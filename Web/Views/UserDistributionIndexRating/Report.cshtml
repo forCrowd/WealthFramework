@@ -1,0 +1,67 @@
+﻿@model BusinessObjects.UserDistributionIndexRatingAverage
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @*@Html.ActionLink("Create New", "Create")*@
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RatingCount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalCostIndexRating)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.KnowledgeIndexRating)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QualityIndexRating)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SectorIndexRating)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmployeeIndexRating)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CustomerIndexRating)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DistanceIndexRating)
+        </th>
+    </tr>
+
+    <tr>
+        <td>
+            @Html.DisplayFor(model => model.RatingCount)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.TotalCostIndexRating)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.KnowledgeIndexRating)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.QualityIndexRating)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.SectorIndexRating)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.EmployeeIndexRating)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.CustomerIndexRating)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.DistanceIndexRating)
+        </td>
+    </tr>
+
+</table>

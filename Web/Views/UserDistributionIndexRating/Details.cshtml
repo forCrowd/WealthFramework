@@ -1,0 +1,106 @@
+﻿@model BusinessObjects.UserDistributionIndexRating
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>UserDistributionIndexRating</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalCostIndexRating)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalCostIndexRating)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KnowledgeIndexRating)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KnowledgeIndexRating)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QualityIndexRating)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QualityIndexRating)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SectorIndexRating)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SectorIndexRating)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeIndexRating)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeIndexRating)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CustomerIndexRating)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustomerIndexRating)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DistanceIndexRating)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DistanceIndexRating)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifiedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeletedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeletedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Email)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="adce09c0591c47b8911820113fd77aa6" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="WealthEconomyModel.License" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="WealthEconomyModel.Organization" Width="1.5" PointX="3.75" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="WealthEconomyModel.Sector" Width="1.5" PointX="1.5" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="WealthEconomyModel.User" Width="2.625" PointX="0.75" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="WealthEconomyModel.UserLicenseRating" Width="1.5" PointX="3" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="WealthEconomyModel.UserOrganizationRating" Width="1.5" PointX="8.75" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="WealthEconomyModel.UserSectorRating" Width="1.5" PointX="5.875" PointY="7.25" IsExpanded="true" />
+        <AssociationConnector Association="WealthEconomyModel.FK_Organization_License" ManuallyRouted="false" />
+        <AssociationConnector Association="WealthEconomyModel.FK_UserLicenseRating_License" ManuallyRouted="false" />
+        <AssociationConnector Association="WealthEconomyModel.FK_Organization_Sector" ManuallyRouted="false" />
+        <AssociationConnector Association="WealthEconomyModel.FK_UserOrganizationRating_Organization" ManuallyRouted="false" />
+        <AssociationConnector Association="WealthEconomyModel.FK_UserSectorRating_Sector" ManuallyRouted="false" />
+        <AssociationConnector Association="WealthEconomyModel.FK_UserLicenseRating_User" ManuallyRouted="false" />
+        <AssociationConnector Association="WealthEconomyModel.FK_UserOrganizationRating_User" ManuallyRouted="false" />
+        <AssociationConnector Association="WealthEconomyModel.FK_UserSectorRating_User" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="WealthEconomyModel.UserDistributionIndexRating" Width="1.5" PointX="3" PointY="17.875" />
+        <AssociationConnector Association="WealthEconomyModel.FK_UserDistributionIndexRating_User" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

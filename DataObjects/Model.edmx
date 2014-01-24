@@ -1,0 +1,690 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="WealthEconomyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="License">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="Text" Type="varchar(max)" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+          <Property Name="DeletedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Organization">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SectorId" Type="tinyint" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ProductionCost" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="SalesPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="LicenseId" Type="smallint" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+          <Property Name="DeletedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Sector">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+          <Property Name="DeletedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+          <Property Name="DeletedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="UserDistributionIndexRating">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="TotalCostIndexRating" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="KnowledgeIndexRating" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="QualityIndexRating" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="SectorIndexRating" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="EmployeeIndexRating" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CustomerIndexRating" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="DistanceIndexRating" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+          <Property Name="DeletedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="UserLicenseRating">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="LicenseId" Type="smallint" Nullable="false" />
+          <Property Name="Rating" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+          <Property Name="DeletedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="UserOrganizationRating">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="OrganizationId" Type="int" Nullable="false" />
+          <Property Name="QualityRating" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CustomSatisfactionRating" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="EmployeeSatisfactionRating" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+          <Property Name="DeletedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="UserSectorRating">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="SectorId" Type="tinyint" Nullable="false" />
+          <Property Name="Rating" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+          <Property Name="DeletedOn" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_Organization_License">
+          <End Role="License" Type="Self.License" Multiplicity="1" />
+          <End Role="Organization" Type="Self.Organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="License">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Organization">
+              <PropertyRef Name="LicenseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Organization_Sector">
+          <End Role="Sector" Type="Self.Sector" Multiplicity="1" />
+          <End Role="Organization" Type="Self.Organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sector">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Organization">
+              <PropertyRef Name="SectorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDistributionIndexRating_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserDistributionIndexRating" Type="Self.UserDistributionIndexRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDistributionIndexRating">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserLicenseRating_License">
+          <End Role="License" Type="Self.License" Multiplicity="1" />
+          <End Role="UserLicenseRating" Type="Self.UserLicenseRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="License">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserLicenseRating">
+              <PropertyRef Name="LicenseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserLicenseRating_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserLicenseRating" Type="Self.UserLicenseRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserLicenseRating">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserOrganizationRating_Organization">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+          <End Role="UserOrganizationRating" Type="Self.UserOrganizationRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserOrganizationRating">
+              <PropertyRef Name="OrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserOrganizationRating_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserOrganizationRating" Type="Self.UserOrganizationRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserOrganizationRating">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserSectorRating_Sector">
+          <End Role="Sector" Type="Self.Sector" Multiplicity="1" />
+          <End Role="UserSectorRating" Type="Self.UserSectorRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sector">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserSectorRating">
+              <PropertyRef Name="SectorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserSectorRating_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserSectorRating" Type="Self.UserSectorRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserSectorRating">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WealthEconomyModelStoreContainer">
+          <EntitySet Name="License" EntityType="Self.License" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Organization" EntityType="Self.Organization" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sector" EntityType="Self.Sector" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserDistributionIndexRating" EntityType="Self.UserDistributionIndexRating" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserLicenseRating" EntityType="Self.UserLicenseRating" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserOrganizationRating" EntityType="Self.UserOrganizationRating" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserSectorRating" EntityType="Self.UserSectorRating" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Organization_License" Association="Self.FK_Organization_License">
+            <End Role="License" EntitySet="License" />
+            <End Role="Organization" EntitySet="Organization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Organization_Sector" Association="Self.FK_Organization_Sector">
+            <End Role="Sector" EntitySet="Sector" />
+            <End Role="Organization" EntitySet="Organization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDistributionIndexRating_User" Association="Self.FK_UserDistributionIndexRating_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserDistributionIndexRating" EntitySet="UserDistributionIndexRating" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserLicenseRating_License" Association="Self.FK_UserLicenseRating_License">
+            <End Role="License" EntitySet="License" />
+            <End Role="UserLicenseRating" EntitySet="UserLicenseRating" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserLicenseRating_User" Association="Self.FK_UserLicenseRating_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserLicenseRating" EntitySet="UserLicenseRating" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserOrganizationRating_Organization" Association="Self.FK_UserOrganizationRating_Organization">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="UserOrganizationRating" EntitySet="UserOrganizationRating" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserOrganizationRating_User" Association="Self.FK_UserOrganizationRating_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserOrganizationRating" EntitySet="UserOrganizationRating" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserSectorRating_Sector" Association="Self.FK_UserSectorRating_Sector">
+            <End Role="Sector" EntitySet="Sector" />
+            <End Role="UserSectorRating" EntitySet="UserSectorRating" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserSectorRating_User" Association="Self.FK_UserSectorRating_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserSectorRating" EntitySet="UserSectorRating" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WealthEconomyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="License">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Organization" Relationship="Self.FK_Organization_License" FromRole="License" ToRole="Organization" />
+          <NavigationProperty Name="UserLicenseRating" Relationship="Self.FK_UserLicenseRating_License" FromRole="License" ToRole="UserLicenseRating" />
+        </EntityType>
+        <EntityType Name="Organization">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SectorId" Type="Byte" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProductionCost" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="SalesPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="LicenseId" Type="Int16" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="License" Relationship="Self.FK_Organization_License" FromRole="Organization" ToRole="License" />
+          <NavigationProperty Name="Sector" Relationship="Self.FK_Organization_Sector" FromRole="Organization" ToRole="Sector" />
+          <NavigationProperty Name="UserOrganizationRating" Relationship="Self.FK_UserOrganizationRating_Organization" FromRole="Organization" ToRole="UserOrganizationRating" />
+        </EntityType>
+        <EntityType Name="Sector">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Organization" Relationship="Self.FK_Organization_Sector" FromRole="Sector" ToRole="Organization" />
+          <NavigationProperty Name="UserSectorRating" Relationship="Self.FK_UserSectorRating_Sector" FromRole="Sector" ToRole="UserSectorRating" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="UserLicenseRatingSet" Relationship="Self.FK_UserLicenseRating_User" FromRole="User" ToRole="UserLicenseRating" />
+          <NavigationProperty Name="UserOrganizationRatingSet" Relationship="Self.FK_UserOrganizationRating_User" FromRole="User" ToRole="UserOrganizationRating" />
+          <NavigationProperty Name="UserSectorRatingSet" Relationship="Self.FK_UserSectorRating_User" FromRole="User" ToRole="UserSectorRating" />
+          <NavigationProperty Name="UserDistributionIndexRatingSet" Relationship="WealthEconomyModel.FK_UserDistributionIndexRating_User" FromRole="User" ToRole="UserDistributionIndexRating" />
+        </EntityType>
+        <EntityType Name="UserLicenseRating">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="LicenseId" Type="Int16" Nullable="false" />
+          <Property Name="Rating" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="License" Relationship="Self.FK_UserLicenseRating_License" FromRole="UserLicenseRating" ToRole="License" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UserLicenseRating_User" FromRole="UserLicenseRating" ToRole="User" />
+        </EntityType>
+        <EntityType Name="UserOrganizationRating">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="OrganizationId" Type="Int32" Nullable="false" />
+          <Property Name="QualityRating" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CustomSatisfactionRating" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="EmployeeSatisfactionRating" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Organization" Relationship="Self.FK_UserOrganizationRating_Organization" FromRole="UserOrganizationRating" ToRole="Organization" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UserOrganizationRating_User" FromRole="UserOrganizationRating" ToRole="User" />
+        </EntityType>
+        <EntityType Name="UserSectorRating">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="SectorId" Type="Byte" Nullable="false" />
+          <Property Name="Rating" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Sector" Relationship="Self.FK_UserSectorRating_Sector" FromRole="UserSectorRating" ToRole="Sector" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UserSectorRating_User" FromRole="UserSectorRating" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Organization_License">
+          <End Role="License" Type="Self.License" Multiplicity="1" />
+          <End Role="Organization" Type="Self.Organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="License">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Organization">
+              <PropertyRef Name="LicenseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserLicenseRating_License">
+          <End Role="License" Type="Self.License" Multiplicity="1" />
+          <End Role="UserLicenseRating" Type="Self.UserLicenseRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="License">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserLicenseRating">
+              <PropertyRef Name="LicenseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Organization_Sector">
+          <End Role="Sector" Type="Self.Sector" Multiplicity="1" />
+          <End Role="Organization" Type="Self.Organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sector">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Organization">
+              <PropertyRef Name="SectorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserOrganizationRating_Organization">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+          <End Role="UserOrganizationRating" Type="Self.UserOrganizationRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserOrganizationRating">
+              <PropertyRef Name="OrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserSectorRating_Sector">
+          <End Role="Sector" Type="Self.Sector" Multiplicity="1" />
+          <End Role="UserSectorRating" Type="Self.UserSectorRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sector">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserSectorRating">
+              <PropertyRef Name="SectorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserLicenseRating_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserLicenseRating" Type="Self.UserLicenseRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserLicenseRating">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserOrganizationRating_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserOrganizationRating" Type="Self.UserOrganizationRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserOrganizationRating">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserSectorRating_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserSectorRating" Type="Self.UserSectorRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserSectorRating">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WealthEconomyEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="LicenseSet" EntityType="Self.License" />
+          <EntitySet Name="OrganizationSet" EntityType="Self.Organization" />
+          <EntitySet Name="SectorSet" EntityType="Self.Sector" />
+          <EntitySet Name="UserSet" EntityType="Self.User" />
+          <EntitySet Name="UserLicenseRatingSet" EntityType="Self.UserLicenseRating" />
+          <EntitySet Name="UserOrganizationRatingSet" EntityType="Self.UserOrganizationRating" />
+          <EntitySet Name="UserSectorRatingSet" EntityType="Self.UserSectorRating" />
+          <AssociationSet Name="FK_Organization_License" Association="Self.FK_Organization_License">
+            <End Role="License" EntitySet="LicenseSet" />
+            <End Role="Organization" EntitySet="OrganizationSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserLicenseRating_License" Association="Self.FK_UserLicenseRating_License">
+            <End Role="License" EntitySet="LicenseSet" />
+            <End Role="UserLicenseRating" EntitySet="UserLicenseRatingSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Organization_Sector" Association="Self.FK_Organization_Sector">
+            <End Role="Sector" EntitySet="SectorSet" />
+            <End Role="Organization" EntitySet="OrganizationSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserOrganizationRating_Organization" Association="Self.FK_UserOrganizationRating_Organization">
+            <End Role="Organization" EntitySet="OrganizationSet" />
+            <End Role="UserOrganizationRating" EntitySet="UserOrganizationRatingSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserSectorRating_Sector" Association="Self.FK_UserSectorRating_Sector">
+            <End Role="Sector" EntitySet="SectorSet" />
+            <End Role="UserSectorRating" EntitySet="UserSectorRatingSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserLicenseRating_User" Association="Self.FK_UserLicenseRating_User">
+            <End Role="User" EntitySet="UserSet" />
+            <End Role="UserLicenseRating" EntitySet="UserLicenseRatingSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserOrganizationRating_User" Association="Self.FK_UserOrganizationRating_User">
+            <End Role="User" EntitySet="UserSet" />
+            <End Role="UserOrganizationRating" EntitySet="UserOrganizationRatingSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserSectorRating_User" Association="Self.FK_UserSectorRating_User">
+            <End Role="User" EntitySet="UserSet" />
+            <End Role="UserSectorRating" EntitySet="UserSectorRatingSet" />
+          </AssociationSet>
+          <EntitySet Name="UserDistributionIndexRatingSet" EntityType="WealthEconomyModel.UserDistributionIndexRating" />
+          <AssociationSet Name="FK_UserDistributionIndexRating_User" Association="WealthEconomyModel.FK_UserDistributionIndexRating_User">
+            <End Role="User" EntitySet="UserSet" />
+            <End Role="UserDistributionIndexRating" EntitySet="UserDistributionIndexRatingSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="UserDistributionIndexRating">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="TotalCostIndexRating" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="KnowledgeIndexRating" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="QualityIndexRating" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="SectorIndexRating" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="EmployeeIndexRating" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="CustomerIndexRating" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="DistanceIndexRating" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="User" Relationship="WealthEconomyModel.FK_UserDistributionIndexRating_User" FromRole="UserDistributionIndexRating" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_UserDistributionIndexRating_User">
+          <End Type="WealthEconomyModel.User" Role="User" Multiplicity="1" />
+          <End Type="WealthEconomyModel.UserDistributionIndexRating" Role="UserDistributionIndexRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDistributionIndexRating">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WealthEconomyModelStoreContainer" CdmEntityContainer="WealthEconomyEntities">
+          <EntitySetMapping Name="LicenseSet">
+            <EntityTypeMapping TypeName="WealthEconomyModel.License">
+              <MappingFragment StoreEntitySet="License">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrganizationSet">
+            <EntityTypeMapping TypeName="WealthEconomyModel.Organization">
+              <MappingFragment StoreEntitySet="Organization">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SectorId" ColumnName="SectorId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ProductionCost" ColumnName="ProductionCost" />
+                <ScalarProperty Name="SalesPrice" ColumnName="SalesPrice" />
+                <ScalarProperty Name="LicenseId" ColumnName="LicenseId" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SectorSet">
+            <EntityTypeMapping TypeName="WealthEconomyModel.Sector">
+              <MappingFragment StoreEntitySet="Sector">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserSet">
+            <EntityTypeMapping TypeName="WealthEconomyModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserLicenseRatingSet">
+            <EntityTypeMapping TypeName="WealthEconomyModel.UserLicenseRating">
+              <MappingFragment StoreEntitySet="UserLicenseRating">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="LicenseId" ColumnName="LicenseId" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserOrganizationRatingSet">
+            <EntityTypeMapping TypeName="WealthEconomyModel.UserOrganizationRating">
+              <MappingFragment StoreEntitySet="UserOrganizationRating">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
+                <ScalarProperty Name="QualityRating" ColumnName="QualityRating" />
+                <ScalarProperty Name="CustomSatisfactionRating" ColumnName="CustomSatisfactionRating" />
+                <ScalarProperty Name="EmployeeSatisfactionRating" ColumnName="EmployeeSatisfactionRating" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserSectorRatingSet">
+            <EntityTypeMapping TypeName="WealthEconomyModel.UserSectorRating">
+              <MappingFragment StoreEntitySet="UserSectorRating">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="SectorId" ColumnName="SectorId" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserDistributionIndexRatingSet">
+            <EntityTypeMapping TypeName="WealthEconomyModel.UserDistributionIndexRating">
+              <MappingFragment StoreEntitySet="UserDistributionIndexRating">
+                <ScalarProperty Name="DistanceIndexRating" ColumnName="DistanceIndexRating" />
+                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CustomerIndexRating" ColumnName="CustomerIndexRating" />
+                <ScalarProperty Name="EmployeeIndexRating" ColumnName="EmployeeIndexRating" />
+                <ScalarProperty Name="SectorIndexRating" ColumnName="SectorIndexRating" />
+                <ScalarProperty Name="QualityIndexRating" ColumnName="QualityIndexRating" />
+                <ScalarProperty Name="KnowledgeIndexRating" ColumnName="KnowledgeIndexRating" />
+                <ScalarProperty Name="TotalCostIndexRating" ColumnName="TotalCostIndexRating" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

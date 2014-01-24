@@ -1,0 +1,14 @@
+﻿. copy + softdelete methods in repositories?
+. Help page doesnt show odata urls
+. Check validation later - metadatatype vs. generate
+. github
+. versioning + version differences (sql changes)
+. easy deployment;
+.. web deployment?
+.. sql local db or compact etc.?
+.. sql migrations
+. persisted computed fields; full name + total index rating
+. distance index rating will not be in use
+. multiple resource pool - general one, pool per sample etc.
+. collection names - add "set" word to the end
+. empty IPR page has an error!
