@@ -1,2 +1,2 @@
-WE
+Wealth Economy
 ==
