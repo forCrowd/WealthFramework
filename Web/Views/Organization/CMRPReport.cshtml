@@ -1,0 +1,289 @@
+﻿@model BusinessObjects.CrowdManagedResourcePool
+
+@{
+    ViewBag.Title = "Test Lab";
+}
+
+<h2>Test Lab</h2>
+
+<p>
+    <div class="btn-group">
+        @{ Html.BeginForm("IncreaseNumberOfSales2", "Organization", new { area = "" }, FormMethod.Post, null); }
+        <button type="submit" class="btn btn-default">Increase Number of Sales</button>
+        @{ Html.EndForm(); }
+        @{ Html.BeginForm("ResetNumberOfSales2", "Organization", new { area = "" }, FormMethod.Post, null); }
+        <button type="submit" class="btn btn-default">Reset Number of Sales</button>
+        @{ Html.EndForm(); }
+    </div>
+</p>
+<p>
+    CMRP Rate: @Model.CMRPPercentage.ToString("P2")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.OrganizationSet.First().Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrganizationSet.First().ProductionCost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrganizationSet.First().SalesPrice)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.OrganizationSet.First().Profit)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.OrganizationSet.First().ProfitPercentage)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.OrganizationSet.First().ProfitMargin)
+        </th>*@
+        @*<th>
+            @Html.DisplayNameFor(model => model.OrganizationSet.First().CMRPTax)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.OrganizationSet.First().SalesPriceIncludingCMRPTax)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrganizationSet.First().NumberOfSales)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrganizationSet.First().TotalProductionCost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrganizationSet.First().TotalSalesRevenue)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrganizationSet.First().TotalProfit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrganizationSet.First().TotalCMRPTax)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrganizationSet.First().TotalSalesRevenueIncludingCMRPTax)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.OrganizationSet.First().TotalCostIndexDifference)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.OrganizationSet.First().TotalCostIndexPercentage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrganizationSet.First().TotalCostIndexPercentageWithNumberOfSales)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrganizationSet.First().TotalCostIndexPercentageWithNumberOfSalesWeighted)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrganizationSet.First().TotalCostIndexIncome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrganizationSet.First().TotalIncome)
+        </th>
+    </tr>
+
+    @foreach (var item in Model.OrganizationSet)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductionCost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SalesPrice)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Profit)
+            </td>*@
+            <td>
+                @item.ProfitPercentage.ToString("P2")
+            </td>
+            @*<td>
+                @item.ProfitMargin.ToString("P2")
+            </td>*@
+            @*<td>
+                @Html.DisplayFor(modelItem => item.CMRPTax)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.SalesPriceIncludingCMRPTax)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfSales)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalProductionCost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalSalesRevenue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalProfit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalCMRPTax)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalSalesRevenueIncludingCMRPTax)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.TotalCostIndexDifference)
+            </td>*@
+            <td>
+                @item.TotalCostIndexPercentage.ToString("P2")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalCostIndexPercentageWithNumberOfSales)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalCostIndexPercentageWithNumberOfSalesWeighted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalCostIndexIncome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalIncome)
+            </td>
+        </tr>
+    }
+    <tr>
+        <td>
+            Total
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => modelItem.ProductionCost)
+        </td>
+        <td>
+            @string.Format("{0} / {1}", Model.SalesPriceSum, Model.SalesPriceAverage)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => modelItem.Profit)
+        </td>*@
+        <td>
+            @Model.ProfitPercentage.ToString("P2")
+        </td>
+        @*<td>
+            @Model.ProfitMargin.ToString("P2")
+        </td>*@
+        @*<td>
+            @Html.DisplayFor(modelItem => modelItem.CMRPTax)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => modelItem.SalesPriceIncludingCMRPTax)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => modelItem.NumberOfSales)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => modelItem.TotalProductionCost)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => modelItem.TotalSalesRevenue)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => modelItem.TotalProfit)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => modelItem.TotalCMRPTax)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => modelItem.TotalSalesRevenueIncludingCMRPTax)
+        </td>
+        @*<td>
+            &nbsp;
+        </td>*@
+        <td>
+            &nbsp;
+        </td>
+        <td>
+            &nbsp;
+        </td>
+        <td>
+            &nbsp;
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => modelItem.TotalCostIndexIncome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => modelItem.TotalIncome)
+        </td>
+    </tr>
+</table>
+@*<table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductionCost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SalesPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Profit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProfitPercentage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProfitMargin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CMRPTax)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SalesPriceIncludingCMRPTax)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberOfSales)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalSalesRevenueIncludingCMRPTax)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalCMRPTax)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductionCost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SalesPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Profit)
+                </td>
+                <td>
+                    @item.ProfitPercentage.ToString("P2")
+                </td>
+                <td>
+                    @item.ProfitMargin.ToString("P2")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CMRPTax)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SalesPriceIncludingCMRPTax)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberOfSales)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalSalesRevenueIncludingCMRPTax)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalCMRPTax)
+                </td>
+            </tr>
+        }
+    </table>*@

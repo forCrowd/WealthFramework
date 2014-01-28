@@ -73,7 +73,7 @@ namespace <#= Namespace #>
         bindAttribute = String.Empty;
     }
 #>
-    public class <#= ControllerName #> : Controller
+    public partial class <#= ControllerName #> : Controller
     {
         private <#= ContextTypeName #> db = new <#= ContextTypeName #>();
 

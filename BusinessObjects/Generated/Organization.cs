@@ -10,27 +10,30 @@
 namespace BusinessObjects
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     
-    public class SectorMetadata
+    [MetadataType(typeof(OrganizationMetadata))]
+    public partial class Organization : IEntity<int>
     {
-        [Display(Name = "Id")]
-        public byte Id { get; set; }
+        public Organization()
+        {
+            this.UserOrganizationRating = new HashSet<UserOrganizationRating>();
+        }
     
-        [Display(Name = "Name")]
+        public int Id { get; set; }
+        public byte SectorId { get; set; }
         public string Name { get; set; }
-    
-        [Display(Name = "Description")]
-        public string Description { get; set; }
-    
-        [Display(Name = "CreatedOn")]
+        public decimal ProductionCost { get; set; }
+        public decimal SalesPrice { get; set; }
+        public short LicenseId { get; set; }
+        public int NumberOfSales { get; set; }
         public System.DateTime CreatedOn { get; set; }
-    
-        [Display(Name = "ModifiedOn")]
         public System.DateTime ModifiedOn { get; set; }
-    
-        [Display(Name = "DeletedOn")]
         public Nullable<System.DateTime> DeletedOn { get; set; }
     
+        public virtual License License { get; set; }
+        public virtual Sector Sector { get; set; }
+        public virtual ICollection<UserOrganizationRating> UserOrganizationRating { get; set; }
     }
 }

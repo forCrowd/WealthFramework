@@ -14,14 +14,32 @@ namespace BusinessObjects
     
     public class UserOrganizationRatingMetadata
     {
+        [Display(Name = "Id")]
         public int Id { get; set; }
+    
+        [Display(Name = "UserId")]
         public int UserId { get; set; }
+    
+        [Display(Name = "OrganizationId")]
         public int OrganizationId { get; set; }
+    
+        [Display(Name = "QualityRating")]
         public decimal QualityRating { get; set; }
+    
+        [Display(Name = "CustomSatisfactionRating")]
         public decimal CustomSatisfactionRating { get; set; }
+    
+        [Display(Name = "EmployeeSatisfactionRating")]
         public decimal EmployeeSatisfactionRating { get; set; }
+    
+        [Display(Name = "CreatedOn")]
         public System.DateTime CreatedOn { get; set; }
+    
+        [Display(Name = "ModifiedOn")]
         public System.DateTime ModifiedOn { get; set; }
+    
+        [Display(Name = "DeletedOn")]
         public Nullable<System.DateTime> DeletedOn { get; set; }
+    
     }
 }

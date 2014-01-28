@@ -14,31 +14,41 @@ namespace BusinessObjects
     
     public class UserDistributionIndexRatingMetadata
     {
+        [Display(Name = "Id")]
         public int Id { get; set; }
+    
+        [Display(Name = "UserId")]
         public int UserId { get; set; }
-        
+    
         [Display(Name = "Total Cost Index")]
         public decimal TotalCostIndexRating { get; set; }
-        
-        [Display(Name = "Knowledge Sharing Index")]
+    
+        [Display(Name = "Knowledge Index")]
         public decimal KnowledgeIndexRating { get; set; }
-
+    
         [Display(Name = "Quality Index")]
         public decimal QualityIndexRating { get; set; }
-
+    
         [Display(Name = "Sector Index")]
         public decimal SectorIndexRating { get; set; }
-
-        [Display(Name = "Employee Satisfaction Index")]
+    
+        [Display(Name = "Employee Index")]
         public decimal EmployeeIndexRating { get; set; }
-
-        [Display(Name = "Customer Satisfaction Index")]
+    
+        [Display(Name = "Customer Index")]
         public decimal CustomerIndexRating { get; set; }
-
+    
         [Display(Name = "Distance Index")]
         public decimal DistanceIndexRating { get; set; }
+    
+        [Display(Name = "CreatedOn")]
         public System.DateTime CreatedOn { get; set; }
+    
+        [Display(Name = "ModifiedOn")]
         public System.DateTime ModifiedOn { get; set; }
+    
+        [Display(Name = "DeletedOn")]
         public Nullable<System.DateTime> DeletedOn { get; set; }
+    
     }
 }

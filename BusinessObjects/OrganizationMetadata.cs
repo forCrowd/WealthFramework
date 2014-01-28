@@ -14,14 +14,35 @@ namespace BusinessObjects
     
     public class OrganizationMetadata
     {
+        [Display(Name = "Id")]
         public int Id { get; set; }
+    
+        [Display(Name = "SectorId")]
         public byte SectorId { get; set; }
+    
+        [Display(Name = "Name")]
         public string Name { get; set; }
+    
+        [Display(Name = "Production Cost")]
         public decimal ProductionCost { get; set; }
+    
+        [Display(Name = "Sales Price")]
         public decimal SalesPrice { get; set; }
+    
+        [Display(Name = "LicenseId")]
         public short LicenseId { get; set; }
+    
+        [Display(Name = "Number of Sales")]
+        public int NumberOfSales { get; set; }
+    
+        [Display(Name = "CreatedOn")]
         public System.DateTime CreatedOn { get; set; }
+    
+        [Display(Name = "ModifiedOn")]
         public System.DateTime ModifiedOn { get; set; }
+    
+        [Display(Name = "DeletedOn")]
         public Nullable<System.DateTime> DeletedOn { get; set; }
+    
     }
 }

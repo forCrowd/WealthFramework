@@ -21,6 +21,9 @@
             @Html.DisplayNameFor(model => model.SalesPrice)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.NumberOfSales)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.License.Name)
         </th>
         <th>
@@ -39,6 +42,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.SalesPrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumberOfSales)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.License.Name)

@@ -14,13 +14,29 @@ namespace BusinessObjects
     
     public class UserMetadata
     {
+        [Display(Name = "Id")]
         public int Id { get; set; }
+    
+        [Display(Name = "Email")]
         public string Email { get; set; }
+    
+        [Display(Name = "FirstName")]
         public string FirstName { get; set; }
+    
+        [Display(Name = "MiddleName")]
         public string MiddleName { get; set; }
+    
+        [Display(Name = "LastName")]
         public string LastName { get; set; }
+    
+        [Display(Name = "CreatedOn")]
         public System.DateTime CreatedOn { get; set; }
+    
+        [Display(Name = "ModifiedOn")]
         public System.DateTime ModifiedOn { get; set; }
+    
+        [Display(Name = "DeletedOn")]
         public Nullable<System.DateTime> DeletedOn { get; set; }
+    
     }
 }

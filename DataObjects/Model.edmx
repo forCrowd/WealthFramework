@@ -27,6 +27,7 @@
           <Property Name="ProductionCost" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="SalesPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="LicenseId" Type="smallint" Nullable="false" />
+          <Property Name="NumberOfSales" Type="int" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
           <Property Name="DeletedOn" Type="datetime" />
@@ -292,6 +293,7 @@
           <Property Name="ProductionCost" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="SalesPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="LicenseId" Type="Int16" Nullable="false" />
+          <Property Name="NumberOfSales" Type="Int32" Nullable="false" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DeletedOn" Type="DateTime" Precision="3" />
@@ -567,6 +569,7 @@
           <EntitySetMapping Name="OrganizationSet">
             <EntityTypeMapping TypeName="WealthEconomyModel.Organization">
               <MappingFragment StoreEntitySet="Organization">
+                <ScalarProperty Name="NumberOfSales" ColumnName="NumberOfSales" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="SectorId" ColumnName="SectorId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />

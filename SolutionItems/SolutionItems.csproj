@@ -36,11 +36,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="Notes\Todo.txt" />
+    <Content Include="Scripts\Database\Alterations\0\0.1\0.1.2\01-20140127 Organization NumberOfSales.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Links\Industry Browser - Yahoo! Finance - Full Industry List.URL" />
     <None Include="Links\Sector List - Yahoo! Finance Industry Browser.URL" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

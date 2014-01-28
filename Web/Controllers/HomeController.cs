@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace Web.Controllers
 {
@@ -10,7 +6,7 @@ namespace Web.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Title = "Home";
+            ViewBag.Title = "Home ";
 
             return View();
         }

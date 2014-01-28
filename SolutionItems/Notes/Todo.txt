@@ -1,7 +1,6 @@
 ﻿. copy + softdelete methods in repositories?
 . Help page doesnt show odata urls
 . Check validation later - metadatatype vs. generate
-. github
 . versioning + version differences (sql changes)
 . easy deployment;
 .. web deployment?
@@ -12,3 +11,12 @@
 . multiple resource pool - general one, pool per sample etc.
 . collection names - add "set" word to the end
 . empty IPR page has an error!
+. there is no group seperator in numbers?
+. cmrp report needs if block for empty organizationset!
+. organization.cs - resourcepool == null checks ?!
+
+. other indexes?
+
+---
+under creative commons license;
+http://www.highcharts.com/demo/pie-basic

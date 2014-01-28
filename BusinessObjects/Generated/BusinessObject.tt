@@ -2,8 +2,6 @@
 <#@ include file="EF6.Utility.CS.ttinclude"#><#@ 
  output extension=".cs"#><#
 
- /* Generate these classes only once */
-
 // To be able to control whether it's going to be executed
 var executeMe = true;
 
@@ -14,7 +12,7 @@ var entityNameToGenerate = string.Empty;
 if (!executeMe)
 	return string.Empty;
 
-const string inputFile = @"..\DataObjects\Model.edmx";
+const string inputFile = @"..\..\DataObjects\Model.edmx";
 var textTransform = DynamicTextTransformation.Create(this);
 var code = new CodeGenerationTools(this);
 var ef = new MetadataTools(this);
@@ -38,17 +36,51 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection)
 		continue;
 
 	// Output file
-	var outputFile = string.Format(@"{0}Metadata.cs", code.Escape(entity));
+	var outputFile = string.Format(@"{0}.cs", code.Escape(entity));
 
     fileManager.StartNewFile(outputFile);
     BeginNamespace(code);
 #>
-using System;
-using System.ComponentModel.DataAnnotations;
-
-public class <#=code.Escape(entity)#>Metadata
+<#=codeStringGenerator.UsingDirectives(inHeader: false, includeDataAnnotations: true)#>
+[MetadataType(typeof(<#=code.Escape(entity)#>Metadata))]
+<#=codeStringGenerator.EntityClassOpening(entity)#>
 {
 <#
+    var propertiesWithDefaultValues = typeMapper.GetPropertiesWithDefaultValues(entity);
+    var collectionNavigationProperties = typeMapper.GetCollectionNavigationProperties(entity);
+    var complexProperties = typeMapper.GetComplexProperties(entity);
+
+    if (propertiesWithDefaultValues.Any() || collectionNavigationProperties.Any() || complexProperties.Any())
+    {
+#>
+    public <#=code.Escape(entity)#>()
+    {
+<#
+        foreach (var edmProperty in propertiesWithDefaultValues)
+        {
+#>
+        this.<#=code.Escape(edmProperty)#> = <#=typeMapper.CreateLiteral(edmProperty.DefaultValue)#>;
+<#
+        }
+
+        foreach (var navigationProperty in collectionNavigationProperties)
+        {
+#>
+        this.<#=code.Escape(navigationProperty)#> = new HashSet<<#=typeMapper.GetTypeName(navigationProperty.ToEndMember.GetEntityType())#>>();
+<#
+        }
+
+        foreach (var complexProperty in complexProperties)
+        {
+#>
+        this.<#=code.Escape(complexProperty)#> = new <#=typeMapper.GetTypeName(complexProperty.TypeUsage)#>();
+<#
+        }
+#>
+    }
+
+<#
+    }
 
     var simpleProperties = typeMapper.GetSimpleProperties(entity);
     if (simpleProperties.Any())
@@ -56,13 +88,37 @@ public class <#=code.Escape(entity)#>Metadata
         foreach (var edmProperty in simpleProperties)
         {
 #>
-    [Display(Name = <#=string.Format(@"""{0}""", code.Escape(edmProperty))#>)]
     <#=codeStringGenerator.Property(edmProperty)#>
-
 <#
         }
     }
 
+    if (complexProperties.Any())
+    {
+#>
+
+<#
+        foreach(var complexProperty in complexProperties)
+        {
+#>
+    <#=codeStringGenerator.Property(complexProperty)#>
+<#
+        }
+    }
+
+    var navigationProperties = typeMapper.GetNavigationProperties(entity);
+    if (navigationProperties.Any())
+    {
+#>
+
+<#
+        foreach (var navigationProperty in navigationProperties)
+        {
+#>
+    <#=codeStringGenerator.NavigationProperty(navigationProperty)#>
+<#
+        }
+    }
 #>
 }
 <#
@@ -76,7 +132,12 @@ foreach (var complex in typeMapper.GetItemsToGenerate<ComplexType>(itemCollectio
 		&& entityNameToGenerate.ToLower() != complex.Name.ToLower())
 		continue;
 
+	// Output directory
+	//var outputEntityDirectory = string.Format(@"..\BusinessObjects\{0}\Generated", complex.Name);
+	//var outputDirectory = Path.Combine(Path.GetDirectoryName(Host.TemplateFile), outputEntityDirectory);
+
 	// Output file
+	//var outputFilePath = string.Format(@"{0}\{1}.cs", outputDirectory, complex.Name);
 	var outputFile = string.Format(@"{0}.cs", complex.Name);
 
     fileManager.StartNewFile(outputFile);
@@ -217,7 +278,8 @@ public void WriteHeader(CodeStringGenerator codeStringGenerator, EntityFramework
 
 public void BeginNamespace(CodeGenerationTools code)
 {
-    var codeNamespace = code.VsNamespaceSuggestion();
+    //var codeNamespace = code.VsNamespaceSuggestion();
+    var codeNamespace = "BusinessObjects";
     if (!String.IsNullOrEmpty(codeNamespace))
     {
 #>
@@ -268,16 +330,6 @@ public class CodeStringGenerator
             _code.Escape(edmProperty),
             _code.SpaceAfter(Accessibility.ForGetter(edmProperty)),
             _code.SpaceAfter(Accessibility.ForSetter(edmProperty)));
-    }
-
-    public string MetadataField(EdmProperty edmProperty)
-    {
-        return string.Format(
-            CultureInfo.InvariantCulture,
-            "{0} {1} {2};",
-            Accessibility.ForProperty(edmProperty),
-            _typeMapper.GetTypeName(edmProperty.TypeUsage),
-            _code.Escape(edmProperty));
     }
 
     public string NavigationProperty(NavigationProperty navProp)
@@ -408,15 +460,16 @@ public class CodeStringGenerator
             _code.Escape(entitySet));
     }
 
-    public string UsingDirectives(bool inHeader, bool includeCollections = true)
+    public string UsingDirectives(bool inHeader, bool includeCollections = true, bool includeDataAnnotations = false)
     {
         return inHeader == string.IsNullOrEmpty(_code.VsNamespaceSuggestion())
             ? string.Format(
                 CultureInfo.InvariantCulture,
-                "{0}using System;{1}" +
-                "{2}",
+                "{0}using System;{1}{2}" +
+                "{3}",
                 inHeader ? Environment.NewLine : "",
                 includeCollections ? (Environment.NewLine + "using System.Collections.Generic;") : "",
+                includeDataAnnotations ? (Environment.NewLine + "using System.ComponentModel.DataAnnotations;") : "",
                 inHeader ? "" : Environment.NewLine)
             : "";
     }
