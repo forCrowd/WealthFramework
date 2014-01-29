@@ -93,8 +93,8 @@
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="OrganizationId" Type="int" Nullable="false" />
           <Property Name="QualityRating" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="CustomSatisfactionRating" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="EmployeeSatisfactionRating" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CustomerSatisfactionRating" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
           <Property Name="DeletedOn" Type="datetime" />
@@ -353,8 +353,8 @@
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="OrganizationId" Type="Int32" Nullable="false" />
           <Property Name="QualityRating" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="CustomSatisfactionRating" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="EmployeeSatisfactionRating" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CustomerSatisfactionRating" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DeletedOn" Type="DateTime" Precision="3" />
@@ -628,9 +628,9 @@
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
                 <ScalarProperty Name="QualityRating" ColumnName="QualityRating" />
-                <ScalarProperty Name="CustomSatisfactionRating" ColumnName="CustomSatisfactionRating" />
-                <ScalarProperty Name="EmployeeSatisfactionRating" ColumnName="EmployeeSatisfactionRating" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                  <ScalarProperty Name="EmployeeSatisfactionRating" ColumnName="EmployeeSatisfactionRating" />
+                  <ScalarProperty Name="CustomerSatisfactionRating" ColumnName="CustomerSatisfactionRating" />
+                  <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
                 <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
               </MappingFragment>

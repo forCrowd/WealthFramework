@@ -20,26 +20,36 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("User", "Index", "User", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Sector", "Index", "Sector", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("License", "Index", "License", new { area = "" }, null)</li>
-                    <li></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Organization <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Definitions <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("List", "Index", "Organization", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Report", "CMRPReport", "Organization", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("User", "Index", "User", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Sector", "Index", "Sector", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("License", "Index", "License", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Organization", "Index", "Organization", new { area = "" }, null)</li>
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Index Pie <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">CMRP <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("List", "Index", "UserDistributionIndexRating", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Report", "Report", "UserDistributionIndexRating", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Total Cost Index", "TotalCostIndex", "ResourcePool", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Knowledge Index", "KnowledgeIndex", "ResourcePool", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Quality Index", "QualityIndex", "ResourcePool", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Employee Satisfaction Index", "EmployeeSatisfactionIndex", "ResourcePool", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Customer Satisfaction Index", "CustomerSatisfactionIndex", "ResourcePool", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Sector Index", "SectorIndex", "ResourcePool", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Index Pie List", "Index", "UserDistributionIndexRating", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Index Pie Report", "Report", "UserDistributionIndexRating", new { area = "" }, null)</li>
                         </ul>
-                    <li>@Html.ActionLink("Licence Rating", "Index", "UserLicenseRating", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Organization Rating", "Index", "UserOrganizationRating", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Sector Rating", "Index", "UserSectorRating", new { area = "" }, null)</li>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ratings <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Licence Rating", "Index", "UserLicenseRating", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Organization Rating", "Index", "UserOrganizationRating", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Sector Rating", "Index", "UserSectorRating", new { area = "" }, null)</li>
+                        </ul>
+                    </li>
                     @*<li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>*@
                 </ul>
             </div>

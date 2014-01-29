@@ -12,19 +12,19 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.QualityRating)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CustomSatisfactionRating)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EmployeeSatisfactionRating)
+            @Html.DisplayNameFor(model => model.User.Email)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Organization.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.User.Email)
+            @Html.DisplayNameFor(model => model.QualityRating)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmployeeSatisfactionRating)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CustomerSatisfactionRating)
         </th>
         <th></th>
     </tr>
@@ -32,19 +32,19 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.QualityRating)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CustomSatisfactionRating)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EmployeeSatisfactionRating)
+            @Html.DisplayFor(modelItem => item.User.Email)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Organization.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.User.Email)
+            @Html.DisplayFor(modelItem => item.QualityRating)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmployeeSatisfactionRating)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CustomerSatisfactionRating)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

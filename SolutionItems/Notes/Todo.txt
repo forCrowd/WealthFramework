@@ -10,12 +10,14 @@
 . distance index rating will not be in use
 . multiple resource pool - general one, pool per sample etc.
 . collection names - add "set" word to the end
-. empty IPR page has an error!
-. there is no group seperator in numbers?
-. cmrp report needs if block for empty organizationset!
+. empty Index Pie Result page has an error!
+. cmrp report needs 'if' block for empty organizationset!
 . organization.cs - resourcepool == null checks ?!
-
-. other indexes?
+. all in one sample?
+. dynamic cmrp rate
+. let it generate random organizations + results?
+. group the organizations properly - should it be handled by resourcepool table?
+. tell the story in a better way ?! make it obvious!
 
 ---
 under creative commons license;

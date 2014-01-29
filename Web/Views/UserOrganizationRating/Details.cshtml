@@ -8,8 +8,24 @@
 
 <div>
     <h4>UserOrganizationRating</h4>
-	<hr />
+    <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Organization.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Organization.Name)
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.QualityRating)
         </dt>
@@ -19,19 +35,19 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.CustomSatisfactionRating)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CustomSatisfactionRating)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.EmployeeSatisfactionRating)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.EmployeeSatisfactionRating)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CustomerSatisfactionRating)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustomerSatisfactionRating)
         </dd>
 
         <dt>
@@ -56,22 +72,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.DeletedOn)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Organization.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Organization.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.User.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.User.Email)
         </dd>
 
     </dl>

@@ -17,7 +17,7 @@ namespace BusinessObjects
         [Display(Name = "Id")]
         public byte Id { get; set; }
     
-        [Display(Name = "Name")]
+        [Display(Name = "Sector")]
         public string Name { get; set; }
     
         [Display(Name = "Description")]

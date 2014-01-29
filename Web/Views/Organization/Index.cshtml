@@ -15,19 +15,19 @@
             @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Sector.Name)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.ProductionCost)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.SalesPrice)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.NumberOfSales)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.License.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Sector.Name)
+            @Html.DisplayNameFor(model => model.NumberOfSales)
         </th>
         <th></th>
     </tr>
@@ -38,19 +38,19 @@
             @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.Sector.Name)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.ProductionCost)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.SalesPrice)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.NumberOfSales)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.License.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Sector.Name)
+            @Html.DisplayFor(modelItem => item.NumberOfSales)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

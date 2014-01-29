@@ -51,7 +51,7 @@ namespace Web.Controllers.Mvc
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include="Id,UserId,OrganizationId,QualityRating,CustomSatisfactionRating,EmployeeSatisfactionRating,CreatedOn,ModifiedOn,DeletedOn")] UserOrganizationRating userorganizationrating)
+        public async Task<ActionResult> Create([Bind(Include = "Id,UserId,OrganizationId,QualityRating,EmployeeSatisfactionRating,CustomerSatisfactionRating,CreatedOn,ModifiedOn,DeletedOn")] UserOrganizationRating userorganizationrating)
         {
             if (ModelState.IsValid)
             {
@@ -89,7 +89,7 @@ namespace Web.Controllers.Mvc
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include="Id,UserId,OrganizationId,QualityRating,CustomSatisfactionRating,EmployeeSatisfactionRating,CreatedOn,ModifiedOn,DeletedOn")] UserOrganizationRating userorganizationrating)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,UserId,OrganizationId,QualityRating,EmployeeSatisfactionRating,CustomerSatisfactionRating,CreatedOn,ModifiedOn,DeletedOn")] UserOrganizationRating userorganizationrating)
         {
             if (ModelState.IsValid)
             {

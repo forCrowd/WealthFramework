@@ -20,8 +20,8 @@ namespace BusinessObjects
         public int UserId { get; set; }
         public int OrganizationId { get; set; }
         public decimal QualityRating { get; set; }
-        public decimal CustomSatisfactionRating { get; set; }
         public decimal EmployeeSatisfactionRating { get; set; }
+        public decimal CustomerSatisfactionRating { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public System.DateTime ModifiedOn { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }

@@ -53,7 +53,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BusinessObject.tt</DependentUpon>
     </Compile>
-    <Compile Include="CrowdManagedResourcePool.cs" />
+    <Compile Include="Sector.cs" />
+    <Compile Include="License.cs" />
+    <Compile Include="ResourcePool.cs" />
     <Compile Include="Organization.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="Generated\License.cs">

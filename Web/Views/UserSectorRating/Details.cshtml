@@ -11,6 +11,22 @@
 	<hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.User.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sector.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sector.Name)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.Rating)
         </dt>
 
@@ -40,22 +56,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.DeletedOn)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Sector.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Sector.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.User.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.User.Email)
         </dd>
 
     </dl>

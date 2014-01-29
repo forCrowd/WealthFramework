@@ -43,18 +43,18 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CustomSatisfactionRating, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CustomSatisfactionRating)
-                @Html.ValidationMessageFor(model => model.CustomSatisfactionRating)
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.EmployeeSatisfactionRating, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.EmployeeSatisfactionRating)
                 @Html.ValidationMessageFor(model => model.EmployeeSatisfactionRating)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CustomerSatisfactionRating, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CustomerSatisfactionRating)
+                @Html.ValidationMessageFor(model => model.CustomerSatisfactionRating)
             </div>
         </div>
 

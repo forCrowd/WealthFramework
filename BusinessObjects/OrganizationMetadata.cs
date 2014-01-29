@@ -20,7 +20,7 @@ namespace BusinessObjects
         [Display(Name = "SectorId")]
         public byte SectorId { get; set; }
     
-        [Display(Name = "Name")]
+        [Display(Name = "Organization")]
         public string Name { get; set; }
     
         [Display(Name = "Production Cost")]

@@ -17,7 +17,7 @@ namespace BusinessObjects
         [Display(Name = "Id")]
         public short Id { get; set; }
     
-        [Display(Name = "Name")]
+        [Display(Name = "License")]
         public string Name { get; set; }
     
         [Display(Name = "Description")]

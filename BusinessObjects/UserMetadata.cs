@@ -20,13 +20,13 @@ namespace BusinessObjects
         [Display(Name = "Email")]
         public string Email { get; set; }
     
-        [Display(Name = "FirstName")]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
     
-        [Display(Name = "MiddleName")]
+        [Display(Name = "Middle Name")]
         public string MiddleName { get; set; }
     
-        [Display(Name = "LastName")]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
     
         [Display(Name = "CreatedOn")]

@@ -23,15 +23,15 @@ namespace BusinessObjects
         [Display(Name = "OrganizationId")]
         public int OrganizationId { get; set; }
     
-        [Display(Name = "QualityRating")]
+        [Display(Name = "Quality Rating")]
         public decimal QualityRating { get; set; }
     
-        [Display(Name = "CustomSatisfactionRating")]
-        public decimal CustomSatisfactionRating { get; set; }
-    
-        [Display(Name = "EmployeeSatisfactionRating")]
+        [Display(Name = "Employee Satisfaction Rating")]
         public decimal EmployeeSatisfactionRating { get; set; }
-    
+
+        [Display(Name = "Customer Satisfaction Rating")]
+        public decimal CustomerSatisfactionRating { get; set; }
+
         [Display(Name = "CreatedOn")]
         public System.DateTime CreatedOn { get; set; }
     

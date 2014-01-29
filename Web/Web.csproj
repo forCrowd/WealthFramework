@@ -159,6 +159,7 @@
     <Compile Include="Controllers\Mvc\Generated\LicenseController.cs" />
     <Compile Include="Controllers\Mvc\Generated\OrganizationController.cs" />
     <Compile Include="Controllers\Mvc\Generated\SectorController.cs" />
+    <Compile Include="Controllers\Mvc\ResourcePoolController.cs" />
     <Compile Include="Controllers\Mvc\OrganizationController.cs" />
     <Compile Include="Controllers\Mvc\UserDistributionIndexRatingController.cs" />
     <Compile Include="Controllers\OData\UserController.cs" />
@@ -254,7 +255,12 @@
     <Content Include="Views\UserDistributionIndexRating\Report.cshtml" />
     <Content Include="Views\Home\Overview.cshtml" />
     <Content Include="Views\Organization\Report.cshtml" />
-    <Content Include="Views\Organization\CMRPReport.cshtml" />
+    <Content Include="Views\ResourcePool\TotalCostIndex.cshtml" />
+    <Content Include="Views\ResourcePool\KnowledgeIndex.cshtml" />
+    <Content Include="Views\ResourcePool\QualityIndex.cshtml" />
+    <Content Include="Views\ResourcePool\EmployeeSatisfactionIndex.cshtml" />
+    <Content Include="Views\ResourcePool\CustomerSatisfactionIndex.cshtml" />
+    <Content Include="Views\ResourcePool\SectorIndex.cshtml" />
     <None Include="Web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -336,7 +342,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>9851</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:9851/</IISUrl>
+          <IISUrl>http://localhost:10001/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
@@ -347,6 +353,11 @@
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <PropertyGroup>
+    <PostBuildEvent>REM Warm up script
+powershell -WindowStyle Hidden "$page = (New-Object System.Net.WebClient).DownloadStringAsync("""http://localhost:10001""")" 2&gt;nul 1&gt;nul
+EXIT 0</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
