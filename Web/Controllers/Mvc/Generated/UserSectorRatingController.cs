@@ -12,14 +12,16 @@ using DataObjects;
 
 namespace Web.Controllers.Mvc
 {
-    public partial class UserSectorRatingController : Controller
+    public partial class UserSectorRatingController : BaseController
     {
-        private WealthEconomyEntities db = new WealthEconomyEntities();
-
         // GET: /UserSectorRating/
         public async Task<ActionResult> Index()
         {
             var usersectorratingset = db.UserSectorRatingSet.Include(u => u.Sector).Include(u => u.User);
+
+            if (IsAuthenticated)
+                usersectorratingset = usersectorratingset.Where(rating => rating.UserId == CurrentUserId);
+
             return View(await usersectorratingset.ToListAsync());
         }
 
@@ -41,8 +43,13 @@ namespace Web.Controllers.Mvc
         // GET: /UserSectorRating/Create
         public ActionResult Create()
         {
+            var userSet = db.UserSet.AsEnumerable();
+
+            if (IsAuthenticated)
+                userSet = userSet.Where(user => user.Id == CurrentUserId);
+
             ViewBag.SectorId = new SelectList(db.SectorSet, "Id", "Name");
-            ViewBag.UserId = new SelectList(db.UserSet, "Id", "Email");
+            ViewBag.UserId = new SelectList(userSet, "Id", "Email");
             return View();
         }
 
@@ -62,8 +69,13 @@ namespace Web.Controllers.Mvc
                 return RedirectToAction("Index");
             }
 
+            var userSet = db.UserSet.AsEnumerable();
+
+            if (IsAuthenticated)
+                userSet = userSet.Where(user => user.Id == CurrentUserId);
+
             ViewBag.SectorId = new SelectList(db.SectorSet, "Id", "Name", usersectorrating.SectorId);
-            ViewBag.UserId = new SelectList(db.UserSet, "Id", "Email", usersectorrating.UserId);
+            ViewBag.UserId = new SelectList(userSet, "Id", "Email", usersectorrating.UserId);
             return View(usersectorrating);
         }
 
@@ -79,8 +91,14 @@ namespace Web.Controllers.Mvc
             {
                 return HttpNotFound();
             }
+
+            var userSet = db.UserSet.AsEnumerable();
+
+            if (IsAuthenticated)
+                userSet = userSet.Where(user => user.Id == CurrentUserId);
+
             ViewBag.SectorId = new SelectList(db.SectorSet, "Id", "Name", usersectorrating.SectorId);
-            ViewBag.UserId = new SelectList(db.UserSet, "Id", "Email", usersectorrating.UserId);
+            ViewBag.UserId = new SelectList(userSet, "Id", "Email", usersectorrating.UserId);
             return View(usersectorrating);
         }
 
@@ -98,8 +116,14 @@ namespace Web.Controllers.Mvc
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
+
+            var userSet = db.UserSet.AsEnumerable();
+
+            if (IsAuthenticated)
+                userSet = userSet.Where(user => user.Id == CurrentUserId);
+
             ViewBag.SectorId = new SelectList(db.SectorSet, "Id", "Name", usersectorrating.SectorId);
-            ViewBag.UserId = new SelectList(db.UserSet, "Id", "Email", usersectorrating.UserId);
+            ViewBag.UserId = new SelectList(userSet, "Id", "Email", usersectorrating.UserId);
             return View(usersectorrating);
         }
 

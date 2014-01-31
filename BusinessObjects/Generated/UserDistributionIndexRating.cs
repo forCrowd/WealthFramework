@@ -13,7 +13,7 @@ namespace BusinessObjects
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     
-    [MetadataType(typeof(UserDistributionIndexRatingMetadata))]
+    [MetadataType(typeof(BusinessObjects.Metadata.UserDistributionIndexRatingMetadata))]
     public partial class UserDistributionIndexRating : IEntity<int>
     {
         public int Id { get; set; }

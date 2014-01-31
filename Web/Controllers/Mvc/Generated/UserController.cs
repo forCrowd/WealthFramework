@@ -12,10 +12,8 @@ using DataObjects;
 
 namespace Web.Controllers.Mvc
 {
-    public partial class UserController : Controller
+    public partial class UserController : BaseController
     {
-        private WealthEconomyEntities db = new WealthEconomyEntities();
-
         // GET: /User/
         public async Task<ActionResult> Index()
         {
@@ -48,7 +46,7 @@ namespace Web.Controllers.Mvc
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include="Id,Email,FirstName,MiddleName,LastName,CreatedOn,ModifiedOn,DeletedOn")] User user)
+        public async Task<ActionResult> Create([Bind(Include="Id,Email,FirstName,MiddleName,LastName,ResourcePoolRate,CreatedOn,ModifiedOn,DeletedOn")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -82,7 +80,7 @@ namespace Web.Controllers.Mvc
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include="Id,Email,FirstName,MiddleName,LastName,CreatedOn,ModifiedOn,DeletedOn")] User user)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Email,FirstName,MiddleName,LastName,ResourcePoolRate,CreatedOn,ModifiedOn,DeletedOn")] User user)
         {
             if (ModelState.IsValid)
             {

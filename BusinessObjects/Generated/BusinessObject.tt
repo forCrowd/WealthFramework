@@ -6,7 +6,7 @@
 var executeMe = true;
 
 // To be able generate only one of the entities (Leave empty for all)
-var entityNameToGenerate = string.Empty;
+var entityNameToGenerate = "";
 
 // Execute me?
 if (!executeMe)
@@ -42,7 +42,7 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection)
     BeginNamespace(code);
 #>
 <#=codeStringGenerator.UsingDirectives(inHeader: false, includeDataAnnotations: true)#>
-[MetadataType(typeof(<#=code.Escape(entity)#>Metadata))]
+[MetadataType(typeof(BusinessObjects.Metadata.<#=code.Escape(entity)#>Metadata))]
 <#=codeStringGenerator.EntityClassOpening(entity)#>
 {
 <#

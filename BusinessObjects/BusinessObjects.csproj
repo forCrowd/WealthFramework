@@ -43,7 +43,7 @@
     <Compile Include="..\SolutionItems\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="BusinessObjectMetadata.cs">
+    <Compile Include="Metadata\BusinessObjectMetadata.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>BusinessObjectMetadata.tt</DependentUpon>
@@ -53,63 +53,64 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BusinessObject.tt</DependentUpon>
     </Compile>
-    <Compile Include="Sector.cs" />
-    <Compile Include="License.cs" />
-    <Compile Include="ResourcePool.cs" />
-    <Compile Include="Organization.cs" />
-    <Compile Include="IEntity.cs" />
     <Compile Include="Generated\License.cs">
       <DependentUpon>BusinessObject.tt</DependentUpon>
-    </Compile>
-    <Compile Include="LicenseMetadata.cs">
-      <DependentUpon>BusinessObjectMetadata.tt</DependentUpon>
     </Compile>
     <Compile Include="Generated\Organization.cs">
       <DependentUpon>BusinessObject.tt</DependentUpon>
     </Compile>
-    <Compile Include="OrganizationMetadata.cs">
-      <DependentUpon>BusinessObjectMetadata.tt</DependentUpon>
-    </Compile>
     <Compile Include="Generated\Sector.cs">
-      <DependentUpon>BusinessObject.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SectorMetadata.cs">
-      <DependentUpon>BusinessObjectMetadata.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\User.cs">
       <DependentUpon>BusinessObject.tt</DependentUpon>
     </Compile>
     <Compile Include="Generated\UserDistributionIndexRating.cs">
       <DependentUpon>BusinessObject.tt</DependentUpon>
     </Compile>
-    <Compile Include="UserDistributionIndexRatingAverage.cs" />
-    <Compile Include="UserDistributionIndexRatingMetadata.cs">
-      <DependentUpon>BusinessObjectMetadata.tt</DependentUpon>
-    </Compile>
     <Compile Include="Generated\UserLicenseRating.cs">
       <DependentUpon>BusinessObject.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UserLicenseRatingMetadata.cs">
-      <DependentUpon>BusinessObjectMetadata.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UserMetadata.cs">
-      <DependentUpon>BusinessObjectMetadata.tt</DependentUpon>
     </Compile>
     <Compile Include="Generated\UserOrganizationRating.cs">
       <DependentUpon>BusinessObject.tt</DependentUpon>
     </Compile>
-    <Compile Include="UserOrganizationRatingMetadata.cs">
-      <DependentUpon>BusinessObjectMetadata.tt</DependentUpon>
-    </Compile>
     <Compile Include="Generated\UserSectorRating.cs">
       <DependentUpon>BusinessObject.tt</DependentUpon>
     </Compile>
-    <Compile Include="UserSectorRatingMetadata.cs">
+    <Compile Include="Sector.cs" />
+    <Compile Include="License.cs" />
+    <Compile Include="ResourcePool.cs" />
+    <Compile Include="Organization.cs" />
+    <Compile Include="IEntity.cs" />
+    <Compile Include="Metadata\LicenseMetadata.cs">
+      <DependentUpon>BusinessObjectMetadata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Metadata\OrganizationMetadata.cs">
+      <DependentUpon>BusinessObjectMetadata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Metadata\SectorMetadata.cs">
+      <DependentUpon>BusinessObjectMetadata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\User.cs">
+      <DependentUpon>BusinessObject.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserDistributionIndexRating.cs" />
+    <Compile Include="UserDistributionIndexRatingAverage.cs" />
+    <Compile Include="Metadata\UserDistributionIndexRatingMetadata.cs">
+      <DependentUpon>BusinessObjectMetadata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Metadata\UserLicenseRatingMetadata.cs">
+      <DependentUpon>BusinessObjectMetadata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Metadata\UserMetadata.cs">
+      <DependentUpon>BusinessObjectMetadata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Metadata\UserOrganizationRatingMetadata.cs">
+      <DependentUpon>BusinessObjectMetadata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Metadata\UserSectorRatingMetadata.cs">
       <DependentUpon>BusinessObjectMetadata.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="BusinessObjectMetadata.tt">
+    <None Include="Metadata\BusinessObjectMetadata.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>BusinessObjectMetadata.cs</LastGenOutput>
     </None>

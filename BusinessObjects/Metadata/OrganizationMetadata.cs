@@ -7,31 +7,34 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BusinessObjects
+namespace BusinessObjects.Metadata
 {
     using System;
     using System.ComponentModel.DataAnnotations;
     
-    public class UserOrganizationRatingMetadata
+    public class OrganizationMetadata
     {
         [Display(Name = "Id")]
         public int Id { get; set; }
     
-        [Display(Name = "UserId")]
-        public int UserId { get; set; }
+        [Display(Name = "SectorId")]
+        public byte SectorId { get; set; }
     
-        [Display(Name = "OrganizationId")]
-        public int OrganizationId { get; set; }
+        [Display(Name = "Organization")]
+        public string Name { get; set; }
     
-        [Display(Name = "Quality Rating")]
-        public decimal QualityRating { get; set; }
+        [Display(Name = "Production Cost")]
+        public decimal ProductionCost { get; set; }
     
-        [Display(Name = "Employee Satisfaction Rating")]
-        public decimal EmployeeSatisfactionRating { get; set; }
-
-        [Display(Name = "Customer Satisfaction Rating")]
-        public decimal CustomerSatisfactionRating { get; set; }
-
+        [Display(Name = "Sales Price")]
+        public decimal SalesPrice { get; set; }
+    
+        [Display(Name = "LicenseId")]
+        public short LicenseId { get; set; }
+    
+        [Display(Name = "Number of Sales")]
+        public int NumberOfSales { get; set; }
+    
         [Display(Name = "CreatedOn")]
         public System.DateTime CreatedOn { get; set; }
     

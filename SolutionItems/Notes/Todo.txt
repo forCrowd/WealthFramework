@@ -1,23 +1,56 @@
 ﻿. copy + softdelete methods in repositories?
 . Help page doesnt show odata urls
 . Check validation later - metadatatype vs. generate
-. versioning + version differences (sql changes)
 . easy deployment;
 .. web deployment?
 .. sql local db or compact etc.?
 .. sql migrations
-. persisted computed fields; full name + total index rating
-. distance index rating will not be in use
-. multiple resource pool - general one, pool per sample etc.
 . collection names - add "set" word to the end
 . empty Index Pie Result page has an error!
-. cmrp report needs 'if' block for empty organizationset!
+. index pages needs 'if' block for empty organizationset!
 . organization.cs - resourcepool == null checks ?!
-. all in one sample?
-. dynamic cmrp rate
 . let it generate random organizations + results?
-. group the organizations properly - should it be handled by resourcepool table?
-. tell the story in a better way ?! make it obvious!
+. organizations groupped with starting letters - handle it with resource pool solution?
+. move overview page to github?
+. sidewaffle for t4 customization?
+. dont modify generated files - check the existing ones!
+. index pages are using weighted average for indexes - the results are confusing now
+. userdistributionindexrating table - employee + customer (there is no satisfaction)
+. distance index in or out? currently partially..
+add, since its not calculated everyone should get the same amount for now
+. in index pie page, use weighted average properties
+. do something about codetemplates
+. user types (roles) - hide definitions if it's admin				
+. github
+. user edit page goes back to user list - its wrong if its from user info block
+
+---
+resource pool types;
+. index samples
+. one big public
+. per user
+
+---
+Index Notes;
+
+total cost	-> lowest
+knowledge	-> highest
+quality		-> highest
+sector		-> highest
+employee	-> highest
+customer	-> highest
+distance	-> lowest
+
+user can rate;
+license (knowledge index)
+organization quality
+sector
+organization employee satisf.
+organization customer satisf.
+
+auto;
+total cost	= sales price - production cost
+distance	= production location - customer location
 
 ---
 under creative commons license;

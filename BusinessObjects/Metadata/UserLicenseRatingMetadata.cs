@@ -7,12 +7,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BusinessObjects
+namespace BusinessObjects.Metadata
 {
     using System;
     using System.ComponentModel.DataAnnotations;
     
-    public class UserSectorRatingMetadata
+    public class UserLicenseRatingMetadata
     {
         [Display(Name = "Id")]
         public int Id { get; set; }
@@ -20,8 +20,8 @@ namespace BusinessObjects
         [Display(Name = "UserId")]
         public int UserId { get; set; }
     
-        [Display(Name = "SectorId")]
-        public byte SectorId { get; set; }
+        [Display(Name = "LicenseId")]
+        public short LicenseId { get; set; }
     
         [Display(Name = "Rating")]
         public decimal Rating { get; set; }

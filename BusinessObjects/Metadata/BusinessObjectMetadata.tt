@@ -5,7 +5,7 @@
  /* Generate these classes only once */
 
 // To be able to control whether it's going to be executed
-var executeMe = true;
+var executeMe = false;
 
 // To be able generate only one of the entities (Leave empty for all)
 var entityNameToGenerate = string.Empty;
@@ -14,7 +14,7 @@ var entityNameToGenerate = string.Empty;
 if (!executeMe)
 	return string.Empty;
 
-const string inputFile = @"..\DataObjects\Model.edmx";
+const string inputFile = @"..\..\DataObjects\Model.edmx";
 var textTransform = DynamicTextTransformation.Create(this);
 var code = new CodeGenerationTools(this);
 var ef = new MetadataTools(this);

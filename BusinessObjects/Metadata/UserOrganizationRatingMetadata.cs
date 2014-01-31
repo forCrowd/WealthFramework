@@ -7,22 +7,31 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BusinessObjects
+namespace BusinessObjects.Metadata
 {
     using System;
     using System.ComponentModel.DataAnnotations;
     
-    public class SectorMetadata
+    public class UserOrganizationRatingMetadata
     {
         [Display(Name = "Id")]
-        public byte Id { get; set; }
+        public int Id { get; set; }
     
-        [Display(Name = "Sector")]
-        public string Name { get; set; }
+        [Display(Name = "UserId")]
+        public int UserId { get; set; }
     
-        [Display(Name = "Description")]
-        public string Description { get; set; }
+        [Display(Name = "OrganizationId")]
+        public int OrganizationId { get; set; }
     
+        [Display(Name = "Quality Rating")]
+        public decimal QualityRating { get; set; }
+    
+        [Display(Name = "Employee Satisfaction Rating")]
+        public decimal EmployeeSatisfactionRating { get; set; }
+
+        [Display(Name = "Customer Satisfaction Rating")]
+        public decimal CustomerSatisfactionRating { get; set; }
+
         [Display(Name = "CreatedOn")]
         public System.DateTime CreatedOn { get; set; }
     

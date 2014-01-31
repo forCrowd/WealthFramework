@@ -7,24 +7,24 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BusinessObjects
+namespace BusinessObjects.Metadata
 {
     using System;
     using System.ComponentModel.DataAnnotations;
     
-    public class UserLicenseRatingMetadata
+    public class LicenseMetadata
     {
         [Display(Name = "Id")]
-        public int Id { get; set; }
+        public short Id { get; set; }
     
-        [Display(Name = "UserId")]
-        public int UserId { get; set; }
+        [Display(Name = "License")]
+        public string Name { get; set; }
     
-        [Display(Name = "LicenseId")]
-        public short LicenseId { get; set; }
+        [Display(Name = "Description")]
+        public string Description { get; set; }
     
-        [Display(Name = "Rating")]
-        public decimal Rating { get; set; }
+        [Display(Name = "Text")]
+        public string Text { get; set; }
     
         [Display(Name = "CreatedOn")]
         public System.DateTime CreatedOn { get; set; }

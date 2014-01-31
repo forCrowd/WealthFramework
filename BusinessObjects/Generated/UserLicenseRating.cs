@@ -13,7 +13,7 @@ namespace BusinessObjects
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     
-    [MetadataType(typeof(UserLicenseRatingMetadata))]
+    [MetadataType(typeof(BusinessObjects.Metadata.UserLicenseRatingMetadata))]
     public partial class UserLicenseRating : IEntity<int>
     {
         public int Id { get; set; }

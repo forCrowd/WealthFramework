@@ -52,7 +52,7 @@
                     return 0;
                 if (ResourcePool == null)
                     return 0;
-                return SalesPrice * ResourcePool.ResourcePoolPercentage;
+                return SalesPrice * ResourcePool.ResourcePoolRate;
             }
         }
 
@@ -144,7 +144,7 @@
             {
                 if (ResourcePool == null)
                     return 0;
-                return ResourcePool.TotalResourcePoolTax * TotalCostIndexPercentageWithNumberOfSalesWeighted;
+                return ResourcePool.TotalCostIndexShare * TotalCostIndexPercentageWithNumberOfSalesWeighted;
             }
         }
 
@@ -191,7 +191,7 @@
             {
                 if (ResourcePool == null)
                     return 0;
-                return ResourcePool.TotalResourcePoolTax * KnowledgeIndexPercentageWithNumberOfSalesWeighted;
+                return ResourcePool.KnowledgeIndexShare * KnowledgeIndexPercentageWithNumberOfSalesWeighted;
             }
         }
         
@@ -248,7 +248,7 @@
             {
                 if (ResourcePool == null)
                     return 0;
-                return ResourcePool.TotalResourcePoolTax * QualityIndexPercentageWithNumberOfSalesWeighted;
+                return ResourcePool.QualityIndexShare * QualityIndexPercentageWithNumberOfSalesWeighted;
             }
         }
 
@@ -295,7 +295,7 @@
             {
                 if (ResourcePool == null)
                     return 0;
-                return ResourcePool.TotalResourcePoolTax * SectorIndexPercentageWithNumberOfSalesWeighted;
+                return ResourcePool.SectorIndexShare * SectorIndexPercentageWithNumberOfSalesWeighted;
             }
         }
 
@@ -352,7 +352,7 @@
             {
                 if (ResourcePool == null)
                     return 0;
-                return ResourcePool.TotalResourcePoolTax * EmployeeSatisfactionIndexPercentageWithNumberOfSalesWeighted;
+                return ResourcePool.EmployeeSatisfactionIndexShare * EmployeeSatisfactionIndexPercentageWithNumberOfSalesWeighted;
             }
         }
 
@@ -409,23 +409,30 @@
             {
                 if (ResourcePool == null)
                     return 0;
-                return ResourcePool.TotalResourcePoolTax * CustomerSatisfactionIndexPercentageWithNumberOfSalesWeighted;
+                return ResourcePool.CustomerSatisfactionIndexShare * CustomerSatisfactionIndexPercentageWithNumberOfSalesWeighted;
             }
         }
 
         #endregion
 
+        [Display(Name="Total CMRP Income")]
+        public decimal TotalResourcePoolIncome
+        {
+            get
+            {
+                return TotalCostIndexIncome
+                    + KnowledgeIndexIncome
+                    + QualityIndexIncome
+                    + SectorIndexIncome
+                    + EmployeeSatisfactionIndexIncome
+                    + CustomerSatisfactionIndexIncome;
+            }
+        }
 
         [Display(Name = "Total Income")]
         public decimal TotalIncome
         {
-            get { return TotalProfit
-                + TotalCostIndexIncome
-                + KnowledgeIndexIncome
-                + QualityIndexIncome
-                + SectorIndexIncome
-                + EmployeeSatisfactionIndexIncome
-                + CustomerSatisfactionIndexIncome; }
+            get { return TotalProfit + TotalResourcePoolIncome; }
         }
     }
 }

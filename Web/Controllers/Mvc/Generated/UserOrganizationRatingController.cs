@@ -12,14 +12,16 @@ using DataObjects;
 
 namespace Web.Controllers.Mvc
 {
-    public partial class UserOrganizationRatingController : Controller
+    public partial class UserOrganizationRatingController : BaseController
     {
-        private WealthEconomyEntities db = new WealthEconomyEntities();
-
         // GET: /UserOrganizationRating/
         public async Task<ActionResult> Index()
         {
             var userorganizationratingset = db.UserOrganizationRatingSet.Include(u => u.Organization).Include(u => u.User);
+
+            if (IsAuthenticated)
+                userorganizationratingset = userorganizationratingset.Where(rating => rating.UserId == CurrentUserId);
+
             return View(await userorganizationratingset.ToListAsync());
         }
 
@@ -41,8 +43,13 @@ namespace Web.Controllers.Mvc
         // GET: /UserOrganizationRating/Create
         public ActionResult Create()
         {
+            var userSet = db.UserSet.AsEnumerable();
+
+            if (IsAuthenticated)
+                userSet = userSet.Where(user => user.Id == CurrentUserId);
+
             ViewBag.OrganizationId = new SelectList(db.OrganizationSet, "Id", "Name");
-            ViewBag.UserId = new SelectList(db.UserSet, "Id", "Email");
+            ViewBag.UserId = new SelectList(userSet, "Id", "Email");
             return View();
         }
 
@@ -62,8 +69,13 @@ namespace Web.Controllers.Mvc
                 return RedirectToAction("Index");
             }
 
+            var userSet = db.UserSet.AsEnumerable();
+
+            if (IsAuthenticated)
+                userSet = userSet.Where(user => user.Id == CurrentUserId);
+
             ViewBag.OrganizationId = new SelectList(db.OrganizationSet, "Id", "Name", userorganizationrating.OrganizationId);
-            ViewBag.UserId = new SelectList(db.UserSet, "Id", "Email", userorganizationrating.UserId);
+            ViewBag.UserId = new SelectList(userSet, "Id", "Email", userorganizationrating.UserId);
             return View(userorganizationrating);
         }
 
@@ -79,8 +91,14 @@ namespace Web.Controllers.Mvc
             {
                 return HttpNotFound();
             }
+
+            var userSet = db.UserSet.AsEnumerable();
+
+            if (IsAuthenticated)
+                userSet = userSet.Where(user => user.Id == CurrentUserId);
+
             ViewBag.OrganizationId = new SelectList(db.OrganizationSet, "Id", "Name", userorganizationrating.OrganizationId);
-            ViewBag.UserId = new SelectList(db.UserSet, "Id", "Email", userorganizationrating.UserId);
+            ViewBag.UserId = new SelectList(userSet, "Id", "Email", userorganizationrating.UserId);
             return View(userorganizationrating);
         }
 
@@ -98,8 +116,14 @@ namespace Web.Controllers.Mvc
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
+
+            var userSet = db.UserSet.AsEnumerable();
+
+            if (IsAuthenticated)
+                userSet = userSet.Where(user => user.Id == CurrentUserId);
+
             ViewBag.OrganizationId = new SelectList(db.OrganizationSet, "Id", "Name", userorganizationrating.OrganizationId);
-            ViewBag.UserId = new SelectList(db.UserSet, "Id", "Email", userorganizationrating.UserId);
+            ViewBag.UserId = new SelectList(userSet, "Id", "Email", userorganizationrating.UserId);
             return View(userorganizationrating);
         }
 

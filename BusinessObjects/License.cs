@@ -12,7 +12,12 @@
 
         public decimal UserRating
         {
-            get { return UserLicenseRating.Average(rating => rating.Rating); }
+            get
+            {
+                if (UserLicenseRating.Count == 0)
+                    return 0;
+                return UserLicenseRating.Average(rating => rating.Rating);
+            }
         }
     }
 }

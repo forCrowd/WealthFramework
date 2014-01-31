@@ -12,14 +12,16 @@ using DataObjects;
 
 namespace Web.Controllers.Mvc
 {
-    public partial class UserDistributionIndexRatingController : Controller
+    public partial class UserDistributionIndexRatingController : BaseController
     {
-        private WealthEconomyEntities db = new WealthEconomyEntities();
-
         // GET: /UserDistributionIndexRating/
         public async Task<ActionResult> Index()
         {
             var userdistributionindexratingset = db.UserDistributionIndexRatingSet.Include(u => u.User);
+            
+            if (IsAuthenticated)
+                userdistributionindexratingset = userdistributionindexratingset.Where(rating => rating.UserId == CurrentUserId);
+            
             return View(await userdistributionindexratingset.ToListAsync());
         }
 
@@ -41,7 +43,12 @@ namespace Web.Controllers.Mvc
         // GET: /UserDistributionIndexRating/Create
         public ActionResult Create()
         {
-            ViewBag.UserId = new SelectList(db.UserSet, "Id", "Email");
+            var userSet = db.UserSet.AsEnumerable();
+
+            if (IsAuthenticated)
+                userSet = userSet.Where(user => user.Id == CurrentUserId);
+            
+            ViewBag.UserId = new SelectList(userSet, "Id", "Email");
             return View();
         }
 
@@ -61,7 +68,12 @@ namespace Web.Controllers.Mvc
                 return RedirectToAction("Index");
             }
 
-            ViewBag.UserId = new SelectList(db.UserSet, "Id", "Email", userdistributionindexrating.UserId);
+            var userSet = db.UserSet.AsEnumerable();
+
+            if (IsAuthenticated)
+                userSet = userSet.Where(user => user.Id == CurrentUserId);
+
+            ViewBag.UserId = new SelectList(userSet, "Id", "Email", userdistributionindexrating.UserId);
             return View(userdistributionindexrating);
         }
 
@@ -77,7 +89,13 @@ namespace Web.Controllers.Mvc
             {
                 return HttpNotFound();
             }
-            ViewBag.UserId = new SelectList(db.UserSet, "Id", "Email", userdistributionindexrating.UserId);
+
+            var userSet = db.UserSet.AsEnumerable();
+
+            if (IsAuthenticated)
+                userSet = userSet.Where(user => user.Id == CurrentUserId);
+
+            ViewBag.UserId = new SelectList(userSet, "Id", "Email", userdistributionindexrating.UserId);
             return View(userdistributionindexrating);
         }
 
@@ -95,7 +113,13 @@ namespace Web.Controllers.Mvc
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.UserId = new SelectList(db.UserSet, "Id", "Email", userdistributionindexrating.UserId);
+
+            var userSet = db.UserSet.AsEnumerable();
+
+            if (IsAuthenticated)
+                userSet = userSet.Where(user => user.Id == CurrentUserId);
+
+            ViewBag.UserId = new SelectList(userSet, "Id", "Email", userdistributionindexrating.UserId);
             return View(userdistributionindexrating);
         }
 

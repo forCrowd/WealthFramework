@@ -13,7 +13,7 @@ namespace BusinessObjects
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     
-    [MetadataType(typeof(LicenseMetadata))]
+    [MetadataType(typeof(BusinessObjects.Metadata.LicenseMetadata))]
     public partial class License : IEntity<short>
     {
         public License()

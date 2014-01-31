@@ -12,10 +12,8 @@ using DataObjects;
 
 namespace Web.Controllers.Mvc
 {
-    public partial class LicenseController : Controller
+    public partial class LicenseController : BaseController
     {
-        private WealthEconomyEntities db = new WealthEconomyEntities();
-
         // GET: /License/
         public async Task<ActionResult> Index()
         {

@@ -155,10 +155,12 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\Mvc\HomeController.cs" />
     <Compile Include="Controllers\Mvc\Generated\LicenseController.cs" />
     <Compile Include="Controllers\Mvc\Generated\OrganizationController.cs" />
     <Compile Include="Controllers\Mvc\Generated\SectorController.cs" />
+    <Compile Include="Controllers\Mvc\DatabaseAlterationController.cs" />
     <Compile Include="Controllers\Mvc\ResourcePoolController.cs" />
     <Compile Include="Controllers\Mvc\OrganizationController.cs" />
     <Compile Include="Controllers\Mvc\UserDistributionIndexRatingController.cs" />
@@ -172,6 +174,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Helper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -261,6 +264,8 @@
     <Content Include="Views\ResourcePool\EmployeeSatisfactionIndex.cshtml" />
     <Content Include="Views\ResourcePool\CustomerSatisfactionIndex.cshtml" />
     <Content Include="Views\ResourcePool\SectorIndex.cshtml" />
+    <Content Include="Views\ResourcePool\AllInOne.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
     <None Include="Web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

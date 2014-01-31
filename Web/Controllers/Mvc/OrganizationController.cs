@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace Web.Controllers.Mvc
 {
-    public partial class OrganizationController : Controller
+    public partial class OrganizationController
     {
     }
 }

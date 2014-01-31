@@ -53,10 +53,10 @@
     <Compile Include="..\SolutionItems\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="UserDistributionIndexRatingPartial.cs" />
+    <Compile Include="UserDistributionIndexRating.cs" />
     <Compile Include="GenericRepository.cs" />
     <Compile Include="IGenericRepository.cs" />
-    <Compile Include="LicenseRepository.cs">
+    <Compile Include="Generated\LicenseRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
     <Compile Include="Model.Context.cs">
@@ -69,30 +69,30 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
-    <Compile Include="OrganizationRepository.cs">
+    <Compile Include="Generated\OrganizationRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
-    <Compile Include="Repository.cs">
+    <Compile Include="Generated\Repository.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
-    <Compile Include="SectorRepository.cs">
+    <Compile Include="Generated\SectorRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
-    <Compile Include="UserDistributionIndexRatingRepository.cs">
+    <Compile Include="Generated\UserDistributionIndexRatingRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
-    <Compile Include="UserLicenseRatingRepository.cs">
+    <Compile Include="Generated\UserLicenseRatingRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
-    <Compile Include="UserOrganizationRatingRepository.cs">
+    <Compile Include="Generated\UserOrganizationRatingRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
-    <Compile Include="UserRepository.cs">
+    <Compile Include="Generated\UserRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
-    <Compile Include="UserSectorRatingRepository.cs">
+    <Compile Include="Generated\UserSectorRatingRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -102,7 +102,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Repository.tt">
+    <None Include="Generated\Repository.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Repository.cs</LastGenOutput>
     </None>

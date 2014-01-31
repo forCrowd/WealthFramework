@@ -8,23 +8,29 @@
 
     public class ResourcePool
     {
-        public ResourcePool(IEnumerable<Organization> organizationSet)
+        public ResourcePool(UserDistributionIndexRatingAverage distributionIndexAverage, decimal resourcePoolRate, IEnumerable<Organization> organizationSet)
         {
-            Init(organizationSet, null, null);
+            Init(distributionIndexAverage, resourcePoolRate, organizationSet, null, null);
         }
 
-        public ResourcePool(IEnumerable<Organization> organizationSet, IEnumerable<License> licenseSet)
+        public ResourcePool(UserDistributionIndexRatingAverage distributionIndexAverage, decimal resourcePoolRate, IEnumerable<Organization> organizationSet, IEnumerable<License> licenseSet)
         {
-            Init(organizationSet, licenseSet, null);
+            Init(distributionIndexAverage, resourcePoolRate, organizationSet, licenseSet, null);
         }
 
-        public ResourcePool(IEnumerable<Organization> organizationSet, IEnumerable<License> licenseSet, IEnumerable<Sector> sectorSet)
+        public ResourcePool(UserDistributionIndexRatingAverage distributionIndexAverage, decimal resourcePoolRate, IEnumerable<Organization> organizationSet, IEnumerable<License> licenseSet, IEnumerable<Sector> sectorSet)
         {
-            Init(organizationSet, null, sectorSet);
+            Init(distributionIndexAverage, resourcePoolRate, organizationSet, licenseSet, sectorSet);
         }
 
-        void Init(IEnumerable<Organization> organizationSet, IEnumerable<License> licenseSet, IEnumerable<Sector> sectorSet)
+        void Init(UserDistributionIndexRatingAverage distributionIndexRatingAverage, decimal resourcePoolRate, IEnumerable<Organization> organizationSet, IEnumerable<License> licenseSet, IEnumerable<Sector> sectorSet)
         {
+            // Distribution index rating average
+            DistributionIndexRatingAverage = distributionIndexRatingAverage;
+
+            // Resource pool rate
+            ResourcePoolRate = resourcePoolRate;
+
             // Organization set
             OrganizationSet = organizationSet;
 
@@ -48,19 +54,15 @@
                 foreach (var sector in SectorSet)
                     sector.ResourcePool = this;
             }
-
         }
 
         public IEnumerable<Organization> OrganizationSet { get; private set; }
         public IEnumerable<License> LicenseSet { get; private set; }
         public IEnumerable<Sector> SectorSet { get; private set; }
+        public UserDistributionIndexRatingAverage DistributionIndexRatingAverage { get; private set; }
 
-        [Display(Name = "CMRP Percentage")]
-        // TODO Make this dynamic
-        public decimal ResourcePoolPercentage
-        {
-            get { return 1.01M; }
-        }
+        [Display(Name = "CMRP Rate")]
+        public decimal ResourcePoolRate { get; private set; }
 
         public decimal ProductionCost
         {
@@ -127,6 +129,13 @@
             get { return OrganizationSet.Sum(organization => organization.TotalSalesRevenueIncludingResourcePoolTax); }
         }
 
+        #region - Total Cost Index -
+
+        public decimal TotalCostIndexShare
+        {
+            get { return TotalResourcePoolTax * DistributionIndexRatingAverage.TotalCostIndexWeightedAverage; }
+        }
+
         public decimal TotalCostIndexPercentageWithNumberOfSales
         {
             get { return OrganizationSet.Sum(organization => organization.TotalCostIndexPercentageWithNumberOfSales); }
@@ -137,7 +146,14 @@
             get { return OrganizationSet.Sum(organization => organization.TotalCostIndexIncome); }
         }
 
+        #endregion
+
         #region - Knowledge Index -
+
+        public decimal KnowledgeIndexShare
+        {
+            get { return TotalResourcePoolTax * DistributionIndexRatingAverage.KnowledgeIndexWeightedAverage; }
+        }
 
         public decimal LicenseUserRating
         {
@@ -163,6 +179,11 @@
 
         #region - Quality Index -
 
+        public decimal QualityIndexShare
+        {
+            get { return TotalResourcePoolTax * DistributionIndexRatingAverage.QualityIndexWeightedAverage; }
+        }
+
         public decimal QualityUserRating
         {
             get { return OrganizationSet.Sum(organization => organization.QualityUserRating); }
@@ -181,6 +202,11 @@
         #endregion
 
         #region - Sector Index -
+
+        public decimal SectorIndexShare
+        {
+            get { return TotalResourcePoolTax * DistributionIndexRatingAverage.SectorIndexWeightedAverage; }
+        }
 
         public decimal SectorUserRating
         {
@@ -206,6 +232,11 @@
 
         #region - Employee Satifaction Index -
 
+        public decimal EmployeeSatisfactionIndexShare
+        {
+            get { return TotalResourcePoolTax * DistributionIndexRatingAverage.EmployeeIndexWeightedAverage; }
+        }
+        
         public decimal EmployeeSatisfactionUserRating
         {
             get { return OrganizationSet.Sum(organization => organization.EmployeeSatisfactionUserRating); }
@@ -225,6 +256,11 @@
 
         #region - Customer Satifaction Index -
 
+        public decimal CustomerSatisfactionIndexShare
+        {
+            get { return TotalResourcePoolTax * DistributionIndexRatingAverage.CustomerIndexWeightedAverage; }
+        }
+        
         public decimal CustomerSatisfactionUserRating
         {
             get { return OrganizationSet.Sum(organization => organization.CustomerSatisfactionUserRating); }
@@ -241,6 +277,11 @@
         }
 
         #endregion
+
+        public decimal TotalResourcePoolIncome
+        {
+            get { return OrganizationSet.Sum(organization => organization.TotalResourcePoolIncome); }
+        }
 
         public decimal TotalIncome
         {

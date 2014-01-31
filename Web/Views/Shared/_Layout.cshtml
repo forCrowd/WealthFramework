@@ -40,6 +40,7 @@
                             <li>@Html.ActionLink("Sector Index", "SectorIndex", "ResourcePool", new { area = "" }, null)</li>
                             <li>@Html.ActionLink("Index Pie List", "Index", "UserDistributionIndexRating", new { area = "" }, null)</li>
                             <li>@Html.ActionLink("Index Pie Report", "Report", "UserDistributionIndexRating", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("All in One", "AllInOne", "ResourcePool", new { area = "" }, null)</li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -51,6 +52,24 @@
                         </ul>
                     </li>
                     @*<li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>*@
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <div class="navbar-text nofloat">
+                            @{if (ViewBag.IsAuthenticated == true)
+                            {
+                                @("User: " + ViewBag.CurrentUserEmail)
+                                @Html.ActionLink("Edit", "Edit", "User", new { area = "", id = ViewBag.CurrentUserId  }, new { @class = "btn btn-xs btn-link" })
+                                @Html.ActionLink("Logout", "Logout", "Home", new { area = "" }, new { @class = "btn btn-xs btn-link" })
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Login", "Login", "Home", new { area = "" }, new { @class = "btn btn-xs btn-link" })
+                            }}
+                        </div>
+                    </li>
+                    @*<span class="navbar-text nofloat">Hello, <a href="#" class="navbar-link" data-bind="text: name, click: manage"></a>!</span>*@
+                    @*<li><a href="#" data-bind="click: logOff">Log off</a></li>*@
                 </ul>
             </div>
         </div>

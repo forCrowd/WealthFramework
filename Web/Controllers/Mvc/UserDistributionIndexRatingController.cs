@@ -4,7 +4,7 @@ using System.Web.Mvc;
 
 namespace Web.Controllers.Mvc
 {
-    public partial class UserDistributionIndexRatingController : Controller
+    public partial class UserDistributionIndexRatingController
     {
         // GET: /UserDistributionIndexRating/Report
         public async Task<ActionResult> Report()

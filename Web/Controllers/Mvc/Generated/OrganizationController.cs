@@ -12,10 +12,8 @@ using DataObjects;
 
 namespace Web.Controllers.Mvc
 {
-    public partial class OrganizationController : Controller
+    public partial class OrganizationController : BaseController
     {
-        private WealthEconomyEntities db = new WealthEconomyEntities();
-
         // GET: /Organization/
         public async Task<ActionResult> Index()
         {

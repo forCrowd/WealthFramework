@@ -13,7 +13,7 @@ namespace BusinessObjects
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     
-    [MetadataType(typeof(UserMetadata))]
+    [MetadataType(typeof(BusinessObjects.Metadata.UserMetadata))]
     public partial class User : IEntity<int>
     {
         public User()
@@ -29,6 +29,7 @@ namespace BusinessObjects
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
+        public decimal ResourcePoolRate { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public System.DateTime ModifiedOn { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }

@@ -7,7 +7,7 @@
 <h2>Edit</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "User", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     
@@ -47,6 +47,14 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.LastName)
                 @Html.ValidationMessageFor(model => model.LastName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ResourcePoolRate, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ResourcePoolRate)
+                @Html.ValidationMessageFor(model => model.ResourcePoolRate)
             </div>
         </div>
 

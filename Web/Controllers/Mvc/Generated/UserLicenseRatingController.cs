@@ -12,14 +12,16 @@ using DataObjects;
 
 namespace Web.Controllers.Mvc
 {
-    public partial class UserLicenseRatingController : Controller
+    public partial class UserLicenseRatingController : BaseController
     {
-        private WealthEconomyEntities db = new WealthEconomyEntities();
-
         // GET: /UserLicenseRating/
         public async Task<ActionResult> Index()
         {
             var userlicenseratingset = db.UserLicenseRatingSet.Include(u => u.License).Include(u => u.User);
+
+            if (IsAuthenticated)
+                userlicenseratingset = userlicenseratingset.Where(rating => rating.UserId == CurrentUserId);
+
             return View(await userlicenseratingset.ToListAsync());
         }
 
@@ -41,8 +43,13 @@ namespace Web.Controllers.Mvc
         // GET: /UserLicenseRating/Create
         public ActionResult Create()
         {
+            var userSet = db.UserSet.AsEnumerable();
+
+            if (IsAuthenticated)
+                userSet = userSet.Where(user => user.Id == CurrentUserId);
+
             ViewBag.LicenseId = new SelectList(db.LicenseSet, "Id", "Name");
-            ViewBag.UserId = new SelectList(db.UserSet, "Id", "Email");
+            ViewBag.UserId = new SelectList(userSet, "Id", "Email");
             return View();
         }
 
@@ -62,8 +69,13 @@ namespace Web.Controllers.Mvc
                 return RedirectToAction("Index");
             }
 
+            var userSet = db.UserSet.AsEnumerable();
+
+            if (IsAuthenticated)
+                userSet = userSet.Where(user => user.Id == CurrentUserId);
+
             ViewBag.LicenseId = new SelectList(db.LicenseSet, "Id", "Name", userlicenserating.LicenseId);
-            ViewBag.UserId = new SelectList(db.UserSet, "Id", "Email", userlicenserating.UserId);
+            ViewBag.UserId = new SelectList(userSet, "Id", "Email", userlicenserating.UserId);
             return View(userlicenserating);
         }
 
@@ -79,8 +91,14 @@ namespace Web.Controllers.Mvc
             {
                 return HttpNotFound();
             }
+
+            var userSet = db.UserSet.AsEnumerable();
+
+            if (IsAuthenticated)
+                userSet = userSet.Where(user => user.Id == CurrentUserId);
+
             ViewBag.LicenseId = new SelectList(db.LicenseSet, "Id", "Name", userlicenserating.LicenseId);
-            ViewBag.UserId = new SelectList(db.UserSet, "Id", "Email", userlicenserating.UserId);
+            ViewBag.UserId = new SelectList(userSet, "Id", "Email", userlicenserating.UserId);
             return View(userlicenserating);
         }
 
@@ -98,8 +116,14 @@ namespace Web.Controllers.Mvc
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
+
+            var userSet = db.UserSet.AsEnumerable();
+
+            if (IsAuthenticated)
+                userSet = userSet.Where(user => user.Id == CurrentUserId);
+
             ViewBag.LicenseId = new SelectList(db.LicenseSet, "Id", "Name", userlicenserating.LicenseId);
-            ViewBag.UserId = new SelectList(db.UserSet, "Id", "Email", userlicenserating.UserId);
+            ViewBag.UserId = new SelectList(userSet, "Id", "Email", userlicenserating.UserId);
             return View(userlicenserating);
         }
 

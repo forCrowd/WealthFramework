@@ -8,13 +8,23 @@ using System.Web.Mvc;
 
 namespace Web.Controllers.Mvc
 {
-    public class ResourcePoolController : Controller
+    public class ResourcePoolController : BaseController
     {
         private WealthEconomyEntities db = new WealthEconomyEntities();
 
         // GET: /ResourcePool/TotalCostIndex
         public async Task<ActionResult> TotalCostIndex()
         {
+            // Distribution index average
+            var distributionIndexAverage = await new DataObjects.UserDistributionIndexRatingRepository(db).GetAverageAsync();
+
+            // Resource pool rate
+            // TODO ?!
+            var user = IsAuthenticated
+                ? await db.UserSet.FindAsync(CurrentUserId)
+                : await db.UserSet.FirstAsync();
+            var resourcePoolRate = user.ResourcePoolRate;
+
             // Organization set
             // TODO To have a correct sample, only retrieve organizations of that index
             var organizationDbSet = db.OrganizationSet
@@ -22,7 +32,7 @@ namespace Web.Controllers.Mvc
             var organizationSet = await organizationDbSet.ToListAsync();
 
             // Resource pool
-            var newResourcePool = new ResourcePool(organizationSet);
+            var newResourcePool = new ResourcePool(distributionIndexAverage, resourcePoolRate, organizationSet);
             
             // Return
             return View(newResourcePool);
@@ -31,6 +41,16 @@ namespace Web.Controllers.Mvc
         // GET: /ResourcePool/KnowledgeIndex
         public async Task<ActionResult> KnowledgeIndex()
         {
+            // Distribution index average
+            var distributionIndexAverage = await new DataObjects.UserDistributionIndexRatingRepository(db).GetAverageAsync();
+
+            // Resource pool rate
+            // TODO ?!
+            var user = IsAuthenticated
+                ? await db.UserSet.FindAsync(CurrentUserId)
+                : await db.UserSet.FirstAsync();
+            var resourcePoolRate = user.ResourcePoolRate;
+
             // Organization set
             // TODO To have a correct sample, only retrieve organizations of that index
             var organizationDbSet = db.OrganizationSet
@@ -42,7 +62,7 @@ namespace Web.Controllers.Mvc
             var licenseSet = await db.LicenseSet.Include(license => license.UserLicenseRating).ToListAsync();
 
             // Resource pool
-            var newResourcePool = new ResourcePool(organizationSet, licenseSet);
+            var newResourcePool = new ResourcePool(distributionIndexAverage, resourcePoolRate, organizationSet, licenseSet);
 
             // Return
             return View(newResourcePool);
@@ -51,6 +71,16 @@ namespace Web.Controllers.Mvc
         // GET: /ResourcePool/QualityIndex
         public async Task<ActionResult> QualityIndex()
         {
+            // Distribution index average
+            var distributionIndexAverage = await new DataObjects.UserDistributionIndexRatingRepository(db).GetAverageAsync();
+
+            // Resource pool rate
+            // TODO ?!
+            var user = IsAuthenticated
+                ? await db.UserSet.FindAsync(CurrentUserId)
+                : await db.UserSet.FirstAsync();
+            var resourcePoolRate = user.ResourcePoolRate;
+
             // Organization set
             // TODO To have a correct sample, only retrieve organizations of that index
             var organizationDbSet = db.OrganizationSet
@@ -59,7 +89,7 @@ namespace Web.Controllers.Mvc
             var organizationSet = await organizationDbSet.ToListAsync();
 
             // Resource pool
-            var newResourcePool = new ResourcePool(organizationSet);
+            var newResourcePool = new ResourcePool(distributionIndexAverage, resourcePoolRate, organizationSet);
 
             // Return
             return View(newResourcePool);
@@ -68,6 +98,16 @@ namespace Web.Controllers.Mvc
         // GET: /ResourcePool/SectorIndex
         public async Task<ActionResult> SectorIndex()
         {
+            // Distribution index average
+            var distributionIndexAverage = await new DataObjects.UserDistributionIndexRatingRepository(db).GetAverageAsync();
+
+            // Resource pool rate
+            // TODO ?!
+            var user = IsAuthenticated
+                ? await db.UserSet.FindAsync(CurrentUserId)
+                : await db.UserSet.FirstAsync();
+            var resourcePoolRate = user.ResourcePoolRate;
+
             // Organization set
             // TODO To have a correct sample, only retrieve organizations of that index
             var organizationDbSet = db.OrganizationSet
@@ -79,7 +119,7 @@ namespace Web.Controllers.Mvc
             var sectorSet = await db.SectorSet.Include(sector => sector.UserSectorRating).ToListAsync();
 
             // Resource pool
-            var newResourcePool = new ResourcePool(organizationSet, null, sectorSet);
+            var newResourcePool = new ResourcePool(distributionIndexAverage, resourcePoolRate, organizationSet, null, sectorSet);
 
             // Return
             return View(newResourcePool);
@@ -88,6 +128,16 @@ namespace Web.Controllers.Mvc
         // GET: /ResourcePool/EmployeeSatisfactionIndex
         public async Task<ActionResult> EmployeeSatisfactionIndex()
         {
+            // Distribution index average
+            var distributionIndexAverage = await new DataObjects.UserDistributionIndexRatingRepository(db).GetAverageAsync();
+
+            // Resource pool rate
+            // TODO ?!
+            var user = IsAuthenticated
+                ? await db.UserSet.FindAsync(CurrentUserId)
+                : await db.UserSet.FirstAsync();
+            var resourcePoolRate = user.ResourcePoolRate;
+
             // Organization set
             // TODO To have a correct sample, only retrieve organizations of that index
             var organizationDbSet = db.OrganizationSet
@@ -95,7 +145,7 @@ namespace Web.Controllers.Mvc
             var organizationSet = await organizationDbSet.ToListAsync();
 
             // Resource pool
-            var newResourcePool = new ResourcePool(organizationSet);
+            var newResourcePool = new ResourcePool(distributionIndexAverage, resourcePoolRate, organizationSet);
 
             // Return
             return View(newResourcePool);
@@ -104,6 +154,16 @@ namespace Web.Controllers.Mvc
         // GET: /ResourcePool/CustomerSatisfactionIndex
         public async Task<ActionResult> CustomerSatisfactionIndex()
         {
+            // Distribution index average
+            var distributionIndexAverage = await new DataObjects.UserDistributionIndexRatingRepository(db).GetAverageAsync();
+
+            // Resource pool rate
+            // TODO ?!
+            var user = IsAuthenticated
+                ? await db.UserSet.FindAsync(CurrentUserId)
+                : await db.UserSet.FirstAsync();
+            var resourcePoolRate = user.ResourcePoolRate;
+
             // Organization set
             // TODO To have a correct sample, only retrieve organizations of that index
             var organizationDbSet = db.OrganizationSet
@@ -111,7 +171,36 @@ namespace Web.Controllers.Mvc
             var organizationSet = await organizationDbSet.ToListAsync();
 
             // Resource pool
-            var newResourcePool = new ResourcePool(organizationSet);
+            var newResourcePool = new ResourcePool(distributionIndexAverage, resourcePoolRate, organizationSet);
+
+            // Return
+            return View(newResourcePool);
+        }
+
+        // GET: /ResourcePool/AllInOne
+        public async Task<ActionResult> AllInOne()
+        {
+            // Distribution index average
+            var distributionIndexAverage = await new DataObjects.UserDistributionIndexRatingRepository(db).GetAverageAsync();
+
+            // Resource pool rate
+            // TODO ?!
+            var user = IsAuthenticated
+                ? await db.UserSet.FindAsync(CurrentUserId)
+                : await db.UserSet.FirstAsync();
+            var resourcePoolRate = user.ResourcePoolRate;
+
+            // Organization set
+            var organizationSet = await db.OrganizationSet.ToListAsync();
+
+            // License set
+            var licenseSet = await db.LicenseSet.Include(license => license.UserLicenseRating).ToListAsync();
+
+            // Sector set
+            var sectorSet = await db.SectorSet.Include(sector => sector.UserSectorRating).ToListAsync();
+
+            // Resource pool
+            var newResourcePool = new ResourcePool(distributionIndexAverage, resourcePoolRate, organizationSet, licenseSet, sectorSet);
 
             // Return
             return View(newResourcePool);
