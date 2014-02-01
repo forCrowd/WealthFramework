@@ -2,7 +2,10 @@
 <#@ include file="EF6.Utility.CS.ttinclude"#><#@ 
  output extension=".cs"#><#
 
- /* Generate these classes only once */
+/* The idea of this file is to generate a metadata file of a class once and then it needs to be updated manually.
+	However once tt executed, it removes the previously generated files. Find a correct combination or remove this file altogether
+	SH - 01 Feb. '14
+*/
 
 // To be able to control whether it's going to be executed
 var executeMe = false;
@@ -28,7 +31,7 @@ if (!typeMapper.VerifyCaseInsensitiveTypeUniqueness(typeMapper.GetAllGlobalItems
     return string.Empty;
 }
 
-WriteHeader(codeStringGenerator, fileManager);
+// WriteHeader(codeStringGenerator, fileManager);
 
 foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection))
 {

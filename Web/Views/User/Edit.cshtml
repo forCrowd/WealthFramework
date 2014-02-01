@@ -10,7 +10,12 @@
 @using (Html.BeginForm("Edit", "User", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-    
+
+    if (Request.UrlReferrer != null)
+    {
+        @Html.Hidden("returnUrl", Request.UrlReferrer)
+    }
+
     <div class="form-horizontal">
         <h4>User</h4>
         <hr />
@@ -72,9 +77,12 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+@{if (Request.UrlReferrer != null)
+{
+    <div>
+        <a href="@Request.UrlReferrer">Back</a>
+    </div>
+}}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

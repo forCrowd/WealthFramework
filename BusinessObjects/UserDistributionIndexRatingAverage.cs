@@ -23,11 +23,11 @@
         [Display(Name = "Sector Index")]
         public decimal SectorIndexRating { get; set; }
         
-        [Display(Name = "Employee Index")]
-        public decimal EmployeeIndexRating { get; set; }
+        [Display(Name = "Employee Satisfaction Index")]
+        public decimal EmployeeSatisfactionIndexRating { get; set; }
         
-        [Display(Name = "Customer Index")]
-        public decimal CustomerIndexRating { get; set; }
+        [Display(Name = "Customer Satisfaction Index")]
+        public decimal CustomerSatisfactionIndexRating { get; set; }
         
         [Display(Name = "Distance Index")]
         public decimal DistanceIndexRating { get; set; }
@@ -40,14 +40,15 @@
                 return TotalCostIndexRating
                     + KnowledgeIndexRating
                     + QualityIndexRating
-                    + EmployeeIndexRating
-                    + CustomerIndexRating
-                    + SectorIndexRating;
-                    // + DistanceIndexRating;
+                    + SectorIndexRating
+                    + EmployeeSatisfactionIndexRating
+                    + CustomerSatisfactionIndexRating
+                    + DistanceIndexRating;
             }
         }
 
-        public decimal TotalCostIndexWeightedAverage
+        [Display(Name = "Total Cost Index Weighted Average")]
+        public decimal TotalCostIndexRatingWeightedAverage
         {
             get
             {
@@ -57,7 +58,8 @@
             }
         }
 
-        public decimal KnowledgeIndexWeightedAverage
+        [Display(Name = "Knowledge Index Weighted Average")]
+        public decimal KnowledgeIndexRatingWeightedAverage
         {
             get
             {
@@ -67,7 +69,8 @@
             }
         }
 
-        public decimal QualityIndexWeightedAverage
+        [Display(Name = "Quality Index Weighted Average")]
+        public decimal QualityIndexRatingWeightedAverage
         {
             get
             {
@@ -77,27 +80,8 @@
             }
         }
 
-        public decimal EmployeeIndexWeightedAverage
-        {
-            get
-            {
-                if (TotalIndexRating == 0)
-                    return 0;
-                return EmployeeIndexRating / TotalIndexRating;
-            }
-        }
-
-        public decimal CustomerIndexWeightedAverage
-        {
-            get
-            {
-                if (TotalIndexRating == 0)
-                    return 0;
-                return CustomerIndexRating / TotalIndexRating;
-            }
-        }
-
-        public decimal SectorIndexWeightedAverage
+        [Display(Name = "Sector Index Weighted Average")]
+        public decimal SectorIndexRatingWeightedAverage
         {
             get
             {
@@ -107,7 +91,30 @@
             }
         }
 
-        public decimal DistanceIndexWeightedAverage
+        [Display(Name = "Employee Satisfaction Index Weighted Average")]
+        public decimal EmployeeSatisfactionIndexRatingWeightedAverage
+        {
+            get
+            {
+                if (TotalIndexRating == 0)
+                    return 0;
+                return EmployeeSatisfactionIndexRating / TotalIndexRating;
+            }
+        }
+
+        [Display(Name = "Customer Satisfaction Index Weighted Average")]
+        public decimal CustomerSatisfactionIndexRatingWeightedAverage
+        {
+            get
+            {
+                if (TotalIndexRating == 0)
+                    return 0;
+                return CustomerSatisfactionIndexRating / TotalIndexRating;
+            }
+        }
+
+        [Display(Name = "Distance Index Weighted Average")]
+        public decimal DistanceIndexRatingWeightedAverage
         {
             get
             {

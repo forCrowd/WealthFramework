@@ -18,7 +18,7 @@ namespace BusinessObjects
     {
         public Organization()
         {
-            this.UserOrganizationRating = new HashSet<UserOrganizationRating>();
+            this.UserOrganizationRatingSet = new HashSet<UserOrganizationRating>();
         }
     
         public int Id { get; set; }
@@ -34,6 +34,6 @@ namespace BusinessObjects
     
         public virtual License License { get; set; }
         public virtual Sector Sector { get; set; }
-        public virtual ICollection<UserOrganizationRating> UserOrganizationRating { get; set; }
+        public virtual ICollection<UserOrganizationRating> UserOrganizationRatingSet { get; set; }
     }
 }

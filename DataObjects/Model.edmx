@@ -67,8 +67,8 @@
           <Property Name="KnowledgeIndexRating" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="QualityIndexRating" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="SectorIndexRating" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="EmployeeIndexRating" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="CustomerIndexRating" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="EmployeeSatisfactionIndexRating" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CustomerSatisfactionIndexRating" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="DistanceIndexRating" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
@@ -281,8 +281,8 @@
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DeletedOn" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Organization" Relationship="Self.FK_Organization_License" FromRole="License" ToRole="Organization" />
-          <NavigationProperty Name="UserLicenseRating" Relationship="Self.FK_UserLicenseRating_License" FromRole="License" ToRole="UserLicenseRating" />
+          <NavigationProperty Name="OrganizationSet" Relationship="Self.FK_Organization_License" FromRole="License" ToRole="Organization" />
+          <NavigationProperty Name="UserLicenseRatingSet" Relationship="Self.FK_UserLicenseRating_License" FromRole="License" ToRole="UserLicenseRating" />
         </EntityType>
         <EntityType Name="Organization">
           <Key>
@@ -300,7 +300,7 @@
           <Property Name="DeletedOn" Type="DateTime" Precision="3" />
           <NavigationProperty Name="License" Relationship="Self.FK_Organization_License" FromRole="Organization" ToRole="License" />
           <NavigationProperty Name="Sector" Relationship="Self.FK_Organization_Sector" FromRole="Organization" ToRole="Sector" />
-          <NavigationProperty Name="UserOrganizationRating" Relationship="Self.FK_UserOrganizationRating_Organization" FromRole="Organization" ToRole="UserOrganizationRating" />
+          <NavigationProperty Name="UserOrganizationRatingSet" Relationship="Self.FK_UserOrganizationRating_Organization" FromRole="Organization" ToRole="UserOrganizationRating" />
         </EntityType>
         <EntityType Name="Sector">
           <Key>
@@ -312,8 +312,8 @@
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DeletedOn" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Organization" Relationship="Self.FK_Organization_Sector" FromRole="Sector" ToRole="Organization" />
-          <NavigationProperty Name="UserSectorRating" Relationship="Self.FK_UserSectorRating_Sector" FromRole="Sector" ToRole="UserSectorRating" />
+          <NavigationProperty Name="OrganizationSet" Relationship="Self.FK_Organization_Sector" FromRole="Sector" ToRole="Organization" />
+          <NavigationProperty Name="UserSectorRatingSet" Relationship="Self.FK_UserSectorRating_Sector" FromRole="Sector" ToRole="UserSectorRating" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -529,8 +529,8 @@
           <Property Name="KnowledgeIndexRating" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="QualityIndexRating" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="SectorIndexRating" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="EmployeeIndexRating" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="CustomerIndexRating" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="EmployeeSatisfactionIndexRating" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="CustomerSatisfactionIndexRating" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="DistanceIndexRating" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
@@ -655,12 +655,12 @@
           <EntitySetMapping Name="UserDistributionIndexRatingSet">
             <EntityTypeMapping TypeName="WealthEconomyModel.UserDistributionIndexRating">
               <MappingFragment StoreEntitySet="UserDistributionIndexRating">
+                <ScalarProperty Name="CustomerSatisfactionIndexRating" ColumnName="CustomerSatisfactionIndexRating" />
+                <ScalarProperty Name="EmployeeSatisfactionIndexRating" ColumnName="EmployeeSatisfactionIndexRating" />
                 <ScalarProperty Name="DistanceIndexRating" ColumnName="DistanceIndexRating" />
                 <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
                 <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="CustomerIndexRating" ColumnName="CustomerIndexRating" />
-                <ScalarProperty Name="EmployeeIndexRating" ColumnName="EmployeeIndexRating" />
                 <ScalarProperty Name="SectorIndexRating" ColumnName="SectorIndexRating" />
                 <ScalarProperty Name="QualityIndexRating" ColumnName="QualityIndexRating" />
                 <ScalarProperty Name="KnowledgeIndexRating" ColumnName="KnowledgeIndexRating" />

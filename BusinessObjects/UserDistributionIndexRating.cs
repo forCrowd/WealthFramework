@@ -13,10 +13,10 @@
                 return TotalCostIndexRating
                     + KnowledgeIndexRating
                     + QualityIndexRating
-                    + EmployeeIndexRating
-                    + CustomerIndexRating
-                    + SectorIndexRating;
-                    // + DistanceIndexRating;
+                    + EmployeeSatisfactionIndexRating
+                    + CustomerSatisfactionIndexRating
+                    + SectorIndexRating
+                    + DistanceIndexRating;
             }
         }
 
@@ -30,7 +30,7 @@
             }
         }
 
-        public decimal KnowledgeIndexRWeightedAverage
+        public decimal KnowledgeIndexWeightedAverage
         {
             get
             {
@@ -56,7 +56,7 @@
             {
                 if (TotalIndexRating == 0)
                     return 0;
-                return EmployeeIndexRating / TotalIndexRating;
+                return EmployeeSatisfactionIndexRating / TotalIndexRating;
             }
         }
 
@@ -66,7 +66,7 @@
             {
                 if (TotalIndexRating == 0)
                     return 0;
-                return CustomerIndexRating / TotalIndexRating;
+                return CustomerSatisfactionIndexRating / TotalIndexRating;
             }
         }
 

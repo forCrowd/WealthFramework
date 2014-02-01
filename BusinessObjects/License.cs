@@ -14,9 +14,9 @@
         {
             get
             {
-                if (UserLicenseRating.Count == 0)
+                if (UserLicenseRatingSet.Count == 0)
                     return 0;
-                return UserLicenseRating.Average(rating => rating.Rating);
+                return UserLicenseRatingSet.Average(rating => rating.Rating);
             }
         }
     }

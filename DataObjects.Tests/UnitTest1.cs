@@ -42,8 +42,8 @@ namespace DataObjects.Tests
                 rating.KnowledgeIndexRating = 1;
                 rating.QualityIndexRating = 1;
                 rating.SectorIndexRating = 1;
-                rating.EmployeeIndexRating = 1;
-                rating.CustomerIndexRating = 1;
+                rating.EmployeeSatisfactionIndexRating = 1;
+                rating.CustomerSatisfactionIndexRating = 1;
 
                 userRatingRepository.InsertOrUpdate(rating);
 

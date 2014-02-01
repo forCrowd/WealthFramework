@@ -18,8 +18,8 @@ namespace BusinessObjects
     {
         public License()
         {
-            this.Organization = new HashSet<Organization>();
-            this.UserLicenseRating = new HashSet<UserLicenseRating>();
+            this.OrganizationSet = new HashSet<Organization>();
+            this.UserLicenseRatingSet = new HashSet<UserLicenseRating>();
         }
     
         public short Id { get; set; }
@@ -30,7 +30,7 @@ namespace BusinessObjects
         public System.DateTime ModifiedOn { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
     
-        public virtual ICollection<Organization> Organization { get; set; }
-        public virtual ICollection<UserLicenseRating> UserLicenseRating { get; set; }
+        public virtual ICollection<Organization> OrganizationSet { get; set; }
+        public virtual ICollection<UserLicenseRating> UserLicenseRatingSet { get; set; }
     }
 }

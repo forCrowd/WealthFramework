@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="Notes\Todo.txt" />
+    <Content Include="Scripts\Database\Alterations\0\0.1\0.1.5\01-20140201 UserDistributionIndexRating table Employee + Customer field rename.sql" />
     <Content Include="Scripts\Database\Alterations\0\0.1\0.1.4\02-20140129 varchar to nvarchar.sql" />
     <Content Include="Scripts\Database\Alterations\0\0.1\0.1.4\01-20140129 User ResourcePoolRate.sql" />
     <Content Include="Scripts\Database\Alterations\0\0.1\0.1.2\01-20140127 Organization NumberOfSales.sql" />

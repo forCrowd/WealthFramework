@@ -1,29 +1,20 @@
 ﻿namespace BusinessObjects
 {
-    using System;
-    using System.Linq;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Linq;
 
     public class ResourcePool
     {
         public ResourcePool(UserDistributionIndexRatingAverage distributionIndexAverage, decimal resourcePoolRate, IEnumerable<Organization> organizationSet)
-        {
-            Init(distributionIndexAverage, resourcePoolRate, organizationSet, null, null);
-        }
+            : this(distributionIndexAverage, resourcePoolRate, organizationSet, null, null)
+        { }
 
         public ResourcePool(UserDistributionIndexRatingAverage distributionIndexAverage, decimal resourcePoolRate, IEnumerable<Organization> organizationSet, IEnumerable<License> licenseSet)
-        {
-            Init(distributionIndexAverage, resourcePoolRate, organizationSet, licenseSet, null);
-        }
+            : this(distributionIndexAverage, resourcePoolRate, organizationSet, licenseSet, null)
+        { }
 
-        public ResourcePool(UserDistributionIndexRatingAverage distributionIndexAverage, decimal resourcePoolRate, IEnumerable<Organization> organizationSet, IEnumerable<License> licenseSet, IEnumerable<Sector> sectorSet)
-        {
-            Init(distributionIndexAverage, resourcePoolRate, organizationSet, licenseSet, sectorSet);
-        }
-
-        void Init(UserDistributionIndexRatingAverage distributionIndexRatingAverage, decimal resourcePoolRate, IEnumerable<Organization> organizationSet, IEnumerable<License> licenseSet, IEnumerable<Sector> sectorSet)
+        public ResourcePool(UserDistributionIndexRatingAverage distributionIndexRatingAverage, decimal resourcePoolRate, IEnumerable<Organization> organizationSet, IEnumerable<License> licenseSet, IEnumerable<Sector> sectorSet)
         {
             // Distribution index rating average
             DistributionIndexRatingAverage = distributionIndexRatingAverage;
@@ -133,7 +124,7 @@
 
         public decimal TotalCostIndexShare
         {
-            get { return TotalResourcePoolTax * DistributionIndexRatingAverage.TotalCostIndexWeightedAverage; }
+            get { return TotalResourcePoolTax * DistributionIndexRatingAverage.TotalCostIndexRatingWeightedAverage; }
         }
 
         public decimal TotalCostIndexPercentageWithNumberOfSales
@@ -152,7 +143,7 @@
 
         public decimal KnowledgeIndexShare
         {
-            get { return TotalResourcePoolTax * DistributionIndexRatingAverage.KnowledgeIndexWeightedAverage; }
+            get { return TotalResourcePoolTax * DistributionIndexRatingAverage.KnowledgeIndexRatingWeightedAverage; }
         }
 
         public decimal LicenseUserRating
@@ -181,7 +172,7 @@
 
         public decimal QualityIndexShare
         {
-            get { return TotalResourcePoolTax * DistributionIndexRatingAverage.QualityIndexWeightedAverage; }
+            get { return TotalResourcePoolTax * DistributionIndexRatingAverage.QualityIndexRatingWeightedAverage; }
         }
 
         public decimal QualityUserRating
@@ -205,7 +196,7 @@
 
         public decimal SectorIndexShare
         {
-            get { return TotalResourcePoolTax * DistributionIndexRatingAverage.SectorIndexWeightedAverage; }
+            get { return TotalResourcePoolTax * DistributionIndexRatingAverage.SectorIndexRatingWeightedAverage; }
         }
 
         public decimal SectorUserRating
@@ -234,7 +225,7 @@
 
         public decimal EmployeeSatisfactionIndexShare
         {
-            get { return TotalResourcePoolTax * DistributionIndexRatingAverage.EmployeeIndexWeightedAverage; }
+            get { return TotalResourcePoolTax * DistributionIndexRatingAverage.EmployeeSatisfactionIndexRatingWeightedAverage; }
         }
         
         public decimal EmployeeSatisfactionUserRating
@@ -258,7 +249,7 @@
 
         public decimal CustomerSatisfactionIndexShare
         {
-            get { return TotalResourcePoolTax * DistributionIndexRatingAverage.CustomerIndexWeightedAverage; }
+            get { return TotalResourcePoolTax * DistributionIndexRatingAverage.CustomerSatisfactionIndexRatingWeightedAverage; }
         }
         
         public decimal CustomerSatisfactionUserRating
@@ -274,6 +265,30 @@
         public decimal CustomerSatisfactionIndexIncome
         {
             get { return OrganizationSet.Sum(organization => organization.CustomerSatisfactionIndexIncome); }
+        }
+
+        #endregion
+
+        #region - Distance Index -
+
+        public decimal DistanceIndexShare
+        {
+            get { return TotalResourcePoolTax * DistributionIndexRatingAverage.DistanceIndexRatingWeightedAverage; }
+        }
+
+        public decimal DistanceRating
+        {
+            get { return OrganizationSet.Sum(organization => organization.DistanceRating); }
+        }
+
+        public decimal DistanceIndexPercentageWithNumberOfSales
+        {
+            get { return OrganizationSet.Sum(organization => organization.DistanceIndexPercentageWithNumberOfSales); }
+        }
+
+        public decimal DistanceIndexIncome
+        {
+            get { return OrganizationSet.Sum(organization => organization.DistanceIndexIncome); }
         }
 
         #endregion

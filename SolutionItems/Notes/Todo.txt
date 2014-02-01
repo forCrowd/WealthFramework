@@ -1,28 +1,11 @@
-﻿. copy + softdelete methods in repositories?
-. Help page doesnt show odata urls
-. Check validation later - metadatatype vs. generate
-. easy deployment;
+﻿. easy deployment;
 .. web deployment?
 .. sql local db or compact etc.?
 .. sql migrations
-. collection names - add "set" word to the end
-. empty Index Pie Result page has an error!
-. index pages needs 'if' block for empty organizationset!
-. organization.cs - resourcepool == null checks ?!
-. let it generate random organizations + results?
+. random data generation?
 . organizations groupped with starting letters - handle it with resource pool solution?
-. move overview page to github?
-. sidewaffle for t4 customization?
-. dont modify generated files - check the existing ones!
-. index pages are using weighted average for indexes - the results are confusing now
-. userdistributionindexrating table - employee + customer (there is no satisfaction)
-. distance index in or out? currently partially..
-add, since its not calculated everyone should get the same amount for now
-. in index pie page, use weighted average properties
-. do something about codetemplates
-. user types (roles) - hide definitions if it's admin				
-. github
-. user edit page goes back to user list - its wrong if its from user info block
+. dont modify generated MVC files - check (compare) the existing ones!
+. user types (roles) - hide definitions if it's admin
 
 ---
 resource pool types;

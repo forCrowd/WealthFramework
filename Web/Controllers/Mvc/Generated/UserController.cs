@@ -80,14 +80,17 @@ namespace Web.Controllers.Mvc
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Email,FirstName,MiddleName,LastName,ResourcePoolRate,CreatedOn,ModifiedOn,DeletedOn")] User user)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Email,FirstName,MiddleName,LastName,ResourcePoolRate,CreatedOn,ModifiedOn,DeletedOn")] User user, string returnUrl)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(user).State = EntityState.Modified;
 				user.ModifiedOn = DateTime.Now;
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+
+                if (!string.IsNullOrWhiteSpace(returnUrl))
+                    return Redirect(returnUrl);
+                return RedirectToAction("Index", "Home");
             }
             return View(user);
         }

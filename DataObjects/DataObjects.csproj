@@ -53,7 +53,7 @@
     <Compile Include="..\SolutionItems\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="UserDistributionIndexRating.cs" />
+    <Compile Include="UserDistributionIndexRatingRepository.cs" />
     <Compile Include="GenericRepository.cs" />
     <Compile Include="IGenericRepository.cs" />
     <Compile Include="Generated\LicenseRepository.cs">

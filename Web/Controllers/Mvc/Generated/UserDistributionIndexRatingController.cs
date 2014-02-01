@@ -57,7 +57,7 @@ namespace Web.Controllers.Mvc
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include="Id,UserId,TotalCostIndexRating,KnowledgeIndexRating,QualityIndexRating,SectorIndexRating,EmployeeIndexRating,CustomerIndexRating,DistanceIndexRating,CreatedOn,ModifiedOn,DeletedOn")] UserDistributionIndexRating userdistributionindexrating)
+        public async Task<ActionResult> Create([Bind(Include = "Id,UserId,TotalCostIndexRating,KnowledgeIndexRating,QualityIndexRating,SectorIndexRating,EmployeeSatisfactionIndexRating,CustomerSatisfactionIndexRating,DistanceIndexRating,CreatedOn,ModifiedOn,DeletedOn")] UserDistributionIndexRating userdistributionindexrating)
         {
             if (ModelState.IsValid)
             {
@@ -104,7 +104,7 @@ namespace Web.Controllers.Mvc
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include="Id,UserId,TotalCostIndexRating,KnowledgeIndexRating,QualityIndexRating,SectorIndexRating,EmployeeIndexRating,CustomerIndexRating,DistanceIndexRating,CreatedOn,ModifiedOn,DeletedOn")] UserDistributionIndexRating userdistributionindexrating)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,UserId,TotalCostIndexRating,KnowledgeIndexRating,QualityIndexRating,SectorIndexRating,EmployeeSatisfactionIndexRating,CustomerSatisfactionIndexRating,DistanceIndexRating,CreatedOn,ModifiedOn,DeletedOn")] UserDistributionIndexRating userdistributionindexrating)
         {
             if (ModelState.IsValid)
             {

@@ -20,24 +20,28 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Definitions <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("User", "Index", "User", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Sector", "Index", "Sector", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("License", "Index", "License", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Organization", "Index", "Organization", new { area = "" }, null)</li>
-                        </ul>
-                    </li>
+                    @{if (!ViewBag.IsAuthenticated)
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Definitions <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("User", "Index", "User", new { area = "" }, null)</li>
+                                <li>@Html.ActionLink("Sector", "Index", "Sector", new { area = "" }, null)</li>
+                                <li>@Html.ActionLink("License", "Index", "License", new { area = "" }, null)</li>
+                                <li>@Html.ActionLink("Organization", "Index", "Organization", new { area = "" }, null)</li>
+                            </ul>
+                        </li>
+                    }}
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">CMRP <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("Total Cost Index", "TotalCostIndex", "ResourcePool", new { area = "" }, null)</li>
                             <li>@Html.ActionLink("Knowledge Index", "KnowledgeIndex", "ResourcePool", new { area = "" }, null)</li>
                             <li>@Html.ActionLink("Quality Index", "QualityIndex", "ResourcePool", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Sector Index", "SectorIndex", "ResourcePool", new { area = "" }, null)</li>
                             <li>@Html.ActionLink("Employee Satisfaction Index", "EmployeeSatisfactionIndex", "ResourcePool", new { area = "" }, null)</li>
                             <li>@Html.ActionLink("Customer Satisfaction Index", "CustomerSatisfactionIndex", "ResourcePool", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Sector Index", "SectorIndex", "ResourcePool", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Distance Index", "DistanceIndex", "ResourcePool", new { area = "" }, null)</li>
                             <li>@Html.ActionLink("Index Pie List", "Index", "UserDistributionIndexRating", new { area = "" }, null)</li>
                             <li>@Html.ActionLink("Index Pie Report", "Report", "UserDistributionIndexRating", new { area = "" }, null)</li>
                             <li>@Html.ActionLink("All in One", "AllInOne", "ResourcePool", new { area = "" }, null)</li>
@@ -59,7 +63,7 @@
                             @{if (ViewBag.IsAuthenticated == true)
                             {
                                 @("User: " + ViewBag.CurrentUserEmail)
-                                @Html.ActionLink("Edit", "Edit", "User", new { area = "", id = ViewBag.CurrentUserId  }, new { @class = "btn btn-xs btn-link" })
+                                @Html.ActionLink("Edit", "Edit", "User", new { area = "", id = ViewBag.CurrentUserId }, new { @class = "btn btn-xs btn-link" })
                                 @Html.ActionLink("Logout", "Logout", "Home", new { area = "" }, new { @class = "btn btn-xs btn-link" })
                             }
                             else

@@ -50,6 +50,7 @@
             {
                 if (SalesPrice == 0)
                     return 0;
+                // TODO ?
                 if (ResourcePool == null)
                     return 0;
                 return SalesPrice * ResourcePool.ResourcePoolRate;
@@ -97,6 +98,7 @@
         {
             get
             {
+                // TODO ?
                 if (ResourcePool == null)
                     return 0;
                 return ResourcePool.SalesPrice - SalesPrice;
@@ -110,6 +112,7 @@
         {
             get
             {
+                // TODO ?
                 if (ResourcePool == null)
                     return 0;
                 if (ResourcePool.SalesPrice == 0)
@@ -129,6 +132,7 @@
         {
             get
             {
+                // TODO ?
                 if (ResourcePool == null)
                     return 0;
                 if (ResourcePool.TotalCostIndexPercentageWithNumberOfSales == 0)
@@ -142,6 +146,7 @@
         {
             get
             {
+                // TODO ?
                 if (ResourcePool == null)
                     return 0;
                 return ResourcePool.TotalCostIndexShare * TotalCostIndexPercentageWithNumberOfSalesWeighted;
@@ -157,6 +162,7 @@
         {
             get
             {
+                // TODO ?
                 if (ResourcePool == null)
                     return 0;
                 if (ResourcePool.LicenseUserRating == 0)
@@ -176,6 +182,7 @@
         {
             get
             {
+                // TODO ?
                 if (ResourcePool == null)
                     return 0;
                 if (ResourcePool.KnowledgeIndexPercentageWithNumberOfSales == 0)
@@ -189,6 +196,7 @@
         {
             get
             {
+                // TODO ?
                 if (ResourcePool == null)
                     return 0;
                 return ResourcePool.KnowledgeIndexShare * KnowledgeIndexPercentageWithNumberOfSalesWeighted;
@@ -203,9 +211,9 @@
         {
             get
             {
-                if (UserOrganizationRating.Count == 0)
+                if (UserOrganizationRatingSet.Count == 0)
                     return 0;
-                return UserOrganizationRating.Average(rating => rating.QualityRating);
+                return UserOrganizationRatingSet.Average(rating => rating.QualityRating);
             }
         }
 
@@ -214,6 +222,7 @@
         {
             get
             {
+                // TODO ?
                 if (ResourcePool == null)
                     return 0;
                 if (ResourcePool.QualityUserRating == 0)
@@ -233,6 +242,7 @@
         {
             get
             {
+                // TODO ?
                 if (ResourcePool == null)
                     return 0;
                 if (ResourcePool.QualityIndexPercentageWithNumberOfSales == 0)
@@ -246,6 +256,7 @@
         {
             get
             {
+                // TODO ?
                 if (ResourcePool == null)
                     return 0;
                 return ResourcePool.QualityIndexShare * QualityIndexPercentageWithNumberOfSalesWeighted;
@@ -261,6 +272,7 @@
         {
             get
             {
+                // TODO ?
                 if (ResourcePool == null)
                     return 0;
                 if (ResourcePool.SectorUserRating == 0)
@@ -280,6 +292,7 @@
         {
             get
             {
+                // TODO ?
                 if (ResourcePool == null)
                     return 0;
                 if (ResourcePool.SectorIndexPercentageWithNumberOfSales == 0)
@@ -293,6 +306,7 @@
         {
             get
             {
+                // TODO ?
                 if (ResourcePool == null)
                     return 0;
                 return ResourcePool.SectorIndexShare * SectorIndexPercentageWithNumberOfSalesWeighted;
@@ -307,9 +321,9 @@
         {
             get
             {
-                if (UserOrganizationRating.Count == 0)
+                if (UserOrganizationRatingSet.Count == 0)
                     return 0;
-                return UserOrganizationRating.Average(rating => rating.EmployeeSatisfactionRating);
+                return UserOrganizationRatingSet.Average(rating => rating.EmployeeSatisfactionRating);
             }
         }
 
@@ -318,6 +332,7 @@
         {
             get
             {
+                // TODO ?
                 if (ResourcePool == null)
                     return 0;
                 if (ResourcePool.EmployeeSatisfactionUserRating == 0)
@@ -337,6 +352,7 @@
         {
             get
             {
+                // TODO ?
                 if (ResourcePool == null)
                     return 0;
                 if (ResourcePool.EmployeeSatisfactionIndexPercentageWithNumberOfSales == 0)
@@ -350,6 +366,7 @@
         {
             get
             {
+                // TODO ?
                 if (ResourcePool == null)
                     return 0;
                 return ResourcePool.EmployeeSatisfactionIndexShare * EmployeeSatisfactionIndexPercentageWithNumberOfSalesWeighted;
@@ -364,9 +381,9 @@
         {
             get
             {
-                if (UserOrganizationRating.Count == 0)
+                if (UserOrganizationRatingSet.Count == 0)
                     return 0;
-                return UserOrganizationRating.Average(rating => rating.CustomerSatisfactionRating);
+                return UserOrganizationRatingSet.Average(rating => rating.CustomerSatisfactionRating);
             }
         }
 
@@ -375,6 +392,7 @@
         {
             get
             {
+                // TODO ?
                 if (ResourcePool == null)
                     return 0;
                 if (ResourcePool.CustomerSatisfactionUserRating == 0)
@@ -394,6 +412,7 @@
         {
             get
             {
+                // TODO ?
                 if (ResourcePool == null)
                     return 0;
                 if (ResourcePool.CustomerSatisfactionIndexPercentageWithNumberOfSales == 0)
@@ -407,9 +426,68 @@
         {
             get
             {
+                // TODO ?
                 if (ResourcePool == null)
                     return 0;
                 return ResourcePool.CustomerSatisfactionIndexShare * CustomerSatisfactionIndexPercentageWithNumberOfSalesWeighted;
+            }
+        }
+
+        #endregion
+
+        #region - Distance Index -
+
+        /// <summary>
+        /// TODO Distance Index has no calculation at the moment
+        /// </summary>
+        public decimal DistanceRating
+        {
+            get { return 1; }
+        }
+
+        [Display(Name = "Distance Index Percentage")]
+        public decimal DistanceIndexPercentage
+        {
+            get
+            {
+                // TODO ?
+                if (ResourcePool == null)
+                    return 0;
+                if (ResourcePool.DistanceRating == 0)
+                    return 0;
+                return DistanceRating / ResourcePool.DistanceRating;
+            }
+        }
+
+        [Display(Name = "Distance Index with Nr of Sales")]
+        public decimal DistanceIndexPercentageWithNumberOfSales
+        {
+            get { return DistanceIndexPercentage * NumberOfSales; }
+        }
+
+        [Display(Name = "Distance Index with Nr of Sales Weighted")]
+        public decimal DistanceIndexPercentageWithNumberOfSalesWeighted
+        {
+            get
+            {
+                // TODO ?
+                if (ResourcePool == null)
+                    return 0;
+                if (ResourcePool.DistanceIndexPercentageWithNumberOfSales == 0)
+                    return 0;
+                return DistanceIndexPercentageWithNumberOfSales / ResourcePool.DistanceIndexPercentageWithNumberOfSales;
+            }
+        }
+
+        [Display(Name = "Distance Index Income")]
+        public decimal DistanceIndexIncome
+        {
+            get
+            {
+                // TODO ?
+                if (ResourcePool == null)
+                    return 0;
+                return ResourcePool.DistanceIndexShare * DistanceIndexPercentageWithNumberOfSalesWeighted;
             }
         }
 
@@ -425,7 +503,8 @@
                     + QualityIndexIncome
                     + SectorIndexIncome
                     + EmployeeSatisfactionIndexIncome
-                    + CustomerSatisfactionIndexIncome;
+                    + CustomerSatisfactionIndexIncome
+                    + DistanceIndexIncome;
             }
         }
 

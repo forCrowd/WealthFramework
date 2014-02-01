@@ -32,11 +32,11 @@ namespace BusinessObjects.Metadata
         [Display(Name = "Sector Index")]
         public decimal SectorIndexRating { get; set; }
     
-        [Display(Name = "Employee Index")]
-        public decimal EmployeeIndexRating { get; set; }
-    
-        [Display(Name = "Customer Index")]
-        public decimal CustomerIndexRating { get; set; }
+        [Display(Name = "Employee Satisfaction Index")]
+        public decimal EmployeeSatisfactionIndexRating { get; set; }
+
+        [Display(Name = "Customer Satisfaction Index")]
+        public decimal CustomerSatisfactionIndexRating { get; set; }
     
         [Display(Name = "Distance Index")]
         public decimal DistanceIndexRating { get; set; }

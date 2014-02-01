@@ -22,8 +22,8 @@ namespace BusinessObjects
         public decimal KnowledgeIndexRating { get; set; }
         public decimal QualityIndexRating { get; set; }
         public decimal SectorIndexRating { get; set; }
-        public decimal EmployeeIndexRating { get; set; }
-        public decimal CustomerIndexRating { get; set; }
+        public decimal EmployeeSatisfactionIndexRating { get; set; }
+        public decimal CustomerSatisfactionIndexRating { get; set; }
         public decimal DistanceIndexRating { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public System.DateTime ModifiedOn { get; set; }

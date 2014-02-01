@@ -14,9 +14,9 @@
         {
             get
             {
-                if (UserSectorRating.Count == 0)
+                if (UserSectorRatingSet.Count == 0)
                     return 0;
-                return UserSectorRating.Average(rating => rating.Rating);
+                return UserSectorRatingSet.Average(rating => rating.Rating);
             }
         }
     }

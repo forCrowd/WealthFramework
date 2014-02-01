@@ -18,8 +18,8 @@ namespace BusinessObjects
     {
         public Sector()
         {
-            this.Organization = new HashSet<Organization>();
-            this.UserSectorRating = new HashSet<UserSectorRating>();
+            this.OrganizationSet = new HashSet<Organization>();
+            this.UserSectorRatingSet = new HashSet<UserSectorRating>();
         }
     
         public byte Id { get; set; }
@@ -29,7 +29,7 @@ namespace BusinessObjects
         public System.DateTime ModifiedOn { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
     
-        public virtual ICollection<Organization> Organization { get; set; }
-        public virtual ICollection<UserSectorRating> UserSectorRating { get; set; }
+        public virtual ICollection<Organization> OrganizationSet { get; set; }
+        public virtual ICollection<UserSectorRating> UserSectorRatingSet { get; set; }
     }
 }
