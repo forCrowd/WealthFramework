@@ -22,6 +22,7 @@
         <AssociationConnector Association="WealthEconomyModel.FK_UserSectorRating_User" ManuallyRouted="false" />
         <EntityTypeShape EntityType="WealthEconomyModel.UserDistributionIndexRating" Width="4.625" PointX="3" PointY="17.875" />
         <AssociationConnector Association="WealthEconomyModel.FK_UserDistributionIndexRating_User" />
+        <AssociationConnector Association="WealthEconomyModel.FK_Organization_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

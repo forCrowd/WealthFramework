@@ -220,7 +220,6 @@
     <Content Include="Views\Sector\Index.cshtml" />
     <Content Include="Views\UserDistributionIndexRating\Report.cshtml" />
     <Content Include="Views\Home\Overview.cshtml" />
-    <Content Include="Views\Organization\Report.cshtml" />
     <Content Include="Views\ResourcePool\TotalCostIndex.cshtml" />
     <Content Include="Views\ResourcePool\KnowledgeIndex.cshtml" />
     <Content Include="Views\ResourcePool\QualityIndex.cshtml" />

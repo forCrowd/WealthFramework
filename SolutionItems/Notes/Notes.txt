@@ -1,0 +1,44 @@
+﻿resource pool types;
+. index samples
+. one big public
+. per user
+
+. cost sample
+.. user's
+
+. knowledge sample
+.. user's
+.. public
+
+. all in one sample
+.. user's
+.. public
+
+number of sales - per user
+organizations - per resource pool?
+
+---
+Index Notes;
+
+total cost	-> lowest
+knowledge	-> highest
+quality		-> highest
+sector		-> highest
+employee	-> highest
+customer	-> highest
+distance	-> lowest
+
+user can rate;
+license (knowledge index)
+organization quality
+sector
+organization employee satisf.
+organization customer satisf.
+
+auto;
+total cost	= sales price - production cost
+distance	= production location - customer location
+
+---
+under creative commons license;
+http://www.highcharts.com/demo/pie-basic

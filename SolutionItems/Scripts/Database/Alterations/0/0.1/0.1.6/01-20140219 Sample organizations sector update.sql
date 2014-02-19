@@ -1,0 +1,10 @@
+SET XACT_ABORT ON;
+GO
+
+BEGIN TRANSACTION;
+
+UPDATE Organization SET SectorId = 1 WHERE NOT Name LIKE 'SI - %'
+
+COMMIT;
+RAISERROR (N'Insert Batch: 1.....Done!', 10, 1) WITH NOWAIT;
+GO

@@ -35,7 +35,10 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="Notes\Notes.txt" />
     <Content Include="Notes\Todo.txt" />
+    <Content Include="Scripts\Database\Alterations\0\0.1\0.1.6\01-20140219 Sample organizations sector update.sql" />
+    <Content Include="Scripts\Database\Alterations\0\0.1\0.1.6\02-20140219 Organization table UserId field.sql" />
     <Content Include="Scripts\Database\Alterations\0\0.1\0.1.5\01-20140201 UserDistributionIndexRating table Employee + Customer field rename.sql" />
     <Content Include="Scripts\Database\Alterations\0\0.1\0.1.4\02-20140129 varchar to nvarchar.sql" />
     <Content Include="Scripts\Database\Alterations\0\0.1\0.1.4\01-20140129 User ResourcePoolRate.sql" />

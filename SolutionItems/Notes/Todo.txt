@@ -5,36 +5,14 @@
 . random data generation?
 . organizations groupped with starting letters - handle it with resource pool solution?
 . dont modify generated MVC files - check (compare) the existing ones!
-. user types (roles) - hide definitions if it's admin
+. in the current structure, userogranizationrating table is not necessary, it could be merged with organization table.
+however it works and since structure is not certain, no need to update organization table + copy records etc.
+. license + sector + quality + customer satis. + employee satis. + all in one views could have "My Results" and "Public Results" versions
+currently they are all "Public Results" (i guess?)
+. doktorasizlar db mix? backup + restore db shortcuts?
 
 ---
-resource pool types;
-. index samples
-. one big public
-. per user
-
----
-Index Notes;
-
-total cost	-> lowest
-knowledge	-> highest
-quality		-> highest
-sector		-> highest
-employee	-> highest
-customer	-> highest
-distance	-> lowest
-
-user can rate;
-license (knowledge index)
-organization quality
-sector
-organization employee satisf.
-organization customer satisf.
-
-auto;
-total cost	= sales price - production cost
-distance	= production location - customer location
-
----
-under creative commons license;
-http://www.highcharts.com/demo/pie-basic
+General
+Using Total Cost Index without other Indexes wouldn't make sense.
+If the quality of the product is not known, rewarding low cost wouldn't mean much?
+Maybe it's better to start with another index?

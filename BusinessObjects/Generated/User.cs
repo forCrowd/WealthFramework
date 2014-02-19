@@ -18,6 +18,7 @@ namespace BusinessObjects
     {
         public User()
         {
+            this.OrganizationSet = new HashSet<Organization>();
             this.UserLicenseRatingSet = new HashSet<UserLicenseRating>();
             this.UserOrganizationRatingSet = new HashSet<UserOrganizationRating>();
             this.UserSectorRatingSet = new HashSet<UserSectorRating>();
@@ -34,6 +35,7 @@ namespace BusinessObjects
         public System.DateTime ModifiedOn { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
     
+        public virtual ICollection<Organization> OrganizationSet { get; set; }
         public virtual ICollection<UserLicenseRating> UserLicenseRatingSet { get; set; }
         public virtual ICollection<UserOrganizationRating> UserOrganizationRatingSet { get; set; }
         public virtual ICollection<UserSectorRating> UserSectorRatingSet { get; set; }

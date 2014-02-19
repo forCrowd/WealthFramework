@@ -22,6 +22,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="SectorId" Type="tinyint" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="ProductionCost" Type="decimal" Precision="18" Scale="2" Nullable="false" />
@@ -136,6 +137,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Organization_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Organization" Type="Self.Organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Organization">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserDistributionIndexRating_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="UserDistributionIndexRating" Type="Self.UserDistributionIndexRating" Multiplicity="*" />
@@ -237,6 +250,10 @@
             <End Role="Sector" EntitySet="Sector" />
             <End Role="Organization" EntitySet="Organization" />
           </AssociationSet>
+          <AssociationSet Name="FK_Organization_User" Association="Self.FK_Organization_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Organization" EntitySet="Organization" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserDistributionIndexRating_User" Association="Self.FK_UserDistributionIndexRating_User">
             <End Role="User" EntitySet="User" />
             <End Role="UserDistributionIndexRating" EntitySet="UserDistributionIndexRating" />
@@ -289,6 +306,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="SectorId" Type="Byte" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ProductionCost" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
@@ -301,6 +319,7 @@
           <NavigationProperty Name="License" Relationship="Self.FK_Organization_License" FromRole="Organization" ToRole="License" />
           <NavigationProperty Name="Sector" Relationship="Self.FK_Organization_Sector" FromRole="Organization" ToRole="Sector" />
           <NavigationProperty Name="UserOrganizationRatingSet" Relationship="Self.FK_UserOrganizationRating_Organization" FromRole="Organization" ToRole="UserOrganizationRating" />
+          <NavigationProperty Name="User" Relationship="WealthEconomyModel.FK_Organization_User" FromRole="Organization" ToRole="User" />
         </EntityType>
         <EntityType Name="Sector">
           <Key>
@@ -328,6 +347,7 @@
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="OrganizationSet" Relationship="WealthEconomyModel.FK_Organization_User" FromRole="User" ToRole="Organization" />
           <NavigationProperty Name="UserLicenseRatingSet" Relationship="Self.FK_UserLicenseRating_User" FromRole="User" ToRole="UserLicenseRating" />
           <NavigationProperty Name="UserOrganizationRatingSet" Relationship="Self.FK_UserOrganizationRating_User" FromRole="User" ToRole="UserOrganizationRating" />
           <NavigationProperty Name="UserSectorRatingSet" Relationship="Self.FK_UserSectorRating_User" FromRole="User" ToRole="UserSectorRating" />
@@ -518,6 +538,10 @@
             <End Role="User" EntitySet="UserSet" />
             <End Role="UserDistributionIndexRating" EntitySet="UserDistributionIndexRatingSet" />
           </AssociationSet>
+          <AssociationSet Name="FK_Organization_User" Association="WealthEconomyModel.FK_Organization_User">
+            <End Role="User" EntitySet="UserSet" />
+            <End Role="Organization" EntitySet="OrganizationSet" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="UserDistributionIndexRating">
           <Key>
@@ -549,6 +573,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Organization_User">
+          <End Type="WealthEconomyModel.User" Role="User" Multiplicity="1" />
+          <End Type="WealthEconomyModel.Organization" Role="Organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Organization">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -571,6 +607,7 @@
           <EntitySetMapping Name="OrganizationSet">
             <EntityTypeMapping TypeName="WealthEconomyModel.Organization">
               <MappingFragment StoreEntitySet="Organization">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="NumberOfSales" ColumnName="NumberOfSales" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="SectorId" ColumnName="SectorId" />

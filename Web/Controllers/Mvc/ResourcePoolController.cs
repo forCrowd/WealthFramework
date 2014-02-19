@@ -32,16 +32,25 @@ namespace Web.Controllers.Mvc
                 : 0M;
 
             // Organization set
-            // TODO To have a correct sample, only retrieve organizations of that index
-            var organizationDbSet = db.OrganizationSet
-                .Where(organization => organization.Name.StartsWith("TCI - "));
-            var organizationSet = await organizationDbSet.ToListAsync();
+            var organizationSet = await GetTotalCostIndexOrganizationQuery().ToListAsync();
 
             // Resource pool
             var newResourcePool = new ResourcePool(distributionIndexAverage, resourcePoolRate, organizationSet);
             
             // Return
             return View(newResourcePool);
+        }
+
+        IQueryable<Organization> GetTotalCostIndexOrganizationQuery()
+        {
+            // TODO To have a correct sample, only retrieve organizations of that index
+            var query = db.OrganizationSet
+                .Where(organization => organization.Name.StartsWith("TCI - "));
+
+            if (IsAuthenticated)
+                query = query.Where(o => o.UserId == CurrentUserId);
+
+            return query;
         }
 
         // GET: /ResourcePool/KnowledgeIndex
@@ -66,11 +75,7 @@ namespace Web.Controllers.Mvc
                 : 0M;
 
             // Organization set
-            // TODO To have a correct sample, only retrieve organizations of that index
-            var organizationDbSet = db.OrganizationSet
-                .Include(organization => organization.License)
-                .Where(organization => organization.Name.StartsWith("KI - "));
-            var organizationSet = await organizationDbSet.ToListAsync();
+            var organizationSet = await GetKnowledgeIndexOrganizationQuery().ToListAsync();
 
             // License set
             var licenseSet = await db.LicenseSet.Include(license => license.UserLicenseRatingSet).ToListAsync();
@@ -80,6 +85,19 @@ namespace Web.Controllers.Mvc
 
             // Return
             return View(newResourcePool);
+        }
+
+        IQueryable<Organization> GetKnowledgeIndexOrganizationQuery()
+        {
+            // TODO To have a correct sample, only retrieve organizations of that index
+            var query = db.OrganizationSet
+                .Include(organization => organization.License)
+                .Where(organization => organization.Name.StartsWith("KI - "));
+
+            if (IsAuthenticated)
+                query = query.Where(o => o.UserId == CurrentUserId);
+            
+            return query;
         }
 
         // GET: /ResourcePool/QualityIndex
@@ -104,17 +122,26 @@ namespace Web.Controllers.Mvc
                 : 0M;
 
             // Organization set
-            // TODO To have a correct sample, only retrieve organizations of that index
-            var organizationDbSet = db.OrganizationSet
-                .Include(organization => organization.License)
-                .Where(organization => organization.Name.StartsWith("QI - "));
-            var organizationSet = await organizationDbSet.ToListAsync();
+            var organizationSet = await GetQualityIndexOrganizationQuery().ToListAsync();
 
             // Resource pool
             var newResourcePool = new ResourcePool(distributionIndexAverage, resourcePoolRate, organizationSet);
 
             // Return
             return View(newResourcePool);
+        }
+
+        IQueryable<Organization> GetQualityIndexOrganizationQuery()
+        {
+            // TODO To have a correct sample, only retrieve organizations of that index
+            var query = db.OrganizationSet
+                .Include(organization => organization.License)
+                .Where(organization => organization.Name.StartsWith("QI - "));
+
+            if (IsAuthenticated)
+                query = query.Where(o => o.UserId == CurrentUserId);
+
+            return query;
         }
 
         // GET: /ResourcePool/SectorIndex
@@ -139,11 +166,7 @@ namespace Web.Controllers.Mvc
                 : 0M;
 
             // Organization set
-            // TODO To have a correct sample, only retrieve organizations of that index
-            var organizationDbSet = db.OrganizationSet
-                .Include(organization => organization.Sector)
-                .Where(organization => organization.Name.StartsWith("SI - "));
-            var organizationSet = await organizationDbSet.ToListAsync();
+            var organizationSet = await GetSectorIndexOrganizationQuery().ToListAsync();
 
             // Sector set
             var sectorSet = await db.SectorSet.Include(sector => sector.UserSectorRatingSet).ToListAsync();
@@ -153,6 +176,19 @@ namespace Web.Controllers.Mvc
 
             // Return
             return View(newResourcePool);
+        }
+
+        IQueryable<Organization> GetSectorIndexOrganizationQuery()
+        {
+            // TODO To have a correct sample, only retrieve organizations of that index
+            var query = db.OrganizationSet
+                .Include(organization => organization.Sector)
+                .Where(organization => organization.Name.StartsWith("SI - "));
+
+            if (IsAuthenticated)
+                query = query.Where(o => o.UserId == CurrentUserId);
+
+            return query;
         }
 
         // GET: /ResourcePool/EmployeeSatisfactionIndex
@@ -177,16 +213,25 @@ namespace Web.Controllers.Mvc
                 : 0M;
 
             // Organization set
-            // TODO To have a correct sample, only retrieve organizations of that index
-            var organizationDbSet = db.OrganizationSet
-                .Where(organization => organization.Name.StartsWith("ESI - "));
-            var organizationSet = await organizationDbSet.ToListAsync();
+            var organizationSet = await GetEmployeeSatisfactionIndexOrganizationQuery().ToListAsync();
 
             // Resource pool
             var newResourcePool = new ResourcePool(distributionIndexAverage, resourcePoolRate, organizationSet);
 
             // Return
             return View(newResourcePool);
+        }
+
+        IQueryable<Organization> GetEmployeeSatisfactionIndexOrganizationQuery()
+        {
+            // TODO To have a correct sample, only retrieve organizations of that index
+            var query = db.OrganizationSet
+                .Where(organization => organization.Name.StartsWith("ESI - "));
+
+            if (IsAuthenticated)
+                query = query.Where(o => o.UserId == CurrentUserId);
+
+            return query;
         }
 
         // GET: /ResourcePool/CustomerSatisfactionIndex
@@ -211,16 +256,25 @@ namespace Web.Controllers.Mvc
                 : 0M;
 
             // Organization set
-            // TODO To have a correct sample, only retrieve organizations of that index
-            var organizationDbSet = db.OrganizationSet
-                .Where(organization => organization.Name.StartsWith("CSI - "));
-            var organizationSet = await organizationDbSet.ToListAsync();
+            var organizationSet = await GetCustomerSatisfactionIndexOrganizationQuery().ToListAsync();
 
             // Resource pool
             var newResourcePool = new ResourcePool(distributionIndexAverage, resourcePoolRate, organizationSet);
 
             // Return
             return View(newResourcePool);
+        }
+
+        IQueryable<Organization> GetCustomerSatisfactionIndexOrganizationQuery()
+        {
+            // TODO To have a correct sample, only retrieve organizations of that index
+            var query = db.OrganizationSet
+                .Where(organization => organization.Name.StartsWith("CSI - "));
+
+            if (IsAuthenticated)
+                query = query.Where(o => o.UserId == CurrentUserId);
+
+            return query;
         }
 
         // GET: /ResourcePool/DistanceIndex
@@ -245,16 +299,25 @@ namespace Web.Controllers.Mvc
                 : 0M;
 
             // Organization set
-            // TODO To have a correct sample, only retrieve organizations of that index
-            var organizationDbSet = db.OrganizationSet
-                .Where(organization => organization.Name.StartsWith("DI - "));
-            var organizationSet = await organizationDbSet.ToListAsync();
+            var organizationSet = await GetDistanceIndexOrganizationQuery().ToListAsync();
 
             // Resource pool
             var newResourcePool = new ResourcePool(distributionIndexAverage, resourcePoolRate, organizationSet);
 
             // Return
             return View(newResourcePool);
+        }
+
+        IQueryable<Organization> GetDistanceIndexOrganizationQuery()
+        {
+            // TODO To have a correct sample, only retrieve organizations of that index
+            var query = db.OrganizationSet
+                .Where(organization => organization.Name.StartsWith("DI - "));
+
+            if (IsAuthenticated)
+                query = query.Where(o => o.UserId == CurrentUserId);
+
+            return query;
         }
 
         // GET: /ResourcePool/AllInOne
@@ -275,7 +338,7 @@ namespace Web.Controllers.Mvc
                 : 0M;
 
             // Organization set
-            var organizationSet = await db.OrganizationSet.ToListAsync();
+            var organizationSet = await GetAllInOneOrganizationQuery().ToListAsync();
 
             // License set
             var licenseSet = await db.LicenseSet.Include(license => license.UserLicenseRatingSet).ToListAsync();
@@ -290,10 +353,35 @@ namespace Web.Controllers.Mvc
             return View(newResourcePool);
         }
 
+        IQueryable<Organization> GetAllInOneOrganizationQuery()
+        {
+            // TODO To have a correct sample, only retrieve organizations of that index
+            var query = db.OrganizationSet.AsQueryable();
+
+            if (IsAuthenticated)
+                query = query.Where(o => o.UserId == CurrentUserId);
+
+            return query;
+        }
+
         [HttpPost]
         public async Task<ActionResult> IncreaseNumberOfSales(string returnAction)
         {
-            var organizationSet = db.OrganizationSet;
+            IQueryable<Organization> organizationQuery = null;
+
+            switch (returnAction)
+            {
+                case "TotalCostIndex": organizationQuery = GetTotalCostIndexOrganizationQuery(); break;
+                case "KnowledgeIndex": organizationQuery = GetKnowledgeIndexOrganizationQuery(); break;
+                case "QualityIndex": organizationQuery = GetQualityIndexOrganizationQuery(); break;
+                case "SectorIndex": organizationQuery = GetSectorIndexOrganizationQuery(); break;
+                case "CustomerSatisfactionIndex": organizationQuery = GetCustomerSatisfactionIndexOrganizationQuery(); break;
+                case "EmployeeSatisfactionIndex": organizationQuery = GetEmployeeSatisfactionIndexOrganizationQuery(); break;
+                case "DistanceIndex": organizationQuery = GetDistanceIndexOrganizationQuery(); break;
+                case "AllInOne": organizationQuery = GetAllInOneOrganizationQuery(); break;
+            }
+
+            var organizationSet = await organizationQuery.ToListAsync();
 
             foreach (var organization in organizationSet)
             {
@@ -313,7 +401,21 @@ namespace Web.Controllers.Mvc
         [HttpPost]
         public async Task<ActionResult> ResetNumberOfSales(string returnAction)
         {
-            var organizationSet = db.OrganizationSet;
+            IQueryable<Organization> organizationQuery = null;
+
+            switch (returnAction)
+            {
+                case "TotalCostIndex": organizationQuery = GetTotalCostIndexOrganizationQuery(); break;
+                case "KnowledgeIndex": organizationQuery = GetKnowledgeIndexOrganizationQuery(); break;
+                case "QualityIndex": organizationQuery = GetQualityIndexOrganizationQuery(); break;
+                case "SectorIndex": organizationQuery = GetSectorIndexOrganizationQuery(); break;
+                case "CustomerSatisfactionIndex": organizationQuery = GetCustomerSatisfactionIndexOrganizationQuery(); break;
+                case "EmployeeSatisfactionIndex": organizationQuery = GetEmployeeSatisfactionIndexOrganizationQuery(); break;
+                case "DistanceIndex": organizationQuery = GetDistanceIndexOrganizationQuery(); break;
+                case "AllInOne": organizationQuery = GetAllInOneOrganizationQuery(); break;
+            }
+
+            var organizationSet = await organizationQuery.ToListAsync();
 
             foreach (var organization in organizationSet)
             {

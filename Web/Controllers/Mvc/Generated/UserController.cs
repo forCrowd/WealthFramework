@@ -53,6 +53,73 @@ namespace Web.Controllers.Mvc
 				user.CreatedOn = DateTime.Now;
 				user.ModifiedOn = DateTime.Now;
                 db.UserSet.Add(user);
+
+                // Sample organizations
+                var organizationUnitOfWork = new Facade.OrganizationUnitOfWork(db);
+                
+                db.OrganizationSet.Add(organizationUnitOfWork.GetTotalCostIndexOrganization1(user));
+                db.OrganizationSet.Add(organizationUnitOfWork.GetTotalCostIndexOrganization2(user));
+
+                db.OrganizationSet.Add(organizationUnitOfWork.GetKnowledgeIndexOrganization1(user));
+                db.OrganizationSet.Add(organizationUnitOfWork.GetKnowledgeIndexOrganization2(user));
+
+                var q1 = organizationUnitOfWork.GetQualityIndexOrganization1(user);
+                db.OrganizationSet.Add(q1);
+                var qr1 = organizationUnitOfWork.GetQualityIndexOrganizationRating1(user, q1);
+                db.UserOrganizationRatingSet.Add(qr1);
+
+                var q2 = organizationUnitOfWork.GetQualityIndexOrganization2(user);
+                db.OrganizationSet.Add(q2);
+                var qr2 = organizationUnitOfWork.GetQualityIndexOrganizationRating2(user, q2);
+                db.UserOrganizationRatingSet.Add(qr2);
+
+                var es1 = organizationUnitOfWork.GetEmployeeSatisfactionIndexOrganization1(user);
+                db.OrganizationSet.Add(es1);
+                var esr1 = organizationUnitOfWork.GetEmployeeSatisfactionIndexOrganizationRating1(user, es1);
+                db.UserOrganizationRatingSet.Add(esr1);
+
+                var es2 = organizationUnitOfWork.GetEmployeeSatisfactionIndexOrganization2(user);
+                db.OrganizationSet.Add(es2);
+                var esr2 = organizationUnitOfWork.GetEmployeeSatisfactionIndexOrganizationRating2(user, es2);
+                db.UserOrganizationRatingSet.Add(esr2);
+
+                var cs1 = organizationUnitOfWork.GetCustomerSatisfactionIndexOrganization1(user);
+                db.OrganizationSet.Add(cs1);
+                var csr1 = organizationUnitOfWork.GetCustomerSatisfactionIndexOrganizationRating1(user, cs1);
+                db.UserOrganizationRatingSet.Add(csr1);
+
+                var cs2 = organizationUnitOfWork.GetCustomerSatisfactionIndexOrganization2(user);
+                db.OrganizationSet.Add(cs2);
+                var csr2 = organizationUnitOfWork.GetCustomerSatisfactionIndexOrganizationRating2(user, cs2);
+                db.UserOrganizationRatingSet.Add(csr2);
+
+                db.OrganizationSet.Add(organizationUnitOfWork.GetSectorIndexOrganization1(user));
+                db.OrganizationSet.Add(organizationUnitOfWork.GetSectorIndexOrganization2(user));
+                db.OrganizationSet.Add(organizationUnitOfWork.GetSectorIndexOrganization3(user));
+                db.OrganizationSet.Add(organizationUnitOfWork.GetSectorIndexOrganization4(user));
+                db.OrganizationSet.Add(organizationUnitOfWork.GetSectorIndexOrganization5(user));
+                db.OrganizationSet.Add(organizationUnitOfWork.GetSectorIndexOrganization6(user));
+                db.OrganizationSet.Add(organizationUnitOfWork.GetSectorIndexOrganization7(user));
+                db.OrganizationSet.Add(organizationUnitOfWork.GetSectorIndexOrganization8(user));
+                db.OrganizationSet.Add(organizationUnitOfWork.GetSectorIndexOrganization9(user));
+
+                db.OrganizationSet.Add(organizationUnitOfWork.GetDistanceIndexOrganization1(user));
+                db.OrganizationSet.Add(organizationUnitOfWork.GetDistanceIndexOrganization2(user));
+
+                // Sample license ratings
+                foreach (var license in db.LicenseSet)
+                {
+                    var licenceRating = new UserLicenseRating() { User = user, License = license, Rating = 0, CreatedOn = DateTime.Now, ModifiedOn = DateTime.Now };
+                    db.UserLicenseRatingSet.Add(licenceRating);
+                }
+
+                // Sample sector ratings
+                foreach (var sector in db.SectorSet)
+                {
+                    var sectorRating = new UserSectorRating() { User = user, Sector = sector, Rating = 0, CreatedOn = DateTime.Now, ModifiedOn = DateTime.Now };
+                    db.UserSectorRatingSet.Add(sectorRating);
+                }
+
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
