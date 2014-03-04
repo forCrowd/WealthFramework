@@ -22,7 +22,6 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="SectorId" Type="tinyint" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="ProductionCost" Type="decimal" Precision="18" Scale="2" Nullable="false" />
@@ -32,6 +31,7 @@
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
           <Property Name="DeletedOn" Type="datetime" />
+          <Property Name="UserId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Sector">
           <Key>
@@ -49,11 +49,13 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserAccountTypeId" Type="tinyint" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
           <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
           <Property Name="LastName" Type="nvarchar" MaxLength="50" />
           <Property Name="ResourcePoolRate" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
           <Property Name="DeletedOn" Type="datetime" />
@@ -70,7 +72,7 @@
           <Property Name="SectorIndexRating" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="EmployeeSatisfactionIndexRating" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="CustomerSatisfactionIndexRating" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="DistanceIndexRating" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="DistanceIndexRating" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
           <Property Name="DeletedOn" Type="datetime" />
@@ -95,8 +97,8 @@
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="OrganizationId" Type="int" Nullable="false" />
           <Property Name="QualityRating" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="EmployeeSatisfactionRating" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="CustomerSatisfactionRating" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="EmployeeSatisfactionRating" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
           <Property Name="DeletedOn" Type="datetime" />
@@ -343,7 +345,9 @@
           <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserAccountTypeId" Type="WealthEconomyModel.UserAccountType" Nullable="false" />
           <Property Name="ResourcePoolRate" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DeletedOn" Type="DateTime" Precision="3" />
@@ -555,7 +559,7 @@
           <Property Name="SectorIndexRating" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="EmployeeSatisfactionIndexRating" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="CustomerSatisfactionIndexRating" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="DistanceIndexRating" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="DistanceIndexRating" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DeletedOn" Type="DateTime" Precision="3" />
@@ -585,6 +589,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EnumType Name="UserAccountType" UnderlyingType="Byte">
+          <Member Name="Administrator" Value="1" />
+          <Member Name="Standard" Value="2" />
+        </EnumType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -636,6 +644,8 @@
           <EntitySetMapping Name="UserSet">
             <EntityTypeMapping TypeName="WealthEconomyModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserAccountTypeId" ColumnName="UserAccountTypeId" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="ResourcePoolRate" ColumnName="ResourcePoolRate" />
                 <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />

@@ -6,16 +6,19 @@
 
     public class ResourcePool
     {
-        public ResourcePool(UserDistributionIndexRatingAverage distributionIndexAverage, decimal resourcePoolRate, IEnumerable<Organization> organizationSet)
-            : this(distributionIndexAverage, resourcePoolRate, organizationSet, null, null)
+        public ResourcePool(User user, UserDistributionIndexRatingAverage distributionIndexAverage, decimal resourcePoolRate, IEnumerable<Organization> organizationSet)
+            : this(user, distributionIndexAverage, resourcePoolRate, organizationSet, null, null)
         { }
 
-        public ResourcePool(UserDistributionIndexRatingAverage distributionIndexAverage, decimal resourcePoolRate, IEnumerable<Organization> organizationSet, IEnumerable<License> licenseSet)
-            : this(distributionIndexAverage, resourcePoolRate, organizationSet, licenseSet, null)
+        public ResourcePool(User user, UserDistributionIndexRatingAverage distributionIndexAverage, decimal resourcePoolRate, IEnumerable<Organization> organizationSet, IEnumerable<License> licenseSet)
+            : this(user, distributionIndexAverage, resourcePoolRate, organizationSet, licenseSet, null)
         { }
 
-        public ResourcePool(UserDistributionIndexRatingAverage distributionIndexRatingAverage, decimal resourcePoolRate, IEnumerable<Organization> organizationSet, IEnumerable<License> licenseSet, IEnumerable<Sector> sectorSet)
+        public ResourcePool(User user, UserDistributionIndexRatingAverage distributionIndexRatingAverage, decimal resourcePoolRate, IEnumerable<Organization> organizationSet, IEnumerable<License> licenseSet, IEnumerable<Sector> sectorSet)
         {
+            // User
+            User = user;
+
             // Distribution index rating average
             DistributionIndexRatingAverage = distributionIndexRatingAverage;
 
@@ -47,6 +50,7 @@
             }
         }
 
+        public User User { get; private set; }
         public IEnumerable<Organization> OrganizationSet { get; private set; }
         public IEnumerable<License> LicenseSet { get; private set; }
         public IEnumerable<Sector> SectorSet { get; private set; }
@@ -152,7 +156,10 @@
             {
                 if (LicenseSet == null)
                     return 0;
-                return LicenseSet.Sum(license => license.UserRating);
+                
+                return User == null
+                    ? LicenseSet.Sum(license => license.GetAverageUserRating())
+                    : LicenseSet.Sum(license => license.GetAverageUserRating(User.Id));
             }
         }
 

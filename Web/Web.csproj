@@ -155,6 +155,9 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Code\ApplicationSettings.cs" />
+    <Compile Include="App_Start\DevelopmentModeConfig.cs" />
+    <Compile Include="Code\ServerMode.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\Mvc\HomeController.cs" />
     <Compile Include="Controllers\Mvc\Generated\LicenseController.cs" />
@@ -283,6 +286,10 @@
     <ProjectReference Include="..\Facade\Facade.csproj">
       <Project>{72eccf0f-6e65-4c20-9b48-abd93b4c3142}</Project>
       <Name>Facade</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework\Framework.csproj">
+      <Project>{1f435477-27e9-405e-b061-a0a9afb63053}</Project>
+      <Name>Framework</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

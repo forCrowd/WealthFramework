@@ -20,8 +20,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @{if (!ViewBag.IsAuthenticated)
-                    {
+                    @{if (ViewBag.IsAuthenticated && ViewBag.CurrentUserAccountTypeId == BusinessObjects.UserAccountType.Administrator) {
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Definitions <b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -32,11 +31,13 @@
                             </ul>
                         </li>
                     }}
+                    @{if (ViewBag.IsAuthenticated) {
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">CMRP <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("Total Cost Index", "TotalCostIndex", "ResourcePool", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Knowledge Index", "KnowledgeIndex", "ResourcePool", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Knowledge Index - Private", "KnowledgeIndexPrivate", "ResourcePool", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Knowledge Index - Public", "KnowledgeIndexPublic", "ResourcePool", new { area = "" }, null)</li>
                             <li>@Html.ActionLink("Quality Index", "QualityIndex", "ResourcePool", new { area = "" }, null)</li>
                             <li>@Html.ActionLink("Sector Index", "SectorIndex", "ResourcePool", new { area = "" }, null)</li>
                             <li>@Html.ActionLink("Employee Satisfaction Index", "EmployeeSatisfactionIndex", "ResourcePool", new { area = "" }, null)</li>
@@ -55,6 +56,7 @@
                             <li>@Html.ActionLink("Sector Rating", "Index", "UserSectorRating", new { area = "" }, null)</li>
                         </ul>
                     </li>
+                    }}
                     @*<li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>*@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">

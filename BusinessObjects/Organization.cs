@@ -167,7 +167,10 @@
                     return 0;
                 if (ResourcePool.LicenseUserRating == 0)
                     return 0;
-                return License.UserRating / ResourcePool.LicenseUserRating;
+
+                return ResourcePool.User == null
+                    ? License.GetAverageUserRating() / ResourcePool.LicenseUserRating
+                    : License.GetAverageUserRating(ResourcePool.User.Id) / ResourcePool.LicenseUserRating;
             }
         }
 

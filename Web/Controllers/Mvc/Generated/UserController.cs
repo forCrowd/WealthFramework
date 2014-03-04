@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BusinessObjects;
 using DataObjects;
+using System.Collections;
 
 namespace Web.Controllers.Mvc
 {
@@ -38,6 +40,11 @@ namespace Web.Controllers.Mvc
         // GET: /User/Create
         public ActionResult Create()
         {
+            var userAccountTypes = Enum.GetValues(typeof(UserAccountType))
+                .OfType<UserAccountType>()
+                .Select(x => new { Id = x, Name = x.ToString() });
+            ViewBag.UserAccountTypeId = new SelectList(userAccountTypes, "Id", "Name");
+
             return View();
         }
 
@@ -46,7 +53,7 @@ namespace Web.Controllers.Mvc
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include="Id,Email,FirstName,MiddleName,LastName,ResourcePoolRate,CreatedOn,ModifiedOn,DeletedOn")] User user)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Email,FirstName,MiddleName,LastName,UserAccountTypeId,ResourcePoolRate,Notes,CreatedOn,ModifiedOn,DeletedOn")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -139,6 +146,11 @@ namespace Web.Controllers.Mvc
             {
                 return HttpNotFound();
             }
+
+            var userAccountTypes = Enum.GetValues(typeof(UserAccountType))
+                .OfType<UserAccountType>()
+                .Select(x => new { Id = x, Name = x.ToString() });
+            ViewBag.UserAccountTypeId = new SelectList(userAccountTypes, "Id", "Name", user.UserAccountTypeId);
             return View(user);
         }
 
@@ -147,7 +159,7 @@ namespace Web.Controllers.Mvc
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Email,FirstName,MiddleName,LastName,ResourcePoolRate,CreatedOn,ModifiedOn,DeletedOn")] User user, string returnUrl)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Email,FirstName,MiddleName,LastName,UserAccountTypeId,ResourcePoolRate,Notes,CreatedOn,ModifiedOn,DeletedOn")] User user, string returnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -183,7 +195,22 @@ namespace Web.Controllers.Mvc
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             User user = await db.UserSet.FindAsync(id);
+
+            // Sector ratings
+            db.UserSectorRatingSet.RemoveRange(user.UserSectorRatingSet);
+
+            // License
+            db.UserLicenseRatingSet.RemoveRange(user.UserLicenseRatingSet);
+
+            // Organization ratings
+            db.UserOrganizationRatingSet.RemoveRange(user.UserOrganizationRatingSet);
+
+            // Organizations
+            db.OrganizationSet.RemoveRange(user.OrganizationSet);
+
+            // User
             db.UserSet.Remove(user);
+
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

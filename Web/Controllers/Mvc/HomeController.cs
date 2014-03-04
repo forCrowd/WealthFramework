@@ -43,6 +43,7 @@ namespace Web.Controllers.Mvc
             // TODO Use token system
             System.Web.HttpContext.Current.Session.Add("CurrentUserId", selectedUser.Id);
             System.Web.HttpContext.Current.Session.Add("CurrentUserEmail", selectedUser.Email);
+            System.Web.HttpContext.Current.Session.Add("CurrentUserAccountTypeId", selectedUser.UserAccountTypeId);
             return Redirect("Index");
         }
 

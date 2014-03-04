@@ -1,4 +1,7 @@
-﻿using DataObjects;
+﻿using BusinessObjects;
+using DataObjects;
+using Framework;
+using System;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -13,6 +16,7 @@ namespace Web.Controllers
             ViewBag.IsAuthenticated = IsAuthenticated;
             ViewBag.CurrentUserId = CurrentUserId;
             ViewBag.CurrentUserEmail = CurrentUserEmail;
+            ViewBag.CurrentUserAccountTypeId = CurrentUserAccountTypeId;
         }
 
         protected bool IsAuthenticated
@@ -37,6 +41,19 @@ namespace Web.Controllers
                 if (!IsAuthenticated)
                     return string.Empty;
                 return System.Web.HttpContext.Current.Session["CurrentUserEmail"].ToString();
+            }
+        }
+
+        protected UserAccountType CurrentUserAccountTypeId
+        {
+            get
+            {
+                if (!IsAuthenticated)
+                    return UserAccountType.Standard;
+
+                return System.Web.HttpContext.Current.Session["CurrentUserAccountTypeId"]
+                    .ToString()
+                    .ToEnum<UserAccountType>();
             }
         }
     }

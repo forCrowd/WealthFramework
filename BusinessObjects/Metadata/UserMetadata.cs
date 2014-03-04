@@ -29,6 +29,9 @@ namespace BusinessObjects.Metadata
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
+        [Display(Name = "User Account Type")]
+        public UserAccountType UserAccountTypeId { get; set; }
+
         [Display(Name = "CMRP Rate")]
         public string ResourcePoolRate { get; set; }
     

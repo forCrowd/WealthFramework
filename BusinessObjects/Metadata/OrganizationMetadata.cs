@@ -16,8 +16,11 @@ namespace BusinessObjects.Metadata
     {
         [Display(Name = "Id")]
         public int Id { get; set; }
-    
-        [Display(Name = "SectorId")]
+
+        [Display(Name = "User")]
+        public int UserId { get; set; }
+
+        [Display(Name = "Sector")]
         public byte SectorId { get; set; }
     
         [Display(Name = "Organization")]
@@ -29,19 +32,19 @@ namespace BusinessObjects.Metadata
         [Display(Name = "Sales Price")]
         public decimal SalesPrice { get; set; }
     
-        [Display(Name = "LicenseId")]
+        [Display(Name = "License")]
         public short LicenseId { get; set; }
     
         [Display(Name = "Number of Sales")]
         public int NumberOfSales { get; set; }
     
-        [Display(Name = "CreatedOn")]
+        [Display(Name = "Created On")]
         public System.DateTime CreatedOn { get; set; }
     
-        [Display(Name = "ModifiedOn")]
+        [Display(Name = "Modified On")]
         public System.DateTime ModifiedOn { get; set; }
     
-        [Display(Name = "DeletedOn")]
+        [Display(Name = "Deleted On")]
         public Nullable<System.DateTime> DeletedOn { get; set; }
     
     }

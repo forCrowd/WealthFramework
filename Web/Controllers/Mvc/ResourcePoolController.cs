@@ -13,6 +13,9 @@ namespace Web.Controllers.Mvc
         // GET: /ResourcePool/TotalCostIndex
         public async Task<ActionResult> TotalCostIndex()
         {
+            // Current user
+            var currentUser = await db.UserSet.FindAsync(CurrentUserId);
+
             // Distribution index average; Make only the current index 100% to be able to see the correct effect of it
             var distributionIndexAverage = new UserDistributionIndexRatingAverage()
             {
@@ -20,42 +23,38 @@ namespace Web.Controllers.Mvc
                 TotalCostIndexRating = 100
             };
 
-            // Resource pool rate
-            // TODO ?!
-            var user = IsAuthenticated
-                ? await db.UserSet.FindAsync(CurrentUserId)
-                : await db.UserSet.FirstOrDefaultAsync();
-
-            // Resource pool rate
-            var resourcePoolRate = (user != null)
-                ? user.ResourcePoolRate
-                : 0M;
-
             // Organization set
-            var organizationSet = await GetTotalCostIndexOrganizationQuery().ToListAsync();
+            var organizationSet = await GetGenericIndexOrganizationQuery("TCI - ").ToListAsync();
 
             // Resource pool
-            var newResourcePool = new ResourcePool(distributionIndexAverage, resourcePoolRate, organizationSet);
+            var newResourcePool = new ResourcePool(null, distributionIndexAverage, currentUser.ResourcePoolRate, organizationSet);
             
             // Return
             return View(newResourcePool);
         }
 
-        IQueryable<Organization> GetTotalCostIndexOrganizationQuery()
+        // GET: /ResourcePool/KnowledgeIndexPrivate
+        public async Task<ActionResult> KnowledgeIndexPrivate()
         {
-            // TODO To have a correct sample, only retrieve organizations of that index
-            var query = db.OrganizationSet
-                .Where(organization => organization.Name.StartsWith("TCI - "));
-
-            if (IsAuthenticated)
-                query = query.Where(o => o.UserId == CurrentUserId);
-
-            return query;
+            ViewBag.Title = "Knowledge Index - Private";
+            return await KnowledgeIndex(true);
         }
 
-        // GET: /ResourcePool/KnowledgeIndex
-        public async Task<ActionResult> KnowledgeIndex()
+        // GET: /ResourcePool/KnowledgeIndexPublic
+        public async Task<ActionResult> KnowledgeIndexPublic()
         {
+            ViewBag.Title = "Knowledge Index - Public";
+            return await KnowledgeIndex(false);
+        }
+
+        async Task<ActionResult> KnowledgeIndex(bool isPrivate)
+        {
+            // Current user
+            var currentUser = await db.UserSet.FindAsync(CurrentUserId);
+
+            // User
+            var user = isPrivate ? currentUser : null;
+
             // Distribution index average; Make only the current index 100% to be able to see the correct effect of it
             var distributionIndexAverage = new UserDistributionIndexRatingAverage()
             {
@@ -63,46 +62,25 @@ namespace Web.Controllers.Mvc
                 KnowledgeIndexRating = 100
             };
 
-            // User
-            // TODO ?!
-            var user = IsAuthenticated
-                ? await db.UserSet.FindAsync(CurrentUserId)
-                : await db.UserSet.FirstOrDefaultAsync();
-
-            // Resource pool rate
-            var resourcePoolRate = (user != null)
-                ? user.ResourcePoolRate
-                : 0M;
-
             // Organization set
-            var organizationSet = await GetKnowledgeIndexOrganizationQuery().ToListAsync();
+            var organizationSet = await GetGenericIndexOrganizationQuery("KI - ").ToListAsync();
 
             // License set
             var licenseSet = await db.LicenseSet.Include(license => license.UserLicenseRatingSet).ToListAsync();
 
             // Resource pool
-            var newResourcePool = new ResourcePool(distributionIndexAverage, resourcePoolRate, organizationSet, licenseSet);
+            var newResourcePool = new ResourcePool(user, distributionIndexAverage, currentUser.ResourcePoolRate, organizationSet, licenseSet);
 
             // Return
-            return View(newResourcePool);
-        }
-
-        IQueryable<Organization> GetKnowledgeIndexOrganizationQuery()
-        {
-            // TODO To have a correct sample, only retrieve organizations of that index
-            var query = db.OrganizationSet
-                .Include(organization => organization.License)
-                .Where(organization => organization.Name.StartsWith("KI - "));
-
-            if (IsAuthenticated)
-                query = query.Where(o => o.UserId == CurrentUserId);
-            
-            return query;
+            return View("KnowledgeIndex", newResourcePool);
         }
 
         // GET: /ResourcePool/QualityIndex
         public async Task<ActionResult> QualityIndex()
         {
+            // Current user
+            var currentUser = await db.UserSet.FindAsync(CurrentUserId);
+
             // Distribution index average; Make only the current index 100% to be able to see the correct effect of it
             var distributionIndexAverage = new UserDistributionIndexRatingAverage()
             {
@@ -110,43 +88,22 @@ namespace Web.Controllers.Mvc
                 QualityIndexRating = 100
             };
 
-            // Resource pool rate
-            // TODO ?!
-            var user = IsAuthenticated
-                ? await db.UserSet.FindAsync(CurrentUserId)
-                : await db.UserSet.FirstOrDefaultAsync();
-
-            // Resource pool rate
-            var resourcePoolRate = (user != null)
-                ? user.ResourcePoolRate
-                : 0M;
-
             // Organization set
-            var organizationSet = await GetQualityIndexOrganizationQuery().ToListAsync();
+            var organizationSet = await GetGenericIndexOrganizationQuery("QI - ").ToListAsync();
 
             // Resource pool
-            var newResourcePool = new ResourcePool(distributionIndexAverage, resourcePoolRate, organizationSet);
+            var newResourcePool = new ResourcePool(null, distributionIndexAverage, currentUser.ResourcePoolRate, organizationSet);
 
             // Return
             return View(newResourcePool);
         }
 
-        IQueryable<Organization> GetQualityIndexOrganizationQuery()
-        {
-            // TODO To have a correct sample, only retrieve organizations of that index
-            var query = db.OrganizationSet
-                .Include(organization => organization.License)
-                .Where(organization => organization.Name.StartsWith("QI - "));
-
-            if (IsAuthenticated)
-                query = query.Where(o => o.UserId == CurrentUserId);
-
-            return query;
-        }
-
         // GET: /ResourcePool/SectorIndex
         public async Task<ActionResult> SectorIndex()
         {
+            // Current user
+            var currentUser = await db.UserSet.FindAsync(CurrentUserId);
+
             // Distribution index average; Make only the current index 100% to be able to see the correct effect of it
             var distributionIndexAverage = new UserDistributionIndexRatingAverage()
             {
@@ -154,46 +111,25 @@ namespace Web.Controllers.Mvc
                 SectorIndexRating = 100
             };
 
-            // Resource pool rate
-            // TODO ?!
-            var user = IsAuthenticated
-                ? await db.UserSet.FindAsync(CurrentUserId)
-                : await db.UserSet.FirstOrDefaultAsync();
-
-            // Resource pool rate
-            var resourcePoolRate = (user != null)
-                ? user.ResourcePoolRate
-                : 0M;
-
             // Organization set
-            var organizationSet = await GetSectorIndexOrganizationQuery().ToListAsync();
+            var organizationSet = await GetGenericIndexOrganizationQuery("SI - ").ToListAsync();
 
             // Sector set
             var sectorSet = await db.SectorSet.Include(sector => sector.UserSectorRatingSet).ToListAsync();
 
             // Resource pool
-            var newResourcePool = new ResourcePool(distributionIndexAverage, resourcePoolRate, organizationSet, null, sectorSet);
+            var newResourcePool = new ResourcePool(null, distributionIndexAverage, currentUser.ResourcePoolRate, organizationSet, null, sectorSet);
 
             // Return
             return View(newResourcePool);
         }
 
-        IQueryable<Organization> GetSectorIndexOrganizationQuery()
-        {
-            // TODO To have a correct sample, only retrieve organizations of that index
-            var query = db.OrganizationSet
-                .Include(organization => organization.Sector)
-                .Where(organization => organization.Name.StartsWith("SI - "));
-
-            if (IsAuthenticated)
-                query = query.Where(o => o.UserId == CurrentUserId);
-
-            return query;
-        }
-
         // GET: /ResourcePool/EmployeeSatisfactionIndex
         public async Task<ActionResult> EmployeeSatisfactionIndex()
         {
+            // Current user
+            var currentUser = await db.UserSet.FindAsync(CurrentUserId);
+
             // Distribution index average; Make only the current index 100% to be able to see the correct effect of it
             var distributionIndexAverage = new UserDistributionIndexRatingAverage()
             {
@@ -201,42 +137,22 @@ namespace Web.Controllers.Mvc
                 EmployeeSatisfactionIndexRating = 100
             };
 
-            // Resource pool rate
-            // TODO ?!
-            var user = IsAuthenticated
-                ? await db.UserSet.FindAsync(CurrentUserId)
-                : await db.UserSet.FirstOrDefaultAsync();
-
-            // Resource pool rate
-            var resourcePoolRate = (user != null)
-                ? user.ResourcePoolRate
-                : 0M;
-
             // Organization set
-            var organizationSet = await GetEmployeeSatisfactionIndexOrganizationQuery().ToListAsync();
+            var organizationSet = await GetGenericIndexOrganizationQuery("ESI - ").ToListAsync();
 
             // Resource pool
-            var newResourcePool = new ResourcePool(distributionIndexAverage, resourcePoolRate, organizationSet);
+            var newResourcePool = new ResourcePool(null, distributionIndexAverage, currentUser.ResourcePoolRate, organizationSet);
 
             // Return
             return View(newResourcePool);
         }
 
-        IQueryable<Organization> GetEmployeeSatisfactionIndexOrganizationQuery()
-        {
-            // TODO To have a correct sample, only retrieve organizations of that index
-            var query = db.OrganizationSet
-                .Where(organization => organization.Name.StartsWith("ESI - "));
-
-            if (IsAuthenticated)
-                query = query.Where(o => o.UserId == CurrentUserId);
-
-            return query;
-        }
-
         // GET: /ResourcePool/CustomerSatisfactionIndex
         public async Task<ActionResult> CustomerSatisfactionIndex()
         {
+            // Current user
+            var currentUser = await db.UserSet.FindAsync(CurrentUserId);
+
             // Distribution index average; Make only the current index 100% to be able to see the correct effect of it
             var distributionIndexAverage = new UserDistributionIndexRatingAverage()
             {
@@ -244,42 +160,22 @@ namespace Web.Controllers.Mvc
                 CustomerSatisfactionIndexRating = 100
             };
 
-            // Resource pool rate
-            // TODO ?!
-            var user = IsAuthenticated
-                ? await db.UserSet.FindAsync(CurrentUserId)
-                : await db.UserSet.FirstOrDefaultAsync();
-
-            // Resource pool rate
-            var resourcePoolRate = (user != null)
-                ? user.ResourcePoolRate
-                : 0M;
-
             // Organization set
-            var organizationSet = await GetCustomerSatisfactionIndexOrganizationQuery().ToListAsync();
+            var organizationSet = await GetGenericIndexOrganizationQuery("CSI - ").ToListAsync();
 
             // Resource pool
-            var newResourcePool = new ResourcePool(distributionIndexAverage, resourcePoolRate, organizationSet);
+            var newResourcePool = new ResourcePool(null, distributionIndexAverage, currentUser.ResourcePoolRate, organizationSet);
 
             // Return
             return View(newResourcePool);
         }
 
-        IQueryable<Organization> GetCustomerSatisfactionIndexOrganizationQuery()
-        {
-            // TODO To have a correct sample, only retrieve organizations of that index
-            var query = db.OrganizationSet
-                .Where(organization => organization.Name.StartsWith("CSI - "));
-
-            if (IsAuthenticated)
-                query = query.Where(o => o.UserId == CurrentUserId);
-
-            return query;
-        }
-
         // GET: /ResourcePool/DistanceIndex
         public async Task<ActionResult> DistanceIndex()
         {
+            // Current user
+            var currentUser = await db.UserSet.FindAsync(CurrentUserId);
+
             // Distribution index average; Make only the current index 100% to be able to see the correct effect of it
             var distributionIndexAverage = new UserDistributionIndexRatingAverage()
             {
@@ -287,55 +183,24 @@ namespace Web.Controllers.Mvc
                 DistanceIndexRating = 100
             };
 
-            // Resource pool rate
-            // TODO ?!
-            var user = IsAuthenticated
-                ? await db.UserSet.FindAsync(CurrentUserId)
-                : await db.UserSet.FirstOrDefaultAsync();
-
-            // Resource pool rate
-            var resourcePoolRate = (user != null)
-                ? user.ResourcePoolRate
-                : 0M;
-
             // Organization set
-            var organizationSet = await GetDistanceIndexOrganizationQuery().ToListAsync();
+            var organizationSet = await GetGenericIndexOrganizationQuery("DI - ").ToListAsync();
 
             // Resource pool
-            var newResourcePool = new ResourcePool(distributionIndexAverage, resourcePoolRate, organizationSet);
+            var newResourcePool = new ResourcePool(null, distributionIndexAverage, currentUser.ResourcePoolRate, organizationSet);
 
             // Return
             return View(newResourcePool);
         }
 
-        IQueryable<Organization> GetDistanceIndexOrganizationQuery()
-        {
-            // TODO To have a correct sample, only retrieve organizations of that index
-            var query = db.OrganizationSet
-                .Where(organization => organization.Name.StartsWith("DI - "));
-
-            if (IsAuthenticated)
-                query = query.Where(o => o.UserId == CurrentUserId);
-
-            return query;
-        }
-
         // GET: /ResourcePool/AllInOne
         public async Task<ActionResult> AllInOne()
         {
+            // Current user
+            var currentUser = await db.UserSet.FindAsync(CurrentUserId);
+
             // Distribution index average; unlike the other Views that focuses on certain Index, this shows all indexes and uses real user index rating averages
             var distributionIndexAverage = await new UserDistributionIndexRatingRepository(db).GetAverageAsync();
-
-            // Resource pool rate
-            // TODO ?!
-            var user = IsAuthenticated
-                ? await db.UserSet.FindAsync(CurrentUserId)
-                : await db.UserSet.FirstOrDefaultAsync();
-
-            // Resource pool rate
-            var resourcePoolRate = (user != null)
-                ? user.ResourcePoolRate
-                : 0M;
 
             // Organization set
             var organizationSet = await GetAllInOneOrganizationQuery().ToListAsync();
@@ -347,10 +212,24 @@ namespace Web.Controllers.Mvc
             var sectorSet = await db.SectorSet.Include(sector => sector.UserSectorRatingSet).ToListAsync();
 
             // Resource pool
-            var newResourcePool = new ResourcePool(distributionIndexAverage, resourcePoolRate, organizationSet, licenseSet, sectorSet);
+            var newResourcePool = new ResourcePool(null, distributionIndexAverage, currentUser.ResourcePoolRate, organizationSet, licenseSet, sectorSet);
 
             // Return
             return View(newResourcePool);
+        }
+
+        IQueryable<Organization> GetGenericIndexOrganizationQuery(string indexPrefix)
+        {
+            // TODO To have a correct sample, only retrieve organizations of that index
+            var query = db.OrganizationSet
+                .Include(organization => organization.Sector)
+                .Include(organization => organization.License)
+                .Where(organization => organization.Name.StartsWith(indexPrefix));
+
+            if (IsAuthenticated)
+                query = query.Where(o => o.UserId == CurrentUserId);
+
+            return query;
         }
 
         IQueryable<Organization> GetAllInOneOrganizationQuery()
@@ -371,13 +250,13 @@ namespace Web.Controllers.Mvc
 
             switch (returnAction)
             {
-                case "TotalCostIndex": organizationQuery = GetTotalCostIndexOrganizationQuery(); break;
-                case "KnowledgeIndex": organizationQuery = GetKnowledgeIndexOrganizationQuery(); break;
-                case "QualityIndex": organizationQuery = GetQualityIndexOrganizationQuery(); break;
-                case "SectorIndex": organizationQuery = GetSectorIndexOrganizationQuery(); break;
-                case "CustomerSatisfactionIndex": organizationQuery = GetCustomerSatisfactionIndexOrganizationQuery(); break;
-                case "EmployeeSatisfactionIndex": organizationQuery = GetEmployeeSatisfactionIndexOrganizationQuery(); break;
-                case "DistanceIndex": organizationQuery = GetDistanceIndexOrganizationQuery(); break;
+                case "TotalCostIndex": organizationQuery = GetGenericIndexOrganizationQuery("TCI - "); break;
+                case "KnowledgeIndex": organizationQuery = GetGenericIndexOrganizationQuery("KI - "); break;
+                case "QualityIndex": organizationQuery = GetGenericIndexOrganizationQuery("QI - "); break;
+                case "SectorIndex": organizationQuery = GetGenericIndexOrganizationQuery("SI - "); break;
+                case "CustomerSatisfactionIndex": organizationQuery = GetGenericIndexOrganizationQuery("CSI - "); break;
+                case "EmployeeSatisfactionIndex": organizationQuery = GetGenericIndexOrganizationQuery("ESI - "); break;
+                case "DistanceIndex": organizationQuery = GetGenericIndexOrganizationQuery("DI - "); break;
                 case "AllInOne": organizationQuery = GetAllInOneOrganizationQuery(); break;
             }
 
@@ -405,13 +284,13 @@ namespace Web.Controllers.Mvc
 
             switch (returnAction)
             {
-                case "TotalCostIndex": organizationQuery = GetTotalCostIndexOrganizationQuery(); break;
-                case "KnowledgeIndex": organizationQuery = GetKnowledgeIndexOrganizationQuery(); break;
-                case "QualityIndex": organizationQuery = GetQualityIndexOrganizationQuery(); break;
-                case "SectorIndex": organizationQuery = GetSectorIndexOrganizationQuery(); break;
-                case "CustomerSatisfactionIndex": organizationQuery = GetCustomerSatisfactionIndexOrganizationQuery(); break;
-                case "EmployeeSatisfactionIndex": organizationQuery = GetEmployeeSatisfactionIndexOrganizationQuery(); break;
-                case "DistanceIndex": organizationQuery = GetDistanceIndexOrganizationQuery(); break;
+                case "TotalCostIndex": organizationQuery = GetGenericIndexOrganizationQuery("TCI - "); break;
+                case "KnowledgeIndex": organizationQuery = GetGenericIndexOrganizationQuery("KI - "); break;
+                case "QualityIndex": organizationQuery = GetGenericIndexOrganizationQuery("QI - "); break;
+                case "SectorIndex": organizationQuery = GetGenericIndexOrganizationQuery("SI - "); break;
+                case "CustomerSatisfactionIndex": organizationQuery = GetGenericIndexOrganizationQuery("CSI - "); break;
+                case "EmployeeSatisfactionIndex": organizationQuery = GetGenericIndexOrganizationQuery("ESI - "); break;
+                case "DistanceIndex": organizationQuery = GetGenericIndexOrganizationQuery("DI - "); break;
                 case "AllInOne": organizationQuery = GetAllInOneOrganizationQuery(); break;
             }
 

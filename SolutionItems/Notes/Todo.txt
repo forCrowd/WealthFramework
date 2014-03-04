@@ -10,9 +10,14 @@ however it works and since structure is not certain, no need to update organizat
 . license + sector + quality + customer satis. + employee satis. + all in one views could have "My Results" and "Public Results" versions
 currently they are all "Public Results" (i guess?)
 . doktorasizlar db mix? backup + restore db shortcuts?
+. check database diagram
+
+. hide user account type if its not admin!
 
 ---
 General
 Using Total Cost Index without other Indexes wouldn't make sense.
 If the quality of the product is not known, rewarding low cost wouldn't mean much?
 Maybe it's better to start with another index?
+New comment: Actually this should be okay, because in the current economic system it's the same.
+We don't look quality and other details but just low cost + max. profit. Same ignorance.

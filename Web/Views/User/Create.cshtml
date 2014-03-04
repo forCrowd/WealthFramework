@@ -49,10 +49,26 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.UserAccountTypeId, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("UserAccountTypeId")
+                @Html.ValidationMessageFor(model => model.UserAccountTypeId)
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.ResourcePoolRate, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ResourcePoolRate)
                 @Html.ValidationMessageFor(model => model.ResourcePoolRate)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Notes, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Notes)
+                @Html.ValidationMessageFor(model => model.Notes)
             </div>
         </div>
 
