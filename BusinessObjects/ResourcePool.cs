@@ -1,23 +1,31 @@
 ﻿namespace BusinessObjects
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
     public class ResourcePool
     {
-        public ResourcePool(User user, UserDistributionIndexRatingAverage distributionIndexAverage, decimal resourcePoolRate, IEnumerable<Organization> organizationSet)
-            : this(user, distributionIndexAverage, resourcePoolRate, organizationSet, null, null)
+        public ResourcePool(User user, ResourcePoolType type, UserDistributionIndexRatingAverage distributionIndexAverage, decimal resourcePoolRate, IEnumerable<Organization> organizationSet)
+            : this(user, type, distributionIndexAverage, resourcePoolRate, organizationSet, null, null)
         { }
 
-        public ResourcePool(User user, UserDistributionIndexRatingAverage distributionIndexAverage, decimal resourcePoolRate, IEnumerable<Organization> organizationSet, IEnumerable<License> licenseSet)
-            : this(user, distributionIndexAverage, resourcePoolRate, organizationSet, licenseSet, null)
+        public ResourcePool(User user, ResourcePoolType type, UserDistributionIndexRatingAverage distributionIndexAverage, decimal resourcePoolRate, IEnumerable<Organization> organizationSet, IEnumerable<License> licenseSet)
+            : this(user, type, distributionIndexAverage, resourcePoolRate, organizationSet, licenseSet, null)
         { }
 
-        public ResourcePool(User user, UserDistributionIndexRatingAverage distributionIndexRatingAverage, decimal resourcePoolRate, IEnumerable<Organization> organizationSet, IEnumerable<License> licenseSet, IEnumerable<Sector> sectorSet)
+        public ResourcePool(User user, ResourcePoolType type, UserDistributionIndexRatingAverage distributionIndexRatingAverage, decimal resourcePoolRate, IEnumerable<Organization> organizationSet, IEnumerable<License> licenseSet, IEnumerable<Sector> sectorSet)
         {
+            // Validate
+            if (user == null)
+                throw new ArgumentNullException("user");
+
             // User
             User = user;
+
+            // Resource pool type
+            ResourcePoolType = type;
 
             // Distribution index rating average
             DistributionIndexRatingAverage = distributionIndexRatingAverage;
@@ -51,7 +59,9 @@
         }
 
         public User User { get; private set; }
+        public ResourcePoolType ResourcePoolType { get; private set; }
         public IEnumerable<Organization> OrganizationSet { get; private set; }
+        public IEnumerable<UserOrganizationRating> UserOrganizationRatingSet { get { return User.UserOrganizationRatingSet.Where(item => OrganizationSet.Any(organization => item.OrganizationId == organization.Id)); } }
         public IEnumerable<License> LicenseSet { get; private set; }
         public IEnumerable<Sector> SectorSet { get; private set; }
         public UserDistributionIndexRatingAverage DistributionIndexRatingAverage { get; private set; }
@@ -96,32 +106,32 @@
 
         public int NumberOfSales
         {
-            get { return OrganizationSet.Sum(organization => organization.NumberOfSales); }
+            get { return UserOrganizationRatingSet.Sum(item => item.NumberOfSales); }
         }
 
         public decimal TotalProductionCost
         {
-            get { return OrganizationSet.Sum(organization => organization.TotalProductionCost); }
+            get { return UserOrganizationRatingSet.Sum(item => item.TotalProductionCost); }
         }
 
         public decimal TotalSalesRevenue
         {
-            get { return OrganizationSet.Sum(organization => organization.TotalSalesRevenue); }
+            get { return UserOrganizationRatingSet.Sum(item => item.TotalSalesRevenue); }
         }
 
         public decimal TotalProfit
         {
-            get { return OrganizationSet.Sum(organization => organization.TotalProfit); }
+            get { return UserOrganizationRatingSet.Sum(item => item.TotalProfit); }
         }
 
         public decimal TotalResourcePoolTax
         {
-            get { return OrganizationSet.Sum(organization => organization.TotalResourcePoolTax); }
+            get { return UserOrganizationRatingSet.Sum(item => item.TotalResourcePoolTax); }
         }
 
         public decimal TotalSalesRevenueIncludingResourcePoolTax
         {
-            get { return OrganizationSet.Sum(organization => organization.TotalSalesRevenueIncludingResourcePoolTax); }
+            get { return UserOrganizationRatingSet.Sum(item => item.TotalSalesRevenueIncludingResourcePoolTax); }
         }
 
         #region - Total Cost Index -
@@ -133,12 +143,12 @@
 
         public decimal TotalCostIndexPercentageWithNumberOfSales
         {
-            get { return OrganizationSet.Sum(organization => organization.TotalCostIndexPercentageWithNumberOfSales); }
+            get { return UserOrganizationRatingSet.Sum(item => item.TotalCostIndexPercentageWithNumberOfSales); }
         }
 
         public decimal TotalCostIndexIncome
         {
-            get { return OrganizationSet.Sum(organization => organization.TotalCostIndexIncome); }
+            get { return UserOrganizationRatingSet.Sum(item => item.TotalCostIndexIncome); }
         }
 
         #endregion
@@ -157,7 +167,7 @@
                 if (LicenseSet == null)
                     return 0;
                 
-                return User == null
+                return ResourcePoolType == ResourcePoolType.Public
                     ? LicenseSet.Sum(license => license.GetAverageUserRating())
                     : LicenseSet.Sum(license => license.GetAverageUserRating(User.Id));
             }
@@ -165,12 +175,12 @@
 
         public decimal KnowledgeIndexPercentageWithNumberOfSales
         {
-            get { return OrganizationSet.Sum(organization => organization.KnowledgeIndexPercentageWithNumberOfSales); }
+            get { return UserOrganizationRatingSet.Sum(item => item.KnowledgeIndexPercentageWithNumberOfSales); }
         }
 
         public decimal KnowledgeIndexIncome
         {
-            get { return OrganizationSet.Sum(organization => organization.KnowledgeIndexIncome); }
+            get { return UserOrganizationRatingSet.Sum(item => item.KnowledgeIndexIncome); }
         }
 
         #endregion
@@ -184,17 +194,22 @@
 
         public decimal QualityUserRating
         {
-            get { return OrganizationSet.Sum(organization => organization.QualityUserRating); }
+            get
+            {
+                return ResourcePoolType == ResourcePoolType.Public
+                    ? OrganizationSet.Sum(organization => organization.GetAverageQualityUserRating())
+                    : OrganizationSet.Sum(organization => organization.GetAverageQualityUserRating(User.Id));
+            }
         }
 
         public decimal QualityIndexPercentageWithNumberOfSales
         {
-            get { return OrganizationSet.Sum(organization => organization.QualityIndexPercentageWithNumberOfSales); }
+            get { return UserOrganizationRatingSet.Sum(item => item.QualityIndexPercentageWithNumberOfSales); }
         }
 
         public decimal QualityIndexIncome
         {
-            get { return OrganizationSet.Sum(organization => organization.QualityIndexIncome); }
+            get { return UserOrganizationRatingSet.Sum(item => item.QualityIndexIncome); }
         }
         
         #endregion
@@ -212,18 +227,21 @@
             {
                 if (SectorSet == null)
                     return 0;
-                return SectorSet.Sum(sector => sector.UserRating);
+
+                return ResourcePoolType == ResourcePoolType.Public
+                    ? SectorSet.Sum(sector => sector.GetAverageUserRating())
+                    : SectorSet.Sum(sector => sector.GetAverageUserRating(User.Id));
             }
         }
 
         public decimal SectorIndexPercentageWithNumberOfSales
         {
-            get { return OrganizationSet.Sum(organization => organization.SectorIndexPercentageWithNumberOfSales); }
+            get { return UserOrganizationRatingSet.Sum(item => item.SectorIndexPercentageWithNumberOfSales); }
         }
 
         public decimal SectorIndexIncome
         {
-            get { return OrganizationSet.Sum(organization => organization.SectorIndexIncome); }
+            get { return UserOrganizationRatingSet.Sum(item => item.SectorIndexIncome); }
         }
 
         #endregion
@@ -237,17 +255,22 @@
         
         public decimal EmployeeSatisfactionUserRating
         {
-            get { return OrganizationSet.Sum(organization => organization.EmployeeSatisfactionUserRating); }
+            get
+            {
+                return ResourcePoolType == ResourcePoolType.Public
+                    ? OrganizationSet.Sum(organization => organization.GetAverageEmployeeSatisfactionUserRating())
+                    : OrganizationSet.Sum(organization => organization.GetAverageEmployeeSatisfactionUserRating(User.Id));
+            }
         }
 
         public decimal EmployeeSatisfactionIndexPercentageWithNumberOfSales
         {
-            get { return OrganizationSet.Sum(organization => organization.EmployeeSatisfactionIndexPercentageWithNumberOfSales); }
+            get { return UserOrganizationRatingSet.Sum(item => item.EmployeeSatisfactionIndexPercentageWithNumberOfSales); }
         }
 
         public decimal EmployeeSatisfactionIndexIncome
         {
-            get { return OrganizationSet.Sum(organization => organization.EmployeeSatisfactionIndexIncome); }
+            get { return UserOrganizationRatingSet.Sum(item => item.EmployeeSatisfactionIndexIncome); }
         }
 
         #endregion
@@ -261,17 +284,22 @@
         
         public decimal CustomerSatisfactionUserRating
         {
-            get { return OrganizationSet.Sum(organization => organization.CustomerSatisfactionUserRating); }
+            get
+            {
+                return ResourcePoolType == ResourcePoolType.Public
+                    ? OrganizationSet.Sum(organization => organization.GetAverageCustomerSatisfactionUserRating())
+                    : OrganizationSet.Sum(organization => organization.GetAverageCustomerSatisfactionUserRating(User.Id));
+            }
         }
 
         public decimal CustomerSatisfactionIndexPercentageWithNumberOfSales
         {
-            get { return OrganizationSet.Sum(organization => organization.CustomerSatisfactionIndexPercentageWithNumberOfSales); }
+            get { return UserOrganizationRatingSet.Sum(item => item.CustomerSatisfactionIndexPercentageWithNumberOfSales); }
         }
 
         public decimal CustomerSatisfactionIndexIncome
         {
-            get { return OrganizationSet.Sum(organization => organization.CustomerSatisfactionIndexIncome); }
+            get { return UserOrganizationRatingSet.Sum(item => item.CustomerSatisfactionIndexIncome); }
         }
 
         #endregion
@@ -290,24 +318,24 @@
 
         public decimal DistanceIndexPercentageWithNumberOfSales
         {
-            get { return OrganizationSet.Sum(organization => organization.DistanceIndexPercentageWithNumberOfSales); }
+            get { return UserOrganizationRatingSet.Sum(item => item.DistanceIndexPercentageWithNumberOfSales); }
         }
 
         public decimal DistanceIndexIncome
         {
-            get { return OrganizationSet.Sum(organization => organization.DistanceIndexIncome); }
+            get { return UserOrganizationRatingSet.Sum(item => item.DistanceIndexIncome); }
         }
 
         #endregion
 
         public decimal TotalResourcePoolIncome
         {
-            get { return OrganizationSet.Sum(organization => organization.TotalResourcePoolIncome); }
+            get { return UserOrganizationRatingSet.Sum(item => item.TotalResourcePoolIncome); }
         }
 
         public decimal TotalIncome
         {
-            get { return OrganizationSet.Sum(organization => organization.TotalIncome); }
+            get { return UserOrganizationRatingSet.Sum(item => item.TotalIncome); }
         }
     }
 }

@@ -165,15 +165,12 @@
     <Compile Include="Controllers\Mvc\Generated\SectorController.cs" />
     <Compile Include="Controllers\Mvc\DatabaseAlterationController.cs" />
     <Compile Include="Controllers\Mvc\ResourcePoolController.cs" />
-    <Compile Include="Controllers\Mvc\OrganizationController.cs" />
     <Compile Include="Controllers\Mvc\UserDistributionIndexRatingController.cs" />
-    <Compile Include="Controllers\OData\UserController.cs" />
     <Compile Include="Controllers\Mvc\Generated\UserDistributionIndexRatingController.cs" />
     <Compile Include="Controllers\Mvc\Generated\UserLicenseRatingController.cs" />
     <Compile Include="Controllers\Mvc\Generated\UserController.cs" />
     <Compile Include="Controllers\Mvc\Generated\UserOrganizationRatingController.cs" />
     <Compile Include="Controllers\Mvc\Generated\UserSectorRatingController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

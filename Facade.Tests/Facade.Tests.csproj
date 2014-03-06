@@ -60,8 +60,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="..\SolutionItems\Properties\AssemblyInfo.cs">
+      <Link>Properties\AssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="UserManager.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessObjects\BusinessObjects.csproj">

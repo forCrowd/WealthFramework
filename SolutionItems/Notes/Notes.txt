@@ -3,18 +3,6 @@
 . one big public
 . per user
 
-. cost sample
-.. user's
-
-. knowledge sample
-.. user's
-.. public
-
-. all in one sample
-.. user's
-.. public
-
-number of sales - per user
 organizations - per resource pool?
 
 ---
@@ -38,6 +26,13 @@ organization customer satisf.
 auto;
 total cost	= sales price - production cost
 distance	= production location - customer location
+
+---
+Using Total Cost Index without other Indexes wouldn't make sense.
+If the quality of the product is not known, rewarding low cost wouldn't mean much?
+Maybe it's better to start with another index?
+New comment: Actually this should be okay, because in the current economic system it's the same.
+We don't look quality and other details but just low cost + max. profit. Same ignorance.
 
 ---
 under creative commons license;

@@ -18,6 +18,9 @@
             @Html.DisplayNameFor(model => model.Organization.Name)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.NumberOfSales)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.QualityRating)
         </th>
         <th>
@@ -36,6 +39,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Organization.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumberOfSales)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.QualityRating)

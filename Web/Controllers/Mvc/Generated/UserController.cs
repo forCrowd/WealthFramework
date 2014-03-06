@@ -40,10 +40,7 @@ namespace Web.Controllers.Mvc
         // GET: /User/Create
         public ActionResult Create()
         {
-            var userAccountTypes = Enum.GetValues(typeof(UserAccountType))
-                .OfType<UserAccountType>()
-                .Select(x => new { Id = x, Name = x.ToString() });
-            ViewBag.UserAccountTypeId = new SelectList(userAccountTypes, "Id", "Name");
+            ViewBag.UserAccountTypeId = new SelectList(GetAvailableUserAccountTypes(), "Id", "Name");
 
             return View();
         }
@@ -62,56 +59,23 @@ namespace Web.Controllers.Mvc
                 db.UserSet.Add(user);
 
                 // Sample organizations
-                var organizationUnitOfWork = new Facade.OrganizationUnitOfWork(db);
-                
-                db.OrganizationSet.Add(organizationUnitOfWork.GetTotalCostIndexOrganization1(user));
-                db.OrganizationSet.Add(organizationUnitOfWork.GetTotalCostIndexOrganization2(user));
+                foreach (var organization in db.OrganizationSet)
+                {
+                    var userOrganization = new UserOrganizationRating()
+                    {
+                        User = user,
+                        Organization = organization,
+                        NumberOfSales = 0,
+                        // TODO Handle these sample ratings nicely ?!
+                        QualityRating = organization.Id == 6 ? 80 : organization.Id == 7 ? 20 : 0,
+                        EmployeeSatisfactionRating = organization.Id == 8 ? 80 : organization.Id == 9 ? 20 : 0,
+                        CustomerSatisfactionRating = organization.Id == 10 ? 80 : organization.Id == 11 ? 20 : 0,
+                        CreatedOn = DateTime.Now,
+                        ModifiedOn = DateTime.Now
+                    };
 
-                db.OrganizationSet.Add(organizationUnitOfWork.GetKnowledgeIndexOrganization1(user));
-                db.OrganizationSet.Add(organizationUnitOfWork.GetKnowledgeIndexOrganization2(user));
-
-                var q1 = organizationUnitOfWork.GetQualityIndexOrganization1(user);
-                db.OrganizationSet.Add(q1);
-                var qr1 = organizationUnitOfWork.GetQualityIndexOrganizationRating1(user, q1);
-                db.UserOrganizationRatingSet.Add(qr1);
-
-                var q2 = organizationUnitOfWork.GetQualityIndexOrganization2(user);
-                db.OrganizationSet.Add(q2);
-                var qr2 = organizationUnitOfWork.GetQualityIndexOrganizationRating2(user, q2);
-                db.UserOrganizationRatingSet.Add(qr2);
-
-                var es1 = organizationUnitOfWork.GetEmployeeSatisfactionIndexOrganization1(user);
-                db.OrganizationSet.Add(es1);
-                var esr1 = organizationUnitOfWork.GetEmployeeSatisfactionIndexOrganizationRating1(user, es1);
-                db.UserOrganizationRatingSet.Add(esr1);
-
-                var es2 = organizationUnitOfWork.GetEmployeeSatisfactionIndexOrganization2(user);
-                db.OrganizationSet.Add(es2);
-                var esr2 = organizationUnitOfWork.GetEmployeeSatisfactionIndexOrganizationRating2(user, es2);
-                db.UserOrganizationRatingSet.Add(esr2);
-
-                var cs1 = organizationUnitOfWork.GetCustomerSatisfactionIndexOrganization1(user);
-                db.OrganizationSet.Add(cs1);
-                var csr1 = organizationUnitOfWork.GetCustomerSatisfactionIndexOrganizationRating1(user, cs1);
-                db.UserOrganizationRatingSet.Add(csr1);
-
-                var cs2 = organizationUnitOfWork.GetCustomerSatisfactionIndexOrganization2(user);
-                db.OrganizationSet.Add(cs2);
-                var csr2 = organizationUnitOfWork.GetCustomerSatisfactionIndexOrganizationRating2(user, cs2);
-                db.UserOrganizationRatingSet.Add(csr2);
-
-                db.OrganizationSet.Add(organizationUnitOfWork.GetSectorIndexOrganization1(user));
-                db.OrganizationSet.Add(organizationUnitOfWork.GetSectorIndexOrganization2(user));
-                db.OrganizationSet.Add(organizationUnitOfWork.GetSectorIndexOrganization3(user));
-                db.OrganizationSet.Add(organizationUnitOfWork.GetSectorIndexOrganization4(user));
-                db.OrganizationSet.Add(organizationUnitOfWork.GetSectorIndexOrganization5(user));
-                db.OrganizationSet.Add(organizationUnitOfWork.GetSectorIndexOrganization6(user));
-                db.OrganizationSet.Add(organizationUnitOfWork.GetSectorIndexOrganization7(user));
-                db.OrganizationSet.Add(organizationUnitOfWork.GetSectorIndexOrganization8(user));
-                db.OrganizationSet.Add(organizationUnitOfWork.GetSectorIndexOrganization9(user));
-
-                db.OrganizationSet.Add(organizationUnitOfWork.GetDistanceIndexOrganization1(user));
-                db.OrganizationSet.Add(organizationUnitOfWork.GetDistanceIndexOrganization2(user));
+                    db.UserOrganizationRatingSet.Add(userOrganization);
+                }
 
                 // Sample license ratings
                 foreach (var license in db.LicenseSet)
@@ -147,10 +111,7 @@ namespace Web.Controllers.Mvc
                 return HttpNotFound();
             }
 
-            var userAccountTypes = Enum.GetValues(typeof(UserAccountType))
-                .OfType<UserAccountType>()
-                .Select(x => new { Id = x, Name = x.ToString() });
-            ViewBag.UserAccountTypeId = new SelectList(userAccountTypes, "Id", "Name", user.UserAccountTypeId);
+            ViewBag.UserAccountTypeId = new SelectList(GetAvailableUserAccountTypes(), "Id", "Name", user.UserAccountTypeId);
             return View(user);
         }
 
@@ -213,6 +174,21 @@ namespace Web.Controllers.Mvc
 
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
+        }
+
+        IEnumerable<dynamic> GetAvailableUserAccountTypes()
+        {
+            // User account types
+            var userAccountTypes = Enum.GetValues(typeof(UserAccountType))
+                .OfType<UserAccountType>()
+                .Select(item => new { Id = item, Name = item.ToString() });
+
+            // If it's not admin, show only the current option
+            if (!(IsAuthenticated && CurrentUserAccountTypeId == UserAccountType.Administrator))
+                userAccountTypes = userAccountTypes.Where(accountType => accountType.Id == UserAccountType.Standard);
+
+            // Return
+            return userAccountTypes;
         }
 
         protected override void Dispose(bool disposing)

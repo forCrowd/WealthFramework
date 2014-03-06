@@ -49,12 +49,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SolutionItems\Properties\AssemblyInfo.cs">
+      <Link>Properties\AssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="SectorUnitOfWork.cs" />
     <Compile Include="LicenseUnitOfWork.cs" />
     <Compile Include="OrganizationUnitOfWork.cs" />
     <Compile Include="GenericUnitOfWork.cs" />
     <Compile Include="UserUnitOfWork.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessObjects\BusinessObjects.csproj">

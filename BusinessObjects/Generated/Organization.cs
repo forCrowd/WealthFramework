@@ -22,20 +22,17 @@ namespace BusinessObjects
         }
     
         public int Id { get; set; }
-        public int UserId { get; set; }
         public byte SectorId { get; set; }
         public string Name { get; set; }
         public decimal ProductionCost { get; set; }
         public decimal SalesPrice { get; set; }
         public short LicenseId { get; set; }
-        public int NumberOfSales { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public System.DateTime ModifiedOn { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
     
-        public virtual License License { get; set; }
         public virtual Sector Sector { get; set; }
+        public virtual License License { get; set; }
         public virtual ICollection<UserOrganizationRating> UserOrganizationRatingSet { get; set; }
-        public virtual User User { get; set; }
     }
 }

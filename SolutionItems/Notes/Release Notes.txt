@@ -1,0 +1,13 @@
+﻿
+0.1.9
+. SolutionItems - Maintenance scripts
+. Database
+.. Organization table UserId + NumberOfSales fields were removed
+.. UserOrganizationRating table NumberOfSales field was added
+.. All tables CreatedOn + ModifiedOn default values
+. Web
+.. Quality Private + Public views
+.. Sector Private + Public views
+.. Employee Satisfaction Private + Public views
+.. Customer Satisfaction Private + Public views
+.. All in One Private + Public views

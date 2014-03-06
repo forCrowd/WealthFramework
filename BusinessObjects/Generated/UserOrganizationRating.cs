@@ -19,6 +19,7 @@ namespace BusinessObjects
         public int Id { get; set; }
         public int UserId { get; set; }
         public int OrganizationId { get; set; }
+        public int NumberOfSales { get; set; }
         public decimal QualityRating { get; set; }
         public decimal EmployeeSatisfactionRating { get; set; }
         public decimal CustomerSatisfactionRating { get; set; }

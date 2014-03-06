@@ -18,7 +18,6 @@ namespace BusinessObjects
     {
         public User()
         {
-            this.OrganizationSet = new HashSet<Organization>();
             this.UserLicenseRatingSet = new HashSet<UserLicenseRating>();
             this.UserOrganizationRatingSet = new HashSet<UserOrganizationRating>();
             this.UserSectorRatingSet = new HashSet<UserSectorRating>();

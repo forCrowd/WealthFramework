@@ -77,6 +77,8 @@
     <Compile Include="Generated\UserSectorRating.cs">
       <DependentUpon>BusinessObject.tt</DependentUpon>
     </Compile>
+    <Compile Include="UserOrganizationRating.cs" />
+    <Compile Include="ResourcePoolType.cs" />
     <Compile Include="Sector.cs" />
     <Compile Include="License.cs" />
     <Compile Include="ResourcePool.cs" />

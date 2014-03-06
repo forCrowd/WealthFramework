@@ -4,10 +4,10 @@
 
 <p>
     <div class="btn-group">
-        @{ Html.BeginForm("IncreaseNumberOfSales", "ResourcePool", new { area = "", returnAction = "KnowledgeIndex" }, FormMethod.Post, null); }
+        @{ Html.BeginForm("IncreaseNumberOfSales", "ResourcePool", new { area = "", returnAction = ViewBag.ReturnAction }, FormMethod.Post, null); }
         <button type="submit" class="btn btn-default">Increase Number of Sales</button>
         @{ Html.EndForm(); }
-        @{ Html.BeginForm("ResetNumberOfSales", "ResourcePool", new { area = "", returnAction = "KnowledgeIndex" }, FormMethod.Post, null); }
+        @{ Html.BeginForm("ResetNumberOfSales", "ResourcePool", new { area = "", returnAction = ViewBag.ReturnAction }, FormMethod.Post, null); }
         <button type="submit" class="btn btn-default">Reset Number of Sales</button>
         @{ Html.EndForm(); }
     </div>
@@ -36,60 +36,60 @@
             @Html.DisplayNameFor(model => model.OrganizationSet.First().SalesPriceIncludingResourcePoolTax)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.OrganizationSet.First().NumberOfSales)
+            @Html.DisplayNameFor(model => model.UserOrganizationRatingSet.First().NumberOfSales)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.OrganizationSet.First().TotalProductionCost)
+            @Html.DisplayNameFor(model => model.UserOrganizationRatingSet.First().TotalProductionCost)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.OrganizationSet.First().TotalSalesRevenue)
+            @Html.DisplayNameFor(model => model.UserOrganizationRatingSet.First().TotalSalesRevenue)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.OrganizationSet.First().TotalProfit)
+            @Html.DisplayNameFor(model => model.UserOrganizationRatingSet.First().TotalProfit)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.OrganizationSet.First().TotalResourcePoolTax)
+            @Html.DisplayNameFor(model => model.UserOrganizationRatingSet.First().TotalResourcePoolTax)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.OrganizationSet.First().TotalSalesRevenueIncludingResourcePoolTax)
+            @Html.DisplayNameFor(model => model.UserOrganizationRatingSet.First().TotalSalesRevenueIncludingResourcePoolTax)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.OrganizationSet.First().KnowledgeIndexPercentage)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.OrganizationSet.First().KnowledgeIndexPercentageWithNumberOfSales)
+            @Html.DisplayNameFor(model => model.UserOrganizationRatingSet.First().KnowledgeIndexPercentageWithNumberOfSales)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.OrganizationSet.First().KnowledgeIndexPercentageWithNumberOfSalesWeighted)
+            @Html.DisplayNameFor(model => model.UserOrganizationRatingSet.First().KnowledgeIndexPercentageWithNumberOfSalesWeighted)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.OrganizationSet.First().KnowledgeIndexIncome)
+            @Html.DisplayNameFor(model => model.UserOrganizationRatingSet.First().KnowledgeIndexIncome)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.OrganizationSet.First().TotalIncome)
+            @Html.DisplayNameFor(model => model.UserOrganizationRatingSet.First().TotalIncome)
         </th>
     </tr>
 
-    @foreach (var item in Model.OrganizationSet)
+    @foreach (var item in Model.UserOrganizationRatingSet)
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => item.Organization.Name)
             </td>
             <td>
-                @item.ProductionCost.ToString("N2")
+                @item.Organization.ProductionCost.ToString("N2")
             </td>
             <td>
-                @item.SalesPrice.ToString("N2")
+                @item.Organization.SalesPrice.ToString("N2")
             </td>
             <td>
-                @Html.DisplayFor(model => item.License.Name)
+                @Html.DisplayFor(model => item.Organization.License.Name)
             </td>
             <td>
-                @item.ProfitPercentage.ToString("P2")
+                @item.Organization.ProfitPercentage.ToString("P2")
             </td>
             <td>
-                @item.SalesPriceIncludingResourcePoolTax.ToString("N2")
+                @item.Organization.SalesPriceIncludingResourcePoolTax.ToString("N2")
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NumberOfSales)
@@ -110,7 +110,7 @@
                 @item.TotalSalesRevenueIncludingResourcePoolTax.ToString("N2")
             </td>
             <td>
-                @item.KnowledgeIndexPercentage.ToString("P2")
+                @item.Organization.KnowledgeIndexPercentage.ToString("P2")
             </td>
             <td>
                 @item.KnowledgeIndexPercentageWithNumberOfSales.ToString("N2")

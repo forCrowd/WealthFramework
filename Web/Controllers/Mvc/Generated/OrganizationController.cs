@@ -19,8 +19,8 @@ namespace Web.Controllers.Mvc
         {
             var organizationset = db.OrganizationSet.Include(o => o.License).Include(o => o.Sector);
 
-            if (IsAuthenticated)
-                organizationset = organizationset.Where(organization => organization.UserId == CurrentUserId);
+            //if (IsAuthenticated)
+            //    organizationset = organizationset.Where(organization => organization.UserId == CurrentUserId);
             
             return View(await organizationset.ToListAsync());
         }
@@ -60,7 +60,7 @@ namespace Web.Controllers.Mvc
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include="Id,UserId,SectorId,Name,ProductionCost,SalesPrice,LicenseId,NumberOfSales,CreatedOn,ModifiedOn,DeletedOn")] Organization organization)
+        public async Task<ActionResult> Create([Bind(Include="Id,SectorId,Name,ProductionCost,SalesPrice,LicenseId,CreatedOn,ModifiedOn,DeletedOn")] Organization organization)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +79,7 @@ namespace Web.Controllers.Mvc
             if (IsAuthenticated)
                 userSet = userSet.Where(user => user.Id == CurrentUserId);
 
-            ViewBag.UserId = new SelectList(userSet, "Id", "Email", organization.UserId);
+            // ViewBag.UserId = new SelectList(userSet, "Id", "Email", organization.UserId);
             return View(organization);
         }
 
@@ -102,7 +102,7 @@ namespace Web.Controllers.Mvc
             if (IsAuthenticated)
                 userSet = userSet.Where(user => user.Id == CurrentUserId);
 
-            ViewBag.UserId = new SelectList(userSet, "Id", "Email", organization.UserId);
+            // ViewBag.UserId = new SelectList(userSet, "Id", "Email", organization.UserId);
             return View(organization);
         }
 
@@ -111,7 +111,7 @@ namespace Web.Controllers.Mvc
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include="Id,UserId,SectorId,Name,ProductionCost,SalesPrice,LicenseId,NumberOfSales,CreatedOn,ModifiedOn,DeletedOn")] Organization organization)
+        public async Task<ActionResult> Edit([Bind(Include="Id,SectorId,Name,ProductionCost,SalesPrice,LicenseId,CreatedOn,ModifiedOn,DeletedOn")] Organization organization)
         {
             if (ModelState.IsValid)
             {
@@ -127,7 +127,7 @@ namespace Web.Controllers.Mvc
             if (IsAuthenticated)
                 userSet = userSet.Where(user => user.Id == CurrentUserId);
 
-            ViewBag.UserId = new SelectList(userSet, "Id", "Email", organization.UserId);
+            //ViewBag.UserId = new SelectList(userSet, "Id", "Email", organization.UserId);
             return View(organization);
         }
 

@@ -46,60 +46,57 @@
             @Html.DisplayNameFor(model => model.OrganizationSet.First().SalesPriceIncludingResourcePoolTax)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.OrganizationSet.First().NumberOfSales)
+            @Html.DisplayNameFor(model => model.UserOrganizationRatingSet.First().NumberOfSales)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.OrganizationSet.First().TotalProductionCost)
+            @Html.DisplayNameFor(model => model.UserOrganizationRatingSet.First().TotalProductionCost)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.OrganizationSet.First().TotalSalesRevenue)
+            @Html.DisplayNameFor(model => model.UserOrganizationRatingSet.First().TotalSalesRevenue)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.OrganizationSet.First().TotalProfit)
+            @Html.DisplayNameFor(model => model.UserOrganizationRatingSet.First().TotalProfit)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.OrganizationSet.First().TotalResourcePoolTax)
+            @Html.DisplayNameFor(model => model.UserOrganizationRatingSet.First().TotalResourcePoolTax)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.OrganizationSet.First().TotalSalesRevenueIncludingResourcePoolTax)
+            @Html.DisplayNameFor(model => model.UserOrganizationRatingSet.First().TotalSalesRevenueIncludingResourcePoolTax)
         </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.OrganizationSet.First().TotalCostIndexDifference)
-        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.OrganizationSet.First().TotalCostIndexPercentage)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.OrganizationSet.First().TotalCostIndexPercentageWithNumberOfSales)
+            @Html.DisplayNameFor(model => model.UserOrganizationRatingSet.First().TotalCostIndexPercentageWithNumberOfSales)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.OrganizationSet.First().TotalCostIndexPercentageWithNumberOfSalesWeighted)
+            @Html.DisplayNameFor(model => model.UserOrganizationRatingSet.First().TotalCostIndexPercentageWithNumberOfSalesWeighted)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.OrganizationSet.First().TotalCostIndexIncome)
+            @Html.DisplayNameFor(model => model.UserOrganizationRatingSet.First().TotalCostIndexIncome)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.OrganizationSet.First().TotalIncome)
+            @Html.DisplayNameFor(model => model.UserOrganizationRatingSet.First().TotalIncome)
         </th>
     </tr>
 
-    @foreach (var item in Model.OrganizationSet)
+    @foreach (var item in Model.UserOrganizationRatingSet)
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => item.Organization.Name)
             </td>
             <td>
-                @item.ProductionCost.ToString("N2")
+                @item.Organization.ProductionCost.ToString("N2")
             </td>
             <td>
-                @item.SalesPrice.ToString("N2")
+                @item.Organization.SalesPrice.ToString("N2")
             </td>
             @*<td>
                 @Html.DisplayFor(modelItem => item.Profit)
             </td>*@
             <td>
-                @item.ProfitPercentage.ToString("P2")
+                @item.Organization.ProfitPercentage.ToString("P2")
             </td>
             @*<td>
                 @item.ProfitMargin.ToString("P2")
@@ -108,7 +105,7 @@
         @Html.DisplayFor(modelItem => item.ResourcePoolTax)
     </td>*@
             <td>
-                @item.SalesPriceIncludingResourcePoolTax.ToString("N2")
+                @item.Organization.SalesPriceIncludingResourcePoolTax.ToString("N2")
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NumberOfSales)
@@ -128,11 +125,8 @@
             <td>
                 @item.TotalSalesRevenueIncludingResourcePoolTax.ToString("N2")
             </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.TotalCostIndexDifference)
-            </td>*@
             <td>
-                @item.TotalCostIndexPercentage.ToString("P2")
+                @item.Organization.TotalCostIndexPercentage.ToString("P2")
             </td>
             <td>
                 @item.TotalCostIndexPercentageWithNumberOfSales.ToString("N2")

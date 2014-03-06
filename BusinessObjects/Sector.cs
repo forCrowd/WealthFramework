@@ -10,14 +10,21 @@
         // TODO ?
         internal ResourcePool ResourcePool { get; set; }
 
-        public decimal UserRating
+        public decimal GetAverageUserRating()
         {
-            get
-            {
-                if (UserSectorRatingSet.Count == 0)
-                    return 0;
-                return UserSectorRatingSet.Average(rating => rating.Rating);
-            }
+            return GetAverageUserRating(0);
+        }
+
+        public decimal GetAverageUserRating(int userId)
+        {
+            var ratings = userId > 0
+                ? UserSectorRatingSet.Where(rating => rating.UserId == userId)
+                : UserSectorRatingSet;
+
+            if (!ratings.Any())
+                return 0;
+
+            return ratings.Average(rating => rating.Rating);
         }
     }
 }

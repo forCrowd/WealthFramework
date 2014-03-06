@@ -22,6 +22,9 @@ namespace BusinessObjects.Metadata
     
         [Display(Name = "OrganizationId")]
         public int OrganizationId { get; set; }
+
+        [Display(Name = "Number of Sales")]
+        public decimal NumberOfSales { get; set; }
     
         [Display(Name = "Quality Rating")]
         public decimal QualityRating { get; set; }

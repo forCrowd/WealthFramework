@@ -9,8 +9,17 @@
     {
         public async Task<UserDistributionIndexRatingAverage> GetAverageAsync()
         {
+            return await GetAverageAsync(0);
+        }
+        
+        public async Task<UserDistributionIndexRatingAverage> GetAverageAsync(int userId)
+        {
             // Prepare the query
             var query = AllLive;
+
+            // User filter
+            if (userId > 0)
+                query = query.Where(rating => rating.UserId == userId);
 
             // Result object
             var result = new UserDistributionIndexRatingAverage();

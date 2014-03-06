@@ -17,9 +17,6 @@ namespace BusinessObjects.Metadata
         [Display(Name = "Id")]
         public int Id { get; set; }
 
-        [Display(Name = "User")]
-        public int UserId { get; set; }
-
         [Display(Name = "Sector")]
         public byte SectorId { get; set; }
     
@@ -34,9 +31,6 @@ namespace BusinessObjects.Metadata
     
         [Display(Name = "License")]
         public short LicenseId { get; set; }
-    
-        [Display(Name = "Number of Sales")]
-        public int NumberOfSales { get; set; }
     
         [Display(Name = "Created On")]
         public System.DateTime CreatedOn { get; set; }
