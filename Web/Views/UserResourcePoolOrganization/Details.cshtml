@@ -1,0 +1,90 @@
+﻿@model BusinessObjects.UserResourcePoolOrganization
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>UserResourcePoolOrganization</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ResourcePoolOrganization.Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ResourcePoolOrganization.Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberOfSales)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumberOfSales)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QualityRating)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QualityRating)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CustomerSatisfactionRating)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustomerSatisfactionRating)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeSatisfactionRating)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeSatisfactionRating)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifiedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeletedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeletedOn)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

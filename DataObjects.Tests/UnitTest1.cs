@@ -22,33 +22,5 @@ namespace DataObjects.Tests
             userRepository.InsertOrUpdate(newUser);
             userRepository.Save();
         }
-
-        [TestMethod]
-        public void NewUserDistributionIndexRating()
-        {
-            using (var context = new WealthEconomyEntities())
-            {
-                var userRepository = new UserRepository(context);
-                var userRatingRepository = new UserDistributionIndexRatingRepository(context);
-
-                var existingUser = userRepository.AllLive.Single(u => u.Email == "serkanholat@hotmail.com");
-
-                var rating =  existingUser.UserDistributionIndexRatingSet.FirstOrDefault();
-
-                if (rating == null)
-                    rating = new UserDistributionIndexRating() { User = existingUser };
-
-                rating.TotalCostIndexRating = 10;
-                rating.KnowledgeIndexRating = 1;
-                rating.QualityIndexRating = 1;
-                rating.SectorIndexRating = 1;
-                rating.EmployeeSatisfactionIndexRating = 1;
-                rating.CustomerSatisfactionIndexRating = 1;
-
-                userRatingRepository.InsertOrUpdate(rating);
-
-                context.SaveChanges();
-            }
-        }
     }
 }

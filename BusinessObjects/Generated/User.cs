@@ -18,10 +18,10 @@ namespace BusinessObjects
     {
         public User()
         {
+            this.UserResourcePoolSet = new HashSet<UserResourcePool>();
             this.UserLicenseRatingSet = new HashSet<UserLicenseRating>();
-            this.UserOrganizationRatingSet = new HashSet<UserOrganizationRating>();
             this.UserSectorRatingSet = new HashSet<UserSectorRating>();
-            this.UserDistributionIndexRatingSet = new HashSet<UserDistributionIndexRating>();
+            this.UserResourcePoolOrganizationSet = new HashSet<UserResourcePoolOrganization>();
         }
     
         public int Id { get; set; }
@@ -30,16 +30,14 @@ namespace BusinessObjects
         public string MiddleName { get; set; }
         public string LastName { get; set; }
         public UserAccountType UserAccountTypeId { get; set; }
-        public decimal ResourcePoolRate { get; set; }
         public string Notes { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public System.DateTime ModifiedOn { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
     
-        public virtual ICollection<Organization> OrganizationSet { get; set; }
+        public virtual ICollection<UserResourcePool> UserResourcePoolSet { get; set; }
         public virtual ICollection<UserLicenseRating> UserLicenseRatingSet { get; set; }
-        public virtual ICollection<UserOrganizationRating> UserOrganizationRatingSet { get; set; }
         public virtual ICollection<UserSectorRating> UserSectorRatingSet { get; set; }
-        public virtual ICollection<UserDistributionIndexRating> UserDistributionIndexRatingSet { get; set; }
+        public virtual ICollection<UserResourcePoolOrganization> UserResourcePoolOrganizationSet { get; set; }
     }
 }

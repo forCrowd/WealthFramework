@@ -73,10 +73,8 @@ namespace <#= Namespace #>
         bindAttribute = String.Empty;
     }
 #>
-    public partial class <#= ControllerName #> : Controller
+    public partial class <#= ControllerName #> : BaseController
     {
-        private <#= ContextTypeName #> db = new <#= ContextTypeName #>();
-
         // GET: <#= routePrefix #>
 <# if (UseAsync) { #>
         public async Task<ActionResult> Index()

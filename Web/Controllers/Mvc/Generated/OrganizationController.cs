@@ -19,9 +19,6 @@ namespace Web.Controllers.Mvc
         {
             var organizationset = db.OrganizationSet.Include(o => o.License).Include(o => o.Sector);
 
-            //if (IsAuthenticated)
-            //    organizationset = organizationset.Where(organization => organization.UserId == CurrentUserId);
-            
             return View(await organizationset.ToListAsync());
         }
 
@@ -46,12 +43,6 @@ namespace Web.Controllers.Mvc
             ViewBag.LicenseId = new SelectList(db.LicenseSet, "Id", "Name");
             ViewBag.SectorId = new SelectList(db.SectorSet, "Id", "Name");
 
-            var userSet = db.UserSet.AsEnumerable();
-
-            if (IsAuthenticated)
-                userSet = userSet.Where(user => user.Id == CurrentUserId);
-
-            ViewBag.UserId = new SelectList(userSet, "Id", "Email");
             return View();
         }
 
@@ -74,12 +65,6 @@ namespace Web.Controllers.Mvc
             ViewBag.LicenseId = new SelectList(db.LicenseSet, "Id", "Name", organization.LicenseId);
             ViewBag.SectorId = new SelectList(db.SectorSet, "Id", "Name", organization.SectorId);
 
-            var userSet = db.UserSet.AsEnumerable();
-
-            if (IsAuthenticated)
-                userSet = userSet.Where(user => user.Id == CurrentUserId);
-
-            // ViewBag.UserId = new SelectList(userSet, "Id", "Email", organization.UserId);
             return View(organization);
         }
 
@@ -97,12 +82,7 @@ namespace Web.Controllers.Mvc
             }
             ViewBag.LicenseId = new SelectList(db.LicenseSet, "Id", "Name", organization.LicenseId);
             ViewBag.SectorId = new SelectList(db.SectorSet, "Id", "Name", organization.SectorId);
-            var userSet = db.UserSet.AsEnumerable();
-
-            if (IsAuthenticated)
-                userSet = userSet.Where(user => user.Id == CurrentUserId);
-
-            // ViewBag.UserId = new SelectList(userSet, "Id", "Email", organization.UserId);
+            
             return View(organization);
         }
 
@@ -122,12 +102,7 @@ namespace Web.Controllers.Mvc
             }
             ViewBag.LicenseId = new SelectList(db.LicenseSet, "Id", "Name", organization.LicenseId);
             ViewBag.SectorId = new SelectList(db.SectorSet, "Id", "Name", organization.SectorId);
-            var userSet = db.UserSet.AsEnumerable();
 
-            if (IsAuthenticated)
-                userSet = userSet.Where(user => user.Id == CurrentUserId);
-
-            //ViewBag.UserId = new SelectList(userSet, "Id", "Email", organization.UserId);
             return View(organization);
         }
 

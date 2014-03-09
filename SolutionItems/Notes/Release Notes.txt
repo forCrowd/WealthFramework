@@ -1,4 +1,11 @@
 ﻿
+0.2.0
+. Database + General
+.. ResourcePool + ResourcePoolOrganization + UserResourcePool + UserResourcePoolOrganization tables were added
+.. User table ResourcePoolRate was removed
+.. UserDistributionIndexRating table was removed
+.. UserOrganizationRating table was removed
+
 0.1.9.1
 . Web + SolutionItems - Minor description text update
 

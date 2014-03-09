@@ -50,7 +50,7 @@ namespace Web.Controllers.Mvc
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Email,FirstName,MiddleName,LastName,UserAccountTypeId,ResourcePoolRate,Notes,CreatedOn,ModifiedOn,DeletedOn")] User user)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Email,FirstName,MiddleName,LastName,UserAccountTypeId,Notes,CreatedOn,ModifiedOn,DeletedOn")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -58,24 +58,26 @@ namespace Web.Controllers.Mvc
 				user.ModifiedOn = DateTime.Now;
                 db.UserSet.Add(user);
 
-                // Sample organizations
-                foreach (var organization in db.OrganizationSet)
-                {
-                    var userOrganization = new UserOrganizationRating()
-                    {
-                        User = user,
-                        Organization = organization,
-                        NumberOfSales = 0,
-                        // TODO Handle these sample ratings nicely ?!
-                        QualityRating = organization.Id == 6 ? 80 : organization.Id == 7 ? 20 : 0,
-                        EmployeeSatisfactionRating = organization.Id == 8 ? 80 : organization.Id == 9 ? 20 : 0,
-                        CustomerSatisfactionRating = organization.Id == 10 ? 80 : organization.Id == 11 ? 20 : 0,
-                        CreatedOn = DateTime.Now,
-                        ModifiedOn = DateTime.Now
-                    };
+                // TODO !
 
-                    db.UserOrganizationRatingSet.Add(userOrganization);
-                }
+                //// Sample organizations
+                //foreach (var organization in db.OrganizationSet)
+                //{
+                //    var userOrganization = new UserOrganizationRating()
+                //    {
+                //        User = user,
+                //        Organization = organization,
+                //        NumberOfSales = 0,
+                //        // TODO Handle these sample ratings nicely ?!
+                //        QualityRating = organization.Id == 6 ? 80 : organization.Id == 7 ? 20 : 0,
+                //        EmployeeSatisfactionRating = organization.Id == 8 ? 80 : organization.Id == 9 ? 20 : 0,
+                //        CustomerSatisfactionRating = organization.Id == 10 ? 80 : organization.Id == 11 ? 20 : 0,
+                //        CreatedOn = DateTime.Now,
+                //        ModifiedOn = DateTime.Now
+                //    };
+
+                //    db.UserOrganizationRatingSet.Add(userOrganization);
+                //}
 
                 // Sample license ratings
                 foreach (var license in db.LicenseSet)
@@ -120,7 +122,7 @@ namespace Web.Controllers.Mvc
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Email,FirstName,MiddleName,LastName,UserAccountTypeId,ResourcePoolRate,Notes,CreatedOn,ModifiedOn,DeletedOn")] User user, string returnUrl)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Email,FirstName,MiddleName,LastName,UserAccountTypeId,Notes,CreatedOn,ModifiedOn,DeletedOn")] User user, string returnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -163,11 +165,7 @@ namespace Web.Controllers.Mvc
             // License
             db.UserLicenseRatingSet.RemoveRange(user.UserLicenseRatingSet);
 
-            // Organization ratings
-            db.UserOrganizationRatingSet.RemoveRange(user.UserOrganizationRatingSet);
-
-            // Organizations
-            db.OrganizationSet.RemoveRange(user.OrganizationSet);
+            // TODO !
 
             // User
             db.UserSet.Remove(user);

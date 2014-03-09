@@ -1,0 +1,206 @@
+﻿@model BusinessObjects.UserResourcePool
+
+@{ ViewBag.Title = string.Format("Total Cost Index - {0}", Model.OrganizationGroupType); }
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    <div class="btn-group">
+        @{ Html.BeginForm("IncreaseNumberOfSales", "OrganizationGroup", new { area = "", returnAction = "TotalCostIndex" }, FormMethod.Post, null); }
+        <button type="submit" class="btn btn-default">Increase Number of Sales</button>
+        @{ Html.EndForm(); }
+        @{ Html.BeginForm("ResetNumberOfSales", "OrganizationGroup", new { area = "", returnAction = "TotalCostIndex" }, FormMethod.Post, null); }
+        <button type="submit" class="btn btn-default">Reset Number of Sales</button>
+        @{ Html.EndForm(); }
+    </div>
+</p>
+<p>
+    CMRP Rate: @Model.ResourcePoolRate.ToString("P2")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.OrganizationSet.First().Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrganizationSet.First().ProductionCost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrganizationSet.First().SalesPrice)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.OrganizationSet.First().Profit)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.OrganizationSet.First().ProfitPercentage)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.OrganizationSet.First().ProfitMargin)
+        </th>*@
+        @*<th>
+        @Html.DisplayNameFor(model => model.OrganizationSet.First().ResourcePoolTax)
+    </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().SalesPriceIncludingResourcePoolTax)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().NumberOfSales)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().TotalProductionCost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().TotalSalesRevenue)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().TotalProfit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().TotalResourcePoolTax)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().TotalSalesRevenueIncludingResourcePoolTax)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().TotalCostIndexPercentage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().TotalCostIndexPercentageWithNumberOfSales)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().TotalCostIndexPercentageWithNumberOfSalesWeighted)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().TotalCostIndexIncome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().TotalIncome)
+        </th>
+    </tr>
+
+    @foreach (var item in Model.UserResourcePoolOrganizationSet)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Organization.Name)
+            </td>
+            <td>
+                @item.Organization.ProductionCost.ToString("N2")
+            </td>
+            <td>
+                @item.Organization.SalesPrice.ToString("N2")
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Profit)
+            </td>*@
+            <td>
+                @item.Organization.ProfitPercentage.ToString("P2")
+            </td>
+            @*<td>
+                @item.ProfitMargin.ToString("P2")
+            </td>*@
+            @*<td>
+        @Html.DisplayFor(modelItem => item.ResourcePoolTax)
+    </td>*@
+            <td>
+                @item.SalesPriceIncludingResourcePoolTax.ToString("N2")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfSales)
+            </td>
+            <td>
+                @item.TotalProductionCost.ToString("N2")
+            </td>
+            <td>
+                @item.TotalSalesRevenue.ToString("N2")
+            </td>
+            <td>
+                @item.TotalProfit.ToString("N2")
+            </td>
+            <td>
+                @item.TotalResourcePoolTax.ToString("N2")
+            </td>
+            <td>
+                @item.TotalSalesRevenueIncludingResourcePoolTax.ToString("N2")
+            </td>
+            <td>
+                @item.TotalCostIndexPercentage.ToString("P2")
+            </td>
+            <td>
+                @item.TotalCostIndexPercentageWithNumberOfSales.ToString("N2")
+            </td>
+            <td>
+                @item.TotalCostIndexPercentageWithNumberOfSalesWeighted.ToString("N2")
+            </td>
+            <td>
+                @item.TotalCostIndexIncome.ToString("N2")
+            </td>
+            <td>
+                @item.TotalIncome.ToString("N2")
+            </td>
+        </tr>
+    }
+    <tr>
+        <td>
+            Total
+        </td>
+        <td>
+            @Model.ResourcePool.ProductionCost.ToString("N2")
+        </td>
+        <td>
+            @Model.ResourcePool.SalesPrice.ToString("N2")
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => modelItem.Profit)
+        </td>*@
+        <td>
+            @*@Model.ProfitPercentage.ToString("P2")*@
+            &nbsp;
+        </td>
+        @*<td>
+            @Model.ProfitMargin.ToString("P2")
+        </td>*@
+        @*<td>
+        @Html.DisplayFor(modelItem => modelItem.ResourcePoolTax)
+    </td>*@
+        <td>
+            @Model.SalesPriceIncludingResourcePoolTax.ToString("N2")
+        </td>
+        <td>
+            @Model.NumberOfSales
+        </td>
+        <td>
+            @Model.TotalProductionCost.ToString("N2")
+        </td>
+        <td>
+            @Model.TotalSalesRevenue.ToString("N2")
+        </td>
+        <td>
+            @Model.TotalProfit.ToString("N2")
+        </td>
+        <td>
+            @Model.TotalResourcePoolTax.ToString("N2")
+        </td>
+        <td>
+            @Model.TotalSalesRevenueIncludingResourcePoolTax.ToString("N2")
+        </td>
+        @*<td>
+            &nbsp;
+        </td>*@
+        <td>
+            &nbsp;
+        </td>
+        <td>
+            &nbsp;
+        </td>
+        <td>
+            &nbsp;
+        </td>
+        <td>
+            @Model.TotalCostIndexIncome.ToString("N2")
+        </td>
+        <td>
+            @Model.TotalIncome.ToString("N2")
+        </td>
+    </tr>
+</table>

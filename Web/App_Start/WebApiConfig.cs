@@ -23,11 +23,6 @@ namespace Web
             );
 
             ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-            builder.EntitySet<User>("User");
-            builder.EntitySet<UserDistributionIndexRating>("UserDistributionIndexRatingSet");
-            builder.EntitySet<UserLicenseRating>("UserLicenseRating");
-            builder.EntitySet<UserOrganizationRating>("UserOrganizationRating");
-            builder.EntitySet<UserSectorRating>("UserSectorRating");
             config.Routes.MapODataRoute("odata", "odata", builder.GetEdmModel());
         }
     }

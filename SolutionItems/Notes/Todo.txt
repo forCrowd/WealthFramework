@@ -3,10 +3,13 @@
 .. sql local db or compact etc.?
 .. sql migrations
 . random data generation?
-. organizations groupped with starting letters - handle it with resource pool solution?
 . dont modify generated MVC files - check (compare) the existing ones!
-. doktorasizlar db mix? backup + restore db shortcuts?
+. doktorasizlar db mix?
 . only allow the users to access to their own pages?
-. userorganizationrating -> userorganization
 . remove satisfaction word..?
 . multiple primary keys structre?
+.. if this can't be solved, resourcepool organization table can't prevent having multiple definitions (so userorganizationrating as well)
+
+. create user / delete user ?!
+
+. update organization names

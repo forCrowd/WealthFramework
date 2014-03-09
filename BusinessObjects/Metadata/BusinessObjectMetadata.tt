@@ -2,8 +2,8 @@
 <#@ include file="EF6.Utility.CS.ttinclude"#><#@ 
  output extension=".cs"#><#
 
-/* The idea of this file is to generate a metadata file of a class once and then it needs to be updated manually.
-	However once tt executed, it removes the previously generated files. Find a correct combination or remove this file altogether
+/* The idea of this file is to generate a metadata file of a class once. Then the output needs to be updated manually.
+	However once tt executed, it removes the previously generated files. Find a correct combination or remove this file altogether.
 	SH - 01 Feb. '14
 */
 

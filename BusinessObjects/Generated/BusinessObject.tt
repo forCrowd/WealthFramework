@@ -3,12 +3,7 @@
  output extension=".cs"#><#
 
 // To be able to control whether it's going to be executed
-var executeMe = true;
-
-// To be able generate only one of the entities (Leave empty for all)
-var entityNameToGenerate = "";
-
-// Execute me?
+var executeMe = true; 
 if (!executeMe)
 	return string.Empty;
 
@@ -30,12 +25,6 @@ WriteHeader(codeStringGenerator, fileManager);
 
 foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection))
 {
-	// Check entityNameToGenerate
-	if (!string.IsNullOrWhiteSpace(entityNameToGenerate)
-		&& entityNameToGenerate.ToLower() != code.Escape(entity).ToLower())
-		continue;
-
-	// Output file
 	var outputFile = string.Format(@"{0}.cs", code.Escape(entity));
 
     fileManager.StartNewFile(outputFile);
@@ -127,17 +116,6 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection)
 
 foreach (var complex in typeMapper.GetItemsToGenerate<ComplexType>(itemCollection))
 {
-	// Check entityNameToGenerate
-	if (!string.IsNullOrWhiteSpace(entityNameToGenerate)
-		&& entityNameToGenerate.ToLower() != complex.Name.ToLower())
-		continue;
-
-	// Output directory
-	//var outputEntityDirectory = string.Format(@"..\BusinessObjects\{0}\Generated", complex.Name);
-	//var outputDirectory = Path.Combine(Path.GetDirectoryName(Host.TemplateFile), outputEntityDirectory);
-
-	// Output file
-	//var outputFilePath = string.Format(@"{0}\{1}.cs", outputDirectory, complex.Name);
 	var outputFile = string.Format(@"{0}.cs", complex.Name);
 
     fileManager.StartNewFile(outputFile);
@@ -206,17 +184,6 @@ foreach (var complex in typeMapper.GetItemsToGenerate<ComplexType>(itemCollectio
 
 foreach (var enumType in typeMapper.GetEnumItemsToGenerate(itemCollection))
 {
-	// Check entityNameToGenerate
-	if (!string.IsNullOrWhiteSpace(entityNameToGenerate)
-		&& entityNameToGenerate.ToLower() != enumType.Name.ToLower())
-		continue;
-	
-	// Output directory
-	//var outputEntityDirectory = string.Format(@"..\BusinessObjects\{0}\Generated", enumType.Name);
-	//var outputDirectory = Path.Combine(Path.GetDirectoryName(Host.TemplateFile), outputEntityDirectory);
-
-	// Output file
-	//var outputFilePath = string.Format(@"{0}\{1}.cs", outputDirectory, enumType.Name);
 	var outputFile = string.Format(@"{0}.cs", enumType.Name);
 
     fileManager.StartNewFile(outputFile);

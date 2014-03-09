@@ -48,8 +48,8 @@ namespace Web.Controllers.Mvc
             if (IsAuthenticated)
                 userSet = userSet.Where(user => user.Id == CurrentUserId);
 
-            ViewBag.LicenseId = new SelectList(db.LicenseSet, "Id", "Name");
             ViewBag.UserId = new SelectList(userSet, "Id", "Email");
+            ViewBag.LicenseId = new SelectList(db.LicenseSet, "Id", "Name");
             return View();
         }
 
@@ -74,8 +74,8 @@ namespace Web.Controllers.Mvc
             if (IsAuthenticated)
                 userSet = userSet.Where(user => user.Id == CurrentUserId);
 
-            ViewBag.LicenseId = new SelectList(db.LicenseSet, "Id", "Name", userlicenserating.LicenseId);
             ViewBag.UserId = new SelectList(userSet, "Id", "Email", userlicenserating.UserId);
+            ViewBag.LicenseId = new SelectList(db.LicenseSet, "Id", "Name", userlicenserating.LicenseId);
             return View(userlicenserating);
         }
 
@@ -97,8 +97,8 @@ namespace Web.Controllers.Mvc
             if (IsAuthenticated)
                 userSet = userSet.Where(user => user.Id == CurrentUserId);
 
-            ViewBag.LicenseId = new SelectList(db.LicenseSet, "Id", "Name", userlicenserating.LicenseId);
             ViewBag.UserId = new SelectList(userSet, "Id", "Email", userlicenserating.UserId);
+            ViewBag.LicenseId = new SelectList(db.LicenseSet, "Id", "Name", userlicenserating.LicenseId);
             return View(userlicenserating);
         }
 
@@ -122,8 +122,8 @@ namespace Web.Controllers.Mvc
             if (IsAuthenticated)
                 userSet = userSet.Where(user => user.Id == CurrentUserId);
 
-            ViewBag.LicenseId = new SelectList(db.LicenseSet, "Id", "Name", userlicenserating.LicenseId);
             ViewBag.UserId = new SelectList(userSet, "Id", "Email", userlicenserating.UserId);
+            ViewBag.LicenseId = new SelectList(db.LicenseSet, "Id", "Name", userlicenserating.LicenseId);
             return View(userlicenserating);
         }
 

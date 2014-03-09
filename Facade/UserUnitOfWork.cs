@@ -14,18 +14,14 @@
 	{
         WealthEconomyEntities context;
         UserRepository userRepository;
-        UserDistributionIndexRatingRepository userDistributionIndexRatingRepository;
         UserLicenseRatingRepository userLicenseRatingRepository;
-        UserOrganizationRatingRepository userOrganizationRatingRepository;
         UserSectorRatingRepository userSectorRatingRepository;
 
         public UserUnitOfWork()
         {
             context = new WealthEconomyEntities();
             userRepository = new UserRepository(context);
-            userDistributionIndexRatingRepository = new UserDistributionIndexRatingRepository(context);
             userLicenseRatingRepository = new UserLicenseRatingRepository(context);
-            userOrganizationRatingRepository = new UserOrganizationRatingRepository(context);
             userSectorRatingRepository = new UserSectorRatingRepository(context);
         }
 

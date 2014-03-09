@@ -3,6 +3,7 @@ using DataObjects;
 using Framework;
 using System;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace Web.Controllers
@@ -21,7 +22,13 @@ namespace Web.Controllers
 
         protected bool IsAuthenticated
         {
-            get { return System.Web.HttpContext.Current.Session["CurrentUserId"] != null; }
+            get
+            {
+                if (System.Web.HttpContext.Current == null)
+                    return false;
+                
+                return System.Web.HttpContext.Current.Session["CurrentUserId"] != null;
+            }
         }
 
         protected int CurrentUserId
@@ -30,6 +37,7 @@ namespace Web.Controllers
             {
                 if (!IsAuthenticated)
                     return 0;
+
                 return (int)System.Web.HttpContext.Current.Session["CurrentUserId"];
             }
         }
@@ -40,6 +48,7 @@ namespace Web.Controllers
             {
                 if (!IsAuthenticated)
                     return string.Empty;
+
                 return System.Web.HttpContext.Current.Session["CurrentUserEmail"].ToString();
             }
         }
