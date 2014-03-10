@@ -8,16 +8,17 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BusinessObjects;
+using BusinessObjects.Dto;
 using DataObjects;
 
-namespace Web.Controllers.Mvc.Generated
+namespace Web.Controllers.Mvc
 {
     public partial class ResourcePoolOrganizationController : BaseController
     {
         // GET: /ResourcePoolOrganization/
         public async Task<ActionResult> Index()
         {
-            var resourcepoolorganization = db.ResourcePoolOrganization.Include(r => r.Organization).Include(r => r.ResourcePool);
+            var resourcepoolorganization = db.ResourcePoolOrganizationSet.Include(r => r.Organization).Include(r => r.ResourcePool);
             return View(await resourcepoolorganization.ToListAsync());
         }
 
@@ -28,7 +29,7 @@ namespace Web.Controllers.Mvc.Generated
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ResourcePoolOrganization resourcepoolorganization = await db.ResourcePoolOrganization.FindAsync(id);
+            ResourcePoolOrganization resourcepoolorganization = await db.ResourcePoolOrganizationSet.FindAsync(id);
             if (resourcepoolorganization == null)
             {
                 return HttpNotFound();
@@ -40,7 +41,7 @@ namespace Web.Controllers.Mvc.Generated
         public ActionResult Create()
         {
             ViewBag.OrganizationId = new SelectList(db.OrganizationSet, "Id", "Name");
-            ViewBag.ResourcePoolId = new SelectList(db.ResourcePool, "Id", "Name");
+            ViewBag.ResourcePoolId = new SelectList(db.ResourcePoolSet, "Id", "Name");
             return View();
         }
 
@@ -49,19 +50,21 @@ namespace Web.Controllers.Mvc.Generated
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include="Id,ResourcePoolId,OrganizationId,CreatedOn,ModifiedOn,DeletedOn")] ResourcePoolOrganization resourcepoolorganization)
+        public async Task<ActionResult> Create([Bind(Include="Id,ResourcePoolId,OrganizationId,CreatedOn,ModifiedOn,DeletedOn")] ResourcePoolOrganizationDto resourcepoolorganizationDto)
         {
+            var resourcepoolorganization = resourcepoolorganizationDto.ToBusinessObject();
+
             if (ModelState.IsValid)
             {
 				resourcepoolorganization.CreatedOn = DateTime.Now;
 				resourcepoolorganization.ModifiedOn = DateTime.Now;
-                db.ResourcePoolOrganization.Add(resourcepoolorganization);
+                db.ResourcePoolOrganizationSet.Add(resourcepoolorganization);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
             ViewBag.OrganizationId = new SelectList(db.OrganizationSet, "Id", "Name", resourcepoolorganization.OrganizationId);
-            ViewBag.ResourcePoolId = new SelectList(db.ResourcePool, "Id", "Name", resourcepoolorganization.ResourcePoolId);
+            ViewBag.ResourcePoolId = new SelectList(db.ResourcePoolSet, "Id", "Name", resourcepoolorganization.ResourcePoolId);
             return View(resourcepoolorganization);
         }
 
@@ -72,13 +75,13 @@ namespace Web.Controllers.Mvc.Generated
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ResourcePoolOrganization resourcepoolorganization = await db.ResourcePoolOrganization.FindAsync(id);
+            ResourcePoolOrganization resourcepoolorganization = await db.ResourcePoolOrganizationSet.FindAsync(id);
             if (resourcepoolorganization == null)
             {
                 return HttpNotFound();
             }
             ViewBag.OrganizationId = new SelectList(db.OrganizationSet, "Id", "Name", resourcepoolorganization.OrganizationId);
-            ViewBag.ResourcePoolId = new SelectList(db.ResourcePool, "Id", "Name", resourcepoolorganization.ResourcePoolId);
+            ViewBag.ResourcePoolId = new SelectList(db.ResourcePoolSet, "Id", "Name", resourcepoolorganization.ResourcePoolId);
             return View(resourcepoolorganization);
         }
 
@@ -87,8 +90,10 @@ namespace Web.Controllers.Mvc.Generated
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include="Id,ResourcePoolId,OrganizationId,CreatedOn,ModifiedOn,DeletedOn")] ResourcePoolOrganization resourcepoolorganization)
+        public async Task<ActionResult> Edit([Bind(Include="Id,ResourcePoolId,OrganizationId,CreatedOn,ModifiedOn,DeletedOn")] ResourcePoolOrganizationDto resourcepoolorganizationDto)
         {
+            var resourcepoolorganization = resourcepoolorganizationDto.ToBusinessObject();
+
             if (ModelState.IsValid)
             {
                 db.Entry(resourcepoolorganization).State = EntityState.Modified;
@@ -97,7 +102,7 @@ namespace Web.Controllers.Mvc.Generated
                 return RedirectToAction("Index");
             }
             ViewBag.OrganizationId = new SelectList(db.OrganizationSet, "Id", "Name", resourcepoolorganization.OrganizationId);
-            ViewBag.ResourcePoolId = new SelectList(db.ResourcePool, "Id", "Name", resourcepoolorganization.ResourcePoolId);
+            ViewBag.ResourcePoolId = new SelectList(db.ResourcePoolSet, "Id", "Name", resourcepoolorganization.ResourcePoolId);
             return View(resourcepoolorganization);
         }
 
@@ -108,7 +113,7 @@ namespace Web.Controllers.Mvc.Generated
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ResourcePoolOrganization resourcepoolorganization = await db.ResourcePoolOrganization.FindAsync(id);
+            ResourcePoolOrganization resourcepoolorganization = await db.ResourcePoolOrganizationSet.FindAsync(id);
             if (resourcepoolorganization == null)
             {
                 return HttpNotFound();
@@ -121,8 +126,8 @@ namespace Web.Controllers.Mvc.Generated
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            ResourcePoolOrganization resourcepoolorganization = await db.ResourcePoolOrganization.FindAsync(id);
-            db.ResourcePoolOrganization.Remove(resourcepoolorganization);
+            ResourcePoolOrganization resourcepoolorganization = await db.ResourcePoolOrganizationSet.FindAsync(id);
+            db.ResourcePoolOrganizationSet.Remove(resourcepoolorganization);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

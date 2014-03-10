@@ -32,9 +32,9 @@ namespace DataObjects
         public virtual DbSet<User> UserSet { get; set; }
         public virtual DbSet<UserLicenseRating> UserLicenseRatingSet { get; set; }
         public virtual DbSet<UserSectorRating> UserSectorRatingSet { get; set; }
-        public virtual DbSet<ResourcePool> ResourcePool { get; set; }
-        public virtual DbSet<ResourcePoolOrganization> ResourcePoolOrganization { get; set; }
-        public virtual DbSet<UserResourcePool> UserResourcePool { get; set; }
-        public virtual DbSet<UserResourcePoolOrganization> UserResourcePoolOrganization { get; set; }
+        public virtual DbSet<ResourcePool> ResourcePoolSet { get; set; }
+        public virtual DbSet<ResourcePoolOrganization> ResourcePoolOrganizationSet { get; set; }
+        public virtual DbSet<UserResourcePool> UserResourcePoolSet { get; set; }
+        public virtual DbSet<UserResourcePoolOrganization> UserResourcePoolOrganizationSet { get; set; }
     }
 }

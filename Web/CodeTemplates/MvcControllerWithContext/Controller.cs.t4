@@ -142,11 +142,13 @@ namespace <#= Namespace #>
         [HttpPost]
         [ValidateAntiForgeryToken]
 <# if (UseAsync) { #>
-        public async Task<ActionResult> Create(<#= bindAttribute #><#= ModelTypeName #> <#= ModelVariable #>)
+        public async Task<ActionResult> Create(<#= bindAttribute #><#= ModelTypeName #>Dto <#= ModelVariable #>Dto)
 <# } else { #>
         public ActionResult Create(<#= bindAttribute #><#= ModelTypeName #> <#= ModelVariable #>)
 <# } #>
         {
+			var <#= ModelVariable #> = <#= ModelVariable #>Dto.ToBusinessObject();
+
             if (ModelState.IsValid)
             {
 <# if(!String.IsNullOrEmpty(primaryKeyType) && String.Equals("System.Guid", primaryKeyType, StringComparison.OrdinalIgnoreCase)) { #>
@@ -204,11 +206,13 @@ namespace <#= Namespace #>
         [HttpPost]
         [ValidateAntiForgeryToken]
 <# if (UseAsync) { #>
-        public async Task<ActionResult> Edit(<#= bindAttribute #><#= ModelTypeName #> <#= ModelVariable #>)
+        public async Task<ActionResult> Edit(<#= bindAttribute #><#= ModelTypeName #>Dto <#= ModelVariable #>Dto)
 <# } else { #>
         public ActionResult Edit(<#= bindAttribute #><#= ModelTypeName #> <#= ModelVariable #>)
 <# } #>
         {
+			var <#= ModelVariable #> = <#= ModelVariable #>Dto.ToBusinessObject();
+
             if (ModelState.IsValid)
             {
                 db.Entry(<#= ModelVariable #>).State = EntityState.Modified;

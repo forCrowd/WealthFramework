@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BusinessObjects;
+using BusinessObjects.Dto;
 using DataObjects;
 
 namespace Web.Controllers.Mvc
@@ -46,8 +47,10 @@ namespace Web.Controllers.Mvc
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include="Id,Name,Description,CreatedOn,ModifiedOn,DeletedOn")] Sector sector)
+        public async Task<ActionResult> Create([Bind(Include="Id,Name,Description,CreatedOn,ModifiedOn,DeletedOn")] SectorDto sectorDto)
         {
+            var sector = sectorDto.ToBusinessObject();
+
             if (ModelState.IsValid)
             {
 				sector.CreatedOn = DateTime.Now;
@@ -80,8 +83,10 @@ namespace Web.Controllers.Mvc
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include="Id,Name,Description,CreatedOn,ModifiedOn,DeletedOn")] Sector sector)
+        public async Task<ActionResult> Edit([Bind(Include="Id,Name,Description,CreatedOn,ModifiedOn,DeletedOn")] SectorDto sectorDto)
         {
+            var sector = sectorDto.ToBusinessObject();
+
             if (ModelState.IsValid)
             {
                 db.Entry(sector).State = EntityState.Modified;

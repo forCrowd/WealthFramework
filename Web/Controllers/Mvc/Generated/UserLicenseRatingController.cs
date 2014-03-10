@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BusinessObjects;
+using BusinessObjects.Dto;
 using DataObjects;
 
 namespace Web.Controllers.Mvc
@@ -58,8 +59,10 @@ namespace Web.Controllers.Mvc
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include="Id,UserId,LicenseId,Rating,CreatedOn,ModifiedOn,DeletedOn")] UserLicenseRating userlicenserating)
+        public async Task<ActionResult> Create([Bind(Include="Id,UserId,LicenseId,Rating,CreatedOn,ModifiedOn,DeletedOn")] UserLicenseRatingDto userlicenseratingDto)
         {
+            var userlicenserating = userlicenseratingDto.ToBusinessObject();
+
             if (ModelState.IsValid)
             {
 				userlicenserating.CreatedOn = DateTime.Now;
@@ -107,8 +110,10 @@ namespace Web.Controllers.Mvc
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include="Id,UserId,LicenseId,Rating,CreatedOn,ModifiedOn,DeletedOn")] UserLicenseRating userlicenserating)
+        public async Task<ActionResult> Edit([Bind(Include="Id,UserId,LicenseId,Rating,CreatedOn,ModifiedOn,DeletedOn")] UserLicenseRatingDto userlicenseratingDto)
         {
+            var userlicenserating = userlicenseratingDto.ToBusinessObject();
+
             if (ModelState.IsValid)
             {
                 db.Entry(userlicenserating).State = EntityState.Modified;

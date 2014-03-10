@@ -1,21 +1,21 @@
 ﻿@model BusinessObjects.UserResourcePool
 
-@{ ViewBag.Title = string.Format("Employee Satisfaction Index - {0}", Model.OrganizationGroupType); }
+@{ ViewBag.Title = string.Format("All in One - {0}", Model.UserResourcePoolType); }
 
 <h2>@ViewBag.Title</h2>
 
 <p>
     <div class="btn-group">
-        @{ Html.BeginForm("IncreaseNumberOfSales", "OrganizationGroup", new { area = "", returnAction = ViewBag.ReturnAction }, FormMethod.Post, null); }
+        @{ Html.BeginForm("IncreaseNumberOfSales", "UserResourcePool", new { area = "", returnAction = ViewBag.ReturnAction }, FormMethod.Post, null); }
         <button type="submit" class="btn btn-default">Increase Number of Sales</button>
         @{ Html.EndForm(); }
-        @{ Html.BeginForm("ResetNumberOfSales", "OrganizationGroup", new { area = "", returnAction = ViewBag.ReturnAction }, FormMethod.Post, null); }
+        @{ Html.BeginForm("ResetNumberOfSales", "UserResourcePool", new { area = "", returnAction = ViewBag.ReturnAction }, FormMethod.Post, null); }
         <button type="submit" class="btn btn-default">Reset Number of Sales</button>
         @{ Html.EndForm(); }
     </div>
 </p>
 <p>
-    CMRP Rate: @Model.ResourcePoolRate.ToString("P2")
+    CMRP Rate: @Model.ResourcePoolRatePercentage.ToString("P2") - Number of ratings: @Model.UserResourcePoolRatingSet.Count()
 </p>
 <table class="table">
     <tr>
@@ -29,6 +29,9 @@
             @Html.DisplayNameFor(model => model.OrganizationSet.First().SalesPrice)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.OrganizationSet.First().License.Name)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.OrganizationSet.First().ProfitPercentage)
         </th>
         <th>
@@ -36,12 +39,6 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().NumberOfSales)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().TotalProductionCost)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().TotalSalesRevenue)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().TotalProfit)
@@ -53,16 +50,28 @@
             @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().TotalSalesRevenueIncludingResourcePoolTax)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().EmployeeSatisfactionIndexPercentage)
+            @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().TotalCostIndexIncome)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().EmployeeSatisfactionIndexPercentageWithNumberOfSales)
+            @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().KnowledgeIndexIncome)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().EmployeeSatisfactionIndexPercentageWithNumberOfSalesWeighted)
+            @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().QualityIndexIncome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().SectorIndexIncome)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().EmployeeSatisfactionIndexIncome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().CustomerSatisfactionIndexIncome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().DistanceIndexIncome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().TotalResourcePoolIncome)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().TotalIncome)
@@ -82,6 +91,9 @@
                 @item.Organization.SalesPrice.ToString("N2")
             </td>
             <td>
+                @Html.DisplayFor(model => item.Organization.License.Name)
+            </td>
+            <td>
                 @item.Organization.ProfitPercentage.ToString("P2")
             </td>
             <td>
@@ -89,12 +101,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NumberOfSales)
-            </td>
-            <td>
-                @item.TotalProductionCost.ToString("N2")
-            </td>
-            <td>
-                @item.TotalSalesRevenue.ToString("N2")
             </td>
             <td>
                 @item.TotalProfit.ToString("N2")
@@ -106,16 +112,28 @@
                 @item.TotalSalesRevenueIncludingResourcePoolTax.ToString("N2")
             </td>
             <td>
-                @item.EmployeeSatisfactionIndexPercentage.ToString("P2")
+                @item.TotalCostIndexIncome.ToString("N2")
             </td>
             <td>
-                @item.EmployeeSatisfactionIndexPercentageWithNumberOfSales.ToString("N2")
+                @item.KnowledgeIndexIncome.ToString("N2")
             </td>
             <td>
-                @item.EmployeeSatisfactionIndexPercentageWithNumberOfSalesWeighted.ToString("N2")
+                @item.QualityIndexIncome.ToString("N2")
+            </td>
+            <td>
+                @item.SectorIndexIncome.ToString("N2")
             </td>
             <td>
                 @item.EmployeeSatisfactionIndexIncome.ToString("N2")
+            </td>
+            <td>
+                @item.CustomerSatisfactionIndexIncome.ToString("N2")
+            </td>
+            <td>
+                @item.DistanceIndexIncome.ToString("N2")
+            </td>
+            <td>
+                @item.TotalResourcePoolIncome.ToString("N2")
             </td>
             <td>
                 @item.TotalIncome.ToString("N2")
@@ -136,16 +154,13 @@
             &nbsp;
         </td>
         <td>
+            &nbsp;
+        </td>
+        <td>
             @Model.SalesPriceIncludingResourcePoolTax.ToString("N2")
         </td>
         <td>
             @Model.NumberOfSales
-        </td>
-        <td>
-            @Model.TotalProductionCost.ToString("N2")
-        </td>
-        <td>
-            @Model.TotalSalesRevenue.ToString("N2")
         </td>
         <td>
             @Model.TotalProfit.ToString("N2")
@@ -157,16 +172,28 @@
             @Model.TotalSalesRevenueIncludingResourcePoolTax.ToString("N2")
         </td>
         <td>
-            &nbsp;
+            @Model.TotalCostIndexIncome.ToString("N2")
         </td>
         <td>
-            &nbsp;
+            @Model.KnowledgeIndexIncome.ToString("N2")
         </td>
         <td>
-            &nbsp;
+            @Model.QualityIndexIncome.ToString("N2")
+        </td>
+        <td>
+            @Model.SectorIndexIncome.ToString("N2")
         </td>
         <td>
             @Model.EmployeeSatisfactionIndexIncome.ToString("N2")
+        </td>
+        <td>
+            @Model.CustomerSatisfactionIndexIncome.ToString("N2")
+        </td>
+        <td>
+            @Model.DistanceIndexIncome.ToString("N2")
+        </td>
+        <td>
+            @Model.TotalResourcePoolIncome.ToString("N2")
         </td>
         <td>
             @Model.TotalIncome.ToString("N2")

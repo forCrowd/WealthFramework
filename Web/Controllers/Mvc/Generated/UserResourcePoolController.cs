@@ -8,16 +8,17 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BusinessObjects;
+using BusinessObjects.Dto;
 using DataObjects;
 
-namespace Web.Controllers.Mvc.Generated
+namespace Web.Controllers.Mvc
 {
     public partial class UserResourcePoolController : BaseController
     {
         // GET: /UserResourcePool/
         public async Task<ActionResult> Index()
         {
-            var userresourcepool = db.UserResourcePool.Include(u => u.User).Include(u => u.ResourcePool);
+            var userresourcepool = db.UserResourcePoolSet.Include(u => u.User).Include(u => u.ResourcePool);
 
             if (IsAuthenticated)
                 userresourcepool = userresourcepool.Where(item => item.UserId == CurrentUserId);
@@ -32,7 +33,7 @@ namespace Web.Controllers.Mvc.Generated
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserResourcePool userresourcepool = await db.UserResourcePool.FindAsync(id);
+            UserResourcePool userresourcepool = await db.UserResourcePoolSet.FindAsync(id);
             if (userresourcepool == null)
             {
                 return HttpNotFound();
@@ -44,7 +45,7 @@ namespace Web.Controllers.Mvc.Generated
         public ActionResult Create()
         {
             ViewBag.UserId = new SelectList(db.UserSet, "Id", "Email");
-            ViewBag.ResourcePoolId = new SelectList(db.ResourcePool, "Id", "Name");
+            ViewBag.ResourcePoolId = new SelectList(db.ResourcePoolSet, "Id", "Name");
             return View();
         }
 
@@ -53,19 +54,21 @@ namespace Web.Controllers.Mvc.Generated
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include="Id,UserId,ResourcePoolId,ResourcePoolRate,TotalCostIndexRating,KnowledgeIndexRating,QualityIndexRating,SectorIndexRating,EmployeeSatisfactionIndexRating,CustomerSatisfactionIndexRating,DistanceIndexRating,CreatedOn,ModifiedOn,DeletedOn")] UserResourcePool userresourcepool)
+        public async Task<ActionResult> Create([Bind(Include = "Id,UserId,ResourcePoolId,ResourcePoolRate,TotalCostIndexRating,KnowledgeIndexRating,QualityIndexRating,SectorIndexRating,EmployeeSatisfactionIndexRating,CustomerSatisfactionIndexRating,DistanceIndexRating,CreatedOn,ModifiedOn,DeletedOn")] UserResourcePoolDto userresourcepoolDto)
         {
+            var userresourcepool = userresourcepoolDto.ToBusinessObject();
+
             if (ModelState.IsValid)
             {
 				userresourcepool.CreatedOn = DateTime.Now;
 				userresourcepool.ModifiedOn = DateTime.Now;
-                db.UserResourcePool.Add(userresourcepool);
+                db.UserResourcePoolSet.Add(userresourcepool);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
             ViewBag.UserId = new SelectList(db.UserSet, "Id", "Email", userresourcepool.UserId);
-            ViewBag.ResourcePoolId = new SelectList(db.ResourcePool, "Id", "Name", userresourcepool.ResourcePoolId);
+            ViewBag.ResourcePoolId = new SelectList(db.ResourcePoolSet, "Id", "Name", userresourcepool.ResourcePoolId);
             return View(userresourcepool);
         }
 
@@ -76,13 +79,13 @@ namespace Web.Controllers.Mvc.Generated
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserResourcePool userresourcepool = await db.UserResourcePool.FindAsync(id);
+            UserResourcePool userresourcepool = await db.UserResourcePoolSet.FindAsync(id);
             if (userresourcepool == null)
             {
                 return HttpNotFound();
             }
             ViewBag.UserId = new SelectList(db.UserSet, "Id", "Email", userresourcepool.UserId);
-            ViewBag.ResourcePoolId = new SelectList(db.ResourcePool, "Id", "Name", userresourcepool.ResourcePoolId);
+            ViewBag.ResourcePoolId = new SelectList(db.ResourcePoolSet, "Id", "Name", userresourcepool.ResourcePoolId);
             return View(userresourcepool);
         }
 
@@ -91,8 +94,10 @@ namespace Web.Controllers.Mvc.Generated
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include="Id,UserId,ResourcePoolId,ResourcePoolRate,TotalCostIndexRating,KnowledgeIndexRating,QualityIndexRating,SectorIndexRating,EmployeeSatisfactionIndexRating,CustomerSatisfactionIndexRating,DistanceIndexRating,CreatedOn,ModifiedOn,DeletedOn")] UserResourcePool userresourcepool)
+        public async Task<ActionResult> Edit([Bind(Include="Id,UserId,ResourcePoolId,ResourcePoolRate,TotalCostIndexRating,KnowledgeIndexRating,QualityIndexRating,SectorIndexRating,EmployeeSatisfactionIndexRating,CustomerSatisfactionIndexRating,DistanceIndexRating,CreatedOn,ModifiedOn,DeletedOn")] UserResourcePoolDto userresourcepoolDto)
         {
+            var userresourcepool = userresourcepoolDto.ToBusinessObject();
+
             if (ModelState.IsValid)
             {
                 db.Entry(userresourcepool).State = EntityState.Modified;
@@ -101,7 +106,7 @@ namespace Web.Controllers.Mvc.Generated
                 return RedirectToAction("Index");
             }
             ViewBag.UserId = new SelectList(db.UserSet, "Id", "Email", userresourcepool.UserId);
-            ViewBag.ResourcePoolId = new SelectList(db.ResourcePool, "Id", "Name", userresourcepool.ResourcePoolId);
+            ViewBag.ResourcePoolId = new SelectList(db.ResourcePoolSet, "Id", "Name", userresourcepool.ResourcePoolId);
             return View(userresourcepool);
         }
 
@@ -112,7 +117,7 @@ namespace Web.Controllers.Mvc.Generated
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserResourcePool userresourcepool = await db.UserResourcePool.FindAsync(id);
+            UserResourcePool userresourcepool = await db.UserResourcePoolSet.FindAsync(id);
             if (userresourcepool == null)
             {
                 return HttpNotFound();
@@ -125,8 +130,8 @@ namespace Web.Controllers.Mvc.Generated
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            UserResourcePool userresourcepool = await db.UserResourcePool.FindAsync(id);
-            db.UserResourcePool.Remove(userresourcepool);
+            UserResourcePool userresourcepool = await db.UserResourcePoolSet.FindAsync(id);
+            db.UserResourcePoolSet.Remove(userresourcepool);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

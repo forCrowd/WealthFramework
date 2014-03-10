@@ -10,6 +10,12 @@
 . multiple primary keys structre?
 .. if this can't be solved, resourcepool organization table can't prevent having multiple definitions (so userorganizationrating as well)
 
-. create user / delete user ?!
+. user create / delete okay - try to apply to others? t4 ?
 
-. update organization names
+Install-Package MvcScaffolding -Version 1.0.8-vs2013 -Pre
+
+---
+Azize
+projenin hayata gecis sureci, hizi - issizlige etkisi..
+hesap yarat + cmrp indexleri
+firmalarin isimleri yazmaya baslarsa problem olur mu?

@@ -1,4 +1,10 @@
-﻿
+﻿0.3.0
+. BusinessObjects
+.. OrganizationGroupType was renamed to UserResourcePoolType
+..  UserDistributionIndexRatingAverage class was merged into UserResourcePool
+. Web
+.. Number of ratings info was added to CMRP views 
+
 0.2.0
 . Database + General
 .. ResourcePool + ResourcePoolOrganization + UserResourcePool + UserResourcePoolOrganization tables were added

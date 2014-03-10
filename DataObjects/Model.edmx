@@ -538,33 +538,33 @@
             <End Role="User" EntitySet="UserSet" />
             <End Role="UserSectorRating" EntitySet="UserSectorRatingSet" />
           </AssociationSet>
-          <EntitySet Name="ResourcePool" EntityType="WealthEconomyModel.ResourcePool" />
-          <EntitySet Name="ResourcePoolOrganization" EntityType="WealthEconomyModel.ResourcePoolOrganization" />
+          <EntitySet Name="ResourcePoolSet" EntityType="WealthEconomyModel.ResourcePool" />
+          <EntitySet Name="ResourcePoolOrganizationSet" EntityType="WealthEconomyModel.ResourcePoolOrganization" />
           <AssociationSet Name="FK_ResourcePoolOrganization_Organization" Association="WealthEconomyModel.FK_ResourcePoolOrganization_Organization">
             <End Role="Organization" EntitySet="OrganizationSet" />
-            <End Role="ResourcePoolOrganization" EntitySet="ResourcePoolOrganization" />
+            <End Role="ResourcePoolOrganization" EntitySet="ResourcePoolOrganizationSet" />
           </AssociationSet>
           <AssociationSet Name="FK_ResourcePoolOrganization_ResourcePool" Association="WealthEconomyModel.FK_ResourcePoolOrganization_ResourcePool">
-            <End Role="ResourcePool" EntitySet="ResourcePool" />
-            <End Role="ResourcePoolOrganization" EntitySet="ResourcePoolOrganization" />
+            <End Role="ResourcePool" EntitySet="ResourcePoolSet" />
+            <End Role="ResourcePoolOrganization" EntitySet="ResourcePoolOrganizationSet" />
           </AssociationSet>
-          <EntitySet Name="UserResourcePool" EntityType="WealthEconomyModel.UserResourcePool" />
+          <EntitySet Name="UserResourcePoolSet" EntityType="WealthEconomyModel.UserResourcePool" />
           <AssociationSet Name="FK_UserResourcePool_ResourcePool" Association="WealthEconomyModel.FK_UserResourcePool_ResourcePool">
-            <End Role="ResourcePool" EntitySet="ResourcePool" />
-            <End Role="UserResourcePool" EntitySet="UserResourcePool" />
+            <End Role="ResourcePool" EntitySet="ResourcePoolSet" />
+            <End Role="UserResourcePool" EntitySet="UserResourcePoolSet" />
           </AssociationSet>
           <AssociationSet Name="FK_UserResourcePool_User" Association="WealthEconomyModel.FK_UserResourcePool_User">
             <End Role="User" EntitySet="UserSet" />
-            <End Role="UserResourcePool" EntitySet="UserResourcePool" />
+            <End Role="UserResourcePool" EntitySet="UserResourcePoolSet" />
           </AssociationSet>
-          <EntitySet Name="UserResourcePoolOrganization" EntityType="WealthEconomyModel.UserResourcePoolOrganization" />
+          <EntitySet Name="UserResourcePoolOrganizationSet" EntityType="WealthEconomyModel.UserResourcePoolOrganization" />
           <AssociationSet Name="FK_UserResourcePoolOrganization_ResourcePoolOrganization" Association="WealthEconomyModel.FK_UserResourcePoolOrganization_ResourcePoolOrganization">
-            <End Role="ResourcePoolOrganization" EntitySet="ResourcePoolOrganization" />
-            <End Role="UserResourcePoolOrganization" EntitySet="UserResourcePoolOrganization" />
+            <End Role="ResourcePoolOrganization" EntitySet="ResourcePoolOrganizationSet" />
+            <End Role="UserResourcePoolOrganization" EntitySet="UserResourcePoolOrganizationSet" />
           </AssociationSet>
           <AssociationSet Name="FK_UserResourcePoolOrganization_User" Association="WealthEconomyModel.FK_UserResourcePoolOrganization_User">
             <End Role="User" EntitySet="UserSet" />
-            <End Role="UserResourcePoolOrganization" EntitySet="UserResourcePoolOrganization" />
+            <End Role="UserResourcePoolOrganization" EntitySet="UserResourcePoolOrganizationSet" />
           </AssociationSet>
         </EntityContainer>
         <EnumType Name="UserAccountType" UnderlyingType="Byte">
@@ -795,7 +795,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ResourcePool">
+          <EntitySetMapping Name="ResourcePoolSet">
             <EntityTypeMapping TypeName="WealthEconomyModel.ResourcePool">
               <MappingFragment StoreEntitySet="ResourcePool">
                 <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
@@ -806,7 +806,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ResourcePoolOrganization">
+          <EntitySetMapping Name="ResourcePoolOrganizationSet">
             <EntityTypeMapping TypeName="WealthEconomyModel.ResourcePoolOrganization">
               <MappingFragment StoreEntitySet="ResourcePoolOrganization">
                 <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
@@ -818,7 +818,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UserResourcePool">
+          <EntitySetMapping Name="UserResourcePoolSet">
             <EntityTypeMapping TypeName="WealthEconomyModel.UserResourcePool">
               <MappingFragment StoreEntitySet="UserResourcePool">
                 <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
@@ -838,7 +838,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UserResourcePoolOrganization">
+          <EntitySetMapping Name="UserResourcePoolOrganizationSet">
             <EntityTypeMapping TypeName="WealthEconomyModel.UserResourcePoolOrganization">
               <MappingFragment StoreEntitySet="UserResourcePoolOrganization">
                 <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />

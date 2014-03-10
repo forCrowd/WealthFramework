@@ -132,6 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\OrganizationGroup\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\SolutionItems\Properties\AssemblyInfo.cs">
@@ -168,7 +169,7 @@
     <Compile Include="Controllers\Mvc\Generated\OrganizationController.cs" />
     <Compile Include="Controllers\Mvc\Generated\SectorController.cs" />
     <Compile Include="Controllers\Mvc\DatabaseAlterationController.cs" />
-    <Compile Include="Controllers\Mvc\OrganizationGroupController.cs" />
+    <Compile Include="Controllers\Mvc\UserResourcePoolController.cs" />
     <Compile Include="Controllers\Mvc\Generated\UserLicenseRatingController.cs" />
     <Compile Include="Controllers\Mvc\Generated\UserController.cs" />
     <Compile Include="Controllers\Mvc\Generated\UserSectorRatingController.cs" />
@@ -220,15 +221,15 @@
     <Content Include="Views\Sector\Edit.cshtml" />
     <Content Include="Views\Sector\Index.cshtml" />
     <Content Include="Views\Home\Overview.cshtml" />
-    <Content Include="Views\OrganizationGroup\TotalCostIndex.cshtml" />
-    <Content Include="Views\OrganizationGroup\KnowledgeIndex.cshtml" />
-    <Content Include="Views\OrganizationGroup\QualityIndex.cshtml" />
-    <Content Include="Views\OrganizationGroup\EmployeeSatisfactionIndex.cshtml" />
-    <Content Include="Views\OrganizationGroup\CustomerSatisfactionIndex.cshtml" />
-    <Content Include="Views\OrganizationGroup\SectorIndex.cshtml" />
-    <Content Include="Views\OrganizationGroup\AllInOne.cshtml" />
+    <Content Include="Views\UserResourcePool\TotalCostIndex.cshtml" />
+    <Content Include="Views\UserResourcePool\KnowledgeIndex.cshtml" />
+    <Content Include="Views\UserResourcePool\QualityIndex.cshtml" />
+    <Content Include="Views\UserResourcePool\EmployeeSatisfactionIndex.cshtml" />
+    <Content Include="Views\UserResourcePool\CustomerSatisfactionIndex.cshtml" />
+    <Content Include="Views\UserResourcePool\SectorIndex.cshtml" />
+    <Content Include="Views\UserResourcePool\AllInOne.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
-    <Content Include="Views\OrganizationGroup\DistanceIndex.cshtml" />
+    <Content Include="Views\UserResourcePool\DistanceIndex.cshtml" />
     <Content Include="Views\ResourcePool\Create.cshtml" />
     <Content Include="Views\ResourcePool\Delete.cshtml" />
     <Content Include="Views\ResourcePool\Details.cshtml" />

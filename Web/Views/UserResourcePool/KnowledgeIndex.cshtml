@@ -1,21 +1,21 @@
 ﻿@model BusinessObjects.UserResourcePool
 
-@{ ViewBag.Title = string.Format("Distance Index - Not Available - {0}", Model.OrganizationGroupType); }
+@{ ViewBag.Title = string.Format("Knowledge Index - {0}", Model.UserResourcePoolType); }
 
 <h2>@ViewBag.Title</h2>
 
 <p>
     <div class="btn-group">
-        @{ Html.BeginForm("IncreaseNumberOfSales", "OrganizationGroup", new { area = "", returnAction = "DistanceIndex" }, FormMethod.Post, null); }
+        @{ Html.BeginForm("IncreaseNumberOfSales", "UserResourcePool", new { area = "", returnAction = ViewBag.ReturnAction }, FormMethod.Post, null); }
         <button type="submit" class="btn btn-default">Increase Number of Sales</button>
         @{ Html.EndForm(); }
-        @{ Html.BeginForm("ResetNumberOfSales", "OrganizationGroup", new { area = "", returnAction = "DistanceIndex" }, FormMethod.Post, null); }
+        @{ Html.BeginForm("ResetNumberOfSales", "UserResourcePool", new { area = "", returnAction = ViewBag.ReturnAction }, FormMethod.Post, null); }
         <button type="submit" class="btn btn-default">Reset Number of Sales</button>
         @{ Html.EndForm(); }
     </div>
 </p>
 <p>
-    CMRP Rate: @Model.ResourcePoolRate.ToString("P2")
+    CMRP Rate: @Model.ResourcePoolRatePercentage.ToString("P2") - Number of ratings: @Model.UserResourcePoolRatingSet.Count()
 </p>
 <table class="table">
     <tr>
@@ -27,6 +27,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.OrganizationSet.First().SalesPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrganizationSet.First().License.Name)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.OrganizationSet.First().ProfitPercentage)
@@ -53,16 +56,16 @@
             @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().TotalSalesRevenueIncludingResourcePoolTax)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().DistanceIndexPercentage)
+            @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().KnowledgeIndexPercentage)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().DistanceIndexPercentageWithNumberOfSales)
+            @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().KnowledgeIndexPercentageWithNumberOfSales)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().DistanceIndexPercentageWithNumberOfSalesWeighted)
+            @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().KnowledgeIndexPercentageWithNumberOfSalesWeighted)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().DistanceIndexIncome)
+            @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().KnowledgeIndexIncome)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.UserResourcePoolOrganizationSet.First().TotalIncome)
@@ -80,6 +83,9 @@
             </td>
             <td>
                 @item.Organization.SalesPrice.ToString("N2")
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Organization.License.Name)
             </td>
             <td>
                 @item.Organization.ProfitPercentage.ToString("P2")
@@ -106,16 +112,16 @@
                 @item.TotalSalesRevenueIncludingResourcePoolTax.ToString("N2")
             </td>
             <td>
-                @item.DistanceIndexPercentage.ToString("P2")
+                @item.KnowledgeIndexPercentage.ToString("P2")
             </td>
             <td>
-                @item.DistanceIndexPercentageWithNumberOfSales.ToString("N2")
+                @item.KnowledgeIndexPercentageWithNumberOfSales.ToString("N2")
             </td>
             <td>
-                @item.DistanceIndexPercentageWithNumberOfSalesWeighted.ToString("N2")
+                @item.KnowledgeIndexPercentageWithNumberOfSalesWeighted.ToString("N2")
             </td>
             <td>
-                @item.DistanceIndexIncome.ToString("N2")
+                @item.KnowledgeIndexIncome.ToString("N2")
             </td>
             <td>
                 @item.TotalIncome.ToString("N2")
@@ -131,6 +137,9 @@
         </td>
         <td>
             @Model.ResourcePool.SalesPrice.ToString("N2")
+        </td>
+        <td>
+            &nbsp;
         </td>
         <td>
             &nbsp;
@@ -166,7 +175,7 @@
             &nbsp;
         </td>
         <td>
-            @Model.DistanceIndexIncome.ToString("N2")
+            @Model.KnowledgeIndexIncome.ToString("N2")
         </td>
         <td>
             @Model.TotalIncome.ToString("N2")

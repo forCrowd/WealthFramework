@@ -1,21 +1,21 @@
 ﻿@model BusinessObjects.UserResourcePool
 
-@{ ViewBag.Title = string.Format("Total Cost Index - {0}", Model.OrganizationGroupType); }
+@{ ViewBag.Title = string.Format("Total Cost Index - {0}", Model.UserResourcePoolType); }
 
 <h2>@ViewBag.Title</h2>
 
 <p>
     <div class="btn-group">
-        @{ Html.BeginForm("IncreaseNumberOfSales", "OrganizationGroup", new { area = "", returnAction = "TotalCostIndex" }, FormMethod.Post, null); }
+        @{ Html.BeginForm("IncreaseNumberOfSales", "UserResourcePool", new { area = "", returnAction = "TotalCostIndex" }, FormMethod.Post, null); }
         <button type="submit" class="btn btn-default">Increase Number of Sales</button>
         @{ Html.EndForm(); }
-        @{ Html.BeginForm("ResetNumberOfSales", "OrganizationGroup", new { area = "", returnAction = "TotalCostIndex" }, FormMethod.Post, null); }
+        @{ Html.BeginForm("ResetNumberOfSales", "UserResourcePool", new { area = "", returnAction = "TotalCostIndex" }, FormMethod.Post, null); }
         <button type="submit" class="btn btn-default">Reset Number of Sales</button>
         @{ Html.EndForm(); }
     </div>
 </p>
 <p>
-    CMRP Rate: @Model.ResourcePoolRate.ToString("P2")
+    CMRP Rate: @Model.ResourcePoolRatePercentage.ToString("P2") - Number of ratings: @Model.UserResourcePoolRatingSet.Count()
 </p>
 <table class="table">
     <tr>

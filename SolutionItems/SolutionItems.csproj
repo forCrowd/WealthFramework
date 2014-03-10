@@ -38,6 +38,7 @@
     <Content Include="Notes\Notes.txt" />
     <Content Include="Notes\Release Notes.txt" />
     <Content Include="Notes\Todo.txt" />
+    <Content Include="Scripts\Database\Alterations\0\0.3\0.3.0\01-20140310 ResourcePool table Rate field update.sql" />
     <Content Include="Scripts\Database\Alterations\0\0.2\0.2.0\04-20140309 UserResourcePoolOrganization table records.sql" />
     <Content Include="Scripts\Database\Alterations\0\0.2\0.2.0\01-20140308 ResourcePool table records.sql" />
     <Content Include="Scripts\Database\Alterations\0\0.2\0.2.0\02-20140308 ResourcePoolOrganization table record.sql" />

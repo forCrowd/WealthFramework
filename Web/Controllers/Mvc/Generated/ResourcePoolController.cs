@@ -8,16 +8,17 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BusinessObjects;
+using BusinessObjects.Dto;
 using DataObjects;
 
-namespace Web.Controllers.Mvc.Generated
+namespace Web.Controllers.Mvc
 {
     public partial class ResourcePoolController : BaseController
     {
         // GET: /ResourcePool/
         public async Task<ActionResult> Index()
         {
-            return View(await db.ResourcePool.ToListAsync());
+            return View(await db.ResourcePoolSet.ToListAsync());
         }
 
         // GET: /ResourcePool/Details/5
@@ -27,7 +28,7 @@ namespace Web.Controllers.Mvc.Generated
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ResourcePool resourcepool = await db.ResourcePool.FindAsync(id);
+            ResourcePool resourcepool = await db.ResourcePoolSet.FindAsync(id);
             if (resourcepool == null)
             {
                 return HttpNotFound();
@@ -46,13 +47,15 @@ namespace Web.Controllers.Mvc.Generated
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include="Id,Name,CreatedOn,ModifiedOn,DeletedOn")] ResourcePool resourcepool)
+        public async Task<ActionResult> Create([Bind(Include="Id,Name,CreatedOn,ModifiedOn,DeletedOn")] ResourcePoolDto resourcepoolDto)
         {
+            var resourcepool = resourcepoolDto.ToBusinessObject();
+
             if (ModelState.IsValid)
             {
 				resourcepool.CreatedOn = DateTime.Now;
 				resourcepool.ModifiedOn = DateTime.Now;
-                db.ResourcePool.Add(resourcepool);
+                db.ResourcePoolSet.Add(resourcepool);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
@@ -67,7 +70,7 @@ namespace Web.Controllers.Mvc.Generated
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ResourcePool resourcepool = await db.ResourcePool.FindAsync(id);
+            ResourcePool resourcepool = await db.ResourcePoolSet.FindAsync(id);
             if (resourcepool == null)
             {
                 return HttpNotFound();
@@ -80,8 +83,10 @@ namespace Web.Controllers.Mvc.Generated
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include="Id,Name,CreatedOn,ModifiedOn,DeletedOn")] ResourcePool resourcepool)
+        public async Task<ActionResult> Edit([Bind(Include="Id,Name,CreatedOn,ModifiedOn,DeletedOn")] ResourcePoolDto resourcepoolDto)
         {
+            var resourcepool = resourcepoolDto.ToBusinessObject();
+
             if (ModelState.IsValid)
             {
                 db.Entry(resourcepool).State = EntityState.Modified;
@@ -99,7 +104,7 @@ namespace Web.Controllers.Mvc.Generated
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ResourcePool resourcepool = await db.ResourcePool.FindAsync(id);
+            ResourcePool resourcepool = await db.ResourcePoolSet.FindAsync(id);
             if (resourcepool == null)
             {
                 return HttpNotFound();
@@ -112,8 +117,8 @@ namespace Web.Controllers.Mvc.Generated
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            ResourcePool resourcepool = await db.ResourcePool.FindAsync(id);
-            db.ResourcePool.Remove(resourcepool);
+            ResourcePool resourcepool = await db.ResourcePoolSet.FindAsync(id);
+            db.ResourcePoolSet.Remove(resourcepool);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
