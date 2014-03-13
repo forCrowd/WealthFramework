@@ -1,4 +1,7 @@
-﻿0.4.2
+﻿0.4.2.1
+. General - Missing files were restored
+
+0.4.2
 . General - github repo merge
 
 0.4.1
