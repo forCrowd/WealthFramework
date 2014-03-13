@@ -15,7 +15,7 @@ namespace BusinessObjects
     using BusinessObjects.Metadata;
     
     [MetadataType(typeof(UserMetadata))]
-    public partial class User : IEntity<int>
+    public partial class User : IEntity
     {
         public User()
         {
@@ -24,7 +24,7 @@ namespace BusinessObjects
             this.UserSectorRatingSet = new HashSet<UserSectorRating>();
             this.UserResourcePoolOrganizationSet = new HashSet<UserResourcePoolOrganization>();
         }
-    
+    	public bool IsNew { get { return Id == default(int); } }
         public int Id { get; set; }
         public string Email { get; set; }
         public string FirstName { get; set; }

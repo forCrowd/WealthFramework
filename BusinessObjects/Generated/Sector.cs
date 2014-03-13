@@ -15,14 +15,14 @@ namespace BusinessObjects
     using BusinessObjects.Metadata;
     
     [MetadataType(typeof(SectorMetadata))]
-    public partial class Sector : IEntity<byte>
+    public partial class Sector : IEntity
     {
         public Sector()
         {
             this.OrganizationSet = new HashSet<Organization>();
             this.UserSectorRatingSet = new HashSet<UserSectorRating>();
         }
-    
+    	public bool IsNew { get { return Id == default(byte); } }
         public byte Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

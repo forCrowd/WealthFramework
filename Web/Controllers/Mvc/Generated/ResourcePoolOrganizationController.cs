@@ -7,7 +7,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
-namespace Web.Controllers.Mvc
+namespace Web.Controllers.Mvc.Generated
 {
     public partial class ResourcePoolOrganizationController : BaseController
     {
@@ -16,8 +16,8 @@ namespace Web.Controllers.Mvc
         // GET: /ResourcePoolOrganization/
         public async Task<ActionResult> Index()
         {
-            var resourcepoolorganization = unitOfWork.AllLiveIncluding(r => r.Organization, r => r.ResourcePool);
-            return View(await resourcepoolorganization.ToListAsync());
+            var resourcepoolorganizationset = unitOfWork.AllLiveIncluding(r => r.Organization, r => r.ResourcePool);
+            return View(await resourcepoolorganizationset.ToListAsync());
         }
 
         // GET: /ResourcePoolOrganization/Details/5
@@ -39,7 +39,7 @@ namespace Web.Controllers.Mvc
         public ActionResult Create()
         {
             ViewBag.OrganizationId = new SelectList(unitOfWork.AllOrganizationLive.AsEnumerable(), "Id", "Name");
-            ViewBag.ResourcePoolId = new SelectList(unitOfWork.AllResourcePoolLive, "Id", "Name");
+            ViewBag.ResourcePoolId = new SelectList(unitOfWork.AllResourcePoolLive.AsEnumerable(), "Id", "Name");
             return View();
         }
 
@@ -48,9 +48,9 @@ namespace Web.Controllers.Mvc
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include="Id,ResourcePoolId,OrganizationId,CreatedOn,ModifiedOn,DeletedOn")] ResourcePoolOrganizationDto resourcepoolorganizationDto)
+        public async Task<ActionResult> Create([Bind(Include = "Id,ResourcePoolId,OrganizationId,CreatedOn,ModifiedOn,DeletedOn")] ResourcePoolOrganizationDto resourcepoolorganizationdto)
         {
-            var resourcepoolorganization = resourcepoolorganizationDto.ToBusinessObject();
+			var resourcepoolorganization = resourcepoolorganizationdto.ToBusinessObject();
 
             if (ModelState.IsValid)
             {
@@ -59,8 +59,8 @@ namespace Web.Controllers.Mvc
                 return RedirectToAction("Index");
             }
 
-            ViewBag.OrganizationId = new SelectList(unitOfWork.AllOrganizationLive, "Id", "Name", resourcepoolorganization.OrganizationId);
-            ViewBag.ResourcePoolId = new SelectList(unitOfWork.AllResourcePoolLive, "Id", "Name", resourcepoolorganization.ResourcePoolId);
+            ViewBag.OrganizationId = new SelectList(unitOfWork.AllOrganizationLive.AsEnumerable(), "Id", "Name", resourcepoolorganization.OrganizationId);
+            ViewBag.ResourcePoolId = new SelectList(unitOfWork.AllResourcePoolLive.AsEnumerable(), "Id", "Name", resourcepoolorganization.ResourcePoolId);
             return View(resourcepoolorganization);
         }
 
@@ -76,8 +76,8 @@ namespace Web.Controllers.Mvc
             {
                 return HttpNotFound();
             }
-            ViewBag.OrganizationId = new SelectList(unitOfWork.AllOrganizationLive, "Id", "Name", resourcepoolorganization.OrganizationId);
-            ViewBag.ResourcePoolId = new SelectList(unitOfWork.AllResourcePoolLive, "Id", "Name", resourcepoolorganization.ResourcePoolId);
+            ViewBag.OrganizationId = new SelectList(unitOfWork.AllOrganizationLive.AsEnumerable(), "Id", "Name", resourcepoolorganization.OrganizationId);
+            ViewBag.ResourcePoolId = new SelectList(unitOfWork.AllResourcePoolLive.AsEnumerable(), "Id", "Name", resourcepoolorganization.ResourcePoolId);
             return View(resourcepoolorganization);
         }
 
@@ -86,9 +86,9 @@ namespace Web.Controllers.Mvc
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include="Id,ResourcePoolId,OrganizationId,CreatedOn,ModifiedOn,DeletedOn")] ResourcePoolOrganizationDto resourcepoolorganizationDto)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,ResourcePoolId,OrganizationId,CreatedOn,ModifiedOn,DeletedOn")] ResourcePoolOrganizationDto resourcepoolorganizationdto)
         {
-            var resourcepoolorganization = resourcepoolorganizationDto.ToBusinessObject();
+			var resourcepoolorganization = resourcepoolorganizationdto.ToBusinessObject();
 
             if (ModelState.IsValid)
             {
@@ -96,8 +96,8 @@ namespace Web.Controllers.Mvc
                 await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.OrganizationId = new SelectList(unitOfWork.AllOrganizationLive, "Id", "Name", resourcepoolorganization.OrganizationId);
-            ViewBag.ResourcePoolId = new SelectList(unitOfWork.AllResourcePoolLive, "Id", "Name", resourcepoolorganization.ResourcePoolId);
+            ViewBag.OrganizationId = new SelectList(unitOfWork.AllOrganizationLive.AsEnumerable(), "Id", "Name", resourcepoolorganization.OrganizationId);
+            ViewBag.ResourcePoolId = new SelectList(unitOfWork.AllResourcePoolLive.AsEnumerable(), "Id", "Name", resourcepoolorganization.ResourcePoolId);
             return View(resourcepoolorganization);
         }
 

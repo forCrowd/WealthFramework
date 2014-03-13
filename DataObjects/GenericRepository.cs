@@ -1,16 +1,14 @@
 ﻿namespace DataObjects
 {
     using BusinessObjects;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
+    using System;
+    using System.Collections.Generic;
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Threading.Tasks;
 
-    public abstract class GenericRepository<TEntityType, TPrimaryKeyType> : IGenericRepository<TEntityType, TPrimaryKeyType>
-        where TEntityType : class, IEntity<TPrimaryKeyType>
-        where TPrimaryKeyType : struct
+    public abstract class GenericRepository<TEntityType> : IGenericRepository<TEntityType> where TEntityType : class, IEntity
     {
         readonly DbSet<TEntityType> dbSet;
 
@@ -50,19 +48,19 @@ using System.Threading.Tasks;
             return query;
         }
 
-        public TEntityType Find(object id)
+        public TEntityType Find(params object[] keyValues)
         {
-            return dbSet.Find(id);
+            return dbSet.Find(keyValues);
         }
 
-        public async Task<TEntityType> FindAsync(object id)
+        public async Task<TEntityType> FindAsync(params object[] keyValues)
         {
-            return await dbSet.FindAsync(id);
+            return await dbSet.FindAsync(keyValues);
         }
 
         public void InsertOrUpdate(TEntityType entity)
         {
-            if (entity.Id.Equals(default(TPrimaryKeyType)))
+            if (entity.IsNew)
             {
                 entity.CreatedOn = DateTime.Now;
                 entity.ModifiedOn = DateTime.Now;
@@ -75,9 +73,9 @@ using System.Threading.Tasks;
             }
         }
 
-        public void Delete(object id)
+        public void Delete(params object[] keyValues)
         {
-            var entity = dbSet.Find(id);
+            var entity = dbSet.Find(keyValues);
             dbSet.Remove(entity);
         }
 

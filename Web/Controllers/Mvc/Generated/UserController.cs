@@ -1,15 +1,13 @@
 ﻿using BusinessObjects;
 using BusinessObjects.Dto;
 using Facade;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
-namespace Web.Controllers.Mvc
+namespace Web.Controllers.Mvc.Generated
 {
     public partial class UserController : BaseController
     {
@@ -39,8 +37,6 @@ namespace Web.Controllers.Mvc
         // GET: /User/Create
         public ActionResult Create()
         {
-            ViewBag.UserAccountTypeId = new SelectList(GetAvailableUserAccountTypes(), "Id", "Name");
-
             return View();
         }
 
@@ -49,9 +45,9 @@ namespace Web.Controllers.Mvc
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Email,FirstName,MiddleName,LastName,UserAccountTypeId,Notes,CreatedOn,ModifiedOn,DeletedOn")] UserDto userDto)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Email,FirstName,MiddleName,LastName,UserAccountTypeId,Notes,CreatedOn,ModifiedOn,DeletedOn")] UserDto userdto)
         {
-            var user = userDto.ToBusinessObject();
+			var user = userdto.ToBusinessObject();
 
             if (ModelState.IsValid)
             {
@@ -75,8 +71,6 @@ namespace Web.Controllers.Mvc
             {
                 return HttpNotFound();
             }
-
-            ViewBag.UserAccountTypeId = new SelectList(GetAvailableUserAccountTypes(), "Id", "Name", user.UserAccountTypeId);
             return View(user);
         }
 
@@ -85,18 +79,15 @@ namespace Web.Controllers.Mvc
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Email,FirstName,MiddleName,LastName,UserAccountTypeId,Notes,CreatedOn,ModifiedOn,DeletedOn")] UserDto userDto, string returnUrl)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Email,FirstName,MiddleName,LastName,UserAccountTypeId,Notes,CreatedOn,ModifiedOn,DeletedOn")] UserDto userdto)
         {
-            var user = userDto.ToBusinessObject();
+			var user = userdto.ToBusinessObject();
 
             if (ModelState.IsValid)
             {
                 unitOfWork.InsertOrUpdate(user);
                 await unitOfWork.SaveAsync();
-
-                if (!string.IsNullOrWhiteSpace(returnUrl))
-                    return Redirect(returnUrl);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index");
             }
             return View(user);
         }
@@ -124,21 +115,6 @@ namespace Web.Controllers.Mvc
             unitOfWork.Delete(id);
             await unitOfWork.SaveAsync();
             return RedirectToAction("Index");
-        }
-
-        IEnumerable<dynamic> GetAvailableUserAccountTypes()
-        {
-            // User account types
-            var userAccountTypes = Enum.GetValues(typeof(UserAccountType))
-                .OfType<UserAccountType>()
-                .Select(item => new { Id = item, Name = item.ToString() });
-
-            // If it's not admin, show only the current option
-            if (!(IsAuthenticated && CurrentUserAccountTypeId == UserAccountType.Administrator))
-                userAccountTypes = userAccountTypes.Where(accountType => accountType.Id == UserAccountType.Standard);
-
-            // Return
-            return userAccountTypes;
         }
     }
 }

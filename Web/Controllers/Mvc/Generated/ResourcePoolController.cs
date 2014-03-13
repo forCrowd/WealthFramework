@@ -2,11 +2,12 @@
 using BusinessObjects.Dto;
 using Facade;
 using System.Data.Entity;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
-namespace Web.Controllers.Mvc
+namespace Web.Controllers.Mvc.Generated
 {
     public partial class ResourcePoolController : BaseController
     {
@@ -44,9 +45,9 @@ namespace Web.Controllers.Mvc
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include="Id,Name,CreatedOn,ModifiedOn,DeletedOn")] ResourcePoolDto resourcepoolDto)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Name,CreatedOn,ModifiedOn,DeletedOn")] ResourcePoolDto resourcepooldto)
         {
-            var resourcepool = resourcepoolDto.ToBusinessObject();
+			var resourcepool = resourcepooldto.ToBusinessObject();
 
             if (ModelState.IsValid)
             {
@@ -78,9 +79,9 @@ namespace Web.Controllers.Mvc
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include="Id,Name,CreatedOn,ModifiedOn,DeletedOn")] ResourcePoolDto resourcepoolDto)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,CreatedOn,ModifiedOn,DeletedOn")] ResourcePoolDto resourcepooldto)
         {
-            var resourcepool = resourcepoolDto.ToBusinessObject();
+			var resourcepool = resourcepooldto.ToBusinessObject();
 
             if (ModelState.IsValid)
             {

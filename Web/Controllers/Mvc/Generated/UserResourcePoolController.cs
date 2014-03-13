@@ -7,7 +7,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
-namespace Web.Controllers.Mvc
+namespace Web.Controllers.Mvc.Generated
 {
     public partial class UserResourcePoolController : BaseController
     {
@@ -16,12 +16,8 @@ namespace Web.Controllers.Mvc
         // GET: /UserResourcePool/
         public async Task<ActionResult> Index()
         {
-            var userresourcepool = unitOfWork.AllLiveIncluding(u => u.User, u => u.ResourcePool);
-
-            if (IsAuthenticated)
-                userresourcepool = userresourcepool.Where(item => item.UserId == CurrentUserId);
-
-            return View(await userresourcepool.ToListAsync());
+            var userresourcepoolset = unitOfWork.AllLiveIncluding(u => u.User, u => u.ResourcePool);
+            return View(await userresourcepoolset.ToListAsync());
         }
 
         // GET: /UserResourcePool/Details/5
@@ -52,9 +48,9 @@ namespace Web.Controllers.Mvc
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,UserId,ResourcePoolId,ResourcePoolRate,TotalCostIndexRating,KnowledgeIndexRating,QualityIndexRating,SectorIndexRating,EmployeeSatisfactionIndexRating,CustomerSatisfactionIndexRating,DistanceIndexRating,CreatedOn,ModifiedOn,DeletedOn")] UserResourcePoolDto userresourcepoolDto)
+        public async Task<ActionResult> Create([Bind(Include = "Id,UserId,ResourcePoolId,ResourcePoolRate,TotalCostIndexRating,KnowledgeIndexRating,QualityIndexRating,SectorIndexRating,EmployeeSatisfactionIndexRating,CustomerSatisfactionIndexRating,DistanceIndexRating,CreatedOn,ModifiedOn,DeletedOn")] UserResourcePoolDto userresourcepooldto)
         {
-            var userresourcepool = userresourcepoolDto.ToBusinessObject();
+			var userresourcepool = userresourcepooldto.ToBusinessObject();
 
             if (ModelState.IsValid)
             {
@@ -90,9 +86,9 @@ namespace Web.Controllers.Mvc
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include="Id,UserId,ResourcePoolId,ResourcePoolRate,TotalCostIndexRating,KnowledgeIndexRating,QualityIndexRating,SectorIndexRating,EmployeeSatisfactionIndexRating,CustomerSatisfactionIndexRating,DistanceIndexRating,CreatedOn,ModifiedOn,DeletedOn")] UserResourcePoolDto userresourcepoolDto)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,UserId,ResourcePoolId,ResourcePoolRate,TotalCostIndexRating,KnowledgeIndexRating,QualityIndexRating,SectorIndexRating,EmployeeSatisfactionIndexRating,CustomerSatisfactionIndexRating,DistanceIndexRating,CreatedOn,ModifiedOn,DeletedOn")] UserResourcePoolDto userresourcepooldto)
         {
-            var userresourcepool = userresourcepoolDto.ToBusinessObject();
+			var userresourcepool = userresourcepooldto.ToBusinessObject();
 
             if (ModelState.IsValid)
             {

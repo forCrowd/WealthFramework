@@ -7,7 +7,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
-namespace Web.Controllers.Mvc
+namespace Web.Controllers.Mvc.Generated
 {
     public partial class UserLicenseRatingController : BaseController
     {
@@ -17,10 +17,6 @@ namespace Web.Controllers.Mvc
         public async Task<ActionResult> Index()
         {
             var userlicenseratingset = unitOfWork.AllLiveIncluding(u => u.License, u => u.User);
-
-            if (IsAuthenticated)
-                userlicenseratingset = userlicenseratingset.Where(rating => rating.UserId == CurrentUserId);
-
             return View(await userlicenseratingset.ToListAsync());
         }
 
@@ -42,13 +38,8 @@ namespace Web.Controllers.Mvc
         // GET: /UserLicenseRating/Create
         public ActionResult Create()
         {
-            var userSet = unitOfWork.AllUserLive.AsEnumerable();
-
-            if (IsAuthenticated)
-                userSet = userSet.Where(user => user.Id == CurrentUserId);
-
-            ViewBag.UserId = new SelectList(userSet, "Id", "Email");
             ViewBag.LicenseId = new SelectList(unitOfWork.AllLicenseLive.AsEnumerable(), "Id", "Name");
+            ViewBag.UserId = new SelectList(unitOfWork.AllUserLive.AsEnumerable(), "Id", "Email");
             return View();
         }
 
@@ -57,9 +48,9 @@ namespace Web.Controllers.Mvc
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include="Id,UserId,LicenseId,Rating,CreatedOn,ModifiedOn,DeletedOn")] UserLicenseRatingDto userlicenseratingDto)
+        public async Task<ActionResult> Create([Bind(Include = "Id,UserId,LicenseId,Rating,CreatedOn,ModifiedOn,DeletedOn")] UserLicenseRatingDto userlicenseratingdto)
         {
-            var userlicenserating = userlicenseratingDto.ToBusinessObject();
+			var userlicenserating = userlicenseratingdto.ToBusinessObject();
 
             if (ModelState.IsValid)
             {
@@ -68,13 +59,8 @@ namespace Web.Controllers.Mvc
                 return RedirectToAction("Index");
             }
 
-            var userSet = unitOfWork.AllUserLive.AsEnumerable();
-
-            if (IsAuthenticated)
-                userSet = userSet.Where(user => user.Id == CurrentUserId);
-
-            ViewBag.UserId = new SelectList(userSet, "Id", "Email", userlicenserating.UserId);
             ViewBag.LicenseId = new SelectList(unitOfWork.AllLicenseLive.AsEnumerable(), "Id", "Name", userlicenserating.LicenseId);
+            ViewBag.UserId = new SelectList(unitOfWork.AllUserLive.AsEnumerable(), "Id", "Email", userlicenserating.UserId);
             return View(userlicenserating);
         }
 
@@ -90,14 +76,8 @@ namespace Web.Controllers.Mvc
             {
                 return HttpNotFound();
             }
-
-            var userSet = unitOfWork.AllUserLive.AsEnumerable();
-
-            if (IsAuthenticated)
-                userSet = userSet.Where(user => user.Id == CurrentUserId);
-
-            ViewBag.UserId = new SelectList(userSet, "Id", "Email", userlicenserating.UserId);
             ViewBag.LicenseId = new SelectList(unitOfWork.AllLicenseLive.AsEnumerable(), "Id", "Name", userlicenserating.LicenseId);
+            ViewBag.UserId = new SelectList(unitOfWork.AllUserLive.AsEnumerable(), "Id", "Email", userlicenserating.UserId);
             return View(userlicenserating);
         }
 
@@ -106,9 +86,9 @@ namespace Web.Controllers.Mvc
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include="Id,UserId,LicenseId,Rating,CreatedOn,ModifiedOn,DeletedOn")] UserLicenseRatingDto userlicenseratingDto)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,UserId,LicenseId,Rating,CreatedOn,ModifiedOn,DeletedOn")] UserLicenseRatingDto userlicenseratingdto)
         {
-            var userlicenserating = userlicenseratingDto.ToBusinessObject();
+			var userlicenserating = userlicenseratingdto.ToBusinessObject();
 
             if (ModelState.IsValid)
             {
@@ -116,14 +96,8 @@ namespace Web.Controllers.Mvc
                 await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
-
-            var userSet = unitOfWork.AllUserLive.AsEnumerable();
-
-            if (IsAuthenticated)
-                userSet = userSet.Where(user => user.Id == CurrentUserId);
-
-            ViewBag.UserId = new SelectList(userSet, "Id", "Email", userlicenserating.UserId);
             ViewBag.LicenseId = new SelectList(unitOfWork.AllLicenseLive.AsEnumerable(), "Id", "Name", userlicenserating.LicenseId);
+            ViewBag.UserId = new SelectList(unitOfWork.AllUserLive.AsEnumerable(), "Id", "Email", userlicenserating.UserId);
             return View(userlicenserating);
         }
 

@@ -1,4 +1,10 @@
-﻿0.4.2.2
+﻿0.5
+. SolutionItems - Local_UpdateDatabase.sql was updated to remove doktrosizlar db items
+. Business + DataObjects
+.. To support tables with multiple primary key, IEntity interface Id property was replaced with IsNew
+. Web - Controllers finetuning
+
+0.4.2.2
 . General - Missing files were restored - attempt #2
 
 0.4.2.1

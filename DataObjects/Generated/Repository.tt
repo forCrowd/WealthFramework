@@ -50,7 +50,7 @@ foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
 #>
     using BusinessObjects;
 
-    public partial class <#= entityName #>Repository : GenericRepository<<#= entityName #>, <#= code.Escape(primaryKey.TypeUsage) #>>
+    public partial class <#= entityName #>Repository : GenericRepository<<#= entityName #>>
     {
         public <#=entityName#>Repository(<#=code.Escape(container)#> context)
             : base(context)

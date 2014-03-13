@@ -61,12 +61,14 @@ public class CodeStringGenerator
     {
         return string.Format(
             CultureInfo.InvariantCulture,
-            "{0} {1}partial class {2}{3} : IEntity<{4}>",
+            // "{0} {1}partial class {2}{3} : IEntity<{4}>",
+            "{0} {1}partial class {2}{3} : IEntity",
             Accessibility.ForType(entity),
             _code.SpaceAfter(_code.AbstractOption(entity)),
             _code.Escape(entity),
-            _code.StringBefore(" : ", _typeMapper.GetTypeName(entity.BaseType)),
-            _code.Escape(entity.KeyMembers[0].TypeUsage));
+            _code.StringBefore(" : ", _typeMapper.GetTypeName(entity.BaseType))
+            );
+            //,_code.Escape(entity.KeyMembers[0].TypeUsage));
     }
     
     public string EnumOpening(SimpleType enumType)

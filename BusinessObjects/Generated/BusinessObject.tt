@@ -26,9 +26,16 @@ WriteHeader(codeStringGenerator, fileManager);
 
 foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection))
 {
+	// foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
 	// Variables
 	var entityName = code.Escape(entity);
 	var entityMetadataName = string.Format("{0}Metadata", entityName);
+	var primaryKey = entity.KeyMembers[0]; // Multiple PK not allowed?
+
+	//var entityName = typeMapper.GetTypeName(entitySet.ElementType);
+	//var entityNameLowerCamelCase = string.Format("{0}{1}", entityName.ToLower()[0], entityName.Substring(1));
+	//var entitySetName = code.Escape(entitySet);
+	//var primaryKey = entitySet.ElementType.KeyMembers[0]; // Multiple PK not allowed?
 
 	// Output file name
 	var outputFileName = string.Format(@"{0}.cs", entityName);
@@ -73,10 +80,11 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection)
         }
 #>
     }
-
 <#
     }
-
+#>
+	public bool IsNew { get { return <#=primaryKey#> == default(<#=typeMapper.GetTypeName(primaryKey.TypeUsage)#>); } }
+<#
     var simpleProperties = typeMapper.GetSimpleProperties(entity);
     if (simpleProperties.Any())
     {

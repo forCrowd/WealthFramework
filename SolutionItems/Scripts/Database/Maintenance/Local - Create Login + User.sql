@@ -7,7 +7,7 @@ DROP LOGIN [WealthEconomy_dbo]
 END
 
 --Create the login
-CREATE LOGIN [WealthEconomy_dbo] WITH PASSWORD=N'B336B37C95CC46BCAE48F6EE2E1E49F7',
+CREATE LOGIN [WealthEconomy_dbo] WITH PASSWORD=N'???',
 	DEFAULT_DATABASE=[WealthEconomy],
 	DEFAULT_LANGUAGE=[us_english],
 	CHECK_EXPIRATION=OFF,

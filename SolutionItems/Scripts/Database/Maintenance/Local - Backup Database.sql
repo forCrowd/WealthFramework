@@ -8,7 +8,7 @@ DECLARE @fileTime VARCHAR(20) -- file time
 DECLARE @fileName VARCHAR(256) -- filename for backup 
 
 --Assign the values
-SET @path = 'D:\Development\Databases\Backup\WealthEconomy\'
+SET @path = 'D:\Development\Databases\Backup\WealthEconomy\local\'
 SET @dbName = 'WealthEconomy'
 SET @fileDate = CONVERT(VARCHAR(20), GETDATE(), 112)
 SET @fileTime = REPLACE(CONVERT(VARCHAR(20), GETDATE(), 114), ':', '')

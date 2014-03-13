@@ -499,7 +499,7 @@
             }
         }
 
-        [Display(Name = "Total Income")]
+        [Display(Name = "Total Income (Profit + CMRP)")]
         public decimal TotalIncome
         {
             get { return TotalProfit + TotalResourcePoolIncome; }

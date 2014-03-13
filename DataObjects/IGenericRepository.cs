@@ -1,15 +1,13 @@
 ﻿namespace DataObjects
 {
     using BusinessObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Threading.Tasks;
 
-    public interface IGenericRepository<TEntityType, TPrimaryKeyType> : IDisposable
-        where TEntityType : class, IEntity<TPrimaryKeyType>
-        where TPrimaryKeyType : struct
+    public interface IGenericRepository<TEntityType> : IDisposable where TEntityType : class, IEntity
     {
         IQueryable<TEntityType> All { get; }
 
@@ -19,13 +17,13 @@ using System.Threading.Tasks;
 
         IQueryable<TEntityType> AllLiveIncluding(params Expression<Func<TEntityType, object>>[] includeProperties);
 
-        TEntityType Find(object id);
+        TEntityType Find(params object[] keyValues);
 
-        Task<TEntityType> FindAsync(object id);
+        Task<TEntityType> FindAsync(params object[] keyValues);
 
         void InsertOrUpdate(TEntityType entity);
 
-        void Delete(object id);
+        void Delete(params object[] id);
 
         void DeleteRange(IEnumerable<TEntityType> entities);
 

@@ -30,24 +30,18 @@ routePrefix += "/" + ControllerRootName + "/";
 <#@ parameter type="System.String" name="BindAttributeIncludeText" #>
 <#@ parameter type="System.String" name ="OverpostingWarningMessage" #>
 <#@ parameter type="System.Collections.Generic.HashSet<System.String>" name="RequiredNamespaces" #>
-using System;
-using System.Collections.Generic;
-using System.Data;
+using BusinessObjects;
+using BusinessObjects.Dto;
+using Facade;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
 <# if (UseAsync) { #>
 using System.Threading.Tasks;
 <# } #>
-using System.Net;
-using System.Web;
 using System.Web.Mvc;
-<# foreach (var namespaceName in RequiredNamespaces) { #>
-using <#= namespaceName #>;
-<# } #>
-using Facade;
-using BusinessObjects.Dto;
 
-namespace <#= Namespace #>
+namespace Web.Controllers.Mvc.Generated
 {
 <#
     var contextTypeName = ContextTypeName;
@@ -56,7 +50,6 @@ namespace <#= Namespace #>
     var entityDtoClassName = string.Format("{0}Dto", ModelTypeName);
     var entityDtoVariable = entityDtoClassName.ToLowerInvariant();
     var unitOfWorkClassName = string.Format("{0}UnitOfWork", ModelTypeName);
-    var unitOfWorkVariable = "unitOfWork";
     var repositoryClassName = string.Format("{0}Repository", ModelTypeName);
     var repositoryVariable = repositoryClassName.ToLowerInvariant();
     var primaryKeyName = ModelMetadata.PrimaryKeys[0].PropertyName;
@@ -70,7 +63,7 @@ namespace <#= Namespace #>
     string bindAttribute;
     if (IsOverpostingProtectionRequired)
     {
-        bindAttribute = String.Format("[Bind(Include=\"{0}\")] ", BindAttributeIncludeText);
+        bindAttribute = String.Format("[Bind(Include = \"{0}\")] ", BindAttributeIncludeText);
 		
 		// Manually remove CreatedOn, ModifiedOn, DeletedOn fields
 		// TODO Better? With an attribute ideally?
@@ -138,8 +131,10 @@ namespace <#= Namespace #>
         // GET: <#= routePrefix #>Create
         public ActionResult Create()
         {
-<# foreach (var property in relatedProperties.Values) { #>
-            ViewBag.<#= property.ForeignKeyPropertyNames[0] #> = new SelectList(<unitOfWork.All<#= property.EntitySetName #>Live.AsEnumerable(), "<#= property.PrimaryKeyNames[0] #>", "<#= property.DisplayPropertyName #>");
+<# foreach (var property in relatedProperties.Values) {
+	   var unitOfWorkProperty = string.Format("All{0}Live", property.TypeName.Replace("BusinessObjects.", ""));
+#>
+            ViewBag.<#= property.ForeignKeyPropertyNames[0] #> = new SelectList(unitOfWork.<#= unitOfWorkProperty #>.AsEnumerable(), "<#= property.PrimaryKeyNames[0] #>", "<#= property.DisplayPropertyName #>");
 <# } #>
             return View();
         }
@@ -174,8 +169,10 @@ namespace <#= Namespace #>
                 return RedirectToAction("Index");
             }
 
-<# foreach (var property in relatedProperties.Values) { #>
-            ViewBag.<#= property.ForeignKeyPropertyNames[0] #> = new SelectList(unitOfWork.All<#= property.EntitySetName #>Live.AsEnumerable(), "<#= property.PrimaryKeyNames[0] #>", "<#= property.DisplayPropertyName #>", <#= ModelVariable #>.<#= property.ForeignKeyPropertyNames[0] #>);
+<# foreach (var property in relatedProperties.Values) {
+	   var unitOfWorkProperty = string.Format("All{0}Live", property.TypeName.Replace("BusinessObjects.", ""));
+#>
+            ViewBag.<#= property.ForeignKeyPropertyNames[0] #> = new SelectList(unitOfWork.<#= unitOfWorkProperty #>.AsEnumerable(), "<#= property.PrimaryKeyNames[0] #>", "<#= property.DisplayPropertyName #>", <#= ModelVariable #>.<#= property.ForeignKeyPropertyNames[0] #>);
 <# } #>
             return View(<#= ModelVariable #>);
         }
@@ -200,8 +197,10 @@ namespace <#= Namespace #>
             {
                 return HttpNotFound();
             }
-<# foreach (var property in relatedProperties.Values) { #>
-            ViewBag.<#= property.ForeignKeyPropertyNames[0] #> = new SelectList(unitOfWork.All<#= property.EntitySetName #>Live.AsEnumerable(), "<#= property.PrimaryKeyNames[0] #>", "<#= property.DisplayPropertyName #>", <#= ModelVariable #>.<#= property.ForeignKeyPropertyNames[0] #>);
+<# foreach (var property in relatedProperties.Values) {
+	   var unitOfWorkProperty = string.Format("All{0}Live", property.TypeName.Replace("BusinessObjects.", ""));
+#>
+            ViewBag.<#= property.ForeignKeyPropertyNames[0] #> = new SelectList(unitOfWork.<#= unitOfWorkProperty #>.AsEnumerable(), "<#= property.PrimaryKeyNames[0] #>", "<#= property.DisplayPropertyName #>", <#= ModelVariable #>.<#= property.ForeignKeyPropertyNames[0] #>);
 <# } #>
             return View(<#= ModelVariable #>);
         }
@@ -232,8 +231,10 @@ namespace <#= Namespace #>
 <# } #>
                 return RedirectToAction("Index");
             }
-<# foreach (var property in relatedProperties.Values) { #>
-            ViewBag.<#= property.ForeignKeyPropertyNames[0] #> = new SelectList(unitOfWork.All<#= property.EntitySetName #>Live.AsEnumerable(), "<#= property.PrimaryKeyNames[0] #>", "<#= property.DisplayPropertyName #>", <#= ModelVariable #>.<#= property.ForeignKeyPropertyNames[0] #>);
+<# foreach (var property in relatedProperties.Values) {
+	   var unitOfWorkProperty = string.Format("All{0}Live", property.TypeName.Replace("BusinessObjects.", ""));
+#>
+            ViewBag.<#= property.ForeignKeyPropertyNames[0] #> = new SelectList(unitOfWork.<#= unitOfWorkProperty #>.AsEnumerable(), "<#= property.PrimaryKeyNames[0] #>", "<#= property.DisplayPropertyName #>", <#= ModelVariable #>.<#= property.ForeignKeyPropertyNames[0] #>);
 <# } #>
             return View(<#= ModelVariable #>);
         }

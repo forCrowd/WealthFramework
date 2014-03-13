@@ -15,13 +15,13 @@ namespace BusinessObjects
     using BusinessObjects.Metadata;
     
     [MetadataType(typeof(ResourcePoolOrganizationMetadata))]
-    public partial class ResourcePoolOrganization : IEntity<int>
+    public partial class ResourcePoolOrganization : IEntity
     {
         public ResourcePoolOrganization()
         {
             this.UserResourcePoolOrganizationSet = new HashSet<UserResourcePoolOrganization>();
         }
-    
+    	public bool IsNew { get { return Id == default(int); } }
         public int Id { get; set; }
         public int ResourcePoolId { get; set; }
         public int OrganizationId { get; set; }

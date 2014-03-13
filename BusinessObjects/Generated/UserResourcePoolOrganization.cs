@@ -15,8 +15,9 @@ namespace BusinessObjects
     using BusinessObjects.Metadata;
     
     [MetadataType(typeof(UserResourcePoolOrganizationMetadata))]
-    public partial class UserResourcePoolOrganization : IEntity<int>
+    public partial class UserResourcePoolOrganization : IEntity
     {
+    	public bool IsNew { get { return Id == default(int); } }
         public int Id { get; set; }
         public int UserId { get; set; }
         public int ResourcePoolOrganizationId { get; set; }

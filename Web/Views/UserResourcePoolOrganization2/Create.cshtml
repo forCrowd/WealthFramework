@@ -1,0 +1,93 @@
+﻿@model BusinessObjects.UserResourcePoolOrganization
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>UserResourcePoolOrganization</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+	Id
+		UserId
+	        <div class="form-group">
+            @Html.LabelFor(model => model.UserId, "UserId", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("UserId", String.Empty)
+                @Html.ValidationMessageFor(model => model.UserId)
+            </div>
+        </div>
+
+	ResourcePoolOrganizationId
+	        <div class="form-group">
+            @Html.LabelFor(model => model.ResourcePoolOrganizationId, "ResourcePoolOrganizationId", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ResourcePoolOrganizationId", String.Empty)
+                @Html.ValidationMessageFor(model => model.ResourcePoolOrganizationId)
+            </div>
+        </div>
+
+	NumberOfSales
+	        <div class="form-group">
+            @Html.LabelFor(model => model.NumberOfSales, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NumberOfSales)
+                @Html.ValidationMessageFor(model => model.NumberOfSales)
+            </div>
+        </div>
+
+	QualityRating
+	        <div class="form-group">
+            @Html.LabelFor(model => model.QualityRating, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.QualityRating)
+                @Html.ValidationMessageFor(model => model.QualityRating)
+            </div>
+        </div>
+
+	CustomerSatisfactionRating
+	        <div class="form-group">
+            @Html.LabelFor(model => model.CustomerSatisfactionRating, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CustomerSatisfactionRating)
+                @Html.ValidationMessageFor(model => model.CustomerSatisfactionRating)
+            </div>
+        </div>
+
+	EmployeeSatisfactionRating
+	        <div class="form-group">
+            @Html.LabelFor(model => model.EmployeeSatisfactionRating, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EmployeeSatisfactionRating)
+                @Html.ValidationMessageFor(model => model.EmployeeSatisfactionRating)
+            </div>
+        </div>
+
+	CreatedOn
+		ModifiedOn
+		DeletedOn
+		User
+		ResourcePoolOrganization
+	        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

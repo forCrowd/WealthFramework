@@ -15,14 +15,14 @@ namespace BusinessObjects
     using BusinessObjects.Metadata;
     
     [MetadataType(typeof(LicenseMetadata))]
-    public partial class License : IEntity<short>
+    public partial class License : IEntity
     {
         public License()
         {
             this.OrganizationSet = new HashSet<Organization>();
             this.UserLicenseRatingSet = new HashSet<UserLicenseRating>();
         }
-    
+    	public bool IsNew { get { return Id == default(short); } }
         public short Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

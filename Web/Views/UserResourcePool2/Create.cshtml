@@ -1,0 +1,129 @@
+﻿@model BusinessObjects.UserResourcePool
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>UserResourcePool</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+	Id
+		UserId
+	        <div class="form-group">
+            @Html.LabelFor(model => model.UserId, "UserId", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("UserId", String.Empty)
+                @Html.ValidationMessageFor(model => model.UserId)
+            </div>
+        </div>
+
+	ResourcePoolId
+	        <div class="form-group">
+            @Html.LabelFor(model => model.ResourcePoolId, "ResourcePoolId", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ResourcePoolId", String.Empty)
+                @Html.ValidationMessageFor(model => model.ResourcePoolId)
+            </div>
+        </div>
+
+	ResourcePoolRate
+	        <div class="form-group">
+            @Html.LabelFor(model => model.ResourcePoolRate, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ResourcePoolRate)
+                @Html.ValidationMessageFor(model => model.ResourcePoolRate)
+            </div>
+        </div>
+
+	TotalCostIndexRating
+	        <div class="form-group">
+            @Html.LabelFor(model => model.TotalCostIndexRating, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TotalCostIndexRating)
+                @Html.ValidationMessageFor(model => model.TotalCostIndexRating)
+            </div>
+        </div>
+
+	KnowledgeIndexRating
+	        <div class="form-group">
+            @Html.LabelFor(model => model.KnowledgeIndexRating, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.KnowledgeIndexRating)
+                @Html.ValidationMessageFor(model => model.KnowledgeIndexRating)
+            </div>
+        </div>
+
+	QualityIndexRating
+	        <div class="form-group">
+            @Html.LabelFor(model => model.QualityIndexRating, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.QualityIndexRating)
+                @Html.ValidationMessageFor(model => model.QualityIndexRating)
+            </div>
+        </div>
+
+	SectorIndexRating
+	        <div class="form-group">
+            @Html.LabelFor(model => model.SectorIndexRating, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SectorIndexRating)
+                @Html.ValidationMessageFor(model => model.SectorIndexRating)
+            </div>
+        </div>
+
+	EmployeeSatisfactionIndexRating
+	        <div class="form-group">
+            @Html.LabelFor(model => model.EmployeeSatisfactionIndexRating, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EmployeeSatisfactionIndexRating)
+                @Html.ValidationMessageFor(model => model.EmployeeSatisfactionIndexRating)
+            </div>
+        </div>
+
+	CustomerSatisfactionIndexRating
+	        <div class="form-group">
+            @Html.LabelFor(model => model.CustomerSatisfactionIndexRating, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CustomerSatisfactionIndexRating)
+                @Html.ValidationMessageFor(model => model.CustomerSatisfactionIndexRating)
+            </div>
+        </div>
+
+	DistanceIndexRating
+	        <div class="form-group">
+            @Html.LabelFor(model => model.DistanceIndexRating, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DistanceIndexRating)
+                @Html.ValidationMessageFor(model => model.DistanceIndexRating)
+            </div>
+        </div>
+
+	CreatedOn
+		ModifiedOn
+		DeletedOn
+		User
+		ResourcePool
+	        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

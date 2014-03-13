@@ -15,8 +15,9 @@ namespace BusinessObjects
     using BusinessObjects.Metadata;
     
     [MetadataType(typeof(UserLicenseRatingMetadata))]
-    public partial class UserLicenseRating : IEntity<int>
+    public partial class UserLicenseRating : IEntity
     {
+    	public bool IsNew { get { return Id == default(int); } }
         public int Id { get; set; }
         public int UserId { get; set; }
         public short LicenseId { get; set; }
