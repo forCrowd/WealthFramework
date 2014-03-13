@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Facade;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -6,6 +7,8 @@ namespace Web.Controllers.Mvc
 {
     public class HomeController : BaseController
     {
+        UserUnitOfWork unitOfWork = new UserUnitOfWork();
+
         public ActionResult Index()
         {
             ViewBag.Title = "Home ";
@@ -24,8 +27,7 @@ namespace Web.Controllers.Mvc
         {
             ViewBag.Title = "Login";
 
-            var userSet = db.UserSet.AsEnumerable();
-            ViewBag.UserId = new SelectList(userSet, "Id", "Email");
+            ViewBag.UserId = new SelectList(unitOfWork.AllLive.AsEnumerable(), "Id", "Email");
             return View();
         }
 
@@ -33,7 +35,7 @@ namespace Web.Controllers.Mvc
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(int UserId)
         {
-            var selectedUser = await db.UserSet.FindAsync(UserId);
+            var selectedUser = await unitOfWork.FindAsync(UserId);
 
             // TODO ?!
             if (selectedUser == null)

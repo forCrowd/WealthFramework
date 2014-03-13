@@ -151,7 +151,7 @@ namespace Web.Controllers.Mvc
         async Task<UserResourcePool> GetUserResourcePool(int resourcePoolId)
         {
             // Get the current user
-            var currentUser = await db.UserSet.FindAsync(CurrentUserId);
+            var currentUser = await unitOfWork.FindUserAsync(CurrentUserId);
 
             // Return the user resource pool
             return currentUser.UserResourcePoolSet.Single(pool => pool.ResourcePoolId == resourcePoolId);
@@ -196,11 +196,10 @@ namespace Web.Controllers.Mvc
             foreach (var item in userResourcePool.UserResourcePoolOrganizationSet)
             {
                 item.NumberOfSales = isReset ? 0 : item.NumberOfSales + 1;
-                item.ModifiedOn = DateTime.Now;
-                db.Entry(item).State = EntityState.Modified;
+                unitOfWork.InsertOrUpdateUserResourcePoolOrganization(item);
             }
 
-            await db.SaveChangesAsync();
+            await unitOfWork.SaveAsync();
 
             // Return
             if (string.IsNullOrWhiteSpace(returnAction))

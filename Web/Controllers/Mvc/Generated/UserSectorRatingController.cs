@@ -1,24 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using BusinessObjects;
+using BusinessObjects.Dto;
+using Facade;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
-using System.Web;
+using System.Threading.Tasks;
 using System.Web.Mvc;
-using BusinessObjects;
-using BusinessObjects.Dto;
-using DataObjects;
 
 namespace Web.Controllers.Mvc
 {
     public partial class UserSectorRatingController : BaseController
     {
+        UserSectorRatingUnitOfWork unitOfWork = new UserSectorRatingUnitOfWork();
+
         // GET: /UserSectorRating/
         public async Task<ActionResult> Index()
         {
-            var usersectorratingset = db.UserSectorRatingSet.Include(u => u.Sector).Include(u => u.User);
+            var usersectorratingset = unitOfWork.AllLiveIncluding(u => u.Sector, u => u.User);
 
             if (IsAuthenticated)
                 usersectorratingset = usersectorratingset.Where(rating => rating.UserId == CurrentUserId);
@@ -33,7 +31,7 @@ namespace Web.Controllers.Mvc
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserSectorRating usersectorrating = await db.UserSectorRatingSet.FindAsync(id);
+            UserSectorRating usersectorrating = await unitOfWork.FindAsync(id);
             if (usersectorrating == null)
             {
                 return HttpNotFound();
@@ -44,12 +42,12 @@ namespace Web.Controllers.Mvc
         // GET: /UserSectorRating/Create
         public ActionResult Create()
         {
-            var userSet = db.UserSet.AsEnumerable();
+            var userSet = unitOfWork.AllUserLive.AsEnumerable();
 
             if (IsAuthenticated)
                 userSet = userSet.Where(user => user.Id == CurrentUserId);
 
-            ViewBag.SectorId = new SelectList(db.SectorSet, "Id", "Name");
+            ViewBag.SectorId = new SelectList(unitOfWork.AllSectorLive.AsEnumerable(), "Id", "Name");
             ViewBag.UserId = new SelectList(userSet, "Id", "Email");
             return View();
         }
@@ -65,19 +63,17 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-				usersectorrating.CreatedOn = DateTime.Now;
-				usersectorrating.ModifiedOn = DateTime.Now;
-                db.UserSectorRatingSet.Add(usersectorrating);
-                await db.SaveChangesAsync();
+                unitOfWork.InsertOrUpdate(usersectorrating);
+                await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
 
-            var userSet = db.UserSet.AsEnumerable();
+            var userSet = unitOfWork.AllUserLive.AsEnumerable();
 
             if (IsAuthenticated)
                 userSet = userSet.Where(user => user.Id == CurrentUserId);
 
-            ViewBag.SectorId = new SelectList(db.SectorSet, "Id", "Name", usersectorrating.SectorId);
+            ViewBag.SectorId = new SelectList(unitOfWork.AllSectorLive.AsEnumerable(), "Id", "Name", usersectorrating.SectorId);
             ViewBag.UserId = new SelectList(userSet, "Id", "Email", usersectorrating.UserId);
             return View(usersectorrating);
         }
@@ -89,18 +85,18 @@ namespace Web.Controllers.Mvc
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserSectorRating usersectorrating = await db.UserSectorRatingSet.FindAsync(id);
+            UserSectorRating usersectorrating = await unitOfWork.FindAsync(id);
             if (usersectorrating == null)
             {
                 return HttpNotFound();
             }
 
-            var userSet = db.UserSet.AsEnumerable();
+            var userSet = unitOfWork.AllUserLive.AsEnumerable();
 
             if (IsAuthenticated)
                 userSet = userSet.Where(user => user.Id == CurrentUserId);
 
-            ViewBag.SectorId = new SelectList(db.SectorSet, "Id", "Name", usersectorrating.SectorId);
+            ViewBag.SectorId = new SelectList(unitOfWork.AllSectorLive.AsEnumerable(), "Id", "Name", usersectorrating.SectorId);
             ViewBag.UserId = new SelectList(userSet, "Id", "Email", usersectorrating.UserId);
             return View(usersectorrating);
         }
@@ -116,18 +112,17 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-                db.Entry(usersectorrating).State = EntityState.Modified;
-				usersectorrating.ModifiedOn = DateTime.Now;
-                await db.SaveChangesAsync();
+                unitOfWork.InsertOrUpdate(usersectorrating);
+                await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
 
-            var userSet = db.UserSet.AsEnumerable();
+            var userSet = unitOfWork.AllUserLive.AsEnumerable();
 
             if (IsAuthenticated)
                 userSet = userSet.Where(user => user.Id == CurrentUserId);
 
-            ViewBag.SectorId = new SelectList(db.SectorSet, "Id", "Name", usersectorrating.SectorId);
+            ViewBag.SectorId = new SelectList(unitOfWork.AllSectorLive.AsEnumerable(), "Id", "Name", usersectorrating.SectorId);
             ViewBag.UserId = new SelectList(userSet, "Id", "Email", usersectorrating.UserId);
             return View(usersectorrating);
         }
@@ -139,7 +134,7 @@ namespace Web.Controllers.Mvc
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserSectorRating usersectorrating = await db.UserSectorRatingSet.FindAsync(id);
+            UserSectorRating usersectorrating = await unitOfWork.FindAsync(id);
             if (usersectorrating == null)
             {
                 return HttpNotFound();
@@ -152,19 +147,9 @@ namespace Web.Controllers.Mvc
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            UserSectorRating usersectorrating = await db.UserSectorRatingSet.FindAsync(id);
-            db.UserSectorRatingSet.Remove(usersectorrating);
-            await db.SaveChangesAsync();
+            unitOfWork.Delete(id);
+            await unitOfWork.SaveAsync();
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

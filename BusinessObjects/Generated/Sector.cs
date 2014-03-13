@@ -12,8 +12,9 @@ namespace BusinessObjects
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using BusinessObjects.Metadata;
     
-    [MetadataType(typeof(BusinessObjects.Metadata.SectorMetadata))]
+    [MetadataType(typeof(SectorMetadata))]
     public partial class Sector : IEntity<byte>
     {
         public Sector()

@@ -1,24 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using BusinessObjects;
+using BusinessObjects.Dto;
+using Facade;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
-using System.Web;
+using System.Threading.Tasks;
 using System.Web.Mvc;
-using BusinessObjects;
-using BusinessObjects.Dto;
-using DataObjects;
 
 namespace Web.Controllers.Mvc
 {
     public partial class OrganizationController : BaseController
     {
+        OrganizationUnitOfWork unitOfWork = new OrganizationUnitOfWork();
+
         // GET: /Organization/
         public async Task<ActionResult> Index()
         {
-            var organizationset = db.OrganizationSet.Include(o => o.License).Include(o => o.Sector);
+            var organizationset = unitOfWork.AllLiveIncluding(o => o.License, o => o.Sector);
 
             return View(await organizationset.ToListAsync());
         }
@@ -30,7 +28,7 @@ namespace Web.Controllers.Mvc
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Organization organization = await db.OrganizationSet.FindAsync(id);
+            Organization organization = await unitOfWork.FindAsync(id);
             if (organization == null)
             {
                 return HttpNotFound();
@@ -41,8 +39,8 @@ namespace Web.Controllers.Mvc
         // GET: /Organization/Create
         public ActionResult Create()
         {
-            ViewBag.LicenseId = new SelectList(db.LicenseSet, "Id", "Name");
-            ViewBag.SectorId = new SelectList(db.SectorSet, "Id", "Name");
+            ViewBag.LicenseId = new SelectList(unitOfWork.AllLicenseLive.AsEnumerable(), "Id", "Name");
+            ViewBag.SectorId = new SelectList(unitOfWork.AllSectorLive.AsEnumerable(), "Id", "Name");
 
             return View();
         }
@@ -58,15 +56,13 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-				organization.CreatedOn = DateTime.Now;
-				organization.ModifiedOn = DateTime.Now;
-                db.OrganizationSet.Add(organization);
-                await db.SaveChangesAsync();
+                unitOfWork.InsertOrUpdate(organizationDto);
+                await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.LicenseId = new SelectList(db.LicenseSet, "Id", "Name", organization.LicenseId);
-            ViewBag.SectorId = new SelectList(db.SectorSet, "Id", "Name", organization.SectorId);
+            ViewBag.LicenseId = new SelectList(unitOfWork.AllLicenseLive.AsEnumerable(), "Id", "Name", organization.LicenseId);
+            ViewBag.SectorId = new SelectList(unitOfWork.AllSectorLive.AsEnumerable(), "Id", "Name", organization.SectorId);
 
             return View(organization);
         }
@@ -78,13 +74,13 @@ namespace Web.Controllers.Mvc
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Organization organization = await db.OrganizationSet.FindAsync(id);
+            Organization organization = await unitOfWork.FindAsync(id);
             if (organization == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.LicenseId = new SelectList(db.LicenseSet, "Id", "Name", organization.LicenseId);
-            ViewBag.SectorId = new SelectList(db.SectorSet, "Id", "Name", organization.SectorId);
+            ViewBag.LicenseId = new SelectList(unitOfWork.AllLicenseLive.AsEnumerable(), "Id", "Name", organization.LicenseId);
+            ViewBag.SectorId = new SelectList(unitOfWork.AllSectorLive.AsEnumerable(), "Id", "Name", organization.SectorId);
             
             return View(organization);
         }
@@ -100,13 +96,12 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-                db.Entry(organization).State = EntityState.Modified;
-				organization.ModifiedOn = DateTime.Now;
-                await db.SaveChangesAsync();
+                unitOfWork.InsertOrUpdate(organization);
+                await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.LicenseId = new SelectList(db.LicenseSet, "Id", "Name", organization.LicenseId);
-            ViewBag.SectorId = new SelectList(db.SectorSet, "Id", "Name", organization.SectorId);
+            ViewBag.LicenseId = new SelectList(unitOfWork.AllLicenseLive.AsEnumerable(), "Id", "Name", organization.LicenseId);
+            ViewBag.SectorId = new SelectList(unitOfWork.AllSectorLive.AsEnumerable(), "Id", "Name", organization.SectorId);
 
             return View(organization);
         }
@@ -118,7 +113,7 @@ namespace Web.Controllers.Mvc
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Organization organization = await db.OrganizationSet.FindAsync(id);
+            Organization organization = await unitOfWork.FindAsync(id);
             if (organization == null)
             {
                 return HttpNotFound();
@@ -131,19 +126,9 @@ namespace Web.Controllers.Mvc
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Organization organization = await db.OrganizationSet.FindAsync(id);
-            db.OrganizationSet.Remove(organization);
-            await db.SaveChangesAsync();
+            unitOfWork.Delete(id);
+            await unitOfWork.SaveAsync();
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

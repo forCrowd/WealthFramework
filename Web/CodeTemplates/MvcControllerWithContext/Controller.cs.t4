@@ -44,6 +44,8 @@ using System.Web.Mvc;
 <# foreach (var namespaceName in RequiredNamespaces) { #>
 using <#= namespaceName #>;
 <# } #>
+using Facade;
+using BusinessObjects.Dto;
 
 namespace <#= Namespace #>
 {
@@ -51,6 +53,12 @@ namespace <#= Namespace #>
     var contextTypeName = ContextTypeName;
     var entitySetName = ModelMetadata.EntitySetName;
     var entitySetVariable = entitySetName.ToLowerInvariant();
+    var entityDtoClassName = string.Format("{0}Dto", ModelTypeName);
+    var entityDtoVariable = entityDtoClassName.ToLowerInvariant();
+    var unitOfWorkClassName = string.Format("{0}UnitOfWork", ModelTypeName);
+    var unitOfWorkVariable = "unitOfWork";
+    var repositoryClassName = string.Format("{0}Repository", ModelTypeName);
+    var repositoryVariable = repositoryClassName.ToLowerInvariant();
     var primaryKeyName = ModelMetadata.PrimaryKeys[0].PropertyName;
     var primaryKeyShortTypeName = ModelMetadata.PrimaryKeys[0].ShortTypeName;
     var primaryKeyDefaultValue = ModelMetadata.PrimaryKeys[0].DefaultValue;
@@ -75,6 +83,8 @@ namespace <#= Namespace #>
 #>
     public partial class <#= ControllerName #> : BaseController
     {
+        <#= unitOfWorkClassName #> unitOfWork = new <#= unitOfWorkClassName #>();
+
         // GET: <#= routePrefix #>
 <# if (UseAsync) { #>
         public async Task<ActionResult> Index()
@@ -83,10 +93,11 @@ namespace <#= Namespace #>
 <# } #>
         {
 <#  var includeExpressions = "";
-        includeExpressions = String.Join("", relatedProperties.Values.Select(property => String.Format(".Include({0} => {0}.{1})", lambdaVar, property.AssociationPropertyName)));
+        // includeExpressions = String.Join("", relatedProperties.Values.Select(property => String.Format(".Include({0} => {0}.{1})", lambdaVar, property.AssociationPropertyName)));
+        includeExpressions = String.Join(", ", relatedProperties.Values.Select(property => String.Format("{0} => {0}.{1}", lambdaVar, property.AssociationPropertyName)));
 #>
 <# if(!String.IsNullOrEmpty(includeExpressions)) { #>
-            var <#= entitySetVariable #> = db.<#= entitySetName #><#= includeExpressions #>;
+            var <#= entitySetVariable #> = unitOfWork.AllLiveIncluding(<#= includeExpressions #>);
 <#		if (UseAsync) { #>
             return View(await <#= entitySetVariable #>.ToListAsync());
 <#		} else { #>
@@ -94,9 +105,9 @@ namespace <#= Namespace #>
 <#		} #>
 <# } else { #>
 <#		if (UseAsync) { #>
-            return View(await db.<#= entitySetName #><#= includeExpressions #>.ToListAsync());
+            return View(await unitOfWork.AllLive<#= includeExpressions #>.ToListAsync());
 <#		} else { #>
-            return View(db.<#= entitySetName #><#= includeExpressions #>.ToList());
+            return View(unitOfWork.AllLive<#= includeExpressions #>.ToList());
 <#		} #>
 <# } #>
         }
@@ -113,9 +124,9 @@ namespace <#= Namespace #>
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 <# if (UseAsync) { #>
-            <#= ModelTypeName #> <#= ModelVariable #> = await db.<#= entitySetName #>.FindAsync(id);
+            <#= ModelTypeName #> <#= ModelVariable #> = await unitOfWork.FindAsync(id);
 <# } else { #>
-            <#= ModelTypeName #> <#= ModelVariable #> = db.<#= entitySetName #>.Find(id);
+            <#= ModelTypeName #> <#= ModelVariable #> = unitOfWork.Find(id);
 <# } #>
             if (<#= ModelVariable #> == null)
             {
@@ -128,7 +139,7 @@ namespace <#= Namespace #>
         public ActionResult Create()
         {
 <# foreach (var property in relatedProperties.Values) { #>
-            ViewBag.<#= property.ForeignKeyPropertyNames[0] #> = new SelectList(db.<#= property.EntitySetName #>, "<#= property.PrimaryKeyNames[0] #>", "<#= property.DisplayPropertyName #>");
+            ViewBag.<#= property.ForeignKeyPropertyNames[0] #> = new SelectList(<unitOfWork.All<#= property.EntitySetName #>Live.AsEnumerable(), "<#= property.PrimaryKeyNames[0] #>", "<#= property.DisplayPropertyName #>");
 <# } #>
             return View();
         }
@@ -142,31 +153,29 @@ namespace <#= Namespace #>
         [HttpPost]
         [ValidateAntiForgeryToken]
 <# if (UseAsync) { #>
-        public async Task<ActionResult> Create(<#= bindAttribute #><#= ModelTypeName #>Dto <#= ModelVariable #>Dto)
+        public async Task<ActionResult> Create(<#= bindAttribute #><#= entityDtoClassName #> <#= entityDtoVariable #>)
 <# } else { #>
-        public ActionResult Create(<#= bindAttribute #><#= ModelTypeName #> <#= ModelVariable #>)
+        public ActionResult Create(<#= bindAttribute #><#= entityDtoClassName #> <#= entityDtoVariable #>)
 <# } #>
         {
-			var <#= ModelVariable #> = <#= ModelVariable #>Dto.ToBusinessObject();
+			var <#= ModelVariable #> = <#= entityDtoVariable #>.ToBusinessObject();
 
             if (ModelState.IsValid)
             {
 <# if(!String.IsNullOrEmpty(primaryKeyType) && String.Equals("System.Guid", primaryKeyType, StringComparison.OrdinalIgnoreCase)) { #>
                 <#= ModelVariable #>.<#= primaryKeyName #> = Guid.NewGuid();
 <# } #>
-				<#= ModelVariable #>.CreatedOn = DateTime.Now;
-				<#= ModelVariable #>.ModifiedOn = DateTime.Now;
-                db.<#= entitySetName #>.Add(<#= ModelVariable #>);
+                unitOfWork.InsertOrUpdate(<#= ModelVariable #>);
 <# if (UseAsync) {#>
-                await db.SaveChangesAsync();
+                await unitOfWork.SaveAsync();
 <# } else { #>
-                db.SaveChanges();
+                unitOfWork.Save();
 <# } #>
                 return RedirectToAction("Index");
             }
 
 <# foreach (var property in relatedProperties.Values) { #>
-            ViewBag.<#= property.ForeignKeyPropertyNames[0] #> = new SelectList(db.<#= property.EntitySetName #>, "<#= property.PrimaryKeyNames[0] #>", "<#= property.DisplayPropertyName #>", <#= ModelVariable #>.<#= property.ForeignKeyPropertyNames[0] #>);
+            ViewBag.<#= property.ForeignKeyPropertyNames[0] #> = new SelectList(unitOfWork.All<#= property.EntitySetName #>Live.AsEnumerable(), "<#= property.PrimaryKeyNames[0] #>", "<#= property.DisplayPropertyName #>", <#= ModelVariable #>.<#= property.ForeignKeyPropertyNames[0] #>);
 <# } #>
             return View(<#= ModelVariable #>);
         }
@@ -183,16 +192,16 @@ namespace <#= Namespace #>
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 <# if (UseAsync) { #>
-            <#= ModelTypeName #> <#= ModelVariable #> = await db.<#= entitySetName #>.FindAsync(id);
+            <#= ModelTypeName #> <#= ModelVariable #> = await unitOfWork.FindAsync(id);
 <# } else { #>
-            <#= ModelTypeName #> <#= ModelVariable #> = db.<#= entitySetName #>.Find(id);
+            <#= ModelTypeName #> <#= ModelVariable #> = unitOfWork.Find(id);
 <# } #>
             if (<#= ModelVariable #> == null)
             {
                 return HttpNotFound();
             }
 <# foreach (var property in relatedProperties.Values) { #>
-            ViewBag.<#= property.ForeignKeyPropertyNames[0] #> = new SelectList(db.<#= property.EntitySetName #>, "<#= property.PrimaryKeyNames[0] #>", "<#= property.DisplayPropertyName #>", <#= ModelVariable #>.<#= property.ForeignKeyPropertyNames[0] #>);
+            ViewBag.<#= property.ForeignKeyPropertyNames[0] #> = new SelectList(unitOfWork.All<#= property.EntitySetName #>Live.AsEnumerable(), "<#= property.PrimaryKeyNames[0] #>", "<#= property.DisplayPropertyName #>", <#= ModelVariable #>.<#= property.ForeignKeyPropertyNames[0] #>);
 <# } #>
             return View(<#= ModelVariable #>);
         }
@@ -206,26 +215,25 @@ namespace <#= Namespace #>
         [HttpPost]
         [ValidateAntiForgeryToken]
 <# if (UseAsync) { #>
-        public async Task<ActionResult> Edit(<#= bindAttribute #><#= ModelTypeName #>Dto <#= ModelVariable #>Dto)
+        public async Task<ActionResult> Edit(<#= bindAttribute #><#= entityDtoClassName #> <#= entityDtoVariable #>)
 <# } else { #>
-        public ActionResult Edit(<#= bindAttribute #><#= ModelTypeName #> <#= ModelVariable #>)
+        public ActionResult Edit(<#= bindAttribute #><#= entityDtoClassName #> <#= entityDtoVariable #>)
 <# } #>
         {
-			var <#= ModelVariable #> = <#= ModelVariable #>Dto.ToBusinessObject();
+			var <#= ModelVariable #> = <#= entityDtoVariable #>.ToBusinessObject();
 
             if (ModelState.IsValid)
             {
-                db.Entry(<#= ModelVariable #>).State = EntityState.Modified;
-<# if (UseAsync) { #>
-				<#= ModelVariable #>.ModifiedOn = DateTime.Now;
-                await db.SaveChangesAsync();
+                unitOfWork.InsertOrUpdate(<#= ModelVariable #>);
+<# if (UseAsync) {#>
+                await unitOfWork.SaveAsync();
 <# } else { #>
-                db.SaveChanges();
+                unitOfWork.Save();
 <# } #>
                 return RedirectToAction("Index");
             }
 <# foreach (var property in relatedProperties.Values) { #>
-            ViewBag.<#= property.ForeignKeyPropertyNames[0] #> = new SelectList(db.<#= property.EntitySetName #>, "<#= property.PrimaryKeyNames[0] #>", "<#= property.DisplayPropertyName #>", <#= ModelVariable #>.<#= property.ForeignKeyPropertyNames[0] #>);
+            ViewBag.<#= property.ForeignKeyPropertyNames[0] #> = new SelectList(unitOfWork.All<#= property.EntitySetName #>Live.AsEnumerable(), "<#= property.PrimaryKeyNames[0] #>", "<#= property.DisplayPropertyName #>", <#= ModelVariable #>.<#= property.ForeignKeyPropertyNames[0] #>);
 <# } #>
             return View(<#= ModelVariable #>);
         }
@@ -242,9 +250,9 @@ namespace <#= Namespace #>
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 <# if (UseAsync) { #>
-            <#= ModelTypeName #> <#= ModelVariable #> = await db.<#= entitySetName #>.FindAsync(id);
+            <#= ModelTypeName #> <#= ModelVariable #> = await unitOfWork.FindAsync(id);
 <# } else { #>
-            <#= ModelTypeName #> <#= ModelVariable #> = db.<#= entitySetName #>.Find(id);
+            <#= ModelTypeName #> <#= ModelVariable #> = unitOfWork.Find(id);
 <# } #>
             if (<#= ModelVariable #> == null)
             {
@@ -262,27 +270,13 @@ namespace <#= Namespace #>
         public ActionResult DeleteConfirmed(<#= primaryKeyShortTypeName #> id)
 <# } #>
         {
+            unitOfWork.Delete(id);
 <# if (UseAsync) { #>
-            <#= ModelTypeName #> <#= ModelVariable #> = await db.<#= entitySetName #>.FindAsync(id);
+            await unitOfWork.SaveAsync();
 <# } else { #>
-            <#= ModelTypeName #> <#= ModelVariable #> = db.<#= entitySetName #>.Find(id);
-<# } #>
-            db.<#= entitySetName #>.Remove(<#= ModelVariable #>);
-<# if (UseAsync) { #>
-            await db.SaveChangesAsync();
-<# } else { #>
-            db.SaveChanges();
+            unitOfWork.Save();
 <# } #>
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

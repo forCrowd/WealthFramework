@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using BusinessObjects;
+﻿using BusinessObjects;
 using BusinessObjects.Dto;
-using DataObjects;
+using Facade;
+using System.Data.Entity;
+using System.Net;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Web.Controllers.Mvc
 {
     public partial class LicenseController : BaseController
     {
+        LicenseUnitOfWork unitOfWork = new LicenseUnitOfWork();
+
         // GET: /License/
         public async Task<ActionResult> Index()
         {
-            return View(await db.LicenseSet.ToListAsync());
+            return View(await unitOfWork.AllLive.ToListAsync());
         }
 
         // GET: /License/Details/5
@@ -28,7 +25,7 @@ namespace Web.Controllers.Mvc
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            License license = await db.LicenseSet.FindAsync(id);
+            License license = await unitOfWork.FindAsync(id);
             if (license == null)
             {
                 return HttpNotFound();
@@ -47,16 +44,14 @@ namespace Web.Controllers.Mvc
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include="Id,Name,Description,Text,CreatedOn,ModifiedOn,DeletedOn")] LicenseDto licenseDto)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Name,Description,Text,CreatedOn,ModifiedOn,DeletedOn")] LicenseDto licenseDto)
         {
             var license = licenseDto.ToBusinessObject();
 
             if (ModelState.IsValid)
             {
-				license.CreatedOn = DateTime.Now;
-				license.ModifiedOn = DateTime.Now;
-                db.LicenseSet.Add(license);
-                await db.SaveChangesAsync();
+                unitOfWork.InsertOrUpdate(license);
+                await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
 
@@ -70,7 +65,7 @@ namespace Web.Controllers.Mvc
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            License license = await db.LicenseSet.FindAsync(id);
+            License license = await unitOfWork.FindAsync(id);
             if (license == null)
             {
                 return HttpNotFound();
@@ -89,9 +84,8 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-                db.Entry(license).State = EntityState.Modified;
-				license.ModifiedOn = DateTime.Now;
-                await db.SaveChangesAsync();
+                unitOfWork.InsertOrUpdate(license);
+                await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
             return View(license);
@@ -104,7 +98,7 @@ namespace Web.Controllers.Mvc
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            License license = await db.LicenseSet.FindAsync(id);
+            License license = await unitOfWork.FindAsync(id);
             if (license == null)
             {
                 return HttpNotFound();
@@ -117,19 +111,9 @@ namespace Web.Controllers.Mvc
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(short id)
         {
-            License license = await db.LicenseSet.FindAsync(id);
-            db.LicenseSet.Remove(license);
-            await db.SaveChangesAsync();
+            unitOfWork.Delete(id);
+            await unitOfWork.SaveAsync();
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

@@ -7,15 +7,20 @@
 . doktorasizlar db mix?
 . only allow the users to access to their own pages?
 . remove satisfaction word..?
-. multiple primary keys structre?
+. multiple primary keys structure?
 .. if this can't be solved, resourcepool organization table can't prevent having multiple definitions (so userorganizationrating as well)
 
-. user create / delete okay - try to apply to others? t4 ?
+. there was a miscalculation in one of cmrp reports - seek & destroy!
 
-Install-Package MvcScaffolding -Version 1.0.8-vs2013 -Pre
+. use normal t4 files for web by referring "edmx" - codetemplates folder
+.. Install-Package MvcScaffolding -Version 1.0.8-vs2013 -Pre - ??
 
----
-Azize
-projenin hayata gecis sureci, hizi - issizlige etkisi..
-hesap yarat + cmrp indexleri
-firmalarin isimleri yazmaya baslarsa problem olur mu?
+. dbset.find(object[] id) ?!
+
+. dto files also need required attribute ?!?!?!
+
+. try to use cascade delete?
+
+. Azize - CMRP index values?
+
+. Remove obsolete github repo later on

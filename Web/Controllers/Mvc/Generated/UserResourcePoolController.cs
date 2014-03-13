@@ -1,24 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using BusinessObjects;
+using BusinessObjects.Dto;
+using Facade;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
-using System.Web;
+using System.Threading.Tasks;
 using System.Web.Mvc;
-using BusinessObjects;
-using BusinessObjects.Dto;
-using DataObjects;
 
 namespace Web.Controllers.Mvc
 {
     public partial class UserResourcePoolController : BaseController
     {
+        UserResourcePoolUnitOfWork unitOfWork = new UserResourcePoolUnitOfWork();
+
         // GET: /UserResourcePool/
         public async Task<ActionResult> Index()
         {
-            var userresourcepool = db.UserResourcePoolSet.Include(u => u.User).Include(u => u.ResourcePool);
+            var userresourcepool = unitOfWork.AllLiveIncluding(u => u.User, u => u.ResourcePool);
 
             if (IsAuthenticated)
                 userresourcepool = userresourcepool.Where(item => item.UserId == CurrentUserId);
@@ -33,7 +31,7 @@ namespace Web.Controllers.Mvc
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserResourcePool userresourcepool = await db.UserResourcePoolSet.FindAsync(id);
+            UserResourcePool userresourcepool = await unitOfWork.FindAsync(id);
             if (userresourcepool == null)
             {
                 return HttpNotFound();
@@ -44,8 +42,8 @@ namespace Web.Controllers.Mvc
         // GET: /UserResourcePool/Create
         public ActionResult Create()
         {
-            ViewBag.UserId = new SelectList(db.UserSet, "Id", "Email");
-            ViewBag.ResourcePoolId = new SelectList(db.ResourcePoolSet, "Id", "Name");
+            ViewBag.UserId = new SelectList(unitOfWork.AllUserLive.AsEnumerable(), "Id", "Email");
+            ViewBag.ResourcePoolId = new SelectList(unitOfWork.AllResourcePoolLive.AsEnumerable(), "Id", "Name");
             return View();
         }
 
@@ -60,15 +58,13 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-				userresourcepool.CreatedOn = DateTime.Now;
-				userresourcepool.ModifiedOn = DateTime.Now;
-                db.UserResourcePoolSet.Add(userresourcepool);
-                await db.SaveChangesAsync();
+                unitOfWork.InsertOrUpdate(userresourcepool);
+                await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.UserId = new SelectList(db.UserSet, "Id", "Email", userresourcepool.UserId);
-            ViewBag.ResourcePoolId = new SelectList(db.ResourcePoolSet, "Id", "Name", userresourcepool.ResourcePoolId);
+            ViewBag.UserId = new SelectList(unitOfWork.AllUserLive.AsEnumerable(), "Id", "Email", userresourcepool.UserId);
+            ViewBag.ResourcePoolId = new SelectList(unitOfWork.AllResourcePoolLive.AsEnumerable(), "Id", "Name", userresourcepool.ResourcePoolId);
             return View(userresourcepool);
         }
 
@@ -79,13 +75,13 @@ namespace Web.Controllers.Mvc
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserResourcePool userresourcepool = await db.UserResourcePoolSet.FindAsync(id);
+            UserResourcePool userresourcepool = await unitOfWork.FindAsync(id);
             if (userresourcepool == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.UserId = new SelectList(db.UserSet, "Id", "Email", userresourcepool.UserId);
-            ViewBag.ResourcePoolId = new SelectList(db.ResourcePoolSet, "Id", "Name", userresourcepool.ResourcePoolId);
+            ViewBag.UserId = new SelectList(unitOfWork.AllUserLive.AsEnumerable(), "Id", "Email", userresourcepool.UserId);
+            ViewBag.ResourcePoolId = new SelectList(unitOfWork.AllResourcePoolLive.AsEnumerable(), "Id", "Name", userresourcepool.ResourcePoolId);
             return View(userresourcepool);
         }
 
@@ -100,13 +96,12 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-                db.Entry(userresourcepool).State = EntityState.Modified;
-				userresourcepool.ModifiedOn = DateTime.Now;
-                await db.SaveChangesAsync();
+                unitOfWork.InsertOrUpdate(userresourcepool);
+                await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.UserId = new SelectList(db.UserSet, "Id", "Email", userresourcepool.UserId);
-            ViewBag.ResourcePoolId = new SelectList(db.ResourcePoolSet, "Id", "Name", userresourcepool.ResourcePoolId);
+            ViewBag.UserId = new SelectList(unitOfWork.AllUserLive.AsEnumerable(), "Id", "Email", userresourcepool.UserId);
+            ViewBag.ResourcePoolId = new SelectList(unitOfWork.AllResourcePoolLive.AsEnumerable(), "Id", "Name", userresourcepool.ResourcePoolId);
             return View(userresourcepool);
         }
 
@@ -117,7 +112,7 @@ namespace Web.Controllers.Mvc
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserResourcePool userresourcepool = await db.UserResourcePoolSet.FindAsync(id);
+            UserResourcePool userresourcepool = await unitOfWork.FindAsync(id);
             if (userresourcepool == null)
             {
                 return HttpNotFound();
@@ -130,19 +125,9 @@ namespace Web.Controllers.Mvc
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            UserResourcePool userresourcepool = await db.UserResourcePoolSet.FindAsync(id);
-            db.UserResourcePoolSet.Remove(userresourcepool);
-            await db.SaveChangesAsync();
+            unitOfWork.Delete(id);
+            await unitOfWork.SaveAsync();
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

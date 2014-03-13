@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using BusinessObjects;
+﻿using BusinessObjects;
 using BusinessObjects.Dto;
-using DataObjects;
+using Facade;
+using System.Data.Entity;
+using System.Net;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Web.Controllers.Mvc
 {
     public partial class SectorController : BaseController
     {
+        SectorUnitOfWork unitOfWork = new SectorUnitOfWork();
+
         // GET: /Sector/
         public async Task<ActionResult> Index()
         {
-            return View(await db.SectorSet.ToListAsync());
+            return View(await unitOfWork.AllLive.ToListAsync());
         }
 
         // GET: /Sector/Details/5
@@ -28,7 +25,7 @@ namespace Web.Controllers.Mvc
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Sector sector = await db.SectorSet.FindAsync(id);
+            Sector sector = await unitOfWork.FindAsync(id);
             if (sector == null)
             {
                 return HttpNotFound();
@@ -53,10 +50,8 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-				sector.CreatedOn = DateTime.Now;
-				sector.ModifiedOn = DateTime.Now;
-                db.SectorSet.Add(sector);
-                await db.SaveChangesAsync();
+                unitOfWork.InsertOrUpdate(sector);
+                await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
 
@@ -70,7 +65,7 @@ namespace Web.Controllers.Mvc
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Sector sector = await db.SectorSet.FindAsync(id);
+            Sector sector = await unitOfWork.FindAsync(id);
             if (sector == null)
             {
                 return HttpNotFound();
@@ -89,9 +84,8 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-                db.Entry(sector).State = EntityState.Modified;
-				sector.ModifiedOn = DateTime.Now;
-                await db.SaveChangesAsync();
+                unitOfWork.InsertOrUpdate(sector);
+                await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
             return View(sector);
@@ -104,7 +98,7 @@ namespace Web.Controllers.Mvc
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Sector sector = await db.SectorSet.FindAsync(id);
+            Sector sector = await unitOfWork.FindAsync(id);
             if (sector == null)
             {
                 return HttpNotFound();
@@ -117,19 +111,9 @@ namespace Web.Controllers.Mvc
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(byte id)
         {
-            Sector sector = await db.SectorSet.FindAsync(id);
-            db.SectorSet.Remove(sector);
-            await db.SaveChangesAsync();
+            unitOfWork.Delete(id);
+            await unitOfWork.SaveAsync();
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

@@ -12,8 +12,9 @@ namespace BusinessObjects
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using BusinessObjects.Metadata;
     
-    [MetadataType(typeof(BusinessObjects.Metadata.UserResourcePoolOrganizationMetadata))]
+    [MetadataType(typeof(UserResourcePoolOrganizationMetadata))]
     public partial class UserResourcePoolOrganization : IEntity<int>
     {
         public int Id { get; set; }

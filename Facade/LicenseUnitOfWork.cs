@@ -1,39 +1,91 @@
 ﻿namespace Facade
 {
     using BusinessObjects;
+    using BusinessObjects.Dto;
     using DataObjects;
     using System;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Threading.Tasks;
 
-	/// <summary>
-	/// Abstract class for all the managers (facades).
-	/// </summary>
-	/// <typeparam name="TBusinessObject">Generic type representing the business object.</typeparam>	
-	public class LicenseUnitOfWork : IDisposable
-	{
+    public class LicenseUnitOfWork : IDisposable
+    {
         WealthEconomyEntities context;
         LicenseRepository licenseRepository;
+        UserLicenseRatingRepository userLicenseRatingRepository;
 
-        LicenseUnitOfWork()
+        public LicenseUnitOfWork()
         {
             context = new WealthEconomyEntities();
         }
 
-        public LicenseRepository LicenseRepository
+        #region - Repositories -
+
+        LicenseRepository LicenseRepository
         {
-            get
-            {
-                if (licenseRepository == null)
-                    licenseRepository = new LicenseRepository(context);
-                return licenseRepository;
-            }
+            get { return licenseRepository ?? (licenseRepository = new LicenseRepository(context)); }
         }
 
-		public void Save()
-		{
+        UserLicenseRatingRepository UserLicenseRatingRepository
+        {
+            get { return userLicenseRatingRepository ?? (userLicenseRatingRepository = new UserLicenseRatingRepository(context)); }
+        }
+
+        #endregion
+
+        public IQueryable<License> All { get { return LicenseRepository.All; } }
+
+        public IQueryable<License> AllLive { get { return LicenseRepository.AllLive; } }
+
+        public IQueryable<License> AllIncluding(params Expression<Func<License, object>>[] includeProperties)
+        {
+            return LicenseRepository.AllIncluding(includeProperties);
+        }
+
+        public IQueryable<License> AllLiveIncluding(params Expression<Func<License, object>>[] includeProperties)
+        {
+            return LicenseRepository.AllLiveIncluding(includeProperties);
+        }
+
+        public License Find(object id)
+        {
+            return LicenseRepository.Find(id);
+        }
+
+        public async Task<License> FindAsync(object id)
+        {
+            return await LicenseRepository.FindAsync(id);
+        }
+
+        public void InsertOrUpdate(LicenseDto licenseDto)
+        {
+            // TODO Validation?
+            InsertOrUpdate(licenseDto.ToBusinessObject());
+        }
+
+        public void InsertOrUpdate(License license)
+        {
+            // TODO Validation?
+            LicenseRepository.InsertOrUpdate(license);
+        }
+
+        public void Delete(object id)
+        {
+            var license = Find(id);
+
+            UserLicenseRatingRepository.DeleteRange(license.UserLicenseRatingSet);
+            LicenseRepository.Delete(id);
+        }
+        
+        public void Save()
+        {
             context.SaveChanges();
-		}
+        }
+
+        public async Task<int> SaveAsync()
+        {
+            return await context.SaveChangesAsync();
+        }
 
         private bool disposed = false;
 

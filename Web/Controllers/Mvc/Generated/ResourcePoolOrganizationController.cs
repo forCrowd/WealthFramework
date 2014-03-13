@@ -1,24 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using BusinessObjects;
+using BusinessObjects.Dto;
+using Facade;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
-using System.Web;
+using System.Threading.Tasks;
 using System.Web.Mvc;
-using BusinessObjects;
-using BusinessObjects.Dto;
-using DataObjects;
 
 namespace Web.Controllers.Mvc
 {
     public partial class ResourcePoolOrganizationController : BaseController
     {
+        ResourcePoolOrganizationUnitOfWork unitOfWork = new ResourcePoolOrganizationUnitOfWork();
+
         // GET: /ResourcePoolOrganization/
         public async Task<ActionResult> Index()
         {
-            var resourcepoolorganization = db.ResourcePoolOrganizationSet.Include(r => r.Organization).Include(r => r.ResourcePool);
+            var resourcepoolorganization = unitOfWork.AllLiveIncluding(r => r.Organization, r => r.ResourcePool);
             return View(await resourcepoolorganization.ToListAsync());
         }
 
@@ -29,7 +27,7 @@ namespace Web.Controllers.Mvc
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ResourcePoolOrganization resourcepoolorganization = await db.ResourcePoolOrganizationSet.FindAsync(id);
+            ResourcePoolOrganization resourcepoolorganization = await unitOfWork.FindAsync(id);
             if (resourcepoolorganization == null)
             {
                 return HttpNotFound();
@@ -40,8 +38,8 @@ namespace Web.Controllers.Mvc
         // GET: /ResourcePoolOrganization/Create
         public ActionResult Create()
         {
-            ViewBag.OrganizationId = new SelectList(db.OrganizationSet, "Id", "Name");
-            ViewBag.ResourcePoolId = new SelectList(db.ResourcePoolSet, "Id", "Name");
+            ViewBag.OrganizationId = new SelectList(unitOfWork.AllOrganizationLive.AsEnumerable(), "Id", "Name");
+            ViewBag.ResourcePoolId = new SelectList(unitOfWork.AllResourcePoolLive, "Id", "Name");
             return View();
         }
 
@@ -56,15 +54,13 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-				resourcepoolorganization.CreatedOn = DateTime.Now;
-				resourcepoolorganization.ModifiedOn = DateTime.Now;
-                db.ResourcePoolOrganizationSet.Add(resourcepoolorganization);
-                await db.SaveChangesAsync();
+                unitOfWork.InsertOrUpdate(resourcepoolorganization);
+                await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.OrganizationId = new SelectList(db.OrganizationSet, "Id", "Name", resourcepoolorganization.OrganizationId);
-            ViewBag.ResourcePoolId = new SelectList(db.ResourcePoolSet, "Id", "Name", resourcepoolorganization.ResourcePoolId);
+            ViewBag.OrganizationId = new SelectList(unitOfWork.AllOrganizationLive, "Id", "Name", resourcepoolorganization.OrganizationId);
+            ViewBag.ResourcePoolId = new SelectList(unitOfWork.AllResourcePoolLive, "Id", "Name", resourcepoolorganization.ResourcePoolId);
             return View(resourcepoolorganization);
         }
 
@@ -75,13 +71,13 @@ namespace Web.Controllers.Mvc
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ResourcePoolOrganization resourcepoolorganization = await db.ResourcePoolOrganizationSet.FindAsync(id);
+            ResourcePoolOrganization resourcepoolorganization = await unitOfWork.FindAsync(id);
             if (resourcepoolorganization == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.OrganizationId = new SelectList(db.OrganizationSet, "Id", "Name", resourcepoolorganization.OrganizationId);
-            ViewBag.ResourcePoolId = new SelectList(db.ResourcePoolSet, "Id", "Name", resourcepoolorganization.ResourcePoolId);
+            ViewBag.OrganizationId = new SelectList(unitOfWork.AllOrganizationLive, "Id", "Name", resourcepoolorganization.OrganizationId);
+            ViewBag.ResourcePoolId = new SelectList(unitOfWork.AllResourcePoolLive, "Id", "Name", resourcepoolorganization.ResourcePoolId);
             return View(resourcepoolorganization);
         }
 
@@ -96,13 +92,12 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-                db.Entry(resourcepoolorganization).State = EntityState.Modified;
-				resourcepoolorganization.ModifiedOn = DateTime.Now;
-                await db.SaveChangesAsync();
+                unitOfWork.InsertOrUpdate(resourcepoolorganization);
+                await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.OrganizationId = new SelectList(db.OrganizationSet, "Id", "Name", resourcepoolorganization.OrganizationId);
-            ViewBag.ResourcePoolId = new SelectList(db.ResourcePoolSet, "Id", "Name", resourcepoolorganization.ResourcePoolId);
+            ViewBag.OrganizationId = new SelectList(unitOfWork.AllOrganizationLive, "Id", "Name", resourcepoolorganization.OrganizationId);
+            ViewBag.ResourcePoolId = new SelectList(unitOfWork.AllResourcePoolLive, "Id", "Name", resourcepoolorganization.ResourcePoolId);
             return View(resourcepoolorganization);
         }
 
@@ -113,7 +108,7 @@ namespace Web.Controllers.Mvc
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ResourcePoolOrganization resourcepoolorganization = await db.ResourcePoolOrganizationSet.FindAsync(id);
+            ResourcePoolOrganization resourcepoolorganization = await unitOfWork.FindAsync(id);
             if (resourcepoolorganization == null)
             {
                 return HttpNotFound();
@@ -126,19 +121,9 @@ namespace Web.Controllers.Mvc
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            ResourcePoolOrganization resourcepoolorganization = await db.ResourcePoolOrganizationSet.FindAsync(id);
-            db.ResourcePoolOrganizationSet.Remove(resourcepoolorganization);
-            await db.SaveChangesAsync();
+            unitOfWork.Delete(id);
+            await unitOfWork.SaveAsync();
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

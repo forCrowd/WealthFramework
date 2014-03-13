@@ -1,17 +1,11 @@
 ﻿using BusinessObjects;
-using DataObjects;
 using Framework;
-using System;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Web.Controllers
 {
     public abstract class BaseController : Controller
     {
-        protected WealthEconomyEntities db = new WealthEconomyEntities();
-
         protected BaseController()
         {
             ViewBag.IsAuthenticated = IsAuthenticated;

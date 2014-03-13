@@ -1,16 +1,17 @@
 ﻿namespace DataObjects
 {
     using BusinessObjects;
-    using System;
-    using System.Data.Entity;
-    using System.Linq;
-    using System.Linq.Expressions;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
     public abstract class GenericRepository<TEntityType, TPrimaryKeyType> : IGenericRepository<TEntityType, TPrimaryKeyType>
         where TEntityType : class, IEntity<TPrimaryKeyType>
         where TPrimaryKeyType : struct
     {
-        DbContext context;
         readonly DbSet<TEntityType> dbSet;
 
         protected GenericRepository(DbContext context)
@@ -19,11 +20,7 @@
             dbSet = Context.Set<TEntityType>();
         }
 
-        public DbContext Context
-        {
-            get { return context; }
-            private set { context = value; }
-        }
+        public DbContext Context { get; private set; }
 
         public IQueryable<TEntityType> All
         {
@@ -53,37 +50,50 @@
             return query;
         }
 
-        public TEntityType Find(TPrimaryKeyType id)
+        public TEntityType Find(object id)
         {
             return dbSet.Find(id);
+        }
+
+        public async Task<TEntityType> FindAsync(object id)
+        {
+            return await dbSet.FindAsync(id);
         }
 
         public void InsertOrUpdate(TEntityType entity)
         {
             if (entity.Id.Equals(default(TPrimaryKeyType)))
             {
-                // New entity
                 entity.CreatedOn = DateTime.Now;
                 entity.ModifiedOn = DateTime.Now;
                 dbSet.Add(entity);
             }
             else
             {
-                // Existing entity
                 entity.ModifiedOn = DateTime.Now;
                 Context.Entry(entity).State = EntityState.Modified;
             }
         }
 
-        public void Delete(TPrimaryKeyType id)
+        public void Delete(object id)
         {
             var entity = dbSet.Find(id);
             dbSet.Remove(entity);
         }
 
-        public void Save()
+        public void DeleteRange(IEnumerable<TEntityType> entities)
         {
-            Context.SaveChanges();
+            dbSet.RemoveRange(entities);
+        }
+
+        public int Save()
+        {
+            return Context.SaveChanges();
+        }
+
+        public async Task<int> SaveAsync()
+        {
+            return await Context.SaveChangesAsync();
         }
 
         public void Dispose()

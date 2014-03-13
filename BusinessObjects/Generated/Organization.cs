@@ -12,8 +12,9 @@ namespace BusinessObjects
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using BusinessObjects.Metadata;
     
-    [MetadataType(typeof(BusinessObjects.Metadata.OrganizationMetadata))]
+    [MetadataType(typeof(OrganizationMetadata))]
     public partial class Organization : IEntity<int>
     {
         public Organization()

@@ -1,9 +1,11 @@
 ﻿namespace DataObjects
 {
     using BusinessObjects;
-    using System;
-    using System.Linq;
-    using System.Linq.Expressions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
     public interface IGenericRepository<TEntityType, TPrimaryKeyType> : IDisposable
         where TEntityType : class, IEntity<TPrimaryKeyType>
@@ -17,12 +19,18 @@
 
         IQueryable<TEntityType> AllLiveIncluding(params Expression<Func<TEntityType, object>>[] includeProperties);
 
-        TEntityType Find(TPrimaryKeyType id);
+        TEntityType Find(object id);
+
+        Task<TEntityType> FindAsync(object id);
 
         void InsertOrUpdate(TEntityType entity);
 
-        void Delete(TPrimaryKeyType id);
+        void Delete(object id);
 
-        void Save();
+        void DeleteRange(IEnumerable<TEntityType> entities);
+
+        int Save();
+
+        Task<int> SaveAsync();
     }
 }

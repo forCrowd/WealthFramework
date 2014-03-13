@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using BusinessObjects;
+﻿using BusinessObjects;
 using BusinessObjects.Dto;
-using DataObjects;
+using Facade;
+using System.Data.Entity;
+using System.Net;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Web.Controllers.Mvc
 {
     public partial class ResourcePoolController : BaseController
     {
+        ResourcePoolUnitOfWork unitOfWork = new ResourcePoolUnitOfWork();
+
         // GET: /ResourcePool/
         public async Task<ActionResult> Index()
         {
-            return View(await db.ResourcePoolSet.ToListAsync());
+            return View(await unitOfWork.AllLive.ToListAsync());
         }
 
         // GET: /ResourcePool/Details/5
@@ -28,7 +25,7 @@ namespace Web.Controllers.Mvc
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ResourcePool resourcepool = await db.ResourcePoolSet.FindAsync(id);
+            ResourcePool resourcepool = await unitOfWork.FindAsync(id);
             if (resourcepool == null)
             {
                 return HttpNotFound();
@@ -53,10 +50,8 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-				resourcepool.CreatedOn = DateTime.Now;
-				resourcepool.ModifiedOn = DateTime.Now;
-                db.ResourcePoolSet.Add(resourcepool);
-                await db.SaveChangesAsync();
+                unitOfWork.InsertOrUpdate(resourcepool);
+                await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
 
@@ -70,7 +65,7 @@ namespace Web.Controllers.Mvc
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ResourcePool resourcepool = await db.ResourcePoolSet.FindAsync(id);
+            ResourcePool resourcepool = await unitOfWork.FindAsync(id);
             if (resourcepool == null)
             {
                 return HttpNotFound();
@@ -89,9 +84,8 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-                db.Entry(resourcepool).State = EntityState.Modified;
-				resourcepool.ModifiedOn = DateTime.Now;
-                await db.SaveChangesAsync();
+                unitOfWork.InsertOrUpdate(resourcepool);
+                await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
             return View(resourcepool);
@@ -104,7 +98,7 @@ namespace Web.Controllers.Mvc
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ResourcePool resourcepool = await db.ResourcePoolSet.FindAsync(id);
+            ResourcePool resourcepool = await unitOfWork.FindAsync(id);
             if (resourcepool == null)
             {
                 return HttpNotFound();
@@ -117,19 +111,9 @@ namespace Web.Controllers.Mvc
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            ResourcePool resourcepool = await db.ResourcePoolSet.FindAsync(id);
-            db.ResourcePoolSet.Remove(resourcepool);
-            await db.SaveChangesAsync();
+            unitOfWork.Delete(id);
+            await unitOfWork.SaveAsync();
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

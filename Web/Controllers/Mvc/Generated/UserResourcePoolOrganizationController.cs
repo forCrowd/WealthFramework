@@ -1,24 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using BusinessObjects;
+using BusinessObjects.Dto;
+using Facade;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
-using System.Web;
+using System.Threading.Tasks;
 using System.Web.Mvc;
-using BusinessObjects;
-using BusinessObjects.Dto;
-using DataObjects;
 
 namespace Web.Controllers.Mvc
 {
     public partial class UserResourcePoolOrganizationController : BaseController
     {
+        UserResourcePoolOrganizationUnitOfWork unitOfWork = new UserResourcePoolOrganizationUnitOfWork();
+
         // GET: /UserResourcePoolOrganization/
         public async Task<ActionResult> Index()
         {
-            var userresourcepoolorganization = db.UserResourcePoolOrganizationSet.Include(u => u.User).Include(u => u.ResourcePoolOrganization);
+            var userresourcepoolorganization = unitOfWork.AllLiveIncluding(u => u.User, u => u.ResourcePoolOrganization);
 
             if (IsAuthenticated)
                 userresourcepoolorganization = userresourcepoolorganization.Where(rating => rating.UserId == CurrentUserId);
@@ -33,7 +31,7 @@ namespace Web.Controllers.Mvc
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserResourcePoolOrganization userresourcepoolorganization = await db.UserResourcePoolOrganizationSet.FindAsync(id);
+            UserResourcePoolOrganization userresourcepoolorganization = await unitOfWork.FindAsync(id);
             if (userresourcepoolorganization == null)
             {
                 return HttpNotFound();
@@ -44,13 +42,13 @@ namespace Web.Controllers.Mvc
         // GET: /UserResourcePoolOrganization/Create
         public ActionResult Create()
         {
-            var userSet = db.UserSet.AsEnumerable();
+            var userSet = unitOfWork.AllUserLive.AsEnumerable();
 
             if (IsAuthenticated)
                 userSet = userSet.Where(user => user.Id == CurrentUserId);
 
             ViewBag.UserId = new SelectList(userSet, "Id", "Email");
-            ViewBag.ResourcePoolOrganizationId = new SelectList(db.ResourcePoolOrganizationSet, "Id", "Name");
+            ViewBag.ResourcePoolOrganizationId = new SelectList(unitOfWork.AllResourcePoolOrganizationLive.AsEnumerable(), "Id", "Name");
             return View();
         }
 
@@ -65,20 +63,18 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-				userresourcepoolorganization.CreatedOn = DateTime.Now;
-				userresourcepoolorganization.ModifiedOn = DateTime.Now;
-                db.UserResourcePoolOrganizationSet.Add(userresourcepoolorganization);
-                await db.SaveChangesAsync();
+                unitOfWork.InsertOrUpdate(userresourcepoolorganization);
+                await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
 
-            var userSet = db.UserSet.AsEnumerable();
+            var userSet = unitOfWork.AllUserLive.AsEnumerable();
 
             if (IsAuthenticated)
                 userSet = userSet.Where(user => user.Id == CurrentUserId);
 
             ViewBag.UserId = new SelectList(userSet, "Id", "Email", userresourcepoolorganization.UserId);
-            ViewBag.ResourcePoolOrganizationId = new SelectList(db.ResourcePoolOrganizationSet, "Id", "Name", userresourcepoolorganization.ResourcePoolOrganizationId);
+            ViewBag.ResourcePoolOrganizationId = new SelectList(unitOfWork.AllResourcePoolOrganizationLive.AsEnumerable(), "Id", "Name", userresourcepoolorganization.ResourcePoolOrganizationId);
             return View(userresourcepoolorganization);
         }
 
@@ -89,19 +85,19 @@ namespace Web.Controllers.Mvc
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserResourcePoolOrganization userresourcepoolorganization = await db.UserResourcePoolOrganizationSet.FindAsync(id);
+            UserResourcePoolOrganization userresourcepoolorganization = await unitOfWork.FindAsync(id);
             if (userresourcepoolorganization == null)
             {
                 return HttpNotFound();
             }
 
-            var userSet = db.UserSet.AsEnumerable();
+            var userSet = unitOfWork.AllUserLive.AsEnumerable();
 
             if (IsAuthenticated)
                 userSet = userSet.Where(user => user.Id == CurrentUserId);
 
             ViewBag.UserId = new SelectList(userSet, "Id", "Email", userresourcepoolorganization.UserId);
-            ViewBag.ResourcePoolOrganizationId = new SelectList(db.ResourcePoolOrganizationSet, "Id", "Name", userresourcepoolorganization.ResourcePoolOrganizationId);
+            ViewBag.ResourcePoolOrganizationId = new SelectList(unitOfWork.AllResourcePoolOrganizationLive.AsEnumerable(), "Id", "Name", userresourcepoolorganization.ResourcePoolOrganizationId);
             return View(userresourcepoolorganization);
         }
 
@@ -116,19 +112,18 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-                db.Entry(userresourcepoolorganization).State = EntityState.Modified;
-				userresourcepoolorganization.ModifiedOn = DateTime.Now;
-                await db.SaveChangesAsync();
+                unitOfWork.InsertOrUpdate(userresourcepoolorganization);
+                await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
 
-            var userSet = db.UserSet.AsEnumerable();
+            var userSet = unitOfWork.AllUserLive.AsEnumerable();
 
             if (IsAuthenticated)
                 userSet = userSet.Where(user => user.Id == CurrentUserId);
 
             ViewBag.UserId = new SelectList(userSet, "Id", "Email", userresourcepoolorganization.UserId);
-            ViewBag.ResourcePoolOrganizationId = new SelectList(db.ResourcePoolOrganizationSet, "Id", "Name", userresourcepoolorganization.ResourcePoolOrganizationId);
+            ViewBag.ResourcePoolOrganizationId = new SelectList(unitOfWork.AllResourcePoolOrganizationLive.AsEnumerable(), "Id", "Name", userresourcepoolorganization.ResourcePoolOrganizationId);
             return View(userresourcepoolorganization);
         }
 
@@ -139,7 +134,7 @@ namespace Web.Controllers.Mvc
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserResourcePoolOrganization userresourcepoolorganization = await db.UserResourcePoolOrganizationSet.FindAsync(id);
+            UserResourcePoolOrganization userresourcepoolorganization = await unitOfWork.FindAsync(id);
             if (userresourcepoolorganization == null)
             {
                 return HttpNotFound();
@@ -152,19 +147,9 @@ namespace Web.Controllers.Mvc
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            UserResourcePoolOrganization userresourcepoolorganization = await db.UserResourcePoolOrganizationSet.FindAsync(id);
-            db.UserResourcePoolOrganizationSet.Remove(userresourcepoolorganization);
-            await db.SaveChangesAsync();
+            unitOfWork.Delete(id);
+            await unitOfWork.SaveAsync();
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

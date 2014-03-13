@@ -23,15 +23,16 @@ namespace Web.Controllers.Mvc
 
         public void ExecuteSqlCommand(string commandText)
         {
-            using (var sqlConnection = new SqlConnection(db.Database.Connection.ConnectionString))
-            {
-                using (var sqlCommand = new SqlCommand(commandText, sqlConnection))
-                {
-                    sqlConnection.Open();
-                    sqlCommand.ExecuteNonQuery();
-                    sqlConnection.Close();
-                }
-            }
+            //var db = new WealthEconomyEntities();
+            //using (var sqlConnection = new SqlConnection(db.Database.Connection.ConnectionString))
+            //{
+            //    using (var sqlCommand = new SqlCommand(commandText, sqlConnection))
+            //    {
+            //        sqlConnection.Open();
+            //        sqlCommand.ExecuteNonQuery();
+            //        sqlConnection.Close();
+            //    }
+            //}
         }
     }
 }

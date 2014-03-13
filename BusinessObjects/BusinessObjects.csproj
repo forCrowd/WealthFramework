@@ -113,9 +113,39 @@
     <Compile Include="Generated\UserSectorRating.cs">
       <DependentUpon>BusinessObject.tt</DependentUpon>
     </Compile>
-    <Compile Include="Metadata\BusinessObjectMetadata.cs">
+    <Compile Include="Metadata\Generated\BusinessObjectMetadata.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>BusinessObjectMetadata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Metadata\Generated\LicenseMetadata.cs">
+      <DependentUpon>BusinessObjectMetadata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Metadata\Generated\OrganizationMetadata.cs">
+      <DependentUpon>BusinessObjectMetadata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Metadata\Generated\ResourcePoolMetadata.cs">
+      <DependentUpon>BusinessObjectMetadata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Metadata\Generated\ResourcePoolOrganizationMetadata.cs">
+      <DependentUpon>BusinessObjectMetadata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Metadata\Generated\SectorMetadata.cs">
+      <DependentUpon>BusinessObjectMetadata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Metadata\Generated\UserLicenseRatingMetadata.cs">
+      <DependentUpon>BusinessObjectMetadata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Metadata\Generated\UserMetadata.cs">
+      <DependentUpon>BusinessObjectMetadata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Metadata\Generated\UserResourcePoolMetadata.cs">
+      <DependentUpon>BusinessObjectMetadata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Metadata\Generated\UserResourcePoolOrganizationMetadata.cs">
+      <DependentUpon>BusinessObjectMetadata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Metadata\Generated\UserSectorRatingMetadata.cs">
       <DependentUpon>BusinessObjectMetadata.tt</DependentUpon>
     </Compile>
     <Compile Include="Metadata\LicenseMetadata.cs" />
@@ -147,7 +177,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>BusinessObjectDto.cs</LastGenOutput>
     </None>
-    <None Include="Metadata\BusinessObjectMetadata.tt">
+    <None Include="Metadata\Generated\BusinessObjectMetadata.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>BusinessObjectMetadata.cs</LastGenOutput>
     </None>

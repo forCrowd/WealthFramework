@@ -1,24 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using BusinessObjects;
+using BusinessObjects.Dto;
+using Facade;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
-using System.Web;
+using System.Threading.Tasks;
 using System.Web.Mvc;
-using BusinessObjects;
-using BusinessObjects.Dto;
-using DataObjects;
 
 namespace Web.Controllers.Mvc
 {
     public partial class UserLicenseRatingController : BaseController
     {
+        UserLicenseRatingUnitOfWork unitOfWork = new UserLicenseRatingUnitOfWork();
+
         // GET: /UserLicenseRating/
         public async Task<ActionResult> Index()
         {
-            var userlicenseratingset = db.UserLicenseRatingSet.Include(u => u.License).Include(u => u.User);
+            var userlicenseratingset = unitOfWork.AllLiveIncluding(u => u.License, u => u.User);
 
             if (IsAuthenticated)
                 userlicenseratingset = userlicenseratingset.Where(rating => rating.UserId == CurrentUserId);
@@ -33,7 +31,7 @@ namespace Web.Controllers.Mvc
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserLicenseRating userlicenserating = await db.UserLicenseRatingSet.FindAsync(id);
+            UserLicenseRating userlicenserating = await unitOfWork.FindAsync(id);
             if (userlicenserating == null)
             {
                 return HttpNotFound();
@@ -44,13 +42,13 @@ namespace Web.Controllers.Mvc
         // GET: /UserLicenseRating/Create
         public ActionResult Create()
         {
-            var userSet = db.UserSet.AsEnumerable();
+            var userSet = unitOfWork.AllUserLive.AsEnumerable();
 
             if (IsAuthenticated)
                 userSet = userSet.Where(user => user.Id == CurrentUserId);
 
             ViewBag.UserId = new SelectList(userSet, "Id", "Email");
-            ViewBag.LicenseId = new SelectList(db.LicenseSet, "Id", "Name");
+            ViewBag.LicenseId = new SelectList(unitOfWork.AllLicenseLive.AsEnumerable(), "Id", "Name");
             return View();
         }
 
@@ -65,20 +63,18 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-				userlicenserating.CreatedOn = DateTime.Now;
-				userlicenserating.ModifiedOn = DateTime.Now;
-                db.UserLicenseRatingSet.Add(userlicenserating);
-                await db.SaveChangesAsync();
+                unitOfWork.InsertOrUpdate(userlicenserating);
+                await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
 
-            var userSet = db.UserSet.AsEnumerable();
+            var userSet = unitOfWork.AllUserLive.AsEnumerable();
 
             if (IsAuthenticated)
                 userSet = userSet.Where(user => user.Id == CurrentUserId);
 
             ViewBag.UserId = new SelectList(userSet, "Id", "Email", userlicenserating.UserId);
-            ViewBag.LicenseId = new SelectList(db.LicenseSet, "Id", "Name", userlicenserating.LicenseId);
+            ViewBag.LicenseId = new SelectList(unitOfWork.AllLicenseLive.AsEnumerable(), "Id", "Name", userlicenserating.LicenseId);
             return View(userlicenserating);
         }
 
@@ -89,19 +85,19 @@ namespace Web.Controllers.Mvc
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserLicenseRating userlicenserating = await db.UserLicenseRatingSet.FindAsync(id);
+            UserLicenseRating userlicenserating = await unitOfWork.FindAsync(id);
             if (userlicenserating == null)
             {
                 return HttpNotFound();
             }
 
-            var userSet = db.UserSet.AsEnumerable();
+            var userSet = unitOfWork.AllUserLive.AsEnumerable();
 
             if (IsAuthenticated)
                 userSet = userSet.Where(user => user.Id == CurrentUserId);
 
             ViewBag.UserId = new SelectList(userSet, "Id", "Email", userlicenserating.UserId);
-            ViewBag.LicenseId = new SelectList(db.LicenseSet, "Id", "Name", userlicenserating.LicenseId);
+            ViewBag.LicenseId = new SelectList(unitOfWork.AllLicenseLive.AsEnumerable(), "Id", "Name", userlicenserating.LicenseId);
             return View(userlicenserating);
         }
 
@@ -116,19 +112,18 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-                db.Entry(userlicenserating).State = EntityState.Modified;
-				userlicenserating.ModifiedOn = DateTime.Now;
-                await db.SaveChangesAsync();
+                unitOfWork.InsertOrUpdate(userlicenserating);
+                await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
 
-            var userSet = db.UserSet.AsEnumerable();
+            var userSet = unitOfWork.AllUserLive.AsEnumerable();
 
             if (IsAuthenticated)
                 userSet = userSet.Where(user => user.Id == CurrentUserId);
 
             ViewBag.UserId = new SelectList(userSet, "Id", "Email", userlicenserating.UserId);
-            ViewBag.LicenseId = new SelectList(db.LicenseSet, "Id", "Name", userlicenserating.LicenseId);
+            ViewBag.LicenseId = new SelectList(unitOfWork.AllLicenseLive.AsEnumerable(), "Id", "Name", userlicenserating.LicenseId);
             return View(userlicenserating);
         }
 
@@ -139,7 +134,7 @@ namespace Web.Controllers.Mvc
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserLicenseRating userlicenserating = await db.UserLicenseRatingSet.FindAsync(id);
+            UserLicenseRating userlicenserating = await unitOfWork.FindAsync(id);
             if (userlicenserating == null)
             {
                 return HttpNotFound();
@@ -152,19 +147,9 @@ namespace Web.Controllers.Mvc
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            UserLicenseRating userlicenserating = await db.UserLicenseRatingSet.FindAsync(id);
-            db.UserLicenseRatingSet.Remove(userlicenserating);
-            await db.SaveChangesAsync();
+            unitOfWork.Delete(id);
+            await unitOfWork.SaveAsync();
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

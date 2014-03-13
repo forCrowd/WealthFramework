@@ -1,39 +1,91 @@
 ﻿namespace Facade
 {
     using BusinessObjects;
+    using BusinessObjects.Dto;
     using DataObjects;
     using System;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Threading.Tasks;
 
-	/// <summary>
-	/// Abstract class for all the managers (facades).
-	/// </summary>
-	/// <typeparam name="TBusinessObject">Generic type representing the business object.</typeparam>	
-	public class SectorUnitOfWork : IDisposable
-	{
+    public class SectorUnitOfWork : IDisposable
+    {
         WealthEconomyEntities context;
         SectorRepository sectorRepository;
+        UserSectorRatingRepository userSectorRatingRepository;
 
-        SectorUnitOfWork()
+        public SectorUnitOfWork()
         {
             context = new WealthEconomyEntities();
         }
 
-        public SectorRepository SectorRepository
+        #region - Repositories -
+
+        SectorRepository SectorRepository
         {
-            get
-            {
-                if (sectorRepository == null)
-                    sectorRepository = new SectorRepository(context);
-                return sectorRepository;
-            }
+            get { return sectorRepository ?? (sectorRepository = new SectorRepository(context)); }
         }
 
-		public void Save()
-		{
+        UserSectorRatingRepository UserSectorRatingRepository
+        {
+            get { return userSectorRatingRepository ?? (userSectorRatingRepository = new UserSectorRatingRepository(context)); }
+        }
+
+        #endregion
+
+        public IQueryable<Sector> All { get { return SectorRepository.All; } }
+
+        public IQueryable<Sector> AllLive { get { return SectorRepository.AllLive; } }
+
+        public IQueryable<Sector> AllIncluding(params Expression<Func<Sector, object>>[] includeProperties)
+        {
+            return SectorRepository.AllIncluding(includeProperties);
+        }
+
+        public IQueryable<Sector> AllLiveIncluding(params Expression<Func<Sector, object>>[] includeProperties)
+        {
+            return SectorRepository.AllLiveIncluding(includeProperties);
+        }
+
+        public Sector Find(object id)
+        {
+            return SectorRepository.Find(id);
+        }
+
+        public async Task<Sector> FindAsync(object id)
+        {
+            return await SectorRepository.FindAsync(id);
+        }
+
+        public void InsertOrUpdate(SectorDto sectorDto)
+        {
+            // TODO Validation?
+            InsertOrUpdate(sectorDto.ToBusinessObject());
+        }
+
+        public void InsertOrUpdate(Sector sector)
+        {
+            // TODO Validation?
+            SectorRepository.InsertOrUpdate(sector);
+        }
+
+        public void Delete(object id)
+        {
+            var sector = Find(id);
+
+            UserSectorRatingRepository.DeleteRange(sector.UserSectorRatingSet);
+            SectorRepository.Delete(id);
+        }
+        
+        public void Save()
+        {
             context.SaveChanges();
-		}
+        }
+
+        public async Task<int> SaveAsync()
+        {
+            return await context.SaveChangesAsync();
+        }
 
         private bool disposed = false;
 
