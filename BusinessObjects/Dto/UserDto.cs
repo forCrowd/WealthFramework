@@ -10,11 +10,13 @@
 namespace BusinessObjects.Dto
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
     
     public class UserDto
     {
         public int Id { get; set; }
         public string Email { get; set; }
+        public string Password { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
@@ -30,6 +32,7 @@ namespace BusinessObjects.Dto
     		{
     			Id = Id, 
     			Email = Email, 
+    			Password = Password, 
     			FirstName = FirstName, 
     			MiddleName = MiddleName, 
     			LastName = LastName, 

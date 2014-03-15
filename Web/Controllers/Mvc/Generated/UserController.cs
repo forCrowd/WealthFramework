@@ -1,14 +1,14 @@
-﻿using BusinessObjects;
-using BusinessObjects.Dto;
-using Facade;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-
-namespace Web.Controllers.Mvc.Generated
+namespace Web.Controllers.Mvc
 {
+    using BusinessObjects;
+    using BusinessObjects.Dto;
+    using Facade;
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Net;
+    using System.Threading.Tasks;
+    using System.Web.Mvc;
+
     public partial class UserController : BaseController
     {
         UserUnitOfWork unitOfWork = new UserUnitOfWork();
@@ -37,6 +37,7 @@ namespace Web.Controllers.Mvc.Generated
         // GET: /User/Create
         public ActionResult Create()
         {
+            ViewBag.UserAccountTypeId = new SelectList(GetAvailableUserAccountTypes(), "Id", "Name");
             return View();
         }
 
@@ -45,9 +46,9 @@ namespace Web.Controllers.Mvc.Generated
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Email,FirstName,MiddleName,LastName,UserAccountTypeId,Notes,CreatedOn,ModifiedOn,DeletedOn")] UserDto userdto)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Email,Password,FirstName,MiddleName,LastName,UserAccountTypeId,Notes,CreatedOn,ModifiedOn,DeletedOn")] UserDto userdto)
         {
-			var user = userdto.ToBusinessObject();
+            var user = userdto.ToBusinessObject();
 
             if (ModelState.IsValid)
             {
@@ -56,6 +57,7 @@ namespace Web.Controllers.Mvc.Generated
                 return RedirectToAction("Index");
             }
 
+            ViewBag.UserAccountTypeId = new SelectList(GetAvailableUserAccountTypes(), "Id", "Name", user.UserAccountTypeId);
             return View(user);
         }
 
@@ -71,6 +73,8 @@ namespace Web.Controllers.Mvc.Generated
             {
                 return HttpNotFound();
             }
+
+            ViewBag.UserAccountTypeId = new SelectList(GetAvailableUserAccountTypes(), "Id", "Name", user.UserAccountTypeId);
             return View(user);
         }
 
@@ -79,16 +83,20 @@ namespace Web.Controllers.Mvc.Generated
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Email,FirstName,MiddleName,LastName,UserAccountTypeId,Notes,CreatedOn,ModifiedOn,DeletedOn")] UserDto userdto)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Email,Password,FirstName,MiddleName,LastName,UserAccountTypeId,Notes,CreatedOn,ModifiedOn,DeletedOn")] UserDto userdto, string returnUrl)
         {
-			var user = userdto.ToBusinessObject();
+            var user = userdto.ToBusinessObject();
 
             if (ModelState.IsValid)
             {
                 unitOfWork.InsertOrUpdate(user);
                 await unitOfWork.SaveAsync();
-                return RedirectToAction("Index");
+                if (!string.IsNullOrWhiteSpace(returnUrl))
+                    return Redirect(returnUrl);
+                return RedirectToAction("Index", "Home");
             }
+
+            ViewBag.UserAccountTypeId = new SelectList(GetAvailableUserAccountTypes(), "Id", "Name", user.UserAccountTypeId);
             return View(user);
         }
 

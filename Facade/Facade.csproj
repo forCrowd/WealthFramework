@@ -52,7 +52,42 @@
     <Compile Include="..\SolutionItems\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="BaseClass.cs" />
+    <Compile Include="BaseUnitOfWork.cs" />
+    <Compile Include="Generated\LicenseUnitOfWork.cs">
+      <DependentUpon>UnitOfWork.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\OrganizationUnitOfWork.cs">
+      <DependentUpon>UnitOfWork.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\ResourcePoolOrganizationUnitOfWork.cs">
+      <DependentUpon>UnitOfWork.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\ResourcePoolUnitOfWork.cs">
+      <DependentUpon>UnitOfWork.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\SectorUnitOfWork.cs">
+      <DependentUpon>UnitOfWork.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\UnitOfWork.cs">
+      <DependentUpon>UnitOfWork.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Generated\UserLicenseRatingUnitOfWork.cs">
+      <DependentUpon>UnitOfWork.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\UserResourcePoolOrganizationUnitOfWork.cs">
+      <DependentUpon>UnitOfWork.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\UserResourcePoolUnitOfWork.cs">
+      <DependentUpon>UnitOfWork.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\UserSectorRatingUnitOfWork.cs">
+      <DependentUpon>UnitOfWork.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\UserUnitOfWork.cs">
+      <DependentUpon>UnitOfWork.tt</DependentUpon>
+    </Compile>
     <Compile Include="UserResourcePoolOrganizationUnitOfWork.cs" />
     <Compile Include="UserResourcePoolUnitOfWork.cs" />
     <Compile Include="UserSectorRatingUnitOfWork.cs" />
@@ -63,7 +98,6 @@
     <Compile Include="ResourcePoolUnitOfWork.cs" />
     <Compile Include="OrganizationUnitOfWork.cs" />
     <Compile Include="LicenseUnitOfWork.cs" />
-    <Compile Include="GenericUnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessObjects\BusinessObjects.csproj">
@@ -77,7 +111,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Generated\UnitOfWork.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>UnitOfWork.cs</LastGenOutput>
+    </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

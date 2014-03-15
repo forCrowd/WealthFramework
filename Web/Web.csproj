@@ -130,7 +130,9 @@
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="..\SolutionItems\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
@@ -157,29 +159,45 @@
     <Compile Include="App_Start\DevelopmentModeConfig.cs" />
     <Compile Include="Code\ServerMode.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\Mvc\Generated\LicenseController.cs" />
-    <Compile Include="Controllers\Mvc\Generated\OrganizationController.cs" />
-    <Compile Include="Controllers\Mvc\Generated\ResourcePoolController.cs" />
-    <Compile Include="Controllers\Mvc\ResourcePoolController.cs" />
-    <Compile Include="Controllers\Mvc\Generated\ResourcePoolOrganizationController.cs" />
-    <Compile Include="Controllers\Mvc\ResourcePoolOrganizationController.cs" />
-    <Compile Include="Controllers\Mvc\Generated\SectorController.cs" />
-    <Compile Include="Controllers\Mvc\Generated\UserController.cs" />
-    <Compile Include="Controllers\Mvc\Generated\UserLicenseRatingController.cs" />
-    <Compile Include="Controllers\Mvc\Generated\UserResourcePoolController.cs" />
-    <Compile Include="Controllers\Mvc\UserResourcePoolController.cs" />
-    <Compile Include="Controllers\Mvc\Generated\UserResourcePoolOrganizationController.cs" />
-    <Compile Include="Controllers\Mvc\UserResourcePoolOrganizationController.cs" />
-    <Compile Include="Controllers\Mvc\Generated\UserSectorRatingController.cs" />
-    <Compile Include="Controllers\Mvc\HomeController.cs" />
-    <Compile Include="Controllers\Mvc\LicenseController.cs" />
-    <Compile Include="Controllers\Mvc\OrganizationController.cs" />
-    <Compile Include="Controllers\Mvc\SectorController.cs" />
-    <Compile Include="Controllers\Mvc\DatabaseAlterationController.cs" />
-    <Compile Include="Controllers\Mvc\UserResourcePoolCustomController.cs" />
-    <Compile Include="Controllers\Mvc\UserLicenseRatingController.cs" />
+    <Compile Include="Controllers\Mvc\Generated\Controller.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Controller.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\Mvc\Generated\LicenseController.cs">
+      <DependentUpon>Controller.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\Mvc\Generated\OrganizationController.cs">
+      <DependentUpon>Controller.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\Mvc\Generated\ResourcePoolController.cs">
+      <DependentUpon>Controller.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\Mvc\Generated\ResourcePoolOrganizationController.cs">
+      <DependentUpon>Controller.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\Mvc\Generated\SectorController.cs">
+      <DependentUpon>Controller.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\Mvc\Generated\UserController.cs">
+      <DependentUpon>Controller.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\Mvc\Generated\UserLicenseRatingController.cs">
+      <DependentUpon>Controller.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\Mvc\Generated\UserResourcePoolController.cs">
+      <DependentUpon>Controller.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\Mvc\Generated\UserResourcePoolOrganizationController.cs">
+      <DependentUpon>Controller.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\Mvc\Generated\UserSectorRatingController.cs">
+      <DependentUpon>Controller.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\Mvc\UserController.cs" />
-    <Compile Include="Controllers\Mvc\UserSectorRatingController.cs" />
+    <Compile Include="Controllers\Mvc\HomeController.cs" />
+    <Compile Include="Controllers\Mvc\DatabaseAlterationController.cs" />
+    <Compile Include="Controllers\Mvc\UserResourcePoolController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -205,6 +223,10 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\HelpPageApiModel.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="Controllers\Mvc\Generated\Controller.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Controller.cs</LastGenOutput>
+    </Content>
     <None Include="Properties\PublishProfiles\Default.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -235,7 +257,7 @@
     <Content Include="Views\UserResourcePool\CustomerSatisfactionIndex.cshtml" />
     <Content Include="Views\UserResourcePool\SectorIndex.cshtml" />
     <Content Include="Views\UserResourcePool\AllInOne.cshtml" />
-    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\UserResourcePool\DistanceIndex.cshtml" />
     <Content Include="Views\ResourcePool\Create.cshtml" />
     <Content Include="Views\ResourcePool\Delete.cshtml" />
@@ -257,56 +279,56 @@
     <Content Include="Views\UserResourcePoolOrganization\Details.cshtml" />
     <Content Include="Views\UserResourcePoolOrganization\Edit.cshtml" />
     <Content Include="Views\UserResourcePoolOrganization\Index.cshtml" />
-    <Content Include="Views\L\Create.cshtml" />
-    <Content Include="Views\L\Delete.cshtml" />
-    <Content Include="Views\L\Details.cshtml" />
-    <Content Include="Views\L\Edit.cshtml" />
-    <Content Include="Views\L\Index.cshtml" />
-    <Content Include="Views\O\Create.cshtml" />
-    <Content Include="Views\O\Delete.cshtml" />
-    <Content Include="Views\O\Details.cshtml" />
-    <Content Include="Views\O\Edit.cshtml" />
-    <Content Include="Views\O\Index.cshtml" />
-    <Content Include="Views\ResourcePool2\Create.cshtml" />
-    <Content Include="Views\ResourcePool2\Delete.cshtml" />
-    <Content Include="Views\ResourcePool2\Details.cshtml" />
-    <Content Include="Views\ResourcePool2\Edit.cshtml" />
-    <Content Include="Views\ResourcePool2\Index.cshtml" />
-    <Content Include="Views\ResourcePoolOrganization2\Create.cshtml" />
-    <Content Include="Views\ResourcePoolOrganization2\Delete.cshtml" />
-    <Content Include="Views\ResourcePoolOrganization2\Details.cshtml" />
-    <Content Include="Views\ResourcePoolOrganization2\Edit.cshtml" />
-    <Content Include="Views\ResourcePoolOrganization2\Index.cshtml" />
-    <Content Include="Views\Sector2\Create.cshtml" />
-    <Content Include="Views\Sector2\Delete.cshtml" />
-    <Content Include="Views\Sector2\Details.cshtml" />
-    <Content Include="Views\Sector2\Edit.cshtml" />
-    <Content Include="Views\Sector2\Index.cshtml" />
-    <Content Include="Views\User2\Create.cshtml" />
-    <Content Include="Views\User2\Delete.cshtml" />
-    <Content Include="Views\User2\Details.cshtml" />
-    <Content Include="Views\User2\Edit.cshtml" />
-    <Content Include="Views\User2\Index.cshtml" />
-    <Content Include="Views\UserLicenseRating2\Create.cshtml" />
-    <Content Include="Views\UserLicenseRating2\Delete.cshtml" />
-    <Content Include="Views\UserLicenseRating2\Details.cshtml" />
-    <Content Include="Views\UserLicenseRating2\Edit.cshtml" />
-    <Content Include="Views\UserLicenseRating2\Index.cshtml" />
-    <Content Include="Views\UserResourcePool2\Create.cshtml" />
-    <Content Include="Views\UserResourcePool2\Delete.cshtml" />
-    <Content Include="Views\UserResourcePool2\Details.cshtml" />
-    <Content Include="Views\UserResourcePool2\Edit.cshtml" />
-    <Content Include="Views\UserResourcePool2\Index.cshtml" />
-    <Content Include="Views\UserResourcePoolOrganization2\Create.cshtml" />
-    <Content Include="Views\UserResourcePoolOrganization2\Delete.cshtml" />
-    <Content Include="Views\UserResourcePoolOrganization2\Details.cshtml" />
-    <Content Include="Views\UserResourcePoolOrganization2\Edit.cshtml" />
-    <Content Include="Views\UserResourcePoolOrganization2\Index.cshtml" />
-    <Content Include="Views\UserSectorRating2\Create.cshtml" />
-    <Content Include="Views\UserSectorRating2\Delete.cshtml" />
-    <Content Include="Views\UserSectorRating2\Details.cshtml" />
-    <Content Include="Views\UserSectorRating2\Edit.cshtml" />
-    <Content Include="Views\UserSectorRating2\Index.cshtml" />
+    <Content Include="Views\LicenseGenerated\Create.cshtml" />
+    <Content Include="Views\LicenseGenerated\Delete.cshtml" />
+    <Content Include="Views\LicenseGenerated\Details.cshtml" />
+    <Content Include="Views\LicenseGenerated\Edit.cshtml" />
+    <Content Include="Views\LicenseGenerated\Index.cshtml" />
+    <Content Include="Views\OrganizationGenerated\Create.cshtml" />
+    <Content Include="Views\OrganizationGenerated\Delete.cshtml" />
+    <Content Include="Views\OrganizationGenerated\Details.cshtml" />
+    <Content Include="Views\OrganizationGenerated\Edit.cshtml" />
+    <Content Include="Views\OrganizationGenerated\Index.cshtml" />
+    <Content Include="Views\ResourcePoolGenerated\Create.cshtml" />
+    <Content Include="Views\ResourcePoolGenerated\Delete.cshtml" />
+    <Content Include="Views\ResourcePoolGenerated\Details.cshtml" />
+    <Content Include="Views\ResourcePoolGenerated\Edit.cshtml" />
+    <Content Include="Views\ResourcePoolGenerated\Index.cshtml" />
+    <Content Include="Views\ResourcePoolOrganizationGenerated\Create.cshtml" />
+    <Content Include="Views\ResourcePoolOrganizationGenerated\Delete.cshtml" />
+    <Content Include="Views\ResourcePoolOrganizationGenerated\Details.cshtml" />
+    <Content Include="Views\ResourcePoolOrganizationGenerated\Edit.cshtml" />
+    <Content Include="Views\ResourcePoolOrganizationGenerated\Index.cshtml" />
+    <Content Include="Views\SectorGenerated\Create.cshtml" />
+    <Content Include="Views\SectorGenerated\Delete.cshtml" />
+    <Content Include="Views\SectorGenerated\Details.cshtml" />
+    <Content Include="Views\SectorGenerated\Edit.cshtml" />
+    <Content Include="Views\SectorGenerated\Index.cshtml" />
+    <Content Include="Views\UserGenerated\Create.cshtml" />
+    <Content Include="Views\UserGenerated\Delete.cshtml" />
+    <Content Include="Views\UserGenerated\Details.cshtml" />
+    <Content Include="Views\UserGenerated\Edit.cshtml" />
+    <Content Include="Views\UserGenerated\Index.cshtml" />
+    <Content Include="Views\UserLicenseRatingGenerated\Create.cshtml" />
+    <Content Include="Views\UserLicenseRatingGenerated\Delete.cshtml" />
+    <Content Include="Views\UserLicenseRatingGenerated\Details.cshtml" />
+    <Content Include="Views\UserLicenseRatingGenerated\Edit.cshtml" />
+    <Content Include="Views\UserLicenseRatingGenerated\Index.cshtml" />
+    <Content Include="Views\UserResourcePoolGenerated\Create.cshtml" />
+    <Content Include="Views\UserResourcePoolGenerated\Delete.cshtml" />
+    <Content Include="Views\UserResourcePoolGenerated\Details.cshtml" />
+    <Content Include="Views\UserResourcePoolGenerated\Edit.cshtml" />
+    <Content Include="Views\UserResourcePoolGenerated\Index.cshtml" />
+    <Content Include="Views\UserResourcePoolOrganizationGenerated\Create.cshtml" />
+    <Content Include="Views\UserResourcePoolOrganizationGenerated\Delete.cshtml" />
+    <Content Include="Views\UserResourcePoolOrganizationGenerated\Details.cshtml" />
+    <Content Include="Views\UserResourcePoolOrganizationGenerated\Edit.cshtml" />
+    <Content Include="Views\UserResourcePoolOrganizationGenerated\Index.cshtml" />
+    <Content Include="Views\UserSectorRatingGenerated\Create.cshtml" />
+    <Content Include="Views\UserSectorRatingGenerated\Delete.cshtml" />
+    <Content Include="Views\UserSectorRatingGenerated\Details.cshtml" />
+    <Content Include="Views\UserSectorRatingGenerated\Edit.cshtml" />
+    <Content Include="Views\UserSectorRatingGenerated\Index.cshtml" />
     <None Include="Web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

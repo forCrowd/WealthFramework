@@ -1,14 +1,14 @@
-﻿using BusinessObjects;
-using BusinessObjects.Dto;
-using Facade;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-
-namespace Web.Controllers.Mvc.Generated
+namespace Web.Controllers.Mvc
 {
+    using BusinessObjects;
+    using BusinessObjects.Dto;
+    using Facade;
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Net;
+    using System.Threading.Tasks;
+    using System.Web.Mvc;
+
     public partial class OrganizationController : BaseController
     {
         OrganizationUnitOfWork unitOfWork = new OrganizationUnitOfWork();
@@ -38,8 +38,8 @@ namespace Web.Controllers.Mvc.Generated
         // GET: /Organization/Create
         public ActionResult Create()
         {
-            ViewBag.SectorId = new SelectList(unitOfWork.AllSectorLive.AsEnumerable(), "Id", "Name");
-            ViewBag.LicenseId = new SelectList(unitOfWork.AllLicenseLive.AsEnumerable(), "Id", "Name");
+            ViewBag.SectorId = new SelectList(unitOfWork.SectorSetLive.AsEnumerable(), "Id", "Name");
+            ViewBag.LicenseId = new SelectList(unitOfWork.LicenseSetLive.AsEnumerable(), "Id", "Name");
             return View();
         }
 
@@ -50,7 +50,7 @@ namespace Web.Controllers.Mvc.Generated
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,SectorId,Name,ProductionCost,SalesPrice,LicenseId,CreatedOn,ModifiedOn,DeletedOn")] OrganizationDto organizationdto)
         {
-			var organization = organizationdto.ToBusinessObject();
+            var organization = organizationdto.ToBusinessObject();
 
             if (ModelState.IsValid)
             {
@@ -59,8 +59,8 @@ namespace Web.Controllers.Mvc.Generated
                 return RedirectToAction("Index");
             }
 
-            ViewBag.SectorId = new SelectList(unitOfWork.AllSectorLive.AsEnumerable(), "Id", "Name", organization.SectorId);
-            ViewBag.LicenseId = new SelectList(unitOfWork.AllLicenseLive.AsEnumerable(), "Id", "Name", organization.LicenseId);
+            ViewBag.SectorId = new SelectList(unitOfWork.SectorSetLive.AsEnumerable(), "Id", "Name", organization.SectorId);
+            ViewBag.LicenseId = new SelectList(unitOfWork.LicenseSetLive.AsEnumerable(), "Id", "Name", organization.LicenseId);
             return View(organization);
         }
 
@@ -76,8 +76,9 @@ namespace Web.Controllers.Mvc.Generated
             {
                 return HttpNotFound();
             }
-            ViewBag.SectorId = new SelectList(unitOfWork.AllSectorLive.AsEnumerable(), "Id", "Name", organization.SectorId);
-            ViewBag.LicenseId = new SelectList(unitOfWork.AllLicenseLive.AsEnumerable(), "Id", "Name", organization.LicenseId);
+
+            ViewBag.SectorId = new SelectList(unitOfWork.SectorSetLive.AsEnumerable(), "Id", "Name", organization.SectorId);
+            ViewBag.LicenseId = new SelectList(unitOfWork.LicenseSetLive.AsEnumerable(), "Id", "Name", organization.LicenseId);
             return View(organization);
         }
 
@@ -88,7 +89,7 @@ namespace Web.Controllers.Mvc.Generated
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "Id,SectorId,Name,ProductionCost,SalesPrice,LicenseId,CreatedOn,ModifiedOn,DeletedOn")] OrganizationDto organizationdto)
         {
-			var organization = organizationdto.ToBusinessObject();
+            var organization = organizationdto.ToBusinessObject();
 
             if (ModelState.IsValid)
             {
@@ -96,8 +97,9 @@ namespace Web.Controllers.Mvc.Generated
                 await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.SectorId = new SelectList(unitOfWork.AllSectorLive.AsEnumerable(), "Id", "Name", organization.SectorId);
-            ViewBag.LicenseId = new SelectList(unitOfWork.AllLicenseLive.AsEnumerable(), "Id", "Name", organization.LicenseId);
+
+            ViewBag.SectorId = new SelectList(unitOfWork.SectorSetLive.AsEnumerable(), "Id", "Name", organization.SectorId);
+            ViewBag.LicenseId = new SelectList(unitOfWork.LicenseSetLive.AsEnumerable(), "Id", "Name", organization.LicenseId);
             return View(organization);
         }
 

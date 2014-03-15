@@ -72,11 +72,11 @@
                             {
                                 @("User: " + ViewBag.CurrentUserEmail)
                                 @Html.ActionLink("Edit", "Edit", "User", new { area = "", id = ViewBag.CurrentUserId }, new { @class = "btn btn-xs btn-link" })
-                                @Html.ActionLink("Logout", "Logout", "Home", new { area = "" }, new { @class = "btn btn-xs btn-link" })
+                                @Html.ActionLink("Logout", "Logout", "User", new { area = "" }, new { @class = "btn btn-xs btn-link" })
                             }
                             else
                             {
-                                @Html.ActionLink("Login", "Login", "Home", new { area = "" }, new { @class = "btn btn-xs btn-link" })
+                                @Html.ActionLink("Login", "Login", "User", new { area = "" }, new { @class = "btn btn-xs btn-link" })
                             }}
                         </div>
                     </li>

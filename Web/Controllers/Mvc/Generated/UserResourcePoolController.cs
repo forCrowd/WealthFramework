@@ -1,14 +1,14 @@
-﻿using BusinessObjects;
-using BusinessObjects.Dto;
-using Facade;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-
-namespace Web.Controllers.Mvc.Generated
+namespace Web.Controllers.Mvc
 {
+    using BusinessObjects;
+    using BusinessObjects.Dto;
+    using Facade;
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Net;
+    using System.Threading.Tasks;
+    using System.Web.Mvc;
+
     public partial class UserResourcePoolController : BaseController
     {
         UserResourcePoolUnitOfWork unitOfWork = new UserResourcePoolUnitOfWork();
@@ -17,6 +17,10 @@ namespace Web.Controllers.Mvc.Generated
         public async Task<ActionResult> Index()
         {
             var userresourcepoolset = unitOfWork.AllLiveIncluding(u => u.User, u => u.ResourcePool);
+
+            if (IsAuthenticated)
+                userresourcepoolset = userresourcepoolset.Where(item => item.UserId == CurrentUserId);
+
             return View(await userresourcepoolset.ToListAsync());
         }
 
@@ -38,8 +42,14 @@ namespace Web.Controllers.Mvc.Generated
         // GET: /UserResourcePool/Create
         public ActionResult Create()
         {
-            ViewBag.UserId = new SelectList(unitOfWork.AllUserLive.AsEnumerable(), "Id", "Email");
-            ViewBag.ResourcePoolId = new SelectList(unitOfWork.AllResourcePoolLive.AsEnumerable(), "Id", "Name");
+
+            var userSet = unitOfWork.UserSetLive.AsEnumerable();
+
+            if (IsAuthenticated)
+                userSet = userSet.Where(user => user.Id == CurrentUserId);
+
+            ViewBag.UserId = new SelectList(userSet, "Id", "Email");
+            ViewBag.ResourcePoolId = new SelectList(unitOfWork.ResourcePoolSetLive.AsEnumerable(), "Id", "Name");
             return View();
         }
 
@@ -50,7 +60,7 @@ namespace Web.Controllers.Mvc.Generated
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,UserId,ResourcePoolId,ResourcePoolRate,TotalCostIndexRating,KnowledgeIndexRating,QualityIndexRating,SectorIndexRating,EmployeeSatisfactionIndexRating,CustomerSatisfactionIndexRating,DistanceIndexRating,CreatedOn,ModifiedOn,DeletedOn")] UserResourcePoolDto userresourcepooldto)
         {
-			var userresourcepool = userresourcepooldto.ToBusinessObject();
+            var userresourcepool = userresourcepooldto.ToBusinessObject();
 
             if (ModelState.IsValid)
             {
@@ -59,8 +69,14 @@ namespace Web.Controllers.Mvc.Generated
                 return RedirectToAction("Index");
             }
 
-            ViewBag.UserId = new SelectList(unitOfWork.AllUserLive.AsEnumerable(), "Id", "Email", userresourcepool.UserId);
-            ViewBag.ResourcePoolId = new SelectList(unitOfWork.AllResourcePoolLive.AsEnumerable(), "Id", "Name", userresourcepool.ResourcePoolId);
+
+            var userSet = unitOfWork.UserSetLive.AsEnumerable();
+
+            if (IsAuthenticated)
+                userSet = userSet.Where(user => user.Id == CurrentUserId);
+
+            ViewBag.UserId = new SelectList(userSet, "Id", "Email", userresourcepool.UserId);
+            ViewBag.ResourcePoolId = new SelectList(unitOfWork.ResourcePoolSetLive.AsEnumerable(), "Id", "Name", userresourcepool.ResourcePoolId);
             return View(userresourcepool);
         }
 
@@ -76,8 +92,15 @@ namespace Web.Controllers.Mvc.Generated
             {
                 return HttpNotFound();
             }
-            ViewBag.UserId = new SelectList(unitOfWork.AllUserLive.AsEnumerable(), "Id", "Email", userresourcepool.UserId);
-            ViewBag.ResourcePoolId = new SelectList(unitOfWork.AllResourcePoolLive.AsEnumerable(), "Id", "Name", userresourcepool.ResourcePoolId);
+
+
+            var userSet = unitOfWork.UserSetLive.AsEnumerable();
+
+            if (IsAuthenticated)
+                userSet = userSet.Where(user => user.Id == CurrentUserId);
+
+            ViewBag.UserId = new SelectList(userSet, "Id", "Email", userresourcepool.UserId);
+            ViewBag.ResourcePoolId = new SelectList(unitOfWork.ResourcePoolSetLive.AsEnumerable(), "Id", "Name", userresourcepool.ResourcePoolId);
             return View(userresourcepool);
         }
 
@@ -88,7 +111,7 @@ namespace Web.Controllers.Mvc.Generated
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "Id,UserId,ResourcePoolId,ResourcePoolRate,TotalCostIndexRating,KnowledgeIndexRating,QualityIndexRating,SectorIndexRating,EmployeeSatisfactionIndexRating,CustomerSatisfactionIndexRating,DistanceIndexRating,CreatedOn,ModifiedOn,DeletedOn")] UserResourcePoolDto userresourcepooldto)
         {
-			var userresourcepool = userresourcepooldto.ToBusinessObject();
+            var userresourcepool = userresourcepooldto.ToBusinessObject();
 
             if (ModelState.IsValid)
             {
@@ -96,8 +119,15 @@ namespace Web.Controllers.Mvc.Generated
                 await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.UserId = new SelectList(unitOfWork.AllUserLive.AsEnumerable(), "Id", "Email", userresourcepool.UserId);
-            ViewBag.ResourcePoolId = new SelectList(unitOfWork.AllResourcePoolLive.AsEnumerable(), "Id", "Name", userresourcepool.ResourcePoolId);
+
+
+            var userSet = unitOfWork.UserSetLive.AsEnumerable();
+
+            if (IsAuthenticated)
+                userSet = userSet.Where(user => user.Id == CurrentUserId);
+
+            ViewBag.UserId = new SelectList(userSet, "Id", "Email", userresourcepool.UserId);
+            ViewBag.ResourcePoolId = new SelectList(unitOfWork.ResourcePoolSetLive.AsEnumerable(), "Id", "Name", userresourcepool.ResourcePoolId);
             return View(userresourcepool);
         }
 

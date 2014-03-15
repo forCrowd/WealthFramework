@@ -1,135 +1,43 @@
 ﻿namespace Facade
 {
     using BusinessObjects;
-    using BusinessObjects.Dto;
     using DataObjects;
-    using System;
     using System.Linq;
-    using System.Linq.Expressions;
-    using System.Threading.Tasks;
 
-    public class OrganizationUnitOfWork : IDisposable
+    public partial class OrganizationUnitOfWork
     {
-        WealthEconomyEntities context;
-        OrganizationRepository organizationRepository;
         LicenseRepository licenseRepository;
         SectorRepository sectorRepository;
-        ResourcePoolOrganizationRepository resourcePoolOrganizationRepository;
-        UserResourcePoolOrganizationRepository userResourcePoolOrganizationRepository;
-
-        public OrganizationUnitOfWork()
-        {
-            context = new WealthEconomyEntities();
-        }
-
-        #region - Repositories -
-
-        OrganizationRepository OrganizationRepository
-        {
-            get { return organizationRepository ?? (organizationRepository = new OrganizationRepository(context)); }
-        }
 
         LicenseRepository LicenseRepository
         {
-            get { return licenseRepository ?? (licenseRepository = new LicenseRepository(context)); }
+            get { return licenseRepository ?? (licenseRepository = new LicenseRepository(Context)); }
         }
 
         SectorRepository SectorRepository
         {
-            get { return sectorRepository ?? (sectorRepository = new SectorRepository(context)); }
+            get { return sectorRepository ?? (sectorRepository = new SectorRepository(Context)); }
         }
 
-        ResourcePoolOrganizationRepository ResourcePoolOrganizationRepository
-        {
-            get { return resourcePoolOrganizationRepository ?? (resourcePoolOrganizationRepository = new ResourcePoolOrganizationRepository(context)); }
-        }
+        public IQueryable<License> LicenseSetLive { get { return LicenseRepository.AllLive; } }
 
-        UserResourcePoolOrganizationRepository UserResourcePoolOrganizationRepository
-        {
-            get { return userResourcePoolOrganizationRepository ?? (userResourcePoolOrganizationRepository = new UserResourcePoolOrganizationRepository(context)); }
-        }
+        public IQueryable<Sector> SectorSetLive { get { return SectorRepository.AllLive; } }
 
-        #endregion
-
-        public IQueryable<Organization> All { get { return OrganizationRepository.All; } }
-
-        public IQueryable<Organization> AllLive { get { return OrganizationRepository.AllLive; } }
-
-        public IQueryable<Organization> AllIncluding(params Expression<Func<Organization, object>>[] includeProperties)
-        {
-            return OrganizationRepository.AllIncluding(includeProperties);
-        }
-
-        public IQueryable<Organization> AllLiveIncluding(params Expression<Func<Organization, object>>[] includeProperties)
-        {
-            return OrganizationRepository.AllLiveIncluding(includeProperties);
-        }
-
-        public IQueryable<License> AllLicenseLive { get { return LicenseRepository.AllLive; } }
-
-        public IQueryable<Sector> AllSectorLive { get { return SectorRepository.AllLive; } }
-
-        public Organization Find(object id)
-        {
-            return OrganizationRepository.Find(id);
-        }
-        
-        public async Task<Organization> FindAsync(object id)
-        {
-            return await OrganizationRepository.FindAsync(id);
-        }
-
-        public void InsertOrUpdate(OrganizationDto organizationDto)
-        {
-            // TODO Validation?
-            InsertOrUpdate(organizationDto.ToBusinessObject());        
-        }
-
-        public void InsertOrUpdate(Organization organization)
-        {
-            // TODO Validation?
-            OrganizationRepository.InsertOrUpdate(organization);
-        }
-
-        public void Delete(object id)
+        public override void Delete(params object[] id)
         {
             var organization = Find(id);
 
+            // Delete child items first
+            var userResourcePoolOrganizationRepository = new UserResourcePoolOrganizationRepository(Context);
+            var resourcePoolOrganizationRepository = new ResourcePoolOrganizationRepository(Context);
+
             var resourceOrganizationSet = organization.ResourcePoolOrganizationSet;
             foreach (var item in resourceOrganizationSet)
-                UserResourcePoolOrganizationRepository.DeleteRange(item.UserResourcePoolOrganizationSet);
-            ResourcePoolOrganizationRepository.DeleteRange(resourceOrganizationSet);
-            OrganizationRepository.Delete(id);
-        }
-        
-        public void Save()
-        {
-            context.SaveChanges();
-        }
+                userResourcePoolOrganizationRepository.DeleteRange(item.UserResourcePoolOrganizationSet);
+            resourcePoolOrganizationRepository.DeleteRange(resourceOrganizationSet);
 
-        public async Task<int> SaveAsync()
-        {
-            return await context.SaveChangesAsync();
-        }
-
-        private bool disposed = false;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!this.disposed)
-            {
-                if (disposing)
-                {
-                    context.Dispose();
-                }
-            }
-            this.disposed = true;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            // Delete main item
+            base.Delete(id);
         }
     }
 }

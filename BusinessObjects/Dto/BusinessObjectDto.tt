@@ -29,8 +29,6 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection)
 	// Variables
 	var entityName = code.Escape(entity);
 	var entityDtoName = string.Format("{0}Dto", entityName);
-
-	// Output file name
 	var outputFileName = string.Format(@"{0}.cs", entityDtoName);
 
     fileManager.StartNewFile(outputFileName);
@@ -100,7 +98,7 @@ public class <#=entityDtoName#>
 
 foreach (var complex in typeMapper.GetItemsToGenerate<ComplexType>(itemCollection))
 {
-	// Output file name
+	// Variables
 	var outputFileName = string.Format(@"{0}.cs", complex.Name);
 
     fileManager.StartNewFile(outputFileName);

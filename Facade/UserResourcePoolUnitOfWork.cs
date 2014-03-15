@@ -1,137 +1,68 @@
 ﻿namespace Facade
 {
     using BusinessObjects;
-    using BusinessObjects.Dto;
     using DataObjects;
-    using System;
     using System.Linq;
-    using System.Linq.Expressions;
     using System.Threading.Tasks;
 
-    public class UserResourcePoolUnitOfWork : IDisposable
+    public partial class UserResourcePoolUnitOfWork
     {
-        WealthEconomyEntities context;
-        UserResourcePoolRepository userResourcePoolRepository;
         UserRepository userRepository;
         ResourcePoolRepository resourcePoolRepository;
         UserResourcePoolOrganizationRepository userResourcePoolOrganizationRepository;
 
-        public UserResourcePoolUnitOfWork()
-        {
-            context = new WealthEconomyEntities();
-        }
-
-        #region - Repositories -
-
-        UserResourcePoolRepository UserResourcePoolRepository
-        {
-            get { return userResourcePoolRepository ?? (userResourcePoolRepository = new UserResourcePoolRepository(context)); }
-        }
-
         UserRepository UserRepository
         {
-            get { return userRepository ?? (userRepository = new UserRepository(context)); }
+            get { return userRepository ?? (userRepository = new UserRepository(Context)); }
         }
 
         ResourcePoolRepository ResourcePoolRepository
         {
-            get { return resourcePoolRepository ?? (resourcePoolRepository = new ResourcePoolRepository(context)); }
+            get { return resourcePoolRepository ?? (resourcePoolRepository = new ResourcePoolRepository(Context)); }
         }
 
         UserResourcePoolOrganizationRepository UserResourcePoolOrganizationRepository
         {
-            get { return userResourcePoolOrganizationRepository ?? (userResourcePoolOrganizationRepository = new UserResourcePoolOrganizationRepository(context)); }
+            get { return userResourcePoolOrganizationRepository ?? (userResourcePoolOrganizationRepository = new UserResourcePoolOrganizationRepository(Context)); }
         }
 
-        #endregion
+        public IQueryable<User> UserSetLive { get { return UserRepository.AllLive; } }
 
-        public IQueryable<UserResourcePool> All { get { return UserResourcePoolRepository.All; } }
-
-        public IQueryable<UserResourcePool> AllLive { get { return UserResourcePoolRepository.AllLive; } }
-
-        public IQueryable<UserResourcePool> AllIncluding(params Expression<Func<UserResourcePool, object>>[] includeProperties)
-        {
-            return UserResourcePoolRepository.AllIncluding(includeProperties);
-        }
-
-        public IQueryable<UserResourcePool> AllLiveIncluding(params Expression<Func<UserResourcePool, object>>[] includeProperties)
-        {
-            return UserResourcePoolRepository.AllLiveIncluding(includeProperties);
-        }
-
-        public IQueryable<User> AllUserLive { get { return UserRepository.AllLive; } }
-
-        public IQueryable<ResourcePool> AllResourcePoolLive { get { return ResourcePoolRepository.AllLive; } }
-
-        public UserResourcePool Find(object id)
-        {
-            return UserResourcePoolRepository.Find(id);
-        }
-
-        public async Task<UserResourcePool> FindAsync(object id)
-        {
-            return await UserResourcePoolRepository.FindAsync(id);
-        }
+        public IQueryable<ResourcePool> ResourcePoolSetLive { get { return ResourcePoolRepository.AllLive; } }
 
         public async Task<User> FindUserAsync(object id)
         {
             return await UserRepository.FindAsync(id);
         }
 
-        public void InsertOrUpdate(UserResourcePoolDto userResourcePoolDto)
+        public void IncreaseNumberOfSales(UserResourcePool userResourcePool)
         {
-            // TODO Validation?
-            InsertOrUpdate(userResourcePoolDto.ToBusinessObject());
+            UpdateNumberOfSales(userResourcePool, false);
         }
 
-        public void InsertOrUpdate(UserResourcePool user)
+        public void ResetNumberOfSales(UserResourcePool userResourcePool)
         {
-            // TODO Validation?
-            UserResourcePoolRepository.InsertOrUpdate(user);
+            UpdateNumberOfSales(userResourcePool, true);
         }
 
-        public void InsertOrUpdateUserResourcePoolOrganization(UserResourcePoolOrganization userResourcePoolOrganization)
+        void UpdateNumberOfSales(UserResourcePool userResourcePool, bool isReset)
         {
-            // TODO Validation?
-            UserResourcePoolOrganizationRepository.InsertOrUpdate(userResourcePoolOrganization);
+            foreach (var organization in userResourcePool.UserResourcePoolOrganizationSet)
+            {
+                organization.NumberOfSales = isReset ? 0 : organization.NumberOfSales + 1;
+                UserResourcePoolOrganizationRepository.InsertOrUpdate(organization);
+            }
         }
 
-        public void Delete(object id)
+        public override void Delete(params object[] id)
         {
             var userResourcePool = Find(id);
 
+            // Delete child items first
             UserResourcePoolOrganizationRepository.DeleteRange(userResourcePool.UserResourcePoolOrganizationSet);
-            UserResourcePoolRepository.Delete(id);
-        }
 
-        public void Save()
-        {
-            context.SaveChanges();
-        }
-
-        public async Task<int> SaveAsync()
-        {
-            return await context.SaveChangesAsync();
-        }
-
-        private bool disposed = false;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!this.disposed)
-            {
-                if (disposing)
-                {
-                    context.Dispose();
-                }
-            }
-            this.disposed = true;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            // Delete main item
+            MainRepository.Delete(id);
         }
     }
 }

@@ -1,14 +1,14 @@
-﻿using BusinessObjects;
-using BusinessObjects.Dto;
-using Facade;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-
-namespace Web.Controllers.Mvc.Generated
+namespace Web.Controllers.Mvc
 {
+    using BusinessObjects;
+    using BusinessObjects.Dto;
+    using Facade;
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Net;
+    using System.Threading.Tasks;
+    using System.Web.Mvc;
+
     public partial class UserLicenseRatingController : BaseController
     {
         UserLicenseRatingUnitOfWork unitOfWork = new UserLicenseRatingUnitOfWork();
@@ -17,6 +17,10 @@ namespace Web.Controllers.Mvc.Generated
         public async Task<ActionResult> Index()
         {
             var userlicenseratingset = unitOfWork.AllLiveIncluding(u => u.License, u => u.User);
+
+            if (IsAuthenticated)
+                userlicenseratingset = userlicenseratingset.Where(item => item.UserId == CurrentUserId);
+
             return View(await userlicenseratingset.ToListAsync());
         }
 
@@ -38,8 +42,14 @@ namespace Web.Controllers.Mvc.Generated
         // GET: /UserLicenseRating/Create
         public ActionResult Create()
         {
-            ViewBag.LicenseId = new SelectList(unitOfWork.AllLicenseLive.AsEnumerable(), "Id", "Name");
-            ViewBag.UserId = new SelectList(unitOfWork.AllUserLive.AsEnumerable(), "Id", "Email");
+            ViewBag.LicenseId = new SelectList(unitOfWork.LicenseSetLive.AsEnumerable(), "Id", "Name");
+
+            var userSet = unitOfWork.UserSetLive.AsEnumerable();
+
+            if (IsAuthenticated)
+                userSet = userSet.Where(user => user.Id == CurrentUserId);
+
+            ViewBag.UserId = new SelectList(userSet, "Id", "Email");
             return View();
         }
 
@@ -50,7 +60,7 @@ namespace Web.Controllers.Mvc.Generated
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,UserId,LicenseId,Rating,CreatedOn,ModifiedOn,DeletedOn")] UserLicenseRatingDto userlicenseratingdto)
         {
-			var userlicenserating = userlicenseratingdto.ToBusinessObject();
+            var userlicenserating = userlicenseratingdto.ToBusinessObject();
 
             if (ModelState.IsValid)
             {
@@ -59,8 +69,14 @@ namespace Web.Controllers.Mvc.Generated
                 return RedirectToAction("Index");
             }
 
-            ViewBag.LicenseId = new SelectList(unitOfWork.AllLicenseLive.AsEnumerable(), "Id", "Name", userlicenserating.LicenseId);
-            ViewBag.UserId = new SelectList(unitOfWork.AllUserLive.AsEnumerable(), "Id", "Email", userlicenserating.UserId);
+            ViewBag.LicenseId = new SelectList(unitOfWork.LicenseSetLive.AsEnumerable(), "Id", "Name", userlicenserating.LicenseId);
+
+            var userSet = unitOfWork.UserSetLive.AsEnumerable();
+
+            if (IsAuthenticated)
+                userSet = userSet.Where(user => user.Id == CurrentUserId);
+
+            ViewBag.UserId = new SelectList(userSet, "Id", "Email", userlicenserating.UserId);
             return View(userlicenserating);
         }
 
@@ -76,8 +92,15 @@ namespace Web.Controllers.Mvc.Generated
             {
                 return HttpNotFound();
             }
-            ViewBag.LicenseId = new SelectList(unitOfWork.AllLicenseLive.AsEnumerable(), "Id", "Name", userlicenserating.LicenseId);
-            ViewBag.UserId = new SelectList(unitOfWork.AllUserLive.AsEnumerable(), "Id", "Email", userlicenserating.UserId);
+
+            ViewBag.LicenseId = new SelectList(unitOfWork.LicenseSetLive.AsEnumerable(), "Id", "Name", userlicenserating.LicenseId);
+
+            var userSet = unitOfWork.UserSetLive.AsEnumerable();
+
+            if (IsAuthenticated)
+                userSet = userSet.Where(user => user.Id == CurrentUserId);
+
+            ViewBag.UserId = new SelectList(userSet, "Id", "Email", userlicenserating.UserId);
             return View(userlicenserating);
         }
 
@@ -88,7 +111,7 @@ namespace Web.Controllers.Mvc.Generated
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "Id,UserId,LicenseId,Rating,CreatedOn,ModifiedOn,DeletedOn")] UserLicenseRatingDto userlicenseratingdto)
         {
-			var userlicenserating = userlicenseratingdto.ToBusinessObject();
+            var userlicenserating = userlicenseratingdto.ToBusinessObject();
 
             if (ModelState.IsValid)
             {
@@ -96,8 +119,15 @@ namespace Web.Controllers.Mvc.Generated
                 await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.LicenseId = new SelectList(unitOfWork.AllLicenseLive.AsEnumerable(), "Id", "Name", userlicenserating.LicenseId);
-            ViewBag.UserId = new SelectList(unitOfWork.AllUserLive.AsEnumerable(), "Id", "Email", userlicenserating.UserId);
+
+            ViewBag.LicenseId = new SelectList(unitOfWork.LicenseSetLive.AsEnumerable(), "Id", "Name", userlicenserating.LicenseId);
+
+            var userSet = unitOfWork.UserSetLive.AsEnumerable();
+
+            if (IsAuthenticated)
+                userSet = userSet.Where(user => user.Id == CurrentUserId);
+
+            ViewBag.UserId = new SelectList(userSet, "Id", "Email", userlicenserating.UserId);
             return View(userlicenserating);
         }
 

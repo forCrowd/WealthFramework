@@ -1,17 +1,13 @@
 ﻿namespace Facade
 {
     using BusinessObjects;
-    using BusinessObjects.Dto;
     using DataObjects;
     using System;
     using System.Linq;
-    using System.Linq.Expressions;
-    using System.Threading.Tasks;
+using System.Threading.Tasks;
 
-    public class UserUnitOfWork : IDisposable
+    public partial class UserUnitOfWork
     {
-        WealthEconomyEntities context;
-        UserRepository userRepository;
         LicenseRepository licenseRepository;
         ResourcePoolRepository resourcePoolRepository;
         SectorRepository sectorRepository;
@@ -20,92 +16,51 @@
         UserResourcePoolOrganizationRepository userResourcePoolOrganizationRepository;
         UserSectorRatingRepository userSectorRatingRepository;
 
-        public UserUnitOfWork()
-        {
-            context = new WealthEconomyEntities();
-        }
-
-        #region - Repositories -
-
-        UserRepository UserRepository
-        {
-            get { return userRepository ?? (userRepository = new UserRepository(context)); }
-        }
-
         LicenseRepository LicenseRepository
         {
-            get { return licenseRepository ?? (licenseRepository = new LicenseRepository(context)); }
+            get { return licenseRepository ?? (licenseRepository = new LicenseRepository(Context)); }
         }
 
         ResourcePoolRepository ResourcePoolRepository
         {
-            get { return resourcePoolRepository ?? (resourcePoolRepository = new ResourcePoolRepository(context)); }
+            get { return resourcePoolRepository ?? (resourcePoolRepository = new ResourcePoolRepository(Context)); }
         }
 
         SectorRepository SectorRepository
         {
-            get { return sectorRepository ?? (sectorRepository = new SectorRepository(context)); }
+            get { return sectorRepository ?? (sectorRepository = new SectorRepository(Context)); }
         }
 
         UserLicenseRatingRepository UserLicenseRatingRepository
         {
-            get { return userLicenseRatingRepository ?? (userLicenseRatingRepository = new UserLicenseRatingRepository(context)); }
+            get { return userLicenseRatingRepository ?? (userLicenseRatingRepository = new UserLicenseRatingRepository(Context)); }
         }
 
         UserResourcePoolRepository UserResourcePoolRepository
         {
-            get { return userResourcePoolRepository ?? (userResourcePoolRepository = new UserResourcePoolRepository(context)); }
+            get { return userResourcePoolRepository ?? (userResourcePoolRepository = new UserResourcePoolRepository(Context)); }
         }
 
         UserResourcePoolOrganizationRepository UserResourcePoolOrganizationRepository
         {
-            get { return userResourcePoolOrganizationRepository ?? (userResourcePoolOrganizationRepository = new UserResourcePoolOrganizationRepository(context)); }
+            get { return userResourcePoolOrganizationRepository ?? (userResourcePoolOrganizationRepository = new UserResourcePoolOrganizationRepository(Context)); }
         }
 
         UserSectorRatingRepository UserSectorRatingRepository
         {
-            get { return userSectorRatingRepository ?? (userSectorRatingRepository = new UserSectorRatingRepository(context)); }
+            get { return userSectorRatingRepository ?? (userSectorRatingRepository = new UserSectorRatingRepository(Context)); }
         }
 
-        #endregion
-
-        public IQueryable<User> All { get { return UserRepository.All; } }
-
-        public IQueryable<User> AllLive { get { return UserRepository.AllLive; } }
-
-        public IQueryable<User> AllIncluding(params Expression<Func<User, object>>[] includeProperties)
+        public override void InsertOrUpdate(User user)
         {
-            return UserRepository.AllIncluding(includeProperties);
-        }
+            var isNew = user.IsNew;
 
-        public IQueryable<User> AllLiveIncluding(params Expression<Func<User, object>>[] includeProperties)
-        {
-            return UserRepository.AllLiveIncluding(includeProperties);
-        }
-
-        public User Find(object id)
-        {
-            return UserRepository.Find(id);
-        }
-
-        public async Task<User> FindAsync(object id)
-        {
-            return await UserRepository.FindAsync(id);
-        }
-
-        public void InsertOrUpdate(UserDto userDto)
-        {
             // TODO Validation?
-            InsertOrUpdate(userDto.ToBusinessObject());
-        }
+            base.InsertOrUpdate(user);
 
-        public void InsertOrUpdate(User user)
-        {
-            // TODO Validation?
-            if (user.Id == default(int))
+            // Add samples
+            if (isNew)
             {
-                UserRepository.InsertOrUpdate(user);
-
                 // Sample user resource pool
                 // TODO Static Id 8 ?!
                 var sampleResourcePools = ResourcePoolRepository.AllLive.Where(resourcePool => resourcePool.Id <= 8);
@@ -164,13 +119,9 @@
                     UserSectorRatingRepository.InsertOrUpdate(sectorRating);
                 }
             }
-            else
-            {
-                UserRepository.InsertOrUpdate(user);
-            }
         }
 
-        public void Delete(object id)
+        public override void Delete(params object[] id)
         {
             var user = Find(id);
 
@@ -178,37 +129,24 @@
             UserResourcePoolOrganizationRepository.DeleteRange(user.UserResourcePoolOrganizationSet);
             UserResourcePoolRepository.DeleteRange(user.UserResourcePoolSet);
             UserSectorRatingRepository.DeleteRange(user.UserSectorRatingSet);
-            UserRepository.Delete(id);
+
+            base.Delete(id);
         }
 
-        public void Save()
+        public async Task<bool> AuthenticateUser(int userId, string password)
         {
-            context.SaveChanges();
-        }
+            var selectedUser = await FindAsync(userId);
 
-        public async Task<int> SaveAsync()
-        {
-            return await context.SaveChangesAsync();
-        }
+            if (selectedUser == null)
+                return false;
 
-        private bool disposed = false;
+            if (string.IsNullOrWhiteSpace(password))
+                return false;
 
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!this.disposed)
-            {
-                if (disposing)
-                {
-                    context.Dispose();
-                }
-            }
-            this.disposed = true;
-        }
+            if (selectedUser.Password != password)
+                return false;
 
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            return true;
         }
     }
 }

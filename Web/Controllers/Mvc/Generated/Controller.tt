@@ -1,0 +1,383 @@
+﻿<#@ template language="C#" debug="false" hostspecific="true"#>
+<#@ include file="EF6.Utility.CS.ttinclude"#>
+<#@ include file="..\..\..\..\DataObjects\Utility.ttinclude"#><#@ 
+ output extension=".cs"#><#
+
+// To be able to control whether it's going to be executed
+var executeMe = true; 
+if (!executeMe)
+	return string.Empty;
+
+const string inputFile = @"..\..\..\..\DataObjects\Model.edmx";
+var textTransform = DynamicTextTransformation.Create(this);
+var code = new CodeGenerationTools(this);
+var ef = new MetadataTools(this);
+var typeMapper = new TypeMapper(code, ef, textTransform.Errors);
+var	fileManager = EntityFrameworkTemplateFileManager.Create(this);
+var itemCollection = new EdmMetadataLoader(textTransform.Host, textTransform.Errors).CreateEdmItemCollection(inputFile);
+var codeStringGenerator = new CodeStringGenerator(code, typeMapper, ef);
+
+var container = itemCollection.OfType<EntityContainer>().FirstOrDefault();
+if (container == null)
+{
+    return string.Empty;
+}
+
+foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
+{
+	// Variables
+	var entitySetName = entitySet.Name;
+	var entitySetVariable = entitySetName.ToLowerInvariant();
+	var entity = entitySet.ElementType;
+	var entityName = typeMapper.GetTypeName(entity);
+	var entityVariable = entityName.ToLowerInvariant();
+	var controllerName = string.Format("{0}Controller", entityName);
+    var entityDtoName = string.Format("{0}Dto", entityName);
+    var entityDtoVariable = entityDtoName.ToLowerInvariant();
+    var unitOfWorkName = string.Format("{0}UnitOfWork", entityName);	
+	var primaryKey = entity.KeyMembers[0];
+    var primaryKeyShortTypeName = typeMapper.GetTypeName(primaryKey.TypeUsage);
+    var primaryKeyNullableTypeName = string.Format("{0}?", primaryKeyShortTypeName);
+	var routePrefix = string.Format("/{0}/", entityName);
+    var lambdaVar = entityVariable[0];
+	
+    var simpleProperties = typeMapper.GetSimpleProperties(entity);
+    var relatedProperties = typeMapper.GetRelatedNavigationProperties(entity);
+	
+	var bindAttributeIncludeText = string.Join(",", simpleProperties);
+    var bindAttribute = String.Format("[Bind(Include = \"{0}\")] ", bindAttributeIncludeText);
+
+	// TODO This needs to be done through enums types?!
+	var hasUserAccountTypeId = simpleProperties.Any(property => property.Name == "UserAccountTypeId");
+
+	var outputFileName = string.Format(@"{0}.cs", controllerName);
+
+    fileManager.StartNewFile(outputFileName);
+#>
+namespace Web.Controllers.Mvc
+{
+    using BusinessObjects;
+    using BusinessObjects.Dto;
+    using Facade;
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Net;
+    using System.Threading.Tasks;
+    using System.Web.Mvc;
+
+    public partial class <#= controllerName #> : BaseController
+    {
+        <#= unitOfWorkName #> unitOfWork = new <#= unitOfWorkName #>();
+
+        // GET: <#= routePrefix #>
+        public async Task<ActionResult> Index()
+        {
+<#  var includeExpressions = String.Join(", ", relatedProperties.Select(property => String.Format("{0} => {0}.{1}", lambdaVar, property.Name)));
+
+	if(!String.IsNullOrEmpty(includeExpressions)) { #>
+            var <#= entitySetVariable #> = unitOfWork.AllLiveIncluding(<#= includeExpressions #>);
+<#
+		if (relatedProperties.Any(property => property.Name == "User"))
+		{
+#>
+
+            if (IsAuthenticated)
+                <#= entitySetVariable #> = <#= entitySetVariable #>.Where(item => item.UserId == CurrentUserId);
+
+<#
+		}
+#>
+            return View(await <#= entitySetVariable #>.ToListAsync());
+<# } else { #>
+            return View(await unitOfWork.AllLive.ToListAsync());
+<# } #>
+        }
+
+        // GET: <#= routePrefix #>Details/5
+        public async Task<ActionResult> Details(<#= primaryKeyNullableTypeName #> id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            <#= entityName #> <#= entityVariable #> = await unitOfWork.FindAsync(id);
+            if (<#= entityVariable #> == null)
+            {
+                return HttpNotFound();
+            }
+            return View(<#= entityVariable #>);
+        }
+
+        // GET: <#= routePrefix #>Create
+        public ActionResult Create()
+        {
+<# foreach (var property in relatedProperties) {
+		var relatedPropertyName = typeMapper.GetTypeName(property.TypeUsage);
+		var dependentForeignKeyName = property.GetDependentProperties().First().Name;
+		var relatedUnitOfWorkPropertyName = string.Format("{0}SetLive", relatedPropertyName);
+		var relatedPrimaryKeyName = ((RefType)(property.ToEndMember.TypeUsage.EdmType)).ElementType.KeyMembers[0];
+		// TODO Find a better way, with Attributes or something?! / SH - 14 Mar. '14
+		var relatedDisplayPropertyName = relatedPropertyName == "User" ? "Email" : relatedPropertyName == "ResourcePoolOrganization" ? "Name" : "Name";
+
+		var relatedSelectListText = string.Format("unitOfWork.{0}.AsEnumerable()", relatedUnitOfWorkPropertyName);
+
+		if (property.Name == "User")
+		{
+#>
+
+            var userSet = unitOfWork.UserSetLive.AsEnumerable();
+
+            if (IsAuthenticated)
+                userSet = userSet.Where(user => user.Id == CurrentUserId);
+
+<#
+			relatedSelectListText = "userSet";
+		}
+#>
+            ViewBag.<#= dependentForeignKeyName #> = new SelectList(<#= relatedSelectListText #>, "<#= relatedPrimaryKeyName #>", "<#= relatedDisplayPropertyName #>");
+<#
+	}
+
+	if (hasUserAccountTypeId)
+    {
+#>
+            ViewBag.UserAccountTypeId = new SelectList(GetAvailableUserAccountTypes(), "Id", "Name");
+<#	} #>
+            return View();
+        }
+
+        // POST: <#= routePrefix #>Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(<#= bindAttribute #><#= entityDtoName #> <#= entityDtoVariable #>)
+        {
+            var <#= entityVariable #> = <#= entityDtoVariable #>.ToBusinessObject();
+
+            if (ModelState.IsValid)
+            {
+                unitOfWork.InsertOrUpdate(<#= entityVariable #>);
+                await unitOfWork.SaveAsync();
+                return RedirectToAction("Index");
+            }
+
+<# foreach (var property in relatedProperties) {
+		var relatedPropertyName = typeMapper.GetTypeName(property.TypeUsage);
+		var dependentForeignKeyName = property.GetDependentProperties().First().Name;
+		var relatedUnitOfWorkPropertyName = string.Format("{0}SetLive", relatedPropertyName);
+		var relatedPrimaryKeyName = ((RefType)(property.ToEndMember.TypeUsage.EdmType)).ElementType.KeyMembers[0];
+		// TODO Find a better way, with Attributes or something?! / SH - 14 Mar. '14
+		var relatedDisplayPropertyName = relatedPropertyName == "User" ? "Email" : relatedPropertyName == "ResourcePoolOrganization" ? "Name" : "Name";
+
+		var relatedSelectListText = string.Format("unitOfWork.{0}.AsEnumerable()", relatedUnitOfWorkPropertyName);
+
+		if (property.Name == "User")
+		{
+#>
+
+            var userSet = unitOfWork.UserSetLive.AsEnumerable();
+
+            if (IsAuthenticated)
+                userSet = userSet.Where(user => user.Id == CurrentUserId);
+
+<#
+			relatedSelectListText = "userSet";
+		}
+#>
+            ViewBag.<#= dependentForeignKeyName #> = new SelectList(<#= relatedSelectListText #>, "<#= relatedPrimaryKeyName #>", "<#= relatedDisplayPropertyName #>", <#= entityVariable #>.<#= dependentForeignKeyName #>);
+<#
+	}
+
+	if (hasUserAccountTypeId)
+    {
+#>
+            ViewBag.UserAccountTypeId = new SelectList(GetAvailableUserAccountTypes(), "Id", "Name", user.UserAccountTypeId);
+<#	} #>
+            return View(<#= entityVariable #>);
+        }
+
+        // GET: <#= routePrefix #>Edit/5
+        public async Task<ActionResult> Edit(<#= primaryKeyNullableTypeName #> id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            <#= entityName #> <#= entityVariable #> = await unitOfWork.FindAsync(id);
+            if (<#= entityVariable #> == null)
+            {
+                return HttpNotFound();
+            }
+
+<# foreach (var property in relatedProperties) {
+		var relatedPropertyName = typeMapper.GetTypeName(property.TypeUsage);
+		var dependentForeignKeyName = property.GetDependentProperties().First().Name;
+		var relatedUnitOfWorkPropertyName = string.Format("{0}SetLive", relatedPropertyName);
+		var relatedPrimaryKeyName = ((RefType)(property.ToEndMember.TypeUsage.EdmType)).ElementType.KeyMembers[0];
+		// TODO Find a better way, with Attributes or something?! / SH - 14 Mar. '14
+		var relatedDisplayPropertyName = relatedPropertyName == "User" ? "Email" : relatedPropertyName == "ResourcePoolOrganization" ? "Name" : "Name";
+
+		var relatedSelectListText = string.Format("unitOfWork.{0}.AsEnumerable()", relatedUnitOfWorkPropertyName);
+
+		if (property.Name == "User")
+		{
+#>
+
+            var userSet = unitOfWork.UserSetLive.AsEnumerable();
+
+            if (IsAuthenticated)
+                userSet = userSet.Where(user => user.Id == CurrentUserId);
+
+<#
+			relatedSelectListText = "userSet";
+		}
+#>
+            ViewBag.<#= dependentForeignKeyName #> = new SelectList(<#= relatedSelectListText #>, "<#= relatedPrimaryKeyName #>", "<#= relatedDisplayPropertyName #>", <#= entityVariable #>.<#= dependentForeignKeyName #>);
+<#
+	}
+
+	if (hasUserAccountTypeId)
+    {
+#>
+            ViewBag.UserAccountTypeId = new SelectList(GetAvailableUserAccountTypes(), "Id", "Name", user.UserAccountTypeId);
+<#	} #>
+            return View(<#= entityVariable #>);
+        }
+
+        // POST: <#= routePrefix #>Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+<#	if (entityName == "User") { #>
+        public async Task<ActionResult> Edit(<#= bindAttribute #><#= entityDtoName #> <#= entityDtoVariable #>, string returnUrl)
+<# } else { #>
+        public async Task<ActionResult> Edit(<#= bindAttribute #><#= entityDtoName #> <#= entityDtoVariable #>)
+<# } #>
+        {
+            var <#= entityVariable #> = <#= entityDtoVariable #>.ToBusinessObject();
+
+            if (ModelState.IsValid)
+            {
+                unitOfWork.InsertOrUpdate(<#= entityVariable #>);
+                await unitOfWork.SaveAsync();
+<#	if (entityName == "User") { #>
+                if (!string.IsNullOrWhiteSpace(returnUrl))
+                    return Redirect(returnUrl);
+                return RedirectToAction("Index", "Home");
+<# } else { #>
+                return RedirectToAction("Index");
+<# } #>
+            }
+
+<# foreach (var property in relatedProperties) {
+		var relatedPropertyName = typeMapper.GetTypeName(property.TypeUsage);
+		var dependentForeignKeyName = property.GetDependentProperties().First().Name;
+		var relatedUnitOfWorkPropertyName = string.Format("{0}SetLive", relatedPropertyName);
+		var relatedPrimaryKeyName = ((RefType)(property.ToEndMember.TypeUsage.EdmType)).ElementType.KeyMembers[0];
+		// TODO Find a better way, with Attributes or something?! / SH - 14 Mar. '14
+		var relatedDisplayPropertyName = relatedPropertyName == "User" ? "Email" : relatedPropertyName == "ResourcePoolOrganization" ? "Name" : "Name";
+
+		var relatedSelectListText = string.Format("unitOfWork.{0}.AsEnumerable()", relatedUnitOfWorkPropertyName);
+
+		if (property.Name == "User")
+		{
+#>
+
+            var userSet = unitOfWork.UserSetLive.AsEnumerable();
+
+            if (IsAuthenticated)
+                userSet = userSet.Where(user => user.Id == CurrentUserId);
+
+<#
+			relatedSelectListText = "userSet";
+		}
+#>
+            ViewBag.<#= dependentForeignKeyName #> = new SelectList(<#= relatedSelectListText #>, "<#= relatedPrimaryKeyName #>", "<#= relatedDisplayPropertyName #>", <#= entityVariable #>.<#= dependentForeignKeyName #>);
+<#
+	}
+
+	if (hasUserAccountTypeId)
+    {
+#>
+            ViewBag.UserAccountTypeId = new SelectList(GetAvailableUserAccountTypes(), "Id", "Name", user.UserAccountTypeId);
+<#	} #>
+            return View(<#= entityVariable #>);
+        }
+
+        // GET: <#= routePrefix #>Delete/5
+        public async Task<ActionResult> Delete(<#= primaryKeyNullableTypeName #> id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            <#= entityName #> <#= entityVariable #> = await unitOfWork.FindAsync(id);
+            if (<#= entityVariable #> == null)
+            {
+                return HttpNotFound();
+            }
+            return View(<#= entityVariable #>);
+        }
+
+        // POST: <#= routePrefix #>Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(<#= primaryKeyShortTypeName #> id)
+        {
+            unitOfWork.Delete(id);
+            await unitOfWork.SaveAsync();
+            return RedirectToAction("Index");
+        }
+    }
+<#
+    EndNamespace(code);
+}
+
+fileManager.Process();
+
+#>
+<#+
+
+public void WriteHeader(CodeStringGenerator codeStringGenerator, EntityFrameworkTemplateFileManager fileManager)
+{
+    fileManager.StartHeader();
+#>
+//------------------------------------------------------------------------------
+// <auto-generated>
+// <#=CodeGenerationTools.GetResourceString("Template_GeneratedCodeCommentLine1")#>
+//
+// <#=CodeGenerationTools.GetResourceString("Template_GeneratedCodeCommentLine2")#>
+// <#=CodeGenerationTools.GetResourceString("Template_GeneratedCodeCommentLine3")#>
+// </auto-generated>
+//------------------------------------------------------------------------------
+<#=codeStringGenerator.UsingDirectives(inHeader: true)#>
+<#+
+    fileManager.EndBlock();
+}
+
+public void BeginNamespace(CodeGenerationTools code)
+{
+    var codeNamespace = code.VsNamespaceSuggestion();
+    if (!String.IsNullOrEmpty(codeNamespace))
+    {
+#>
+namespace <#=code.EscapeNamespace(codeNamespace)#>
+{
+<#+
+        // PushIndent("    ");
+    }
+}
+
+public void EndNamespace(CodeGenerationTools code)
+{
+    if (!String.IsNullOrEmpty(code.VsNamespaceSuggestion()))
+    {
+        // PopIndent();
+#>
+}
+<#+
+    }
+}
+#>

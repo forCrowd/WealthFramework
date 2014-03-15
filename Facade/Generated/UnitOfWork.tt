@@ -1,10 +1,10 @@
 ﻿<#@ template language="C#" debug="false" hostspecific="true"#>
 <#@ include file="EF6.Utility.CS.ttinclude"#>
-<#@ include file="..\Utility.ttinclude"#><#@ 
+<#@ include file="..\..\DataObjects\Utility.ttinclude"#><#@ 
  output extension=".cs"#><#
 
 // To be able to control whether it's going to be executed
-var executeMe = false;
+var executeMe = false; 
 if (!executeMe)
 	return string.Empty;
 
@@ -27,21 +27,18 @@ foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
 {
 	// Variables
 	var entityName = typeMapper.GetTypeName(entitySet.ElementType);
-	var entityRepositoryName = string.Format("{0}Repository", entityName);
-	var outputFileName = string.Format(@"{0}.cs", entityRepositoryName);
+	var entityUnitOfWorkName = string.Format("{0}UnitOfWork", entityName);
+	var outputFileName = string.Format(@"{0}.cs", entityUnitOfWorkName);
 
     fileManager.StartNewFile(outputFileName);
 
 	BeginNamespace(code);
 #>
     using BusinessObjects;
+    using Facade;
 
-    public partial class <#= entityRepositoryName #> : BaseRepository<<#= entityName #>>
+    public partial class <#= entityUnitOfWorkName #> : BaseUnitOfWork<<#= entityName #>>
     {
-        public <#= entityRepositoryName #>(<#=code.Escape(container)#> context)
-            : base(context)
-        {
-        }
     }
 <#
     EndNamespace(code);

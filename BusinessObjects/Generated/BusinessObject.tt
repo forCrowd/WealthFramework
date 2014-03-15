@@ -26,18 +26,10 @@ WriteHeader(codeStringGenerator, fileManager);
 
 foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection))
 {
-	// foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
 	// Variables
 	var entityName = code.Escape(entity);
 	var entityMetadataName = string.Format("{0}Metadata", entityName);
-	var primaryKey = entity.KeyMembers[0]; // Multiple PK not allowed?
-
-	//var entityName = typeMapper.GetTypeName(entitySet.ElementType);
-	//var entityNameLowerCamelCase = string.Format("{0}{1}", entityName.ToLower()[0], entityName.Substring(1));
-	//var entitySetName = code.Escape(entitySet);
-	//var primaryKey = entitySet.ElementType.KeyMembers[0]; // Multiple PK not allowed?
-
-	// Output file name
+	var primaryKey = entity.KeyMembers[0];
 	var outputFileName = string.Format(@"{0}.cs", entityName);
 
     fileManager.StartNewFile(outputFileName);
@@ -130,6 +122,7 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection)
 
 foreach (var complex in typeMapper.GetItemsToGenerate<ComplexType>(itemCollection))
 {
+	// Variables
 	var outputFileName = string.Format(@"{0}.cs", complex.Name);
 
     fileManager.StartNewFile(outputFileName);
@@ -198,6 +191,7 @@ foreach (var complex in typeMapper.GetItemsToGenerate<ComplexType>(itemCollectio
 
 foreach (var enumType in typeMapper.GetEnumItemsToGenerate(itemCollection))
 {
+	// Variables
 	var outputFileName = string.Format(@"{0}.cs", enumType.Name);
 
     fileManager.StartNewFile(outputFileName);

@@ -78,15 +78,6 @@
     <Compile Include="Dto\UserSectorRatingDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
-    <Compile Include="Generated\ResourcePool.cs">
-      <DependentUpon>BusinessObject.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\ResourcePoolOrganization.cs">
-      <DependentUpon>BusinessObject.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\UserAccountType.cs">
-      <DependentUpon>BusinessObject.tt</DependentUpon>
-    </Compile>
     <Compile Include="Generated\BusinessObject.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -98,7 +89,19 @@
     <Compile Include="Generated\Organization.cs">
       <DependentUpon>BusinessObject.tt</DependentUpon>
     </Compile>
+    <Compile Include="Generated\ResourcePool.cs">
+      <DependentUpon>BusinessObject.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\ResourcePoolOrganization.cs">
+      <DependentUpon>BusinessObject.tt</DependentUpon>
+    </Compile>
     <Compile Include="Generated\Sector.cs">
+      <DependentUpon>BusinessObject.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\User.cs">
+      <DependentUpon>BusinessObject.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\UserAccountType.cs">
       <DependentUpon>BusinessObject.tt</DependentUpon>
     </Compile>
     <Compile Include="Generated\UserLicenseRating.cs">
@@ -168,9 +171,6 @@
     <Compile Include="License.cs" />
     <Compile Include="Organization.cs" />
     <Compile Include="IEntity.cs" />
-    <Compile Include="Generated\User.cs">
-      <DependentUpon>BusinessObject.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Dto\BusinessObjectDto.tt">

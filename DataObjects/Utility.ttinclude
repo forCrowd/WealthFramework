@@ -441,6 +441,11 @@ public class TypeMapper
     {
         return type.NavigationProperties.Where(np => np.DeclaringType == type);
     }
+
+    public IEnumerable<NavigationProperty> GetRelatedNavigationProperties(EntityType type)
+    {
+        return type.NavigationProperties.Where(np => np.DeclaringType == type && np.ToEndMember.RelationshipMultiplicity == RelationshipMultiplicity.One);
+    }
     
     public IEnumerable<NavigationProperty> GetCollectionNavigationProperties(EntityType type)
     {

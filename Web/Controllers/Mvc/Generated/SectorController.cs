@@ -1,14 +1,14 @@
-﻿using BusinessObjects;
-using BusinessObjects.Dto;
-using Facade;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-
-namespace Web.Controllers.Mvc.Generated
+namespace Web.Controllers.Mvc
 {
+    using BusinessObjects;
+    using BusinessObjects.Dto;
+    using Facade;
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Net;
+    using System.Threading.Tasks;
+    using System.Web.Mvc;
+
     public partial class SectorController : BaseController
     {
         SectorUnitOfWork unitOfWork = new SectorUnitOfWork();
@@ -47,7 +47,7 @@ namespace Web.Controllers.Mvc.Generated
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,Name,Description,CreatedOn,ModifiedOn,DeletedOn")] SectorDto sectordto)
         {
-			var sector = sectordto.ToBusinessObject();
+            var sector = sectordto.ToBusinessObject();
 
             if (ModelState.IsValid)
             {
@@ -71,6 +71,7 @@ namespace Web.Controllers.Mvc.Generated
             {
                 return HttpNotFound();
             }
+
             return View(sector);
         }
 
@@ -81,7 +82,7 @@ namespace Web.Controllers.Mvc.Generated
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "Id,Name,Description,CreatedOn,ModifiedOn,DeletedOn")] SectorDto sectordto)
         {
-			var sector = sectordto.ToBusinessObject();
+            var sector = sectordto.ToBusinessObject();
 
             if (ModelState.IsValid)
             {
@@ -89,6 +90,7 @@ namespace Web.Controllers.Mvc.Generated
                 await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
+
             return View(sector);
         }
 

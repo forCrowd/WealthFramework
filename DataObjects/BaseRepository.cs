@@ -8,11 +8,11 @@
     using System.Linq.Expressions;
     using System.Threading.Tasks;
 
-    public abstract class GenericRepository<TEntityType> : IGenericRepository<TEntityType> where TEntityType : class, IEntity
+    public class BaseRepository<TEntityType> : IGenericRepository<TEntityType> where TEntityType : class, IEntity
     {
         readonly DbSet<TEntityType> dbSet;
 
-        protected GenericRepository(DbContext context)
+        public BaseRepository(DbContext context)
         {
             Context = context;
             dbSet = Context.Set<TEntityType>();

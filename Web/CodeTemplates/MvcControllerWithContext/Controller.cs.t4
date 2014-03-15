@@ -44,17 +44,12 @@ using System.Web.Mvc;
 namespace Web.Controllers.Mvc.Generated
 {
 <#
-    var contextTypeName = ContextTypeName;
-    var entitySetName = ModelMetadata.EntitySetName;
-    var entitySetVariable = entitySetName.ToLowerInvariant();
+    var entitySetVariable = ModelMetadata.EntitySetName.ToLowerInvariant();
     var entityDtoClassName = string.Format("{0}Dto", ModelTypeName);
     var entityDtoVariable = entityDtoClassName.ToLowerInvariant();
     var unitOfWorkClassName = string.Format("{0}UnitOfWork", ModelTypeName);
-    var repositoryClassName = string.Format("{0}Repository", ModelTypeName);
-    var repositoryVariable = repositoryClassName.ToLowerInvariant();
     var primaryKeyName = ModelMetadata.PrimaryKeys[0].PropertyName;
     var primaryKeyShortTypeName = ModelMetadata.PrimaryKeys[0].ShortTypeName;
-    var primaryKeyDefaultValue = ModelMetadata.PrimaryKeys[0].DefaultValue;
     var primaryKeyType = ModelMetadata.PrimaryKeys[0].TypeName;
     var primaryKeyNullableTypeName = GetNullableTypeName(primaryKeyType, primaryKeyShortTypeName);
     var lambdaVar = ModelVariable[0];
@@ -64,10 +59,6 @@ namespace Web.Controllers.Mvc.Generated
     if (IsOverpostingProtectionRequired)
     {
         bindAttribute = String.Format("[Bind(Include = \"{0}\")] ", BindAttributeIncludeText);
-		
-		// Manually remove CreatedOn, ModifiedOn, DeletedOn fields
-		// TODO Better? With an attribute ideally?
-		//bindAttribute = bindAttribute.Replace(",CreatedOn,ModifiedOn,DeletedOn", string.Empty);
     }
     else
     {
@@ -86,7 +77,6 @@ namespace Web.Controllers.Mvc.Generated
 <# } #>
         {
 <#  var includeExpressions = "";
-        // includeExpressions = String.Join("", relatedProperties.Values.Select(property => String.Format(".Include({0} => {0}.{1})", lambdaVar, property.AssociationPropertyName)));
         includeExpressions = String.Join(", ", relatedProperties.Values.Select(property => String.Format("{0} => {0}.{1}", lambdaVar, property.AssociationPropertyName)));
 #>
 <# if(!String.IsNullOrEmpty(includeExpressions)) { #>
@@ -153,7 +143,7 @@ namespace Web.Controllers.Mvc.Generated
         public ActionResult Create(<#= bindAttribute #><#= entityDtoClassName #> <#= entityDtoVariable #>)
 <# } #>
         {
-			var <#= ModelVariable #> = <#= entityDtoVariable #>.ToBusinessObject();
+            var <#= ModelVariable #> = <#= entityDtoVariable #>.ToBusinessObject();
 
             if (ModelState.IsValid)
             {
@@ -219,7 +209,7 @@ namespace Web.Controllers.Mvc.Generated
         public ActionResult Edit(<#= bindAttribute #><#= entityDtoClassName #> <#= entityDtoVariable #>)
 <# } #>
         {
-			var <#= ModelVariable #> = <#= entityDtoVariable #>.ToBusinessObject();
+            var <#= ModelVariable #> = <#= entityDtoVariable #>.ToBusinessObject();
 
             if (ModelState.IsValid)
             {

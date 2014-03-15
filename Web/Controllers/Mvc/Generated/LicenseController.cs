@@ -1,13 +1,14 @@
-﻿using BusinessObjects;
-using BusinessObjects.Dto;
-using Facade;
-using System.Data.Entity;
-using System.Net;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-
-namespace Web.Controllers.Mvc.Generated
+namespace Web.Controllers.Mvc
 {
+    using BusinessObjects;
+    using BusinessObjects.Dto;
+    using Facade;
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Net;
+    using System.Threading.Tasks;
+    using System.Web.Mvc;
+
     public partial class LicenseController : BaseController
     {
         LicenseUnitOfWork unitOfWork = new LicenseUnitOfWork();
@@ -46,7 +47,7 @@ namespace Web.Controllers.Mvc.Generated
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,Name,Description,Text,CreatedOn,ModifiedOn,DeletedOn")] LicenseDto licensedto)
         {
-			var license = licensedto.ToBusinessObject();
+            var license = licensedto.ToBusinessObject();
 
             if (ModelState.IsValid)
             {
@@ -70,6 +71,7 @@ namespace Web.Controllers.Mvc.Generated
             {
                 return HttpNotFound();
             }
+
             return View(license);
         }
 
@@ -80,7 +82,7 @@ namespace Web.Controllers.Mvc.Generated
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "Id,Name,Description,Text,CreatedOn,ModifiedOn,DeletedOn")] LicenseDto licensedto)
         {
-			var license = licensedto.ToBusinessObject();
+            var license = licensedto.ToBusinessObject();
 
             if (ModelState.IsValid)
             {
@@ -88,6 +90,7 @@ namespace Web.Controllers.Mvc.Generated
                 await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
+
             return View(license);
         }
 

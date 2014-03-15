@@ -1,14 +1,14 @@
-﻿using BusinessObjects;
-using BusinessObjects.Dto;
-using Facade;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-
-namespace Web.Controllers.Mvc.Generated
+namespace Web.Controllers.Mvc
 {
+    using BusinessObjects;
+    using BusinessObjects.Dto;
+    using Facade;
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Net;
+    using System.Threading.Tasks;
+    using System.Web.Mvc;
+
     public partial class ResourcePoolOrganizationController : BaseController
     {
         ResourcePoolOrganizationUnitOfWork unitOfWork = new ResourcePoolOrganizationUnitOfWork();
@@ -38,8 +38,8 @@ namespace Web.Controllers.Mvc.Generated
         // GET: /ResourcePoolOrganization/Create
         public ActionResult Create()
         {
-            ViewBag.OrganizationId = new SelectList(unitOfWork.AllOrganizationLive.AsEnumerable(), "Id", "Name");
-            ViewBag.ResourcePoolId = new SelectList(unitOfWork.AllResourcePoolLive.AsEnumerable(), "Id", "Name");
+            ViewBag.OrganizationId = new SelectList(unitOfWork.OrganizationSetLive.AsEnumerable(), "Id", "Name");
+            ViewBag.ResourcePoolId = new SelectList(unitOfWork.ResourcePoolSetLive.AsEnumerable(), "Id", "Name");
             return View();
         }
 
@@ -50,7 +50,7 @@ namespace Web.Controllers.Mvc.Generated
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,ResourcePoolId,OrganizationId,CreatedOn,ModifiedOn,DeletedOn")] ResourcePoolOrganizationDto resourcepoolorganizationdto)
         {
-			var resourcepoolorganization = resourcepoolorganizationdto.ToBusinessObject();
+            var resourcepoolorganization = resourcepoolorganizationdto.ToBusinessObject();
 
             if (ModelState.IsValid)
             {
@@ -59,8 +59,8 @@ namespace Web.Controllers.Mvc.Generated
                 return RedirectToAction("Index");
             }
 
-            ViewBag.OrganizationId = new SelectList(unitOfWork.AllOrganizationLive.AsEnumerable(), "Id", "Name", resourcepoolorganization.OrganizationId);
-            ViewBag.ResourcePoolId = new SelectList(unitOfWork.AllResourcePoolLive.AsEnumerable(), "Id", "Name", resourcepoolorganization.ResourcePoolId);
+            ViewBag.OrganizationId = new SelectList(unitOfWork.OrganizationSetLive.AsEnumerable(), "Id", "Name", resourcepoolorganization.OrganizationId);
+            ViewBag.ResourcePoolId = new SelectList(unitOfWork.ResourcePoolSetLive.AsEnumerable(), "Id", "Name", resourcepoolorganization.ResourcePoolId);
             return View(resourcepoolorganization);
         }
 
@@ -76,8 +76,9 @@ namespace Web.Controllers.Mvc.Generated
             {
                 return HttpNotFound();
             }
-            ViewBag.OrganizationId = new SelectList(unitOfWork.AllOrganizationLive.AsEnumerable(), "Id", "Name", resourcepoolorganization.OrganizationId);
-            ViewBag.ResourcePoolId = new SelectList(unitOfWork.AllResourcePoolLive.AsEnumerable(), "Id", "Name", resourcepoolorganization.ResourcePoolId);
+
+            ViewBag.OrganizationId = new SelectList(unitOfWork.OrganizationSetLive.AsEnumerable(), "Id", "Name", resourcepoolorganization.OrganizationId);
+            ViewBag.ResourcePoolId = new SelectList(unitOfWork.ResourcePoolSetLive.AsEnumerable(), "Id", "Name", resourcepoolorganization.ResourcePoolId);
             return View(resourcepoolorganization);
         }
 
@@ -88,7 +89,7 @@ namespace Web.Controllers.Mvc.Generated
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "Id,ResourcePoolId,OrganizationId,CreatedOn,ModifiedOn,DeletedOn")] ResourcePoolOrganizationDto resourcepoolorganizationdto)
         {
-			var resourcepoolorganization = resourcepoolorganizationdto.ToBusinessObject();
+            var resourcepoolorganization = resourcepoolorganizationdto.ToBusinessObject();
 
             if (ModelState.IsValid)
             {
@@ -96,8 +97,9 @@ namespace Web.Controllers.Mvc.Generated
                 await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.OrganizationId = new SelectList(unitOfWork.AllOrganizationLive.AsEnumerable(), "Id", "Name", resourcepoolorganization.OrganizationId);
-            ViewBag.ResourcePoolId = new SelectList(unitOfWork.AllResourcePoolLive.AsEnumerable(), "Id", "Name", resourcepoolorganization.ResourcePoolId);
+
+            ViewBag.OrganizationId = new SelectList(unitOfWork.OrganizationSetLive.AsEnumerable(), "Id", "Name", resourcepoolorganization.OrganizationId);
+            ViewBag.ResourcePoolId = new SelectList(unitOfWork.ResourcePoolSetLive.AsEnumerable(), "Id", "Name", resourcepoolorganization.ResourcePoolId);
             return View(resourcepoolorganization);
         }
 

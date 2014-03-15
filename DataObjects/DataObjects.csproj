@@ -59,11 +59,6 @@
     <Compile Include="Generated\OrganizationRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
-    <Compile Include="Generated\RepositoryXp.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RepositoryXp.tt</DependentUpon>
-    </Compile>
     <Compile Include="Generated\ResourcePoolOrganizationRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
@@ -88,7 +83,7 @@
     <Compile Include="Generated\UserSectorRatingRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
-    <Compile Include="GenericRepository.cs" />
+    <Compile Include="BaseRepository.cs" />
     <Compile Include="IGenericRepository.cs" />
     <Compile Include="Model.Context.cs">
       <AutoGen>True</AutoGen>
@@ -112,10 +107,6 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Generated\RepositoryXp.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>RepositoryXp.cs</LastGenOutput>
-    </None>
     <None Include="Generated\Repository.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Repository.cs</LastGenOutput>

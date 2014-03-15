@@ -7,7 +7,10 @@ namespace BusinessObjects.Metadata
     {
         [Display(Name = "Email")]
         public object Email { get; set; }
-    
+
+        [Display(Name = "Password")]
+        public string Password { get; set; }
+
         [Display(Name = "First Name")]
         public object FirstName { get; set; }
     

@@ -1,4 +1,9 @@
-﻿0.5
+﻿0.6
+. Facade - UnitOfWork finetuning
+. General - Password for User table + basic authentication
+. Web - Controller.tt was created
+
+0.5
 . SolutionItems - Local_UpdateDatabase.sql was updated to remove doktrosizlar db items
 . Business + DataObjects
 .. To support tables with multiple primary key, IEntity interface Id property was replaced with IsNew

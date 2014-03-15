@@ -2,7 +2,7 @@ namespace DataObjects
 {
     using BusinessObjects;
 
-    public partial class UserResourcePoolRepository : GenericRepository<UserResourcePool>
+    public partial class UserResourcePoolRepository : BaseRepository<UserResourcePool>
     {
         public UserResourcePoolRepository(WealthEconomyEntities context)
             : base(context)

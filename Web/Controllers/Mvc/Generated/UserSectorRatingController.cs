@@ -1,14 +1,14 @@
-﻿using BusinessObjects;
-using BusinessObjects.Dto;
-using Facade;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-
-namespace Web.Controllers.Mvc.Generated
+namespace Web.Controllers.Mvc
 {
+    using BusinessObjects;
+    using BusinessObjects.Dto;
+    using Facade;
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Net;
+    using System.Threading.Tasks;
+    using System.Web.Mvc;
+
     public partial class UserSectorRatingController : BaseController
     {
         UserSectorRatingUnitOfWork unitOfWork = new UserSectorRatingUnitOfWork();
@@ -17,6 +17,10 @@ namespace Web.Controllers.Mvc.Generated
         public async Task<ActionResult> Index()
         {
             var usersectorratingset = unitOfWork.AllLiveIncluding(u => u.Sector, u => u.User);
+
+            if (IsAuthenticated)
+                usersectorratingset = usersectorratingset.Where(item => item.UserId == CurrentUserId);
+
             return View(await usersectorratingset.ToListAsync());
         }
 
@@ -38,8 +42,14 @@ namespace Web.Controllers.Mvc.Generated
         // GET: /UserSectorRating/Create
         public ActionResult Create()
         {
-            ViewBag.SectorId = new SelectList(unitOfWork.AllSectorLive.AsEnumerable(), "Id", "Name");
-            ViewBag.UserId = new SelectList(unitOfWork.AllUserLive.AsEnumerable(), "Id", "Email");
+            ViewBag.SectorId = new SelectList(unitOfWork.SectorSetLive.AsEnumerable(), "Id", "Name");
+
+            var userSet = unitOfWork.UserSetLive.AsEnumerable();
+
+            if (IsAuthenticated)
+                userSet = userSet.Where(user => user.Id == CurrentUserId);
+
+            ViewBag.UserId = new SelectList(userSet, "Id", "Email");
             return View();
         }
 
@@ -50,7 +60,7 @@ namespace Web.Controllers.Mvc.Generated
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,UserId,SectorId,Rating,CreatedOn,ModifiedOn,DeletedOn")] UserSectorRatingDto usersectorratingdto)
         {
-			var usersectorrating = usersectorratingdto.ToBusinessObject();
+            var usersectorrating = usersectorratingdto.ToBusinessObject();
 
             if (ModelState.IsValid)
             {
@@ -59,8 +69,14 @@ namespace Web.Controllers.Mvc.Generated
                 return RedirectToAction("Index");
             }
 
-            ViewBag.SectorId = new SelectList(unitOfWork.AllSectorLive.AsEnumerable(), "Id", "Name", usersectorrating.SectorId);
-            ViewBag.UserId = new SelectList(unitOfWork.AllUserLive.AsEnumerable(), "Id", "Email", usersectorrating.UserId);
+            ViewBag.SectorId = new SelectList(unitOfWork.SectorSetLive.AsEnumerable(), "Id", "Name", usersectorrating.SectorId);
+
+            var userSet = unitOfWork.UserSetLive.AsEnumerable();
+
+            if (IsAuthenticated)
+                userSet = userSet.Where(user => user.Id == CurrentUserId);
+
+            ViewBag.UserId = new SelectList(userSet, "Id", "Email", usersectorrating.UserId);
             return View(usersectorrating);
         }
 
@@ -76,8 +92,15 @@ namespace Web.Controllers.Mvc.Generated
             {
                 return HttpNotFound();
             }
-            ViewBag.SectorId = new SelectList(unitOfWork.AllSectorLive.AsEnumerable(), "Id", "Name", usersectorrating.SectorId);
-            ViewBag.UserId = new SelectList(unitOfWork.AllUserLive.AsEnumerable(), "Id", "Email", usersectorrating.UserId);
+
+            ViewBag.SectorId = new SelectList(unitOfWork.SectorSetLive.AsEnumerable(), "Id", "Name", usersectorrating.SectorId);
+
+            var userSet = unitOfWork.UserSetLive.AsEnumerable();
+
+            if (IsAuthenticated)
+                userSet = userSet.Where(user => user.Id == CurrentUserId);
+
+            ViewBag.UserId = new SelectList(userSet, "Id", "Email", usersectorrating.UserId);
             return View(usersectorrating);
         }
 
@@ -88,7 +111,7 @@ namespace Web.Controllers.Mvc.Generated
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "Id,UserId,SectorId,Rating,CreatedOn,ModifiedOn,DeletedOn")] UserSectorRatingDto usersectorratingdto)
         {
-			var usersectorrating = usersectorratingdto.ToBusinessObject();
+            var usersectorrating = usersectorratingdto.ToBusinessObject();
 
             if (ModelState.IsValid)
             {
@@ -96,8 +119,15 @@ namespace Web.Controllers.Mvc.Generated
                 await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.SectorId = new SelectList(unitOfWork.AllSectorLive.AsEnumerable(), "Id", "Name", usersectorrating.SectorId);
-            ViewBag.UserId = new SelectList(unitOfWork.AllUserLive.AsEnumerable(), "Id", "Email", usersectorrating.UserId);
+
+            ViewBag.SectorId = new SelectList(unitOfWork.SectorSetLive.AsEnumerable(), "Id", "Name", usersectorrating.SectorId);
+
+            var userSet = unitOfWork.UserSetLive.AsEnumerable();
+
+            if (IsAuthenticated)
+                userSet = userSet.Where(user => user.Id == CurrentUserId);
+
+            ViewBag.UserId = new SelectList(userSet, "Id", "Email", usersectorrating.UserId);
             return View(usersectorrating);
         }
 
