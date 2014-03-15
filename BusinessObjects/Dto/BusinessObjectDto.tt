@@ -35,6 +35,7 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection)
     BeginNamespace(code);
 #>
 using System;
+using System.ComponentModel.DataAnnotations;
 
 public class <#=entityDtoName#>
 {
@@ -64,7 +65,10 @@ public class <#=entityDtoName#>
     {
         foreach (var edmProperty in simpleProperties)
         {
+			if (!edmProperty.Nullable) {
 #>
+	[Required]
+<#			} #>
     <#=codeStringGenerator.Property(edmProperty)#>
 <#
         }

@@ -10,13 +10,19 @@
 namespace BusinessObjects.Dto
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
     
     public class ResourcePoolOrganizationDto
     {
+    	[Required]
         public int Id { get; set; }
+    	[Required]
         public int ResourcePoolId { get; set; }
+    	[Required]
         public int OrganizationId { get; set; }
+    	[Required]
         public System.DateTime CreatedOn { get; set; }
+    	[Required]
         public System.DateTime ModifiedOn { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
     	

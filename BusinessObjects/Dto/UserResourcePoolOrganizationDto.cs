@@ -10,17 +10,27 @@
 namespace BusinessObjects.Dto
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
     
     public class UserResourcePoolOrganizationDto
     {
+    	[Required]
         public int Id { get; set; }
+    	[Required]
         public int UserId { get; set; }
+    	[Required]
         public int ResourcePoolOrganizationId { get; set; }
+    	[Required]
         public int NumberOfSales { get; set; }
+    	[Required]
         public decimal QualityRating { get; set; }
+    	[Required]
         public decimal CustomerSatisfactionRating { get; set; }
+    	[Required]
         public decimal EmployeeSatisfactionRating { get; set; }
+    	[Required]
         public System.DateTime CreatedOn { get; set; }
+    	[Required]
         public System.DateTime ModifiedOn { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
     	

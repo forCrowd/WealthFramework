@@ -1,4 +1,7 @@
-﻿0.6
+﻿0.6.1
+. BusinessObjects - Required attribute for Dto classes
+
+0.6
 . Facade - UnitOfWork finetuning
 . General - Password for User table + basic authentication
 . Web - Controller.tt was created

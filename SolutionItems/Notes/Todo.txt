@@ -8,5 +8,3 @@
 . only allow the users to access to their own pages?
 . remove satisfaction word..?
 . multiple pk for user organization + user sector + user license + user resource pool organization + resource pool organization
-. dto files also need required attribute ?!?!?!
-.. modelstate.isvalid ?!

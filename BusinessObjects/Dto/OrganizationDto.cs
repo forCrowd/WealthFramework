@@ -10,16 +10,25 @@
 namespace BusinessObjects.Dto
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
     
     public class OrganizationDto
     {
+    	[Required]
         public int Id { get; set; }
+    	[Required]
         public byte SectorId { get; set; }
+    	[Required]
         public string Name { get; set; }
+    	[Required]
         public decimal ProductionCost { get; set; }
+    	[Required]
         public decimal SalesPrice { get; set; }
+    	[Required]
         public short LicenseId { get; set; }
+    	[Required]
         public System.DateTime CreatedOn { get; set; }
+    	[Required]
         public System.DateTime ModifiedOn { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
     	

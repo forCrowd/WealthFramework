@@ -10,14 +10,21 @@
 namespace BusinessObjects.Dto
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
     
     public class UserSectorRatingDto
     {
+    	[Required]
         public int Id { get; set; }
+    	[Required]
         public int UserId { get; set; }
+    	[Required]
         public byte SectorId { get; set; }
+    	[Required]
         public decimal Rating { get; set; }
+    	[Required]
         public System.DateTime CreatedOn { get; set; }
+    	[Required]
         public System.DateTime ModifiedOn { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
     	

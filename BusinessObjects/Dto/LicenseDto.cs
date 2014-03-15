@@ -10,14 +10,20 @@
 namespace BusinessObjects.Dto
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
     
     public class LicenseDto
     {
+    	[Required]
         public short Id { get; set; }
+    	[Required]
         public string Name { get; set; }
         public string Description { get; set; }
+    	[Required]
         public string Text { get; set; }
+    	[Required]
         public System.DateTime CreatedOn { get; set; }
+    	[Required]
         public System.DateTime ModifiedOn { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
     	

@@ -53,7 +53,6 @@
 
         public virtual void InsertOrUpdate(TEntityType entity)
         {
-            // TODO Validation?
             MainRepository.InsertOrUpdate(entity);
         }
 
