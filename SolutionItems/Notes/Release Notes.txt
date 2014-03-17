@@ -1,4 +1,7 @@
-﻿0.6.2
+﻿0.6.3
+. Web - Overview text update
+
+0.6.2
 . Web - Overview text update
 
 0.6.1
