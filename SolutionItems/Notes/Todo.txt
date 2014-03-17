@@ -5,6 +5,8 @@
 .. sql local db or compact etc.?
 .. sql migrations
 . random data generation?
-. only allow the users to access to their own pages?
+. users should only access to their own items?
 . remove satisfaction word..?
 . multiple pk for user organization + user sector + user license + user resource pool organization + resource pool organization
+
+continue with overviews - parameters

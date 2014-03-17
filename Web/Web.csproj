@@ -279,6 +279,7 @@
     <Content Include="Views\UserResourcePoolOrganization\Details.cshtml" />
     <Content Include="Views\UserResourcePoolOrganization\Edit.cshtml" />
     <Content Include="Views\UserResourcePoolOrganization\Index.cshtml" />
+    <Content Include="Views\Home\Overview 2014 03 17.cshtml" />
     <None Include="Web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

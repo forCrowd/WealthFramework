@@ -1,4 +1,7 @@
-﻿0.6.1
+﻿0.6.2
+. Web - Overview text update
+
+0.6.1
 . BusinessObjects - Required attribute for Dto classes
 
 0.6
