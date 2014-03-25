@@ -31,7 +31,7 @@ namespace BusinessObjects
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
-        public UserAccountType UserAccountTypeId { get; set; }
+        public byte UserAccountTypeId { get; set; }
         public string Notes { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public System.DateTime ModifiedOn { get; set; }

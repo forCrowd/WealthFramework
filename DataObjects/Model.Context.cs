@@ -27,15 +27,16 @@ namespace DataObjects
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<License> LicenseSet { get; set; }
-        public virtual DbSet<Organization> OrganizationSet { get; set; }
-        public virtual DbSet<Sector> SectorSet { get; set; }
-        public virtual DbSet<User> UserSet { get; set; }
-        public virtual DbSet<UserLicenseRating> UserLicenseRatingSet { get; set; }
-        public virtual DbSet<UserSectorRating> UserSectorRatingSet { get; set; }
-        public virtual DbSet<ResourcePool> ResourcePoolSet { get; set; }
-        public virtual DbSet<ResourcePoolOrganization> ResourcePoolOrganizationSet { get; set; }
-        public virtual DbSet<UserResourcePool> UserResourcePoolSet { get; set; }
-        public virtual DbSet<UserResourcePoolOrganization> UserResourcePoolOrganizationSet { get; set; }
+        public virtual DbSet<License> License { get; set; }
+        public virtual DbSet<Organization> Organization { get; set; }
+        public virtual DbSet<Sector> Sector { get; set; }
+        public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<UserLicenseRating> UserLicenseRating { get; set; }
+        public virtual DbSet<UserSectorRating> UserSectorRating { get; set; }
+        public virtual DbSet<ResourcePool> ResourcePool { get; set; }
+        public virtual DbSet<ResourcePoolOrganization> ResourcePoolOrganization { get; set; }
+        public virtual DbSet<UserResourcePool> UserResourcePool { get; set; }
+        public virtual DbSet<UserResourcePoolOrganization> UserResourcePoolOrganization { get; set; }
+        public virtual DbSet<A1> A1 { get; set; }
     }
 }

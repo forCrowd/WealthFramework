@@ -1,4 +1,7 @@
-﻿0.6.3
+﻿0.7
+. SPA attemts with OData + AngularJS + Breeze.js
+
+0.6.3
 . Web - Overview text update
 
 0.6.2

@@ -27,8 +27,8 @@ namespace BusinessObjects
         public string Name { get; set; }
         public string Description { get; set; }
         public string Text { get; set; }
-        public System.DateTime CreatedOn { get; set; }
-        public System.DateTime ModifiedOn { get; set; }
+        public virtual DateTime CreatedOn { get; set; }
+        public virtual System.DateTime ModifiedOn { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
     
         public virtual ICollection<Organization> OrganizationSet { get; set; }

@@ -24,7 +24,7 @@ namespace BusinessObjects.Dto
         public string MiddleName { get; set; }
         public string LastName { get; set; }
     	[Required]
-        public UserAccountType UserAccountTypeId { get; set; }
+        public byte UserAccountTypeId { get; set; }
         public string Notes { get; set; }
     	[Required]
         public System.DateTime CreatedOn { get; set; }

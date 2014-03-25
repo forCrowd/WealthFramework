@@ -1,0 +1,35 @@
+﻿<h2>List</h2>
+<p>
+    <a href="#/new">Create New</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Text
+        </th>
+        <th></th>
+    </tr>
+    <tr ng-repeat="license in licenseSet">
+        <td>
+            {{ license.Name }}
+        </td>
+        <td>
+            {{ license.Description }}
+        </td>
+        <td>
+            {{ license.Text }}
+        </td>
+        <td>
+            <a href="#/edit/{{license.Id}}">Edit</a>
+            <a href="" ng-click="deleteLicense($index)">
+                Delete
+            </a>
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,35 @@
+﻿<h2>Edit</h2>
+<form name="editForm">
+    <div class="form-horizontal">
+        <h4>License</h4>
+        <hr />
+        <div class="form-group">
+            <label for="Name" class="control-label col-md-2">Name</label>
+            <div class="col-md-10" ng-class="{'has-error': editForm.Name.$invalid && !editForm.Name.$pristine}">
+                <input type="text" id="Name" name="Name" ng-model="license.Name" class="form-control" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Description" class="control-label col-md-2">Description</label>
+            <div class="col-md-10">
+                <input type="text" name="Description" id="Description" ng-model="license.Description" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for=" text" class="control-label col-md-2">
+                Text
+            </label>
+            <div class="col-md-10" ng-class="{'has-error': editForm.Text.$invalid && !editForm.Text.$pristine}">
+                <input type="text" name="Text" id="Text" ng-model="license.Text" class="form-control" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button ng-click="saveLicense()" ng-disabled="editForm.$invalid" class="btn btn-default">
+                    Save
+                </button>
+                <a href="#/" class="btn">Cancel</a>
+            </div>
+        </div>
+    </div>
+</form>

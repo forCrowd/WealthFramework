@@ -6,8 +6,21 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
+    <script src="/Scripts/angular.min.js"></script>
+    <script src="/Scripts/angular-route.min.js"></script>
+    <script src="/Scripts/datajs-1.1.2.js"></script>
+    <script src="/Scripts/breeze.debug.js"></script>
+    <script src="/Scripts/breeze.angular.js"></script>
+    <script src="/Scripts/breeze.directives.js"></script>
+
+    <script src="/Scripts/app/main.js"></script>
+    <script src="/Scripts/app/route.js"></script>
+    <script src="/Scripts/app/entityManagerFactory.js"></script>
+    <script src="/Scripts/app/dataContext.js"></script>
+    <script src="/Scripts/app/logger.js"></script>
 </head>
-<body>
+<body ng-app="main">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -20,48 +33,51 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @{if (ViewBag.IsAuthenticated && ViewBag.CurrentUserAccountTypeId == BusinessObjects.UserAccountType.Administrator) {
+                    @{if (ViewBag.IsAuthenticated && ViewBag.CurrentUserAccountTypeId == BusinessObjects.UserAccountType.Administrator)
+                    {
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Definitions <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li>@Html.ActionLink("User", "Index", "User", new { area = "" }, null)</li>
                                 <li>@Html.ActionLink("Sector", "Index", "Sector", new { area = "" }, null)</li>
                                 <li>@Html.ActionLink("License", "Index", "License", new { area = "" }, null)</li>
+                                <li>@Html.ActionLink("License Ng", "Index", "LicenseNg", new { area = "" }, null)</li>
                                 <li>@Html.ActionLink("Organization", "Index", "Organization", new { area = "" }, null)</li>
                                 <li>@Html.ActionLink("Resource Pool", "Index", "ResourcePool", new { area = "" }, null)</li>
                                 <li>@Html.ActionLink("Resource Pool - Organization", "Index", "ResourcePoolOrganization", new { area = "" }, null)</li>
                             </ul>
                         </li>
                     }}
-                    @{if (ViewBag.IsAuthenticated) {
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">CMRP <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Total Cost Index", "TotalCostIndex", "UserResourcePool", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Knowledge Index - Private", "KnowledgeIndexPrivate", "UserResourcePool", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Knowledge Index - Public", "KnowledgeIndexPublic", "UserResourcePool", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Quality Index - Private", "QualityIndexPrivate", "UserResourcePool", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Quality Index - Public", "QualityIndexPublic", "UserResourcePool", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Employee Satisfaction Index - Private", "EmployeeSatisfactionIndexPrivate", "UserResourcePool", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Employee Satisfaction Index - Public", "EmployeeSatisfactionIndexPublic", "UserResourcePool", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Customer Satisfaction Index - Private", "CustomerSatisfactionIndexPrivate", "UserResourcePool", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Customer Satisfaction Index - Public", "CustomerSatisfactionIndexPublic", "UserResourcePool", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Sector Index - Private", "SectorIndexPrivate", "UserResourcePool", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Sector Index - Public", "SectorIndexPublic", "UserResourcePool", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Distance Index", "DistanceIndex", "UserResourcePool", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("All in One - Private", "AllInOnePrivate", "UserResourcePool", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("All in One - Public", "AllInOnePublic", "UserResourcePool", new { area = "" }, null)</li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ratings <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("CMRP Index Rating", "Index", "UserResourcePool", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Resource Pool - Organization Rating", "Index", "UserResourcePoolOrganization", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Licence Rating", "Index", "UserLicenseRating", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Sector Rating", "Index", "UserSectorRating", new { area = "" }, null)</li>
-                        </ul>
-                    </li>
+                    @{if (ViewBag.IsAuthenticated)
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">CMRP <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Total Cost Index", "TotalCostIndex", "UserResourcePool", new { area = "" }, null)</li>
+                                <li>@Html.ActionLink("Knowledge Index - Private", "KnowledgeIndexPrivate", "UserResourcePool", new { area = "" }, null)</li>
+                                <li>@Html.ActionLink("Knowledge Index - Public", "KnowledgeIndexPublic", "UserResourcePool", new { area = "" }, null)</li>
+                                <li>@Html.ActionLink("Quality Index - Private", "QualityIndexPrivate", "UserResourcePool", new { area = "" }, null)</li>
+                                <li>@Html.ActionLink("Quality Index - Public", "QualityIndexPublic", "UserResourcePool", new { area = "" }, null)</li>
+                                <li>@Html.ActionLink("Employee Satisfaction Index - Private", "EmployeeSatisfactionIndexPrivate", "UserResourcePool", new { area = "" }, null)</li>
+                                <li>@Html.ActionLink("Employee Satisfaction Index - Public", "EmployeeSatisfactionIndexPublic", "UserResourcePool", new { area = "" }, null)</li>
+                                <li>@Html.ActionLink("Customer Satisfaction Index - Private", "CustomerSatisfactionIndexPrivate", "UserResourcePool", new { area = "" }, null)</li>
+                                <li>@Html.ActionLink("Customer Satisfaction Index - Public", "CustomerSatisfactionIndexPublic", "UserResourcePool", new { area = "" }, null)</li>
+                                <li>@Html.ActionLink("Sector Index - Private", "SectorIndexPrivate", "UserResourcePool", new { area = "" }, null)</li>
+                                <li>@Html.ActionLink("Sector Index - Public", "SectorIndexPublic", "UserResourcePool", new { area = "" }, null)</li>
+                                <li>@Html.ActionLink("Distance Index", "DistanceIndex", "UserResourcePool", new { area = "" }, null)</li>
+                                <li>@Html.ActionLink("All in One - Private", "AllInOnePrivate", "UserResourcePool", new { area = "" }, null)</li>
+                                <li>@Html.ActionLink("All in One - Public", "AllInOnePublic", "UserResourcePool", new { area = "" }, null)</li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ratings <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("CMRP Index Rating", "Index", "UserResourcePool", new { area = "" }, null)</li>
+                                <li>@Html.ActionLink("Resource Pool - Organization Rating", "Index", "UserResourcePoolOrganization", new { area = "" }, null)</li>
+                                <li>@Html.ActionLink("Licence Rating", "Index", "UserLicenseRating", new { area = "" }, null)</li>
+                                <li>@Html.ActionLink("Sector Rating", "Index", "UserSectorRating", new { area = "" }, null)</li>
+                            </ul>
+                        </li>
                     }}
                     @*<li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>*@
                 </ul>

@@ -5,28 +5,29 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="adce09c0591c47b8911820113fd77aa6" Name="Diagram1" ZoomLevel="74">
-        <EntityTypeShape EntityType="WealthEconomyModel.License" Width="1.5" PointX="2.25" PointY="1.125" IsExpanded="false" />
-        <EntityTypeShape EntityType="WealthEconomyModel.Organization" Width="1.5" PointX="3" PointY="6.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="WealthEconomyModel.Sector" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="WealthEconomyModel.User" Width="2.625" PointX="1.125" PointY="2.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="WealthEconomyModel.UserLicenseRating" Width="1.625" PointX="4.5" PointY="0.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="WealthEconomyModel.UserSectorRating" Width="1.625" PointX="4.5" PointY="4.75" IsExpanded="false" />
-        <AssociationConnector Association="WealthEconomyModel.FK_Organization_License" ManuallyRouted="false" />
-        <AssociationConnector Association="WealthEconomyModel.FK_UserLicenseRating_License" ManuallyRouted="false" />
-        <AssociationConnector Association="WealthEconomyModel.FK_Organization_Sector" ManuallyRouted="false" />
-        <AssociationConnector Association="WealthEconomyModel.FK_UserSectorRating_Sector" ManuallyRouted="false" />
-        <AssociationConnector Association="WealthEconomyModel.FK_UserLicenseRating_User" ManuallyRouted="false" />
-        <AssociationConnector Association="WealthEconomyModel.FK_UserSectorRating_User" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="WealthEconomyModel.ResourcePool" Width="1.5" PointX="2.25" PointY="4.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="WealthEconomyModel.ResourcePoolOrganization" Width="1.5" PointX="5.25" PointY="6.75" IsExpanded="false" />
-        <AssociationConnector Association="WealthEconomyModel.FK_ResourcePoolOrganization_Organization" />
-        <AssociationConnector Association="WealthEconomyModel.FK_ResourcePoolOrganization_ResourcePool" />
-        <EntityTypeShape EntityType="WealthEconomyModel.UserResourcePool" Width="1.5" PointX="4.5" PointY="2.75" IsExpanded="false" />
-        <AssociationConnector Association="WealthEconomyModel.FK_UserResourcePool_ResourcePool" />
-        <AssociationConnector Association="WealthEconomyModel.FK_UserResourcePool_User" />
-        <EntityTypeShape EntityType="WealthEconomyModel.UserResourcePoolOrganization" Width="2.125" PointX="7.5" PointY="2.75" IsExpanded="false" />
-        <AssociationConnector Association="WealthEconomyModel.FK_UserResourcePoolOrganization_ResourcePoolOrganization" />
-        <AssociationConnector Association="WealthEconomyModel.FK_UserResourcePoolOrganization_User" />
+        <EntityTypeShape EntityType="BusinessObjects.License" Width="1.5" PointX="2.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessObjects.Organization" Width="1.5" PointX="3" PointY="6.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="BusinessObjects.Sector" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="BusinessObjects.User" Width="2.625" PointX="0.75" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessObjects.UserLicenseRating" Width="1.625" PointX="4.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessObjects.UserSectorRating" Width="1.625" PointX="4.5" PointY="4.75" IsExpanded="false" />
+        <AssociationConnector Association="BusinessObjects.FK_Organization_License" ManuallyRouted="false" />
+        <AssociationConnector Association="BusinessObjects.FK_UserLicenseRating_License" ManuallyRouted="false" />
+        <AssociationConnector Association="BusinessObjects.FK_Organization_Sector" ManuallyRouted="false" />
+        <AssociationConnector Association="BusinessObjects.FK_UserSectorRating_Sector" ManuallyRouted="false" />
+        <AssociationConnector Association="BusinessObjects.FK_UserLicenseRating_User" ManuallyRouted="false" />
+        <AssociationConnector Association="BusinessObjects.FK_UserSectorRating_User" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="BusinessObjects.ResourcePool" Width="1.5" PointX="2.25" PointY="4.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="BusinessObjects.ResourcePoolOrganization" Width="1.5" PointX="5.25" PointY="6.75" IsExpanded="true" />
+        <AssociationConnector Association="BusinessObjects.FK_ResourcePoolOrganization_Organization" />
+        <AssociationConnector Association="BusinessObjects.FK_ResourcePoolOrganization_ResourcePool" />
+        <EntityTypeShape EntityType="BusinessObjects.UserResourcePool" Width="1.5" PointX="4.5" PointY="2.75" IsExpanded="false" />
+        <AssociationConnector Association="BusinessObjects.FK_UserResourcePool_ResourcePool" />
+        <AssociationConnector Association="BusinessObjects.FK_UserResourcePool_User" />
+        <EntityTypeShape EntityType="BusinessObjects.UserResourcePoolOrganization" Width="2.125" PointX="9.125" PointY="2.5" IsExpanded="true" />
+        <AssociationConnector Association="BusinessObjects.FK_UserResourcePoolOrganization_ResourcePoolOrganization" />
+        <AssociationConnector Association="BusinessObjects.FK_UserResourcePoolOrganization_User" />
+        <EntityTypeShape EntityType="BusinessObjects.A1" Width="1.5" PointX="7.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

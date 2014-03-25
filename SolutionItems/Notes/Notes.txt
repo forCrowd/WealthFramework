@@ -1,4 +1,7 @@
-﻿resource pool types;
+﻿resource pool types: realtime vs. static
+
+---
+resource pool types;
 . index samples
 . one big public
 . per user

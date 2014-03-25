@@ -41,6 +41,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Breeze.ContextProvider">
+      <HintPath>..\packages\Breeze.Server.ContextProvider.1.4.11\lib\Breeze.ContextProvider.dll</HintPath>
+    </Reference>
+    <Reference Include="Breeze.ContextProvider.EF6">
+      <HintPath>..\packages\Breeze.Server.ContextProvider.EF6.1.4.11\lib\Breeze.ContextProvider.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="Breeze.WebApi2">
+      <HintPath>..\packages\Breeze.Server.WebApi2.1.4.11\lib\Breeze.WebApi2.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -57,6 +66,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Spatial, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Spatial.5.6.0\lib\net40\System.Spatial.dll</HintPath>
     </Reference>
@@ -121,6 +132,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivator">
+      <HintPath>..\packages\WebActivator.1.5.3\lib\net40\WebActivator.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -137,9 +151,11 @@
     <Compile Include="..\SolutionItems\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="App_Start\BreezeWebApiConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfigObsolete.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
@@ -194,22 +210,57 @@
     <Compile Include="Controllers\Mvc\Generated\UserSectorRatingController.cs">
       <DependentUpon>Controller.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\Mvc\LicenseNgController.cs" />
     <Compile Include="Controllers\Mvc\UserController.cs" />
     <Compile Include="Controllers\Mvc\HomeController.cs" />
     <Compile Include="Controllers\Mvc\DatabaseAlterationController.cs" />
     <Compile Include="Controllers\Mvc\UserResourcePoolController.cs" />
+    <Compile Include="Controllers\OData\Generated\LicenseController.cs" />
+    <Compile Include="Controllers\OData\Generated\OrganizationController.cs" />
+    <Compile Include="Controllers\OData\Generated\ResourcePoolController.cs" />
+    <Compile Include="Controllers\OData\Generated\ResourcePoolOrganizationController.cs" />
+    <Compile Include="Controllers\OData\Generated\SectorController.cs" />
+    <Compile Include="Controllers\OData\Generated\UserController.cs" />
+    <Compile Include="Controllers\OData\Generated\UserLicenseRatingController.cs" />
+    <Compile Include="Controllers\OData\Generated\UserResourcePoolController.cs" />
+    <Compile Include="Controllers\OData\Generated\UserResourcePoolOrganizationController.cs" />
+    <Compile Include="Controllers\OData\Generated\UserSectorRatingController.cs" />
+    <Compile Include="Controllers\OData\A1Controller.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Helper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Angular\Samples\Modules\index.html" />
+    <Content Include="Angular\Samples\Modules\script.js" />
+    <Content Include="Angular\Samples\WireUpABackend\Backup\detail.html" />
+    <Content Include="Angular\Samples\WireUpABackend\Backup\index.html" />
+    <Content Include="Angular\Samples\WireUpABackend\Backup\list.html" />
+    <Content Include="Angular\Samples\WireUpABackend\Backup\project.js" />
+    <Content Include="Angular\Samples\WireUpABackend\detail.html" />
+    <Content Include="Angular\Samples\WireUpABackend\list.html" />
+    <Content Include="Angular\Samples\WireUpABackend\project.js" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\breeze.directives.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\angular-mocks.js" />
+    <Content Include="Scripts\angular-route.js" />
+    <Content Include="Scripts\angular-route.min.js" />
+    <Content Include="Scripts\angular.js" />
+    <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\app\datacontextBackup.js" />
+    <Content Include="Scripts\app\entityManagerFactory.js" />
+    <Content Include="Scripts\app\dataContext.js" />
+    <Content Include="Scripts\app\licenseControllerBackup2.js" />
+    <Content Include="Scripts\app\licenseControllerBackup.js" />
+    <Content Include="Scripts\app\logger.js" />
+    <Content Include="Scripts\app\route.js" />
+    <Content Include="Scripts\app\main.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -228,12 +279,28 @@
       <LastGenOutput>Controller.cs</LastGenOutput>
     </Content>
     <None Include="Properties\PublishProfiles\Default.pubxml" />
+    <Content Include="Scripts\angular.min.js.map" />
+    <Content Include="Scripts\angular-route.min.js.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <None Include="Scripts\breeze.intellisense.js" />
+    <Content Include="Scripts\breeze.angular.js" />
+    <Content Include="Scripts\breeze.debugBackup.js" />
+    <Content Include="Scripts\breeze.debug.js" />
+    <Content Include="Scripts\breeze.directives.js" />
+    <Content Include="Scripts\breeze.min.js" />
+    <Content Include="Scripts\datajs-1.1.2.js" />
+    <Content Include="Scripts\datajs-1.1.2.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\q.js" />
+    <Content Include="Scripts\q.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Angular\Samples\WireUpABackend\index.html" />
+    <Content Include="Scripts\app\licenseController.js" />
+    <Content Include="ViewsNg\License\edit.html" />
+    <Content Include="ViewsNg\License\index.html" />
     <Content Include="Views\License\Create.cshtml" />
     <Content Include="Views\License\Delete.cshtml" />
     <Content Include="Views\License\Details.cshtml" />
@@ -280,7 +347,12 @@
     <Content Include="Views\UserResourcePoolOrganization\Edit.cshtml" />
     <Content Include="Views\UserResourcePoolOrganization\Index.cshtml" />
     <Content Include="Views\Home\Overview 2014 03 17.cshtml" />
-    <None Include="Web.config" />
+    <Content Include="Views\Home\Technologies.cshtml" />
+    <Content Include="Views\LicenseNg\Index.cshtml" />
+    <Content Include="ViewsNg\License\list.html" />
+    <None Include="Web.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -337,6 +409,7 @@
     <None Include="packages.config" />
     <None Include="Project_Readme.html" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
