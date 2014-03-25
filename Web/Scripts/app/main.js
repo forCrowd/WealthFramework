@@ -9,10 +9,10 @@
 
     var main = angular.module('main', [
 
-        // Angular modules
+        // Angular
         'ngRoute', // Routing
 
-        // Breeze modules
+        // Breeze
         'breeze.angular' // Services
 
     ]);

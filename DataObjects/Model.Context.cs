@@ -37,6 +37,5 @@ namespace DataObjects
         public virtual DbSet<ResourcePoolOrganization> ResourcePoolOrganization { get; set; }
         public virtual DbSet<UserResourcePool> UserResourcePool { get; set; }
         public virtual DbSet<UserResourcePoolOrganization> UserResourcePoolOrganization { get; set; }
-        public virtual DbSet<A1> A1 { get; set; }
     }
 }

@@ -9,34 +9,30 @@
 . remove satisfaction word..?
 . multiple pk for user organization + user sector + user license + user resource pool organization + resource pool organization
 
-. angularjs
-.. latest version?
 .. use scripts.render?
 
-. breezejs.com
-http://www.breezejs.com/samples/todo-angular
-
-. remove angular folder from web
-
-. licensecontroller has breeze code - make it right or clean
-.. also backup file?
-
-. entity framework 6.0 -> 6.2
-
----
-for license;
+. for license;
 difference between current odatacontroller vs. original generated -> createdon + modifiedon
 
----
-is this necessary;
-BreezeWebApiConfig
+. breeze.debug.js modification
+. createdon = datetime.specifykind(utc);
+. edmbuilder modification
 
-.createdon = datetime.specifykind(utc);
-
-breeze.debug.js modification
-
----
-try to merge list + edit.htmls ?!
+. try to merge list + edit.htmls ?!
 how to handle route.js then?!
+New comment: this may not be the correct way of doing it
 
-try to clean the project, it gets really dirty!
+. angularjs wire up a backend sample has a solution for multiple with with same context!
+
+. merge getLicense + getLicenseSet
+
+. use controller as vm + remove $scope if possible
+
+. use data-ng..
+
+. ef tools?!
+http://msdn.microsoft.com/en-us/data/jj593170.aspx
+http://msdn.microsoft.com/en-US/data/jj200620
+http://msdn.microsoft.com/en-US/data/jj591583#Index
+
+. what exactly makes this new validation style trick?

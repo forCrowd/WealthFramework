@@ -22,6 +22,8 @@ namespace Web
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/toastr.css",
+                      "~/Content/breeze.directives.css", // TODO ?!
                       "~/Content/site.css"));
         }
     }

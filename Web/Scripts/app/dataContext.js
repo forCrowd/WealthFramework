@@ -1,5 +1,5 @@
 ﻿/***
- * Service: datacontext 
+ * Service: dataContext 
  *
  * Handles all persistence and creation/deletion of app entities
  * using BreezeJS.
@@ -8,17 +8,17 @@
 (function () {
     'use strict';
 
-    var serviceId = 'datacontext';
+    var serviceId = 'dataContext';
     angular.module('main').factory(serviceId,
-    ['$q', 'entityManagerFactory', datacontext]);
+    ['$q', 'logger', 'entityManagerFactory', dataContext]);
 
-    function datacontext($q, emFactory) {
-        //logger = logger.forSource(serviceId);
-        //var logError = logger.logError;
-        //var logSuccess = logger.logSuccess;
-        //var logWarning = logger.logWarning;
+    function dataContext($q, logger, entityManagerFactory) {
+        logger = logger.forSource(serviceId);
+        var logError = logger.logError;
+        var logSuccess = logger.logSuccess;
+        var logWarning = logger.logWarning;
 
-        var manager = emFactory.newManager();
+        var manager = entityManagerFactory.newManager();
 
         var service = {
             getChangesCount: getChangesCount,
@@ -27,9 +27,6 @@
             getLicense: getLicense,
             deleteLicense: deleteLicense,
             createLicense: createLicense,
-            createTodoItem: createTodoItem,
-            deleteTodoItem: deleteTodoItem,
-            deleteTodoList: deleteTodoList,
             save: save
         };
 
@@ -47,39 +44,13 @@
             //initialValues.created = initialValues.created || created;
             // return manager.createEntity('TodoList', initialValues);
 
-            //if (!hasMetadata()) {
-            //    manager.fetchMetadata(emFactory.serviceName)
-            //        .then(function () {
-            //            return manager.createEntity('License', license);
-            //        })
-            //        .fail(function (exception) {
-            //            // TODO ?!
-            //    });
-            //}
-            //else {
-            return manager.createEntity('License', license);
-            //}
-        }
-
-        function createTodoItem(initialValues) {
             // Todo: guard against missing initialValues?
-            return manager.createEntity('TodoItem', initialValues);
-        }
 
-        function deleteTodoItem(todoItem) {
-            todoItem.entityAspect.setDeleted();
+            return manager.createEntity('License', license);
         }
 
         function deleteLicense(license) {
             license.entityAspect.setDeleted();
-        }
-
-        function deleteTodoList(todoList) {
-            // first mark deleted all the child TodoItems (via copies)
-            var todoCopies = todoList.todoItems.slice();
-            todoCopies.forEach(function (td) { td.entityAspect.setDeleted(); });
-            // now mark deleted the parent TodoList 
-            todoList.entityAspect.setDeleted();
         }
 
         function getChangesCount() {
@@ -93,55 +64,44 @@
                 if (manager.hasChanges()) {
                     count = getChangesCount();
                     manager.rejectChanges(); // undo all unsaved changes!
-                    //logWarning('Discarded ' + count + ' pending change(s)', null, true);
+                    logWarning('Discarded ' + count + ' pending change(s)', null, true);
                 }
             }
 
             //Todo: when no forceRefresh, consider getting from cache rather than remotely
             return breeze.EntityQuery.from("License")
-                // .orderBy("createdOn")
-                // .expand("TodoItems")
                 .using(manager).execute()
                 .then(success).catch(failed);
 
             function success(response) {
 
-                // console.log(response);
-
                 count = response.results.length;
-                //logSuccess('Got ' + count + ' todolist(s)', response, true);
+                logSuccess('Got ' + count + ' license(s)', response, true);
                 return response.results;
             }
             function failed(error) {
-                var message = error.message || "todolists query failed";
-                console.log("datacontext - getLicenseSet - failed: " + message);
-                //logError(message, error, true);
+                var message = error.message || "License query failed";
+                logError(message, error, true);
             }
         }
 
+        // TODO Merge this with getLicenseSet
         function getLicense(licenseId) {
-
-            console.log("datacontext - getLicense");
 
             //Todo: when no forceRefresh, consider getting from cache rather than remotely
             return breeze.EntityQuery.from("License")
                 .where("Id", "==", licenseId)
-                // .orderBy("createdOn")
-                // .expand("TodoItems")
                 .using(manager).execute()
                 .then(success).catch(failed);
 
             function success(response) {
 
-                // console.log(response);
-
                 var count = response.results.length;
-                //logSuccess('Got ' + count + ' todolist(s)', response, true);
+                //logSuccess('Got ' + count + ' license(s)', response, true);
                 return response.results;
             }
             function failed(error) {
-                var message = error.message || "todolists query failed";
-                console.log("datacontext - getLicenseSet - failed: " + message);
+                var message = error.message || "License query failed";
                 //logError(message, error, true);
             }
         }
@@ -150,13 +110,7 @@
             return manager.hasChanges();
         }
 
-        //function hasMetadata() {
-        //    return manager.metadataStore.hasMetadataFor(emFactory.serviceName);
-        //}
-
         function save() {
-
-            console.log('datacontext - saving');
 
             var count = getChangesCount();
             var promise = null;
@@ -164,8 +118,6 @@
             saveBatches.forEach(function (batch) {
                 // ignore empty batches (except 'null' which means "save everything else")
                 if (batch == null || batch.length > 0) {
-
-                    console.log('datacontext - saving');
 
                     promise = promise ?
                         promise.then(function () { return manager.saveChanges(batch); }) :
@@ -175,13 +127,13 @@
             return promise.then(success).catch(failed);
 
             function success(result) {
-                //logSuccess('Saved ' + count + ' change(s)', result, true);
+                logSuccess('Saved ' + count + ' change(s)', result, true);
             }
 
             function failed(error) {
                 var msg = 'Save failed. ' + (error.message || "");
                 error.message = msg;
-                //logError(msg, error, true);
+                logError(msg, error, true);
                 return $q.reject(error); // pass error along to next handler
             }
 
@@ -202,7 +154,6 @@
                 */
                 var batches = [];
                 batches.push(manager.getEntities(['License'], [breeze.EntityState.Deleted]));
-                //batches.push(manager.getEntities(['TodoList'], [breeze.EntityState.Deleted]));
                 batches.push(manager.getEntities(['License'], [breeze.EntityState.Added]));
                 batches.push(null); // empty = save all remaining pending changes
                 return batches;

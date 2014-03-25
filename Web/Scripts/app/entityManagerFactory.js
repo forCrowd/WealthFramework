@@ -2,7 +2,7 @@
  * Service: entityManagerFactory 
  *
  * Configures BreezeJS and creates new instance(s) of the 
- * BreezeJS EntityManager for use in a 'datacontext' service
+ * BreezeJS EntityManager for use in a 'dataContext' service
  *
  ***/
 (function () {
@@ -10,9 +10,9 @@
 
     var serviceId = 'entityManagerFactory';
     angular.module('main')
-           .factory(serviceId, ['breeze', emFactory]);
+           .factory(serviceId, ['breeze', entityManagerFactory]);
 
-    function emFactory(breeze) {
+    function entityManagerFactory(breeze) {
         configureBreeze();
         var serviceRoot = window.location.protocol + '//' + window.location.host + '/';
         var serviceName = serviceRoot + 'odata/';

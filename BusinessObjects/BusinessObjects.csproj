@@ -43,9 +43,6 @@
     <Compile Include="..\SolutionItems\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Dto\A1Dto.cs">
-      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
-    </Compile>
     <Compile Include="Dto\BusinessObjectDto.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -80,9 +77,6 @@
     </Compile>
     <Compile Include="Dto\UserSectorRatingDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\A1.cs">
-      <DependentUpon>BusinessObject.tt</DependentUpon>
     </Compile>
     <Compile Include="Generated\BusinessObject.cs">
       <AutoGen>True</AutoGen>
@@ -122,9 +116,6 @@
     <Compile Include="Generated\UserSectorRating.cs">
       <DependentUpon>BusinessObject.tt</DependentUpon>
     </Compile>
-    <Compile Include="Metadata\Generated\A1Metadata.cs">
-      <DependentUpon>BusinessObjectMetadata.tt</DependentUpon>
-    </Compile>
     <Compile Include="Metadata\Generated\BusinessObjectMetadata.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -160,7 +151,6 @@
     <Compile Include="Metadata\Generated\UserSectorRatingMetadata.cs">
       <DependentUpon>BusinessObjectMetadata.tt</DependentUpon>
     </Compile>
-    <Compile Include="Metadata\A1Metadata.cs" />
     <Compile Include="Metadata\LicenseMetadata.cs" />
     <Compile Include="Metadata\OrganizationMetadata.cs" />
     <Compile Include="Metadata\ResourcePoolOrganizationMetadata.cs" />

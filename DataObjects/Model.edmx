@@ -5,16 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Alias="Self" Namespace="BusinessObjects.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008">
-        <EntityType Name="A1">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
-          <Property Name="Name" Nullable="false" MaxLength="50" Type="nvarchar" />
-          <Property Name="CreatedOn" Nullable="false" Type="datetime" />
-          <Property Name="ModifiedOn" Nullable="false" Type="datetime" />
-          <Property Name="DeletedOn" Type="datetime" />
-        </EntityType>
         <EntityType Name="License">
           <Key>
             <PropertyRef Name="Id" />
@@ -292,7 +282,6 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="BusinessObjectsStoreContainer">
-          <EntitySet Name="A1" EntityType="Self.A1" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="License" EntityType="Self.License" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Organization" EntityType="Self.Organization" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ResourcePool" EntityType="Self.ResourcePool" Schema="dbo" store:Type="Tables" />
@@ -579,7 +568,6 @@
             <End Role="User" EntitySet="User" />
             <End Role="UserResourcePoolOrganization" EntitySet="UserResourcePoolOrganization" />
           </AssociationSet>
-          <EntitySet Name="A1" EntityType="BusinessObjects.A1" />
         </EntityContainer>
         <EnumType Name="UserAccountType" UnderlyingType="Byte">
           <Member Name="Administrator" Value="1" />
@@ -721,16 +709,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="A1">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DeletedOn" Type="DateTime" Precision="3" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -875,17 +853,6 @@
                 <ScalarProperty Name="NumberOfSales" ColumnName="NumberOfSales" />
                 <ScalarProperty Name="ResourcePoolOrganizationId" ColumnName="ResourcePoolOrganizationId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="A1">
-            <EntityTypeMapping TypeName="BusinessObjects.A1">
-              <MappingFragment StoreEntitySet="A1">
-                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
-                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

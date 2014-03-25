@@ -12,6 +12,7 @@
     angular.module('main').factory('logger', ['$log', logger]);
 
     function logger($log) {
+        configureToastr();
         var service = {
             forSource: forSource,
             log: log,
@@ -21,6 +22,12 @@
         };
 
         return service;
+
+        function configureToastr() {
+            toastr.options = {
+                "positionClass": "toast-bottom-right"
+            }
+        }
 
         function forSource(src) {
             return {

@@ -6,10 +6,14 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
 
     <script src="/Scripts/angular.min.js"></script>
+    <script src="/Scripts/angular-animate.min.js"></script>
     <script src="/Scripts/angular-route.min.js"></script>
-    <script src="/Scripts/datajs-1.1.2.js"></script>
+    <script src="/Scripts/datajs-1.1.2.min.js"></script>
+    <script src="/Scripts/toastr.js"></script>
+
     <script src="/Scripts/breeze.debug.js"></script>
     <script src="/Scripts/breeze.angular.js"></script>
     <script src="/Scripts/breeze.directives.js"></script>
@@ -112,7 +116,6 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
