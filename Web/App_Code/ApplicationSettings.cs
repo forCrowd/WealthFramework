@@ -1,7 +1,7 @@
 ﻿using Framework;
 using System.Configuration;
 
-namespace Web
+namespace Web.App_Code
 {
     public static class ApplicationSettings
     {

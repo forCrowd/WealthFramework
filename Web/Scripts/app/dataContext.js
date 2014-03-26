@@ -20,19 +20,23 @@
 
         var manager = entityManagerFactory.newManager();
 
+        var minimumDate = new Date(0);
+        var licenseSetFetchedOn = minimumDate;
+
         var service = {
+            createLicense: createLicense,
+            deleteLicense: deleteLicense,
             getChangesCount: getChangesCount,
             getHasChanges: hasChanges,
             getLicenseSet: getLicenseSet,
             getLicense: getLicense,
-            deleteLicense: deleteLicense,
-            createLicense: createLicense,
             save: save
         };
 
         return service;
 
         /*** implementation ***/
+
 
         function createLicense(license) {
 
@@ -59,6 +63,8 @@
 
         function getLicenseSet(forceRefresh) {
 
+            logWarning('licenseSetFetchedOn: ' + licenseSetFetchedOn, null, true);
+
             var count;
             if (forceRefresh) {
                 if (manager.hasChanges()) {
@@ -69,8 +75,22 @@
             }
 
             //Todo: when no forceRefresh, consider getting from cache rather than remotely
-            return breeze.EntityQuery.from("License")
-                .using(manager).execute()
+            var query = breeze.EntityQuery.from("License");
+
+            if (licenseSetFetchedOn === minimumDate || forceRefresh) { // From remote
+                query = query.using(breeze.FetchStrategy.FromServer)
+                licenseSetFetchedOn = new Date();
+
+                logWarning('Fetched from server', null, true);
+
+            }
+            else { // From local
+                query = query.using(breeze.FetchStrategy.FromLocalCache)
+
+                logWarning('Fetched from local', null, true);
+            }
+
+            return manager.executeQuery(query)
                 .then(success).catch(failed);
 
             function success(response) {

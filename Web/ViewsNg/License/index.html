@@ -1,9 +1,12 @@
 ﻿<!-- New / Edit -->
-<div ng-show="isCreating || isEditing">
-    <div ng-include="'/ViewsNg/License/edit.html'"></div>
+<div data-ng-show="vm.isCreating || vm.isEditing">
+    <div data-ng-include="'/ViewsNg/License/edit.html?v=20140326.1'"></div>
 </div>
 
 <!-- List -->
-<div ng-show="isListing">
-    <div ng-include="'/ViewsNg/License/list.html'"></div>
+<div data-ng-show="vm.isListing">
+    <div data-ng-include="'/ViewsNg/License/list.html?v=20140326.3'"></div>
 </div>
+
+<!--New list-->
+<a href="#/list2">New list</a>

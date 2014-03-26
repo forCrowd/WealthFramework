@@ -1,4 +1,4 @@
-﻿namespace Web
+﻿namespace Web.App_Code
 {
     using System;
 

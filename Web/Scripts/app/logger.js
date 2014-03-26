@@ -55,6 +55,7 @@
         }
 
         function logIt(message, data, source, showToast, toastType) {
+
             var write = (toastType === 'error') ? $log.error : $log.log;
             source = source ? '[' + source + '] ' : '';
             write(source, message, data);
