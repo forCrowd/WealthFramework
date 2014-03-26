@@ -25,10 +25,12 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <button data-ng-click="vm.saveLicense()" data-ng-disabled="editForm.$invalid" class="btn btn-default">
+                <button data-ng-click="vm.saveChanges()" data-ng-disabled="editForm.$invalid || vm.isSaveDisabled()" class="btn btn-success">
                     Save
                 </button>
-                <a href="#/" class="btn">Cancel</a>
+                <button data-ng-click="vm.cancelChanges()" class="btn btn-danger">
+                    Cancel
+                </button>
             </div>
         </div>
     </div>

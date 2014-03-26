@@ -33,6 +33,10 @@
 
         function newManager() {
             var mgr = new breeze.EntityManager(serviceName);
+
+            // TODO async?!
+            mgr.fetchMetadata();
+
             return mgr;
         }
     }

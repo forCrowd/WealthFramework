@@ -323,10 +323,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\toastr.min.js" />
-    <Content Include="ViewsNg\License\edit2.html" />
     <Content Include="ViewsNg\License\edit.html" />
-    <Content Include="ViewsNg\License\index.html" />
-    <Content Include="ViewsNg\License\list2.html" />
     <Content Include="Views\License\Create.cshtml" />
     <Content Include="Views\License\Delete.cshtml" />
     <Content Include="Views\License\Details.cshtml" />
