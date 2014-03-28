@@ -107,7 +107,7 @@ using System.Threading.Tasks;
                 var licenseSet = LicenseRepository.AllLive;
                 foreach (var license in licenseSet)
                 {
-                    var licenceRating = new UserLicenseRating() { User = user, License = license, Rating = 0, CreatedOn = DateTime.Now, ModifiedOn = DateTime.Now };
+                    var licenceRating = new UserLicenseRating() { User = user, License = license, Rating = 0 };
                     UserLicenseRatingRepository.InsertOrUpdate(licenceRating);
                 }
 
@@ -115,7 +115,7 @@ using System.Threading.Tasks;
                 var sectorSet = SectorRepository.AllLive;
                 foreach (var sector in sectorSet)
                 {
-                    var sectorRating = new UserSectorRating() { User = user, Sector = sector, Rating = 0, CreatedOn = DateTime.Now, ModifiedOn = DateTime.Now };
+                    var sectorRating = new UserSectorRating() { User = user, Sector = sector, Rating = 0 };
                     UserSectorRatingRepository.InsertOrUpdate(sectorRating);
                 }
             }

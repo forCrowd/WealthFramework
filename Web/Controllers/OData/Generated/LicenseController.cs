@@ -47,8 +47,7 @@ namespace Web.Controllers.OData.Generated
                 return BadRequest();
             }
 
-            license.CreatedOn = DateTime.Now;
-            license.ModifiedOn = DateTime.Now;
+            license.ModifiedOn = DateTime.UtcNow;
             db.Entry(license).State = EntityState.Modified;
 
             try
@@ -79,10 +78,7 @@ namespace Web.Controllers.OData.Generated
             }
 
             license.CreatedOn = DateTime.Now;
-            license.ModifiedOn = DateTime.Now;
-
-            license.CreatedOn = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
-            license.ModifiedOn = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
+            license.ModifiedOn = DateTime.UtcNow;
 
             db.License.Add(license);
             await db.SaveChangesAsync();
@@ -106,6 +102,8 @@ namespace Web.Controllers.OData.Generated
             {
                 return NotFound();
             }
+
+            license.ModifiedOn = DateTime.UtcNow;
 
             patch.Patch(license);
 

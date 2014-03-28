@@ -18,9 +18,3 @@ http://msdn.microsoft.com/en-US/data/jj591583#Index
 
 . for license;
 difference between current odatacontroller vs. original generated -> createdon + modifiedon
-
-. breeze.debug.js modification
-. createdon = datetime.specifykind(utc);
-. edmbuilder modification
-
-. new object createdon + modifiedon - modified - modifiedOn

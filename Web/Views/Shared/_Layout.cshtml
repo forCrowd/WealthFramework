@@ -11,7 +11,7 @@
     <script src="/Scripts/angular.min.js"></script>
     <script src="/Scripts/angular-animate.min.js"></script>
     <script src="/Scripts/angular-route.min.js"></script>
-    <script src="/Scripts/datajs-1.1.2.min.js"></script>
+    <script src="/Scripts/datajs-1.1.2.js"></script>
     <script src="/Scripts/toastr.js"></script>
 
     <script src="/Scripts/breeze.debug.js"></script>
@@ -40,7 +40,7 @@
                     @{if (ViewBag.IsAuthenticated && ViewBag.CurrentUserAccountTypeId == BusinessObjects.UserAccountType.Administrator)
                     {
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Definitions <b class="caret"></b></a>
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown">Definitions <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li>@Html.ActionLink("User", "Index", "User", new { area = "" }, null)</li>
                                 <li>@Html.ActionLink("Sector", "Index", "Sector", new { area = "" }, null)</li>
@@ -55,7 +55,7 @@
                     @{if (ViewBag.IsAuthenticated)
                     {
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">CMRP <b class="caret"></b></a>
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown">CMRP <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li>@Html.ActionLink("Total Cost Index", "TotalCostIndex", "UserResourcePool", new { area = "" }, null)</li>
                                 <li>@Html.ActionLink("Knowledge Index - Private", "KnowledgeIndexPrivate", "UserResourcePool", new { area = "" }, null)</li>
@@ -74,7 +74,7 @@
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ratings <b class="caret"></b></a>
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown">Ratings <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li>@Html.ActionLink("CMRP Index Rating", "Index", "UserResourcePool", new { area = "" }, null)</li>
                                 <li>@Html.ActionLink("Resource Pool - Organization Rating", "Index", "UserResourcePoolOrganization", new { area = "" }, null)</li>

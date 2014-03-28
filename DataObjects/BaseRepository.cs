@@ -63,13 +63,13 @@
         {
             if (entity.IsNew)
             {
-                entity.CreatedOn = DateTime.Now;
-                entity.ModifiedOn = DateTime.Now;
+                entity.CreatedOn = DateTime.UtcNow;
+                entity.ModifiedOn = DateTime.UtcNow;
                 dbSet.Add(entity);
             }
             else
             {
-                entity.ModifiedOn = DateTime.Now;
+                entity.ModifiedOn = DateTime.UtcNow;
                 Context.Entry(entity).State = EntityState.Modified;
             }
         }

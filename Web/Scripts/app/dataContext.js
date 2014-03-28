@@ -45,30 +45,6 @@
         /*** Implementations ***/
 
         function createLicense(license) {
-
-            //if (isMetadataEmpty()) {
-            //    fetchMetadata()
-            //        .then(function () {
-            //            logWarning('fetched: ' + isMetadataEmpty(), null, true);
-            //            return createLicenseInternal(license)
-            //        })
-            //        .catch( /* TODO */ );
-            //} else {
-                return createLicenseInternal(license);
-            //}
-        }
-
-        function createLicenseInternal(license) {
-            license.CreatedOn = new Date();
-            license.ModifiedOn = new Date();
-
-            // var created = new Date().toUTCString();
-            //initialValues = initialValues || { title: '[New TodoList]' };
-            //initialValues.created = initialValues.created || created;
-            // return manager.createEntity('TodoList', initialValues);
-
-            // Todo: guard against missing initialValues?
-
             return manager.createEntity('License', license);
         }
 
@@ -85,7 +61,7 @@
         }
 
         function getLicenseSet(forceRefresh) {
-            logWarning('licenseSetFetchedOn: ' + licenseSetFetchedOn, null, true);
+            //logWarning('licenseSetFetchedOn: ' + licenseSetFetchedOn, null, true);
 
             var count;
             if (forceRefresh) {
@@ -105,11 +81,11 @@
             if (fetchFromServer) { // From remote
                 query = query.using(breeze.FetchStrategy.FromServer)
                 licenseSetFetchedOn = new Date();
-                logWarning('Fetched from server', null, true);
+                //logWarning('Fetched from server', null, true);
             }
             else { // From local
                 query = query.using(breeze.FetchStrategy.FromLocalCache)
-                logWarning('Fetched from local', null, true);
+                //logWarning('Fetched from local', null, true);
             }
 
             return manager.executeQuery(query)
@@ -133,7 +109,7 @@
                 .then(success).catch(failed);
 
             function success(result) {
-                logSuccess('Got license with Id: ' + result.entity.Id, result, true);
+                //logSuccess('Got license with Id: ' + result.entity.Id, result, true);
                 return result.entity;
             }
 

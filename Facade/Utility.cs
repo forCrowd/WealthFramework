@@ -1,5 +1,4 @@
 ﻿using DataObjects;
-using Framework;
 using Microsoft.Data.Edm;
 
 namespace Facade
@@ -8,7 +7,7 @@ namespace Facade
     {
         public static IEdmModel GetEdmModel()
         {
-            return EdmModelBuilder.GetModelFirstEdmModel<WealthEconomyEntities>();
+            return EdmBuilder.GetModelFirstEdm<WealthEconomyEntities>();
         }
     }
 }

@@ -31,21 +31,11 @@
 
         function deleteLicense(licenseIndex) {
             var license = vm.licenseSet[licenseIndex];
-            vm.licenseSet.splice(licenseIndex, 1);
             dataContext.deleteLicense(license);
 
-            saveChanges();
-        };
-
-        function getLicenseSet(forceRefresh) {
-            return dataContext.getLicenseSet(forceRefresh).then(function (data) {
-                return vm.licenseSet = data;
-            });
-        }
-
-        function saveChanges() {
-            return dataContext.saveChanges()
+            dataContext.saveChanges()
                 .then(function () {
+                    vm.licenseSet.splice(licenseIndex, 1);
                     logSuccess("Hooray we saved", null, true);
                 })
                 .catch(function (error) {
@@ -54,6 +44,12 @@
                     // Here we just blew it all away and start over
                     // refresh();
                 })
+        };
+
+        function getLicenseSet(forceRefresh) {
+            return dataContext.getLicenseSet(forceRefresh).then(function (data) {
+                return vm.licenseSet = data;
+            });
         }
     };
 
@@ -83,7 +79,7 @@
         /*** Implementations ***/
 
         function cancelChanges() {
-            
+
             $location.path('/');
 
             if (dataContext.hasChanges()) {

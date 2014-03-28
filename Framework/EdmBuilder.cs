@@ -1,5 +1,4 @@
-﻿using Microsoft.Data.Edm;
-using Microsoft.Data.Edm.Csdl;
+﻿using Microsoft.Data.Edm.Csdl;
 using Microsoft.Data.Edm.Validation;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -11,16 +10,17 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Xml;
 
-namespace Framework
+namespace Microsoft.Data.Edm
 {
     /// <summary>
-    /// DbContext extension that builds an "Entity Data Model" (EDM) from a <see cref="DbContext"/> created using Database First or Model First
+    /// DbContext extension that builds an "Entity Data Model" (EDM) from a <see cref="DbContext"/>
     /// </summary>
     /// <remarks>
-    /// To be able to support OData with Breeze, metadta of the DbContext needs to be published.
-    /// Breeze has a package called EdmBuilder for this task, however it only works with DbContext created using Model First.
-    /// This gist is creating the metadata from an Edmx file.
-    /// Original url of this gist: https://gist.github.com/dariusclay/8673940
+    /// To be able to support OData with Breeze, metadata of the DbContext needs to be published.
+    /// Breeze has a package called EdmBuilder for this task, however it only works with DbContext created using Code-First.
+    /// The gist in the following url creates the metadata from an Edmx file;
+    /// https://gist.github.com/dariusclay/8673940
+    /// This class contains both approaches with minor modifications.
     /// 
     /// Breeze EdmBuilder package url: http://www.nuget.org/packages/Breeze.EdmBuilder/
     /// 
@@ -36,12 +36,27 @@ namespace Framework
     /// <p>This EDM Builder ask the EF DbContext to supply the metadata which 
     /// satisfy both route definition and Breeze.</p>
     /// </remarks>
-    public static class EdmModelBuilder
+    public static class EdmBuilder
     {
         // Metadata pattern to find conceptual model name
-        const string METADATACSDLPATTERN = "(\\w+\\.csdl)";
+        const string METADATACSDLPATTERN = "((\\w+\\.)+csdl)";
 
-        public static IEdmModel GetModelFirstEdmModel<T>() where T : DbContext, new()
+        /// <summary>
+        /// Builds an "Entity Data Model" (EDM) from a <see cref="DbContext"/> created using Model-First
+        /// </summary>
+        /// <example>
+        /// <![CDATA[
+        /// /* In the WebApiConfig.cs */
+        /// config.Routes.MapODataRoute(
+        ///     routeName: "odata", 
+        ///     routePrefix: "odata", 
+        ///     model: EdmBuilder.GetModelFirstEdm<CustomDbContext>(), 
+        ///     batchHandler: new DefaultODataBatchHandler(GlobalConfiguration.DefaultServer)
+        ///     );
+        /// ]]>
+        /// </example>
+        /// <returns>An XML <see cref="IEdmModel"/> </returns>
+        public static IEdmModel GetModelFirstEdm<T>() where T : DbContext, new()
         {
             using (var csdlStream = GetCsdlStreamFromMetadata(new T()))
             {
@@ -78,29 +93,27 @@ namespace Framework
         }
 
         /// <summary>
-        /// Builds an "Entity Data Model" (EDM) from a <see cref="DbContext"/>
+        /// Builds an "Entity Data Model" (EDM) from a <see cref="DbContext"/> created using Code-First
         /// </summary>
         /// <example>
+        /// <![CDATA[
         /// /* In the WebApiConfig.cs */
-        /// using (var context = new TodoListContext())
-        /// {
-        ///   config.Routes.MapODataRoute(
-        ///       routeName: "odata", 
-        ///       routePrefix: "odata", 
-        ///       model: context.GetEdm(), 
-        ///       batchHandler: new DefaultODataBatchHandler(GlobalConfiguration.DefaultServer)
-        ///       );
-        /// }
+        /// config.Routes.MapODataRoute(
+        ///     routeName: "odata", 
+        ///     routePrefix: "odata", 
+        ///     model: EdmBuilder.GetCodeFirstEdm<CustomDbContext>(), 
+        ///     batchHandler: new DefaultODataBatchHandler(GlobalConfiguration.DefaultServer)
+        ///     );
+        /// ]]>
         /// </example>
-        /// <param name="dbContext">The source <see cref="DbContext"/></param>
         /// <returns>An XML <see cref="IEdmModel"/> </returns>
-        public static IEdmModel GetCodeFirstEdmModel(this DbContext dbContext)
+        public static IEdmModel GetCodeFirstEdm<T>() where T : DbContext, new()
         {
             using (var stream = new MemoryStream())
             {
                 using (var writer = XmlWriter.Create(stream))
                 {
-                    System.Data.Entity.Infrastructure.EdmxWriter.WriteEdmx(dbContext, writer);
+                    System.Data.Entity.Infrastructure.EdmxWriter.WriteEdmx(new T(), writer);
                 }
                 stream.Position = 0;
                 using (var reader = XmlReader.Create(stream))

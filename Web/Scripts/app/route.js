@@ -3,6 +3,8 @@ angular.module('main')
 
 .config(function ($routeProvider) {
 
+    console.log('route.js');
+
     var entityName = this.location.pathname.replace('/', '').replace('Ng', '');
 
     var entityListController = entityName + 'ListController as vm';
