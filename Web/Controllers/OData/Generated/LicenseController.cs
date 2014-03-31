@@ -77,7 +77,7 @@ namespace Web.Controllers.OData.Generated
                 return BadRequest(ModelState);
             }
 
-            license.CreatedOn = DateTime.Now;
+            license.CreatedOn = DateTime.UtcNow;
             license.ModifiedOn = DateTime.UtcNow;
 
             db.License.Add(license);

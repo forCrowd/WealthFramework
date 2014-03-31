@@ -22,12 +22,10 @@ namespace Web
             );
 
             // OData routes
-            var csdlModel = Facade.Utility.GetEdmModel();
-
             config.Routes.MapODataRoute(
                 routeName: "odata",
                 routePrefix: "odata",
-                model: csdlModel,
+                model: Facade.Utility.GetWealthEconomyEntitiesEdm(),
                 batchHandler: new DefaultODataBatchHandler(GlobalConfiguration.DefaultServer));
         }
     }

@@ -1,5 +1,5 @@
 ﻿0.7
-. SPA attemts with OData + AngularJS + Breeze.js + toastr.js
+. SPA with OData + AngularJS + Breeze.js + toastr.js
 
 0.6.3
 . Web - Overview text update
