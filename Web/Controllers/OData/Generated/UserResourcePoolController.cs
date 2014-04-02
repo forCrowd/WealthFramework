@@ -1,37 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.ModelBinding;
-using System.Web.Http.OData;
-using System.Web.Http.OData.Routing;
-using BusinessObjects;
-using DataObjects;
-
-namespace Web.Controllers.OData.Generated
+namespace Web.Controllers.OData
 {
-    public class UserResourcePoolController : ODataController
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Data.Entity;
+    using System.Data.Entity.Infrastructure;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+    using System.Web.Http;
+    using System.Web.Http.ModelBinding;
+    using System.Web.Http.OData;
+    using System.Web.Http.OData.Routing;
+    using BusinessObjects;
+    using DataObjects;
+    using Facade;
+
+    public partial class UserResourcePoolController : ODataController
     {
-        private WealthEconomyEntities db = new WealthEconomyEntities();
+        UserResourcePoolUnitOfWork unitOfWork = new UserResourcePoolUnitOfWork();
 
         // GET odata/UserResourcePool
         [Queryable]
         public IQueryable<UserResourcePool> GetUserResourcePool()
         {
-            return db.UserResourcePool;
+            return unitOfWork.AllLive;
         }
 
         // GET odata/UserResourcePool(5)
         [Queryable]
         public SingleResult<UserResourcePool> GetUserResourcePool([FromODataUri] int key)
         {
-            return SingleResult.Create(db.UserResourcePool.Where(userresourcepool => userresourcepool.Id == key));
+            return SingleResult.Create(unitOfWork.AllLive.Where(userresourcepool => userresourcepool.Id == key));
         }
 
         // PUT odata/UserResourcePool(5)
@@ -47,15 +48,14 @@ namespace Web.Controllers.OData.Generated
                 return BadRequest();
             }
 
-            db.Entry(userresourcepool).State = EntityState.Modified;
-
+            unitOfWork.Update(userresourcepool);
             try
             {
-                await db.SaveChangesAsync();
+                await unitOfWork.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserResourcePoolExists(key))
+                if (!unitOfWork.Exists(key))
                 {
                     return NotFound();
                 }
@@ -76,8 +76,23 @@ namespace Web.Controllers.OData.Generated
                 return BadRequest(ModelState);
             }
 
-            db.UserResourcePool.Add(userresourcepool);
-            await db.SaveChangesAsync();
+            unitOfWork.Insert(userresourcepool);
+
+            try
+            {
+                await unitOfWork.SaveAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (unitOfWork.Exists(userresourcepool.Id))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             return Created(userresourcepool);
         }
@@ -91,21 +106,22 @@ namespace Web.Controllers.OData.Generated
                 return BadRequest(ModelState);
             }
 
-            UserResourcePool userresourcepool = await db.UserResourcePool.FindAsync(key);
+            UserResourcePool userresourcepool = await unitOfWork.FindAsync(key);
             if (userresourcepool == null)
             {
                 return NotFound();
             }
 
             patch.Patch(userresourcepool);
+            unitOfWork.Update(userresourcepool);
 
             try
             {
-                await db.SaveChangesAsync();
+                await unitOfWork.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserResourcePoolExists(key))
+                if (!unitOfWork.Exists(key))
                 {
                     return NotFound();
                 }
@@ -121,44 +137,16 @@ namespace Web.Controllers.OData.Generated
         // DELETE odata/UserResourcePool(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            UserResourcePool userresourcepool = await db.UserResourcePool.FindAsync(key);
+            UserResourcePool userresourcepool = await unitOfWork.FindAsync(key);
             if (userresourcepool == null)
             {
                 return NotFound();
             }
 
-            db.UserResourcePool.Remove(userresourcepool);
-            await db.SaveChangesAsync();
+            unitOfWork.Delete(userresourcepool.Id);
+            await unitOfWork.SaveAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // GET odata/UserResourcePool(5)/User
-        [Queryable]
-        public SingleResult<User> GetUser([FromODataUri] int key)
-        {
-            return SingleResult.Create(db.UserResourcePool.Where(m => m.Id == key).Select(m => m.User));
-        }
-
-        // GET odata/UserResourcePool(5)/ResourcePool
-        [Queryable]
-        public SingleResult<ResourcePool> GetResourcePool([FromODataUri] int key)
-        {
-            return SingleResult.Create(db.UserResourcePool.Where(m => m.Id == key).Select(m => m.ResourcePool));
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool UserResourcePoolExists(int key)
-        {
-            return db.UserResourcePool.Count(e => e.Id == key) > 0;
         }
     }
 }

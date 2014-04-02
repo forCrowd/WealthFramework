@@ -17,7 +17,6 @@ namespace BusinessObjects
     [MetadataType(typeof(UserSectorRatingMetadata))]
     public partial class UserSectorRating : IEntity
     {
-    	public bool IsNew { get { return Id == default(int); } }
         public int Id { get; set; }
         public int UserId { get; set; }
         public byte SectorId { get; set; }

@@ -8,8 +8,15 @@
 . users should only access to their own items?
 . remove satisfaction word..?
 . multiple pk for user organization + user sector + user license + user resource pool organization + resource pool organization
+. find(async) vs. deleted records?!
+. exists should work with find or alllive.any() or all.any() ?
+. if every entity will have its own manager, do we need datacontext.cs?
+. be carefull about, saveChanges(), hasChanges(), getChanges(), rejectChanges() methods. currently they don't work on entity level?
+. breeze entitymanager - ensure metadata fetched;
+http://stackoverflow.com/questions/16068184/breezejs-how-to-fetch-metadata-at-start-with-shared-entitymanager
 
 . ef tools?!
+http://msdn.microsoft.com/en-US/data/jj593170
 http://msdn.microsoft.com/en-us/data/jj593170.aspx
 http://msdn.microsoft.com/en-US/data/jj200620
 http://msdn.microsoft.com/en-US/data/jj591583#Index
@@ -18,3 +25,34 @@ http://msdn.microsoft.com/en-US/data/jj591583#Index
 
 . for license;
 difference between current odatacontroller vs. original generated -> createdon + modifiedon
+
+. organization works - but loadnavigationproperty is bit weird (with .then().then part) + check sectorSet + licenseSet parts
+mainly, these could be retrieved from local but since there is no connection between sector + organization manager how to understand whether its fetched earlier ?!?!?
+
+. how delta & patch works?
+
+. validateantiforgerytoken + bind attributes in odata controller?
+
+. tt files - entiyName -> entityTypeName?
+
+. unitOfWork - entityexists method + SaveAsync() -> SaveChangesAsync() ? delete -> remove?
+
+. check patch method in odata
+
+. related metadata sections?;
+
+RelatedModelMetadata GetRelatedModelMetadata(PropertyMetadata property){
+    RelatedModelMetadata propertyModel;
+    IDictionary<string, RelatedModelMetadata> relatedProperties;
+    if(ModelMetadata.RelatedEntities != null)
+    {
+        relatedProperties = ModelMetadata.RelatedEntities.ToDictionary(item => item.AssociationPropertyName);
+    }
+    else
+    {
+        relatedProperties = new Dictionary<string, RelatedModelMetadata>();
+    }
+    relatedProperties.TryGetValue(property.PropertyName, out propertyModel);
+
+    return propertyModel;
+}

@@ -1,37 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.ModelBinding;
-using System.Web.Http.OData;
-using System.Web.Http.OData.Routing;
-using BusinessObjects;
-using DataObjects;
-
-namespace Web.Controllers.OData.Generated
+namespace Web.Controllers.OData
 {
-    public class LicenseController : ODataController
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Data.Entity;
+    using System.Data.Entity.Infrastructure;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+    using System.Web.Http;
+    using System.Web.Http.ModelBinding;
+    using System.Web.Http.OData;
+    using System.Web.Http.OData.Routing;
+    using BusinessObjects;
+    using DataObjects;
+    using Facade;
+
+    public partial class LicenseController : ODataController
     {
-        private WealthEconomyEntities db = new WealthEconomyEntities();
+        LicenseUnitOfWork unitOfWork = new LicenseUnitOfWork();
 
         // GET odata/License
         [Queryable]
         public IQueryable<License> GetLicense()
         {
-            return db.License;
+            return unitOfWork.AllLive;
         }
 
         // GET odata/License(5)
         [Queryable]
         public SingleResult<License> GetLicense([FromODataUri] short key)
         {
-            return SingleResult.Create(db.License.Where(license => license.Id == key));
+            return SingleResult.Create(unitOfWork.AllLive.Where(license => license.Id == key));
         }
 
         // PUT odata/License(5)
@@ -47,16 +48,14 @@ namespace Web.Controllers.OData.Generated
                 return BadRequest();
             }
 
-            license.ModifiedOn = DateTime.UtcNow;
-            db.Entry(license).State = EntityState.Modified;
-
+            unitOfWork.Update(license);
             try
             {
-                await db.SaveChangesAsync();
+                await unitOfWork.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!LicenseExists(key))
+                if (!unitOfWork.Exists(key))
                 {
                     return NotFound();
                 }
@@ -77,15 +76,25 @@ namespace Web.Controllers.OData.Generated
                 return BadRequest(ModelState);
             }
 
-            license.CreatedOn = DateTime.UtcNow;
-            license.ModifiedOn = DateTime.UtcNow;
+            unitOfWork.Insert(license);
 
-            db.License.Add(license);
-            await db.SaveChangesAsync();
+            try
+            {
+                await unitOfWork.SaveAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (unitOfWork.Exists(license.Id))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-            var created = Created(license);
-
-            return created;
+            return Created(license);
         }
 
         // PATCH odata/License(5)
@@ -97,23 +106,22 @@ namespace Web.Controllers.OData.Generated
                 return BadRequest(ModelState);
             }
 
-            License license = await db.License.FindAsync(key);
+            License license = await unitOfWork.FindAsync(key);
             if (license == null)
             {
                 return NotFound();
             }
 
-            license.ModifiedOn = DateTime.UtcNow;
-
             patch.Patch(license);
+            unitOfWork.Update(license);
 
             try
             {
-                await db.SaveChangesAsync();
+                await unitOfWork.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!LicenseExists(key))
+                if (!unitOfWork.Exists(key))
                 {
                     return NotFound();
                 }
@@ -129,44 +137,16 @@ namespace Web.Controllers.OData.Generated
         // DELETE odata/License(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] short key)
         {
-            License license = await db.License.FindAsync(key);
+            License license = await unitOfWork.FindAsync(key);
             if (license == null)
             {
                 return NotFound();
             }
 
-            db.License.Remove(license);
-            await db.SaveChangesAsync();
+            unitOfWork.Delete(license.Id);
+            await unitOfWork.SaveAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // GET odata/License(5)/OrganizationSet
-        [Queryable]
-        public IQueryable<Organization> GetOrganizationSet([FromODataUri] short key)
-        {
-            return db.License.Where(m => m.Id == key).SelectMany(m => m.OrganizationSet);
-        }
-
-        // GET odata/License(5)/UserLicenseRatingSet
-        [Queryable]
-        public IQueryable<UserLicenseRating> GetUserLicenseRatingSet([FromODataUri] short key)
-        {
-            return db.License.Where(m => m.Id == key).SelectMany(m => m.UserLicenseRatingSet);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool LicenseExists(short key)
-        {
-            return db.License.Count(e => e.Id == key) > 0;
         }
     }
 }

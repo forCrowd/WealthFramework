@@ -21,7 +21,7 @@ namespace BusinessObjects
         {
             this.UserResourcePoolOrganizationSet = new HashSet<UserResourcePoolOrganization>();
         }
-    	public bool IsNew { get { return Id == default(int); } }
+    
         public int Id { get; set; }
         public int ResourcePoolId { get; set; }
         public int OrganizationId { get; set; }

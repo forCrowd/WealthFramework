@@ -21,7 +21,7 @@
                 UserAccountTypeId = (byte)UserAccountType.Standard
             };
 
-            unitOfWork.InsertOrUpdate(user);
+            unitOfWork.Insert(user);
             unitOfWork.Save();
         }
 
@@ -33,7 +33,7 @@
             var user = unitOfWork.AllLive.OrderByDescending(item => item.CreatedOn).First();
             user.Notes += string.Format("{0}Update test: {1:yyyyMMdd_HHmmss}", Environment.NewLine, DateTime.Now);
 
-            unitOfWork.InsertOrUpdate(user);
+            unitOfWork.Update(user);
             unitOfWork.Save();
         }
 

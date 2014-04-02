@@ -1,37 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.ModelBinding;
-using System.Web.Http.OData;
-using System.Web.Http.OData.Routing;
-using BusinessObjects;
-using DataObjects;
-
-namespace Web.Controllers.OData.Generated
+namespace Web.Controllers.OData
 {
-    public class UserSectorRatingController : ODataController
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Data.Entity;
+    using System.Data.Entity.Infrastructure;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+    using System.Web.Http;
+    using System.Web.Http.ModelBinding;
+    using System.Web.Http.OData;
+    using System.Web.Http.OData.Routing;
+    using BusinessObjects;
+    using DataObjects;
+    using Facade;
+
+    public partial class UserSectorRatingController : ODataController
     {
-        private WealthEconomyEntities db = new WealthEconomyEntities();
+        UserSectorRatingUnitOfWork unitOfWork = new UserSectorRatingUnitOfWork();
 
         // GET odata/UserSectorRating
         [Queryable]
         public IQueryable<UserSectorRating> GetUserSectorRating()
         {
-            return db.UserSectorRating;
+            return unitOfWork.AllLive;
         }
 
         // GET odata/UserSectorRating(5)
         [Queryable]
         public SingleResult<UserSectorRating> GetUserSectorRating([FromODataUri] int key)
         {
-            return SingleResult.Create(db.UserSectorRating.Where(usersectorrating => usersectorrating.Id == key));
+            return SingleResult.Create(unitOfWork.AllLive.Where(usersectorrating => usersectorrating.Id == key));
         }
 
         // PUT odata/UserSectorRating(5)
@@ -47,15 +48,14 @@ namespace Web.Controllers.OData.Generated
                 return BadRequest();
             }
 
-            db.Entry(usersectorrating).State = EntityState.Modified;
-
+            unitOfWork.Update(usersectorrating);
             try
             {
-                await db.SaveChangesAsync();
+                await unitOfWork.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserSectorRatingExists(key))
+                if (!unitOfWork.Exists(key))
                 {
                     return NotFound();
                 }
@@ -76,8 +76,23 @@ namespace Web.Controllers.OData.Generated
                 return BadRequest(ModelState);
             }
 
-            db.UserSectorRating.Add(usersectorrating);
-            await db.SaveChangesAsync();
+            unitOfWork.Insert(usersectorrating);
+
+            try
+            {
+                await unitOfWork.SaveAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (unitOfWork.Exists(usersectorrating.Id))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             return Created(usersectorrating);
         }
@@ -91,21 +106,22 @@ namespace Web.Controllers.OData.Generated
                 return BadRequest(ModelState);
             }
 
-            UserSectorRating usersectorrating = await db.UserSectorRating.FindAsync(key);
+            UserSectorRating usersectorrating = await unitOfWork.FindAsync(key);
             if (usersectorrating == null)
             {
                 return NotFound();
             }
 
             patch.Patch(usersectorrating);
+            unitOfWork.Update(usersectorrating);
 
             try
             {
-                await db.SaveChangesAsync();
+                await unitOfWork.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserSectorRatingExists(key))
+                if (!unitOfWork.Exists(key))
                 {
                     return NotFound();
                 }
@@ -121,44 +137,16 @@ namespace Web.Controllers.OData.Generated
         // DELETE odata/UserSectorRating(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            UserSectorRating usersectorrating = await db.UserSectorRating.FindAsync(key);
+            UserSectorRating usersectorrating = await unitOfWork.FindAsync(key);
             if (usersectorrating == null)
             {
                 return NotFound();
             }
 
-            db.UserSectorRating.Remove(usersectorrating);
-            await db.SaveChangesAsync();
+            unitOfWork.Delete(usersectorrating.Id);
+            await unitOfWork.SaveAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // GET odata/UserSectorRating(5)/Sector
-        [Queryable]
-        public SingleResult<Sector> GetSector([FromODataUri] int key)
-        {
-            return SingleResult.Create(db.UserSectorRating.Where(m => m.Id == key).Select(m => m.Sector));
-        }
-
-        // GET odata/UserSectorRating(5)/User
-        [Queryable]
-        public SingleResult<User> GetUser([FromODataUri] int key)
-        {
-            return SingleResult.Create(db.UserSectorRating.Where(m => m.Id == key).Select(m => m.User));
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool UserSectorRatingExists(int key)
-        {
-            return db.UserSectorRating.Count(e => e.Id == key) > 0;
         }
     }
 }

@@ -4,7 +4,7 @@
     using DataObjects;
     using System;
     using System.Linq;
-using System.Threading.Tasks;
+    using System.Threading.Tasks;
 
     public partial class UserUnitOfWork
     {
@@ -51,73 +51,68 @@ using System.Threading.Tasks;
             get { return userSectorRatingRepository ?? (userSectorRatingRepository = new UserSectorRatingRepository(Context)); }
         }
 
-        public override void InsertOrUpdate(User user)
+        public override void Insert(User user)
         {
-            var isNew = user.IsNew;
-
             // TODO Validation?
-            base.InsertOrUpdate(user);
+            base.Insert(user);
 
             // Add samples
-            if (isNew)
-            {
-                // Sample user resource pool
-                // TODO Static Id 8 ?!
-                var sampleResourcePools = ResourcePoolRepository.AllLive.Where(resourcePool => resourcePool.Id <= 8);
+            // Sample user resource pool
+            // TODO Static Id 8 ?!
+            var sampleResourcePools = ResourcePoolRepository.AllLive.Where(resourcePool => resourcePool.Id <= 8);
 
-                foreach (var resourcePool in sampleResourcePools)
+            foreach (var resourcePool in sampleResourcePools)
+            {
+                var userResourcePool = new UserResourcePool()
                 {
-                    var userResourcePool = new UserResourcePool()
+                    User = user,
+                    ResourcePool = resourcePool,
+                    ResourcePoolRate = 0,
+                    TotalCostIndexRating = resourcePool.Id == 1 ? 100 : 0,
+                    KnowledgeIndexRating = resourcePool.Id == 2 ? 100 : 0,
+                    QualityIndexRating = resourcePool.Id == 3 ? 100 : 0,
+                    SectorIndexRating = resourcePool.Id == 4 ? 100 : 0,
+                    EmployeeSatisfactionIndexRating = resourcePool.Id == 5 ? 100 : 0,
+                    CustomerSatisfactionIndexRating = resourcePool.Id == 6 ? 100 : 0,
+                    DistanceIndexRating = resourcePool.Id == 7 ? 100 : 0,
+                };
+
+                UserResourcePoolRepository.Insert(userResourcePool);
+
+                // Sample resource pool organizations
+                var sampleResourcePoolOrganizations = resourcePool.ResourcePoolOrganizationSet;
+
+                foreach (var resourcePoolOrganization in sampleResourcePoolOrganizations)
+                {
+                    var userResourcePoolOrganization = new UserResourcePoolOrganization()
                     {
                         User = user,
-                        ResourcePool = resourcePool,
-                        ResourcePoolRate = 0,
-                        TotalCostIndexRating = resourcePool.Id == 1 ? 100 : 0,
-                        KnowledgeIndexRating = resourcePool.Id == 2 ? 100 : 0,
-                        QualityIndexRating = resourcePool.Id == 3 ? 100 : 0,
-                        SectorIndexRating = resourcePool.Id == 4 ? 100 : 0,
-                        EmployeeSatisfactionIndexRating = resourcePool.Id == 5 ? 100 : 0,
-                        CustomerSatisfactionIndexRating = resourcePool.Id == 6 ? 100 : 0,
-                        DistanceIndexRating = resourcePool.Id == 7 ? 100 : 0,
+                        ResourcePoolOrganization = resourcePoolOrganization,
+                        NumberOfSales = 0,
+                        // TODO Handle these sample ratings nicely ?!
+                        QualityRating = resourcePoolOrganization.OrganizationId == 6 ? 80 : resourcePoolOrganization.OrganizationId == 7 ? 20 : 0,
+                        CustomerSatisfactionRating = resourcePoolOrganization.OrganizationId == 8 ? 80 : resourcePoolOrganization.OrganizationId == 9 ? 20 : 0,
+                        EmployeeSatisfactionRating = resourcePoolOrganization.OrganizationId == 10 ? 80 : resourcePoolOrganization.OrganizationId == 11 ? 20 : 0,
                     };
 
-                    UserResourcePoolRepository.InsertOrUpdate(userResourcePool);
-
-                    // Sample resource pool organizations
-                    var sampleResourcePoolOrganizations = resourcePool.ResourcePoolOrganizationSet;
-
-                    foreach (var resourcePoolOrganization in sampleResourcePoolOrganizations)
-                    {
-                        var userResourcePoolOrganization = new UserResourcePoolOrganization()
-                        {
-                            User = user,
-                            ResourcePoolOrganization = resourcePoolOrganization,
-                            NumberOfSales = 0,
-                            // TODO Handle these sample ratings nicely ?!
-                            QualityRating = resourcePoolOrganization.OrganizationId == 6 ? 80 : resourcePoolOrganization.OrganizationId == 7 ? 20 : 0,
-                            CustomerSatisfactionRating = resourcePoolOrganization.OrganizationId == 8 ? 80 : resourcePoolOrganization.OrganizationId == 9 ? 20 : 0,
-                            EmployeeSatisfactionRating = resourcePoolOrganization.OrganizationId == 10 ? 80 : resourcePoolOrganization.OrganizationId == 11 ? 20 : 0,
-                        };
-
-                        UserResourcePoolOrganizationRepository.InsertOrUpdate(userResourcePoolOrganization);
-                    }
+                    UserResourcePoolOrganizationRepository.Insert(userResourcePoolOrganization);
                 }
+            }
 
-                // Sample license ratings
-                var licenseSet = LicenseRepository.AllLive;
-                foreach (var license in licenseSet)
-                {
-                    var licenceRating = new UserLicenseRating() { User = user, License = license, Rating = 0 };
-                    UserLicenseRatingRepository.InsertOrUpdate(licenceRating);
-                }
+            // Sample license ratings
+            var licenseSet = LicenseRepository.AllLive;
+            foreach (var license in licenseSet)
+            {
+                var licenceRating = new UserLicenseRating() { User = user, License = license, Rating = 0 };
+                UserLicenseRatingRepository.Insert(licenceRating);
+            }
 
-                // Sample sector ratings
-                var sectorSet = SectorRepository.AllLive;
-                foreach (var sector in sectorSet)
-                {
-                    var sectorRating = new UserSectorRating() { User = user, Sector = sector, Rating = 0 };
-                    UserSectorRatingRepository.InsertOrUpdate(sectorRating);
-                }
+            // Sample sector ratings
+            var sectorSet = SectorRepository.AllLive;
+            foreach (var sector in sectorSet)
+            {
+                var sectorRating = new UserSectorRating() { User = user, Sector = sector, Rating = 0 };
+                UserSectorRatingRepository.Insert(sectorRating);
             }
         }
 

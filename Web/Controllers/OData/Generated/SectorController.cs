@@ -1,37 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.ModelBinding;
-using System.Web.Http.OData;
-using System.Web.Http.OData.Routing;
-using BusinessObjects;
-using DataObjects;
-
-namespace Web.Controllers.OData.Generated
+namespace Web.Controllers.OData
 {
-    public class SectorController : ODataController
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Data.Entity;
+    using System.Data.Entity.Infrastructure;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+    using System.Web.Http;
+    using System.Web.Http.ModelBinding;
+    using System.Web.Http.OData;
+    using System.Web.Http.OData.Routing;
+    using BusinessObjects;
+    using DataObjects;
+    using Facade;
+
+    public partial class SectorController : ODataController
     {
-        private WealthEconomyEntities db = new WealthEconomyEntities();
+        SectorUnitOfWork unitOfWork = new SectorUnitOfWork();
 
         // GET odata/Sector
         [Queryable]
         public IQueryable<Sector> GetSector()
         {
-            return db.Sector;
+            return unitOfWork.AllLive;
         }
 
         // GET odata/Sector(5)
         [Queryable]
         public SingleResult<Sector> GetSector([FromODataUri] byte key)
         {
-            return SingleResult.Create(db.Sector.Where(sector => sector.Id == key));
+            return SingleResult.Create(unitOfWork.AllLive.Where(sector => sector.Id == key));
         }
 
         // PUT odata/Sector(5)
@@ -47,15 +48,14 @@ namespace Web.Controllers.OData.Generated
                 return BadRequest();
             }
 
-            db.Entry(sector).State = EntityState.Modified;
-
+            unitOfWork.Update(sector);
             try
             {
-                await db.SaveChangesAsync();
+                await unitOfWork.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!SectorExists(key))
+                if (!unitOfWork.Exists(key))
                 {
                     return NotFound();
                 }
@@ -76,8 +76,23 @@ namespace Web.Controllers.OData.Generated
                 return BadRequest(ModelState);
             }
 
-            db.Sector.Add(sector);
-            await db.SaveChangesAsync();
+            unitOfWork.Insert(sector);
+
+            try
+            {
+                await unitOfWork.SaveAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (unitOfWork.Exists(sector.Id))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             return Created(sector);
         }
@@ -91,21 +106,22 @@ namespace Web.Controllers.OData.Generated
                 return BadRequest(ModelState);
             }
 
-            Sector sector = await db.Sector.FindAsync(key);
+            Sector sector = await unitOfWork.FindAsync(key);
             if (sector == null)
             {
                 return NotFound();
             }
 
             patch.Patch(sector);
+            unitOfWork.Update(sector);
 
             try
             {
-                await db.SaveChangesAsync();
+                await unitOfWork.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!SectorExists(key))
+                if (!unitOfWork.Exists(key))
                 {
                     return NotFound();
                 }
@@ -121,44 +137,16 @@ namespace Web.Controllers.OData.Generated
         // DELETE odata/Sector(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] byte key)
         {
-            Sector sector = await db.Sector.FindAsync(key);
+            Sector sector = await unitOfWork.FindAsync(key);
             if (sector == null)
             {
                 return NotFound();
             }
 
-            db.Sector.Remove(sector);
-            await db.SaveChangesAsync();
+            unitOfWork.Delete(sector.Id);
+            await unitOfWork.SaveAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // GET odata/Sector(5)/OrganizationSet
-        [Queryable]
-        public IQueryable<Organization> GetOrganizationSet([FromODataUri] byte key)
-        {
-            return db.Sector.Where(m => m.Id == key).SelectMany(m => m.OrganizationSet);
-        }
-
-        // GET odata/Sector(5)/UserSectorRatingSet
-        [Queryable]
-        public IQueryable<UserSectorRating> GetUserSectorRatingSet([FromODataUri] byte key)
-        {
-            return db.Sector.Where(m => m.Id == key).SelectMany(m => m.UserSectorRatingSet);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool SectorExists(byte key)
-        {
-            return db.Sector.Count(e => e.Id == key) > 0;
         }
     }
 }

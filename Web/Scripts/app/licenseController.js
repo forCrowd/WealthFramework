@@ -9,11 +9,11 @@
 (function () {
     'use strict';
 
-    var controllerId = 'LicenseListController';
+    var controllerId = 'licenseListController';
     angular.module('main')
-        .controller(controllerId, ['dataContext', 'logger', LicenseListController]);
+        .controller(controllerId, ['licenseManager', 'logger', licenseListController]);
 
-    function LicenseListController(dataContext, logger) {
+    function licenseListController(licenseManager, logger) {
 
         logger = logger.forSource(controllerId);
         var logError = logger.logError;
@@ -29,11 +29,27 @@
             getLicenseSet();
         };
 
-        function deleteLicense(licenseIndex) {
-            var license = vm.licenseSet[licenseIndex];
-            dataContext.deleteLicense(license);
+        function deleteLicense(license) {
+            licenseManager.deleteLicense(license);
 
-            dataContext.saveChanges()
+            licenseManager.saveChanges()
+                .then(function () {
+                    vm.licenseSet.splice(vm.licenseSet.indexOf(license));
+                    logSuccess("Hooray we saved", null, true);
+                })
+                .catch(function (error) {
+                    logError("Boooo, we failed: " + error.message, null, true);
+                    // Todo: more sophisticated recovery. 
+                    // Here we just blew it all away and start over
+                    // refresh();
+                })
+        };
+
+        function deleteLicense2(licenseIndex) {
+            var license = vm.licenseSet[licenseIndex];
+            licenseManager.deleteLicense(license);
+
+            licenseManager.saveChanges()
                 .then(function () {
                     vm.licenseSet.splice(licenseIndex, 1);
                     logSuccess("Hooray we saved", null, true);
@@ -47,17 +63,17 @@
         };
 
         function getLicenseSet(forceRefresh) {
-            return dataContext.getLicenseSet(forceRefresh).then(function (data) {
+            return licenseManager.getLicenseSet(forceRefresh).then(function (data) {
                 return vm.licenseSet = data;
             });
         }
     };
 
-    var controllerId = 'LicenseEditController';
+    var controllerId = 'licenseEditController';
     angular.module('main')
-        .controller(controllerId, ['dataContext', 'logger', '$location', '$routeParams', '$timeout', LicenseEditController]);
+        .controller(controllerId, ['licenseManager', 'logger', '$location', '$routeParams', '$timeout', licenseEditController]);
 
-    function LicenseEditController(dataContext, logger, $location, $routeParams, $timeout) {
+    function licenseEditController(licenseManager, logger, $location, $routeParams, $timeout) {
 
         logger = logger.forSource(controllerId);
         var logError = logger.logError;
@@ -82,14 +98,14 @@
 
             $location.path('/');
 
-            if (dataContext.hasChanges()) {
-                dataContext.rejectChanges();
+            if (licenseManager.hasChanges()) {
+                licenseManager.rejectChanges();
                 logWarning('Discarded pending change(s)', null, true);
             }
         }
 
         function hasChanges() {
-            return dataContext.hasChanges();
+            return licenseManager.hasChanges();
         }
 
         function initialize() {
@@ -102,10 +118,7 @@
                 };
             }
             else {
-                // TODO Try to retrieve it from licenseSet
-                logger.logWarning($routeParams.Id, null, true);
-
-                dataContext.getLicense($routeParams.Id)
+                licenseManager.getLicense($routeParams.Id)
                     .then(function (data) {
                         vm.license = data;
                     })
@@ -120,16 +133,17 @@
 
         function isSaveDisabled() {
             return isSaving ||
-                (!isNew && !dataContext.hasChanges());
+                (!isNew && !licenseManager.hasChanges());
         }
 
         function saveChanges() {
 
-            if (isNew)
-                dataContext.createLicense(vm.license);
+            if (isNew) {
+                licenseManager.createLicense(vm.license);
+            }
 
             isSaving = true;
-            return dataContext.saveChanges()
+            return licenseManager.saveChanges()
                 .then(function () {
                     logSuccess("Hooray we saved", null, true);
                     $location.path('/');

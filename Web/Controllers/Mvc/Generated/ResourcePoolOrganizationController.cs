@@ -16,8 +16,8 @@ namespace Web.Controllers.Mvc
         // GET: /ResourcePoolOrganization/
         public async Task<ActionResult> Index()
         {
-            var resourcepoolorganizationset = unitOfWork.AllLiveIncluding(r => r.Organization, r => r.ResourcePool);
-            return View(await resourcepoolorganizationset.ToListAsync());
+            var resourcepoolorganization = unitOfWork.AllLiveIncluding(r => r.Organization, r => r.ResourcePool);
+            return View(await resourcepoolorganization.ToListAsync());
         }
 
         // GET: /ResourcePoolOrganization/Details/5
@@ -54,7 +54,7 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-                unitOfWork.InsertOrUpdate(resourcepoolorganization);
+                unitOfWork.Insert(resourcepoolorganization);
                 await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
@@ -93,7 +93,7 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-                unitOfWork.InsertOrUpdate(resourcepoolorganization);
+                unitOfWork.Update(resourcepoolorganization);
                 await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }

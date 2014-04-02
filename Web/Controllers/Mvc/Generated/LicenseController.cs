@@ -51,7 +51,7 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-                unitOfWork.InsertOrUpdate(license);
+                unitOfWork.Insert(license);
                 await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
@@ -86,7 +86,7 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-                unitOfWork.InsertOrUpdate(license);
+                unitOfWork.Update(license);
                 await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }

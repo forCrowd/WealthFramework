@@ -189,56 +189,92 @@
     <Compile Include="App_Start\DevelopmentModeConfig.cs" />
     <Compile Include="App_Code\ServerMode.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\Mvc\Generated\Controller.cs">
+    <Compile Include="Controllers\Mvc\Generated\MvcController.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Controller.tt</DependentUpon>
+      <DependentUpon>MvcController.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\Mvc\Generated\LicenseController.cs">
-      <DependentUpon>Controller.tt</DependentUpon>
+      <DependentUpon>MvcController.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\Mvc\Generated\OrganizationController.cs">
-      <DependentUpon>Controller.tt</DependentUpon>
+      <DependentUpon>MvcController.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\Mvc\Generated\ResourcePoolController.cs">
-      <DependentUpon>Controller.tt</DependentUpon>
+      <DependentUpon>MvcController.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\Mvc\Generated\ResourcePoolOrganizationController.cs">
-      <DependentUpon>Controller.tt</DependentUpon>
+      <DependentUpon>MvcController.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\Mvc\Generated\SectorController.cs">
-      <DependentUpon>Controller.tt</DependentUpon>
+      <DependentUpon>MvcController.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\Mvc\Generated\UserController.cs">
-      <DependentUpon>Controller.tt</DependentUpon>
+      <DependentUpon>MvcController.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\Mvc\Generated\UserLicenseRatingController.cs">
-      <DependentUpon>Controller.tt</DependentUpon>
+      <DependentUpon>MvcController.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\Mvc\Generated\UserResourcePoolController.cs">
-      <DependentUpon>Controller.tt</DependentUpon>
+      <DependentUpon>MvcController.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\Mvc\Generated\UserResourcePoolOrganizationController.cs">
-      <DependentUpon>Controller.tt</DependentUpon>
+      <DependentUpon>MvcController.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\Mvc\Generated\UserSectorRatingController.cs">
-      <DependentUpon>Controller.tt</DependentUpon>
+      <DependentUpon>MvcController.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\Mvc\OrganizationController.cs" />
     <Compile Include="Controllers\Mvc\LicenseNgController.cs" />
     <Compile Include="Controllers\Mvc\UserController.cs" />
     <Compile Include="Controllers\Mvc\HomeController.cs" />
     <Compile Include="Controllers\Mvc\DatabaseAlterationController.cs" />
     <Compile Include="Controllers\Mvc\UserResourcePoolController.cs" />
-    <Compile Include="Controllers\OData\Generated\LicenseController.cs" />
-    <Compile Include="Controllers\OData\Generated\OrganizationController.cs" />
-    <Compile Include="Controllers\OData\Generated\ResourcePoolController.cs" />
-    <Compile Include="Controllers\OData\Generated\ResourcePoolOrganizationController.cs" />
-    <Compile Include="Controllers\OData\Generated\SectorController.cs" />
-    <Compile Include="Controllers\OData\Generated\UserController.cs" />
-    <Compile Include="Controllers\OData\Generated\UserLicenseRatingController.cs" />
-    <Compile Include="Controllers\OData\Generated\UserResourcePoolController.cs" />
-    <Compile Include="Controllers\OData\Generated\UserResourcePoolOrganizationController.cs" />
-    <Compile Include="Controllers\OData\Generated\UserSectorRatingController.cs" />
+    <Compile Include="Controllers\OData\Generated\ODataController.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ODataController.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\OData\Generated\LicenseController.cs">
+      <DependentUpon>ODataController.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\OData\Generated\OrganizationController.cs">
+      <DependentUpon>ODataController.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\OData\Generated\ResourcePoolController.cs">
+      <DependentUpon>ODataController.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\OData\Generated\ResourcePoolOrganizationController.cs">
+      <DependentUpon>ODataController.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\OData\Generated\SectorController.cs">
+      <DependentUpon>ODataController.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\OData\Generated\UserController.cs">
+      <DependentUpon>ODataController.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\OData\Generated\UserLicenseRatingController.cs">
+      <DependentUpon>ODataController.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\OData\Generated\UserResourcePoolController.cs">
+      <DependentUpon>ODataController.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\OData\Generated\UserResourcePoolOrganizationController.cs">
+      <DependentUpon>ODataController.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\OData\Generated\UserSectorRatingController.cs">
+      <DependentUpon>ODataController.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\OData\LicenseController.cs" />
+    <Compile Include="Controllers\OData\OrganizationController.cs" />
+    <Compile Include="Controllers\OData\ResourcePoolController.cs" />
+    <Compile Include="Controllers\OData\ResourcePoolOrganizationController.cs" />
+    <Compile Include="Controllers\OData\SectorController.cs" />
+    <Compile Include="Controllers\OData\UserController.cs" />
+    <Compile Include="Controllers\OData\UserLicenseRatingController.cs" />
+    <Compile Include="Controllers\OData\UserResourcePoolController.cs" />
+    <Compile Include="Controllers\OData\UserResourcePoolOrganizationController.cs" />
+    <Compile Include="Controllers\OData\UserSectorRatingController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -261,6 +297,9 @@
     <Content Include="Scripts\angular-route.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\app\organizationController.js" />
+    <Content Include="Scripts\app\organizationManager.js" />
+    <Content Include="Scripts\app\licenseManager.js" />
     <Content Include="Scripts\app\entityManagerFactory.js" />
     <Content Include="Scripts\app\dataContext.js" />
     <Content Include="Scripts\app\logger.js" />
@@ -268,9 +307,9 @@
     <Content Include="Scripts\app\main.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Controllers\Mvc\Generated\Controller.tt">
+    <Content Include="Controllers\Mvc\Generated\MvcController.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Controller.cs</LastGenOutput>
+      <LastGenOutput>MvcController.cs</LastGenOutput>
     </Content>
     <Content Include="Content\toastr.less" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -297,6 +336,10 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="Controllers\OData\Generated\ODataController.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ODataController.cs</LastGenOutput>
+    </Content>
     <None Include="Properties\PublishProfiles\Default.pubxml" />
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\angular-route.min.js.map" />
@@ -322,6 +365,8 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\toastr.min.js" />
+    <Content Include="ViewsNg\Organization\edit.html" />
+    <Content Include="ViewsNg\Organization\list.html" />
     <Content Include="ViewsNg\License\edit.html" />
     <Content Include="Views\License\Create.cshtml" />
     <Content Include="Views\License\Delete.cshtml" />
@@ -374,6 +419,7 @@
     <Content Include="ViewsNg\License\list.html" />
     <Content Include="Scripts\toastr.min.js.map" />
     <Content Include="Scripts\jquery-2.1.0.min.map" />
+    <Content Include="Views\OrganizationNg\Index.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>

@@ -16,8 +16,8 @@ namespace Web.Controllers.Mvc
         // GET: /Organization/
         public async Task<ActionResult> Index()
         {
-            var organizationset = unitOfWork.AllLiveIncluding(o => o.Sector, o => o.License);
-            return View(await organizationset.ToListAsync());
+            var organization = unitOfWork.AllLiveIncluding(o => o.Sector, o => o.License);
+            return View(await organization.ToListAsync());
         }
 
         // GET: /Organization/Details/5
@@ -54,7 +54,7 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-                unitOfWork.InsertOrUpdate(organization);
+                unitOfWork.Insert(organization);
                 await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
@@ -93,7 +93,7 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-                unitOfWork.InsertOrUpdate(organization);
+                unitOfWork.Update(organization);
                 await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }

@@ -16,12 +16,12 @@ namespace Web.Controllers.Mvc
         // GET: /UserResourcePool/
         public async Task<ActionResult> Index()
         {
-            var userresourcepoolset = unitOfWork.AllLiveIncluding(u => u.User, u => u.ResourcePool);
+            var userresourcepool = unitOfWork.AllLiveIncluding(u => u.User, u => u.ResourcePool);
 
             if (IsAuthenticated)
-                userresourcepoolset = userresourcepoolset.Where(item => item.UserId == CurrentUserId);
+                userresourcepool = userresourcepool.Where(item => item.UserId == CurrentUserId);
 
-            return View(await userresourcepoolset.ToListAsync());
+            return View(await userresourcepool.ToListAsync());
         }
 
         // GET: /UserResourcePool/Details/5
@@ -64,7 +64,7 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-                unitOfWork.InsertOrUpdate(userresourcepool);
+                unitOfWork.Insert(userresourcepool);
                 await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
@@ -115,7 +115,7 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-                unitOfWork.InsertOrUpdate(userresourcepool);
+                unitOfWork.Update(userresourcepool);
                 await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }

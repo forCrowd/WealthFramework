@@ -22,13 +22,13 @@ namespace BusinessObjects
             this.OrganizationSet = new HashSet<Organization>();
             this.UserLicenseRatingSet = new HashSet<UserLicenseRating>();
         }
-    	public bool IsNew { get { return Id == default(short); } }
+    
         public short Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Text { get; set; }
-        public virtual DateTime CreatedOn { get; set; }
-        public virtual System.DateTime ModifiedOn { get; set; }
+        public System.DateTime CreatedOn { get; set; }
+        public System.DateTime ModifiedOn { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
     
         public virtual ICollection<Organization> OrganizationSet { get; set; }

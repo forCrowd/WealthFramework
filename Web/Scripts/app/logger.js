@@ -9,7 +9,8 @@
 (function () {
     'use strict';
 
-    angular.module('main').factory('logger', ['$log', logger]);
+    angular.module('main')
+        .factory('logger', ['$log', logger]);
 
     function logger($log) {
         configureToastr();

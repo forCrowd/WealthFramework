@@ -21,9 +21,13 @@
 
         Task<TEntityType> FindAsync(params object[] keyValues);
 
-        void InsertOrUpdate(TEntityType entity);
+        bool Exists(object[] keyValues);
 
-        void Delete(params object[] id);
+        void Insert(TEntityType entity);
+
+        void Update(TEntityType entity);
+
+        void Delete(params object[] keyValues);
 
         void DeleteRange(IEnumerable<TEntityType> entities);
 

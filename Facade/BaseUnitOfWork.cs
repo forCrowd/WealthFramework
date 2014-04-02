@@ -51,9 +51,19 @@
             return await MainRepository.FindAsync(keyValues);
         }
 
-        public virtual void InsertOrUpdate(TEntityType entity)
+        public bool Exists(params object[] keyValues)
         {
-            MainRepository.InsertOrUpdate(entity);
+            return MainRepository.Exists(keyValues);
+        }
+
+        public virtual void Insert(TEntityType entity)
+        {
+            MainRepository.Insert(entity);
+        }
+
+        public virtual void Update(TEntityType entity)
+        {
+            MainRepository.Update(entity);
         }
 
         public virtual void Delete(params object[] keyValues)

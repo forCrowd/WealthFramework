@@ -50,7 +50,7 @@
             foreach (var organization in userResourcePool.UserResourcePoolOrganizationSet)
             {
                 organization.NumberOfSales = isReset ? 0 : organization.NumberOfSales + 1;
-                UserResourcePoolOrganizationRepository.InsertOrUpdate(organization);
+                UserResourcePoolOrganizationRepository.Update(organization);
             }
         }
 

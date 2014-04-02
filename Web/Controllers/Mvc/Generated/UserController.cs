@@ -52,7 +52,7 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-                unitOfWork.InsertOrUpdate(user);
+                unitOfWork.Insert(user);
                 await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
@@ -89,7 +89,7 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-                unitOfWork.InsertOrUpdate(user);
+                unitOfWork.Update(user);
                 await unitOfWork.SaveAsync();
                 if (!string.IsNullOrWhiteSpace(returnUrl))
                     return Redirect(returnUrl);

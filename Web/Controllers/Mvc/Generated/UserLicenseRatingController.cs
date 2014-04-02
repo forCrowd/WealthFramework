@@ -16,12 +16,12 @@ namespace Web.Controllers.Mvc
         // GET: /UserLicenseRating/
         public async Task<ActionResult> Index()
         {
-            var userlicenseratingset = unitOfWork.AllLiveIncluding(u => u.License, u => u.User);
+            var userlicenserating = unitOfWork.AllLiveIncluding(u => u.License, u => u.User);
 
             if (IsAuthenticated)
-                userlicenseratingset = userlicenseratingset.Where(item => item.UserId == CurrentUserId);
+                userlicenserating = userlicenserating.Where(item => item.UserId == CurrentUserId);
 
-            return View(await userlicenseratingset.ToListAsync());
+            return View(await userlicenserating.ToListAsync());
         }
 
         // GET: /UserLicenseRating/Details/5
@@ -64,7 +64,7 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-                unitOfWork.InsertOrUpdate(userlicenserating);
+                unitOfWork.Insert(userlicenserating);
                 await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
@@ -115,7 +115,7 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-                unitOfWork.InsertOrUpdate(userlicenserating);
+                unitOfWork.Update(userlicenserating);
                 await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }

@@ -16,12 +16,12 @@ namespace Web.Controllers.Mvc
         // GET: /UserSectorRating/
         public async Task<ActionResult> Index()
         {
-            var usersectorratingset = unitOfWork.AllLiveIncluding(u => u.Sector, u => u.User);
+            var usersectorrating = unitOfWork.AllLiveIncluding(u => u.Sector, u => u.User);
 
             if (IsAuthenticated)
-                usersectorratingset = usersectorratingset.Where(item => item.UserId == CurrentUserId);
+                usersectorrating = usersectorrating.Where(item => item.UserId == CurrentUserId);
 
-            return View(await usersectorratingset.ToListAsync());
+            return View(await usersectorrating.ToListAsync());
         }
 
         // GET: /UserSectorRating/Details/5
@@ -64,7 +64,7 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-                unitOfWork.InsertOrUpdate(usersectorrating);
+                unitOfWork.Insert(usersectorrating);
                 await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
@@ -115,7 +115,7 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-                unitOfWork.InsertOrUpdate(usersectorrating);
+                unitOfWork.Update(usersectorrating);
                 await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }

@@ -1,37 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.ModelBinding;
-using System.Web.Http.OData;
-using System.Web.Http.OData.Routing;
-using BusinessObjects;
-using DataObjects;
-
-namespace Web.Controllers.OData.Generated
+namespace Web.Controllers.OData
 {
-    public class UserController : ODataController
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Data.Entity;
+    using System.Data.Entity.Infrastructure;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+    using System.Web.Http;
+    using System.Web.Http.ModelBinding;
+    using System.Web.Http.OData;
+    using System.Web.Http.OData.Routing;
+    using BusinessObjects;
+    using DataObjects;
+    using Facade;
+
+    public partial class UserController : ODataController
     {
-        private WealthEconomyEntities db = new WealthEconomyEntities();
+        UserUnitOfWork unitOfWork = new UserUnitOfWork();
 
         // GET odata/User
         [Queryable]
         public IQueryable<User> GetUser()
         {
-            return db.User;
+            return unitOfWork.AllLive;
         }
 
         // GET odata/User(5)
         [Queryable]
         public SingleResult<User> GetUser([FromODataUri] int key)
         {
-            return SingleResult.Create(db.User.Where(user => user.Id == key));
+            return SingleResult.Create(unitOfWork.AllLive.Where(user => user.Id == key));
         }
 
         // PUT odata/User(5)
@@ -47,15 +48,14 @@ namespace Web.Controllers.OData.Generated
                 return BadRequest();
             }
 
-            db.Entry(user).State = EntityState.Modified;
-
+            unitOfWork.Update(user);
             try
             {
-                await db.SaveChangesAsync();
+                await unitOfWork.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(key))
+                if (!unitOfWork.Exists(key))
                 {
                     return NotFound();
                 }
@@ -76,8 +76,23 @@ namespace Web.Controllers.OData.Generated
                 return BadRequest(ModelState);
             }
 
-            db.User.Add(user);
-            await db.SaveChangesAsync();
+            unitOfWork.Insert(user);
+
+            try
+            {
+                await unitOfWork.SaveAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (unitOfWork.Exists(user.Id))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             return Created(user);
         }
@@ -91,21 +106,22 @@ namespace Web.Controllers.OData.Generated
                 return BadRequest(ModelState);
             }
 
-            User user = await db.User.FindAsync(key);
+            User user = await unitOfWork.FindAsync(key);
             if (user == null)
             {
                 return NotFound();
             }
 
             patch.Patch(user);
+            unitOfWork.Update(user);
 
             try
             {
-                await db.SaveChangesAsync();
+                await unitOfWork.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(key))
+                if (!unitOfWork.Exists(key))
                 {
                     return NotFound();
                 }
@@ -121,58 +137,16 @@ namespace Web.Controllers.OData.Generated
         // DELETE odata/User(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            User user = await db.User.FindAsync(key);
+            User user = await unitOfWork.FindAsync(key);
             if (user == null)
             {
                 return NotFound();
             }
 
-            db.User.Remove(user);
-            await db.SaveChangesAsync();
+            unitOfWork.Delete(user.Id);
+            await unitOfWork.SaveAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // GET odata/User(5)/UserResourcePoolSet
-        [Queryable]
-        public IQueryable<UserResourcePool> GetUserResourcePoolSet([FromODataUri] int key)
-        {
-            return db.User.Where(m => m.Id == key).SelectMany(m => m.UserResourcePoolSet);
-        }
-
-        // GET odata/User(5)/UserLicenseRatingSet
-        [Queryable]
-        public IQueryable<UserLicenseRating> GetUserLicenseRatingSet([FromODataUri] int key)
-        {
-            return db.User.Where(m => m.Id == key).SelectMany(m => m.UserLicenseRatingSet);
-        }
-
-        // GET odata/User(5)/UserSectorRatingSet
-        [Queryable]
-        public IQueryable<UserSectorRating> GetUserSectorRatingSet([FromODataUri] int key)
-        {
-            return db.User.Where(m => m.Id == key).SelectMany(m => m.UserSectorRatingSet);
-        }
-
-        // GET odata/User(5)/UserResourcePoolOrganizationSet
-        [Queryable]
-        public IQueryable<UserResourcePoolOrganization> GetUserResourcePoolOrganizationSet([FromODataUri] int key)
-        {
-            return db.User.Where(m => m.Id == key).SelectMany(m => m.UserResourcePoolOrganizationSet);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool UserExists(int key)
-        {
-            return db.User.Count(e => e.Id == key) > 0;
         }
     }
 }

@@ -59,19 +59,22 @@
             return await dbSet.FindAsync(keyValues);
         }
 
-        public void InsertOrUpdate(TEntityType entity)
+        public bool Exists(params object[] keyValues)
         {
-            if (entity.IsNew)
-            {
-                entity.CreatedOn = DateTime.UtcNow;
-                entity.ModifiedOn = DateTime.UtcNow;
-                dbSet.Add(entity);
-            }
-            else
-            {
-                entity.ModifiedOn = DateTime.UtcNow;
-                Context.Entry(entity).State = EntityState.Modified;
-            }
+            return Find(keyValues) != null;
+        }
+
+        public void Insert(TEntityType entity)
+        {
+            entity.CreatedOn = DateTime.UtcNow;
+            entity.ModifiedOn = DateTime.UtcNow;
+            dbSet.Add(entity);        
+        }
+
+        public void Update(TEntityType entity)
+        {
+            entity.ModifiedOn = DateTime.UtcNow;
+            Context.Entry(entity).State = EntityState.Modified;        
         }
 
         public void Delete(params object[] keyValues)

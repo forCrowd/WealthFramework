@@ -1,37 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.ModelBinding;
-using System.Web.Http.OData;
-using System.Web.Http.OData.Routing;
-using BusinessObjects;
-using DataObjects;
-
-namespace Web.Controllers.OData.Generated
+namespace Web.Controllers.OData
 {
-    public class OrganizationController : ODataController
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Data.Entity;
+    using System.Data.Entity.Infrastructure;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+    using System.Web.Http;
+    using System.Web.Http.ModelBinding;
+    using System.Web.Http.OData;
+    using System.Web.Http.OData.Routing;
+    using BusinessObjects;
+    using DataObjects;
+    using Facade;
+
+    public partial class OrganizationController : ODataController
     {
-        private WealthEconomyEntities db = new WealthEconomyEntities();
+        OrganizationUnitOfWork unitOfWork = new OrganizationUnitOfWork();
 
         // GET odata/Organization
         [Queryable]
         public IQueryable<Organization> GetOrganization()
         {
-            return db.Organization;
+            return unitOfWork.AllLive;
         }
 
         // GET odata/Organization(5)
         [Queryable]
         public SingleResult<Organization> GetOrganization([FromODataUri] int key)
         {
-            return SingleResult.Create(db.Organization.Where(organization => organization.Id == key));
+            return SingleResult.Create(unitOfWork.AllLive.Where(organization => organization.Id == key));
         }
 
         // PUT odata/Organization(5)
@@ -47,15 +48,14 @@ namespace Web.Controllers.OData.Generated
                 return BadRequest();
             }
 
-            db.Entry(organization).State = EntityState.Modified;
-
+            unitOfWork.Update(organization);
             try
             {
-                await db.SaveChangesAsync();
+                await unitOfWork.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OrganizationExists(key))
+                if (!unitOfWork.Exists(key))
                 {
                     return NotFound();
                 }
@@ -76,8 +76,23 @@ namespace Web.Controllers.OData.Generated
                 return BadRequest(ModelState);
             }
 
-            db.Organization.Add(organization);
-            await db.SaveChangesAsync();
+            unitOfWork.Insert(organization);
+
+            try
+            {
+                await unitOfWork.SaveAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (unitOfWork.Exists(organization.Id))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             return Created(organization);
         }
@@ -91,21 +106,22 @@ namespace Web.Controllers.OData.Generated
                 return BadRequest(ModelState);
             }
 
-            Organization organization = await db.Organization.FindAsync(key);
+            Organization organization = await unitOfWork.FindAsync(key);
             if (organization == null)
             {
                 return NotFound();
             }
 
             patch.Patch(organization);
+            unitOfWork.Update(organization);
 
             try
             {
-                await db.SaveChangesAsync();
+                await unitOfWork.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OrganizationExists(key))
+                if (!unitOfWork.Exists(key))
                 {
                     return NotFound();
                 }
@@ -121,51 +137,16 @@ namespace Web.Controllers.OData.Generated
         // DELETE odata/Organization(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            Organization organization = await db.Organization.FindAsync(key);
+            Organization organization = await unitOfWork.FindAsync(key);
             if (organization == null)
             {
                 return NotFound();
             }
 
-            db.Organization.Remove(organization);
-            await db.SaveChangesAsync();
+            unitOfWork.Delete(organization.Id);
+            await unitOfWork.SaveAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // GET odata/Organization(5)/Sector
-        [Queryable]
-        public SingleResult<Sector> GetSector([FromODataUri] int key)
-        {
-            return SingleResult.Create(db.Organization.Where(m => m.Id == key).Select(m => m.Sector));
-        }
-
-        // GET odata/Organization(5)/License
-        [Queryable]
-        public SingleResult<License> GetLicense([FromODataUri] int key)
-        {
-            return SingleResult.Create(db.Organization.Where(m => m.Id == key).Select(m => m.License));
-        }
-
-        // GET odata/Organization(5)/ResourcePoolOrganizationSet
-        [Queryable]
-        public IQueryable<ResourcePoolOrganization> GetResourcePoolOrganizationSet([FromODataUri] int key)
-        {
-            return db.Organization.Where(m => m.Id == key).SelectMany(m => m.ResourcePoolOrganizationSet);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool OrganizationExists(int key)
-        {
-            return db.Organization.Count(e => e.Id == key) > 0;
         }
     }
 }

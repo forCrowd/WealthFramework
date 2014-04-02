@@ -72,11 +72,10 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection)
         }
 #>
     }
+
 <#
     }
-#>
-	public bool IsNew { get { return <#=primaryKey#> == default(<#=typeMapper.GetTypeName(primaryKey.TypeUsage)#>); } }
-<#
+  
     var simpleProperties = typeMapper.GetSimpleProperties(entity);
     if (simpleProperties.Any())
     {

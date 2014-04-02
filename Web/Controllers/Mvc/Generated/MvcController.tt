@@ -157,7 +157,7 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-                unitOfWork.InsertOrUpdate(<#= entityVariable #>);
+                unitOfWork.Insert(<#= entityVariable #>);
                 await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
@@ -260,7 +260,7 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-                unitOfWork.InsertOrUpdate(<#= entityVariable #>);
+                unitOfWork.Update(<#= entityVariable #>);
                 await unitOfWork.SaveAsync();
 <#	if (entityName == "User") { #>
                 if (!string.IsNullOrWhiteSpace(returnUrl))

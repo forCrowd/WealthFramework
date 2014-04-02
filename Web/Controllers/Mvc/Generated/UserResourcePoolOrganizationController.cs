@@ -16,12 +16,12 @@ namespace Web.Controllers.Mvc
         // GET: /UserResourcePoolOrganization/
         public async Task<ActionResult> Index()
         {
-            var userresourcepoolorganizationset = unitOfWork.AllLiveIncluding(u => u.User, u => u.ResourcePoolOrganization);
+            var userresourcepoolorganization = unitOfWork.AllLiveIncluding(u => u.User, u => u.ResourcePoolOrganization);
 
             if (IsAuthenticated)
-                userresourcepoolorganizationset = userresourcepoolorganizationset.Where(item => item.UserId == CurrentUserId);
+                userresourcepoolorganization = userresourcepoolorganization.Where(item => item.UserId == CurrentUserId);
 
-            return View(await userresourcepoolorganizationset.ToListAsync());
+            return View(await userresourcepoolorganization.ToListAsync());
         }
 
         // GET: /UserResourcePoolOrganization/Details/5
@@ -64,7 +64,7 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-                unitOfWork.InsertOrUpdate(userresourcepoolorganization);
+                unitOfWork.Insert(userresourcepoolorganization);
                 await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }
@@ -115,7 +115,7 @@ namespace Web.Controllers.Mvc
 
             if (ModelState.IsValid)
             {
-                unitOfWork.InsertOrUpdate(userresourcepoolorganization);
+                unitOfWork.Update(userresourcepoolorganization);
                 await unitOfWork.SaveAsync();
                 return RedirectToAction("Index");
             }

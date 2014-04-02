@@ -1,37 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.ModelBinding;
-using System.Web.Http.OData;
-using System.Web.Http.OData.Routing;
-using BusinessObjects;
-using DataObjects;
-
-namespace Web.Controllers.OData.Generated
+namespace Web.Controllers.OData
 {
-    public class ResourcePoolOrganizationController : ODataController
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Data.Entity;
+    using System.Data.Entity.Infrastructure;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+    using System.Web.Http;
+    using System.Web.Http.ModelBinding;
+    using System.Web.Http.OData;
+    using System.Web.Http.OData.Routing;
+    using BusinessObjects;
+    using DataObjects;
+    using Facade;
+
+    public partial class ResourcePoolOrganizationController : ODataController
     {
-        private WealthEconomyEntities db = new WealthEconomyEntities();
+        ResourcePoolOrganizationUnitOfWork unitOfWork = new ResourcePoolOrganizationUnitOfWork();
 
         // GET odata/ResourcePoolOrganization
         [Queryable]
         public IQueryable<ResourcePoolOrganization> GetResourcePoolOrganization()
         {
-            return db.ResourcePoolOrganization;
+            return unitOfWork.AllLive;
         }
 
         // GET odata/ResourcePoolOrganization(5)
         [Queryable]
         public SingleResult<ResourcePoolOrganization> GetResourcePoolOrganization([FromODataUri] int key)
         {
-            return SingleResult.Create(db.ResourcePoolOrganization.Where(resourcepoolorganization => resourcepoolorganization.Id == key));
+            return SingleResult.Create(unitOfWork.AllLive.Where(resourcepoolorganization => resourcepoolorganization.Id == key));
         }
 
         // PUT odata/ResourcePoolOrganization(5)
@@ -47,15 +48,14 @@ namespace Web.Controllers.OData.Generated
                 return BadRequest();
             }
 
-            db.Entry(resourcepoolorganization).State = EntityState.Modified;
-
+            unitOfWork.Update(resourcepoolorganization);
             try
             {
-                await db.SaveChangesAsync();
+                await unitOfWork.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ResourcePoolOrganizationExists(key))
+                if (!unitOfWork.Exists(key))
                 {
                     return NotFound();
                 }
@@ -76,8 +76,23 @@ namespace Web.Controllers.OData.Generated
                 return BadRequest(ModelState);
             }
 
-            db.ResourcePoolOrganization.Add(resourcepoolorganization);
-            await db.SaveChangesAsync();
+            unitOfWork.Insert(resourcepoolorganization);
+
+            try
+            {
+                await unitOfWork.SaveAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (unitOfWork.Exists(resourcepoolorganization.Id))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             return Created(resourcepoolorganization);
         }
@@ -91,21 +106,22 @@ namespace Web.Controllers.OData.Generated
                 return BadRequest(ModelState);
             }
 
-            ResourcePoolOrganization resourcepoolorganization = await db.ResourcePoolOrganization.FindAsync(key);
+            ResourcePoolOrganization resourcepoolorganization = await unitOfWork.FindAsync(key);
             if (resourcepoolorganization == null)
             {
                 return NotFound();
             }
 
             patch.Patch(resourcepoolorganization);
+            unitOfWork.Update(resourcepoolorganization);
 
             try
             {
-                await db.SaveChangesAsync();
+                await unitOfWork.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ResourcePoolOrganizationExists(key))
+                if (!unitOfWork.Exists(key))
                 {
                     return NotFound();
                 }
@@ -121,51 +137,16 @@ namespace Web.Controllers.OData.Generated
         // DELETE odata/ResourcePoolOrganization(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            ResourcePoolOrganization resourcepoolorganization = await db.ResourcePoolOrganization.FindAsync(key);
+            ResourcePoolOrganization resourcepoolorganization = await unitOfWork.FindAsync(key);
             if (resourcepoolorganization == null)
             {
                 return NotFound();
             }
 
-            db.ResourcePoolOrganization.Remove(resourcepoolorganization);
-            await db.SaveChangesAsync();
+            unitOfWork.Delete(resourcepoolorganization.Id);
+            await unitOfWork.SaveAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // GET odata/ResourcePoolOrganization(5)/Organization
-        [Queryable]
-        public SingleResult<Organization> GetOrganization([FromODataUri] int key)
-        {
-            return SingleResult.Create(db.ResourcePoolOrganization.Where(m => m.Id == key).Select(m => m.Organization));
-        }
-
-        // GET odata/ResourcePoolOrganization(5)/ResourcePool
-        [Queryable]
-        public SingleResult<ResourcePool> GetResourcePool([FromODataUri] int key)
-        {
-            return SingleResult.Create(db.ResourcePoolOrganization.Where(m => m.Id == key).Select(m => m.ResourcePool));
-        }
-
-        // GET odata/ResourcePoolOrganization(5)/UserResourcePoolOrganizationSet
-        [Queryable]
-        public IQueryable<UserResourcePoolOrganization> GetUserResourcePoolOrganizationSet([FromODataUri] int key)
-        {
-            return db.ResourcePoolOrganization.Where(m => m.Id == key).SelectMany(m => m.UserResourcePoolOrganizationSet);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool ResourcePoolOrganizationExists(int key)
-        {
-            return db.ResourcePoolOrganization.Count(e => e.Id == key) > 0;
         }
     }
 }

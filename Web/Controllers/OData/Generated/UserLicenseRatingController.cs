@@ -1,37 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.ModelBinding;
-using System.Web.Http.OData;
-using System.Web.Http.OData.Routing;
-using BusinessObjects;
-using DataObjects;
-
-namespace Web.Controllers.OData.Generated
+namespace Web.Controllers.OData
 {
-    public class UserLicenseRatingController : ODataController
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Data.Entity;
+    using System.Data.Entity.Infrastructure;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+    using System.Web.Http;
+    using System.Web.Http.ModelBinding;
+    using System.Web.Http.OData;
+    using System.Web.Http.OData.Routing;
+    using BusinessObjects;
+    using DataObjects;
+    using Facade;
+
+    public partial class UserLicenseRatingController : ODataController
     {
-        private WealthEconomyEntities db = new WealthEconomyEntities();
+        UserLicenseRatingUnitOfWork unitOfWork = new UserLicenseRatingUnitOfWork();
 
         // GET odata/UserLicenseRating
         [Queryable]
         public IQueryable<UserLicenseRating> GetUserLicenseRating()
         {
-            return db.UserLicenseRating;
+            return unitOfWork.AllLive;
         }
 
         // GET odata/UserLicenseRating(5)
         [Queryable]
         public SingleResult<UserLicenseRating> GetUserLicenseRating([FromODataUri] int key)
         {
-            return SingleResult.Create(db.UserLicenseRating.Where(userlicenserating => userlicenserating.Id == key));
+            return SingleResult.Create(unitOfWork.AllLive.Where(userlicenserating => userlicenserating.Id == key));
         }
 
         // PUT odata/UserLicenseRating(5)
@@ -47,15 +48,14 @@ namespace Web.Controllers.OData.Generated
                 return BadRequest();
             }
 
-            db.Entry(userlicenserating).State = EntityState.Modified;
-
+            unitOfWork.Update(userlicenserating);
             try
             {
-                await db.SaveChangesAsync();
+                await unitOfWork.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserLicenseRatingExists(key))
+                if (!unitOfWork.Exists(key))
                 {
                     return NotFound();
                 }
@@ -76,8 +76,23 @@ namespace Web.Controllers.OData.Generated
                 return BadRequest(ModelState);
             }
 
-            db.UserLicenseRating.Add(userlicenserating);
-            await db.SaveChangesAsync();
+            unitOfWork.Insert(userlicenserating);
+
+            try
+            {
+                await unitOfWork.SaveAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (unitOfWork.Exists(userlicenserating.Id))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             return Created(userlicenserating);
         }
@@ -91,21 +106,22 @@ namespace Web.Controllers.OData.Generated
                 return BadRequest(ModelState);
             }
 
-            UserLicenseRating userlicenserating = await db.UserLicenseRating.FindAsync(key);
+            UserLicenseRating userlicenserating = await unitOfWork.FindAsync(key);
             if (userlicenserating == null)
             {
                 return NotFound();
             }
 
             patch.Patch(userlicenserating);
+            unitOfWork.Update(userlicenserating);
 
             try
             {
-                await db.SaveChangesAsync();
+                await unitOfWork.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserLicenseRatingExists(key))
+                if (!unitOfWork.Exists(key))
                 {
                     return NotFound();
                 }
@@ -121,44 +137,16 @@ namespace Web.Controllers.OData.Generated
         // DELETE odata/UserLicenseRating(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            UserLicenseRating userlicenserating = await db.UserLicenseRating.FindAsync(key);
+            UserLicenseRating userlicenserating = await unitOfWork.FindAsync(key);
             if (userlicenserating == null)
             {
                 return NotFound();
             }
 
-            db.UserLicenseRating.Remove(userlicenserating);
-            await db.SaveChangesAsync();
+            unitOfWork.Delete(userlicenserating.Id);
+            await unitOfWork.SaveAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // GET odata/UserLicenseRating(5)/License
-        [Queryable]
-        public SingleResult<License> GetLicense([FromODataUri] int key)
-        {
-            return SingleResult.Create(db.UserLicenseRating.Where(m => m.Id == key).Select(m => m.License));
-        }
-
-        // GET odata/UserLicenseRating(5)/User
-        [Queryable]
-        public SingleResult<User> GetUser([FromODataUri] int key)
-        {
-            return SingleResult.Create(db.UserLicenseRating.Where(m => m.Id == key).Select(m => m.User));
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool UserLicenseRatingExists(int key)
-        {
-            return db.UserLicenseRating.Count(e => e.Id == key) > 0;
         }
     }
 }
