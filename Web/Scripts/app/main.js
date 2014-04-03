@@ -7,7 +7,7 @@
 (function () {
     'use strict';
 
-    var main = angular.module('main', [
+    angular.module('main', [
 
         // Angular
         'ngRoute', // Routing

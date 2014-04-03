@@ -1,7 +1,6 @@
 ﻿<#@ template language="C#" debug="false" hostspecific="true"#>
 <#@ include file="EF6.Utility.CS.ttinclude"#>
-<#@ include file="..\..\..\DataObjects\Utility.ttinclude"#><#@ 
- output extension=".cs"#><#
+<#@ include file="..\..\..\DataObjects\Utility.ttinclude"#><#
 
 /*
 	Use this file to generate the metadadata file(s) just for the first time.
@@ -32,10 +31,10 @@ if (!typeMapper.VerifyCaseInsensitiveTypeUniqueness(typeMapper.GetAllGlobalItems
 
 WriteHeader(codeStringGenerator, fileManager);
 
-foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection))
+foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollection))
 {
 	// Variables
-	var entityMetadataName = string.Format("{0}Metadata", code.Escape(entity));
+	var entityMetadataName = string.Format("{0}Metadata", code.Escape(entityType));
 	var outputFileName = string.Format(@"{0}.cs", entityMetadataName);
 
     fileManager.StartNewFile(outputFileName);
@@ -48,14 +47,14 @@ public class <#=entityMetadataName#>
 {
 <#
 
-    var simpleProperties = typeMapper.GetSimpleProperties(entity);
+    var simpleProperties = typeMapper.GetSimpleProperties(entityType);
     if (simpleProperties.Any())
     {
         foreach (var edmProperty in simpleProperties)
         {
 #>
     [Display(Name = <#=string.Format(@"""{0}""", code.Escape(edmProperty))#>)]
-    <#=codeStringGenerator.Property(edmProperty)#>
+    <#=codeStringGenerator.MetadataProperty(edmProperty)#>
 
 <#
         }

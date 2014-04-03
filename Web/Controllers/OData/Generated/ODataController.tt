@@ -1,7 +1,6 @@
 ﻿<#@ template language="C#" debug="false" hostspecific="true"#>
 <#@ include file="EF6.Utility.CS.ttinclude"#>
-<#@ include file="..\..\..\..\DataObjects\Utility.ttinclude"#><#@ 
- output extension=".cs"#><#
+<#@ include file="..\..\..\..\DataObjects\Utility.ttinclude"#><#
 
 // To be able to control whether it's going to be executed
 var executeMe = true;
@@ -17,30 +16,26 @@ var	fileManager = EntityFrameworkTemplateFileManager.Create(this);
 var itemCollection = new EdmMetadataLoader(textTransform.Host, textTransform.Errors).CreateEdmItemCollection(inputFile);
 var codeStringGenerator = new CodeStringGenerator(code, typeMapper, ef);
 
-var container = itemCollection.OfType<EntityContainer>().FirstOrDefault();
-if (container == null)
+if (!typeMapper.VerifyCaseInsensitiveTypeUniqueness(typeMapper.GetAllGlobalItems(itemCollection), inputFile))
 {
     return string.Empty;
 }
 
-foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
+WriteHeader(codeStringGenerator, fileManager);
+
+foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollection))
 {
 	// Variables
-	var entitySetName = entitySet.Name;
-	var entitySetVariable = entitySetName.ToLowerInvariant();
-	var entity = entitySet.ElementType;
-	var entityName = typeMapper.GetTypeName(entity);
-	var entityVariable = entityName.ToLowerInvariant();
-	var controllerName = string.Format("{0}Controller", entityName);
-    var entityDtoName = string.Format("{0}Dto", entityName);
-    var entityDtoVariable = entityDtoName.ToLowerInvariant();
-    var unitOfWorkName = string.Format("{0}UnitOfWork", entityName);	
-	var primaryKeyName = entity.KeyMembers[0];
-    var primaryKeyShortTypeName = typeMapper.GetTypeName(primaryKeyName.TypeUsage);
-	var routePrefix = string.Format("odata/{0}", entityName);
+	var entityTypeName = typeMapper.GetTypeName(entityType);
+	var entityVariable = entityTypeName.ToLowerInvariant();
+	var controllerName = string.Format("{0}Controller", entityTypeName);
+    var unitOfWorkName = string.Format("{0}UnitOfWork", entityTypeName);	
+	var primaryKey = entityType.KeyMembers[0];
+    var primaryKeyShortTypeName = typeMapper.GetTypeName(primaryKey.TypeUsage);
+	var routePrefix = string.Format("odata/{0}", entityTypeName);
 	
-    var simpleProperties = typeMapper.GetSimpleProperties(entity);
-    var relatedProperties = typeMapper.GetRelatedNavigationProperties(entity);
+    var simpleProperties = typeMapper.GetSimpleProperties(entityType);
+    var relatedProperties = typeMapper.GetRelatedNavigationProperties(entityType);
 	
 	var bindAttributeIncludeText = string.Join(",", simpleProperties);
     var bindAttribute = String.Format("[Bind(Include = \"{0}\")] ", bindAttributeIncludeText);
@@ -54,22 +49,15 @@ foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
 #>
 namespace Web.Controllers.OData
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Data.Entity;
+    using BusinessObjects;
+    using Facade;
     using System.Data.Entity.Infrastructure;
     using System.Linq;
     using System.Net;
-    using System.Net.Http;
     using System.Threading.Tasks;
     using System.Web.Http;
     using System.Web.Http.ModelBinding;
     using System.Web.Http.OData;
-    using System.Web.Http.OData.Routing;
-    using BusinessObjects;
-    using DataObjects;
-    using Facade;
 
     public partial class <#= controllerName #> : ODataController
     {
@@ -77,32 +65,33 @@ namespace Web.Controllers.OData
 
         // GET <#= routePrefix #>
         [Queryable]
-        public IQueryable<<#= entityName #>> Get<#= entityName #>()
+        public IQueryable<<#= entityTypeName #>> Get<#= entityTypeName #>()
         {
             return unitOfWork.AllLive;
         }
 
         // GET <#= routePrefix #>(5)
         [Queryable]
-        public SingleResult<<#= entityName #>> Get<#= entityName #>([FromODataUri] <#= primaryKeyShortTypeName #> key)
+        public SingleResult<<#= entityTypeName #>> Get<#= entityTypeName #>([FromODataUri] <#= primaryKeyShortTypeName #> key)
         {
-            return SingleResult.Create(unitOfWork.AllLive.Where(<#= entityVariable #> => <#= entityVariable #>.<#= primaryKeyName #> == key));
+            return SingleResult.Create(unitOfWork.AllLive.Where(<#= entityVariable #> => <#= entityVariable #>.<#= primaryKey #> == key));
         }
 
         // PUT <#= routePrefix #>(5)
-        public async Task<IHttpActionResult> Put([FromODataUri] <#= primaryKeyShortTypeName #> key, <#= entityName #> <#= entityVariable #>)
+        public async Task<IHttpActionResult> Put([FromODataUri] <#= primaryKeyShortTypeName #> key, <#= entityTypeName #> <#= entityVariable #>)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (key != <#= entityVariable #>.<#= primaryKeyName #>)
+            if (key != <#= entityVariable #>.<#= primaryKey #>)
             {
                 return BadRequest();
             }
 
             unitOfWork.Update(<#= entityVariable #>);
+
             try
             {
                 await unitOfWork.SaveAsync();
@@ -123,7 +112,7 @@ namespace Web.Controllers.OData
         }
 
         // POST <#= routePrefix #>
-        public async Task<IHttpActionResult> Post(<#= entityName #> <#= entityVariable #>)
+        public async Task<IHttpActionResult> Post(<#= entityTypeName #> <#= entityVariable #>)
         {
             if (!ModelState.IsValid)
             {
@@ -138,7 +127,7 @@ namespace Web.Controllers.OData
             }
             catch (DbUpdateException)
             {
-                if (unitOfWork.Exists(<#= entityVariable #>.<#= primaryKeyName #>))
+                if (unitOfWork.Exists(<#= entityVariable #>.<#= primaryKey #>))
                 {
                     return Conflict();
                 }
@@ -153,14 +142,14 @@ namespace Web.Controllers.OData
 
         // PATCH <#= routePrefix #>(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public async Task<IHttpActionResult> Patch([FromODataUri] <#= primaryKeyShortTypeName #> key, Delta<<#= entityName #>> patch)
+        public async Task<IHttpActionResult> Patch([FromODataUri] <#= primaryKeyShortTypeName #> key, Delta<<#= entityTypeName #>> patch)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            <#= entityName #> <#= entityVariable #> = await unitOfWork.FindAsync(key);
+            var <#= entityVariable #> = await unitOfWork.FindAsync(key);
             if (<#= entityVariable #> == null)
             {
                 return NotFound();
@@ -191,13 +180,13 @@ namespace Web.Controllers.OData
         // DELETE <#= routePrefix #>(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] <#= primaryKeyShortTypeName #> key)
         {
-            <#= entityName #> <#= entityVariable #> = await unitOfWork.FindAsync(key);
+            var <#= entityVariable #> = await unitOfWork.FindAsync(key);
             if (<#= entityVariable #> == null)
             {
                 return NotFound();
             }
 
-            unitOfWork.Delete(<#= entityVariable #>.<#= primaryKeyName #>);
+            unitOfWork.Delete(<#= entityVariable #>.<#= primaryKey #>);
             await unitOfWork.SaveAsync();
 
             return StatusCode(HttpStatusCode.NoContent);

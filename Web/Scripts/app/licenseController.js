@@ -11,9 +11,9 @@
 
     var controllerId = 'licenseListController';
     angular.module('main')
-        .controller(controllerId, ['licenseManager', 'logger', licenseListController]);
+        .controller(controllerId, ['licenseService', 'logger', licenseListController]);
 
-    function licenseListController(licenseManager, logger) {
+    function licenseListController(licenseService, logger) {
 
         logger = logger.forSource(controllerId);
         var logError = logger.logError;
@@ -30,9 +30,9 @@
         };
 
         function deleteLicense(license) {
-            licenseManager.deleteLicense(license);
+            licenseService.deleteLicense(license);
 
-            licenseManager.saveChanges()
+            licenseService.saveChanges()
                 .then(function () {
                     vm.licenseSet.splice(vm.licenseSet.indexOf(license));
                     logSuccess("Hooray we saved", null, true);
@@ -47,9 +47,9 @@
 
         function deleteLicense2(licenseIndex) {
             var license = vm.licenseSet[licenseIndex];
-            licenseManager.deleteLicense(license);
+            licenseService.deleteLicense(license);
 
-            licenseManager.saveChanges()
+            licenseService.saveChanges()
                 .then(function () {
                     vm.licenseSet.splice(licenseIndex, 1);
                     logSuccess("Hooray we saved", null, true);
@@ -63,7 +63,7 @@
         };
 
         function getLicenseSet(forceRefresh) {
-            return licenseManager.getLicenseSet(forceRefresh).then(function (data) {
+            return licenseService.getLicenseSet(forceRefresh).then(function (data) {
                 return vm.licenseSet = data;
             });
         }
@@ -71,9 +71,9 @@
 
     var controllerId = 'licenseEditController';
     angular.module('main')
-        .controller(controllerId, ['licenseManager', 'logger', '$location', '$routeParams', '$timeout', licenseEditController]);
+        .controller(controllerId, ['licenseService', 'logger', '$location', '$routeParams', '$timeout', licenseEditController]);
 
-    function licenseEditController(licenseManager, logger, $location, $routeParams, $timeout) {
+    function licenseEditController(licenseService, logger, $location, $routeParams, $timeout) {
 
         logger = logger.forSource(controllerId);
         var logError = logger.logError;
@@ -98,14 +98,14 @@
 
             $location.path('/');
 
-            if (licenseManager.hasChanges()) {
-                licenseManager.rejectChanges();
+            if (licenseService.hasChanges()) {
+                licenseService.rejectChanges();
                 logWarning('Discarded pending change(s)', null, true);
             }
         }
 
         function hasChanges() {
-            return licenseManager.hasChanges();
+            return licenseService.hasChanges();
         }
 
         function initialize() {
@@ -118,7 +118,7 @@
                 };
             }
             else {
-                licenseManager.getLicense($routeParams.Id)
+                licenseService.getLicense($routeParams.Id)
                     .then(function (data) {
                         vm.license = data;
                     })
@@ -133,17 +133,17 @@
 
         function isSaveDisabled() {
             return isSaving ||
-                (!isNew && !licenseManager.hasChanges());
+                (!isNew && !licenseService.hasChanges());
         }
 
         function saveChanges() {
 
             if (isNew) {
-                licenseManager.createLicense(vm.license);
+                licenseService.createLicense(vm.license);
             }
 
             isSaving = true;
-            return licenseManager.saveChanges()
+            return licenseService.saveChanges()
                 .then(function () {
                     logSuccess("Hooray we saved", null, true);
                     $location.path('/');

@@ -15,31 +15,31 @@ namespace BusinessObjects.Metadata.Generated
     public class OrganizationMetadata
     {
         [Display(Name = "Id")]
-        public int Id { get; set; }
+        public object Id { get; set; }
     
         [Display(Name = "SectorId")]
-        public byte SectorId { get; set; }
+        public object SectorId { get; set; }
     
         [Display(Name = "Name")]
-        public string Name { get; set; }
+        public object Name { get; set; }
     
         [Display(Name = "ProductionCost")]
-        public decimal ProductionCost { get; set; }
+        public object ProductionCost { get; set; }
     
         [Display(Name = "SalesPrice")]
-        public decimal SalesPrice { get; set; }
+        public object SalesPrice { get; set; }
     
         [Display(Name = "LicenseId")]
-        public short LicenseId { get; set; }
+        public object LicenseId { get; set; }
     
         [Display(Name = "CreatedOn")]
-        public System.DateTime CreatedOn { get; set; }
+        public object CreatedOn { get; set; }
     
         [Display(Name = "ModifiedOn")]
-        public System.DateTime ModifiedOn { get; set; }
+        public object ModifiedOn { get; set; }
     
         [Display(Name = "DeletedOn")]
-        public Nullable<System.DateTime> DeletedOn { get; set; }
+        public object DeletedOn { get; set; }
     
     }
 }

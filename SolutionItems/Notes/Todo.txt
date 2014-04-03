@@ -14,6 +14,7 @@
 . be carefull about, saveChanges(), hasChanges(), getChanges(), rejectChanges() methods. currently they don't work on entity level?
 . breeze entitymanager - ensure metadata fetched;
 http://stackoverflow.com/questions/16068184/breezejs-how-to-fetch-metadata-at-start-with-shared-entitymanager
+. check javascript beginning comments
 
 . ef tools?!
 http://msdn.microsoft.com/en-US/data/jj593170
@@ -23,24 +24,19 @@ http://msdn.microsoft.com/en-US/data/jj591583#Index
 
 .. use scripts.render?
 
-. for license;
-difference between current odatacontroller vs. original generated -> createdon + modifiedon
-
-. organization works - but loadnavigationproperty is bit weird (with .then().then part) + check sectorSet + licenseSet parts
-mainly, these could be retrieved from local but since there is no connection between sector + organization manager how to understand whether its fetched earlier ?!?!?
-
 . how delta & patch works?
 
 . validateantiforgerytoken + bind attributes in odata controller?
 
-. tt files - entiyName -> entityTypeName?
+. writeheader is now in utility.tt -> apply to the others
+also check beginnamespace + endnamespace etc.
 
-. unitOfWork - entityexists method + SaveAsync() -> SaveChangesAsync() ? delete -> remove?
+. entityVariable = entity[0] + entity.substring(1) ?!
 
-. check patch method in odata
+. continue with list.html + edit.html
+.. delete old controllers
 
 . related metadata sections?;
-
 RelatedModelMetadata GetRelatedModelMetadata(PropertyMetadata property){
     RelatedModelMetadata propertyModel;
     IDictionary<string, RelatedModelMetadata> relatedProperties;

@@ -6,7 +6,7 @@
         <div class="form-group">
             <label for="SectorId" class="control-label col-md-2">Sector</label>
             <div class="col-md-10" data-ng-class="{'has-error': editForm.SectorId.$invalid && !editForm.SectorId.$pristine}">
-                <select data-ng-model="vm.organization.Sector" data-ng-options="sector.Name for sector in vm.SectorSet" class="form-control" required></select>
+                <select data-ng-model="vm.organization.Sector" data-ng-options="sector.Name for sector in vm.sectorSet" class="form-control" required></select>
             </div>
         </div>
         <div class="form-group">
@@ -18,19 +18,19 @@
         <div class="form-group">
             <label for="ProductionCost" class="control-label col-md-2">Production Cost</label>
             <div class="col-md-10">
-                <input type="text" id="ProductionCost" name="ProductionCost" data-ng-model="vm.organization.ProductionCost" class="form-control">
+                <input type="text" id="ProductionCost" name="ProductionCost" data-ng-model="vm.organization.ProductionCost" class="form-control" required>
             </div>
         </div>
         <div class="form-group">
             <label for="SalesPrice" class="control-label col-md-2">Sales Price</label>
             <div class="col-md-10">
-                <input type="text" id="SalesPrice" name="SalesPrice" data-ng-model="vm.organization.SalesPrice" class="form-control">
+                <input type="text" id="SalesPrice" name="SalesPrice" data-ng-model="vm.organization.SalesPrice" class="form-control" required>
             </div>
         </div>
         <div class="form-group">
             <label for="LicenseId" class="control-label col-md-2">License</label>
             <div class="col-md-10" data-ng-class="{'has-error': editForm.LicenseId.$invalid && !editForm.LicenseId.$pristine}">
-                <select data-ng-model="vm.organization.License" data-ng-options="license.Name for license in vm.LicenseSet" class="form-control" required></select>
+                <select data-ng-model="vm.organization.License" data-ng-options="license.Name for license in vm.licenseSet" class="form-control" required></select>
             </div>
         </div>
         <div class="form-group">

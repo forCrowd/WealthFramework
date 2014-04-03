@@ -10,7 +10,7 @@
 
     var serviceId = 'entityManagerFactory';
     angular.module('main')
-           .factory(serviceId, ['breeze', entityManagerFactory]);
+        .factory(serviceId, ['breeze', entityManagerFactory]);
 
     function entityManagerFactory(breeze) {
         configureBreeze();

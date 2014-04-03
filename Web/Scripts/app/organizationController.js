@@ -11,9 +11,9 @@
 
     var controllerId = 'organizationListController';
     angular.module('main')
-        .controller(controllerId, ['organizationManager', 'logger', organizationListController]);
+        .controller(controllerId, ['organizationService', 'logger', organizationListController]);
 
-    function organizationListController(organizationManager, logger) {
+    function organizationListController(organizationService, logger) {
 
         logger = logger.forSource(controllerId);
         var logError = logger.logError;
@@ -30,9 +30,9 @@
         };
 
         function deleteOrganization(organization) {
-            organizationManager.deleteOrganization(organization);
+            organizationService.deleteOrganization(organization);
 
-            organizationManager.saveChanges()
+            organizationService.saveChanges()
                 .then(function () {
                     vm.organizationSet.splice(vm.organizationSet.indexOf(organization), 1);
                     logSuccess("Hooray we saved", null, true);
@@ -46,7 +46,7 @@
         };
 
         function getOrganizationSet(forceRefresh) {
-            return organizationManager.getOrganizationSet(forceRefresh).then(function (data) {
+            return organizationService.getOrganizationSet(forceRefresh).then(function (data) {
                 return vm.organizationSet = data;
             });
         }
@@ -54,9 +54,9 @@
 
     var controllerId = 'organizationEditController';
     angular.module('main')
-        .controller(controllerId, ['organizationManager', 'logger', '$location', '$routeParams', '$timeout', organizationEditController]);
+        .controller(controllerId, ['organizationService', 'licenseService', 'sectorService', 'logger', '$location', '$routeParams', organizationEditController]);
 
-    function organizationEditController(organizationManager, logger, $location, $routeParams, $timeout) {
+    function organizationEditController(organizationService, licenseService, sectorService, logger, $location, $routeParams) {
 
         logger = logger.forSource(controllerId);
         var logError = logger.logError;
@@ -67,8 +67,8 @@
 
         // Controller methods (alphabetically)
         var vm = this;
-        vm.LicenseSet = [];
-        vm.SectorSet = [];
+        vm.licenseSet = [];
+        vm.sectorSet = [];
         vm.cancelChanges = cancelChanges;
         vm.isSaveDisabled = isSaveDisabled;
         vm.organization = null;
@@ -83,34 +83,33 @@
 
             $location.path('/');
 
-            if (organizationManager.hasChanges()) {
-                organizationManager.rejectChanges();
+            if (organizationService.hasChanges()) {
+                organizationService.rejectChanges();
                 logWarning('Discarded pending change(s)', null, true);
             }
         }
 
         function hasChanges() {
-            return organizationManager.hasChanges();
+            return organizationService.hasChanges();
         }
 
         function initialize() {
 
-            organizationManager.getLicenseSet()
-                .then(function (licenseSet) {
-
-                    vm.LicenseSet = licenseSet;
-
-                    organizationManager.getSectorSet()
-                        .then(function (sectorSet) {
-
-                            vm.SectorSet = sectorSet;
-
-                        }).catch(function (error) {
-                            /* TODO ?! */
-                        });
-                }).catch(function (error) {
-                    /* TODO ?! */
+            // License set
+            licenseService.getLicenseSet()
+                .then(function (data) {
+                    vm.licenseSet = data;
                 });
+
+            // TODO Catch?
+
+            // Sector set
+            sectorService.getSectorSet()
+                .then(function (data) {
+                    vm.sectorSet = data;
+                });
+
+            // TODO Catch?
 
             if (isNew) {
                 // TODO Only development ?!
@@ -123,7 +122,7 @@
                 };
             }
             else {
-                organizationManager.getOrganization($routeParams.Id)
+                organizationService.getOrganization($routeParams.Id)
                     .then(function (data) {
                         vm.organization = data;
                     })
@@ -138,17 +137,17 @@
 
         function isSaveDisabled() {
             return isSaving ||
-                (!isNew && !organizationManager.hasChanges());
+                (!isNew && !organizationService.hasChanges());
         }
 
         function saveChanges() {
 
             if (isNew) {
-                organizationManager.createOrganization(vm.organization);
+                organizationService.createOrganization(vm.organization);
             }
 
             isSaving = true;
-            return organizationManager.saveChanges()
+            return organizationService.saveChanges()
                 .then(function () {
                     logSuccess("Hooray we saved", null, true);
                     $location.path('/');

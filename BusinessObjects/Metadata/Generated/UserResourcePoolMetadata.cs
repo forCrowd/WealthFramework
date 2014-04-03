@@ -15,46 +15,46 @@ namespace BusinessObjects.Metadata.Generated
     public class UserResourcePoolMetadata
     {
         [Display(Name = "Id")]
-        public int Id { get; set; }
+        public object Id { get; set; }
     
         [Display(Name = "UserId")]
-        public int UserId { get; set; }
+        public object UserId { get; set; }
     
         [Display(Name = "ResourcePoolId")]
-        public int ResourcePoolId { get; set; }
+        public object ResourcePoolId { get; set; }
     
         [Display(Name = "ResourcePoolRate")]
-        public decimal ResourcePoolRate { get; set; }
+        public object ResourcePoolRate { get; set; }
     
         [Display(Name = "TotalCostIndexRating")]
-        public decimal TotalCostIndexRating { get; set; }
+        public object TotalCostIndexRating { get; set; }
     
         [Display(Name = "KnowledgeIndexRating")]
-        public decimal KnowledgeIndexRating { get; set; }
+        public object KnowledgeIndexRating { get; set; }
     
         [Display(Name = "QualityIndexRating")]
-        public decimal QualityIndexRating { get; set; }
+        public object QualityIndexRating { get; set; }
     
         [Display(Name = "SectorIndexRating")]
-        public decimal SectorIndexRating { get; set; }
+        public object SectorIndexRating { get; set; }
     
         [Display(Name = "EmployeeSatisfactionIndexRating")]
-        public decimal EmployeeSatisfactionIndexRating { get; set; }
+        public object EmployeeSatisfactionIndexRating { get; set; }
     
         [Display(Name = "CustomerSatisfactionIndexRating")]
-        public decimal CustomerSatisfactionIndexRating { get; set; }
+        public object CustomerSatisfactionIndexRating { get; set; }
     
         [Display(Name = "DistanceIndexRating")]
-        public decimal DistanceIndexRating { get; set; }
+        public object DistanceIndexRating { get; set; }
     
         [Display(Name = "CreatedOn")]
-        public System.DateTime CreatedOn { get; set; }
+        public object CreatedOn { get; set; }
     
         [Display(Name = "ModifiedOn")]
-        public System.DateTime ModifiedOn { get; set; }
+        public object ModifiedOn { get; set; }
     
         [Display(Name = "DeletedOn")]
-        public Nullable<System.DateTime> DeletedOn { get; set; }
+        public object DeletedOn { get; set; }
     
     }
 }

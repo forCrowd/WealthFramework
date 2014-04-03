@@ -15,37 +15,37 @@ namespace BusinessObjects.Metadata.Generated
     public class UserMetadata
     {
         [Display(Name = "Id")]
-        public int Id { get; set; }
+        public object Id { get; set; }
     
         [Display(Name = "Email")]
-        public string Email { get; set; }
+        public object Email { get; set; }
     
         [Display(Name = "Password")]
-        public string Password { get; set; }
+        public object Password { get; set; }
     
         [Display(Name = "FirstName")]
-        public string FirstName { get; set; }
+        public object FirstName { get; set; }
     
         [Display(Name = "MiddleName")]
-        public string MiddleName { get; set; }
+        public object MiddleName { get; set; }
     
         [Display(Name = "LastName")]
-        public string LastName { get; set; }
+        public object LastName { get; set; }
     
         [Display(Name = "UserAccountTypeId")]
-        public UserAccountType UserAccountTypeId { get; set; }
+        public object UserAccountTypeId { get; set; }
     
         [Display(Name = "Notes")]
-        public string Notes { get; set; }
+        public object Notes { get; set; }
     
         [Display(Name = "CreatedOn")]
-        public System.DateTime CreatedOn { get; set; }
+        public object CreatedOn { get; set; }
     
         [Display(Name = "ModifiedOn")]
-        public System.DateTime ModifiedOn { get; set; }
+        public object ModifiedOn { get; set; }
     
         [Display(Name = "DeletedOn")]
-        public Nullable<System.DateTime> DeletedOn { get; set; }
+        public object DeletedOn { get; set; }
     
     }
 }

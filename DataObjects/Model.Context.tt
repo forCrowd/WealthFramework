@@ -1,7 +1,6 @@
 ﻿<#@ template language="C#" debug="false" hostspecific="true"#>
 <#@ include file="EF6.Utility.CS.ttinclude"#>
-<#@ include file="Utility.ttinclude"#><#@
- output extension=".cs"#><#
+<#@ include file="Utility.ttinclude"#><#
 
 const string inputFile = @"Model.edmx";
 var textTransform = DynamicTextTransformation.Create(this);

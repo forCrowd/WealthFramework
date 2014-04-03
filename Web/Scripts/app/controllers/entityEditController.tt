@@ -1,0 +1,188 @@
+﻿<#@ template language="C#" debug="false" hostspecific="true"#>
+<#@ include file="EF6.Utility.CS.ttinclude"#>
+<#@ include file="..\..\..\..\DataObjects\Utility.ttinclude"#><#
+
+// To be able to control whether it's going to be executed
+var executeMe = true;
+if (!executeMe)
+	return string.Empty;
+
+const string inputFile = @"..\..\..\..\DataObjects\Model.edmx";
+var textTransform = DynamicTextTransformation.Create(this);
+var code = new CodeGenerationTools(this);
+var ef = new MetadataTools(this);
+var typeMapper = new TypeMapper(code, ef, textTransform.Errors);
+var	fileManager = EntityFrameworkTemplateFileManager.Create(this);
+var itemCollection = new EdmMetadataLoader(textTransform.Host, textTransform.Errors).CreateEdmItemCollection(inputFile);
+var codeStringGenerator = new CodeStringGenerator(code, typeMapper, ef);
+
+if (!typeMapper.VerifyCaseInsensitiveTypeUniqueness(typeMapper.GetAllGlobalItems(itemCollection), inputFile))
+{
+    return string.Empty;
+}
+
+foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollection))
+{
+	// Variables
+	var entityTypeName = typeMapper.GetTypeName(entityType);
+	var entityVariable = entityTypeName.ToLowerInvariant();
+	var entitySetName = string.Format("{0}Set", entityVariable);
+	var controllerId = string.Format("{0}EditController", entityVariable);
+	var serviceId = string.Format("{0}Service", entityVariable);
+	var primaryKey = entityType.KeyMembers[0];
+    var primaryKeyShortTypeName = typeMapper.GetTypeName(primaryKey.TypeUsage);
+	
+    var simpleProperties = typeMapper.GetSimpleProperties(entityType);
+    var relatedProperties = typeMapper.GetRelatedNavigationProperties(entityType);
+	
+	// TODO This needs to be done through enums types?!
+	var hasUserAccountTypeId = simpleProperties.Any(property => property.Name == "UserAccountTypeId");
+
+	var outputFileName = string.Format(@"{0}.js", controllerId);
+
+    fileManager.StartNewFile(outputFileName);
+#>
+<#= codeStringGenerator.WriteHeader() #>
+(function () {
+    'use strict';
+
+    var controllerId = '<#= controllerId #>';
+    angular.module('main')
+        .controller(controllerId, ['<#= serviceId #>',
+<#
+	foreach (var property in relatedProperties)
+	{
+		var relatedVariable = string.Format("{0}{1}", property.Name[0].ToString().ToLowerInvariant(), property.Name.Substring(1));
+		var relatedServiceId = string.Format("{0}Service", relatedVariable);
+#>
+            '<#= relatedServiceId #>',
+<# } #>
+            'logger',
+            '$location',
+            '$routeParams',
+            <#= controllerId #>]);
+
+    function <#= controllerId #>(<#= serviceId #>,
+<#
+	foreach (var property in relatedProperties)
+	{
+		var relatedVariable = string.Format("{0}{1}", property.Name[0].ToString().ToLowerInvariant(), property.Name.Substring(1));
+		var relatedServiceId = string.Format("{0}Service", relatedVariable);
+#>
+		<#= relatedServiceId #>,
+<# } #>
+		logger,
+		$location,
+		$routeParams) {
+
+        logger = logger.forSource(controllerId);
+        var logError = logger.logError;
+        var logSuccess = logger.logSuccess;
+
+        var isNew = $location.path() === '/new';
+        var isSaving = false;
+
+        // Controller methods (alphabetically)
+        var vm = this;
+<#
+	foreach (var property in relatedProperties)
+	{
+		var relatedVariable = string.Format("{0}{1}", property.Name[0].ToString().ToLowerInvariant(), property.Name.Substring(1));
+		var relatedSetName = string.Format("{0}Set", relatedVariable);
+#>
+        vm.<#= relatedSetName #> = [];
+<# } #>
+        vm.cancelChanges = cancelChanges;
+        vm.isSaveDisabled = isSaveDisabled;
+        vm.<#= entityVariable #> = null;
+        vm.saveChanges = saveChanges;
+        vm.hasChanges = hasChanges;
+
+        initialize();
+
+        /*** Implementations ***/
+
+        function cancelChanges() {
+
+            $location.path('/');
+
+            if (<#= serviceId #>.hasChanges()) {
+                <#= serviceId #>.rejectChanges();
+                logWarning('Discarded pending change(s)', null, true);
+            }
+        }
+
+        function hasChanges() {
+            return <#= serviceId #>.hasChanges();
+        }
+
+        function initialize() {
+
+<#
+	foreach (var property in relatedProperties)
+	{
+		var relatedVariable = string.Format("{0}{1}", property.Name[0].ToString().ToLowerInvariant(), property.Name.Substring(1));
+		var relatedServiceId = string.Format("{0}Service", relatedVariable);
+		var relatedSetGetMethod = string.Format("get{0}Set", property.Name);
+		var relatedSetName = string.Format("{0}Set", relatedVariable);
+#>
+            <#= relatedServiceId #>.<#= relatedSetGetMethod #>()
+                .then(function (data) {
+                    vm.<#= relatedSetName #> = data;
+                });
+
+            // TODO Catch?
+
+<# } #>
+            if (isNew) {
+                // TODO Only for development, create test entity ?!
+            }
+            else {
+                <#= serviceId #>.get<#= entityTypeName #>($routeParams.Id)
+                    .then(function (data) {
+                        vm.<#= entityVariable #> = data;
+                    })
+                    .catch(function (error) {
+                        logError("Boooo, we failed: " + error.message, null, true);
+                        // Todo: more sophisticated recovery. 
+                        // Here we just blew it all away and start over
+                        // refresh();
+                    });
+            }
+        };
+
+        function isSaveDisabled() {
+            return isSaving ||
+                (!isNew && !<#= serviceId #>.hasChanges());
+        }
+
+        function saveChanges() {
+
+            if (isNew) {
+                <#= serviceId #>.create<#= entityTypeName #>(vm.<#= entityVariable #>);
+            }
+
+            isSaving = true;
+            return <#= serviceId #>.saveChanges()
+                .then(function () {
+                    logSuccess("Hooray we saved", null, true);
+                    $location.path('/');
+                })
+                .catch(function (error) {
+                    logError("Boooo, we failed: " + error.message, null, true);
+                    // Todo: more sophisticated recovery. 
+                    // Here we just blew it all away and start over
+                    // refresh();
+                })
+                .finally(function () {
+                    isSaving = false;
+                });
+        }
+    };
+})();
+<#
+}
+
+fileManager.Process();
+
+#>

@@ -15,25 +15,25 @@ namespace BusinessObjects.Metadata.Generated
     public class UserLicenseRatingMetadata
     {
         [Display(Name = "Id")]
-        public int Id { get; set; }
+        public object Id { get; set; }
     
         [Display(Name = "UserId")]
-        public int UserId { get; set; }
+        public object UserId { get; set; }
     
         [Display(Name = "LicenseId")]
-        public short LicenseId { get; set; }
+        public object LicenseId { get; set; }
     
         [Display(Name = "Rating")]
-        public decimal Rating { get; set; }
+        public object Rating { get; set; }
     
         [Display(Name = "CreatedOn")]
-        public System.DateTime CreatedOn { get; set; }
+        public object CreatedOn { get; set; }
     
         [Display(Name = "ModifiedOn")]
-        public System.DateTime ModifiedOn { get; set; }
+        public object ModifiedOn { get; set; }
     
         [Display(Name = "DeletedOn")]
-        public Nullable<System.DateTime> DeletedOn { get; set; }
+        public object DeletedOn { get; set; }
     
     }
 }

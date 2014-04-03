@@ -15,19 +15,19 @@ namespace BusinessObjects.Metadata.Generated
     public class ResourcePoolMetadata
     {
         [Display(Name = "Id")]
-        public int Id { get; set; }
+        public object Id { get; set; }
     
         [Display(Name = "Name")]
-        public string Name { get; set; }
+        public object Name { get; set; }
     
         [Display(Name = "CreatedOn")]
-        public System.DateTime CreatedOn { get; set; }
+        public object CreatedOn { get; set; }
     
         [Display(Name = "ModifiedOn")]
-        public System.DateTime ModifiedOn { get; set; }
+        public object ModifiedOn { get; set; }
     
         [Display(Name = "DeletedOn")]
-        public Nullable<System.DateTime> DeletedOn { get; set; }
+        public object DeletedOn { get; set; }
     
     }
 }

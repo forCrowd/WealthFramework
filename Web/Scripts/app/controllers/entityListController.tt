@@ -1,0 +1,99 @@
+﻿<#@ template language="C#" debug="false" hostspecific="true"#>
+<#@ include file="EF6.Utility.CS.ttinclude"#>
+<#@ include file="..\..\..\..\DataObjects\Utility.ttinclude"#><#
+
+// To be able to control whether it's going to be executed
+var executeMe = true;
+if (!executeMe)
+	return string.Empty;
+
+const string inputFile = @"..\..\..\..\DataObjects\Model.edmx";
+var textTransform = DynamicTextTransformation.Create(this);
+var code = new CodeGenerationTools(this);
+var ef = new MetadataTools(this);
+var typeMapper = new TypeMapper(code, ef, textTransform.Errors);
+var	fileManager = EntityFrameworkTemplateFileManager.Create(this);
+var itemCollection = new EdmMetadataLoader(textTransform.Host, textTransform.Errors).CreateEdmItemCollection(inputFile);
+var codeStringGenerator = new CodeStringGenerator(code, typeMapper, ef);
+
+if (!typeMapper.VerifyCaseInsensitiveTypeUniqueness(typeMapper.GetAllGlobalItems(itemCollection), inputFile))
+{
+    return string.Empty;
+}
+
+foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollection))
+{
+	// Variables
+	var entityTypeName = typeMapper.GetTypeName(entityType);
+	var entityVariable = entityTypeName.ToLowerInvariant();
+	var entitySetName = string.Format("{0}Set", entityVariable);
+	var controllerId = string.Format("{0}ListController", entityVariable);
+	var serviceId = string.Format("{0}Service", entityVariable);
+	var entitySetGetMethod = string.Format("get{0}Set", entityTypeName);
+	var entityDeleteMethod = string.Format("delete{0}", entityTypeName);
+	var primaryKey = entityType.KeyMembers[0];
+    var primaryKeyShortTypeName = typeMapper.GetTypeName(primaryKey.TypeUsage);
+	
+    var simpleProperties = typeMapper.GetSimpleProperties(entityType);
+    var relatedProperties = typeMapper.GetRelatedNavigationProperties(entityType);
+	
+	// TODO This needs to be done through enums types?!
+	var hasUserAccountTypeId = simpleProperties.Any(property => property.Name == "UserAccountTypeId");
+
+	var outputFileName = string.Format(@"{0}.js", controllerId);
+
+    fileManager.StartNewFile(outputFileName);
+#>
+<#= codeStringGenerator.WriteHeader()#>
+(function () {
+    'use strict';
+
+    var controllerId = '<#= controllerId #>';
+    angular.module('main')
+        .controller(controllerId, ['<#= serviceId #>', 'logger', <#= controllerId #>]);
+
+    function <#= controllerId #>(<#= serviceId #>, logger) {
+
+        logger = logger.forSource(controllerId);
+        var logError = logger.logError;
+        var logSuccess = logger.logSuccess;
+
+        var vm = this;
+        vm.<#= entityDeleteMethod #> = <#= entityDeleteMethod #>;
+        vm.<#= entitySetName #> = [];
+
+        initialize();
+
+        function initialize() {
+            <#= entitySetGetMethod #>();
+        };
+
+        function <#= entityDeleteMethod #>(<#= entityVariable #>) {
+            <#= serviceId #>.<#= entityDeleteMethod #>(<#= entityVariable #>);
+
+            <#= serviceId #>.saveChanges()
+                .then(function () {
+                    vm.<#= entitySetName #>.splice(vm.<#= entitySetName #>.indexOf(<#= entityVariable #>), 1);
+                    logSuccess("Hooray we saved", null, true);
+                })
+                .catch(function (error) {
+                    logError("Boooo, we failed: " + error.message, null, true);
+                    // Todo: more sophisticated recovery. 
+                    // Here we just blew it all away and start over
+                    // refresh();
+                })
+        };
+
+        function <#= entitySetGetMethod #>(forceRefresh) {
+            return <#= serviceId #>.<#= entitySetGetMethod #>(forceRefresh).then(function (data) {
+                return vm.<#= entitySetName #> = data;
+            });
+        }
+    };
+})();
+<#
+}
+
+fileManager.Process();
+
+#>

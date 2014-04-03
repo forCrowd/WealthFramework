@@ -1,0 +1,219 @@
+﻿<#@ template language="C#" debug="false" hostspecific="true"#>
+<#@ include file="EF6.Utility.CS.ttinclude"#>
+<#@ include file="..\..\..\..\DataObjects\Utility.ttinclude"#><#
+
+// To be able to control whether it's going to be executed
+var executeMe = true;
+if (!executeMe)
+	return string.Empty;
+
+const string inputFile = @"..\..\..\..\DataObjects\Model.edmx";
+var textTransform = DynamicTextTransformation.Create(this);
+var code = new CodeGenerationTools(this);
+var ef = new MetadataTools(this);
+var typeMapper = new TypeMapper(code, ef, textTransform.Errors);
+var	fileManager = EntityFrameworkTemplateFileManager.Create(this);
+var itemCollection = new EdmMetadataLoader(textTransform.Host, textTransform.Errors).CreateEdmItemCollection(inputFile);
+var codeStringGenerator = new CodeStringGenerator(code, typeMapper, ef);
+
+if (!typeMapper.VerifyCaseInsensitiveTypeUniqueness(typeMapper.GetAllGlobalItems(itemCollection), inputFile))
+{
+    return string.Empty;
+}
+
+WriteHeader(codeStringGenerator, fileManager);
+
+foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollection))
+{
+	// Variables
+	var entityTypeName = typeMapper.GetTypeName(entityType);
+	var entityVariable = entityTypeName.ToLowerInvariant();
+	var serviceId = string.Format("{0}Service", entityVariable);
+	var primaryKey = entityType.KeyMembers[0];
+    var primaryKeyShortTypeName = typeMapper.GetTypeName(primaryKey.TypeUsage);
+	
+    var simpleProperties = typeMapper.GetSimpleProperties(entityType);
+    var relatedProperties = typeMapper.GetRelatedNavigationProperties(entityType);
+	
+	// TODO This needs to be done through enums types?!
+	var hasUserAccountTypeId = simpleProperties.Any(property => property.Name == "UserAccountTypeId");
+
+	var outputFileName = string.Format(@"{0}.js", serviceId);
+
+    fileManager.StartNewFile(outputFileName);
+#>
+(function () {
+    'use strict';
+
+    var serviceId = '<#= serviceId #>';
+    angular.module('main')
+        .factory(serviceId, ['dataContext', 'logger', <#= serviceId #>]);
+
+    function <#= serviceId #>(dataContext, logger) {
+
+        // Logger
+        logger = logger.forSource(serviceId);
+        var logError = logger.logError;
+        var logSuccess = logger.logSuccess;
+        var logWarning = logger.logWarning;
+
+        // To determine whether the data will be fecthed from server or local
+        var minimumDate = new Date(0);
+        var fetchedOn = minimumDate;
+
+        // Service methods (alphabetically)
+        var service = {
+            create<#= entityTypeName #>: create<#= entityTypeName #>,
+            delete<#= entityTypeName #>: delete<#= entityTypeName #>,
+            getChanges: getChanges,
+            getChangesCount: getChangesCount,
+            get<#= entityTypeName #>Set: get<#= entityTypeName #>Set,
+            get<#= entityTypeName #>: get<#= entityTypeName #>,
+            hasChanges: hasChanges,
+            rejectChanges: rejectChanges,
+            saveChanges: saveChanges
+        };
+
+        return service;
+
+        /*** Implementations ***/
+
+        function create<#= entityTypeName #>(<#= entityVariable #>) {
+            return dataContext.manager.createEntity('<#= entityTypeName #>', <#= entityVariable #>);
+        }
+
+        function delete<#= entityTypeName #>(<#= entityVariable #>) {
+            <#= entityVariable #>.entityAspect.setDeleted();
+        }
+
+        function getChanges() {
+            return dataContext.getChanges();
+        }
+
+        function getChangesCount() {
+            return dataContext.getChangesCount();
+        }
+
+        function get<#= entityTypeName #>Set(forceRefresh) {
+
+            var count;
+            if (forceRefresh) {
+                if (dataContext.hasChanges()) {
+                    count = dataContext.getChangesCount();
+                    dataContext.rejectChanges(); // undo all unsaved changes!
+                    logWarning('Discarded ' + count + ' pending change(s)', null, true);
+                }
+            }
+
+            var query = breeze.EntityQuery
+				.from("<#= entityTypeName #>")
+<# if (relatedProperties.Any()) {
+	var expandQueryJoin = String.Join(", ", relatedProperties.Select(property => string.Format("'{0}'", property.Name)));
+	var expandQuery = string.Format(".expand([{0}])", expandQueryJoin); #>
+				<#= expandQuery #>
+<# } #>
+            ;
+
+            // Fetch the data from server, in case if it's not fetched earlier or forced
+            var fetchFromServer = fetchedOn === minimumDate || forceRefresh;
+
+            // Prepare the query
+            if (fetchFromServer) { // From remote
+                query = query.using(breeze.FetchStrategy.FromServer)
+                fetchedOn = new Date();
+            }
+            else { // From local
+                query = query.using(breeze.FetchStrategy.FromLocalCache)
+            }
+
+            return dataContext.manager.executeQuery(query)
+                .then(success).catch(failed);
+
+            function success(response) {
+                count = response.results.length;
+                logSuccess('Got ' + count + ' <#= entityVariable #>(s)', response, true);
+                return response.results;
+            }
+
+            function failed(error) {
+                var message = error.message || "<#= entityTypeName #> query failed";
+                logError(message, error, true);
+            }
+        }
+
+        function get<#= entityTypeName #>(<#= entityVariable #>Id, forceRefresh) {
+            return dataContext.manager.fetchEntityByKey("<#= entityTypeName #>", <#= entityVariable #>Id, !forceRefresh)
+                .then(success).catch(failed);
+
+            function success(result) {
+                return result.entity;
+            }
+
+            function failed(error) {
+                var message = error.message || "get<#= entityTypeName #> query failed";
+                logError(message, error, true);
+            }
+        }
+
+        function hasChanges() {
+            return dataContext.hasChanges();
+        }
+
+        function rejectChanges() {
+            dataContext.rejectChanges();
+        }
+
+        function saveChanges() {
+            return dataContext.saveChanges();
+        }
+    }
+})();
+<#
+}
+
+fileManager.Process();
+
+#>
+<#+
+
+public void WriteHeader(CodeStringGenerator codeStringGenerator, EntityFrameworkTemplateFileManager fileManager)
+{
+    fileManager.StartHeader();
+#>
+//------------------------------------------------------------------------------
+// <auto-generated>
+// <#=CodeGenerationTools.GetResourceString("Template_GeneratedCodeCommentLine1")#>
+//
+// <#=CodeGenerationTools.GetResourceString("Template_GeneratedCodeCommentLine2")#>
+// <#=CodeGenerationTools.GetResourceString("Template_GeneratedCodeCommentLine3")#>
+// </auto-generated>
+//------------------------------------------------------------------------------
+<#=codeStringGenerator.UsingDirectives(inHeader: true)#>
+<#+
+    fileManager.EndBlock();
+}
+
+public void BeginNamespace(CodeGenerationTools code)
+{
+    var codeNamespace = code.VsNamespaceSuggestion();
+    if (!String.IsNullOrEmpty(codeNamespace))
+    {
+#>
+namespace <#=code.EscapeNamespace(codeNamespace)#>
+{
+<#+
+        // PushIndent("    ");
+    }
+}
+
+public void EndNamespace(CodeGenerationTools code)
+{
+    if (!String.IsNullOrEmpty(code.VsNamespaceSuggestion()))
+    {
+        // PopIndent();
+#>
+}
+<#+
+    }
+}
+#>

@@ -15,34 +15,34 @@ namespace BusinessObjects.Metadata.Generated
     public class UserResourcePoolOrganizationMetadata
     {
         [Display(Name = "Id")]
-        public int Id { get; set; }
+        public object Id { get; set; }
     
         [Display(Name = "UserId")]
-        public int UserId { get; set; }
+        public object UserId { get; set; }
     
         [Display(Name = "ResourcePoolOrganizationId")]
-        public int ResourcePoolOrganizationId { get; set; }
+        public object ResourcePoolOrganizationId { get; set; }
     
         [Display(Name = "NumberOfSales")]
-        public int NumberOfSales { get; set; }
+        public object NumberOfSales { get; set; }
     
         [Display(Name = "QualityRating")]
-        public decimal QualityRating { get; set; }
+        public object QualityRating { get; set; }
     
         [Display(Name = "CustomerSatisfactionRating")]
-        public decimal CustomerSatisfactionRating { get; set; }
+        public object CustomerSatisfactionRating { get; set; }
     
         [Display(Name = "EmployeeSatisfactionRating")]
-        public decimal EmployeeSatisfactionRating { get; set; }
+        public object EmployeeSatisfactionRating { get; set; }
     
         [Display(Name = "CreatedOn")]
-        public System.DateTime CreatedOn { get; set; }
+        public object CreatedOn { get; set; }
     
         [Display(Name = "ModifiedOn")]
-        public System.DateTime ModifiedOn { get; set; }
+        public object ModifiedOn { get; set; }
     
         [Display(Name = "DeletedOn")]
-        public Nullable<System.DateTime> DeletedOn { get; set; }
+        public object DeletedOn { get; set; }
     
     }
 }

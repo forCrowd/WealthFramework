@@ -1,7 +1,6 @@
 ﻿<#@ template language="C#" debug="false" hostspecific="true"#>
 <#@ include file="EF6.Utility.CS.ttinclude"#>
-<#@ include file="..\..\DataObjects\Utility.ttinclude"#><#@ 
- output extension=".cs"#><#
+<#@ include file="..\..\DataObjects\Utility.ttinclude"#><#
 
 // To be able to control whether it's going to be executed
 var executeMe = true; 
@@ -24,11 +23,11 @@ if (!typeMapper.VerifyCaseInsensitiveTypeUniqueness(typeMapper.GetAllGlobalItems
 
 WriteHeader(codeStringGenerator, fileManager);
 
-foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection))
+foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollection))
 {
 	// Variables
-	var entityName = code.Escape(entity);
-	var entityDtoName = string.Format("{0}Dto", entityName);
+	var entityTypeName = code.Escape(entityType);
+	var entityDtoName = string.Format("{0}Dto", entityTypeName);
 	var outputFileName = string.Format(@"{0}.cs", entityDtoName);
 
     fileManager.StartNewFile(outputFileName);
@@ -40,7 +39,7 @@ using System.ComponentModel.DataAnnotations;
 public class <#=entityDtoName#>
 {
 <#
-    var propertiesWithDefaultValues = typeMapper.GetPropertiesWithDefaultValues(entity);
+    var propertiesWithDefaultValues = typeMapper.GetPropertiesWithDefaultValues(entityType);
 
     if (propertiesWithDefaultValues.Any())
     {
@@ -60,7 +59,7 @@ public class <#=entityDtoName#>
 <#
     }
 
-    var simpleProperties = typeMapper.GetSimpleProperties(entity);
+    var simpleProperties = typeMapper.GetSimpleProperties(entityType);
     if (simpleProperties.Any())
     {
         foreach (var edmProperty in simpleProperties)
@@ -78,9 +77,9 @@ public class <#=entityDtoName#>
     {
 #>
 	
-	public <#=entityName#> ToBusinessObject()
+	public <#=entityTypeName#> ToBusinessObject()
 	{
-		return new <#=entityName#>()
+		return new <#=entityTypeName#>()
 		{
 <#
         foreach (var edmProperty in simpleProperties)

@@ -1,7 +1,6 @@
 ﻿<#@ template language="C#" debug="false" hostspecific="true"#>
 <#@ include file="EF6.Utility.CS.ttinclude"#>
-<#@ include file="..\..\..\..\DataObjects\Utility.ttinclude"#><#@ 
- output extension=".cs"#><#
+<#@ include file="..\..\..\..\DataObjects\Utility.ttinclude"#><#
 
 // To be able to control whether it's going to be executed
 var executeMe = true; 
@@ -29,16 +28,16 @@ foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
 	var entitySetName = entitySet.Name;
 	var entitySetVariable = entitySetName.ToLowerInvariant();
 	var entity = entitySet.ElementType;
-	var entityName = typeMapper.GetTypeName(entity);
-	var entityVariable = entityName.ToLowerInvariant();
-	var controllerName = string.Format("{0}Controller", entityName);
-    var entityDtoName = string.Format("{0}Dto", entityName);
+	var entityTypeName = typeMapper.GetTypeName(entity);
+	var entityVariable = entityTypeName.ToLowerInvariant();
+	var controllerName = string.Format("{0}Controller", entityTypeName);
+    var entityDtoName = string.Format("{0}Dto", entityTypeName);
     var entityDtoVariable = entityDtoName.ToLowerInvariant();
-    var unitOfWorkName = string.Format("{0}UnitOfWork", entityName);	
+    var unitOfWorkName = string.Format("{0}UnitOfWork", entityTypeName);	
 	var primaryKey = entity.KeyMembers[0];
     var primaryKeyShortTypeName = typeMapper.GetTypeName(primaryKey.TypeUsage);
     var primaryKeyNullableTypeName = string.Format("{0}?", primaryKeyShortTypeName);
-	var routePrefix = string.Format("/{0}/", entityName);
+	var routePrefix = string.Format("/{0}/", entityTypeName);
     var lambdaVar = entityVariable[0];
 	
     var simpleProperties = typeMapper.GetSimpleProperties(entity);
@@ -100,7 +99,7 @@ namespace Web.Controllers.Mvc
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            <#= entityName #> <#= entityVariable #> = await unitOfWork.FindAsync(id);
+            <#= entityTypeName #> <#= entityVariable #> = await unitOfWork.FindAsync(id);
             if (<#= entityVariable #> == null)
             {
                 return HttpNotFound();
@@ -204,7 +203,7 @@ namespace Web.Controllers.Mvc
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            <#= entityName #> <#= entityVariable #> = await unitOfWork.FindAsync(id);
+            <#= entityTypeName #> <#= entityVariable #> = await unitOfWork.FindAsync(id);
             if (<#= entityVariable #> == null)
             {
                 return HttpNotFound();
@@ -250,7 +249,7 @@ namespace Web.Controllers.Mvc
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-<#	if (entityName == "User") { #>
+<#	if (entityTypeName == "User") { #>
         public async Task<ActionResult> Edit(<#= bindAttribute #><#= entityDtoName #> <#= entityDtoVariable #>, string returnUrl)
 <# } else { #>
         public async Task<ActionResult> Edit(<#= bindAttribute #><#= entityDtoName #> <#= entityDtoVariable #>)
@@ -262,7 +261,7 @@ namespace Web.Controllers.Mvc
             {
                 unitOfWork.Update(<#= entityVariable #>);
                 await unitOfWork.SaveAsync();
-<#	if (entityName == "User") { #>
+<#	if (entityTypeName == "User") { #>
                 if (!string.IsNullOrWhiteSpace(returnUrl))
                     return Redirect(returnUrl);
                 return RedirectToAction("Index", "Home");
@@ -313,7 +312,7 @@ namespace Web.Controllers.Mvc
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            <#= entityName #> <#= entityVariable #> = await unitOfWork.FindAsync(id);
+            <#= entityTypeName #> <#= entityVariable #> = await unitOfWork.FindAsync(id);
             if (<#= entityVariable #> == null)
             {
                 return HttpNotFound();

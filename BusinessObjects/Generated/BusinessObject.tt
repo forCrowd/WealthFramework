@@ -1,7 +1,6 @@
 ﻿<#@ template language="C#" debug="false" hostspecific="true"#>
 <#@ include file="EF6.Utility.CS.ttinclude"#>
-<#@ include file="..\..\DataObjects\Utility.ttinclude"#><#@ 
- output extension=".cs"#><#
+<#@ include file="..\..\DataObjects\Utility.ttinclude"#><#
 
 // To be able to control whether it's going to be executed
 var executeMe = true; 
@@ -24,30 +23,30 @@ if (!typeMapper.VerifyCaseInsensitiveTypeUniqueness(typeMapper.GetAllGlobalItems
 
 WriteHeader(codeStringGenerator, fileManager);
 
-foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection))
+foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollection))
 {
 	// Variables
-	var entityName = code.Escape(entity);
-	var entityMetadataName = string.Format("{0}Metadata", entityName);
-	var primaryKey = entity.KeyMembers[0];
-	var outputFileName = string.Format(@"{0}.cs", entityName);
+	var entityTypeName = code.Escape(entityType);
+	var entityMetadataName = string.Format("{0}Metadata", entityTypeName);
+	var primaryKey = entityType.KeyMembers[0];
+	var outputFileName = string.Format(@"{0}.cs", entityTypeName);
 
     fileManager.StartNewFile(outputFileName);
     BeginNamespace(code);
 #>
 <#=codeStringGenerator.UsingDirectives(inHeader: false, includeDataAnnotations: true, includeBusinessObjectsMetadata: true)#>
 [MetadataType(typeof(<#=entityMetadataName#>))]
-<#=codeStringGenerator.EntityClassOpening(entity)#>
+<#=codeStringGenerator.EntityClassOpening(entityType)#>
 {
 <#
-    var propertiesWithDefaultValues = typeMapper.GetPropertiesWithDefaultValues(entity);
-    var collectionNavigationProperties = typeMapper.GetCollectionNavigationProperties(entity);
-    var complexProperties = typeMapper.GetComplexProperties(entity);
+    var propertiesWithDefaultValues = typeMapper.GetPropertiesWithDefaultValues(entityType);
+    var collectionNavigationProperties = typeMapper.GetCollectionNavigationProperties(entityType);
+    var complexProperties = typeMapper.GetComplexProperties(entityType);
 
     if (propertiesWithDefaultValues.Any() || collectionNavigationProperties.Any() || complexProperties.Any())
     {
 #>
-    public <#=entityName#>()
+    public <#=entityTypeName#>()
     {
 <#
         foreach (var edmProperty in propertiesWithDefaultValues)
@@ -76,7 +75,7 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection)
 <#
     }
   
-    var simpleProperties = typeMapper.GetSimpleProperties(entity);
+    var simpleProperties = typeMapper.GetSimpleProperties(entityType);
     if (simpleProperties.Any())
     {
         foreach (var edmProperty in simpleProperties)
@@ -100,7 +99,7 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection)
         }
     }
 
-    var navigationProperties = typeMapper.GetNavigationProperties(entity);
+    var navigationProperties = typeMapper.GetNavigationProperties(entityType);
     if (navigationProperties.Any())
     {
 #>

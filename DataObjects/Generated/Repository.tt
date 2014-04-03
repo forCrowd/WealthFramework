@@ -1,10 +1,9 @@
 ﻿<#@ template language="C#" debug="false" hostspecific="true"#>
 <#@ include file="EF6.Utility.CS.ttinclude"#>
-<#@ include file="..\Utility.ttinclude"#><#@ 
- output extension=".cs"#><#
+<#@ include file="..\Utility.ttinclude"#><#
 
 // To be able to control whether it's going to be executed
-var executeMe = false;
+var executeMe = true;
 if (!executeMe)
 	return string.Empty;
 
@@ -23,11 +22,18 @@ if (container == null)
     return string.Empty;
 }
 
-foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
+if (!typeMapper.VerifyCaseInsensitiveTypeUniqueness(typeMapper.GetAllGlobalItems(itemCollection), inputFile))
+{
+    return string.Empty;
+}
+
+WriteHeader(codeStringGenerator, fileManager);
+
+foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollection))
 {
 	// Variables
-	var entityName = typeMapper.GetTypeName(entitySet.ElementType);
-	var entityRepositoryName = string.Format("{0}Repository", entityName);
+	var entityTypeName = typeMapper.GetTypeName(entityType);
+	var entityRepositoryName = string.Format("{0}Repository", entityTypeName);
 	var outputFileName = string.Format(@"{0}.cs", entityRepositoryName);
 
     fileManager.StartNewFile(outputFileName);
@@ -36,7 +42,7 @@ foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
 #>
     using BusinessObjects;
 
-    public partial class <#= entityRepositoryName #> : BaseRepository<<#= entityName #>>
+    public partial class <#= entityRepositoryName #> : BaseRepository<<#= entityTypeName #>>
     {
         public <#= entityRepositoryName #>(<#=code.Escape(container)#> context)
             : base(context)

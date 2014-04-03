@@ -31,8 +31,8 @@
 
         void DeleteRange(IEnumerable<TEntityType> entities);
 
-        int Save();
+        int SaveChanges();
 
-        Task<int> SaveAsync();
+        Task<int> SaveChangesAsync();
     }
 }
