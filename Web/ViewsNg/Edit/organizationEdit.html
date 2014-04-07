@@ -14,7 +14,7 @@
         <h4>Organization</h4>
         <hr />
         <div class="form-group">
-            <label for="SectorId" class="control-label col-md-2">Name</label>
+            <label for="SectorId" class="control-label col-md-2">Sector</label>
             <div class="col-md-10" data-ng-class="{'has-error': editForm.SectorId.$invalid && !editForm.SectorId.$pristine}">
                 <select id="SectorId" name="SectorId" data-ng-model="vm.organization.Sector" data-ng-options="sector.Name for sector in vm.sectorSet" class="form-control" required ></select>
             </div>

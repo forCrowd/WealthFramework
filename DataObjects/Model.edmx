@@ -382,7 +382,7 @@
                         <PropertyRef Name="Id" />
                     </Key>
                     <Property Name="Id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
-                    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+                    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" cs:DisplayName="Sector" />
                     <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
                     <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
                     <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
