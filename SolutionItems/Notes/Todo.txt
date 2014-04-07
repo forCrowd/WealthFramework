@@ -15,40 +15,21 @@
 . breeze entitymanager - ensure metadata fetched;
 http://stackoverflow.com/questions/16068184/breezejs-how-to-fetch-metadata-at-start-with-shared-entitymanager
 . check javascript beginning comments
-
+. in some cases, cancel button doesnt allow to go back? - fill this required field?
+. paging + filters (user id)
+. related metadata sections from odata controller?
+. how delta & patch works?
+. validateantiforgerytoken + bind attributes in odata controller?
+. use scripts.render?
 . ef tools?!
 http://msdn.microsoft.com/en-US/data/jj593170
 http://msdn.microsoft.com/en-us/data/jj593170.aspx
 http://msdn.microsoft.com/en-US/data/jj200620
 http://msdn.microsoft.com/en-US/data/jj591583#Index
 
-.. use scripts.render?
-
-. how delta & patch works?
-
-. validateantiforgerytoken + bind attributes in odata controller?
-
 . writeheader is now in utility.tt -> apply to the others
 also check beginnamespace + endnamespace etc.
 
-. entityVariable = entity[0] + entity.substring(1) ?!
+. camelcase case!
 
-. continue with list.html + edit.html
-.. delete old controllers
-
-. related metadata sections?;
-RelatedModelMetadata GetRelatedModelMetadata(PropertyMetadata property){
-    RelatedModelMetadata propertyModel;
-    IDictionary<string, RelatedModelMetadata> relatedProperties;
-    if(ModelMetadata.RelatedEntities != null)
-    {
-        relatedProperties = ModelMetadata.RelatedEntities.ToDictionary(item => item.AssociationPropertyName);
-    }
-    else
-    {
-        relatedProperties = new Dictionary<string, RelatedModelMetadata>();
-    }
-    relatedProperties.TryGetValue(property.PropertyName, out propertyModel);
-
-    return propertyModel;
-}
+. navigation properties - resourcepoolorganization entity fails, since Name is a property in the partial class and not in db+edmx. not possible to use it ?!

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="EdmCustomSchema"
+    targetNamespace="http://tempuri.org/EdmCustomSchema.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://tempuri.org/EdmCustomSchema.xsd"
+    xmlns:mstns="http://tempuri.org/EdmCustomSchema.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+    <xs:annotation>
+        <xs:documentation xml:lang="en">
+            Custom schema for edmx files.
+        </xs:documentation>
+    </xs:annotation>
+
+     <!--Entity level-->
+    <xs:attribute name="DefaultProperty" type="xs:string" />
+
+    <!-- Property level -->
+    <xs:attribute name="DisplayName" type="xs:string" />
+    <xs:attribute name="DisplayOnListView" type="xs:boolean" default="true" />
+    <xs:attribute name="DisplayOnEditView" type="xs:boolean" default="true" />
+
+</xs:schema>

@@ -23,7 +23,7 @@ namespace BusinessObjects
         }
     
         public int Id { get; set; }
-        public byte SectorId { get; set; }
+        public short SectorId { get; set; }
         public string Name { get; set; }
         public decimal ProductionCost { get; set; }
         public decimal SalesPrice { get; set; }

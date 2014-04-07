@@ -4,13 +4,14 @@
     angular.module('main')
         .config(function ($routeProvider) {
             var entityName = window.location.pathname.replace('/', '').replace('Ng', '');
-            var entityNameLowerCase = entityName[0].toLowerCase() + entityName.substring(1);
+            // var entityNameLowerCase = entityName[0].toLowerCase() + entityName.substring(1);
+            var entityNameLowerCase = entityName.toLowerCase();
 
             var entityListController = entityNameLowerCase + 'ListController as vm';
-            var entityListTemplateUrl = 'ViewsNg/' + entityName + '/list.html';
+            var entityListTemplateUrl = 'ViewsNg/list/' + entityNameLowerCase + 'List.html';
 
             var entityEditController = entityNameLowerCase + 'EditController as vm';
-            var entityEditTemplateUrl = 'ViewsNg/' + entityName + '/edit.html';
+            var entityEditTemplateUrl = 'ViewsNg/edit/' + entityNameLowerCase + 'Edit.html';
 
             // Routes
             $routeProvider

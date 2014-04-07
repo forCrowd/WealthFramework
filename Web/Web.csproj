@@ -224,8 +224,16 @@
     <Compile Include="Controllers\Mvc\Generated\UserSectorRatingController.cs">
       <DependentUpon>MvcController.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\Mvc\OrganizationController.cs" />
+    <Compile Include="Controllers\Mvc\ResourcePoolOrganizationNgController.cs" />
+    <Compile Include="Controllers\Mvc\ResourcePoolNgController.cs" />
+    <Compile Include="Controllers\Mvc\SectorNgController.cs" />
+    <Compile Include="Controllers\Mvc\OrganizationNgController.cs" />
     <Compile Include="Controllers\Mvc\LicenseNgController.cs" />
+    <Compile Include="Controllers\Mvc\UserSectorRatingNgController.cs" />
+    <Compile Include="Controllers\Mvc\UserResourcePoolOrganizationNgController.cs" />
+    <Compile Include="Controllers\Mvc\UserResourcePoolNgController.cs" />
+    <Compile Include="Controllers\Mvc\UserLicenseRatingNgController.cs" />
+    <Compile Include="Controllers\Mvc\UserNgController.cs" />
     <Compile Include="Controllers\Mvc\UserController.cs" />
     <Compile Include="Controllers\Mvc\HomeController.cs" />
     <Compile Include="Controllers\Mvc\DatabaseAlterationController.cs" />
@@ -279,20 +287,30 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Helper.cs" />
-    <Compile Include="Scripts\app\controllers\entityEditController.cs">
+    <Compile Include="Scripts\app\controllers\editController.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>entityEditController.tt</DependentUpon>
+      <DependentUpon>editController.tt</DependentUpon>
     </Compile>
-    <Compile Include="Scripts\app\controllers\entityListController.cs">
+    <Compile Include="Scripts\app\controllers\listController.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>entityListController.tt</DependentUpon>
+      <DependentUpon>listController.tt</DependentUpon>
     </Compile>
-    <Compile Include="Scripts\app\services\entityService.cs">
+    <Compile Include="Scripts\app\services\service.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>entityService.tt</DependentUpon>
+      <DependentUpon>service.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewsNg\Edit\edit.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>edit.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewsNg\List\list.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>list.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -304,6 +322,36 @@
     <Content Include="Content\breeze.directives.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
+    <Content Include="Controllers\Mvc\Generated\licenseList.html">
+      <DependentUpon>list.tt</DependentUpon>
+    </Content>
+    <Content Include="Controllers\Mvc\Generated\organizationList.html">
+      <DependentUpon>list.tt</DependentUpon>
+    </Content>
+    <Content Include="Controllers\Mvc\Generated\resourcepoolList.html">
+      <DependentUpon>list.tt</DependentUpon>
+    </Content>
+    <Content Include="Controllers\Mvc\Generated\resourcepoolorganizationList.html">
+      <DependentUpon>list.tt</DependentUpon>
+    </Content>
+    <Content Include="Controllers\Mvc\Generated\sectorList.html">
+      <DependentUpon>list.tt</DependentUpon>
+    </Content>
+    <Content Include="Controllers\Mvc\Generated\userlicenseratingList.html">
+      <DependentUpon>list.tt</DependentUpon>
+    </Content>
+    <Content Include="Controllers\Mvc\Generated\userList.html">
+      <DependentUpon>list.tt</DependentUpon>
+    </Content>
+    <Content Include="Controllers\Mvc\Generated\userresourcepoolList.html">
+      <DependentUpon>list.tt</DependentUpon>
+    </Content>
+    <Content Include="Controllers\Mvc\Generated\userresourcepoolorganizationList.html">
+      <DependentUpon>list.tt</DependentUpon>
+    </Content>
+    <Content Include="Controllers\Mvc\Generated\usersectorratingList.html">
+      <DependentUpon>list.tt</DependentUpon>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -313,101 +361,99 @@
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\app\controllers\licenseEditController.js">
-      <DependentUpon>entityEditController.tt</DependentUpon>
+      <DependentUpon>editController.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\controllers\licenseListController.js">
-      <DependentUpon>entityListController.tt</DependentUpon>
+      <DependentUpon>listController.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\controllers\organizationEditController.js">
-      <DependentUpon>entityEditController.tt</DependentUpon>
+      <DependentUpon>editController.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\controllers\organizationListController.js">
-      <DependentUpon>entityListController.tt</DependentUpon>
+      <DependentUpon>listController.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\controllers\resourcepoolEditController.js">
-      <DependentUpon>entityEditController.tt</DependentUpon>
+      <DependentUpon>editController.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\controllers\resourcepoolListController.js">
-      <DependentUpon>entityListController.tt</DependentUpon>
+      <DependentUpon>listController.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\controllers\resourcepoolorganizationEditController.js">
-      <DependentUpon>entityEditController.tt</DependentUpon>
+      <DependentUpon>editController.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\controllers\resourcepoolorganizationListController.js">
-      <DependentUpon>entityListController.tt</DependentUpon>
+      <DependentUpon>listController.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\controllers\sectorEditController.js">
-      <DependentUpon>entityEditController.tt</DependentUpon>
+      <DependentUpon>editController.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\controllers\sectorListController.js">
-      <DependentUpon>entityListController.tt</DependentUpon>
+      <DependentUpon>listController.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\controllers\userEditController.js">
-      <DependentUpon>entityEditController.tt</DependentUpon>
+      <DependentUpon>editController.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\controllers\userlicenseratingEditController.js">
-      <DependentUpon>entityEditController.tt</DependentUpon>
+      <DependentUpon>editController.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\controllers\userlicenseratingListController.js">
-      <DependentUpon>entityListController.tt</DependentUpon>
+      <DependentUpon>listController.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\controllers\userListController.js">
-      <DependentUpon>entityListController.tt</DependentUpon>
+      <DependentUpon>listController.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\controllers\userresourcepoolEditController.js">
-      <DependentUpon>entityEditController.tt</DependentUpon>
+      <DependentUpon>editController.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\controllers\userresourcepoolListController.js">
-      <DependentUpon>entityListController.tt</DependentUpon>
+      <DependentUpon>listController.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\controllers\userresourcepoolorganizationEditController.js">
-      <DependentUpon>entityEditController.tt</DependentUpon>
+      <DependentUpon>editController.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\controllers\userresourcepoolorganizationListController.js">
-      <DependentUpon>entityListController.tt</DependentUpon>
+      <DependentUpon>listController.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\controllers\usersectorratingEditController.js">
-      <DependentUpon>entityEditController.tt</DependentUpon>
+      <DependentUpon>editController.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\controllers\usersectorratingListController.js">
-      <DependentUpon>entityListController.tt</DependentUpon>
+      <DependentUpon>listController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\organizationController.js" />
-    <Content Include="Scripts\app\sectorManager.js" />
     <Content Include="Scripts\app\entityManagerFactory.js" />
     <Content Include="Scripts\app\dataContext.js" />
     <Content Include="Scripts\app\logger.js" />
     <Content Include="Scripts\app\route.js" />
     <Content Include="Scripts\app\main.js" />
     <Content Include="Scripts\app\services\licenseService.js">
-      <DependentUpon>entityService.tt</DependentUpon>
+      <DependentUpon>service.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\services\organizationService.js">
-      <DependentUpon>entityService.tt</DependentUpon>
+      <DependentUpon>service.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\services\resourcepoolorganizationService.js">
-      <DependentUpon>entityService.tt</DependentUpon>
+      <DependentUpon>service.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\services\resourcepoolService.js">
-      <DependentUpon>entityService.tt</DependentUpon>
+      <DependentUpon>service.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\services\sectorService.js">
-      <DependentUpon>entityService.tt</DependentUpon>
+      <DependentUpon>service.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\services\userlicenseratingService.js">
-      <DependentUpon>entityService.tt</DependentUpon>
+      <DependentUpon>service.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\services\userresourcepoolorganizationService.js">
-      <DependentUpon>entityService.tt</DependentUpon>
+      <DependentUpon>service.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\services\userresourcepoolService.js">
-      <DependentUpon>entityService.tt</DependentUpon>
+      <DependentUpon>service.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\services\usersectorratingService.js">
-      <DependentUpon>entityService.tt</DependentUpon>
+      <DependentUpon>service.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\services\userService.js">
-      <DependentUpon>entityService.tt</DependentUpon>
+      <DependentUpon>service.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -447,17 +493,17 @@
     <None Include="Properties\PublishProfiles\Default.pubxml" />
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\angular-route.min.js.map" />
-    <Content Include="Scripts\app\services\entityService.tt">
+    <Content Include="Scripts\app\services\service.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>entityService.cs</LastGenOutput>
+      <LastGenOutput>service.cs</LastGenOutput>
     </Content>
-    <Content Include="Scripts\app\controllers\entityListController.tt">
+    <Content Include="Scripts\app\controllers\listController.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>entityListController.cs</LastGenOutput>
+      <LastGenOutput>listController.cs</LastGenOutput>
     </Content>
-    <Content Include="Scripts\app\controllers\entityEditController.tt">
+    <Content Include="Scripts\app\controllers\editController.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>entityEditController.cs</LastGenOutput>
+      <LastGenOutput>editController.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\breeze.intellisense.js" />
@@ -474,13 +520,72 @@
     <Content Include="Scripts\modernizr-2.7.2.js" />
     <Content Include="Scripts\q.js" />
     <Content Include="Scripts\q.min.js" />
-    <Content Include="Scripts\app\licenseController.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\toastr.min.js" />
+    <Content Include="ViewsNg\Edit\licenseEdit.html">
+      <DependentUpon>edit.tt</DependentUpon>
+    </Content>
+    <Content Include="ViewsNg\Edit\organizationEdit.html">
+      <DependentUpon>edit.tt</DependentUpon>
+    </Content>
+    <Content Include="ViewsNg\Edit\resourcepoolEdit.html">
+      <DependentUpon>edit.tt</DependentUpon>
+    </Content>
+    <Content Include="ViewsNg\Edit\resourcepoolorganizationEdit.html">
+      <DependentUpon>edit.tt</DependentUpon>
+    </Content>
+    <Content Include="ViewsNg\Edit\sectorEdit.html">
+      <DependentUpon>edit.tt</DependentUpon>
+    </Content>
+    <Content Include="ViewsNg\Edit\userEdit.html">
+      <DependentUpon>edit.tt</DependentUpon>
+    </Content>
+    <Content Include="ViewsNg\Edit\userlicenseratingEdit.html">
+      <DependentUpon>edit.tt</DependentUpon>
+    </Content>
+    <Content Include="ViewsNg\Edit\userresourcepoolEdit.html">
+      <DependentUpon>edit.tt</DependentUpon>
+    </Content>
+    <Content Include="ViewsNg\Edit\userresourcepoolorganizationEdit.html">
+      <DependentUpon>edit.tt</DependentUpon>
+    </Content>
+    <Content Include="ViewsNg\Edit\usersectorratingEdit.html">
+      <DependentUpon>edit.tt</DependentUpon>
+    </Content>
+    <Content Include="ViewsNg\List\licenseList.html">
+      <DependentUpon>list.tt</DependentUpon>
+    </Content>
+    <Content Include="ViewsNg\List\organizationList.html">
+      <DependentUpon>list.tt</DependentUpon>
+    </Content>
+    <Content Include="ViewsNg\List\resourcepoolList.html">
+      <DependentUpon>list.tt</DependentUpon>
+    </Content>
+    <Content Include="ViewsNg\List\resourcepoolorganizationList.html">
+      <DependentUpon>list.tt</DependentUpon>
+    </Content>
+    <Content Include="ViewsNg\List\sectorList.html">
+      <DependentUpon>list.tt</DependentUpon>
+    </Content>
+    <Content Include="ViewsNg\List\userlicenseratingList.html">
+      <DependentUpon>list.tt</DependentUpon>
+    </Content>
+    <Content Include="ViewsNg\List\userList.html">
+      <DependentUpon>list.tt</DependentUpon>
+    </Content>
+    <Content Include="ViewsNg\List\userresourcepoolList.html">
+      <DependentUpon>list.tt</DependentUpon>
+    </Content>
+    <Content Include="ViewsNg\List\userresourcepoolorganizationList.html">
+      <DependentUpon>list.tt</DependentUpon>
+    </Content>
+    <Content Include="ViewsNg\List\usersectorratingList.html">
+      <DependentUpon>list.tt</DependentUpon>
+    </Content>
     <Content Include="ViewsNg\Organization\edit.html" />
     <Content Include="ViewsNg\Organization\list.html" />
     <Content Include="ViewsNg\License\edit.html" />
@@ -536,6 +641,22 @@
     <Content Include="Scripts\toastr.min.js.map" />
     <Content Include="Scripts\jquery-2.1.0.min.map" />
     <Content Include="Views\OrganizationNg\Index.cshtml" />
+    <Content Include="ViewsNg\List\list.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>list.cs</LastGenOutput>
+    </Content>
+    <Content Include="ViewsNg\Edit\edit.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>edit.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\ResourcePoolNg\Index.cshtml" />
+    <Content Include="Views\ResourcePoolOrganizationNg\Index.cshtml" />
+    <Content Include="Views\SectorNg\Index.cshtml" />
+    <Content Include="Views\UserNg\Index.cshtml" />
+    <Content Include="Views\UserResourcePoolNg\Index.cshtml" />
+    <Content Include="Views\UserResourcePoolOrganizationNg\Index.cshtml" />
+    <Content Include="Views\UserSectorRatingNg\Index.cshtml" />
+    <Content Include="Views\UserLicenseRatingNg\Index.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>

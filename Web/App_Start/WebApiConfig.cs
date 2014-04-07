@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using Microsoft.Data.Edm;
+using System.Web.Http;
 using System.Web.Http.OData.Batch;
 
 namespace Web

@@ -123,6 +123,9 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="EdmCustomSchema.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Generated\Repository.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Repository.cs</LastGenOutput>

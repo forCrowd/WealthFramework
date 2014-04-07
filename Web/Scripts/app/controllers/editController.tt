@@ -52,7 +52,8 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 <#
 	foreach (var property in relatedProperties)
 	{
-		var relatedVariable = string.Format("{0}{1}", property.Name[0].ToString().ToLowerInvariant(), property.Name.Substring(1));
+		//var relatedVariable = string.Format("{0}{1}", property.Name[0].ToString().ToLowerInvariant(), property.Name.Substring(1));
+		var relatedVariable = property.Name.ToLowerInvariant();
 		var relatedServiceId = string.Format("{0}Service", relatedVariable);
 #>
             '<#= relatedServiceId #>',
@@ -66,7 +67,8 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 <#
 	foreach (var property in relatedProperties)
 	{
-		var relatedVariable = string.Format("{0}{1}", property.Name[0].ToString().ToLowerInvariant(), property.Name.Substring(1));
+		// var relatedVariable = string.Format("{0}{1}", property.Name[0].ToString().ToLowerInvariant(), property.Name.Substring(1));
+		var relatedVariable = property.Name.ToLowerInvariant();
 		var relatedServiceId = string.Format("{0}Service", relatedVariable);
 #>
 		<#= relatedServiceId #>,
@@ -87,7 +89,8 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 <#
 	foreach (var property in relatedProperties)
 	{
-		var relatedVariable = string.Format("{0}{1}", property.Name[0].ToString().ToLowerInvariant(), property.Name.Substring(1));
+		//var relatedVariable = string.Format("{0}{1}", property.Name[0].ToString().ToLowerInvariant(), property.Name.Substring(1));
+		var relatedVariable = property.Name.ToLowerInvariant();
 		var relatedSetName = string.Format("{0}Set", relatedVariable);
 #>
         vm.<#= relatedSetName #> = [];
@@ -121,7 +124,8 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 <#
 	foreach (var property in relatedProperties)
 	{
-		var relatedVariable = string.Format("{0}{1}", property.Name[0].ToString().ToLowerInvariant(), property.Name.Substring(1));
+		// var relatedVariable = string.Format("{0}{1}", property.Name[0].ToString().ToLowerInvariant(), property.Name.Substring(1));
+		var relatedVariable = property.Name.ToLowerInvariant();
 		var relatedServiceId = string.Format("{0}Service", relatedVariable);
 		var relatedSetGetMethod = string.Format("get{0}Set", property.Name);
 		var relatedSetName = string.Format("{0}Set", relatedVariable);

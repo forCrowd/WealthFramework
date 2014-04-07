@@ -1,0 +1,143 @@
+﻿<#@ template language="C#" debug="false" hostspecific="true"#>
+<#@ include file="EF6.Utility.CS.ttinclude"#>
+<#@ include file="..\..\..\DataObjects\Utility.ttinclude"#><#
+
+// To be able to control whether it's going to be executed
+var executeMe = true;
+if (!executeMe)
+	return string.Empty;
+
+const string inputFile = @"..\..\..\DataObjects\Model.edmx";
+var textTransform = DynamicTextTransformation.Create(this);
+var code = new CodeGenerationTools(this);
+var ef = new MetadataTools(this);
+var typeMapper = new TypeMapper(code, ef, textTransform.Errors);
+var	fileManager = EntityFrameworkTemplateFileManager.Create(this);
+var itemCollection = new EdmMetadataLoader(textTransform.Host, textTransform.Errors).CreateEdmItemCollection(inputFile);
+var codeStringGenerator = new CodeStringGenerator(code, typeMapper, ef);
+
+if (!typeMapper.VerifyCaseInsensitiveTypeUniqueness(typeMapper.GetAllGlobalItems(itemCollection), inputFile))
+{
+    return string.Empty;
+}
+
+foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollection))
+{
+	// Variables
+	var entityTypeName = typeMapper.GetTypeName(entityType);
+	var entityVariable = entityTypeName.ToLowerInvariant();
+	var entitySetName = string.Format("{0}Set", entityVariable);
+	var entityDeleteMethod = string.Format("delete{0}", entityTypeName);
+	var primaryKey = entityType.KeyMembers[0];
+    var primaryKeyShortTypeName = typeMapper.GetTypeName(primaryKey.TypeUsage);
+    var simpleProperties = typeMapper.GetSimpleProperties(entityType);
+    var relatedProperties = typeMapper.GetRelatedNavigationProperties(entityType);
+	var outputFileName = string.Format(@"{0}Edit.html", entityVariable);
+
+    fileManager.StartNewFile(outputFileName);
+#>
+<!--
+<#= codeStringGenerator.WriteHeader() #>-->
+<h2>Edit</h2>
+<form name="editForm">
+    <div class="form-horizontal">
+        <h4><#= entityTypeName #></h4>
+        <hr />
+<#
+    if (simpleProperties.Any())
+    {
+        foreach (var property in simpleProperties)
+        {
+			if (property.MetadataProperties.Any(p => p.Name == "http://tempuri.org/EdmCustomSchema.xsd:DisplayOnEditView")
+				&& !bool.Parse(property.MetadataProperties["http://tempuri.org/EdmCustomSchema.xsd:DisplayOnEditView"].Value.ToString()))
+				continue;
+			
+		// Check foreign key
+		var relatedProperty = relatedProperties.SingleOrDefault(related => ((AssociationType)related.RelationshipType)
+			.Constraint
+			.ToProperties
+			.Any(constraint => constraint.Name == property.Name));
+
+		var displayName = string.Empty;
+		var displayInput = string.Empty;
+
+		var requiredText = property.Nullable ? "" : "required ";
+		
+		if (relatedProperty == null)
+        {
+			displayName = property.Name;
+
+			if (property.MetadataProperties.Any(p => p.Name == "http://tempuri.org/EdmCustomSchema.xsd:DisplayName"))
+				displayName = property.MetadataProperties["http://tempuri.org/EdmCustomSchema.xsd:DisplayName"].Value.ToString();
+
+			displayInput = string.Format(@"<input id=""{0}"" name=""{0}"" type=""text"" data-ng-model=""vm.{1}.{2}"" class=""form-control"" {3}/>",
+				property.Name,
+				entityVariable,
+				property.Name,
+				requiredText);
+
+		}
+		else
+        {
+			var relatedEntityType = (EntityType)((RefType)relatedProperty.ToEndMember.TypeUsage.EdmType).ElementType;
+			
+			displayName = typeMapper.GetTypeName(relatedEntityType);
+		
+			// Default property
+			var relatedDefaultPropertyName = string.Empty;
+
+			if (relatedEntityType.MetadataProperties.Any(p => p.Name == "http://tempuri.org/EdmCustomSchema.xsd:DefaultProperty"))
+				relatedDefaultPropertyName = relatedEntityType.MetadataProperties["http://tempuri.org/EdmCustomSchema.xsd:DefaultProperty"].Value.ToString();
+
+			if (relatedEntityType.Properties.Any(p => p.Name == relatedDefaultPropertyName))
+			{
+				var relatedDefaultProperty = relatedEntityType.Properties[relatedDefaultPropertyName];
+
+				displayName = relatedDefaultProperty.Name;
+
+				if (relatedDefaultProperty.MetadataProperties.Any(p => p.Name == "http://tempuri.org/EdmCustomSchema.xsd:DisplayName"))
+					displayName = relatedDefaultProperty.MetadataProperties["http://tempuri.org/EdmCustomSchema.xsd:DisplayName"].Value.ToString();
+			}
+
+			var relatedEntityVariable = relatedProperty.Name.ToLowerInvariant();
+			var relatedEntitySet = string.Format("{0}Set", relatedEntityVariable);
+
+			displayInput = string.Format(@"<select id=""{0}"" name=""{0}"" data-ng-model=""vm.{1}.{2}"" data-ng-options=""{3}.{4} for {3} in vm.{5}"" class=""form-control"" {6}></select>",
+				property.Name,
+				entityVariable,
+				relatedProperty.Name,
+				relatedEntityVariable,
+				relatedDefaultPropertyName,
+				relatedEntitySet,
+				requiredText);
+        }
+		
+#>
+        <div class="form-group">
+            <label for="<#= property.Name #>" class="control-label col-md-2"><#= displayName #></label>
+            <div class="col-md-10" data-ng-class="{'has-error': editForm.<#= property.Name #>.$invalid && !editForm.<#= property.Name #>.$pristine}">
+                <#= displayInput #>
+            </div>
+        </div>
+<#
+        }
+    }
+#>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button data-ng-click="vm.saveChanges()" data-ng-disabled="editForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
+                    Save
+                </button>
+                <button data-ng-click="vm.cancelChanges()" class="btn btn-danger">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+<#
+}
+
+fileManager.Process();
+
+#>

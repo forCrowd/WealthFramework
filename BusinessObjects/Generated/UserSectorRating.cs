@@ -19,7 +19,7 @@ namespace BusinessObjects
     {
         public int Id { get; set; }
         public int UserId { get; set; }
-        public byte SectorId { get; set; }
+        public short SectorId { get; set; }
         public decimal Rating { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public System.DateTime ModifiedOn { get; set; }

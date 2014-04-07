@@ -14,7 +14,7 @@
     angular.module('main')
         .controller(controllerId, ['resourcepoolorganizationService',
             'organizationService',
-            'resourcePoolService',
+            'resourcepoolService',
             'logger',
             '$location',
             '$routeParams',
@@ -22,7 +22,7 @@
 
     function resourcepoolorganizationEditController(resourcepoolorganizationService,
 		organizationService,
-		resourcePoolService,
+		resourcepoolService,
 		logger,
 		$location,
 		$routeParams) {
@@ -37,7 +37,7 @@
         // Controller methods (alphabetically)
         var vm = this;
         vm.organizationSet = [];
-        vm.resourcePoolSet = [];
+        vm.resourcepoolSet = [];
         vm.cancelChanges = cancelChanges;
         vm.isSaveDisabled = isSaveDisabled;
         vm.resourcepoolorganization = null;
@@ -71,9 +71,9 @@
 
             // TODO Catch?
 
-            resourcePoolService.getResourcePoolSet()
+            resourcepoolService.getResourcePoolSet()
                 .then(function (data) {
-                    vm.resourcePoolSet = data;
+                    vm.resourcepoolSet = data;
                 });
 
             // TODO Catch?
