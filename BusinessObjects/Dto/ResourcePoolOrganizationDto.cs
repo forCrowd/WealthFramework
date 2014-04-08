@@ -11,32 +11,32 @@ namespace BusinessObjects.Dto
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    
+
     public class ResourcePoolOrganizationDto
     {
-    	[Required]
+        [Required]
         public int Id { get; set; }
-    	[Required]
+        [Required]
         public int ResourcePoolId { get; set; }
-    	[Required]
+        [Required]
         public int OrganizationId { get; set; }
-    	[Required]
+        [Required]
         public System.DateTime CreatedOn { get; set; }
-    	[Required]
+        [Required]
         public System.DateTime ModifiedOn { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
-    	
-    	public ResourcePoolOrganization ToBusinessObject()
-    	{
-    		return new ResourcePoolOrganization()
-    		{
-    			Id = Id, 
-    			ResourcePoolId = ResourcePoolId, 
-    			OrganizationId = OrganizationId, 
-    			CreatedOn = CreatedOn, 
-    			ModifiedOn = ModifiedOn, 
-    			DeletedOn = DeletedOn
-    		};
-    	}
+
+        public ResourcePoolOrganization ToBusinessObject()
+        {
+            return new ResourcePoolOrganization()
+            {
+                Id = Id,
+                ResourcePoolId = ResourcePoolId,
+                OrganizationId = OrganizationId,
+                CreatedOn = CreatedOn,
+                ModifiedOn = ModifiedOn,
+                DeletedOn = DeletedOn
+            };
+        }
     }
 }

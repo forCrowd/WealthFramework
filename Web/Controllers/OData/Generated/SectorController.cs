@@ -32,13 +32,13 @@ namespace Web.Controllers.OData
 
         // GET odata/Sector(5)
         [Queryable]
-        public SingleResult<Sector> GetSector([FromODataUri] byte key)
+        public SingleResult<Sector> GetSector([FromODataUri] short key)
         {
             return SingleResult.Create(unitOfWork.AllLive.Where(sector => sector.Id == key));
         }
 
         // PUT odata/Sector(5)
-        public async Task<IHttpActionResult> Put([FromODataUri] byte key, Sector sector)
+        public async Task<IHttpActionResult> Put([FromODataUri] short key, Sector sector)
         {
             if (!ModelState.IsValid)
             {
@@ -102,7 +102,7 @@ namespace Web.Controllers.OData
 
         // PATCH odata/Sector(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public async Task<IHttpActionResult> Patch([FromODataUri] byte key, Delta<Sector> patch)
+        public async Task<IHttpActionResult> Patch([FromODataUri] short key, Delta<Sector> patch)
         {
             if (!ModelState.IsValid)
             {
@@ -138,7 +138,7 @@ namespace Web.Controllers.OData
         }
 
         // DELETE odata/Sector(5)
-        public async Task<IHttpActionResult> Delete([FromODataUri] byte key)
+        public async Task<IHttpActionResult> Delete([FromODataUri] short key)
         {
             var sector = await unitOfWork.FindAsync(key);
             if (sector == null)

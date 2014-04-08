@@ -21,8 +21,6 @@ if (!typeMapper.VerifyCaseInsensitiveTypeUniqueness(typeMapper.GetAllGlobalItems
     return string.Empty;
 }
 
-WriteHeader(codeStringGenerator, fileManager);
-
 foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollection))
 {
 	// Variables
@@ -32,12 +30,18 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 	var outputFileName = string.Format(@"{0}.cs", entityTypeName);
 
     fileManager.StartNewFile(outputFileName);
-    BeginNamespace(code);
 #>
-<#=codeStringGenerator.UsingDirectives(inHeader: false, includeDataAnnotations: true, includeBusinessObjectsMetadata: true)#>
-[MetadataType(typeof(<#=entityMetadataName#>))]
-<#=codeStringGenerator.EntityClassOpening(entityType)#>
+<#= codeStringGenerator.WriteHeader() #>
+namespace BusinessObjects
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using BusinessObjects.Metadata;
+
+    [MetadataType(typeof(<#=entityMetadataName#>))]
+    <#=codeStringGenerator.EntityClassOpening(entityType)#>
+    {
 <#
     var propertiesWithDefaultValues = typeMapper.GetPropertiesWithDefaultValues(entityType);
     var collectionNavigationProperties = typeMapper.GetCollectionNavigationProperties(entityType);
@@ -46,31 +50,31 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
     if (propertiesWithDefaultValues.Any() || collectionNavigationProperties.Any() || complexProperties.Any())
     {
 #>
-    public <#=entityTypeName#>()
-    {
+        public <#=entityTypeName#>()
+        {
 <#
         foreach (var edmProperty in propertiesWithDefaultValues)
         {
 #>
-        this.<#=code.Escape(edmProperty)#> = <#=typeMapper.CreateLiteral(edmProperty.DefaultValue)#>;
+            this.<#=code.Escape(edmProperty)#> = <#=typeMapper.CreateLiteral(edmProperty.DefaultValue)#>;
 <#
         }
 
         foreach (var navigationProperty in collectionNavigationProperties)
         {
 #>
-        this.<#=code.Escape(navigationProperty)#> = new HashSet<<#=typeMapper.GetTypeName(navigationProperty.ToEndMember.GetEntityType())#>>();
+            this.<#=code.Escape(navigationProperty)#> = new HashSet<<#=typeMapper.GetTypeName(navigationProperty.ToEndMember.GetEntityType())#>>();
 <#
         }
 
         foreach (var complexProperty in complexProperties)
         {
 #>
-        this.<#=code.Escape(complexProperty)#> = new <#=typeMapper.GetTypeName(complexProperty.TypeUsage)#>();
+            this.<#=code.Escape(complexProperty)#> = new <#=typeMapper.GetTypeName(complexProperty.TypeUsage)#>();
 <#
         }
 #>
-    }
+        }
 
 <#
     }
@@ -81,7 +85,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
         foreach (var edmProperty in simpleProperties)
         {
 #>
-    <#=codeStringGenerator.Property(edmProperty)#>
+        <#=codeStringGenerator.Property(edmProperty)#>
 <#
         }
     }
@@ -94,7 +98,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
         foreach(var complexProperty in complexProperties)
         {
 #>
-    <#=codeStringGenerator.Property(complexProperty)#>
+        <#=codeStringGenerator.Property(complexProperty)#>
 <#
         }
     }
@@ -108,14 +112,14 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
         foreach (var navigationProperty in navigationProperties)
         {
 #>
-    <#=codeStringGenerator.NavigationProperty(navigationProperty)#>
+        <#=codeStringGenerator.NavigationProperty(navigationProperty)#>
 <#
         }
     }
 #>
+    }
 }
 <#
-    EndNamespace(code);
 }
 
 foreach (var complex in typeMapper.GetItemsToGenerate<ComplexType>(itemCollection))
@@ -124,11 +128,12 @@ foreach (var complex in typeMapper.GetItemsToGenerate<ComplexType>(itemCollectio
 	var outputFileName = string.Format(@"{0}.cs", complex.Name);
 
     fileManager.StartNewFile(outputFileName);
-    BeginNamespace(code);
 #>
-<#=codeStringGenerator.UsingDirectives(inHeader: false, includeCollections: false)#>
-<#=Accessibility.ForType(complex)#> partial class <#=code.Escape(complex)#>
+<#= codeStringGenerator.WriteHeader() #>
+namespace BusinessObjects
 {
+    <#=Accessibility.ForType(complex)#> partial class <#=code.Escape(complex)#>
+    {
 <#
     var complexProperties = typeMapper.GetComplexProperties(complex);
     var propertiesWithDefaultValues = typeMapper.GetPropertiesWithDefaultValues(complex);
@@ -136,24 +141,24 @@ foreach (var complex in typeMapper.GetItemsToGenerate<ComplexType>(itemCollectio
     if (propertiesWithDefaultValues.Any() || complexProperties.Any())
     {
 #>
-    public <#=code.Escape(complex)#>()
-    {
+        public <#=code.Escape(complex)#>()
+        {
 <#
         foreach (var edmProperty in propertiesWithDefaultValues)
         {
 #>
-        this.<#=code.Escape(edmProperty)#> = <#=typeMapper.CreateLiteral(edmProperty.DefaultValue)#>;
+            this.<#=code.Escape(edmProperty)#> = <#=typeMapper.CreateLiteral(edmProperty.DefaultValue)#>;
 <#
         }
 
         foreach (var complexProperty in complexProperties)
         {
 #>
-        this.<#=code.Escape(complexProperty)#> = new <#=typeMapper.GetTypeName(complexProperty.TypeUsage)#>();
+            this.<#=code.Escape(complexProperty)#> = new <#=typeMapper.GetTypeName(complexProperty.TypeUsage)#>();
 <#
         }
 #>
-    }
+        }
 
 <#
     }
@@ -164,7 +169,7 @@ foreach (var complex in typeMapper.GetItemsToGenerate<ComplexType>(itemCollectio
         foreach(var edmProperty in simpleProperties)
         {
 #>
-    <#=codeStringGenerator.Property(edmProperty)#>
+        <#=codeStringGenerator.Property(edmProperty)#>
 <#
         }
     }
@@ -182,9 +187,10 @@ foreach (var complex in typeMapper.GetItemsToGenerate<ComplexType>(itemCollectio
         }
     }
 #>
+    }
 }
 <#
-    EndNamespace(code);
+    
 }
 
 foreach (var enumType in typeMapper.GetEnumItemsToGenerate(itemCollection))
@@ -193,19 +199,20 @@ foreach (var enumType in typeMapper.GetEnumItemsToGenerate(itemCollection))
 	var outputFileName = string.Format(@"{0}.cs", enumType.Name);
 
     fileManager.StartNewFile(outputFileName);
-    BeginNamespace(code);
 #>
-<#=codeStringGenerator.UsingDirectives(inHeader: false, includeCollections: false)#>
+<#= codeStringGenerator.WriteHeader() #>
+namespace BusinessObjects
+{
 <#
     if (typeMapper.EnumIsFlags(enumType))
     {
 #>
-[Flags]
+    [Flags]
 <#
     }
 #>
-<#=codeStringGenerator.EnumOpening(enumType)#>
-{
+    <#=codeStringGenerator.EnumOpening(enumType)#>
+    {
 <#
     var foundOne = false;
     
@@ -213,7 +220,7 @@ foreach (var enumType in typeMapper.GetEnumItemsToGenerate(itemCollection))
     {
         foundOne = true;
 #>
-    <#=code.Escape(typeMapper.GetEnumMemberName(member))#> = <#=typeMapper.GetEnumMemberValue(member)#>,
+        <#=code.Escape(typeMapper.GetEnumMemberName(member))#> = <#=typeMapper.GetEnumMemberValue(member)#>,
 <#
     }
 
@@ -222,55 +229,11 @@ foreach (var enumType in typeMapper.GetEnumItemsToGenerate(itemCollection))
         this.GenerationEnvironment.Remove(this.GenerationEnvironment.Length - 3, 1);
     }
 #>
+    }
 }
 <#
-    EndNamespace(code);
 }
 
 fileManager.Process();
 
-#>
-<#+
-
-public void WriteHeader(CodeStringGenerator codeStringGenerator, EntityFrameworkTemplateFileManager fileManager)
-{
-    fileManager.StartHeader();
-#>
-//------------------------------------------------------------------------------
-// <auto-generated>
-// <#=CodeGenerationTools.GetResourceString("Template_GeneratedCodeCommentLine1")#>
-//
-// <#=CodeGenerationTools.GetResourceString("Template_GeneratedCodeCommentLine2")#>
-// <#=CodeGenerationTools.GetResourceString("Template_GeneratedCodeCommentLine3")#>
-// </auto-generated>
-//------------------------------------------------------------------------------
-<#=codeStringGenerator.UsingDirectives(inHeader: true)#>
-<#+
-    fileManager.EndBlock();
-}
-
-public void BeginNamespace(CodeGenerationTools code)
-{
-    //var codeNamespace = code.VsNamespaceSuggestion();
-    var codeNamespace = "BusinessObjects";
-    if (!String.IsNullOrEmpty(codeNamespace))
-    {
-#>
-namespace <#=code.EscapeNamespace(codeNamespace)#>
-{
-<#+
-        PushIndent("    ");
-    }
-}
-
-public void EndNamespace(CodeGenerationTools code)
-{
-    if (!String.IsNullOrEmpty(code.VsNamespaceSuggestion()))
-    {
-        PopIndent();
-#>
-}
-<#+
-    }
-}
 #>

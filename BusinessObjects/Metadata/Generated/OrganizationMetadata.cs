@@ -11,35 +11,35 @@ namespace BusinessObjects.Metadata.Generated
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    
+
     public class OrganizationMetadata
     {
         [Display(Name = "Id")]
         public object Id { get; set; }
-    
+
         [Display(Name = "SectorId")]
         public object SectorId { get; set; }
-    
+
         [Display(Name = "Name")]
         public object Name { get; set; }
-    
+
         [Display(Name = "ProductionCost")]
         public object ProductionCost { get; set; }
-    
+
         [Display(Name = "SalesPrice")]
         public object SalesPrice { get; set; }
-    
+
         [Display(Name = "LicenseId")]
         public object LicenseId { get; set; }
-    
+
         [Display(Name = "CreatedOn")]
         public object CreatedOn { get; set; }
-    
+
         [Display(Name = "ModifiedOn")]
         public object ModifiedOn { get; set; }
-    
+
         [Display(Name = "DeletedOn")]
         public object DeletedOn { get; set; }
-    
+
     }
 }

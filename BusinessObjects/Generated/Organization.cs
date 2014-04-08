@@ -13,7 +13,7 @@ namespace BusinessObjects
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using BusinessObjects.Metadata;
-    
+
     [MetadataType(typeof(OrganizationMetadata))]
     public partial class Organization : IEntity
     {
@@ -21,7 +21,7 @@ namespace BusinessObjects
         {
             this.ResourcePoolOrganizationSet = new HashSet<ResourcePoolOrganization>();
         }
-    
+
         public int Id { get; set; }
         public short SectorId { get; set; }
         public string Name { get; set; }
@@ -31,7 +31,7 @@ namespace BusinessObjects
         public System.DateTime CreatedOn { get; set; }
         public System.DateTime ModifiedOn { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
-    
+
         public virtual Sector Sector { get; set; }
         public virtual License License { get; set; }
         public virtual ICollection<ResourcePoolOrganization> ResourcePoolOrganizationSet { get; set; }

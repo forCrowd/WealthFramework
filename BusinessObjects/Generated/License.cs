@@ -13,7 +13,7 @@ namespace BusinessObjects
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using BusinessObjects.Metadata;
-    
+
     [MetadataType(typeof(LicenseMetadata))]
     public partial class License : IEntity
     {
@@ -22,7 +22,7 @@ namespace BusinessObjects
             this.OrganizationSet = new HashSet<Organization>();
             this.UserLicenseRatingSet = new HashSet<UserLicenseRating>();
         }
-    
+
         public short Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -30,7 +30,7 @@ namespace BusinessObjects
         public System.DateTime CreatedOn { get; set; }
         public System.DateTime ModifiedOn { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
-    
+
         public virtual ICollection<Organization> OrganizationSet { get; set; }
         public virtual ICollection<UserLicenseRating> UserLicenseRatingSet { get; set; }
     }

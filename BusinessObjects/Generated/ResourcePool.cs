@@ -13,7 +13,7 @@ namespace BusinessObjects
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using BusinessObjects.Metadata;
-    
+
     [MetadataType(typeof(ResourcePoolMetadata))]
     public partial class ResourcePool : IEntity
     {
@@ -22,13 +22,13 @@ namespace BusinessObjects
             this.ResourcePoolOrganizationSet = new HashSet<ResourcePoolOrganization>();
             this.UserResourcePoolSet = new HashSet<UserResourcePool>();
         }
-    
+
         public int Id { get; set; }
         public string Name { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public System.DateTime ModifiedOn { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
-    
+
         public virtual ICollection<ResourcePoolOrganization> ResourcePoolOrganizationSet { get; set; }
         public virtual ICollection<UserResourcePool> UserResourcePoolSet { get; set; }
     }

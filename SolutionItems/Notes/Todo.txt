@@ -32,5 +32,4 @@ http://msdn.microsoft.com/en-US/data/jj591583#Index
 
 . camelcase case!
 
-. writeheader is now in utility.tt -> apply to the others
-also check beginnamespace + endnamespace etc.
+. live - sector - Id byte to smallint

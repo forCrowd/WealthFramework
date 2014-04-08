@@ -11,43 +11,43 @@ namespace BusinessObjects.Dto
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    
+
     public class UserDto
     {
-    	[Required]
+        [Required]
         public int Id { get; set; }
-    	[Required]
+        [Required]
         public string Email { get; set; }
-    	[Required]
+        [Required]
         public string Password { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
-    	[Required]
+        [Required]
         public byte UserAccountTypeId { get; set; }
         public string Notes { get; set; }
-    	[Required]
+        [Required]
         public System.DateTime CreatedOn { get; set; }
-    	[Required]
+        [Required]
         public System.DateTime ModifiedOn { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
-    	
-    	public User ToBusinessObject()
-    	{
-    		return new User()
-    		{
-    			Id = Id, 
-    			Email = Email, 
-    			Password = Password, 
-    			FirstName = FirstName, 
-    			MiddleName = MiddleName, 
-    			LastName = LastName, 
-    			UserAccountTypeId = UserAccountTypeId, 
-    			Notes = Notes, 
-    			CreatedOn = CreatedOn, 
-    			ModifiedOn = ModifiedOn, 
-    			DeletedOn = DeletedOn
-    		};
-    	}
+
+        public User ToBusinessObject()
+        {
+            return new User()
+            {
+                Id = Id,
+                Email = Email,
+                Password = Password,
+                FirstName = FirstName,
+                MiddleName = MiddleName,
+                LastName = LastName,
+                UserAccountTypeId = UserAccountTypeId,
+                Notes = Notes,
+                CreatedOn = CreatedOn,
+                ModifiedOn = ModifiedOn,
+                DeletedOn = DeletedOn
+            };
+        }
     }
 }

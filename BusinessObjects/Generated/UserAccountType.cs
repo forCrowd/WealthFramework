@@ -9,8 +9,6 @@
 
 namespace BusinessObjects
 {
-    using System;
-    
     public enum UserAccountType : byte
     {
         Administrator = 1,

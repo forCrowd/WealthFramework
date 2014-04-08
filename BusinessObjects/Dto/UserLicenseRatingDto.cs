@@ -11,35 +11,35 @@ namespace BusinessObjects.Dto
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    
+
     public class UserLicenseRatingDto
     {
-    	[Required]
+        [Required]
         public int Id { get; set; }
-    	[Required]
+        [Required]
         public int UserId { get; set; }
-    	[Required]
+        [Required]
         public short LicenseId { get; set; }
-    	[Required]
+        [Required]
         public decimal Rating { get; set; }
-    	[Required]
+        [Required]
         public System.DateTime CreatedOn { get; set; }
-    	[Required]
+        [Required]
         public System.DateTime ModifiedOn { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
-    	
-    	public UserLicenseRating ToBusinessObject()
-    	{
-    		return new UserLicenseRating()
-    		{
-    			Id = Id, 
-    			UserId = UserId, 
-    			LicenseId = LicenseId, 
-    			Rating = Rating, 
-    			CreatedOn = CreatedOn, 
-    			ModifiedOn = ModifiedOn, 
-    			DeletedOn = DeletedOn
-    		};
-    	}
+
+        public UserLicenseRating ToBusinessObject()
+        {
+            return new UserLicenseRating()
+            {
+                Id = Id,
+                UserId = UserId,
+                LicenseId = LicenseId,
+                Rating = Rating,
+                CreatedOn = CreatedOn,
+                ModifiedOn = ModifiedOn,
+                DeletedOn = DeletedOn
+            };
+        }
     }
 }

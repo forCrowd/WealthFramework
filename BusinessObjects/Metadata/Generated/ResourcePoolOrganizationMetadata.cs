@@ -11,26 +11,26 @@ namespace BusinessObjects.Metadata.Generated
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    
+
     public class ResourcePoolOrganizationMetadata
     {
         [Display(Name = "Id")]
         public object Id { get; set; }
-    
+
         [Display(Name = "ResourcePoolId")]
         public object ResourcePoolId { get; set; }
-    
+
         [Display(Name = "OrganizationId")]
         public object OrganizationId { get; set; }
-    
+
         [Display(Name = "CreatedOn")]
         public object CreatedOn { get; set; }
-    
+
         [Display(Name = "ModifiedOn")]
         public object ModifiedOn { get; set; }
-    
+
         [Display(Name = "DeletedOn")]
         public object DeletedOn { get; set; }
-    
+
     }
 }

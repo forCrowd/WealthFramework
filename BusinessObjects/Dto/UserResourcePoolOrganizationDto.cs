@@ -11,44 +11,44 @@ namespace BusinessObjects.Dto
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    
+
     public class UserResourcePoolOrganizationDto
     {
-    	[Required]
+        [Required]
         public int Id { get; set; }
-    	[Required]
+        [Required]
         public int UserId { get; set; }
-    	[Required]
+        [Required]
         public int ResourcePoolOrganizationId { get; set; }
-    	[Required]
+        [Required]
         public int NumberOfSales { get; set; }
-    	[Required]
+        [Required]
         public decimal QualityRating { get; set; }
-    	[Required]
+        [Required]
         public decimal CustomerSatisfactionRating { get; set; }
-    	[Required]
+        [Required]
         public decimal EmployeeSatisfactionRating { get; set; }
-    	[Required]
+        [Required]
         public System.DateTime CreatedOn { get; set; }
-    	[Required]
+        [Required]
         public System.DateTime ModifiedOn { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
-    	
-    	public UserResourcePoolOrganization ToBusinessObject()
-    	{
-    		return new UserResourcePoolOrganization()
-    		{
-    			Id = Id, 
-    			UserId = UserId, 
-    			ResourcePoolOrganizationId = ResourcePoolOrganizationId, 
-    			NumberOfSales = NumberOfSales, 
-    			QualityRating = QualityRating, 
-    			CustomerSatisfactionRating = CustomerSatisfactionRating, 
-    			EmployeeSatisfactionRating = EmployeeSatisfactionRating, 
-    			CreatedOn = CreatedOn, 
-    			ModifiedOn = ModifiedOn, 
-    			DeletedOn = DeletedOn
-    		};
-    	}
+
+        public UserResourcePoolOrganization ToBusinessObject()
+        {
+            return new UserResourcePoolOrganization()
+            {
+                Id = Id,
+                UserId = UserId,
+                ResourcePoolOrganizationId = ResourcePoolOrganizationId,
+                NumberOfSales = NumberOfSales,
+                QualityRating = QualityRating,
+                CustomerSatisfactionRating = CustomerSatisfactionRating,
+                EmployeeSatisfactionRating = EmployeeSatisfactionRating,
+                CreatedOn = CreatedOn,
+                ModifiedOn = ModifiedOn,
+                DeletedOn = DeletedOn
+            };
+        }
     }
 }

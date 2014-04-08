@@ -11,35 +11,35 @@ namespace BusinessObjects.Dto
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    
+
     public class UserSectorRatingDto
     {
-    	[Required]
+        [Required]
         public int Id { get; set; }
-    	[Required]
+        [Required]
         public int UserId { get; set; }
-    	[Required]
-        public byte SectorId { get; set; }
-    	[Required]
+        [Required]
+        public short SectorId { get; set; }
+        [Required]
         public decimal Rating { get; set; }
-    	[Required]
+        [Required]
         public System.DateTime CreatedOn { get; set; }
-    	[Required]
+        [Required]
         public System.DateTime ModifiedOn { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
-    	
-    	public UserSectorRating ToBusinessObject()
-    	{
-    		return new UserSectorRating()
-    		{
-    			Id = Id, 
-    			UserId = UserId, 
-    			SectorId = SectorId, 
-    			Rating = Rating, 
-    			CreatedOn = CreatedOn, 
-    			ModifiedOn = ModifiedOn, 
-    			DeletedOn = DeletedOn
-    		};
-    	}
+
+        public UserSectorRating ToBusinessObject()
+        {
+            return new UserSectorRating()
+            {
+                Id = Id,
+                UserId = UserId,
+                SectorId = SectorId,
+                Rating = Rating,
+                CreatedOn = CreatedOn,
+                ModifiedOn = ModifiedOn,
+                DeletedOn = DeletedOn
+            };
+        }
     }
 }

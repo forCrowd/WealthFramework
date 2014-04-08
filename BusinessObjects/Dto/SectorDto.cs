@@ -11,31 +11,31 @@ namespace BusinessObjects.Dto
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    
+
     public class SectorDto
     {
-    	[Required]
-        public byte Id { get; set; }
-    	[Required]
+        [Required]
+        public short Id { get; set; }
+        [Required]
         public string Name { get; set; }
         public string Description { get; set; }
-    	[Required]
+        [Required]
         public System.DateTime CreatedOn { get; set; }
-    	[Required]
+        [Required]
         public System.DateTime ModifiedOn { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
-    	
-    	public Sector ToBusinessObject()
-    	{
-    		return new Sector()
-    		{
-    			Id = Id, 
-    			Name = Name, 
-    			Description = Description, 
-    			CreatedOn = CreatedOn, 
-    			ModifiedOn = ModifiedOn, 
-    			DeletedOn = DeletedOn
-    		};
-    	}
+
+        public Sector ToBusinessObject()
+        {
+            return new Sector()
+            {
+                Id = Id,
+                Name = Name,
+                Description = Description,
+                CreatedOn = CreatedOn,
+                ModifiedOn = ModifiedOn,
+                DeletedOn = DeletedOn
+            };
+        }
     }
 }

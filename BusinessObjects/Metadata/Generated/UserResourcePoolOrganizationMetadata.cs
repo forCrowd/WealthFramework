@@ -11,38 +11,38 @@ namespace BusinessObjects.Metadata.Generated
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    
+
     public class UserResourcePoolOrganizationMetadata
     {
         [Display(Name = "Id")]
         public object Id { get; set; }
-    
+
         [Display(Name = "UserId")]
         public object UserId { get; set; }
-    
+
         [Display(Name = "ResourcePoolOrganizationId")]
         public object ResourcePoolOrganizationId { get; set; }
-    
+
         [Display(Name = "NumberOfSales")]
         public object NumberOfSales { get; set; }
-    
+
         [Display(Name = "QualityRating")]
         public object QualityRating { get; set; }
-    
+
         [Display(Name = "CustomerSatisfactionRating")]
         public object CustomerSatisfactionRating { get; set; }
-    
+
         [Display(Name = "EmployeeSatisfactionRating")]
         public object EmployeeSatisfactionRating { get; set; }
-    
+
         [Display(Name = "CreatedOn")]
         public object CreatedOn { get; set; }
-    
+
         [Display(Name = "ModifiedOn")]
         public object ModifiedOn { get; set; }
-    
+
         [Display(Name = "DeletedOn")]
         public object DeletedOn { get; set; }
-    
+
     }
 }

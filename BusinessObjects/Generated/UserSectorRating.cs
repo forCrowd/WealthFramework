@@ -13,7 +13,7 @@ namespace BusinessObjects
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using BusinessObjects.Metadata;
-    
+
     [MetadataType(typeof(UserSectorRatingMetadata))]
     public partial class UserSectorRating : IEntity
     {
@@ -24,7 +24,7 @@ namespace BusinessObjects
         public System.DateTime CreatedOn { get; set; }
         public System.DateTime ModifiedOn { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
-    
+
         public virtual Sector Sector { get; set; }
         public virtual User User { get; set; }
     }

@@ -11,23 +11,23 @@ namespace BusinessObjects.Metadata.Generated
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    
+
     public class ResourcePoolMetadata
     {
         [Display(Name = "Id")]
         public object Id { get; set; }
-    
+
         [Display(Name = "Name")]
         public object Name { get; set; }
-    
+
         [Display(Name = "CreatedOn")]
         public object CreatedOn { get; set; }
-    
+
         [Display(Name = "ModifiedOn")]
         public object ModifiedOn { get; set; }
-    
+
         [Display(Name = "DeletedOn")]
         public object DeletedOn { get; set; }
-    
+
     }
 }

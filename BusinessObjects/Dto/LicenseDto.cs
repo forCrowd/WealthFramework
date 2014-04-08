@@ -11,34 +11,34 @@ namespace BusinessObjects.Dto
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    
+
     public class LicenseDto
     {
-    	[Required]
+        [Required]
         public short Id { get; set; }
-    	[Required]
+        [Required]
         public string Name { get; set; }
         public string Description { get; set; }
-    	[Required]
+        [Required]
         public string Text { get; set; }
-    	[Required]
+        [Required]
         public System.DateTime CreatedOn { get; set; }
-    	[Required]
+        [Required]
         public System.DateTime ModifiedOn { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
-    	
-    	public License ToBusinessObject()
-    	{
-    		return new License()
-    		{
-    			Id = Id, 
-    			Name = Name, 
-    			Description = Description, 
-    			Text = Text, 
-    			CreatedOn = CreatedOn, 
-    			ModifiedOn = ModifiedOn, 
-    			DeletedOn = DeletedOn
-    		};
-    	}
+
+        public License ToBusinessObject()
+        {
+            return new License()
+            {
+                Id = Id,
+                Name = Name,
+                Description = Description,
+                Text = Text,
+                CreatedOn = CreatedOn,
+                ModifiedOn = ModifiedOn,
+                DeletedOn = DeletedOn
+            };
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace BusinessObjects
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using BusinessObjects.Metadata;
-    
+
     [MetadataType(typeof(UserMetadata))]
     public partial class User : IEntity
     {
@@ -24,7 +24,7 @@ namespace BusinessObjects
             this.UserSectorRatingSet = new HashSet<UserSectorRating>();
             this.UserResourcePoolOrganizationSet = new HashSet<UserResourcePoolOrganization>();
         }
-    
+
         public int Id { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
@@ -36,7 +36,7 @@ namespace BusinessObjects
         public System.DateTime CreatedOn { get; set; }
         public System.DateTime ModifiedOn { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
-    
+
         public virtual ICollection<UserResourcePool> UserResourcePoolSet { get; set; }
         public virtual ICollection<UserLicenseRating> UserLicenseRatingSet { get; set; }
         public virtual ICollection<UserSectorRating> UserSectorRatingSet { get; set; }

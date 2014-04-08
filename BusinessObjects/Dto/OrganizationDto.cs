@@ -11,41 +11,41 @@ namespace BusinessObjects.Dto
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    
+
     public class OrganizationDto
     {
-    	[Required]
+        [Required]
         public int Id { get; set; }
-    	[Required]
-        public byte SectorId { get; set; }
-    	[Required]
+        [Required]
+        public short SectorId { get; set; }
+        [Required]
         public string Name { get; set; }
-    	[Required]
+        [Required]
         public decimal ProductionCost { get; set; }
-    	[Required]
+        [Required]
         public decimal SalesPrice { get; set; }
-    	[Required]
+        [Required]
         public short LicenseId { get; set; }
-    	[Required]
+        [Required]
         public System.DateTime CreatedOn { get; set; }
-    	[Required]
+        [Required]
         public System.DateTime ModifiedOn { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
-    	
-    	public Organization ToBusinessObject()
-    	{
-    		return new Organization()
-    		{
-    			Id = Id, 
-    			SectorId = SectorId, 
-    			Name = Name, 
-    			ProductionCost = ProductionCost, 
-    			SalesPrice = SalesPrice, 
-    			LicenseId = LicenseId, 
-    			CreatedOn = CreatedOn, 
-    			ModifiedOn = ModifiedOn, 
-    			DeletedOn = DeletedOn
-    		};
-    	}
+
+        public Organization ToBusinessObject()
+        {
+            return new Organization()
+            {
+                Id = Id,
+                SectorId = SectorId,
+                Name = Name,
+                ProductionCost = ProductionCost,
+                SalesPrice = SalesPrice,
+                LicenseId = LicenseId,
+                CreatedOn = CreatedOn,
+                ModifiedOn = ModifiedOn,
+                DeletedOn = DeletedOn
+            };
+        }
     }
 }

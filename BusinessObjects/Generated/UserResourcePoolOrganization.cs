@@ -13,7 +13,7 @@ namespace BusinessObjects
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using BusinessObjects.Metadata;
-    
+
     [MetadataType(typeof(UserResourcePoolOrganizationMetadata))]
     public partial class UserResourcePoolOrganization : IEntity
     {
@@ -27,7 +27,7 @@ namespace BusinessObjects
         public System.DateTime CreatedOn { get; set; }
         public System.DateTime ModifiedOn { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
-    
+
         public virtual User User { get; set; }
         public virtual ResourcePoolOrganization ResourcePoolOrganization { get; set; }
     }
