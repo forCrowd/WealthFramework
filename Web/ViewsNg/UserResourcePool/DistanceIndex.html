@@ -1,0 +1,163 @@
+﻿<h2>Distance Index - Not Available - {{ vm.userResourcePool.UserResourcePoolType }}</h2>
+
+<p>
+    <div class="btn-group">
+        <button type="submit" class="btn btn-default">Increase Number of Sales</button>
+        <button type="submit" class="btn btn-default">Reset Number of Sales</button>
+    </div>
+</p>
+<p>
+    CMRP Rate: {{ vm.userResourcePool.ResourcePoolRatePercentage }} - Number of ratings: {{ vm.userResourcePool.UserResourcePoolRatingSet.length }}
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            ProductionCost
+        </th>
+        <th>
+            SalesPrice
+        </th>
+        <th>
+            ProfitPercentage
+        </th>
+        <th>
+            SalesPriceIncludingResourcePoolTax
+        </th>
+        <th>
+            NumberOfSales
+        </th>
+        <th>
+            TotalProductionCost
+        </th>
+        <th>
+            TotalSalesRevenue
+        </th>
+        <th>
+            TotalProfit
+        </th>
+        <th>
+            TotalResourcePoolTax
+        </th>
+        <th>
+            TotalSalesRevenueIncludingResourcePoolTax
+        </th>
+        <th>
+            DistanceIndexPercentage
+        </th>
+        <th>
+            DistanceIndexPercentageWithNumberOfSales
+        </th>
+        <th>
+            DistanceIndexPercentageWithNumberOfSalesWeighted
+        </th>
+        <th>
+            DistanceIndexIncome
+        </th>
+        <th>
+            TotalIncome
+        </th>
+    </tr>
+    <tr data-ng-repeat="item in vm.userResourcePool.UserResourcePoolOrganizationSet">
+        <td>
+            {{ item.Organization.Name }}
+        </td>
+        <td>
+            {{ item.Organization.ProductionCost }}
+        </td>
+        <td>
+            {{ item.Organization.SalesPrice }}
+        </td>
+        <td>
+            {{ item.Organization.ProfitPercentage }}
+        </td>
+        <td>
+            {{ item.SalesPriceIncludingResourcePoolTax }}
+        </td>
+        <td>
+            {{ item.NumberOfSales }}
+        </td>
+        <td>
+            {{ item.TotalProductionCost }}
+        </td>
+        <td>
+            {{ item.TotalSalesRevenue }}
+        </td>
+        <td>
+            {{ item.TotalProfit }}
+        </td>
+        <td>
+            {{ item.TotalResourcePoolTax }}
+        </td>
+        <td>
+            {{ item.TotalSalesRevenueIncludingResourcePoolTax }}
+        </td>
+        <td>
+            {{ item.DistanceIndexPercentage }}
+        </td>
+        <td>
+            {{ item.DistanceIndexPercentageWithNumberOfSales }}
+        </td>
+        <td>
+            {{ item.DistanceIndexPercentageWithNumberOfSalesWeighted }}
+        </td>
+        <td>
+            {{ item.DistanceIndexIncome }}
+        </td>
+        <td>
+            {{ item.TotalIncome }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Total
+        </td>
+        <td>
+            {{ vm.userResourcePool.ResourcePool.ProductionCost }}
+        </td>
+        <td>
+            {{ vm.userResourcePool.ResourcePool.SalesPrice }}
+        </td>
+        <td>
+            &nbsp;
+        </td>
+        <td>
+            {{ vm.userResourcePool.SalesPriceIncludingResourcePoolTax }}
+        </td>
+        <td>
+            {{ vm.userResourcePool.NumberOfSales }}
+        </td>
+        <td>
+            {{ vm.userResourcePool.TotalProductionCost }}
+        </td>
+        <td>
+            {{ vm.userResourcePool.TotalSalesRevenue }}
+        </td>
+        <td>
+            {{ vm.userResourcePool.TotalProfit }}
+        </td>
+        <td>
+            {{ vm.userResourcePool.TotalResourcePoolTax }}
+        </td>
+        <td>
+            {{ vm.userResourcePool.TotalSalesRevenueIncludingResourcePoolTax }}
+        </td>
+        <td>
+            &nbsp;
+        </td>
+        <td>
+            &nbsp;
+        </td>
+        <td>
+            &nbsp;
+        </td>
+        <td>
+            {{ vm.userResourcePool.DistanceIndexIncome }}
+        </td>
+        <td>
+            {{ vm.userResourcePool.TotalIncome }}
+        </td>
+    </tr>
+</table>

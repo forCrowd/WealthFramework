@@ -28,6 +28,9 @@
 
         // Service methods (alphabetically)
         var service = {
+
+            getDataContext: getDataContext,
+
             createUser: createUser,
             deleteUser: deleteUser,
             getChanges: getChanges,
@@ -42,6 +45,10 @@
         return service;
 
         /*** Implementations ***/
+
+        function getDataContext() {
+            return dataContext;
+        }
 
         function createUser(user) {
             return dataContext.manager.createEntity('User', user);

@@ -207,6 +207,16 @@ public class CodeStringGenerator
                 inHeader ? "" : Environment.NewLine)
             : "";
     }
+
+	public string GetCamelCase(string input)
+    {
+		if (string.IsNullOrWhiteSpace(input) || input.Length < 2)
+			return string.Empty;
+
+		return string.Format("{0}{1}",
+			input[0].ToString().ToLowerInvariant(),
+			input.Substring(1));
+	}
 }
 
 public class TypeMapper

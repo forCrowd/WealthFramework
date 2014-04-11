@@ -10,11 +10,11 @@
 (function () {
     'use strict';
 
-    var controllerId = 'userresourcepoolorganizationListController';
+    var controllerId = 'userResourcePoolOrganizationListController';
     angular.module('main')
-        .controller(controllerId, ['userresourcepoolorganizationService', 'logger', userresourcepoolorganizationListController]);
+        .controller(controllerId, ['userResourcePoolOrganizationService', 'logger', userResourcePoolOrganizationListController]);
 
-    function userresourcepoolorganizationListController(userresourcepoolorganizationService, logger) {
+    function userResourcePoolOrganizationListController(userResourcePoolOrganizationService, logger) {
 
         logger = logger.forSource(controllerId);
         var logError = logger.logError;
@@ -22,7 +22,7 @@
 
         var vm = this;
         vm.deleteUserResourcePoolOrganization = deleteUserResourcePoolOrganization;
-        vm.userresourcepoolorganizationSet = [];
+        vm.userResourcePoolOrganizationSet = [];
 
         initialize();
 
@@ -30,12 +30,12 @@
             getUserResourcePoolOrganizationSet();
         };
 
-        function deleteUserResourcePoolOrganization(userresourcepoolorganization) {
-            userresourcepoolorganizationService.deleteUserResourcePoolOrganization(userresourcepoolorganization);
+        function deleteUserResourcePoolOrganization(userResourcePoolOrganization) {
+            userResourcePoolOrganizationService.deleteUserResourcePoolOrganization(userResourcePoolOrganization);
 
-            userresourcepoolorganizationService.saveChanges()
+            userResourcePoolOrganizationService.saveChanges()
                 .then(function () {
-                    vm.userresourcepoolorganizationSet.splice(vm.userresourcepoolorganizationSet.indexOf(userresourcepoolorganization), 1);
+                    vm.userResourcePoolOrganizationSet.splice(vm.userResourcePoolOrganizationSet.indexOf(userResourcePoolOrganization), 1);
                     logSuccess("Hooray we saved", null, true);
                 })
                 .catch(function (error) {
@@ -46,9 +46,9 @@
                 })
         };
 
-        function getUserResourcePoolOrganizationSet(forceRefresh) {
-            return userresourcepoolorganizationService.getUserResourcePoolOrganizationSet(forceRefresh).then(function (data) {
-                return vm.userresourcepoolorganizationSet = data;
+        function getUserResourcePoolOrganizationSet() {
+            return userResourcePoolOrganizationService.getUserResourcePoolOrganizationSet().then(function (data) {
+                return vm.userResourcePoolOrganizationSet = data;
             });
         }
     };

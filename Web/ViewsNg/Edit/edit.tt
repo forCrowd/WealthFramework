@@ -25,7 +25,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 {
 	// Variables
 	var entityTypeName = typeMapper.GetTypeName(entityType);
-	var entityVariable = entityTypeName.ToLowerInvariant();
+	var entityVariable = codeStringGenerator.GetCamelCase(entityTypeName);
 	var entitySetName = string.Format("{0}Set", entityVariable);
 	var entityDeleteMethod = string.Format("delete{0}", entityTypeName);
 	var primaryKey = entityType.KeyMembers[0];
@@ -99,7 +99,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 					displayName = relatedDefaultProperty.MetadataProperties["http://tempuri.org/EdmCustomSchema.xsd:DisplayName"].Value.ToString();
 			}
 
-			var relatedEntityVariable = relatedProperty.Name.ToLowerInvariant();
+			var relatedEntityVariable = codeStringGenerator.GetCamelCase(relatedProperty.Name);
 			var relatedEntitySet = string.Format("{0}Set", relatedEntityVariable);
 
 			displayInput = string.Format(@"<select id=""{0}"" name=""{0}"" data-ng-model=""vm.{1}.{2}"" data-ng-options=""{3}.{4} for {3} in vm.{5}"" class=""form-control"" {6}></select>",

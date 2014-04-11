@@ -10,11 +10,11 @@
 (function () {
     'use strict';
 
-    var serviceId = 'resourcepoolorganizationService';
+    var serviceId = 'resourcePoolOrganizationService';
     angular.module('main')
-        .factory(serviceId, ['dataContext', 'logger', resourcepoolorganizationService]);
+        .factory(serviceId, ['dataContext', 'logger', resourcePoolOrganizationService]);
 
-    function resourcepoolorganizationService(dataContext, logger) {
+    function resourcePoolOrganizationService(dataContext, logger) {
 
         // Logger
         logger = logger.forSource(serviceId);
@@ -43,12 +43,12 @@
 
         /*** Implementations ***/
 
-        function createResourcePoolOrganization(resourcepoolorganization) {
-            return dataContext.manager.createEntity('ResourcePoolOrganization', resourcepoolorganization);
+        function createResourcePoolOrganization(resourcePoolOrganization) {
+            return dataContext.manager.createEntity('ResourcePoolOrganization', resourcePoolOrganization);
         }
 
-        function deleteResourcePoolOrganization(resourcepoolorganization) {
-            resourcepoolorganization.entityAspect.setDeleted();
+        function deleteResourcePoolOrganization(resourcePoolOrganization) {
+            resourcePoolOrganization.entityAspect.setDeleted();
         }
 
         function getChanges() {
@@ -92,7 +92,7 @@
 
             function success(response) {
                 count = response.results.length;
-                logSuccess('Got ' + count + ' resourcepoolorganization(s)', response, true);
+                logSuccess('Got ' + count + ' resourcePoolOrganization(s)', response, true);
                 return response.results;
             }
 
@@ -102,8 +102,8 @@
             }
         }
 
-        function getResourcePoolOrganization(resourcepoolorganizationId, forceRefresh) {
-            return dataContext.manager.fetchEntityByKey("ResourcePoolOrganization", resourcepoolorganizationId, !forceRefresh)
+        function getResourcePoolOrganization(resourcePoolOrganizationId, forceRefresh) {
+            return dataContext.manager.fetchEntityByKey("ResourcePoolOrganization", resourcePoolOrganizationId, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {

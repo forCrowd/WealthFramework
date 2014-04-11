@@ -25,7 +25,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 {
 	// Variables
 	var entityTypeName = typeMapper.GetTypeName(entityType);
-	var entityVariable = entityTypeName.ToLowerInvariant();
+	var entityVariable = codeStringGenerator.GetCamelCase(entityTypeName);
 	var entitySetName = string.Format("{0}Set", entityVariable);
 	var controllerId = string.Format("{0}EditController", entityVariable);
 	var serviceId = string.Format("{0}Service", entityVariable);
@@ -52,8 +52,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 <#
 	foreach (var property in relatedProperties)
 	{
-		//var relatedVariable = string.Format("{0}{1}", property.Name[0].ToString().ToLowerInvariant(), property.Name.Substring(1));
-		var relatedVariable = property.Name.ToLowerInvariant();
+		var relatedVariable = codeStringGenerator.GetCamelCase(property.Name);
 		var relatedServiceId = string.Format("{0}Service", relatedVariable);
 #>
             '<#= relatedServiceId #>',
@@ -67,8 +66,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 <#
 	foreach (var property in relatedProperties)
 	{
-		// var relatedVariable = string.Format("{0}{1}", property.Name[0].ToString().ToLowerInvariant(), property.Name.Substring(1));
-		var relatedVariable = property.Name.ToLowerInvariant();
+		var relatedVariable = codeStringGenerator.GetCamelCase(property.Name);
 		var relatedServiceId = string.Format("{0}Service", relatedVariable);
 #>
 		<#= relatedServiceId #>,
@@ -81,7 +79,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
         var logError = logger.logError;
         var logSuccess = logger.logSuccess;
 
-        var isNew = $location.path() === '/new';
+        var isNew = $location.path() === '/<#= entityTypeName #>/new';
         var isSaving = false;
 
         // Controller methods (alphabetically)
@@ -89,8 +87,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 <#
 	foreach (var property in relatedProperties)
 	{
-		//var relatedVariable = string.Format("{0}{1}", property.Name[0].ToString().ToLowerInvariant(), property.Name.Substring(1));
-		var relatedVariable = property.Name.ToLowerInvariant();
+		var relatedVariable = codeStringGenerator.GetCamelCase(property.Name);
 		var relatedSetName = string.Format("{0}Set", relatedVariable);
 #>
         vm.<#= relatedSetName #> = [];
@@ -107,7 +104,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 
         function cancelChanges() {
 
-            $location.path('/');
+            $location.path('/<#= entityTypeName #>/');
 
             if (<#= serviceId #>.hasChanges()) {
                 <#= serviceId #>.rejectChanges();
@@ -124,8 +121,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 <#
 	foreach (var property in relatedProperties)
 	{
-		// var relatedVariable = string.Format("{0}{1}", property.Name[0].ToString().ToLowerInvariant(), property.Name.Substring(1));
-		var relatedVariable = property.Name.ToLowerInvariant();
+		var relatedVariable = codeStringGenerator.GetCamelCase(property.Name);
 		var relatedServiceId = string.Format("{0}Service", relatedVariable);
 		var relatedSetGetMethod = string.Format("get{0}Set", property.Name);
 		var relatedSetName = string.Format("{0}Set", relatedVariable);
@@ -170,7 +166,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
             return <#= serviceId #>.saveChanges()
                 .then(function () {
                     logSuccess("Hooray we saved", null, true);
-                    $location.path('/');
+                    $location.path('/<#= entityTypeName #>/');
                 })
                 .catch(function (error) {
                     logError("Boooo, we failed: " + error.message, null, true);

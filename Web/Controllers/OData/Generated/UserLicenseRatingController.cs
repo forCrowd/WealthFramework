@@ -34,23 +34,23 @@ namespace Web.Controllers.OData
         [Queryable]
         public SingleResult<UserLicenseRating> GetUserLicenseRating([FromODataUri] int key)
         {
-            return SingleResult.Create(unitOfWork.AllLive.Where(userlicenserating => userlicenserating.Id == key));
+            return SingleResult.Create(unitOfWork.AllLive.Where(userLicenseRating => userLicenseRating.Id == key));
         }
 
         // PUT odata/UserLicenseRating(5)
-        public async Task<IHttpActionResult> Put([FromODataUri] int key, UserLicenseRating userlicenserating)
+        public async Task<IHttpActionResult> Put([FromODataUri] int key, UserLicenseRating userLicenseRating)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (key != userlicenserating.Id)
+            if (key != userLicenseRating.Id)
             {
                 return BadRequest();
             }
 
-            unitOfWork.Update(userlicenserating);
+            unitOfWork.Update(userLicenseRating);
 
             try
             {
@@ -68,18 +68,18 @@ namespace Web.Controllers.OData
                 }
             }
 
-            return Updated(userlicenserating);
+            return Updated(userLicenseRating);
         }
 
         // POST odata/UserLicenseRating
-        public async Task<IHttpActionResult> Post(UserLicenseRating userlicenserating)
+        public async Task<IHttpActionResult> Post(UserLicenseRating userLicenseRating)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            unitOfWork.Insert(userlicenserating);
+            unitOfWork.Insert(userLicenseRating);
 
             try
             {
@@ -87,7 +87,7 @@ namespace Web.Controllers.OData
             }
             catch (DbUpdateException)
             {
-                if (unitOfWork.Exists(userlicenserating.Id))
+                if (unitOfWork.Exists(userLicenseRating.Id))
                 {
                     return Conflict();
                 }
@@ -97,7 +97,7 @@ namespace Web.Controllers.OData
                 }
             }
 
-            return Created(userlicenserating);
+            return Created(userLicenseRating);
         }
 
         // PATCH odata/UserLicenseRating(5)
@@ -109,14 +109,14 @@ namespace Web.Controllers.OData
                 return BadRequest(ModelState);
             }
 
-            var userlicenserating = await unitOfWork.FindAsync(key);
-            if (userlicenserating == null)
+            var userLicenseRating = await unitOfWork.FindAsync(key);
+            if (userLicenseRating == null)
             {
                 return NotFound();
             }
 
-            patch.Patch(userlicenserating);
-            unitOfWork.Update(userlicenserating);
+            patch.Patch(userLicenseRating);
+            unitOfWork.Update(userLicenseRating);
 
             try
             {
@@ -134,19 +134,19 @@ namespace Web.Controllers.OData
                 }
             }
 
-            return Updated(userlicenserating);
+            return Updated(userLicenseRating);
         }
 
         // DELETE odata/UserLicenseRating(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            var userlicenserating = await unitOfWork.FindAsync(key);
-            if (userlicenserating == null)
+            var userLicenseRating = await unitOfWork.FindAsync(key);
+            if (userLicenseRating == null)
             {
                 return NotFound();
             }
 
-            unitOfWork.Delete(userlicenserating.Id);
+            unitOfWork.Delete(userLicenseRating.Id);
             await unitOfWork.SaveAsync();
 
             return StatusCode(HttpStatusCode.NoContent);

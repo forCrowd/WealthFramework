@@ -10,11 +10,11 @@
 (function () {
     'use strict';
 
-    var serviceId = 'userlicenseratingService';
+    var serviceId = 'userLicenseRatingService';
     angular.module('main')
-        .factory(serviceId, ['dataContext', 'logger', userlicenseratingService]);
+        .factory(serviceId, ['dataContext', 'logger', userLicenseRatingService]);
 
-    function userlicenseratingService(dataContext, logger) {
+    function userLicenseRatingService(dataContext, logger) {
 
         // Logger
         logger = logger.forSource(serviceId);
@@ -43,12 +43,12 @@
 
         /*** Implementations ***/
 
-        function createUserLicenseRating(userlicenserating) {
-            return dataContext.manager.createEntity('UserLicenseRating', userlicenserating);
+        function createUserLicenseRating(userLicenseRating) {
+            return dataContext.manager.createEntity('UserLicenseRating', userLicenseRating);
         }
 
-        function deleteUserLicenseRating(userlicenserating) {
-            userlicenserating.entityAspect.setDeleted();
+        function deleteUserLicenseRating(userLicenseRating) {
+            userLicenseRating.entityAspect.setDeleted();
         }
 
         function getChanges() {
@@ -92,7 +92,7 @@
 
             function success(response) {
                 count = response.results.length;
-                logSuccess('Got ' + count + ' userlicenserating(s)', response, true);
+                logSuccess('Got ' + count + ' userLicenseRating(s)', response, true);
                 return response.results;
             }
 
@@ -102,8 +102,8 @@
             }
         }
 
-        function getUserLicenseRating(userlicenseratingId, forceRefresh) {
-            return dataContext.manager.fetchEntityByKey("UserLicenseRating", userlicenseratingId, !forceRefresh)
+        function getUserLicenseRating(userLicenseRatingId, forceRefresh) {
+            return dataContext.manager.fetchEntityByKey("UserLicenseRating", userLicenseRatingId, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {

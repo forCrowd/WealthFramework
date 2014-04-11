@@ -7,7 +7,8 @@
     {
         public UserResourcePool UserResourcePool
         {
-            get { return User.UserResourcePoolSet.Single(item => item.ResourcePool == ResourcePoolOrganization.ResourcePool); }
+            // TODO This has to be Single()
+            get { return User.UserResourcePoolSet.First(item => item.ResourcePool == ResourcePoolOrganization.ResourcePool); }
         }
 
         public Organization Organization

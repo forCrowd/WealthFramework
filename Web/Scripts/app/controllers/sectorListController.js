@@ -46,8 +46,8 @@
                 })
         };
 
-        function getSectorSet(forceRefresh) {
-            return sectorService.getSectorSet(forceRefresh).then(function (data) {
+        function getSectorSet() {
+            return sectorService.getSectorSet().then(function (data) {
                 return vm.sectorSet = data;
             });
         }

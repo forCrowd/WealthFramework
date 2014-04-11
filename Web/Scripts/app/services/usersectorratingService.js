@@ -10,11 +10,11 @@
 (function () {
     'use strict';
 
-    var serviceId = 'usersectorratingService';
+    var serviceId = 'userSectorRatingService';
     angular.module('main')
-        .factory(serviceId, ['dataContext', 'logger', usersectorratingService]);
+        .factory(serviceId, ['dataContext', 'logger', userSectorRatingService]);
 
-    function usersectorratingService(dataContext, logger) {
+    function userSectorRatingService(dataContext, logger) {
 
         // Logger
         logger = logger.forSource(serviceId);
@@ -43,12 +43,12 @@
 
         /*** Implementations ***/
 
-        function createUserSectorRating(usersectorrating) {
-            return dataContext.manager.createEntity('UserSectorRating', usersectorrating);
+        function createUserSectorRating(userSectorRating) {
+            return dataContext.manager.createEntity('UserSectorRating', userSectorRating);
         }
 
-        function deleteUserSectorRating(usersectorrating) {
-            usersectorrating.entityAspect.setDeleted();
+        function deleteUserSectorRating(userSectorRating) {
+            userSectorRating.entityAspect.setDeleted();
         }
 
         function getChanges() {
@@ -92,7 +92,7 @@
 
             function success(response) {
                 count = response.results.length;
-                logSuccess('Got ' + count + ' usersectorrating(s)', response, true);
+                logSuccess('Got ' + count + ' userSectorRating(s)', response, true);
                 return response.results;
             }
 
@@ -102,8 +102,8 @@
             }
         }
 
-        function getUserSectorRating(usersectorratingId, forceRefresh) {
-            return dataContext.manager.fetchEntityByKey("UserSectorRating", usersectorratingId, !forceRefresh)
+        function getUserSectorRating(userSectorRatingId, forceRefresh) {
+            return dataContext.manager.fetchEntityByKey("UserSectorRating", userSectorRatingId, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {

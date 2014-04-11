@@ -10,11 +10,11 @@
 (function () {
     'use strict';
 
-    var serviceId = 'resourcepoolService';
+    var serviceId = 'resourcePoolService';
     angular.module('main')
-        .factory(serviceId, ['dataContext', 'logger', resourcepoolService]);
+        .factory(serviceId, ['dataContext', 'logger', resourcePoolService]);
 
-    function resourcepoolService(dataContext, logger) {
+    function resourcePoolService(dataContext, logger) {
 
         // Logger
         logger = logger.forSource(serviceId);
@@ -43,12 +43,12 @@
 
         /*** Implementations ***/
 
-        function createResourcePool(resourcepool) {
-            return dataContext.manager.createEntity('ResourcePool', resourcepool);
+        function createResourcePool(resourcePool) {
+            return dataContext.manager.createEntity('ResourcePool', resourcePool);
         }
 
-        function deleteResourcePool(resourcepool) {
-            resourcepool.entityAspect.setDeleted();
+        function deleteResourcePool(resourcePool) {
+            resourcePool.entityAspect.setDeleted();
         }
 
         function getChanges() {
@@ -91,7 +91,7 @@
 
             function success(response) {
                 count = response.results.length;
-                logSuccess('Got ' + count + ' resourcepool(s)', response, true);
+                logSuccess('Got ' + count + ' resourcePool(s)', response, true);
                 return response.results;
             }
 
@@ -101,8 +101,8 @@
             }
         }
 
-        function getResourcePool(resourcepoolId, forceRefresh) {
-            return dataContext.manager.fetchEntityByKey("ResourcePool", resourcepoolId, !forceRefresh)
+        function getResourcePool(resourcePoolId, forceRefresh) {
+            return dataContext.manager.fetchEntityByKey("ResourcePool", resourcePoolId, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {

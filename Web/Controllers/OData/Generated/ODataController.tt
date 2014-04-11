@@ -25,7 +25,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 {
 	// Variables
 	var entityTypeName = typeMapper.GetTypeName(entityType);
-	var entityVariable = entityTypeName.ToLowerInvariant();
+	var entityVariable = codeStringGenerator.GetCamelCase(entityTypeName);
 	var controllerName = string.Format("{0}Controller", entityTypeName);
     var unitOfWorkName = string.Format("{0}UnitOfWork", entityTypeName);	
 	var primaryKey = entityType.KeyMembers[0];

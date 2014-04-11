@@ -10,17 +10,17 @@
 (function () {
     'use strict';
 
-    var controllerId = 'userlicenseratingEditController';
+    var controllerId = 'userLicenseRatingEditController';
     angular.module('main')
-        .controller(controllerId, ['userlicenseratingService',
+        .controller(controllerId, ['userLicenseRatingService',
             'licenseService',
             'userService',
             'logger',
             '$location',
             '$routeParams',
-            userlicenseratingEditController]);
+            userLicenseRatingEditController]);
 
-    function userlicenseratingEditController(userlicenseratingService,
+    function userLicenseRatingEditController(userLicenseRatingService,
 		licenseService,
 		userService,
 		logger,
@@ -31,7 +31,7 @@
         var logError = logger.logError;
         var logSuccess = logger.logSuccess;
 
-        var isNew = $location.path() === '/new';
+        var isNew = $location.path() === '/UserLicenseRating/new';
         var isSaving = false;
 
         // Controller methods (alphabetically)
@@ -40,7 +40,7 @@
         vm.userSet = [];
         vm.cancelChanges = cancelChanges;
         vm.isSaveDisabled = isSaveDisabled;
-        vm.userlicenserating = null;
+        vm.userLicenseRating = null;
         vm.saveChanges = saveChanges;
         vm.hasChanges = hasChanges;
 
@@ -50,16 +50,16 @@
 
         function cancelChanges() {
 
-            $location.path('/');
+            $location.path('/UserLicenseRating/');
 
-            if (userlicenseratingService.hasChanges()) {
-                userlicenseratingService.rejectChanges();
+            if (userLicenseRatingService.hasChanges()) {
+                userLicenseRatingService.rejectChanges();
                 logWarning('Discarded pending change(s)', null, true);
             }
         }
 
         function hasChanges() {
-            return userlicenseratingService.hasChanges();
+            return userLicenseRatingService.hasChanges();
         }
 
         function initialize() {
@@ -82,9 +82,9 @@
                 // TODO Only for development, create test entity ?!
             }
             else {
-                userlicenseratingService.getUserLicenseRating($routeParams.Id)
+                userLicenseRatingService.getUserLicenseRating($routeParams.Id)
                     .then(function (data) {
-                        vm.userlicenserating = data;
+                        vm.userLicenseRating = data;
                     })
                     .catch(function (error) {
                         logError("Boooo, we failed: " + error.message, null, true);
@@ -97,20 +97,20 @@
 
         function isSaveDisabled() {
             return isSaving ||
-                (!isNew && !userlicenseratingService.hasChanges());
+                (!isNew && !userLicenseRatingService.hasChanges());
         }
 
         function saveChanges() {
 
             if (isNew) {
-                userlicenseratingService.createUserLicenseRating(vm.userlicenserating);
+                userLicenseRatingService.createUserLicenseRating(vm.userLicenseRating);
             }
 
             isSaving = true;
-            return userlicenseratingService.saveChanges()
+            return userLicenseRatingService.saveChanges()
                 .then(function () {
                     logSuccess("Hooray we saved", null, true);
-                    $location.path('/');
+                    $location.path('/UserLicenseRating/');
                 })
                 .catch(function (error) {
                     logError("Boooo, we failed: " + error.message, null, true);

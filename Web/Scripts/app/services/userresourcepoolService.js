@@ -10,11 +10,11 @@
 (function () {
     'use strict';
 
-    var serviceId = 'userresourcepoolService';
+    var serviceId = 'userResourcePoolService';
     angular.module('main')
-        .factory(serviceId, ['dataContext', 'logger', userresourcepoolService]);
+        .factory(serviceId, ['dataContext', 'logger', userResourcePoolService]);
 
-    function userresourcepoolService(dataContext, logger) {
+    function userResourcePoolService(dataContext, logger) {
 
         // Logger
         logger = logger.forSource(serviceId);
@@ -43,12 +43,12 @@
 
         /*** Implementations ***/
 
-        function createUserResourcePool(userresourcepool) {
-            return dataContext.manager.createEntity('UserResourcePool', userresourcepool);
+        function createUserResourcePool(userResourcePool) {
+            return dataContext.manager.createEntity('UserResourcePool', userResourcePool);
         }
 
-        function deleteUserResourcePool(userresourcepool) {
-            userresourcepool.entityAspect.setDeleted();
+        function deleteUserResourcePool(userResourcePool) {
+            userResourcePool.entityAspect.setDeleted();
         }
 
         function getChanges() {
@@ -92,7 +92,7 @@
 
             function success(response) {
                 count = response.results.length;
-                logSuccess('Got ' + count + ' userresourcepool(s)', response, true);
+                logSuccess('Got ' + count + ' userResourcePool(s)', response, true);
                 return response.results;
             }
 
@@ -102,8 +102,8 @@
             }
         }
 
-        function getUserResourcePool(userresourcepoolId, forceRefresh) {
-            return dataContext.manager.fetchEntityByKey("UserResourcePool", userresourcepoolId, !forceRefresh)
+        function getUserResourcePool(userResourcePoolId, forceRefresh) {
+            return dataContext.manager.fetchEntityByKey("UserResourcePool", userResourcePoolId, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {

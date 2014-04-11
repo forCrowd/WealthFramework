@@ -30,6 +30,64 @@ http://msdn.microsoft.com/en-US/data/jj591583#Index
 
 . userId filter
 
-. camelcase case!
+. enums? useraccountypeid?
+
+. handle all links with angular route?
+.. home works but overview didnt, solve the mistery
+
+. custom views;
+.. user - login
+.. user resource pools
+
+. how to handle calculated properties ?!?!
+setter could help but only for scalar properties? and check update operation?
+how about collections? setter?
+
+resourcepoolorganization - name should be in db + with private or internal or public setter?
+userresourcepoolorganization - same
+how about userresourcepool - organization collection? or licenseset etc?
+actually code first + default odata model builder - collection works perfectly, shows parent class in metadata as complex type and returns it
+in wealth, it fails because of edmx? how to define parentplain in edmx (collection of string)
+
+http://stackoverflow.com/questions/16524073/handling-calculated-properties-with-breezejs-and-web-api
+http://www.breezejs.com/documentation/extending-entities
 
 . live - sector - Id byte to smallint
+
+3 ways;
+1. update metadata manually - but server side!!!!!!!!!
+2. switch to code first, but first solve how to use tt files with code-first context
+3. update database structure
+
+manually try to manipulate csdl file! check consoleapp!
+
+check efcontextprovider
+
+custom metadata works, but can it update ?!
+
+even complex type works .. just try to build the app then make it proper!
+
+dont forget to remove parent + colors + testvalue
+
+file nesting vs extension
+web essentials?
+
+userresourcepoollist.html was edited manually! zcareful!
+
+---
+FINAL SITUATION:
+by using manually updated metadata, scalar properties can be exposed
+to allow update operation, every scalar property has private set {} part
+
+it works with custom objects - so that's okay - just make it to work and clean the stuff
+item.NumberOfSales doesn't work! also formatting is terrible!
+continue with other indexes
+database is getting inconsistent by the way! zcareful!
+
+
+        public UserResourcePool UserResourcePool
+        {
+            // TODO This has to be Single()
+            get { return User.UserResourcePoolSet.First(item => item.ResourcePool == ResourcePoolOrganization.ResourcePool); }
+        }
+		

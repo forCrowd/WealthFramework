@@ -34,23 +34,23 @@ namespace Web.Controllers.OData
         [Queryable]
         public SingleResult<ResourcePool> GetResourcePool([FromODataUri] int key)
         {
-            return SingleResult.Create(unitOfWork.AllLive.Where(resourcepool => resourcepool.Id == key));
+            return SingleResult.Create(unitOfWork.AllLive.Where(resourcePool => resourcePool.Id == key));
         }
 
         // PUT odata/ResourcePool(5)
-        public async Task<IHttpActionResult> Put([FromODataUri] int key, ResourcePool resourcepool)
+        public async Task<IHttpActionResult> Put([FromODataUri] int key, ResourcePool resourcePool)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (key != resourcepool.Id)
+            if (key != resourcePool.Id)
             {
                 return BadRequest();
             }
 
-            unitOfWork.Update(resourcepool);
+            unitOfWork.Update(resourcePool);
 
             try
             {
@@ -68,18 +68,18 @@ namespace Web.Controllers.OData
                 }
             }
 
-            return Updated(resourcepool);
+            return Updated(resourcePool);
         }
 
         // POST odata/ResourcePool
-        public async Task<IHttpActionResult> Post(ResourcePool resourcepool)
+        public async Task<IHttpActionResult> Post(ResourcePool resourcePool)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            unitOfWork.Insert(resourcepool);
+            unitOfWork.Insert(resourcePool);
 
             try
             {
@@ -87,7 +87,7 @@ namespace Web.Controllers.OData
             }
             catch (DbUpdateException)
             {
-                if (unitOfWork.Exists(resourcepool.Id))
+                if (unitOfWork.Exists(resourcePool.Id))
                 {
                     return Conflict();
                 }
@@ -97,7 +97,7 @@ namespace Web.Controllers.OData
                 }
             }
 
-            return Created(resourcepool);
+            return Created(resourcePool);
         }
 
         // PATCH odata/ResourcePool(5)
@@ -109,14 +109,14 @@ namespace Web.Controllers.OData
                 return BadRequest(ModelState);
             }
 
-            var resourcepool = await unitOfWork.FindAsync(key);
-            if (resourcepool == null)
+            var resourcePool = await unitOfWork.FindAsync(key);
+            if (resourcePool == null)
             {
                 return NotFound();
             }
 
-            patch.Patch(resourcepool);
-            unitOfWork.Update(resourcepool);
+            patch.Patch(resourcePool);
+            unitOfWork.Update(resourcePool);
 
             try
             {
@@ -134,19 +134,19 @@ namespace Web.Controllers.OData
                 }
             }
 
-            return Updated(resourcepool);
+            return Updated(resourcePool);
         }
 
         // DELETE odata/ResourcePool(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            var resourcepool = await unitOfWork.FindAsync(key);
-            if (resourcepool == null)
+            var resourcePool = await unitOfWork.FindAsync(key);
+            if (resourcePool == null)
             {
                 return NotFound();
             }
 
-            unitOfWork.Delete(resourcepool.Id);
+            unitOfWork.Delete(resourcePool.Id);
             await unitOfWork.SaveAsync();
 
             return StatusCode(HttpStatusCode.NoContent);

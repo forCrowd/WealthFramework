@@ -1,0 +1,190 @@
+﻿<h2>All in One - {{ vm.userResourcePool.UserResourcePoolType }}</h2>
+
+<p>
+    <div class="btn-group">
+        <button type="submit" class="btn btn-default">Increase Number of Sales</button>
+        <button type="submit" class="btn btn-default">Reset Number of Sales</button>
+    </div>
+</p>
+<p>
+    CMRP Rate: {{ vm.userResourcePool.ResourcePoolRatePercentage }} - Number of ratings: {{ vm.userResourcePool.UserResourcePoolRatingSet.length }}
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            ProductionCost
+        </th>
+        <th>
+            SalesPrice
+        </th>
+        <th>
+            License.Name
+        </th>
+        <th>
+            ProfitPercentage
+        </th>
+        <th>
+            SalesPriceIncludingResourcePoolTax
+        </th>
+        <th>
+            NumberOfSales
+        </th>
+        <th>
+            TotalProfit
+        </th>
+        <th>
+            TotalResourcePoolTax
+        </th>
+        <th>
+            TotalSalesRevenueIncludingResourcePoolTax
+        </th>
+        <th>
+            TotalCostIndexIncome
+        </th>
+        <th>
+            KnowledgeIndexIncome
+        </th>
+        <th>
+            QualityIndexIncome
+        </th>
+        <th>
+            SectorIndexIncome
+        </th>
+        <th>
+            EmployeeSatisfactionIndexIncome
+        </th>
+        <th>
+            CustomerSatisfactionIndexIncome
+        </th>
+        <th>
+            DistanceIndexIncome
+        </th>
+        <th>
+            TotalResourcePoolIncome
+        </th>
+        <th>
+            TotalIncome
+        </th>
+    </tr>
+    <tr data-ng-repeat="item in vm.userResourcePool.UserResourcePoolOrganizationSet">
+        <td>
+            {{ item.Organization.Name }}
+        </td>
+        <td>
+            {{ item.Organization.ProductionCost }}
+        </td>
+        <td>
+            {{ item.Organization.SalesPrice }}
+        </td>
+        <td>
+            {{ item.Organization.License.Name
+        </td>
+        <td>
+            {{ item.Organization.ProfitPercentage }}
+        </td>
+        <td>
+            {{ item.SalesPriceIncludingResourcePoolTax }}
+        </td>
+        <td>
+            {{ item.NumberOfSales }}
+        </td>
+        <td>
+            {{ item.TotalProfit }}
+        </td>
+        <td>
+            {{ item.TotalResourcePoolTax }}
+        </td>
+        <td>
+            {{ item.TotalSalesRevenueIncludingResourcePoolTax }}
+        </td>
+        <td>
+            {{ item.TotalCostIndexIncome }}
+        </td>
+        <td>
+            {{ item.KnowledgeIndexIncome }}
+        </td>
+        <td>
+            {{ item.QualityIndexIncome }}
+        </td>
+        <td>
+            {{ item.SectorIndexIncome }}
+        </td>
+        <td>
+            {{ item.EmployeeSatisfactionIndexIncome }}
+        </td>
+        <td>
+            {{ item.CustomerSatisfactionIndexIncome }}
+        </td>
+        <td>
+            {{ item.DistanceIndexIncome }}
+        </td>
+        <td>
+            {{ item.TotalResourcePoolIncome }}
+        </td>
+        <td>
+            {{ item.TotalIncome }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Total
+        </td>
+        <td>
+            {{ vm.userResourcePool.ResourcePool.ProductionCost }}
+        </td>
+        <td>
+            {{ vm.userResourcePool.ResourcePool.SalesPrice }}
+        </td>
+        <td>
+            &nbsp;
+        </td>
+        <td>
+            &nbsp;
+        </td>
+        <td>
+            {{ vm.userResourcePool.SalesPriceIncludingResourcePoolTax }}
+        </td>
+        <td>
+            {{ vm.userResourcePool.NumberOfSales }}
+        </td>
+        <td>
+            {{ vm.userResourcePool.TotalProfit }}
+        </td>
+        <td>
+            {{ vm.userResourcePool.TotalResourcePoolTax }}
+        </td>
+        <td>
+            {{ vm.userResourcePool.TotalSalesRevenueIncludingResourcePoolTax }}
+        </td>
+        <td>
+            {{ vm.userResourcePool.TotalCostIndexIncome }}
+        </td>
+        <td>
+            {{ vm.userResourcePool.KnowledgeIndexIncome }}
+        </td>
+        <td>
+            {{ vm.userResourcePool.QualityIndexIncome }}
+        </td>
+        <td>
+            {{ vm.userResourcePool.SectorIndexIncome }}
+        </td>
+        <td>
+            {{ vm.userResourcePool.EmployeeSatisfactionIndexIncome }}
+        </td>
+        <td>
+            {{ vm.userResourcePool.CustomerSatisfactionIndexIncome }}
+        </td>
+        <td>
+            {{ vm.userResourcePool.DistanceIndexIncome }}
+        </td>
+        <td>
+            {{ vm.userResourcePool.TotalResourcePoolIncome }}
+        </td>
+        <td>
+            {{ vm.userResourcePool.TotalIncome }}
+        </td>
+    </tr>
+</table>

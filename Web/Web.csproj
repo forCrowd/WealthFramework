@@ -188,7 +188,7 @@
     <Compile Include="App_Code\ApplicationSettings.cs" />
     <Compile Include="App_Start\DevelopmentModeConfig.cs" />
     <Compile Include="App_Code\ServerMode.cs" />
-    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\Mvc\BaseController.cs" />
     <Compile Include="Controllers\Mvc\Generated\LicenseController.cs">
       <DependentUpon>MvcController.tt</DependentUpon>
     </Compile>
@@ -273,16 +273,6 @@
     <Compile Include="Controllers\OData\Generated\UserSectorRatingController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\OData\LicenseController.cs" />
-    <Compile Include="Controllers\OData\OrganizationController.cs" />
-    <Compile Include="Controllers\OData\ResourcePoolController.cs" />
-    <Compile Include="Controllers\OData\ResourcePoolOrganizationController.cs" />
-    <Compile Include="Controllers\OData\SectorController.cs" />
-    <Compile Include="Controllers\OData\UserController.cs" />
-    <Compile Include="Controllers\OData\UserLicenseRatingController.cs" />
-    <Compile Include="Controllers\OData\UserResourcePoolController.cs" />
-    <Compile Include="Controllers\OData\UserResourcePoolOrganizationController.cs" />
-    <Compile Include="Controllers\OData\UserSectorRatingController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -322,36 +312,7 @@
     <Content Include="Content\breeze.directives.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
-    <Content Include="Controllers\Mvc\Generated\licenseList.html">
-      <DependentUpon>list.tt</DependentUpon>
-    </Content>
-    <Content Include="Controllers\Mvc\Generated\organizationList.html">
-      <DependentUpon>list.tt</DependentUpon>
-    </Content>
-    <Content Include="Controllers\Mvc\Generated\resourcepoolList.html">
-      <DependentUpon>list.tt</DependentUpon>
-    </Content>
-    <Content Include="Controllers\Mvc\Generated\resourcepoolorganizationList.html">
-      <DependentUpon>list.tt</DependentUpon>
-    </Content>
-    <Content Include="Controllers\Mvc\Generated\sectorList.html">
-      <DependentUpon>list.tt</DependentUpon>
-    </Content>
-    <Content Include="Controllers\Mvc\Generated\userlicenseratingList.html">
-      <DependentUpon>list.tt</DependentUpon>
-    </Content>
-    <Content Include="Controllers\Mvc\Generated\userList.html">
-      <DependentUpon>list.tt</DependentUpon>
-    </Content>
-    <Content Include="Controllers\Mvc\Generated\userresourcepoolList.html">
-      <DependentUpon>list.tt</DependentUpon>
-    </Content>
-    <Content Include="Controllers\Mvc\Generated\userresourcepoolorganizationList.html">
-      <DependentUpon>list.tt</DependentUpon>
-    </Content>
-    <Content Include="Controllers\Mvc\Generated\usersectorratingList.html">
-      <DependentUpon>list.tt</DependentUpon>
-    </Content>
+    <Content Include="Controllers\OData\metadata.xml" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -360,6 +321,7 @@
     <Content Include="Scripts\angular-route.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\app\controllers\userResourcePoolController.js" />
     <Content Include="Scripts\app\controllers\licenseEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
@@ -372,16 +334,16 @@
     <Content Include="Scripts\app\controllers\organizationListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\resourcepoolEditController.js">
+    <Content Include="Scripts\app\controllers\resourcePoolEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\resourcepoolListController.js">
+    <Content Include="Scripts\app\controllers\resourcePoolListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\resourcepoolorganizationEditController.js">
+    <Content Include="Scripts\app\controllers\resourcePoolOrganizationEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\resourcepoolorganizationListController.js">
+    <Content Include="Scripts\app\controllers\resourcePoolOrganizationListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\controllers\sectorEditController.js">
@@ -393,31 +355,31 @@
     <Content Include="Scripts\app\controllers\userEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\userlicenseratingEditController.js">
+    <Content Include="Scripts\app\controllers\userLicenseRatingEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\userlicenseratingListController.js">
+    <Content Include="Scripts\app\controllers\userLicenseRatingListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\controllers\userListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\userresourcepoolEditController.js">
+    <Content Include="Scripts\app\controllers\userResourcePoolEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\userresourcepoolListController.js">
+    <Content Include="Scripts\app\controllers\userResourcePoolListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\userresourcepoolorganizationEditController.js">
+    <Content Include="Scripts\app\controllers\userResourcePoolOrganizationEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\userresourcepoolorganizationListController.js">
+    <Content Include="Scripts\app\controllers\userResourcePoolOrganizationListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\usersectorratingEditController.js">
+    <Content Include="Scripts\app\controllers\userSectorRatingEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\usersectorratingListController.js">
+    <Content Include="Scripts\app\controllers\userSectorRatingListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\entityManagerFactory.js" />
@@ -431,30 +393,31 @@
     <Content Include="Scripts\app\services\organizationService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\services\resourcepoolorganizationService.js">
+    <Content Include="Scripts\app\services\resourcePoolOrganizationService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\services\resourcepoolService.js">
+    <Content Include="Scripts\app\services\resourcePoolService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\services\sectorService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\services\userlicenseratingService.js">
+    <Content Include="Scripts\app\services\userLicenseRatingService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\services\userresourcepoolorganizationService.js">
+    <Content Include="Scripts\app\services\userResourcePoolOrganizationService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\services\userresourcepoolService.js">
+    <Content Include="Scripts\app\services\userResourcePoolService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\services\usersectorratingService.js">
+    <Content Include="Scripts\app\services\userSectorRatingService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\services\userService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
+    <Content Include="Scripts\app\services\userService2.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Controllers\Mvc\Generated\MvcController.tt">
@@ -532,10 +495,10 @@
     <Content Include="ViewsNg\Edit\organizationEdit.html">
       <DependentUpon>edit.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\Edit\resourcepoolEdit.html">
+    <Content Include="ViewsNg\Edit\resourcePoolEdit.html">
       <DependentUpon>edit.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\Edit\resourcepoolorganizationEdit.html">
+    <Content Include="ViewsNg\Edit\resourcePoolOrganizationEdit.html">
       <DependentUpon>edit.tt</DependentUpon>
     </Content>
     <Content Include="ViewsNg\Edit\sectorEdit.html">
@@ -544,16 +507,16 @@
     <Content Include="ViewsNg\Edit\userEdit.html">
       <DependentUpon>edit.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\Edit\userlicenseratingEdit.html">
+    <Content Include="ViewsNg\Edit\userLicenseRatingEdit.html">
       <DependentUpon>edit.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\Edit\userresourcepoolEdit.html">
+    <Content Include="ViewsNg\Edit\userResourcePoolEdit.html">
       <DependentUpon>edit.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\Edit\userresourcepoolorganizationEdit.html">
+    <Content Include="ViewsNg\Edit\userResourcePoolOrganizationEdit.html">
       <DependentUpon>edit.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\Edit\usersectorratingEdit.html">
+    <Content Include="ViewsNg\Edit\userSectorRatingEdit.html">
       <DependentUpon>edit.tt</DependentUpon>
     </Content>
     <Content Include="ViewsNg\List\licenseList.html">
@@ -562,28 +525,28 @@
     <Content Include="ViewsNg\List\organizationList.html">
       <DependentUpon>list.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\List\resourcepoolList.html">
+    <Content Include="ViewsNg\List\resourcePoolList.html">
       <DependentUpon>list.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\List\resourcepoolorganizationList.html">
+    <Content Include="ViewsNg\List\resourcePoolOrganizationList.html">
       <DependentUpon>list.tt</DependentUpon>
     </Content>
     <Content Include="ViewsNg\List\sectorList.html">
       <DependentUpon>list.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\List\userlicenseratingList.html">
+    <Content Include="ViewsNg\List\userLicenseRatingList.html">
       <DependentUpon>list.tt</DependentUpon>
     </Content>
     <Content Include="ViewsNg\List\userList.html">
       <DependentUpon>list.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\List\userresourcepoolList.html">
+    <Content Include="ViewsNg\List\userResourcePoolList.html">
       <DependentUpon>list.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\List\userresourcepoolorganizationList.html">
+    <Content Include="ViewsNg\List\userResourcePoolOrganizationList.html">
       <DependentUpon>list.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\List\usersectorratingList.html">
+    <Content Include="ViewsNg\List\userSectorRatingList.html">
       <DependentUpon>list.tt</DependentUpon>
     </Content>
     <Content Include="Views\License\Create.cshtml" />
@@ -601,7 +564,6 @@
     <Content Include="Views\Sector\Details.cshtml" />
     <Content Include="Views\Sector\Edit.cshtml" />
     <Content Include="Views\Sector\Index.cshtml" />
-    <Content Include="Views\Home\Overview.cshtml" />
     <Content Include="Views\UserResourcePool\TotalCostIndex.cshtml" />
     <Content Include="Views\UserResourcePool\KnowledgeIndex.cshtml" />
     <Content Include="Views\UserResourcePool\QualityIndex.cshtml" />
@@ -631,8 +593,6 @@
     <Content Include="Views\UserResourcePoolOrganization\Details.cshtml" />
     <Content Include="Views\UserResourcePoolOrganization\Edit.cshtml" />
     <Content Include="Views\UserResourcePoolOrganization\Index.cshtml" />
-    <Content Include="Views\Home\Overview 2014 03 17.cshtml" />
-    <Content Include="Views\Home\Technologies.cshtml" />
     <Content Include="Views\LicenseNg\Index.cshtml" />
     <Content Include="Scripts\toastr.min.js.map" />
     <Content Include="Scripts\jquery-2.1.0.min.map" />
@@ -653,6 +613,17 @@
     <Content Include="Views\UserResourcePoolOrganizationNg\Index.cshtml" />
     <Content Include="Views\UserSectorRatingNg\Index.cshtml" />
     <Content Include="Views\UserLicenseRatingNg\Index.cshtml" />
+    <Content Include="ViewsNg\Home\Index.html" />
+    <Content Include="ViewsNg\Home\Overview.html" />
+    <Content Include="ViewsNg\Home\Technologies.html" />
+    <Content Include="ViewsNg\UserResourcePool\AllInOne.html" />
+    <Content Include="ViewsNg\UserResourcePool\CustomerSatisfactionIndex.html" />
+    <Content Include="ViewsNg\UserResourcePool\DistanceIndex.html" />
+    <Content Include="ViewsNg\UserResourcePool\EmployeeSatisfactionIndex.html" />
+    <Content Include="ViewsNg\UserResourcePool\KnowledgeIndex.html" />
+    <Content Include="ViewsNg\UserResourcePool\QualityIndex.html" />
+    <Content Include="ViewsNg\UserResourcePool\SectorIndex.html" />
+    <Content Include="ViewsNg\UserResourcePool\TotalCostIndex.html" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>

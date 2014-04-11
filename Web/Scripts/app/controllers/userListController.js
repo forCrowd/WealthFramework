@@ -46,8 +46,8 @@
                 })
         };
 
-        function getUserSet(forceRefresh) {
-            return userService.getUserSet(forceRefresh).then(function (data) {
+        function getUserSet() {
+            return userService.getUserSet().then(function (data) {
                 return vm.userSet = data;
             });
         }

@@ -10,11 +10,11 @@
 (function () {
     'use strict';
 
-    var controllerId = 'userlicenseratingListController';
+    var controllerId = 'userLicenseRatingListController';
     angular.module('main')
-        .controller(controllerId, ['userlicenseratingService', 'logger', userlicenseratingListController]);
+        .controller(controllerId, ['userLicenseRatingService', 'logger', userLicenseRatingListController]);
 
-    function userlicenseratingListController(userlicenseratingService, logger) {
+    function userLicenseRatingListController(userLicenseRatingService, logger) {
 
         logger = logger.forSource(controllerId);
         var logError = logger.logError;
@@ -22,7 +22,7 @@
 
         var vm = this;
         vm.deleteUserLicenseRating = deleteUserLicenseRating;
-        vm.userlicenseratingSet = [];
+        vm.userLicenseRatingSet = [];
 
         initialize();
 
@@ -30,12 +30,12 @@
             getUserLicenseRatingSet();
         };
 
-        function deleteUserLicenseRating(userlicenserating) {
-            userlicenseratingService.deleteUserLicenseRating(userlicenserating);
+        function deleteUserLicenseRating(userLicenseRating) {
+            userLicenseRatingService.deleteUserLicenseRating(userLicenseRating);
 
-            userlicenseratingService.saveChanges()
+            userLicenseRatingService.saveChanges()
                 .then(function () {
-                    vm.userlicenseratingSet.splice(vm.userlicenseratingSet.indexOf(userlicenserating), 1);
+                    vm.userLicenseRatingSet.splice(vm.userLicenseRatingSet.indexOf(userLicenseRating), 1);
                     logSuccess("Hooray we saved", null, true);
                 })
                 .catch(function (error) {
@@ -46,9 +46,9 @@
                 })
         };
 
-        function getUserLicenseRatingSet(forceRefresh) {
-            return userlicenseratingService.getUserLicenseRatingSet(forceRefresh).then(function (data) {
-                return vm.userlicenseratingSet = data;
+        function getUserLicenseRatingSet() {
+            return userLicenseRatingService.getUserLicenseRatingSet().then(function (data) {
+                return vm.userLicenseRatingSet = data;
             });
         }
     };

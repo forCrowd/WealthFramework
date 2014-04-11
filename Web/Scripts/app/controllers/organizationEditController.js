@@ -31,7 +31,7 @@
         var logError = logger.logError;
         var logSuccess = logger.logSuccess;
 
-        var isNew = $location.path() === '/new';
+        var isNew = $location.path() === '/Organization/new';
         var isSaving = false;
 
         // Controller methods (alphabetically)
@@ -50,7 +50,7 @@
 
         function cancelChanges() {
 
-            $location.path('/');
+            $location.path('/Organization/');
 
             if (organizationService.hasChanges()) {
                 organizationService.rejectChanges();
@@ -110,7 +110,7 @@
             return organizationService.saveChanges()
                 .then(function () {
                     logSuccess("Hooray we saved", null, true);
-                    $location.path('/');
+                    $location.path('/Organization/');
                 })
                 .catch(function (error) {
                     logError("Boooo, we failed: " + error.message, null, true);

@@ -10,11 +10,11 @@
 (function () {
     'use strict';
 
-    var controllerId = 'userresourcepoolListController';
+    var controllerId = 'userResourcePoolListController';
     angular.module('main')
-        .controller(controllerId, ['userresourcepoolService', 'logger', userresourcepoolListController]);
+        .controller(controllerId, ['userResourcePoolService', 'logger', userResourcePoolListController]);
 
-    function userresourcepoolListController(userresourcepoolService, logger) {
+    function userResourcePoolListController(userResourcePoolService, logger) {
 
         logger = logger.forSource(controllerId);
         var logError = logger.logError;
@@ -22,7 +22,7 @@
 
         var vm = this;
         vm.deleteUserResourcePool = deleteUserResourcePool;
-        vm.userresourcepoolSet = [];
+        vm.userResourcePoolSet = [];
 
         initialize();
 
@@ -30,12 +30,12 @@
             getUserResourcePoolSet();
         };
 
-        function deleteUserResourcePool(userresourcepool) {
-            userresourcepoolService.deleteUserResourcePool(userresourcepool);
+        function deleteUserResourcePool(userResourcePool) {
+            userResourcePoolService.deleteUserResourcePool(userResourcePool);
 
-            userresourcepoolService.saveChanges()
+            userResourcePoolService.saveChanges()
                 .then(function () {
-                    vm.userresourcepoolSet.splice(vm.userresourcepoolSet.indexOf(userresourcepool), 1);
+                    vm.userResourcePoolSet.splice(vm.userResourcePoolSet.indexOf(userResourcePool), 1);
                     logSuccess("Hooray we saved", null, true);
                 })
                 .catch(function (error) {
@@ -46,9 +46,9 @@
                 })
         };
 
-        function getUserResourcePoolSet(forceRefresh) {
-            return userresourcepoolService.getUserResourcePoolSet(forceRefresh).then(function (data) {
-                return vm.userresourcepoolSet = data;
+        function getUserResourcePoolSet() {
+            return userResourcePoolService.getUserResourcePoolSet().then(function (data) {
+                return vm.userResourcePoolSet = data;
             });
         }
     };

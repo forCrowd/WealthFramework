@@ -7,14 +7,7 @@ namespace Web.Controllers.Mvc
         public ActionResult Index()
         {
             ViewBag.Title = "Home ";
-
-            return View();
-        }
-
-        public ActionResult Overview()
-        {
-            ViewBag.Title = "Overview";
-
+            
             return View();
         }
     }

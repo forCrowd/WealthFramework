@@ -10,11 +10,11 @@
 (function () {
     'use strict';
 
-    var controllerId = 'usersectorratingListController';
+    var controllerId = 'userSectorRatingListController';
     angular.module('main')
-        .controller(controllerId, ['usersectorratingService', 'logger', usersectorratingListController]);
+        .controller(controllerId, ['userSectorRatingService', 'logger', userSectorRatingListController]);
 
-    function usersectorratingListController(usersectorratingService, logger) {
+    function userSectorRatingListController(userSectorRatingService, logger) {
 
         logger = logger.forSource(controllerId);
         var logError = logger.logError;
@@ -22,7 +22,7 @@
 
         var vm = this;
         vm.deleteUserSectorRating = deleteUserSectorRating;
-        vm.usersectorratingSet = [];
+        vm.userSectorRatingSet = [];
 
         initialize();
 
@@ -30,12 +30,12 @@
             getUserSectorRatingSet();
         };
 
-        function deleteUserSectorRating(usersectorrating) {
-            usersectorratingService.deleteUserSectorRating(usersectorrating);
+        function deleteUserSectorRating(userSectorRating) {
+            userSectorRatingService.deleteUserSectorRating(userSectorRating);
 
-            usersectorratingService.saveChanges()
+            userSectorRatingService.saveChanges()
                 .then(function () {
-                    vm.usersectorratingSet.splice(vm.usersectorratingSet.indexOf(usersectorrating), 1);
+                    vm.userSectorRatingSet.splice(vm.userSectorRatingSet.indexOf(userSectorRating), 1);
                     logSuccess("Hooray we saved", null, true);
                 })
                 .catch(function (error) {
@@ -46,9 +46,9 @@
                 })
         };
 
-        function getUserSectorRatingSet(forceRefresh) {
-            return usersectorratingService.getUserSectorRatingSet(forceRefresh).then(function (data) {
-                return vm.usersectorratingSet = data;
+        function getUserSectorRatingSet() {
+            return userSectorRatingService.getUserSectorRatingSet().then(function (data) {
+                return vm.userSectorRatingSet = data;
             });
         }
     };

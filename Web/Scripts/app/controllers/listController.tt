@@ -25,7 +25,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 {
 	// Variables
 	var entityTypeName = typeMapper.GetTypeName(entityType);
-	var entityVariable = entityTypeName.ToLowerInvariant();
+	var entityVariable = codeStringGenerator.GetCamelCase(entityTypeName);
 	var entitySetName = string.Format("{0}Set", entityVariable);
 	var controllerId = string.Format("{0}ListController", entityVariable);
 	var serviceId = string.Format("{0}Service", entityVariable);
@@ -84,8 +84,8 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
                 })
         };
 
-        function <#= entitySetGetMethod #>(forceRefresh) {
-            return <#= serviceId #>.<#= entitySetGetMethod #>(forceRefresh).then(function (data) {
+        function <#= entitySetGetMethod #>() {
+            return <#= serviceId #>.<#= entitySetGetMethod #>().then(function (data) {
                 return vm.<#= entitySetName #> = data;
             });
         }

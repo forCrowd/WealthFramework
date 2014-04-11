@@ -16,19 +16,19 @@
         <div class="form-group">
             <label for="UserId" class="control-label col-md-2">Email</label>
             <div class="col-md-10" data-ng-class="{'has-error': editForm.UserId.$invalid && !editForm.UserId.$pristine}">
-                <select id="UserId" name="UserId" data-ng-model="vm.usersectorrating.User" data-ng-options="user.Email for user in vm.userSet" class="form-control" required ></select>
+                <select id="UserId" name="UserId" data-ng-model="vm.userSectorRating.User" data-ng-options="user.Email for user in vm.userSet" class="form-control" required ></select>
             </div>
         </div>
         <div class="form-group">
             <label for="SectorId" class="control-label col-md-2">Sector</label>
             <div class="col-md-10" data-ng-class="{'has-error': editForm.SectorId.$invalid && !editForm.SectorId.$pristine}">
-                <select id="SectorId" name="SectorId" data-ng-model="vm.usersectorrating.Sector" data-ng-options="sector.Name for sector in vm.sectorSet" class="form-control" required ></select>
+                <select id="SectorId" name="SectorId" data-ng-model="vm.userSectorRating.Sector" data-ng-options="sector.Name for sector in vm.sectorSet" class="form-control" required ></select>
             </div>
         </div>
         <div class="form-group">
             <label for="Rating" class="control-label col-md-2">Rating</label>
             <div class="col-md-10" data-ng-class="{'has-error': editForm.Rating.$invalid && !editForm.Rating.$pristine}">
-                <input id="Rating" name="Rating" type="text" data-ng-model="vm.usersectorrating.Rating" class="form-control" required />
+                <input id="Rating" name="Rating" type="text" data-ng-model="vm.userSectorRating.Rating" class="form-control" required />
             </div>
         </div>
         <div class="form-group">

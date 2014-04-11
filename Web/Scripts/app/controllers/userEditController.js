@@ -27,7 +27,7 @@
         var logError = logger.logError;
         var logSuccess = logger.logSuccess;
 
-        var isNew = $location.path() === '/new';
+        var isNew = $location.path() === '/User/new';
         var isSaving = false;
 
         // Controller methods (alphabetically)
@@ -44,7 +44,7 @@
 
         function cancelChanges() {
 
-            $location.path('/');
+            $location.path('/User/');
 
             if (userService.hasChanges()) {
                 userService.rejectChanges();
@@ -90,7 +90,7 @@
             return userService.saveChanges()
                 .then(function () {
                     logSuccess("Hooray we saved", null, true);
-                    $location.path('/');
+                    $location.path('/User/');
                 })
                 .catch(function (error) {
                     logError("Boooo, we failed: " + error.message, null, true);

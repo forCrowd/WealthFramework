@@ -75,6 +75,7 @@
     <Compile Include="Dto\UserResourcePoolOrganizationDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
+    <Compile Include="Dto\OrganizationDto2.cs" />
     <Compile Include="Dto\UserSectorRatingDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
@@ -164,6 +165,7 @@
     <Compile Include="Metadata\UserSectorRatingMetadata.cs" />
     <Compile Include="ResourcePool.cs" />
     <Compile Include="ResourcePoolOrganization.cs" />
+    <Compile Include="Dto\UserResourcePoolOrganizationDto2.cs" />
     <Compile Include="UserResourcePoolOrganization.cs" />
     <Compile Include="UserResourcePool.cs" />
     <Compile Include="UserResourcePoolType.cs" />

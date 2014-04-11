@@ -10,7 +10,7 @@
 -->
 <h2>List</h2>
 <p>
-    <a href="#/new">Create New</a>
+    <a href="#/UserSectorRating/new">Create New</a>
 </p>
 <table class="table">
     <tr>
@@ -25,19 +25,19 @@
     </th>
         <th></th>
     </tr>
-    <tr data-ng-repeat="usersectorrating in vm.usersectorratingSet">
+    <tr data-ng-repeat="userSectorRating in vm.userSectorRatingSet">
         <td>
-            {{ usersectorrating.User.Email }}
+            {{ userSectorRating.User.Email }}
         </td>
         <td>
-            {{ usersectorrating.Sector.Name }}
+            {{ userSectorRating.Sector.Name }}
         </td>
         <td>
-            {{ usersectorrating.Rating }}
+            {{ userSectorRating.Rating }}
         </td>
         <td>
-            <a href="#/edit/{{ usersectorrating.Id }}">Edit</a> |
-            <a href="" data-ng-click="vm.deleteUserSectorRating(usersectorrating)">
+            <a href="#/UserSectorRating/edit/{{ userSectorRating.Id }}">Edit</a> |
+            <a href="" data-ng-click="vm.deleteUserSectorRating(userSectorRating)">
                 Delete
             </a>
         </td>

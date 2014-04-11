@@ -10,19 +10,19 @@
 (function () {
     'use strict';
 
-    var controllerId = 'userresourcepoolorganizationEditController';
+    var controllerId = 'userResourcePoolOrganizationEditController';
     angular.module('main')
-        .controller(controllerId, ['userresourcepoolorganizationService',
+        .controller(controllerId, ['userResourcePoolOrganizationService',
             'userService',
-            'resourcepoolorganizationService',
+            'resourcePoolOrganizationService',
             'logger',
             '$location',
             '$routeParams',
-            userresourcepoolorganizationEditController]);
+            userResourcePoolOrganizationEditController]);
 
-    function userresourcepoolorganizationEditController(userresourcepoolorganizationService,
+    function userResourcePoolOrganizationEditController(userResourcePoolOrganizationService,
 		userService,
-		resourcepoolorganizationService,
+		resourcePoolOrganizationService,
 		logger,
 		$location,
 		$routeParams) {
@@ -31,16 +31,16 @@
         var logError = logger.logError;
         var logSuccess = logger.logSuccess;
 
-        var isNew = $location.path() === '/new';
+        var isNew = $location.path() === '/UserResourcePoolOrganization/new';
         var isSaving = false;
 
         // Controller methods (alphabetically)
         var vm = this;
         vm.userSet = [];
-        vm.resourcepoolorganizationSet = [];
+        vm.resourcePoolOrganizationSet = [];
         vm.cancelChanges = cancelChanges;
         vm.isSaveDisabled = isSaveDisabled;
-        vm.userresourcepoolorganization = null;
+        vm.userResourcePoolOrganization = null;
         vm.saveChanges = saveChanges;
         vm.hasChanges = hasChanges;
 
@@ -50,16 +50,16 @@
 
         function cancelChanges() {
 
-            $location.path('/');
+            $location.path('/UserResourcePoolOrganization/');
 
-            if (userresourcepoolorganizationService.hasChanges()) {
-                userresourcepoolorganizationService.rejectChanges();
+            if (userResourcePoolOrganizationService.hasChanges()) {
+                userResourcePoolOrganizationService.rejectChanges();
                 logWarning('Discarded pending change(s)', null, true);
             }
         }
 
         function hasChanges() {
-            return userresourcepoolorganizationService.hasChanges();
+            return userResourcePoolOrganizationService.hasChanges();
         }
 
         function initialize() {
@@ -71,9 +71,9 @@
 
             // TODO Catch?
 
-            resourcepoolorganizationService.getResourcePoolOrganizationSet()
+            resourcePoolOrganizationService.getResourcePoolOrganizationSet()
                 .then(function (data) {
-                    vm.resourcepoolorganizationSet = data;
+                    vm.resourcePoolOrganizationSet = data;
                 });
 
             // TODO Catch?
@@ -82,9 +82,9 @@
                 // TODO Only for development, create test entity ?!
             }
             else {
-                userresourcepoolorganizationService.getUserResourcePoolOrganization($routeParams.Id)
+                userResourcePoolOrganizationService.getUserResourcePoolOrganization($routeParams.Id)
                     .then(function (data) {
-                        vm.userresourcepoolorganization = data;
+                        vm.userResourcePoolOrganization = data;
                     })
                     .catch(function (error) {
                         logError("Boooo, we failed: " + error.message, null, true);
@@ -97,20 +97,20 @@
 
         function isSaveDisabled() {
             return isSaving ||
-                (!isNew && !userresourcepoolorganizationService.hasChanges());
+                (!isNew && !userResourcePoolOrganizationService.hasChanges());
         }
 
         function saveChanges() {
 
             if (isNew) {
-                userresourcepoolorganizationService.createUserResourcePoolOrganization(vm.userresourcepoolorganization);
+                userResourcePoolOrganizationService.createUserResourcePoolOrganization(vm.userResourcePoolOrganization);
             }
 
             isSaving = true;
-            return userresourcepoolorganizationService.saveChanges()
+            return userResourcePoolOrganizationService.saveChanges()
                 .then(function () {
                     logSuccess("Hooray we saved", null, true);
-                    $location.path('/');
+                    $location.path('/UserResourcePoolOrganization/');
                 })
                 .catch(function (error) {
                     logError("Boooo, we failed: " + error.message, null, true);

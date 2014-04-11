@@ -46,8 +46,8 @@
                 })
         };
 
-        function getLicenseSet(forceRefresh) {
-            return licenseService.getLicenseSet(forceRefresh).then(function (data) {
+        function getLicenseSet() {
+            return licenseService.getLicenseSet().then(function (data) {
                 return vm.licenseSet = data;
             });
         }

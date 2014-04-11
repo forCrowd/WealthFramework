@@ -27,7 +27,7 @@
         var logError = logger.logError;
         var logSuccess = logger.logSuccess;
 
-        var isNew = $location.path() === '/new';
+        var isNew = $location.path() === '/Sector/new';
         var isSaving = false;
 
         // Controller methods (alphabetically)
@@ -44,7 +44,7 @@
 
         function cancelChanges() {
 
-            $location.path('/');
+            $location.path('/Sector/');
 
             if (sectorService.hasChanges()) {
                 sectorService.rejectChanges();
@@ -90,7 +90,7 @@
             return sectorService.saveChanges()
                 .then(function () {
                     logSuccess("Hooray we saved", null, true);
-                    $location.path('/');
+                    $location.path('/Sector/');
                 })
                 .catch(function (error) {
                     logError("Boooo, we failed: " + error.message, null, true);

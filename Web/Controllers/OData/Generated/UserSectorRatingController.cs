@@ -34,23 +34,23 @@ namespace Web.Controllers.OData
         [Queryable]
         public SingleResult<UserSectorRating> GetUserSectorRating([FromODataUri] int key)
         {
-            return SingleResult.Create(unitOfWork.AllLive.Where(usersectorrating => usersectorrating.Id == key));
+            return SingleResult.Create(unitOfWork.AllLive.Where(userSectorRating => userSectorRating.Id == key));
         }
 
         // PUT odata/UserSectorRating(5)
-        public async Task<IHttpActionResult> Put([FromODataUri] int key, UserSectorRating usersectorrating)
+        public async Task<IHttpActionResult> Put([FromODataUri] int key, UserSectorRating userSectorRating)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (key != usersectorrating.Id)
+            if (key != userSectorRating.Id)
             {
                 return BadRequest();
             }
 
-            unitOfWork.Update(usersectorrating);
+            unitOfWork.Update(userSectorRating);
 
             try
             {
@@ -68,18 +68,18 @@ namespace Web.Controllers.OData
                 }
             }
 
-            return Updated(usersectorrating);
+            return Updated(userSectorRating);
         }
 
         // POST odata/UserSectorRating
-        public async Task<IHttpActionResult> Post(UserSectorRating usersectorrating)
+        public async Task<IHttpActionResult> Post(UserSectorRating userSectorRating)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            unitOfWork.Insert(usersectorrating);
+            unitOfWork.Insert(userSectorRating);
 
             try
             {
@@ -87,7 +87,7 @@ namespace Web.Controllers.OData
             }
             catch (DbUpdateException)
             {
-                if (unitOfWork.Exists(usersectorrating.Id))
+                if (unitOfWork.Exists(userSectorRating.Id))
                 {
                     return Conflict();
                 }
@@ -97,7 +97,7 @@ namespace Web.Controllers.OData
                 }
             }
 
-            return Created(usersectorrating);
+            return Created(userSectorRating);
         }
 
         // PATCH odata/UserSectorRating(5)
@@ -109,14 +109,14 @@ namespace Web.Controllers.OData
                 return BadRequest(ModelState);
             }
 
-            var usersectorrating = await unitOfWork.FindAsync(key);
-            if (usersectorrating == null)
+            var userSectorRating = await unitOfWork.FindAsync(key);
+            if (userSectorRating == null)
             {
                 return NotFound();
             }
 
-            patch.Patch(usersectorrating);
-            unitOfWork.Update(usersectorrating);
+            patch.Patch(userSectorRating);
+            unitOfWork.Update(userSectorRating);
 
             try
             {
@@ -134,19 +134,19 @@ namespace Web.Controllers.OData
                 }
             }
 
-            return Updated(usersectorrating);
+            return Updated(userSectorRating);
         }
 
         // DELETE odata/UserSectorRating(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            var usersectorrating = await unitOfWork.FindAsync(key);
-            if (usersectorrating == null)
+            var userSectorRating = await unitOfWork.FindAsync(key);
+            if (userSectorRating == null)
             {
                 return NotFound();
             }
 
-            unitOfWork.Delete(usersectorrating.Id);
+            unitOfWork.Delete(userSectorRating.Id);
             await unitOfWork.SaveAsync();
 
             return StatusCode(HttpStatusCode.NoContent);

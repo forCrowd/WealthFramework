@@ -46,8 +46,8 @@
                 })
         };
 
-        function getOrganizationSet(forceRefresh) {
-            return organizationService.getOrganizationSet(forceRefresh).then(function (data) {
+        function getOrganizationSet() {
+            return organizationService.getOrganizationSet().then(function (data) {
                 return vm.organizationSet = data;
             });
         }

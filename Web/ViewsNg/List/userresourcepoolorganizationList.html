@@ -10,7 +10,7 @@
 -->
 <h2>List</h2>
 <p>
-    <a href="#/new">Create New</a>
+    <a href="#/UserResourcePoolOrganization/new">Create New</a>
 </p>
 <table class="table">
     <tr>
@@ -18,7 +18,7 @@
         Email
     </th>
     <th>
-        Resource Pool Organization - Id
+        Resource Pool Organization
     </th>
     <th>
         Number of Sales
@@ -34,28 +34,28 @@
     </th>
         <th></th>
     </tr>
-    <tr data-ng-repeat="userresourcepoolorganization in vm.userresourcepoolorganizationSet">
+    <tr data-ng-repeat="userResourcePoolOrganization in vm.userResourcePoolOrganizationSet">
         <td>
-            {{ userresourcepoolorganization.User.Email }}
+            {{ userResourcePoolOrganization.User.Email }}
         </td>
         <td>
-            {{ userresourcepoolorganization.ResourcePoolOrganization.Id }}
+            {{ userResourcePoolOrganization.ResourcePoolOrganization.Name }}
         </td>
         <td>
-            {{ userresourcepoolorganization.NumberOfSales }}
+            {{ userResourcePoolOrganization.NumberOfSales }}
         </td>
         <td>
-            {{ userresourcepoolorganization.QualityRating }}
+            {{ userResourcePoolOrganization.QualityRating }}
         </td>
         <td>
-            {{ userresourcepoolorganization.CustomerSatisfactionRating }}
+            {{ userResourcePoolOrganization.CustomerSatisfactionRating }}
         </td>
         <td>
-            {{ userresourcepoolorganization.EmployeeSatisfactionRating }}
+            {{ userResourcePoolOrganization.EmployeeSatisfactionRating }}
         </td>
         <td>
-            <a href="#/edit/{{ userresourcepoolorganization.Id }}">Edit</a> |
-            <a href="" data-ng-click="vm.deleteUserResourcePoolOrganization(userresourcepoolorganization)">
+            <a href="#/UserResourcePoolOrganization/edit/{{ userResourcePoolOrganization.Id }}">Edit</a> |
+            <a href="" data-ng-click="vm.deleteUserResourcePoolOrganization(userResourcePoolOrganization)">
                 Delete
             </a>
         </td>

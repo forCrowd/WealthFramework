@@ -10,11 +10,11 @@
 (function () {
     'use strict';
 
-    var controllerId = 'resourcepoolorganizationListController';
+    var controllerId = 'resourcePoolOrganizationListController';
     angular.module('main')
-        .controller(controllerId, ['resourcepoolorganizationService', 'logger', resourcepoolorganizationListController]);
+        .controller(controllerId, ['resourcePoolOrganizationService', 'logger', resourcePoolOrganizationListController]);
 
-    function resourcepoolorganizationListController(resourcepoolorganizationService, logger) {
+    function resourcePoolOrganizationListController(resourcePoolOrganizationService, logger) {
 
         logger = logger.forSource(controllerId);
         var logError = logger.logError;
@@ -22,7 +22,7 @@
 
         var vm = this;
         vm.deleteResourcePoolOrganization = deleteResourcePoolOrganization;
-        vm.resourcepoolorganizationSet = [];
+        vm.resourcePoolOrganizationSet = [];
 
         initialize();
 
@@ -30,12 +30,12 @@
             getResourcePoolOrganizationSet();
         };
 
-        function deleteResourcePoolOrganization(resourcepoolorganization) {
-            resourcepoolorganizationService.deleteResourcePoolOrganization(resourcepoolorganization);
+        function deleteResourcePoolOrganization(resourcePoolOrganization) {
+            resourcePoolOrganizationService.deleteResourcePoolOrganization(resourcePoolOrganization);
 
-            resourcepoolorganizationService.saveChanges()
+            resourcePoolOrganizationService.saveChanges()
                 .then(function () {
-                    vm.resourcepoolorganizationSet.splice(vm.resourcepoolorganizationSet.indexOf(resourcepoolorganization), 1);
+                    vm.resourcePoolOrganizationSet.splice(vm.resourcePoolOrganizationSet.indexOf(resourcePoolOrganization), 1);
                     logSuccess("Hooray we saved", null, true);
                 })
                 .catch(function (error) {
@@ -46,9 +46,9 @@
                 })
         };
 
-        function getResourcePoolOrganizationSet(forceRefresh) {
-            return resourcepoolorganizationService.getResourcePoolOrganizationSet(forceRefresh).then(function (data) {
-                return vm.resourcepoolorganizationSet = data;
+        function getResourcePoolOrganizationSet() {
+            return resourcePoolOrganizationService.getResourcePoolOrganizationSet().then(function (data) {
+                return vm.resourcePoolOrganizationSet = data;
             });
         }
     };

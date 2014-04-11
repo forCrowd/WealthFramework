@@ -10,15 +10,15 @@
 (function () {
     'use strict';
 
-    var controllerId = 'resourcepoolEditController';
+    var controllerId = 'resourcePoolEditController';
     angular.module('main')
-        .controller(controllerId, ['resourcepoolService',
+        .controller(controllerId, ['resourcePoolService',
             'logger',
             '$location',
             '$routeParams',
-            resourcepoolEditController]);
+            resourcePoolEditController]);
 
-    function resourcepoolEditController(resourcepoolService,
+    function resourcePoolEditController(resourcePoolService,
 		logger,
 		$location,
 		$routeParams) {
@@ -27,14 +27,14 @@
         var logError = logger.logError;
         var logSuccess = logger.logSuccess;
 
-        var isNew = $location.path() === '/new';
+        var isNew = $location.path() === '/ResourcePool/new';
         var isSaving = false;
 
         // Controller methods (alphabetically)
         var vm = this;
         vm.cancelChanges = cancelChanges;
         vm.isSaveDisabled = isSaveDisabled;
-        vm.resourcepool = null;
+        vm.resourcePool = null;
         vm.saveChanges = saveChanges;
         vm.hasChanges = hasChanges;
 
@@ -44,16 +44,16 @@
 
         function cancelChanges() {
 
-            $location.path('/');
+            $location.path('/ResourcePool/');
 
-            if (resourcepoolService.hasChanges()) {
-                resourcepoolService.rejectChanges();
+            if (resourcePoolService.hasChanges()) {
+                resourcePoolService.rejectChanges();
                 logWarning('Discarded pending change(s)', null, true);
             }
         }
 
         function hasChanges() {
-            return resourcepoolService.hasChanges();
+            return resourcePoolService.hasChanges();
         }
 
         function initialize() {
@@ -62,9 +62,9 @@
                 // TODO Only for development, create test entity ?!
             }
             else {
-                resourcepoolService.getResourcePool($routeParams.Id)
+                resourcePoolService.getResourcePool($routeParams.Id)
                     .then(function (data) {
-                        vm.resourcepool = data;
+                        vm.resourcePool = data;
                     })
                     .catch(function (error) {
                         logError("Boooo, we failed: " + error.message, null, true);
@@ -77,20 +77,20 @@
 
         function isSaveDisabled() {
             return isSaving ||
-                (!isNew && !resourcepoolService.hasChanges());
+                (!isNew && !resourcePoolService.hasChanges());
         }
 
         function saveChanges() {
 
             if (isNew) {
-                resourcepoolService.createResourcePool(vm.resourcepool);
+                resourcePoolService.createResourcePool(vm.resourcePool);
             }
 
             isSaving = true;
-            return resourcepoolService.saveChanges()
+            return resourcePoolService.saveChanges()
                 .then(function () {
                     logSuccess("Hooray we saved", null, true);
-                    $location.path('/');
+                    $location.path('/ResourcePool/');
                 })
                 .catch(function (error) {
                     logError("Boooo, we failed: " + error.message, null, true);

@@ -2,7 +2,7 @@
 using Framework;
 using System.Web.Mvc;
 
-namespace Web.Controllers
+namespace Web.Controllers.Mvc
 {
     public abstract class BaseController : Controller
     {

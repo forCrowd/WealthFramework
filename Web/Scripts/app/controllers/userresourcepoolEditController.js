@@ -10,19 +10,19 @@
 (function () {
     'use strict';
 
-    var controllerId = 'userresourcepoolEditController';
+    var controllerId = 'userResourcePoolEditController';
     angular.module('main')
-        .controller(controllerId, ['userresourcepoolService',
+        .controller(controllerId, ['userResourcePoolService',
             'userService',
-            'resourcepoolService',
+            'resourcePoolService',
             'logger',
             '$location',
             '$routeParams',
-            userresourcepoolEditController]);
+            userResourcePoolEditController]);
 
-    function userresourcepoolEditController(userresourcepoolService,
+    function userResourcePoolEditController(userResourcePoolService,
 		userService,
-		resourcepoolService,
+		resourcePoolService,
 		logger,
 		$location,
 		$routeParams) {
@@ -31,16 +31,16 @@
         var logError = logger.logError;
         var logSuccess = logger.logSuccess;
 
-        var isNew = $location.path() === '/new';
+        var isNew = $location.path() === '/UserResourcePool/new';
         var isSaving = false;
 
         // Controller methods (alphabetically)
         var vm = this;
         vm.userSet = [];
-        vm.resourcepoolSet = [];
+        vm.resourcePoolSet = [];
         vm.cancelChanges = cancelChanges;
         vm.isSaveDisabled = isSaveDisabled;
-        vm.userresourcepool = null;
+        vm.userResourcePool = null;
         vm.saveChanges = saveChanges;
         vm.hasChanges = hasChanges;
 
@@ -50,16 +50,16 @@
 
         function cancelChanges() {
 
-            $location.path('/');
+            $location.path('/UserResourcePool/');
 
-            if (userresourcepoolService.hasChanges()) {
-                userresourcepoolService.rejectChanges();
+            if (userResourcePoolService.hasChanges()) {
+                userResourcePoolService.rejectChanges();
                 logWarning('Discarded pending change(s)', null, true);
             }
         }
 
         function hasChanges() {
-            return userresourcepoolService.hasChanges();
+            return userResourcePoolService.hasChanges();
         }
 
         function initialize() {
@@ -71,9 +71,9 @@
 
             // TODO Catch?
 
-            resourcepoolService.getResourcePoolSet()
+            resourcePoolService.getResourcePoolSet()
                 .then(function (data) {
-                    vm.resourcepoolSet = data;
+                    vm.resourcePoolSet = data;
                 });
 
             // TODO Catch?
@@ -82,9 +82,9 @@
                 // TODO Only for development, create test entity ?!
             }
             else {
-                userresourcepoolService.getUserResourcePool($routeParams.Id)
+                userResourcePoolService.getUserResourcePool($routeParams.Id)
                     .then(function (data) {
-                        vm.userresourcepool = data;
+                        vm.userResourcePool = data;
                     })
                     .catch(function (error) {
                         logError("Boooo, we failed: " + error.message, null, true);
@@ -97,20 +97,20 @@
 
         function isSaveDisabled() {
             return isSaving ||
-                (!isNew && !userresourcepoolService.hasChanges());
+                (!isNew && !userResourcePoolService.hasChanges());
         }
 
         function saveChanges() {
 
             if (isNew) {
-                userresourcepoolService.createUserResourcePool(vm.userresourcepool);
+                userResourcePoolService.createUserResourcePool(vm.userResourcePool);
             }
 
             isSaving = true;
-            return userresourcepoolService.saveChanges()
+            return userResourcePoolService.saveChanges()
                 .then(function () {
                     logSuccess("Hooray we saved", null, true);
-                    $location.path('/');
+                    $location.path('/UserResourcePool/');
                 })
                 .catch(function (error) {
                     logError("Boooo, we failed: " + error.message, null, true);

@@ -10,11 +10,11 @@
 (function () {
     'use strict';
 
-    var controllerId = 'resourcepoolListController';
+    var controllerId = 'resourcePoolListController';
     angular.module('main')
-        .controller(controllerId, ['resourcepoolService', 'logger', resourcepoolListController]);
+        .controller(controllerId, ['resourcePoolService', 'logger', resourcePoolListController]);
 
-    function resourcepoolListController(resourcepoolService, logger) {
+    function resourcePoolListController(resourcePoolService, logger) {
 
         logger = logger.forSource(controllerId);
         var logError = logger.logError;
@@ -22,7 +22,7 @@
 
         var vm = this;
         vm.deleteResourcePool = deleteResourcePool;
-        vm.resourcepoolSet = [];
+        vm.resourcePoolSet = [];
 
         initialize();
 
@@ -30,12 +30,12 @@
             getResourcePoolSet();
         };
 
-        function deleteResourcePool(resourcepool) {
-            resourcepoolService.deleteResourcePool(resourcepool);
+        function deleteResourcePool(resourcePool) {
+            resourcePoolService.deleteResourcePool(resourcePool);
 
-            resourcepoolService.saveChanges()
+            resourcePoolService.saveChanges()
                 .then(function () {
-                    vm.resourcepoolSet.splice(vm.resourcepoolSet.indexOf(resourcepool), 1);
+                    vm.resourcePoolSet.splice(vm.resourcePoolSet.indexOf(resourcePool), 1);
                     logSuccess("Hooray we saved", null, true);
                 })
                 .catch(function (error) {
@@ -46,9 +46,9 @@
                 })
         };
 
-        function getResourcePoolSet(forceRefresh) {
-            return resourcepoolService.getResourcePoolSet(forceRefresh).then(function (data) {
-                return vm.resourcepoolSet = data;
+        function getResourcePoolSet() {
+            return resourcePoolService.getResourcePoolSet().then(function (data) {
+                return vm.resourcePoolSet = data;
             });
         }
     };

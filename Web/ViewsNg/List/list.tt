@@ -25,7 +25,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 {
 	// Variables
 	var entityTypeName = typeMapper.GetTypeName(entityType);
-	var entityVariable = entityTypeName.ToLowerInvariant();
+	var entityVariable = codeStringGenerator.GetCamelCase(entityTypeName);
 	var entitySetName = string.Format("{0}Set", entityVariable);
 	var entityDeleteMethod = string.Format("delete{0}", entityTypeName);
 	var primaryKey = entityType.KeyMembers[0];
@@ -40,7 +40,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 <#= codeStringGenerator.WriteHeader() #>-->
 <h2>List</h2>
 <p>
-    <a href="#/new">Create New</a>
+    <a href="#/<#= entityTypeName #>/new">Create New</a>
 </p>
 <table class="table">
     <tr>
@@ -136,7 +136,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
     }
 #>
         <td>
-            <a href="#/edit/{{ <#= entityVariable #>.<#= primaryKey #> }}">Edit</a> |
+            <a href="#/<#= entityTypeName #>/edit/{{ <#= entityVariable #>.<#= primaryKey #> }}">Edit</a> |
             <a href="" data-ng-click="vm.<#= entityDeleteMethod #>(<#= entityVariable #>)">
                 Delete
             </a>

@@ -34,23 +34,23 @@ namespace Web.Controllers.OData
         [Queryable]
         public SingleResult<ResourcePoolOrganization> GetResourcePoolOrganization([FromODataUri] int key)
         {
-            return SingleResult.Create(unitOfWork.AllLive.Where(resourcepoolorganization => resourcepoolorganization.Id == key));
+            return SingleResult.Create(unitOfWork.AllLive.Where(resourcePoolOrganization => resourcePoolOrganization.Id == key));
         }
 
         // PUT odata/ResourcePoolOrganization(5)
-        public async Task<IHttpActionResult> Put([FromODataUri] int key, ResourcePoolOrganization resourcepoolorganization)
+        public async Task<IHttpActionResult> Put([FromODataUri] int key, ResourcePoolOrganization resourcePoolOrganization)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (key != resourcepoolorganization.Id)
+            if (key != resourcePoolOrganization.Id)
             {
                 return BadRequest();
             }
 
-            unitOfWork.Update(resourcepoolorganization);
+            unitOfWork.Update(resourcePoolOrganization);
 
             try
             {
@@ -68,18 +68,18 @@ namespace Web.Controllers.OData
                 }
             }
 
-            return Updated(resourcepoolorganization);
+            return Updated(resourcePoolOrganization);
         }
 
         // POST odata/ResourcePoolOrganization
-        public async Task<IHttpActionResult> Post(ResourcePoolOrganization resourcepoolorganization)
+        public async Task<IHttpActionResult> Post(ResourcePoolOrganization resourcePoolOrganization)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            unitOfWork.Insert(resourcepoolorganization);
+            unitOfWork.Insert(resourcePoolOrganization);
 
             try
             {
@@ -87,7 +87,7 @@ namespace Web.Controllers.OData
             }
             catch (DbUpdateException)
             {
-                if (unitOfWork.Exists(resourcepoolorganization.Id))
+                if (unitOfWork.Exists(resourcePoolOrganization.Id))
                 {
                     return Conflict();
                 }
@@ -97,7 +97,7 @@ namespace Web.Controllers.OData
                 }
             }
 
-            return Created(resourcepoolorganization);
+            return Created(resourcePoolOrganization);
         }
 
         // PATCH odata/ResourcePoolOrganization(5)
@@ -109,14 +109,14 @@ namespace Web.Controllers.OData
                 return BadRequest(ModelState);
             }
 
-            var resourcepoolorganization = await unitOfWork.FindAsync(key);
-            if (resourcepoolorganization == null)
+            var resourcePoolOrganization = await unitOfWork.FindAsync(key);
+            if (resourcePoolOrganization == null)
             {
                 return NotFound();
             }
 
-            patch.Patch(resourcepoolorganization);
-            unitOfWork.Update(resourcepoolorganization);
+            patch.Patch(resourcePoolOrganization);
+            unitOfWork.Update(resourcePoolOrganization);
 
             try
             {
@@ -134,19 +134,19 @@ namespace Web.Controllers.OData
                 }
             }
 
-            return Updated(resourcepoolorganization);
+            return Updated(resourcePoolOrganization);
         }
 
         // DELETE odata/ResourcePoolOrganization(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            var resourcepoolorganization = await unitOfWork.FindAsync(key);
-            if (resourcepoolorganization == null)
+            var resourcePoolOrganization = await unitOfWork.FindAsync(key);
+            if (resourcePoolOrganization == null)
             {
                 return NotFound();
             }
 
-            unitOfWork.Delete(resourcepoolorganization.Id);
+            unitOfWork.Delete(resourcePoolOrganization.Id);
             await unitOfWork.SaveAsync();
 
             return StatusCode(HttpStatusCode.NoContent);

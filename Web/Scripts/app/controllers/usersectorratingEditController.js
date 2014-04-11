@@ -10,17 +10,17 @@
 (function () {
     'use strict';
 
-    var controllerId = 'usersectorratingEditController';
+    var controllerId = 'userSectorRatingEditController';
     angular.module('main')
-        .controller(controllerId, ['usersectorratingService',
+        .controller(controllerId, ['userSectorRatingService',
             'sectorService',
             'userService',
             'logger',
             '$location',
             '$routeParams',
-            usersectorratingEditController]);
+            userSectorRatingEditController]);
 
-    function usersectorratingEditController(usersectorratingService,
+    function userSectorRatingEditController(userSectorRatingService,
 		sectorService,
 		userService,
 		logger,
@@ -31,7 +31,7 @@
         var logError = logger.logError;
         var logSuccess = logger.logSuccess;
 
-        var isNew = $location.path() === '/new';
+        var isNew = $location.path() === '/UserSectorRating/new';
         var isSaving = false;
 
         // Controller methods (alphabetically)
@@ -40,7 +40,7 @@
         vm.userSet = [];
         vm.cancelChanges = cancelChanges;
         vm.isSaveDisabled = isSaveDisabled;
-        vm.usersectorrating = null;
+        vm.userSectorRating = null;
         vm.saveChanges = saveChanges;
         vm.hasChanges = hasChanges;
 
@@ -50,16 +50,16 @@
 
         function cancelChanges() {
 
-            $location.path('/');
+            $location.path('/UserSectorRating/');
 
-            if (usersectorratingService.hasChanges()) {
-                usersectorratingService.rejectChanges();
+            if (userSectorRatingService.hasChanges()) {
+                userSectorRatingService.rejectChanges();
                 logWarning('Discarded pending change(s)', null, true);
             }
         }
 
         function hasChanges() {
-            return usersectorratingService.hasChanges();
+            return userSectorRatingService.hasChanges();
         }
 
         function initialize() {
@@ -82,9 +82,9 @@
                 // TODO Only for development, create test entity ?!
             }
             else {
-                usersectorratingService.getUserSectorRating($routeParams.Id)
+                userSectorRatingService.getUserSectorRating($routeParams.Id)
                     .then(function (data) {
-                        vm.usersectorrating = data;
+                        vm.userSectorRating = data;
                     })
                     .catch(function (error) {
                         logError("Boooo, we failed: " + error.message, null, true);
@@ -97,20 +97,20 @@
 
         function isSaveDisabled() {
             return isSaving ||
-                (!isNew && !usersectorratingService.hasChanges());
+                (!isNew && !userSectorRatingService.hasChanges());
         }
 
         function saveChanges() {
 
             if (isNew) {
-                usersectorratingService.createUserSectorRating(vm.usersectorrating);
+                userSectorRatingService.createUserSectorRating(vm.userSectorRating);
             }
 
             isSaving = true;
-            return usersectorratingService.saveChanges()
+            return userSectorRatingService.saveChanges()
                 .then(function () {
                     logSuccess("Hooray we saved", null, true);
-                    $location.path('/');
+                    $location.path('/UserSectorRating/');
                 })
                 .catch(function (error) {
                     logError("Boooo, we failed: " + error.message, null, true);
