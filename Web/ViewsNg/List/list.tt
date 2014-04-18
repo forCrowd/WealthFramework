@@ -78,15 +78,22 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 			if (relatedEntityType.MetadataProperties.Any(p => p.Name == "http://tempuri.org/EdmCustomSchema.xsd:DefaultProperty"))
 				relatedDefaultPropertyName = relatedEntityType.MetadataProperties["http://tempuri.org/EdmCustomSchema.xsd:DefaultProperty"].Value.ToString();
 
-			if (relatedEntityType.Properties.Any(p => p.Name == relatedDefaultPropertyName))
-			{
-				var relatedDefaultProperty = relatedEntityType.Properties[relatedDefaultPropertyName];
+			if (relatedEntityType.MetadataProperties.Any(p => p.Name == "http://tempuri.org/EdmCustomSchema.xsd:DefaultPropertyDisplayName"))
+            {
+				displayName = relatedEntityType.MetadataProperties["http://tempuri.org/EdmCustomSchema.xsd:DefaultPropertyDisplayName"].Value.ToString();
+            }
+			else
+            {
+				if (relatedEntityType.Properties.Any(p => p.Name == relatedDefaultPropertyName))
+				{
+					var relatedDefaultProperty = relatedEntityType.Properties[relatedDefaultPropertyName];
 
-				displayName = relatedDefaultProperty.Name;
+					displayName = relatedDefaultProperty.Name;
 
-				if (relatedDefaultProperty.MetadataProperties.Any(p => p.Name == "http://tempuri.org/EdmCustomSchema.xsd:DisplayName"))
-					displayName = relatedDefaultProperty.MetadataProperties["http://tempuri.org/EdmCustomSchema.xsd:DisplayName"].Value.ToString();
-			}
+					if (relatedDefaultProperty.MetadataProperties.Any(p => p.Name == "http://tempuri.org/EdmCustomSchema.xsd:DisplayName"))
+						displayName = relatedDefaultProperty.MetadataProperties["http://tempuri.org/EdmCustomSchema.xsd:DisplayName"].Value.ToString();
+				}
+            }
         }
 #>
     <th>

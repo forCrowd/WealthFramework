@@ -5,6 +5,10 @@ namespace Web
 {
     public static class WebApiConfig
     {
+        // To support Session in WebApi - can be removed in case of tokens
+        public static string UrlPrefix { get { return "api"; } }
+        public static string UrlPrefixRelative { get { return "~/api"; } }
+
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
@@ -17,13 +21,13 @@ namespace Web
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
+                routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
 
             // OData routes
             config.Routes.MapODataRoute(
-                routeName: "odata",
+                routeName: "ODataRoute",
                 routePrefix: "odata",
                 model: GetEdm(),
                 // model: Facade.Utility.GetWealthEconomyEntitiesEdm(),
@@ -41,7 +45,10 @@ namespace Web
                 if (!Microsoft.Data.Edm.Csdl.CsdlReader.TryParse(new[] { reader }, out model, out errors))
                 {
                     foreach (var e in errors)
-                        System.Diagnostics.Debug.Fail(e.ErrorCode.ToString("F"), e.ErrorMessage);
+                    {
+                        // TODO Merge the errors?
+                        throw new System.Exception(string.Format("Code: {0}{1}Message: {2}", e.ErrorCode.ToString("F"), System.Environment.NewLine, e.ErrorMessage));
+                    }
                 }
                 return model;
             }        

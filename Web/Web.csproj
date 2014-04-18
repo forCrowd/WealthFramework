@@ -188,6 +188,9 @@
     <Compile Include="App_Code\ApplicationSettings.cs" />
     <Compile Include="App_Start\DevelopmentModeConfig.cs" />
     <Compile Include="App_Code\ServerMode.cs" />
+    <Compile Include="Controllers\Api\BaseController.cs" />
+    <Compile Include="Controllers\Api\ApplicationController.cs" />
+    <Compile Include="Controllers\Api\UserHelperController.cs" />
     <Compile Include="Controllers\Mvc\BaseController.cs" />
     <Compile Include="Controllers\Mvc\Generated\LicenseController.cs">
       <DependentUpon>MvcController.tt</DependentUpon>
@@ -273,6 +276,7 @@
     <Compile Include="Controllers\OData\Generated\UserSectorRatingController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\OData\UserResourcePoolController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -287,7 +291,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>listController.tt</DependentUpon>
     </Compile>
-    <Compile Include="Scripts\app\services\service.cs">
+    <Compile Include="Scripts\app\services\generated\service.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>service.tt</DependentUpon>
@@ -312,7 +316,9 @@
     <Content Include="Content\breeze.directives.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
-    <Content Include="Controllers\OData\metadata.xml" />
+    <Content Include="Controllers\OData\metadata.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -321,6 +327,8 @@
     <Content Include="Scripts\angular-route.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\app\controllers\layoutController.js" />
+    <Content Include="Scripts\app\controllers\userController.js" />
     <Content Include="Scripts\app\controllers\userResourcePoolController.js" />
     <Content Include="Scripts\app\controllers\licenseEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
@@ -384,40 +392,43 @@
     </Content>
     <Content Include="Scripts\app\entityManagerFactory.js" />
     <Content Include="Scripts\app\dataContext.js" />
+    <Content Include="Scripts\app\filters\angular-percentage.js" />
     <Content Include="Scripts\app\logger.js" />
     <Content Include="Scripts\app\route.js" />
     <Content Include="Scripts\app\main.js" />
-    <Content Include="Scripts\app\services\licenseService.js">
+    <Content Include="Scripts\app\services\generated\licenseService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\services\organizationService.js">
+    <Content Include="Scripts\app\services\generated\organizationService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\services\resourcePoolOrganizationService.js">
+    <Content Include="Scripts\app\services\generated\resourcePoolOrganizationService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\services\resourcePoolService.js">
+    <Content Include="Scripts\app\services\generated\resourcePoolService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\services\sectorService.js">
+    <Content Include="Scripts\app\services\generated\sectorService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\services\userLicenseRatingService.js">
+    <Content Include="Scripts\app\services\generated\userLicenseRatingService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\services\userResourcePoolOrganizationService.js">
+    <Content Include="Scripts\app\services\generated\userResourcePoolOrganizationService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\services\userResourcePoolService.js">
+    <Content Include="Scripts\app\services\generated\userResourcePoolService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\services\userSectorRatingService.js">
+    <Content Include="Scripts\app\services\generated\userSectorRatingService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\services\userService.js">
+    <Content Include="Scripts\app\services\generated\userService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\services\userService2.js" />
+    <Content Include="Scripts\app\services\mainService.js" />
+    <Content Include="Scripts\app\services\userService.js" />
+    <Content Include="Scripts\app\services\userResourcePoolService.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Controllers\Mvc\Generated\MvcController.tt">
@@ -456,7 +467,7 @@
     <None Include="Properties\PublishProfiles\Default.pubxml" />
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\angular-route.min.js.map" />
-    <Content Include="Scripts\app\services\service.tt">
+    <Content Include="Scripts\app\services\generated\service.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>service.cs</LastGenOutput>
     </Content>
@@ -624,6 +635,7 @@
     <Content Include="ViewsNg\UserResourcePool\QualityIndex.html" />
     <Content Include="ViewsNg\UserResourcePool\SectorIndex.html" />
     <Content Include="ViewsNg\UserResourcePool\TotalCostIndex.html" />
+    <Content Include="ViewsNg\User\Login.html" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>

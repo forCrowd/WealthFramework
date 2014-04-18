@@ -143,5 +143,12 @@
 
             return true;
         }
+
+        public User AuthenticateUser2(string email, string password)
+        {
+            return AllLive.SingleOrDefault(user =>
+                user.Email == email &&
+                user.Password == password);
+        }
     }
 }

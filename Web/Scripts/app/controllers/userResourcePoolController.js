@@ -3,51 +3,62 @@
 
     var controllerId = 'userResourcePoolController';
     angular.module('main')
-        .controller(controllerId, ['userService', 'logger', userResourcePoolController]);
+        .controller(controllerId, ['userResourcePoolService', '$location', 'logger', userResourcePoolController]);
 
-    function userResourcePoolController(userService, logger) {
-
+    function userResourcePoolController(userResourcePoolService, $location, logger) {
         logger = logger.forSource(controllerId);
-        var logError = logger.logError;
-        var logSuccess = logger.logSuccess;
-
-        logSuccess('userResourcePoolController', null, true);
 
         var vm = this;
-        // vm.deleteUserResourcePool = deleteUserResourcePool;
-        vm.userResourcePoolSet = [];
+        vm.userResourcePool = null;
+        vm.increaseNumberOfSales = increaseNumberOfSales;
+        vm.resetNumberOfSales = resetNumberOfSales;
 
         initialize();
 
         function initialize() {
-            getUserResourcePoolSet();
-
+            getUserResourcePool();
         };
 
-        //function deleteUserResourcePool(userResourcePool) {
-        //    userResourcePoolService.deleteUserResourcePool(userResourcePool);
+        function getUserResourcePool() {
 
-        //    userResourcePoolService.saveChanges()
-        //        .then(function () {
-        //            vm.userResourcePoolSet.splice(vm.userResourcePoolSet.indexOf(userResourcePool), 1);
-        //            logSuccess("Hooray we saved", null, true);
-        //        })
-        //        .catch(function (error) {
-        //            logError("Boooo, we failed: " + error.message, null, true);
-        //            // Todo: more sophisticated recovery. 
-        //            // Here we just blew it all away and start over
-        //            // refresh();
-        //        })
-        //};
+            logger.logSuccess('location', $location, true);
 
-        function getUserResourcePoolSet() {
+            var resourcePoolId = 0;
 
-            logSuccess('getUserResourcePoolSet', null, true);
+            logger.logSuccess('resourcePoolId : ' + resourcePoolId, null, true);
+            
+            switch ($location.path())
+            {
+                case '/TotalCostIndex/': resourcePoolId = 1; break;
+                case '/KnowledgeIndex/': resourcePoolId = 2; break;
+                case '/QualityIndex/': resourcePoolId = 3; break;
+                case '/EmployeeSatisfactionIndex/': resourcePoolId = 4; break;
+                case '/CustomerSatisfactionIndex/': resourcePoolId = 5; break;
+                case '/SectorIndex/': resourcePoolId = 6; break;
+                case '/DistanceIndex/': resourcePoolId = 7; break;
+                case '/AllInOne/': resourcePoolId = 8; break;
+            }
 
-            return userService.getUserResourcePoolSet(1, userService, logger).then(function (data) {
-                logSuccess('data', data[0], true);
-                return vm.userResourcePool = data[0];
-            });
+            logger.logSuccess('resourcePoolId : ' + resourcePoolId, null, true);
+
+            return userResourcePoolService.getUserResourcePool(resourcePoolId)
+                .then(function (data) {
+                    return vm.userResourcePool = data;
+                });
+        }
+
+        function increaseNumberOfSales() {
+            userResourcePoolService.increaseNumberOfSales(vm.userResourcePool.Id)
+                .success(function () {
+                    getUserResourcePool();
+                });
+        }
+
+        function resetNumberOfSales() {
+            userResourcePoolService.resetNumberOfSales(vm.userResourcePool.Id)
+                .success(function () {
+                    getUserResourcePool();
+                });
         }
     };
 })();

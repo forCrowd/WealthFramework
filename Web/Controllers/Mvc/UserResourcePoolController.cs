@@ -154,7 +154,7 @@ namespace Web.Controllers.Mvc
             var currentUser = await unitOfWork.FindUserAsync(CurrentUserId);
 
             // Return the user resource pool
-            return currentUser.UserResourcePoolSet.Single(pool => pool.ResourcePoolId == resourcePoolId);
+            return currentUser.UserResourcePoolSet.First(pool => pool.ResourcePoolId == resourcePoolId);
         }
 
         async Task<UserResourcePool> GetUserResourcePoolByReturnAction(string returnAction)

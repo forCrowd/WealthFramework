@@ -6,11 +6,6 @@
 
     function routeConfig($routeProvider) {
 
-        console.log('route.js begin');
-
-        console.log(window.location);
-        console.log($routeProvider);
-
         // Routes
         $routeProvider
             .when('/', { controller: getController(true), templateUrl: getTemplate(true, '/') })
@@ -49,6 +44,15 @@
             .when('/UserSectorRating/edit/:Id', { controller: 'userSectorRatingEditController as vm', templateUrl: 'ViewsNg/edit/UserSectorRatingEdit.html' })
 
             .when('/TotalCostIndex/', { controller: 'userResourcePoolController as vm', templateUrl: 'ViewsNg/UserResourcePool/TotalCostIndex.html' })
+            .when('/KnowledgeIndex/', { controller: 'userResourcePoolController as vm', templateUrl: 'ViewsNg/UserResourcePool/KnowledgeIndex.html' })
+            .when('/QualityIndex/', { controller: 'userResourcePoolController as vm', templateUrl: 'ViewsNg/UserResourcePool/QualityIndex.html' })
+            .when('/EmployeeSatisfactionIndex/', { controller: 'userResourcePoolController as vm', templateUrl: 'ViewsNg/UserResourcePool/EmployeeSatisfactionIndex.html' })
+            .when('/CustomerSatisfactionIndex/', { controller: 'userResourcePoolController as vm', templateUrl: 'ViewsNg/UserResourcePool/CustomerSatisfactionIndex.html' })
+            .when('/SectorIndex/', { controller: 'userResourcePoolController as vm', templateUrl: 'ViewsNg/UserResourcePool/SectorIndex.html' })
+            .when('/DistanceIndex/', { controller: 'userResourcePoolController as vm', templateUrl: 'ViewsNg/UserResourcePool/DistanceIndex.html' })
+            .when('/AllInOne/', { controller: 'userResourcePoolController as vm', templateUrl: 'ViewsNg/UserResourcePool/AllInOne.html' })
+
+            .when('/User/Login/', { controller: 'userController as vm', templateUrl: 'ViewsNg/User/Login.html' })
 
             .when('/Overview', {
                 templateUrl: 'ViewsNg/Home/Overview.html'
@@ -59,17 +63,13 @@
                 redirectTo: '/'
             });
 
-        console.log('route.js end');
-
         function getEntityName() {
 
             var entityName = window.location.pathname.replace('/', '').replace('Ng', '');
-            console.log('entityName: ' + entityName);
 
             var entityNameCamelCase = entityName.length > 1
                 ? entityName[0].toLowerCase() + entityName.substring(1)
                 : entityName;
-            console.log('entityNameCamelCase: ' + entityNameCamelCase);
 
             return entityNameCamelCase;
         }
@@ -88,8 +88,6 @@
 
         function getTemplate(isList, routeState) {
 
-            console.log('routeState: ' + routeState);
-
             var isEntityRoute = window.location.pathname.indexOf('Ng') > 0;
 
             if (isEntityRoute)
@@ -107,11 +105,7 @@
                     template = pathParams[1] + '.html';
                 }
 
-                console.log(pathParams);
-
                 var template = 'ViewsNg/' + folder + '/' + template;
-
-                console.log(template);
 
                 return template;
             }

@@ -2,130 +2,130 @@
 
 <p>
     <div class="btn-group">
-        <button type="submit" class="btn btn-default">Increase Number of Sales</button>
-        <button type="submit" class="btn btn-default">Reset Number of Sales</button>
+        <button type="submit" data-ng-click="vm.increaseNumberOfSales()" class="btn btn-default">Increase Number of Sales</button>
+        <button type="submit" data-ng-click="vm.resetNumberOfSales()" class="btn btn-default">Reset Number of Sales</button>
     </div>
 </p>
 <p>
-    CMRP Rate: {{ vm.userResourcePool.ResourcePoolRatePercentage }} - Number of ratings: {{ vm.userResourcePool.UserResourcePoolRatingSet.length }}
+    CMRP Rate: {{ vm.userResourcePool.ResourcePoolRatePercentage | percentage:2 }} - Number of ratings: {{ vm.userResourcePool.UserResourcePoolRatingCount }}
 </p>
 <table class="table">
     <tr>
         <th>
-            Name
+            Organization
         </th>
         <th>
-            ProductionCost
+            Production Cost
         </th>
         <th>
-            SalesPrice
+            Sales Price
         </th>
         <th>
-            License.Name
+            License
         </th>
         <th>
-            ProfitPercentage
+            Profit Percentage
         </th>
         <th>
-            SalesPriceIncludingResourcePoolTax
+            Sales Price incl. CMRP Tax
         </th>
         <th>
-            NumberOfSales
+            Number of Sales
         </th>
         <th>
-            TotalProfit
+            Total Profit
         </th>
         <th>
-            TotalResourcePoolTax
+            Total CMRP Tax
         </th>
         <th>
-            TotalSalesRevenueIncludingResourcePoolTax
+            Total Sales Revenue incl. CMRP Tax
         </th>
         <th>
-            TotalCostIndexIncome
+            Total Cost Index Income
         </th>
         <th>
-            KnowledgeIndexIncome
+            Knowledge Index Income
         </th>
         <th>
-            QualityIndexIncome
+            Quality Index Income
         </th>
         <th>
-            SectorIndexIncome
+            Sector Index Income
         </th>
         <th>
-            EmployeeSatisfactionIndexIncome
+            EmployeeSatisfaction Index Income
         </th>
         <th>
-            CustomerSatisfactionIndexIncome
+            CustomerSatisfaction Index Income
         </th>
         <th>
-            DistanceIndexIncome
+            Distance Index Income
         </th>
         <th>
             TotalResourcePoolIncome
         </th>
         <th>
-            TotalIncome
+            Total Income (Profit + CMRP)
         </th>
     </tr>
-    <tr data-ng-repeat="item in vm.userResourcePool.UserResourcePoolOrganizationSet">
+    <tr data-ng-repeat="item in vm.userResourcePool.UserResourcePoolOrganizationDto2Set.results">
         <td>
-            {{ item.Organization.Name }}
+            {{ item.OrganizationName }}
         </td>
         <td>
-            {{ item.Organization.ProductionCost }}
+            {{ item.OrganizationProductionCost | number:2 }}
         </td>
         <td>
-            {{ item.Organization.SalesPrice }}
+            {{ item.OrganizationSalesPrice | number:2 }}
         </td>
         <td>
-            {{ item.Organization.License.Name
+            {{ item.OrganizationLicenseName }}
         </td>
         <td>
-            {{ item.Organization.ProfitPercentage }}
+            {{ item.OrganizationProfitPercentage | percentage:2 }}
         </td>
         <td>
-            {{ item.SalesPriceIncludingResourcePoolTax }}
+            {{ item.SalesPriceIncludingResourcePoolTax | number:2 }}
         </td>
         <td>
             {{ item.NumberOfSales }}
         </td>
         <td>
-            {{ item.TotalProfit }}
+            {{ item.TotalProfit | number:2 }}
         </td>
         <td>
-            {{ item.TotalResourcePoolTax }}
+            {{ item.TotalResourcePoolTax | number:2 }}
         </td>
         <td>
-            {{ item.TotalSalesRevenueIncludingResourcePoolTax }}
+            {{ item.TotalSalesRevenueIncludingResourcePoolTax | number:2 }}
         </td>
         <td>
-            {{ item.TotalCostIndexIncome }}
+            {{ item.TotalCostIndexIncome | number:2 }}
         </td>
         <td>
-            {{ item.KnowledgeIndexIncome }}
+            {{ item.KnowledgeIndexIncome | number:2 }}
         </td>
         <td>
-            {{ item.QualityIndexIncome }}
+            {{ item.QualityIndexIncome | number:2 }}
         </td>
         <td>
-            {{ item.SectorIndexIncome }}
+            {{ item.SectorIndexIncome | number:2 }}
         </td>
         <td>
-            {{ item.EmployeeSatisfactionIndexIncome }}
+            {{ item.EmployeeSatisfactionIndexIncome | number:2 }}
         </td>
         <td>
-            {{ item.CustomerSatisfactionIndexIncome }}
+            {{ item.CustomerSatisfactionIndexIncome | number:2 }}
         </td>
         <td>
-            {{ item.DistanceIndexIncome }}
+            {{ item.DistanceIndexIncome | number:2 }}
         </td>
         <td>
-            {{ item.TotalResourcePoolIncome }}
+            {{ item.TotalResourcePoolIncome | number:2 }}
         </td>
         <td>
-            {{ item.TotalIncome }}
+            {{ item.TotalIncome | number:2 }}
         </td>
     </tr>
     <tr>
@@ -133,58 +133,58 @@
             Total
         </td>
         <td>
-            {{ vm.userResourcePool.ResourcePool.ProductionCost }}
+            {{ vm.userResourcePool.ResourcePool.ProductionCost | number:2 }}
         </td>
         <td>
-            {{ vm.userResourcePool.ResourcePool.SalesPrice }}
-        </td>
-        <td>
-            &nbsp;
+            {{ vm.userResourcePool.ResourcePool.SalesPrice | number:2 }}
         </td>
         <td>
             &nbsp;
         </td>
         <td>
-            {{ vm.userResourcePool.SalesPriceIncludingResourcePoolTax }}
+            &nbsp;
+        </td>
+        <td>
+            {{ vm.userResourcePool.SalesPriceIncludingResourcePoolTax | number:2 }}
         </td>
         <td>
             {{ vm.userResourcePool.NumberOfSales }}
         </td>
         <td>
-            {{ vm.userResourcePool.TotalProfit }}
+            {{ vm.userResourcePool.TotalProfit | number:2 }}
         </td>
         <td>
-            {{ vm.userResourcePool.TotalResourcePoolTax }}
+            {{ vm.userResourcePool.TotalResourcePoolTax | number:2 }}
         </td>
         <td>
-            {{ vm.userResourcePool.TotalSalesRevenueIncludingResourcePoolTax }}
+            {{ vm.userResourcePool.TotalSalesRevenueIncludingResourcePoolTax | number:2 }}
         </td>
         <td>
-            {{ vm.userResourcePool.TotalCostIndexIncome }}
+            {{ vm.userResourcePool.TotalCostIndexIncome | number:2 }}
         </td>
         <td>
-            {{ vm.userResourcePool.KnowledgeIndexIncome }}
+            {{ vm.userResourcePool.KnowledgeIndexIncome | number:2 }}
         </td>
         <td>
-            {{ vm.userResourcePool.QualityIndexIncome }}
+            {{ vm.userResourcePool.QualityIndexIncome | number:2 }}
         </td>
         <td>
-            {{ vm.userResourcePool.SectorIndexIncome }}
+            {{ vm.userResourcePool.SectorIndexIncome | number:2 }}
         </td>
         <td>
-            {{ vm.userResourcePool.EmployeeSatisfactionIndexIncome }}
+            {{ vm.userResourcePool.EmployeeSatisfactionIndexIncome | number:2 }}
         </td>
         <td>
-            {{ vm.userResourcePool.CustomerSatisfactionIndexIncome }}
+            {{ vm.userResourcePool.CustomerSatisfactionIndexIncome | number:2 }}
         </td>
         <td>
-            {{ vm.userResourcePool.DistanceIndexIncome }}
+            {{ vm.userResourcePool.DistanceIndexIncome | number:2 }}
         </td>
         <td>
-            {{ vm.userResourcePool.TotalResourcePoolIncome }}
+            {{ vm.userResourcePool.TotalResourcePoolIncome | number:2 }}
         </td>
         <td>
-            {{ vm.userResourcePool.TotalIncome }}
+            {{ vm.userResourcePool.TotalIncome | number:2 }}
         </td>
     </tr>
 </table>

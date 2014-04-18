@@ -22,43 +22,49 @@
     <script src="/Scripts/app/route.js"></script>
     <script src="/Scripts/app/entityManagerFactory.js"></script>
     <script src="/Scripts/app/dataContext.js"></script>
+    <script src="/Scripts/app/filters/angular-percentage.js"></script>
 
-    <script src="/Scripts/app/services/licenseService.js"></script>
+    <script src="/Scripts/app/services/generated/licenseService.js"></script>
     <script src="/Scripts/app/controllers/licenseListController.js"></script>
     <script src="/Scripts/app/controllers/licenseEditController.js"></script>
-    <script src="/Scripts/app/services/organizationService.js"></script>
+    <script src="/Scripts/app/services/generated/organizationService.js"></script>
     <script src="/Scripts/app/controllers/organizationListController.js"></script>
     <script src="/Scripts/app/controllers/organizationEditController.js"></script>
-    <script src="/Scripts/app/services/resourcePoolService.js"></script>
+    <script src="/Scripts/app/services/generated/resourcePoolService.js"></script>
     <script src="/Scripts/app/controllers/resourcePoolListController.js"></script>
     <script src="/Scripts/app/controllers/resourcePoolEditController.js"></script>
-    <script src="/Scripts/app/services/resourcePoolOrganizationService.js"></script>
+    <script src="/Scripts/app/services/generated/resourcePoolOrganizationService.js"></script>
     <script src="/Scripts/app/controllers/resourcePoolOrganizationListController.js"></script>
     <script src="/Scripts/app/controllers/resourcePoolOrganizationEditController.js"></script>
-    <script src="/Scripts/app/services/sectorService.js"></script>
+    <script src="/Scripts/app/services/generated/sectorService.js"></script>
     <script src="/Scripts/app/controllers/sectorListController.js"></script>
     <script src="/Scripts/app/controllers/sectorEditController.js"></script>
-    <script src="/Scripts/app/services/userService.js"></script>
+    <script src="/Scripts/app/services/generated/userService.js"></script>
     <script src="/Scripts/app/controllers/userListController.js"></script>
     <script src="/Scripts/app/controllers/userEditController.js"></script>
-    <script src="/Scripts/app/services/userLicenseRatingService.js"></script>
+    <script src="/Scripts/app/services/generated/userLicenseRatingService.js"></script>
     <script src="/Scripts/app/controllers/userLicenseRatingListController.js"></script>
     <script src="/Scripts/app/controllers/userLicenseRatingEditController.js"></script>
-    <script src="/Scripts/app/services/userResourcePoolService.js"></script>
+    <script src="/Scripts/app/services/generated/userResourcePoolService.js"></script>
     <script src="/Scripts/app/controllers/userResourcePoolListController.js"></script>
     <script src="/Scripts/app/controllers/userResourcePoolEditController.js"></script>
-    <script src="/Scripts/app/services/userResourcePoolOrganizationService.js"></script>
+    <script src="/Scripts/app/services/generated/userResourcePoolOrganizationService.js"></script>
     <script src="/Scripts/app/controllers/userResourcePoolOrganizationListController.js"></script>
     <script src="/Scripts/app/controllers/userResourcePoolOrganizationEditController.js"></script>
-    <script src="/Scripts/app/services/userSectorRatingService.js"></script>
+    <script src="/Scripts/app/services/generated/userSectorRatingService.js"></script>
     <script src="/Scripts/app/controllers/userSectorRatingListController.js"></script>
     <script src="/Scripts/app/controllers/userSectorRatingEditController.js"></script>
 
-    <script src="/Scripts/app/services/userService2.js"></script>
+    <script src="/Scripts/app/services/userResourcePoolService.js"></script>
     <script src="/Scripts/app/controllers/userResourcePoolController.js"></script>
 
+    <script src="/Scripts/app/services/mainService.js"></script>
+    <script src="/Scripts/app/services/userService.js"></script>
+    <script src="/Scripts/app/controllers/layoutController.js"></script>
+    <script src="/Scripts/app/controllers/userController.js"></script>
+
 </head>
-<body data-ng-app="main">
+<body data-ng-app="main" data-ng-controller="layoutController as vm">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -67,12 +73,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Wealth Economy", "Index", "Home", null, new { @class = "navbar-brand" })
+                <a href="#/" class="navbar-brand">Wealth Economy</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @{if (ViewBag.IsAuthenticated && ViewBag.CurrentUserAccountTypeId == BusinessObjects.UserAccountType.Administrator)
-                      {
+                    {
                         <li class="dropdown">
                             <a href="" class="dropdown-toggle" data-toggle="dropdown">Definitions SPA <b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -106,29 +112,23 @@
                                 <li>@Html.ActionLink("Resource Pool - Organization Ng", "Index", "ResourcePoolOrganizationNg", new { area = "" }, null)</li>
                             </ul>
                         </li>
-                      }}
+                    }}
                     @{if (ViewBag.IsAuthenticated)
-                      {
+                    {
                         <li class="dropdown">
                             <a href="" class="dropdown-toggle" data-toggle="dropdown">CMRP SPA <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="#/TotalCostIndex/">Total Cost Index</a></li>
-                                @*<li>@Html.ActionLink("Knowledge Index - Private", "KnowledgeIndexPrivate", "UserResourcePool", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Knowledge Index - Public", "KnowledgeIndexPublic", "UserResourcePool", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Quality Index - Private", "QualityIndexPrivate", "UserResourcePool", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Quality Index - Public", "QualityIndexPublic", "UserResourcePool", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Employee Satisfaction Index - Private", "EmployeeSatisfactionIndexPrivate", "UserResourcePool", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Employee Satisfaction Index - Public", "EmployeeSatisfactionIndexPublic", "UserResourcePool", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Customer Satisfaction Index - Private", "CustomerSatisfactionIndexPrivate", "UserResourcePool", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Customer Satisfaction Index - Public", "CustomerSatisfactionIndexPublic", "UserResourcePool", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Sector Index - Private", "SectorIndexPrivate", "UserResourcePool", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Sector Index - Public", "SectorIndexPublic", "UserResourcePool", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Distance Index", "DistanceIndex", "UserResourcePool", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("All in One - Private", "AllInOnePrivate", "UserResourcePool", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("All in One - Public", "AllInOnePublic", "UserResourcePool", new { area = "" }, null)</li>*@
+                                <li><a href="#/KnowledgeIndex/">Knowledge Index</a></li>
+                                <li><a href="#/QualityIndex/">Quality Index</a></li>
+                                <li><a href="#/EmployeeSatisfactionIndex/">Employee Satisfaction Index</a></li>
+                                <li><a href="#/CustomerSatisfactionIndex/">Customer Satisfaction Index</a></li>
+                                <li><a href="#/SectorIndex/">Sector Index</a></li>
+                                <li><a href="#/DistanceIndex/">Distance Index</a></li>
+                                <li><a href="#/AllInOne/">All in One</a></li>
                             </ul>
                         </li>
-                        
+
                         <li class="dropdown">
                             <a href="" class="dropdown-toggle" data-toggle="dropdown">CMRP <b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -147,8 +147,8 @@
                                 <li>@Html.ActionLink("All in One - Private", "AllInOnePrivate", "UserResourcePool", new { area = "" }, null)</li>
                                 <li>@Html.ActionLink("All in One - Public", "AllInOnePublic", "UserResourcePool", new { area = "" }, null)</li>
                             </ul>
-                        </li>                        
-                        
+                        </li>
+
                         <li class="dropdown">
                             <a href="" class="dropdown-toggle" data-toggle="dropdown">Ratings <b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -162,7 +162,7 @@
                                 <li>@Html.ActionLink("Sector Rating Ng", "Index", "UserSectorRatingNg", new { area = "" }, null)</li>
                             </ul>
                         </li>
-                      }}
+                    }}
                     <li class="dropdown">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown">Misc <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -170,21 +170,20 @@
                             <li><a href="#/Technologies">Technologies</a></li>
                         </ul>
                     </li>
-                    @*<li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>*@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <div class="navbar-text nofloat">
                             @{if (ViewBag.IsAuthenticated == true)
-                              {
+                            {
                                 @("User: " + ViewBag.CurrentUserEmail)
-                                @Html.ActionLink("Edit", "Edit", "User", new { area = "", id = ViewBag.CurrentUserId }, new { @class = "btn btn-xs btn-link" })
-                                @Html.ActionLink("Logout", "Logout", "User", new { area = "" }, new { @class = "btn btn-xs btn-link" })
-                              }
-                              else
-                              {
-                                @Html.ActionLink("Login", "Login", "User", new { area = "" }, new { @class = "btn btn-xs btn-link" })
-                              }}
+                                <a href="#/User/edit/@(ViewBag.CurrentUserId)">Edit</a>
+                                <a href="" data-ng-click="vm.userLogout()">Logout</a>
+                            }
+                            else
+                            {
+                                <a href="#/User/Login/">Login</a>
+                            }}
                         </div>
                     </li>
                 </ul>
@@ -197,8 +196,8 @@
         <hr />
         <footer>
             <p>
-                @DateTime.Now.Year - Open Source Pioneers<br />
-                Ver.: @System.Reflection.Assembly.GetAssembly(typeof(BundleConfig)).GetName().Version<br />
+                {{ vm.currentDate | date:'yyyy' }} - Open Source Pioneers<br />
+                Ver.: {{ vm.currentVersion }}<br />
             </p>
         </footer>
     </div>

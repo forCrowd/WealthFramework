@@ -454,7 +454,7 @@
                     <NavigationProperty Name="ResourcePoolOrganizationSet" Relationship="BusinessObjects.FK_ResourcePoolOrganization_ResourcePool" FromRole="ResourcePool" ToRole="ResourcePoolOrganization" />
                     <NavigationProperty Name="UserResourcePoolSet" Relationship="BusinessObjects.FK_UserResourcePool_ResourcePool" FromRole="ResourcePool" ToRole="UserResourcePool" />
                 </EntityType>
-                <EntityType Name="ResourcePoolOrganization" cs:DefaultProperty="Id">
+                <EntityType Name="ResourcePoolOrganization" cs:DefaultProperty="Name" cs:DefaultPropertyDisplayName="Resource Pool Organization">
                     <Key>
                         <PropertyRef Name="Id" />
                     </Key>

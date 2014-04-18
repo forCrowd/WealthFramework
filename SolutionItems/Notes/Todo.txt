@@ -20,74 +20,34 @@ http://stackoverflow.com/questions/16068184/breezejs-how-to-fetch-metadata-at-st
 . how delta & patch works?
 . validateantiforgerytoken + bind attributes in odata controller?
 . use scripts.render?
+. compare metadata files of manual + odataconventionbuilder + edmbuilder for functionimport and for other stuff
 . ef tools?!
 http://msdn.microsoft.com/en-US/data/jj593170
 http://msdn.microsoft.com/en-us/data/jj593170.aspx
 http://msdn.microsoft.com/en-US/data/jj200620
 http://msdn.microsoft.com/en-US/data/jj591583#Index
+. web essentials; http://vswebessentials.com/
+. kendo ui; http://a.shinynew.me/post/82897588209/kendo-ui-core-the-free-jquery-widget-library
+. odata error message;
+<?xml version="1.0" encoding="utf-8"?>
+<m:error xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
+  <m:code />
+  <m:message xml:lang="en-US">No HTTP resource was found that matches the request URI 'http://localhost:10001/odata/UserResourcePool(145)/ResetNumberOfSales'.</m:message>
+  <m:innererror>
+    <m:message>No routing convention was found to select an action for the OData path with template '~/entityset/key/action'.</m:message>
+    <m:type></m:type>
+    <m:stacktrace></m:stacktrace>
+  </m:innererror>
+</m:error>
 
-. navigation properties - resourcepoolorganization entity fails, since Name is a property in the partial class and not in db+edmx. not possible to use it ?!
+. switch to code first, but first solve how to use tt files with code-first context
+. update database structure - resource pool should have organizations + licenses + sectors
 
 . userId filter
-
 . enums? useraccountypeid?
+. public vs. private
+. layout - user edit - cancel doesn't go to back to home page
 
-. handle all links with angular route?
-.. home works but overview didnt, solve the mistery
-
-. custom views;
-.. user - login
-.. user resource pools
-
-. how to handle calculated properties ?!?!
-setter could help but only for scalar properties? and check update operation?
-how about collections? setter?
-
-resourcepoolorganization - name should be in db + with private or internal or public setter?
-userresourcepoolorganization - same
-how about userresourcepool - organization collection? or licenseset etc?
-actually code first + default odata model builder - collection works perfectly, shows parent class in metadata as complex type and returns it
-in wealth, it fails because of edmx? how to define parentplain in edmx (collection of string)
-
-http://stackoverflow.com/questions/16524073/handling-calculated-properties-with-breezejs-and-web-api
-http://www.breezejs.com/documentation/extending-entities
+. clean layout.cshtml - version ok - check user related stuff. it's about to be okay..
 
 . live - sector - Id byte to smallint
-
-3 ways;
-1. update metadata manually - but server side!!!!!!!!!
-2. switch to code first, but first solve how to use tt files with code-first context
-3. update database structure
-
-manually try to manipulate csdl file! check consoleapp!
-
-check efcontextprovider
-
-custom metadata works, but can it update ?!
-
-even complex type works .. just try to build the app then make it proper!
-
-dont forget to remove parent + colors + testvalue
-
-file nesting vs extension
-web essentials?
-
-userresourcepoollist.html was edited manually! zcareful!
-
----
-FINAL SITUATION:
-by using manually updated metadata, scalar properties can be exposed
-to allow update operation, every scalar property has private set {} part
-
-it works with custom objects - so that's okay - just make it to work and clean the stuff
-item.NumberOfSales doesn't work! also formatting is terrible!
-continue with other indexes
-database is getting inconsistent by the way! zcareful!
-
-
-        public UserResourcePool UserResourcePool
-        {
-            // TODO This has to be Single()
-            get { return User.UserResourcePoolSet.First(item => item.ResourcePool == ResourcePoolOrganization.ResourcePool); }
-        }
-		

@@ -7,31 +7,56 @@
     {
         public decimal ProductionCost
         {
-            get { return ResourcePoolOrganizationSet.Sum(item => item.Organization.ProductionCost); }
+            get
+            {
+                if (ResourcePoolOrganizationSet.Count == 0)
+                    return 0;
+                return ResourcePoolOrganizationSet.Sum(item => item.Organization.ProductionCost);
+            }
             private set { }
         }
 
         public decimal SalesPrice
         {
-            get { return ResourcePoolOrganizationSet.Sum(item => item.Organization.SalesPrice); }
+            get
+            {
+                if (ResourcePoolOrganizationSet.Count == 0)
+                    return 0;
+                return ResourcePoolOrganizationSet.Sum(item => item.Organization.SalesPrice);
+            }
             private set { }
         }
 
         public decimal Profit
         {
-            get { return ResourcePoolOrganizationSet.Sum(item => item.Organization.Profit); }
+            get
+            {
+                if (ResourcePoolOrganizationSet.Count == 0)
+                    return 0;
+                return ResourcePoolOrganizationSet.Sum(item => item.Organization.Profit);
+            }
             private set { }
         }
 
         public decimal ProfitPercentage
         {
-            get { return ResourcePoolOrganizationSet.Average(item => item.Organization.ProfitPercentage); }
+            get
+            {
+                if (ResourcePoolOrganizationSet.Count == 0)
+                    return 0;
+                return ResourcePoolOrganizationSet.Average(item => item.Organization.ProfitPercentage);
+            }
             private set { }
         }
 
         public decimal ProfitMargin
         {
-            get { return ResourcePoolOrganizationSet.Average(item => item.Organization.ProfitMargin); }
+            get
+            {
+                if (ResourcePoolOrganizationSet.Count == 0)
+                    return 0;
+                return ResourcePoolOrganizationSet.Average(item => item.Organization.ProfitMargin);
+            }
             private set { }
         }
 

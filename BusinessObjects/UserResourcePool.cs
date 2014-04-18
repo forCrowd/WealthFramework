@@ -45,9 +45,11 @@
                         OrganizationProductionCost = item.Organization.ProductionCost,
                         OrganizationSalesPrice = item.Organization.SalesPrice,
                         OrganizationProfitPercentage = item.Organization.ProfitPercentage,
+                        OrganizationLicenseName = item.Organization.License.Name,
 
                         ResourcePoolTax = item.ResourcePoolTax,
                         SalesPriceIncludingResourcePoolTax = item.SalesPriceIncludingResourcePoolTax,
+                        NumberOfSales = item.NumberOfSales,
                         TotalProductionCost = item.TotalProductionCost,
                         TotalSalesRevenue = item.TotalSalesRevenue,
                         TotalProfit = item.TotalProfit,

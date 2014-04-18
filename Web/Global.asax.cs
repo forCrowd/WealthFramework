@@ -23,5 +23,14 @@ namespace Web
             if (ApplicationSettings.ServerMode == ServerMode.Development)
                 DevelopmentModeConfig.Init();
         }
+
+        // To support Session in WebApi - can be removed in case of tokens
+        protected void Application_PostAuthorizeRequest()
+        {
+            if (System.Web.HttpContext.Current.Request.AppRelativeCurrentExecutionFilePath.StartsWith(WebApiConfig.UrlPrefixRelative))
+            {
+                System.Web.HttpContext.Current.SetSessionStateBehavior(System.Web.SessionState.SessionStateBehavior.Required);
+            }
+        }
     }
 }

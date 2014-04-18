@@ -6,9 +6,11 @@
         public decimal OrganizationProductionCost { get; set; }
         public decimal OrganizationSalesPrice { get; set; }
         public decimal OrganizationProfitPercentage { get; set; }
+        public string OrganizationLicenseName { get; set; }
 
         public decimal ResourcePoolTax { get; set; }
         public decimal SalesPriceIncludingResourcePoolTax { get; set; }
+        public int NumberOfSales { get; set; }
         public decimal TotalProductionCost { get; set; }
         public decimal TotalSalesRevenue { get; set; }
         public decimal TotalProfit { get; set; }

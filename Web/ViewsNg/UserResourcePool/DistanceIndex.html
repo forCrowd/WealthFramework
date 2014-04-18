@@ -2,112 +2,112 @@
 
 <p>
     <div class="btn-group">
-        <button type="submit" class="btn btn-default">Increase Number of Sales</button>
-        <button type="submit" class="btn btn-default">Reset Number of Sales</button>
+        <button type="submit" data-ng-click="vm.increaseNumberOfSales()" class="btn btn-default">Increase Number of Sales</button>
+        <button type="submit" data-ng-click="vm.resetNumberOfSales()" class="btn btn-default">Reset Number of Sales</button>
     </div>
 </p>
 <p>
-    CMRP Rate: {{ vm.userResourcePool.ResourcePoolRatePercentage }} - Number of ratings: {{ vm.userResourcePool.UserResourcePoolRatingSet.length }}
+    CMRP Rate: {{ vm.userResourcePool.ResourcePoolRatePercentage | percentage:2 }} - Number of ratings: {{ vm.userResourcePool.UserResourcePoolRatingCount }}
 </p>
 <table class="table">
     <tr>
         <th>
-            Name
+            Organization
         </th>
         <th>
-            ProductionCost
+            Production Cost
         </th>
         <th>
-            SalesPrice
+            Sales Price
         </th>
         <th>
-            ProfitPercentage
+            Profit Percentage
         </th>
         <th>
-            SalesPriceIncludingResourcePoolTax
+            Sales Price incl. CMRP Tax
         </th>
         <th>
-            NumberOfSales
+            Number of Sales
         </th>
         <th>
-            TotalProductionCost
+            Total Production Cost
         </th>
         <th>
-            TotalSalesRevenue
+            Total Sales Revenue
         </th>
         <th>
-            TotalProfit
+            Total Profit
         </th>
         <th>
-            TotalResourcePoolTax
+            Total CMRP Tax
         </th>
         <th>
-            TotalSalesRevenueIncludingResourcePoolTax
+            Total Sales Revenue incl. CMRP Tax
         </th>
         <th>
-            DistanceIndexPercentage
+            Distance Index Percentage
         </th>
         <th>
-            DistanceIndexPercentageWithNumberOfSales
+            Distance Index with Nr of Sales
         </th>
         <th>
-            DistanceIndexPercentageWithNumberOfSalesWeighted
+            Distance Index with Nr of Sales Weighted
         </th>
         <th>
-            DistanceIndexIncome
+            Distance Index Income
         </th>
         <th>
-            TotalIncome
+            Total Income (Profit + CMRP)
         </th>
     </tr>
-    <tr data-ng-repeat="item in vm.userResourcePool.UserResourcePoolOrganizationSet">
+    <tr data-ng-repeat="item in vm.userResourcePool.UserResourcePoolOrganizationDto2Set.results">
         <td>
-            {{ item.Organization.Name }}
+            {{ item.OrganizationName }}
         </td>
         <td>
-            {{ item.Organization.ProductionCost }}
+            {{ item.OrganizationProductionCost | number:2 }}
         </td>
         <td>
-            {{ item.Organization.SalesPrice }}
+            {{ item.OrganizationSalesPrice | number:2 }}
         </td>
         <td>
-            {{ item.Organization.ProfitPercentage }}
+            {{ item.OrganizationProfitPercentage | percentage:2 }}
         </td>
         <td>
-            {{ item.SalesPriceIncludingResourcePoolTax }}
+            {{ item.SalesPriceIncludingResourcePoolTax | number:2 }}
         </td>
         <td>
             {{ item.NumberOfSales }}
         </td>
         <td>
-            {{ item.TotalProductionCost }}
+            {{ item.TotalProductionCost | number:2 }}
         </td>
         <td>
-            {{ item.TotalSalesRevenue }}
+            {{ item.TotalSalesRevenue | number:2 }}
         </td>
         <td>
-            {{ item.TotalProfit }}
+            {{ item.TotalProfit | number:2 }}
         </td>
         <td>
-            {{ item.TotalResourcePoolTax }}
+            {{ item.TotalResourcePoolTax | number:2 }}
         </td>
         <td>
-            {{ item.TotalSalesRevenueIncludingResourcePoolTax }}
+            {{ item.TotalSalesRevenueIncludingResourcePoolTax | number:2 }}
         </td>
         <td>
-            {{ item.DistanceIndexPercentage }}
+            {{ item.DistanceIndexPercentage | percentage:2 }}
         </td>
         <td>
-            {{ item.DistanceIndexPercentageWithNumberOfSales }}
+            {{ item.DistanceIndexPercentageWithNumberOfSales | number:2 }}
         </td>
         <td>
-            {{ item.DistanceIndexPercentageWithNumberOfSalesWeighted }}
+            {{ item.DistanceIndexPercentageWithNumberOfSalesWeighted | number:2 }}
         </td>
         <td>
-            {{ item.DistanceIndexIncome }}
+            {{ item.DistanceIndexIncome | number:2 }}
         </td>
         <td>
-            {{ item.TotalIncome }}
+            {{ item.TotalIncome | number:2 }}
         </td>
     </tr>
     <tr>
@@ -115,37 +115,34 @@
             Total
         </td>
         <td>
-            {{ vm.userResourcePool.ResourcePool.ProductionCost }}
+            {{ vm.userResourcePool.ResourcePool.ProductionCost | number:2 }}
         </td>
         <td>
-            {{ vm.userResourcePool.ResourcePool.SalesPrice }}
+            {{ vm.userResourcePool.ResourcePool.SalesPrice | number:2 }}
         </td>
         <td>
             &nbsp;
         </td>
         <td>
-            {{ vm.userResourcePool.SalesPriceIncludingResourcePoolTax }}
+            {{ vm.userResourcePool.SalesPriceIncludingResourcePoolTax | number:2 }}
         </td>
         <td>
             {{ vm.userResourcePool.NumberOfSales }}
         </td>
         <td>
-            {{ vm.userResourcePool.TotalProductionCost }}
+            {{ vm.userResourcePool.TotalProductionCost | number:2 }}
         </td>
         <td>
-            {{ vm.userResourcePool.TotalSalesRevenue }}
+            {{ vm.userResourcePool.TotalSalesRevenue | number:2 }}
         </td>
         <td>
-            {{ vm.userResourcePool.TotalProfit }}
+            {{ vm.userResourcePool.TotalProfit | number:2 }}
         </td>
         <td>
-            {{ vm.userResourcePool.TotalResourcePoolTax }}
+            {{ vm.userResourcePool.TotalResourcePoolTax | number:2 }}
         </td>
         <td>
-            {{ vm.userResourcePool.TotalSalesRevenueIncludingResourcePoolTax }}
-        </td>
-        <td>
-            &nbsp;
+            {{ vm.userResourcePool.TotalSalesRevenueIncludingResourcePoolTax | number:2 }}
         </td>
         <td>
             &nbsp;
@@ -154,10 +151,13 @@
             &nbsp;
         </td>
         <td>
-            {{ vm.userResourcePool.DistanceIndexIncome }}
+            &nbsp;
         </td>
         <td>
-            {{ vm.userResourcePool.TotalIncome }}
+            {{ vm.userResourcePool.DistanceIndexIncome | number:2 }}
+        </td>
+        <td>
+            {{ vm.userResourcePool.TotalIncome | number:2 }}
         </td>
     </tr>
 </table>

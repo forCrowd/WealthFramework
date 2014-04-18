@@ -14,6 +14,7 @@
 
      <!--Entity level-->
     <xs:attribute name="DefaultProperty" type="xs:string" />
+    <xs:attribute name="DefaultPropertyDisplayName" type="xs:string" />
 
     <!-- Property level -->
     <xs:attribute name="DisplayName" type="xs:string" />

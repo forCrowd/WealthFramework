@@ -1,0 +1,29 @@
+﻿<h2>Login</h2>
+
+<form name="loginForm">
+    <div class="form-horizontal">
+        <hr />
+        <div class="form-group">
+            <label for="Email" class="control-label col-md-2">Email</label>
+            <div class="col-md-10" data-ng-class="{'has-error': loginForm.Email.$invalid && !loginForm.Email.$pristine}">
+                <input id="Email" name="Email" type="text" data-ng-model="vm.email" class="form-control" required />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Password" class="control-label col-md-2">Password</label>
+            <div class="col-md-10" data-ng-class="{'has-error': loginForm.Password.$invalid && !loginForm.Password.$pristine}">
+                <input id="Password" name="Password" type="text" data-ng-model="vm.password" class="form-control" required />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button data-ng-click="vm.login()" data-ng-disabled="loginForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
+                    Login
+                </button>
+                <!--<button data-ng-click="vm.cancelChanges()" class="btn btn-danger">
+                    Cancel
+                </button>-->
+            </div>
+        </div>
+    </div>
+</form>
