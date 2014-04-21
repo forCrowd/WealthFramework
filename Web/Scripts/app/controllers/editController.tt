@@ -31,13 +31,8 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 	var serviceId = string.Format("{0}Service", entityVariable);
 	var primaryKey = entityType.KeyMembers[0];
     var primaryKeyShortTypeName = typeMapper.GetTypeName(primaryKey.TypeUsage);
-	
     var simpleProperties = typeMapper.GetSimpleProperties(entityType);
     var relatedProperties = typeMapper.GetRelatedNavigationProperties(entityType);
-	
-	// TODO This needs to be done through enums types?!
-	var hasUserAccountTypeId = simpleProperties.Any(property => property.Name == "UserAccountTypeId");
-
 	var outputFileName = string.Format(@"{0}.js", controllerId);
 
     fileManager.StartNewFile(outputFileName);
@@ -74,10 +69,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 		logger,
 		$location,
 		$routeParams) {
-
         logger = logger.forSource(controllerId);
-        var logError = logger.logError;
-        var logSuccess = logger.logSuccess;
 
         var isNew = $location.path() === '/<#= entityTypeName #>/new';
         var isSaving = false;
@@ -126,7 +118,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 		var relatedSetGetMethod = string.Format("get{0}Set", property.Name);
 		var relatedSetName = string.Format("{0}Set", relatedVariable);
 #>
-            <#= relatedServiceId #>.<#= relatedSetGetMethod #>()
+            <#= relatedServiceId #>.<#= relatedSetGetMethod #>(false)
                 .then(function (data) {
                     vm.<#= relatedSetName #> = data;
                 });
@@ -143,7 +135,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
                         vm.<#= entityVariable #> = data;
                     })
                     .catch(function (error) {
-                        logError("Boooo, we failed: " + error.message, null, true);
+                        logger.logError("Boooo, we failed: " + error.message, null, true);
                         // Todo: more sophisticated recovery. 
                         // Here we just blew it all away and start over
                         // refresh();
@@ -165,11 +157,11 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
             isSaving = true;
             return <#= serviceId #>.saveChanges()
                 .then(function () {
-                    logSuccess("Hooray we saved", null, true);
+                    logger.logSuccess("Hooray we saved", null, true);
                     $location.path('/<#= entityTypeName #>/');
                 })
                 .catch(function (error) {
-                    logError("Boooo, we failed: " + error.message, null, true);
+                    logger.logError("Boooo, we failed: " + error.message, null, true);
                     // Todo: more sophisticated recovery. 
                     // Here we just blew it all away and start over
                     // refresh();

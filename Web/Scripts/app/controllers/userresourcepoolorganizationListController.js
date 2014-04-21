@@ -12,9 +12,14 @@
 
     var controllerId = 'userResourcePoolOrganizationListController';
     angular.module('main')
-        .controller(controllerId, ['userResourcePoolOrganizationService', 'logger', userResourcePoolOrganizationListController]);
+        .controller(controllerId, ['userResourcePoolOrganizationService',
+            'userService',
+            'logger',
+			userResourcePoolOrganizationListController]);
 
-    function userResourcePoolOrganizationListController(userResourcePoolOrganizationService, logger) {
+    function userResourcePoolOrganizationListController(userResourcePoolOrganizationService,
+        userService,
+        logger) {
 
         logger = logger.forSource(controllerId);
         var logError = logger.logError;
@@ -47,9 +52,13 @@
         };
 
         function getUserResourcePoolOrganizationSet() {
-            userResourcePoolOrganizationService.getUserResourcePoolOrganizationSet().then(function (data) {
-                vm.userResourcePoolOrganizationSet = data;
-            });
+            userService.getCurrentUser()
+			    .success(function (currentUser) {
+					userResourcePoolOrganizationService.getUserResourcePoolOrganizationSet(currentUser.Id, false)
+						.then(function (data) {
+							vm.userResourcePoolOrganizationSet = data;
+						});
+			    });
         }
     };
 })();

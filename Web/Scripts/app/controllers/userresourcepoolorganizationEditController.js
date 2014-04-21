@@ -26,10 +26,7 @@
 		logger,
 		$location,
 		$routeParams) {
-
         logger = logger.forSource(controllerId);
-        var logError = logger.logError;
-        var logSuccess = logger.logSuccess;
 
         var isNew = $location.path() === '/UserResourcePoolOrganization/new';
         var isSaving = false;
@@ -64,14 +61,14 @@
 
         function initialize() {
 
-            userService.getUserSet()
+            userService.getUserSet(false)
                 .then(function (data) {
                     vm.userSet = data;
                 });
 
             // TODO Catch?
 
-            resourcePoolOrganizationService.getResourcePoolOrganizationSet()
+            resourcePoolOrganizationService.getResourcePoolOrganizationSet(false)
                 .then(function (data) {
                     vm.resourcePoolOrganizationSet = data;
                 });
@@ -87,7 +84,7 @@
                         vm.userResourcePoolOrganization = data;
                     })
                     .catch(function (error) {
-                        logError("Boooo, we failed: " + error.message, null, true);
+                        logger.logError("Boooo, we failed: " + error.message, null, true);
                         // Todo: more sophisticated recovery. 
                         // Here we just blew it all away and start over
                         // refresh();
@@ -109,11 +106,11 @@
             isSaving = true;
             return userResourcePoolOrganizationService.saveChanges()
                 .then(function () {
-                    logSuccess("Hooray we saved", null, true);
+                    logger.logSuccess("Hooray we saved", null, true);
                     $location.path('/UserResourcePoolOrganization/');
                 })
                 .catch(function (error) {
-                    logError("Boooo, we failed: " + error.message, null, true);
+                    logger.logError("Boooo, we failed: " + error.message, null, true);
                     // Todo: more sophisticated recovery. 
                     // Here we just blew it all away and start over
                     // refresh();

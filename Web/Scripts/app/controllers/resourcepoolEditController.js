@@ -22,10 +22,7 @@
 		logger,
 		$location,
 		$routeParams) {
-
         logger = logger.forSource(controllerId);
-        var logError = logger.logError;
-        var logSuccess = logger.logSuccess;
 
         var isNew = $location.path() === '/ResourcePool/new';
         var isSaving = false;
@@ -67,7 +64,7 @@
                         vm.resourcePool = data;
                     })
                     .catch(function (error) {
-                        logError("Boooo, we failed: " + error.message, null, true);
+                        logger.logError("Boooo, we failed: " + error.message, null, true);
                         // Todo: more sophisticated recovery. 
                         // Here we just blew it all away and start over
                         // refresh();
@@ -89,11 +86,11 @@
             isSaving = true;
             return resourcePoolService.saveChanges()
                 .then(function () {
-                    logSuccess("Hooray we saved", null, true);
+                    logger.logSuccess("Hooray we saved", null, true);
                     $location.path('/ResourcePool/');
                 })
                 .catch(function (error) {
-                    logError("Boooo, we failed: " + error.message, null, true);
+                    logger.logError("Boooo, we failed: " + error.message, null, true);
                     // Todo: more sophisticated recovery. 
                     // Here we just blew it all away and start over
                     // refresh();

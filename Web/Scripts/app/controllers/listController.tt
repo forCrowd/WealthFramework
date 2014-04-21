@@ -33,12 +33,9 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 	var entityDeleteMethod = string.Format("delete{0}", entityTypeName);
 	var primaryKey = entityType.KeyMembers[0];
     var primaryKeyShortTypeName = typeMapper.GetTypeName(primaryKey.TypeUsage);
-	
     var simpleProperties = typeMapper.GetSimpleProperties(entityType);
     var relatedProperties = typeMapper.GetRelatedNavigationProperties(entityType);
-	
-	// TODO This needs to be done through enums types?!
-	var hasUserAccountTypeId = simpleProperties.Any(property => property.Name == "UserAccountTypeId");
+	var hasUserId = simpleProperties.Any(property => property.Name == "UserId");
 
 	var outputFileName = string.Format(@"{0}.js", controllerId);
 
@@ -50,9 +47,18 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 
     var controllerId = '<#= controllerId #>';
     angular.module('main')
-        .controller(controllerId, ['<#= serviceId #>', 'logger', <#= controllerId #>]);
+        .controller(controllerId, ['<#= serviceId #>',
+<# if (hasUserId) { #>
+            'userService',
+<# } #>
+            'logger',
+			<#= controllerId #>]);
 
-    function <#= controllerId #>(<#= serviceId #>, logger) {
+    function <#= controllerId #>(<#= serviceId #>,
+<# if (hasUserId) { #>
+        userService,
+<# } #>
+        logger) {
 
         logger = logger.forSource(controllerId);
         var logError = logger.logError;
@@ -85,9 +91,20 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
         };
 
         function <#= entitySetGetMethod #>() {
-            <#= serviceId #>.<#= entitySetGetMethod #>().then(function (data) {
-                vm.<#= entitySetName #> = data;
-            });
+<# if (hasUserId) { #>
+            userService.getCurrentUser()
+			    .success(function (currentUser) {
+					<#= serviceId #>.<#= entitySetGetMethod #>(currentUser.Id, false)
+						.then(function (data) {
+							vm.<#= entitySetName #> = data;
+						});
+			    });
+<# } else { #>
+            <#= serviceId #>.<#= entitySetGetMethod #>(false)
+			    .then(function (data) {
+                    vm.<#= entitySetName #> = data;
+                });
+<# } #>
         }
     };
 })();

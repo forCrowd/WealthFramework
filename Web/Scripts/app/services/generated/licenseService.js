@@ -15,12 +15,7 @@
         .factory(serviceId, ['dataContext', 'logger', licenseService]);
 
     function licenseService(dataContext, logger) {
-
-        // Logger
         logger = logger.forSource(serviceId);
-        var logError = logger.logError;
-        var logSuccess = logger.logSuccess;
-        var logWarning = logger.logWarning;
 
         // To determine whether the data will be fecthed from server or local
         var minimumDate = new Date(0);
@@ -66,12 +61,12 @@
                 if (dataContext.hasChanges()) {
                     count = dataContext.getChangesCount();
                     dataContext.rejectChanges(); // undo all unsaved changes!
-                    logWarning('Discarded ' + count + ' pending change(s)', null, true);
+                    logger.logWarning('Discarded ' + count + ' pending change(s)', null, true);
                 }
             }
 
             var query = breeze.EntityQuery
-				.from("License")
+				.from('License')
             ;
 
             // Fetch the data from server, in case if it's not fetched earlier or forced
@@ -91,18 +86,18 @@
 
             function success(response) {
                 count = response.results.length;
-                logSuccess('Got ' + count + ' license(s)', response, true);
+                logger.logSuccess('Got ' + count + ' license(s)', response, true);
                 return response.results;
             }
 
             function failed(error) {
-                var message = error.message || "License query failed";
-                logError(message, error, true);
+                var message = error.message || 'License query failed';
+                logger.logError(message, error, true);
             }
         }
 
         function getLicense(licenseId, forceRefresh) {
-            return dataContext.manager.fetchEntityByKey("License", licenseId, !forceRefresh)
+            return dataContext.manager.fetchEntityByKey('License', licenseId, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {
@@ -110,8 +105,8 @@
             }
 
             function failed(error) {
-                var message = error.message || "getLicense query failed";
-                logError(message, error, true);
+                var message = error.message || 'getLicense query failed';
+                logger.logError(message, error, true);
             }
         }
 

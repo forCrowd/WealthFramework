@@ -15,12 +15,7 @@
         .factory(serviceId, ['dataContext', 'logger', userResourcePoolService]);
 
     function userResourcePoolService(dataContext, logger) {
-
-        // Logger
         logger = logger.forSource(serviceId);
-        var logError = logger.logError;
-        var logSuccess = logger.logSuccess;
-        var logWarning = logger.logWarning;
 
         // To determine whether the data will be fecthed from server or local
         var minimumDate = new Date(0);
@@ -59,20 +54,21 @@
             return dataContext.getChangesCount();
         }
 
-        function getUserResourcePoolSet(forceRefresh) {
+        function getUserResourcePoolSet(userId, forceRefresh) {
 
             var count;
             if (forceRefresh) {
                 if (dataContext.hasChanges()) {
                     count = dataContext.getChangesCount();
                     dataContext.rejectChanges(); // undo all unsaved changes!
-                    logWarning('Discarded ' + count + ' pending change(s)', null, true);
+                    logger.logWarning('Discarded ' + count + ' pending change(s)', null, true);
                 }
             }
 
             var query = breeze.EntityQuery
-				.from("UserResourcePool")
+				.from('UserResourcePool')
 				.expand(['User', 'ResourcePool'])
+				.where('UserId eq ' + userId)
             ;
 
             // Fetch the data from server, in case if it's not fetched earlier or forced
@@ -92,18 +88,18 @@
 
             function success(response) {
                 count = response.results.length;
-                logSuccess('Got ' + count + ' userResourcePool(s)', response, true);
+                logger.logSuccess('Got ' + count + ' userResourcePool(s)', response, true);
                 return response.results;
             }
 
             function failed(error) {
-                var message = error.message || "UserResourcePool query failed";
-                logError(message, error, true);
+                var message = error.message || 'UserResourcePool query failed';
+                logger.logError(message, error, true);
             }
         }
 
         function getUserResourcePool(userResourcePoolId, forceRefresh) {
-            return dataContext.manager.fetchEntityByKey("UserResourcePool", userResourcePoolId, !forceRefresh)
+            return dataContext.manager.fetchEntityByKey('UserResourcePool', userResourcePoolId, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {
@@ -111,8 +107,8 @@
             }
 
             function failed(error) {
-                var message = error.message || "getUserResourcePool query failed";
-                logError(message, error, true);
+                var message = error.message || 'getUserResourcePool query failed';
+                logger.logError(message, error, true);
             }
         }
 

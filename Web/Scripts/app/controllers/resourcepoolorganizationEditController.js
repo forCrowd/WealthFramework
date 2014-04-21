@@ -26,10 +26,7 @@
 		logger,
 		$location,
 		$routeParams) {
-
         logger = logger.forSource(controllerId);
-        var logError = logger.logError;
-        var logSuccess = logger.logSuccess;
 
         var isNew = $location.path() === '/ResourcePoolOrganization/new';
         var isSaving = false;
@@ -64,14 +61,14 @@
 
         function initialize() {
 
-            organizationService.getOrganizationSet()
+            organizationService.getOrganizationSet(false)
                 .then(function (data) {
                     vm.organizationSet = data;
                 });
 
             // TODO Catch?
 
-            resourcePoolService.getResourcePoolSet()
+            resourcePoolService.getResourcePoolSet(false)
                 .then(function (data) {
                     vm.resourcePoolSet = data;
                 });
@@ -87,7 +84,7 @@
                         vm.resourcePoolOrganization = data;
                     })
                     .catch(function (error) {
-                        logError("Boooo, we failed: " + error.message, null, true);
+                        logger.logError("Boooo, we failed: " + error.message, null, true);
                         // Todo: more sophisticated recovery. 
                         // Here we just blew it all away and start over
                         // refresh();
@@ -109,11 +106,11 @@
             isSaving = true;
             return resourcePoolOrganizationService.saveChanges()
                 .then(function () {
-                    logSuccess("Hooray we saved", null, true);
+                    logger.logSuccess("Hooray we saved", null, true);
                     $location.path('/ResourcePoolOrganization/');
                 })
                 .catch(function (error) {
-                    logError("Boooo, we failed: " + error.message, null, true);
+                    logger.logError("Boooo, we failed: " + error.message, null, true);
                     // Todo: more sophisticated recovery. 
                     // Here we just blew it all away and start over
                     // refresh();

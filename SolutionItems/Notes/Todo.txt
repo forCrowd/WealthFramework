@@ -51,3 +51,5 @@ http://msdn.microsoft.com/en-US/data/jj591583#Index
 . live - sector - Id byte to smallint
 
 . continue with userId in UserResourcePool - organization - license - sector - last 4
+
+. forceRefresh ?!

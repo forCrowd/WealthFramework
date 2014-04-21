@@ -12,9 +12,12 @@
 
     var controllerId = 'licenseListController';
     angular.module('main')
-        .controller(controllerId, ['licenseService', 'logger', licenseListController]);
+        .controller(controllerId, ['licenseService',
+            'logger',
+			licenseListController]);
 
-    function licenseListController(licenseService, logger) {
+    function licenseListController(licenseService,
+        logger) {
 
         logger = logger.forSource(controllerId);
         var logError = logger.logError;
@@ -47,9 +50,10 @@
         };
 
         function getLicenseSet() {
-            licenseService.getLicenseSet().then(function (data) {
-                vm.licenseSet = data;
-            });
+            licenseService.getLicenseSet(false)
+			    .then(function (data) {
+                    vm.licenseSet = data;
+                });
         }
     };
 })();

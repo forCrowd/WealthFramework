@@ -26,10 +26,7 @@
 		logger,
 		$location,
 		$routeParams) {
-
         logger = logger.forSource(controllerId);
-        var logError = logger.logError;
-        var logSuccess = logger.logSuccess;
 
         var isNew = $location.path() === '/UserSectorRating/new';
         var isSaving = false;
@@ -64,14 +61,14 @@
 
         function initialize() {
 
-            sectorService.getSectorSet()
+            sectorService.getSectorSet(false)
                 .then(function (data) {
                     vm.sectorSet = data;
                 });
 
             // TODO Catch?
 
-            userService.getUserSet()
+            userService.getUserSet(false)
                 .then(function (data) {
                     vm.userSet = data;
                 });
@@ -87,7 +84,7 @@
                         vm.userSectorRating = data;
                     })
                     .catch(function (error) {
-                        logError("Boooo, we failed: " + error.message, null, true);
+                        logger.logError("Boooo, we failed: " + error.message, null, true);
                         // Todo: more sophisticated recovery. 
                         // Here we just blew it all away and start over
                         // refresh();
@@ -109,11 +106,11 @@
             isSaving = true;
             return userSectorRatingService.saveChanges()
                 .then(function () {
-                    logSuccess("Hooray we saved", null, true);
+                    logger.logSuccess("Hooray we saved", null, true);
                     $location.path('/UserSectorRating/');
                 })
                 .catch(function (error) {
-                    logError("Boooo, we failed: " + error.message, null, true);
+                    logger.logError("Boooo, we failed: " + error.message, null, true);
                     // Todo: more sophisticated recovery. 
                     // Here we just blew it all away and start over
                     // refresh();

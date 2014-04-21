@@ -12,9 +12,12 @@
 
     var controllerId = 'sectorListController';
     angular.module('main')
-        .controller(controllerId, ['sectorService', 'logger', sectorListController]);
+        .controller(controllerId, ['sectorService',
+            'logger',
+			sectorListController]);
 
-    function sectorListController(sectorService, logger) {
+    function sectorListController(sectorService,
+        logger) {
 
         logger = logger.forSource(controllerId);
         var logError = logger.logError;
@@ -47,9 +50,10 @@
         };
 
         function getSectorSet() {
-            sectorService.getSectorSet().then(function (data) {
-                vm.sectorSet = data;
-            });
+            sectorService.getSectorSet(false)
+			    .then(function (data) {
+                    vm.sectorSet = data;
+                });
         }
     };
 })();

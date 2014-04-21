@@ -12,9 +12,12 @@
 
     var controllerId = 'organizationListController';
     angular.module('main')
-        .controller(controllerId, ['organizationService', 'logger', organizationListController]);
+        .controller(controllerId, ['organizationService',
+            'logger',
+			organizationListController]);
 
-    function organizationListController(organizationService, logger) {
+    function organizationListController(organizationService,
+        logger) {
 
         logger = logger.forSource(controllerId);
         var logError = logger.logError;
@@ -47,9 +50,10 @@
         };
 
         function getOrganizationSet() {
-            organizationService.getOrganizationSet().then(function (data) {
-                vm.organizationSet = data;
-            });
+            organizationService.getOrganizationSet(false)
+			    .then(function (data) {
+                    vm.organizationSet = data;
+                });
         }
     };
 })();

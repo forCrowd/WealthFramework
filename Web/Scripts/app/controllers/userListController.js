@@ -12,9 +12,12 @@
 
     var controllerId = 'userListController';
     angular.module('main')
-        .controller(controllerId, ['userService', 'logger', userListController]);
+        .controller(controllerId, ['userService',
+            'logger',
+			userListController]);
 
-    function userListController(userService, logger) {
+    function userListController(userService,
+        logger) {
 
         logger = logger.forSource(controllerId);
         var logError = logger.logError;
@@ -47,9 +50,10 @@
         };
 
         function getUserSet() {
-            userService.getUserSet().then(function (data) {
-                vm.userSet = data;
-            });
+            userService.getUserSet(false)
+			    .then(function (data) {
+                    vm.userSet = data;
+                });
         }
     };
 })();

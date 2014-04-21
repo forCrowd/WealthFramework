@@ -15,12 +15,7 @@
         .factory(serviceId, ['dataContext', 'logger', userResourcePoolOrganizationService]);
 
     function userResourcePoolOrganizationService(dataContext, logger) {
-
-        // Logger
         logger = logger.forSource(serviceId);
-        var logError = logger.logError;
-        var logSuccess = logger.logSuccess;
-        var logWarning = logger.logWarning;
 
         // To determine whether the data will be fecthed from server or local
         var minimumDate = new Date(0);
@@ -59,20 +54,21 @@
             return dataContext.getChangesCount();
         }
 
-        function getUserResourcePoolOrganizationSet(forceRefresh) {
+        function getUserResourcePoolOrganizationSet(userId, forceRefresh) {
 
             var count;
             if (forceRefresh) {
                 if (dataContext.hasChanges()) {
                     count = dataContext.getChangesCount();
                     dataContext.rejectChanges(); // undo all unsaved changes!
-                    logWarning('Discarded ' + count + ' pending change(s)', null, true);
+                    logger.logWarning('Discarded ' + count + ' pending change(s)', null, true);
                 }
             }
 
             var query = breeze.EntityQuery
-				.from("UserResourcePoolOrganization")
+				.from('UserResourcePoolOrganization')
 				.expand(['User', 'ResourcePoolOrganization'])
+				.where('UserId eq ' + userId)
             ;
 
             // Fetch the data from server, in case if it's not fetched earlier or forced
@@ -92,18 +88,18 @@
 
             function success(response) {
                 count = response.results.length;
-                logSuccess('Got ' + count + ' userResourcePoolOrganization(s)', response, true);
+                logger.logSuccess('Got ' + count + ' userResourcePoolOrganization(s)', response, true);
                 return response.results;
             }
 
             function failed(error) {
-                var message = error.message || "UserResourcePoolOrganization query failed";
-                logError(message, error, true);
+                var message = error.message || 'UserResourcePoolOrganization query failed';
+                logger.logError(message, error, true);
             }
         }
 
         function getUserResourcePoolOrganization(userResourcePoolOrganizationId, forceRefresh) {
-            return dataContext.manager.fetchEntityByKey("UserResourcePoolOrganization", userResourcePoolOrganizationId, !forceRefresh)
+            return dataContext.manager.fetchEntityByKey('UserResourcePoolOrganization', userResourcePoolOrganizationId, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {
@@ -111,8 +107,8 @@
             }
 
             function failed(error) {
-                var message = error.message || "getUserResourcePoolOrganization query failed";
-                logError(message, error, true);
+                var message = error.message || 'getUserResourcePoolOrganization query failed';
+                logger.logError(message, error, true);
             }
         }
 

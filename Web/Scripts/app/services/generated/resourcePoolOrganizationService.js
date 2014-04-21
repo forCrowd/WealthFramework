@@ -15,12 +15,7 @@
         .factory(serviceId, ['dataContext', 'logger', resourcePoolOrganizationService]);
 
     function resourcePoolOrganizationService(dataContext, logger) {
-
-        // Logger
         logger = logger.forSource(serviceId);
-        var logError = logger.logError;
-        var logSuccess = logger.logSuccess;
-        var logWarning = logger.logWarning;
 
         // To determine whether the data will be fecthed from server or local
         var minimumDate = new Date(0);
@@ -66,12 +61,12 @@
                 if (dataContext.hasChanges()) {
                     count = dataContext.getChangesCount();
                     dataContext.rejectChanges(); // undo all unsaved changes!
-                    logWarning('Discarded ' + count + ' pending change(s)', null, true);
+                    logger.logWarning('Discarded ' + count + ' pending change(s)', null, true);
                 }
             }
 
             var query = breeze.EntityQuery
-				.from("ResourcePoolOrganization")
+				.from('ResourcePoolOrganization')
 				.expand(['Organization', 'ResourcePool'])
             ;
 
@@ -92,18 +87,18 @@
 
             function success(response) {
                 count = response.results.length;
-                logSuccess('Got ' + count + ' resourcePoolOrganization(s)', response, true);
+                logger.logSuccess('Got ' + count + ' resourcePoolOrganization(s)', response, true);
                 return response.results;
             }
 
             function failed(error) {
-                var message = error.message || "ResourcePoolOrganization query failed";
-                logError(message, error, true);
+                var message = error.message || 'ResourcePoolOrganization query failed';
+                logger.logError(message, error, true);
             }
         }
 
         function getResourcePoolOrganization(resourcePoolOrganizationId, forceRefresh) {
-            return dataContext.manager.fetchEntityByKey("ResourcePoolOrganization", resourcePoolOrganizationId, !forceRefresh)
+            return dataContext.manager.fetchEntityByKey('ResourcePoolOrganization', resourcePoolOrganizationId, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {
@@ -111,8 +106,8 @@
             }
 
             function failed(error) {
-                var message = error.message || "getResourcePoolOrganization query failed";
-                logError(message, error, true);
+                var message = error.message || 'getResourcePoolOrganization query failed';
+                logger.logError(message, error, true);
             }
         }
 

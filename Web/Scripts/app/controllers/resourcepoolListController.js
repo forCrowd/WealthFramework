@@ -12,9 +12,12 @@
 
     var controllerId = 'resourcePoolListController';
     angular.module('main')
-        .controller(controllerId, ['resourcePoolService', 'logger', resourcePoolListController]);
+        .controller(controllerId, ['resourcePoolService',
+            'logger',
+			resourcePoolListController]);
 
-    function resourcePoolListController(resourcePoolService, logger) {
+    function resourcePoolListController(resourcePoolService,
+        logger) {
 
         logger = logger.forSource(controllerId);
         var logError = logger.logError;
@@ -47,9 +50,10 @@
         };
 
         function getResourcePoolSet() {
-            resourcePoolService.getResourcePoolSet().then(function (data) {
-                vm.resourcePoolSet = data;
-            });
+            resourcePoolService.getResourcePoolSet(false)
+			    .then(function (data) {
+                    vm.resourcePoolSet = data;
+                });
         }
     };
 })();

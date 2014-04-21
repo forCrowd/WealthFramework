@@ -29,12 +29,9 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 	var serviceId = string.Format("{0}Service", entityVariable);
 	var primaryKey = entityType.KeyMembers[0];
     var primaryKeyShortTypeName = typeMapper.GetTypeName(primaryKey.TypeUsage);
-	
     var simpleProperties = typeMapper.GetSimpleProperties(entityType);
     var relatedProperties = typeMapper.GetRelatedNavigationProperties(entityType);
-	
-	// TODO This needs to be done through enums types?!
-	var hasUserAccountTypeId = simpleProperties.Any(property => property.Name == "UserAccountTypeId");
+	var hasUserId = simpleProperties.Any(property => property.Name == "UserId");
 
 	var outputFileName = string.Format(@"{0}.js", serviceId);
 
@@ -49,12 +46,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
         .factory(serviceId, ['dataContext', 'logger', <#= serviceId #>]);
 
     function <#= serviceId #>(dataContext, logger) {
-
-        // Logger
         logger = logger.forSource(serviceId);
-        var logError = logger.logError;
-        var logSuccess = logger.logSuccess;
-        var logWarning = logger.logWarning;
 
         // To determine whether the data will be fecthed from server or local
         var minimumDate = new Date(0);
@@ -93,23 +85,30 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
             return dataContext.getChangesCount();
         }
 
+<# if (hasUserId) { #>
+        function get<#= entityTypeName #>Set(userId, forceRefresh) {
+<# } else { #>
         function get<#= entityTypeName #>Set(forceRefresh) {
+<# } #>
 
             var count;
             if (forceRefresh) {
                 if (dataContext.hasChanges()) {
                     count = dataContext.getChangesCount();
                     dataContext.rejectChanges(); // undo all unsaved changes!
-                    logWarning('Discarded ' + count + ' pending change(s)', null, true);
+                    logger.logWarning('Discarded ' + count + ' pending change(s)', null, true);
                 }
             }
 
             var query = breeze.EntityQuery
-				.from("<#= entityTypeName #>")
+				.from('<#= entityTypeName #>')
 <# if (relatedProperties.Any()) {
 	var expandQueryJoin = String.Join(", ", relatedProperties.Select(property => string.Format("'{0}'", property.Name)));
 	var expandQuery = string.Format(".expand([{0}])", expandQueryJoin); #>
 				<#= expandQuery #>
+<# } #>
+<# if (hasUserId) { #>
+				.where('UserId eq ' + userId)
 <# } #>
             ;
 
@@ -130,18 +129,18 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 
             function success(response) {
                 count = response.results.length;
-                logSuccess('Got ' + count + ' <#= entityVariable #>(s)', response, true);
+                logger.logSuccess('Got ' + count + ' <#= entityVariable #>(s)', response, true);
                 return response.results;
             }
 
             function failed(error) {
-                var message = error.message || "<#= entityTypeName #> query failed";
-                logError(message, error, true);
+                var message = error.message || '<#= entityTypeName #> query failed';
+                logger.logError(message, error, true);
             }
         }
 
         function get<#= entityTypeName #>(<#= entityVariable #>Id, forceRefresh) {
-            return dataContext.manager.fetchEntityByKey("<#= entityTypeName #>", <#= entityVariable #>Id, !forceRefresh)
+            return dataContext.manager.fetchEntityByKey('<#= entityTypeName #>', <#= entityVariable #>Id, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {
@@ -149,8 +148,8 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
             }
 
             function failed(error) {
-                var message = error.message || "get<#= entityTypeName #> query failed";
-                logError(message, error, true);
+                var message = error.message || 'get<#= entityTypeName #> query failed';
+                logger.logError(message, error, true);
             }
         }
 
