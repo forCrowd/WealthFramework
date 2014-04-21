@@ -2,6 +2,7 @@
 . SPA with OData + AngularJS + Breeze.js + toastr.js
 . Database - Sector table Id field switched to smallint from byte
 . Solution - Refactoring tt files
+. Solution - nuget package updates
 
 0.6.3
 . Web - Overview text update
