@@ -47,8 +47,8 @@
         };
 
         function getUserSectorRatingSet() {
-            return userSectorRatingService.getUserSectorRatingSet().then(function (data) {
-                return vm.userSectorRatingSet = data;
+            userSectorRatingService.getUserSectorRatingSet().then(function (data) {
+                vm.userSectorRatingSet = data;
             });
         }
     };

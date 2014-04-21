@@ -24,33 +24,47 @@
     <script src="/Scripts/app/dataContext.js"></script>
     <script src="/Scripts/app/filters/angular-percentage.js"></script>
 
+    <script src="/Scripts/app/services/mainService.js"></script>
+
     <script src="/Scripts/app/services/generated/licenseService.js"></script>
     <script src="/Scripts/app/controllers/licenseListController.js"></script>
     <script src="/Scripts/app/controllers/licenseEditController.js"></script>
+
     <script src="/Scripts/app/services/generated/organizationService.js"></script>
     <script src="/Scripts/app/controllers/organizationListController.js"></script>
     <script src="/Scripts/app/controllers/organizationEditController.js"></script>
+
     <script src="/Scripts/app/services/generated/resourcePoolService.js"></script>
     <script src="/Scripts/app/controllers/resourcePoolListController.js"></script>
     <script src="/Scripts/app/controllers/resourcePoolEditController.js"></script>
+
     <script src="/Scripts/app/services/generated/resourcePoolOrganizationService.js"></script>
     <script src="/Scripts/app/controllers/resourcePoolOrganizationListController.js"></script>
     <script src="/Scripts/app/controllers/resourcePoolOrganizationEditController.js"></script>
+
     <script src="/Scripts/app/services/generated/sectorService.js"></script>
     <script src="/Scripts/app/controllers/sectorListController.js"></script>
     <script src="/Scripts/app/controllers/sectorEditController.js"></script>
+
     <script src="/Scripts/app/services/generated/userService.js"></script>
     <script src="/Scripts/app/controllers/userListController.js"></script>
     <script src="/Scripts/app/controllers/userEditController.js"></script>
+
+    @* User service extension *@
+    <script src="/Scripts/app/services/userService.js"></script>
+
     <script src="/Scripts/app/services/generated/userLicenseRatingService.js"></script>
     <script src="/Scripts/app/controllers/userLicenseRatingListController.js"></script>
     <script src="/Scripts/app/controllers/userLicenseRatingEditController.js"></script>
+
     <script src="/Scripts/app/services/generated/userResourcePoolService.js"></script>
     <script src="/Scripts/app/controllers/userResourcePoolListController.js"></script>
     <script src="/Scripts/app/controllers/userResourcePoolEditController.js"></script>
+
     <script src="/Scripts/app/services/generated/userResourcePoolOrganizationService.js"></script>
     <script src="/Scripts/app/controllers/userResourcePoolOrganizationListController.js"></script>
     <script src="/Scripts/app/controllers/userResourcePoolOrganizationEditController.js"></script>
+
     <script src="/Scripts/app/services/generated/userSectorRatingService.js"></script>
     <script src="/Scripts/app/controllers/userSectorRatingListController.js"></script>
     <script src="/Scripts/app/controllers/userSectorRatingEditController.js"></script>
@@ -58,8 +72,6 @@
     <script src="/Scripts/app/services/userResourcePoolService.js"></script>
     <script src="/Scripts/app/controllers/userResourcePoolController.js"></script>
 
-    <script src="/Scripts/app/services/mainService.js"></script>
-    <script src="/Scripts/app/services/userService.js"></script>
     <script src="/Scripts/app/controllers/layoutController.js"></script>
     <script src="/Scripts/app/controllers/userController.js"></script>
 
@@ -78,7 +90,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li class="dropdown" data-ng-show="vm.isAuthenticated && vm.currentUser.UserAccountTypeId == 1">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Definitions SPA <b class="caret"></b></a>
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Definitions S <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="#/License/">License</a></li>
                             <li><a href="#/Organization/">Organization</a></li>
@@ -93,7 +105,7 @@
                         </ul>
                     </li>
                     <li class="dropdown" data-ng-show="vm.isAuthenticated && vm.currentUser.UserAccountTypeId == 1">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Definitions <b class="caret"></b></a>
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Def <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("User", "Index", "User", new { area = "" }, null)</li>
                             <li>@Html.ActionLink("UserNg", "Index", "UserNg", new { area = "" }, null)</li>
@@ -110,7 +122,7 @@
                         </ul>
                     </li>
                     <li class="dropdown" data-ng-show="vm.isAuthenticated">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown">CMRP SPA <b class="caret"></b></a>
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">CMRP S <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="#/TotalCostIndex/">Total Cost Index</a></li>
                             <li><a href="#/KnowledgeIndex/">Knowledge Index</a></li>
@@ -143,7 +155,16 @@
                         </ul>
                     </li>
                     <li class="dropdown" data-ng-show="vm.isAuthenticated">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Ratings <b class="caret"></b></a>
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Ratings S <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#/UserResourcePool/">CMRP Index Rating</a></li>
+                            <li><a href="#/UserResourcePoolOrganization/">Resource Pool - Organization Rating</a></li>
+                            <li><a href="#/UserLicenseRating/">Licence Rating</a></li>
+                            <li><a href="#/UserSectorRating/">Sector Rating</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" data-ng-show="vm.isAuthenticated">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Rat <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("CMRP Index Rating", "Index", "UserResourcePool", new { area = "" }, null)</li>
                             <li>@Html.ActionLink("CMRP Index Rating Ng", "Index", "UserResourcePoolNg", new { area = "" }, null)</li>

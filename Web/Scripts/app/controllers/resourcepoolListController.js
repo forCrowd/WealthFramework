@@ -47,8 +47,8 @@
         };
 
         function getResourcePoolSet() {
-            return resourcePoolService.getResourcePoolSet().then(function (data) {
-                return vm.resourcePoolSet = data;
+            resourcePoolService.getResourcePoolSet().then(function (data) {
+                vm.resourcePoolSet = data;
             });
         }
     };

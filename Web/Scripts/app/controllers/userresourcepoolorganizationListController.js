@@ -47,8 +47,8 @@
         };
 
         function getUserResourcePoolOrganizationSet() {
-            return userResourcePoolOrganizationService.getUserResourcePoolOrganizationSet().then(function (data) {
-                return vm.userResourcePoolOrganizationSet = data;
+            userResourcePoolOrganizationService.getUserResourcePoolOrganizationSet().then(function (data) {
+                vm.userResourcePoolOrganizationSet = data;
             });
         }
     };

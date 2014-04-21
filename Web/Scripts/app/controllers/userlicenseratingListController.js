@@ -47,8 +47,8 @@
         };
 
         function getUserLicenseRatingSet() {
-            return userLicenseRatingService.getUserLicenseRatingSet().then(function (data) {
-                return vm.userLicenseRatingSet = data;
+            userLicenseRatingService.getUserLicenseRatingSet().then(function (data) {
+                vm.userLicenseRatingSet = data;
             });
         }
     };

@@ -26,6 +26,7 @@ http://msdn.microsoft.com/en-US/data/jj593170
 http://msdn.microsoft.com/en-us/data/jj593170.aspx
 http://msdn.microsoft.com/en-US/data/jj200620
 http://msdn.microsoft.com/en-US/data/jj591583#Index
+. enums? useraccountypeid - after switching to code first, if possible at all!
 . web essentials; http://vswebessentials.com/
 . kendo ui; http://a.shinynew.me/post/82897588209/kendo-ui-core-the-free-jquery-widget-library
 . odata error message;
@@ -44,8 +45,9 @@ http://msdn.microsoft.com/en-US/data/jj591583#Index
 . update database structure - resource pool should have organizations + licenses + sectors
 
 . userId filter
-. enums? useraccountypeid?
 . public vs. private
 . layout - user edit - cancel doesn't go to back to home page
 
 . live - sector - Id byte to smallint
+
+. continue with userId in UserResourcePool - organization - license - sector - last 4

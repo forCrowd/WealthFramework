@@ -20,12 +20,12 @@
 
         /*** Implementations ***/
 
-        function getUserResourcePool(resourcePoolId) {
+        function getUserResourcePool(userId, resourcePoolId) {
 
             var query = breeze.EntityQuery
                 .from("UserResourcePool")
                 .expand("ResourcePool")
-                .where("UserId eq 1 and ResourcePoolId eq " + resourcePoolId)
+                .where("UserId eq " + userId + " and ResourcePoolId eq " + resourcePoolId)
             ;
 
             // Fetch the data from server, in case if it's not fetched earlier or forced

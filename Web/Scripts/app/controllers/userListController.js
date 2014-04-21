@@ -47,8 +47,8 @@
         };
 
         function getUserSet() {
-            return userService.getUserSet().then(function (data) {
-                return vm.userSet = data;
+            userService.getUserSet().then(function (data) {
+                vm.userSet = data;
             });
         }
     };

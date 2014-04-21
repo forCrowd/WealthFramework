@@ -47,8 +47,8 @@
         };
 
         function getSectorSet() {
-            return sectorService.getSectorSet().then(function (data) {
-                return vm.sectorSet = data;
+            sectorService.getSectorSet().then(function (data) {
+                vm.sectorSet = data;
             });
         }
     };

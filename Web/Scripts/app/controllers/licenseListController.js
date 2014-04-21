@@ -47,8 +47,8 @@
         };
 
         function getLicenseSet() {
-            return licenseService.getLicenseSet().then(function (data) {
-                return vm.licenseSet = data;
+            licenseService.getLicenseSet().then(function (data) {
+                vm.licenseSet = data;
             });
         }
     };

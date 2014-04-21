@@ -47,8 +47,8 @@
         };
 
         function getResourcePoolOrganizationSet() {
-            return resourcePoolOrganizationService.getResourcePoolOrganizationSet().then(function (data) {
-                return vm.resourcePoolOrganizationSet = data;
+            resourcePoolOrganizationService.getResourcePoolOrganizationSet().then(function (data) {
+                vm.resourcePoolOrganizationSet = data;
             });
         }
     };

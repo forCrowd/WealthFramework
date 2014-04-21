@@ -85,8 +85,8 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
         };
 
         function <#= entitySetGetMethod #>() {
-            return <#= serviceId #>.<#= entitySetGetMethod #>().then(function (data) {
-                return vm.<#= entitySetName #> = data;
+            <#= serviceId #>.<#= entitySetGetMethod #>().then(function (data) {
+                vm.<#= entitySetName #> = data;
             });
         }
     };
