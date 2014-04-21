@@ -14,22 +14,51 @@ namespace BusinessObjects.Dto
 
     public class UserDto
     {
+        public UserDto()
+        {
+        }
+
+        public UserDto(User user)
+        {
+            this.Id = user.Id;
+            this.Email = user.Email;
+            this.Password = user.Password;
+            this.FirstName = user.FirstName;
+            this.MiddleName = user.MiddleName;
+            this.LastName = user.LastName;
+            this.UserAccountTypeId = user.UserAccountTypeId;
+            this.Notes = user.Notes;
+            this.CreatedOn = user.CreatedOn;
+            this.ModifiedOn = user.ModifiedOn;
+            this.DeletedOn = user.DeletedOn;
+        }
+
         [Required]
         public int Id { get; set; }
+
         [Required]
         public string Email { get; set; }
+
         [Required]
         public string Password { get; set; }
+
         public string FirstName { get; set; }
+
         public string MiddleName { get; set; }
+
         public string LastName { get; set; }
+
         [Required]
         public byte UserAccountTypeId { get; set; }
+
         public string Notes { get; set; }
+
         [Required]
         public System.DateTime CreatedOn { get; set; }
+
         [Required]
         public System.DateTime ModifiedOn { get; set; }
+
         public Nullable<System.DateTime> DeletedOn { get; set; }
 
         public User ToBusinessObject()

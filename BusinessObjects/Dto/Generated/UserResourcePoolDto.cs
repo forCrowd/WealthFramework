@@ -14,32 +14,67 @@ namespace BusinessObjects.Dto
 
     public class UserResourcePoolDto
     {
+        public UserResourcePoolDto()
+        {
+        }
+
+        public UserResourcePoolDto(UserResourcePool userResourcePool)
+        {
+            this.Id = userResourcePool.Id;
+            this.UserId = userResourcePool.UserId;
+            this.ResourcePoolId = userResourcePool.ResourcePoolId;
+            this.ResourcePoolRate = userResourcePool.ResourcePoolRate;
+            this.TotalCostIndexRating = userResourcePool.TotalCostIndexRating;
+            this.KnowledgeIndexRating = userResourcePool.KnowledgeIndexRating;
+            this.QualityIndexRating = userResourcePool.QualityIndexRating;
+            this.SectorIndexRating = userResourcePool.SectorIndexRating;
+            this.EmployeeSatisfactionIndexRating = userResourcePool.EmployeeSatisfactionIndexRating;
+            this.CustomerSatisfactionIndexRating = userResourcePool.CustomerSatisfactionIndexRating;
+            this.DistanceIndexRating = userResourcePool.DistanceIndexRating;
+            this.CreatedOn = userResourcePool.CreatedOn;
+            this.ModifiedOn = userResourcePool.ModifiedOn;
+            this.DeletedOn = userResourcePool.DeletedOn;
+        }
+
         [Required]
         public int Id { get; set; }
+
         [Required]
         public int UserId { get; set; }
+
         [Required]
         public int ResourcePoolId { get; set; }
+
         [Required]
         public decimal ResourcePoolRate { get; set; }
+
         [Required]
         public decimal TotalCostIndexRating { get; set; }
+
         [Required]
         public decimal KnowledgeIndexRating { get; set; }
+
         [Required]
         public decimal QualityIndexRating { get; set; }
+
         [Required]
         public decimal SectorIndexRating { get; set; }
+
         [Required]
         public decimal EmployeeSatisfactionIndexRating { get; set; }
+
         [Required]
         public decimal CustomerSatisfactionIndexRating { get; set; }
+
         [Required]
         public decimal DistanceIndexRating { get; set; }
+
         [Required]
         public System.DateTime CreatedOn { get; set; }
+
         [Required]
         public System.DateTime ModifiedOn { get; set; }
+
         public Nullable<System.DateTime> DeletedOn { get; set; }
 
         public UserResourcePool ToBusinessObject()

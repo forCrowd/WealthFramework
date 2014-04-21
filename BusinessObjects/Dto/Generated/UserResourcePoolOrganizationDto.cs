@@ -14,24 +14,51 @@ namespace BusinessObjects.Dto
 
     public class UserResourcePoolOrganizationDto
     {
+        public UserResourcePoolOrganizationDto()
+        {
+        }
+
+        public UserResourcePoolOrganizationDto(UserResourcePoolOrganization userResourcePoolOrganization)
+        {
+            this.Id = userResourcePoolOrganization.Id;
+            this.UserId = userResourcePoolOrganization.UserId;
+            this.ResourcePoolOrganizationId = userResourcePoolOrganization.ResourcePoolOrganizationId;
+            this.NumberOfSales = userResourcePoolOrganization.NumberOfSales;
+            this.QualityRating = userResourcePoolOrganization.QualityRating;
+            this.CustomerSatisfactionRating = userResourcePoolOrganization.CustomerSatisfactionRating;
+            this.EmployeeSatisfactionRating = userResourcePoolOrganization.EmployeeSatisfactionRating;
+            this.CreatedOn = userResourcePoolOrganization.CreatedOn;
+            this.ModifiedOn = userResourcePoolOrganization.ModifiedOn;
+            this.DeletedOn = userResourcePoolOrganization.DeletedOn;
+        }
+
         [Required]
         public int Id { get; set; }
+
         [Required]
         public int UserId { get; set; }
+
         [Required]
         public int ResourcePoolOrganizationId { get; set; }
+
         [Required]
         public int NumberOfSales { get; set; }
+
         [Required]
         public decimal QualityRating { get; set; }
+
         [Required]
         public decimal CustomerSatisfactionRating { get; set; }
+
         [Required]
         public decimal EmployeeSatisfactionRating { get; set; }
+
         [Required]
         public System.DateTime CreatedOn { get; set; }
+
         [Required]
         public System.DateTime ModifiedOn { get; set; }
+
         public Nullable<System.DateTime> DeletedOn { get; set; }
 
         public UserResourcePoolOrganization ToBusinessObject()

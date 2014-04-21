@@ -12,36 +12,45 @@ namespace BusinessObjects.Dto
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    public class OrganizationDto
+    public class SectorDto
     {
+        public SectorDto()
+        {
+        }
+
+        public SectorDto(Sector sector)
+        {
+            this.Id = sector.Id;
+            this.Name = sector.Name;
+            this.Description = sector.Description;
+            this.CreatedOn = sector.CreatedOn;
+            this.ModifiedOn = sector.ModifiedOn;
+            this.DeletedOn = sector.DeletedOn;
+        }
+
         [Required]
-        public int Id { get; set; }
-        [Required]
-        public short SectorId { get; set; }
+        public short Id { get; set; }
+
         [Required]
         public string Name { get; set; }
-        [Required]
-        public decimal ProductionCost { get; set; }
-        [Required]
-        public decimal SalesPrice { get; set; }
-        [Required]
-        public short LicenseId { get; set; }
+
+        public string Description { get; set; }
+
         [Required]
         public System.DateTime CreatedOn { get; set; }
+
         [Required]
         public System.DateTime ModifiedOn { get; set; }
+
         public Nullable<System.DateTime> DeletedOn { get; set; }
 
-        public Organization ToBusinessObject()
+        public Sector ToBusinessObject()
         {
-            return new Organization()
+            return new Sector()
             {
                 Id = Id,
-                SectorId = SectorId,
                 Name = Name,
-                ProductionCost = ProductionCost,
-                SalesPrice = SalesPrice,
-                LicenseId = LicenseId,
+                Description = Description,
                 CreatedOn = CreatedOn,
                 ModifiedOn = ModifiedOn,
                 DeletedOn = DeletedOn

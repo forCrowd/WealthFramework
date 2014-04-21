@@ -12,29 +12,46 @@ namespace BusinessObjects.Dto
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    public class LicenseDto
+    public class ResourcePoolOrganizationDto
     {
+        public ResourcePoolOrganizationDto()
+        {
+        }
+
+        public ResourcePoolOrganizationDto(ResourcePoolOrganization resourcePoolOrganization)
+        {
+            this.Id = resourcePoolOrganization.Id;
+            this.ResourcePoolId = resourcePoolOrganization.ResourcePoolId;
+            this.OrganizationId = resourcePoolOrganization.OrganizationId;
+            this.CreatedOn = resourcePoolOrganization.CreatedOn;
+            this.ModifiedOn = resourcePoolOrganization.ModifiedOn;
+            this.DeletedOn = resourcePoolOrganization.DeletedOn;
+        }
+
         [Required]
-        public short Id { get; set; }
+        public int Id { get; set; }
+
         [Required]
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public int ResourcePoolId { get; set; }
+
         [Required]
-        public string Text { get; set; }
+        public int OrganizationId { get; set; }
+
         [Required]
         public System.DateTime CreatedOn { get; set; }
+
         [Required]
         public System.DateTime ModifiedOn { get; set; }
+
         public Nullable<System.DateTime> DeletedOn { get; set; }
 
-        public License ToBusinessObject()
+        public ResourcePoolOrganization ToBusinessObject()
         {
-            return new License()
+            return new ResourcePoolOrganization()
             {
                 Id = Id,
-                Name = Name,
-                Description = Description,
-                Text = Text,
+                ResourcePoolId = ResourcePoolId,
+                OrganizationId = OrganizationId,
                 CreatedOn = CreatedOn,
                 ModifiedOn = ModifiedOn,
                 DeletedOn = DeletedOn

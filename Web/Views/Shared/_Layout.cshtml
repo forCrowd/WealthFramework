@@ -77,92 +77,84 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @{if (ViewBag.IsAuthenticated && ViewBag.CurrentUserAccountTypeId == BusinessObjects.UserAccountType.Administrator)
-                    {
-                        <li class="dropdown">
-                            <a href="" class="dropdown-toggle" data-toggle="dropdown">Definitions SPA <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#/License/">License</a></li>
-                                <li><a href="#/Organization/">Organization</a></li>
-                                <li><a href="#/ResourcePool/">ResourcePool</a></li>
-                                <li><a href="#/ResourcePoolOrganization/">ResourcePoolOrganization</a></li>
-                                <li><a href="#/Sector/">Sector</a></li>
-                                <li><a href="#/User/">User</a></li>
-                                <li><a href="#/UserLicenseRating/">UserLicenseRating</a></li>
-                                <li><a href="#/UserResourcePool/">UserResourcePool</a></li>
-                                <li><a href="#/UserResourcePoolOrganization/">UserResourcePoolOrganization</a></li>
-                                <li><a href="#/UserSectorRating/">UserSectorRating</a></li>
-                            </ul>
-                        </li>
+                    <li class="dropdown" data-ng-show="vm.isAuthenticated && vm.currentUser.UserAccountTypeId == 1">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Definitions SPA <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#/License/">License</a></li>
+                            <li><a href="#/Organization/">Organization</a></li>
+                            <li><a href="#/ResourcePool/">ResourcePool</a></li>
+                            <li><a href="#/ResourcePoolOrganization/">ResourcePoolOrganization</a></li>
+                            <li><a href="#/Sector/">Sector</a></li>
+                            <li><a href="#/User/">User</a></li>
+                            <li><a href="#/UserLicenseRating/">UserLicenseRating</a></li>
+                            <li><a href="#/UserResourcePool/">UserResourcePool</a></li>
+                            <li><a href="#/UserResourcePoolOrganization/">UserResourcePoolOrganization</a></li>
+                            <li><a href="#/UserSectorRating/">UserSectorRating</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" data-ng-show="vm.isAuthenticated && vm.currentUser.UserAccountTypeId == 1">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Definitions <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("User", "Index", "User", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("UserNg", "Index", "UserNg", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Sector", "Index", "Sector", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("SectorNg", "Index", "SectorNg", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("License", "Index", "License", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("License Ng", "Index", "LicenseNg", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Organization", "Index", "Organization", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Organization Ng", "Index", "OrganizationNg", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Resource Pool", "Index", "ResourcePool", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Resource Pool Ng", "Index", "ResourcePoolNg", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Resource Pool - Organization", "Index", "ResourcePoolOrganization", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Resource Pool - Organization Ng", "Index", "ResourcePoolOrganizationNg", new { area = "" }, null)</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" data-ng-show="vm.isAuthenticated">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">CMRP SPA <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#/TotalCostIndex/">Total Cost Index</a></li>
+                            <li><a href="#/KnowledgeIndex/">Knowledge Index</a></li>
+                            <li><a href="#/QualityIndex/">Quality Index</a></li>
+                            <li><a href="#/EmployeeSatisfactionIndex/">Employee Satisfaction Index</a></li>
+                            <li><a href="#/CustomerSatisfactionIndex/">Customer Satisfaction Index</a></li>
+                            <li><a href="#/SectorIndex/">Sector Index</a></li>
+                            <li><a href="#/DistanceIndex/">Distance Index</a></li>
+                            <li><a href="#/AllInOne/">All in One</a></li>
+                        </ul>
+                    </li>
 
-                        <li class="dropdown">
-                            <a href="" class="dropdown-toggle" data-toggle="dropdown">Definitions <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("User", "Index", "User", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("UserNg", "Index", "UserNg", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Sector", "Index", "Sector", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("SectorNg", "Index", "SectorNg", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("License", "Index", "License", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("License Ng", "Index", "LicenseNg", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Organization", "Index", "Organization", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Organization Ng", "Index", "OrganizationNg", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Resource Pool", "Index", "ResourcePool", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Resource Pool Ng", "Index", "ResourcePoolNg", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Resource Pool - Organization", "Index", "ResourcePoolOrganization", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Resource Pool - Organization Ng", "Index", "ResourcePoolOrganizationNg", new { area = "" }, null)</li>
-                            </ul>
-                        </li>
-                    }}
-                    @{if (ViewBag.IsAuthenticated)
-                    {
-                        <li class="dropdown">
-                            <a href="" class="dropdown-toggle" data-toggle="dropdown">CMRP SPA <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#/TotalCostIndex/">Total Cost Index</a></li>
-                                <li><a href="#/KnowledgeIndex/">Knowledge Index</a></li>
-                                <li><a href="#/QualityIndex/">Quality Index</a></li>
-                                <li><a href="#/EmployeeSatisfactionIndex/">Employee Satisfaction Index</a></li>
-                                <li><a href="#/CustomerSatisfactionIndex/">Customer Satisfaction Index</a></li>
-                                <li><a href="#/SectorIndex/">Sector Index</a></li>
-                                <li><a href="#/DistanceIndex/">Distance Index</a></li>
-                                <li><a href="#/AllInOne/">All in One</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="dropdown">
-                            <a href="" class="dropdown-toggle" data-toggle="dropdown">CMRP <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("Total Cost Index", "TotalCostIndex", "UserResourcePool", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Knowledge Index - Private", "KnowledgeIndexPrivate", "UserResourcePool", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Knowledge Index - Public", "KnowledgeIndexPublic", "UserResourcePool", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Quality Index - Private", "QualityIndexPrivate", "UserResourcePool", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Quality Index - Public", "QualityIndexPublic", "UserResourcePool", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Employee Satisfaction Index - Private", "EmployeeSatisfactionIndexPrivate", "UserResourcePool", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Employee Satisfaction Index - Public", "EmployeeSatisfactionIndexPublic", "UserResourcePool", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Customer Satisfaction Index - Private", "CustomerSatisfactionIndexPrivate", "UserResourcePool", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Customer Satisfaction Index - Public", "CustomerSatisfactionIndexPublic", "UserResourcePool", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Sector Index - Private", "SectorIndexPrivate", "UserResourcePool", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Sector Index - Public", "SectorIndexPublic", "UserResourcePool", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Distance Index", "DistanceIndex", "UserResourcePool", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("All in One - Private", "AllInOnePrivate", "UserResourcePool", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("All in One - Public", "AllInOnePublic", "UserResourcePool", new { area = "" }, null)</li>
-                            </ul>
-                        </li>
-
-                        <li class="dropdown">
-                            <a href="" class="dropdown-toggle" data-toggle="dropdown">Ratings <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("CMRP Index Rating", "Index", "UserResourcePool", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("CMRP Index Rating Ng", "Index", "UserResourcePoolNg", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Resource Pool - Organization Rating", "Index", "UserResourcePoolOrganization", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Resource Pool - Organization Rating Ng", "Index", "UserResourcePoolOrganizationNg", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Licence Rating", "Index", "UserLicenseRating", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Licence Rating Ng", "Index", "UserLicenseRatingNg", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Sector Rating", "Index", "UserSectorRating", new { area = "" }, null)</li>
-                                <li>@Html.ActionLink("Sector Rating Ng", "Index", "UserSectorRatingNg", new { area = "" }, null)</li>
-                            </ul>
-                        </li>
-                    }}
+                    <li class="dropdown" data-ng-show="vm.isAuthenticated">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">CMRP <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Total Cost Index", "TotalCostIndex", "UserResourcePool", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Knowledge Index - Private", "KnowledgeIndexPrivate", "UserResourcePool", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Knowledge Index - Public", "KnowledgeIndexPublic", "UserResourcePool", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Quality Index - Private", "QualityIndexPrivate", "UserResourcePool", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Quality Index - Public", "QualityIndexPublic", "UserResourcePool", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Employee Satisfaction Index - Private", "EmployeeSatisfactionIndexPrivate", "UserResourcePool", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Employee Satisfaction Index - Public", "EmployeeSatisfactionIndexPublic", "UserResourcePool", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Customer Satisfaction Index - Private", "CustomerSatisfactionIndexPrivate", "UserResourcePool", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Customer Satisfaction Index - Public", "CustomerSatisfactionIndexPublic", "UserResourcePool", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Sector Index - Private", "SectorIndexPrivate", "UserResourcePool", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Sector Index - Public", "SectorIndexPublic", "UserResourcePool", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Distance Index", "DistanceIndex", "UserResourcePool", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("All in One - Private", "AllInOnePrivate", "UserResourcePool", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("All in One - Public", "AllInOnePublic", "UserResourcePool", new { area = "" }, null)</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" data-ng-show="vm.isAuthenticated">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Ratings <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("CMRP Index Rating", "Index", "UserResourcePool", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("CMRP Index Rating Ng", "Index", "UserResourcePoolNg", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Resource Pool - Organization Rating", "Index", "UserResourcePoolOrganization", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Resource Pool - Organization Rating Ng", "Index", "UserResourcePoolOrganizationNg", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Licence Rating", "Index", "UserLicenseRating", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Licence Rating Ng", "Index", "UserLicenseRatingNg", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Sector Rating", "Index", "UserSectorRating", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Sector Rating Ng", "Index", "UserSectorRatingNg", new { area = "" }, null)</li>
+                        </ul>
+                    </li>
                     <li class="dropdown">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown">Misc <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -174,16 +166,14 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <div class="navbar-text nofloat">
-                            @{if (ViewBag.IsAuthenticated == true)
-                            {
-                                @("User: " + ViewBag.CurrentUserEmail)
-                                <a href="#/User/edit/@(ViewBag.CurrentUserId)">Edit</a>
+                            <div data-ng-show="vm.isAuthenticated">
+                                User: {{ vm.currentUser.Email }}
+                                <a href="#/User/edit/{{ vm.currentUser.Id }}">Edit</a>
                                 <a href="" data-ng-click="vm.userLogout()">Logout</a>
-                            }
-                            else
-                            {
+                            </div>
+                            <div data-ng-show="!vm.isAuthenticated">
                                 <a href="#/User/Login/">Login</a>
-                            }}
+                            </div>
                         </div>
                     </li>
                 </ul>

@@ -12,26 +12,41 @@ namespace BusinessObjects.Dto
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    public class SectorDto
+    public class ResourcePoolDto
     {
+        public ResourcePoolDto()
+        {
+        }
+
+        public ResourcePoolDto(ResourcePool resourcePool)
+        {
+            this.Id = resourcePool.Id;
+            this.Name = resourcePool.Name;
+            this.CreatedOn = resourcePool.CreatedOn;
+            this.ModifiedOn = resourcePool.ModifiedOn;
+            this.DeletedOn = resourcePool.DeletedOn;
+        }
+
         [Required]
-        public short Id { get; set; }
+        public int Id { get; set; }
+
         [Required]
         public string Name { get; set; }
-        public string Description { get; set; }
+
         [Required]
         public System.DateTime CreatedOn { get; set; }
+
         [Required]
         public System.DateTime ModifiedOn { get; set; }
+
         public Nullable<System.DateTime> DeletedOn { get; set; }
 
-        public Sector ToBusinessObject()
+        public ResourcePool ToBusinessObject()
         {
-            return new Sector()
+            return new ResourcePool()
             {
                 Id = Id,
                 Name = Name,
-                Description = Description,
                 CreatedOn = CreatedOn,
                 ModifiedOn = ModifiedOn,
                 DeletedOn = DeletedOn

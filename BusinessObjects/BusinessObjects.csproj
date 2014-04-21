@@ -43,40 +43,39 @@
     <Compile Include="..\SolutionItems\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Dto\BusinessObjectDto.cs">
+    <Compile Include="Dto\Generated\BusinessObjectDto.cs">
+      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Dto\Generated\LicenseDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
-    <Compile Include="Dto\LicenseDto.cs">
+    <Compile Include="Dto\Generated\OrganizationDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
-    <Compile Include="Dto\OrganizationDto.cs">
+    <Compile Include="Dto\Generated\ResourcePoolDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
-    <Compile Include="Dto\ResourcePoolDto.cs">
+    <Compile Include="Dto\Generated\ResourcePoolOrganizationDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
-    <Compile Include="Dto\ResourcePoolOrganizationDto.cs">
+    <Compile Include="Dto\Generated\SectorDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
-    <Compile Include="Dto\SectorDto.cs">
+    <Compile Include="Dto\Generated\UserDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
-    <Compile Include="Dto\UserDto.cs">
+    <Compile Include="Dto\Generated\UserLicenseRatingDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
-    <Compile Include="Dto\UserLicenseRatingDto.cs">
+    <Compile Include="Dto\Generated\UserResourcePoolDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
-    <Compile Include="Dto\UserResourcePoolDto.cs">
+    <Compile Include="Dto\Generated\UserResourcePoolOrganizationDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
-    <Compile Include="Dto\UserResourcePoolOrganizationDto.cs">
-      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Dto\OrganizationDto2.cs" />
-    <Compile Include="Dto\UserSectorRatingDto.cs">
+    <Compile Include="Dto\Generated\UserSectorRatingDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
     <Compile Include="Generated\BusinessObject.cs">
@@ -175,7 +174,7 @@
     <Compile Include="IEntity.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Dto\BusinessObjectDto.tt">
+    <None Include="Dto\Generated\BusinessObjectDto.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>BusinessObjectDto.cs</LastGenOutput>
     </None>

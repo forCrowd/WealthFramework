@@ -28,7 +28,7 @@
             }).
                 //success(function () {
                 //}).
-                error(function () {
+                error(function (data, status, headers, config) {
                     // TODO
                 });
         }

@@ -48,6 +48,4 @@ http://msdn.microsoft.com/en-US/data/jj591583#Index
 . public vs. private
 . layout - user edit - cancel doesn't go to back to home page
 
-. clean layout.cshtml - version ok - check user related stuff. it's about to be okay..
-
 . live - sector - Id byte to smallint

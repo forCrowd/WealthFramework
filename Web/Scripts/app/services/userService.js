@@ -12,12 +12,27 @@
         logger = logger.forSource(serviceId);
 
         // Service methods (alphabetically)
+        $delegate.getCurrentUser = getCurrentUser;
         $delegate.login = login;
         $delegate.logout = logout;
 
         return $delegate;
 
         /*** Implementations ***/
+
+        function getCurrentUser() {
+            var url = '/api/UserHelper/CurrentUser';
+
+            return $http({
+                method: 'GET',
+                url: url
+            }).
+                //success(function () {
+                //}).
+                error(function (data, status, headers, config) {
+                    logger.logError('error', null, true);
+                });
+        }
 
         function login(email, password) {
             var url = '/api/UserHelper/Login';
@@ -31,7 +46,7 @@
             }).
                 //success(function () {
                 //}).
-                error(function () {
+                error(function (data, status, headers, config) {
                     // TODO
                 });
         }
@@ -43,7 +58,7 @@
             return $http({ method: 'POST', url: url }).
                 //success(function () {
                 //}).
-                error(function () {
+                error(function (data, status, headers, config) {
                     // TODO
                 });
         }

@@ -63,7 +63,7 @@
             return $http({ method: 'POST', url: url }).
                 //success(function () {
                 //}).
-                error(function () {
+                error(function (data, status, headers, config) {
                     // TODO
                 });
         }
@@ -75,7 +75,7 @@
             return $http({ method: 'POST', url: url }).
                 //success(function () {
                 //}).
-                error(function () {
+                error(function (data, status, headers, config) {
                     // TODO
                 });
         }

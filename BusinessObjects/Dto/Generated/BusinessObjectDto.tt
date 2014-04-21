@@ -1,13 +1,13 @@
 ﻿<#@ template language="C#" debug="false" hostspecific="true"#>
 <#@ include file="EF6.Utility.CS.ttinclude"#>
-<#@ include file="..\..\DataObjects\Utility.ttinclude"#><#
+<#@ include file="..\..\..\DataObjects\Utility.ttinclude"#><#
 
 // To be able to control whether it's going to be executed
 var executeMe = true; 
 if (!executeMe)
 	return string.Empty;
 
-const string inputFile = @"..\..\DataObjects\Model.edmx";
+const string inputFile = @"..\..\..\DataObjects\Model.edmx";
 var textTransform = DynamicTextTransformation.Create(this);
 var code = new CodeGenerationTools(this);
 var ef = new MetadataTools(this);
@@ -26,7 +26,11 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 	// Variables
 	var entityTypeName = code.Escape(entityType);
 	var entityDtoName = string.Format("{0}Dto", entityTypeName);
+	var entityVariable = codeStringGenerator.GetCamelCase(entityTypeName);
 	var outputFileName = string.Format(@"{0}.cs", entityDtoName);
+
+    var propertiesWithDefaultValues = typeMapper.GetPropertiesWithDefaultValues(entityType);
+    var simpleProperties = typeMapper.GetSimpleProperties(entityType);
 
     fileManager.StartNewFile(outputFileName);
 
@@ -40,46 +44,50 @@ namespace BusinessObjects.Dto
     public class <#=entityDtoName#>
     {
 <#
-    var propertiesWithDefaultValues = typeMapper.GetPropertiesWithDefaultValues(entityType);
 
-    if (propertiesWithDefaultValues.Any())
-    {
 #>
         public <#=entityDtoName#>()
         {
 <#
-        foreach (var edmProperty in propertiesWithDefaultValues)
-        {
+    foreach (var edmProperty in propertiesWithDefaultValues)
+    {
 #>
         this.<#=code.Escape(edmProperty)#> = <#=typeMapper.CreateLiteral(edmProperty.DefaultValue)#>;
 <#
+    }
+#>
         }
+
+        public <#=entityDtoName#>(<#=entityTypeName#> <#=entityVariable#>)
+        {
+<#
+    foreach (var edmProperty in simpleProperties)
+    {
+#>
+            this.<#=code.Escape(edmProperty)#> = <#=entityVariable#>.<#=code.Escape(edmProperty)#>;
+<#
+    }
 #>
         }
 
 <#
-    }
 
-    var simpleProperties = typeMapper.GetSimpleProperties(entityType);
-    if (simpleProperties.Any())
+    foreach (var edmProperty in simpleProperties)
     {
-        foreach (var edmProperty in simpleProperties)
-        {
-			if (!edmProperty.Nullable) {
+		if (!edmProperty.Nullable) {
 #>
         [Required]
 <#
-        }
+    }
 #>
         <#=codeStringGenerator.Property(edmProperty)#>
+
 <#
-        }
     }
 
     if (simpleProperties.Any())
     {
 #>
-
         public <#=entityTypeName#> ToBusinessObject()
         {
             return new <#=entityTypeName#>()

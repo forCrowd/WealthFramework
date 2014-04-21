@@ -18,6 +18,22 @@ namespace Web.Controllers.Api
 {
     public class UserHelperController : ApiController
     {
+        [HttpGet]
+        public async Task<UserDto> CurrentUser()
+        {
+            if (System.Web.HttpContext.Current == null)
+                return null;
+
+            if (System.Web.HttpContext.Current.Session["CurrentUserId"] == null)
+                return null;
+
+            var currentUserId = (int)System.Web.HttpContext.Current.Session["CurrentUserId"];
+
+            var unitOfWork = new UserUnitOfWork();
+            var currentUser = await unitOfWork.FindAsync(currentUserId);
+            return new UserDto(currentUser);
+        }
+
         [HttpPost]
         public IHttpActionResult Login([FromBody] UserDto userDto)
         {
