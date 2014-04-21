@@ -18,6 +18,7 @@
             var user = new User()
             {
                 Email = string.Format("user_{0:yyyyMMdd_HHmmss}", DateTime.Now),
+                //UserAccountTypeId = UserAccountType.Standard
                 UserAccountTypeId = (byte)UserAccountType.Standard
             };
 

@@ -70,12 +70,27 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 			if (property.MetadataProperties.Any(p => p.Name == "http://tempuri.org/EdmCustomSchema.xsd:DisplayName"))
 				displayName = property.MetadataProperties["http://tempuri.org/EdmCustomSchema.xsd:DisplayName"].Value.ToString();
 
-			displayInput = string.Format(@"<input id=""{0}"" name=""{0}"" type=""text"" data-ng-model=""vm.{1}.{2}"" class=""form-control"" {3}/>",
-				property.Name,
-				entityVariable,
-				property.Name,
-				requiredText);
-
+			if (!property.IsEnumType)
+            {
+				displayInput = string.Format(@"<input id=""{0}"" name=""{0}"" type=""text"" data-ng-model=""vm.{1}.{2}"" class=""form-control"" {3}/>",
+					property.Name,
+					entityVariable,
+					property.Name,
+					requiredText);
+            }
+			else // Enum type
+            {
+				var displayInputOptions = new System.Text.StringBuilder();
+				
+				foreach (var item in property.EnumType.Members)
+					displayInputOptions.AppendFormat(@"<option value=""{0}"">{1}</option>", item.Value, item.Name);
+				
+				displayInput = string.Format(@"<select id=""{0}"" name=""{0}"" data-ng-model=""vm.{1}.{0}"" class=""form-control"" {2}>{3}</select>",
+					property.Name,
+					entityVariable,
+					requiredText,
+					displayInputOptions);			
+			}
 		}
 		else
         {

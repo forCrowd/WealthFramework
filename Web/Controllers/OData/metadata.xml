@@ -447,12 +447,6 @@
             </Dependent>
         </ReferentialConstraint>
     </Association>
-    <ComplexType Name="TestColor">
-        <Property Name="Name" Type="Edm.String"/>
-    </ComplexType>
-    <ComplexType Name="UserDto2">
-        <Property Name="Name" Type="Edm.String"/>
-    </ComplexType>
     <ComplexType Name="UserResourcePoolOrganizationDto2">
         <Property Name="Name" Type="Edm.String"/>
 

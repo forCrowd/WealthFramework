@@ -20,9 +20,9 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="ResourcePoolOrganizationId" class="control-label col-md-2">Resource Pool Organization - Id</label>
+            <label for="ResourcePoolOrganizationId" class="control-label col-md-2">ResourcePoolOrganization</label>
             <div class="col-md-10" data-ng-class="{'has-error': editForm.ResourcePoolOrganizationId.$invalid && !editForm.ResourcePoolOrganizationId.$pristine}">
-                <select id="ResourcePoolOrganizationId" name="ResourcePoolOrganizationId" data-ng-model="vm.userResourcePoolOrganization.ResourcePoolOrganization" data-ng-options="resourcePoolOrganization.Id for resourcePoolOrganization in vm.resourcePoolOrganizationSet" class="form-control" required ></select>
+                <select id="ResourcePoolOrganizationId" name="ResourcePoolOrganizationId" data-ng-model="vm.userResourcePoolOrganization.ResourcePoolOrganization" data-ng-options="resourcePoolOrganization.Name for resourcePoolOrganization in vm.resourcePoolOrganizationSet" class="form-control" required ></select>
             </div>
         </div>
         <div class="form-group">
