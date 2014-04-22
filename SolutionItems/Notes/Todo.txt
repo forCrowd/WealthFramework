@@ -47,5 +47,3 @@ http://msdn.microsoft.com/en-US/data/jj591583#Index
 . update database structure - resource pool should have organizations + licenses + sectors
 
 . layout - user edit - cancel doesn't go to back to home page
-
-. live - sector - Id byte to smallint
