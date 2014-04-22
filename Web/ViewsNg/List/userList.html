@@ -26,9 +26,6 @@
     <th>
         Last Name
     </th>
-    <th>
-        Account Type
-    </th>
         <th></th>
     </tr>
     <tr data-ng-repeat="user in vm.userSet">
@@ -43,9 +40,6 @@
         </td>
         <td>
             {{ user.LastName }}
-        </td>
-        <td>
-            {{ user.UserAccountTypeId }}
         </td>
         <td>
             <a href="#/User/edit/{{ user.Id }}">Edit</a> |

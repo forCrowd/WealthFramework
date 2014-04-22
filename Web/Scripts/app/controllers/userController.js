@@ -9,8 +9,8 @@
         logger = logger.forSource(controllerId);
 
         var vm = this;
-        vm.email = 'serkanholat@hotmail.com';
-        vm.password = '1';
+        //vm.email = 'serkanholat@hotmail.com';
+        //vm.password = '1';
         vm.login = login;
 
         initialize();

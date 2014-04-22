@@ -400,7 +400,7 @@
                     <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" cs:DisplayName="First Name" />
                     <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" cs:DisplayName="Middle Name" />
                     <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" cs:DisplayName="Last Name" />
-                    <Property Name="UserAccountTypeId" Type="Byte" Nullable="false" cs:DisplayName="Account Type" />
+                    <Property Name="UserAccountTypeId" Type="Byte" Nullable="false" cs:DisplayName="Account Type" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
                     <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" cs:DisplayOnListView="false" />
                     <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
                     <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
