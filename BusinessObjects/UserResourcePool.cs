@@ -6,7 +6,7 @@
 
     public partial class UserResourcePool
     {
-        UserResourcePoolType userResourcePoolType = UserResourcePoolType.Private;
+        UserResourcePoolType userResourcePoolType = UserResourcePoolType.Public;
 
         public UserResourcePoolType UserResourcePoolType
         {

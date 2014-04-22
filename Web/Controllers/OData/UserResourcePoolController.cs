@@ -166,6 +166,23 @@ namespace Web.Controllers.OData
         //    return null;
         //}
 
+        //// [Route("odata/Test")]
+        //[HttpPost]
+        //public string Test([FromODataUri] int key)
+        //{
+        //    return "test value";
+        //}
+
+        ////[HttpPost]
+        //[HttpPost]
+        //public UserResourcePool GetUserResourcePoolPublic()
+        //{
+        //    var list = unitOfWork.AllLive.Where(item => item.Id == 1).AsEnumerable();
+        //    var pool = list.First();
+        //    pool.UserResourcePoolType = UserResourcePoolType.Public;
+        //    return pool;
+        //}
+
         // POST odata/UserResourcePool
         [HttpPost]
         public async Task<IHttpActionResult> IncreaseNumberOfSales([FromODataUri] int key)
