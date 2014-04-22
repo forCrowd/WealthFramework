@@ -1,4 +1,7 @@
-﻿0.7
+﻿0.8
+. Database - ResourcePool table will become the main container for Organization, License and Sector tables
+
+0.7
 . SPA with OData + AngularJS + Breeze.js + toastr.js
 . Database - Sector table Id field switched to smallint from byte
 . Solution - Refactoring tt files
