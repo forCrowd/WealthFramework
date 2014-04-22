@@ -12,8 +12,8 @@
         ResourcePoolRepository resourcePoolRepository;
         SectorRepository sectorRepository;
         UserLicenseRatingRepository userLicenseRatingRepository;
+        UserOrganizationRepository userOrganizationRepository;
         UserResourcePoolRepository userResourcePoolRepository;
-        UserResourcePoolOrganizationRepository userResourcePoolOrganizationRepository;
         UserSectorRatingRepository userSectorRatingRepository;
 
         LicenseRepository LicenseRepository
@@ -36,14 +36,14 @@
             get { return userLicenseRatingRepository ?? (userLicenseRatingRepository = new UserLicenseRatingRepository(Context)); }
         }
 
+        UserOrganizationRepository UserOrganizationRepository
+        {
+            get { return userOrganizationRepository ?? (userOrganizationRepository = new UserOrganizationRepository(Context)); }
+        }
+
         UserResourcePoolRepository UserResourcePoolRepository
         {
             get { return userResourcePoolRepository ?? (userResourcePoolRepository = new UserResourcePoolRepository(Context)); }
-        }
-
-        UserResourcePoolOrganizationRepository UserResourcePoolOrganizationRepository
-        {
-            get { return userResourcePoolOrganizationRepository ?? (userResourcePoolOrganizationRepository = new UserResourcePoolOrganizationRepository(Context)); }
         }
 
         UserSectorRatingRepository UserSectorRatingRepository
@@ -80,22 +80,22 @@
                 UserResourcePoolRepository.Insert(userResourcePool);
 
                 // Sample resource pool organizations
-                var sampleResourcePoolOrganizations = resourcePool.ResourcePoolOrganizationSet;
+                var sampleOrganizations = resourcePool.OrganizationSet;
 
-                foreach (var resourcePoolOrganization in sampleResourcePoolOrganizations)
+                foreach (var organization in sampleOrganizations)
                 {
-                    var userResourcePoolOrganization = new UserResourcePoolOrganization()
+                    var userOrganization = new UserOrganization()
                     {
                         User = user,
-                        ResourcePoolOrganization = resourcePoolOrganization,
+                        Organization = organization,
                         NumberOfSales = 0,
                         // TODO Handle these sample ratings nicely ?!
-                        QualityRating = resourcePoolOrganization.OrganizationId == 6 ? 80 : resourcePoolOrganization.OrganizationId == 7 ? 20 : 0,
-                        CustomerSatisfactionRating = resourcePoolOrganization.OrganizationId == 8 ? 80 : resourcePoolOrganization.OrganizationId == 9 ? 20 : 0,
-                        EmployeeSatisfactionRating = resourcePoolOrganization.OrganizationId == 10 ? 80 : resourcePoolOrganization.OrganizationId == 11 ? 20 : 0,
+                        QualityRating = organization.Id == 6 ? 80 : organization.Id == 7 ? 20 : 0,
+                        CustomerSatisfactionRating = organization.Id == 8 ? 80 : organization.Id == 9 ? 20 : 0,
+                        EmployeeSatisfactionRating = organization.Id == 10 ? 80 : organization.Id == 11 ? 20 : 0,
                     };
 
-                    UserResourcePoolOrganizationRepository.Insert(userResourcePoolOrganization);
+                    UserOrganizationRepository.Insert(userOrganization);
                 }
             }
 
@@ -121,7 +121,7 @@
             var user = Find(id);
 
             UserLicenseRatingRepository.DeleteRange(user.UserLicenseRatingSet);
-            UserResourcePoolOrganizationRepository.DeleteRange(user.UserResourcePoolOrganizationSet);
+            UserOrganizationRepository.DeleteRange(user.UserOrganizationSet);
             UserResourcePoolRepository.DeleteRange(user.UserResourcePoolSet);
             UserSectorRatingRepository.DeleteRange(user.UserSectorRatingSet);
 

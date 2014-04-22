@@ -14,7 +14,7 @@ namespace BusinessObjects
     using System.ComponentModel.DataAnnotations;
     using BusinessObjects.Metadata;
 
-    [MetadataType(typeof(UserResourcePoolMetadata))]
+    //[MetadataType(typeof(UserResourcePoolMetadata))]
     public partial class UserResourcePool : IEntity
     {
         public int Id { get; set; }

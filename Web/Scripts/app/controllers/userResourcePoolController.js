@@ -38,9 +38,6 @@
                         case '/AllInOne/': resourcePoolId = 8; break;
                     }
 
-                    logger.logSuccess('currentUserId : ' + currentUserId, null, true);
-                    logger.logSuccess('resourcePoolId : ' + resourcePoolId, null, true);
-
                     userResourcePoolService.getUserResourcePool(currentUserId, resourcePoolId)
                         .then(function (data) {
                             vm.userResourcePool = data;

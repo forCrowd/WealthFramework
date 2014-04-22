@@ -18,10 +18,7 @@
 
     function organizationListController(organizationService,
         logger) {
-
         logger = logger.forSource(controllerId);
-        var logError = logger.logError;
-        var logSuccess = logger.logSuccess;
 
         var vm = this;
         vm.deleteOrganization = deleteOrganization;
@@ -39,10 +36,10 @@
             organizationService.saveChanges()
                 .then(function () {
                     vm.organizationSet.splice(vm.organizationSet.indexOf(organization), 1);
-                    logSuccess("Hooray we saved", null, true);
+                    logger.logSuccess("Hooray we saved", null, true);
                 })
                 .catch(function (error) {
-                    logError("Boooo, we failed: " + error.message, null, true);
+                    logger.logError("Boooo, we failed: " + error.message, null, true);
                     // Todo: more sophisticated recovery. 
                     // Here we just blew it all away and start over
                     // refresh();

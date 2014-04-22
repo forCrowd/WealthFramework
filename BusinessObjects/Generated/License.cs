@@ -14,7 +14,7 @@ namespace BusinessObjects
     using System.ComponentModel.DataAnnotations;
     using BusinessObjects.Metadata;
 
-    [MetadataType(typeof(LicenseMetadata))]
+    //[MetadataType(typeof(LicenseMetadata))]
     public partial class License : IEntity
     {
         public License()
@@ -24,6 +24,7 @@ namespace BusinessObjects
         }
 
         public short Id { get; set; }
+        public int ResourcePoolId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Text { get; set; }
@@ -33,5 +34,6 @@ namespace BusinessObjects
 
         public virtual ICollection<Organization> OrganizationSet { get; set; }
         public virtual ICollection<UserLicenseRating> UserLicenseRatingSet { get; set; }
+        public virtual ResourcePool ResourcePool { get; set; }
     }
 }

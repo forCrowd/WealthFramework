@@ -9,9 +9,9 @@
         {
             get
             {
-                if (ResourcePoolOrganizationSet.Count == 0)
+                if (OrganizationSet.Count == 0)
                     return 0;
-                return ResourcePoolOrganizationSet.Sum(item => item.Organization.ProductionCost);
+                return OrganizationSet.Sum(organization => organization.ProductionCost);
             }
             private set { }
         }
@@ -20,9 +20,9 @@
         {
             get
             {
-                if (ResourcePoolOrganizationSet.Count == 0)
+                if (OrganizationSet.Count == 0)
                     return 0;
-                return ResourcePoolOrganizationSet.Sum(item => item.Organization.SalesPrice);
+                return OrganizationSet.Sum(organization => organization.SalesPrice);
             }
             private set { }
         }
@@ -31,9 +31,9 @@
         {
             get
             {
-                if (ResourcePoolOrganizationSet.Count == 0)
+                if (OrganizationSet.Count == 0)
                     return 0;
-                return ResourcePoolOrganizationSet.Sum(item => item.Organization.Profit);
+                return OrganizationSet.Sum(organization => organization.Profit);
             }
             private set { }
         }
@@ -42,9 +42,9 @@
         {
             get
             {
-                if (ResourcePoolOrganizationSet.Count == 0)
+                if (OrganizationSet.Count == 0)
                     return 0;
-                return ResourcePoolOrganizationSet.Average(item => item.Organization.ProfitPercentage);
+                return OrganizationSet.Average(organization => organization.ProfitPercentage);
             }
             private set { }
         }
@@ -53,21 +53,21 @@
         {
             get
             {
-                if (ResourcePoolOrganizationSet.Count == 0)
+                if (OrganizationSet.Count == 0)
                     return 0;
-                return ResourcePoolOrganizationSet.Average(item => item.Organization.ProfitMargin);
+                return OrganizationSet.Average(organization => organization.ProfitMargin);
             }
             private set { }
         }
 
         //public decimal ResourcePoolTax
         //{
-        //    get { return ResourcePoolOrganizationSet.Sum(item => item.Organization.ResourcePoolTax); }
+        //    get { return OrganizationSet.Sum(organization => organization.ResourcePoolTax); }
         //}
 
         //public decimal SalesPriceIncludingResourcePoolTax
         //{
-        //    get { return ResourcePoolOrganizationSet.Sum(item => item.Organization.SalesPriceIncludingResourcePoolTax); }
+        //    get { return OrganizationSet.Sum(organization => organization.SalesPriceIncludingResourcePoolTax); }
         //}
     }
 }

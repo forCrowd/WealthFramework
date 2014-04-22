@@ -67,7 +67,7 @@
 
             var query = breeze.EntityQuery
 				.from('Organization')
-				.expand(['Sector', 'License'])
+				.expand(['Sector', 'License', 'ResourcePool'])
             ;
 
             // Fetch the data from server, in case if it's not fetched earlier or forced

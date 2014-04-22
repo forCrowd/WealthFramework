@@ -14,15 +14,15 @@ namespace BusinessObjects
     using System.ComponentModel.DataAnnotations;
     using BusinessObjects.Metadata;
 
-    [MetadataType(typeof(UserMetadata))]
+    //[MetadataType(typeof(UserMetadata))]
     public partial class User : IEntity
     {
         public User()
         {
-            this.UserResourcePoolSet = new HashSet<UserResourcePool>();
             this.UserLicenseRatingSet = new HashSet<UserLicenseRating>();
+            this.UserOrganizationSet = new HashSet<UserOrganization>();
+            this.UserResourcePoolSet = new HashSet<UserResourcePool>();
             this.UserSectorRatingSet = new HashSet<UserSectorRating>();
-            this.UserResourcePoolOrganizationSet = new HashSet<UserResourcePoolOrganization>();
         }
 
         public int Id { get; set; }
@@ -37,9 +37,9 @@ namespace BusinessObjects
         public System.DateTime ModifiedOn { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
 
-        public virtual ICollection<UserResourcePool> UserResourcePoolSet { get; set; }
         public virtual ICollection<UserLicenseRating> UserLicenseRatingSet { get; set; }
+        public virtual ICollection<UserOrganization> UserOrganizationSet { get; set; }
+        public virtual ICollection<UserResourcePool> UserResourcePoolSet { get; set; }
         public virtual ICollection<UserSectorRating> UserSectorRatingSet { get; set; }
-        public virtual ICollection<UserResourcePoolOrganization> UserResourcePoolOrganizationSet { get; set; }
     }
 }

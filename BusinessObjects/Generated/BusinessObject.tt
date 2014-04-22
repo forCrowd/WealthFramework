@@ -39,7 +39,7 @@ namespace BusinessObjects
     using System.ComponentModel.DataAnnotations;
     using BusinessObjects.Metadata;
 
-    [MetadataType(typeof(<#=entityMetadataName#>))]
+    //[MetadataType(typeof(<#=entityMetadataName#>))]
     <#=codeStringGenerator.EntityClassOpening(entityType)#>
     {
 <#

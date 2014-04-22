@@ -19,38 +19,38 @@ namespace Web.Controllers.OData
     using System.Web.Http.ModelBinding;
     using System.Web.Http.OData;
 
-    public partial class ResourcePoolOrganizationController : ODataController
+    public partial class UserOrganizationController : ODataController
     {
-        ResourcePoolOrganizationUnitOfWork unitOfWork = new ResourcePoolOrganizationUnitOfWork();
+        UserOrganizationUnitOfWork unitOfWork = new UserOrganizationUnitOfWork();
 
-        // GET odata/ResourcePoolOrganization
+        // GET odata/UserOrganization
         [Queryable]
-        public IQueryable<ResourcePoolOrganization> GetResourcePoolOrganization()
+        public IQueryable<UserOrganization> GetUserOrganization()
         {
             return unitOfWork.AllLive;
         }
 
-        // GET odata/ResourcePoolOrganization(5)
+        // GET odata/UserOrganization(5)
         [Queryable]
-        public SingleResult<ResourcePoolOrganization> GetResourcePoolOrganization([FromODataUri] int key)
+        public SingleResult<UserOrganization> GetUserOrganization([FromODataUri] int key)
         {
-            return SingleResult.Create(unitOfWork.AllLive.Where(resourcePoolOrganization => resourcePoolOrganization.Id == key));
+            return SingleResult.Create(unitOfWork.AllLive.Where(userOrganization => userOrganization.Id == key));
         }
 
-        // PUT odata/ResourcePoolOrganization(5)
-        public async Task<IHttpActionResult> Put([FromODataUri] int key, ResourcePoolOrganization resourcePoolOrganization)
+        // PUT odata/UserOrganization(5)
+        public async Task<IHttpActionResult> Put([FromODataUri] int key, UserOrganization userOrganization)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (key != resourcePoolOrganization.Id)
+            if (key != userOrganization.Id)
             {
                 return BadRequest();
             }
 
-            unitOfWork.Update(resourcePoolOrganization);
+            unitOfWork.Update(userOrganization);
 
             try
             {
@@ -68,18 +68,18 @@ namespace Web.Controllers.OData
                 }
             }
 
-            return Updated(resourcePoolOrganization);
+            return Updated(userOrganization);
         }
 
-        // POST odata/ResourcePoolOrganization
-        public async Task<IHttpActionResult> Post(ResourcePoolOrganization resourcePoolOrganization)
+        // POST odata/UserOrganization
+        public async Task<IHttpActionResult> Post(UserOrganization userOrganization)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            unitOfWork.Insert(resourcePoolOrganization);
+            unitOfWork.Insert(userOrganization);
 
             try
             {
@@ -87,7 +87,7 @@ namespace Web.Controllers.OData
             }
             catch (DbUpdateException)
             {
-                if (unitOfWork.Exists(resourcePoolOrganization.Id))
+                if (unitOfWork.Exists(userOrganization.Id))
                 {
                     return Conflict();
                 }
@@ -97,26 +97,26 @@ namespace Web.Controllers.OData
                 }
             }
 
-            return Created(resourcePoolOrganization);
+            return Created(userOrganization);
         }
 
-        // PATCH odata/ResourcePoolOrganization(5)
+        // PATCH odata/UserOrganization(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<ResourcePoolOrganization> patch)
+        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<UserOrganization> patch)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var resourcePoolOrganization = await unitOfWork.FindAsync(key);
-            if (resourcePoolOrganization == null)
+            var userOrganization = await unitOfWork.FindAsync(key);
+            if (userOrganization == null)
             {
                 return NotFound();
             }
 
-            patch.Patch(resourcePoolOrganization);
-            unitOfWork.Update(resourcePoolOrganization);
+            patch.Patch(userOrganization);
+            unitOfWork.Update(userOrganization);
 
             try
             {
@@ -134,19 +134,19 @@ namespace Web.Controllers.OData
                 }
             }
 
-            return Updated(resourcePoolOrganization);
+            return Updated(userOrganization);
         }
 
-        // DELETE odata/ResourcePoolOrganization(5)
+        // DELETE odata/UserOrganization(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            var resourcePoolOrganization = await unitOfWork.FindAsync(key);
-            if (resourcePoolOrganization == null)
+            var userOrganization = await unitOfWork.FindAsync(key);
+            if (userOrganization == null)
             {
                 return NotFound();
             }
 
-            unitOfWork.Delete(resourcePoolOrganization.Id);
+            unitOfWork.Delete(userOrganization.Id);
             await unitOfWork.SaveAsync();
 
             return StatusCode(HttpStatusCode.NoContent);

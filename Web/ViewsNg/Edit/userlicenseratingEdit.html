@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="LicenseId" class="control-label col-md-2">Name</label>
+            <label for="LicenseId" class="control-label col-md-2">License</label>
             <div class="col-md-10" data-ng-class="{'has-error': editForm.LicenseId.$invalid && !editForm.LicenseId.$pristine}">
                 <select id="LicenseId" name="LicenseId" data-ng-model="vm.userLicenseRating.License" data-ng-options="license.Name for license in vm.licenseSet" class="form-control" required ></select>
             </div>

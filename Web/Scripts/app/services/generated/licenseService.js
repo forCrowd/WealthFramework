@@ -67,6 +67,7 @@
 
             var query = breeze.EntityQuery
 				.from('License')
+				.expand(['ResourcePool'])
             ;
 
             // Fetch the data from server, in case if it's not fetched earlier or forced

@@ -21,6 +21,7 @@ namespace BusinessObjects.Dto
         public LicenseDto(License license)
         {
             this.Id = license.Id;
+            this.ResourcePoolId = license.ResourcePoolId;
             this.Name = license.Name;
             this.Description = license.Description;
             this.Text = license.Text;
@@ -31,6 +32,9 @@ namespace BusinessObjects.Dto
 
         [Required]
         public short Id { get; set; }
+
+        [Required]
+        public int ResourcePoolId { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -53,6 +57,7 @@ namespace BusinessObjects.Dto
             return new License()
             {
                 Id = Id,
+                ResourcePoolId = ResourcePoolId,
                 Name = Name,
                 Description = Description,
                 Text = Text,

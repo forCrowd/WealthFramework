@@ -9,7 +9,8 @@
     {
         UserRepository userRepository;
         ResourcePoolRepository resourcePoolRepository;
-        UserResourcePoolOrganizationRepository userResourcePoolOrganizationRepository;
+        UserOrganizationRepository userOrganizationRepository;
+        //UserResourcePoolOrganizationRepository userResourcePoolOrganizationRepository;
 
         UserRepository UserRepository
         {
@@ -21,10 +22,15 @@
             get { return resourcePoolRepository ?? (resourcePoolRepository = new ResourcePoolRepository(Context)); }
         }
 
-        UserResourcePoolOrganizationRepository UserResourcePoolOrganizationRepository
+        UserOrganizationRepository UserOrganizationRepository
         {
-            get { return userResourcePoolOrganizationRepository ?? (userResourcePoolOrganizationRepository = new UserResourcePoolOrganizationRepository(Context)); }
+            get { return userOrganizationRepository ?? (userOrganizationRepository = new UserOrganizationRepository(Context)); }
         }
+
+        //UserResourcePoolOrganizationRepository UserResourcePoolOrganizationRepository
+        //{
+        //    get { return userResourcePoolOrganizationRepository ?? (userResourcePoolOrganizationRepository = new UserResourcePoolOrganizationRepository(Context)); }
+        //}
 
         public IQueryable<User> UserSetLive { get { return UserRepository.AllLive; } }
 
@@ -47,10 +53,10 @@
 
         void UpdateNumberOfSales(UserResourcePool userResourcePool, bool isReset)
         {
-            foreach (var organization in userResourcePool.UserResourcePoolOrganizationSet)
+            foreach (var organization in userResourcePool.UserOrganizationSet)
             {
                 organization.NumberOfSales = isReset ? 0 : organization.NumberOfSales + 1;
-                UserResourcePoolOrganizationRepository.Update(organization);
+                UserOrganizationRepository.Update(organization);
             }
         }
 
@@ -59,7 +65,7 @@
             var userResourcePool = Find(id);
 
             // Delete child items first
-            UserResourcePoolOrganizationRepository.DeleteRange(userResourcePool.UserResourcePoolOrganizationSet);
+            UserOrganizationRepository.DeleteRange(userResourcePool.UserOrganizationSet);
 
             // Delete main item
             MainRepository.Delete(id);

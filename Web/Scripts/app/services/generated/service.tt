@@ -108,7 +108,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 				<#= expandQuery #>
 <# } #>
 <# if (hasUserId) { #>
-				.where('UserId eq ' + userId)
+				.where('UserId', '==', userId)
 <# } #>
             ;
 

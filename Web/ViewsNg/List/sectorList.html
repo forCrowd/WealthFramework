@@ -15,6 +15,9 @@
 <table class="table">
     <tr>
     <th>
+        Resource Pool
+    </th>
+    <th>
         Sector
     </th>
     <th>
@@ -23,6 +26,9 @@
         <th></th>
     </tr>
     <tr data-ng-repeat="sector in vm.sectorSet">
+        <td>
+            {{ sector.ResourcePool.Name }}
+        </td>
         <td>
             {{ sector.Name }}
         </td>

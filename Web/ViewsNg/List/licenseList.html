@@ -15,7 +15,10 @@
 <table class="table">
     <tr>
     <th>
-        Name
+        Resource Pool
+    </th>
+    <th>
+        License
     </th>
     <th>
         Description
@@ -26,6 +29,9 @@
         <th></th>
     </tr>
     <tr data-ng-repeat="license in vm.licenseSet">
+        <td>
+            {{ license.ResourcePool.Name }}
+        </td>
         <td>
             {{ license.Name }}
         </td>

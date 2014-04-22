@@ -10,7 +10,7 @@
 -->
 <h2>List</h2>
 <p>
-    <a href="#/UserResourcePoolOrganization/new">Create New</a>
+    <a href="#/UserOrganization/new">Create New</a>
 </p>
 <table class="table">
     <tr>
@@ -18,7 +18,7 @@
         Email
     </th>
     <th>
-        Resource Pool Organization
+        Organization
     </th>
     <th>
         Number of Sales
@@ -34,28 +34,28 @@
     </th>
         <th></th>
     </tr>
-    <tr data-ng-repeat="userResourcePoolOrganization in vm.userResourcePoolOrganizationSet">
+    <tr data-ng-repeat="userOrganization in vm.userOrganizationSet">
         <td>
-            {{ userResourcePoolOrganization.User.Email }}
+            {{ userOrganization.User.Email }}
         </td>
         <td>
-            {{ userResourcePoolOrganization.ResourcePoolOrganization.Name }}
+            {{ userOrganization.Organization.Name }}
         </td>
         <td>
-            {{ userResourcePoolOrganization.NumberOfSales }}
+            {{ userOrganization.NumberOfSales }}
         </td>
         <td>
-            {{ userResourcePoolOrganization.QualityRating }}
+            {{ userOrganization.QualityRating }}
         </td>
         <td>
-            {{ userResourcePoolOrganization.CustomerSatisfactionRating }}
+            {{ userOrganization.CustomerSatisfactionRating }}
         </td>
         <td>
-            {{ userResourcePoolOrganization.EmployeeSatisfactionRating }}
+            {{ userOrganization.EmployeeSatisfactionRating }}
         </td>
         <td>
-            <a href="#/UserResourcePoolOrganization/edit/{{ userResourcePoolOrganization.Id }}">Edit</a> |
-            <a href="" data-ng-click="vm.deleteUserResourcePoolOrganization(userResourcePoolOrganization)">
+            <a href="#/UserOrganization/edit/{{ userOrganization.Id }}">Edit</a> |
+            <a href="" data-ng-click="vm.deleteUserOrganization(userOrganization)">
                 Delete
             </a>
         </td>

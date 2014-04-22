@@ -34,8 +34,7 @@ namespace DataObjects
         public virtual DbSet<UserLicenseRating> UserLicenseRating { get; set; }
         public virtual DbSet<UserSectorRating> UserSectorRating { get; set; }
         public virtual DbSet<ResourcePool> ResourcePool { get; set; }
-        public virtual DbSet<ResourcePoolOrganization> ResourcePoolOrganization { get; set; }
         public virtual DbSet<UserResourcePool> UserResourcePool { get; set; }
-        public virtual DbSet<UserResourcePoolOrganization> UserResourcePoolOrganization { get; set; }
+        public virtual DbSet<UserOrganization> UserOrganization { get; set; }
     }
 }

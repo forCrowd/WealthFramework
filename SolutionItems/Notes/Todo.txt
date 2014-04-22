@@ -18,6 +18,7 @@ http://stackoverflow.com/questions/16068184/breezejs-how-to-fetch-metadata-at-st
 . in some cases, cancel button doesnt allow to go back? - fill this required field?
 . paging + filters
 . how delta & patch works?
+. create a sample user + sample data for creating new users
 . validateantiforgerytoken + bind attributes in odata controller?
 . use scripts.render?
 . compare metadata files of manual + odataconventionbuilder + edmbuilder for functionimport and for other stuff
@@ -48,4 +49,7 @@ http://msdn.microsoft.com/en-US/data/jj591583#Index
 
 . layout - user edit - cancel doesn't go to back to home page
 
-. userorganization - quality + cust + emp ratings are empty for all!
+. resource pool delete method disabled for the moment
+. "all in one" disabled for the moment
+
+. clean up!

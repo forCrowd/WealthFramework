@@ -14,15 +14,16 @@ namespace BusinessObjects
     using System.ComponentModel.DataAnnotations;
     using BusinessObjects.Metadata;
 
-    [MetadataType(typeof(OrganizationMetadata))]
+    //[MetadataType(typeof(OrganizationMetadata))]
     public partial class Organization : IEntity
     {
         public Organization()
         {
-            this.ResourcePoolOrganizationSet = new HashSet<ResourcePoolOrganization>();
+            this.UserOrganizationSet = new HashSet<UserOrganization>();
         }
 
         public int Id { get; set; }
+        public int ResourcePoolId { get; set; }
         public short SectorId { get; set; }
         public string Name { get; set; }
         public decimal ProductionCost { get; set; }
@@ -34,6 +35,7 @@ namespace BusinessObjects
 
         public virtual Sector Sector { get; set; }
         public virtual License License { get; set; }
-        public virtual ICollection<ResourcePoolOrganization> ResourcePoolOrganizationSet { get; set; }
+        public virtual ResourcePool ResourcePool { get; set; }
+        public virtual ICollection<UserOrganization> UserOrganizationSet { get; set; }
     }
 }

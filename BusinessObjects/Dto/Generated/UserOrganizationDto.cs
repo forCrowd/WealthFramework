@@ -12,24 +12,24 @@ namespace BusinessObjects.Dto
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    public class UserResourcePoolOrganizationDto
+    public class UserOrganizationDto
     {
-        public UserResourcePoolOrganizationDto()
+        public UserOrganizationDto()
         {
         }
 
-        public UserResourcePoolOrganizationDto(UserResourcePoolOrganization userResourcePoolOrganization)
+        public UserOrganizationDto(UserOrganization userOrganization)
         {
-            this.Id = userResourcePoolOrganization.Id;
-            this.UserId = userResourcePoolOrganization.UserId;
-            this.ResourcePoolOrganizationId = userResourcePoolOrganization.ResourcePoolOrganizationId;
-            this.NumberOfSales = userResourcePoolOrganization.NumberOfSales;
-            this.QualityRating = userResourcePoolOrganization.QualityRating;
-            this.CustomerSatisfactionRating = userResourcePoolOrganization.CustomerSatisfactionRating;
-            this.EmployeeSatisfactionRating = userResourcePoolOrganization.EmployeeSatisfactionRating;
-            this.CreatedOn = userResourcePoolOrganization.CreatedOn;
-            this.ModifiedOn = userResourcePoolOrganization.ModifiedOn;
-            this.DeletedOn = userResourcePoolOrganization.DeletedOn;
+            this.Id = userOrganization.Id;
+            this.UserId = userOrganization.UserId;
+            this.OrganizationId = userOrganization.OrganizationId;
+            this.NumberOfSales = userOrganization.NumberOfSales;
+            this.QualityRating = userOrganization.QualityRating;
+            this.CustomerSatisfactionRating = userOrganization.CustomerSatisfactionRating;
+            this.EmployeeSatisfactionRating = userOrganization.EmployeeSatisfactionRating;
+            this.CreatedOn = userOrganization.CreatedOn;
+            this.ModifiedOn = userOrganization.ModifiedOn;
+            this.DeletedOn = userOrganization.DeletedOn;
         }
 
         [Required]
@@ -39,7 +39,7 @@ namespace BusinessObjects.Dto
         public int UserId { get; set; }
 
         [Required]
-        public int ResourcePoolOrganizationId { get; set; }
+        public int OrganizationId { get; set; }
 
         [Required]
         public int NumberOfSales { get; set; }
@@ -61,13 +61,13 @@ namespace BusinessObjects.Dto
 
         public Nullable<System.DateTime> DeletedOn { get; set; }
 
-        public UserResourcePoolOrganization ToBusinessObject()
+        public UserOrganization ToBusinessObject()
         {
-            return new UserResourcePoolOrganization()
+            return new UserOrganization()
             {
                 Id = Id,
                 UserId = UserId,
-                ResourcePoolOrganizationId = ResourcePoolOrganizationId,
+                OrganizationId = OrganizationId,
                 NumberOfSales = NumberOfSales,
                 QualityRating = QualityRating,
                 CustomerSatisfactionRating = CustomerSatisfactionRating,

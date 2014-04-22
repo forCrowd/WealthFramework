@@ -13,6 +13,57 @@
             get { return SalesPrice - ProductionCost; }
         }
 
+        public decimal GetAverageQualityRating()
+        {
+            return GetAverageQualityRating(0);
+        }
+
+        public decimal GetAverageQualityRating(int userId)
+        {
+            var ratings = userId > 0
+                ? UserOrganizationSet.Where(rating => rating.UserId == userId)
+                : UserOrganizationSet;
+
+            if (!ratings.Any())
+                return 0;
+
+            return ratings.Average(rating => rating.QualityRating);
+        }
+
+        public decimal GetAverageEmployeeSatisfactionRating()
+        {
+            return GetAverageEmployeeSatisfactionRating(0);
+        }
+
+        public decimal GetAverageEmployeeSatisfactionRating(int userId)
+        {
+            var ratings = userId > 0
+                ? UserOrganizationSet.Where(rating => rating.UserId == userId)
+                : UserOrganizationSet;
+
+            if (!ratings.Any())
+                return 0;
+
+            return ratings.Average(rating => rating.EmployeeSatisfactionRating);
+        }
+
+        public decimal GetAverageCustomerSatisfactionRating()
+        {
+            return GetAverageCustomerSatisfactionRating(0);
+        }
+
+        public decimal GetAverageCustomerSatisfactionRating(int userId)
+        {
+            var ratings = userId > 0
+                ? UserOrganizationSet.Where(rating => rating.UserId == userId)
+                : UserOrganizationSet;
+
+            if (!ratings.Any())
+                return 0;
+
+            return ratings.Average(rating => rating.CustomerSatisfactionRating);
+        }
+
         /// <summary>
         /// a.k.a Markup percentage
         /// </summary>

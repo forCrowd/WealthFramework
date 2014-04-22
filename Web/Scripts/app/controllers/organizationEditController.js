@@ -15,6 +15,7 @@
         .controller(controllerId, ['organizationService',
             'sectorService',
             'licenseService',
+            'resourcePoolService',
             'logger',
             '$location',
             '$routeParams',
@@ -23,6 +24,7 @@
     function organizationEditController(organizationService,
 		sectorService,
 		licenseService,
+		resourcePoolService,
 		logger,
 		$location,
 		$routeParams) {
@@ -35,6 +37,7 @@
         var vm = this;
         vm.sectorSet = [];
         vm.licenseSet = [];
+        vm.resourcePoolSet = [];
         vm.cancelChanges = cancelChanges;
         vm.isSaveDisabled = isSaveDisabled;
         vm.organization = null;
@@ -71,6 +74,13 @@
             licenseService.getLicenseSet(false)
                 .then(function (data) {
                     vm.licenseSet = data;
+                });
+
+            // TODO Catch?
+
+            resourcePoolService.getResourcePoolSet(false)
+                .then(function (data) {
+                    vm.resourcePoolSet = data;
                 });
 
             // TODO Catch?

@@ -18,7 +18,6 @@
         initialize();
 
         function initialize() {
-            logger.logSuccess('initialize', null, true);
             getCurrentUser();
             getCurrentVersion();
         };

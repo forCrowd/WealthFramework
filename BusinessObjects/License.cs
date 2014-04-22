@@ -5,12 +5,12 @@
     public partial class License
     {
 
-        public decimal GetAverageUserRating()
+        public decimal GetAverageRating()
         {
-            return GetAverageUserRating(0);
+            return GetAverageRating(0);
         }
 
-        public decimal GetAverageUserRating(int userId)
+        public decimal GetAverageRating(int userId)
         {
             var ratings = userId > 0
                 ? UserLicenseRatingSet.Where(rating => rating.UserId == userId)

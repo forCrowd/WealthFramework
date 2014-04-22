@@ -1,5 +1,7 @@
 ﻿0.8
-. Database - ResourcePool table will become the main container for Organization, License and Sector tables
+. Database
+.. ResourcePool table became the main container for Organization, License and Sector tables
+.. UserResourcePoolOrganization was dropped and UserOrganization was introduced
 
 0.7
 . SPA with OData + AngularJS + Breeze.js + toastr.js

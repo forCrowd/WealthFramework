@@ -21,6 +21,7 @@ namespace BusinessObjects.Dto
         public SectorDto(Sector sector)
         {
             this.Id = sector.Id;
+            this.ResourcePoolId = sector.ResourcePoolId;
             this.Name = sector.Name;
             this.Description = sector.Description;
             this.CreatedOn = sector.CreatedOn;
@@ -30,6 +31,9 @@ namespace BusinessObjects.Dto
 
         [Required]
         public short Id { get; set; }
+
+        [Required]
+        public int ResourcePoolId { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -49,6 +53,7 @@ namespace BusinessObjects.Dto
             return new Sector()
             {
                 Id = Id,
+                ResourcePoolId = ResourcePoolId,
                 Name = Name,
                 Description = Description,
                 CreatedOn = CreatedOn,

@@ -57,9 +57,6 @@
     <Compile Include="Dto\Generated\ResourcePoolDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
-    <Compile Include="Dto\Generated\ResourcePoolOrganizationDto.cs">
-      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
-    </Compile>
     <Compile Include="Dto\Generated\SectorDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
@@ -69,10 +66,10 @@
     <Compile Include="Dto\Generated\UserLicenseRatingDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
-    <Compile Include="Dto\Generated\UserResourcePoolDto.cs">
+    <Compile Include="Dto\Generated\UserOrganizationDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
-    <Compile Include="Dto\Generated\UserResourcePoolOrganizationDto.cs">
+    <Compile Include="Dto\Generated\UserResourcePoolDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
     <Compile Include="Dto\Generated\UserSectorRatingDto.cs">
@@ -92,9 +89,6 @@
     <Compile Include="Generated\ResourcePool.cs">
       <DependentUpon>BusinessObject.tt</DependentUpon>
     </Compile>
-    <Compile Include="Generated\ResourcePoolOrganization.cs">
-      <DependentUpon>BusinessObject.tt</DependentUpon>
-    </Compile>
     <Compile Include="Generated\Sector.cs">
       <DependentUpon>BusinessObject.tt</DependentUpon>
     </Compile>
@@ -107,10 +101,10 @@
     <Compile Include="Generated\UserLicenseRating.cs">
       <DependentUpon>BusinessObject.tt</DependentUpon>
     </Compile>
-    <Compile Include="Generated\UserResourcePool.cs">
+    <Compile Include="Generated\UserOrganization.cs">
       <DependentUpon>BusinessObject.tt</DependentUpon>
     </Compile>
-    <Compile Include="Generated\UserResourcePoolOrganization.cs">
+    <Compile Include="Generated\UserResourcePool.cs">
       <DependentUpon>BusinessObject.tt</DependentUpon>
     </Compile>
     <Compile Include="Generated\UserSectorRating.cs">
@@ -165,6 +159,7 @@
     <Compile Include="ResourcePool.cs" />
     <Compile Include="ResourcePoolOrganization.cs" />
     <Compile Include="Dto\UserResourcePoolOrganizationDto2.cs" />
+    <Compile Include="UserOrganization.cs" />
     <Compile Include="UserResourcePoolOrganization.cs" />
     <Compile Include="UserResourcePool.cs" />
     <Compile Include="UserResourcePoolType.cs" />

@@ -14,12 +14,12 @@ namespace BusinessObjects
     using System.ComponentModel.DataAnnotations;
     using BusinessObjects.Metadata;
 
-    [MetadataType(typeof(UserResourcePoolOrganizationMetadata))]
-    public partial class UserResourcePoolOrganization : IEntity
+    //[MetadataType(typeof(UserOrganizationMetadata))]
+    public partial class UserOrganization : IEntity
     {
         public int Id { get; set; }
         public int UserId { get; set; }
-        public int ResourcePoolOrganizationId { get; set; }
+        public int OrganizationId { get; set; }
         public int NumberOfSales { get; set; }
         public decimal QualityRating { get; set; }
         public decimal CustomerSatisfactionRating { get; set; }
@@ -28,7 +28,7 @@ namespace BusinessObjects
         public System.DateTime ModifiedOn { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
 
+        public virtual Organization Organization { get; set; }
         public virtual User User { get; set; }
-        public virtual ResourcePoolOrganization ResourcePoolOrganization { get; set; }
     }
 }

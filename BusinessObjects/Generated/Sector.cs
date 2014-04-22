@@ -14,7 +14,7 @@ namespace BusinessObjects
     using System.ComponentModel.DataAnnotations;
     using BusinessObjects.Metadata;
 
-    [MetadataType(typeof(SectorMetadata))]
+    //[MetadataType(typeof(SectorMetadata))]
     public partial class Sector : IEntity
     {
         public Sector()
@@ -24,6 +24,7 @@ namespace BusinessObjects
         }
 
         public short Id { get; set; }
+        public int ResourcePoolId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public System.DateTime CreatedOn { get; set; }
@@ -32,5 +33,6 @@ namespace BusinessObjects
 
         public virtual ICollection<Organization> OrganizationSet { get; set; }
         public virtual ICollection<UserSectorRating> UserSectorRatingSet { get; set; }
+        public virtual ResourcePool ResourcePool { get; set; }
     }
 }

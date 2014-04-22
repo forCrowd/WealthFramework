@@ -206,9 +206,6 @@
     <Compile Include="Controllers\Mvc\Generated\ResourcePoolController.cs">
       <DependentUpon>MvcController.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\Mvc\Generated\ResourcePoolOrganizationController.cs">
-      <DependentUpon>MvcController.tt</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\Mvc\Generated\SectorController.cs">
       <DependentUpon>MvcController.tt</DependentUpon>
     </Compile>
@@ -218,10 +215,10 @@
     <Compile Include="Controllers\Mvc\Generated\UserLicenseRatingController.cs">
       <DependentUpon>MvcController.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\Mvc\Generated\UserResourcePoolController.cs">
+    <Compile Include="Controllers\Mvc\Generated\UserOrganizationController.cs">
       <DependentUpon>MvcController.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\Mvc\Generated\UserResourcePoolOrganizationController.cs">
+    <Compile Include="Controllers\Mvc\Generated\UserResourcePoolController.cs">
       <DependentUpon>MvcController.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\Mvc\Generated\UserSectorRatingController.cs">
@@ -255,9 +252,6 @@
     <Compile Include="Controllers\OData\Generated\ResourcePoolController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\OData\Generated\ResourcePoolOrganizationController.cs">
-      <DependentUpon>ODataController.tt</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\OData\Generated\SectorController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
@@ -267,10 +261,10 @@
     <Compile Include="Controllers\OData\Generated\UserLicenseRatingController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\OData\Generated\UserResourcePoolController.cs">
+    <Compile Include="Controllers\OData\Generated\UserOrganizationController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\OData\Generated\UserResourcePoolOrganizationController.cs">
+    <Compile Include="Controllers\OData\Generated\UserResourcePoolController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\OData\Generated\UserSectorRatingController.cs">
@@ -329,6 +323,12 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\app\controllers\layoutController.js" />
     <Content Include="Scripts\app\controllers\userController.js" />
+    <Content Include="Scripts\app\controllers\userOrganizationEditController.js">
+      <DependentUpon>editController.tt</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\controllers\userOrganizationListController.js">
+      <DependentUpon>listController.tt</DependentUpon>
+    </Content>
     <Content Include="Scripts\app\controllers\userResourcePoolController.js" />
     <Content Include="Scripts\app\controllers\licenseEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
@@ -346,12 +346,6 @@
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\controllers\resourcePoolListController.js">
-      <DependentUpon>listController.tt</DependentUpon>
-    </Content>
-    <Content Include="Scripts\app\controllers\resourcePoolOrganizationEditController.js">
-      <DependentUpon>editController.tt</DependentUpon>
-    </Content>
-    <Content Include="Scripts\app\controllers\resourcePoolOrganizationListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\controllers\sectorEditController.js">
@@ -378,12 +372,6 @@
     <Content Include="Scripts\app\controllers\userResourcePoolListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\userResourcePoolOrganizationEditController.js">
-      <DependentUpon>editController.tt</DependentUpon>
-    </Content>
-    <Content Include="Scripts\app\controllers\userResourcePoolOrganizationListController.js">
-      <DependentUpon>listController.tt</DependentUpon>
-    </Content>
     <Content Include="Scripts\app\controllers\userSectorRatingEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
@@ -402,9 +390,6 @@
     <Content Include="Scripts\app\services\generated\organizationService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\services\generated\resourcePoolOrganizationService.js">
-      <DependentUpon>service.tt</DependentUpon>
-    </Content>
     <Content Include="Scripts\app\services\generated\resourcePoolService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
@@ -414,7 +399,7 @@
     <Content Include="Scripts\app\services\generated\userLicenseRatingService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\services\generated\userResourcePoolOrganizationService.js">
+    <Content Include="Scripts\app\services\generated\userOrganizationService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\services\generated\userResourcePoolService.js">
@@ -510,9 +495,6 @@
     <Content Include="ViewsNg\Edit\resourcePoolEdit.html">
       <DependentUpon>edit.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\Edit\resourcePoolOrganizationEdit.html">
-      <DependentUpon>edit.tt</DependentUpon>
-    </Content>
     <Content Include="ViewsNg\Edit\sectorEdit.html">
       <DependentUpon>edit.tt</DependentUpon>
     </Content>
@@ -522,10 +504,10 @@
     <Content Include="ViewsNg\Edit\userLicenseRatingEdit.html">
       <DependentUpon>edit.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\Edit\userResourcePoolEdit.html">
+    <Content Include="ViewsNg\Edit\userOrganizationEdit.html">
       <DependentUpon>edit.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\Edit\userResourcePoolOrganizationEdit.html">
+    <Content Include="ViewsNg\Edit\userResourcePoolEdit.html">
       <DependentUpon>edit.tt</DependentUpon>
     </Content>
     <Content Include="ViewsNg\Edit\userSectorRatingEdit.html">
@@ -540,9 +522,6 @@
     <Content Include="ViewsNg\List\resourcePoolList.html">
       <DependentUpon>list.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\List\resourcePoolOrganizationList.html">
-      <DependentUpon>list.tt</DependentUpon>
-    </Content>
     <Content Include="ViewsNg\List\sectorList.html">
       <DependentUpon>list.tt</DependentUpon>
     </Content>
@@ -552,10 +531,10 @@
     <Content Include="ViewsNg\List\userList.html">
       <DependentUpon>list.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\List\userResourcePoolList.html">
+    <Content Include="ViewsNg\List\userOrganizationList.html">
       <DependentUpon>list.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\List\userResourcePoolOrganizationList.html">
+    <Content Include="ViewsNg\List\userResourcePoolList.html">
       <DependentUpon>list.tt</DependentUpon>
     </Content>
     <Content Include="ViewsNg\List\userSectorRatingList.html">

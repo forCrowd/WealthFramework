@@ -7,15 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DataObjects
+namespace Facade
 {
     using BusinessObjects;
 
-    public partial class ResourcePoolOrganizationRepository : BaseRepository<ResourcePoolOrganization>
+    public partial class UserOrganizationUnitOfWork : BaseUnitOfWork<UserOrganization>
     {
-        public ResourcePoolOrganizationRepository(WealthEconomyEntities context)
-            : base(context)
-        {
-        }
     }
 }

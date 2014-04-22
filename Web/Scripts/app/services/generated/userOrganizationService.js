@@ -10,11 +10,11 @@
 (function () {
     'use strict';
 
-    var serviceId = 'resourcePoolOrganizationService';
+    var serviceId = 'userOrganizationService';
     angular.module('main')
-        .factory(serviceId, ['dataContext', 'logger', resourcePoolOrganizationService]);
+        .factory(serviceId, ['dataContext', 'logger', userOrganizationService]);
 
-    function resourcePoolOrganizationService(dataContext, logger) {
+    function userOrganizationService(dataContext, logger) {
         logger = logger.forSource(serviceId);
 
         // To determine whether the data will be fecthed from server or local
@@ -23,12 +23,12 @@
 
         // Service methods (alphabetically)
         var service = {
-            createResourcePoolOrganization: createResourcePoolOrganization,
-            deleteResourcePoolOrganization: deleteResourcePoolOrganization,
+            createUserOrganization: createUserOrganization,
+            deleteUserOrganization: deleteUserOrganization,
             getChanges: getChanges,
             getChangesCount: getChangesCount,
-            getResourcePoolOrganizationSet: getResourcePoolOrganizationSet,
-            getResourcePoolOrganization: getResourcePoolOrganization,
+            getUserOrganizationSet: getUserOrganizationSet,
+            getUserOrganization: getUserOrganization,
             hasChanges: hasChanges,
             rejectChanges: rejectChanges,
             saveChanges: saveChanges
@@ -38,12 +38,12 @@
 
         /*** Implementations ***/
 
-        function createResourcePoolOrganization(resourcePoolOrganization) {
-            return dataContext.manager.createEntity('ResourcePoolOrganization', resourcePoolOrganization);
+        function createUserOrganization(userOrganization) {
+            return dataContext.manager.createEntity('UserOrganization', userOrganization);
         }
 
-        function deleteResourcePoolOrganization(resourcePoolOrganization) {
-            resourcePoolOrganization.entityAspect.setDeleted();
+        function deleteUserOrganization(userOrganization) {
+            userOrganization.entityAspect.setDeleted();
         }
 
         function getChanges() {
@@ -54,7 +54,7 @@
             return dataContext.getChangesCount();
         }
 
-        function getResourcePoolOrganizationSet(forceRefresh) {
+        function getUserOrganizationSet(userId, forceRefresh) {
 
             var count;
             if (forceRefresh) {
@@ -66,8 +66,9 @@
             }
 
             var query = breeze.EntityQuery
-				.from('ResourcePoolOrganization')
-				.expand(['Organization', 'ResourcePool'])
+				.from('UserOrganization')
+				.expand(['Organization', 'User'])
+				.where('UserId', '==', userId)
             ;
 
             // Fetch the data from server, in case if it's not fetched earlier or forced
@@ -87,18 +88,18 @@
 
             function success(response) {
                 count = response.results.length;
-                logger.logSuccess('Got ' + count + ' resourcePoolOrganization(s)', response, true);
+                logger.logSuccess('Got ' + count + ' userOrganization(s)', response, true);
                 return response.results;
             }
 
             function failed(error) {
-                var message = error.message || 'ResourcePoolOrganization query failed';
+                var message = error.message || 'UserOrganization query failed';
                 logger.logError(message, error, true);
             }
         }
 
-        function getResourcePoolOrganization(resourcePoolOrganizationId, forceRefresh) {
-            return dataContext.manager.fetchEntityByKey('ResourcePoolOrganization', resourcePoolOrganizationId, !forceRefresh)
+        function getUserOrganization(userOrganizationId, forceRefresh) {
+            return dataContext.manager.fetchEntityByKey('UserOrganization', userOrganizationId, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {
@@ -106,7 +107,7 @@
             }
 
             function failed(error) {
-                var message = error.message || 'getResourcePoolOrganization query failed';
+                var message = error.message || 'getUserOrganization query failed';
                 logger.logError(message, error, true);
             }
         }

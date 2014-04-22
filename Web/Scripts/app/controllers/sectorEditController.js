@@ -13,12 +13,14 @@
     var controllerId = 'sectorEditController';
     angular.module('main')
         .controller(controllerId, ['sectorService',
+            'resourcePoolService',
             'logger',
             '$location',
             '$routeParams',
             sectorEditController]);
 
     function sectorEditController(sectorService,
+		resourcePoolService,
 		logger,
 		$location,
 		$routeParams) {
@@ -29,6 +31,7 @@
 
         // Controller methods (alphabetically)
         var vm = this;
+        vm.resourcePoolSet = [];
         vm.cancelChanges = cancelChanges;
         vm.isSaveDisabled = isSaveDisabled;
         vm.sector = null;
@@ -54,6 +57,13 @@
         }
 
         function initialize() {
+
+            resourcePoolService.getResourcePoolSet(false)
+                .then(function (data) {
+                    vm.resourcePoolSet = data;
+                });
+
+            // TODO Catch?
 
             if (isNew) {
                 // TODO Only for development, create test entity ?!

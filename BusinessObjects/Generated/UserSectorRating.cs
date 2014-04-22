@@ -14,7 +14,7 @@ namespace BusinessObjects
     using System.ComponentModel.DataAnnotations;
     using BusinessObjects.Metadata;
 
-    [MetadataType(typeof(UserSectorRatingMetadata))]
+    //[MetadataType(typeof(UserSectorRatingMetadata))]
     public partial class UserSectorRating : IEntity
     {
         public int Id { get; set; }

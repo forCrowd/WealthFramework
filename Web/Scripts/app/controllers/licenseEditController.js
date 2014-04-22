@@ -13,12 +13,14 @@
     var controllerId = 'licenseEditController';
     angular.module('main')
         .controller(controllerId, ['licenseService',
+            'resourcePoolService',
             'logger',
             '$location',
             '$routeParams',
             licenseEditController]);
 
     function licenseEditController(licenseService,
+		resourcePoolService,
 		logger,
 		$location,
 		$routeParams) {
@@ -29,6 +31,7 @@
 
         // Controller methods (alphabetically)
         var vm = this;
+        vm.resourcePoolSet = [];
         vm.cancelChanges = cancelChanges;
         vm.isSaveDisabled = isSaveDisabled;
         vm.license = null;
@@ -54,6 +57,13 @@
         }
 
         function initialize() {
+
+            resourcePoolService.getResourcePoolSet(false)
+                .then(function (data) {
+                    vm.resourcePoolSet = data;
+                });
+
+            // TODO Catch?
 
             if (isNew) {
                 // TODO Only for development, create test entity ?!

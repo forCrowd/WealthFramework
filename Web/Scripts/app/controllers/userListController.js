@@ -18,10 +18,7 @@
 
     function userListController(userService,
         logger) {
-
         logger = logger.forSource(controllerId);
-        var logError = logger.logError;
-        var logSuccess = logger.logSuccess;
 
         var vm = this;
         vm.deleteUser = deleteUser;
@@ -39,10 +36,10 @@
             userService.saveChanges()
                 .then(function () {
                     vm.userSet.splice(vm.userSet.indexOf(user), 1);
-                    logSuccess("Hooray we saved", null, true);
+                    logger.logSuccess("Hooray we saved", null, true);
                 })
                 .catch(function (error) {
-                    logError("Boooo, we failed: " + error.message, null, true);
+                    logger.logError("Boooo, we failed: " + error.message, null, true);
                     // Todo: more sophisticated recovery. 
                     // Here we just blew it all away and start over
                     // refresh();

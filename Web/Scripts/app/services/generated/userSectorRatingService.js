@@ -68,7 +68,7 @@
             var query = breeze.EntityQuery
 				.from('UserSectorRating')
 				.expand(['Sector', 'User'])
-				.where('UserId eq ' + userId)
+				.where('UserId', '==', userId)
             ;
 
             // Fetch the data from server, in case if it's not fetched earlier or forced

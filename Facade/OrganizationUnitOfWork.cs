@@ -28,13 +28,8 @@
             var organization = Find(id);
 
             // Delete child items first
-            var userResourcePoolOrganizationRepository = new UserResourcePoolOrganizationRepository(Context);
-            var resourcePoolOrganizationRepository = new ResourcePoolOrganizationRepository(Context);
-
-            var resourceOrganizationSet = organization.ResourcePoolOrganizationSet;
-            foreach (var item in resourceOrganizationSet)
-                userResourcePoolOrganizationRepository.DeleteRange(item.UserResourcePoolOrganizationSet);
-            resourcePoolOrganizationRepository.DeleteRange(resourceOrganizationSet);
+            var userOrganizationRepository = new UserOrganizationRepository(Context);
+            userOrganizationRepository.DeleteRange(organization.UserOrganizationSet);
 
             // Delete main item
             base.Delete(id);
