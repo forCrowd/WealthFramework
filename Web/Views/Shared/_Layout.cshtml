@@ -3,10 +3,97 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
+    <title>Wealth Economy</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
+</head>
+<body data-ng-app="main" data-ng-controller="layoutController as vm">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="#/" class="navbar-brand">Wealth Economy</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown" data-ng-show="vm.isAuthenticated && vm.currentUser.UserAccountTypeId == 1">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Definitions <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#/User/">User</a></li>
+                            <li><a href="#/ResourcePool/">Resource Pool</a></li>
+                            <li><a href="#/Sector/">Sector</a></li>
+                            <li><a href="#/License/">License</a></li>
+                            <li><a href="#/Organization/">Organization</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" data-ng-show="vm.isAuthenticated">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">CMRP <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#/TotalCostIndex/">Total Cost Index</a></li>
+                            <li><a href="#/KnowledgeIndex/">Knowledge Index</a></li>
+                            <li><a href="#/QualityIndex/">Quality Index</a></li>
+                            <li><a href="#/EmployeeSatisfactionIndex/">Employee Satisfaction Index</a></li>
+                            <li><a href="#/CustomerSatisfactionIndex/">Customer Satisfaction Index</a></li>
+                            <li><a href="#/SectorIndex/">Sector Index</a></li>
+                            <li><a href="#/DistanceIndex/">Distance Index</a></li>
+                            @*<li><a href="#/AllInOne/">All in One</a></li>*@
+                        </ul>
+                    </li>
+                    <li class="dropdown" data-ng-show="vm.isAuthenticated">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Ratings <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#/UserResourcePool/">CMRP Index Rating</a></li>
+                            <li><a href="#/UserOrganization/">Organization Rating</a></li>
+                            <li><a href="#/UserSectorRating/">Sector Rating</a></li>
+                            <li><a href="#/UserLicenseRating/">Licence Rating</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Misc <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#/Overview">Overview</a></li>
+                            <li><a href="#/Technologies">Technologies</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <div class="navbar-text nofloat">
+                            <div data-ng-show="vm.isAuthenticated">
+                                User: {{ vm.currentUser.Email }}
+                                <a href="#/User/edit/{{ vm.currentUser.Id }}">Edit</a>
+                                <a href="" data-ng-click="vm.userLogout()">Logout</a>
+                            </div>
+                            <div data-ng-show="!vm.isAuthenticated">
+                                <a href="#/User/Login/">Login</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+
+        @RenderBody()
+        <div ng-view></div>
+
+        <hr />
+        <footer>
+            <p>
+                {{ vm.currentDate | date:'yyyy' }} - Open Source Pioneers<br />
+                Ver.: {{ vm.currentVersion }}<br />
+            </p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
 
     <script src="/Scripts/angular.js"></script>
     <script src="/Scripts/angular-route.js"></script>
@@ -38,10 +125,6 @@
     <script src="/Scripts/app/controllers/resourcePoolListController.js"></script>
     <script src="/Scripts/app/controllers/resourcePoolEditController.js"></script>
 
-    @*<script src="/Scripts/app/services/generated/resourcePoolOrganizationService.js"></script>
-    <script src="/Scripts/app/controllers/resourcePoolOrganizationListController.js"></script>
-    <script src="/Scripts/app/controllers/resourcePoolOrganizationEditController.js"></script>*@
-
     <script src="/Scripts/app/services/generated/sectorService.js"></script>
     <script src="/Scripts/app/controllers/sectorListController.js"></script>
     <script src="/Scripts/app/controllers/sectorEditController.js"></script>
@@ -65,10 +148,6 @@
     <script src="/Scripts/app/controllers/userOrganizationListController.js"></script>
     <script src="/Scripts/app/controllers/userOrganizationEditController.js"></script>
 
-    @*<script src="/Scripts/app/services/generated/userResourcePoolOrganizationService.js"></script>
-    <script src="/Scripts/app/controllers/userResourcePoolOrganizationListController.js"></script>
-    <script src="/Scripts/app/controllers/userResourcePoolOrganizationEditController.js"></script>*@
-
     <script src="/Scripts/app/services/generated/userSectorRatingService.js"></script>
     <script src="/Scripts/app/controllers/userSectorRatingListController.js"></script>
     <script src="/Scripts/app/controllers/userSectorRatingEditController.js"></script>
@@ -79,141 +158,5 @@
     <script src="/Scripts/app/controllers/layoutController.js"></script>
     <script src="/Scripts/app/controllers/userController.js"></script>
 
-</head>
-<body data-ng-app="main" data-ng-controller="layoutController as vm">
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a href="#/" class="navbar-brand">Wealth Economy</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li class="dropdown" data-ng-show="vm.isAuthenticated && vm.currentUser.UserAccountTypeId == 1">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Definitions <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#/User/">User</a></li>
-                            <li><a href="#/ResourcePool/">Resource Pool</a></li>
-                            <li><a href="#/Sector/">Sector</a></li>
-                            <li><a href="#/License/">License</a></li>
-                            <li><a href="#/Organization/">Organization</a></li>
-                            @*<li><a href="#/ResourcePoolOrganization/">Resource Pool - Organization</a></li>*@
-                        </ul>
-                    </li>
-                    @*<li class="dropdown" data-ng-show="vm.isAuthenticated && vm.currentUser.UserAccountTypeId == 1">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Def <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("User", "Index", "User", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("UserNg", "Index", "UserNg", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Sector", "Index", "Sector", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("SectorNg", "Index", "SectorNg", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("License", "Index", "License", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("License Ng", "Index", "LicenseNg", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Organization", "Index", "Organization", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Organization Ng", "Index", "OrganizationNg", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Resource Pool", "Index", "ResourcePool", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Resource Pool Ng", "Index", "ResourcePoolNg", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Resource Pool - Organization", "Index", "ResourcePoolOrganization", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Resource Pool - Organization Ng", "Index", "ResourcePoolOrganizationNg", new { area = "" }, null)</li>
-                        </ul>
-                    </li>*@
-                    <li class="dropdown" data-ng-show="vm.isAuthenticated">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown">CMRP <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#/TotalCostIndex/">Total Cost Index</a></li>
-                            <li><a href="#/KnowledgeIndex/">Knowledge Index</a></li>
-                            <li><a href="#/QualityIndex/">Quality Index</a></li>
-                            <li><a href="#/EmployeeSatisfactionIndex/">Employee Satisfaction Index</a></li>
-                            <li><a href="#/CustomerSatisfactionIndex/">Customer Satisfaction Index</a></li>
-                            <li><a href="#/SectorIndex/">Sector Index</a></li>
-                            <li><a href="#/DistanceIndex/">Distance Index</a></li>
-                            @*<li><a href="#/AllInOne/">All in One</a></li>*@
-                        </ul>
-                    </li>
-
-                    @*<li class="dropdown" data-ng-show="vm.isAuthenticated">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown">CMRP <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Total Cost Index", "TotalCostIndex", "UserResourcePool", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Knowledge Index - Private", "KnowledgeIndexPrivate", "UserResourcePool", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Knowledge Index - Public", "KnowledgeIndexPublic", "UserResourcePool", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Quality Index - Private", "QualityIndexPrivate", "UserResourcePool", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Quality Index - Public", "QualityIndexPublic", "UserResourcePool", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Employee Satisfaction Index - Private", "EmployeeSatisfactionIndexPrivate", "UserResourcePool", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Employee Satisfaction Index - Public", "EmployeeSatisfactionIndexPublic", "UserResourcePool", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Customer Satisfaction Index - Private", "CustomerSatisfactionIndexPrivate", "UserResourcePool", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Customer Satisfaction Index - Public", "CustomerSatisfactionIndexPublic", "UserResourcePool", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Sector Index - Private", "SectorIndexPrivate", "UserResourcePool", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Sector Index - Public", "SectorIndexPublic", "UserResourcePool", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Distance Index", "DistanceIndex", "UserResourcePool", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("All in One - Private", "AllInOnePrivate", "UserResourcePool", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("All in One - Public", "AllInOnePublic", "UserResourcePool", new { area = "" }, null)</li>
-                        </ul>
-                    </li>*@
-                    <li class="dropdown" data-ng-show="vm.isAuthenticated">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Ratings <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#/UserResourcePool/">CMRP Index Rating</a></li>
-                            <li><a href="#/UserOrganization/">Organization Rating</a></li>
-                            <li><a href="#/UserSectorRating/">Sector Rating</a></li>
-                            <li><a href="#/UserLicenseRating/">Licence Rating</a></li>
-                        </ul>
-                    </li>
-                    @*<li class="dropdown" data-ng-show="vm.isAuthenticated">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Rat <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("CMRP Index Rating", "Index", "UserResourcePool", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("CMRP Index Rating Ng", "Index", "UserResourcePoolNg", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Resource Pool - Organization Rating", "Index", "UserResourcePoolOrganization", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Resource Pool - Organization Rating Ng", "Index", "UserResourcePoolOrganizationNg", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Licence Rating", "Index", "UserLicenseRating", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Licence Rating Ng", "Index", "UserLicenseRatingNg", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Sector Rating", "Index", "UserSectorRating", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Sector Rating Ng", "Index", "UserSectorRatingNg", new { area = "" }, null)</li>
-                        </ul>
-                    </li>*@
-                    <li class="dropdown">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Misc <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#/Overview">Overview</a></li>
-                            <li><a href="#/Technologies">Technologies</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <div class="navbar-text nofloat">
-                            <div data-ng-show="vm.isAuthenticated">
-                                User: {{ vm.currentUser.Email }}
-                                <a href="#/User/edit/{{ vm.currentUser.Id }}">Edit</a>
-                                <a href="" data-ng-click="vm.userLogout()">Logout</a>
-                            </div>
-                            <div data-ng-show="!vm.isAuthenticated">
-                                <a href="#/User/Login/">Login</a>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="container body-content">
-
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>
-                {{ vm.currentDate | date:'yyyy' }} - Open Source Pioneers<br />
-                Ver.: {{ vm.currentVersion }}<br />
-            </p>
-        </footer>
-    </div>
-
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
 </body>
 </html>

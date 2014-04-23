@@ -1,4 +1,7 @@
-﻿0.8
+﻿0.8.1
+. Web - Cleaning up the old mvc controllers + views etc.
+
+0.8
 . Database
 .. ResourcePool table became the main container for Organization, License and Sector tables
 .. UserResourcePoolOrganization was dropped and UserOrganization was introduced

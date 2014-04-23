@@ -29,6 +29,7 @@ http://msdn.microsoft.com/en-US/data/jj200620
 http://msdn.microsoft.com/en-US/data/jj591583#Index
 . enums? useraccountypeid - after switching to code first, if possible at all!
 . public vs. private didnt work for now with odata, try it later
+. try to remove scripts.render() + styles.render() from layout.cshtml - then mvc can be done completely
 . web essentials; http://vswebessentials.com/
 . kendo ui; http://a.shinynew.me/post/82897588209/kendo-ui-core-the-free-jquery-widget-library
 . canonpy; web testing

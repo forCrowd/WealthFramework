@@ -191,53 +191,7 @@
     <Compile Include="Controllers\Api\BaseController.cs" />
     <Compile Include="Controllers\Api\ApplicationController.cs" />
     <Compile Include="Controllers\Api\UserHelperController.cs" />
-    <Compile Include="Controllers\Mvc\BaseController.cs" />
-    <Compile Include="Controllers\Mvc\Generated\LicenseController.cs">
-      <DependentUpon>MvcController.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\Mvc\Generated\MvcController.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MvcController.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\Mvc\Generated\OrganizationController.cs">
-      <DependentUpon>MvcController.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\Mvc\Generated\ResourcePoolController.cs">
-      <DependentUpon>MvcController.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\Mvc\Generated\SectorController.cs">
-      <DependentUpon>MvcController.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\Mvc\Generated\UserController.cs">
-      <DependentUpon>MvcController.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\Mvc\Generated\UserLicenseRatingController.cs">
-      <DependentUpon>MvcController.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\Mvc\Generated\UserOrganizationController.cs">
-      <DependentUpon>MvcController.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\Mvc\Generated\UserResourcePoolController.cs">
-      <DependentUpon>MvcController.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\Mvc\Generated\UserSectorRatingController.cs">
-      <DependentUpon>MvcController.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\Mvc\ResourcePoolOrganizationNgController.cs" />
-    <Compile Include="Controllers\Mvc\ResourcePoolNgController.cs" />
-    <Compile Include="Controllers\Mvc\SectorNgController.cs" />
-    <Compile Include="Controllers\Mvc\OrganizationNgController.cs" />
-    <Compile Include="Controllers\Mvc\LicenseNgController.cs" />
-    <Compile Include="Controllers\Mvc\UserSectorRatingNgController.cs" />
-    <Compile Include="Controllers\Mvc\UserResourcePoolOrganizationNgController.cs" />
-    <Compile Include="Controllers\Mvc\UserResourcePoolNgController.cs" />
-    <Compile Include="Controllers\Mvc\UserLicenseRatingNgController.cs" />
-    <Compile Include="Controllers\Mvc\UserNgController.cs" />
-    <Compile Include="Controllers\Mvc\UserController.cs" />
     <Compile Include="Controllers\Mvc\HomeController.cs" />
-    <Compile Include="Controllers\Mvc\DatabaseAlterationController.cs" />
-    <Compile Include="Controllers\Mvc\UserResourcePoolController.cs" />
     <Compile Include="Controllers\OData\Generated\ODataController.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -274,7 +228,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\Helper.cs" />
     <Compile Include="Scripts\app\controllers\editController.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -416,10 +369,6 @@
     <Content Include="Scripts\app\services\userResourcePoolService.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Controllers\Mvc\Generated\MvcController.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>MvcController.cs</LastGenOutput>
-    </Content>
     <Content Include="Content\toastr.less" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -540,54 +489,8 @@
     <Content Include="ViewsNg\List\userSectorRatingList.html">
       <DependentUpon>list.tt</DependentUpon>
     </Content>
-    <Content Include="Views\License\Create.cshtml" />
-    <Content Include="Views\License\Delete.cshtml" />
-    <Content Include="Views\License\Details.cshtml" />
-    <Content Include="Views\License\Edit.cshtml" />
-    <Content Include="Views\License\Index.cshtml" />
-    <Content Include="Views\Organization\Create.cshtml" />
-    <Content Include="Views\Organization\Delete.cshtml" />
-    <Content Include="Views\Organization\Details.cshtml" />
-    <Content Include="Views\Organization\Edit.cshtml" />
-    <Content Include="Views\Organization\Index.cshtml" />
-    <Content Include="Views\Sector\Create.cshtml" />
-    <Content Include="Views\Sector\Delete.cshtml" />
-    <Content Include="Views\Sector\Details.cshtml" />
-    <Content Include="Views\Sector\Edit.cshtml" />
-    <Content Include="Views\Sector\Index.cshtml" />
-    <Content Include="Views\UserResourcePool\TotalCostIndex.cshtml" />
-    <Content Include="Views\UserResourcePool\KnowledgeIndex.cshtml" />
-    <Content Include="Views\UserResourcePool\QualityIndex.cshtml" />
-    <Content Include="Views\UserResourcePool\EmployeeSatisfactionIndex.cshtml" />
-    <Content Include="Views\UserResourcePool\CustomerSatisfactionIndex.cshtml" />
-    <Content Include="Views\UserResourcePool\SectorIndex.cshtml" />
-    <Content Include="Views\UserResourcePool\AllInOne.cshtml" />
-    <Content Include="Views\User\Login.cshtml" />
-    <Content Include="Views\UserResourcePool\DistanceIndex.cshtml" />
-    <Content Include="Views\ResourcePool\Create.cshtml" />
-    <Content Include="Views\ResourcePool\Delete.cshtml" />
-    <Content Include="Views\ResourcePool\Details.cshtml" />
-    <Content Include="Views\ResourcePool\Edit.cshtml" />
-    <Content Include="Views\ResourcePool\Index.cshtml" />
-    <Content Include="Views\ResourcePoolOrganization\Create.cshtml" />
-    <Content Include="Views\ResourcePoolOrganization\Delete.cshtml" />
-    <Content Include="Views\ResourcePoolOrganization\Details.cshtml" />
-    <Content Include="Views\ResourcePoolOrganization\Edit.cshtml" />
-    <Content Include="Views\ResourcePoolOrganization\Index.cshtml" />
-    <Content Include="Views\UserResourcePool\Create.cshtml" />
-    <Content Include="Views\UserResourcePool\Delete.cshtml" />
-    <Content Include="Views\UserResourcePool\Details.cshtml" />
-    <Content Include="Views\UserResourcePool\Edit.cshtml" />
-    <Content Include="Views\UserResourcePool\Index.cshtml" />
-    <Content Include="Views\UserResourcePoolOrganization\Create.cshtml" />
-    <Content Include="Views\UserResourcePoolOrganization\Delete.cshtml" />
-    <Content Include="Views\UserResourcePoolOrganization\Details.cshtml" />
-    <Content Include="Views\UserResourcePoolOrganization\Edit.cshtml" />
-    <Content Include="Views\UserResourcePoolOrganization\Index.cshtml" />
-    <Content Include="Views\LicenseNg\Index.cshtml" />
     <Content Include="Scripts\toastr.min.js.map" />
     <Content Include="Scripts\jquery-2.1.0.min.map" />
-    <Content Include="Views\OrganizationNg\Index.cshtml" />
     <Content Include="ViewsNg\List\list.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>list.cs</LastGenOutput>
@@ -596,14 +499,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>edit.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\ResourcePoolNg\Index.cshtml" />
-    <Content Include="Views\ResourcePoolOrganizationNg\Index.cshtml" />
-    <Content Include="Views\SectorNg\Index.cshtml" />
-    <Content Include="Views\UserNg\Index.cshtml" />
-    <Content Include="Views\UserResourcePoolNg\Index.cshtml" />
-    <Content Include="Views\UserResourcePoolOrganizationNg\Index.cshtml" />
-    <Content Include="Views\UserSectorRatingNg\Index.cshtml" />
-    <Content Include="Views\UserLicenseRatingNg\Index.cshtml" />
     <Content Include="ViewsNg\Home\Index.html" />
     <Content Include="ViewsNg\Home\Overview.html" />
     <Content Include="ViewsNg\Home\Technologies.html" />
@@ -616,6 +511,7 @@
     <Content Include="ViewsNg\UserResourcePool\SectorIndex.html" />
     <Content Include="ViewsNg\UserResourcePool\TotalCostIndex.html" />
     <Content Include="ViewsNg\User\Login.html" />
+    <Content Include="Views\Home\Index.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>
@@ -629,24 +525,8 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\User\Create.cshtml" />
-    <Content Include="Views\User\Delete.cshtml" />
-    <Content Include="Views\User\Details.cshtml" />
-    <Content Include="Views\User\Edit.cshtml" />
-    <Content Include="Views\User\Index.cshtml" />
-    <Content Include="Views\UserLicenseRating\Create.cshtml" />
-    <Content Include="Views\UserLicenseRating\Delete.cshtml" />
-    <Content Include="Views\UserLicenseRating\Details.cshtml" />
-    <Content Include="Views\UserLicenseRating\Edit.cshtml" />
-    <Content Include="Views\UserLicenseRating\Index.cshtml" />
-    <Content Include="Views\UserSectorRating\Create.cshtml" />
-    <Content Include="Views\UserSectorRating\Delete.cshtml" />
-    <Content Include="Views\UserSectorRating\Details.cshtml" />
-    <Content Include="Views\UserSectorRating\Edit.cshtml" />
-    <Content Include="Views\UserSectorRating\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessObjects\BusinessObjects.csproj">

@@ -2,12 +2,10 @@
 
 namespace Web.Controllers.Mvc
 {
-    public class HomeController : BaseController
+    public class HomeController : Controller
     {
         public ActionResult Index()
         {
-            ViewBag.Title = "Home ";
-            
             return View();
         }
     }
