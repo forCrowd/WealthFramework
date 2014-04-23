@@ -1,5 +1,4 @@
-﻿. remove obsolete github repo later on
-. edmx + database - try to use cascade delete option?
+﻿. edmx + database - try to use cascade delete option?
 . easy deployment;
 .. web deployment?
 .. sql local db or compact etc.?
@@ -10,7 +9,7 @@
 . multiple pk for user organization + user sector + user license + user resource pool organization + resource pool organization
 . find(async) vs. deleted records?!
 . exists should work with find or alllive.any() or all.any() ?
-. if every entity will have its own manager, do we need datacontext.cs?
+. js - if every entity will have its own manager, do we need datacontext.js?
 . be carefull about, saveChanges(), hasChanges(), getChanges(), rejectChanges() methods. currently they don't work on entity level?
 . breeze entitymanager - ensure metadata fetched;
 http://stackoverflow.com/questions/16068184/breezejs-how-to-fetch-metadata-at-start-with-shared-entitymanager
@@ -52,5 +51,3 @@ http://msdn.microsoft.com/en-US/data/jj591583#Index
 
 . resource pool delete method disabled for the moment
 . "all in one" disabled for the moment
-
-. clean up!
