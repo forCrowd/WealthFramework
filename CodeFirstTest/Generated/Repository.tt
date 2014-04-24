@@ -1,28 +1,28 @@
 ﻿<#@ template language="C#" debug="false" hostspecific="true"#>
-<#@ assembly name="$(ProjectDir)bin\Debug\DataObjects.dll" #>
-<#@ assembly name="$(ProjectDir)bin\Debug\BusinessObjects.dll" #>
-<#@ import namespace="DataObjects" #>
+<#@ assembly name="$(ProjectDir)bin\Debug\CodeFirstTest.exe" #>
+<#@ import namespace="CodeFirstTest" #>
 <#@ import namespace="System.Configuration" #>
-<#@ include file="..\EF6.Utility.ttinclude"#>
+<#@ include file="EF6.Utility.CS.ttinclude"#>
 <#@ include file="..\Utility.ttinclude"#><#
 
 // To be able to control whether it's going to be executed
-var executeMe = true;
+var executeMe = false;
 if (!executeMe)
 	return string.Empty;
 
-const string connectionString = @"Server=(LocalDb)\v11.0;Database=WealthEconomyDb;Integrated Security=True";
-
+// const string inputFile = @"..\..\DataObjects\Model.edmx";
 var textTransform = DynamicTextTransformation.Create(this);
 var code = new CodeGenerationTools(this);
 var ef = new MetadataTools(this);
 var typeMapper = new TypeMapper(code, ef, textTransform.Errors);
-var codeStringGenerator = new CodeStringGenerator(code, typeMapper, ef);
 var	fileManager = EntityFrameworkTemplateFileManager.Create(this);
 var edmMetadataLoader = new EdmMetadataLoader(textTransform.Host, textTransform.Errors);
-IEnumerable<GlobalItem> itemCollection;
-using (var db = new WealthEconomyEntities(connectionString))
-	itemCollection = edmMetadataLoader.CreateEdmItemCollection(db);
+IEnumerable<GlobalItem> itemCollection = null;
+
+var db = new CodeFirstContext("Server=(LocalDb)\\v11.0;Database=CodeFirstDb;Integrated Security=True;");
+var licenseSet = db.LicenseSet.ToList();
+
+var codeStringGenerator = new CodeStringGenerator(code, typeMapper, ef);
 
 var container = itemCollection.OfType<EntityContainer>().FirstOrDefault();
 if (container == null)
@@ -30,13 +30,15 @@ if (container == null)
     return string.Empty;
 }
 
-if (!typeMapper.VerifyCaseInsensitiveTypeUniqueness(typeMapper.GetAllGlobalItems(itemCollection), connectionString))
-{
-    return string.Empty;
-}
+//if (!typeMapper.VerifyCaseInsensitiveTypeUniqueness(typeMapper.GetAllGlobalItems(itemCollection), inputFile))
+//{
+//    return string.Empty;
+//}
 
 foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollection))
 {
+	continue;
+
 	// Variables
 	var entityTypeName = typeMapper.GetTypeName(entityType);
 	var entityRepositoryName = string.Format("{0}Repository", entityTypeName);

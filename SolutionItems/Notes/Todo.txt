@@ -44,6 +44,8 @@ http://msdn.microsoft.com/en-US/data/jj591583#Index
   </m:innererror>
 </m:error>
 
+. update route.js to handle the links correctly - # is not necessary anymore
+
 . switch to code first, but first solve how to use tt files with code-first context
 . update database structure - resource pool should have organizations + licenses + sectors
 
@@ -51,3 +53,35 @@ http://msdn.microsoft.com/en-US/data/jj591583#Index
 
 . resource pool delete method disabled for the moment
 . "all in one" disabled for the moment
+
+. code first findings;
+.. use localdb in local - normal sql server in production
+.. try to findout whether .tt files could work with codefirst?
+.. remove localdbtest stuff from the project + production (people table + migrationshistory)
+
+---
+using (var db = new CodeFirstContext())
+{
+    using (var stream = new MemoryStream())
+    {
+        using (var writer = XmlWriter.Create(stream))
+        {
+            System.Data.Entity.Infrastructure.EdmxWriter.WriteEdmx(db, writer);
+        }
+        stream.Position = 0;
+
+		itemCollection = edmMetadataLoader.CreateEdmItemCollection(stream);
+    }
+} 
+
+---
+code first olacak gibi ama dbcontext instance lazim, o da sorun cikariyor.. grkkkkkkk 11?!?!?!?
+ef6.utility.cs.ttinclude was modified!
+
+try to read connection string
+
++		base	{data source=.\SQLEXPRESS;Integrated Security=SSPI;AttachDBFilename=|DataDirectory|aspnetdb.mdf;User Instance=true}	System.Configuration.ConfigurationElement {System.Configuration.ConnectionStringSettings}
+
+---
+rename utiliy.ttinclude to ef.utility
+EF.Utility.CS.ttinclude

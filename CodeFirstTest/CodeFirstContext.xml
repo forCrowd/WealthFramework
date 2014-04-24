@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Edmx Version="3.0" xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Runtime>
+        <ConceptualModels>
+            <Schema Namespace="Web.CodeFirst" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+                <EntityType Name="License">
+                    <Key>
+                        <PropertyRef Name="Id" />
+                    </Key>
+                    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+                    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+                </EntityType>
+                <EntityType Name="Organization">
+                    <Key>
+                        <PropertyRef Name="Id" />
+                    </Key>
+                    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+                    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+                    <NavigationProperty Name="License" Relationship="Self.Organization_License" FromRole="Organization_License_Source" ToRole="Organization_License_Target" />
+                </EntityType>
+                <Association Name="Organization_License">
+                    <End Role="Organization_License_Source" Type="Self.Organization" Multiplicity="*" />
+                    <End Role="Organization_License_Target" Type="Self.License" Multiplicity="0..1" />
+                </Association>
+                <EntityContainer Name="CodeFirstContext">
+                    <EntitySet Name="LicenseSet" EntityType="Self.License" />
+                    <EntitySet Name="OrganizationSet" EntityType="Self.Organization" />
+                    <AssociationSet Name="Organization_License" Association="Self.Organization_License">
+                        <End Role="Organization_License_Source" EntitySet="OrganizationSet" />
+                        <End Role="Organization_License_Target" EntitySet="LicenseSet" />
+                    </AssociationSet>
+                </EntityContainer>
+            </Schema>
+        </ConceptualModels>
+        <Mappings>
+            <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+                <EntityContainerMapping StorageEntityContainer="CodeFirstDatabase" CdmEntityContainer="CodeFirstContext">
+                    <EntitySetMapping Name="LicenseSet">
+                        <EntityTypeMapping TypeName="Web.CodeFirst.License">
+                            <MappingFragment StoreEntitySet="License">
+                                <ScalarProperty Name="Id" ColumnName="Id" />
+                                <ScalarProperty Name="Name" ColumnName="Name" />
+                            </MappingFragment>
+                        </EntityTypeMapping>
+                    </EntitySetMapping>
+                    <EntitySetMapping Name="OrganizationSet">
+                        <EntityTypeMapping TypeName="Web.CodeFirst.Organization">
+                            <MappingFragment StoreEntitySet="Organization">
+                                <ScalarProperty Name="Id" ColumnName="Id" />
+                                <ScalarProperty Name="Name" ColumnName="Name" />
+                            </MappingFragment>
+                        </EntityTypeMapping>
+                    </EntitySetMapping>
+                    <AssociationSetMapping Name="Organization_License" TypeName="Web.CodeFirst.Organization_License" StoreEntitySet="Organization">
+                        <EndProperty Name="Organization_License_Target">
+                            <ScalarProperty Name="Id" ColumnName="License_Id" />
+                        </EndProperty>
+                        <EndProperty Name="Organization_License_Source">
+                            <ScalarProperty Name="Id" ColumnName="Id" />
+                        </EndProperty>
+                        <Condition IsNull="false" ColumnName="License_Id" />
+                    </AssociationSetMapping>
+                </EntityContainerMapping>
+            </Mapping>
+        </Mappings>
+        <StorageModels>
+            <Schema Namespace="CodeFirstDatabaseSchema" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+                <EntityType Name="License">
+                    <Key>
+                        <PropertyRef Name="Id" />
+                    </Key>
+                    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+                    <Property Name="Name" Type="nvarchar(max)" Nullable="true" />
+                </EntityType>
+                <EntityType Name="Organization">
+                    <Key>
+                        <PropertyRef Name="Id" />
+                    </Key>
+                    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+                    <Property Name="Name" Type="nvarchar(max)" Nullable="true" />
+                    <Property Name="License_Id" Type="int" Nullable="true" />
+                </EntityType>
+                <Association Name="Organization_License">
+                    <End Role="License" Type="Self.License" Multiplicity="0..1" />
+                    <End Role="Organization" Type="Self.Organization" Multiplicity="*" />
+                    <ReferentialConstraint>
+                        <Principal Role="License">
+                            <PropertyRef Name="Id" />
+                        </Principal>
+                        <Dependent Role="Organization">
+                            <PropertyRef Name="License_Id" />
+                        </Dependent>
+                    </ReferentialConstraint>
+                </Association>
+                <EntityContainer Name="CodeFirstDatabase">
+                    <EntitySet Name="License" EntityType="Self.License" Schema="dbo" Table="Licenses" />
+                    <EntitySet Name="Organization" EntityType="Self.Organization" Schema="dbo" Table="Organizations" />
+                    <AssociationSet Name="Organization_License" Association="Self.Organization_License">
+                        <End Role="License" EntitySet="License" />
+                        <End Role="Organization" EntitySet="Organization" />
+                    </AssociationSet>
+                </EntityContainer>
+            </Schema>
+        </StorageModels>
+    </Runtime>
+    <Designer>
+        <Connection>
+            <DesignerInfoPropertySet>
+                <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+            </DesignerInfoPropertySet>
+        </Connection>
+        <Options>
+            <DesignerInfoPropertySet>
+                <DesignerProperty Name="ValidateOnBuild" Value="False" />
+                <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+                <DesignerProperty Name="ProcessDependentTemplatesOnSave" Value="False" />
+            </DesignerInfoPropertySet>
+        </Options>
+        <Diagrams />
+    </Designer>
+</Edmx>
