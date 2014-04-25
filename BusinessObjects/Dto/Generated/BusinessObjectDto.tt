@@ -9,7 +9,7 @@ var executeMe = true;
 if (!executeMe)
 	return string.Empty;
 
-const string connectionString = @"Server=(LocalDb)\v11.0;Database=WealthEconomyDb;Integrated Security=True";
+const string connectionString = @"Server=(LocalDb)\v11.0;Database=WealthEconomyDb;Integrated Security=True;MultipleActiveResultSets=True";
 
 var textTransform = DynamicTextTransformation.Create(this);
 var code = new CodeGenerationTools(this);

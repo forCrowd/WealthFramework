@@ -36,7 +36,7 @@
 
 //            // var x = Microsoft.Data.Edm.EdmBuilder.GetEdm<CodeFirstContext>();
 //            XElement rootElement;
-//            using (var db = new CodeFirstContext("Server=(LocalDb)\\v11.0;Database=CodeFirstDb;Integrated Security=True;"))
+//            using (var db = new CodeFirstContext("Server=(LocalDb)\\v11.0;Database=CodeFirstDb;Integrated Security=True;MultipleActiveResultSets=True;"))
 //            {
 //                // IEdmModel model;
 

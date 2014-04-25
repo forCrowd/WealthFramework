@@ -51,8 +51,6 @@ http://msdn.microsoft.com/en-US/data/jj591583#Index
 . resource pool delete method disabled for the moment
 . "all in one" disabled for the moment
 
-. userunitofwork - insert disabled due to ef 6.1 issue!
-
 . code first findings;
 .. use localdb in local - normal sql server in production
 .. remove localdbtest stuff from the project + production (people table + migrationshistory)
@@ -72,8 +70,6 @@ check settings - fields - stringlengths
 enums?
 calculated properties
 
-ef 6.1 has an issue!
-try to downgrade to prev. version
 try to test all definition pages + cmrp pages - whether they all work?
 any problem with odata and/or metadadta.xml?
 and how to merge metadata.xml with codefirst emdbuilder output?
@@ -82,4 +78,7 @@ test codefirst migrations? and field sort order and calculated properties and..?
 check release notes!
 test + clean up nicely pls!
 
-test the case with prev ef with a new project (without updading nuget packages?!)
+---
+latest notes
+it was all about multipleactiveresultsets setting and lazy loading - everything seems fine now
+make some more test and try to finish this code-first stuff!

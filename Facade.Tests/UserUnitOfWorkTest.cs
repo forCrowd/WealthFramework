@@ -15,11 +15,6 @@
             using (var unitOfWork = new UserUnitOfWork())
             {
                 var users = unitOfWork.AllLive.AsEnumerable();
-
-                foreach (var user in users)
-                {
-                    
-                }
             }
         }
 

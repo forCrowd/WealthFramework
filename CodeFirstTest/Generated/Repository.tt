@@ -19,7 +19,7 @@ var	fileManager = EntityFrameworkTemplateFileManager.Create(this);
 var edmMetadataLoader = new EdmMetadataLoader(textTransform.Host, textTransform.Errors);
 IEnumerable<GlobalItem> itemCollection = null;
 
-var db = new CodeFirstContext("Server=(LocalDb)\\v11.0;Database=CodeFirstDb;Integrated Security=True;");
+var db = new CodeFirstContext("Server=(LocalDb)\\v11.0;Database=CodeFirstDb;Integrated Security=True;MultipleActiveResultSets=True;");
 var licenseSet = db.LicenseSet.ToList();
 
 var codeStringGenerator = new CodeStringGenerator(code, typeMapper, ef);
