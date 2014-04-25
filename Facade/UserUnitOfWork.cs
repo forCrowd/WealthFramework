@@ -59,7 +59,26 @@
             // Add samples
             // Sample user resource pool
             // TODO Static Id 8 ?!
-            var sampleResourcePools = ResourcePoolRepository.AllLive.Where(resourcePool => resourcePool.Id <= 8);
+            var sampleResourcePools = ResourcePoolRepository.AllLive.Where(resourcePool => resourcePool.Id <= 8).AsEnumerable();
+            //var sampleSectors = sampleResourcePools.SelectMany(item => item.SectorSet.AsEnumerable());
+            //var sampleLicenses = sampleResourcePools.SelectMany(item => item.LicenseSet);
+            //var sampleOrganizations = sampleResourcePools.SelectMany(item => item.OrganizationSet);
+
+            // Sample sector ratings
+            //foreach (var sector in sampleSectors)
+            //{
+            //    var sectorRating = new UserSectorRating() { User = user, Sector = sector, Rating = 0 };
+            //    UserSectorRatingRepository.Insert(sectorRating);
+            //}
+
+            var sampleSectors = sampleResourcePools.SelectMany(x=>x.SectorSet.ToList());
+
+            // Sample sector ratings
+            foreach (var sector in sampleSectors)
+            {
+                var sectorRating = new UserSectorRating() { User = user, Sector = sector, Rating = 0 };
+                UserSectorRatingRepository.Insert(sectorRating);
+            }
 
             foreach (var resourcePool in sampleResourcePools)
             {
@@ -79,41 +98,41 @@
 
                 UserResourcePoolRepository.Insert(userResourcePool);
 
-                // Sample resource pool organizations
-                var sampleOrganizations = resourcePool.OrganizationSet;
-
-                foreach (var organization in sampleOrganizations)
-                {
-                    var userOrganization = new UserOrganization()
-                    {
-                        User = user,
-                        Organization = organization,
-                        NumberOfSales = 0,
-                        // TODO Handle these sample ratings nicely ?!
-                        QualityRating = organization.Id == 6 ? 80 : organization.Id == 7 ? 20 : 0,
-                        CustomerSatisfactionRating = organization.Id == 8 ? 80 : organization.Id == 9 ? 20 : 0,
-                        EmployeeSatisfactionRating = organization.Id == 10 ? 80 : organization.Id == 11 ? 20 : 0,
-                    };
-
-                    UserOrganizationRepository.Insert(userOrganization);
-                }
+                // Sample sector ratings
+                //foreach (var sector in sampleSectors)
+                //for (int i = 0; i < sampleSectors.Count; i++)
+                //{
+                //    var sector = sampleSectors[i];
+                //    var sectorRating = new UserSectorRating() { User = user, Sector = sector, Rating = 0 };
+                //    UserSectorRatingRepository.Insert(sectorRating);
+                //}
             }
 
-            // Sample license ratings
-            var licenseSet = LicenseRepository.AllLive;
-            foreach (var license in licenseSet)
-            {
-                var licenceRating = new UserLicenseRating() { User = user, License = license, Rating = 0 };
-                UserLicenseRatingRepository.Insert(licenceRating);
-            }
 
-            // Sample sector ratings
-            var sectorSet = SectorRepository.AllLive;
-            foreach (var sector in sectorSet)
-            {
-                var sectorRating = new UserSectorRating() { User = user, Sector = sector, Rating = 0 };
-                UserSectorRatingRepository.Insert(sectorRating);
-            }
+
+            //// Sample license ratings
+            //foreach (var license in sampleLicenses)
+            //{
+            //    var licenceRating = new UserLicenseRating() { User = user, License = license, Rating = 0 };
+            //    UserLicenseRatingRepository.Insert(licenceRating);
+            //}
+
+            //// Sample resource pool organizations
+            //foreach (var organization in sampleOrganizations)
+            //{
+            //    var userOrganization = new UserOrganization()
+            //    {
+            //        User = user,
+            //        Organization = organization,
+            //        NumberOfSales = 0,
+            //        // TODO Handle these sample ratings nicely ?!
+            //        QualityRating = organization.Id == 6 ? 80 : organization.Id == 7 ? 20 : 0,
+            //        CustomerSatisfactionRating = organization.Id == 8 ? 80 : organization.Id == 9 ? 20 : 0,
+            //        EmployeeSatisfactionRating = organization.Id == 10 ? 80 : organization.Id == 11 ? 20 : 0,
+            //    };
+
+            //    UserOrganizationRepository.Insert(userOrganization);
+            //}
         }
 
         public override void Delete(params object[] id)

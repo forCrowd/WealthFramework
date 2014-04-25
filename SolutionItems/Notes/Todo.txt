@@ -46,42 +46,37 @@ http://msdn.microsoft.com/en-US/data/jj591583#Index
 
 . update route.js to handle the links correctly - # is not necessary anymore
 
-. switch to code first, but first solve how to use tt files with code-first context
-. update database structure - resource pool should have organizations + licenses + sectors
-
 . layout - user edit - cancel doesn't go to back to home page
 
 . resource pool delete method disabled for the moment
 . "all in one" disabled for the moment
 
+. userunitofwork - insert disabled due to ef 6.1 issue!
+
 . code first findings;
 .. use localdb in local - normal sql server in production
-.. try to findout whether .tt files could work with codefirst?
 .. remove localdbtest stuff from the project + production (people table + migrationshistory)
-
----
-using (var db = new CodeFirstContext())
-{
-    using (var stream = new MemoryStream())
-    {
-        using (var writer = XmlWriter.Create(stream))
-        {
-            System.Data.Entity.Infrastructure.EdmxWriter.WriteEdmx(db, writer);
-        }
-        stream.Position = 0;
-
-		itemCollection = edmMetadataLoader.CreateEdmItemCollection(stream);
-    }
-} 
-
----
-code first olacak gibi ama dbcontext instance lazim, o da sorun cikariyor.. grkkkkkkk 11?!?!?!?
-ef6.utility.cs.ttinclude was modified!
-
-try to read connection string
-
-+		base	{data source=.\SQLEXPRESS;Integrated Security=SSPI;AttachDBFilename=|DataDirectory|aspnetdb.mdf;User Instance=true}	System.Configuration.ConfigurationElement {System.Configuration.ConnectionStringSettings}
 
 ---
 rename utiliy.ttinclude to ef.utility
 EF.Utility.CS.ttinclude
+
+---
+namespace is different - dataobjects vs businessobjects
+calculated properties are there in dto - how to separate them?
+metadata.tt will be gone
+remove App_Data
+
+database
+check settings - fields - stringlengths
+enums?
+calculated properties
+
+ef 6.1 has an issue!
+try to downgrade to prev. version
+try to test all definition pages + cmrp pages - whether they all work?
+any problem with odata and/or metadadta.xml?
+and how to merge metadata.xml with codefirst emdbuilder output?
+how to publish the work to live? delete live tables, let them create by code-first and then apply the script?
+test codefirst migrations? and field sort order and calculated properties and..?
+test + clean up nicely pls!

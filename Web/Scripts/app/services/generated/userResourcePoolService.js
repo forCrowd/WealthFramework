@@ -67,7 +67,7 @@
 
             var query = breeze.EntityQuery
 				.from('UserResourcePool')
-				.expand(['User', 'ResourcePool'])
+				.expand(['ResourcePool', 'User'])
 				.where('UserId', '==', userId)
             ;
 

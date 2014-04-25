@@ -1,10 +1,8 @@
 ﻿<#@ template language="C#" debug="false" hostspecific="true"#>
-<#@ assembly name="$(ProjectDir)bin\Debug\DataObjects.dll" #>
-<#@ assembly name="$(ProjectDir)bin\Debug\BusinessObjects.dll" #>
-<#@ import namespace="DataObjects" #>
-<#@ import namespace="System.Configuration" #>
-<#@ include file="..\EF6.Utility.ttinclude"#>
-<#@ include file="..\Utility.ttinclude"#><#
+<#@ assembly name="$(SolutionDir)DataObjects\bin\Debug\DataObjects.dll"#>
+<#@ import namespace="DataObjects"#>
+<#@ include file="$(SolutionDir)DataObjects\EF6.Utility.ttinclude"#>
+<#@ include file="$(SolutionDir)DataObjects\Utility.ttinclude"#><#
 
 // To be able to control whether it's going to be executed
 var executeMe = true;

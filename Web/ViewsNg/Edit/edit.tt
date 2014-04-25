@@ -1,22 +1,33 @@
 ﻿<#@ template language="C#" debug="false" hostspecific="true"#>
-<#@ include file="EF6.Utility.CS.ttinclude"#>
-<#@ include file="..\..\..\DataObjects\Utility.ttinclude"#><#
+<#@ assembly name="System.ComponentModel.DataAnnotations"#>
+<#@ assembly name="$(SolutionDir)BusinessObjects\bin\Debug\BusinessObjects.dll"#>
+<#@ assembly name="$(SolutionDir)DataObjects\bin\Debug\DataObjects.dll"#>
+<#@ import namespace="System.ComponentModel.DataAnnotations"#>
+<#@ import namespace="BusinessObjects"#>
+<#@ import namespace="BusinessObjects.Metadata.Attributes"#>
+<#@ import namespace="DataObjects"#>
+<#@ include file="$(SolutionDir)DataObjects\EF6.Utility.ttinclude"#>
+<#@ include file="$(SolutionDir)DataObjects\Utility.ttinclude"#><#
 
 // To be able to control whether it's going to be executed
 var executeMe = true;
 if (!executeMe)
 	return string.Empty;
 
-const string inputFile = @"..\..\..\DataObjects\Model.edmx";
+const string connectionString = @"Server=(LocalDb)\v11.0;Database=WealthEconomyDb;Integrated Security=True";
+
 var textTransform = DynamicTextTransformation.Create(this);
 var code = new CodeGenerationTools(this);
 var ef = new MetadataTools(this);
 var typeMapper = new TypeMapper(code, ef, textTransform.Errors);
-var	fileManager = EntityFrameworkTemplateFileManager.Create(this);
-var itemCollection = new EdmMetadataLoader(textTransform.Host, textTransform.Errors).CreateEdmItemCollection(inputFile);
 var codeStringGenerator = new CodeStringGenerator(code, typeMapper, ef);
+var	fileManager = EntityFrameworkTemplateFileManager.Create(this);
+var edmMetadataLoader = new EdmMetadataLoader(textTransform.Host, textTransform.Errors);
+IEnumerable<GlobalItem> itemCollection;
+using (var db = new WealthEconomyEntities(connectionString))
+	itemCollection = edmMetadataLoader.CreateEdmItemCollection(db);
 
-if (!typeMapper.VerifyCaseInsensitiveTypeUniqueness(typeMapper.GetAllGlobalItems(itemCollection), inputFile))
+if (!typeMapper.VerifyCaseInsensitiveTypeUniqueness(typeMapper.GetAllGlobalItems(itemCollection), connectionString))
 {
     return string.Empty;
 }
@@ -29,9 +40,8 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 	var entitySetName = string.Format("{0}Set", entityVariable);
 	var entityDeleteMethod = string.Format("delete{0}", entityTypeName);
 	var primaryKey = entityType.KeyMembers[0];
-    var primaryKeyShortTypeName = typeMapper.GetTypeName(primaryKey.TypeUsage);
     var simpleProperties = typeMapper.GetSimpleProperties(entityType);
-    var relatedProperties = typeMapper.GetRelatedNavigationProperties(entityType);
+	var metadataProperties = typeMapper.GetMetadataProperties(entityTypeName);
 	var outputFileName = string.Format(@"{0}Edit.html", entityVariable);
 
     fileManager.StartNewFile(outputFileName);
@@ -44,98 +54,23 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
         <h4><#= entityTypeName #></h4>
         <hr />
 <#
-    if (simpleProperties.Any())
+    foreach (var property in simpleProperties)
     {
-        foreach (var property in simpleProperties)
-        {
-			if (property.MetadataProperties.Any(p => p.Name == "http://tempuri.org/EdmCustomSchema.xsd:DisplayOnEditView")
-				&& !bool.Parse(property.MetadataProperties["http://tempuri.org/EdmCustomSchema.xsd:DisplayOnEditView"].Value.ToString()))
-				continue;
-			
-		// Check foreign key
-		var relatedProperty = relatedProperties.SingleOrDefault(related => ((AssociationType)related.RelationshipType)
-			.Constraint
-			.ToProperties
-			.Any(constraint => constraint.Name == property.Name));
+		// Get metadata property
+		var metadataProperty = metadataProperties.SingleOrDefault(p => p.Name == property.Name);
 
-		var displayName = string.Empty;
-		var displayInput = string.Empty;
-
-		var requiredText = property.Nullable ? "" : "required ";
-		
-		if (relatedProperty == null)
-        {
-			displayName = property.Name;
-
-			if (property.MetadataProperties.Any(p => p.Name == "http://tempuri.org/EdmCustomSchema.xsd:DisplayName"))
-				displayName = property.MetadataProperties["http://tempuri.org/EdmCustomSchema.xsd:DisplayName"].Value.ToString();
-
-			if (!property.IsEnumType)
-            {
-				displayInput = string.Format(@"<input id=""{0}"" name=""{0}"" type=""text"" data-ng-model=""vm.{1}.{2}"" class=""form-control"" {3}/>",
-					property.Name,
-					entityVariable,
-					property.Name,
-					requiredText);
-            }
-			else // Enum type
-            {
-				var displayInputOptions = new System.Text.StringBuilder();
-				
-				foreach (var item in property.EnumType.Members)
-					displayInputOptions.AppendFormat(@"<option value=""{0}"">{1}</option>", item.Value, item.Name);
-				
-				displayInput = string.Format(@"<select id=""{0}"" name=""{0}"" data-ng-model=""vm.{1}.{0}"" class=""form-control"" {2}>{3}</select>",
-					property.Name,
-					entityVariable,
-					requiredText,
-					displayInputOptions);			
-			}
-		}
-		else
-        {
-			var relatedEntityType = (EntityType)((RefType)relatedProperty.ToEndMember.TypeUsage.EdmType).ElementType;
-			
-			displayName = typeMapper.GetTypeName(relatedEntityType);
-		
-			// Default property
-			var relatedDefaultPropertyName = string.Empty;
-
-			if (relatedEntityType.MetadataProperties.Any(p => p.Name == "http://tempuri.org/EdmCustomSchema.xsd:DefaultProperty"))
-				relatedDefaultPropertyName = relatedEntityType.MetadataProperties["http://tempuri.org/EdmCustomSchema.xsd:DefaultProperty"].Value.ToString();
-
-			if (relatedEntityType.Properties.Any(p => p.Name == relatedDefaultPropertyName))
-			{
-				var relatedDefaultProperty = relatedEntityType.Properties[relatedDefaultPropertyName];
-
-				displayName = relatedDefaultProperty.Name;
-
-				if (relatedDefaultProperty.MetadataProperties.Any(p => p.Name == "http://tempuri.org/EdmCustomSchema.xsd:DisplayName"))
-					displayName = relatedDefaultProperty.MetadataProperties["http://tempuri.org/EdmCustomSchema.xsd:DisplayName"].Value.ToString();
-			}
-
-			var relatedEntityVariable = codeStringGenerator.GetCamelCase(relatedProperty.Name);
-			var relatedEntitySet = string.Format("{0}Set", relatedEntityVariable);
-
-			displayInput = string.Format(@"<select id=""{0}"" name=""{0}"" data-ng-model=""vm.{1}.{2}"" data-ng-options=""{3}.{4} for {3} in vm.{5}"" class=""form-control"" {6}></select>",
-				property.Name,
-				entityVariable,
-				relatedProperty.Name,
-				relatedEntityVariable,
-				relatedDefaultPropertyName,
-				relatedEntitySet,
-				requiredText);
-        }
-		
+		// Display the property?
+		var displayOnEditAttribute = typeMapper.GetAttribute<DisplayOnEditViewAttribute>(metadataProperty);
+		if (displayOnEditAttribute != null && !displayOnEditAttribute.Value)
+			continue;
 #>
         <div class="form-group">
-            <label for="<#= property.Name #>" class="control-label col-md-2"><#= displayName #></label>
+            <label for="<#= property.Name #>" class="control-label col-md-2"><#= codeStringGenerator.GetPropertyTitle(property) #></label>
             <div class="col-md-10" data-ng-class="{'has-error': editForm.<#= property.Name #>.$invalid && !editForm.<#= property.Name #>.$pristine}">
-                <#= displayInput #>
+                <#= GetPropertyInput(property, typeMapper, codeStringGenerator) #>
             </div>
         </div>
 <#
-        }
     }
 #>
         <div class="form-group">
@@ -154,5 +89,75 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 }
 
 fileManager.Process();
+
+#>
+
+<#+
+
+string GetPropertyInput(EdmProperty property, TypeMapper typeMapper, CodeStringGenerator codeStringGenerator)
+{
+	// Variables
+	var propertyInput = string.Empty;
+	var requiredText = property.Nullable ? "" : "required ";
+	var declaringType = (EntityType)((EdmMember)property).DeclaringType;
+	var declaringTypeName = typeMapper.GetTypeName(declaringType);
+	var declaringTypeVariable = codeStringGenerator.GetCamelCase(declaringTypeName);
+	var navigationProperties = typeMapper.GetRelatedNavigationProperties(declaringType);
+
+	// Is navigation property?
+	var navigationProperty = navigationProperties.SingleOrDefault(related => ((AssociationType)related.RelationshipType)
+		.Constraint
+		.ToProperties
+		.Any(constraint => constraint.Name == property.Name));
+
+	if (navigationProperty == null)
+	{
+		// Simple type (textbox)
+		if (!property.IsEnumType)
+		{
+			propertyInput = string.Format(@"<input id=""{0}"" name=""{0}"" type=""text"" data-ng-model=""vm.{1}.{2}"" class=""form-control"" {3}/>",
+				property.Name,
+				declaringTypeVariable,
+				property.Name,
+				requiredText);
+		}
+		else // Enum type (dropdown)
+		{
+			var propertyInputOptions = new System.Text.StringBuilder();
+				
+			foreach (var item in property.EnumType.Members)
+				propertyInputOptions.AppendFormat(@"<option value=""{0}"">{1}</option>", item.Value, item.Name);
+				
+			propertyInput = string.Format(@"<select id=""{0}"" name=""{0}"" data-ng-model=""vm.{1}.{0}"" class=""form-control"" {2}>{3}</select>",
+				property.Name,
+				declaringTypeVariable,
+				requiredText,
+				propertyInputOptions);			
+		}
+	}
+	else // Navigation property case
+	{
+		// Check DefaultProperty attribute of the related entity
+		var relatedEntityVariable = codeStringGenerator.GetCamelCase(navigationProperty.Name);
+		var relatedEntitySet = string.Format("{0}Set", relatedEntityVariable);
+		var relatedEntityType = (EntityType)((RefType)navigationProperty.ToEndMember.TypeUsage.EdmType).ElementType;
+		var relatedEntityTypeName = typeMapper.GetTypeName(relatedEntityType);
+		var relatedEntityMetadataType = typeMapper.GetMetadataType(relatedEntityTypeName);
+		var defaultPropertyAttribute = typeMapper.GetAttribute<DefaultPropertyAttribute>(relatedEntityMetadataType);
+
+		// Use the value of DefaultProperty attribute of the related entity
+		if (defaultPropertyAttribute != null)
+			propertyInput = string.Format(@"<select id=""{0}"" name=""{0}"" data-ng-model=""vm.{1}.{2}"" data-ng-options=""{3}.{4} for {3} in vm.{5}"" class=""form-control"" {6}></select>",
+				property.Name,
+				declaringTypeVariable,
+				navigationProperty.Name,
+				relatedEntityVariable,
+				defaultPropertyAttribute.Value,
+				relatedEntitySet,
+				requiredText);
+	}
+
+	return propertyInput;
+}
 
 #>

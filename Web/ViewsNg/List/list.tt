@@ -1,22 +1,33 @@
 ﻿<#@ template language="C#" debug="false" hostspecific="true"#>
-<#@ include file="EF6.Utility.CS.ttinclude"#>
-<#@ include file="..\..\..\DataObjects\Utility.ttinclude"#><#
+<#@ assembly name="System.ComponentModel.DataAnnotations"#>
+<#@ assembly name="$(SolutionDir)BusinessObjects\bin\Debug\BusinessObjects.dll"#>
+<#@ assembly name="$(SolutionDir)DataObjects\bin\Debug\DataObjects.dll"#>
+<#@ import namespace="System.ComponentModel.DataAnnotations"#>
+<#@ import namespace="BusinessObjects"#>
+<#@ import namespace="BusinessObjects.Metadata.Attributes"#>
+<#@ import namespace="DataObjects"#>
+<#@ include file="$(SolutionDir)DataObjects\EF6.Utility.ttinclude"#>
+<#@ include file="$(SolutionDir)DataObjects\Utility.ttinclude"#><#
 
 // To be able to control whether it's going to be executed
 var executeMe = true;
 if (!executeMe)
 	return string.Empty;
 
-const string inputFile = @"..\..\..\DataObjects\Model.edmx";
+const string connectionString = @"Server=(LocalDb)\v11.0;Database=WealthEconomyDb;Integrated Security=True";
+
 var textTransform = DynamicTextTransformation.Create(this);
 var code = new CodeGenerationTools(this);
 var ef = new MetadataTools(this);
 var typeMapper = new TypeMapper(code, ef, textTransform.Errors);
-var	fileManager = EntityFrameworkTemplateFileManager.Create(this);
-var itemCollection = new EdmMetadataLoader(textTransform.Host, textTransform.Errors).CreateEdmItemCollection(inputFile);
 var codeStringGenerator = new CodeStringGenerator(code, typeMapper, ef);
+var	fileManager = EntityFrameworkTemplateFileManager.Create(this);
+var edmMetadataLoader = new EdmMetadataLoader(textTransform.Host, textTransform.Errors);
+IEnumerable<GlobalItem> itemCollection;
+using (var db = new WealthEconomyEntities(connectionString))
+	itemCollection = edmMetadataLoader.CreateEdmItemCollection(db);
 
-if (!typeMapper.VerifyCaseInsensitiveTypeUniqueness(typeMapper.GetAllGlobalItems(itemCollection), inputFile))
+if (!typeMapper.VerifyCaseInsensitiveTypeUniqueness(typeMapper.GetAllGlobalItems(itemCollection), connectionString))
 {
     return string.Empty;
 }
@@ -29,12 +40,11 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 	var entitySetName = string.Format("{0}Set", entityVariable);
 	var entityDeleteMethod = string.Format("delete{0}", entityTypeName);
 	var primaryKey = entityType.KeyMembers[0];
-    var primaryKeyShortTypeName = typeMapper.GetTypeName(primaryKey.TypeUsage);
     var simpleProperties = typeMapper.GetSimpleProperties(entityType);
-    var relatedProperties = typeMapper.GetRelatedNavigationProperties(entityType);
+	var metadataProperties = typeMapper.GetMetadataProperties(entityTypeName);
 	var outputFileName = string.Format(@"{0}List.html", entityVariable);
 
-    fileManager.StartNewFile(outputFileName);
+	fileManager.StartNewFile(outputFileName);
 #>
 <!--
 <#= codeStringGenerator.WriteHeader() #>-->
@@ -47,57 +57,16 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 <#
     foreach (var property in simpleProperties)
     {
-		if (property.MetadataProperties.Any(p => p.Name == "http://tempuri.org/EdmCustomSchema.xsd:DisplayOnListView")
-			&& !bool.Parse(property.MetadataProperties["http://tempuri.org/EdmCustomSchema.xsd:DisplayOnListView"].Value.ToString()))
+		// Get metadata property
+		var metadataProperty = metadataProperties.SingleOrDefault(p => p.Name == property.Name);
+
+		// Display the property?
+		var displayOnListAttribute = typeMapper.GetAttribute<DisplayOnListViewAttribute>(metadataProperty);
+		if (displayOnListAttribute != null && !displayOnListAttribute.Value)
 			continue;
-		
-		// Check foreign key
-		var relatedProperty = relatedProperties.SingleOrDefault(related => ((AssociationType)related.RelationshipType)
-			.Constraint
-			.ToProperties
-			.Any(constraint => constraint.Name == property.Name));
-
-		var displayName = string.Empty;
-		
-		if (relatedProperty == null)
-        {
-			displayName = property.Name;
-
-			if (property.MetadataProperties.Any(p => p.Name == "http://tempuri.org/EdmCustomSchema.xsd:DisplayName"))
-				displayName = property.MetadataProperties["http://tempuri.org/EdmCustomSchema.xsd:DisplayName"].Value.ToString();
-		}
-		else
-        {
-			var relatedEntityType = (EntityType)((RefType)relatedProperty.ToEndMember.TypeUsage.EdmType).ElementType;
-			
-			displayName = typeMapper.GetTypeName(relatedEntityType);
-		
-			// Default property
-			var relatedDefaultPropertyName = string.Empty;
-
-			if (relatedEntityType.MetadataProperties.Any(p => p.Name == "http://tempuri.org/EdmCustomSchema.xsd:DefaultProperty"))
-				relatedDefaultPropertyName = relatedEntityType.MetadataProperties["http://tempuri.org/EdmCustomSchema.xsd:DefaultProperty"].Value.ToString();
-
-			if (relatedEntityType.MetadataProperties.Any(p => p.Name == "http://tempuri.org/EdmCustomSchema.xsd:DefaultPropertyDisplayName"))
-            {
-				displayName = relatedEntityType.MetadataProperties["http://tempuri.org/EdmCustomSchema.xsd:DefaultPropertyDisplayName"].Value.ToString();
-            }
-			else
-            {
-				if (relatedEntityType.Properties.Any(p => p.Name == relatedDefaultPropertyName))
-				{
-					var relatedDefaultProperty = relatedEntityType.Properties[relatedDefaultPropertyName];
-
-					displayName = relatedDefaultProperty.Name;
-
-					if (relatedDefaultProperty.MetadataProperties.Any(p => p.Name == "http://tempuri.org/EdmCustomSchema.xsd:DisplayName"))
-						displayName = relatedDefaultProperty.MetadataProperties["http://tempuri.org/EdmCustomSchema.xsd:DisplayName"].Value.ToString();
-				}
-            }
-        }
 #>
     <th>
-        <#= displayName #>
+        <#= codeStringGenerator.GetPropertyTitle(property) #>
     </th>
 <#
     }
@@ -108,36 +77,14 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 <#
     foreach (var property in simpleProperties)
     {
-		if (property.MetadataProperties.Any(p => p.Name == "http://tempuri.org/EdmCustomSchema.xsd:DisplayOnListView")
-			&& !bool.Parse(property.MetadataProperties["http://tempuri.org/EdmCustomSchema.xsd:DisplayOnListView"].Value.ToString()))
+		var metadataProperty = metadataProperties.SingleOrDefault(p => p.Name == property.Name);
+
+		var displayOnListAttribute = typeMapper.GetAttribute<DisplayOnListViewAttribute>(metadataProperty);
+		if (displayOnListAttribute != null && !displayOnListAttribute.Value)
 			continue;
-
-		// Check foreign key
-		var relatedProperty = relatedProperties.SingleOrDefault(related => ((AssociationType)related.RelationshipType)
-			.Constraint
-			.ToProperties
-			.Any(constraint => constraint.Name == property.Name));
-
-		var displayValue = string.Empty;
-		
-		if (relatedProperty == null)
-        {
-			displayValue = string.Format("{0}.{1}", entityVariable, property.Name);
-		}
-		else
-        {
-			var relatedEntityType = (EntityType)((RefType)relatedProperty.ToEndMember.TypeUsage.EdmType).ElementType;
-			var relatedEntityTypeName = typeMapper.GetTypeName(relatedEntityType);
-			var relatedDefaultProperty = string.Empty;
-			
-			if (relatedEntityType.MetadataProperties.Any(p => p.Name == "http://tempuri.org/EdmCustomSchema.xsd:DefaultProperty"))
-				relatedDefaultProperty = relatedEntityType.MetadataProperties["http://tempuri.org/EdmCustomSchema.xsd:DefaultProperty"].Value.ToString();
-
-			displayValue = string.Format("{0}.{1}.{2}", entityVariable, relatedEntityTypeName, relatedDefaultProperty);
-        }
 #>
         <td>
-            {{ <#= displayValue #> }}
+            {{ <#= GetPropertyPath(property, typeMapper, codeStringGenerator) #> }}
         </td>
 <#
     }
@@ -154,5 +101,42 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 }
 
 fileManager.Process();
+
+#>
+
+<#+
+
+string GetPropertyPath(EdmProperty property, TypeMapper typeMapper, CodeStringGenerator codeStringGenerator)
+{
+	// Get declaring type
+	var declaringType = (EntityType)((EdmMember)property).DeclaringType;
+	var declaringTypeName = typeMapper.GetTypeName(declaringType);
+	var declaringTypeVariable = codeStringGenerator.GetCamelCase(declaringTypeName);
+
+	// 1. Property name itself is the default one
+	var propertyPath = string.Format("{0}.{1}", declaringTypeVariable, property.Name); 
+
+	// Is navigation property?
+	var navigationProperties = typeMapper.GetRelatedNavigationProperties(declaringType);
+	var navigationProperty = navigationProperties.SingleOrDefault(related => ((AssociationType)related.RelationshipType)
+		.Constraint
+		.ToProperties
+		.Any(constraint => constraint.Name == property.Name));
+
+	if (navigationProperty != null)
+    {
+		// Check DefaultProperty attribute of the related entity
+		var relatedEntityType = (EntityType)((RefType)navigationProperty.ToEndMember.TypeUsage.EdmType).ElementType;
+		var relatedEntityTypeName = typeMapper.GetTypeName(relatedEntityType);
+		var relatedEntityMetadataType = typeMapper.GetMetadataType(relatedEntityTypeName);
+		var defaultPropertyAttribute = typeMapper.GetAttribute<DefaultPropertyAttribute>(relatedEntityMetadataType);
+
+		// 2. Use the value of DefaultProperty attribute of the related entity
+		if (defaultPropertyAttribute != null)
+			propertyPath = string.Format("{0}.{1}.{2}", declaringTypeVariable, relatedEntityTypeName, defaultPropertyAttribute.Value);
+    }
+
+	return propertyPath;
+}
 
 #>

@@ -13,16 +13,16 @@
     var controllerId = 'userResourcePoolEditController';
     angular.module('main')
         .controller(controllerId, ['userResourcePoolService',
-            'userService',
             'resourcePoolService',
+            'userService',
             'logger',
             '$location',
             '$routeParams',
             userResourcePoolEditController]);
 
     function userResourcePoolEditController(userResourcePoolService,
-		userService,
 		resourcePoolService,
+		userService,
 		logger,
 		$location,
 		$routeParams) {
@@ -33,8 +33,8 @@
 
         // Controller methods (alphabetically)
         var vm = this;
-        vm.userSet = [];
         vm.resourcePoolSet = [];
+        vm.userSet = [];
         vm.cancelChanges = cancelChanges;
         vm.isSaveDisabled = isSaveDisabled;
         vm.userResourcePool = null;
@@ -61,16 +61,16 @@
 
         function initialize() {
 
-            userService.getUserSet(false)
+            resourcePoolService.getResourcePoolSet(false)
                 .then(function (data) {
-                    vm.userSet = data;
+                    vm.resourcePoolSet = data;
                 });
 
             // TODO Catch?
 
-            resourcePoolService.getResourcePoolSet(false)
+            userService.getUserSet(false)
                 .then(function (data) {
-                    vm.resourcePoolSet = data;
+                    vm.userSet = data;
                 });
 
             // TODO Catch?

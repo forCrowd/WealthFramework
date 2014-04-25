@@ -14,7 +14,7 @@ namespace BusinessObjects
     using System.ComponentModel.DataAnnotations;
     using BusinessObjects.Metadata;
 
-    //[MetadataType(typeof(SectorMetadata))]
+    [MetadataType(typeof(SectorMetadata))]
     public partial class Sector : IEntity
     {
         public Sector()

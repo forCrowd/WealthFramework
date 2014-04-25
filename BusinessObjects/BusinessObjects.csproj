@@ -11,6 +11,8 @@
     <AssemblyName>BusinessObjects</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,6 +32,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -48,31 +56,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Dto\Generated\LicenseDto.cs">
-      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Dto\Generated\OrganizationDto.cs">
-      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Dto\Generated\ResourcePoolDto.cs">
-      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Dto\Generated\SectorDto.cs">
-      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
-    </Compile>
     <Compile Include="Dto\Generated\UserDto.cs">
-      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Dto\Generated\UserLicenseRatingDto.cs">
-      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Dto\Generated\UserOrganizationDto.cs">
-      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Dto\Generated\UserResourcePoolDto.cs">
-      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Dto\Generated\UserSectorRatingDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
     <Compile Include="Generated\BusinessObject.cs">
@@ -110,6 +94,9 @@
     <Compile Include="Generated\UserSectorRating.cs">
       <DependentUpon>BusinessObject.tt</DependentUpon>
     </Compile>
+    <Compile Include="Metadata\Attributes\DefaultPropertyAttribute.cs" />
+    <Compile Include="Metadata\Attributes\DisplayOnEditViewAttribute.cs" />
+    <Compile Include="Metadata\Attributes\DisplayOnListViewAttribute.cs" />
     <Compile Include="Metadata\Generated\BusinessObjectMetadata.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -147,20 +134,17 @@
     </Compile>
     <Compile Include="Metadata\LicenseMetadata.cs" />
     <Compile Include="Metadata\OrganizationMetadata.cs" />
-    <Compile Include="Metadata\ResourcePoolOrganizationMetadata.cs" />
     <Compile Include="Metadata\SectorMetadata.cs" />
-    <Compile Include="Metadata\UserDistributionIndexRatingMetadata.cs" />
     <Compile Include="Metadata\ResourcePoolMetadata.cs" />
     <Compile Include="Metadata\UserLicenseRatingMetadata.cs" />
     <Compile Include="Metadata\UserMetadata.cs" />
-    <Compile Include="Metadata\UserResourcePoolOrganizationMetadata.cs" />
+    <Compile Include="Metadata\UserOrganizationMetadata.cs" />
     <Compile Include="Metadata\UserResourcePoolMetadata.cs" />
     <Compile Include="Metadata\UserSectorRatingMetadata.cs" />
     <Compile Include="ResourcePool.cs" />
     <Compile Include="ResourcePoolOrganization.cs" />
     <Compile Include="Dto\UserResourcePoolOrganizationDto2.cs" />
     <Compile Include="UserOrganization.cs" />
-    <Compile Include="UserResourcePoolOrganization.cs" />
     <Compile Include="UserResourcePool.cs" />
     <Compile Include="UserResourcePoolType.cs" />
     <Compile Include="Sector.cs" />
@@ -169,6 +153,7 @@
     <Compile Include="IEntity.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="Dto\Generated\BusinessObjectDto.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>BusinessObjectDto.cs</LastGenOutput>
@@ -181,12 +166,20 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>BusinessObject.cs</LastGenOutput>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

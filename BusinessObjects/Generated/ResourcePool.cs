@@ -14,7 +14,7 @@ namespace BusinessObjects
     using System.ComponentModel.DataAnnotations;
     using BusinessObjects.Metadata;
 
-    //[MetadataType(typeof(ResourcePoolMetadata))]
+    [MetadataType(typeof(ResourcePoolMetadata))]
     public partial class ResourcePool : IEntity
     {
         public ResourcePool()

@@ -14,7 +14,7 @@ namespace BusinessObjects
     using System.ComponentModel.DataAnnotations;
     using BusinessObjects.Metadata;
 
-    //[MetadataType(typeof(UserMetadata))]
+    [MetadataType(typeof(UserMetadata))]
     public partial class User : IEntity
     {
         public User()

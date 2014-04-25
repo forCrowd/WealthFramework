@@ -13,18 +13,18 @@
     var controllerId = 'organizationEditController';
     angular.module('main')
         .controller(controllerId, ['organizationService',
-            'sectorService',
             'licenseService',
             'resourcePoolService',
+            'sectorService',
             'logger',
             '$location',
             '$routeParams',
             organizationEditController]);
 
     function organizationEditController(organizationService,
-		sectorService,
 		licenseService,
 		resourcePoolService,
+		sectorService,
 		logger,
 		$location,
 		$routeParams) {
@@ -35,9 +35,9 @@
 
         // Controller methods (alphabetically)
         var vm = this;
-        vm.sectorSet = [];
         vm.licenseSet = [];
         vm.resourcePoolSet = [];
+        vm.sectorSet = [];
         vm.cancelChanges = cancelChanges;
         vm.isSaveDisabled = isSaveDisabled;
         vm.organization = null;
@@ -64,13 +64,6 @@
 
         function initialize() {
 
-            sectorService.getSectorSet(false)
-                .then(function (data) {
-                    vm.sectorSet = data;
-                });
-
-            // TODO Catch?
-
             licenseService.getLicenseSet(false)
                 .then(function (data) {
                     vm.licenseSet = data;
@@ -81,6 +74,13 @@
             resourcePoolService.getResourcePoolSet(false)
                 .then(function (data) {
                     vm.resourcePoolSet = data;
+                });
+
+            // TODO Catch?
+
+            sectorService.getSectorSet(false)
+                .then(function (data) {
+                    vm.sectorSet = data;
                 });
 
             // TODO Catch?

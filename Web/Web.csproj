@@ -502,9 +502,22 @@
     <Content Include="ViewsNg\Edit\userSectorRatingEdit.html">
       <DependentUpon>edit.tt</DependentUpon>
     </Content>
+    <Content Include="Scripts\toastr.min.js.map" />
+    <Content Include="Scripts\jquery-2.1.0.min.map" />
     <Content Include="ViewsNg\List\licenseList.html">
       <DependentUpon>list.tt</DependentUpon>
     </Content>
+    <Content Include="ViewsNg\List\list.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>list.cs</LastGenOutput>
+    </Content>
+    <Content Include="ViewsNg\Edit\edit.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>edit.cs</LastGenOutput>
+    </Content>
+    <Content Include="ViewsNg\Home\Index.html" />
+    <Content Include="ViewsNg\Home\Overview.html" />
+    <Content Include="ViewsNg\Home\Technologies.html" />
     <Content Include="ViewsNg\List\organizationList.html">
       <DependentUpon>list.tt</DependentUpon>
     </Content>
@@ -529,19 +542,6 @@
     <Content Include="ViewsNg\List\userSectorRatingList.html">
       <DependentUpon>list.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\toastr.min.js.map" />
-    <Content Include="Scripts\jquery-2.1.0.min.map" />
-    <Content Include="ViewsNg\List\list.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>list.cs</LastGenOutput>
-    </Content>
-    <Content Include="ViewsNg\Edit\edit.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>edit.cs</LastGenOutput>
-    </Content>
-    <Content Include="ViewsNg\Home\Index.html" />
-    <Content Include="ViewsNg\Home\Overview.html" />
-    <Content Include="ViewsNg\Home\Technologies.html" />
     <Content Include="ViewsNg\UserResourcePool\AllInOne.html" />
     <Content Include="ViewsNg\UserResourcePool\CustomerSatisfactionIndex.html" />
     <Content Include="ViewsNg\UserResourcePool\DistanceIndex.html" />

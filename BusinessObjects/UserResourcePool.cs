@@ -6,6 +6,11 @@
 
     public partial class UserResourcePool
     {
+        public string Name
+        {
+            get { return string.Format("{0} - {1}", User.Email, ResourcePool.Name); }
+        }
+
         UserResourcePoolType userResourcePoolType = UserResourcePoolType.Public;
 
         public UserResourcePoolType UserResourcePoolType
