@@ -79,4 +79,7 @@ any problem with odata and/or metadadta.xml?
 and how to merge metadata.xml with codefirst emdbuilder output?
 how to publish the work to live? delete live tables, let them create by code-first and then apply the script?
 test codefirst migrations? and field sort order and calculated properties and..?
+check release notes!
 test + clean up nicely pls!
+
+test the case with prev ef with a new project (without updading nuget packages?!)
