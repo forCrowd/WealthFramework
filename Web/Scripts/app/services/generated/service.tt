@@ -1,8 +1,5 @@
 ﻿<#@ template language="C#" debug="false" hostspecific="true"#>
-<#@ assembly name="$(SolutionDir)DataObjects\bin\Debug\DataObjects.dll"#>
-<#@ import namespace="DataObjects"#>
-<#@ include file="$(SolutionDir)DataObjects\EF6.Utility.ttinclude"#>
-<#@ include file="$(SolutionDir)DataObjects\Utility.ttinclude"#><#
+<#@ include file="$(SolutionDir)Framework\T4\EF.Utility.ttinclude"#><#
 
 // To be able to control whether it's going to be executed
 var executeMe = true;
@@ -19,7 +16,7 @@ var codeStringGenerator = new CodeStringGenerator(code, typeMapper, ef);
 var	fileManager = EntityFrameworkTemplateFileManager.Create(this);
 var edmMetadataLoader = new EdmMetadataLoader(textTransform.Host, textTransform.Errors);
 IEnumerable<GlobalItem> itemCollection;
-using (var db = new WealthEconomyEntities(connectionString))
+using (var db = new WealthEconomyContext(connectionString))
 	itemCollection = edmMetadataLoader.CreateEdmItemCollection(db);
 
 if (!typeMapper.VerifyCaseInsensitiveTypeUniqueness(typeMapper.GetAllGlobalItems(itemCollection), connectionString))

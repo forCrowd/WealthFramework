@@ -282,7 +282,7 @@
             </Dependent>
         </ReferentialConstraint>
     </Association>
-    <EntityContainer Name="WealthEconomyEntities" annotation:LazyLoadingEnabled="true">
+    <EntityContainer Name="WealthEconomyContext" annotation:LazyLoadingEnabled="true">
         <EntitySet Name="License" EntityType="Self.License" />
         <EntitySet Name="Organization" EntityType="Self.Organization" />
         <EntitySet Name="Sector" EntityType="Self.Sector" />

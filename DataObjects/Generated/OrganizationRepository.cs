@@ -13,7 +13,7 @@ namespace DataObjects
 
     public partial class OrganizationRepository : BaseRepository<Organization>
     {
-        public OrganizationRepository(WealthEconomyEntities context)
+        public OrganizationRepository(WealthEconomyContext context)
             : base(context)
         {
         }

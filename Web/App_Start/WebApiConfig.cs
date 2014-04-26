@@ -30,7 +30,7 @@ namespace Web
                 routeName: "ODataRoute",
                 routePrefix: "odata",
                 model: GetEdm(),
-                // model: Facade.Utility.GetWealthEconomyEntitiesEdm(),
+                // model: Facade.Utility.GetWealthEconomyContextEdm(),
                 batchHandler: new DefaultODataBatchHandler(GlobalConfiguration.DefaultServer));
         }
 

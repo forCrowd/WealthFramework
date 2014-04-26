@@ -4,13 +4,13 @@
     using System.Data.Entity;
     using System.Data.Entity.ModelConfiguration.Conventions;
 
-    public class WealthEconomyEntities : DbContext
+    public class WealthEconomyContext : DbContext
     {
-        public WealthEconomyEntities() : base(nameOrConnectionString: "WealthEconomyContext")
+        public WealthEconomyContext() : base(nameOrConnectionString: "WealthEconomyContext")
         {
         }
 
-        public WealthEconomyEntities(string nameOrConnectionString)
+        public WealthEconomyContext(string nameOrConnectionString)
             : base(nameOrConnectionString)
         {
         }

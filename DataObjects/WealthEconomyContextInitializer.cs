@@ -4,9 +4,9 @@
     using System;
     using System.Data.Entity;
 
-    public class WealthEconomyContextInitializer : DropCreateDatabaseIfModelChanges<WealthEconomyEntities>
+    public class WealthEconomyContextInitializer : DropCreateDatabaseIfModelChanges<WealthEconomyContext>
     {
-        protected override void Seed(WealthEconomyEntities context)
+        protected override void Seed(WealthEconomyContext context)
         {
             base.Seed(context);
 

@@ -9,15 +9,15 @@
 
     public class BaseUnitOfWork<TEntityType> : IDisposable where TEntityType : class, IEntity
     {
-        WealthEconomyEntities context;
+        WealthEconomyContext context;
         IGenericRepository<TEntityType> mainRepository;
 
         protected BaseUnitOfWork()
         {
-            context = new WealthEconomyEntities();
+            context = new WealthEconomyContext();
         }
 
-        protected WealthEconomyEntities Context
+        protected WealthEconomyContext Context
         {
             get { return context; }
         }

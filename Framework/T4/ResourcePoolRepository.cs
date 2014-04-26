@@ -11,9 +11,9 @@ namespace DataObjects
 {
     using BusinessObjects;
 
-    public partial class OrganizationRepository : BaseRepository<Organization>
+    public partial class ResourcePoolRepository : BaseRepository<ResourcePool>
     {
-        public OrganizationRepository(WealthEconomyEntities context)
+        public ResourcePoolRepository(WealthEconomyContext context)
             : base(context)
         {
         }

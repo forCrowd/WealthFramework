@@ -58,7 +58,31 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Dto\Generated\LicenseDto.cs">
+      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Dto\Generated\OrganizationDto.cs">
+      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Dto\Generated\ResourcePoolDto.cs">
+      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Dto\Generated\SectorDto.cs">
+      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
+    </Compile>
     <Compile Include="Dto\Generated\UserDto.cs">
+      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Dto\Generated\UserLicenseRatingDto.cs">
+      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Dto\Generated\UserOrganizationDto.cs">
+      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Dto\Generated\UserResourcePoolDto.cs">
+      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Dto\Generated\UserSectorRatingDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
     <Compile Include="Generated\BusinessObject.cs">

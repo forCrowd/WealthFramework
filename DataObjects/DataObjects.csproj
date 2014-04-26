@@ -96,7 +96,6 @@
     </Compile>
     <Compile Include="WealthEconomyContextInitializer.cs" />
     <Compile Include="WealthEconomyContext.cs" />
-    <Compile Include="WealthEconomyEntities.cs" />
     <Compile Include="BaseRepository.cs" />
     <Compile Include="IGenericRepository.cs" />
     <Compile Include="Generated\Repository.cs">
@@ -109,16 +108,11 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="EdmCustomSchema.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Generated\Repository.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Repository.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
-    <None Include="EF6.Utility.ttinclude" />
-    <None Include="Utility.ttinclude" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

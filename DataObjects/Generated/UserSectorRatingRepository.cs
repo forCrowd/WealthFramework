@@ -13,7 +13,7 @@ namespace DataObjects
 
     public partial class UserSectorRatingRepository : BaseRepository<UserSectorRating>
     {
-        public UserSectorRatingRepository(WealthEconomyEntities context)
+        public UserSectorRatingRepository(WealthEconomyContext context)
             : base(context)
         {
         }

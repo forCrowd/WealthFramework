@@ -1,6 +1,6 @@
 ﻿<#@ template language="C#" debug="false" hostspecific="true"#>
 <#@ include file="EF6.Utility.CS.ttinclude"#>
-<#@ include file="..\..\..\DataObjects\Utility.ttinclude"#><#
+<#@ include file="..\..\..\DataObjects\EF.Utility.ttinclude"#><#
 
 /*
 	Use this file to generate the metadadata file(s) just for the first time.

@@ -5,9 +5,9 @@ namespace Facade
 {
     public static class Utility
     {
-        public static IEdmModel GetWealthEconomyEntitiesEdm()
+        public static IEdmModel GetWealthEconomyContextEdm()
         {
-            return EdmBuilder.GetEdm<WealthEconomyEntities>();
+            return EdmBuilder.GetEdm<WealthEconomyContext>();
         }
     }
 }

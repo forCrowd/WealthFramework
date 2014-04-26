@@ -1,8 +1,10 @@
 ﻿0.9
-. DataObjects - Convert the context to code-first approach
-.. LocalDb instead of Sql server
-.. New metadata way
-.. utility.cs.ttinclude updates etc.
+. Application
+.. Converted to Code-First approach instead of Database-First
+... T4 files were updated to read from code-first metadata
+... EF6.Utility.cs was moved to the solution
+.. Switched to LocalDb instead of SQL Server 2008 R2
+.. T4 include files are now under Framework\T4 folder
 
 0.8.1
 . Web - Cleaning up the old mvc controllers + views etc.

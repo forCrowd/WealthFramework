@@ -51,19 +51,10 @@ http://msdn.microsoft.com/en-US/data/jj591583#Index
 . resource pool delete method disabled for the moment
 . "all in one" disabled for the moment
 
-. code first findings;
-.. use localdb in local - normal sql server in production
-.. remove localdbtest stuff from the project + production (people table + migrationshistory)
-
----
-rename utiliy.ttinclude to ef.utility
-EF.Utility.CS.ttinclude
-
 ---
 namespace is different - dataobjects vs businessobjects
 calculated properties are there in dto - how to separate them?
-metadata.tt will be gone
-remove App_Data
+metadata.tt will be gone ?
 
 database
 check settings - fields - stringlengths
@@ -75,10 +66,4 @@ any problem with odata and/or metadadta.xml?
 and how to merge metadata.xml with codefirst emdbuilder output?
 how to publish the work to live? delete live tables, let them create by code-first and then apply the script?
 test codefirst migrations? and field sort order and calculated properties and..?
-check release notes!
 test + clean up nicely pls!
-
----
-latest notes
-it was all about multipleactiveresultsets setting and lazy loading - everything seems fine now
-make some more test and try to finish this code-first stuff!

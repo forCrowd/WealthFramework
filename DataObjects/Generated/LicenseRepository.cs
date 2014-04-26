@@ -13,7 +13,7 @@ namespace DataObjects
 
     public partial class LicenseRepository : BaseRepository<License>
     {
-        public LicenseRepository(WealthEconomyEntities context)
+        public LicenseRepository(WealthEconomyContext context)
             : base(context)
         {
         }

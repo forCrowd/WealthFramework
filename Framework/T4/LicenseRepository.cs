@@ -11,9 +11,9 @@ namespace DataObjects
 {
     using BusinessObjects;
 
-    public partial class SectorRepository : BaseRepository<Sector>
+    public partial class LicenseRepository : BaseRepository<License>
     {
-        public SectorRepository(WealthEconomyEntities context)
+        public LicenseRepository(WealthEconomyContext context)
             : base(context)
         {
         }
