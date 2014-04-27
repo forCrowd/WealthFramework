@@ -153,6 +153,7 @@
     <Compile Include="..\SolutionItems\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="App_Start\DatabaseConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -473,7 +474,6 @@
     </Content>
     <Content Include="ViewsNg\Edit\edit.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>edit.cs</LastGenOutput>
     </Content>
     <Content Include="ViewsNg\Home\Index.html" />
     <Content Include="ViewsNg\Home\Overview.html" />

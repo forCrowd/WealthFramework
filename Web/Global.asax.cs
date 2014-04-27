@@ -15,13 +15,14 @@ namespace Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            DatabaseConfig.Initialize();
         }
 
         protected void Session_Start()
         {
             // Development mode
             if (ApplicationSettings.ServerMode == ServerMode.Development)
-                DevelopmentModeConfig.Init();
+                DevelopmentModeConfig.Initialize();
         }
 
         // To support Session in WebApi - can be removed in case of tokens

@@ -52,18 +52,15 @@ http://msdn.microsoft.com/en-US/data/jj591583#Index
 . "all in one" disabled for the moment
 
 ---
+merge metadata.xml + edmbuilder output?
+
 namespace is different - dataobjects vs businessobjects
 calculated properties are there in dto - how to separate them?
+businessobject.tt will be gone?
+geenrated + custom businessobjects will be merged?
 metadata.tt will be gone ?
 
 database
-check settings - fields - stringlengths
+check settings - fields - stringlengths - default values!
 enums?
 calculated properties
-
-try to test all definition pages + cmrp pages - whether they all work?
-any problem with odata and/or metadadta.xml?
-and how to merge metadata.xml with codefirst emdbuilder output?
-how to publish the work to live? delete live tables, let them create by code-first and then apply the script?
-test codefirst migrations? and field sort order and calculated properties and..?
-test + clean up nicely pls!

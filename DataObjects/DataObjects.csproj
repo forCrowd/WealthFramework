@@ -94,7 +94,11 @@
     <Compile Include="Generated\UserSectorRatingRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
-    <Compile Include="WealthEconomyContextInitializer.cs" />
+    <Compile Include="Migrations\201404271036016_InitialCreate.cs" />
+    <Compile Include="Migrations\201404271036016_InitialCreate.Designer.cs">
+      <DependentUpon>201404271036016_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="WealthEconomyContext.cs" />
     <Compile Include="BaseRepository.cs" />
     <Compile Include="IGenericRepository.cs" />
@@ -123,7 +127,11 @@
       <Name>BusinessObjects</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201404271036016_InitialCreate.resx">
+      <DependentUpon>201404271036016_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

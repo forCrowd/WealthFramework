@@ -3,11 +3,11 @@ using System.Web;
 
 namespace Web
 {
-    public class DevelopmentModeConfig
+    public static class DevelopmentModeConfig
     {
         public static bool Initialized { get; private set; }
 
-        public static void Init()
+        public static void Initialize()
         {
             if (Initialized)
                 return;
