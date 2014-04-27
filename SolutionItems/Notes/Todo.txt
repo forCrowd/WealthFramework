@@ -51,6 +51,9 @@ http://msdn.microsoft.com/en-US/data/jj591583#Index
 . resource pool delete method disabled for the moment
 . "all in one" disabled for the moment
 
+. put default value in the constructor of the classes! datetime.utcnow etc. so ne need to have them in repo?
+ratings
+
 ---
 merge metadata.xml + edmbuilder output?
 
@@ -59,8 +62,3 @@ calculated properties are there in dto - how to separate them?
 businessobject.tt will be gone?
 geenrated + custom businessobjects will be merged?
 metadata.tt will be gone ?
-
-database
-check settings - fields - stringlengths - default values!
-enums?
-calculated properties

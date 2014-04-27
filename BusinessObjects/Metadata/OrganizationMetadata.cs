@@ -3,6 +3,7 @@ namespace BusinessObjects.Metadata
     using BusinessObjects.Metadata.Attributes;
     using System;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     [DefaultProperty("Name")]
     public class OrganizationMetadata
@@ -16,6 +17,7 @@ namespace BusinessObjects.Metadata
     
         [Display(Name = "Organization")]
         [Required]
+        [StringLength(100)]
         public object Name { get; set; }
     
         [Display(Name = "Production Cost")]

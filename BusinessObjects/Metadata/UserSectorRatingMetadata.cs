@@ -4,7 +4,6 @@ namespace BusinessObjects.Metadata
     using System;
     using System.ComponentModel.DataAnnotations;
     
-
     public class UserSectorRatingMetadata
     {
         [DisplayOnListView(false)]
@@ -18,6 +17,7 @@ namespace BusinessObjects.Metadata
         public object SectorId { get; set; }
     
         [Display(Name = "Rating")]
+        
         public object Rating { get; set; }
 
         [Display(Name = "Created On")]

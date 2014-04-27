@@ -12,16 +12,20 @@ namespace BusinessObjects.Metadata
         public object Id { get; set; }
 
         [Display(Name="Number of Sales")]
-        public string NumberOfSales {get; set;}
+        
+        public string NumberOfSales { get; set; }
 
         [Display(Name="Quality Rating")]
-        public string QualityRating {get; set;}
+        
+        public string QualityRating { get; set; }
 
         [Display(Name="Customer Satisfaction Rating")]
-        public string CustomerSatisfactionRating {get; set;}
+        
+        public string CustomerSatisfactionRating { get; set; }
 
         [Display(Name="Employee Satisfaction Rating")]
-        public string EmployeeSatisfactionRating {get; set;}
+        
+        public string EmployeeSatisfactionRating { get; set; }
 
         [Display(Name = "Created On")]
         [DisplayOnListView(false)]

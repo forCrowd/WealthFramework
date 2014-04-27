@@ -13,6 +13,7 @@ namespace BusinessObjects.Metadata
 
         [Display(Name = "Sector")]
         [Required]
+        [StringLength(50)]
         public object Name { get; set; }
 
         [Display(Name = "Created On")]

@@ -1,6 +1,7 @@
 namespace BusinessObjects.Metadata
 {
     using BusinessObjects.Metadata.Attributes;
+    using System;
     using System.ComponentModel.DataAnnotations;
 
     [DefaultProperty("Name")]
@@ -12,6 +13,7 @@ namespace BusinessObjects.Metadata
 
         [Display(Name="License")]
         [Required]
+        [StringLength(50)]
         public object Name { get; set; }
 
         [DisplayOnListView(false)]

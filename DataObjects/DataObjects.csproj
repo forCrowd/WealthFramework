@@ -98,6 +98,10 @@
     <Compile Include="Migrations\201404271036016_InitialCreate.Designer.cs">
       <DependentUpon>201404271036016_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201404271306297_V0_9_1.cs" />
+    <Compile Include="Migrations\201404271306297_V0_9_1.Designer.cs">
+      <DependentUpon>201404271306297_V0_9_1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="WealthEconomyContext.cs" />
     <Compile Include="BaseRepository.cs" />
@@ -130,6 +134,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201404271036016_InitialCreate.resx">
       <DependentUpon>201404271036016_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404271306297_V0_9_1.resx">
+      <DependentUpon>201404271306297_V0_9_1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

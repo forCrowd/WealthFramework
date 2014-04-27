@@ -4,7 +4,7 @@ namespace BusinessObjects.Metadata
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    
+
     [DefaultProperty("Name")]
     public class ResourcePoolMetadata
     {
@@ -14,6 +14,7 @@ namespace BusinessObjects.Metadata
 
         [Display(Name = "Resource Pool")]
         [Required]
+        [StringLength(50)]
         public object Name { get; set; }
 
         [DisplayOnListView(false)]

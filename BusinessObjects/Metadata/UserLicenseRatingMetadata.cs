@@ -18,6 +18,7 @@ namespace BusinessObjects.Metadata
         public object LicenseId { get; set; }
     
         [Display(Name = "Rating")]
+        
         public object Rating { get; set; }
 
         [Display(Name = "Created On")]

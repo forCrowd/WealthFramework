@@ -1,6 +1,7 @@
 namespace BusinessObjects.Metadata
 {
     using BusinessObjects.Metadata.Attributes;
+    using System;
     using System.ComponentModel.DataAnnotations;
 
     [DefaultProperty("Email")]
@@ -12,20 +13,25 @@ namespace BusinessObjects.Metadata
 
         [Display(Name = "Email")]
         [Required]
+        [StringLength(100)]
         public object Email { get; set; }
 
         [Display(Name = "Password")]
         [DisplayOnListView(false)]
         [Required]
+        [StringLength(50)]
         public string Password { get; set; }
 
         [Display(Name = "First Name")]
+        [StringLength(50)]
         public object FirstName { get; set; }
     
         [Display(Name = "Middle Name")]
+        [StringLength(50)]
         public object MiddleName { get; set; }
     
         [Display(Name = "Last Name")]
+        [StringLength(50)]
         public object LastName { get; set; }
 
         [Display(Name = "User Account Type")]

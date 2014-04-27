@@ -2,6 +2,7 @@
 
 namespace BusinessObjects.Metadata.Attributes
 {
+    [AttributeUsage(AttributeTargets.Property)]
     public class DisplayOnListViewAttribute : Attribute
     {
         public DisplayOnListViewAttribute(bool value)

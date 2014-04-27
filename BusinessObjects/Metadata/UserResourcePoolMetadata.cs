@@ -19,27 +19,35 @@ namespace BusinessObjects.Metadata
         public object ResourcePoolId { get; set; }
 
         [Display(Name = "CMRP Rate")]
+        
         public object ResourcePoolRate { get; set; }
 
         [Display(Name = "Total Cost Index")]
+        
         public object TotalCostIndexRating { get; set; }
 
         [Display(Name = "Knowledge Index")]
+        
         public object KnowledgeIndexRating { get; set; }
 
         [Display(Name = "Quality Index")]
+        
         public object QualityIndexRating { get; set; }
 
         [Display(Name = "Sector Index")]
+        
         public object SectorIndexRating { get; set; }
 
         [Display(Name = "Employee Satisfaction Index")]
+        
         public object EmployeeSatisfactionIndexRating { get; set; }
 
         [Display(Name = "Customer Satisfaction Index")]
+        
         public object CustomerSatisfactionIndexRating { get; set; }
 
         [Display(Name = "Distance Index")]
+        
         public object DistanceIndexRating { get; set; }
 
         [DisplayOnListView(false)]

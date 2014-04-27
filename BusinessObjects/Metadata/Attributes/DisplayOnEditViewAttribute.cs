@@ -2,6 +2,7 @@
 
 namespace BusinessObjects.Metadata.Attributes
 {
+    [AttributeUsage(AttributeTargets.Property)]
     public class DisplayOnEditViewAttribute : Attribute
     {
         public DisplayOnEditViewAttribute(bool value)
