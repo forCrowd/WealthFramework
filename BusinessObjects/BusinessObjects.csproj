@@ -138,7 +138,7 @@
     <Compile Include="Metadata\UserOrganizationMetadata.cs" />
     <Compile Include="Metadata\UserResourcePoolMetadata.cs" />
     <Compile Include="Metadata\UserSectorRatingMetadata.cs" />
-    <Compile Include="ViewModels\UserOrganization.cs" />
+    <Compile Include="ViewModels\UserOrganizationViewModel.cs" />
     <Compile Include="UserResourcePoolType.cs" />
     <Compile Include="IEntity.cs" />
   </ItemGroup>

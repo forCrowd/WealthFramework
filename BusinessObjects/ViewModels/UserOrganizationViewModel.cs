@@ -1,6 +1,6 @@
 ﻿namespace BusinessObjects.ViewModels
 {
-    public class UserOrganization
+    public class UserOrganizationViewModel
     {
         public string OrganizationName { get; set; }
         public decimal OrganizationProductionCost { get; set; }

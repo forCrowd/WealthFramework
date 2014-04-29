@@ -3,6 +3,7 @@
 .. Merge generated and custom classes
 .. BaseEntity class
 .. Clean up + finetuning
+. Framework - T4 files fixes
 
 0.9.1
 . BusinessObjects - StringLength attributes

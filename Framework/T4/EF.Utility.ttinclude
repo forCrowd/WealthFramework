@@ -592,13 +592,11 @@ public class TypeMapper
 	public Type GetBusinessObjectType(string entityTypeName)
 	{
 		// DbContext namespace shows "DataObjects.[Entity]", intead of "Business."
-		// Because of this issue, entityTypeName doesn't help and BusinessObjects library had to defined manually over here.
-		const string businessObjectsAssemblyName = "BusinessObjects";
-		
-		var businessObjectsAssembly = Assembly.GetExecutingAssembly().GetReferencedAssemblies().Single(assembly => assembly.Name == businessObjectsAssemblyName);
-		var assemblyQualifiedName = string.Format("{0}.{1}, {2}", businessObjectsAssemblyName, entityTypeName, businessObjectsAssembly.FullName);
-	
-		return Type.GetType(assemblyQualifiedName);
+		// Because of this issue, entityTypeName doesn't help and BusinessObjects assembly needs to be called in a bit weird way.
+		// TODO Make it better!
+		var assembly = typeof(BusinessObjects.IEntity).Assembly;
+		var types = assembly.GetTypes();
+		return types.Single(type => type.Name == entityTypeName);
 	}
 
 	public Type GetMetadataType(string entityTypeName)

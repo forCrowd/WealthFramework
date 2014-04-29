@@ -47,11 +47,11 @@ namespace BusinessObjects
             get { return User.UserOrganizationSet.Where(item => item.Organization.ResourcePool == ResourcePool); }
         }
 
-        public IEnumerable<ViewModels.UserOrganization> UserResourcePoolOrganizationDto2Set
+        public IEnumerable<ViewModels.UserOrganizationViewModel> UserResourcePoolOrganizationDto2Set
         {
             get
             {
-                return UserOrganizationSet.Select(item => new ViewModels.UserOrganization()
+                return UserOrganizationSet.Select(item => new ViewModels.UserOrganizationViewModel()
                 {
                     OrganizationName = item.Organization.Name,
                     OrganizationProductionCost = item.Organization.ProductionCost,

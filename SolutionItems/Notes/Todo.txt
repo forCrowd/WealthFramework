@@ -84,3 +84,7 @@ http://vimeo.com/43603474
 http://www.asp.net/web-api/overview/odata-support-in-aspnet-web-api
 
 http://www.asp.net/aspnet/samples/aspnet-web-api
+
+---
+compare list.tt + edit.tt outputs with a bit older version!
+continue with asp identity if there is nothing else left ?!?!
