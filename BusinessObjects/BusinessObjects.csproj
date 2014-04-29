@@ -85,16 +85,16 @@
     <Compile Include="Dto\Generated\UserSectorRatingDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
-    <Compile Include="Generated\License.cs" />
-    <Compile Include="Generated\Organization.cs" />
-    <Compile Include="Generated\ResourcePool.cs" />
-    <Compile Include="Generated\Sector.cs" />
-    <Compile Include="Generated\User.cs" />
-    <Compile Include="Generated\UserAccountType.cs" />
-    <Compile Include="Generated\UserLicenseRating.cs" />
-    <Compile Include="Generated\UserOrganization.cs" />
-    <Compile Include="Generated\UserResourcePool.cs" />
-    <Compile Include="Generated\UserSectorRating.cs" />
+    <Compile Include="License.cs" />
+    <Compile Include="Organization.cs" />
+    <Compile Include="ResourcePool.cs" />
+    <Compile Include="Sector.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="UserAccountType.cs" />
+    <Compile Include="UserLicenseRating.cs" />
+    <Compile Include="UserOrganization.cs" />
+    <Compile Include="UserResourcePool.cs" />
+    <Compile Include="UserSectorRating.cs" />
     <Compile Include="Metadata\Attributes\DefaultPropertyAttribute.cs" />
     <Compile Include="Metadata\Attributes\DisplayOnEditViewAttribute.cs" />
     <Compile Include="Metadata\Attributes\DisplayOnListViewAttribute.cs" />
