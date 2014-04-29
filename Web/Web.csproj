@@ -249,6 +249,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>edit.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewsNg\Edit\edit1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>edit.tt</DependentUpon>
+    </Compile>
     <Compile Include="ViewsNg\List\list.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -465,43 +470,17 @@
     </Content>
     <Content Include="Scripts\toastr.min.js.map" />
     <Content Include="Scripts\jquery-2.1.0.min.map" />
-    <Content Include="ViewsNg\List\licenseList.html">
-      <DependentUpon>list.tt</DependentUpon>
-    </Content>
     <Content Include="ViewsNg\List\list.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>list.cs</LastGenOutput>
     </Content>
     <Content Include="ViewsNg\Edit\edit.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>edit1.cs</LastGenOutput>
     </Content>
     <Content Include="ViewsNg\Home\Index.html" />
     <Content Include="ViewsNg\Home\Overview.html" />
     <Content Include="ViewsNg\Home\Technologies.html" />
-    <Content Include="ViewsNg\List\organizationList.html">
-      <DependentUpon>list.tt</DependentUpon>
-    </Content>
-    <Content Include="ViewsNg\List\resourcePoolList.html">
-      <DependentUpon>list.tt</DependentUpon>
-    </Content>
-    <Content Include="ViewsNg\List\sectorList.html">
-      <DependentUpon>list.tt</DependentUpon>
-    </Content>
-    <Content Include="ViewsNg\List\userLicenseRatingList.html">
-      <DependentUpon>list.tt</DependentUpon>
-    </Content>
-    <Content Include="ViewsNg\List\userList.html">
-      <DependentUpon>list.tt</DependentUpon>
-    </Content>
-    <Content Include="ViewsNg\List\userOrganizationList.html">
-      <DependentUpon>list.tt</DependentUpon>
-    </Content>
-    <Content Include="ViewsNg\List\userResourcePoolList.html">
-      <DependentUpon>list.tt</DependentUpon>
-    </Content>
-    <Content Include="ViewsNg\List\userSectorRatingList.html">
-      <DependentUpon>list.tt</DependentUpon>
-    </Content>
     <Content Include="ViewsNg\UserResourcePool\AllInOne.html" />
     <Content Include="ViewsNg\UserResourcePool\CustomerSatisfactionIndex.html" />
     <Content Include="ViewsNg\UserResourcePool\DistanceIndex.html" />

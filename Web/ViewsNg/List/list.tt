@@ -33,7 +33,14 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 	var entityDeleteMethod = string.Format("delete{0}", entityTypeName);
 	var primaryKey = entityType.KeyMembers[0];
     var simpleProperties = typeMapper.GetSimpleProperties(entityType);
-	var metadataProperties = typeMapper.GetMetadataProperties(entityTypeName);
+
+	if (entityTypeName == "License")
+		continue;
+
+	//var metadataProperties = typeMapper.GetMetadataProperties(entityTypeName);
+	var metadataProperties = typeMapper.GetType().GetProperties();
+	//var metadataProperties = new HashSet<System.Reflection.PropertyInfo>(); // typeMapper.GetMetadataProperties(entityTypeName);
+
 	var outputFileName = string.Format(@"{0}List.html", entityVariable);
 
 	fileManager.StartNewFile(outputFileName);

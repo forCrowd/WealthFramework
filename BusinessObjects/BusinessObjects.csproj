@@ -85,6 +85,7 @@
     <Compile Include="Dto\Generated\UserSectorRatingDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
+    <Compile Include="BaseEntity.cs" />
     <Compile Include="License.cs" />
     <Compile Include="Organization.cs" />
     <Compile Include="ResourcePool.cs" />

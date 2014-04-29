@@ -64,6 +64,7 @@
     <Compile Include="..\SolutionItems\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="LicenseUnitOfWorkTest.cs" />
     <Compile Include="UserUnitOfWorkTest.cs" />
   </ItemGroup>
   <ItemGroup>
