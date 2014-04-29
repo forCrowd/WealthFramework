@@ -3,6 +3,7 @@ namespace BusinessObjects
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Linq;
     using BusinessObjects.Metadata;
 
     [MetadataType(typeof(ResourcePoolMetadata))]

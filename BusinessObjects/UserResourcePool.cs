@@ -3,6 +3,7 @@ namespace BusinessObjects
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Linq;
     using BusinessObjects.Metadata;
 
     [MetadataType(typeof(UserResourcePoolMetadata))]
@@ -46,11 +47,11 @@ namespace BusinessObjects
             get { return User.UserOrganizationSet.Where(item => item.Organization.ResourcePool == ResourcePool); }
         }
 
-        public IEnumerable<UserResourcePoolOrganizationDto2> UserResourcePoolOrganizationDto2Set
+        public IEnumerable<ViewModels.UserOrganization> UserResourcePoolOrganizationDto2Set
         {
             get
             {
-                return UserOrganizationSet.Select(item => new UserResourcePoolOrganizationDto2()
+                return UserOrganizationSet.Select(item => new ViewModels.UserOrganization()
                 {
                     OrganizationName = item.Organization.Name,
                     OrganizationProductionCost = item.Organization.ProductionCost,

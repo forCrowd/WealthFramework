@@ -1,6 +1,6 @@
-﻿namespace BusinessObjects
+﻿namespace BusinessObjects.ViewModels
 {
-    public class UserResourcePoolOrganizationDto2
+    public class UserOrganization
     {
         public string OrganizationName { get; set; }
         public decimal OrganizationProductionCost { get; set; }
