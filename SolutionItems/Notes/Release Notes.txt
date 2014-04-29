@@ -9,8 +9,8 @@
 
 0.9
 . Application
-.. Converted to Code-First approach instead of Database-First
-... T4 files were updated to read from code-first metadata
+.. Converted to Code First approach from Database First
+... T4 files were updated to read from Code First metadata
 ... EF6.Utility.cs was moved to the solution
 .. Switched to LocalDb instead of SQL Server 2008 R2
 .. T4 include files are now under Framework\T4 folder

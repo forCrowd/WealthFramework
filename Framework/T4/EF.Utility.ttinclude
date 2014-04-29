@@ -226,7 +226,7 @@ public class CodeStringGenerator
 			input.Substring(1));
 	}
 
-	/* New functions to support Code-First / 25 Apr. '14 */
+	/* New functions to support Code First / 25 Apr. '14 */
 
 	public string GetPropertyTitle(EdmProperty property)
 	{
@@ -587,12 +587,16 @@ public class TypeMapper
         return !includeMergeOption && returnType != null && returnType.EdmType.BuiltInTypeKind == BuiltInTypeKind.EntityType;
     }
 
-	/* New functions to support Code-First / 25 Apr. '14 */
+	/* New functions to support Code First / 25 Apr. '14 */
 
 	public Type GetBusinessObjectType(string entityTypeName)
 	{
-		// TODO Static?
-		var assemblyQualifiedName = string.Format("BusinessObjects.{0}, BusinessObjects, Version=0.9.0.0, Culture=neutral, PublicKeyToken=null", entityTypeName);
+		// DbContext namespace shows "DataObjects.[Entity]", intead of "Business."
+		// Because of this issue, entityTypeName doesn't help and BusinessObjects library had to defined manually over here.
+		const string businessObjectsAssemblyName = "BusinessObjects";
+		
+		var businessObjectsAssembly = Assembly.GetExecutingAssembly().GetReferencedAssemblies().Single(assembly => assembly.Name == businessObjectsAssemblyName);
+		var assemblyQualifiedName = string.Format("{0}.{1}, {2}", businessObjectsAssemblyName, entityTypeName, businessObjectsAssembly.FullName);
 	
 		return Type.GetType(assemblyQualifiedName);
 	}
@@ -614,18 +618,24 @@ public class TypeMapper
 
 	public IEnumerable<PropertyInfo> GetMetadataProperties(string entityTypeName)
 	{
-		return GetMetadataType(entityTypeName).GetProperties();
+		var metadataType = GetMetadataType(entityTypeName);
+
+		if (metadataType == null)
+			return null;
+		
+		return metadataType.GetProperties();
 	}
 
 	public T GetAttribute<T>(MemberInfo info) where T : Attribute
 	{
-		if (info == null)
+		ArgumentNotNull(info, "info");
+		
+		var customAttributes = info.GetCustomAttributes();
+
+		if (customAttributes == null)
 			return default(T);
 
-		var attribute = info
-			.GetCustomAttributes()
-			.SingleOrDefault(a => ((MemberInfo)a.TypeId)
-				.Name == typeof(T).Name);
+		var attribute = customAttributes.SingleOrDefault(a => ((MemberInfo)a.TypeId).Name == typeof(T).Name);
 
 		if (attribute == null)
 			return default(T);
