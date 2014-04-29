@@ -85,41 +85,16 @@
     <Compile Include="Dto\Generated\UserSectorRatingDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
-    <Compile Include="Generated\BusinessObject.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BusinessObject.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\License.cs">
-      <DependentUpon>BusinessObject.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\Organization.cs">
-      <DependentUpon>BusinessObject.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\ResourcePool.cs">
-      <DependentUpon>BusinessObject.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\Sector.cs">
-      <DependentUpon>BusinessObject.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\User.cs">
-      <DependentUpon>BusinessObject.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\UserAccountType.cs">
-      <DependentUpon>BusinessObject.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\UserLicenseRating.cs">
-      <DependentUpon>BusinessObject.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\UserOrganization.cs">
-      <DependentUpon>BusinessObject.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\UserResourcePool.cs">
-      <DependentUpon>BusinessObject.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\UserSectorRating.cs">
-      <DependentUpon>BusinessObject.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Generated\License.cs" />
+    <Compile Include="Generated\Organization.cs" />
+    <Compile Include="Generated\ResourcePool.cs" />
+    <Compile Include="Generated\Sector.cs" />
+    <Compile Include="Generated\User.cs" />
+    <Compile Include="Generated\UserAccountType.cs" />
+    <Compile Include="Generated\UserLicenseRating.cs" />
+    <Compile Include="Generated\UserOrganization.cs" />
+    <Compile Include="Generated\UserResourcePool.cs" />
+    <Compile Include="Generated\UserSectorRating.cs" />
     <Compile Include="Metadata\Attributes\DefaultPropertyAttribute.cs" />
     <Compile Include="Metadata\Attributes\DisplayOnEditViewAttribute.cs" />
     <Compile Include="Metadata\Attributes\DisplayOnListViewAttribute.cs" />
@@ -167,15 +142,8 @@
     <Compile Include="Metadata\UserOrganizationMetadata.cs" />
     <Compile Include="Metadata\UserResourcePoolMetadata.cs" />
     <Compile Include="Metadata\UserSectorRatingMetadata.cs" />
-    <Compile Include="ResourcePool.cs" />
-    <Compile Include="ResourcePoolOrganization.cs" />
     <Compile Include="Dto\UserResourcePoolOrganizationDto2.cs" />
-    <Compile Include="UserOrganization.cs" />
-    <Compile Include="UserResourcePool.cs" />
     <Compile Include="UserResourcePoolType.cs" />
-    <Compile Include="Sector.cs" />
-    <Compile Include="License.cs" />
-    <Compile Include="Organization.cs" />
     <Compile Include="IEntity.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -187,10 +155,6 @@
     <None Include="Metadata\Generated\BusinessObjectMetadata.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>BusinessObjectMetadata.cs</LastGenOutput>
-    </None>
-    <None Include="Generated\BusinessObject.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>BusinessObject.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
