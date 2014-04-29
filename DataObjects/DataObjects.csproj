@@ -106,11 +106,6 @@
     <Compile Include="WealthEconomyContext.cs" />
     <Compile Include="BaseRepository.cs" />
     <Compile Include="IGenericRepository.cs" />
-    <Compile Include="Generated\Repository.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Repository.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -118,7 +113,7 @@
     </None>
     <None Include="Generated\Repository.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Repository.cs</LastGenOutput>
+      <LastGenOutput>Repository.txt</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -138,6 +133,13 @@
     <EmbeddedResource Include="Migrations\201404271306297_V0_9_1.resx">
       <DependentUpon>201404271306297_V0_9_1.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Generated\Repository.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Repository.tt</DependentUpon>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

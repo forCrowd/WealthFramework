@@ -193,11 +193,6 @@
     <Compile Include="Controllers\Api\ApplicationController.cs" />
     <Compile Include="Controllers\Api\UserHelperController.cs" />
     <Compile Include="Controllers\Mvc\HomeController.cs" />
-    <Compile Include="Controllers\OData\Generated\ODataController.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ODataController.tt</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\OData\Generated\LicenseController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
@@ -229,35 +224,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Scripts\app\controllers\editController.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>editController.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Scripts\app\controllers\listController.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>listController.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Scripts\app\services\generated\service.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>service.tt</DependentUpon>
-    </Compile>
     <Compile Include="ViewsNg\Edit\edit.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>edit.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ViewsNg\Edit\edit1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>edit.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ViewsNg\List\list.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>list.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -269,6 +239,11 @@
     <Content Include="Content\breeze.directives.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
+    <Content Include="Controllers\OData\Generated\ODataController.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ODataController.tt</DependentUpon>
+    </Content>
     <Content Include="Controllers\OData\metadata.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -280,7 +255,17 @@
     <Content Include="Scripts\angular-route.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\app\controllers\editController.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>editController.tt</DependentUpon>
+    </Content>
     <Content Include="Scripts\app\controllers\layoutController.js" />
+    <Content Include="Scripts\app\controllers\listController.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>listController.tt</DependentUpon>
+    </Content>
     <Content Include="Scripts\app\controllers\userController.js" />
     <Content Include="Scripts\app\controllers\userOrganizationEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
@@ -355,6 +340,11 @@
     <Content Include="Scripts\app\services\generated\sectorService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
+    <Content Include="Scripts\app\services\generated\service.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>service.tt</DependentUpon>
+    </Content>
     <Content Include="Scripts\app\services\generated\userLicenseRatingService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
@@ -383,7 +373,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Controllers\OData\Generated\ODataController.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ODataController.cs</LastGenOutput>
+      <LastGenOutput>ODataController.txt</LastGenOutput>
     </Content>
     <Content Include="Areas\HelpPage\Views\Web.config" />
     <Content Include="Areas\HelpPage\Views\Shared\_Layout.cshtml" />
@@ -410,15 +400,15 @@
     <Content Include="Scripts\angular-route.min.js.map" />
     <Content Include="Scripts\app\services\generated\service.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>service.cs</LastGenOutput>
+      <LastGenOutput>service.txt</LastGenOutput>
     </Content>
     <Content Include="Scripts\app\controllers\listController.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>listController.cs</LastGenOutput>
+      <LastGenOutput>listController.txt</LastGenOutput>
     </Content>
     <Content Include="Scripts\app\controllers\editController.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>editController.cs</LastGenOutput>
+      <LastGenOutput>editController.txt</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\breeze.intellisense.js" />
@@ -441,6 +431,11 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\toastr.min.js" />
+    <Content Include="ViewsNg\Edit\edit.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>edit.tt</DependentUpon>
+    </Content>
     <Content Include="ViewsNg\Edit\licenseEdit.html">
       <DependentUpon>edit.tt</DependentUpon>
     </Content>
@@ -470,17 +465,49 @@
     </Content>
     <Content Include="Scripts\toastr.min.js.map" />
     <Content Include="Scripts\jquery-2.1.0.min.map" />
+    <Content Include="ViewsNg\List\licenseList.html">
+      <DependentUpon>list.tt</DependentUpon>
+    </Content>
     <Content Include="ViewsNg\List\list.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>list.cs</LastGenOutput>
+      <LastGenOutput>list.txt</LastGenOutput>
     </Content>
     <Content Include="ViewsNg\Edit\edit.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>edit1.cs</LastGenOutput>
+      <LastGenOutput>edit.txt</LastGenOutput>
     </Content>
     <Content Include="ViewsNg\Home\Index.html" />
     <Content Include="ViewsNg\Home\Overview.html" />
     <Content Include="ViewsNg\Home\Technologies.html" />
+    <Content Include="ViewsNg\List\list.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>list.tt</DependentUpon>
+    </Content>
+    <Content Include="ViewsNg\List\organizationList.html">
+      <DependentUpon>list.tt</DependentUpon>
+    </Content>
+    <Content Include="ViewsNg\List\resourcePoolList.html">
+      <DependentUpon>list.tt</DependentUpon>
+    </Content>
+    <Content Include="ViewsNg\List\sectorList.html">
+      <DependentUpon>list.tt</DependentUpon>
+    </Content>
+    <Content Include="ViewsNg\List\userLicenseRatingList.html">
+      <DependentUpon>list.tt</DependentUpon>
+    </Content>
+    <Content Include="ViewsNg\List\userList.html">
+      <DependentUpon>list.tt</DependentUpon>
+    </Content>
+    <Content Include="ViewsNg\List\userOrganizationList.html">
+      <DependentUpon>list.tt</DependentUpon>
+    </Content>
+    <Content Include="ViewsNg\List\userResourcePoolList.html">
+      <DependentUpon>list.tt</DependentUpon>
+    </Content>
+    <Content Include="ViewsNg\List\userSectorRatingList.html">
+      <DependentUpon>list.tt</DependentUpon>
+    </Content>
     <Content Include="ViewsNg\UserResourcePool\AllInOne.html" />
     <Content Include="ViewsNg\UserResourcePool\CustomerSatisfactionIndex.html" />
     <Content Include="ViewsNg\UserResourcePool\DistanceIndex.html" />

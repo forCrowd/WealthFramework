@@ -1,12 +1,13 @@
 ﻿<#@ template language="C#" debug="false" hostspecific="true"#>
-<#@ include file="$(SolutionDir)Framework\T4\EF.Utility.ttinclude"#><#
+<#@ include file="$(SolutionDir)Framework\T4\EF.Utility.ttinclude"#>
+<#@ output extension=".txt"#><#
 
 // To be able to control whether it's going to be executed
 var executeMe = true;
 if (!executeMe)
 	return string.Empty;
 
-const string connectionString = @"Server=(LocalDb)\v11.0;Database=WealthEconomyDb;Integrated Security=True;MultipleActiveResultSets=True";
+const string connectionString = @"Server=(LocalDb)\v11.0;Database=WealthEconomy;Integrated Security=True;MultipleActiveResultSets=True";
 
 var textTransform = DynamicTextTransformation.Create(this);
 var code = new CodeGenerationTools(this);

@@ -7,7 +7,7 @@ namespace BusinessObjects
     using BusinessObjects.Metadata;
 
     [MetadataType(typeof(LicenseMetadata))]
-    public partial class License : BaseEntity
+    public partial class License : IEntity
     {
         public License()
         {
@@ -20,6 +20,9 @@ namespace BusinessObjects
         public string Name { get; set; }
         public string Description { get; set; }
         public string Text { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public DateTime ModifiedOn { get; set; }
+        public Nullable<DateTime> DeletedOn { get; set; }
 
         public virtual ICollection<Organization> OrganizationSet { get; set; }
         public virtual ICollection<UserLicenseRating> UserLicenseRatingSet { get; set; }

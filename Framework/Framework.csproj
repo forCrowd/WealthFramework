@@ -66,6 +66,35 @@
     <None Include="T4\EF.Utility.ttinclude" />
     <None Include="T4\EF6.Utility.ttinclude" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="T4\licenseEditController.js">
+      <DependentUpon>EF.Utility.ttinclude</DependentUpon>
+    </Content>
+    <Content Include="T4\organizationEditController.js">
+      <DependentUpon>EF.Utility.ttinclude</DependentUpon>
+    </Content>
+    <Content Include="T4\resourcePoolEditController.js">
+      <DependentUpon>EF.Utility.ttinclude</DependentUpon>
+    </Content>
+    <Content Include="T4\sectorEditController.js">
+      <DependentUpon>EF.Utility.ttinclude</DependentUpon>
+    </Content>
+    <Content Include="T4\userEditController.js">
+      <DependentUpon>EF.Utility.ttinclude</DependentUpon>
+    </Content>
+    <Content Include="T4\userLicenseRatingEditController.js">
+      <DependentUpon>EF.Utility.ttinclude</DependentUpon>
+    </Content>
+    <Content Include="T4\userOrganizationEditController.js">
+      <DependentUpon>EF.Utility.ttinclude</DependentUpon>
+    </Content>
+    <Content Include="T4\userResourcePoolEditController.js">
+      <DependentUpon>EF.Utility.ttinclude</DependentUpon>
+    </Content>
+    <Content Include="T4\userSectorRatingEditController.js">
+      <DependentUpon>EF.Utility.ttinclude</DependentUpon>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

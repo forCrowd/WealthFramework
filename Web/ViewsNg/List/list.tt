@@ -1,12 +1,13 @@
 ﻿<#@ template language="C#" debug="false" hostspecific="true"#>
-<#@ include file="$(SolutionDir)Framework\T4\EF.Utility.ttinclude"#><#
+<#@ include file="$(SolutionDir)Framework\T4\EF.Utility.ttinclude"#>
+<#@ output extension=".txt"#><#
 
 // To be able to control whether it's going to be executed
 var executeMe = true;
 if (!executeMe)
 	return string.Empty;
 
-const string connectionString = @"Server=(LocalDb)\v11.0;Database=WealthEconomyDb;Integrated Security=True;MultipleActiveResultSets=True";
+const string connectionString = @"Server=(LocalDb)\v11.0;Database=WealthEconomy;Integrated Security=True;MultipleActiveResultSets=True";
 
 var textTransform = DynamicTextTransformation.Create(this);
 var code = new CodeGenerationTools(this);
@@ -33,14 +34,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 	var entityDeleteMethod = string.Format("delete{0}", entityTypeName);
 	var primaryKey = entityType.KeyMembers[0];
     var simpleProperties = typeMapper.GetSimpleProperties(entityType);
-
-	if (entityTypeName == "License")
-		continue;
-
-	//var metadataProperties = typeMapper.GetMetadataProperties(entityTypeName);
-	var metadataProperties = typeMapper.GetType().GetProperties();
-	//var metadataProperties = new HashSet<System.Reflection.PropertyInfo>(); // typeMapper.GetMetadataProperties(entityTypeName);
-
+	var metadataProperties = typeMapper.GetMetadataProperties(entityTypeName);
 	var outputFileName = string.Format(@"{0}List.html", entityVariable);
 
 	fileManager.StartNewFile(outputFileName);
@@ -60,9 +54,12 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 		var metadataProperty = metadataProperties.SingleOrDefault(p => p.Name == property.Name);
 
 		// Display the property?
-		var displayOnListAttribute = typeMapper.GetAttribute<DisplayOnListViewAttribute>(metadataProperty);
-		if (displayOnListAttribute != null && !displayOnListAttribute.Value)
-			continue;
+		if (metadataProperty != null)
+        {
+			var displayOnListAttribute = typeMapper.GetAttribute<DisplayOnListViewAttribute>(metadataProperty);
+			if (displayOnListAttribute != null && !displayOnListAttribute.Value)
+				continue;
+        }
 #>
     <th>
         <#= codeStringGenerator.GetPropertyTitle(property) #>
@@ -78,9 +75,13 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
     {
 		var metadataProperty = metadataProperties.SingleOrDefault(p => p.Name == property.Name);
 
-		var displayOnListAttribute = typeMapper.GetAttribute<DisplayOnListViewAttribute>(metadataProperty);
-		if (displayOnListAttribute != null && !displayOnListAttribute.Value)
-			continue;
+		// Display the property?
+		if (metadataProperty != null)
+		{
+			var displayOnListAttribute = typeMapper.GetAttribute<DisplayOnListViewAttribute>(metadataProperty);
+			if (displayOnListAttribute != null && !displayOnListAttribute.Value)
+				continue;
+		}
 #>
         <td>
             {{ <#= GetPropertyPath(property, typeMapper, codeStringGenerator) #> }}

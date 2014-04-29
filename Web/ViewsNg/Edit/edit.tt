@@ -1,12 +1,13 @@
 ﻿<#@ template language="C#" debug="false" hostspecific="true"#>
-<#@ include file="$(SolutionDir)Framework\T4\EF.Utility.ttinclude"#><#
+<#@ include file="$(SolutionDir)Framework\T4\EF.Utility.ttinclude"#>
+<#@ output extension=".txt"#><#
 
 // To be able to control whether it's going to be executed
 var executeMe = true;
 if (!executeMe)
 	return string.Empty;
 
-const string connectionString = @"Server=(LocalDb)\v11.0;Database=WealthEconomyDb;Integrated Security=True;MultipleActiveResultSets=True";
+const string connectionString = @"Server=(LocalDb)\v11.0;Database=WealthEconomy;Integrated Security=True;MultipleActiveResultSets=True";
 
 var textTransform = DynamicTextTransformation.Create(this);
 var code = new CodeGenerationTools(this);
@@ -52,9 +53,12 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 		var metadataProperty = metadataProperties.SingleOrDefault(p => p.Name == property.Name);
 
 		// Display the property?
-		var displayOnEditAttribute = typeMapper.GetAttribute<DisplayOnEditViewAttribute>(metadataProperty);
-		if (displayOnEditAttribute != null && !displayOnEditAttribute.Value)
-			continue;
+		if (metadataProperty != null)
+        {
+			var displayOnEditAttribute = typeMapper.GetAttribute<DisplayOnEditViewAttribute>(metadataProperty);
+			if (displayOnEditAttribute != null && !displayOnEditAttribute.Value)
+				continue;
+        }
 #>
         <div class="form-group">
             <label for="<#= property.Name #>" class="control-label col-md-2"><#= codeStringGenerator.GetPropertyTitle(property) #></label>
