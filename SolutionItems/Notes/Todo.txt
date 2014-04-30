@@ -1,6 +1,4 @@
 ﻿. edmx + database - try to use cascade delete option?
-. easy deployment;
-.. web deployment?
 . random data generation?
 . remove satisfaction word..?
 . multiple pk for user organization + user sector + user license + user resource pool organization + resource pool organization
@@ -18,9 +16,14 @@ http://stackoverflow.com/questions/16068184/breezejs-how-to-fetch-metadata-at-st
 . compare metadata files of manual + odataconventionbuilder + edmbuilder for functionimport and for other stuff
 . public vs. private didnt work for now with odata, try it later
 . use or try to remove scripts.render() + styles.render() from layout.cshtml - then mvc can be done completely
+. automate .tt scripts with afterbuild?
 . web essentials; http://vswebessentials.com/
 . kendo ui; http://a.shinynew.me/post/82897588209/kendo-ui-core-the-free-jquery-widget-library
 . canonpy; web testing
+. more from webapi;
+http://msdn.microsoft.com/en-us/magazine/dn201742.aspx
+http://www.asp.net/web-api/overview/working-with-http
+http://www.asp.net/web-api/overview/formats-and-model-binding
 . odata error message;
 <?xml version="1.0" encoding="utf-8"?>
 <m:error xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
@@ -49,13 +52,7 @@ ratings
 merge metadata.xml + edmbuilder output?
 
 namespace is different - dataobjects vs businessobjects
-calculated properties are there in dto - how to separate them?
-businessobject.tt will be gone?
-metadata.tt will be gone ?
-
-											continue with generated + custom businessobjects will be merged?
-										automate .tt scripts with afterbuild?
-										then asp.net identity? check odata articles first?
+metadata.tt will be gone ? dto classes?
 
 ---
 auth
@@ -81,10 +78,16 @@ http://www.asp.net/web-api/overview/security/preventing-cross-site-request-forge
 
 http://vimeo.com/43603474
 
-http://www.asp.net/web-api/overview/odata-support-in-aspnet-web-api
-
 http://www.asp.net/aspnet/samples/aspnet-web-api
 
 ---
-compare list.tt + edit.tt outputs with a bit older version!
-continue with asp identity if there is nothing else left ?!?!
+querayable vs enablequerysupport
+[Queryable(PageSize=10)]
+
+var queryAttribute = new QueryableAttribute()
+{
+    AllowedQueryOptions = AllowedQueryOptions.Top | AllowedQueryOptions.Skip,
+    MaxTop = 100
+};
+                
+config.EnableQuerySupport(queryAttribute);
