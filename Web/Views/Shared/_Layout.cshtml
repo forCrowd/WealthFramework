@@ -67,7 +67,7 @@
                             <div data-ng-show="vm.isAuthenticated">
                                 User: {{ vm.currentUser.Email }}
                                 <a href="#/User/edit/{{ vm.currentUser.Id }}">Edit</a>
-                                <a href="" data-ng-click="vm.userLogout()">Logout</a>
+                                <a href="" data-ng-click="vm.userLogoutNew()">Logout</a>
                             </div>
                             <div data-ng-show="!vm.isAuthenticated">
                                 <a href="#/User/Login/">Login</a>

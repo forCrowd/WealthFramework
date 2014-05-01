@@ -185,6 +185,7 @@ namespace Web.Controllers.OData
 
         // POST odata/UserResourcePool
         [HttpPost]
+        [Authorize]
         public async Task<IHttpActionResult> IncreaseNumberOfSales([FromODataUri] int key)
         {
             return await UpdateNumberOfSales(key, false);

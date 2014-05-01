@@ -17,6 +17,8 @@ http://stackoverflow.com/questions/16068184/breezejs-how-to-fetch-metadata-at-st
 . public vs. private didnt work for now with odata, try it later
 . use or try to remove scripts.render() + styles.render() from layout.cshtml - then mvc can be done completely
 . automate .tt scripts with afterbuild?
+. UserAccountTypeId use byte type not enum ?!
+. does unitofwork needs using {}?
 . web essentials; http://vswebessentials.com/
 . kendo ui; http://a.shinynew.me/post/82897588209/kendo-ui-core-the-free-jquery-widget-library
 . canonpy; web testing
@@ -36,6 +38,14 @@ http://www.asp.net/web-api/overview/formats-and-model-binding
   </m:innererror>
 </m:error>
 
+. http.get() + http.post() shortcuts
+
+. increasenumberofsales should return userresourcepool? but its sending httpactionresult?
+
+. window.location.href = '/'; reload the whole page ?!?!?!?!?!
+
+. upgrade frameworks to 4.5.1? but check apm has it?
+
 . concurrency with timestamp?
 
 . update route.js to handle the links correctly - # is not necessary anymore
@@ -47,6 +57,7 @@ http://www.asp.net/web-api/overview/formats-and-model-binding
 
 . put default value in the constructor of the classes! datetime.utcnow etc. so no need to have them in repo?
 ratings
+. remove CreatedOn = DateTime.UtcNow from repos?
 
 ---
 merge metadata.xml + edmbuilder output?
@@ -76,9 +87,8 @@ http://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-w
 http://www.asp.net/web-api/overview/security/preventing-cross-site-request-forgery-%28csrf%29-attacks
 . validateantiforgerytoken + bind attributes in odata controller?
 
-http://vimeo.com/43603474
-
-http://www.asp.net/aspnet/samples/aspnet-web-api
+http://www.asp.net/identity/overview/extensibility/overview-of-custom-storage-providers-for-aspnet-identity
+http://maxgershkovich.wordpress.com/2013/12/12/microsoft-mvc-asp-net-identity-with-telerik-openaccess-awesomeness/
 
 ---
 querayable vs enablequerysupport
@@ -91,3 +101,52 @@ var queryAttribute = new QueryableAttribute()
 };
                 
 config.EnableQuerySupport(queryAttribute);
+
+---
+startup partials merge	- fail
+xml-encoded to json?	- no
+token place change		- ok
+api+odata merge			- possible but needs metadata.xml modif.
+identityuser extend?	- ok
+user+identityuser merge	- keep them separate - compare the files with AspNetIdentityMvcTest - good sample
+connectionstring merge	- ok
+wealth+identitydb merge	- ok
+copy existing data		- ?
+
+---
+{
+  "UserName": "Alice11",
+  "Password": "password123",
+  "ConfirmPassword": "password123"
+}
+
+grant_type=password&username=Alice11&password=password123
+Content-Type: application/x-www-form-urlencoded
+
+p_Bg_9y6EGypBjQSJK67Yrc-rq3hvOpNvcn1zfOiCiaOPFra09P5m8WUFxXOfNvpAtvKDElO1IXSJlUpEhg4f-QgWs7CJM8p9O7C65Pq5r3pRzwYoksIuUwWuAEKLklMcJe-txwZ8g-mlw9IUL2UiXijW1B-HGGaDVYSQkPxkKRf1bFNbYU30DtdIAnT089lbTfxL2TS6aaNPqzglEk1g7_UmfoMUDmd4QMo7Dmksx8iAcx_JaIwXit1JgU5RuSoQ4X2KuITseT2Tj_So8yhdkZO1o6Qf6n9_Z-A8S8-yazQSwmMxbuyq_0E6r3RzriAKBRJgX9j71r-YX2Fy-Sakvrlmireo6k6_Cddg8f4XfuCV-IAL0GmsWseJzzzX9oxi30dqBffVyhVab1ScCN2sP_OikkdZA1TnDlLYtWUxhJCy3MQMQrFlK4hJyIZVXLEuebSn-lTdGJe6D6t3HfVmn2YiiDQ4FF0VX437j-0orI
+
+eyV9YR3Ne7XmS1eeSxBbLdYNQM3QwxYUzKqiKTCGwA7_6mX1oUrBttMBbbmWEgk0F1lggvOkjf1fUuf5-N8_-6WWh7GVWdzCfSFo0Oj7rrtd6a5A_6RO2Fnm8Z-GOxOhIcimHqLAgAc67EgrygH_f4efXqvZ1SVad7I4Eo01iB1EA4d6OfUt9LlP9lpL2ao9i3eFf7_WF7ZX8Uprngemy0fwi-6_0Ce97dOtRBxBCMzU1CbIczprRn2jpqxw-MwxbYVgy4UFSsbLts7SBAfVyLJ2K8vkIPsuBXawg3p6wk8ns-OOSVFQYK0gvRdZB11zIahEVyzBoR2MQSl6iFqs5wtB2a-gHZwt9Ql9-TSjZdwF88q0lt-hTnUAfUZrzAhAwcX2cRtRa4QVWApx1xhee8h10DM47bj6vKd6slO5imE
+
+---
+http://localhost:15816/api/Values
+token from wealtheco worked in this last app
+also db is not there but probably because dbcontext wasnt used
+
+---
+UserManager.UpdateSecurityStampAsync(userId)
+
+---
+api
+register
+token
+login
+logout
+try access after logout
+
+mvc
+register
+login
+logout
+try access after logout
+
+---

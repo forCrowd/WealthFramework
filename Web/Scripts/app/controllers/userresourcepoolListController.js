@@ -49,7 +49,7 @@
         };
 
         function getUserResourcePoolSet() {
-            userService.getCurrentUser()
+            userService.getCurrentUserNew()
 			    .success(function (currentUser) {
 					userResourcePoolService.getUserResourcePoolSet(currentUser.Id, false)
 						.then(function (data) {

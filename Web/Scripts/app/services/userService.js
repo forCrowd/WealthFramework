@@ -12,9 +12,16 @@
         logger = logger.forSource(serviceId);
 
         // Service methods (alphabetically)
+        $delegate.isNew = true;
+        $delegate.currentUser = null;
+        $delegate.currentToken = '';
         $delegate.getCurrentUser = getCurrentUser;
+        $delegate.getCurrentUserNew = getCurrentUserNew;
+        $delegate.getToken = getToken;
         $delegate.login = login;
         $delegate.logout = logout;
+        $delegate.logoutNew = logoutNew;
+        $delegate.register = register;
 
         return $delegate;
 
@@ -27,10 +34,45 @@
                 method: 'GET',
                 url: url
             }).
-                //success(function () {
+                //success(function (currentUser) {
                 //}).
                 error(function (data, status, headers, config) {
                     logger.logError('error', null, true);
+                });
+        }
+
+        function getCurrentUserNew() {
+            var url = '/api/Account/UserInfo';
+
+            return $http({
+                method: 'GET',
+                url: url
+            }).
+                success(function (currentUser) {
+                    $delegate.currentUser = currentUser;
+                }).
+                error(function (data, status, headers, config) {
+                    logger.logError('error', null, true);
+                });
+        }
+
+        function getToken(email, password) {
+            var url = '/api/Token';
+            var tokenRequestData = 'grant_type=password&username=' + email + '&password=' + password;
+
+            return $http({
+                method: 'POST',
+                url: url,
+                data: tokenRequestData,
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            }).
+                success(function (response) {
+                    $delegate.isNew = false;
+                    logger.logSuccess('userService - isNew', $delegate.isNew, true);
+                    $delegate.currentToken = response.access_token;
+                }).
+                error(function (data, status, headers, config) {
+                    // TODO
                 });
         }
 
@@ -61,6 +103,29 @@
                 error(function (data, status, headers, config) {
                     // TODO
                 });
+        }
+
+        function logoutNew() {
+
+            logger.logSuccess('arrived', null, true);
+
+            var url = '/api/Account/Logout';
+
+            var currentToken = userService.currentToken;
+
+            return $http({
+                method: 'POST', url: url
+            }).
+                success(function () {
+                    $delegate.currentToken = '';
+                }).
+                error(function (data, status, headers, config) {
+                    // TODO
+                });
+        }
+
+        function register() {
+            // TODO
         }
     }
 

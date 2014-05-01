@@ -49,7 +49,7 @@
         };
 
         function getUserOrganizationSet() {
-            userService.getCurrentUser()
+            userService.getCurrentUserNew()
 			    .success(function (currentUser) {
 					userOrganizationService.getUserOrganizationSet(currentUser.Id, false)
 						.then(function (data) {

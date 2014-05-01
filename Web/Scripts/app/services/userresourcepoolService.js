@@ -5,11 +5,15 @@
     var serviceId = 'userResourcePoolService';
     angular.module('main')
         .config(function ($provide) {
-            $provide.decorator(serviceId, ['$delegate', 'dataContext', '$http', 'logger', userResourcePoolService]);
+            $provide.decorator(serviceId, ['$delegate', 'dataContext', 'userService', '$http', 'logger', userResourcePoolService]);
         });
 
-    function userResourcePoolService($delegate, dataContext, $http, logger) {
+    function userResourcePoolService($delegate, dataContext, userService, $http, logger) {
         logger = logger.forSource(serviceId);
+
+        logger.logSuccess('userService', userService, true);
+        logger.logSuccess('userService - isNew', userService.isNew, true);
+        logger.logSuccess('userService - token', userService.currentToken, true);
 
         // Service methods (alphabetically)
         $delegate.getUserResourcePool = getUserResourcePool;
@@ -60,7 +64,12 @@
 
             var url = '/odata/UserResourcePool(' + userResourcePoolId + ')/IncreaseNumberOfSales';
 
-            return $http({ method: 'POST', url: url }).
+            var currentToken = userService.currentToken;
+
+            return $http({
+                method: 'POST',
+                url: url
+            }).
                 //success(function () {
                 //}).
                 error(function (data, status, headers, config) {

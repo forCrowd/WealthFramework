@@ -21,7 +21,7 @@
 
         function getUserResourcePool() {
 
-            userService.getCurrentUser()
+            userService.getCurrentUserNew()
                 .success(function (currentUser) {
 
                     var currentUserId = currentUser.Id;

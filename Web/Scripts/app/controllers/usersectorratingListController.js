@@ -49,7 +49,7 @@
         };
 
         function getUserSectorRatingSet() {
-            userService.getCurrentUser()
+            userService.getCurrentUserNew()
 			    .success(function (currentUser) {
 					userSectorRatingService.getUserSectorRatingSet(currentUser.Id, false)
 						.then(function (data) {

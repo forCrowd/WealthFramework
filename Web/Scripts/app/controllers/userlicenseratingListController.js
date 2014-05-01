@@ -49,7 +49,7 @@
         };
 
         function getUserLicenseRatingSet() {
-            userService.getCurrentUser()
+            userService.getCurrentUserNew()
 			    .success(function (currentUser) {
 					userLicenseRatingService.getUserLicenseRatingSet(currentUser.Id, false)
 						.then(function (data) {
