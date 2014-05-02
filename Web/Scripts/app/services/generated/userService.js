@@ -55,7 +55,6 @@
         }
 
         function getUserSet(forceRefresh) {
-
             var count;
             if (forceRefresh) {
                 if (dataContext.hasChanges()) {

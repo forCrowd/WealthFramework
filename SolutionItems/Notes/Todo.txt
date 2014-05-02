@@ -38,11 +38,13 @@ http://www.asp.net/web-api/overview/formats-and-model-binding
   </m:innererror>
 </m:error>
 
-. http.get() + http.post() shortcuts
+	. continue with currentuserinfo + account controller clean up
+	. remove userhelpercontroller + session state stuff
+	. find a way to create aspnetuser for the existing users
+
+. aspnet context locations - currently in web.models? and it's written in migrationhistory as well
 
 . increasenumberofsales should return userresourcepool? but its sending httpactionresult?
-
-. window.location.href = '/'; reload the whole page ?!?!?!?!?!
 
 . upgrade frameworks to 4.5.1? but check apm has it?
 

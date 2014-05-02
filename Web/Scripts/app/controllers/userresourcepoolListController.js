@@ -13,12 +13,10 @@
     var controllerId = 'userResourcePoolListController';
     angular.module('main')
         .controller(controllerId, ['userResourcePoolService',
-            'userService',
             'logger',
 			userResourcePoolListController]);
 
     function userResourcePoolListController(userResourcePoolService,
-        userService,
         logger) {
         logger = logger.forSource(controllerId);
 
@@ -49,13 +47,10 @@
         };
 
         function getUserResourcePoolSet() {
-            userService.getCurrentUserNew()
-			    .success(function (currentUser) {
-					userResourcePoolService.getUserResourcePoolSet(currentUser.Id, false)
-						.then(function (data) {
-							vm.userResourcePoolSet = data;
-						});
-			    });
+            userResourcePoolService.getUserResourcePoolSet(false)
+			    .then(function (data) {
+                    vm.userResourcePoolSet = data;
+                });
         }
     };
 })();

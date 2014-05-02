@@ -39,7 +39,6 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
     var primaryKeyShortTypeName = typeMapper.GetTypeName(primaryKey.TypeUsage);
     var simpleProperties = typeMapper.GetSimpleProperties(entityType);
     var relatedProperties = typeMapper.GetRelatedNavigationProperties(entityType);
-	var hasUserId = simpleProperties.Any(property => property.Name == "UserId");
 
 	var outputFileName = string.Format(@"{0}.js", controllerId);
 
@@ -52,16 +51,10 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
     var controllerId = '<#= controllerId #>';
     angular.module('main')
         .controller(controllerId, ['<#= serviceId #>',
-<# if (hasUserId) { #>
-            'userService',
-<# } #>
             'logger',
 			<#= controllerId #>]);
 
     function <#= controllerId #>(<#= serviceId #>,
-<# if (hasUserId) { #>
-        userService,
-<# } #>
         logger) {
         logger = logger.forSource(controllerId);
 
@@ -92,20 +85,10 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
         };
 
         function <#= entitySetGetMethod #>() {
-<# if (hasUserId) { #>
-            userService.getCurrentUser()
-			    .success(function (currentUser) {
-					<#= serviceId #>.<#= entitySetGetMethod #>(currentUser.Id, false)
-						.then(function (data) {
-							vm.<#= entitySetName #> = data;
-						});
-			    });
-<# } else { #>
             <#= serviceId #>.<#= entitySetGetMethod #>(false)
 			    .then(function (data) {
                     vm.<#= entitySetName #> = data;
                 });
-<# } #>
         }
     };
 })();

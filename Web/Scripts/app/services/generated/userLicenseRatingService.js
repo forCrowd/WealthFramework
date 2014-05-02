@@ -54,8 +54,7 @@
             return dataContext.getChangesCount();
         }
 
-        function getUserLicenseRatingSet(userId, forceRefresh) {
-
+        function getUserLicenseRatingSet(forceRefresh) {
             var count;
             if (forceRefresh) {
                 if (dataContext.hasChanges()) {
@@ -68,7 +67,6 @@
             var query = breeze.EntityQuery
 				.from('UserLicenseRating')
 				.expand(['License', 'User'])
-				.where('UserId', '==', userId)
             ;
 
             // Fetch the data from server, in case if it's not fetched earlier or forced

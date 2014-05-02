@@ -13,12 +13,10 @@
     var controllerId = 'userLicenseRatingListController';
     angular.module('main')
         .controller(controllerId, ['userLicenseRatingService',
-            'userService',
             'logger',
 			userLicenseRatingListController]);
 
     function userLicenseRatingListController(userLicenseRatingService,
-        userService,
         logger) {
         logger = logger.forSource(controllerId);
 
@@ -49,13 +47,10 @@
         };
 
         function getUserLicenseRatingSet() {
-            userService.getCurrentUserNew()
-			    .success(function (currentUser) {
-					userLicenseRatingService.getUserLicenseRatingSet(currentUser.Id, false)
-						.then(function (data) {
-							vm.userLicenseRatingSet = data;
-						});
-			    });
+            userLicenseRatingService.getUserLicenseRatingSet(false)
+			    .then(function (data) {
+                    vm.userLicenseRatingSet = data;
+                });
         }
     };
 })();

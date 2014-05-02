@@ -13,12 +13,10 @@
     var controllerId = 'userSectorRatingListController';
     angular.module('main')
         .controller(controllerId, ['userSectorRatingService',
-            'userService',
             'logger',
 			userSectorRatingListController]);
 
     function userSectorRatingListController(userSectorRatingService,
-        userService,
         logger) {
         logger = logger.forSource(controllerId);
 
@@ -49,13 +47,10 @@
         };
 
         function getUserSectorRatingSet() {
-            userService.getCurrentUserNew()
-			    .success(function (currentUser) {
-					userSectorRatingService.getUserSectorRatingSet(currentUser.Id, false)
-						.then(function (data) {
-							vm.userSectorRatingSet = data;
-						});
-			    });
+            userSectorRatingService.getUserSectorRatingSet(false)
+			    .then(function (data) {
+                    vm.userSectorRatingSet = data;
+                });
         }
     };
 })();

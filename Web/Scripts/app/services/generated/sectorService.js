@@ -55,7 +55,6 @@
         }
 
         function getSectorSet(forceRefresh) {
-
             var count;
             if (forceRefresh) {
                 if (dataContext.hasChanges()) {

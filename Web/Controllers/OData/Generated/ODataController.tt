@@ -35,16 +35,10 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 	var primaryKey = entityType.KeyMembers[0];
     var primaryKeyShortTypeName = typeMapper.GetTypeName(primaryKey.TypeUsage);
 	var routePrefix = string.Format("odata/{0}", entityTypeName);
-	
     var simpleProperties = typeMapper.GetSimpleProperties(entityType);
     var relatedProperties = typeMapper.GetRelatedNavigationProperties(entityType);
+	var hasUserId = simpleProperties.Any(property => property.Name == "UserId");
 	
-	var bindAttributeIncludeText = string.Join(",", simpleProperties);
-    var bindAttribute = String.Format("[Bind(Include = \"{0}\")] ", bindAttributeIncludeText);
-
-	// TODO This needs to be done through enums types?!
-	var hasUserAccountTypeId = simpleProperties.Any(property => property.Name == "UserAccountTypeId");
-
 	var outputFileName = string.Format(@"{0}.cs", controllerName);
 
     fileManager.StartNewFile(outputFileName);
@@ -54,6 +48,7 @@ namespace Web.Controllers.OData
 {
     using BusinessObjects;
     using Facade;
+    using Microsoft.AspNet.Identity;
     using System.Data.Entity.Infrastructure;
     using System.Linq;
     using System.Net;
@@ -70,7 +65,16 @@ namespace Web.Controllers.OData
         [Queryable]
         public IQueryable<<#= entityTypeName #>> Get<#= entityTypeName #>()
         {
-            return unitOfWork.AllLive;
+			var list = unitOfWork.AllLive;
+<# if (hasUserId) { #>
+			using (var userUnitOfWork = new UserUnitOfWork())
+			{
+			    var aspNetUserId = User.Identity.GetUserId();
+			    var currentUser = userUnitOfWork.AllLive.Single(user => user.AspNetUserId == aspNetUserId);
+			    list = list.Where(item => item.UserId == currentUser.Id);
+			}
+<# } #>
+            return list;
         }
 
         // GET <#= routePrefix #>(5)

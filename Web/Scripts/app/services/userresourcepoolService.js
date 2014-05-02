@@ -11,11 +11,7 @@
     function userResourcePoolService($delegate, dataContext, userService, $http, logger) {
         logger = logger.forSource(serviceId);
 
-        logger.logSuccess('userService', userService, true);
-        logger.logSuccess('userService - isNew', userService.isNew, true);
-        logger.logSuccess('userService - token', userService.currentToken, true);
-
-        // Service methods (alphabetically)
+        // Service methods
         $delegate.getUserResourcePool = getUserResourcePool;
         $delegate.increaseNumberOfSales = increaseNumberOfSales;
         $delegate.resetNumberOfSales = resetNumberOfSales;
@@ -24,12 +20,12 @@
 
         /*** Implementations ***/
 
-        function getUserResourcePool(userId, resourcePoolId) {
+        function getUserResourcePool(resourcePoolId) {
 
             var query = breeze.EntityQuery
                 .from("UserResourcePool")
                 .expand("ResourcePool")
-                .where("UserId eq " + userId + " and ResourcePoolId eq " + resourcePoolId)
+                .where("ResourcePoolId", "eq", resourcePoolId)
             ;
 
             // Fetch the data from server, in case if it's not fetched earlier or forced
@@ -61,30 +57,19 @@
         }
 
         function increaseNumberOfSales(userResourcePoolId) {
-
             var url = '/odata/UserResourcePool(' + userResourcePoolId + ')/IncreaseNumberOfSales';
 
-            var currentToken = userService.currentToken;
-
-            return $http({
-                method: 'POST',
-                url: url
-            }).
-                //success(function () {
-                //}).
-                error(function (data, status, headers, config) {
+            return $http.post(url)
+                .error(function (data, status, headers, config) {
                     // TODO
                 });
         }
 
         function resetNumberOfSales(userResourcePoolId) {
-
             var url = '/odata/UserResourcePool(' + userResourcePoolId + ')/ResetNumberOfSales';
 
-            return $http({ method: 'POST', url: url }).
-                //success(function () {
-                //}).
-                error(function (data, status, headers, config) {
+            return $http.post(url)
+                .error(function (data, status, headers, config) {
                     // TODO
                 });
         }

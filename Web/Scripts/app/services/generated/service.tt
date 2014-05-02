@@ -35,7 +35,6 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
     var primaryKeyShortTypeName = typeMapper.GetTypeName(primaryKey.TypeUsage);
     var simpleProperties = typeMapper.GetSimpleProperties(entityType);
     var relatedProperties = typeMapper.GetRelatedNavigationProperties(entityType);
-	var hasUserId = simpleProperties.Any(property => property.Name == "UserId");
 
 	var outputFileName = string.Format(@"{0}.js", serviceId);
 
@@ -89,12 +88,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
             return dataContext.getChangesCount();
         }
 
-<# if (hasUserId) { #>
-        function get<#= entityTypeName #>Set(userId, forceRefresh) {
-<# } else { #>
         function get<#= entityTypeName #>Set(forceRefresh) {
-<# } #>
-
             var count;
             if (forceRefresh) {
                 if (dataContext.hasChanges()) {
@@ -110,9 +104,6 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 	var expandQueryJoin = String.Join(", ", relatedProperties.Select(property => string.Format("'{0}'", property.Name)));
 	var expandQuery = string.Format(".expand([{0}])", expandQueryJoin); #>
 				<#= expandQuery #>
-<# } #>
-<# if (hasUserId) { #>
-				.where('UserId', '==', userId)
 <# } #>
             ;
 

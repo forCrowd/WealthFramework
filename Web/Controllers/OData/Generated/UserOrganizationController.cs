@@ -11,6 +11,7 @@ namespace Web.Controllers.OData
 {
     using BusinessObjects;
     using Facade;
+    using Microsoft.AspNet.Identity;
     using System.Data.Entity.Infrastructure;
     using System.Linq;
     using System.Net;
@@ -27,7 +28,14 @@ namespace Web.Controllers.OData
         [Queryable]
         public IQueryable<UserOrganization> GetUserOrganization()
         {
-            return unitOfWork.AllLive;
+			var list = unitOfWork.AllLive;
+			using (var userUnitOfWork = new UserUnitOfWork())
+			{
+			    var aspNetUserId = User.Identity.GetUserId();
+			    var currentUser = userUnitOfWork.AllLive.Single(user => user.AspNetUserId == aspNetUserId);
+			    list = list.Where(item => item.UserId == currentUser.Id);
+			}
+            return list;
         }
 
         // GET odata/UserOrganization(5)

@@ -55,7 +55,6 @@
         }
 
         function getLicenseSet(forceRefresh) {
-
             var count;
             if (forceRefresh) {
                 if (dataContext.hasChanges()) {

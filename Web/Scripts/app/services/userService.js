@@ -5,121 +5,69 @@
     var serviceId = 'userService';
     angular.module('main')
         .config(function ($provide) {
-            $provide.decorator(serviceId, ['$delegate', 'dataContext', '$http', 'logger', userService]);
+            $provide.decorator(serviceId, ['$delegate', 'dataContext', '$http', '$q', 'logger', userService]);
         });
 
-    function userService($delegate, dataContext, $http, logger) {
+    function userService($delegate, dataContext, $http, $q, logger) {
         logger = logger.forSource(serviceId);
 
-        // Service methods (alphabetically)
-        $delegate.isNew = true;
-        $delegate.currentUser = null;
-        $delegate.currentToken = '';
+        var accessTokenUrl = '/api/Token';
+        var currentUser = null;
+        var currentUserUrl = '/api/Account/UserInfo';
+
+        // Service methods
+        $delegate.getAccessToken = getAccessToken;
         $delegate.getCurrentUser = getCurrentUser;
-        $delegate.getCurrentUserNew = getCurrentUserNew;
-        $delegate.getToken = getToken;
-        $delegate.login = login;
         $delegate.logout = logout;
-        $delegate.logoutNew = logoutNew;
         $delegate.register = register;
 
         return $delegate;
 
         /*** Implementations ***/
 
+        function getAccessToken(email, password) {
+            var accessTokenData = 'grant_type=password&username=' + email + '&password=' + password;
+
+            return $http.post(accessTokenUrl, accessTokenData, { 'Content-Type': 'application/x-www-form-urlencoded' })
+                .success(function (data) {
+                    // TODO in case cookies are disabled?
+                })
+                .error(function (data, status, headers, config) {
+                    // TODO
+                });
+        }
+
         function getCurrentUser() {
-            var url = '/api/UserHelper/CurrentUser';
 
-            return $http({
-                method: 'GET',
-                url: url
-            }).
-                //success(function (currentUser) {
-                //}).
-                error(function (data, status, headers, config) {
-                    logger.logError('error', null, true);
-                });
-        }
+            var deferred = $q.defer();
 
-        function getCurrentUserNew() {
-            var url = '/api/Account/UserInfo';
+            if (currentUser !== null) {
+                deferred.resolve(currentUser);
+            } else {
+                $http.get(currentUserUrl)
+                    .success(function (data) {
+                        currentUser = data;
+                        deferred.resolve(currentUser);
+                    })
+                    .error(function (data, status, headers, config) {
+                        // TODO
+                        // If it return Unauthorized (status === 401), then it's not logged in yet and it's okay, no need to show an error
+                        // It's something else, server may not be unreachle or internal error? Just say 'Something went wrong'?
+                        deferred.reject({ data: data, status: status, headers: headers, config: config });
+                    });
+            }
 
-            return $http({
-                method: 'GET',
-                url: url
-            }).
-                success(function (currentUser) {
-                    $delegate.currentUser = currentUser;
-                }).
-                error(function (data, status, headers, config) {
-                    logger.logError('error', null, true);
-                });
-        }
-
-        function getToken(email, password) {
-            var url = '/api/Token';
-            var tokenRequestData = 'grant_type=password&username=' + email + '&password=' + password;
-
-            return $http({
-                method: 'POST',
-                url: url,
-                data: tokenRequestData,
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-            }).
-                success(function (response) {
-                    $delegate.isNew = false;
-                    logger.logSuccess('userService - isNew', $delegate.isNew, true);
-                    $delegate.currentToken = response.access_token;
-                }).
-                error(function (data, status, headers, config) {
-                    // TODO
-                });
-        }
-
-        function login(email, password) {
-            var url = '/api/UserHelper/Login';
-            var userDto = { "email": email, "password": password };
-
-            return $http({
-                method: 'POST',
-                url: url,
-                data: userDto,
-                headers: { 'Content-Type': 'application/json' }
-            }).
-                //success(function () {
-                //}).
-                error(function (data, status, headers, config) {
-                    // TODO
-                });
+            return deferred.promise;
         }
 
         function logout() {
+            var logoutUrl = '/api/Account/Logout';
 
-            var url = '/api/UserHelper/Logout';
-
-            return $http({ method: 'POST', url: url }).
-                //success(function () {
-                //}).
-                error(function (data, status, headers, config) {
-                    // TODO
-                });
-        }
-
-        function logoutNew() {
-
-            logger.logSuccess('arrived', null, true);
-
-            var url = '/api/Account/Logout';
-
-            var currentToken = userService.currentToken;
-
-            return $http({
-                method: 'POST', url: url
-            }).
-                success(function () {
-                    $delegate.currentToken = '';
-                }).
-                error(function (data, status, headers, config) {
+            return $http.post(logoutUrl)
+                .success(function () {
+                    //
+                })
+                .error(function (data, status, headers, config) {
                     // TODO
                 });
         }

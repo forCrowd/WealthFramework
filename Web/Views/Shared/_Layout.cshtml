@@ -21,7 +21,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="dropdown" data-ng-show="vm.isAuthenticated && vm.currentUser.UserAccountTypeId == 1">
+                    <li class="dropdown" data-ng-show="vm.currentUser && vm.currentUser.UserAccountTypeId == 1">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown">Definitions <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="#/User/">User</a></li>
@@ -31,7 +31,7 @@
                             <li><a href="#/Organization/">Organization</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown" data-ng-show="vm.isAuthenticated">
+                    <li class="dropdown" data-ng-show="vm.currentUser">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown">CMRP <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="#/TotalCostIndex/">Total Cost Index</a></li>
@@ -44,7 +44,7 @@
                             @*<li><a href="#/AllInOne/">All in One</a></li>*@
                         </ul>
                     </li>
-                    <li class="dropdown" data-ng-show="vm.isAuthenticated">
+                    <li class="dropdown" data-ng-show="vm.currentUser">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown">Ratings <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="#/UserResourcePool/">CMRP Index Rating</a></li>
@@ -64,12 +64,12 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <div class="navbar-text nofloat">
-                            <div data-ng-show="vm.isAuthenticated">
+                            <div data-ng-show="vm.currentUser">
                                 User: {{ vm.currentUser.Email }}
                                 <a href="#/User/edit/{{ vm.currentUser.Id }}">Edit</a>
-                                <a href="" data-ng-click="vm.userLogoutNew()">Logout</a>
+                                <a href="" data-ng-click="vm.logout()">Logout</a>
                             </div>
-                            <div data-ng-show="!vm.isAuthenticated">
+                            <div data-ng-show="!vm.currentUser">
                                 <a href="#/User/Login/">Login</a>
                             </div>
                         </div>
@@ -87,7 +87,7 @@
         <footer>
             <p>
                 {{ vm.currentDate | date:'yyyy' }} - Open Source Pioneers<br />
-                Ver.: {{ vm.currentVersion }}<br />
+                Ver.: {{ vm.applicationInfo.CurrentVersion }}<br />
             </p>
         </footer>
     </div>

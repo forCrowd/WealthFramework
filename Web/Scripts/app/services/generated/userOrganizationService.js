@@ -54,8 +54,7 @@
             return dataContext.getChangesCount();
         }
 
-        function getUserOrganizationSet(userId, forceRefresh) {
-
+        function getUserOrganizationSet(forceRefresh) {
             var count;
             if (forceRefresh) {
                 if (dataContext.hasChanges()) {
@@ -68,7 +67,6 @@
             var query = breeze.EntityQuery
 				.from('UserOrganization')
 				.expand(['Organization', 'User'])
-				.where('UserId', '==', userId)
             ;
 
             // Fetch the data from server, in case if it's not fetched earlier or forced

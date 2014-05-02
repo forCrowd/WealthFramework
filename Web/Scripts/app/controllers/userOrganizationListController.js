@@ -13,12 +13,10 @@
     var controllerId = 'userOrganizationListController';
     angular.module('main')
         .controller(controllerId, ['userOrganizationService',
-            'userService',
             'logger',
 			userOrganizationListController]);
 
     function userOrganizationListController(userOrganizationService,
-        userService,
         logger) {
         logger = logger.forSource(controllerId);
 
@@ -49,13 +47,10 @@
         };
 
         function getUserOrganizationSet() {
-            userService.getCurrentUserNew()
-			    .success(function (currentUser) {
-					userOrganizationService.getUserOrganizationSet(currentUser.Id, false)
-						.then(function (data) {
-							vm.userOrganizationSet = data;
-						});
-			    });
+            userOrganizationService.getUserOrganizationSet(false)
+			    .then(function (data) {
+                    vm.userOrganizationSet = data;
+                });
         }
     };
 })();

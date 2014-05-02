@@ -55,7 +55,6 @@
         }
 
         function getOrganizationSet(forceRefresh) {
-
             var count;
             if (forceRefresh) {
                 if (dataContext.hasChanges()) {

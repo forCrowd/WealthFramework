@@ -47,15 +47,12 @@ namespace Web.Controllers
         [Route("UserInfo")]
         public UserInfoViewModel GetUserInfo()
         {
-            ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
+            var externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
 
-            BusinessObjects.User currentUser;
-
+            User currentUser;
+            var aspNetUserId = User.Identity.GetUserId();
             using (var unitOfWork = new UserUnitOfWork())
-            {
-                var aspNetUserId = User.Identity.GetUserId();
                 currentUser = unitOfWork.AllLive.Single(user => user.AspNetUserId == aspNetUserId);
-            }
 
             return new UserInfoViewModel
             {

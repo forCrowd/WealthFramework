@@ -3,74 +3,48 @@
 
     var controllerId = 'layoutController';
     angular.module('main')
-        .controller(controllerId, ['mainService', 'userService', 'logger', layoutController]);
+        .controller(controllerId, ['mainService', 'userService', '$rootScope', '$location', 'logger', layoutController]);
 
-    function layoutController(mainService, userService, logger) {
+    function layoutController(mainService, userService, $rootScope, $location, logger) {
         logger = logger.forSource(controllerId);
 
         var vm = this;
+        vm.applicationInfo = null;
         vm.currentDate = new Date();
         vm.currentUser = null;
-        vm.currentVersion = '';
-        vm.isAuthenticated = false;
-        vm.userLogout = userLogout;
-        vm.userLogoutNew = userLogoutNew;
-
+        vm.logout = logout;
         initialize();
 
         function initialize() {
-            getCurrentUserNew();
-            getCurrentVersion();
+            getApplicationInfo();
+
+            // If the route changes, try to load the current user
+            $rootScope.$on('$routeChangeSuccess', function (next, current) {
+                logger.logSuccess('$routeChangeSuccess', { next: next, current: current }, true);
+                if (current.loadedTemplateUrl === 'ViewsNg/home/index.html') {
+                    getCurrentUser();
+                }
+            });
         };
+
+        function getApplicationInfo() {
+            mainService.getApplicationInfo().then(function (applicationInfo) {
+                vm.applicationInfo = applicationInfo;
+            });
+        }
 
         function getCurrentUser() {
             userService.getCurrentUser()
-                .success(function (currentUser) {
-                    // TODO Why string null?
-                    vm.isAuthenticated = currentUser !== "null";
+                .then(function (currentUser) {
                     vm.currentUser = currentUser;
                 });
         }
 
-        function getCurrentUserNew() {
-            userService.getCurrentUserNew()
-                .success(function (currentUser) {
-                    // TODO Why string null?
-                    vm.isAuthenticated = currentUser !== "null";
-                    vm.currentUser = currentUser;
-                });
-        }
-
-        function getCurrentVersion() {
-            mainService.getCurrentVersion()
-                .success(function (applicationInfo) {
-                    vm.currentVersion = applicationInfo.CurrentVersion;
-                });
-        }
-
-        function userLogout() {
+        function logout() {
             userService.logout()
                 .success(function () {
-                    // TODO!
-                    window.location.href = '/';
                     vm.currentUser = null;
-                    vm.isAuthenticated = false;
-                });
-        }
-
-        function userLogoutNew() {
-
-            logger.logSuccess('arrived 1', null, true);
-
-            userService.logoutNew()
-                .success(function () {
-
-                    logger.logSuccess('success 1', null, true);
-
-                    // TODO!
-                    window.location.href = '/';
-                    vm.currentUser = null;
-                    vm.isAuthenticated = false;
+                    $location.path('/');
                 });
         }
     };

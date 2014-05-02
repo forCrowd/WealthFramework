@@ -55,7 +55,6 @@
         }
 
         function getResourcePoolSet(forceRefresh) {
-
             var count;
             if (forceRefresh) {
                 if (dataContext.hasChanges()) {
