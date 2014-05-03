@@ -27,16 +27,6 @@ namespace Web.Models
 
     public class UserInfoViewModel
     {
-        public string UserName { get; set; }
-
-        public bool HasRegistered { get; set; }
-
-        public string LoginProvider { get; set; }
-
-        public string AuthenticationType { get; set; }
-        public string IsAuthenticated { get; set; }
-        public string Name { get; set; }
-        
         public int Id { get; set; }
         public byte UserAccountTypeId { get; set; }
         public string Email { get; set; }

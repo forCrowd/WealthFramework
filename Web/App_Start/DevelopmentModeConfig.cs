@@ -3,29 +3,29 @@ using System.Web;
 
 namespace Web
 {
-    public static class DevelopmentModeConfig
-    {
-        public static bool Initialized { get; private set; }
+    //public static class DevelopmentModeConfig
+    //{
+    //    public static bool Initialized { get; private set; }
 
-        public static void Initialize()
-        {
-            if (Initialized)
-                return;
+    //    public static void Initialize()
+    //    {
+    //        if (Initialized)
+    //            return;
 
-            // Validate user agent; to be able to ignore warm-up script
-            if (string.IsNullOrWhiteSpace(HttpContext.Current.Request.UserAgent))
-                return;
+    //        // Validate user agent; to be able to ignore warm-up script
+    //        if (string.IsNullOrWhiteSpace(HttpContext.Current.Request.UserAgent))
+    //            return;
 
-            Login();
+    //        Login();
 
-            Initialized = true;
-        }
+    //        Initialized = true;
+    //    }
         
-        static void Login()
-        {
-            HttpContext.Current.Session.Add("CurrentUserId", 1);
-            HttpContext.Current.Session.Add("CurrentUserEmail", "serkanholat@hotmail.com");
-            HttpContext.Current.Session.Add("CurrentUserAccountTypeId", UserAccountType.Administrator);        
-        }
-    }
+    //    static void Login()
+    //    {
+    //        HttpContext.Current.Session.Add("CurrentUserId", 1);
+    //        HttpContext.Current.Session.Add("CurrentUserEmail", "serkanholat@hotmail.com");
+    //        HttpContext.Current.Session.Add("CurrentUserAccountTypeId", UserAccountType.Administrator);        
+    //    }
+    //}
 }

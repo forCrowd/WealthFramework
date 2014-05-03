@@ -5,19 +5,19 @@
     var serviceId = 'userService';
     angular.module('main')
         .config(function ($provide) {
-            $provide.decorator(serviceId, ['$delegate', 'dataContext', '$http', '$q', 'logger', userService]);
+            $provide.decorator(serviceId, ['$delegate', 'dataContext', '$http', '$q', '$rootScope', 'logger', userService]);
         });
 
-    function userService($delegate, dataContext, $http, $q, logger) {
+    function userService($delegate, dataContext, $http, $q, $rootScope, logger) {
         logger = logger.forSource(serviceId);
 
         var accessTokenUrl = '/api/Token';
-        var currentUser = null;
-        var currentUserUrl = '/api/Account/UserInfo';
+        var userInfo = null;
+        var userInfoUrl = '/api/Account/UserInfo';
 
         // Service methods
         $delegate.getAccessToken = getAccessToken;
-        $delegate.getCurrentUser = getCurrentUser;
+        $delegate.getUserInfo = getUserInfo;
         $delegate.logout = logout;
         $delegate.register = register;
 
@@ -30,24 +30,27 @@
 
             return $http.post(accessTokenUrl, accessTokenData, { 'Content-Type': 'application/x-www-form-urlencoded' })
                 .success(function (data) {
+                    $rootScope.$broadcast('userLoggedIn');
+
                     // TODO in case cookies are disabled?
+
                 })
                 .error(function (data, status, headers, config) {
                     // TODO
                 });
         }
 
-        function getCurrentUser() {
+        function getUserInfo() {
 
             var deferred = $q.defer();
 
-            if (currentUser !== null) {
-                deferred.resolve(currentUser);
+            if (userInfo !== null) {
+                deferred.resolve(userInfo);
             } else {
-                $http.get(currentUserUrl)
+                $http.get(userInfoUrl)
                     .success(function (data) {
-                        currentUser = data;
-                        deferred.resolve(currentUser);
+                        userInfo = data;
+                        deferred.resolve(userInfo);
                     })
                     .error(function (data, status, headers, config) {
                         // TODO
@@ -65,7 +68,7 @@
 
             return $http.post(logoutUrl)
                 .success(function () {
-                    //
+                    $rootScope.$broadcast('userLoggedOut');
                 })
                 .error(function (data, status, headers, config) {
                     // TODO

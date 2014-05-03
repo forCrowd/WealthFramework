@@ -39,10 +39,8 @@ http://www.asp.net/web-api/overview/formats-and-model-binding
 </m:error>
 
 	. continue with currentuserinfo + account controller clean up
-	. remove userhelpercontroller + session state stuff
-	. find a way to create aspnetuser for the existing users
-
-. aspnet context locations - currently in web.models? and it's written in migrationhistory as well
+	. set roles
+	. set authorization attributes (authorize - allowanonymous etc. - roles admin etc.)
 
 . increasenumberofsales should return userresourcepool? but its sending httpactionresult?
 
@@ -135,9 +133,6 @@ token from wealtheco worked in this last app
 also db is not there but probably because dbcontext wasnt used
 
 ---
-UserManager.UpdateSecurityStampAsync(userId)
-
----
 api
 register
 token
@@ -152,3 +147,8 @@ logout
 try access after logout
 
 ---
+serkanholat@hotmail.com		- q1w2e3
+osengelli@gmail.com			- genericPassword1
+fatihsoylemez@gmail.com		- genericPassword1
+azizeleylek@hotmail.com		- genericPassword1
+kemal@zenitlift.com.tr		- genericPassword1

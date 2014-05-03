@@ -11,39 +11,45 @@
         var vm = this;
         vm.applicationInfo = null;
         vm.currentDate = new Date();
-        vm.currentUser = null;
         vm.logout = logout;
+        vm.userInfo = null;
+
         initialize();
 
         function initialize() {
             getApplicationInfo();
+            getUserInfo();
 
-            // If the route changes, try to load the current user
-            $rootScope.$on('$routeChangeSuccess', function (next, current) {
-                logger.logSuccess('$routeChangeSuccess', { next: next, current: current }, true);
-                if (current.loadedTemplateUrl === 'ViewsNg/home/index.html') {
-                    getCurrentUser();
-                }
+            // User logged in
+            $rootScope.$on('userLoggedIn', function () {
+                getUserInfo();
+            });
+
+            // User logged out
+            $rootScope.$on('userLoggedOut', function () {
+                vm.userInfo = null;
             });
         };
 
         function getApplicationInfo() {
-            mainService.getApplicationInfo().then(function (applicationInfo) {
-                vm.applicationInfo = applicationInfo;
-            });
+            mainService.getApplicationInfo()
+                .then(function (applicationInfo) {
+                    vm.applicationInfo = applicationInfo;
+                });
         }
 
-        function getCurrentUser() {
-            userService.getCurrentUser()
-                .then(function (currentUser) {
-                    vm.currentUser = currentUser;
+        function getUserInfo() {
+            userService.getUserInfo()
+                .then(function (userInfo) {
+                    vm.userInfo = userInfo;
+                }, function () {
+                    // TODO Error?
                 });
         }
 
         function logout() {
             userService.logout()
                 .success(function () {
-                    vm.currentUser = null;
                     $location.path('/');
                 });
         }

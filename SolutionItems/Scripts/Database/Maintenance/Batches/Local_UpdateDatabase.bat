@@ -8,14 +8,14 @@ CHOICE /M "Are you sure you want to run the script"
 IF ERRORLEVEL 2 EXIT
 
 REM ECHO.
-REM sqlcmd -S localhost -d WealthEconomy -e "%~dp0\..\Local - Create Login + User.sql"
+REM sqlcmd -S (LocalDb)\v11.0 -d WealthEconomy -e "%~dp0\..\Local - Create Login + User.sql"
 REM ECHO.
 
 REM ECHO.
-REM %SystemRoot%\Microsoft.NET\Framework64\v4.0.30319\aspnet_regsql.exe -S localhost -sstype c -d WealthEconomy -e -ssadd
+REM %SystemRoot%\Microsoft.NET\Framework64\v4.0.30319\aspnet_regsql.exe -S (LocalDb)\v11.0 -sstype c -d WealthEconomy -e -ssadd
 REM ECHO.
 
 ECHO.
-sqlcmd -S localhost -d WealthEconomy -e -i "%~dp0\..\Local - Update Database.sql"
+sqlcmd -S (LocalDb)\v11.0 -d WealthEconomy -e -i "%~dp0\..\Local - Update Database.sql"
 ECHO.
 PAUSE

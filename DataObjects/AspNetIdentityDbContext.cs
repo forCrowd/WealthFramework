@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
-
-namespace Web.Models
+﻿
+namespace DataObjects
 {
+    using Microsoft.AspNet.Identity.EntityFramework;
+
     public class AspNetIdentityDbContext : IdentityDbContext<IdentityUser>
     {
         public AspNetIdentityDbContext()

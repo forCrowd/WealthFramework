@@ -9,6 +9,7 @@ using Microsoft.Owin.Security.OAuth;
 using Owin;
 using Web.Providers;
 using Web.Models;
+using Facade;
 
 namespace Web
 {
@@ -18,7 +19,7 @@ namespace Web
         {
             PublicClientId = "self";
 
-            UserManagerFactory = () => new UserManager<IdentityUser>(new UserStore<IdentityUser>(new AspNetIdentityDbContext()));
+            UserManagerFactory = () => new AspNetUserManager();
 
             OAuthOptions = new OAuthAuthorizationServerOptions
             {

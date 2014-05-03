@@ -9,8 +9,8 @@
         logger = logger.forSource(controllerId);
 
         var vm = this;
-        vm.email = 'Alice13';
-        vm.password = 'password123';
+        vm.email = 'serkanholat@hotmail.com';
+        vm.password = 'q1w2e3';
         vm.getAccessToken = getAccessToken;
 
         initialize();
