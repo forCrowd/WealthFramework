@@ -113,6 +113,10 @@
     <Compile Include="Migrations\201405010754539_V0_10.Designer.cs">
       <DependentUpon>201405010754539_V0_10.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201405031811163_V0_10_1.cs" />
+    <Compile Include="Migrations\201405031811163_V0_10_1.Designer.cs">
+      <DependentUpon>201405031811163_V0_10_1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="WealthEconomyContext.cs" />
     <Compile Include="BaseRepository.cs" />
@@ -146,6 +150,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201405010754539_V0_10.resx">
       <DependentUpon>201405010754539_V0_10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405031811163_V0_10_1.resx">
+      <DependentUpon>201405031811163_V0_10_1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

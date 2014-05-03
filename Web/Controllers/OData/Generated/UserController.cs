@@ -20,27 +20,32 @@ namespace Web.Controllers.OData
     using System.Web.Http.ModelBinding;
     using System.Web.Http.OData;
 
-    public partial class UserController : ODataController
+    public abstract class BaseUserController : BaseController
     {
-        UserUnitOfWork unitOfWork = new UserUnitOfWork();
+        public BaseUserController()
+		{
+			MainUnitOfWork = new UserUnitOfWork();		
+		}
+
+		protected UserUnitOfWork MainUnitOfWork { get; private set; }
 
         // GET odata/User
         [Queryable]
-        public IQueryable<User> GetUser()
+        public virtual IQueryable<User> Get()
         {
-			var list = unitOfWork.AllLive;
+			var list = MainUnitOfWork.AllLive;
             return list;
         }
 
         // GET odata/User(5)
         [Queryable]
-        public SingleResult<User> GetUser([FromODataUri] int key)
+        public virtual SingleResult<User> Get([FromODataUri] int key)
         {
-            return SingleResult.Create(unitOfWork.AllLive.Where(user => user.Id == key));
+            return SingleResult.Create(MainUnitOfWork.AllLive.Where(user => user.Id == key));
         }
 
         // PUT odata/User(5)
-        public async Task<IHttpActionResult> Put([FromODataUri] int key, User user)
+        public virtual async Task<IHttpActionResult> Put([FromODataUri] int key, User user)
         {
             if (!ModelState.IsValid)
             {
@@ -52,15 +57,15 @@ namespace Web.Controllers.OData
                 return BadRequest();
             }
 
-            unitOfWork.Update(user);
+            MainUnitOfWork.Update(user);
 
             try
             {
-                await unitOfWork.SaveAsync();
+                await MainUnitOfWork.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!unitOfWork.Exists(key))
+                if (!MainUnitOfWork.Exists(key))
                 {
                     return NotFound();
                 }
@@ -74,22 +79,22 @@ namespace Web.Controllers.OData
         }
 
         // POST odata/User
-        public async Task<IHttpActionResult> Post(User user)
+        public virtual async Task<IHttpActionResult> Post(User user)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            unitOfWork.Insert(user);
+            MainUnitOfWork.Insert(user);
 
             try
             {
-                await unitOfWork.SaveAsync();
+                await MainUnitOfWork.SaveAsync();
             }
             catch (DbUpdateException)
             {
-                if (unitOfWork.Exists(user.Id))
+                if (MainUnitOfWork.Exists(user.Id))
                 {
                     return Conflict();
                 }
@@ -104,29 +109,29 @@ namespace Web.Controllers.OData
 
         // PATCH odata/User(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<User> patch)
+        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<User> patch)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var user = await unitOfWork.FindAsync(key);
+            var user = await MainUnitOfWork.FindAsync(key);
             if (user == null)
             {
                 return NotFound();
             }
 
             patch.Patch(user);
-            unitOfWork.Update(user);
+            MainUnitOfWork.Update(user);
 
             try
             {
-                await unitOfWork.SaveAsync();
+                await MainUnitOfWork.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!unitOfWork.Exists(key))
+                if (!MainUnitOfWork.Exists(key))
                 {
                     return NotFound();
                 }
@@ -140,18 +145,22 @@ namespace Web.Controllers.OData
         }
 
         // DELETE odata/User(5)
-        public async Task<IHttpActionResult> Delete([FromODataUri] int key)
+        public virtual async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            var user = await unitOfWork.FindAsync(key);
+            var user = await MainUnitOfWork.FindAsync(key);
             if (user == null)
             {
                 return NotFound();
             }
 
-            unitOfWork.Delete(user.Id);
-            await unitOfWork.SaveAsync();
+            MainUnitOfWork.Delete(user.Id);
+            await MainUnitOfWork.SaveAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
     }
+
+    public partial class UserController : BaseUserController
+    {
+	}
 }

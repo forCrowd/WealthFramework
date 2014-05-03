@@ -20,27 +20,33 @@ namespace Web.Controllers.OData
     using System.Web.Http.ModelBinding;
     using System.Web.Http.OData;
 
-    public partial class LicenseController : ODataController
+    [Authorize(Roles="Administrator")]
+    public abstract class BaseLicenseController : BaseController
     {
-        LicenseUnitOfWork unitOfWork = new LicenseUnitOfWork();
+        public BaseLicenseController()
+		{
+			MainUnitOfWork = new LicenseUnitOfWork();		
+		}
+
+		protected LicenseUnitOfWork MainUnitOfWork { get; private set; }
 
         // GET odata/License
         [Queryable]
-        public IQueryable<License> GetLicense()
+        public virtual IQueryable<License> Get()
         {
-			var list = unitOfWork.AllLive;
+			var list = MainUnitOfWork.AllLive;
             return list;
         }
 
         // GET odata/License(5)
         [Queryable]
-        public SingleResult<License> GetLicense([FromODataUri] short key)
+        public virtual SingleResult<License> Get([FromODataUri] short key)
         {
-            return SingleResult.Create(unitOfWork.AllLive.Where(license => license.Id == key));
+            return SingleResult.Create(MainUnitOfWork.AllLive.Where(license => license.Id == key));
         }
 
         // PUT odata/License(5)
-        public async Task<IHttpActionResult> Put([FromODataUri] short key, License license)
+        public virtual async Task<IHttpActionResult> Put([FromODataUri] short key, License license)
         {
             if (!ModelState.IsValid)
             {
@@ -52,15 +58,15 @@ namespace Web.Controllers.OData
                 return BadRequest();
             }
 
-            unitOfWork.Update(license);
+            MainUnitOfWork.Update(license);
 
             try
             {
-                await unitOfWork.SaveAsync();
+                await MainUnitOfWork.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!unitOfWork.Exists(key))
+                if (!MainUnitOfWork.Exists(key))
                 {
                     return NotFound();
                 }
@@ -74,22 +80,22 @@ namespace Web.Controllers.OData
         }
 
         // POST odata/License
-        public async Task<IHttpActionResult> Post(License license)
+        public virtual async Task<IHttpActionResult> Post(License license)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            unitOfWork.Insert(license);
+            MainUnitOfWork.Insert(license);
 
             try
             {
-                await unitOfWork.SaveAsync();
+                await MainUnitOfWork.SaveAsync();
             }
             catch (DbUpdateException)
             {
-                if (unitOfWork.Exists(license.Id))
+                if (MainUnitOfWork.Exists(license.Id))
                 {
                     return Conflict();
                 }
@@ -104,29 +110,29 @@ namespace Web.Controllers.OData
 
         // PATCH odata/License(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public async Task<IHttpActionResult> Patch([FromODataUri] short key, Delta<License> patch)
+        public virtual async Task<IHttpActionResult> Patch([FromODataUri] short key, Delta<License> patch)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var license = await unitOfWork.FindAsync(key);
+            var license = await MainUnitOfWork.FindAsync(key);
             if (license == null)
             {
                 return NotFound();
             }
 
             patch.Patch(license);
-            unitOfWork.Update(license);
+            MainUnitOfWork.Update(license);
 
             try
             {
-                await unitOfWork.SaveAsync();
+                await MainUnitOfWork.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!unitOfWork.Exists(key))
+                if (!MainUnitOfWork.Exists(key))
                 {
                     return NotFound();
                 }
@@ -140,18 +146,22 @@ namespace Web.Controllers.OData
         }
 
         // DELETE odata/License(5)
-        public async Task<IHttpActionResult> Delete([FromODataUri] short key)
+        public virtual async Task<IHttpActionResult> Delete([FromODataUri] short key)
         {
-            var license = await unitOfWork.FindAsync(key);
+            var license = await MainUnitOfWork.FindAsync(key);
             if (license == null)
             {
                 return NotFound();
             }
 
-            unitOfWork.Delete(license.Id);
-            await unitOfWork.SaveAsync();
+            MainUnitOfWork.Delete(license.Id);
+            await MainUnitOfWork.SaveAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
     }
+
+    public partial class LicenseController : BaseLicenseController
+    {
+	}
 }

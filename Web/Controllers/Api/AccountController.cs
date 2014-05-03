@@ -1,27 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http;
-using System.Web.Http.ModelBinding;
+﻿using BusinessObjects;
+using Facade;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.OAuth;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
 using Web.Models;
-using Web.Providers;
-using Web.Results;
-using Facade;
-using BusinessObjects;
 
 namespace Web.Controllers
 {
-    [Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
@@ -47,8 +39,8 @@ namespace Web.Controllers
         [Route("UserInfo")]
         public UserInfoViewModel GetUserInfo()
         {
-            User currentUser;
             var aspNetUserId = User.Identity.GetUserId();
+            User currentUser;
             using (var unitOfWork = new UserUnitOfWork())
                 currentUser = unitOfWork.AllLive.Single(user => user.AspNetUserId == aspNetUserId);
 
@@ -56,12 +48,11 @@ namespace Web.Controllers
             {
                 Id = currentUser.Id,
                 Email = currentUser.Email,
-                UserAccountTypeId = currentUser.UserAccountTypeId
+                IsAdmin = User.IsInRole("Administrator")
             };
         }
 
         // POST api/Account/Logout
-        [Route("Logout")]
         public IHttpActionResult Logout()
         {
             Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
@@ -108,7 +99,6 @@ namespace Web.Controllers
         }
 
         // POST api/Account/ChangePassword
-        [Route("ChangePassword")]
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -129,7 +119,6 @@ namespace Web.Controllers
         }
 
         // POST api/Account/SetPassword
-        [Route("SetPassword")]
         public async Task<IHttpActionResult> SetPassword(SetPasswordBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -150,7 +139,6 @@ namespace Web.Controllers
 
         // POST api/Account/Register
         [AllowAnonymous]
-        [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -163,28 +151,27 @@ namespace Web.Controllers
                 UserName = model.UserName
             };
 
-            IdentityResult result = await UserManager.CreateAsync(aspNetUser, model.Password);
-            IHttpActionResult errorResult = GetErrorResult(result);
+            // Create AspNetUser
+            var result = await UserManager.CreateAsync(aspNetUser, model.Password);
+            var errorResult = GetErrorResult(result);
 
             if (errorResult != null)
             {
                 return errorResult;
             }
 
-            //// Create the application user in relation with AspNetUser
-            //using (var unitOfWork = new UserUnitOfWork())
-            //{
-            //    var user = new User()
-            //    {
-            //        AspNetUserId = aspNetUser.Id,
-            //        Email = aspNetUser.UserName,
-            //        Password = "[obsolete]",
-            //        UserAccountTypeId = (byte)UserAccountType.Standard
-            //    };
+            // Create the application user in relation with AspNetUser
+            using (var unitOfWork = new UserUnitOfWork())
+            {
+                var user = new User()
+                {
+                    AspNetUserId = aspNetUser.Id,
+                    Email = aspNetUser.UserName,
+                };
 
-            //    unitOfWork.Insert(user);
-            //    await unitOfWork.SaveAsync();
-            //}
+                unitOfWork.Insert(user);
+                await unitOfWork.SaveAsync();
+            }
 
             return Ok();
         }

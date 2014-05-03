@@ -11,11 +11,7 @@ REM ECHO.
 REM sqlcmd -S (LocalDb)\v11.0 -d WealthEconomy -e "%~dp0\..\Local - Create Login + User.sql"
 REM ECHO.
 
-REM ECHO.
-REM %SystemRoot%\Microsoft.NET\Framework64\v4.0.30319\aspnet_regsql.exe -S (LocalDb)\v11.0 -sstype c -d WealthEconomy -e -ssadd
-REM ECHO.
-
 ECHO.
-sqlcmd -S (LocalDb)\v11.0 -d WealthEconomy -e -i "%~dp0\..\Local - Update Database.sql"
+sqlcmd -S (LocalDb)\v11.0 -d WealthEconomy -e -i "Sql\Local - Update Database.sql"
 ECHO.
 PAUSE

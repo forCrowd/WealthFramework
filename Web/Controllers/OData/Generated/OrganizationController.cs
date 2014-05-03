@@ -20,27 +20,33 @@ namespace Web.Controllers.OData
     using System.Web.Http.ModelBinding;
     using System.Web.Http.OData;
 
-    public partial class OrganizationController : ODataController
+    [Authorize(Roles="Administrator")]
+    public abstract class BaseOrganizationController : BaseController
     {
-        OrganizationUnitOfWork unitOfWork = new OrganizationUnitOfWork();
+        public BaseOrganizationController()
+		{
+			MainUnitOfWork = new OrganizationUnitOfWork();		
+		}
+
+		protected OrganizationUnitOfWork MainUnitOfWork { get; private set; }
 
         // GET odata/Organization
         [Queryable]
-        public IQueryable<Organization> GetOrganization()
+        public virtual IQueryable<Organization> Get()
         {
-			var list = unitOfWork.AllLive;
+			var list = MainUnitOfWork.AllLive;
             return list;
         }
 
         // GET odata/Organization(5)
         [Queryable]
-        public SingleResult<Organization> GetOrganization([FromODataUri] int key)
+        public virtual SingleResult<Organization> Get([FromODataUri] int key)
         {
-            return SingleResult.Create(unitOfWork.AllLive.Where(organization => organization.Id == key));
+            return SingleResult.Create(MainUnitOfWork.AllLive.Where(organization => organization.Id == key));
         }
 
         // PUT odata/Organization(5)
-        public async Task<IHttpActionResult> Put([FromODataUri] int key, Organization organization)
+        public virtual async Task<IHttpActionResult> Put([FromODataUri] int key, Organization organization)
         {
             if (!ModelState.IsValid)
             {
@@ -52,15 +58,15 @@ namespace Web.Controllers.OData
                 return BadRequest();
             }
 
-            unitOfWork.Update(organization);
+            MainUnitOfWork.Update(organization);
 
             try
             {
-                await unitOfWork.SaveAsync();
+                await MainUnitOfWork.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!unitOfWork.Exists(key))
+                if (!MainUnitOfWork.Exists(key))
                 {
                     return NotFound();
                 }
@@ -74,22 +80,22 @@ namespace Web.Controllers.OData
         }
 
         // POST odata/Organization
-        public async Task<IHttpActionResult> Post(Organization organization)
+        public virtual async Task<IHttpActionResult> Post(Organization organization)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            unitOfWork.Insert(organization);
+            MainUnitOfWork.Insert(organization);
 
             try
             {
-                await unitOfWork.SaveAsync();
+                await MainUnitOfWork.SaveAsync();
             }
             catch (DbUpdateException)
             {
-                if (unitOfWork.Exists(organization.Id))
+                if (MainUnitOfWork.Exists(organization.Id))
                 {
                     return Conflict();
                 }
@@ -104,29 +110,29 @@ namespace Web.Controllers.OData
 
         // PATCH odata/Organization(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<Organization> patch)
+        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<Organization> patch)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var organization = await unitOfWork.FindAsync(key);
+            var organization = await MainUnitOfWork.FindAsync(key);
             if (organization == null)
             {
                 return NotFound();
             }
 
             patch.Patch(organization);
-            unitOfWork.Update(organization);
+            MainUnitOfWork.Update(organization);
 
             try
             {
-                await unitOfWork.SaveAsync();
+                await MainUnitOfWork.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!unitOfWork.Exists(key))
+                if (!MainUnitOfWork.Exists(key))
                 {
                     return NotFound();
                 }
@@ -140,18 +146,22 @@ namespace Web.Controllers.OData
         }
 
         // DELETE odata/Organization(5)
-        public async Task<IHttpActionResult> Delete([FromODataUri] int key)
+        public virtual async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            var organization = await unitOfWork.FindAsync(key);
+            var organization = await MainUnitOfWork.FindAsync(key);
             if (organization == null)
             {
                 return NotFound();
             }
 
-            unitOfWork.Delete(organization.Id);
-            await unitOfWork.SaveAsync();
+            MainUnitOfWork.Delete(organization.Id);
+            await MainUnitOfWork.SaveAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
     }
+
+    public partial class OrganizationController : BaseOrganizationController
+    {
+	}
 }

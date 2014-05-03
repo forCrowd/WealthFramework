@@ -28,8 +28,8 @@ namespace Web.Models
     public class UserInfoViewModel
     {
         public int Id { get; set; }
-        public byte UserAccountTypeId { get; set; }
         public string Email { get; set; }
+        public bool IsAdmin { get; set; }
     }
 
     public class UserLoginInfoViewModel

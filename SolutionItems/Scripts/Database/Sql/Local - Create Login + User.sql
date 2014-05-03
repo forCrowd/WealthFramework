@@ -11,7 +11,7 @@ CREATE LOGIN [WealthEconomy_dbo] WITH PASSWORD=N'???',
 	DEFAULT_DATABASE=[WealthEconomy],
 	DEFAULT_LANGUAGE=[us_english],
 	CHECK_EXPIRATION=OFF,
-	CHECK_POLICY=OFF 
+	CHECK_POLICY=OFF
 
 --Drop the user
 IF EXISTS (SELECT * FROM sys.database_principals WHERE name = N'WealthEconomy_dbo')

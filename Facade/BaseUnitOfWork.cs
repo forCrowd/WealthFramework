@@ -7,25 +7,17 @@
     using System.Linq.Expressions;
     using System.Threading.Tasks;
 
-    public class BaseUnitOfWork<TEntityType> : IDisposable where TEntityType : class, IEntity
+    public abstract class BaseUnitOfWork<TEntityType> : IDisposable where TEntityType : class, IEntity
     {
-        WealthEconomyContext context;
-        IGenericRepository<TEntityType> mainRepository;
-
-        protected BaseUnitOfWork()
+        public BaseUnitOfWork()
         {
-            context = new WealthEconomyContext();
+            Context = new WealthEconomyContext();
+            MainRepository = new BaseRepository<TEntityType>(Context);
         }
 
-        protected WealthEconomyContext Context
-        {
-            get { return context; }
-        }
+        protected WealthEconomyContext Context { get; private set; }
 
-        protected IGenericRepository<TEntityType> MainRepository
-        {
-            get {  return mainRepository ?? (mainRepository = new BaseRepository<TEntityType>(Context)); }
-        }
+        protected IGenericRepository<TEntityType> MainRepository { get; private set; }
 
         public IQueryable<TEntityType> All { get { return MainRepository.All; } }
 

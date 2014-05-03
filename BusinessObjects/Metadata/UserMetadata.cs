@@ -5,6 +5,7 @@ namespace BusinessObjects.Metadata
     using System.ComponentModel.DataAnnotations;
 
     [DefaultProperty("Email")]
+    //[ODataControllerAuthorization("Administrator")]
     public class UserMetadata
     {
         [DisplayOnListView(false)]
@@ -21,11 +22,11 @@ namespace BusinessObjects.Metadata
         [StringLength(100)]
         public object Email { get; set; }
 
-        [Display(Name = "Password")]
-        [DisplayOnListView(false)]
-        [Required]
-        [StringLength(50)]
-        public string Password { get; set; }
+        //[Display(Name = "Password")]
+        //[DisplayOnListView(false)]
+        //[Required]
+        //[StringLength(50)]
+        //public string Password { get; set; }
 
         [Display(Name = "First Name")]
         [StringLength(50)]
@@ -38,11 +39,6 @@ namespace BusinessObjects.Metadata
         [Display(Name = "Last Name")]
         [StringLength(50)]
         public object LastName { get; set; }
-
-        [Display(Name = "User Account Type")]
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
-        public object UserAccountTypeId { get; set; }
 
         [DisplayOnListView(false)]
         public object Notes { get; set; }

@@ -1,4 +1,13 @@
-﻿0.10.0
+﻿0.10.1
+. Session state related files + codes were removed
+. Password, UserAccountTypeId fields were removed from User table
+. Alterations folder was removed from SolutionItems
+. Authorization filter was added to all Api controllers, Register action in AccountController was set to AllowAnonymous
+. Administrator role was introduced - All definition Controller were put under "Administrator" role except "User" controller
+. BaseController was created and ODataController.tt was modified to create BaseEntityControllers
+. CodeTemplates folder was removed
+
+0.10.0
 . Asp.Net Identity
 
 0.9.2

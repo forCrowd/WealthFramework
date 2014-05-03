@@ -20,27 +20,33 @@ namespace Web.Controllers.OData
     using System.Web.Http.ModelBinding;
     using System.Web.Http.OData;
 
-    public partial class ResourcePoolController : ODataController
+    [Authorize(Roles="Administrator")]
+    public abstract class BaseResourcePoolController : BaseController
     {
-        ResourcePoolUnitOfWork unitOfWork = new ResourcePoolUnitOfWork();
+        public BaseResourcePoolController()
+		{
+			MainUnitOfWork = new ResourcePoolUnitOfWork();		
+		}
+
+		protected ResourcePoolUnitOfWork MainUnitOfWork { get; private set; }
 
         // GET odata/ResourcePool
         [Queryable]
-        public IQueryable<ResourcePool> GetResourcePool()
+        public virtual IQueryable<ResourcePool> Get()
         {
-			var list = unitOfWork.AllLive;
+			var list = MainUnitOfWork.AllLive;
             return list;
         }
 
         // GET odata/ResourcePool(5)
         [Queryable]
-        public SingleResult<ResourcePool> GetResourcePool([FromODataUri] int key)
+        public virtual SingleResult<ResourcePool> Get([FromODataUri] int key)
         {
-            return SingleResult.Create(unitOfWork.AllLive.Where(resourcePool => resourcePool.Id == key));
+            return SingleResult.Create(MainUnitOfWork.AllLive.Where(resourcePool => resourcePool.Id == key));
         }
 
         // PUT odata/ResourcePool(5)
-        public async Task<IHttpActionResult> Put([FromODataUri] int key, ResourcePool resourcePool)
+        public virtual async Task<IHttpActionResult> Put([FromODataUri] int key, ResourcePool resourcePool)
         {
             if (!ModelState.IsValid)
             {
@@ -52,15 +58,15 @@ namespace Web.Controllers.OData
                 return BadRequest();
             }
 
-            unitOfWork.Update(resourcePool);
+            MainUnitOfWork.Update(resourcePool);
 
             try
             {
-                await unitOfWork.SaveAsync();
+                await MainUnitOfWork.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!unitOfWork.Exists(key))
+                if (!MainUnitOfWork.Exists(key))
                 {
                     return NotFound();
                 }
@@ -74,22 +80,22 @@ namespace Web.Controllers.OData
         }
 
         // POST odata/ResourcePool
-        public async Task<IHttpActionResult> Post(ResourcePool resourcePool)
+        public virtual async Task<IHttpActionResult> Post(ResourcePool resourcePool)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            unitOfWork.Insert(resourcePool);
+            MainUnitOfWork.Insert(resourcePool);
 
             try
             {
-                await unitOfWork.SaveAsync();
+                await MainUnitOfWork.SaveAsync();
             }
             catch (DbUpdateException)
             {
-                if (unitOfWork.Exists(resourcePool.Id))
+                if (MainUnitOfWork.Exists(resourcePool.Id))
                 {
                     return Conflict();
                 }
@@ -104,29 +110,29 @@ namespace Web.Controllers.OData
 
         // PATCH odata/ResourcePool(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<ResourcePool> patch)
+        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<ResourcePool> patch)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var resourcePool = await unitOfWork.FindAsync(key);
+            var resourcePool = await MainUnitOfWork.FindAsync(key);
             if (resourcePool == null)
             {
                 return NotFound();
             }
 
             patch.Patch(resourcePool);
-            unitOfWork.Update(resourcePool);
+            MainUnitOfWork.Update(resourcePool);
 
             try
             {
-                await unitOfWork.SaveAsync();
+                await MainUnitOfWork.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!unitOfWork.Exists(key))
+                if (!MainUnitOfWork.Exists(key))
                 {
                     return NotFound();
                 }
@@ -140,18 +146,22 @@ namespace Web.Controllers.OData
         }
 
         // DELETE odata/ResourcePool(5)
-        public async Task<IHttpActionResult> Delete([FromODataUri] int key)
+        public virtual async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            var resourcePool = await unitOfWork.FindAsync(key);
+            var resourcePool = await MainUnitOfWork.FindAsync(key);
             if (resourcePool == null)
             {
                 return NotFound();
             }
 
-            unitOfWork.Delete(resourcePool.Id);
-            await unitOfWork.SaveAsync();
+            MainUnitOfWork.Delete(resourcePool.Id);
+            await MainUnitOfWork.SaveAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
     }
+
+    public partial class ResourcePoolController : BaseResourcePoolController
+    {
+	}
 }

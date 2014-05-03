@@ -8,6 +8,6 @@ CHOICE /M "Are you sure you want to run the script"
 IF ERRORLEVEL 2 EXIT
 
 echo.
-sqlcmd -S (LocalDb)\v11.0 -d WealthEconomy -e -i "%~dp0\..\Local - Backup Database.sql"
+sqlcmd -S (LocalDb)\v11.0 -d WealthEconomy -e -i "Sql\Local - Backup Database.sql"
 echo.
 pause

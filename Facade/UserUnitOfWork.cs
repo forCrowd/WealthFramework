@@ -142,28 +142,5 @@
 
             base.Delete(id);
         }
-
-        public async Task<bool> AuthenticateUser(int userId, string password)
-        {
-            var selectedUser = await FindAsync(userId);
-
-            if (selectedUser == null)
-                return false;
-
-            if (string.IsNullOrWhiteSpace(password))
-                return false;
-
-            if (selectedUser.Password != password)
-                return false;
-
-            return true;
-        }
-
-        public User AuthenticateUser2(string email, string password)
-        {
-            return AllLive.SingleOrDefault(user =>
-                user.Email == email &&
-                user.Password == password);
-        }
     }
 }

@@ -22,11 +22,9 @@ namespace BusinessObjects.Dto
         {
             this.Id = user.Id;
             this.Email = user.Email;
-            this.Password = user.Password;
             this.FirstName = user.FirstName;
             this.MiddleName = user.MiddleName;
             this.LastName = user.LastName;
-            this.UserAccountTypeId = user.UserAccountTypeId;
             this.Notes = user.Notes;
             this.CreatedOn = user.CreatedOn;
             this.ModifiedOn = user.ModifiedOn;
@@ -39,17 +37,14 @@ namespace BusinessObjects.Dto
         [Required]
         public string Email { get; set; }
 
-        [Required]
-        public string Password { get; set; }
+        //[Required]
+        //public string Password { get; set; }
 
         public string FirstName { get; set; }
 
         public string MiddleName { get; set; }
 
         public string LastName { get; set; }
-
-        [Required]
-        public byte UserAccountTypeId { get; set; }
 
         public string Notes { get; set; }
 
@@ -67,11 +62,9 @@ namespace BusinessObjects.Dto
             {
                 Id = Id,
                 Email = Email,
-                Password = Password,
                 FirstName = FirstName,
                 MiddleName = MiddleName,
                 LastName = LastName,
-                UserAccountTypeId = UserAccountTypeId,
                 Notes = Notes,
                 CreatedOn = CreatedOn,
                 ModifiedOn = ModifiedOn,

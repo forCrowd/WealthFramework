@@ -32,9 +32,6 @@ namespace BusinessObjects.Metadata.Generated
         [Display(Name = "LastName")]
         public object LastName { get; set; }
 
-        [Display(Name = "UserAccountTypeId")]
-        public object UserAccountTypeId { get; set; }
-
         [Display(Name = "Notes")]
         public object Notes { get; set; }
 

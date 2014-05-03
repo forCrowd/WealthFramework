@@ -1,12 +1,7 @@
-﻿using BusinessObjects;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.OData;
-// using System.Web;
 
 namespace Web.Controllers.OData
 {
@@ -185,7 +180,6 @@ namespace Web.Controllers.OData
 
         // POST odata/UserResourcePool
         [HttpPost]
-        [Authorize]
         public async Task<IHttpActionResult> IncreaseNumberOfSales([FromODataUri] int key)
         {
             return await UpdateNumberOfSales(key, false);
@@ -200,7 +194,7 @@ namespace Web.Controllers.OData
         async Task<IHttpActionResult> UpdateNumberOfSales(int userResourcePoolId, bool isReset)
         {
             // Get the organizations
-            var userResourcePool = GetUserResourcePool(userResourcePoolId).Queryable.SingleOrDefault();
+            var userResourcePool = Get(userResourcePoolId).Queryable.SingleOrDefault();
 
             // Not found
             if (userResourcePool == null)
@@ -208,11 +202,11 @@ namespace Web.Controllers.OData
             
             // Reset or increase number of sales
             if (isReset)
-                unitOfWork.ResetNumberOfSales(userResourcePool);
+                MainUnitOfWork.ResetNumberOfSales(userResourcePool);
             else
-                unitOfWork.IncreaseNumberOfSales(userResourcePool);
-            
-            await unitOfWork.SaveAsync();
+                MainUnitOfWork.IncreaseNumberOfSales(userResourcePool);
+
+            await MainUnitOfWork.SaveAsync();
 
             return Updated(userResourcePool);
         }

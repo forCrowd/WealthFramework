@@ -82,6 +82,7 @@
     </Compile>
     <Compile Include="BaseEntity.cs" />
     <Compile Include="License.cs" />
+    <Compile Include="Metadata\Attributes\ODataControllerAuthorizationAttribute.cs" />
     <Compile Include="Organization.cs" />
     <Compile Include="ResourcePool.cs" />
     <Compile Include="Sector.cs" />

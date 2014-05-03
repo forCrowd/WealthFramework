@@ -5,6 +5,7 @@ namespace BusinessObjects.Metadata
     using System.ComponentModel.DataAnnotations;
 
     [DefaultProperty("Name")]
+    [ODataControllerAuthorization("Administrator")]
     public class SectorMetadata
     {
         [DisplayOnListView(false)]

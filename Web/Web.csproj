@@ -185,12 +185,12 @@
     </Compile>
     <Compile Include="App_Start\DatabaseConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\SecurityConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="App_Code\ApplicationSettings.cs" />
-    <Compile Include="App_Start\DevelopmentModeConfig.cs" />
     <Compile Include="App_Code\ServerMode.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
@@ -221,9 +221,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\Api\AccountController.cs" />
-    <Compile Include="Controllers\Api\BaseController.cs" />
     <Compile Include="Controllers\Api\ApplicationController.cs" />
-    <Compile Include="Controllers\Api\UserHelperController.cs" />
     <Compile Include="Controllers\Mvc\HomeController.cs" />
     <Compile Include="Controllers\OData\Generated\LicenseController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
@@ -252,6 +250,9 @@
     <Compile Include="Controllers\OData\Generated\UserSectorRatingController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\OData\IODataController.cs" />
+    <Compile Include="Controllers\OData\BaseController.cs" />
+    <Compile Include="Controllers\OData\UserController.cs" />
     <Compile Include="Controllers\OData\UserResourcePoolController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -259,7 +260,6 @@
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
-    <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

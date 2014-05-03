@@ -6,6 +6,7 @@
     using System;
     using System.Linq;
 
+    // Update these tests with UserManager?
     [TestClass]
     public class UserUnitOfWorkTest
     {
@@ -26,9 +27,6 @@
                 var user = new User()
                 {
                     Email = string.Format("user_{0:yyyyMMdd_HHmmss}", DateTime.Now),
-                    Password = "Password",
-                    //UserAccountTypeId = UserAccountType.Standard
-                    UserAccountTypeId = (byte)UserAccountType.Standard
                 };
 
                 unitOfWork.Insert(user);

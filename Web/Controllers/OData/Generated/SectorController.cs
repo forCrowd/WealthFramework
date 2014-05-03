@@ -20,27 +20,33 @@ namespace Web.Controllers.OData
     using System.Web.Http.ModelBinding;
     using System.Web.Http.OData;
 
-    public partial class SectorController : ODataController
+    [Authorize(Roles="Administrator")]
+    public abstract class BaseSectorController : BaseController
     {
-        SectorUnitOfWork unitOfWork = new SectorUnitOfWork();
+        public BaseSectorController()
+		{
+			MainUnitOfWork = new SectorUnitOfWork();		
+		}
+
+		protected SectorUnitOfWork MainUnitOfWork { get; private set; }
 
         // GET odata/Sector
         [Queryable]
-        public IQueryable<Sector> GetSector()
+        public virtual IQueryable<Sector> Get()
         {
-			var list = unitOfWork.AllLive;
+			var list = MainUnitOfWork.AllLive;
             return list;
         }
 
         // GET odata/Sector(5)
         [Queryable]
-        public SingleResult<Sector> GetSector([FromODataUri] short key)
+        public virtual SingleResult<Sector> Get([FromODataUri] short key)
         {
-            return SingleResult.Create(unitOfWork.AllLive.Where(sector => sector.Id == key));
+            return SingleResult.Create(MainUnitOfWork.AllLive.Where(sector => sector.Id == key));
         }
 
         // PUT odata/Sector(5)
-        public async Task<IHttpActionResult> Put([FromODataUri] short key, Sector sector)
+        public virtual async Task<IHttpActionResult> Put([FromODataUri] short key, Sector sector)
         {
             if (!ModelState.IsValid)
             {
@@ -52,15 +58,15 @@ namespace Web.Controllers.OData
                 return BadRequest();
             }
 
-            unitOfWork.Update(sector);
+            MainUnitOfWork.Update(sector);
 
             try
             {
-                await unitOfWork.SaveAsync();
+                await MainUnitOfWork.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!unitOfWork.Exists(key))
+                if (!MainUnitOfWork.Exists(key))
                 {
                     return NotFound();
                 }
@@ -74,22 +80,22 @@ namespace Web.Controllers.OData
         }
 
         // POST odata/Sector
-        public async Task<IHttpActionResult> Post(Sector sector)
+        public virtual async Task<IHttpActionResult> Post(Sector sector)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            unitOfWork.Insert(sector);
+            MainUnitOfWork.Insert(sector);
 
             try
             {
-                await unitOfWork.SaveAsync();
+                await MainUnitOfWork.SaveAsync();
             }
             catch (DbUpdateException)
             {
-                if (unitOfWork.Exists(sector.Id))
+                if (MainUnitOfWork.Exists(sector.Id))
                 {
                     return Conflict();
                 }
@@ -104,29 +110,29 @@ namespace Web.Controllers.OData
 
         // PATCH odata/Sector(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public async Task<IHttpActionResult> Patch([FromODataUri] short key, Delta<Sector> patch)
+        public virtual async Task<IHttpActionResult> Patch([FromODataUri] short key, Delta<Sector> patch)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var sector = await unitOfWork.FindAsync(key);
+            var sector = await MainUnitOfWork.FindAsync(key);
             if (sector == null)
             {
                 return NotFound();
             }
 
             patch.Patch(sector);
-            unitOfWork.Update(sector);
+            MainUnitOfWork.Update(sector);
 
             try
             {
-                await unitOfWork.SaveAsync();
+                await MainUnitOfWork.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!unitOfWork.Exists(key))
+                if (!MainUnitOfWork.Exists(key))
                 {
                     return NotFound();
                 }
@@ -140,18 +146,22 @@ namespace Web.Controllers.OData
         }
 
         // DELETE odata/Sector(5)
-        public async Task<IHttpActionResult> Delete([FromODataUri] short key)
+        public virtual async Task<IHttpActionResult> Delete([FromODataUri] short key)
         {
-            var sector = await unitOfWork.FindAsync(key);
+            var sector = await MainUnitOfWork.FindAsync(key);
             if (sector == null)
             {
                 return NotFound();
             }
 
-            unitOfWork.Delete(sector.Id);
-            await unitOfWork.SaveAsync();
+            MainUnitOfWork.Delete(sector.Id);
+            await MainUnitOfWork.SaveAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
     }
+
+    public partial class SectorController : BaseSectorController
+    {
+	}
 }

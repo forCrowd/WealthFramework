@@ -3,8 +3,10 @@ using System.Web.Http;
 
 namespace Web.Controllers.Api
 {
+    [RoutePrefix("api/Application")]
     public class ApplicationController : ApiController
     {
+        [Route("ApplicationInfo")]
         public ApplicationInfo GetApplicationInfo()
         {
             return new ApplicationInfo()

@@ -20,33 +20,34 @@ namespace Web.Controllers.OData
     using System.Web.Http.ModelBinding;
     using System.Web.Http.OData;
 
-    public partial class UserLicenseRatingController : ODataController
+    public abstract class BaseUserLicenseRatingController : BaseController
     {
-        UserLicenseRatingUnitOfWork unitOfWork = new UserLicenseRatingUnitOfWork();
+        public BaseUserLicenseRatingController()
+		{
+			MainUnitOfWork = new UserLicenseRatingUnitOfWork();		
+		}
+
+		protected UserLicenseRatingUnitOfWork MainUnitOfWork { get; private set; }
 
         // GET odata/UserLicenseRating
         [Queryable]
-        public IQueryable<UserLicenseRating> GetUserLicenseRating()
+        public virtual IQueryable<UserLicenseRating> Get()
         {
-			var list = unitOfWork.AllLive;
+			var list = MainUnitOfWork.AllLive;
 			using (var userUnitOfWork = new UserUnitOfWork())
-			{
-			    var aspNetUserId = User.Identity.GetUserId();
-			    var currentUser = userUnitOfWork.AllLive.Single(user => user.AspNetUserId == aspNetUserId);
-			    list = list.Where(item => item.UserId == currentUser.Id);
-			}
+			    list = list.Where(item => item.UserId == ApplicationUser.Id);
             return list;
         }
 
         // GET odata/UserLicenseRating(5)
         [Queryable]
-        public SingleResult<UserLicenseRating> GetUserLicenseRating([FromODataUri] int key)
+        public virtual SingleResult<UserLicenseRating> Get([FromODataUri] int key)
         {
-            return SingleResult.Create(unitOfWork.AllLive.Where(userLicenseRating => userLicenseRating.Id == key));
+            return SingleResult.Create(MainUnitOfWork.AllLive.Where(userLicenseRating => userLicenseRating.Id == key));
         }
 
         // PUT odata/UserLicenseRating(5)
-        public async Task<IHttpActionResult> Put([FromODataUri] int key, UserLicenseRating userLicenseRating)
+        public virtual async Task<IHttpActionResult> Put([FromODataUri] int key, UserLicenseRating userLicenseRating)
         {
             if (!ModelState.IsValid)
             {
@@ -58,15 +59,15 @@ namespace Web.Controllers.OData
                 return BadRequest();
             }
 
-            unitOfWork.Update(userLicenseRating);
+            MainUnitOfWork.Update(userLicenseRating);
 
             try
             {
-                await unitOfWork.SaveAsync();
+                await MainUnitOfWork.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!unitOfWork.Exists(key))
+                if (!MainUnitOfWork.Exists(key))
                 {
                     return NotFound();
                 }
@@ -80,22 +81,22 @@ namespace Web.Controllers.OData
         }
 
         // POST odata/UserLicenseRating
-        public async Task<IHttpActionResult> Post(UserLicenseRating userLicenseRating)
+        public virtual async Task<IHttpActionResult> Post(UserLicenseRating userLicenseRating)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            unitOfWork.Insert(userLicenseRating);
+            MainUnitOfWork.Insert(userLicenseRating);
 
             try
             {
-                await unitOfWork.SaveAsync();
+                await MainUnitOfWork.SaveAsync();
             }
             catch (DbUpdateException)
             {
-                if (unitOfWork.Exists(userLicenseRating.Id))
+                if (MainUnitOfWork.Exists(userLicenseRating.Id))
                 {
                     return Conflict();
                 }
@@ -110,29 +111,29 @@ namespace Web.Controllers.OData
 
         // PATCH odata/UserLicenseRating(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<UserLicenseRating> patch)
+        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<UserLicenseRating> patch)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var userLicenseRating = await unitOfWork.FindAsync(key);
+            var userLicenseRating = await MainUnitOfWork.FindAsync(key);
             if (userLicenseRating == null)
             {
                 return NotFound();
             }
 
             patch.Patch(userLicenseRating);
-            unitOfWork.Update(userLicenseRating);
+            MainUnitOfWork.Update(userLicenseRating);
 
             try
             {
-                await unitOfWork.SaveAsync();
+                await MainUnitOfWork.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!unitOfWork.Exists(key))
+                if (!MainUnitOfWork.Exists(key))
                 {
                     return NotFound();
                 }
@@ -146,18 +147,22 @@ namespace Web.Controllers.OData
         }
 
         // DELETE odata/UserLicenseRating(5)
-        public async Task<IHttpActionResult> Delete([FromODataUri] int key)
+        public virtual async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            var userLicenseRating = await unitOfWork.FindAsync(key);
+            var userLicenseRating = await MainUnitOfWork.FindAsync(key);
             if (userLicenseRating == null)
             {
                 return NotFound();
             }
 
-            unitOfWork.Delete(userLicenseRating.Id);
-            await unitOfWork.SaveAsync();
+            MainUnitOfWork.Delete(userLicenseRating.Id);
+            await MainUnitOfWork.SaveAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
     }
+
+    public partial class UserLicenseRatingController : BaseUserLicenseRatingController
+    {
+	}
 }

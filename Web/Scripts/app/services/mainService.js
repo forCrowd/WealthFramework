@@ -8,7 +8,7 @@
     function mainService($http, $q, logger) {
         logger = logger.forSource(serviceId);
 
-        var applicationInfoUrl = '/api/Application/GetApplicationInfo';
+        var applicationInfoUrl = '/api/Application/ApplicationInfo';
         var applicationInfo = null;
 
         // Service methods
