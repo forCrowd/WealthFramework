@@ -69,6 +69,8 @@ learn this disposable thingy? repo + unitofwork + context + controllers?
 findlive!
 or don't retrieve dead at all?
 
+								. merge aspnetidentity vith main
+
 ---
 http://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-web-api
 http://www.asp.net/web-api/overview/security/preventing-cross-site-request-forgery-%28csrf%29-attacks
@@ -88,7 +90,3 @@ var queryAttribute = new QueryableAttribute()
 };
                 
 config.EnableQuerySupport(queryAttribute);
-
----
-LIVE
-ADMIN ROLE + SH TO ADMIN
