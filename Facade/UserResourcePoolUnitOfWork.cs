@@ -36,11 +36,6 @@
 
         public IQueryable<ResourcePool> ResourcePoolSetLive { get { return ResourcePoolRepository.AllLive; } }
 
-        public async Task<User> FindUserAsync(object id)
-        {
-            return await UserRepository.FindAsync(id);
-        }
-
         public void IncreaseNumberOfSales(UserResourcePool userResourcePool)
         {
             UpdateNumberOfSales(userResourcePool, false);

@@ -58,20 +58,12 @@
 
         function increaseNumberOfSales(userResourcePoolId) {
             var url = '/odata/UserResourcePool(' + userResourcePoolId + ')/IncreaseNumberOfSales';
-
             return $http.post(url)
-                .error(function (data, status, headers, config) {
-                    // TODO
-                });
         }
 
         function resetNumberOfSales(userResourcePoolId) {
             var url = '/odata/UserResourcePool(' + userResourcePoolId + ')/ResetNumberOfSales';
-
             return $http.post(url)
-                .error(function (data, status, headers, config) {
-                    // TODO
-                });
         }
     }
 

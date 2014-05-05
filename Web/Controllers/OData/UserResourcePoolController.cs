@@ -208,7 +208,10 @@ namespace Web.Controllers.OData
 
             await MainUnitOfWork.SaveAsync();
 
-            return Updated(userResourcePool);
+            // TODO Ideally userResourcePool should be returned as a result - to update the client-side
+            // However due to some bad implementation, it gives object reference error when it's been sent.
+            // If the structure could be better, later on, try it again with 200 status code (Ok(userResourcePool)).
+            return Ok();
         }
     }
 }

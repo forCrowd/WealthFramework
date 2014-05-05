@@ -34,8 +34,8 @@
             }
 
             userResourcePoolService.getUserResourcePool(resourcePoolId)
-                .then(function (data) {
-                    vm.userResourcePool = data;
+                .then(function (userResourcePool) {
+                    vm.userResourcePool = userResourcePool;
                 });
         }
 
