@@ -15,7 +15,7 @@ namespace Web
 
             routes.MapRoute(
                 name: "Default",
-                url: "{*url}",
+                url: "{*catchall}",
                 defaults: new { controller = "Home", action = "Index" });
         }
     }

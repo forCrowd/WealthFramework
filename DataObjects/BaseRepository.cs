@@ -68,13 +68,13 @@
         {
             entity.CreatedOn = DateTime.UtcNow;
             entity.ModifiedOn = DateTime.UtcNow;
-            dbSet.Add(entity);        
+            dbSet.Add(entity);
         }
 
         public void Update(TEntityType entity)
         {
             entity.ModifiedOn = DateTime.UtcNow;
-            Context.Entry(entity).State = EntityState.Modified;        
+            Context.Entry(entity).State = EntityState.Modified;
         }
 
         public void Delete(params object[] keyValues)

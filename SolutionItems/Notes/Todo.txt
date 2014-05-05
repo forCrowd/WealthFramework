@@ -2,7 +2,7 @@
 . random data generation?
 . remove satisfaction word..?
 . multiple pk for user organization + user sector + user license + user resource pool organization + resource pool organization
-. find(async) vs. deleted records?!
+. find vs. deleted records? - findlive? or don't retrieve dead records at all?
 . exists should work with find or alllive.any() or all.any() ?
 . js - if every entity will have its own manager, do we need datacontext.js?
 . be carefull about, saveChanges(), hasChanges(), getChanges(), rejectChanges() methods. currently they don't work on entity level?
@@ -22,6 +22,9 @@ http://stackoverflow.com/questions/16068184/breezejs-how-to-fetch-metadata-at-st
 . merge odata usercontroller + apiaccount controller?
 . check glimpse configuration
 . __migrationhistory createdon field error
+. user list - create new link should go to register?! or how to override default new?
+. layout - user edit - cancel doesn't go to back to home page
+. learn this disposable thingy? repo + unitofwork + context + controllers?
 . web essentials; http://vswebessentials.com/
 . kendo ui; http://a.shinynew.me/post/82897588209/kendo-ui-core-the-free-jquery-widget-library
 . canonpy; web testing
@@ -46,30 +49,18 @@ http://www.danielroot.info/2013/09/hooking-angularjs-validation-to-aspnet.html
 . updrage to .net 4.5.1? APM doesn't have it right now
 http://msdn.microsoft.com/en-us/library/hh925568%28v=vs.110%29.aspx
 
-. put default value in the constructor of the classes! datetime.utcnow etc. so no need to have them in repo?
-ratings
-. remove CreatedOn = DateTime.UtcNow from repos?
-
 . increasenumberofsales should return userresourcepool? but its sending httpactionresult?
 
 . concurrency with timestamp?
 
-. layout - user edit - cancel doesn't go to back to home page
-
 . resource pool delete method disabled for the moment
+
 . "all in one" disabled for the moment
 
----
-merge metadata.xml + edmbuilder output?
+. merge metadata.xml + edmbuilder output?
 
 namespace is different - dataobjects vs businessobjects
 metadata.tt will be gone ? dto classes?
-
----
-learn this disposable thingy? repo + unitofwork + context + controllers?
-
-findlive!
-or don't retrieve dead at all?
 
 ---
 http://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-web-api

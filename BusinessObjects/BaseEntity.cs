@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace BusinessObjects
 {
@@ -7,8 +6,6 @@ namespace BusinessObjects
     {
         internal BaseEntity()
         {
-            CreatedOn = DateTime.UtcNow;
-            ModifiedOn = DateTime.UtcNow;
         }
 
         public DateTime CreatedOn { get; set; }
