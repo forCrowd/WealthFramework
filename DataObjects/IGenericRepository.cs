@@ -7,7 +7,7 @@
     using System.Linq.Expressions;
     using System.Threading.Tasks;
 
-    public interface IGenericRepository<TEntityType> : IDisposable where TEntityType : class, IEntity
+    public interface IRepository<TEntityType> : IDisposable where TEntityType : class, IEntity
     {
         IQueryable<TEntityType> All { get; }
 

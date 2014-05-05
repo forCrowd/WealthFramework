@@ -17,7 +17,7 @@
 
         protected WealthEconomyContext Context { get; private set; }
 
-        protected IGenericRepository<TEntityType> MainRepository { get; private set; }
+        protected IRepository<TEntityType> MainRepository { get; private set; }
 
         public IQueryable<TEntityType> All { get { return MainRepository.All; } }
 

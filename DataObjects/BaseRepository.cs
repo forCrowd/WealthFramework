@@ -9,7 +9,7 @@
     using System.Threading.Tasks;
 
 
-    public class BaseRepository<TEntityType> : IGenericRepository<TEntityType> where TEntityType : class, IEntity
+    public class BaseRepository<TEntityType> : IRepository<TEntityType> where TEntityType : class, IEntity
     {
         readonly DbSet<TEntityType> dbSet;
 
