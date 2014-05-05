@@ -16,6 +16,7 @@ http://stackoverflow.com/questions/16068184/breezejs-how-to-fetch-metadata-at-st
 . compare metadata files of manual + odataconventionbuilder + edmbuilder for functionimport and for other stuff
 . public vs. private didnt work for now with odata, try it later
 . use or try to remove scripts.render() + styles.render() from layout.cshtml - then mvc can be done completely
+. IE resourcepool pages don't retrieve data?!
 . automate .tt scripts with afterbuild?
 . does unitofwork needs using {}?
 . merge odata usercontroller + apiaccount controller?
@@ -24,10 +25,11 @@ http://stackoverflow.com/questions/16068184/breezejs-how-to-fetch-metadata-at-st
 . web essentials; http://vswebessentials.com/
 . kendo ui; http://a.shinynew.me/post/82897588209/kendo-ui-core-the-free-jquery-widget-library
 . canonpy; web testing
-. more from webapi;
+. webapi;
 http://msdn.microsoft.com/en-us/magazine/dn201742.aspx
 http://www.asp.net/web-api/overview/working-with-http
 http://www.asp.net/web-api/overview/formats-and-model-binding
+http://www.asp.net/web-api/overview/testing-and-debugging
 . validation improvements;
 http://www.danielroot.info/2013/09/hooking-angularjs-validation-to-aspnet.html
 . odata error message;
@@ -41,23 +43,21 @@ http://www.danielroot.info/2013/09/hooking-angularjs-validation-to-aspnet.html
     <m:stacktrace></m:stacktrace>
   </m:innererror>
 </m:error>
+. updrage to .net 4.5.1? APM doesn't have it right now
+http://msdn.microsoft.com/en-us/library/hh925568%28v=vs.110%29.aspx
+
+. put default value in the constructor of the classes! datetime.utcnow etc. so no need to have them in repo?
+ratings
+. remove CreatedOn = DateTime.UtcNow from repos?
 
 . increasenumberofsales should return userresourcepool? but its sending httpactionresult?
 
-. upgrade frameworks to 4.5.1? but check apm has it?
-
 . concurrency with timestamp?
-
-. update route.js to handle the links correctly - # is not necessary anymore
 
 . layout - user edit - cancel doesn't go to back to home page
 
 . resource pool delete method disabled for the moment
 . "all in one" disabled for the moment
-
-. put default value in the constructor of the classes! datetime.utcnow etc. so no need to have them in repo?
-ratings
-. remove CreatedOn = DateTime.UtcNow from repos?
 
 ---
 merge metadata.xml + edmbuilder output?

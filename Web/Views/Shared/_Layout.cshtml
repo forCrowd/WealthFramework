@@ -17,47 +17,47 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="#/" class="navbar-brand">Wealth Economy</a>
+                <a href="/" class="navbar-brand">Wealth Economy</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li class="dropdown" data-ng-show="vm.userInfo && vm.userInfo.IsAdmin">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown">Definitions <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#/User/">User</a></li>
-                            <li><a href="#/ResourcePool/">Resource Pool</a></li>
-                            <li><a href="#/Sector/">Sector</a></li>
-                            <li><a href="#/License/">License</a></li>
-                            <li><a href="#/Organization/">Organization</a></li>
+                            <li><a href="/User/">User</a></li>
+                            <li><a href="/ResourcePool/">Resource Pool</a></li>
+                            <li><a href="/Sector/">Sector</a></li>
+                            <li><a href="/License/">License</a></li>
+                            <li><a href="/Organization/">Organization</a></li>
                         </ul>
                     </li>
                     <li class="dropdown" data-ng-show="vm.userInfo">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown">CMRP <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#/TotalCostIndex/">Total Cost Index</a></li>
-                            <li><a href="#/KnowledgeIndex/">Knowledge Index</a></li>
-                            <li><a href="#/QualityIndex/">Quality Index</a></li>
-                            <li><a href="#/EmployeeSatisfactionIndex/">Employee Satisfaction Index</a></li>
-                            <li><a href="#/CustomerSatisfactionIndex/">Customer Satisfaction Index</a></li>
-                            <li><a href="#/SectorIndex/">Sector Index</a></li>
-                            <li><a href="#/DistanceIndex/">Distance Index</a></li>
-                            @*<li><a href="#/AllInOne/">All in One</a></li>*@
+                            <li><a href="/TotalCostIndex/">Total Cost Index</a></li>
+                            <li><a href="/KnowledgeIndex/">Knowledge Index</a></li>
+                            <li><a href="/QualityIndex/">Quality Index</a></li>
+                            <li><a href="/EmployeeSatisfactionIndex/">Employee Satisfaction Index</a></li>
+                            <li><a href="/CustomerSatisfactionIndex/">Customer Satisfaction Index</a></li>
+                            <li><a href="/SectorIndex/">Sector Index</a></li>
+                            <li><a href="/DistanceIndex/">Distance Index</a></li>
+                            @*<li><a href="/AllInOne/">All in One</a></li>*@
                         </ul>
                     </li>
                     <li class="dropdown" data-ng-show="vm.userInfo">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown">Ratings <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#/UserResourcePool/">CMRP Index Rating</a></li>
-                            <li><a href="#/UserOrganization/">Organization Rating</a></li>
-                            <li><a href="#/UserSectorRating/">Sector Rating</a></li>
-                            <li><a href="#/UserLicenseRating/">Licence Rating</a></li>
+                            <li><a href="/UserResourcePool/">CMRP Index Rating</a></li>
+                            <li><a href="/UserOrganization/">Organization Rating</a></li>
+                            <li><a href="/UserSectorRating/">Sector Rating</a></li>
+                            <li><a href="/UserLicenseRating/">Licence Rating</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown">Misc <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#/Overview">Overview</a></li>
-                            <li><a href="#/Technologies">Technologies</a></li>
+                            <li><a href="/Overview">Overview</a></li>
+                            <li><a href="/Technologies">Technologies</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -66,16 +66,16 @@
                         <div class="navbar-text nofloat">
                             <div data-ng-show="vm.userInfo">
                                 User: {{ vm.userInfo.Email }}
-                                <a href="#/User/edit/{{ vm.userInfo.Id }}">Edit</a>
+                                <a href="/User/edit/{{ vm.userInfo.Id }}">Edit</a>
                                 &nbsp;
-                                <a href="#/User/ChangePassword/">Change password</a>
+                                <a href="/User/ChangePassword/">Change password</a>
                                 &nbsp;
                                 <a href="" data-ng-click="vm.logout()">Logout</a>
                             </div>
                             <div data-ng-show="!vm.userInfo">
-                                <a href="#/User/Register/">Register</a>
+                                <a href="/User/Register/">Register</a>
                                 &nbsp;
-                                <a href="#/User/Login/">Login</a>
+                                <a href="/User/Login/">Login</a>
                             </div>
                         </div>
                     </li>

@@ -1,4 +1,10 @@
-﻿0.10.4
+﻿0.10.5
+. routing fixes
+.. if it's supported, angular html5Mode is on
+.. href fixes
+.. mvc routing always goes to HomeController, so angular can handle the requests
+
+0.10.4
 . glimpse nuget package - only for development environment for now
 . Thanks to glimpse, <clear /> line was added to connectionstrings section in config files
 
