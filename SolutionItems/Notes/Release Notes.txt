@@ -1,4 +1,7 @@
-﻿0.10.2
+﻿0.10.3
+. Nuget package updates
+
+0.10.2
 . Register + ChangePassword pages
 
 0.10.1

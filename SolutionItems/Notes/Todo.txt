@@ -40,7 +40,6 @@ http://www.danielroot.info/2013/09/hooking-angularjs-validation-to-aspnet.html
   </m:innererror>
 </m:error>
 
-	. merge aspnetidentity with main
 	. nuget updates
 	. glimpse; http://www.dotnetcurry.com/showarticle.aspx?ID=923
 
