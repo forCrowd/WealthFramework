@@ -5,10 +5,6 @@ namespace Web
 {
     public static class WebApiConfig
     {
-        // To support Session in WebApi - can be removed in case of tokens
-        public static string UrlPrefix { get { return "api"; } }
-        public static string UrlPrefixRelative { get { return "~/api"; } }
-
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services

@@ -49,8 +49,6 @@ http://www.danielroot.info/2013/09/hooking-angularjs-validation-to-aspnet.html
 . updrage to .net 4.5.1? APM doesn't have it right now
 http://msdn.microsoft.com/en-us/library/hh925568%28v=vs.110%29.aspx
 
-. salesnumber vs numberofsales
-
 . concurrency with timestamp?
 
 . resource pool delete method disabled for the moment

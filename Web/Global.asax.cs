@@ -14,7 +14,7 @@ namespace Web
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             SecurityConfig.RegisterSecurityFilters(GlobalConfiguration.Configuration.Filters);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
+            MvcRouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             DatabaseConfig.Initialize();
 

@@ -205,7 +205,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\SecurityConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\MvcRouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="App_Code\ApplicationSettings.cs" />
@@ -268,7 +268,6 @@
     <Compile Include="Controllers\OData\Generated\UserSectorRatingController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\OData\IODataController.cs" />
     <Compile Include="Controllers\OData\BaseController.cs" />
     <Compile Include="Controllers\OData\UserController.cs" />
     <Compile Include="Controllers\OData\UserResourcePoolController.cs" />
