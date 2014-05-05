@@ -19,6 +19,8 @@ http://stackoverflow.com/questions/16068184/breezejs-how-to-fetch-metadata-at-st
 . automate .tt scripts with afterbuild?
 . does unitofwork needs using {}?
 . merge odata usercontroller + apiaccount controller?
+. check glimpse configuration
+. __migrationhistory createdon field error
 . web essentials; http://vswebessentials.com/
 . kendo ui; http://a.shinynew.me/post/82897588209/kendo-ui-core-the-free-jquery-widget-library
 . canonpy; web testing
@@ -39,9 +41,6 @@ http://www.danielroot.info/2013/09/hooking-angularjs-validation-to-aspnet.html
     <m:stacktrace></m:stacktrace>
   </m:innererror>
 </m:error>
-
-	. nuget updates
-	. glimpse; http://www.dotnetcurry.com/showarticle.aspx?ID=923
 
 . increasenumberofsales should return userresourcepool? but its sending httpactionresult?
 
