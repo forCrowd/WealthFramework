@@ -23,14 +23,14 @@
             var resourcePoolId = 0;
 
             switch ($location.path()) {
-                case '/TotalCostIndex/': resourcePoolId = 1; break;
-                case '/KnowledgeIndex/': resourcePoolId = 2; break;
-                case '/QualityIndex/': resourcePoolId = 3; break;
-                case '/EmployeeSatisfactionIndex/': resourcePoolId = 4; break;
-                case '/CustomerSatisfactionIndex/': resourcePoolId = 5; break;
-                case '/SectorIndex/': resourcePoolId = 6; break;
-                case '/DistanceIndex/': resourcePoolId = 7; break;
-                case '/AllInOne/': resourcePoolId = 8; break;
+                case '/TotalCostIndex': resourcePoolId = 1; break;
+                case '/KnowledgeIndex': resourcePoolId = 2; break;
+                case '/QualityIndex': resourcePoolId = 3; break;
+                case '/EmployeeSatisfactionIndex': resourcePoolId = 4; break;
+                case '/CustomerSatisfactionIndex': resourcePoolId = 5; break;
+                case '/SectorIndex': resourcePoolId = 6; break;
+                case '/DistanceIndex': resourcePoolId = 7; break;
+                case '/AllInOne': resourcePoolId = 8; break;
             }
 
             userResourcePoolService.getUserResourcePool(resourcePoolId)
