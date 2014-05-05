@@ -67,9 +67,14 @@
                             <div data-ng-show="vm.userInfo">
                                 User: {{ vm.userInfo.Email }}
                                 <a href="#/User/edit/{{ vm.userInfo.Id }}">Edit</a>
+                                &nbsp;
+                                <a href="#/User/ChangePassword/">Change password</a>
+                                &nbsp;
                                 <a href="" data-ng-click="vm.logout()">Logout</a>
                             </div>
                             <div data-ng-show="!vm.userInfo">
+                                <a href="#/User/Register/">Register</a>
+                                &nbsp;
                                 <a href="#/User/Login/">Login</a>
                             </div>
                         </div>
@@ -156,7 +161,9 @@
     <script src="/Scripts/app/controllers/userResourcePoolController.js"></script>
 
     <script src="/Scripts/app/controllers/layoutController.js"></script>
-    <script src="/Scripts/app/controllers/userController.js"></script>
+    <script src="/Scripts/app/controllers/loginController.js"></script>
+    <script src="/Scripts/app/controllers/registerController.js"></script>
+    <script src="/Scripts/app/controllers/changePasswordController.js"></script>
 
 </body>
 </html>

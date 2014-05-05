@@ -298,7 +298,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\userController.js" />
+    <Content Include="Scripts\app\controllers\changePasswordController.js" />
+    <Content Include="Scripts\app\controllers\registerController.js" />
+    <Content Include="Scripts\app\controllers\loginController.js" />
     <Content Include="Scripts\app\controllers\userOrganizationEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
@@ -548,6 +550,8 @@
     <Content Include="ViewsNg\UserResourcePool\QualityIndex.html" />
     <Content Include="ViewsNg\UserResourcePool\SectorIndex.html" />
     <Content Include="ViewsNg\UserResourcePool\TotalCostIndex.html" />
+    <Content Include="ViewsNg\User\ChangePassword.html" />
+    <Content Include="ViewsNg\User\Register.html" />
     <Content Include="ViewsNg\User\Login.html" />
     <Content Include="Views\Home\Index.cshtml" />
     <None Include="Web.config">
@@ -586,7 +590,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

@@ -12,10 +12,14 @@
         logger = logger.forSource(serviceId);
 
         var accessTokenUrl = '/api/Token';
+        var changePasswordUrl = '/api/Account/ChangePassword';
+        var logoutUrl = '/api/Account/Logout';
+        var registerUrl = '/api/Account/Register';
         var userInfo = null;
         var userInfoUrl = '/api/Account/UserInfo';
 
         // Service methods
+        $delegate.changePassword = changePassword;
         $delegate.getAccessToken = getAccessToken;
         $delegate.getUserInfo = getUserInfo;
         $delegate.logout = logout;
@@ -25,23 +29,21 @@
 
         /*** Implementations ***/
 
+        function changePassword(changePasswordBindingModel) {
+            return $http.post(changePasswordUrl, changePasswordBindingModel)
+        }
+
         function getAccessToken(email, password) {
             var accessTokenData = 'grant_type=password&username=' + email + '&password=' + password;
 
             return $http.post(accessTokenUrl, accessTokenData, { 'Content-Type': 'application/x-www-form-urlencoded' })
                 .success(function (data) {
                     $rootScope.$broadcast('userLoggedIn');
-
                     // TODO in case cookies are disabled?
-
                 })
-                .error(function (data, status, headers, config) {
-                    // TODO
-                });
         }
 
         function getUserInfo() {
-
             var deferred = $q.defer();
 
             if (userInfo !== null) {
@@ -64,8 +66,6 @@
         }
 
         function logout() {
-            var logoutUrl = '/api/Account/Logout';
-
             return $http.post(logoutUrl)
                 .success(function () {
                     $rootScope.$broadcast('userLoggedOut');
@@ -75,8 +75,11 @@
                 });
         }
 
-        function register() {
-            // TODO
+        function register(registerBindingModel) {
+            return $http.post(registerUrl, registerBindingModel)
+                .error(function (data, status, headers, config) {
+                    // TODO
+                });
         }
     }
 

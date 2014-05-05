@@ -18,6 +18,7 @@ http://stackoverflow.com/questions/16068184/breezejs-how-to-fetch-metadata-at-st
 . use or try to remove scripts.render() + styles.render() from layout.cshtml - then mvc can be done completely
 . automate .tt scripts with afterbuild?
 . does unitofwork needs using {}?
+. merge odata usercontroller + apiaccount controller?
 . web essentials; http://vswebessentials.com/
 . kendo ui; http://a.shinynew.me/post/82897588209/kendo-ui-core-the-free-jquery-widget-library
 . canonpy; web testing
@@ -25,6 +26,8 @@ http://stackoverflow.com/questions/16068184/breezejs-how-to-fetch-metadata-at-st
 http://msdn.microsoft.com/en-us/magazine/dn201742.aspx
 http://www.asp.net/web-api/overview/working-with-http
 http://www.asp.net/web-api/overview/formats-and-model-binding
+. validation improvements;
+http://www.danielroot.info/2013/09/hooking-angularjs-validation-to-aspnet.html
 . odata error message;
 <?xml version="1.0" encoding="utf-8"?>
 <m:error xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
@@ -37,8 +40,9 @@ http://www.asp.net/web-api/overview/formats-and-model-binding
   </m:innererror>
 </m:error>
 
-	. register + change email + change password actions?
-	. userinfo + account controller clean up
+	. merge aspnetidentity with main
+	. nuget updates
+	. glimpse; http://www.dotnetcurry.com/showarticle.aspx?ID=923
 
 . increasenumberofsales should return userresourcepool? but its sending httpactionresult?
 
@@ -68,8 +72,6 @@ learn this disposable thingy? repo + unitofwork + context + controllers?
 
 findlive!
 or don't retrieve dead at all?
-
-								. merge aspnetidentity vith main
 
 ---
 http://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-web-api

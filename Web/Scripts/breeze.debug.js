@@ -15310,9 +15310,6 @@ breeze.SaveOptions= SaveOptions;
         if (url) result.url = url;
         result.body = hasResponse ? response.body : error.message;
 
-        console.log(error);
-        console.log(hasResponse);
-
         if (hasResponse) {
             if (response.body) {
                 var nextErr;

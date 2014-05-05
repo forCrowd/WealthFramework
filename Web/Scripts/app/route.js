@@ -21,9 +21,6 @@
             .when('/ResourcePool/', { controller: 'resourcePoolListController as vm', templateUrl: 'ViewsNg/list/resourcePoolList.html' })
             .when('/ResourcePool/new', { controller: 'resourcePoolEditController as vm', templateUrl: 'ViewsNg/edit/resourcePoolEdit.html' })
             .when('/ResourcePool/edit/:Id', { controller: 'resourcePoolEditController as vm', templateUrl: 'ViewsNg/edit/ResourcePoolEdit.html' })
-            //.when('/ResourcePoolOrganization/', { controller: 'resourcePoolOrganizationListController as vm', templateUrl: 'ViewsNg/list/resourcePoolOrganizationList.html' })
-            //.when('/ResourcePoolOrganization/new', { controller: 'resourcePoolOrganizationEditController as vm', templateUrl: 'ViewsNg/edit/resourcePoolOrganizationEdit.html' })
-            //.when('/ResourcePoolOrganization/edit/:Id', { controller: 'resourcePoolOrganizationEditController as vm', templateUrl: 'ViewsNg/edit/ResourcePoolOrganizationEdit.html' })
             .when('/Sector/', { controller: 'sectorListController as vm', templateUrl: 'ViewsNg/list/sectorList.html' })
             .when('/Sector/new', { controller: 'sectorEditController as vm', templateUrl: 'ViewsNg/edit/sectorEdit.html' })
             .when('/Sector/edit/:Id', { controller: 'sectorEditController as vm', templateUrl: 'ViewsNg/edit/SectorEdit.html' })
@@ -39,9 +36,6 @@
             .when('/UserResourcePool/', { controller: 'userResourcePoolListController as vm', templateUrl: 'ViewsNg/list/userResourcePoolList.html' })
             .when('/UserResourcePool/new', { controller: 'userResourcePoolEditController as vm', templateUrl: 'ViewsNg/edit/userResourcePoolEdit.html' })
             .when('/UserResourcePool/edit/:Id', { controller: 'userResourcePoolEditController as vm', templateUrl: 'ViewsNg/edit/UserResourcePoolEdit.html' })
-            //.when('/UserResourcePoolOrganization/', { controller: 'userResourcePoolOrganizationListController as vm', templateUrl: 'ViewsNg/list/userResourcePoolOrganizationList.html' })
-            //.when('/UserResourcePoolOrganization/new', { controller: 'userResourcePoolOrganizationEditController as vm', templateUrl: 'ViewsNg/edit/userResourcePoolOrganizationEdit.html' })
-            //.when('/UserResourcePoolOrganization/edit/:Id', { controller: 'userResourcePoolOrganizationEditController as vm', templateUrl: 'ViewsNg/edit/UserResourcePoolOrganizationEdit.html' })
             .when('/UserSectorRating/', { controller: 'userSectorRatingListController as vm', templateUrl: 'ViewsNg/list/userSectorRatingList.html' })
             .when('/UserSectorRating/new', { controller: 'userSectorRatingEditController as vm', templateUrl: 'ViewsNg/edit/userSectorRatingEdit.html' })
             .when('/UserSectorRating/edit/:Id', { controller: 'userSectorRatingEditController as vm', templateUrl: 'ViewsNg/edit/UserSectorRatingEdit.html' })
@@ -55,7 +49,9 @@
             .when('/DistanceIndex/', { controller: 'userResourcePoolController as vm', templateUrl: 'ViewsNg/UserResourcePool/DistanceIndex.html' })
             .when('/AllInOne/', { controller: 'userResourcePoolController as vm', templateUrl: 'ViewsNg/UserResourcePool/AllInOne.html' })
 
-            .when('/User/Login/', { controller: 'userController as vm', templateUrl: 'ViewsNg/User/Login.html' })
+            .when('/User/Login/', { controller: 'loginController as vm', templateUrl: 'ViewsNg/User/Login.html' })
+            .when('/User/Register/', { controller: 'registerController as vm', templateUrl: 'ViewsNg/User/Register.html' })
+            .when('/User/ChangePassword/', { controller: 'changePasswordController as vm', templateUrl: 'ViewsNg/User/ChangePassword.html' })
 
             .when('/Overview', {
                 templateUrl: 'ViewsNg/Home/Overview.html'

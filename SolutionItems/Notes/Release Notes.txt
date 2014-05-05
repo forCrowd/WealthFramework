@@ -1,4 +1,7 @@
-﻿0.10.1
+﻿0.10.2
+. Register + ChangePassword pages
+
+0.10.1
 . Session state related files + codes were removed
 . Password, UserAccountTypeId fields were removed from User table
 . Alterations folder was removed from SolutionItems
