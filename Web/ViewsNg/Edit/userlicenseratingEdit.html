@@ -32,6 +32,11 @@
             </div>
         </div>
         <div class="form-group">
+            <div class="col-md-10">
+                <input id="RowVersion" name="RowVersion" data-ng-model="vm.userLicenseRating.RowVersion" type="hidden">
+            </div>
+        </div>
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <button data-ng-click="vm.saveChanges()" data-ng-disabled="editForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
                     Save

@@ -47,7 +47,7 @@
 
         function cancelChanges() {
 
-            $location.path('/UserOrganization/');
+            $location.path('/UserOrganization');
 
             if (userOrganizationService.hasChanges()) {
                 userOrganizationService.rejectChanges();
@@ -66,17 +66,13 @@
                     vm.organizationSet = data;
                 });
 
-            // TODO Catch?
-
             userService.getUserSet(false)
                 .then(function (data) {
                     vm.userSet = data;
                 });
 
-            // TODO Catch?
-
             if (isNew) {
-                // TODO Only for development, create test entity ?!
+                // TODO For development enviroment, create test entity?
             }
             else {
                 userOrganizationService.getUserOrganization($routeParams.Id)
@@ -84,10 +80,7 @@
                         vm.userOrganization = data;
                     })
                     .catch(function (error) {
-                        logger.logError("Boooo, we failed: " + error.message, null, true);
-                        // Todo: more sophisticated recovery. 
-                        // Here we just blew it all away and start over
-                        // refresh();
+                        // TODO User-friendly message?
                     });
             }
         };
@@ -101,19 +94,24 @@
 
             if (isNew) {
                 userOrganizationService.createUserOrganization(vm.userOrganization);
+            } else {
+                // To be able to do concurrency check, RowVersion field needs to be send to server
+				// Since breeze only sends the modified fields, a fake modification had to be applied to RowVersion field
+                var rowVersion = vm.userOrganization.RowVersion;
+                vm.userOrganization.RowVersion = '';
+                vm.userOrganization.RowVersion = rowVersion;
             }
 
             isSaving = true;
             return userOrganizationService.saveChanges()
-                .then(function () {
-                    logger.logSuccess("Hooray we saved", null, true);
-                    $location.path('/UserOrganization/');
+                .then(function (result) {
+                    $location.path('/UserOrganization');
                 })
                 .catch(function (error) {
-                    logger.logError("Boooo, we failed: " + error.message, null, true);
-                    // Todo: more sophisticated recovery. 
-                    // Here we just blew it all away and start over
-                    // refresh();
+                    // Conflict (Concurrency exception)
+                    if (error.status === '409') {
+                        // TODO Try to recover!
+                    }
                 })
                 .finally(function () {
                     isSaving = false;

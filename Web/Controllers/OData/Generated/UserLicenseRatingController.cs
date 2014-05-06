@@ -73,11 +73,11 @@ namespace Web.Controllers.OData
                 }
                 else
                 {
-                    throw;
+                    return Conflict();
                 }
             }
 
-            return Updated(userLicenseRating);
+            return Ok(userLicenseRating);
         }
 
         // POST odata/UserLicenseRating
@@ -124,26 +124,17 @@ namespace Web.Controllers.OData
                 return NotFound();
             }
 
+            var patchEntity = patch.GetEntity();
+            if (!userLicenseRating.RowVersion.SequenceEqual(patchEntity.RowVersion))
+            {
+                return Conflict();
+            }
+
             patch.Patch(userLicenseRating);
             MainUnitOfWork.Update(userLicenseRating);
+            await MainUnitOfWork.SaveAsync();
 
-            try
-            {
-                await MainUnitOfWork.SaveAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MainUnitOfWork.Exists(key))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return Updated(userLicenseRating);
+            return Ok(userLicenseRating);
         }
 
         // DELETE odata/UserLicenseRating(5)

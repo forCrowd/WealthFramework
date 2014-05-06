@@ -47,7 +47,7 @@
 
         function cancelChanges() {
 
-            $location.path('/UserLicenseRating/');
+            $location.path('/UserLicenseRating');
 
             if (userLicenseRatingService.hasChanges()) {
                 userLicenseRatingService.rejectChanges();
@@ -66,17 +66,13 @@
                     vm.licenseSet = data;
                 });
 
-            // TODO Catch?
-
             userService.getUserSet(false)
                 .then(function (data) {
                     vm.userSet = data;
                 });
 
-            // TODO Catch?
-
             if (isNew) {
-                // TODO Only for development, create test entity ?!
+                // TODO For development enviroment, create test entity?
             }
             else {
                 userLicenseRatingService.getUserLicenseRating($routeParams.Id)
@@ -84,10 +80,7 @@
                         vm.userLicenseRating = data;
                     })
                     .catch(function (error) {
-                        logger.logError("Boooo, we failed: " + error.message, null, true);
-                        // Todo: more sophisticated recovery. 
-                        // Here we just blew it all away and start over
-                        // refresh();
+                        // TODO User-friendly message?
                     });
             }
         };
@@ -101,19 +94,24 @@
 
             if (isNew) {
                 userLicenseRatingService.createUserLicenseRating(vm.userLicenseRating);
+            } else {
+                // To be able to do concurrency check, RowVersion field needs to be send to server
+				// Since breeze only sends the modified fields, a fake modification had to be applied to RowVersion field
+                var rowVersion = vm.userLicenseRating.RowVersion;
+                vm.userLicenseRating.RowVersion = '';
+                vm.userLicenseRating.RowVersion = rowVersion;
             }
 
             isSaving = true;
             return userLicenseRatingService.saveChanges()
-                .then(function () {
-                    logger.logSuccess("Hooray we saved", null, true);
-                    $location.path('/UserLicenseRating/');
+                .then(function (result) {
+                    $location.path('/UserLicenseRating');
                 })
                 .catch(function (error) {
-                    logger.logError("Boooo, we failed: " + error.message, null, true);
-                    // Todo: more sophisticated recovery. 
-                    // Here we just blew it all away and start over
-                    // refresh();
+                    // Conflict (Concurrency exception)
+                    if (error.status === '409') {
+                        // TODO Try to recover!
+                    }
                 })
                 .finally(function () {
                     isSaving = false;

@@ -44,7 +44,7 @@
 
         function cancelChanges() {
 
-            $location.path('/License/');
+            $location.path('/License');
 
             if (licenseService.hasChanges()) {
                 licenseService.rejectChanges();
@@ -63,10 +63,8 @@
                     vm.resourcePoolSet = data;
                 });
 
-            // TODO Catch?
-
             if (isNew) {
-                // TODO Only for development, create test entity ?!
+                // TODO For development enviroment, create test entity?
             }
             else {
                 licenseService.getLicense($routeParams.Id)
@@ -74,10 +72,7 @@
                         vm.license = data;
                     })
                     .catch(function (error) {
-                        logger.logError("Boooo, we failed: " + error.message, null, true);
-                        // Todo: more sophisticated recovery. 
-                        // Here we just blew it all away and start over
-                        // refresh();
+                        // TODO User-friendly message?
                     });
             }
         };
@@ -91,19 +86,24 @@
 
             if (isNew) {
                 licenseService.createLicense(vm.license);
+            } else {
+                // To be able to do concurrency check, RowVersion field needs to be send to server
+				// Since breeze only sends the modified fields, a fake modification had to be applied to RowVersion field
+                var rowVersion = vm.license.RowVersion;
+                vm.license.RowVersion = '';
+                vm.license.RowVersion = rowVersion;
             }
 
             isSaving = true;
             return licenseService.saveChanges()
-                .then(function () {
-                    logger.logSuccess("Hooray we saved", null, true);
-                    $location.path('/License/');
+                .then(function (result) {
+                    $location.path('/License');
                 })
                 .catch(function (error) {
-                    logger.logError("Boooo, we failed: " + error.message, null, true);
-                    // Todo: more sophisticated recovery. 
-                    // Here we just blew it all away and start over
-                    // refresh();
+                    // Conflict (Concurrency exception)
+                    if (error.status === '409') {
+                        // TODO Try to recover!
+                    }
                 })
                 .finally(function () {
                     isSaving = false;

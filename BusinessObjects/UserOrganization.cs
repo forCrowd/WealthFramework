@@ -7,7 +7,7 @@ namespace BusinessObjects
     using BusinessObjects.Metadata;
 
     [MetadataType(typeof(UserOrganizationMetadata))]
-    public partial class UserOrganization : IEntity
+    public partial class UserOrganization : BaseEntity
     {
         public int Id { get; set; }
         public int UserId { get; set; }
@@ -16,9 +16,9 @@ namespace BusinessObjects
         public decimal QualityRating { get; set; }
         public decimal CustomerSatisfactionRating { get; set; }
         public decimal EmployeeSatisfactionRating { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public DateTime ModifiedOn { get; set; }
-        public Nullable<DateTime> DeletedOn { get; set; }
+        
+        
+        
 
         public virtual Organization Organization { get; set; }
         public virtual User User { get; set; }

@@ -24,6 +24,7 @@ http://stackoverflow.com/questions/16068184/breezejs-how-to-fetch-metadata-at-st
 . layout - user edit - cancel doesn't go to back to home page
 . learn this disposable thingy? repo + unitofwork + context + controllers?
 . use cascade delete option? how about soft delete?
+. handling concurrency can be improved - load the new record and let the user choose which one is correct
 
 Links
 . web essentials; http://vswebessentials.com/
@@ -48,8 +49,6 @@ http://www.danielroot.info/2013/09/hooking-angularjs-validation-to-aspnet.html
 </m:error>
 . updrage to .net 4.5.1? APM doesn't have it right now
 http://msdn.microsoft.com/en-us/library/hh925568%28v=vs.110%29.aspx
-
-. concurrency with timestamp?
 
 . resource pool delete method disabled for the moment
 

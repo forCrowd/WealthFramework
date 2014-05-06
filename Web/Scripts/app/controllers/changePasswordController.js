@@ -15,7 +15,7 @@
             userService.changePassword(vm)
                 .success(function () {
                     $location.path('/');
-                    logger.logSuccess('Your password have been changed successfully!', null, true);
+                    logger.logSuccess('Your password has been changed!', null, true);
                 })
                 .error(function (data) {
 

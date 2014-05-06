@@ -21,12 +21,14 @@ namespace Web
                 defaults: new { id = RouteParameter.Optional }
             );
 
+            var edm = GetEdm();
+            //var edm = Facade.Utility.GetWealthEconomyContextEdm();
+
             // OData routes
             config.Routes.MapODataRoute(
                 routeName: "ODataRoute",
                 routePrefix: "odata",
-                model: GetEdm(),
-                // model: Facade.Utility.GetWealthEconomyContextEdm(),
+                model: edm,
                 batchHandler: new DefaultODataBatchHandler(GlobalConfiguration.DefaultServer));
         }
 

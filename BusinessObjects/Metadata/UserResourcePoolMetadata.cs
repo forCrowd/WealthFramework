@@ -281,5 +281,9 @@ namespace BusinessObjects.Metadata
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         public object DeletedOn { get; set; }
+
+        [DisplayOnListView(false)]
+        [DisplayOnEditView(false)]
+        public object RowVersion { get; set; }
     }
 }

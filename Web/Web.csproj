@@ -484,81 +484,81 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\toastr.min.js" />
-    <Content Include="ViewsNg\Edit\edit.txt">
+    <Content Include="ViewsNg\Edit\editView.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>edit.tt</DependentUpon>
+      <DependentUpon>editView.tt</DependentUpon>
     </Content>
     <Content Include="ViewsNg\Edit\licenseEdit.html">
-      <DependentUpon>edit.tt</DependentUpon>
+      <DependentUpon>editView.tt</DependentUpon>
     </Content>
     <Content Include="ViewsNg\Edit\organizationEdit.html">
-      <DependentUpon>edit.tt</DependentUpon>
+      <DependentUpon>editView.tt</DependentUpon>
     </Content>
     <Content Include="ViewsNg\Edit\resourcePoolEdit.html">
-      <DependentUpon>edit.tt</DependentUpon>
+      <DependentUpon>editView.tt</DependentUpon>
     </Content>
     <Content Include="ViewsNg\Edit\sectorEdit.html">
-      <DependentUpon>edit.tt</DependentUpon>
+      <DependentUpon>editView.tt</DependentUpon>
     </Content>
     <Content Include="ViewsNg\Edit\userEdit.html">
-      <DependentUpon>edit.tt</DependentUpon>
+      <DependentUpon>editView.tt</DependentUpon>
     </Content>
     <Content Include="ViewsNg\Edit\userLicenseRatingEdit.html">
-      <DependentUpon>edit.tt</DependentUpon>
+      <DependentUpon>editView.tt</DependentUpon>
     </Content>
     <Content Include="ViewsNg\Edit\userOrganizationEdit.html">
-      <DependentUpon>edit.tt</DependentUpon>
+      <DependentUpon>editView.tt</DependentUpon>
     </Content>
     <Content Include="ViewsNg\Edit\userResourcePoolEdit.html">
-      <DependentUpon>edit.tt</DependentUpon>
+      <DependentUpon>editView.tt</DependentUpon>
     </Content>
     <Content Include="ViewsNg\Edit\userSectorRatingEdit.html">
-      <DependentUpon>edit.tt</DependentUpon>
+      <DependentUpon>editView.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\jquery-2.1.0.min.map" />
     <Content Include="ViewsNg\List\licenseList.html">
-      <DependentUpon>list.tt</DependentUpon>
+      <DependentUpon>listView.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\List\list.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>list.txt</LastGenOutput>
+    <Content Include="ViewsNg\List\listView.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>listView.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\Edit\edit.tt">
+    <Content Include="ViewsNg\List\listView.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>edit.txt</LastGenOutput>
+      <LastGenOutput>listView.txt</LastGenOutput>
+    </Content>
+    <Content Include="ViewsNg\Edit\editView.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>editView.txt</LastGenOutput>
     </Content>
     <Content Include="ViewsNg\Home\Index.html" />
     <Content Include="ViewsNg\Home\Overview.html" />
     <Content Include="ViewsNg\Home\Technologies.html" />
-    <Content Include="ViewsNg\List\list.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>list.tt</DependentUpon>
-    </Content>
     <Content Include="ViewsNg\List\organizationList.html">
-      <DependentUpon>list.tt</DependentUpon>
+      <DependentUpon>listView.tt</DependentUpon>
     </Content>
     <Content Include="ViewsNg\List\resourcePoolList.html">
-      <DependentUpon>list.tt</DependentUpon>
+      <DependentUpon>listView.tt</DependentUpon>
     </Content>
     <Content Include="ViewsNg\List\sectorList.html">
-      <DependentUpon>list.tt</DependentUpon>
+      <DependentUpon>listView.tt</DependentUpon>
     </Content>
     <Content Include="ViewsNg\List\userLicenseRatingList.html">
-      <DependentUpon>list.tt</DependentUpon>
+      <DependentUpon>listView.tt</DependentUpon>
     </Content>
     <Content Include="ViewsNg\List\userList.html">
-      <DependentUpon>list.tt</DependentUpon>
+      <DependentUpon>listView.tt</DependentUpon>
     </Content>
     <Content Include="ViewsNg\List\userOrganizationList.html">
-      <DependentUpon>list.tt</DependentUpon>
+      <DependentUpon>listView.tt</DependentUpon>
     </Content>
     <Content Include="ViewsNg\List\userResourcePoolList.html">
-      <DependentUpon>list.tt</DependentUpon>
+      <DependentUpon>listView.tt</DependentUpon>
     </Content>
     <Content Include="ViewsNg\List\userSectorRatingList.html">
-      <DependentUpon>list.tt</DependentUpon>
+      <DependentUpon>listView.tt</DependentUpon>
     </Content>
     <Content Include="ViewsNg\UserResourcePool\AllInOne.html" />
     <Content Include="ViewsNg\UserResourcePool\CustomerSatisfactionIndex.html" />

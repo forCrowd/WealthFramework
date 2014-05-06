@@ -15,7 +15,7 @@
             userService.register(vm)
                 .success(function () {
                     $location.path('/');
-                    logger.logSuccess('You have been registered successfully!', null, true);
+                    logger.logSuccess('You have been registered!', null, true);
                 });
         }
     };

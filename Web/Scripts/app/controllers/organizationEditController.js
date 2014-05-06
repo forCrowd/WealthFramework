@@ -50,7 +50,7 @@
 
         function cancelChanges() {
 
-            $location.path('/Organization/');
+            $location.path('/Organization');
 
             if (organizationService.hasChanges()) {
                 organizationService.rejectChanges();
@@ -69,24 +69,18 @@
                     vm.licenseSet = data;
                 });
 
-            // TODO Catch?
-
             resourcePoolService.getResourcePoolSet(false)
                 .then(function (data) {
                     vm.resourcePoolSet = data;
                 });
-
-            // TODO Catch?
 
             sectorService.getSectorSet(false)
                 .then(function (data) {
                     vm.sectorSet = data;
                 });
 
-            // TODO Catch?
-
             if (isNew) {
-                // TODO Only for development, create test entity ?!
+                // TODO For development enviroment, create test entity?
             }
             else {
                 organizationService.getOrganization($routeParams.Id)
@@ -94,10 +88,7 @@
                         vm.organization = data;
                     })
                     .catch(function (error) {
-                        logger.logError("Boooo, we failed: " + error.message, null, true);
-                        // Todo: more sophisticated recovery. 
-                        // Here we just blew it all away and start over
-                        // refresh();
+                        // TODO User-friendly message?
                     });
             }
         };
@@ -111,19 +102,24 @@
 
             if (isNew) {
                 organizationService.createOrganization(vm.organization);
+            } else {
+                // To be able to do concurrency check, RowVersion field needs to be send to server
+				// Since breeze only sends the modified fields, a fake modification had to be applied to RowVersion field
+                var rowVersion = vm.organization.RowVersion;
+                vm.organization.RowVersion = '';
+                vm.organization.RowVersion = rowVersion;
             }
 
             isSaving = true;
             return organizationService.saveChanges()
-                .then(function () {
-                    logger.logSuccess("Hooray we saved", null, true);
-                    $location.path('/Organization/');
+                .then(function (result) {
+                    $location.path('/Organization');
                 })
                 .catch(function (error) {
-                    logger.logError("Boooo, we failed: " + error.message, null, true);
-                    // Todo: more sophisticated recovery. 
-                    // Here we just blew it all away and start over
-                    // refresh();
+                    // Conflict (Concurrency exception)
+                    if (error.status === '409') {
+                        // TODO Try to recover!
+                    }
                 })
                 .finally(function () {
                     isSaving = false;

@@ -100,7 +100,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 
         function cancelChanges() {
 
-            $location.path('/<#= entityTypeName #>/');
+            $location.path('/<#= entityTypeName #>');
 
             if (<#= serviceId #>.hasChanges()) {
                 <#= serviceId #>.rejectChanges();
@@ -127,11 +127,9 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
                     vm.<#= relatedSetName #> = data;
                 });
 
-            // TODO Catch?
-
 <# } #>
             if (isNew) {
-                // TODO Only for development, create test entity ?!
+                // TODO For development enviroment, create test entity?
             }
             else {
                 <#= serviceId #>.get<#= entityTypeName #>($routeParams.Id)
@@ -139,10 +137,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
                         vm.<#= entityVariable #> = data;
                     })
                     .catch(function (error) {
-                        logger.logError("Boooo, we failed: " + error.message, null, true);
-                        // Todo: more sophisticated recovery. 
-                        // Here we just blew it all away and start over
-                        // refresh();
+                        // TODO User-friendly message?
                     });
             }
         };
@@ -156,19 +151,24 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 
             if (isNew) {
                 <#= serviceId #>.create<#= entityTypeName #>(vm.<#= entityVariable #>);
+            } else {
+                // To be able to do concurrency check, RowVersion field needs to be send to server
+				// Since breeze only sends the modified fields, a fake modification had to be applied to RowVersion field
+                var rowVersion = vm.<#= entityVariable #>.RowVersion;
+                vm.<#= entityVariable #>.RowVersion = '';
+                vm.<#= entityVariable #>.RowVersion = rowVersion;
             }
 
             isSaving = true;
             return <#= serviceId #>.saveChanges()
-                .then(function () {
-                    logger.logSuccess("Hooray we saved", null, true);
-                    $location.path('/<#= entityTypeName #>/');
+                .then(function (result) {
+                    $location.path('/<#= entityTypeName #>');
                 })
                 .catch(function (error) {
-                    logger.logError("Boooo, we failed: " + error.message, null, true);
-                    // Todo: more sophisticated recovery. 
-                    // Here we just blew it all away and start over
-                    // refresh();
+                    // Conflict (Concurrency exception)
+                    if (error.status === '409') {
+                        // TODO Try to recover!
+                    }
                 })
                 .finally(function () {
                     isSaving = false;

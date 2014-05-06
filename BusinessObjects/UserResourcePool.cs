@@ -7,7 +7,7 @@ namespace BusinessObjects
     using BusinessObjects.Metadata;
 
     [MetadataType(typeof(UserResourcePoolMetadata))]
-    public partial class UserResourcePool : IEntity
+    public partial class UserResourcePool : BaseEntity
     {
         public int Id { get; set; }
         public int UserId { get; set; }
@@ -20,9 +20,9 @@ namespace BusinessObjects
         public decimal EmployeeSatisfactionIndexRating { get; set; }
         public decimal CustomerSatisfactionIndexRating { get; set; }
         public decimal DistanceIndexRating { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public DateTime ModifiedOn { get; set; }
-        public Nullable<DateTime> DeletedOn { get; set; }
+        
+        
+        
 
         public virtual User User { get; set; }
         public virtual ResourcePool ResourcePool { get; set; }

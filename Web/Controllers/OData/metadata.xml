@@ -12,6 +12,7 @@
         <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
         <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
         <Property Name="DeletedOn" Type="DateTime" Precision="3" cs:DisplayName="Deleted On" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
+        <Property Name="RowVersion" Type="Binary" ConcurrencyMode="Fixed" MaxLength="8" FixedLength="false" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
         <NavigationProperty Name="OrganizationSet" Relationship="Self.FK_Organization_License" FromRole="License" ToRole="Organization" />
         <NavigationProperty Name="UserLicenseRatingSet" Relationship="Self.FK_UserLicenseRating_License" FromRole="License" ToRole="UserLicenseRating" />
         <NavigationProperty Name="ResourcePool" Relationship="BusinessObjects.FK_License_ResourcePool" FromRole="License" ToRole="ResourcePool" />
@@ -30,6 +31,7 @@
         <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
         <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
         <Property Name="DeletedOn" Type="DateTime" Precision="3" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
+        <Property Name="RowVersion" Type="Binary" ConcurrencyMode="Fixed" MaxLength="8" FixedLength="false" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
         <NavigationProperty Name="Sector" Relationship="Self.FK_Organization_Sector" FromRole="Organization" ToRole="Sector" />
         <NavigationProperty Name="License" Relationship="Self.FK_Organization_License" FromRole="Organization" ToRole="License" />
         <NavigationProperty Name="ResourcePool" Relationship="BusinessObjects.FK_Organization_ResourcePool" FromRole="Organization" ToRole="ResourcePool" />
@@ -46,6 +48,7 @@
         <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
         <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
         <Property Name="DeletedOn" Type="DateTime" Precision="3" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
+        <Property Name="RowVersion" Type="Binary" ConcurrencyMode="Fixed" MaxLength="8" FixedLength="false" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
         <NavigationProperty Name="OrganizationSet" Relationship="Self.FK_Organization_Sector" FromRole="Sector" ToRole="Organization" />
         <NavigationProperty Name="UserSectorRatingSet" Relationship="Self.FK_UserSectorRating_Sector" FromRole="Sector" ToRole="UserSectorRating" />
         <NavigationProperty Name="ResourcePool" Relationship="BusinessObjects.FK_Sector_ResourcePool" FromRole="Sector" ToRole="ResourcePool" />
@@ -63,6 +66,7 @@
         <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
         <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
         <Property Name="DeletedOn" Type="DateTime" Precision="3" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
+        <Property Name="RowVersion" Type="Binary" ConcurrencyMode="Fixed" MaxLength="8" FixedLength="false" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
         <NavigationProperty Name="UserLicenseRatingSet" Relationship="Self.FK_UserLicenseRating_User" FromRole="User" ToRole="UserLicenseRating" />
         <NavigationProperty Name="UserOrganizationSet" Relationship="BusinessObjects.FK_UserOrganization_User" FromRole="User" ToRole="UserOrganization" />
         <NavigationProperty Name="UserResourcePoolSet" Relationship="BusinessObjects.FK_UserResourcePool_User" FromRole="User" ToRole="UserResourcePool" />
@@ -79,6 +83,7 @@
         <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
         <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
         <Property Name="DeletedOn" Type="DateTime" Precision="3" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
+        <Property Name="RowVersion" Type="Binary" ConcurrencyMode="Fixed" MaxLength="8" FixedLength="false" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
         <NavigationProperty Name="License" Relationship="Self.FK_UserLicenseRating_License" FromRole="UserLicenseRating" ToRole="License" />
         <NavigationProperty Name="User" Relationship="Self.FK_UserLicenseRating_User" FromRole="UserLicenseRating" ToRole="User" />
     </EntityType>
@@ -93,6 +98,7 @@
         <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
         <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
         <Property Name="DeletedOn" Type="DateTime" Precision="3" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
+        <Property Name="RowVersion" Type="Binary" ConcurrencyMode="Fixed" MaxLength="8" FixedLength="false" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
         <NavigationProperty Name="Sector" Relationship="Self.FK_UserSectorRating_Sector" FromRole="UserSectorRating" ToRole="Sector" />
         <NavigationProperty Name="User" Relationship="Self.FK_UserSectorRating_User" FromRole="UserSectorRating" ToRole="User" />
     </EntityType>
@@ -114,6 +120,7 @@
         <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
         <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
         <Property Name="DeletedOn" Type="DateTime" Precision="3" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
+        <Property Name="RowVersion" Type="Binary" ConcurrencyMode="Fixed" MaxLength="8" FixedLength="false" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
         <NavigationProperty Name="LicenseSet" Relationship="BusinessObjects.FK_License_ResourcePool" FromRole="ResourcePool" ToRole="License" />
         <NavigationProperty Name="OrganizationSet" Relationship="BusinessObjects.FK_Organization_ResourcePool" FromRole="ResourcePool" ToRole="Organization" />
         <NavigationProperty Name="SectorSet" Relationship="BusinessObjects.FK_Sector_ResourcePool" FromRole="ResourcePool" ToRole="Sector" />
@@ -205,6 +212,7 @@
         <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
         <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
         <Property Name="DeletedOn" Type="DateTime" Precision="3" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
+        <Property Name="RowVersion" Type="Binary" ConcurrencyMode="Fixed" MaxLength="8" FixedLength="false" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
         <NavigationProperty Name="User" Relationship="BusinessObjects.FK_UserResourcePool_User" FromRole="UserResourcePool" ToRole="User" />
         <NavigationProperty Name="ResourcePool" Relationship="BusinessObjects.FK_UserResourcePool_ResourcePool" FromRole="UserResourcePool" ToRole="ResourcePool" />
     </EntityType>
@@ -390,6 +398,7 @@
         <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
         <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
         <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+        <Property Name="RowVersion" Type="Binary" ConcurrencyMode="Fixed" MaxLength="8" FixedLength="false" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
         <NavigationProperty Name="Organization" Relationship="BusinessObjects.FK_UserOrganization_Organization" FromRole="UserOrganization" ToRole="Organization" />
         <NavigationProperty Name="User" Relationship="BusinessObjects.FK_UserOrganization_User" FromRole="UserOrganization" ToRole="User" />
     </EntityType>

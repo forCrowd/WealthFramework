@@ -73,11 +73,11 @@ namespace Web.Controllers.OData
                 }
                 else
                 {
-                    throw;
+                    return Conflict();
                 }
             }
 
-            return Updated(userResourcePool);
+            return Ok(userResourcePool);
         }
 
         // POST odata/UserResourcePool
@@ -124,26 +124,17 @@ namespace Web.Controllers.OData
                 return NotFound();
             }
 
+            var patchEntity = patch.GetEntity();
+            if (!userResourcePool.RowVersion.SequenceEqual(patchEntity.RowVersion))
+            {
+                return Conflict();
+            }
+
             patch.Patch(userResourcePool);
             MainUnitOfWork.Update(userResourcePool);
+            await MainUnitOfWork.SaveAsync();
 
-            try
-            {
-                await MainUnitOfWork.SaveAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MainUnitOfWork.Exists(key))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return Updated(userResourcePool);
+            return Ok(userResourcePool);
         }
 
         // DELETE odata/UserResourcePool(5)

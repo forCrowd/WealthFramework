@@ -1,4 +1,7 @@
-﻿0.10.5
+﻿0.10.6
+. Concurrency check - RowVersion field was added to all entities and in ODataController it does a concurrency check for Patch operation
+
+0.10.5
 . routing fixes
 .. if it's supported, angular html5Mode is on
 .. href fixes

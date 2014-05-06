@@ -41,7 +41,7 @@
 
         function cancelChanges() {
 
-            $location.path('/ResourcePool/');
+            $location.path('/ResourcePool');
 
             if (resourcePoolService.hasChanges()) {
                 resourcePoolService.rejectChanges();
@@ -56,7 +56,7 @@
         function initialize() {
 
             if (isNew) {
-                // TODO Only for development, create test entity ?!
+                // TODO For development enviroment, create test entity?
             }
             else {
                 resourcePoolService.getResourcePool($routeParams.Id)
@@ -64,10 +64,7 @@
                         vm.resourcePool = data;
                     })
                     .catch(function (error) {
-                        logger.logError("Boooo, we failed: " + error.message, null, true);
-                        // Todo: more sophisticated recovery. 
-                        // Here we just blew it all away and start over
-                        // refresh();
+                        // TODO User-friendly message?
                     });
             }
         };
@@ -81,19 +78,24 @@
 
             if (isNew) {
                 resourcePoolService.createResourcePool(vm.resourcePool);
+            } else {
+                // To be able to do concurrency check, RowVersion field needs to be send to server
+				// Since breeze only sends the modified fields, a fake modification had to be applied to RowVersion field
+                var rowVersion = vm.resourcePool.RowVersion;
+                vm.resourcePool.RowVersion = '';
+                vm.resourcePool.RowVersion = rowVersion;
             }
 
             isSaving = true;
             return resourcePoolService.saveChanges()
-                .then(function () {
-                    logger.logSuccess("Hooray we saved", null, true);
-                    $location.path('/ResourcePool/');
+                .then(function (result) {
+                    $location.path('/ResourcePool');
                 })
                 .catch(function (error) {
-                    logger.logError("Boooo, we failed: " + error.message, null, true);
-                    // Todo: more sophisticated recovery. 
-                    // Here we just blew it all away and start over
-                    // refresh();
+                    // Conflict (Concurrency exception)
+                    if (error.status === '409') {
+                        // TODO Try to recover!
+                    }
                 })
                 .finally(function () {
                     isSaving = false;

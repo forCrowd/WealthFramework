@@ -61,7 +61,6 @@
             saveBatches.forEach(function (batch) {
                 // ignore empty batches (except 'null' which means "save everything else")
                 if (batch == null || batch.length > 0) {
-
                     promise = promise ?
                         promise.then(function () { return manager.saveChanges(batch); }) :
                         manager.saveChanges(batch);
@@ -74,9 +73,11 @@
             }
 
             function failed(error) {
-                var msg = 'Save failed. ' + (error.message || "");
-                error.message = msg;
-                logError(msg, error, true);
+                if (error.status === '409') {
+                    logger.logError('Save failed!<br />The record you attempted to edit was modified by another user after you got the original value. The edit operation was canceled.', null, true);
+                } else {
+                    logger.logError('Save failed!', null, true);
+                }
                 return $q.reject(error); // pass error along to next handler
             }
 

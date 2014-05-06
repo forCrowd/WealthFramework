@@ -41,7 +41,7 @@
 
         function cancelChanges() {
 
-            $location.path('/User/');
+            $location.path('/User');
 
             if (userService.hasChanges()) {
                 userService.rejectChanges();
@@ -56,7 +56,7 @@
         function initialize() {
 
             if (isNew) {
-                // TODO Only for development, create test entity ?!
+                // TODO For development enviroment, create test entity?
             }
             else {
                 userService.getUser($routeParams.Id)
@@ -64,10 +64,7 @@
                         vm.user = data;
                     })
                     .catch(function (error) {
-                        logger.logError("Boooo, we failed: " + error.message, null, true);
-                        // Todo: more sophisticated recovery. 
-                        // Here we just blew it all away and start over
-                        // refresh();
+                        // TODO User-friendly message?
                     });
             }
         };
@@ -81,19 +78,24 @@
 
             if (isNew) {
                 userService.createUser(vm.user);
+            } else {
+                // To be able to do concurrency check, RowVersion field needs to be send to server
+				// Since breeze only sends the modified fields, a fake modification had to be applied to RowVersion field
+                var rowVersion = vm.user.RowVersion;
+                vm.user.RowVersion = '';
+                vm.user.RowVersion = rowVersion;
             }
 
             isSaving = true;
             return userService.saveChanges()
-                .then(function () {
-                    logger.logSuccess("Hooray we saved", null, true);
-                    $location.path('/User/');
+                .then(function (result) {
+                    $location.path('/User');
                 })
                 .catch(function (error) {
-                    logger.logError("Boooo, we failed: " + error.message, null, true);
-                    // Todo: more sophisticated recovery. 
-                    // Here we just blew it all away and start over
-                    // refresh();
+                    // Conflict (Concurrency exception)
+                    if (error.status === '409') {
+                        // TODO Try to recover!
+                    }
                 })
                 .finally(function () {
                     isSaving = false;

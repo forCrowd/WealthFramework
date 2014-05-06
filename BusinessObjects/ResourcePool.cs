@@ -7,7 +7,7 @@ namespace BusinessObjects
     using BusinessObjects.Metadata;
 
     [MetadataType(typeof(ResourcePoolMetadata))]
-    public partial class ResourcePool : IEntity
+    public partial class ResourcePool : BaseEntity
     {
         public ResourcePool()
         {
@@ -19,9 +19,9 @@ namespace BusinessObjects
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public DateTime ModifiedOn { get; set; }
-        public Nullable<DateTime> DeletedOn { get; set; }
+        
+        
+        
 
         public virtual ICollection<License> LicenseSet { get; set; }
         public virtual ICollection<Organization> OrganizationSet { get; set; }

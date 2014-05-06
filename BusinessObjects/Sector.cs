@@ -7,7 +7,7 @@ namespace BusinessObjects
     using BusinessObjects.Metadata;
 
     [MetadataType(typeof(SectorMetadata))]
-    public partial class Sector : IEntity
+    public partial class Sector : BaseEntity
     {
         public Sector()
         {
@@ -19,9 +19,9 @@ namespace BusinessObjects
         public int ResourcePoolId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public DateTime ModifiedOn { get; set; }
-        public Nullable<DateTime> DeletedOn { get; set; }
+        
+        
+        
 
         public virtual ICollection<Organization> OrganizationSet { get; set; }
         public virtual ICollection<UserSectorRating> UserSectorRatingSet { get; set; }

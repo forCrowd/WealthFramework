@@ -7,7 +7,7 @@ namespace BusinessObjects
     using BusinessObjects.Metadata;
 
     [MetadataType(typeof(OrganizationMetadata))]
-    public partial class Organization : IEntity
+    public partial class Organization : BaseEntity
     {
         public Organization()
         {
@@ -21,9 +21,9 @@ namespace BusinessObjects
         public decimal ProductionCost { get; set; }
         public decimal SalesPrice { get; set; }
         public short LicenseId { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public DateTime ModifiedOn { get; set; }
-        public Nullable<DateTime> DeletedOn { get; set; }
+        
+        
+        
 
         public virtual Sector Sector { get; set; }
         public virtual License License { get; set; }
