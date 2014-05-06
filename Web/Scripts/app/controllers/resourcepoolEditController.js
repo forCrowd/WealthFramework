@@ -87,7 +87,7 @@
             }
 
             isSaving = true;
-            return resourcePoolService.saveChanges()
+            resourcePoolService.saveChanges()
                 .then(function (result) {
                     $location.path('/ResourcePool');
                 })

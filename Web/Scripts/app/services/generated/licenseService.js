@@ -39,7 +39,7 @@
         /*** Implementations ***/
 
         function createLicense(license) {
-            return dataContext.manager.createEntity('License', license);
+            dataContext.createEntity('License', license);
         }
 
         function deleteLicense(license) {
@@ -81,7 +81,7 @@
                 query = query.using(breeze.FetchStrategy.FromLocalCache)
             }
 
-            return dataContext.manager.executeQuery(query)
+            return dataContext.executeQuery(query)
                 .then(success).catch(failed);
 
             function success(response) {
@@ -97,7 +97,7 @@
         }
 
         function getLicense(licenseId, forceRefresh) {
-            return dataContext.manager.fetchEntityByKey('License', licenseId, !forceRefresh)
+            return dataContext.fetchEntityByKey('License', licenseId, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {

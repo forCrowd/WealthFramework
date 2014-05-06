@@ -39,7 +39,7 @@
         /*** Implementations ***/
 
         function createResourcePool(resourcePool) {
-            return dataContext.manager.createEntity('ResourcePool', resourcePool);
+            dataContext.createEntity('ResourcePool', resourcePool);
         }
 
         function deleteResourcePool(resourcePool) {
@@ -80,7 +80,7 @@
                 query = query.using(breeze.FetchStrategy.FromLocalCache)
             }
 
-            return dataContext.manager.executeQuery(query)
+            return dataContext.executeQuery(query)
                 .then(success).catch(failed);
 
             function success(response) {
@@ -96,7 +96,7 @@
         }
 
         function getResourcePool(resourcePoolId, forceRefresh) {
-            return dataContext.manager.fetchEntityByKey('ResourcePool', resourcePoolId, !forceRefresh)
+            return dataContext.fetchEntityByKey('ResourcePool', resourcePoolId, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {

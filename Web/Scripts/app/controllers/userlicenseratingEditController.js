@@ -103,7 +103,7 @@
             }
 
             isSaving = true;
-            return userLicenseRatingService.saveChanges()
+            userLicenseRatingService.saveChanges()
                 .then(function (result) {
                     $location.path('/UserLicenseRating');
                 })

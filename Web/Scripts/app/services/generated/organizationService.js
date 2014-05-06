@@ -39,7 +39,7 @@
         /*** Implementations ***/
 
         function createOrganization(organization) {
-            return dataContext.manager.createEntity('Organization', organization);
+            dataContext.createEntity('Organization', organization);
         }
 
         function deleteOrganization(organization) {
@@ -81,7 +81,7 @@
                 query = query.using(breeze.FetchStrategy.FromLocalCache)
             }
 
-            return dataContext.manager.executeQuery(query)
+            return dataContext.executeQuery(query)
                 .then(success).catch(failed);
 
             function success(response) {
@@ -97,7 +97,7 @@
         }
 
         function getOrganization(organizationId, forceRefresh) {
-            return dataContext.manager.fetchEntityByKey('Organization', organizationId, !forceRefresh)
+            return dataContext.fetchEntityByKey('Organization', organizationId, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {

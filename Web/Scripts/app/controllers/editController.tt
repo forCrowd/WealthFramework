@@ -160,7 +160,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
             }
 
             isSaving = true;
-            return <#= serviceId #>.saveChanges()
+            <#= serviceId #>.saveChanges()
                 .then(function (result) {
                     $location.path('/<#= entityTypeName #>');
                 })

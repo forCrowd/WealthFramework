@@ -13,7 +13,9 @@
         .factory(serviceId, ['breeze', entityManagerFactory]);
 
     function entityManagerFactory(breeze) {
+
         configureBreeze();
+
         var serviceRoot = window.location.protocol + '//' + window.location.host + '/';
         var serviceName = serviceRoot + 'odata/';
         var factory = {
@@ -32,12 +34,7 @@
         }
 
         function newManager() {
-            var mgr = new breeze.EntityManager(serviceName);
-
-            // TODO async?!
-            mgr.fetchMetadata();
-
-            return mgr;
+            return new breeze.EntityManager(serviceName);
         }
     }
 })();

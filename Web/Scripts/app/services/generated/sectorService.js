@@ -39,7 +39,7 @@
         /*** Implementations ***/
 
         function createSector(sector) {
-            return dataContext.manager.createEntity('Sector', sector);
+            dataContext.createEntity('Sector', sector);
         }
 
         function deleteSector(sector) {
@@ -81,7 +81,7 @@
                 query = query.using(breeze.FetchStrategy.FromLocalCache)
             }
 
-            return dataContext.manager.executeQuery(query)
+            return dataContext.executeQuery(query)
                 .then(success).catch(failed);
 
             function success(response) {
@@ -97,7 +97,7 @@
         }
 
         function getSector(sectorId, forceRefresh) {
-            return dataContext.manager.fetchEntityByKey('Sector', sectorId, !forceRefresh)
+            return dataContext.fetchEntityByKey('Sector', sectorId, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {

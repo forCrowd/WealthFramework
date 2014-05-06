@@ -103,7 +103,7 @@
             }
 
             isSaving = true;
-            return userSectorRatingService.saveChanges()
+            userSectorRatingService.saveChanges()
                 .then(function (result) {
                     $location.path('/UserSectorRating');
                 })

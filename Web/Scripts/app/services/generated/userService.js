@@ -39,7 +39,7 @@
         /*** Implementations ***/
 
         function createUser(user) {
-            return dataContext.manager.createEntity('User', user);
+            dataContext.createEntity('User', user);
         }
 
         function deleteUser(user) {
@@ -80,7 +80,7 @@
                 query = query.using(breeze.FetchStrategy.FromLocalCache)
             }
 
-            return dataContext.manager.executeQuery(query)
+            return dataContext.executeQuery(query)
                 .then(success).catch(failed);
 
             function success(response) {
@@ -96,7 +96,7 @@
         }
 
         function getUser(userId, forceRefresh) {
-            return dataContext.manager.fetchEntityByKey('User', userId, !forceRefresh)
+            return dataContext.fetchEntityByKey('User', userId, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {

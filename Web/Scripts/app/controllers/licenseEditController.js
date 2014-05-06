@@ -95,7 +95,7 @@
             }
 
             isSaving = true;
-            return licenseService.saveChanges()
+            licenseService.saveChanges()
                 .then(function (result) {
                     $location.path('/License');
                 })

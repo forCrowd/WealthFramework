@@ -39,7 +39,7 @@
         /*** Implementations ***/
 
         function createUserLicenseRating(userLicenseRating) {
-            return dataContext.manager.createEntity('UserLicenseRating', userLicenseRating);
+            dataContext.createEntity('UserLicenseRating', userLicenseRating);
         }
 
         function deleteUserLicenseRating(userLicenseRating) {
@@ -81,7 +81,7 @@
                 query = query.using(breeze.FetchStrategy.FromLocalCache)
             }
 
-            return dataContext.manager.executeQuery(query)
+            return dataContext.executeQuery(query)
                 .then(success).catch(failed);
 
             function success(response) {
@@ -97,7 +97,7 @@
         }
 
         function getUserLicenseRating(userLicenseRatingId, forceRefresh) {
-            return dataContext.manager.fetchEntityByKey('UserLicenseRating', userLicenseRatingId, !forceRefresh)
+            return dataContext.fetchEntityByKey('UserLicenseRating', userLicenseRatingId, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {

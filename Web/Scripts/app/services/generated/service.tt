@@ -73,7 +73,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
         /*** Implementations ***/
 
         function create<#= entityTypeName #>(<#= entityVariable #>) {
-            return dataContext.manager.createEntity('<#= entityTypeName #>', <#= entityVariable #>);
+            dataContext.createEntity('<#= entityTypeName #>', <#= entityVariable #>);
         }
 
         function delete<#= entityTypeName #>(<#= entityVariable #>) {
@@ -119,7 +119,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
                 query = query.using(breeze.FetchStrategy.FromLocalCache)
             }
 
-            return dataContext.manager.executeQuery(query)
+            return dataContext.executeQuery(query)
                 .then(success).catch(failed);
 
             function success(response) {
@@ -135,7 +135,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
         }
 
         function get<#= entityTypeName #>(<#= entityVariable #>Id, forceRefresh) {
-            return dataContext.manager.fetchEntityByKey('<#= entityTypeName #>', <#= entityVariable #>Id, !forceRefresh)
+            return dataContext.fetchEntityByKey('<#= entityTypeName #>', <#= entityVariable #>Id, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {

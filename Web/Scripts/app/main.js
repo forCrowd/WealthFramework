@@ -9,11 +9,9 @@
 
     angular.module('main', [
 
-        // Angular
-        'ngRoute', // Routing
+        'ngRoute', // Angular routing
 
-        // Breeze
-        'breeze.angular' // Services
+        'breeze.angular'
 
     ]);
 })();

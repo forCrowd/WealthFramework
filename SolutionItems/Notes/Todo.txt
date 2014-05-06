@@ -5,12 +5,9 @@
 . exists should work with find or alllive.any() or all.any() ?
 . js - if every entity will have its own manager, do we need datacontext.js?
 . be carefull about, saveChanges(), hasChanges(), getChanges(), rejectChanges() methods. currently they don't work on entity level?
-. breeze entitymanager - ensure metadata fetched;
-http://stackoverflow.com/questions/16068184/breezejs-how-to-fetch-metadata-at-start-with-shared-entitymanager
-. check javascript beginning comments
+. check comments / explanations / descriptions ?
 . in some cases, cancel button doesnt allow to go back? - fill this required field?
 . paging + filters
-. how delta & patch works?
 . create a sample user + sample data for creating new users
 . compare metadata files of manual + odataconventionbuilder + edmbuilder for functionimport and for other stuff
 . public vs. private didnt work for now with odata, try it later

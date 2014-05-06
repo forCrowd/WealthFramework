@@ -87,7 +87,7 @@
             }
 
             isSaving = true;
-            return userService.saveChanges()
+            userService.saveChanges()
                 .then(function (result) {
                     $location.path('/User');
                 })

@@ -95,7 +95,7 @@
             }
 
             isSaving = true;
-            return sectorService.saveChanges()
+            sectorService.saveChanges()
                 .then(function (result) {
                     $location.path('/Sector');
                 })

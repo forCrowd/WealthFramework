@@ -103,7 +103,7 @@
             }
 
             isSaving = true;
-            return userOrganizationService.saveChanges()
+            userOrganizationService.saveChanges()
                 .then(function (result) {
                     $location.path('/UserOrganization');
                 })

@@ -39,7 +39,7 @@
         /*** Implementations ***/
 
         function createUserSectorRating(userSectorRating) {
-            return dataContext.manager.createEntity('UserSectorRating', userSectorRating);
+            dataContext.createEntity('UserSectorRating', userSectorRating);
         }
 
         function deleteUserSectorRating(userSectorRating) {
@@ -81,7 +81,7 @@
                 query = query.using(breeze.FetchStrategy.FromLocalCache)
             }
 
-            return dataContext.manager.executeQuery(query)
+            return dataContext.executeQuery(query)
                 .then(success).catch(failed);
 
             function success(response) {
@@ -97,7 +97,7 @@
         }
 
         function getUserSectorRating(userSectorRatingId, forceRefresh) {
-            return dataContext.manager.fetchEntityByKey('UserSectorRating', userSectorRatingId, !forceRefresh)
+            return dataContext.fetchEntityByKey('UserSectorRating', userSectorRatingId, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {

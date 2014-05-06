@@ -39,7 +39,7 @@
         /*** Implementations ***/
 
         function createUserOrganization(userOrganization) {
-            return dataContext.manager.createEntity('UserOrganization', userOrganization);
+            dataContext.createEntity('UserOrganization', userOrganization);
         }
 
         function deleteUserOrganization(userOrganization) {
@@ -81,7 +81,7 @@
                 query = query.using(breeze.FetchStrategy.FromLocalCache)
             }
 
-            return dataContext.manager.executeQuery(query)
+            return dataContext.executeQuery(query)
                 .then(success).catch(failed);
 
             function success(response) {
@@ -97,7 +97,7 @@
         }
 
         function getUserOrganization(userOrganizationId, forceRefresh) {
-            return dataContext.manager.fetchEntityByKey('UserOrganization', userOrganizationId, !forceRefresh)
+            return dataContext.fetchEntityByKey('UserOrganization', userOrganizationId, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {
