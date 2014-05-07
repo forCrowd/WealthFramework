@@ -3,27 +3,27 @@
 . multiple pk for user organization + user sector + user license + user resource pool organization + resource pool organization
 . find vs. deleted records? - findlive? or don't retrieve dead records at all?
 . exists should work with find or alllive.any() or all.any() ?
-. js - if every entity will have its own manager, do we need datacontext.js?
-. be carefull about, saveChanges(), hasChanges(), getChanges(), rejectChanges() methods. currently they don't work on entity level?
-. check comments / explanations / descriptions ?
-. in some cases, cancel button doesnt allow to go back? - fill this required field?
-. paging + filters
+. breeze - check save + has + get + reject changes. currently they don't work on entity level? - also prepareBatch method?
 . create a sample user + sample data for creating new users
-. compare metadata files of manual + odataconventionbuilder + edmbuilder for functionimport and for other stuff
 . public vs. private didnt work for now with odata, try it later
 . use or try to remove scripts.render() + styles.render() from layout.cshtml - then mvc can be removed completely
 . automate .tt scripts with afterbuild?
-. does unitofwork needs using {}?
 . merge odata usercontroller + apiaccount controller?
-. check glimpse configuration
-. __migrationhistory createdon field error
-. user list - create new link should go to register?! or how to override default new?
-. layout - user edit - cancel doesn't go to back to home page
+. user list - `create new` link should go to register?! or how to override default new?
+. layout - user edit - cancel doesn't go to back to home page - also in general cancel button doesn't allow to go back (fill required?)
 . learn this disposable thingy? repo + unitofwork + context + controllers?
 . use cascade delete option? how about soft delete?
 . handling concurrency can be improved - load the new record and let the user choose which one is correct
+. html cache break - angular scripts + views etc.?
+. admin user?
+. __migrationhistory createdon field error - it seems there is not much to do, it also might be about glimpse?
+. updrage to .net 4.5.1? APM doesn't have it right now
+http://msdn.microsoft.com/en-us/library/hh925568%28v=vs.110%29.aspx
+. resource pool delete method disabled for the moment
+. "all in one" disabled for the moment
+. compare metadata files of manual + odataconventionbuilder + edmbuilder for functionimport and for other stuff + merge?
+. codefirst namespace is dataobjects, businessobjects?
 
-Links
 . web essentials; http://vswebessentials.com/
 . kendo ui; http://a.shinynew.me/post/82897588209/kendo-ui-core-the-free-jquery-widget-library
 . canonpy; web testing
@@ -33,6 +33,24 @@ http://www.asp.net/web-api/overview/formats-and-model-binding
 http://www.asp.net/web-api/overview/testing-and-debugging
 . validation improvements;
 http://www.danielroot.info/2013/09/hooking-angularjs-validation-to-aspnet.html
+. http://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-web-api
+. http://www.asp.net/web-api/overview/security/preventing-cross-site-request-forgery-%28csrf%29-attacks
+. validateantiforgerytoken + bind attributes in odata controller?
+. http://www.asp.net/identity/overview/extensibility/overview-of-custom-storage-providers-for-aspnet-identity
+. http://maxgershkovich.wordpress.com/2013/12/12/microsoft-mvc-asp-net-identity-with-telerik-openaccess-awesomeness/
+
+. odata - paging (also filters?)
+querayable vs enablequerysupport
+[Queryable(PageSize=10)]
+
+var queryAttribute = new QueryableAttribute()
+{
+    AllowedQueryOptions = AllowedQueryOptions.Top | AllowedQueryOptions.Skip,
+    MaxTop = 100
+};
+
+config.EnableQuerySupport(queryAttribute);
+
 . odata error message;
 <?xml version="1.0" encoding="utf-8"?>
 <m:error xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
@@ -44,34 +62,5 @@ http://www.danielroot.info/2013/09/hooking-angularjs-validation-to-aspnet.html
     <m:stacktrace></m:stacktrace>
   </m:innererror>
 </m:error>
-. updrage to .net 4.5.1? APM doesn't have it right now
-http://msdn.microsoft.com/en-us/library/hh925568%28v=vs.110%29.aspx
-
-. resource pool delete method disabled for the moment
-
-. "all in one" disabled for the moment
-
-. merge metadata.xml + edmbuilder output?
-
-namespace is different - dataobjects vs businessobjects
-metadata.tt will be gone ? dto classes?
 
 ---
-http://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-web-api
-http://www.asp.net/web-api/overview/security/preventing-cross-site-request-forgery-%28csrf%29-attacks
-. validateantiforgerytoken + bind attributes in odata controller?
-
-http://www.asp.net/identity/overview/extensibility/overview-of-custom-storage-providers-for-aspnet-identity
-http://maxgershkovich.wordpress.com/2013/12/12/microsoft-mvc-asp-net-identity-with-telerik-openaccess-awesomeness/
-
----
-querayable vs enablequerysupport
-[Queryable(PageSize=10)]
-
-var queryAttribute = new QueryableAttribute()
-{
-    AllowedQueryOptions = AllowedQueryOptions.Top | AllowedQueryOptions.Skip,
-    MaxTop = 100
-};
-
-config.EnableQuerySupport(queryAttribute);

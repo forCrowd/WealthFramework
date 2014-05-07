@@ -1,10 +1,9 @@
 namespace BusinessObjects
 {
-    using System;
+    using BusinessObjects.Metadata;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
-    using BusinessObjects.Metadata;
 
     [MetadataType(typeof(LicenseMetadata))]
     public partial class License : BaseEntity
@@ -20,11 +19,6 @@ namespace BusinessObjects
         public string Name { get; set; }
         public string Description { get; set; }
         public string Text { get; set; }
-        
-        
-        
-        //[Timestamp]
-        //public byte[] RowVersion { get; set; }
 
         public virtual ICollection<Organization> OrganizationSet { get; set; }
         public virtual ICollection<UserLicenseRating> UserLicenseRatingSet { get; set; }
