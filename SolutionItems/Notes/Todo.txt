@@ -71,3 +71,5 @@ LIVE
 delete migrationhistory record for aspnetcontext!
 run the insert script !?
 -- DELETE FROM __MigrationHistory WHERE MigrationId = '201405031330304_InitialCreate'
+
+UPDATE LIVE DB WITH THE LATEST WORK !

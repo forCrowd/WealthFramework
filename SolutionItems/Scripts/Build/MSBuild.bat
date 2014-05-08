@@ -9,7 +9,7 @@ IF ERRORLEVEL 2 EXIT
 
 echo.
 REM TODO MSBuild folder could differ
-C:\Windows\Microsoft.NET\Framework64\v4.0.30319\msbuild "%~dp0\..\..\..\Wealtheconomy.sln" /v:q
+C:\Windows\Microsoft.NET\Framework64\v4.0.30319\msbuild "%~dp0\..\..\..\Wealtheconomy.sln" /v:q /p:Configuration=Release
 
 echo Script execution completed
 echo.
