@@ -8,14 +8,14 @@ namespace Facade
     // TODO Categorize them better ?!
     public static class Utility
     {
+        public static void InitializeDatabase()
+        {
+            WealthEconomyContext.InitializeDatabase();
+        }
+
         public static IEdmModel GetWealthEconomyContextEdm()
         {
             return EdmBuilder.GetEdm<WealthEconomyContext>();
-        }
-
-        public static void MigrateDatabaseToLatestVersion()
-        {
-            WealthEconomyContext.MigrateDatabaseToLatestVersion();
         }
     }
 }

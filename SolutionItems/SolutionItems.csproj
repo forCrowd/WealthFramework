@@ -46,6 +46,8 @@
   <ItemGroup>
     <None Include="Links\Industry Browser - Yahoo! Finance - Full Industry List.URL" />
     <None Include="Links\Sector List - Yahoo! Finance Industry Browser.URL" />
+    <None Include="Scripts\Build\IISExpress.bat" />
+    <None Include="Scripts\Build\MSBuild.bat" />
     <None Include="Scripts\Database\Local_BackupDatabase.bat" />
     <None Include="Scripts\Database\Local_UpdateDatabase.bat" />
   </ItemGroup>

@@ -65,6 +65,7 @@
     <Compile Include="..\SolutionItems\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AspNetRoleManager.cs" />
     <Compile Include="AspNetUserManager.cs" />
     <Compile Include="BaseUnitOfWork.cs" />
     <Compile Include="Generated\LicenseUnitOfWork.cs">

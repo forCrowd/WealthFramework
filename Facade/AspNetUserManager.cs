@@ -6,7 +6,8 @@
 
     public class AspNetUserManager : UserManager<IdentityUser>
     {
-        public AspNetUserManager() : base(new UserStore<IdentityUser>(new AspNetIdentityDbContext()))
+        public AspNetUserManager()
+            : base(new UserStore<IdentityUser>(new AspNetIdentityDbContext()))
         {
         }
     }

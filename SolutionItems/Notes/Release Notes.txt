@@ -1,4 +1,8 @@
-﻿0.10.7
+﻿0.10.8
+. MSBuild and IISExpress script files were created
+. UserAccountType.cs file and its references were removed
+
+0.10.7
 . breeze.js - metadataReady method in dataContext
 
 0.10.6

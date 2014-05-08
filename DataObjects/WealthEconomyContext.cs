@@ -29,7 +29,7 @@
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
 
-        public static void MigrateDatabaseToLatestVersion()
+        public static void InitializeDatabase()
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<WealthEconomyContext, Configuration>());
         }

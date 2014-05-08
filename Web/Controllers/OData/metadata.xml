@@ -102,10 +102,6 @@
         <NavigationProperty Name="Sector" Relationship="Self.FK_UserSectorRating_Sector" FromRole="UserSectorRating" ToRole="Sector" />
         <NavigationProperty Name="User" Relationship="Self.FK_UserSectorRating_User" FromRole="UserSectorRating" ToRole="User" />
     </EntityType>
-    <EnumType Name="UserAccountType" UnderlyingType="Byte">
-        <Member Name="Administrator" Value="1" />
-        <Member Name="Standard" Value="2" />
-    </EnumType>
     <EntityType Name="ResourcePool" cs:DefaultProperty="Name">
         <Key>
             <PropertyRef Name="Id" />

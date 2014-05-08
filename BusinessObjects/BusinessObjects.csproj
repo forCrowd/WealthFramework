@@ -87,7 +87,6 @@
     <Compile Include="ResourcePool.cs" />
     <Compile Include="Sector.cs" />
     <Compile Include="User.cs" />
-    <Compile Include="UserAccountType.cs" />
     <Compile Include="UserLicenseRating.cs" />
     <Compile Include="UserOrganization.cs" />
     <Compile Include="UserResourcePool.cs" />

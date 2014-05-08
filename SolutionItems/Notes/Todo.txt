@@ -64,3 +64,8 @@ config.EnableQuerySupport(queryAttribute);
 </m:error>
 
 ---
+continue with db - first user
+aspnet identity side is not working the first run
+check with old db, it was okay - find the diff!
+find a way to seed the db
+in the worst case, go back to a working version - get msbuild + iisexpress changes - then start over?!
