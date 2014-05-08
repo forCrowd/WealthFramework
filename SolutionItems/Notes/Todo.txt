@@ -64,6 +64,8 @@ config.EnableQuerySupport(queryAttribute);
   </m:innererror>
 </m:error>
 
+. check t4 script outputs for identitycontext ?!
+
 ---
 LIVE
 delete migrationhistory record for aspnetcontext!
