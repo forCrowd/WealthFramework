@@ -1,6 +1,8 @@
 ﻿0.10.8
 . MSBuild and IISExpress script files were created
 . UserAccountType.cs file and its references were removed
+. WealthEconomyContext and AspNetIdentityContext were merged
+. Initial admin role + user + password
 
 0.10.7
 . breeze.js - metadataReady method in dataContext
