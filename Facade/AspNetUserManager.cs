@@ -7,7 +7,7 @@
     public class AspNetUserManager : UserManager<IdentityUser>
     {
         public AspNetUserManager()
-            : base(new UserStore<IdentityUser>(new AspNetIdentityDbContext()))
+            : base(new UserStore<IdentityUser>(new WealthEconomyContext()))
         {
         }
     }

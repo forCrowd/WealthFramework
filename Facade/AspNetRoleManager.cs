@@ -7,7 +7,7 @@
     public class AspNetRoleManager : RoleManager<IdentityRole>
     {
         public AspNetRoleManager()
-            : base(new RoleStore<IdentityRole>(new AspNetIdentityDbContext()))
+            : base(new RoleStore<IdentityRole>(new WealthEconomyContext()))
         {
         }
     }

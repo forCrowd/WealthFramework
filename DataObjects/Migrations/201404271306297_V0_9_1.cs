@@ -23,7 +23,10 @@ namespace DataObjects.Migrations
             AlterColumn("dbo.User", "LastName", c => c.String());
             AlterColumn("dbo.User", "MiddleName", c => c.String());
             AlterColumn("dbo.User", "FirstName", c => c.String());
+            
+            // TODO Doesn't work due to it can't drop default value constraint?
             AlterColumn("dbo.User", "Password", c => c.String(nullable: false));
+            
             AlterColumn("dbo.User", "Email", c => c.String(nullable: false));
             AlterColumn("dbo.Sector", "Name", c => c.String(nullable: false));
             AlterColumn("dbo.ResourcePool", "Name", c => c.String(nullable: false));

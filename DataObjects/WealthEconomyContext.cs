@@ -2,12 +2,14 @@
 {
     using BusinessObjects;
     using DataObjects.Migrations;
+    using Microsoft.AspNet.Identity.EntityFramework;
     using System.Data.Entity;
     using System.Data.Entity.ModelConfiguration.Conventions;
 
-    public class WealthEconomyContext : DbContext
+    public class WealthEconomyContext : IdentityDbContext<IdentityUser>
     {
-        public WealthEconomyContext() : base(nameOrConnectionString: "WealthEconomyContext")
+        public WealthEconomyContext()
+            : base(nameOrConnectionString: "WealthEconomyContext")
         {
         }
 

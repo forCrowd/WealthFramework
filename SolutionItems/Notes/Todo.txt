@@ -23,6 +23,7 @@ http://msdn.microsoft.com/en-us/library/hh925568%28v=vs.110%29.aspx
 . "all in one" disabled for the moment
 . compare metadata files of manual + odataconventionbuilder + edmbuilder for functionimport and for other stuff + merge?
 . codefirst namespace is dataobjects, businessobjects?
+. try to create admin role + user in facade, instead of dataobjects layer
 
 . web essentials; http://vswebessentials.com/
 . kendo ui; http://a.shinynew.me/post/82897588209/kendo-ui-core-the-free-jquery-widget-library
@@ -64,8 +65,7 @@ config.EnableQuerySupport(queryAttribute);
 </m:error>
 
 ---
-continue with db - first user
-aspnet identity side is not working the first run
-check with old db, it was okay - find the diff!
-find a way to seed the db
-in the worst case, go back to a working version - get msbuild + iisexpress changes - then start over?!
+LIVE
+delete migrationhistory record for aspnetcontext!
+run the insert script !?
+-- DELETE FROM __MigrationHistory WHERE MigrationId = '201405031330304_InitialCreate'
