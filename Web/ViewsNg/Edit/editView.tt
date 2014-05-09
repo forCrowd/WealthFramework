@@ -29,6 +29,10 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 {
 	// Variables
 	var entityTypeName = typeMapper.GetTypeName(entityType);
+
+	if (entityTypeName.StartsWith("Identity"))
+		continue;
+
 	var entityVariable = codeStringGenerator.GetCamelCase(entityTypeName);
 	var entitySetName = string.Format("{0}Set", entityVariable);
 	var entityDeleteMethod = string.Format("delete{0}", entityTypeName);

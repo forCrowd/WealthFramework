@@ -1,0 +1,19 @@
+﻿ERROR
+T4 file - Could not load type 'System.ComponentModel.DataAnnotations.Schema.IndexAttribute' from assembly 'EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.
+
+SOLUTION
+Visual Studio has its own Entity Framework 6.0 under the following folder;
+C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE
+
+Since the application is now using 6.1, it needs to be updated manually.
+Take a backup of the original files and replace them with the latest Entity Framework library.
+
+Files
+EntityFramework.dll
+EntityFramework.SqlServer.dll
+EntityFramework.SqlServerCompact.6.0 -> This file is not used by this application, can be better to take a backup and just change its name.
+
+DATE
+09 May '14
+
+---

@@ -15,7 +15,6 @@
 . use cascade delete option? how about soft delete?
 . handling concurrency can be improved - load the new record and let the user choose which one is correct
 . html cache break - angular scripts + views etc.?
-. admin user?
 . __migrationhistory createdon field error - it seems there is not much to do, it also might be about glimpse?
 . updrage to .net 4.5.1? APM doesn't have it right now
 http://msdn.microsoft.com/en-us/library/hh925568%28v=vs.110%29.aspx
@@ -65,3 +64,57 @@ config.EnableQuerySupport(queryAttribute);
 </m:error>
 
 . check t4 script outputs for identitycontext ?!
+it fails as expected. it doesnt like identitycontext. one of the remarks is that visual studio has its own ef.dll + its extensions.
+those dlls probably are older versions of ef. try to copy them to dependencies and then run with the old config?
+Microsoft.Data.Entity.Design.dll - not found!
+
+---
+<#@ assembly name="$(SolutionDir)Framework\T4\Dependencies\IDE\EntityFramework.dll" #>
+<#@ assembly name="$(SolutionDir)Framework\T4\Dependencies\IDE\EntityFramework.SqlServer.dll" #>
+<#@ assembly name="$(SolutionDir)Framework\T4\Dependencies\IDE\Microsoft.Data.Entity.Design.BootstrapPackage.dll" #>
+<#@ assembly name="$(SolutionDir)Framework\T4\Dependencies\IDE\Microsoft.Data.Entity.Design.DatabaseGeneration.dll" #>
+<#@ assembly name="$(SolutionDir)Framework\T4\Dependencies\IDE\Microsoft.Data.Entity.Design.dll" #>
+<#@ assembly name="$(SolutionDir)Framework\T4\Dependencies\IDE\Microsoft.Data.Entity.Design.EntityDesigner.dll" #>
+<#@ assembly name="$(SolutionDir)Framework\T4\Dependencies\IDE\Microsoft.Data.Entity.Design.Model.dll" #>
+<#@ assembly name="$(SolutionDir)Framework\T4\Dependencies\IDE\Microsoft.Data.Entity.Design.Package.dll" #>
+<#@ assembly name="$(SolutionDir)Framework\T4\Dependencies\IDE\Microsoft.Data.Entity.Design.VersioningFacade.dll" #>
+
+<#@ assembly name="%VS120COMNTOOLS%..\IDE\EntityFramework.dll" #>
+<#@ assembly name="%VS120COMNTOOLS%..\IDE\Microsoft.Data.Entity.Design.dll" #>
+
+---
+currently in debug mode it works - direct execute fails
+microsoft.data.entity.design references was removed + related code block was modified
+
+---
+current config file; C:\Users\coni2k\AppData\Local\Microsoft\VisualStudio\12.0\devenv.exe.config
+
+---
+// <#= AppDomain.CurrentDomain.SetupInformation.ConfigurationFile #>
+
+// <#= System.Configuration.ConfigurationManager.ConnectionStrings[0] #>
+
+// <#= System.Environment.CurrentDirectory #>
+
+<#
+      var machineConfig =
+        System.Configuration.ConfigurationManager.OpenMachineConfiguration();
+      // Get the machine.config file path.
+      var configFile =
+        new System.Configuration.ConfigurationFileMap(machineConfig.FilePath);
+
+      var roamingConfig =
+        System.Configuration.ConfigurationManager.OpenExeConfiguration(
+         System.Configuration.ConfigurationUserLevel.PerUserRoaming);
+
+#>
+
+// <#= machineConfig.FilePath #>
+
+// <#= roamingConfig.FilePath #>
+
+---
+possible paths;
+. find a compatible version of Microsoft.Data.Entity.Design.dll
+. clear t4 files
+. try to run t4 with texttemplate, so it won't crash?

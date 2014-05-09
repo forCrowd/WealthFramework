@@ -29,6 +29,10 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 {
 	// Variables
 	var entityTypeName = typeMapper.GetTypeName(entityType);
+
+	if (entityTypeName.StartsWith("Identity"))
+		continue;
+
 	var entityVariable = codeStringGenerator.GetCamelCase(entityTypeName);
 	var controllerName = string.Format("{0}Controller", entityTypeName);
 	var baseControllerName = string.Format("Base{0}", controllerName);

@@ -30,6 +30,7 @@ namespace BusinessObjects.Dto
             this.CreatedOn = organization.CreatedOn;
             this.ModifiedOn = organization.ModifiedOn;
             this.DeletedOn = organization.DeletedOn;
+            this.RowVersion = organization.RowVersion;
         }
 
         [Required]
@@ -61,6 +62,9 @@ namespace BusinessObjects.Dto
 
         public Nullable<System.DateTime> DeletedOn { get; set; }
 
+        [Required]
+        public byte[] RowVersion { get; set; }
+
         public Organization ToBusinessObject()
         {
             return new Organization()
@@ -74,7 +78,8 @@ namespace BusinessObjects.Dto
                 LicenseId = LicenseId,
                 CreatedOn = CreatedOn,
                 ModifiedOn = ModifiedOn,
-                DeletedOn = DeletedOn
+                DeletedOn = DeletedOn,
+                RowVersion = RowVersion
             };
         }
     }

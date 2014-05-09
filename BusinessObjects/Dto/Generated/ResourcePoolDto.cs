@@ -25,6 +25,7 @@ namespace BusinessObjects.Dto
             this.CreatedOn = resourcePool.CreatedOn;
             this.ModifiedOn = resourcePool.ModifiedOn;
             this.DeletedOn = resourcePool.DeletedOn;
+            this.RowVersion = resourcePool.RowVersion;
         }
 
         [Required]
@@ -41,6 +42,9 @@ namespace BusinessObjects.Dto
 
         public Nullable<System.DateTime> DeletedOn { get; set; }
 
+        [Required]
+        public byte[] RowVersion { get; set; }
+
         public ResourcePool ToBusinessObject()
         {
             return new ResourcePool()
@@ -49,7 +53,8 @@ namespace BusinessObjects.Dto
                 Name = Name,
                 CreatedOn = CreatedOn,
                 ModifiedOn = ModifiedOn,
-                DeletedOn = DeletedOn
+                DeletedOn = DeletedOn,
+                RowVersion = RowVersion
             };
         }
     }

@@ -29,6 +29,10 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 {
 	// Variables
 	var entityTypeName = typeMapper.GetTypeName(entityType);
+
+	if (entityTypeName.StartsWith("Identity"))
+		continue;
+
 	var entityUnitOfWorkName = string.Format("{0}UnitOfWork", entityTypeName);
 	var outputFileName = string.Format(@"{0}.cs", entityUnitOfWorkName);
 

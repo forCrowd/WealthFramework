@@ -30,6 +30,7 @@ namespace BusinessObjects.Dto
             this.CreatedOn = userOrganization.CreatedOn;
             this.ModifiedOn = userOrganization.ModifiedOn;
             this.DeletedOn = userOrganization.DeletedOn;
+            this.RowVersion = userOrganization.RowVersion;
         }
 
         [Required]
@@ -61,6 +62,9 @@ namespace BusinessObjects.Dto
 
         public Nullable<System.DateTime> DeletedOn { get; set; }
 
+        [Required]
+        public byte[] RowVersion { get; set; }
+
         public UserOrganization ToBusinessObject()
         {
             return new UserOrganization()
@@ -74,7 +78,8 @@ namespace BusinessObjects.Dto
                 EmployeeSatisfactionRating = EmployeeSatisfactionRating,
                 CreatedOn = CreatedOn,
                 ModifiedOn = ModifiedOn,
-                DeletedOn = DeletedOn
+                DeletedOn = DeletedOn,
+                RowVersion = RowVersion
             };
         }
     }

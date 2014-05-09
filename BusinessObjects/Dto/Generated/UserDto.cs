@@ -21,6 +21,7 @@ namespace BusinessObjects.Dto
         public UserDto(User user)
         {
             this.Id = user.Id;
+            this.AspNetUserId = user.AspNetUserId;
             this.Email = user.Email;
             this.FirstName = user.FirstName;
             this.MiddleName = user.MiddleName;
@@ -29,16 +30,16 @@ namespace BusinessObjects.Dto
             this.CreatedOn = user.CreatedOn;
             this.ModifiedOn = user.ModifiedOn;
             this.DeletedOn = user.DeletedOn;
+            this.RowVersion = user.RowVersion;
         }
 
         [Required]
         public int Id { get; set; }
 
+        public string AspNetUserId { get; set; }
+
         [Required]
         public string Email { get; set; }
-
-        //[Required]
-        //public string Password { get; set; }
 
         public string FirstName { get; set; }
 
@@ -56,11 +57,15 @@ namespace BusinessObjects.Dto
 
         public Nullable<System.DateTime> DeletedOn { get; set; }
 
+        [Required]
+        public byte[] RowVersion { get; set; }
+
         public User ToBusinessObject()
         {
             return new User()
             {
                 Id = Id,
+                AspNetUserId = AspNetUserId,
                 Email = Email,
                 FirstName = FirstName,
                 MiddleName = MiddleName,
@@ -68,7 +73,8 @@ namespace BusinessObjects.Dto
                 Notes = Notes,
                 CreatedOn = CreatedOn,
                 ModifiedOn = ModifiedOn,
-                DeletedOn = DeletedOn
+                DeletedOn = DeletedOn,
+                RowVersion = RowVersion
             };
         }
     }

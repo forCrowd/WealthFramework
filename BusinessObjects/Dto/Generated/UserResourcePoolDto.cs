@@ -34,6 +34,7 @@ namespace BusinessObjects.Dto
             this.CreatedOn = userResourcePool.CreatedOn;
             this.ModifiedOn = userResourcePool.ModifiedOn;
             this.DeletedOn = userResourcePool.DeletedOn;
+            this.RowVersion = userResourcePool.RowVersion;
         }
 
         [Required]
@@ -77,6 +78,9 @@ namespace BusinessObjects.Dto
 
         public Nullable<System.DateTime> DeletedOn { get; set; }
 
+        [Required]
+        public byte[] RowVersion { get; set; }
+
         public UserResourcePool ToBusinessObject()
         {
             return new UserResourcePool()
@@ -94,7 +98,8 @@ namespace BusinessObjects.Dto
                 DistanceIndexRating = DistanceIndexRating,
                 CreatedOn = CreatedOn,
                 ModifiedOn = ModifiedOn,
-                DeletedOn = DeletedOn
+                DeletedOn = DeletedOn,
+                RowVersion = RowVersion
             };
         }
     }

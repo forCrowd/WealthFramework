@@ -1,6 +1,6 @@
 ﻿<#@ template language="C#" debug="false" hostspecific="true"#>
-<#@ include file="EF6.Utility.CS.ttinclude"#>
-<#@ include file="..\..\..\DataObjects\EF.Utility.ttinclude"#><#
+<#@ include file="$(SolutionDir)Framework\T4\EF.Utility.ttinclude"#>
+<#@ output extension=".txt"#><#
 
 /*
 	Use this file to generate the metadadata file(s) just for the first time.
@@ -34,6 +34,9 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 	// Variables
 	var entityMetadataName = string.Format("{0}Metadata", code.Escape(entityType));
 	var outputFileName = string.Format(@"{0}.cs", entityMetadataName);
+
+	if (entityMetadataName.StartsWith("Identity"))
+		continue;
 
     fileManager.StartNewFile(outputFileName);
 

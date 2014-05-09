@@ -29,6 +29,10 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 {
 	// Variables
 	var entityTypeName = code.Escape(entityType);
+
+	if (entityTypeName.StartsWith("Identity"))
+		continue;
+
 	var entityDtoName = string.Format("{0}Dto", entityTypeName);
 	var entityVariable = codeStringGenerator.GetCamelCase(entityTypeName);
 	var outputFileName = string.Format(@"{0}.cs", entityDtoName);

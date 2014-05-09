@@ -5,8 +5,17 @@
 <#@ assembly name="System.Xml" #>
 <#@ assembly name="System.Xml.Linq"#>
 <#@ assembly name="EnvDTE"#>
+/*
+EntityFramework.dll + EntityFramework.SqlServer.dll files under
+C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE folder
+were replaced with Entity Framework 6.1 versions.
+v0.10.9
+SH - 09 May '14
+*/
 <#@ assembly name="%VS120COMNTOOLS%..\IDE\EntityFramework.dll" #>
 <#@ assembly name="%VS120COMNTOOLS%..\IDE\Microsoft.Data.Entity.Design.dll" #>
+<#@ assembly name="$(SolutionDir)DataObjects\bin\Debug\Microsoft.AspNet.Identity.Core.dll" #>
+<#@ assembly name="$(SolutionDir)DataObjects\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll" #>
 <#@ import namespace="System" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.IO" #>

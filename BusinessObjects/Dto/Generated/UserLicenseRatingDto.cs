@@ -27,6 +27,7 @@ namespace BusinessObjects.Dto
             this.CreatedOn = userLicenseRating.CreatedOn;
             this.ModifiedOn = userLicenseRating.ModifiedOn;
             this.DeletedOn = userLicenseRating.DeletedOn;
+            this.RowVersion = userLicenseRating.RowVersion;
         }
 
         [Required]
@@ -49,6 +50,9 @@ namespace BusinessObjects.Dto
 
         public Nullable<System.DateTime> DeletedOn { get; set; }
 
+        [Required]
+        public byte[] RowVersion { get; set; }
+
         public UserLicenseRating ToBusinessObject()
         {
             return new UserLicenseRating()
@@ -59,7 +63,8 @@ namespace BusinessObjects.Dto
                 Rating = Rating,
                 CreatedOn = CreatedOn,
                 ModifiedOn = ModifiedOn,
-                DeletedOn = DeletedOn
+                DeletedOn = DeletedOn,
+                RowVersion = RowVersion
             };
         }
     }

@@ -27,6 +27,7 @@ namespace BusinessObjects.Dto
             this.CreatedOn = sector.CreatedOn;
             this.ModifiedOn = sector.ModifiedOn;
             this.DeletedOn = sector.DeletedOn;
+            this.RowVersion = sector.RowVersion;
         }
 
         [Required]
@@ -48,6 +49,9 @@ namespace BusinessObjects.Dto
 
         public Nullable<System.DateTime> DeletedOn { get; set; }
 
+        [Required]
+        public byte[] RowVersion { get; set; }
+
         public Sector ToBusinessObject()
         {
             return new Sector()
@@ -58,7 +62,8 @@ namespace BusinessObjects.Dto
                 Description = Description,
                 CreatedOn = CreatedOn,
                 ModifiedOn = ModifiedOn,
-                DeletedOn = DeletedOn
+                DeletedOn = DeletedOn,
+                RowVersion = RowVersion
             };
         }
     }
