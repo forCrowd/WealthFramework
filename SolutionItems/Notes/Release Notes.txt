@@ -1,4 +1,7 @@
-﻿0.10.9
+﻿0.11
+. HighCharts
+
+0.10.9
 . T4 files update to use IdentityContext
 .. Dependencies folder was created under Framework - T4 folder, that contains IdentityContext libraries
 . EntityFramework.dll + EntityFramework.SqlServer.dll files under

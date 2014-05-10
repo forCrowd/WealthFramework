@@ -11,7 +11,9 @@
 
         'ngRoute', // Angular routing
 
-        'breeze.angular'
+        'breeze.angular',
+
+        'highcharts-ng'
 
     ]);
 })();

@@ -55,6 +55,8 @@
             .when('/DistanceIndex', { controller: 'userResourcePoolController as vm', templateUrl: '/ViewsNg/UserResourcePool/DistanceIndex.html' })
             .when('/AllInOne', { controller: 'userResourcePoolController as vm', templateUrl: '/ViewsNg/UserResourcePool/AllInOne.html' })
 
+            .when('/SectorChart', { controller: 'sectorChartController as vm', templateUrl: '/ViewsNg/Sector/SectorChart.html' })
+
             .otherwise({ redirectTo: '/' });
 
         // Html5Mode is on, if supported (# will not be used)
