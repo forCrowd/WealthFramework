@@ -13,7 +13,7 @@ An experimental resource management system that aims to provide a sustainable ec
 * T4 files update to use IdentityContext
   * Dependencies folder was created under Framework - T4 folder, that contains IdentityContext libraries
 * EntityFramework.dll + EntityFramework.SqlServer.dll files under  
-C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE folder
+C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE folder  
 were replaced with Entity Framework 6.1 versions.
 
 **0.10.8**
