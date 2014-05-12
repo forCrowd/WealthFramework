@@ -1,9 +1,30 @@
-﻿<div class="row">
-    <highchart id="sectorChart" config="vm.chartConfig" class="span10"></highchart>
-</div>
-<p>
-    <div class="btn-group">
-        <button type="submit" data-ng-click="vm.increase()" class="btn btn-default">Increase</button>
-        <button type="submit" data-ng-click="vm.decrease()" class="btn btn-default">Decrease</button>
+﻿<h2>Sector Ratings</h2>
+<div class="row">
+    <div class="col-md-6">
+        <highchart id="sectorChart" config="vm.chartConfig" class="span10"></highchart>
     </div>
-</p>
+    <div class="col-md-6">
+        <form name="editForm" class="form-horizontal">
+            <div class="form-group row" data-ng-repeat="item in vm.chartData">
+                <label class="control-label col-md-4">{{ item.name }}</label>
+                <div class="input-group col-md-4">
+                    <input type="text" data-ng-model="item.y" class="form-control " required readonly>
+                    <div class="input-group-btn">
+                        <button type="button" data-ng-click="vm.increase($index)" class="btn btn-default">+</button>
+                        <button type="button" data-ng-click="vm.decrease($index)" class="btn btn-default">-</button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-offset-4 col-md-4">
+                    <button data-ng-click="vm.saveChanges()" data-ng-disabled="editForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
+                        Save
+                    </button>
+                    <button data-ng-click="vm.resetChanges()" class="btn btn-danger">
+                        Reset
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

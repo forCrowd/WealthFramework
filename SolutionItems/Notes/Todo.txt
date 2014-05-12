@@ -64,7 +64,12 @@ config.EnableQuerySupport(queryAttribute);
 </m:error>
 
 . user resourcepool save failed!
+has an issue with UserResourcePoolOrganizationDto2Set - while saving it doesn't like null for this property
+try to create a different controller for this viewmodel?
 
 . replace readme.md with release notes.txt
 
 . continue with listing sectors + increase decrease (with numbers?)
+. number input didn't work, it breaks the chart?
+
+. multiple users?
