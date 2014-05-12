@@ -37,7 +37,6 @@
   <ItemGroup>
     <Content Include="Notes\Troubleshoot.txt" />
     <Content Include="Notes\Notes.txt" />
-    <Content Include="Notes\Release Notes.txt" />
     <Content Include="Notes\Todo.txt" />
     <Content Include="Scripts\Database\Sql\Live - Backup Database.sql" />
     <Content Include="Scripts\Database\Sql\Local - Backup Database.sql" />
@@ -45,6 +44,12 @@
     <Content Include="Scripts\Database\Sql\Local - Update Database.sql" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\LICENSE">
+      <Link>Notes\LICENSE</Link>
+    </None>
+    <None Include="..\README.md">
+      <Link>Notes\README.md</Link>
+    </None>
     <None Include="Links\Industry Browser - Yahoo! Finance - Full Industry List.URL" />
     <None Include="Links\Sector List - Yahoo! Finance Industry Browser.URL" />
     <None Include="Scripts\Build\IISExpress.bat" />

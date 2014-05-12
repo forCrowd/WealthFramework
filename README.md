@@ -6,6 +6,9 @@ An experimental resource management system that aims to provide a sustainable ec
 
 ### Release Notes
 
+**0.11.1**
+* README.md and Release Notes.txt files merged
+
 **0.11**
 * HighCharts implementation: SectorChart page
 
