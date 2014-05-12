@@ -33,7 +33,7 @@
                 case '/AllInOne': resourcePoolId = 8; break;
             }
 
-            userResourcePoolService.getUserResourcePool(resourcePoolId)
+            userResourcePoolService.getUserResourcePoolByResourcePoolId(resourcePoolId)
                 .then(function (userResourcePool) {
                     vm.userResourcePool = userResourcePool;
                 });

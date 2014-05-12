@@ -12,7 +12,7 @@
         logger = logger.forSource(serviceId);
 
         // Service methods
-        $delegate.getUserResourcePool = getUserResourcePool;
+        $delegate.getUserResourcePoolByResourcePoolId = getUserResourcePoolByResourcePoolId;
         $delegate.increaseNumberOfSales = increaseNumberOfSales;
         $delegate.resetNumberOfSales = resetNumberOfSales;
 
@@ -20,7 +20,7 @@
 
         /*** Implementations ***/
 
-        function getUserResourcePool(resourcePoolId) {
+        function getUserResourcePoolByResourcePoolId(resourcePoolId) {
 
             var query = breeze.EntityQuery
                 .from("UserResourcePool")
