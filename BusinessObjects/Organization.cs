@@ -15,7 +15,7 @@ namespace BusinessObjects
         }
 
         public int Id { get; set; }
-        public int ResourcePoolId { get; set; }
+        //public int ResourcePoolId { get; set; }
         public short SectorId { get; set; }
         public string Name { get; set; }
         public decimal ProductionCost { get; set; }
@@ -27,7 +27,7 @@ namespace BusinessObjects
 
         public virtual Sector Sector { get; set; }
         public virtual License License { get; set; }
-        public virtual ResourcePool ResourcePool { get; set; }
+        // public virtual ResourcePool ResourcePool { get; set; }
         public virtual ICollection<UserOrganization> UserOrganizationSet { get; set; }
 
         /* */

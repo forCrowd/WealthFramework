@@ -19,22 +19,27 @@ namespace BusinessObjects
 
         public int Id { get; set; }
         public string Name { get; set; }
-        
-        
-        
+
+
+
 
         public virtual ICollection<License> LicenseSet { get; set; }
-        public virtual ICollection<Organization> OrganizationSet { get; set; }
         public virtual ICollection<Sector> SectorSet { get; set; }
         public virtual ICollection<UserResourcePool> UserResourcePoolSet { get; set; }
 
         /* */
 
+        public IEnumerable<Organization> OrganizationSet
+        {
+            get { return SectorSet.SelectMany(sector => sector.OrganizationSet); }
+            private set { }
+        }
+
         public decimal ProductionCost
         {
             get
             {
-                if (OrganizationSet.Count == 0)
+                if (!OrganizationSet.Any())
                     return 0;
                 return OrganizationSet.Sum(organization => organization.ProductionCost);
             }
@@ -45,7 +50,7 @@ namespace BusinessObjects
         {
             get
             {
-                if (OrganizationSet.Count == 0)
+                if (!OrganizationSet.Any())
                     return 0;
                 return OrganizationSet.Sum(organization => organization.SalesPrice);
             }
@@ -56,7 +61,7 @@ namespace BusinessObjects
         {
             get
             {
-                if (OrganizationSet.Count == 0)
+                if (!OrganizationSet.Any())
                     return 0;
                 return OrganizationSet.Sum(organization => organization.Profit);
             }
@@ -67,7 +72,7 @@ namespace BusinessObjects
         {
             get
             {
-                if (OrganizationSet.Count == 0)
+                if (!OrganizationSet.Any())
                     return 0;
                 return OrganizationSet.Average(organization => organization.ProfitPercentage);
             }
@@ -78,7 +83,7 @@ namespace BusinessObjects
         {
             get
             {
-                if (OrganizationSet.Count == 0)
+                if (!OrganizationSet.Any())
                     return 0;
                 return OrganizationSet.Average(organization => organization.ProfitMargin);
             }

@@ -27,7 +27,7 @@ namespace BusinessObjects
 
         public UserResourcePool UserResourcePool
         {
-            get { return User.UserResourcePoolSet.Single(item => item.ResourcePool == Organization.ResourcePool); }
+            get { return User.UserResourcePoolSet.Single(item => item.ResourcePool == Organization.Sector.ResourcePool); }
         }
 
         [Display(Name = "CMRP Tax")]

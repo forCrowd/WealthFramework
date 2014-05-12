@@ -67,9 +67,8 @@ config.EnableQuerySupport(queryAttribute);
 has an issue with UserResourcePoolOrganizationDto2Set - while saving it doesn't like null for this property
 try to create a different controller for this viewmodel?
 
-. replace readme.md with release notes.txt
-
-. continue with listing sectors + increase decrease (with numbers?)
-. number input didn't work, it breaks the chart?
+. using numbers in sector chart page didn't work, it breaks the chart?
 
 . multiple users?
+
+. continue with new resource pool + create a sample pool + organization + license etc.

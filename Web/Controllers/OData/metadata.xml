@@ -22,7 +22,7 @@
             <PropertyRef Name="Id" />
         </Key>
         <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
-        <Property Name="ResourcePoolId" Type="Int32" Nullable="false" />
+        <!--<Property Name="ResourcePoolId" Type="Int32" Nullable="false" />-->
         <Property Name="SectorId" Type="Int16" Nullable="false" />
         <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" cs:DisplayName="Organization" />
         <Property Name="ProductionCost" Type="Decimal" Precision="18" Scale="2" Nullable="false" cs:DisplayName="Production Cost" />
@@ -34,7 +34,7 @@
         <Property Name="RowVersion" Type="Binary" ConcurrencyMode="Fixed" MaxLength="8" FixedLength="false" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
         <NavigationProperty Name="Sector" Relationship="Self.FK_Organization_Sector" FromRole="Organization" ToRole="Sector" />
         <NavigationProperty Name="License" Relationship="Self.FK_Organization_License" FromRole="Organization" ToRole="License" />
-        <NavigationProperty Name="ResourcePool" Relationship="BusinessObjects.FK_Organization_ResourcePool" FromRole="Organization" ToRole="ResourcePool" />
+        <!--<NavigationProperty Name="ResourcePool" Relationship="BusinessObjects.FK_Organization_ResourcePool" FromRole="Organization" ToRole="ResourcePool" />-->
         <NavigationProperty Name="UserOrganizationSet" Relationship="BusinessObjects.FK_UserOrganization_Organization" FromRole="Organization" ToRole="UserOrganization" />
     </EntityType>
     <EntityType Name="Sector" cs:DefaultProperty="Name">
@@ -118,7 +118,7 @@
         <Property Name="DeletedOn" Type="DateTime" Precision="3" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
         <Property Name="RowVersion" Type="Binary" ConcurrencyMode="Fixed" MaxLength="8" FixedLength="false" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
         <NavigationProperty Name="LicenseSet" Relationship="BusinessObjects.FK_License_ResourcePool" FromRole="ResourcePool" ToRole="License" />
-        <NavigationProperty Name="OrganizationSet" Relationship="BusinessObjects.FK_Organization_ResourcePool" FromRole="ResourcePool" ToRole="Organization" />
+        <!--<NavigationProperty Name="OrganizationSet" Relationship="BusinessObjects.FK_Organization_ResourcePool" FromRole="ResourcePool" ToRole="Organization" />-->
         <NavigationProperty Name="SectorSet" Relationship="BusinessObjects.FK_Sector_ResourcePool" FromRole="ResourcePool" ToRole="Sector" />
         <NavigationProperty Name="UserResourcePoolSet" Relationship="BusinessObjects.FK_UserResourcePool_ResourcePool" FromRole="ResourcePool" ToRole="UserResourcePool" />
     </EntityType>
@@ -330,10 +330,10 @@
             <End Role="ResourcePool" EntitySet="ResourcePool" />
             <End Role="License" EntitySet="License" />
         </AssociationSet>
-        <AssociationSet Name="FK_Organization_ResourcePool" Association="BusinessObjects.FK_Organization_ResourcePool">
+        <!--<AssociationSet Name="FK_Organization_ResourcePool" Association="BusinessObjects.FK_Organization_ResourcePool">
             <End Role="ResourcePool" EntitySet="ResourcePool" />
             <End Role="Organization" EntitySet="Organization" />
-        </AssociationSet>
+        </AssociationSet>-->
         <AssociationSet Name="FK_UserOrganization_Organization" Association="BusinessObjects.FK_UserOrganization_Organization">
             <End Role="Organization" EntitySet="Organization" />
             <End Role="UserOrganization" EntitySet="UserOrganization" />
@@ -410,7 +410,7 @@
             </Dependent>
         </ReferentialConstraint>
     </Association>
-    <Association Name="FK_Organization_ResourcePool">
+    <!--<Association Name="FK_Organization_ResourcePool">
         <End Type="BusinessObjects.ResourcePool" Role="ResourcePool" Multiplicity="1" />
         <End Type="BusinessObjects.Organization" Role="Organization" Multiplicity="*" />
         <ReferentialConstraint>
@@ -421,7 +421,7 @@
                 <PropertyRef Name="ResourcePoolId" />
             </Dependent>
         </ReferentialConstraint>
-    </Association>
+    </Association>-->
     <Association Name="FK_UserOrganization_Organization">
         <End Type="BusinessObjects.Organization" Role="Organization" Multiplicity="1" />
         <End Type="BusinessObjects.UserOrganization" Role="UserOrganization" Multiplicity="*" />

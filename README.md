@@ -6,6 +6,9 @@ An experimental resource management system that aims to provide a sustainable ec
 
 ### Release Notes
 
+**0.11.2**
+* ResourcePoolId field was removed from Organization table
+
 **0.11.1**
 * README.md and Release Notes.txt files merged
 
