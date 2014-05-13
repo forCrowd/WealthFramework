@@ -17,5 +17,5 @@ SET @fileName = @path + @dbName + '_' + @fileDate + '_' + @fileTime + '.bak'
 --Backup the database
 BACKUP DATABASE @dbName TO DISK = @fileName
 
-PRINT CHAR(10) + N'WealthEconomy - "Local - Backup Database.sql" script file has been successfully executed!';
+PRINT CHAR(10) + N'WealthEconomy - "Local - Backup Database.sql" script file has been executed!';
 GO

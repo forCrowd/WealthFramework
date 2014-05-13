@@ -4,7 +4,7 @@
 . find vs. deleted records? - findlive? or don't retrieve dead records at all?
 . exists should work with find or alllive.any() or all.any() ?
 . breeze - check save + has + get + reject changes. currently they don't work on entity level? - also prepareBatch method?
-. create a sample user + sample data for creating new users
+. create a sample user and hanlde the "creating sample data for new users" logic through this user
 . public vs. private didnt work for now with odata, try it later
 . use or try to remove scripts.render() + styles.render() from layout.cshtml - then mvc can be removed completely
 . automate .tt scripts with afterbuild?
@@ -63,7 +63,7 @@ config.EnableQuerySupport(queryAttribute);
   </m:innererror>
 </m:error>
 
-. user resourcepool save failed!
+. create user resourcepool save failed!
 has an issue with UserResourcePoolOrganizationDto2Set - while saving it doesn't like null for this property
 try to create a different controller for this viewmodel?
 
@@ -72,10 +72,4 @@ any user should be able to access them. currently definitions link is only visib
 
 . using numbers in sector chart page didn't work, it breaks the chart?
 
-. multiple users?
-
-. continue with new resource pool + create a sample pool + organization + license etc.
-
-. check ozgur's records - total cost index etc.
-
-. authorization errors?
+. test new user in new env.

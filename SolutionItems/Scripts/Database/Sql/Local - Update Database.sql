@@ -446,5 +446,5 @@ GO
 	
 /* End */
 COMMIT;
-PRINT CHAR(10) + N'WealthEconomy - "Local - Update Content.sql" script file has been successfully executed!'
+PRINT CHAR(10) + N'WealthEconomy - "Local - Update Content.sql" script file has been executed!'
 GO

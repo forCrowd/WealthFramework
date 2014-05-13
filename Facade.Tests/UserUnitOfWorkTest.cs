@@ -11,6 +11,7 @@
     public class UserUnitOfWorkTest
     {
         [TestMethod]
+        [Obsolete("Needs to be integrated with AspNetUserManager")]
         public void Select()
         {
             using (var unitOfWork = new UserUnitOfWork())
@@ -20,6 +21,7 @@
         }
 
         [TestMethod]
+        [Obsolete("Needs to be integrated with AspNetUserManager")]
         public void Insert()
         {
             using (var unitOfWork = new UserUnitOfWork())
@@ -35,6 +37,7 @@
         }
 
         [TestMethod]
+        [Obsolete("Needs to be integrated with AspNetUserManager")]
         public void Update()
         {
             using (var unitOfWork = new UserUnitOfWork())
@@ -48,6 +51,7 @@
         }
 
         [TestMethod]
+        [Obsolete("Needs to be integrated with AspNetUserManager")]
         public void Delete()
         {
             using (var unitOfWork = new UserUnitOfWork())

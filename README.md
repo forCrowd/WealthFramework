@@ -6,6 +6,9 @@ An experimental resource management system that aims to provide a sustainable ec
 
 ### Release Notes
 
+**0.11.5**
+* Database seed method was updated to add sample records
+
 **0.11.4**
 * 'Definition controllers are only accessible to admins' rule didn't work, removed. Check this later on.
 
