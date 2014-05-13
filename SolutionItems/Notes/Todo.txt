@@ -71,5 +71,3 @@ try to create a different controller for this viewmodel?
 any user should be able to access them. currently definitions link is only visible to admins - according to this, normal user may not use post action for instance? check these rules later on
 
 . using numbers in sector chart page didn't work, it breaks the chart?
-
-. test new user in new env.
