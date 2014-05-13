@@ -5,7 +5,7 @@ namespace BusinessObjects.Metadata
     using System.ComponentModel.DataAnnotations;
 
     [DefaultProperty("Name")]
-    [ODataControllerAuthorization("Administrator")]
+    // [ODataControllerAuthorization("Administrator")]
     public class LicenseMetadata
     {
         [DisplayOnListView(false)]

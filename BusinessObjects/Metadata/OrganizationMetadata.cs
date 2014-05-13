@@ -6,7 +6,7 @@ namespace BusinessObjects.Metadata
     using System.ComponentModel.DataAnnotations.Schema;
 
     [DefaultProperty("Name")]
-    [ODataControllerAuthorization("Administrator")]
+    // [ODataControllerAuthorization("Administrator")]
     public class OrganizationMetadata
     {
         [DisplayOnListView(false)]

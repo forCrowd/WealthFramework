@@ -20,7 +20,6 @@ namespace Web.Controllers.OData
     using System.Web.Http.ModelBinding;
     using System.Web.Http.OData;
 
-    [Authorize(Roles="Administrator")]
     public abstract class BaseLicenseController : BaseController
     {
         public BaseLicenseController()

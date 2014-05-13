@@ -67,6 +67,9 @@ config.EnableQuerySupport(queryAttribute);
 has an issue with UserResourcePoolOrganizationDto2Set - while saving it doesn't like null for this property
 try to create a different controller for this viewmodel?
 
+. authorize only for admins didnt work - license, organization, resourcepool, sector..
+any user should be able to access them. currently definitions link is only visible to admins - according to this, normal user may not use post action for instance? check these rules later on
+
 . using numbers in sector chart page didn't work, it breaks the chart?
 
 . multiple users?
@@ -74,4 +77,5 @@ try to create a different controller for this viewmodel?
 . continue with new resource pool + create a sample pool + organization + license etc.
 
 . check ozgur's records - total cost index etc.
-remove v0_11_3 - numberofusers
+
+. authorization errors?
