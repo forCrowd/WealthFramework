@@ -56,7 +56,7 @@ namespace DataObjects.Migrations
 
                             var userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(dbContext));
                             var adminUser = new IdentityUser("admin");
-                            var adminPassword = DateTime.Now.ToString("yyyyMMddHH");
+                            var adminPassword = DateTime.Now.ToString("yyyyMMdd");
                             
                             // TODO Make this better?
                             var adminUserResult = userManager.Create(adminUser, adminPassword);

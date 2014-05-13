@@ -9,6 +9,7 @@ An experimental resource management system that aims to provide a sustainable ec
 **0.11.5**
 * Database seed method was updated to add sample records
 * UserUnitOfWork insert method was synced with latest updates
+* Initial admin password updated
 
 **0.11.4**
 * 'Definition controllers are only accessible to admins' rule didn't work, removed. Check this later on.
