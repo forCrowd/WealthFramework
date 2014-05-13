@@ -72,3 +72,6 @@ try to create a different controller for this viewmodel?
 . multiple users?
 
 . continue with new resource pool + create a sample pool + organization + license etc.
+
+. check ozgur's records - total cost index etc.
+remove v0_11_3 - numberofusers
