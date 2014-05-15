@@ -26,7 +26,6 @@ http://msdn.microsoft.com/en-us/library/hh925568%28v=vs.110%29.aspx
 . try to create initial admin role + user in facade, instead of dataobjects layer
 . don't allow delete License if it's connected to an Organization (can't be deleted)
 . create sample data with average rating value? or make the rating nullable
-. remove tt output files from web publish
 . table structure - by this way, userresourcepool could reach to usersectorrating easily?;
 user - resourcepool - userresourcepoolId
 userresourcepoolsector -> userresourcepoolId sectorId rating
@@ -39,6 +38,7 @@ const int maxSampleResourcePoolId = 7;
 . using numbers in sector chart page didn't work, it breaks the chart?
 . authorize only for admins didnt work - license, organization, resourcepool, sector
 any user should be able to access them. currently definitions link is only visible to admins - according to this, normal user may not use post action for instance? check these rules later on
+. in some delete cases, odatacontroller returns NotFound error? although it's deleted, the record stays on the page until refreshing the page
 
 . web essentials; http://vswebessentials.com/
 . kendo ui; http://a.shinynew.me/post/82897588209/kendo-ui-core-the-free-jquery-widget-library
@@ -78,8 +78,6 @@ config.EnableQuerySupport(queryAttribute);
     <m:stacktrace></m:stacktrace>
   </m:innererror>
 </m:error>
-
-. remove data objects test project
 
 . create user resourcepool save failed!
 has an issue with UserResourcePoolOrganizationDto2Set - while saving it doesn't like null for this property

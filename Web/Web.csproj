@@ -293,11 +293,11 @@
     <Content Include="Content\breeze.directives.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
-    <Content Include="Controllers\OData\Generated\ODataController.txt">
+    <None Include="Controllers\OData\Generated\ODataController.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ODataController.tt</DependentUpon>
-    </Content>
+    </None>
     <Content Include="Controllers\OData\metadata.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -397,11 +397,11 @@
     <Content Include="Scripts\app\services\generated\sectorService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\services\generated\service.txt">
+    <None Include="Scripts\app\services\generated\service.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>service.tt</DependentUpon>
-    </Content>
+    </None>
     <Content Include="Scripts\app\services\generated\userLicenseRatingService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
@@ -458,14 +458,14 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>service.txt</LastGenOutput>
     </Content>
-    <Content Include="Scripts\app\controllers\listController.tt">
+    <None Include="Scripts\app\controllers\listController.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>listController.txt</LastGenOutput>
-    </Content>
-    <Content Include="Scripts\app\controllers\editController.tt">
+    </None>
+    <None Include="Scripts\app\controllers\editController.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>editController.txt</LastGenOutput>
-    </Content>
+    </None>
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\angular-route.min.js.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -489,11 +489,11 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\toastr.min.js" />
-    <Content Include="ViewsNg\Edit\editView.txt">
+    <None Include="ViewsNg\Edit\editView.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>editView.tt</DependentUpon>
-    </Content>
+    </None>
     <Content Include="ViewsNg\Edit\licenseEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
@@ -530,10 +530,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\List\listView.tt">
+    <None Include="ViewsNg\List\listView.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>listView.txt</LastGenOutput>
-    </Content>
+    </None>
     <Content Include="ViewsNg\Edit\editView.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>editView.txt</LastGenOutput>

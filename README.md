@@ -5,6 +5,10 @@ An experimental resource management system that aims to provide a sustainable ec
 ---
 
 ### Release Notes
+**0.11.7**
+* DataObjects.Tests project was removed
+* tt output files were removed from Web project's publish output
+
 **0.11.6**
 * Cascase delete option enabled
 * Sample child records will be added when creating a new ResourcePool, Sector, License, Organization, User ResourcePool entities
