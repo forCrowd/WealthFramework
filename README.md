@@ -5,6 +5,9 @@ An experimental resource management system that aims to provide a sustainable ec
 ---
 
 ### Release Notes
+**0.11.6**
+* Cascase delete option enabled
+* Sample child records will be added when creating a new ResourcePool, Sector, License, Organization, User ResourcePool entities
 
 **0.11.5**
 * Database seed method was updated to add sample records

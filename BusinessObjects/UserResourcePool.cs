@@ -20,9 +20,6 @@ namespace BusinessObjects
         public decimal EmployeeSatisfactionIndexRating { get; set; }
         public decimal CustomerSatisfactionIndexRating { get; set; }
         public decimal DistanceIndexRating { get; set; }
-        
-        
-        
 
         public virtual User User { get; set; }
         public virtual ResourcePool ResourcePool { get; set; }
@@ -44,7 +41,12 @@ namespace BusinessObjects
 
         public IEnumerable<UserOrganization> UserOrganizationSet
         {
-            get { return User.UserOrganizationSet.Where(item => item.Organization.Sector.ResourcePool == ResourcePool); }
+            get
+            {
+                return User
+                    .UserOrganizationSet
+                    .Where(item => item.Organization.Sector.ResourcePool == ResourcePool);
+            }
         }
 
         public IEnumerable<ViewModels.UserOrganizationViewModel> UserResourcePoolOrganizationDto2Set

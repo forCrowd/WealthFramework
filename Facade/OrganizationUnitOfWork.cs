@@ -2,37 +2,31 @@
 {
     using BusinessObjects;
     using DataObjects;
-    using System.Linq;
 
     public partial class OrganizationUnitOfWork
     {
-        LicenseRepository licenseRepository;
-        SectorRepository sectorRepository;
+        UserOrganizationRepository userOrganizationRepository;
 
-        LicenseRepository LicenseRepository
+        public UserOrganizationRepository UserOrganizationRepository
         {
-            get { return licenseRepository ?? (licenseRepository = new LicenseRepository(Context)); }
+            get { return userOrganizationRepository ?? (userOrganizationRepository = new UserOrganizationRepository(Context)); }
         }
 
-        SectorRepository SectorRepository
+        public void Insert(Organization entity, int userId)
         {
-            get { return sectorRepository ?? (sectorRepository = new SectorRepository(Context)); }
-        }
+            base.Insert(entity);
 
-        public IQueryable<License> LicenseSetLive { get { return LicenseRepository.AllLive; } }
-
-        public IQueryable<Sector> SectorSetLive { get { return SectorRepository.AllLive; } }
-
-        public override void Delete(params object[] id)
-        {
-            var organization = Find(id);
-
-            // Delete child items first
-            var userOrganizationRepository = new UserOrganizationRepository(Context);
-            userOrganizationRepository.DeleteRange(organization.UserOrganizationSet);
-
-            // Delete main item
-            base.Delete(id);
+            // Sample user organization
+            var sampleUserOrganization = new UserOrganization()
+            {
+                UserId = userId,
+                Organization = entity,
+                NumberOfSales = 0,
+                QualityRating = 0,
+                CustomerSatisfactionRating = 0,
+                EmployeeSatisfactionRating = 0
+            };
+            UserOrganizationRepository.Insert(sampleUserOrganization);
         }
     }
 }

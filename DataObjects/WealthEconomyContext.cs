@@ -28,7 +28,7 @@
 
             // b. Disable cascade delete
             // TODO This was necessary because both Sector - Organization refers to ResourcePool?
-            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+            //modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
 
         public static void InitializeDatabase()

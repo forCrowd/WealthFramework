@@ -5,15 +5,37 @@
 
     public partial class SectorUnitOfWork
     {
-        public override void Delete(params object[] id)
+        UserSectorRatingRepository userSectorRatingRepository;
+
+        public UserSectorRatingRepository UserSectorRatingRepository
         {
-            var sector = Find(id);
+            get { return userSectorRatingRepository ?? (userSectorRatingRepository = new UserSectorRatingRepository(Context)); }
+        }
 
-            // Delete child items first
-            new UserSectorRatingRepository(Context).DeleteRange(sector.UserSectorRatingSet);
+        public void Insert(Sector entity, int userId)
+        {
+            base.Insert(entity);
 
-            // Delete main item
-            base.Delete(id);
+            // TODO After having License under Sector
+
+            // Sample organization
+            //var sampleOrganization = new Organization()
+            //{
+            //    Sector = entity,
+            //    Name = "Generic Organization",
+            //    ProductionCost = 0,
+            //    SalesPrice = 0,
+            //    LicenseId = sampleLicense.Id
+            //};
+
+            // Sample rating
+            var sampleUserSectorRating = new UserSectorRating()
+            {
+                UserId = userId,
+                Sector = entity,
+                Rating = 0
+            };
+            UserSectorRatingRepository.Insert(sampleUserSectorRating);
         }
     }
 }

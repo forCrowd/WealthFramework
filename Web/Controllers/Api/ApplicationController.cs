@@ -6,6 +6,7 @@ namespace Web.Controllers.Api
     [RoutePrefix("api/Application")]
     public class ApplicationController : ApiController
     {
+        [AllowAnonymous]
         [Route("ApplicationInfo")]
         public ApplicationInfo GetApplicationInfo()
         {

@@ -96,13 +96,9 @@
       <DependentUpon>UnitOfWork.tt</DependentUpon>
     </Compile>
     <Compile Include="Utility.cs" />
-    <Compile Include="UserResourcePoolOrganizationUnitOfWork.cs" />
     <Compile Include="UserResourcePoolUnitOfWork.cs" />
-    <Compile Include="UserSectorRatingUnitOfWork.cs" />
-    <Compile Include="UserLicenseRatingUnitOfWork.cs" />
     <Compile Include="UserUnitOfWork.cs" />
     <Compile Include="SectorUnitOfWork.cs" />
-    <Compile Include="ResourcePoolOrganizationUnitOfWork.cs" />
     <Compile Include="ResourcePoolUnitOfWork.cs" />
     <Compile Include="OrganizationUnitOfWork.cs" />
     <Compile Include="LicenseUnitOfWork.cs" />

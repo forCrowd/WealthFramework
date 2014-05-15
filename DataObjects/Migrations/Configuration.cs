@@ -72,7 +72,6 @@ namespace DataObjects.Migrations
                             var user = new BusinessObjects.User() { AspNetUserId = adminUser.Id, Email = adminUser.UserName };
                             var userRepository = new UserRepository(dbContext);
                             userRepository.Insert(user);
-                            // userRepository.SaveChanges();
                             
                             // Initial records
                             var resourcePoolRepository = new ResourcePoolRepository(dbContext);

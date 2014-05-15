@@ -5,15 +5,25 @@
 
     public partial class LicenseUnitOfWork
     {
-        public override void Delete(params object[] id)
+        UserLicenseRatingRepository userLicenseRatingRepository;
+
+        public UserLicenseRatingRepository UserLicenseRatingRepository
         {
-            var license = Find(id);
+            get { return userLicenseRatingRepository ?? (userLicenseRatingRepository = new UserLicenseRatingRepository(Context)); }
+        }
 
-            // Delete child items first
-            new UserLicenseRatingRepository(Context).DeleteRange(license.UserLicenseRatingSet);
+        public void Insert(License entity, int userId)
+        {
+            base.Insert(entity);
 
-            // Main
-            base.Delete(id);
+            // Sample rating
+            var sampleUserLicenseRating = new UserLicenseRating()
+            {
+                UserId = userId,
+                License = entity,
+                Rating = 0
+            };
+            UserLicenseRatingRepository.Insert(sampleUserLicenseRating);
         }
     }
 }

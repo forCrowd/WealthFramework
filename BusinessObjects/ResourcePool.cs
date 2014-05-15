@@ -20,9 +20,6 @@ namespace BusinessObjects
         public int Id { get; set; }
         public string Name { get; set; }
 
-
-
-
         public virtual ICollection<License> LicenseSet { get; set; }
         public virtual ICollection<Sector> SectorSet { get; set; }
         public virtual ICollection<UserResourcePool> UserResourcePoolSet { get; set; }

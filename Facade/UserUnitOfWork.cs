@@ -2,25 +2,18 @@
 {
     using BusinessObjects;
     using DataObjects;
-    using System;
     using System.Data.Entity;
     using System.Linq;
-    using System.Threading.Tasks;
 
     public partial class UserUnitOfWork
     {
-        LicenseRepository licenseRepository;
         ResourcePoolRepository resourcePoolRepository;
         SectorRepository sectorRepository;
-        UserLicenseRatingRepository userLicenseRatingRepository;
-        UserOrganizationRepository userOrganizationRepository;
+        LicenseRepository licenseRepository;
         UserResourcePoolRepository userResourcePoolRepository;
         UserSectorRatingRepository userSectorRatingRepository;
-
-        LicenseRepository LicenseRepository
-        {
-            get { return licenseRepository ?? (licenseRepository = new LicenseRepository(Context)); }
-        }
+        UserLicenseRatingRepository userLicenseRatingRepository;
+        UserOrganizationRepository userOrganizationRepository;
 
         ResourcePoolRepository ResourcePoolRepository
         {
@@ -32,14 +25,9 @@
             get { return sectorRepository ?? (sectorRepository = new SectorRepository(Context)); }
         }
 
-        UserLicenseRatingRepository UserLicenseRatingRepository
+        LicenseRepository LicenseRepository
         {
-            get { return userLicenseRatingRepository ?? (userLicenseRatingRepository = new UserLicenseRatingRepository(Context)); }
-        }
-
-        UserOrganizationRepository UserOrganizationRepository
-        {
-            get { return userOrganizationRepository ?? (userOrganizationRepository = new UserOrganizationRepository(Context)); }
+            get { return licenseRepository ?? (licenseRepository = new LicenseRepository(Context)); }
         }
 
         UserResourcePoolRepository UserResourcePoolRepository
@@ -52,9 +40,18 @@
             get { return userSectorRatingRepository ?? (userSectorRatingRepository = new UserSectorRatingRepository(Context)); }
         }
 
+        UserLicenseRatingRepository UserLicenseRatingRepository
+        {
+            get { return userLicenseRatingRepository ?? (userLicenseRatingRepository = new UserLicenseRatingRepository(Context)); }
+        }
+
+        UserOrganizationRepository UserOrganizationRepository
+        {
+            get { return userOrganizationRepository ?? (userOrganizationRepository = new UserOrganizationRepository(Context)); }
+        }
+
         public override void Insert(User user)
         {
-            // TODO Validation?
             base.Insert(user);
 
             // Add sample data to the user

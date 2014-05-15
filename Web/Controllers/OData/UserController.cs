@@ -1,12 +1,10 @@
 namespace Web.Controllers.OData
 {
     using BusinessObjects;
-    using System.Data.Entity.Infrastructure;
     using System.Linq;
     using System.Net;
     using System.Threading.Tasks;
     using System.Web.Http;
-    using System.Web.Http.ModelBinding;
     using System.Web.Http.OData;
 
     public partial class UserController
@@ -44,7 +42,7 @@ namespace Web.Controllers.OData
         // POST odata/User
         public override Task<IHttpActionResult> Post(User user)
         {
-            // TODO Will not be implemented / should be available at all
+            // TODO Will not be implemented / should not be available at all
             throw new System.Web.Http.HttpResponseException(HttpStatusCode.Unused);
         }
 

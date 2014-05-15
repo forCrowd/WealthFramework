@@ -14,7 +14,12 @@
         {
             using (var unitOfWork = new LicenseUnitOfWork())
             {
-                var licenses = unitOfWork.AllLive.AsEnumerable();
+                var licenses = unitOfWork.AllLive;
+
+                foreach (var item in licenses)
+                {
+                    Console.WriteLine(item.Name);
+                }
             }
         }
 
@@ -23,18 +28,22 @@
         {
             ResourcePool sampleResourcePool;
             using (var unitOfWork = new ResourcePoolUnitOfWork())
-                sampleResourcePool = unitOfWork.AllLive.OrderByDescending(item => item.CreatedOn).First();
+                sampleResourcePool = unitOfWork.AllLive.First();
+
+            User sampleUser;
+            using (var unitOfWork = new UserUnitOfWork())
+                sampleUser = unitOfWork.AllLive.First();
 
             using (var unitOfWork = new LicenseUnitOfWork())
             {
                 var license = new License()
                 {
-                    ResourcePool = sampleResourcePool,
-                    Name = "New license",
-                    Text = "Text of new license"
+                    ResourcePoolId = sampleResourcePool.Id,
+                    Name = "Test license",
+                    Text = "Test license text"
                 };
 
-                unitOfWork.Insert(license);
+                unitOfWork.Insert(license, sampleUser.Id);
                 unitOfWork.Save();
             }
         }

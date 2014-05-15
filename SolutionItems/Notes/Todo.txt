@@ -1,10 +1,11 @@
-﻿. random data generation?
+﻿. try to merge unit of work classes - resourcepool unitofwork could create sector + license + organization for instance
+. be careful about different contexts entities - license.resourcepool = sampleResourcePool was creating new resource pools!
+either work with Ids, or try to work on merging unitofwork classes
 . remove satisfaction word..?
 . multiple pk for user organization + user sector + user license + user resource pool organization + resource pool organization
 . find vs. deleted records? - findlive? or don't retrieve dead records at all?
 . exists should work with find or alllive.any() or all.any() ?
 . breeze - check save + has + get + reject changes. currently they don't work on entity level? - also prepareBatch method?
-. create a sample user and hanlde the "creating sample data for new users" logic through this user
 . public vs. private didnt work for now with odata, try it later
 . use or try to remove scripts.render() + styles.render() from layout.cshtml - then mvc can be removed completely
 . automate .tt scripts with afterbuild?
@@ -22,7 +23,22 @@ http://msdn.microsoft.com/en-us/library/hh925568%28v=vs.110%29.aspx
 . "all in one" disabled for the moment
 . compare metadata files of manual + odataconventionbuilder + edmbuilder for functionimport and for other stuff + merge?
 . codefirst namespace is dataobjects, businessobjects?
-. try to create admin role + user in facade, instead of dataobjects layer
+. try to create initial admin role + user in facade, instead of dataobjects layer
+. don't allow delete License if it's connected to an Organization (can't be deleted)
+. create sample data with average rating value? or make the rating nullable
+. remove tt output files from web publish
+. table structure - by this way, userresourcepool could reach to usersectorrating easily?;
+user - resourcepool - userresourcepoolId
+userresourcepoolsector -> userresourcepoolId sectorId rating
+userresourcepoollicense -> userresourcepoolId licenseId rating
+userresourcepoolorganization -> userresourcepoolId organizationId rating
+. create a sample user and hanlde the "creating sample data for new users" logic through this user
+. handle this nicely;
+const int sampleUserId = 1;
+const int maxSampleResourcePoolId = 7;
+. using numbers in sector chart page didn't work, it breaks the chart?
+. authorize only for admins didnt work - license, organization, resourcepool, sector
+any user should be able to access them. currently definitions link is only visible to admins - according to this, normal user may not use post action for instance? check these rules later on
 
 . web essentials; http://vswebessentials.com/
 . kendo ui; http://a.shinynew.me/post/82897588209/kendo-ui-core-the-free-jquery-widget-library
@@ -63,11 +79,11 @@ config.EnableQuerySupport(queryAttribute);
   </m:innererror>
 </m:error>
 
+. remove data objects test project
+
 . create user resourcepool save failed!
 has an issue with UserResourcePoolOrganizationDto2Set - while saving it doesn't like null for this property
 try to create a different controller for this viewmodel?
 
-. authorize only for admins didnt work - license, organization, resourcepool, sector..
-any user should be able to access them. currently definitions link is only visible to admins - according to this, normal user may not use post action for instance? check these rules later on
-
-. using numbers in sector chart page didn't work, it breaks the chart?
+. unit of work operartions should save at the end?
+only resourcepoolunitofwork insert has save in it at the moment
