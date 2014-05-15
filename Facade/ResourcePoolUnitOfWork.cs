@@ -3,6 +3,7 @@
     using BusinessObjects;
     using DataObjects;
     using System.Linq;
+    using System.Threading.Tasks;
 
     public partial class ResourcePoolUnitOfWork
     {
@@ -47,10 +48,8 @@
             get { return userOrganizationRepository ?? (userOrganizationRepository = new UserOrganizationRepository(Context)); }
         }
 
-        public void Insert(ResourcePool entity, int userId)
+        public async Task<int> InsertAsync(ResourcePool entity, int userId)
         {
-            base.Insert(entity);
-
             // Sample records
             var sampleSector = new Sector()
             {
@@ -79,10 +78,11 @@
 
             CreateUserResourcePool(entity, userId);
 
-            Save();
+            return await base.InsertAsync(entity);
+            // Save();
         }
 
-        public override void Delete(params object[] id)
+        public override async Task<int> DeleteAsync(params object[] id)
         {
             var resourcePoolId = (int)id[0];
 
@@ -91,9 +91,9 @@
                 .SingleOrDefault(item => item.Id == resourcePoolId);
 
             if (resourcePool == null)
-                return;
+                return 0;
 
-            base.Delete(resourcePoolId);
+            return await base.DeleteAsync(resourcePoolId);
         }
 
         #region - Private Methods - 

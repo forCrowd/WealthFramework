@@ -108,11 +108,9 @@ namespace Web.Controllers.OData
                 return BadRequest();
             }
 
-            MainUnitOfWork.Update(<#= entityVariable #>);
-
             try
             {
-                await MainUnitOfWork.SaveAsync();
+                await MainUnitOfWork.UpdateAsync(<#= entityVariable #>);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -137,11 +135,9 @@ namespace Web.Controllers.OData
                 return BadRequest(ModelState);
             }
 
-            MainUnitOfWork.Insert(<#= entityVariable #>);
-
             try
             {
-                await MainUnitOfWork.SaveAsync();
+                await MainUnitOfWork.InsertAsync(<#= entityVariable #>);
             }
             catch (DbUpdateException)
             {
@@ -180,8 +176,7 @@ namespace Web.Controllers.OData
             }
 
             patch.Patch(<#= entityVariable #>);
-            MainUnitOfWork.Update(<#= entityVariable #>);
-            await MainUnitOfWork.SaveAsync();
+            await MainUnitOfWork.UpdateAsync(<#= entityVariable #>);
 
             return Ok(<#= entityVariable #>);
         }
@@ -195,8 +190,7 @@ namespace Web.Controllers.OData
                 return NotFound();
             }
 
-            MainUnitOfWork.Delete(<#= entityVariable #>.<#= primaryKey #>);
-            await MainUnitOfWork.SaveAsync();
+            await MainUnitOfWork.DeleteAsync(<#= entityVariable #>.<#= primaryKey #>);
 
             return StatusCode(HttpStatusCode.NoContent);
         }

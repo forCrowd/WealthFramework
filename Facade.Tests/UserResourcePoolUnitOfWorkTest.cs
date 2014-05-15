@@ -40,7 +40,7 @@
                     && item.ResourcePoolId == sampleResourcePool.Id);
                 
                 foreach (var item in existingList)
-                    unitOfWork.Delete(item.Id);
+                    unitOfWork.DeleteAsync(item.Id);
 
                 var userResourcePool = new UserResourcePool()
                 {
@@ -56,8 +56,8 @@
                     DistanceIndexRating = 0
                 };
 
-                unitOfWork.Insert(userResourcePool);
-                unitOfWork.Save();
+                unitOfWork.InsertAsync(userResourcePool);
+                //unitOfWork.Save();
             }
         }
 
@@ -69,8 +69,8 @@
                 var userResourcePool = unitOfWork.AllLive.OrderByDescending(item => item.CreatedOn).First();
                 userResourcePool.ResourcePoolRate = 1;
 
-                unitOfWork.Update(userResourcePool);
-                unitOfWork.Save();
+                unitOfWork.UpdateAsync(userResourcePool);
+                //unitOfWork.Save();
             }
         }
 
@@ -81,8 +81,8 @@
             {
                 var userResourcePool = unitOfWork.AllLive.OrderByDescending(item => item.CreatedOn).First();
 
-                unitOfWork.Delete(userResourcePool.Id);
-                unitOfWork.Save();
+                unitOfWork.DeleteAsync(userResourcePool.Id);
+                //unitOfWork.Save();
             }
         }
     }

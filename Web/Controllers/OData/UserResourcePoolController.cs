@@ -178,40 +178,64 @@ namespace Web.Controllers.OData
         //    return pool;
         //}
 
-        // POST odata/UserResourcePool
+        // POST odata/UserResourcePool(1)/IncreaseNumberOfSales
         [HttpPost]
         public async Task<IHttpActionResult> IncreaseNumberOfSales([FromODataUri] int key)
         {
-            return await UpdateNumberOfSales(key, false);
-        }
-        
-        [HttpPost]
-        public async Task<IHttpActionResult> ResetNumberOfSales([FromODataUri] int key)
-        {
-            return await UpdateNumberOfSales(key, true);
-        }
+            var userResourcePool = Get(key).Queryable.SingleOrDefault();
 
-        async Task<IHttpActionResult> UpdateNumberOfSales(int userResourcePoolId, bool isReset)
-        {
-            // Get the organizations
-            var userResourcePool = Get(userResourcePoolId).Queryable.SingleOrDefault();
-
-            // Not found
             if (userResourcePool == null)
                 return NotFound();
             
-            // Reset or increase number of sales
-            if (isReset)
-                MainUnitOfWork.ResetNumberOfSales(userResourcePool);
-            else
-                MainUnitOfWork.IncreaseNumberOfSales(userResourcePool);
+            await MainUnitOfWork.IncreaseNumberOfSales(userResourcePool);
 
-            await MainUnitOfWork.SaveAsync();
-
-            // TODO Ideally userResourcePool should be returned as a result - to update the client-side
-            // However due to some bad implementation, it gives object reference error when it's been sent.
-            // If the structure could be better, later on, try it again with 200 status code (Ok(userResourcePool)).
             return Ok();
         }
+
+        // POST odata/UserResourcePool(1)/IncreaseNumberOfSales
+        [HttpPost]
+        public async Task<IHttpActionResult> DecreaseNumberOfSales([FromODataUri] int key)
+        {
+            var userResourcePool = Get(key).Queryable.SingleOrDefault();
+
+            if (userResourcePool == null)
+                return NotFound();
+
+            await MainUnitOfWork.DecreaseNumberOfSales(userResourcePool);
+
+            return Ok();
+        }
+
+        // POST odata/UserResourcePool(1)/ResetNumberOfSales
+        [HttpPost]
+        public async Task<IHttpActionResult> ResetNumberOfSales([FromODataUri] int key)
+        {
+            var userResourcePool = Get(key).Queryable.SingleOrDefault();
+
+            if (userResourcePool == null)
+                return NotFound();
+
+            await MainUnitOfWork.ResetNumberOfSales(userResourcePool);
+
+            return Ok();
+        }
+
+        //async Task<IHttpActionResult> UpdateNumberOfSales(int userResourcePoolId, bool isReset)
+        //{
+        //    // Get the organizations
+        //    var userResourcePool = Get(userResourcePoolId).Queryable.SingleOrDefault();
+
+        //    // Not found
+        //    if (userResourcePool == null)
+        //        return NotFound();
+            
+        //    // Reset or increase number of sales
+        //    if (isReset)
+        //        await MainUnitOfWork.ResetNumberOfSales(userResourcePool);
+        //    else
+        //        await MainUnitOfWork.IncreaseNumberOfSales(userResourcePool);
+
+        //    return Ok();
+        //}
     }
 }

@@ -59,11 +59,9 @@ namespace Web.Controllers.OData
                 return BadRequest();
             }
 
-            MainUnitOfWork.Update(userSectorRating);
-
             try
             {
-                await MainUnitOfWork.SaveAsync();
+                await MainUnitOfWork.UpdateAsync(userSectorRating);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -88,11 +86,9 @@ namespace Web.Controllers.OData
                 return BadRequest(ModelState);
             }
 
-            MainUnitOfWork.Insert(userSectorRating);
-
             try
             {
-                await MainUnitOfWork.SaveAsync();
+                await MainUnitOfWork.InsertAsync(userSectorRating);
             }
             catch (DbUpdateException)
             {
@@ -131,8 +127,7 @@ namespace Web.Controllers.OData
             }
 
             patch.Patch(userSectorRating);
-            MainUnitOfWork.Update(userSectorRating);
-            await MainUnitOfWork.SaveAsync();
+            await MainUnitOfWork.UpdateAsync(userSectorRating);
 
             return Ok(userSectorRating);
         }
@@ -146,8 +141,7 @@ namespace Web.Controllers.OData
                 return NotFound();
             }
 
-            MainUnitOfWork.Delete(userSectorRating.Id);
-            await MainUnitOfWork.SaveAsync();
+            await MainUnitOfWork.DeleteAsync(userSectorRating.Id);
 
             return StatusCode(HttpStatusCode.NoContent);
         }

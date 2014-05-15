@@ -10,6 +10,7 @@
 
         var vm = this;
         vm.userResourcePool = null;
+        vm.decreaseNumberOfSales = decreaseNumberOfSales;
         vm.increaseNumberOfSales = increaseNumberOfSales;
         vm.resetNumberOfSales = resetNumberOfSales;
 
@@ -36,6 +37,13 @@
             userResourcePoolService.getUserResourcePoolByResourcePoolId(resourcePoolId)
                 .then(function (userResourcePool) {
                     vm.userResourcePool = userResourcePool;
+                });
+        }
+
+        function decreaseNumberOfSales() {
+            userResourcePoolService.decreaseNumberOfSales(vm.userResourcePool.Id)
+                .success(function () {
+                    getUserResourcePool();
                 });
         }
 

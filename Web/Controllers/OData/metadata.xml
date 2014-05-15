@@ -352,6 +352,9 @@
         <FunctionImport Name="IncreaseNumberOfSales" IsBindable="true" EntitySet="UserResourcePool">
             <Parameter Name="bindingParameter" Type="BusinessObjects.UserResourcePool" />
         </FunctionImport>
+        <FunctionImport Name="DecreaseNumberOfSales" IsBindable="true" EntitySet="UserResourcePool">
+            <Parameter Name="bindingParameter" Type="BusinessObjects.UserResourcePool" />
+        </FunctionImport>
         <FunctionImport Name="ResetNumberOfSales" IsBindable="true" EntitySet="UserResourcePool">
             <Parameter Name="bindingParameter" Type="BusinessObjects.UserResourcePool" />
         </FunctionImport>

@@ -3,6 +3,7 @@
     using BusinessObjects;
     using DataObjects;
     using System.Linq;
+    using System.Threading.Tasks;
 
     public partial class UserResourcePoolUnitOfWork
     {
@@ -31,17 +32,15 @@
             get { return userOrganizationRepository ?? (userOrganizationRepository = new UserOrganizationRepository(Context)); }
         }
 
-        enum UpdateNumberOfSalesActions
+        public enum UpdateNumberOfSalesActions
         {
             Increase,
             Decrease,
             Reset
         }
 
-        public override void Insert(UserResourcePool userResourcePool)
+        public override async Task<int> InsertAsync(UserResourcePool userResourcePool)
         {
-            base.Insert(userResourcePool);
-
             // TODO This is only for temporary, try to find a way to handle these cases better!
             // Currently it's not certain that userResourcePool.ResourcePool property has a value but ResourcePoolId definitely filled.. ?!
             var resourcePool = ResourcePoolRepository.Find(userResourcePool.ResourcePoolId);
@@ -85,21 +84,26 @@
                 };
                 UserLicenseRatingRepository.Insert(sampleLicenseRating);                
             }
+
+            return await base.InsertAsync(userResourcePool);
         }
 
-        public void IncreaseNumberOfSales(UserResourcePool userResourcePool)
+        public async Task<int> IncreaseNumberOfSales(UserResourcePool userResourcePool)
         {
             UpdateNumberOfSales(userResourcePool, UpdateNumberOfSalesActions.Increase);
+            return await Context.SaveChangesAsync();
         }
 
-        public void DecreaseNumberOfSales(UserResourcePool userResourcePool)
+        public async Task<int> DecreaseNumberOfSales(UserResourcePool userResourcePool)
         {
             UpdateNumberOfSales(userResourcePool, UpdateNumberOfSalesActions.Decrease);
+            return await Context.SaveChangesAsync();
         }
 
-        public void ResetNumberOfSales(UserResourcePool userResourcePool)
+        public async Task<int> ResetNumberOfSales(UserResourcePool userResourcePool)
         {
             UpdateNumberOfSales(userResourcePool, UpdateNumberOfSalesActions.Reset);
+            return await Context.SaveChangesAsync();
         }
 
         void UpdateNumberOfSales(UserResourcePool userResourcePool, UpdateNumberOfSalesActions action)
@@ -112,7 +116,8 @@
                         organization.NumberOfSales++;
                         break;
                     case UpdateNumberOfSalesActions.Decrease:
-                        organization.NumberOfSales--;
+                        if (organization.NumberOfSales > 0)
+                            organization.NumberOfSales--;
                         break;
                     case UpdateNumberOfSalesActions.Reset:
                         organization.NumberOfSales = 0;
@@ -122,7 +127,7 @@
             }
         }
 
-        public override void Delete(params object[] id)
+        public override async Task<int> DeleteAsync(params object[] id)
         {
             // TODO How about retrieving it by using Include?
             var userResourcePool = Find(id);
@@ -149,7 +154,7 @@
             UserLicenseRatingRepository.DeleteRange(userLicenseRatings);
 
             // Delete main item
-            base.Delete(id);
+            return await base.DeleteAsync(id);
         }
     }
 }

@@ -57,11 +57,9 @@ namespace Web.Controllers.OData
                 return BadRequest();
             }
 
-            MainUnitOfWork.Update(user);
-
             try
             {
-                await MainUnitOfWork.SaveAsync();
+                await MainUnitOfWork.UpdateAsync(user);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -86,11 +84,9 @@ namespace Web.Controllers.OData
                 return BadRequest(ModelState);
             }
 
-            MainUnitOfWork.Insert(user);
-
             try
             {
-                await MainUnitOfWork.SaveAsync();
+                await MainUnitOfWork.InsertAsync(user);
             }
             catch (DbUpdateException)
             {
@@ -129,8 +125,7 @@ namespace Web.Controllers.OData
             }
 
             patch.Patch(user);
-            MainUnitOfWork.Update(user);
-            await MainUnitOfWork.SaveAsync();
+            await MainUnitOfWork.UpdateAsync(user);
 
             return Ok(user);
         }
@@ -144,8 +139,7 @@ namespace Web.Controllers.OData
                 return NotFound();
             }
 
-            MainUnitOfWork.Delete(user.Id);
-            await MainUnitOfWork.SaveAsync();
+            await MainUnitOfWork.DeleteAsync(user.Id);
 
             return StatusCode(HttpStatusCode.NoContent);
         }

@@ -59,11 +59,9 @@ namespace Web.Controllers.OData
                 return BadRequest();
             }
 
-            MainUnitOfWork.Update(userLicenseRating);
-
             try
             {
-                await MainUnitOfWork.SaveAsync();
+                await MainUnitOfWork.UpdateAsync(userLicenseRating);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -88,11 +86,9 @@ namespace Web.Controllers.OData
                 return BadRequest(ModelState);
             }
 
-            MainUnitOfWork.Insert(userLicenseRating);
-
             try
             {
-                await MainUnitOfWork.SaveAsync();
+                await MainUnitOfWork.InsertAsync(userLicenseRating);
             }
             catch (DbUpdateException)
             {
@@ -131,8 +127,7 @@ namespace Web.Controllers.OData
             }
 
             patch.Patch(userLicenseRating);
-            MainUnitOfWork.Update(userLicenseRating);
-            await MainUnitOfWork.SaveAsync();
+            await MainUnitOfWork.UpdateAsync(userLicenseRating);
 
             return Ok(userLicenseRating);
         }
@@ -146,8 +141,7 @@ namespace Web.Controllers.OData
                 return NotFound();
             }
 
-            MainUnitOfWork.Delete(userLicenseRating.Id);
-            await MainUnitOfWork.SaveAsync();
+            await MainUnitOfWork.DeleteAsync(userLicenseRating.Id);
 
             return StatusCode(HttpStatusCode.NoContent);
         }

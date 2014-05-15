@@ -43,8 +43,8 @@
                     Text = "Test license text"
                 };
 
-                unitOfWork.Insert(license, sampleUser.Id);
-                unitOfWork.Save();
+                unitOfWork.InsertAsync(license, sampleUser.Id);
+                //unitOfWork.Save();
             }
         }
 
@@ -56,8 +56,8 @@
                 var license = unitOfWork.AllLive.OrderByDescending(item => item.CreatedOn).First();
                 license.Description += string.Format("{0}Update test: {1:yyyyMMdd_HHmmss}", Environment.NewLine, DateTime.Now);
 
-                unitOfWork.Update(license);
-                unitOfWork.Save();
+                unitOfWork.UpdateAsync(license);
+                // unitOfWork.Save();
             }
         }
 
@@ -68,8 +68,8 @@
             {
                 var license = unitOfWork.AllLive.OrderByDescending(item => item.CreatedOn).First();
 
-                unitOfWork.Delete(license.Id);
-                unitOfWork.Save();
+                unitOfWork.DeleteAsync(license.Id);
+                // unitOfWork.Save();
             }
         }
     }

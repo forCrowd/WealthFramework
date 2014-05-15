@@ -38,7 +38,7 @@
                     Name = "Test Resource Pool"
                 };
 
-                unitOfWork.Insert(resourcePool, sampleUser.Id);
+                unitOfWork.InsertAsync(resourcePool, sampleUser.Id);
             }
         }
 
@@ -50,8 +50,8 @@
                 var resourcePool = unitOfWork.AllLive.OrderByDescending(item => item.CreatedOn).First();
                 resourcePool.Name += string.Format("{0}Update test: {1:yyyyMMdd_HHmmss}", Environment.NewLine, DateTime.Now);
 
-                unitOfWork.Update(resourcePool);
-                unitOfWork.Save();
+                unitOfWork.UpdateAsync(resourcePool);
+                //unitOfWork.Save();
             }
         }
 
@@ -61,8 +61,8 @@
             using (var unitOfWork = new ResourcePoolUnitOfWork())
             {
                 var resourcePool = unitOfWork.AllLive.OrderByDescending(item => item.CreatedOn).First();
-                unitOfWork.Delete(resourcePool.Id);
-                unitOfWork.Save();
+                unitOfWork.DeleteAsync(resourcePool.Id);
+                //unitOfWork.Save();
             }
         }
     }

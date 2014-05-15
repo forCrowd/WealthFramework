@@ -2,6 +2,7 @@
 {
     using BusinessObjects;
     using DataObjects;
+    using System.Threading.Tasks;
 
     public partial class LicenseUnitOfWork
     {
@@ -12,10 +13,8 @@
             get { return userLicenseRatingRepository ?? (userLicenseRatingRepository = new UserLicenseRatingRepository(Context)); }
         }
 
-        public void Insert(License entity, int userId)
+        public async Task<int> InsertAsync(License entity, int userId)
         {
-            base.Insert(entity);
-
             // Sample rating
             var sampleUserLicenseRating = new UserLicenseRating()
             {
@@ -24,6 +23,8 @@
                 Rating = 0
             };
             UserLicenseRatingRepository.Insert(sampleUserLicenseRating);
+
+            return await base.InsertAsync(entity);
         }
     }
 }

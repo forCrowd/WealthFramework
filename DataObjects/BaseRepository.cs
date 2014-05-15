@@ -8,7 +8,6 @@
     using System.Linq.Expressions;
     using System.Threading.Tasks;
 
-
     public class BaseRepository<TEntityType> : IRepository<TEntityType> where TEntityType : class, IEntity
     {
         readonly DbSet<TEntityType> dbSet;
@@ -88,15 +87,15 @@
             dbSet.RemoveRange(entities);
         }
 
-        public int SaveChanges()
-        {
-            return Context.SaveChanges();
-        }
+        //public int SaveChanges()
+        //{
+        //    return Context.SaveChanges();
+        //}
 
-        public async Task<int> SaveChangesAsync()
-        {
-            return await Context.SaveChangesAsync();
-        }
+        //public async Task<int> SaveChangesAsync()
+        //{
+        //    return await Context.SaveChangesAsync();
+        //}
 
         public void Dispose()
         {

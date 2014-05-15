@@ -4,6 +4,7 @@
     using DataObjects;
     using System.Data.Entity;
     using System.Linq;
+    using System.Threading.Tasks;
 
     public partial class UserUnitOfWork
     {
@@ -50,10 +51,8 @@
             get { return userOrganizationRepository ?? (userOrganizationRepository = new UserOrganizationRepository(Context)); }
         }
 
-        public override void Insert(User user)
+        public override async Task<int> InsertAsync(User user)
         {
-            base.Insert(user);
-
             // Add sample data to the user
 
             // TODO Static?
@@ -137,9 +136,11 @@
                 };
                 UserOrganizationRepository.Insert(userOrganization);
             }
+
+            return await base.InsertAsync(user);
         }
 
-        public override void Delete(params object[] id)
+        public override async Task<int> DeleteAsync(params object[] id)
         {
             var user = Find(id);
 
@@ -148,7 +149,7 @@
             UserResourcePoolRepository.DeleteRange(user.UserResourcePoolSet);
             UserSectorRatingRepository.DeleteRange(user.UserSectorRatingSet);
 
-            base.Delete(id);
+            return await base.DeleteAsync(id);
         }
     }
 }

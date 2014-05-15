@@ -15,11 +15,9 @@ namespace Web.Controllers.OData
                 return BadRequest(ModelState);
             }
 
-            MainUnitOfWork.Insert(organization, ApplicationUser.Id);
-
             try
             {
-                await MainUnitOfWork.SaveAsync();
+                await MainUnitOfWork.InsertAsync(organization, ApplicationUser.Id);
             }
             catch (DbUpdateException)
             {

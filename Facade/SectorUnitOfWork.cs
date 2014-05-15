@@ -2,6 +2,7 @@
 {
     using BusinessObjects;
     using DataObjects;
+    using System.Threading.Tasks;
 
     public partial class SectorUnitOfWork
     {
@@ -12,10 +13,8 @@
             get { return userSectorRatingRepository ?? (userSectorRatingRepository = new UserSectorRatingRepository(Context)); }
         }
 
-        public void Insert(Sector entity, int userId)
+        public async Task<int> InsertAsync(Sector entity, int userId)
         {
-            base.Insert(entity);
-
             // TODO After having License under Sector
 
             // Sample organization
@@ -36,6 +35,8 @@
                 Rating = 0
             };
             UserSectorRatingRepository.Insert(sampleUserSectorRating);
+
+            return await base.InsertAsync(entity);
         }
     }
 }

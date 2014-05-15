@@ -109,8 +109,7 @@ namespace Web.Controllers
                     Email = aspNetUser.UserName,
                 };
 
-                unitOfWork.Insert(user);
-                await unitOfWork.SaveAsync();
+                await unitOfWork.InsertAsync(user);
             }
 
             return Ok();

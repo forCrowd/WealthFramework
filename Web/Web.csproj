@@ -418,6 +418,7 @@
       <DependentUpon>service.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\services\mainService.js" />
+    <Content Include="Scripts\app\services\userSectorRatingService.js" />
     <Content Include="Scripts\app\services\userService.js" />
     <Content Include="Scripts\app\services\userResourcePoolService.js" />
     <Content Include="Scripts\bootstrap.js" />

@@ -59,11 +59,9 @@ namespace Web.Controllers.OData
                 return BadRequest();
             }
 
-            MainUnitOfWork.Update(userResourcePool);
-
             try
             {
-                await MainUnitOfWork.SaveAsync();
+                await MainUnitOfWork.UpdateAsync(userResourcePool);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -88,11 +86,9 @@ namespace Web.Controllers.OData
                 return BadRequest(ModelState);
             }
 
-            MainUnitOfWork.Insert(userResourcePool);
-
             try
             {
-                await MainUnitOfWork.SaveAsync();
+                await MainUnitOfWork.InsertAsync(userResourcePool);
             }
             catch (DbUpdateException)
             {
@@ -131,8 +127,7 @@ namespace Web.Controllers.OData
             }
 
             patch.Patch(userResourcePool);
-            MainUnitOfWork.Update(userResourcePool);
-            await MainUnitOfWork.SaveAsync();
+            await MainUnitOfWork.UpdateAsync(userResourcePool);
 
             return Ok(userResourcePool);
         }
@@ -146,8 +141,7 @@ namespace Web.Controllers.OData
                 return NotFound();
             }
 
-            MainUnitOfWork.Delete(userResourcePool.Id);
-            await MainUnitOfWork.SaveAsync();
+            await MainUnitOfWork.DeleteAsync(userResourcePool.Id);
 
             return StatusCode(HttpStatusCode.NoContent);
         }

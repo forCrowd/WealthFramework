@@ -48,30 +48,33 @@
             return MainRepository.Exists(keyValues);
         }
 
-        public virtual void Insert(TEntityType entity)
+        public virtual async Task<int> InsertAsync(TEntityType entity)
         {
             MainRepository.Insert(entity);
-        }
-
-        public virtual void Update(TEntityType entity)
-        {
-            MainRepository.Update(entity);
-        }
-
-        public virtual void Delete(params object[] keyValues)
-        {
-            MainRepository.Delete(keyValues);
-        }
-
-        public int Save()
-        {
-            return Context.SaveChanges();
-        }
-
-        public async Task<int> SaveAsync()
-        {
             return await Context.SaveChangesAsync();
         }
+
+        public virtual async Task<int> UpdateAsync(TEntityType entity)
+        {
+            MainRepository.Update(entity);
+            return await Context.SaveChangesAsync();
+        }
+
+        public virtual async Task<int> DeleteAsync(params object[] keyValues)
+        {
+            MainRepository.Delete(keyValues);
+            return await Context.SaveChangesAsync();
+        }
+
+        //public int Save()
+        //{
+        //    return Context.SaveChanges();
+        //}
+
+        //public async Task<int> SaveAsync()
+        //{
+        //    return await Context.SaveChangesAsync();
+        //}
 
         private bool disposed = false;
 

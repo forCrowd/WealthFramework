@@ -31,8 +31,8 @@
                     Email = string.Format("user_{0:yyyyMMdd_HHmmss}", DateTime.Now),
                 };
 
-                unitOfWork.Insert(user);
-                unitOfWork.Save();
+                unitOfWork.InsertAsync(user);
+                //unitOfWork.Save();
             }
         }
 
@@ -45,8 +45,8 @@
                 var user = unitOfWork.AllLive.OrderByDescending(item => item.CreatedOn).First();
                 user.Notes += string.Format("{0}Update test: {1:yyyyMMdd_HHmmss}", Environment.NewLine, DateTime.Now);
 
-                unitOfWork.Update(user);
-                unitOfWork.Save();
+                unitOfWork.UpdateAsync(user);
+                //unitOfWork.Save();
             }
         }
 
@@ -58,8 +58,8 @@
             {
                 var user = unitOfWork.AllLive.OrderByDescending(item => item.CreatedOn).First();
 
-                unitOfWork.Delete(user.Id);
-                unitOfWork.Save();
+                unitOfWork.DeleteAsync(user.Id);
+                //unitOfWork.Save();
             }
         }
     }

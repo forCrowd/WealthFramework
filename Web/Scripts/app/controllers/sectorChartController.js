@@ -8,6 +8,9 @@
     function sectorChartController(userSectorRatingService, logger) {
         logger = logger.forSource(controllerId);
 
+        // TODO Static?
+        var resourcePoolId = 6;
+
         var vm = this;
         vm.chartData = null;
         vm.decrease = decrease;
@@ -25,7 +28,9 @@
         }
 
         function decrease(index) {
-            vm.chartData[index].y -= 5;
+            vm.chartData[index].y = vm.chartData[index].y - 5 < 0
+                ? 0
+                : vm.chartData[index].y - 5;
         }
 
         function increase(index) {
@@ -50,7 +55,7 @@
 
             vm.chartConfig.loading = true;
 
-            userSectorRatingService.getUserSectorRatingSet(false)
+            userSectorRatingService.getUserSectorRatingSetByResourcePoolId(resourcePoolId, false)
                 .then(function (data) {
 
                     // Convert userSectorRating to chart data
@@ -74,7 +79,7 @@
 
         function saveChanges() {
 
-            userSectorRatingService.getUserSectorRatingSet(false)
+            userSectorRatingService.getUserSectorRatingSetByResourcePoolId(resourcePoolId, false)
                 .then(function (data) {
 
                     // Convert chart data to userSectorRating

@@ -48,8 +48,8 @@
                     LicenseId = sampleLicense.Id
                 };
 
-                unitOfWork.Insert(organization, sampleUser.Id);
-                unitOfWork.Save();
+                unitOfWork.InsertAsync(organization, sampleUser.Id);
+                //unitOfWork.Save();
             }
         }
 
@@ -61,8 +61,8 @@
                 var organization = unitOfWork.AllLive.OrderByDescending(item => item.CreatedOn).First();
                 organization.Name += string.Format("{0}Update test: {1:yyyyMMdd_HHmmss}", Environment.NewLine, DateTime.Now);
 
-                unitOfWork.Update(organization);
-                unitOfWork.Save();
+                unitOfWork.UpdateAsync(organization);
+                //unitOfWork.Save();
             }
         }
 
@@ -73,8 +73,8 @@
             {
                 var organization = unitOfWork.AllLive.OrderByDescending(item => item.CreatedOn).First();
 
-                unitOfWork.Delete(organization.Id);
-                unitOfWork.Save();
+                unitOfWork.DeleteAsync(organization.Id);
+                //unitOfWork.Save();
             }
         }
     }

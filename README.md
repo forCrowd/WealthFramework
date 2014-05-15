@@ -6,6 +6,9 @@ An experimental resource management system that aims to provide a sustainable ec
 
 ### Release Notes
 **0.11.7**
+* UnitOfWork methods are now saving the changes at the end. Save method is not public anymore
+* DecreaseNumberOfSales method was implemented
+* SectorChart page only shows Sector resource pool related data + negative values fix
 * DataObjects.Tests project was removed
 * tt output files were removed from Web project's publish output
 

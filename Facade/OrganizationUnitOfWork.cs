@@ -2,6 +2,7 @@
 {
     using BusinessObjects;
     using DataObjects;
+    using System.Threading.Tasks;
 
     public partial class OrganizationUnitOfWork
     {
@@ -12,10 +13,8 @@
             get { return userOrganizationRepository ?? (userOrganizationRepository = new UserOrganizationRepository(Context)); }
         }
 
-        public void Insert(Organization entity, int userId)
+        public async Task<int> InsertAsync(Organization entity, int userId)
         {
-            base.Insert(entity);
-
             // Sample user organization
             var sampleUserOrganization = new UserOrganization()
             {
@@ -27,6 +26,8 @@
                 EmployeeSatisfactionRating = 0
             };
             UserOrganizationRepository.Insert(sampleUserOrganization);
+
+            return await base.InsertAsync(entity);
         }
     }
 }
