@@ -274,6 +274,7 @@
     <Compile Include="Controllers\OData\ResourcePoolController.cs" />
     <Compile Include="Controllers\OData\LicenseController.cs" />
     <Compile Include="Controllers\OData\UserController.cs" />
+    <Compile Include="Controllers\OData\UserSectorRatingController.cs" />
     <Compile Include="Controllers\OData\UserResourcePoolController.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
