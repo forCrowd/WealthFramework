@@ -34,8 +34,7 @@ namespace Web.Controllers.OData
         public virtual IQueryable<UserSectorRating> Get()
         {
 			var list = MainUnitOfWork.AllLive;
-			using (var userUnitOfWork = new UserUnitOfWork())
-			    list = list.Where(item => item.UserId == ApplicationUser.Id);
+			list = list.Where(item => item.UserId == ApplicationUser.Id);
             return list;
         }
 

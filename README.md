@@ -5,6 +5,9 @@ An experimental resource management system that aims to provide a sustainable ec
 ---
 
 ### Release Notes
+**0.11.9**
+* ODataController.tt fine-tuning
+
 **0.11.8**
 * UserResurcePoolCustom api controller was created and special methods moved to this controller from OData
 * New UserResourcePool save failed issue was fixed

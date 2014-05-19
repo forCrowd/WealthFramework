@@ -67,7 +67,7 @@ namespace Web.Controllers.OData
 <# if (authorizationAttribute != null) { #>
     [Authorize(Roles="<#= authorizationAttribute.Value #>")]
 <# } #>
-    public abstract class <#= baseControllerName #> : BaseController
+    public abstract class <#= baseControllerName #> : BaseODataController
     {
         public <#= baseControllerName #>()
 		{
@@ -82,8 +82,7 @@ namespace Web.Controllers.OData
         {
 			var list = MainUnitOfWork.AllLive;
 <# if (hasUserId) { #>
-			using (var userUnitOfWork = new UserUnitOfWork())
-			    list = list.Where(item => item.UserId == ApplicationUser.Id);
+			list = list.Where(item => item.UserId == ApplicationUser.Id);
 <# } #>
             return list;
         }

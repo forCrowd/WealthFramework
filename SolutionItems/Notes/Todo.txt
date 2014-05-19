@@ -83,5 +83,3 @@ config.EnableQuerySupport(queryAttribute);
 . try to add indexes dynamically?
 
 . "all in one" disabled for the moment
-
-. remove this line from odatacontroller.tt - using (var userUnitOfWork = new UserUnitOfWork())

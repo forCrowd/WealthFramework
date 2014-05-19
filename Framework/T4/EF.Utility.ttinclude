@@ -596,7 +596,7 @@ public class TypeMapper
 		// TODO Make it better!
 		var assembly = typeof(BusinessObjects.IEntity).Assembly;
 		var types = assembly.GetTypes();
-		return types.Single(type => type.Name == entityTypeName);
+		return types.Single(type => type.Name == entityTypeName && type.Namespace == "BusinessObjects");
 	}
 
 	public Type GetMetadataType(string entityTypeName)
@@ -624,11 +624,11 @@ public class TypeMapper
 		return metadataType.GetProperties();
 	}
 
-	public T GetAttribute<T>(MemberInfo info) where T : Attribute
+	public T GetAttribute<T>(MemberInfo member) where T : Attribute
 	{
-		ArgumentNotNull(info, "info");
+		ArgumentNotNull(member, "member");
 		
-		var customAttributes = info.GetCustomAttributes();
+		var customAttributes = member.GetCustomAttributes();
 
 		if (customAttributes == null)
 			return default(T);
