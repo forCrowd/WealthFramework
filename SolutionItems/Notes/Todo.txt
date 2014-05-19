@@ -15,7 +15,6 @@ either work with Ids, or try to work on merging unitofwork classes
 . implement soft delete
 . handling concurrency can be improved - load the new record and let the user choose which one is correct
 . html cache break - angular scripts + views etc.?
-. "all in one" disabled for the moment
 . compare metadata files of manual + odataconventionbuilder + edmbuilder for functionimport and for other stuff + merge?
 . codefirst namespace is dataobjects, businessobjects?
 . try to create initial admin role + user from facade, instead of dataobjects layer
@@ -34,8 +33,10 @@ const int maxSampleResourcePoolId = 7;
 . using numbers in sector chart page didn't work, it breaks the chart?
 . authorize only for admins didnt work - license, organization, resourcepool, sector
 any user should be able to access them. currently definitions link is only visible to admins - according to this, normal user may not use post action for instance? check these rules later on
+. update namespaces - osp.wealtheconomy.
 . in some delete cases, odatacontroller returns NotFound error? although it's deleted, the record stays on the page until refreshing the page
-. sector chart loads all sectors, without any resourcepool filter?
+. how to calculate average index? some people may enter 1,2,3 - some may enter 100,200,300? always force them to enter percentage?
+or always calculate the total average based on invidiuals percentage? or both?
 . __migrationhistory createdon field error - it seems there is not much to do, it also might be about glimpse?
 . updrage to .net 4.5.1? APM doesn't have it right now
 http://msdn.microsoft.com/en-us/library/hh925568%28v=vs.110%29.aspx
@@ -79,6 +80,8 @@ config.EnableQuerySupport(queryAttribute);
   </m:innererror>
 </m:error>
 
-. create user resourcepool save failed!
-has an issue with UserResourcePoolOrganizationDto2Set - while saving it doesn't like null for this property
-try to create a different controller for this viewmodel?
+. try to add indexes dynamically?
+
+. "all in one" disabled for the moment
+
+. remove this line from odatacontroller.tt - using (var userUnitOfWork = new UserUnitOfWork())

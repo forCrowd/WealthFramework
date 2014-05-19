@@ -22,7 +22,6 @@
             <PropertyRef Name="Id" />
         </Key>
         <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
-        <!--<Property Name="ResourcePoolId" Type="Int32" Nullable="false" />-->
         <Property Name="SectorId" Type="Int16" Nullable="false" />
         <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" cs:DisplayName="Organization" />
         <Property Name="ProductionCost" Type="Decimal" Precision="18" Scale="2" Nullable="false" cs:DisplayName="Production Cost" />
@@ -34,7 +33,6 @@
         <Property Name="RowVersion" Type="Binary" ConcurrencyMode="Fixed" MaxLength="8" FixedLength="false" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
         <NavigationProperty Name="Sector" Relationship="Self.FK_Organization_Sector" FromRole="Organization" ToRole="Sector" />
         <NavigationProperty Name="License" Relationship="Self.FK_Organization_License" FromRole="Organization" ToRole="License" />
-        <!--<NavigationProperty Name="ResourcePool" Relationship="BusinessObjects.FK_Organization_ResourcePool" FromRole="Organization" ToRole="ResourcePool" />-->
         <NavigationProperty Name="UserOrganizationSet" Relationship="BusinessObjects.FK_UserOrganization_Organization" FromRole="Organization" ToRole="UserOrganization" />
     </EntityType>
     <EntityType Name="Sector" cs:DefaultProperty="Name">
@@ -118,7 +116,6 @@
         <Property Name="DeletedOn" Type="DateTime" Precision="3" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
         <Property Name="RowVersion" Type="Binary" ConcurrencyMode="Fixed" MaxLength="8" FixedLength="false" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
         <NavigationProperty Name="LicenseSet" Relationship="BusinessObjects.FK_License_ResourcePool" FromRole="ResourcePool" ToRole="License" />
-        <!--<NavigationProperty Name="OrganizationSet" Relationship="BusinessObjects.FK_Organization_ResourcePool" FromRole="ResourcePool" ToRole="Organization" />-->
         <NavigationProperty Name="SectorSet" Relationship="BusinessObjects.FK_Sector_ResourcePool" FromRole="ResourcePool" ToRole="Sector" />
         <NavigationProperty Name="UserResourcePoolSet" Relationship="BusinessObjects.FK_UserResourcePool_ResourcePool" FromRole="ResourcePool" ToRole="UserResourcePool" />
     </EntityType>
@@ -130,7 +127,6 @@
         <Property Name="UserId" Type="Int32" Nullable="false" />
         <Property Name="ResourcePoolId" Type="Int32" Nullable="false" />
         <Property Name="ResourcePoolRate" Type="Decimal" Nullable="false" Precision="18" Scale="2" cs:DisplayName="CMRP Rate" />
-        <Property Name="ResourcePoolRatePercentage" Type="Decimal" Precision="18" Scale="2" />
         <Property Name="TotalCostIndexRating" Type="Decimal" Nullable="false" Precision="18" Scale="2" cs:DisplayName="Total Cost Index" />
         <Property Name="KnowledgeIndexRating" Type="Decimal" Nullable="false" Precision="18" Scale="2" cs:DisplayName="Knowledge Index" />
         <Property Name="QualityIndexRating" Type="Decimal" Nullable="false" Precision="18" Scale="2" cs:DisplayName="Quality Index" />
@@ -138,73 +134,6 @@
         <Property Name="EmployeeSatisfactionIndexRating" Type="Decimal" Nullable="false" Precision="18" Scale="2" cs:DisplayName="Employee Satisfaction Index" />
         <Property Name="CustomerSatisfactionIndexRating" Type="Decimal" Nullable="false" Precision="18" Scale="2" cs:DisplayName="Customer Satisfaction Index" />
         <Property Name="DistanceIndexRating" Type="Decimal" Nullable="false" Precision="18" Scale="2" cs:DisplayName="Distance Index" />
-        <Property Name="UserResourcePoolRatingCount" Type="Int32" />
-
-        <Property Name="UserResourcePoolOrganizationDto2Set" Type="Collection(BusinessObjects.UserResourcePoolOrganizationDto2)" />
-
-        <Property Name="TotalCostIndexRatingAverage" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="KnowledgeIndexRatingAverage" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="QualityIndexRatingAverage" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="SectorIndexRatingAverage" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="EmployeeSatisfactionIndexRatingAverage" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="CustomerSatisfactionIndexRatingAverage" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="DistanceIndexRatingAverage" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="TotalIndexRating" Type="Decimal" Precision="18" Scale="2" />
-
-        <Property Name="TotalCostIndexRatingWeightedAverage" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="KnowledgeIndexRatingWeightedAverage" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="QualityIndexRatingWeightedAverage" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="SectorIndexRatingWeightedAverage" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="EmployeeSatisfactionIndexRatingWeightedAverage" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="CustomerSatisfactionIndexRatingWeightedAverage" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="DistanceIndexRatingWeightedAverage" Type="Decimal" Precision="18" Scale="2" />
-
-        <Property Name="ResourcePoolTax" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="SalesPriceIncludingResourcePoolTax" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="NumberOfSales" Type="Int32" />
-        <Property Name="TotalProductionCost" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="TotalSalesRevenue" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="TotalProfit" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="TotalResourcePoolTax" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="TotalSalesRevenueIncludingResourcePoolTax" Type="Decimal" Precision="18" Scale="2" />
-
-        <Property Name="TotalCostIndexShare" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="TotalCostIndexPercentageWithNumberOfSales" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="TotalCostIndexIncome" Type="Decimal" Precision="18" Scale="2" />
-
-        <Property Name="KnowledgeIndexShare" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="LicenseUserRating" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="KnowledgeIndexPercentageWithNumberOfSales" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="KnowledgeIndexIncome" Type="Decimal" Precision="18" Scale="2" />
-
-        <Property Name="QualityIndexShare" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="QualityUserRating" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="QualityIndexPercentageWithNumberOfSales" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="QualityIndexIncome" Type="Decimal" Precision="18" Scale="2" />
-
-        <Property Name="SectorIndexShare" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="SectorUserRating" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="SectorIndexPercentageWithNumberOfSales" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="SectorIndexIncome" Type="Decimal" Precision="18" Scale="2" />
-
-        <Property Name="EmployeeSatisfactionIndexShare" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="EmployeeSatisfactionUserRating" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="EmployeeSatisfactionIndexPercentageWithNumberOfSales" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="EmployeeSatisfactionIndexIncome" Type="Decimal" Precision="18" Scale="2" />
-
-        <Property Name="CustomerSatisfactionIndexShare" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="CustomerSatisfactionUserRating" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="CustomerSatisfactionIndexPercentageWithNumberOfSales" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="CustomerSatisfactionIndexIncome" Type="Decimal" Precision="18" Scale="2" />
-
-        <Property Name="DistanceIndexShare" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="DistanceRating" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="DistanceIndexPercentageWithNumberOfSales" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="DistanceIndexIncome" Type="Decimal" Precision="18" Scale="2" />
-
-        <Property Name="TotalResourcePoolIncome" Type="Decimal" Precision="18" Scale="2" />
-        <Property Name="TotalIncome" Type="Decimal" Precision="18" Scale="2" />
-
         <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
         <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
         <Property Name="DeletedOn" Type="DateTime" Precision="3" cs:DisplayOnListView="false" cs:DisplayOnEditView="false" />
@@ -330,10 +259,6 @@
             <End Role="ResourcePool" EntitySet="ResourcePool" />
             <End Role="License" EntitySet="License" />
         </AssociationSet>
-        <!--<AssociationSet Name="FK_Organization_ResourcePool" Association="BusinessObjects.FK_Organization_ResourcePool">
-            <End Role="ResourcePool" EntitySet="ResourcePool" />
-            <End Role="Organization" EntitySet="Organization" />
-        </AssociationSet>-->
         <AssociationSet Name="FK_UserOrganization_Organization" Association="BusinessObjects.FK_UserOrganization_Organization">
             <End Role="Organization" EntitySet="Organization" />
             <End Role="UserOrganization" EntitySet="UserOrganization" />
@@ -346,18 +271,6 @@
             <End Role="User" EntitySet="User" />
             <End Role="UserOrganization" EntitySet="UserOrganization" />
         </AssociationSet>
-        <FunctionImport Name="Logout" IsBindable="true" EntitySet="User">
-            <Parameter Name="bindingParameter" Type="BusinessObjects.User" />
-        </FunctionImport>
-        <FunctionImport Name="IncreaseNumberOfSales" IsBindable="true" EntitySet="UserResourcePool">
-            <Parameter Name="bindingParameter" Type="BusinessObjects.UserResourcePool" />
-        </FunctionImport>
-        <FunctionImport Name="DecreaseNumberOfSales" IsBindable="true" EntitySet="UserResourcePool">
-            <Parameter Name="bindingParameter" Type="BusinessObjects.UserResourcePool" />
-        </FunctionImport>
-        <FunctionImport Name="ResetNumberOfSales" IsBindable="true" EntitySet="UserResourcePool">
-            <Parameter Name="bindingParameter" Type="BusinessObjects.UserResourcePool" />
-        </FunctionImport>
     </EntityContainer>
     <Association Name="FK_UserResourcePool_ResourcePool">
         <End Type="BusinessObjects.ResourcePool" Role="ResourcePool" Multiplicity="1" />
@@ -413,18 +326,6 @@
             </Dependent>
         </ReferentialConstraint>
     </Association>
-    <!--<Association Name="FK_Organization_ResourcePool">
-        <End Type="BusinessObjects.ResourcePool" Role="ResourcePool" Multiplicity="1" />
-        <End Type="BusinessObjects.Organization" Role="Organization" Multiplicity="*" />
-        <ReferentialConstraint>
-            <Principal Role="ResourcePool">
-                <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Organization">
-                <PropertyRef Name="ResourcePoolId" />
-            </Dependent>
-        </ReferentialConstraint>
-    </Association>-->
     <Association Name="FK_UserOrganization_Organization">
         <End Type="BusinessObjects.Organization" Role="Organization" Multiplicity="1" />
         <End Type="BusinessObjects.UserOrganization" Role="UserOrganization" Multiplicity="*" />
@@ -461,56 +362,4 @@
             </Dependent>
         </ReferentialConstraint>
     </Association>
-    <ComplexType Name="UserResourcePoolOrganizationDto2">
-        <Property Name="Name" Type="Edm.String"/>
-
-        <Property Name="OrganizationName" Type="Edm.String" />
-        <Property Name="OrganizationProductionCost" Type="Edm.Decimal" />
-        <Property Name="OrganizationSalesPrice" Type="Edm.Decimal" />
-        <Property Name="OrganizationProfitPercentage" Type="Edm.Decimal" />
-        <Property Name="OrganizationLicenseName" Type="Edm.String" />
-
-        <Property Name="ResourcePoolTax" Type="Edm.Decimal" />
-        <Property Name="SalesPriceIncludingResourcePoolTax" Type="Edm.Decimal" />
-        <Property Name="NumberOfSales" Type="Edm.Int32" />
-        <Property Name="TotalProductionCost" Type="Edm.Decimal" />
-        <Property Name="TotalSalesRevenue" Type="Edm.Decimal" />
-        <Property Name="TotalProfit" Type="Edm.Decimal" />
-        <Property Name="TotalResourcePoolTax" Type="Edm.Decimal" />
-        <Property Name="TotalSalesRevenueIncludingResourcePoolTax" Type="Edm.Decimal" />
-        <Property Name="TotalCostIndexPercentage" Type="Edm.Decimal" />
-        <Property Name="TotalCostIndexPercentageWithNumberOfSales" Type="Edm.Decimal" />
-        <Property Name="TotalCostIndexPercentageWithNumberOfSalesWeighted" Type="Edm.Decimal" />
-        <Property Name="TotalCostIndexIncome" Type="Edm.Decimal" />
-        <Property Name="KnowledgeIndexPercentage" Type="Edm.Decimal" />
-        <Property Name="KnowledgeIndexPercentageWithNumberOfSales" Type="Edm.Decimal" />
-        <Property Name="KnowledgeIndexPercentageWithNumberOfSalesWeighted" Type="Edm.Decimal" />
-        <Property Name="KnowledgeIndexIncome" Type="Edm.Decimal" />
-        <Property Name="QualityIndexPercentage" Type="Edm.Decimal" />
-        <Property Name="QualityIndexPercentageWithNumberOfSales" Type="Edm.Decimal" />
-        <Property Name="QualityIndexPercentageWithNumberOfSalesWeighted" Type="Edm.Decimal" />
-        <Property Name="QualityIndexIncome" Type="Edm.Decimal" />
-        <Property Name="SectorIndexPercentage" Type="Edm.Decimal" />
-        <Property Name="SectorIndexPercentageWithNumberOfSales" Type="Edm.Decimal" />
-        <Property Name="SectorIndexPercentageWithNumberOfSalesWeighted" Type="Edm.Decimal" />
-        <Property Name="SectorIndexIncome" Type="Edm.Decimal" />
-        <Property Name="EmployeeSatisfactionIndexPercentage" Type="Edm.Decimal" />
-        <Property Name="EmployeeSatisfactionIndexPercentageWithNumberOfSales" Type="Edm.Decimal" />
-        <Property Name="EmployeeSatisfactionIndexPercentageWithNumberOfSalesWeighted" Type="Edm.Decimal" />
-        <Property Name="EmployeeSatisfactionIndexIncome" Type="Edm.Decimal" />
-        <Property Name="CustomerSatisfactionIndexPercentage" Type="Edm.Decimal" />
-        <Property Name="CustomerSatisfactionIndexPercentageWithNumberOfSales" Type="Edm.Decimal" />
-        <Property Name="CustomerSatisfactionIndexPercentageWithNumberOfSalesWeighted" Type="Edm.Decimal" />
-        <Property Name="CustomerSatisfactionIndexIncome" Type="Edm.Decimal" />
-        <Property Name="DistanceRating" Type="Edm.Decimal" />
-        <Property Name="DistanceIndexPercentage" Type="Edm.Decimal" />
-        <Property Name="DistanceIndexPercentageWithNumberOfSales" Type="Edm.Decimal" />
-        <Property Name="DistanceIndexPercentageWithNumberOfSalesWeighted" Type="Edm.Decimal" />
-        <Property Name="DistanceIndexIncome" Type="Edm.Decimal" />
-        <Property Name="TotalResourcePoolIncome" Type="Edm.Decimal" />
-        <Property Name="TotalIncome" Type="Edm.Decimal" />
-
-    </ComplexType>
-    <!--<EntityContainer Name="Container">
-    </EntityContainer>-->
 </Schema>

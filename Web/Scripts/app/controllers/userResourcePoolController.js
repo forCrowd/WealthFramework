@@ -35,7 +35,7 @@
             }
 
             userResourcePoolService.getUserResourcePoolByResourcePoolId(resourcePoolId)
-                .then(function (userResourcePool) {
+                .success(function (userResourcePool) {
                     vm.userResourcePool = userResourcePool;
                 });
         }
@@ -48,6 +48,7 @@
         }
 
         function increaseNumberOfSales() {
+            logger.log('increaseNumberOfSales', vm.userResourcePool.Id);
             userResourcePoolService.increaseNumberOfSales(vm.userResourcePool.Id)
                 .success(function () {
                     getUserResourcePool();

@@ -11,7 +11,7 @@ using System.Web.Http;
 using System.Web.Http.ModelBinding;
 using Web.Models;
 
-namespace Web.Controllers
+namespace Web.Controllers.Api
 {
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController

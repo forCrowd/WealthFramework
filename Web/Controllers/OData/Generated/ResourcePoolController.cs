@@ -20,7 +20,7 @@ namespace Web.Controllers.OData
     using System.Web.Http.ModelBinding;
     using System.Web.Http.OData;
 
-    public abstract class BaseResourcePoolController : BaseController
+    public abstract class BaseResourcePoolController : BaseODataController
     {
         public BaseResourcePoolController()
 		{

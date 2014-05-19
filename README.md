@@ -5,6 +5,10 @@ An experimental resource management system that aims to provide a sustainable ec
 ---
 
 ### Release Notes
+**0.11.8**
+* UserResurcePoolCustom api controller was created and special methods moved to this controller from OData
+* New UserResourcePool save failed issue was fixed
+
 **0.11.7**
 * UnitOfWork methods are now saving the changes at the end. Save method is not public anymore
 * DecreaseNumberOfSales method was implemented

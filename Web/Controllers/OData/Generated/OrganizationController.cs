@@ -20,7 +20,7 @@ namespace Web.Controllers.OData
     using System.Web.Http.ModelBinding;
     using System.Web.Http.OData;
 
-    public abstract class BaseOrganizationController : BaseController
+    public abstract class BaseOrganizationController : BaseODataController
     {
         public BaseOrganizationController()
 		{

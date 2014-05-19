@@ -6,7 +6,7 @@ using System.Web.Http.OData;
 
 namespace Web.Controllers.OData
 {
-    public abstract class BaseController : ODataController
+    public abstract class BaseODataController : ODataController
     {
         internal string AspNetUserId
         {

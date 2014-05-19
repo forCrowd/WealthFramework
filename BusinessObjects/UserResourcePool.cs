@@ -49,61 +49,61 @@ namespace BusinessObjects
             }
         }
 
-        public IEnumerable<ViewModels.UserOrganizationViewModel> UserResourcePoolOrganizationDto2Set
-        {
-            get
-            {
-                return UserOrganizationSet.Select(item => new ViewModels.UserOrganizationViewModel()
-                {
-                    OrganizationName = item.Organization.Name,
-                    OrganizationProductionCost = item.Organization.ProductionCost,
-                    OrganizationSalesPrice = item.Organization.SalesPrice,
-                    OrganizationProfitPercentage = item.Organization.ProfitPercentage,
-                    OrganizationLicenseName = item.Organization.License.Name,
+        //public IEnumerable<ViewModels.UserOrganizationViewModel> UserResourcePoolOrganizationDto2Set
+        //{
+        //    get
+        //    {
+        //        return UserOrganizationSet.Select(item => new ViewModels.UserOrganizationViewModel()
+        //        {
+        //            OrganizationName = item.Organization.Name,
+        //            OrganizationProductionCost = item.Organization.ProductionCost,
+        //            OrganizationSalesPrice = item.Organization.SalesPrice,
+        //            OrganizationProfitPercentage = item.Organization.ProfitPercentage,
+        //            OrganizationLicenseName = item.Organization.License.Name,
 
-                    ResourcePoolTax = item.ResourcePoolTax,
-                    SalesPriceIncludingResourcePoolTax = item.SalesPriceIncludingResourcePoolTax,
-                    NumberOfSales = item.NumberOfSales,
-                    TotalProductionCost = item.TotalProductionCost,
-                    TotalSalesRevenue = item.TotalSalesRevenue,
-                    TotalProfit = item.TotalProfit,
-                    TotalResourcePoolTax = item.TotalResourcePoolTax,
-                    TotalSalesRevenueIncludingResourcePoolTax = item.TotalSalesRevenueIncludingResourcePoolTax,
-                    TotalCostIndexPercentage = item.TotalCostIndexPercentage,
-                    TotalCostIndexPercentageWithNumberOfSales = item.TotalCostIndexPercentageWithNumberOfSales,
-                    TotalCostIndexPercentageWithNumberOfSalesWeighted = item.TotalCostIndexPercentageWithNumberOfSalesWeighted,
-                    TotalCostIndexIncome = item.TotalCostIndexIncome,
-                    KnowledgeIndexPercentage = item.KnowledgeIndexPercentage,
-                    KnowledgeIndexPercentageWithNumberOfSales = item.KnowledgeIndexPercentageWithNumberOfSales,
-                    KnowledgeIndexPercentageWithNumberOfSalesWeighted = item.KnowledgeIndexPercentageWithNumberOfSalesWeighted,
-                    KnowledgeIndexIncome = item.KnowledgeIndexIncome,
-                    QualityIndexPercentage = item.QualityIndexPercentage,
-                    QualityIndexPercentageWithNumberOfSales = item.QualityIndexPercentageWithNumberOfSales,
-                    QualityIndexPercentageWithNumberOfSalesWeighted = item.QualityIndexPercentageWithNumberOfSalesWeighted,
-                    QualityIndexIncome = item.QualityIndexIncome,
-                    SectorIndexPercentage = item.SectorIndexPercentage,
-                    SectorIndexPercentageWithNumberOfSales = item.SectorIndexPercentageWithNumberOfSales,
-                    SectorIndexPercentageWithNumberOfSalesWeighted = item.SectorIndexPercentageWithNumberOfSalesWeighted,
-                    SectorIndexIncome = item.SectorIndexIncome,
-                    EmployeeSatisfactionIndexPercentage = item.EmployeeSatisfactionIndexPercentage,
-                    EmployeeSatisfactionIndexPercentageWithNumberOfSales = item.EmployeeSatisfactionIndexPercentageWithNumberOfSales,
-                    EmployeeSatisfactionIndexPercentageWithNumberOfSalesWeighted = item.EmployeeSatisfactionIndexPercentageWithNumberOfSalesWeighted,
-                    EmployeeSatisfactionIndexIncome = item.EmployeeSatisfactionIndexIncome,
-                    CustomerSatisfactionIndexPercentage = item.CustomerSatisfactionIndexPercentage,
-                    CustomerSatisfactionIndexPercentageWithNumberOfSales = item.CustomerSatisfactionIndexPercentageWithNumberOfSales,
-                    CustomerSatisfactionIndexPercentageWithNumberOfSalesWeighted = item.CustomerSatisfactionIndexPercentageWithNumberOfSalesWeighted,
-                    CustomerSatisfactionIndexIncome = item.CustomerSatisfactionIndexIncome,
-                    DistanceRating = item.DistanceRating,
-                    DistanceIndexPercentage = item.DistanceIndexPercentage,
-                    DistanceIndexPercentageWithNumberOfSales = item.DistanceIndexPercentageWithNumberOfSales,
-                    DistanceIndexPercentageWithNumberOfSalesWeighted = item.DistanceIndexPercentageWithNumberOfSalesWeighted,
-                    DistanceIndexIncome = item.DistanceIndexIncome,
-                    TotalResourcePoolIncome = item.TotalResourcePoolIncome,
-                    TotalIncome = item.TotalIncome
-                });
-            }
-            private set { }
-        }
+        //            ResourcePoolTax = item.ResourcePoolTax,
+        //            SalesPriceIncludingResourcePoolTax = item.SalesPriceIncludingResourcePoolTax,
+        //            NumberOfSales = item.NumberOfSales,
+        //            TotalProductionCost = item.TotalProductionCost,
+        //            TotalSalesRevenue = item.TotalSalesRevenue,
+        //            TotalProfit = item.TotalProfit,
+        //            TotalResourcePoolTax = item.TotalResourcePoolTax,
+        //            TotalSalesRevenueIncludingResourcePoolTax = item.TotalSalesRevenueIncludingResourcePoolTax,
+        //            TotalCostIndexPercentage = item.TotalCostIndexPercentage,
+        //            TotalCostIndexPercentageWithNumberOfSales = item.TotalCostIndexPercentageWithNumberOfSales,
+        //            TotalCostIndexPercentageWithNumberOfSalesWeighted = item.TotalCostIndexPercentageWithNumberOfSalesWeighted,
+        //            TotalCostIndexIncome = item.TotalCostIndexIncome,
+        //            KnowledgeIndexPercentage = item.KnowledgeIndexPercentage,
+        //            KnowledgeIndexPercentageWithNumberOfSales = item.KnowledgeIndexPercentageWithNumberOfSales,
+        //            KnowledgeIndexPercentageWithNumberOfSalesWeighted = item.KnowledgeIndexPercentageWithNumberOfSalesWeighted,
+        //            KnowledgeIndexIncome = item.KnowledgeIndexIncome,
+        //            QualityIndexPercentage = item.QualityIndexPercentage,
+        //            QualityIndexPercentageWithNumberOfSales = item.QualityIndexPercentageWithNumberOfSales,
+        //            QualityIndexPercentageWithNumberOfSalesWeighted = item.QualityIndexPercentageWithNumberOfSalesWeighted,
+        //            QualityIndexIncome = item.QualityIndexIncome,
+        //            SectorIndexPercentage = item.SectorIndexPercentage,
+        //            SectorIndexPercentageWithNumberOfSales = item.SectorIndexPercentageWithNumberOfSales,
+        //            SectorIndexPercentageWithNumberOfSalesWeighted = item.SectorIndexPercentageWithNumberOfSalesWeighted,
+        //            SectorIndexIncome = item.SectorIndexIncome,
+        //            EmployeeSatisfactionIndexPercentage = item.EmployeeSatisfactionIndexPercentage,
+        //            EmployeeSatisfactionIndexPercentageWithNumberOfSales = item.EmployeeSatisfactionIndexPercentageWithNumberOfSales,
+        //            EmployeeSatisfactionIndexPercentageWithNumberOfSalesWeighted = item.EmployeeSatisfactionIndexPercentageWithNumberOfSalesWeighted,
+        //            EmployeeSatisfactionIndexIncome = item.EmployeeSatisfactionIndexIncome,
+        //            CustomerSatisfactionIndexPercentage = item.CustomerSatisfactionIndexPercentage,
+        //            CustomerSatisfactionIndexPercentageWithNumberOfSales = item.CustomerSatisfactionIndexPercentageWithNumberOfSales,
+        //            CustomerSatisfactionIndexPercentageWithNumberOfSalesWeighted = item.CustomerSatisfactionIndexPercentageWithNumberOfSalesWeighted,
+        //            CustomerSatisfactionIndexIncome = item.CustomerSatisfactionIndexIncome,
+        //            DistanceRating = item.DistanceRating,
+        //            DistanceIndexPercentage = item.DistanceIndexPercentage,
+        //            DistanceIndexPercentageWithNumberOfSales = item.DistanceIndexPercentageWithNumberOfSales,
+        //            DistanceIndexPercentageWithNumberOfSalesWeighted = item.DistanceIndexPercentageWithNumberOfSalesWeighted,
+        //            DistanceIndexIncome = item.DistanceIndexIncome,
+        //            TotalResourcePoolIncome = item.TotalResourcePoolIncome,
+        //            TotalIncome = item.TotalIncome
+        //        });
+        //    }
+        //    private set { }
+        //}
 
         public IEnumerable<UserResourcePool> UserResourcePoolRatingSet
         {
@@ -455,6 +455,7 @@ namespace BusinessObjects
         public decimal SectorIndexPercentageWithNumberOfSales
         {
             get { return UserOrganizationSet.Sum(item => item.SectorIndexPercentageWithNumberOfSales); }
+            private set { }
         }
 
         public decimal SectorIndexIncome

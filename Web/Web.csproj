@@ -240,6 +240,8 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\Api\AccountController.cs" />
     <Compile Include="Controllers\Api\ApplicationController.cs" />
+    <Compile Include="Controllers\Api\BaseApiController.cs" />
+    <Compile Include="Controllers\Api\UserResourcePoolCustomController.cs" />
     <Compile Include="Controllers\Mvc\HomeController.cs" />
     <Compile Include="Controllers\OData\Generated\LicenseController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
@@ -268,7 +270,7 @@
     <Compile Include="Controllers\OData\Generated\UserSectorRatingController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\OData\BaseController.cs" />
+    <Compile Include="Controllers\OData\BaseODataController.cs" />
     <Compile Include="Controllers\OData\SectorController.cs" />
     <Compile Include="Controllers\OData\OrganizationController.cs" />
     <Compile Include="Controllers\OData\ResourcePoolController.cs" />

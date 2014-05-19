@@ -209,6 +209,10 @@ namespace BusinessObjects.Metadata
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         [NotMapped]
+        public object SectorIndexPercentageWithNumberOfSales { get; set; }
+        [DisplayOnListView(false)]
+        [DisplayOnEditView(false)]
+        [NotMapped]
         public object SectorIndexIncome { get; set; }
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]

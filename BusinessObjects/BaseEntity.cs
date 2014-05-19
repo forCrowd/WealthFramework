@@ -9,6 +9,6 @@ namespace BusinessObjects
         public DateTime ModifiedOn { get; set; }
         public Nullable<DateTime> DeletedOn { get; set; }
         [Timestamp]
-        public byte[] RowVersion {get; set;}
+        public byte[] RowVersion { get; set; }
     }
 }
