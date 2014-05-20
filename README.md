@@ -9,6 +9,7 @@ An experimental resource management system that aims to provide a sustainable ec
 * TotalCostIndex calculation is now based on Profit, instead of Sales Price
 * Sample data values were updated (.25 vs .75)
 * All in One sample was re-enabled
+* Sample user was created and sample data moved under this account
 * UserResourcePool pages subtotals were fixed
 * ODataController.tt fine-tuning
 

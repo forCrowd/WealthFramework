@@ -105,35 +105,49 @@ namespace DataObjects.Migrations
                                 return;
 
                             var userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(Context));
-                            var adminUser = new IdentityUser("admin");
-                            var adminPassword = DateTime.Now.ToString("yyyyMMdd");
+                            var adminIdentityUser = new IdentityUser("admin");
+                            var adminIdentityUserPassword = DateTime.Now.ToString("yyyyMMdd");
                             
                             // TODO Make this better?
-                            var adminUserResult = userManager.Create(adminUser, adminPassword);
+                            var adminIdentityUserResult = userManager.Create(adminIdentityUser, adminIdentityUserPassword);
 
                             // TODO result error check?
-                            if (adminUserResult == null)
+                            if (adminIdentityUserResult == null)
                                 return;
 
-                            var addToRoleResult = userManager.AddToRole(adminUser.Id, "Administrator");
+                            var addAdminIdentityUserToRoleResult = userManager.AddToRole(adminIdentityUser.Id, "Administrator");
 
                             // TODO result error check?
-                            if (addToRoleResult == null)
+                            if (addAdminIdentityUserToRoleResult == null)
                                 return;
 
-                            var user = new BusinessObjects.User() { AspNetUserId = adminUser.Id, Email = adminUser.UserName };
+                            var adminUser = new BusinessObjects.User() { AspNetUserId = adminIdentityUser.Id, Email = adminIdentityUser.UserName };
                             var userRepository = new UserRepository(Context);
-                            userRepository.Insert(user);
-                            
+                            userRepository.Insert(adminUser);
+
+                            // Sample user
+                            var sampleIdentityUser = new IdentityUser("sample");
+                            var sampleIdentityUserPassword = DateTime.Now.ToString("yyyyMMdd");
+
+                            // TODO Make this better?
+                            var sampleIdentityUserResult = userManager.Create(sampleIdentityUser, sampleIdentityUserPassword);
+
+                            // TODO result error check?
+                            if (sampleIdentityUserResult == null)
+                                return;
+
+                            var sampleUser = new BusinessObjects.User() { AspNetUserId = sampleIdentityUser.Id, Email = sampleIdentityUser.UserName };
+                            userRepository.Insert(sampleUser);
+
                             // Samples
-                            AddTotalCostIndexSample(user);
-                            AddKnowledgeIndexSample(user);
-                            AddQualityIndexSample(user);
-                            AddEmployeeSatisfactionIndexSample(user);
-                            AddCustomerSatisfactionIndexSample(user);
-                            AddSectorIndexSample(user);
-                            AddDistanceIndexSample(user);
-                            AddAllInOneSample(user);
+                            AddTotalCostIndexSample(sampleUser);
+                            AddKnowledgeIndexSample(sampleUser);
+                            AddQualityIndexSample(sampleUser);
+                            AddEmployeeSatisfactionIndexSample(sampleUser);
+                            AddCustomerSatisfactionIndexSample(sampleUser);
+                            AddSectorIndexSample(sampleUser);
+                            AddDistanceIndexSample(sampleUser);
+                            AddAllInOneSample(sampleUser);
 
                             Context.SaveChanges();
 
@@ -148,8 +162,8 @@ namespace DataObjects.Migrations
         void AddTotalCostIndexSample(BusinessObjects.User user)
         {
             var totalCostResourcePool = new BusinessObjects.ResourcePool() { Name = "Total Cost Index Sample" };
-            var totalCostSector = new BusinessObjects.Sector() { ResourcePool = totalCostResourcePool, Name = "Generic Sector" };
-            var totalCostLicense = new BusinessObjects.License() { ResourcePool = totalCostResourcePool, Name = "Generic License", Text = "License Text" };
+            var totalCostSector = new BusinessObjects.Sector() { ResourcePool = totalCostResourcePool, Name = "Total Cost Index Generic Sector" };
+            var totalCostLicense = new BusinessObjects.License() { ResourcePool = totalCostResourcePool, Name = "Total Cost Index Generic License", Text = "License Text" };
             var totalCostOrganization1 = new BusinessObjects.Organization() { Sector = totalCostSector, Name = "Lowlands", ProductionCost = 100, SalesPrice = 125, License = totalCostLicense };
             var totalCostOrganization2 = new BusinessObjects.Organization() { Sector = totalCostSector, Name = "High Coast", ProductionCost = 100, SalesPrice = 175, License = totalCostLicense };
             var totalCostUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = totalCostResourcePool, ResourcePoolRate = 101, TotalCostIndexRating = 100, KnowledgeIndexRating = 0, QualityIndexRating = 0, SectorIndexRating = 0, EmployeeSatisfactionIndexRating = 0, CustomerSatisfactionIndexRating = 0, DistanceIndexRating = 0 };
@@ -169,7 +183,7 @@ namespace DataObjects.Migrations
         void AddKnowledgeIndexSample(BusinessObjects.User user)
         {
             var knowledgeResourcePool = new BusinessObjects.ResourcePool() { Name = "Knowledge Index Sample" };
-            var knowledgeSector = new BusinessObjects.Sector() { ResourcePool = knowledgeResourcePool, Name = "Generic Sector" };
+            var knowledgeSector = new BusinessObjects.Sector() { ResourcePool = knowledgeResourcePool, Name = "Knowledge Index Generic Sector" };
             var knowledgeLicense1 = new BusinessObjects.License() { ResourcePool = knowledgeResourcePool, Name = "Open License", Description = "Open source license sample", Text = "When you use this license it allows everyone to use your license without any restriction" };
             var knowledgeLicense2 = new BusinessObjects.License() { ResourcePool = knowledgeResourcePool, Name = "Restricted License", Description = "Restricted license sample", Text = "Can't, can't, can't" };
             var knowledgeOrganization1 = new BusinessObjects.Organization() { Sector = knowledgeSector, Name = "True Source", ProductionCost = 100, SalesPrice = 150, License = knowledgeLicense1 };
@@ -196,8 +210,8 @@ namespace DataObjects.Migrations
         void AddQualityIndexSample(BusinessObjects.User user)
         {
             var qualityResourcePool = new BusinessObjects.ResourcePool() { Name = "Quality Index Sample" };
-            var qualitySector = new BusinessObjects.Sector() { ResourcePool = qualityResourcePool, Name = "Generic Sector" };
-            var qualityLicense = new BusinessObjects.License() { ResourcePool = qualityResourcePool, Name = "Generic License", Text = "License Text" };
+            var qualitySector = new BusinessObjects.Sector() { ResourcePool = qualityResourcePool, Name = "Quality Index Generic Sector" };
+            var qualityLicense = new BusinessObjects.License() { ResourcePool = qualityResourcePool, Name = "Quality Index Generic License", Text = "License Text" };
             var qualityOrganization1 = new BusinessObjects.Organization() { Sector = qualitySector, Name = "Wealth's Finest", ProductionCost = 100, SalesPrice = 150, License = qualityLicense };
             var qualityOrganization2 = new BusinessObjects.Organization() { Sector = qualitySector, Name = "Poor Beggar", ProductionCost = 100, SalesPrice = 150, License = qualityLicense };
             var qualityUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = qualityResourcePool, ResourcePoolRate = 101, TotalCostIndexRating = 0, KnowledgeIndexRating = 0, QualityIndexRating = 100, SectorIndexRating = 0, EmployeeSatisfactionIndexRating = 0, CustomerSatisfactionIndexRating = 0, DistanceIndexRating = 0 };
@@ -217,8 +231,8 @@ namespace DataObjects.Migrations
         void AddEmployeeSatisfactionIndexSample(BusinessObjects.User user)
         {
             var employeeResourcePool = new BusinessObjects.ResourcePool() { Name = "Employee Satisfaction Index Sample" };
-            var employeeSector = new BusinessObjects.Sector() { ResourcePool = employeeResourcePool, Name = "Generic Sector" };
-            var employeeLicense = new BusinessObjects.License() { ResourcePool = employeeResourcePool, Name = "Generic License", Text = "License Text" };
+            var employeeSector = new BusinessObjects.Sector() { ResourcePool = employeeResourcePool, Name = "Employee Satisfaction Index Generic Sector" };
+            var employeeLicense = new BusinessObjects.License() { ResourcePool = employeeResourcePool, Name = "Employee Satisfaction Index Generic License", Text = "License Text" };
             var employeeOrganization1 = new BusinessObjects.Organization() { Sector = employeeSector, Name = "One Big Family", ProductionCost = 100, SalesPrice = 150, License = employeeLicense };
             var employeeOrganization2 = new BusinessObjects.Organization() { Sector = employeeSector, Name = "Reckless Ones", ProductionCost = 100, SalesPrice = 150, License = employeeLicense };
             var employeeUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = employeeResourcePool, ResourcePoolRate = 101, TotalCostIndexRating = 0, KnowledgeIndexRating = 0, QualityIndexRating = 0, SectorIndexRating = 0, EmployeeSatisfactionIndexRating = 100, CustomerSatisfactionIndexRating = 0, DistanceIndexRating = 0 };
@@ -238,8 +252,8 @@ namespace DataObjects.Migrations
         void AddCustomerSatisfactionIndexSample(BusinessObjects.User user)
         {
             var customerResourcePool = new BusinessObjects.ResourcePool() { Name = "Customer Satisfaction Index Sample" };
-            var customerSector = new BusinessObjects.Sector() { ResourcePool = customerResourcePool, Name = "Generic Sector" };
-            var customerLicense = new BusinessObjects.License() { ResourcePool = customerResourcePool, Name = "Generic License", Text = "License Text" };
+            var customerSector = new BusinessObjects.Sector() { ResourcePool = customerResourcePool, Name = "Customer Satisfaction Index Generic Sector" };
+            var customerLicense = new BusinessObjects.License() { ResourcePool = customerResourcePool, Name = "Customer Satisfaction Index Generic License", Text = "License Text" };
             var customerOrganization1 = new BusinessObjects.Organization() { Sector = customerSector, Name = "Friendly Faieries", ProductionCost = 100, SalesPrice = 150, License = customerLicense };
             var customerOrganization2 = new BusinessObjects.Organization() { Sector = customerSector, Name = "Clumsy Clowns", ProductionCost = 100, SalesPrice = 150, License = customerLicense };
             var customerUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = customerResourcePool, ResourcePoolRate = 101, TotalCostIndexRating = 0, KnowledgeIndexRating = 0, QualityIndexRating = 0, SectorIndexRating = 0, EmployeeSatisfactionIndexRating = 0, CustomerSatisfactionIndexRating = 100, DistanceIndexRating = 0 };
@@ -267,7 +281,7 @@ namespace DataObjects.Migrations
             var sectorSector6 = new BusinessObjects.Sector() { ResourcePool = sectorResourcePool, Name = "Industrial Goods" };
             var sectorSector7 = new BusinessObjects.Sector() { ResourcePool = sectorResourcePool, Name = "Conglomerates" };
             var sectorSector8 = new BusinessObjects.Sector() { ResourcePool = sectorResourcePool, Name = "Financial" };
-            var sectorLicense = new BusinessObjects.License() { ResourcePool = sectorResourcePool, Name = "Generic License", Text = "License Text" };
+            var sectorLicense = new BusinessObjects.License() { ResourcePool = sectorResourcePool, Name = "Sector Index Generic License", Text = "License Text" };
             var sectorOrganization1 = new BusinessObjects.Organization() { Sector = sectorSector1, Name = "Utilities", ProductionCost = 100, SalesPrice = 150, License = sectorLicense };
             var sectorOrganization2 = new BusinessObjects.Organization() { Sector = sectorSector2, Name = "Consumer Goods", ProductionCost = 100, SalesPrice = 150, License = sectorLicense };
             var sectorOrganization3 = new BusinessObjects.Organization() { Sector = sectorSector3, Name = "Basic Materials", ProductionCost = 100, SalesPrice = 150, License = sectorLicense };
@@ -334,8 +348,8 @@ namespace DataObjects.Migrations
         void AddDistanceIndexSample(BusinessObjects.User user)
         {
             var distanceResourcePool = new BusinessObjects.ResourcePool() { Name = "Distance Index Sample" };
-            var distanceSector = new BusinessObjects.Sector() { ResourcePool = distanceResourcePool, Name = "Generic Sector" };
-            var distanceLicense = new BusinessObjects.License() { ResourcePool = distanceResourcePool, Name = "Generic License", Text = "License Text" };
+            var distanceSector = new BusinessObjects.Sector() { ResourcePool = distanceResourcePool, Name = "Distance Index Generic Sector" };
+            var distanceLicense = new BusinessObjects.License() { ResourcePool = distanceResourcePool, Name = "Distance Index Generic License", Text = "License Text" };
             var distanceOrganization1 = new BusinessObjects.Organization() { Sector = distanceSector, Name = "Home", ProductionCost = 100, SalesPrice = 150, License = distanceLicense };
             var distanceOrganization2 = new BusinessObjects.Organization() { Sector = distanceSector, Name = "Far Far Away Galaxy", ProductionCost = 100, SalesPrice = 150, License = distanceLicense };
             var distanceUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = distanceResourcePool, ResourcePoolRate = 101, TotalCostIndexRating = 0, KnowledgeIndexRating = 0, QualityIndexRating = 0, SectorIndexRating = 0, EmployeeSatisfactionIndexRating = 0, CustomerSatisfactionIndexRating = 0, DistanceIndexRating = 100 };
@@ -355,8 +369,8 @@ namespace DataObjects.Migrations
         void AddAllInOneSample(BusinessObjects.User user)
         {
             var allInOneResourcePool = new BusinessObjects.ResourcePool() { Name = "All in One Sample" };
-            var allInOneGenericSector = new BusinessObjects.Sector() { ResourcePool = allInOneResourcePool, Name = "Generic Sector" };
-            var allInOneGenericLicense = new BusinessObjects.License() { ResourcePool = allInOneResourcePool, Name = "Generic License", Text = "License Text" };
+            var allInOneGenericSector = new BusinessObjects.Sector() { ResourcePool = allInOneResourcePool, Name = "All in One Generic Sector" };
+            var allInOneGenericLicense = new BusinessObjects.License() { ResourcePool = allInOneResourcePool, Name = "All in One Generic License", Text = "License Text" };
             var allInOneUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = allInOneResourcePool, ResourcePoolRate = 101, TotalCostIndexRating = 15, KnowledgeIndexRating = 15, QualityIndexRating = 15, SectorIndexRating = 15, EmployeeSatisfactionIndexRating = 15, CustomerSatisfactionIndexRating = 15, DistanceIndexRating = 10 };
             var allInOneUserGenericSectorRating = new BusinessObjects.UserSectorRating() { User = user, Sector = allInOneGenericSector, Rating = 50 };
             var allInOneUserGenericLicenseRating = new BusinessObjects.UserLicenseRating() { User = user, License = allInOneGenericLicense, Rating = 50 };

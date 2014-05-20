@@ -56,7 +56,7 @@
             // Add sample data to the user
 
             // TODO Static?
-            const int sampleUserId = 1;
+            const int sampleUserId = 2;
             const int maxSampleResourcePoolId = 8;
 
             // User resource pools

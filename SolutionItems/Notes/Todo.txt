@@ -26,10 +26,9 @@ user - resourcepool - userresourcepoolId
 userresourcepoolsector -> userresourcepoolId sectorId rating
 userresourcepoollicense -> userresourcepoolId licenseId rating
 userresourcepoolorganization -> userresourcepoolId organizationId rating
-. create a sample user and hanlde the "creating sample data for new users" logic through this user
 . handle this nicely;
-const int sampleUserId = 1;
-const int maxSampleResourcePoolId = 7;
+const int sampleUserId = 2;
+const int maxSampleResourcePoolId = 8;
 . using numbers in sector chart page didn't work, it breaks the chart?
 . authorize only for admins didnt work - license, organization, resourcepool, sector
 any user should be able to access them. currently definitions link is only visible to admins - according to this, normal user may not use post action for instance? check these rules later on
@@ -81,8 +80,3 @@ config.EnableQuerySupport(queryAttribute);
 </m:error>
 
 . try to add indexes dynamically?
-
-. currently which user's data used as sample? userId = 1? that changes?
-
-. be careful about live data - best could be to remove all and recreate with the latest?
-create all in one sample data!
