@@ -30,7 +30,6 @@ namespace BusinessObjects
             get { return User.UserResourcePoolSet.Single(item => item.ResourcePool == Organization.Sector.ResourcePool); }
         }
 
-        [Display(Name = "CMRP Tax")]
         public decimal ResourcePoolTax
         {
             get
@@ -39,13 +38,11 @@ namespace BusinessObjects
             }
         }
 
-        [Display(Name = "Sales Price incl. CMRP Tax")]
         public decimal SalesPriceIncludingResourcePoolTax
         {
             get { return Organization.SalesPrice + ResourcePoolTax; }
         }
 
-        [Display(Name = "Total Production Cost")]
         public decimal TotalProductionCost
         {
             get
@@ -54,7 +51,6 @@ namespace BusinessObjects
             }
         }
 
-        [Display(Name = "Total Sales Revenue")]
         public decimal TotalSalesRevenue
         {
             get
@@ -63,7 +59,6 @@ namespace BusinessObjects
             }
         }
 
-        [Display(Name = "Total Profit")] // a.k.a TotalSalesIncome?
         public decimal TotalProfit
         {
             get
@@ -72,7 +67,6 @@ namespace BusinessObjects
             }
         }
 
-        [Display(Name = "Total CMRP Tax")]
         public decimal TotalResourcePoolTax
         {
             get
@@ -81,7 +75,6 @@ namespace BusinessObjects
             }
         }
 
-        [Display(Name = "Total Sales Revenue incl. CMRP Tax")]
         public decimal TotalSalesRevenueIncludingResourcePoolTax
         {
             get
@@ -92,8 +85,11 @@ namespace BusinessObjects
 
         #region - Total Cost Index -
 
-        [Display(Name = "Total Cost Index Percentage")]
-        public decimal TotalCostIndexPercentage
+        /// <summary>
+        /// Old formula for Total Cost Index calculation, based on Sales Price
+        /// Keep it for a while as a sample (maybe both Profit and Sales Price could be used)
+        /// </summary>
+        public decimal TotalCostIndexPercentageWithSalesPrice
         {
             get
             {
@@ -104,7 +100,17 @@ namespace BusinessObjects
             }
         }
 
-        [Display(Name = "Total Cost Index with Nr of Sales")]
+        public decimal TotalCostIndexPercentage
+        {
+            get
+            {
+                if (UserResourcePool.ResourcePool.Profit == 0)
+                    return 0;
+
+                return 1 - (Organization.Profit / UserResourcePool.ResourcePool.Profit);
+            }
+        }
+
         public decimal TotalCostIndexPercentageWithNumberOfSales
         {
             get
@@ -113,7 +119,6 @@ namespace BusinessObjects
             }
         }
 
-        [Display(Name = "Total Cost Index with Nr of Sales Weighted")]
         public decimal TotalCostIndexPercentageWithNumberOfSalesWeighted
         {
             get
@@ -125,7 +130,6 @@ namespace BusinessObjects
             }
         }
 
-        [Display(Name = "Total Cost Index Income")]
         public decimal TotalCostIndexIncome
         {
             get
@@ -138,7 +142,6 @@ namespace BusinessObjects
 
         #region - Knowledge Index -
 
-        [Display(Name = "Knowledge Index Percentage")]
         public decimal KnowledgeIndexPercentage
         {
             get
@@ -154,7 +157,6 @@ namespace BusinessObjects
             }
         }
 
-        [Display(Name = "Knowledge Index with Nr of Sales")]
         public decimal KnowledgeIndexPercentageWithNumberOfSales
         {
             get
@@ -163,7 +165,6 @@ namespace BusinessObjects
             }
         }
 
-        [Display(Name = "Knowledge Index with Nr of Sales Weighted")]
         public decimal KnowledgeIndexPercentageWithNumberOfSalesWeighted
         {
             get
@@ -175,7 +176,6 @@ namespace BusinessObjects
             }
         }
 
-        [Display(Name = "Knowledge Index Income")]
         public decimal KnowledgeIndexIncome
         {
             get
@@ -205,7 +205,6 @@ namespace BusinessObjects
         //    return ratings.Average(rating => rating.QualityRating);
         //}
 
-        [Display(Name = "Quality Index Percentage")]
         public decimal QualityIndexPercentage
         {
             get
@@ -221,7 +220,6 @@ namespace BusinessObjects
             }
         }
 
-        [Display(Name = "Quality Index with Nr of Sales")]
         public decimal QualityIndexPercentageWithNumberOfSales
         {
             get
@@ -230,7 +228,6 @@ namespace BusinessObjects
             }
         }
 
-        [Display(Name = "Quality Index with Nr of Sales Weighted")]
         public decimal QualityIndexPercentageWithNumberOfSalesWeighted
         {
             get
@@ -242,7 +239,6 @@ namespace BusinessObjects
             }
         }
 
-        [Display(Name = "Quality Index Income")]
         public decimal QualityIndexIncome
         {
             get
@@ -255,7 +251,6 @@ namespace BusinessObjects
 
         #region - Sector Index -
 
-        [Display(Name = "Sector Index Percentage")]
         public decimal SectorIndexPercentage
         {
             get
@@ -271,7 +266,6 @@ namespace BusinessObjects
             }
         }
 
-        [Display(Name = "Sector Index with Nr of Sales")]
         public decimal SectorIndexPercentageWithNumberOfSales
         {
             get
@@ -280,7 +274,6 @@ namespace BusinessObjects
             }
         }
 
-        [Display(Name = "Sector Index with Nr of Sales Weighted")]
         public decimal SectorIndexPercentageWithNumberOfSalesWeighted
         {
             get
@@ -292,7 +285,6 @@ namespace BusinessObjects
             }
         }
 
-        [Display(Name = "Sector Index Income")]
         public decimal SectorIndexIncome
         {
             get
@@ -322,7 +314,6 @@ namespace BusinessObjects
         //    return ratings.Average(rating => rating.EmployeeSatisfactionRating);
         //}
 
-        [Display(Name = "Employee Satisfaction Index Percentage")]
         public decimal EmployeeSatisfactionIndexPercentage
         {
             get
@@ -342,7 +333,6 @@ namespace BusinessObjects
             }
         }
 
-        [Display(Name = "Employee Satisfaction Index with Nr of Sales")]
         public decimal EmployeeSatisfactionIndexPercentageWithNumberOfSales
         {
             get
@@ -351,7 +341,6 @@ namespace BusinessObjects
             }
         }
 
-        [Display(Name = "Employee Satisfaction Index with Nr of Sales Weighted")]
         public decimal EmployeeSatisfactionIndexPercentageWithNumberOfSalesWeighted
         {
             get
@@ -363,7 +352,6 @@ namespace BusinessObjects
             }
         }
 
-        [Display(Name = "Employee Satisfaction Index Income")]
         public decimal EmployeeSatisfactionIndexIncome
         {
             get
@@ -393,7 +381,6 @@ namespace BusinessObjects
         //    return ratings.Average(rating => rating.CustomerSatisfactionRating);
         //}
 
-        [Display(Name = "Customer Satisfaction Index Percentage")]
         public decimal CustomerSatisfactionIndexPercentage
         {
             get
@@ -409,7 +396,6 @@ namespace BusinessObjects
             }
         }
 
-        [Display(Name = "Customer Satisfaction Index with Nr of Sales")]
         public decimal CustomerSatisfactionIndexPercentageWithNumberOfSales
         {
             get
@@ -418,7 +404,6 @@ namespace BusinessObjects
             }
         }
 
-        [Display(Name = "Customer Satisfaction Index with Nr of Sales Weighted")]
         public decimal CustomerSatisfactionIndexPercentageWithNumberOfSalesWeighted
         {
             get
@@ -430,7 +415,6 @@ namespace BusinessObjects
             }
         }
 
-        [Display(Name = "Customer Satisfaction Index Income")]
         public decimal CustomerSatisfactionIndexIncome
         {
             get
@@ -451,7 +435,6 @@ namespace BusinessObjects
             get { return 1; }
         }
 
-        [Display(Name = "Distance Index Percentage")]
         public decimal DistanceIndexPercentage
         {
             get
@@ -467,7 +450,6 @@ namespace BusinessObjects
             }
         }
 
-        [Display(Name = "Distance Index with Nr of Sales")]
         public decimal DistanceIndexPercentageWithNumberOfSales
         {
             get
@@ -476,7 +458,6 @@ namespace BusinessObjects
             }
         }
 
-        [Display(Name = "Distance Index with Nr of Sales Weighted")]
         public decimal DistanceIndexPercentageWithNumberOfSalesWeighted
         {
             get
@@ -488,7 +469,6 @@ namespace BusinessObjects
             }
         }
 
-        [Display(Name = "Distance Index Income")]
         public decimal DistanceIndexIncome
         {
             get
@@ -499,7 +479,6 @@ namespace BusinessObjects
 
         #endregion
 
-        [Display(Name = "Total CMRP Income")]
         public decimal TotalResourcePoolIncome
         {
             get
@@ -514,7 +493,6 @@ namespace BusinessObjects
             }
         }
 
-        [Display(Name = "Total Income (Profit + CMRP)")]
         public decimal TotalIncome
         {
             get { return TotalProfit + TotalResourcePoolIncome; }

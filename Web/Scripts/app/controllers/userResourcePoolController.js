@@ -48,7 +48,6 @@
         }
 
         function increaseNumberOfSales() {
-            logger.log('increaseNumberOfSales', vm.userResourcePool.Id);
             userResourcePoolService.increaseNumberOfSales(vm.userResourcePool.Id)
                 .success(function () {
                     getUserResourcePool();

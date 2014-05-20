@@ -24,7 +24,7 @@ namespace BusinessObjects
         public virtual User User { get; set; }
         public virtual ResourcePool ResourcePool { get; set; }
 
-        /* */
+        #region - General -
 
         public string Name
         {
@@ -49,62 +49,6 @@ namespace BusinessObjects
             }
         }
 
-        //public IEnumerable<ViewModels.UserOrganizationViewModel> UserResourcePoolOrganizationDto2Set
-        //{
-        //    get
-        //    {
-        //        return UserOrganizationSet.Select(item => new ViewModels.UserOrganizationViewModel()
-        //        {
-        //            OrganizationName = item.Organization.Name,
-        //            OrganizationProductionCost = item.Organization.ProductionCost,
-        //            OrganizationSalesPrice = item.Organization.SalesPrice,
-        //            OrganizationProfitPercentage = item.Organization.ProfitPercentage,
-        //            OrganizationLicenseName = item.Organization.License.Name,
-
-        //            ResourcePoolTax = item.ResourcePoolTax,
-        //            SalesPriceIncludingResourcePoolTax = item.SalesPriceIncludingResourcePoolTax,
-        //            NumberOfSales = item.NumberOfSales,
-        //            TotalProductionCost = item.TotalProductionCost,
-        //            TotalSalesRevenue = item.TotalSalesRevenue,
-        //            TotalProfit = item.TotalProfit,
-        //            TotalResourcePoolTax = item.TotalResourcePoolTax,
-        //            TotalSalesRevenueIncludingResourcePoolTax = item.TotalSalesRevenueIncludingResourcePoolTax,
-        //            TotalCostIndexPercentage = item.TotalCostIndexPercentage,
-        //            TotalCostIndexPercentageWithNumberOfSales = item.TotalCostIndexPercentageWithNumberOfSales,
-        //            TotalCostIndexPercentageWithNumberOfSalesWeighted = item.TotalCostIndexPercentageWithNumberOfSalesWeighted,
-        //            TotalCostIndexIncome = item.TotalCostIndexIncome,
-        //            KnowledgeIndexPercentage = item.KnowledgeIndexPercentage,
-        //            KnowledgeIndexPercentageWithNumberOfSales = item.KnowledgeIndexPercentageWithNumberOfSales,
-        //            KnowledgeIndexPercentageWithNumberOfSalesWeighted = item.KnowledgeIndexPercentageWithNumberOfSalesWeighted,
-        //            KnowledgeIndexIncome = item.KnowledgeIndexIncome,
-        //            QualityIndexPercentage = item.QualityIndexPercentage,
-        //            QualityIndexPercentageWithNumberOfSales = item.QualityIndexPercentageWithNumberOfSales,
-        //            QualityIndexPercentageWithNumberOfSalesWeighted = item.QualityIndexPercentageWithNumberOfSalesWeighted,
-        //            QualityIndexIncome = item.QualityIndexIncome,
-        //            SectorIndexPercentage = item.SectorIndexPercentage,
-        //            SectorIndexPercentageWithNumberOfSales = item.SectorIndexPercentageWithNumberOfSales,
-        //            SectorIndexPercentageWithNumberOfSalesWeighted = item.SectorIndexPercentageWithNumberOfSalesWeighted,
-        //            SectorIndexIncome = item.SectorIndexIncome,
-        //            EmployeeSatisfactionIndexPercentage = item.EmployeeSatisfactionIndexPercentage,
-        //            EmployeeSatisfactionIndexPercentageWithNumberOfSales = item.EmployeeSatisfactionIndexPercentageWithNumberOfSales,
-        //            EmployeeSatisfactionIndexPercentageWithNumberOfSalesWeighted = item.EmployeeSatisfactionIndexPercentageWithNumberOfSalesWeighted,
-        //            EmployeeSatisfactionIndexIncome = item.EmployeeSatisfactionIndexIncome,
-        //            CustomerSatisfactionIndexPercentage = item.CustomerSatisfactionIndexPercentage,
-        //            CustomerSatisfactionIndexPercentageWithNumberOfSales = item.CustomerSatisfactionIndexPercentageWithNumberOfSales,
-        //            CustomerSatisfactionIndexPercentageWithNumberOfSalesWeighted = item.CustomerSatisfactionIndexPercentageWithNumberOfSalesWeighted,
-        //            CustomerSatisfactionIndexIncome = item.CustomerSatisfactionIndexIncome,
-        //            DistanceRating = item.DistanceRating,
-        //            DistanceIndexPercentage = item.DistanceIndexPercentage,
-        //            DistanceIndexPercentageWithNumberOfSales = item.DistanceIndexPercentageWithNumberOfSales,
-        //            DistanceIndexPercentageWithNumberOfSalesWeighted = item.DistanceIndexPercentageWithNumberOfSalesWeighted,
-        //            DistanceIndexIncome = item.DistanceIndexIncome,
-        //            TotalResourcePoolIncome = item.TotalResourcePoolIncome,
-        //            TotalIncome = item.TotalIncome
-        //        });
-        //    }
-        //    private set { }
-        //}
-
         public IEnumerable<UserResourcePool> UserResourcePoolRatingSet
         {
             get
@@ -127,167 +71,6 @@ namespace BusinessObjects
             private set { }
         }
 
-        #region - Ratings -
-
-        [Display(Name = "Total Cost Index Average")]
-        public decimal TotalCostIndexRatingAverage
-        {
-            get { return UserResourcePoolRatingSet.Average(rating => rating.TotalCostIndexRating); }
-            private set { }
-        }
-
-        [Display(Name = "Knowledge Index Average")]
-        public decimal KnowledgeIndexRatingAverage
-        {
-            get { return UserResourcePoolRatingSet.Average(rating => rating.KnowledgeIndexRating); }
-            private set { }
-        }
-
-        [Display(Name = "Quality Index Average")]
-        public decimal QualityIndexRatingAverage
-        {
-            get { return UserResourcePoolRatingSet.Average(rating => rating.QualityIndexRating); }
-            private set { }
-        }
-
-        [Display(Name = "Sector Index Average")]
-        public decimal SectorIndexRatingAverage
-        {
-            get { return UserResourcePoolRatingSet.Average(rating => rating.SectorIndexRating); }
-            private set { }
-        }
-
-        [Display(Name = "Employee Satisfaction Index Average")]
-        public decimal EmployeeSatisfactionIndexRatingAverage
-        {
-            get { return UserResourcePoolRatingSet.Average(rating => rating.EmployeeSatisfactionIndexRating); }
-            private set { }
-        }
-
-        [Display(Name = "Customer Satisfaction Index Average")]
-        public decimal CustomerSatisfactionIndexRatingAverage
-        {
-            get { return UserResourcePoolRatingSet.Average(rating => rating.CustomerSatisfactionIndexRating); }
-            private set { }
-        }
-
-        [Display(Name = "Distance Index Average")]
-        public decimal DistanceIndexRatingAverage
-        {
-            get { return UserResourcePoolRatingSet.Average(rating => rating.DistanceIndexRating); }
-            private set { }
-        }
-
-        [Display(Name = "Total Index Rating")]
-        public decimal TotalIndexRating
-        {
-            get
-            {
-                return TotalCostIndexRatingAverage
-                    + KnowledgeIndexRatingAverage
-                    + QualityIndexRatingAverage
-                    + SectorIndexRatingAverage
-                    + EmployeeSatisfactionIndexRatingAverage
-                    + CustomerSatisfactionIndexRatingAverage
-                    + DistanceIndexRatingAverage;
-            }
-            private set { }
-        }
-
-        [Display(Name = "Total Cost Index Weighted Average")]
-        public decimal TotalCostIndexRatingWeightedAverage
-        {
-            get
-            {
-                if (TotalIndexRating == 0)
-                    return 0;
-
-                return TotalCostIndexRating / TotalIndexRating;
-            }
-            private set { }
-        }
-
-        [Display(Name = "Knowledge Index Weighted Average")]
-        public decimal KnowledgeIndexRatingWeightedAverage
-        {
-            get
-            {
-                if (TotalIndexRating == 0)
-                    return 0;
-
-                return KnowledgeIndexRating / TotalIndexRating;
-            }
-            private set { }
-        }
-
-        [Display(Name = "Quality Index Weighted Average")]
-        public decimal QualityIndexRatingWeightedAverage
-        {
-            get
-            {
-                if (TotalIndexRating == 0)
-                    return 0;
-
-                return QualityIndexRating / TotalIndexRating;
-            }
-            private set { }
-        }
-
-        [Display(Name = "Sector Index Weighted Average")]
-        public decimal SectorIndexRatingWeightedAverage
-        {
-            get
-            {
-                if (TotalIndexRating == 0)
-                    return 0;
-
-                return SectorIndexRating / TotalIndexRating;
-            }
-            private set { }
-        }
-
-        [Display(Name = "Employee Satisfaction Index Weighted Average")]
-        public decimal EmployeeSatisfactionIndexRatingWeightedAverage
-        {
-            get
-            {
-                if (TotalIndexRating == 0)
-                    return 0;
-
-                return EmployeeSatisfactionIndexRating / TotalIndexRating;
-            }
-            private set { }
-        }
-
-        [Display(Name = "Customer Satisfaction Index Weighted Average")]
-        public decimal CustomerSatisfactionIndexRatingWeightedAverage
-        {
-            get
-            {
-                if (TotalIndexRating == 0)
-                    return 0;
-
-                return CustomerSatisfactionIndexRating / TotalIndexRating;
-            }
-            private set { }
-        }
-
-        [Display(Name = "Distance Index Weighted Average")]
-        public decimal DistanceIndexRatingWeightedAverage
-        {
-            get
-            {
-                if (TotalIndexRating == 0)
-                    return 0;
-
-                return DistanceIndexRating / TotalIndexRating;
-            }
-            private set { }
-        }
-
-        #endregion
-
-        #region - General -
 
         public decimal ResourcePoolTax
         {
@@ -325,6 +108,21 @@ namespace BusinessObjects
             private set { }
         }
 
+        public decimal TotalIndexRating
+        {
+            get
+            {
+                return TotalCostIndexRatingAverage
+                    + KnowledgeIndexRatingAverage
+                    + QualityIndexRatingAverage
+                    + SectorIndexRatingAverage
+                    + EmployeeSatisfactionIndexRatingAverage
+                    + CustomerSatisfactionIndexRatingAverage
+                    + DistanceIndexRatingAverage;
+            }
+            private set { }
+        }
+
         public decimal TotalResourcePoolTax
         {
             get { return UserOrganizationSet.Sum(item => item.TotalResourcePoolTax); }
@@ -337,9 +135,39 @@ namespace BusinessObjects
             private set { }
         }
 
+        public decimal TotalResourcePoolIncome
+        {
+            get { return UserOrganizationSet.Sum(item => item.TotalResourcePoolIncome); }
+            private set { }
+        }
+
+        public decimal TotalIncome
+        {
+            get { return UserOrganizationSet.Sum(item => item.TotalIncome); }
+            private set { }
+        }
+
         #endregion
 
         #region - Total Cost Index -
+
+        public decimal TotalCostIndexRatingAverage
+        {
+            get { return UserResourcePoolRatingSet.Average(rating => rating.TotalCostIndexRating); }
+            private set { }
+        }
+
+        public decimal TotalCostIndexRatingWeightedAverage
+        {
+            get
+            {
+                if (TotalIndexRating == 0)
+                    return 0;
+
+                return TotalCostIndexRating / TotalIndexRating;
+            }
+            private set { }
+        }
 
         public decimal TotalCostIndexShare
         {
@@ -362,6 +190,24 @@ namespace BusinessObjects
         #endregion
 
         #region - Knowledge Index -
+
+        public decimal KnowledgeIndexRatingAverage
+        {
+            get { return UserResourcePoolRatingSet.Average(rating => rating.KnowledgeIndexRating); }
+            private set { }
+        }
+
+        public decimal KnowledgeIndexRatingWeightedAverage
+        {
+            get
+            {
+                if (TotalIndexRating == 0)
+                    return 0;
+
+                return KnowledgeIndexRating / TotalIndexRating;
+            }
+            private set { }
+        }
 
         public decimal KnowledgeIndexShare
         {
@@ -399,6 +245,24 @@ namespace BusinessObjects
 
         #region - Quality Index -
 
+        public decimal QualityIndexRatingAverage
+        {
+            get { return UserResourcePoolRatingSet.Average(rating => rating.QualityIndexRating); }
+            private set { }
+        }
+
+        public decimal QualityIndexRatingWeightedAverage
+        {
+            get
+            {
+                if (TotalIndexRating == 0)
+                    return 0;
+
+                return QualityIndexRating / TotalIndexRating;
+            }
+            private set { }
+        }
+
         public decimal QualityIndexShare
         {
             get { return TotalResourcePoolTax * QualityIndexRatingWeightedAverage; }
@@ -431,6 +295,24 @@ namespace BusinessObjects
         #endregion
 
         #region - Sector Index -
+
+        public decimal SectorIndexRatingAverage
+        {
+            get { return UserResourcePoolRatingSet.Average(rating => rating.SectorIndexRating); }
+            private set { }
+        }
+
+        public decimal SectorIndexRatingWeightedAverage
+        {
+            get
+            {
+                if (TotalIndexRating == 0)
+                    return 0;
+
+                return SectorIndexRating / TotalIndexRating;
+            }
+            private set { }
+        }
 
         public decimal SectorIndexShare
         {
@@ -468,6 +350,24 @@ namespace BusinessObjects
 
         #region - Employee Satifaction Index -
 
+        public decimal EmployeeSatisfactionIndexRatingAverage
+        {
+            get { return UserResourcePoolRatingSet.Average(rating => rating.EmployeeSatisfactionIndexRating); }
+            private set { }
+        }
+
+        public decimal EmployeeSatisfactionIndexRatingWeightedAverage
+        {
+            get
+            {
+                if (TotalIndexRating == 0)
+                    return 0;
+
+                return EmployeeSatisfactionIndexRating / TotalIndexRating;
+            }
+            private set { }
+        }
+
         public decimal EmployeeSatisfactionIndexShare
         {
             get { return TotalResourcePoolTax * EmployeeSatisfactionIndexRatingWeightedAverage; }
@@ -500,6 +400,24 @@ namespace BusinessObjects
         #endregion
 
         #region - Customer Satifaction Index -
+
+        public decimal CustomerSatisfactionIndexRatingAverage
+        {
+            get { return UserResourcePoolRatingSet.Average(rating => rating.CustomerSatisfactionIndexRating); }
+            private set { }
+        }
+
+        public decimal CustomerSatisfactionIndexRatingWeightedAverage
+        {
+            get
+            {
+                if (TotalIndexRating == 0)
+                    return 0;
+
+                return CustomerSatisfactionIndexRating / TotalIndexRating;
+            }
+            private set { }
+        }
 
         public decimal CustomerSatisfactionIndexShare
         {
@@ -534,6 +452,24 @@ namespace BusinessObjects
 
         #region - Distance Index -
 
+        public decimal DistanceIndexRatingAverage
+        {
+            get { return UserResourcePoolRatingSet.Average(rating => rating.DistanceIndexRating); }
+            private set { }
+        }
+
+        public decimal DistanceIndexRatingWeightedAverage
+        {
+            get
+            {
+                if (TotalIndexRating == 0)
+                    return 0;
+
+                return DistanceIndexRating / TotalIndexRating;
+            }
+            private set { }
+        }
+
         public decimal DistanceIndexShare
         {
             get { return TotalResourcePoolTax * DistanceIndexRatingWeightedAverage; }
@@ -559,17 +495,5 @@ namespace BusinessObjects
         }
 
         #endregion
-
-        public decimal TotalResourcePoolIncome
-        {
-            get { return UserOrganizationSet.Sum(item => item.TotalResourcePoolIncome); }
-            private set { }
-        }
-
-        public decimal TotalIncome
-        {
-            get { return UserOrganizationSet.Sum(item => item.TotalIncome); }
-            private set { }
-        }
     }
 }

@@ -57,7 +57,7 @@
 
             // TODO Static?
             const int sampleUserId = 1;
-            const int maxSampleResourcePoolId = 7;
+            const int maxSampleResourcePoolId = 8;
 
             // User resource pools
             var sampleUserResourcePools = UserResourcePoolRepository

@@ -82,4 +82,7 @@ config.EnableQuerySupport(queryAttribute);
 
 . try to add indexes dynamically?
 
-. "all in one" disabled for the moment
+. currently which user's data used as sample? userId = 1? that changes?
+
+. be careful about live data - best could be to remove all and recreate with the latest?
+create all in one sample data!
