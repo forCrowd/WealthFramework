@@ -273,32 +273,35 @@ namespace DataObjects.Migrations
         void AddSectorIndexSample(BusinessObjects.User user)
         {
             var sectorResourcePool = new BusinessObjects.ResourcePool() { Name = "Sector Index Sample" };
-            var sectorSector1 = new BusinessObjects.Sector() { ResourcePool = sectorResourcePool, Name = "Utilities" };
-            var sectorSector2 = new BusinessObjects.Sector() { ResourcePool = sectorResourcePool, Name = "Consumer Goods" };
-            var sectorSector3 = new BusinessObjects.Sector() { ResourcePool = sectorResourcePool, Name = "Basic Materials" };
-            var sectorSector4 = new BusinessObjects.Sector() { ResourcePool = sectorResourcePool, Name = "Services" };
-            var sectorSector5 = new BusinessObjects.Sector() { ResourcePool = sectorResourcePool, Name = "Technology" };
+            var sectorSector1 = new BusinessObjects.Sector() { ResourcePool = sectorResourcePool, Name = "Basic Materials" };
+            var sectorSector2 = new BusinessObjects.Sector() { ResourcePool = sectorResourcePool, Name = "Conglomerates" };
+            var sectorSector3 = new BusinessObjects.Sector() { ResourcePool = sectorResourcePool, Name = "Consumer Goods" };
+            var sectorSector4 = new BusinessObjects.Sector() { ResourcePool = sectorResourcePool, Name = "Financial" };
+            var sectorSector5 = new BusinessObjects.Sector() { ResourcePool = sectorResourcePool, Name = "Healthcare" };
             var sectorSector6 = new BusinessObjects.Sector() { ResourcePool = sectorResourcePool, Name = "Industrial Goods" };
-            var sectorSector7 = new BusinessObjects.Sector() { ResourcePool = sectorResourcePool, Name = "Conglomerates" };
-            var sectorSector8 = new BusinessObjects.Sector() { ResourcePool = sectorResourcePool, Name = "Financial" };
+            var sectorSector7 = new BusinessObjects.Sector() { ResourcePool = sectorResourcePool, Name = "Services" };
+            var sectorSector8 = new BusinessObjects.Sector() { ResourcePool = sectorResourcePool, Name = "Technology" };
+            var sectorSector9 = new BusinessObjects.Sector() { ResourcePool = sectorResourcePool, Name = "Utilities" };
             var sectorLicense = new BusinessObjects.License() { ResourcePool = sectorResourcePool, Name = "Sector Index Generic License", Text = "License Text" };
-            var sectorOrganization1 = new BusinessObjects.Organization() { Sector = sectorSector1, Name = "Utilities", ProductionCost = 100, SalesPrice = 150, License = sectorLicense };
-            var sectorOrganization2 = new BusinessObjects.Organization() { Sector = sectorSector2, Name = "Consumer Goods", ProductionCost = 100, SalesPrice = 150, License = sectorLicense };
-            var sectorOrganization3 = new BusinessObjects.Organization() { Sector = sectorSector3, Name = "Basic Materials", ProductionCost = 100, SalesPrice = 150, License = sectorLicense };
-            var sectorOrganization4 = new BusinessObjects.Organization() { Sector = sectorSector4, Name = "Services", ProductionCost = 100, SalesPrice = 150, License = sectorLicense };
-            var sectorOrganization5 = new BusinessObjects.Organization() { Sector = sectorSector5, Name = "Technology", ProductionCost = 100, SalesPrice = 150, License = sectorLicense };
+            var sectorOrganization1 = new BusinessObjects.Organization() { Sector = sectorSector1, Name = "Basic Materials", ProductionCost = 100, SalesPrice = 150, License = sectorLicense };
+            var sectorOrganization2 = new BusinessObjects.Organization() { Sector = sectorSector2, Name = "Conglomerates", ProductionCost = 100, SalesPrice = 150, License = sectorLicense };
+            var sectorOrganization3 = new BusinessObjects.Organization() { Sector = sectorSector3, Name = "Consumer Goods", ProductionCost = 100, SalesPrice = 150, License = sectorLicense };
+            var sectorOrganization4 = new BusinessObjects.Organization() { Sector = sectorSector4, Name = "Financial", ProductionCost = 100, SalesPrice = 150, License = sectorLicense };
+            var sectorOrganization5 = new BusinessObjects.Organization() { Sector = sectorSector5, Name = "Healthcare", ProductionCost = 100, SalesPrice = 150, License = sectorLicense };
             var sectorOrganization6 = new BusinessObjects.Organization() { Sector = sectorSector6, Name = "Industrial Goods", ProductionCost = 100, SalesPrice = 150, License = sectorLicense };
-            var sectorOrganization7 = new BusinessObjects.Organization() { Sector = sectorSector7, Name = "Conglomerates", ProductionCost = 100, SalesPrice = 150, License = sectorLicense };
-            var sectorOrganization8 = new BusinessObjects.Organization() { Sector = sectorSector8, Name = "Financial", ProductionCost = 100, SalesPrice = 150, License = sectorLicense };
+            var sectorOrganization7 = new BusinessObjects.Organization() { Sector = sectorSector7, Name = "Services", ProductionCost = 100, SalesPrice = 150, License = sectorLicense };
+            var sectorOrganization8 = new BusinessObjects.Organization() { Sector = sectorSector8, Name = "Technology", ProductionCost = 100, SalesPrice = 150, License = sectorLicense };
+            var sectorOrganization9 = new BusinessObjects.Organization() { Sector = sectorSector9, Name = "Utilities", ProductionCost = 100, SalesPrice = 150, License = sectorLicense };
             var sectorUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = sectorResourcePool, ResourcePoolRate = 101, TotalCostIndexRating = 0, KnowledgeIndexRating = 0, QualityIndexRating = 0, SectorIndexRating = 100, EmployeeSatisfactionIndexRating = 0, CustomerSatisfactionIndexRating = 0, DistanceIndexRating = 0 };
-            var sectorUserSectorRating1 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector1, Rating = 12.5m };
-            var sectorUserSectorRating2 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector2, Rating = 12.5m };
-            var sectorUserSectorRating3 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector3, Rating = 12.5m };
-            var sectorUserSectorRating4 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector4, Rating = 12.5m };
-            var sectorUserSectorRating5 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector5, Rating = 12.5m };
-            var sectorUserSectorRating6 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector6, Rating = 12.5m };
-            var sectorUserSectorRating7 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector7, Rating = 12.5m };
-            var sectorUserSectorRating8 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector8, Rating = 12.5m };
+            var sectorUserSectorRating1 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector1, Rating = 12 };
+            var sectorUserSectorRating2 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector2, Rating = 11 };
+            var sectorUserSectorRating3 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector3, Rating = 11 };
+            var sectorUserSectorRating4 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector4, Rating = 11 };
+            var sectorUserSectorRating5 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector5, Rating = 11 };
+            var sectorUserSectorRating6 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector6, Rating = 11 };
+            var sectorUserSectorRating7 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector7, Rating = 11 };
+            var sectorUserSectorRating8 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector8, Rating = 11 };
+            var sectorUserSectorRating9 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector9, Rating = 11 };
             var sectorUserOrganization1 = new BusinessObjects.UserOrganization() { User = user, Organization = sectorOrganization1, NumberOfSales = 0, QualityRating = 0, CustomerSatisfactionRating = 0, EmployeeSatisfactionRating = 0 };
             var sectorUserOrganization2 = new BusinessObjects.UserOrganization() { User = user, Organization = sectorOrganization2, NumberOfSales = 0, QualityRating = 0, CustomerSatisfactionRating = 0, EmployeeSatisfactionRating = 0 };
             var sectorUserOrganization3 = new BusinessObjects.UserOrganization() { User = user, Organization = sectorOrganization3, NumberOfSales = 0, QualityRating = 0, CustomerSatisfactionRating = 0, EmployeeSatisfactionRating = 0 };
@@ -307,6 +310,7 @@ namespace DataObjects.Migrations
             var sectorUserOrganization6 = new BusinessObjects.UserOrganization() { User = user, Organization = sectorOrganization6, NumberOfSales = 0, QualityRating = 0, CustomerSatisfactionRating = 0, EmployeeSatisfactionRating = 0 };
             var sectorUserOrganization7 = new BusinessObjects.UserOrganization() { User = user, Organization = sectorOrganization7, NumberOfSales = 0, QualityRating = 0, CustomerSatisfactionRating = 0, EmployeeSatisfactionRating = 0 };
             var sectorUserOrganization8 = new BusinessObjects.UserOrganization() { User = user, Organization = sectorOrganization8, NumberOfSales = 0, QualityRating = 0, CustomerSatisfactionRating = 0, EmployeeSatisfactionRating = 0 };
+            var sectorUserOrganization9 = new BusinessObjects.UserOrganization() { User = user, Organization = sectorOrganization9, NumberOfSales = 0, QualityRating = 0, CustomerSatisfactionRating = 0, EmployeeSatisfactionRating = 0 };
 
             ResourcePoolRepository.Insert(sectorResourcePool);
             SectorRepository.Insert(sectorSector1);
@@ -317,6 +321,7 @@ namespace DataObjects.Migrations
             SectorRepository.Insert(sectorSector6);
             SectorRepository.Insert(sectorSector7);
             SectorRepository.Insert(sectorSector8);
+            SectorRepository.Insert(sectorSector9);
             LicenseRepository.Insert(sectorLicense);
             OrganizationRepository.Insert(sectorOrganization1);
             OrganizationRepository.Insert(sectorOrganization2);
@@ -326,6 +331,7 @@ namespace DataObjects.Migrations
             OrganizationRepository.Insert(sectorOrganization6);
             OrganizationRepository.Insert(sectorOrganization7);
             OrganizationRepository.Insert(sectorOrganization8);
+            OrganizationRepository.Insert(sectorOrganization9);
             UserResourcePoolRepository.Insert(sectorUserResourcePool);
             UserSectorRatingRepository.Insert(sectorUserSectorRating1);
             UserSectorRatingRepository.Insert(sectorUserSectorRating2);
@@ -335,6 +341,7 @@ namespace DataObjects.Migrations
             UserSectorRatingRepository.Insert(sectorUserSectorRating6);
             UserSectorRatingRepository.Insert(sectorUserSectorRating7);
             UserSectorRatingRepository.Insert(sectorUserSectorRating8);
+            UserSectorRatingRepository.Insert(sectorUserSectorRating9);
             UserOrganizationRepository.Insert(sectorUserOrganization1);
             UserOrganizationRepository.Insert(sectorUserOrganization2);
             UserOrganizationRepository.Insert(sectorUserOrganization3);
@@ -343,6 +350,7 @@ namespace DataObjects.Migrations
             UserOrganizationRepository.Insert(sectorUserOrganization6);
             UserOrganizationRepository.Insert(sectorUserOrganization7);
             UserOrganizationRepository.Insert(sectorUserOrganization8);
+            UserOrganizationRepository.Insert(sectorUserOrganization9);
         }
 
         void AddDistanceIndexSample(BusinessObjects.User user)
@@ -410,30 +418,33 @@ namespace DataObjects.Migrations
             var customerUserOrganization2 = new BusinessObjects.UserOrganization() { User = user, Organization = customerOrganization2, NumberOfSales = 0, QualityRating = 50, CustomerSatisfactionRating = 25, EmployeeSatisfactionRating = 50 };
 
             // Sector
-            var sectorSector1 = new BusinessObjects.Sector() { ResourcePool = allInOneResourcePool, Name = "Utilities" };
-            var sectorSector2 = new BusinessObjects.Sector() { ResourcePool = allInOneResourcePool, Name = "Consumer Goods" };
-            var sectorSector3 = new BusinessObjects.Sector() { ResourcePool = allInOneResourcePool, Name = "Basic Materials" };
-            var sectorSector4 = new BusinessObjects.Sector() { ResourcePool = allInOneResourcePool, Name = "Services" };
-            var sectorSector5 = new BusinessObjects.Sector() { ResourcePool = allInOneResourcePool, Name = "Technology" };
+            var sectorSector1 = new BusinessObjects.Sector() { ResourcePool = allInOneResourcePool, Name = "Basic Materials" };
+            var sectorSector2 = new BusinessObjects.Sector() { ResourcePool = allInOneResourcePool, Name = "Conglomerates" };
+            var sectorSector3 = new BusinessObjects.Sector() { ResourcePool = allInOneResourcePool, Name = "Consumer Goods" };
+            var sectorSector4 = new BusinessObjects.Sector() { ResourcePool = allInOneResourcePool, Name = "Financial" };
+            var sectorSector5 = new BusinessObjects.Sector() { ResourcePool = allInOneResourcePool, Name = "Healthcare" };
             var sectorSector6 = new BusinessObjects.Sector() { ResourcePool = allInOneResourcePool, Name = "Industrial Goods" };
-            var sectorSector7 = new BusinessObjects.Sector() { ResourcePool = allInOneResourcePool, Name = "Conglomerates" };
-            var sectorSector8 = new BusinessObjects.Sector() { ResourcePool = allInOneResourcePool, Name = "Financial" };
-            var sectorOrganization1 = new BusinessObjects.Organization() { Sector = sectorSector1, Name = "Utilities", ProductionCost = 100, SalesPrice = 150, License = allInOneGenericLicense };
-            var sectorOrganization2 = new BusinessObjects.Organization() { Sector = sectorSector2, Name = "Consumer Goods", ProductionCost = 100, SalesPrice = 150, License = allInOneGenericLicense };
-            var sectorOrganization3 = new BusinessObjects.Organization() { Sector = sectorSector3, Name = "Basic Materials", ProductionCost = 100, SalesPrice = 150, License = allInOneGenericLicense };
-            var sectorOrganization4 = new BusinessObjects.Organization() { Sector = sectorSector4, Name = "Services", ProductionCost = 100, SalesPrice = 150, License = allInOneGenericLicense };
-            var sectorOrganization5 = new BusinessObjects.Organization() { Sector = sectorSector5, Name = "Technology", ProductionCost = 100, SalesPrice = 150, License = allInOneGenericLicense };
+            var sectorSector7 = new BusinessObjects.Sector() { ResourcePool = allInOneResourcePool, Name = "Services" };
+            var sectorSector8 = new BusinessObjects.Sector() { ResourcePool = allInOneResourcePool, Name = "Technology" };
+            var sectorSector9 = new BusinessObjects.Sector() { ResourcePool = allInOneResourcePool, Name = "Utilities" };
+            var sectorOrganization1 = new BusinessObjects.Organization() { Sector = sectorSector3, Name = "Basic Materials", ProductionCost = 100, SalesPrice = 150, License = allInOneGenericLicense };
+            var sectorOrganization2 = new BusinessObjects.Organization() { Sector = sectorSector7, Name = "Conglomerates", ProductionCost = 100, SalesPrice = 150, License = allInOneGenericLicense };
+            var sectorOrganization3 = new BusinessObjects.Organization() { Sector = sectorSector2, Name = "Consumer Goods", ProductionCost = 100, SalesPrice = 150, License = allInOneGenericLicense };
+            var sectorOrganization4 = new BusinessObjects.Organization() { Sector = sectorSector8, Name = "Financial", ProductionCost = 100, SalesPrice = 150, License = allInOneGenericLicense };
+            var sectorOrganization5 = new BusinessObjects.Organization() { Sector = sectorSector8, Name = "Healthcare", ProductionCost = 100, SalesPrice = 150, License = allInOneGenericLicense };
             var sectorOrganization6 = new BusinessObjects.Organization() { Sector = sectorSector6, Name = "Industrial Goods", ProductionCost = 100, SalesPrice = 150, License = allInOneGenericLicense };
-            var sectorOrganization7 = new BusinessObjects.Organization() { Sector = sectorSector7, Name = "Conglomerates", ProductionCost = 100, SalesPrice = 150, License = allInOneGenericLicense };
-            var sectorOrganization8 = new BusinessObjects.Organization() { Sector = sectorSector8, Name = "Financial", ProductionCost = 100, SalesPrice = 150, License = allInOneGenericLicense };
-            var sectorUserSectorRating1 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector1, Rating = 12.5m };
-            var sectorUserSectorRating2 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector2, Rating = 12.5m };
-            var sectorUserSectorRating3 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector3, Rating = 12.5m };
-            var sectorUserSectorRating4 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector4, Rating = 12.5m };
-            var sectorUserSectorRating5 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector5, Rating = 12.5m };
-            var sectorUserSectorRating6 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector6, Rating = 12.5m };
-            var sectorUserSectorRating7 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector7, Rating = 12.5m };
-            var sectorUserSectorRating8 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector8, Rating = 12.5m };
+            var sectorOrganization7 = new BusinessObjects.Organization() { Sector = sectorSector4, Name = "Services", ProductionCost = 100, SalesPrice = 150, License = allInOneGenericLicense };
+            var sectorOrganization8 = new BusinessObjects.Organization() { Sector = sectorSector5, Name = "Technology", ProductionCost = 100, SalesPrice = 150, License = allInOneGenericLicense };
+            var sectorOrganization9 = new BusinessObjects.Organization() { Sector = sectorSector1, Name = "Utilities", ProductionCost = 100, SalesPrice = 150, License = allInOneGenericLicense };
+            var sectorUserSectorRating1 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector1, Rating = 12 };
+            var sectorUserSectorRating2 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector2, Rating = 11 };
+            var sectorUserSectorRating3 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector3, Rating = 11 };
+            var sectorUserSectorRating4 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector4, Rating = 11 };
+            var sectorUserSectorRating5 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector5, Rating = 11 };
+            var sectorUserSectorRating6 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector6, Rating = 11 };
+            var sectorUserSectorRating7 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector7, Rating = 11 };
+            var sectorUserSectorRating8 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector8, Rating = 11 };
+            var sectorUserSectorRating9 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector9, Rating = 11 };
             var sectorUserOrganization1 = new BusinessObjects.UserOrganization() { User = user, Organization = sectorOrganization1, NumberOfSales = 0, QualityRating = 50, CustomerSatisfactionRating = 50, EmployeeSatisfactionRating = 50 };
             var sectorUserOrganization2 = new BusinessObjects.UserOrganization() { User = user, Organization = sectorOrganization2, NumberOfSales = 0, QualityRating = 50, CustomerSatisfactionRating = 50, EmployeeSatisfactionRating = 50 };
             var sectorUserOrganization3 = new BusinessObjects.UserOrganization() { User = user, Organization = sectorOrganization3, NumberOfSales = 0, QualityRating = 50, CustomerSatisfactionRating = 50, EmployeeSatisfactionRating = 50 };
@@ -442,6 +453,7 @@ namespace DataObjects.Migrations
             var sectorUserOrganization6 = new BusinessObjects.UserOrganization() { User = user, Organization = sectorOrganization6, NumberOfSales = 0, QualityRating = 50, CustomerSatisfactionRating = 50, EmployeeSatisfactionRating = 50 };
             var sectorUserOrganization7 = new BusinessObjects.UserOrganization() { User = user, Organization = sectorOrganization7, NumberOfSales = 0, QualityRating = 50, CustomerSatisfactionRating = 50, EmployeeSatisfactionRating = 50 };
             var sectorUserOrganization8 = new BusinessObjects.UserOrganization() { User = user, Organization = sectorOrganization8, NumberOfSales = 0, QualityRating = 50, CustomerSatisfactionRating = 50, EmployeeSatisfactionRating = 50 };
+            var sectorUserOrganization9 = new BusinessObjects.UserOrganization() { User = user, Organization = sectorOrganization9, NumberOfSales = 0, QualityRating = 50, CustomerSatisfactionRating = 50, EmployeeSatisfactionRating = 50 };
 
             // Distance
             var distanceOrganization1 = new BusinessObjects.Organization() { Sector = allInOneGenericSector, Name = "Home", ProductionCost = 100, SalesPrice = 150, License = allInOneGenericLicense };
@@ -494,6 +506,7 @@ namespace DataObjects.Migrations
             SectorRepository.Insert(sectorSector6);
             SectorRepository.Insert(sectorSector7);
             SectorRepository.Insert(sectorSector8);
+            SectorRepository.Insert(sectorSector9);
             OrganizationRepository.Insert(sectorOrganization1);
             OrganizationRepository.Insert(sectorOrganization2);
             OrganizationRepository.Insert(sectorOrganization3);
@@ -502,6 +515,7 @@ namespace DataObjects.Migrations
             OrganizationRepository.Insert(sectorOrganization6);
             OrganizationRepository.Insert(sectorOrganization7);
             OrganizationRepository.Insert(sectorOrganization8);
+            OrganizationRepository.Insert(sectorOrganization9);
             UserSectorRatingRepository.Insert(sectorUserSectorRating1);
             UserSectorRatingRepository.Insert(sectorUserSectorRating2);
             UserSectorRatingRepository.Insert(sectorUserSectorRating3);
@@ -510,6 +524,7 @@ namespace DataObjects.Migrations
             UserSectorRatingRepository.Insert(sectorUserSectorRating6);
             UserSectorRatingRepository.Insert(sectorUserSectorRating7);
             UserSectorRatingRepository.Insert(sectorUserSectorRating8);
+            UserSectorRatingRepository.Insert(sectorUserSectorRating9);
             UserOrganizationRepository.Insert(sectorUserOrganization1);
             UserOrganizationRepository.Insert(sectorUserOrganization2);
             UserOrganizationRepository.Insert(sectorUserOrganization3);
@@ -518,6 +533,7 @@ namespace DataObjects.Migrations
             UserOrganizationRepository.Insert(sectorUserOrganization6);
             UserOrganizationRepository.Insert(sectorUserOrganization7);
             UserOrganizationRepository.Insert(sectorUserOrganization8);
+            UserOrganizationRepository.Insert(sectorUserOrganization9);
             
             OrganizationRepository.Insert(distanceOrganization1);
             OrganizationRepository.Insert(distanceOrganization2);

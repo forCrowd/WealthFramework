@@ -12,6 +12,7 @@ An experimental resource management system that aims to provide a sustainable ec
 * Sample user was created and sample data moved under this account
 * UserResourcePool pages subtotals were fixed
 * ODataController.tt fine-tuning
+* User - AspNetUserId required
 
 **0.11.8**
 * UserResurcePoolCustom api controller was created and special methods moved to this controller from OData

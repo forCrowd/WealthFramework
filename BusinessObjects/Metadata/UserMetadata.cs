@@ -12,6 +12,7 @@ namespace BusinessObjects.Metadata
 
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
+        [Required]
         [StringLength(256)]
         public object AspNetUserId { get; set; }
 
