@@ -32,6 +32,7 @@
 /// <reference path="angular-route.js" />
 /// <reference path="app/controllers/sectorchartcontroller.js" />
 /// <reference path="app/services/usersectorratingservice.js" />
+/// <reference path="app/controllers/accounteditcontroller.js" />
 /// <reference path="app/controllers/licenselistcontroller.js" />
 /// <reference path="app/services/generated/licenseservice.js" />
 /// <reference path="app/controllers/licenseeditcontroller.js" />

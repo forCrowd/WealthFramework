@@ -5,6 +5,9 @@ An experimental resource management system that aims to provide a sustainable ec
 ---
 
 ### Release Notes
+**0.12**
+* Chapters
+
 **0.11.12**
 * Text updates
 

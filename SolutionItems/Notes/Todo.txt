@@ -62,3 +62,24 @@ var queryAttribute = new QueryableAttribute()
 config.EnableQuerySupport(queryAttribute);
 
 . try to add indexes dynamically?
+
+---
+#1 - Profit Oriented Economy
+
+#2 - Burden of the Consumer
+
+#3 - Can't see the overall
+
+#4 - Global Knowledge Database
+
+#5 - Profit: Good? Bad & Ugly
+
+#6 - Fair Share?
+
+#7 - Quality?
+
+#8 - Employee?
+
+#9 - Customer
+
+#10 - Distance

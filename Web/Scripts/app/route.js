@@ -9,10 +9,21 @@
         // Routes
         $routeProvider
 
-            .when('/', { templateUrl: 'ViewsNg/home/index.html' })
-            .when('/Home', { templateUrl: 'ViewsNg/home/index.html' })
-            .when('/Overview', { templateUrl: 'ViewsNg/Home/Overview.html' })
-            .when('/Technologies', { templateUrl: 'ViewsNg/Home/Technologies.html' })
+            .when('/', { templateUrl: '/ViewsNg/home/index.html' })
+            .when('/Home', { templateUrl: '/ViewsNg/home/index.html' })
+            .when('/Overview', { templateUrl: '/ViewsNg/Home/Overview.html' })
+            .when('/Technologies', { templateUrl: '/ViewsNg/Home/Technologies.html' })
+
+            .when('/Chapters/1', { templateUrl: '/ViewsNg/Chapters/Chapter1.html' })
+            .when('/Chapters/2', { templateUrl: '/ViewsNg/Chapters/Chapter2.html' })
+            .when('/Chapters/3', { templateUrl: '/ViewsNg/Chapters/Chapter3.html' })
+            .when('/Chapters/4', { templateUrl: '/ViewsNg/Chapters/Chapter4.html' })
+            .when('/Chapters/5', { templateUrl: '/ViewsNg/Chapters/Chapter5.html' })
+            .when('/Chapters/6', { templateUrl: '/ViewsNg/Chapters/Chapter6.html' })
+            .when('/Chapters/7', { templateUrl: '/ViewsNg/Chapters/Chapter7.html' })
+            .when('/Chapters/8', { templateUrl: '/ViewsNg/Chapters/Chapter8.html' })
+            .when('/Chapters/9', { templateUrl: '/ViewsNg/Chapters/Chapter9.html' })
+            .when('/Chapters/10', { templateUrl: '/ViewsNg/Chapters/Chapter10.html' })
 
             .when('/User/Login', { controller: 'loginController as vm', templateUrl: '/ViewsNg/User/Login.html' })
             .when('/User/Register', { controller: 'registerController as vm', templateUrl: '/ViewsNg/User/Register.html' })

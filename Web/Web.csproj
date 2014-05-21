@@ -496,6 +496,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>editView.tt</DependentUpon>
     </None>
+    <Content Include="ViewsNg\Chapters\Chapter3.html" />
+    <Content Include="ViewsNg\Chapters\Chapter2.html" />
     <Content Include="ViewsNg\Edit\licenseEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
@@ -524,6 +526,7 @@
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\jquery-2.1.0.min.map" />
+    <Content Include="ViewsNg\Chapters\Chapter1.html" />
     <Content Include="ViewsNg\List\licenseList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
