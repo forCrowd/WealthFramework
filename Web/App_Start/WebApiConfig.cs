@@ -21,8 +21,8 @@ namespace Web
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            var edm = GetEdm();
-            //var edm = Facade.Utility.GetWealthEconomyContextEdm();
+            // var edm = GetEdm();
+            var edm = Facade.Utility.GetWealthEconomyContextEdm();
 
             // OData routes
             config.Routes.MapODataRoute(

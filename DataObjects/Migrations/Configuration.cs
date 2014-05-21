@@ -1,5 +1,6 @@
 namespace DataObjects.Migrations
 {
+    using BusinessObjects;
     using DataObjects;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;

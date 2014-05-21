@@ -119,8 +119,6 @@ namespace Microsoft.Data.Edm
                 : GetModelFirstEdm<T>(dbContext);
         }
 
-
-
         /// <summary>
         /// Builds an Entity Data Model (EDM) from an
         /// existing <see cref="DbContext"/> created using Code-First.

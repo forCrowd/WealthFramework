@@ -1,4 +1,5 @@
-﻿using DataObjects;
+﻿using BusinessObjects;
+using DataObjects;
 using Microsoft.Data.Edm;
 using System.Data.Entity;
 

@@ -1,4 +1,5 @@
-﻿namespace DataObjects
+﻿namespace BusinessObjects
+//namespace DataObjects
 {
     using BusinessObjects;
     using DataObjects.Migrations;
