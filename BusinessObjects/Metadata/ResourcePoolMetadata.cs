@@ -18,6 +18,11 @@ namespace BusinessObjects.Metadata
         [StringLength(50)]
         public object Name { get; set; }
 
+        [Required]
+        [DisplayOnListView(false)]
+        [DisplayOnEditView(false)]
+        public object IsSample { get; set; }
+
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         [NotMapped]

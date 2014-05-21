@@ -50,6 +50,9 @@
 
         public async Task<int> InsertAsync(ResourcePool entity, int userId)
         {
+            // Sample resource pool could only be created during DatabaseInitialization at the moment
+            entity.IsSample = false;
+
             // Sample records
             var sampleSector = new Sector()
             {
@@ -79,7 +82,6 @@
             CreateUserResourcePool(entity, userId);
 
             return await base.InsertAsync(entity);
-            // Save();
         }
 
         public override async Task<int> DeleteAsync(params object[] id)

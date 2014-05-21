@@ -24,9 +24,6 @@ namespace BusinessObjects
         public string LastName { get; set; }
         public string Notes { get; set; }
         
-        
-        
-
         public virtual ICollection<UserLicenseRating> UserLicenseRatingSet { get; set; }
         public virtual ICollection<UserOrganization> UserOrganizationSet { get; set; }
         public virtual ICollection<UserResourcePool> UserResourcePoolSet { get; set; }

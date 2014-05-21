@@ -45,7 +45,7 @@
 
             if (userService.hasChanges()) {
                 userService.rejectChanges();
-                logger.logWarning('Discarded pending change(s)', null, true);
+                logWarning('Discarded pending change(s)', null, true);
             }
         }
 

@@ -51,19 +51,15 @@
             get { return userOrganizationRepository ?? (userOrganizationRepository = new UserOrganizationRepository(Context)); }
         }
 
-        public override async Task<int> InsertAsync(User user)
+        public async Task<int> InsertAsync(User user, int sampleUserId)
         {
-            // Add sample data to the user
-
-            // TODO Static?
-            const int sampleUserId = 2;
-            const int maxSampleResourcePoolId = 8;
-
+            /* Add sample data to the new user */
+            
             // User resource pools
             var sampleUserResourcePools = UserResourcePoolRepository
                 .AllLive
                 .Include(item => item.ResourcePool)
-                .Where(item => item.UserId == sampleUserId && item.ResourcePoolId <= maxSampleResourcePoolId);
+                .Where(item => item.UserId == sampleUserId && item.ResourcePool.IsSample);
 
             foreach (var sampleUserResourcePool in sampleUserResourcePools)
             {
@@ -87,7 +83,7 @@
             var sampleSectorRatings = UserSectorRatingRepository
                 .AllLive
                 .Include(item => item.Sector)
-                .Where(item => item.UserId == sampleUserId && item.Sector.ResourcePoolId <= maxSampleResourcePoolId);
+                .Where(item => item.UserId == sampleUserId && item.Sector.ResourcePool.IsSample);
 
             foreach (var sampleSectorRating in sampleSectorRatings)
             {
@@ -104,7 +100,7 @@
             var sampleLicenseRatings = UserLicenseRatingRepository
                 .AllLive
                 .Include(item => item.License)
-                .Where(item => item.UserId == sampleUserId && item.License.ResourcePoolId <= maxSampleResourcePoolId);
+                .Where(item => item.UserId == sampleUserId && item.License.ResourcePool.IsSample);
             
             foreach (var sampleLicenseRating in sampleLicenseRatings)
             {
@@ -121,7 +117,7 @@
             var sampleOrganizations = UserOrganizationRepository
                 .AllLive
                 .Include(item => item.Organization)
-                .Where(item => item.UserId == sampleUserId && item.Organization.Sector.ResourcePoolId <= maxSampleResourcePoolId);
+                .Where(item => item.UserId == sampleUserId && item.Organization.Sector.ResourcePool.IsSample);
 
             foreach (var sampleOrganization in sampleOrganizations)
             {

@@ -9,5 +9,10 @@ namespace Web.App_Code
         {
             get { return ConfigurationManager.AppSettings["ServerMode"].ToEnum<ServerMode>(); }
         }
+
+        public static int SampleUserId
+        {
+            get { return int.Parse(ConfigurationManager.AppSettings["SampleUserId"]); }
+        }
     }
 }

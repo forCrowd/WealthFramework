@@ -13,8 +13,6 @@ either work with Ids, or try to work on merging unitofwork classes
 . implement soft delete
 . handling concurrency can be improved - load the new record and let the user choose which one is correct
 . html cache break - angular scripts + views etc.?
-. compare metadata files of manual + odataconventionbuilder + edmbuilder for functionimport and for other stuff + merge?
-. codefirst namespace is dataobjects, businessobjects?
 . try to create initial data from facade, instead of dataobjects layer
 . don't allow delete License if it's connected to an Organization (can't be deleted) - same goes for the others but License really can't be deleted
 . create sample data with average rating value? or make the rating nullable
@@ -24,9 +22,6 @@ user - resourcepool - userresourcepoolId
 userresourcepoolsector -> userresourcepoolId sectorId rating
 userresourcepoollicense -> userresourcepoolId licenseId rating
 userresourcepoolorganization -> userresourcepoolId organizationId rating
-. handle this nicely;
-const int sampleUserId = 2;
-const int maxSampleResourcePoolId = 8;
 . using numbers in sector chart page didn't work, it breaks the chart?
 . authorize only for admins didnt work - license, organization, resourcepool, sector
 any user should be able to access them. currently definitions link is only visible to admins - according to this, normal user may not use post action for instance? check these rules later on
@@ -65,16 +60,6 @@ var queryAttribute = new QueryableAttribute()
 
 config.EnableQuerySupport(queryAttribute);
 
-
 . try to add indexes dynamically?
 
 . user list - `create new` link should go to register?! or how to override default new?
-
-. continue with metadata.xml
-
-. update __migrations - contextkey to BusinessObjects
-
-LIVE
---begin tran
---update __MigrationHistory set ContextKey = REPLACE(ContextKey, 'DataObjects.', 'BusinessObjects.')
---commit

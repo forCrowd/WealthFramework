@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
+using Web.App_Code;
 using Web.Models;
 
 namespace Web.Controllers.Api
@@ -109,7 +110,7 @@ namespace Web.Controllers.Api
                     Email = aspNetUser.UserName,
                 };
 
-                await unitOfWork.InsertAsync(user);
+                await unitOfWork.InsertAsync(user, ApplicationSettings.SampleUserId);
             }
 
             return Ok();

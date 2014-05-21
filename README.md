@@ -8,6 +8,7 @@ An experimental resource management system that aims to provide a sustainable ec
 **0.11.10**
 * Replace metadata.xml with EdmBuilder CodeFirst output
 ** WealthEconomyContext moved under BusinessObjects
+* IsSample field to ResourcePool object, SampleUserId to Web\web.config and UserUnitOfWork now uses these parameters to copy the sample data
 
 **0.11.9**
 * TotalCostIndex calculation is now based on Profit, instead of Sales Price

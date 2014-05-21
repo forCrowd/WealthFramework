@@ -26,13 +26,14 @@
         {
             using (var unitOfWork = new UserUnitOfWork())
             {
+                const int sampleUserId = 2;
+
                 var user = new User()
                 {
                     Email = string.Format("user_{0:yyyyMMdd_HHmmss}", DateTime.Now),
                 };
 
-                unitOfWork.InsertAsync(user);
-                //unitOfWork.Save();
+                unitOfWork.InsertAsync(user, sampleUserId);
             }
         }
 
@@ -46,7 +47,6 @@
                 user.Notes += string.Format("{0}Update test: {1:yyyyMMdd_HHmmss}", Environment.NewLine, DateTime.Now);
 
                 unitOfWork.UpdateAsync(user);
-                //unitOfWork.Save();
             }
         }
 
@@ -59,7 +59,6 @@
                 var user = unitOfWork.AllLive.OrderByDescending(item => item.CreatedOn).First();
 
                 unitOfWork.DeleteAsync(user.Id);
-                //unitOfWork.Save();
             }
         }
     }
