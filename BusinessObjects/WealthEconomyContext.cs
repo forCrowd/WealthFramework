@@ -1,8 +1,5 @@
 ﻿namespace BusinessObjects
-//namespace DataObjects
 {
-    using BusinessObjects;
-    using DataObjects.Migrations;
     using Microsoft.AspNet.Identity.EntityFramework;
     using System.Data.Entity;
     using System.Data.Entity.ModelConfiguration.Conventions;
@@ -25,16 +22,7 @@
 
             // Conventions
             // a. Don't pluralize
-            modelBuilder.Conventions.Remove<System.Data.Entity.ModelConfiguration.Conventions.PluralizingTableNameConvention>();
-
-            // b. Disable cascade delete
-            // TODO This was necessary because both Sector - Organization refers to ResourcePool?
-            //modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-        }
-
-        public static void InitializeDatabase()
-        {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<WealthEconomyContext, Configuration>());
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
 
         public virtual DbSet<License> License { get; set; }

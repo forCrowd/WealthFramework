@@ -1,7 +1,5 @@
 ﻿using BusinessObjects;
-using DataObjects;
 using Microsoft.Data.Edm;
-using System.Data.Entity;
 
 namespace Facade
 {
@@ -11,7 +9,7 @@ namespace Facade
     {
         public static void InitializeDatabase()
         {
-            WealthEconomyContext.InitializeDatabase();
+            DatabaseInitializer.Initialize();
         }
 
         public static IEdmModel GetWealthEconomyContextEdm()

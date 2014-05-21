@@ -102,6 +102,8 @@
     <Compile Include="Generated\UserSectorRatingRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
+    <Compile Include="BaseRepository.cs" />
+    <Compile Include="IRepository.cs" />
     <Compile Include="Migrations\201404271036016_InitialCreate.cs" />
     <Compile Include="Migrations\201404271036016_InitialCreate.Designer.cs">
       <DependentUpon>201404271036016_InitialCreate.cs</DependentUpon>
@@ -139,9 +141,7 @@
       <DependentUpon>201405201412054_V0_11_9.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="WealthEconomyContext.cs" />
-    <Compile Include="BaseRepository.cs" />
-    <Compile Include="IRepository.cs" />
+    <Compile Include="DatabaseInitializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -161,6 +161,13 @@
       <Project>{f65431e9-0f38-4a61-9072-74faeb426fa1}</Project>
       <Name>BusinessObjects</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Generated\Repository.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Repository.tt</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201404271036016_InitialCreate.resx">
@@ -190,13 +197,6 @@
     <EmbeddedResource Include="Migrations\201405201412054_V0_11_9.resx">
       <DependentUpon>201405201412054_V0_11_9.cs</DependentUpon>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Generated\Repository.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Repository.tt</DependentUpon>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

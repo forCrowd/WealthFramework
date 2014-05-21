@@ -7,6 +7,7 @@ An experimental resource management system that aims to provide a sustainable ec
 ### Release Notes
 **0.11.10**
 * Replace metadata.xml with EdmBuilder CodeFirst output
+** WealthEconomyContext moved under BusinessObjects
 
 **0.11.9**
 * TotalCostIndex calculation is now based on Profit, instead of Sales Price

@@ -71,3 +71,10 @@ config.EnableQuerySupport(queryAttribute);
 . user list - `create new` link should go to register?! or how to override default new?
 
 . continue with metadata.xml
+
+. update __migrations - contextkey to BusinessObjects
+
+LIVE
+--begin tran
+--update __MigrationHistory set ContextKey = REPLACE(ContextKey, 'DataObjects.', 'BusinessObjects.')
+--commit
