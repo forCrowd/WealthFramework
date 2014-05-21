@@ -8,7 +8,8 @@ either work with Ids, or try to work on merging unitofwork classes
 . public vs. private didnt work for now with odata, try it later
 . use or try to remove scripts.render() + styles.render() from layout.cshtml - then mvc can be removed completely
 . automate .tt scripts with afterbuild?
-. layout - user edit - cancel doesn't go to back to home page - also in general cancel button doesn't allow to go back (fill required?)
+. sometimes cancel button doesn't allow to go back (fill required?)
+.. use history.back sort of method, but first vm needs to be a new object, without createEntity
 . learn this disposable thingy? repo + unitofwork + context + controllers?
 . implement soft delete
 . handling concurrency can be improved - load the new record and let the user choose which one is correct
