@@ -5,6 +5,10 @@ An experimental resource management system that aims to provide a sustainable ec
 ---
 
 ### Release Notes
+**0.11.11**
+* AccountEdit page instead of using the generic user edit, to be able customize it like removing cancel button etc.
+* Reset sample data function added
+
 **0.11.10**
 * Replace metadata.xml with EdmBuilder CodeFirst output
 ** WealthEconomyContext moved under BusinessObjects

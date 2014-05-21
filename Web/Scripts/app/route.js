@@ -16,6 +16,7 @@
 
             .when('/User/Login', { controller: 'loginController as vm', templateUrl: '/ViewsNg/User/Login.html' })
             .when('/User/Register', { controller: 'registerController as vm', templateUrl: '/ViewsNg/User/Register.html' })
+            .when('/User/AccountEdit/:Id', { controller: 'accountEditController as vm', templateUrl: '/ViewsNg/User/AccountEdit.html' })
             .when('/User/ChangePassword', { controller: 'changePasswordController as vm', templateUrl: '/ViewsNg/User/ChangePassword.html' })
 
             .when('/License', { controller: 'licenseListController as vm', templateUrl: '/ViewsNg/list/licenseList.html' })

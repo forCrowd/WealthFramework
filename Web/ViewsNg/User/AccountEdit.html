@@ -1,0 +1,53 @@
+﻿<!-- This is a custom copy of userEdit.html -->
+<h2>Edit</h2>
+<form name="editForm">
+    <div class="form-horizontal">
+        <h4>User</h4>
+        <hr />
+        <div class="form-group">
+            <label for="Email" class="control-label col-md-2">Email</label>
+            <div class="col-md-10" data-ng-class="{'has-error': editForm.Email.$invalid && !editForm.Email.$pristine}">
+                <input id="Email" name="Email" type="text" data-ng-model="vm.user.Email" class="form-control" required />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="FirstName" class="control-label col-md-2">First Name</label>
+            <div class="col-md-10" data-ng-class="{'has-error': editForm.FirstName.$invalid && !editForm.FirstName.$pristine}">
+                <input id="FirstName" name="FirstName" type="text" data-ng-model="vm.user.FirstName" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="MiddleName" class="control-label col-md-2">Middle Name</label>
+            <div class="col-md-10" data-ng-class="{'has-error': editForm.MiddleName.$invalid && !editForm.MiddleName.$pristine}">
+                <input id="MiddleName" name="MiddleName" type="text" data-ng-model="vm.user.MiddleName" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="LastName" class="control-label col-md-2">Last Name</label>
+            <div class="col-md-10" data-ng-class="{'has-error': editForm.LastName.$invalid && !editForm.LastName.$pristine}">
+                <input id="LastName" name="LastName" type="text" data-ng-model="vm.user.LastName" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Notes" class="control-label col-md-2">Notes</label>
+            <div class="col-md-10" data-ng-class="{'has-error': editForm.Notes.$invalid && !editForm.Notes.$pristine}">
+                <input id="Notes" name="Notes" type="text" data-ng-model="vm.user.Notes" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10">
+                <input id="RowVersion" name="RowVersion" data-ng-model="vm.user.RowVersion" type="hidden">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button data-ng-click="vm.saveChanges()" data-ng-disabled="editForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
+                    Save
+                </button>
+                <!--<button data-ng-click="vm.cancelChanges()" class="btn btn-danger">
+                    Cancel
+                </button>-->
+            </div>
+        </div>
+    </div>
+</form>

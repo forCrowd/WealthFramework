@@ -12,6 +12,7 @@
         vm.applicationInfo = null;
         vm.currentDate = new Date();
         vm.logout = logout;
+        vm.resetSampleData = resetSampleData;
         vm.userInfo = null;
 
         initialize();
@@ -52,6 +53,16 @@
                 .success(function () {
                     $location.path('/');
                 });
+        }
+
+        function resetSampleData() {
+            if (confirm('Are you sure you want to reset your sample data?')) {
+                userService.resetSampleData()
+                    .success(function () {
+                        $location.path('/');
+                        logger.logSuccess('Your sample data was reset!', null, true);
+                    });
+            }
         }
     };
 })();

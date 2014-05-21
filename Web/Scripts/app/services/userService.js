@@ -15,6 +15,7 @@
         var changePasswordUrl = '/api/Account/ChangePassword';
         var logoutUrl = '/api/Account/Logout';
         var registerUrl = '/api/Account/Register';
+        var resetSampleDataUrl = '/api/Account/ResetSampleData';
         var userInfo = null;
         var userInfoUrl = '/api/Account/UserInfo';
 
@@ -24,6 +25,7 @@
         $delegate.getUserInfo = getUserInfo;
         $delegate.logout = logout;
         $delegate.register = register;
+        $delegate.resetSampleData = resetSampleData;
 
         return $delegate;
 
@@ -79,6 +81,13 @@
             return $http.post(registerUrl, registerBindingModel)
                 .error(function (data, status, headers, config) {
                     // TODO
+                });
+        }
+
+        function resetSampleData() {
+            return $http.post(resetSampleDataUrl)
+                .error(function (data, status, headers, config) {
+                    // TODO ?
                 });
         }
     }

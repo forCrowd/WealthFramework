@@ -116,6 +116,20 @@ namespace Web.Controllers.Api
             return Ok();
         }
 
+        // POST api/Account/Register
+        [HttpPost]
+        public async Task<IHttpActionResult> ResetSampleData()
+        {
+            var aspNetUserId = User.Identity.GetUserId();
+            using (var unitOfWork = new UserUnitOfWork())
+            {
+                var currentUser = unitOfWork.AllLive.Single(user => user.AspNetUserId == aspNetUserId);
+                await unitOfWork.ResetSampleDataAsync(currentUser.Id, ApplicationSettings.SampleUserId);
+            }
+
+            return Ok();
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

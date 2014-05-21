@@ -10,6 +10,8 @@
     [TestClass]
     public class UserUnitOfWorkTest
     {
+        const int sampleUserId = 2;
+
         [TestMethod]
         [Obsolete("Needs to be integrated with AspNetUserManager")]
         public void Select()
@@ -26,7 +28,6 @@
         {
             using (var unitOfWork = new UserUnitOfWork())
             {
-                const int sampleUserId = 2;
 
                 var user = new User()
                 {
@@ -57,8 +58,17 @@
             using (var unitOfWork = new UserUnitOfWork())
             {
                 var user = unitOfWork.AllLive.OrderByDescending(item => item.CreatedOn).First();
-
                 unitOfWork.DeleteAsync(user.Id);
+            }
+        }
+
+        [TestMethod]
+        public void ResetSampleData()
+        {
+            using (var unitOfWork = new UserUnitOfWork())
+            {
+                var user = unitOfWork.AllLive.OrderByDescending(item => item.CreatedOn).First();
+                unitOfWork.ResetSampleDataAsync(user.Id, sampleUserId);
             }
         }
     }

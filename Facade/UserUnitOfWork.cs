@@ -53,19 +53,67 @@
 
         public async Task<int> InsertAsync(User user, int sampleUserId)
         {
-            /* Add sample data to the new user */
-            
+            CopySampleData(user, sampleUserId);
+
+            return await base.InsertAsync(user);
+        }
+
+        public override async Task<int> DeleteAsync(params object[] id)
+        {
+            var user = await FindAsync(id);
+
+            DeleteSampleData(user);
+
+            return await base.DeleteAsync(id);
+        }
+
+        public async Task ResetSampleDataAsync(int targetUserId, int sourceUserId)
+        {
+            var targetUser = await FindAsync(targetUserId);
+
+            DeleteSampleData(targetUser);
+
+            CopySampleData(targetUser, sourceUserId);
+
+            await Context.SaveChangesAsync();
+        }
+
+        public void ResetSampleData(int targetUserId, int sourceUserId)
+        {
+            var targetUser = Find(targetUserId);
+
+            DeleteSampleData(targetUser);
+
+            CopySampleData(targetUser, sourceUserId);
+
+            Context.SaveChanges();
+        }
+
+        #region - Private Methods -
+        
+        // Don't call Context.Save()
+
+        void DeleteSampleData(User user)
+        {
+            UserOrganizationRepository.DeleteRange(user.UserOrganizationSet);
+            UserLicenseRatingRepository.DeleteRange(user.UserLicenseRatingSet);
+            UserSectorRatingRepository.DeleteRange(user.UserSectorRatingSet);
+            UserResourcePoolRepository.DeleteRange(user.UserResourcePoolSet);
+        }
+
+        void CopySampleData(User targetUser, int sourceUserId)
+        {
             // User resource pools
             var sampleUserResourcePools = UserResourcePoolRepository
                 .AllLive
                 .Include(item => item.ResourcePool)
-                .Where(item => item.UserId == sampleUserId && item.ResourcePool.IsSample);
+                .Where(item => item.UserId == sourceUserId && item.ResourcePool.IsSample);
 
             foreach (var sampleUserResourcePool in sampleUserResourcePools)
             {
                 var userResourcePool = new UserResourcePool()
                 {
-                    User = user,
+                    User = targetUser,
                     ResourcePool = sampleUserResourcePool.ResourcePool,
                     ResourcePoolRate = sampleUserResourcePool.ResourcePoolRate,
                     TotalCostIndexRating = sampleUserResourcePool.TotalCostIndexRating,
@@ -83,13 +131,13 @@
             var sampleSectorRatings = UserSectorRatingRepository
                 .AllLive
                 .Include(item => item.Sector)
-                .Where(item => item.UserId == sampleUserId && item.Sector.ResourcePool.IsSample);
+                .Where(item => item.UserId == sourceUserId && item.Sector.ResourcePool.IsSample);
 
             foreach (var sampleSectorRating in sampleSectorRatings)
             {
                 var userSectorRating = new UserSectorRating()
                 {
-                    User = user,
+                    User = targetUser,
                     Sector = sampleSectorRating.Sector,
                     Rating = sampleSectorRating.Rating
                 };
@@ -100,13 +148,13 @@
             var sampleLicenseRatings = UserLicenseRatingRepository
                 .AllLive
                 .Include(item => item.License)
-                .Where(item => item.UserId == sampleUserId && item.License.ResourcePool.IsSample);
-            
+                .Where(item => item.UserId == sourceUserId && item.License.ResourcePool.IsSample);
+
             foreach (var sampleLicenseRating in sampleLicenseRatings)
             {
                 var userLicenceRating = new UserLicenseRating()
                 {
-                    User = user,
+                    User = targetUser,
                     License = sampleLicenseRating.License,
                     Rating = sampleLicenseRating.Rating
                 };
@@ -117,13 +165,13 @@
             var sampleOrganizations = UserOrganizationRepository
                 .AllLive
                 .Include(item => item.Organization)
-                .Where(item => item.UserId == sampleUserId && item.Organization.Sector.ResourcePool.IsSample);
+                .Where(item => item.UserId == sourceUserId && item.Organization.Sector.ResourcePool.IsSample);
 
             foreach (var sampleOrganization in sampleOrganizations)
             {
                 var userOrganization = new UserOrganization()
                 {
-                    User = user,
+                    User = targetUser,
                     Organization = sampleOrganization.Organization,
                     NumberOfSales = sampleOrganization.NumberOfSales,
                     QualityRating = sampleOrganization.QualityRating,
@@ -132,20 +180,8 @@
                 };
                 UserOrganizationRepository.Insert(userOrganization);
             }
-
-            return await base.InsertAsync(user);
         }
 
-        public override async Task<int> DeleteAsync(params object[] id)
-        {
-            var user = Find(id);
-
-            UserLicenseRatingRepository.DeleteRange(user.UserLicenseRatingSet);
-            UserOrganizationRepository.DeleteRange(user.UserOrganizationSet);
-            UserResourcePoolRepository.DeleteRange(user.UserResourcePoolSet);
-            UserSectorRatingRepository.DeleteRange(user.UserSectorRatingSet);
-
-            return await base.DeleteAsync(id);
-        }
+        #endregion
     }
 }
