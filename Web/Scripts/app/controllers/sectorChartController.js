@@ -46,6 +46,11 @@
                 options: {
                     chart: {
                         type: 'pie'
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true
+                        }
                     }
                 }
             }

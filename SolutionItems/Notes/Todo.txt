@@ -59,9 +59,16 @@ var queryAttribute = new QueryableAttribute()
     MaxTop = 100
 };
 
+. loading animation? both for breeze + angular
+
+. exclude sample user from rating averages!
+
 config.EnableQuerySupport(queryAttribute);
 
 . try to add indexes dynamically?
+
+. vs update 2 changes?
+.. asp.net identity
 
 ---
 #1 - Profit Oriented Economy

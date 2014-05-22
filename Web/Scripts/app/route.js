@@ -14,7 +14,7 @@
             .when('/Overview', { templateUrl: '/ViewsNg/Home/Overview.html' })
             .when('/Technologies', { templateUrl: '/ViewsNg/Home/Technologies.html' })
 
-            .when('/Chapters/1', { templateUrl: '/ViewsNg/Chapters/Chapter1.html' })
+            .when('/Chapters/1', { templateUrl: '/ViewsNg/Chapters/Chapter1.html', controller: 'chapter1Controller as vm' })
             .when('/Chapters/2', { templateUrl: '/ViewsNg/Chapters/Chapter2.html' })
             .when('/Chapters/3', { templateUrl: '/ViewsNg/Chapters/Chapter3.html' })
             .when('/Chapters/4', { templateUrl: '/ViewsNg/Chapters/Chapter4.html' })

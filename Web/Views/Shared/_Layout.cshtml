@@ -78,23 +78,20 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
+                    <li class="dropdown" data-ng-show="vm.userInfo">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">User: {{ vm.userInfo.Email }} <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/User/AccountEdit/{{ vm.userInfo.Id }}">Edit</a></li>
+                            <li><a href="/User/ChangePassword/">Change password</a></li>
+                            <li><a href="" data-ng-click="vm.resetSampleData()">Reset sample data</a></li>
+                            <li><a href="" data-ng-click="vm.logout()">Logout</a></li>
+                        </ul>
+                    </li>
+                    <li data-ng-show="!vm.userInfo">
                         <div class="navbar-text nofloat">
-                            <div data-ng-show="vm.userInfo">
-                                User: {{ vm.userInfo.Email }}
-                                <a href="/User/AccountEdit/{{ vm.userInfo.Id }}">Edit</a>
-                                &nbsp;
-                                <a href="/User/ChangePassword/">Change password</a>
-                                &nbsp;
-                                <a href="" data-ng-click="vm.resetSampleData()">Reset sample data</a>
-                                &nbsp;
-                                <a href="" data-ng-click="vm.logout()">Logout</a>
-                            </div>
-                            <div data-ng-show="!vm.userInfo">
-                                <a href="/User/Register/">Register</a>
-                                &nbsp;
-                                <a href="/User/Login/">Login</a>
-                            </div>
+                            <a href="/User/Register/">Register</a>
+                            &nbsp;
+                            <a href="/User/Login/">Login</a>
                         </div>
                     </li>
                 </ul>
@@ -192,6 +189,8 @@
     <script src="/Scripts/app/controllers/changePasswordController.js"></script>
 
     <script src="/Scripts/app/controllers/sectorChartController.js"></script>
+
+    <script src="/Scripts/app/controllers/chapter1Controller.js"></script>
 
 </body>
 </html>

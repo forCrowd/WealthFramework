@@ -310,6 +310,7 @@
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\app\controllers\accountEditController.js" />
+    <Content Include="Scripts\app\controllers\chapter1Controller.js" />
     <Content Include="Scripts\app\controllers\sectorChartController.js" />
     <Content Include="Scripts\app\controllers\editController.txt">
       <AutoGen>True</AutoGen>

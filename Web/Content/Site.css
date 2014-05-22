@@ -46,6 +46,6 @@ input[type="checkbox"].input-validation-error {
 }
 
 /* Project level custom helpers / SH 24 Jan. '14 */
-.reviewLater {
-    color: red;
+.top-buffer {
+    margin-top: 20px;
 }
