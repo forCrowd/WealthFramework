@@ -311,6 +311,8 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\app\controllers\accountEditController.js" />
     <Content Include="Scripts\app\controllers\chapter1Controller.js" />
+    <Content Include="Scripts\app\controllers\chapter5Controller.js" />
+    <Content Include="Scripts\app\controllers\chapter4Controller.js" />
     <Content Include="Scripts\app\controllers\sectorChartController.js" />
     <Content Include="Scripts\app\controllers\editController.txt">
       <AutoGen>True</AutoGen>
@@ -420,6 +422,7 @@
       <DependentUpon>service.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\app\services\mainService.js" />
+    <Content Include="Scripts\app\services\userLicenseRatingService.js" />
     <Content Include="Scripts\app\services\userSectorRatingService.js" />
     <Content Include="Scripts\app\services\userService.js" />
     <Content Include="Scripts\app\services\userResourcePoolService.js" />
@@ -497,6 +500,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>editView.tt</DependentUpon>
     </None>
+    <Content Include="ViewsNg\Chapters\Chapter10.html" />
+    <Content Include="ViewsNg\Chapters\Chapter9.html" />
+    <Content Include="ViewsNg\Chapters\Chapter8.html" />
+    <Content Include="ViewsNg\Chapters\Chapter7.html" />
+    <Content Include="ViewsNg\Chapters\Chapter6.html" />
+    <Content Include="ViewsNg\Chapters\Chapter5.html" />
+    <Content Include="ViewsNg\Chapters\Chapter4.html" />
     <Content Include="ViewsNg\Chapters\Chapter3.html" />
     <Content Include="ViewsNg\Chapters\Chapter2.html" />
     <Content Include="ViewsNg\Edit\licenseEdit.html">

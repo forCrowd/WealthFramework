@@ -45,8 +45,7 @@
                     yAxis: {
                         title: { text: 'Number of sales' },
                         min: 0,
-                        allowDecimals: false,
-                        tickInterval: 5
+                        allowDecimals: false
                     },
                     xAxis: { categories: ['Units'] },
                     plotOptions: {

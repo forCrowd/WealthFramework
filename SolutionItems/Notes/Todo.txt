@@ -58,35 +58,44 @@ var queryAttribute = new QueryableAttribute()
     AllowedQueryOptions = AllowedQueryOptions.Top | AllowedQueryOptions.Skip,
     MaxTop = 100
 };
+config.EnableQuerySupport(queryAttribute);
 
 . loading animation? both for breeze + angular
 
 . exclude sample user from rating averages!
-
-config.EnableQuerySupport(queryAttribute);
 
 . try to add indexes dynamically?
 
 . vs update 2 changes?
 .. asp.net identity
 
+. speech synt;
+http://msdn.microsoft.com/en-us/library/system.speech.synthesis.speechsynthesizer.aspx
+
 ---
 #1 - Profit Oriented Economy
 
 #2 - Burden of the Consumer
 
-#3 - Can't see the overall
+#4 - Seeing the overall
+display the average ratings
 
-#4 - Global Knowledge Database
+#5 - Global Knowledge Database
+display the average ratings
+default ratings should 50/50
 
-#5 - Profit: Good? Bad & Ugly
+#6 - Profit: Good? Bad & Ugly
 
-#6 - Fair Share?
+#7 - Fair Share?
 
-#7 - Quality?
+#8 - Quality?
 
-#8 - Employee?
+#9 - Employee?
 
-#9 - Customer
+#10 - Customer
 
-#10 - Distance
+#11 - Distance
+
+#12 - Roadmap
+
+#13 - Risks?
