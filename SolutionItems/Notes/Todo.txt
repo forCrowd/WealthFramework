@@ -81,8 +81,8 @@ http://msdn.microsoft.com/en-us/library/system.speech.synthesis.speechsynthesize
 display the average ratings
 
 #5 - Global Knowledge Database
-display the average ratings
 default ratings should 50/50
+make the total always 100%
 
 #6 - Profit: Good? Bad & Ugly
 

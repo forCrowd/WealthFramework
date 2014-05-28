@@ -1,5 +1,5 @@
 ﻿<div class="page-header">
-    <h2>#5 Knowledge Index: Building the Global Knowledge Database</h2>
+    <h1>#5 Knowledge Index: Building the Global Knowledge Database</h1>
 </div>
 <div class="row">
     <div class="col-md-8">
@@ -40,8 +40,17 @@
 </div>
 <div class="row top-buffer">
     <div class="col-md-12">
+        <h2>
+            Rating the Licenses
+        </h2>
         <p>
-            Knowledge Index allows us to rate the various licences by comparing them side by side. Then the resources could be distributed to the organizations based on the license that they are using.
+            Knowledge Index allows us to compare the licenses side by side and rate them directly. The resources then could be distributed to the organizations based on their license choice.
+        </p>
+        <p class="top-buffer text-center">
+            <i>
+                Which license offers more benefits and more resources should be allocated to it?<br />
+                Please rate the licenses below. The results will appear after you save your ratings.
+            </i>
         </p>
     </div>
 </div>
@@ -65,12 +74,12 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Open License</td>
-                        <td><span class="glyphicon glyphicon-ok"></span></td>
-                        <td><span class="glyphicon glyphicon-ok"></span></td>
-                        <td><span class="glyphicon glyphicon-ok"></span></td>
-                        <td><span class="glyphicon glyphicon-ok"></span></td>
-                        <td><span class="glyphicon glyphicon-ok"></span></td>
+                        <td>{{ vm.chartData[0].name }}</td>
+                        <td><span class="glyphicon glyphicon-ok text-success"></span></td>
+                        <td><span class="glyphicon glyphicon-ok text-success"></span></td>
+                        <td><span class="glyphicon glyphicon-ok text-success"></span></td>
+                        <td><span class="glyphicon glyphicon-ok text-success"></span></td>
+                        <td><span class="glyphicon glyphicon-ok text-success"></span></td>
                         <td>
                             <div class="input-group col-md-8">
                                 <input type="text" data-ng-model="vm.chartData[0].y" class="form-control" required readonly>
@@ -82,12 +91,12 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Restricted License</td>
-                        <td><span class="glyphicon glyphicon-ok"></span></td>
-                        <td><span class="glyphicon glyphicon-remove"></span></td>
-                        <td><span class="glyphicon glyphicon-remove"></span></td>
-                        <td><span class="glyphicon glyphicon-remove"></span></td>
-                        <td><span class="glyphicon glyphicon-remove"></span></td>
+                        <td>{{ vm.chartData[1].name }}</td>
+                        <td><span class="glyphicon glyphicon-ok text-success"></span></td>
+                        <td><span class="glyphicon glyphicon-remove text-danger"></span></td>
+                        <td><span class="glyphicon glyphicon-remove text-danger"></span></td>
+                        <td><span class="glyphicon glyphicon-remove text-danger"></span></td>
+                        <td><span class="glyphicon glyphicon-remove text-danger"></span></td>
                         <td>
                             <div class="input-group col-md-8">
                                 <input type="text" data-ng-model="vm.chartData[1].y" class="form-control" required readonly>
@@ -111,5 +120,38 @@
                 </div>
             </div>
         </form>
+    </div>
+</div>
+<div class="row top-buffer" data-ng-show="vm.displayLicenseResult">
+    <div class="col-md-12">
+        <h2>
+            Results
+        </h2>
+    </div>
+    <div class="col-md-6">
+        <highchart config="vm.licenseResultChartConfig"></highchart>
+    </div>
+    <div class="col-md-6">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>License</th>
+                    <th>Rating Count</th>
+                    <th>Average Rating</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ vm.licenseResultLicenseSet[0].LicenseName }}</td>
+                    <td>{{ vm.licenseResultLicenseSet[0].RatingCount }}</td>
+                    <td>{{ vm.licenseResultLicenseSet[0].AverageRating | number:2 }}</td>
+                </tr>
+                <tr>
+                    <td>{{ vm.licenseResultLicenseSet[1].LicenseName }}</td>
+                    <td>{{ vm.licenseResultLicenseSet[1].RatingCount }}</td>
+                    <td>{{ vm.licenseResultLicenseSet[1].AverageRating | number:2 }}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>

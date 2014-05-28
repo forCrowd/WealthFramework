@@ -241,6 +241,7 @@
     <Compile Include="Controllers\Api\AccountController.cs" />
     <Compile Include="Controllers\Api\ApplicationController.cs" />
     <Compile Include="Controllers\Api\BaseApiController.cs" />
+    <Compile Include="Controllers\Api\ResourcePoolCustomController.cs" />
     <Compile Include="Controllers\Api\UserResourcePoolCustomController.cs" />
     <Compile Include="Controllers\Mvc\HomeController.cs" />
     <Compile Include="Controllers\OData\Generated\LicenseController.cs">
@@ -423,6 +424,7 @@
     </Content>
     <Content Include="Scripts\app\services\mainService.js" />
     <Content Include="Scripts\app\services\userLicenseRatingService.js" />
+    <Content Include="Scripts\app\services\resourcePoolService.js" />
     <Content Include="Scripts\app\services\userSectorRatingService.js" />
     <Content Include="Scripts\app\services\userService.js" />
     <Content Include="Scripts\app\services\userResourcePoolService.js" />

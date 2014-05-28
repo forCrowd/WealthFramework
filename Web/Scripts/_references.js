@@ -63,4 +63,5 @@
 /// <reference path="app/services/generated/userresourcepoolservice.js" />
 /// <reference path="app/services/generated/usersectorratingservice.js" />
 /// <reference path="app/services/generated/userservice.js" />
+/// <reference path="app/services/resourcepoolservice.js" />
 

@@ -3,9 +3,9 @@
 
     var controllerId = 'chapter5Controller';
     angular.module('main')
-        .controller(controllerId, ['userLicenseRatingService', '$scope', '$timeout', 'logger', chapter5Controller]);
+        .controller(controllerId, ['userLicenseRatingService', 'resourcePoolService', '$scope', '$timeout', 'logger', chapter5Controller]);
 
-    function chapter5Controller(userLicenseRatingService, $scope, $timeout, logger) {
+    function chapter5Controller(userLicenseRatingService, resourcePoolService, $scope, $timeout, logger) {
         logger = logger.forSource(controllerId);
 
         // TODO Static?
@@ -20,6 +20,9 @@
         vm.newSystemChartConfig = null;
         vm.increase = increase;
         vm.licenseChartConfig = null;
+        vm.displayLicenseResult = false;
+        vm.licenseResultChartConfig = null;
+        vm.licenseResultLicenseSet = [];
         vm.resetChanges = resetChanges;
         vm.saveChanges = saveChanges;
 
@@ -31,7 +34,7 @@
             configureCharts();
             loadChartData();
 
-            refreshTimeout = $timeout(refreshPage, 30000);
+            refreshTimeout = $timeout(refreshPage, 5000);
         }
 
         function refreshPage() {
@@ -132,6 +135,22 @@
                     }
                 }
             };
+
+            vm.licenseResultChartConfig = {
+                title: {
+                    text: ''
+                },
+                options: {
+                    chart: {
+                        type: 'pie'
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true
+                        }
+                    }
+                }
+            };
         }
 
         function loadChartData() {
@@ -153,6 +172,30 @@
 
                     vm.licenseChartConfig.series = [{ data: vm.chartData }];
                     vm.licenseChartConfig.loading = false;
+                });
+
+            // License Result Chart
+
+            vm.licenseResultChartConfig.loading = true;
+
+            resourcePoolService.getLicenseSet(resourcePoolId)
+                .success(function (licenseSet) {
+
+                    vm.licenseResultLicenseSet = licenseSet;
+
+                    // Convert licenseSet to chart data
+                    var licenseResultChartData = [];
+                    for (var i = 0; i < vm.licenseResultLicenseSet.length; i++) {
+                        var chartDataItem = {
+                            name: vm.licenseResultLicenseSet[i].LicenseName,
+                            y: vm.licenseResultLicenseSet[i].AverageRating
+                        }
+                        licenseResultChartData.push(chartDataItem);
+                    }
+
+                    vm.licenseResultChartConfig.series = [{ data: licenseResultChartData }];
+                    vm.licenseResultChartConfig.loading = false;
+
                 });
         }
 
@@ -182,6 +225,10 @@
                     userLicenseRatingService.saveChanges()
                         .then(function () {
                             logger.logSuccess('Your changes have been saved!', null, true);
+
+                            vm.displayLicenseResult = true;
+
+                            loadChartData();
                         });
                 });
         }
