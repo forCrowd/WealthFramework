@@ -36,6 +36,7 @@
 /// <reference path="app/services/userresourcepoolservice.js" />
 /// <reference path="app/services/usersectorratingservice.js" />
 /// <reference path="app/services/userservice.js" />
+/// <reference path="app/services/resourcepoolservice.js" />
 /// <reference path="app/controllers/licenseeditcontroller.js" />
 /// <reference path="app/controllers/organizationeditcontroller.js" />
 /// <reference path="app/controllers/resourcepooleditcontroller.js" />
@@ -63,5 +64,5 @@
 /// <reference path="app/services/generated/userresourcepoolservice.js" />
 /// <reference path="app/services/generated/usersectorratingservice.js" />
 /// <reference path="app/services/generated/userservice.js" />
-/// <reference path="app/services/resourcepoolservice.js" />
+/// <reference path="app/controllers/chapter6controller.js" />
 

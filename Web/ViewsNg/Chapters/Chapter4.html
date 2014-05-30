@@ -30,21 +30,46 @@
     </div>
 </div>
 <div class="row top-buffer">
+    <div class="col-md-12">
+        <p>
+            Knowledge Index allows us to compare the licenses side by side and rate them directly. The resources then could be distributed to the organizations based on their license choice.
+        </p>
+        <p class="top-buffer text-center">
+            <i>
+                Which sectors are more important and should control more resources?<br />
+                Please rate the sectors below. The results will appear after you save your ratings.
+            </i>
+        </p>
+    </div>
+</div>
+<div class="row top-buffer">
     <div class="col-md-6">
         <highchart id="sectorChart" config="vm.chartConfig"></highchart>
     </div>
     <div class="col-md-6">
         <form name="editForm" class="form-horizontal">
-            <div class="form-group row" data-ng-repeat="item in vm.chartData">
-                <label class="control-label col-md-4">{{ item.name }}</label>
-                <div class="input-group col-md-4">
-                    <input type="text" data-ng-model="item.y" class="form-control " required readonly>
-                    <div class="input-group-btn">
-                        <button type="button" data-ng-click="vm.increase($index)" class="btn btn-default">+</button>
-                        <button type="button" data-ng-click="vm.decrease($index)" class="btn btn-default">-</button>
-                    </div>
-                </div>
-            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Sector</th>
+                        <th>Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="item in vm.chartData">
+                        <td>{{ item.name }}</td>
+                        <td>
+                            <div class="input-group col-md-8">
+                                <input type="text" data-ng-model="item.y" class="form-control " required readonly>
+                                <div class="input-group-btn">
+                                    <button type="button" data-ng-click="vm.increase($index)" class="btn btn-default">+</button>
+                                    <button type="button" data-ng-click="vm.decrease($index)" class="btn btn-default">-</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             <div class="form-group row">
                 <div class="col-md-offset-4 col-md-4">
                     <button data-ng-click="vm.saveChanges()" data-ng-disabled="editForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
@@ -58,4 +83,31 @@
         </form>
     </div>
 </div>
-
+<div class="row top-buffer" data-ng-show="vm.displayResults">
+    <div class="col-md-12">
+        <h2>
+            Results
+        </h2>
+    </div>
+    <div class="col-md-6">
+        <highchart config="vm.resultsChartConfig"></highchart>
+    </div>
+    <div class="col-md-6">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Sector</th>
+                    <th>Rating Count</th>
+                    <th>Average Rating</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="item in vm.resultsSectorSet">
+                    <td>{{ item.SectorName }}</td>
+                    <td>{{ item.RatingCount }}</td>
+                    <td>{{ item.AverageRating | number:2 }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

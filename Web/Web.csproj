@@ -312,6 +312,7 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\app\controllers\accountEditController.js" />
     <Content Include="Scripts\app\controllers\chapter1Controller.js" />
+    <Content Include="Scripts\app\controllers\chapter6Controller.js" />
     <Content Include="Scripts\app\controllers\chapter5Controller.js" />
     <Content Include="Scripts\app\controllers\chapter4Controller.js" />
     <Content Include="Scripts\app\controllers\sectorChartController.js" />

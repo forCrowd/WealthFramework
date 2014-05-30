@@ -13,6 +13,7 @@
 
         // Service methods
         $delegate.getLicenseSet = getLicenseSet;
+        $delegate.getSectorSet = getSectorSet;
 
         return $delegate;
 
@@ -20,6 +21,11 @@
 
         function getLicenseSet(resourcePoolId) {
             var url = '/api/ResourcePoolCustom/LicenseSet/' + resourcePoolId;
+            return $http.get(url);
+        }
+
+        function getSectorSet(resourcePoolId) {
+            var url = '/api/ResourcePoolCustom/SectorSet/' + resourcePoolId;
             return $http.get(url);
         }
     }

@@ -85,10 +85,6 @@ namespace BusinessObjects
 
         #region - Total Cost Index -
 
-        /// <summary>
-        /// Old formula for Total Cost Index calculation, based on Sales Price
-        /// Keep it for a while as a sample (maybe both Profit and Sales Price could be used)
-        /// </summary>
         public decimal TotalCostIndexPercentageWithSalesPrice
         {
             get
@@ -100,7 +96,11 @@ namespace BusinessObjects
             }
         }
 
-        public decimal TotalCostIndexPercentage
+        /// <summary>
+        /// Old formula for Total Cost Index calculation, based on Profit
+        /// Keep it for a while as a sample (maybe both Profit and Sales Price could be used)
+        /// </summary>
+        public decimal TotalCostIndexPercentageWithProfit
         {
             get
             {
@@ -115,7 +115,7 @@ namespace BusinessObjects
         {
             get
             {
-                return TotalCostIndexPercentage * NumberOfSales;
+                return TotalCostIndexPercentageWithSalesPrice * NumberOfSales;
             }
         }
 

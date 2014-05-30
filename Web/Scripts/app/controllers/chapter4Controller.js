@@ -3,19 +3,23 @@
 
     var controllerId = 'chapter4Controller';
     angular.module('main')
-        .controller(controllerId, ['userSectorRatingService', 'logger', chapter4Controller]);
+        .controller(controllerId, ['userSectorRatingService', 'resourcePoolService', 'logger', chapter4Controller]);
 
-    function chapter4Controller(userSectorRatingService, logger) {
+    function chapter4Controller(userSectorRatingService, resourcePoolService, logger) {
         logger = logger.forSource(controllerId);
 
         // TODO Static?
         var resourcePoolId = 6;
 
         var vm = this;
+        vm.chartConfig = null;
         vm.chartData = null;
         vm.decrease = decrease;
+        vm.displayResults = false;
         vm.increase = increase;
         vm.resetChanges = resetChanges;
+        vm.resultsChartConfig = null;
+        vm.resultsSectorSet = [];
         vm.saveChanges = saveChanges;
 
         initialize();
@@ -53,7 +57,23 @@
                         }
                     }
                 }
-            }
+            };
+
+            vm.resultsChartConfig = {
+                title: {
+                    text: ''
+                },
+                options: {
+                    chart: {
+                        type: 'pie'
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true
+                        }
+                    }
+                }
+            };
         }
 
         function loadChartData() {
@@ -75,6 +95,30 @@
 
                     vm.chartConfig.series = [{ data: vm.chartData }];
                     vm.chartConfig.loading = false;
+                });
+
+            // Results chart
+
+            vm.resultsChartConfig.loading = true;
+
+            resourcePoolService.getSectorSet(resourcePoolId)
+                .success(function (sectorSet) {
+
+                    vm.resultsSectorSet = sectorSet;
+
+                    // Convert sectorSet to chart data
+                    var resultsChartData = [];
+                    for (var i = 0; i < vm.resultsSectorSet.length; i++) {
+                        var chartDataItem = {
+                            name: vm.resultsSectorSet[i].SectorName,
+                            y: vm.resultsSectorSet[i].AverageRating
+                        }
+                        resultsChartData.push(chartDataItem);
+                    }
+
+                    vm.resultsChartConfig.series = [{ data: resultsChartData }];
+                    vm.resultsChartConfig.loading = false;
+
                 });
         }
 
@@ -105,6 +149,10 @@
                     userSectorRatingService.saveChanges()
                         .then(function () {
                             logger.logSuccess('Your changes have been saved!', null, true);
+
+                            vm.displayResults = true;
+
+                            loadChartData();
                         });
                 });
         }

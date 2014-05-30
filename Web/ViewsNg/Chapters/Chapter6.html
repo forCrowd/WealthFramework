@@ -15,7 +15,301 @@
 <div class="row top-buffer">
     <div class="col-md-12">
         <p>
-            &nbsp;
+            In the current system, since that’s the only way to get more resources, majority of the organizations aim to maximize their profits.
+            However, what is beneficial for the organization is exactly the opposite for the society.
+            Trying to maximize the profit means that the organization becomes more expensive to society in solving the issues.
+        </p>
+        <p>
+            In the following sample, there are two organizations that produce the same type of product with the same features.
+            The only difference is their Sales Price.
+        </p>
+    </div>
+</div>
+<div class="row top-buffer">
+    <div class="col-md-6">
+        <highchart config="vm.totalCostChartConfig"></highchart>
+    </div>
+    <div class="col-md-6">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Organization</th>
+                    <th>Production Cost</th>
+                    <th>Sales Price</th>
+                    <th>Number of Sales</th>
+                    <th>Total Income</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="item in vm.totalCostData.UserOrganizationSet">
+                    <td>{{ item.OrganizationName }}</td>
+                    <td>{{ item.OrganizationProductionCost }}</td>
+                    <td>{{ item.OrganizationSalesPrice }}</td>
+                    <td>{{ item.NumberOfSales }}</td>
+                    <td>{{ item.TotalProfit }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="btn-group">
+            <button data-ng-click="vm.increaseNumberOfSales()" class="btn btn-default">Increase Number of Sales</button>
+            <button data-ng-click="vm.decreaseNumberOfSales()" class="btn btn-default">Decrease Number of Sales</button>
+            <button data-ng-click="vm.resetNumberOfSales()" class="btn btn-default">Reset Number of Sales</button>
+        </div>
+    </div>
+</div>
+<div class="row top-buffer">
+    <div class="col-md-12">
+        <p>
+            Organization "Lowlands" solves the issue in a more cost-effective way the other organization.
+            However, since currently being more expensive also brings more resources, at the end of the race, "High Coast" will always have more resources than its competitor.
+        </p>
+        <p>
+            With this logic, we will keep encouring the organizations to maximize their profit and allocate less resources to the organizations that have a less cost on the society.
+            This is one of the paradoxes that we are having in the current system.
+        </p>
+    </div>
+</div>
+<div class="row top-buffer">
+    <div class="col-md-12">
+        <h2>
+            New target: Profit minimization
+        </h2>
+        <p>
+            Total Cost Index aims to balance this situation by calculating the difference between the sales prices and allocates the difference to the most cost-effective organizations as a compensation.
+        </p>
+        <p class="top-buffer text-center">
+            <i>
+                Please choose the compansation level for Total Cost Index. Sales Price will be multiplied by this percentage.
+            </i>
+        </p>
+    </div>
+</div>
+<div class="row top-buffer">
+    <div class="col-md-6">
+        <highchart config="vm.totalCost2ChartConfig"></highchart>
+    </div>
+    <div class="col-md-6">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Organization
+                    </th>
+                    <th>
+                        Production Cost
+                    </th>
+                    <th>
+                        Sales Price
+                    </th>
+                    <!--<th>
+                        Profit Percentage
+                    </th>-->
+                    <th>
+                        Sales Price incl. CMRP Tax
+                    </th>
+                    <th>
+                        Number of Sales
+                    </th>
+                    <th>
+                        Total Production Cost
+                    </th>
+                    <th>
+                        Total Sales Revenue
+                    </th>
+                    <th>
+                        Total Profit
+                    </th>
+                    <th>
+                        Total CMRP Tax
+                    </th>
+                    <th>
+                        Total Sales Revenue incl. CMRP Tax
+                    </th>
+                    <!--<th>
+                        Total Cost Index Percentage
+                    </th>
+                    <th>
+                        Total Cost Index with Nr of Sales
+                    </th>-->
+                    <th>
+                        <!--Total Cost Index with Nr of Sales Weighted-->
+                        Total Cost Index Percentage
+                    </th>
+                    <th>
+                        Total Cost Index Income
+                    </th>
+                    <th>
+                        Total Income (Profit + CMRP)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="item in vm.totalCostData.UserOrganizationSet">
+                    <td>
+                        {{ item.OrganizationName }}
+                    </td>
+                    <td>
+                        {{ item.OrganizationProductionCost | number:2 }}
+                    </td>
+                    <td>
+                        {{ item.OrganizationSalesPrice | number:2 }}
+                    </td>
+                    <!--<td>
+                        {{ item.OrganizationProfitPercentage | percentage:2 }}
+                    </td>-->
+                    <td>
+                        {{ item.SalesPriceIncludingResourcePoolTax | number:2 }}
+                    </td>
+                    <td>
+                        {{ item.NumberOfSales }}
+                    </td>
+                    <td>
+                        {{ item.TotalProductionCost | number:2 }}
+                    </td>
+                    <td>
+                        {{ item.TotalSalesRevenue | number:2 }}
+                    </td>
+                    <td>
+                        {{ item.TotalProfit | number:2 }}
+                    </td>
+                    <td>
+                        {{ item.TotalResourcePoolTax | number:2 }}
+                    </td>
+                    <td>
+                        {{ item.TotalSalesRevenueIncludingResourcePoolTax | number:2 }}
+                    </td>
+                    <!--<td>
+                        {{ item.TotalCostIndexPercentage | percentage:2 }}
+                    </td>
+                    <td>
+                        {{ item.TotalCostIndexPercentageWithNumberOfSales | percentage:2 }}
+                    </td>-->
+                    <td>
+                        {{ item.TotalCostIndexPercentageWithNumberOfSalesWeighted | percentage:2 }}
+                    </td>
+                    <td>
+                        {{ item.TotalCostIndexIncome | number:2 }}
+                    </td>
+                    <td>
+                        {{ item.TotalIncome | number:2 }}
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td>
+                        Total
+                    </td>
+                    <td>
+                        {{ vm.totalCostData.ResourcePoolProductionCost | number:2 }}
+                    </td>
+                    <td>
+                        {{ vm.totalCostData.ResourcePoolSalesPrice | number:2 }}
+                    </td>
+                    <!--<td>
+                        &nbsp;
+                    </td>-->
+                    <td>
+                        {{ vm.totalCostData.SalesPriceIncludingResourcePoolTax | number:2 }}
+                    </td>
+                    <td>
+                        {{ vm.totalCostData.NumberOfSales }}
+                    </td>
+                    <td>
+                        {{ vm.totalCostData.TotalProductionCost | number:2 }}
+                    </td>
+                    <td>
+                        {{ vm.totalCostData.TotalSalesRevenue | number:2 }}
+                    </td>
+                    <td>
+                        {{ vm.totalCostData.TotalProfit | number:2 }}
+                    </td>
+                    <td>
+                        {{ vm.totalCostData.TotalResourcePoolTax | number:2 }}
+                    </td>
+                    <td>
+                        {{ vm.totalCostData.TotalSalesRevenueIncludingResourcePoolTax | number:2 }}
+                    </td>
+                    <!--<td>
+                        &nbsp;
+                    </td>
+                    <td>
+                        &nbsp;
+                    </td>-->
+                    <td>
+                        &nbsp;
+                    </td>
+                    <td>
+                        {{ vm.totalCostData.TotalCostIndexIncome | number:2 }}
+                    </td>
+                    <td>
+                        {{ vm.totalCostData.TotalIncome | number:2 }}
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <!--<table class="table">
+            <thead>
+                <tr>
+                    <th>Organization</th>
+                    <th>Production Cost</th>
+                    <th>Sales Price</th>
+                    <th>Sales Price incl. CMRP Tax</th>
+                    <th>Number of Sales</th>
+                    <th>Total Income</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="item in vm.totalCostData.UserOrganizationSet">
+                    <td>{{ item.OrganizationName }}</td>
+                    <td>{{ item.OrganizationProductionCost }}</td>
+                    <td>{{ item.OrganizationSalesPrice }}</td>
+                    <td>{{ item.SalesPriceIncludingResourcePoolTax }}</td>
+                    <td>{{ item.NumberOfSales }}</td>
+                    <td>{{ item.TotalIncome }}</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>{{ vm.totalCostData.ResourcePoolProductionCost }}</td>
+                    <td>{{ vm.totalCostData.ResourcePoolSalesPrice }}</td>
+                    <td>{{ vm.totalCostData.SalesPriceIncludingResourcePoolTax }}</td>
+                    <td>{{ vm.totalCostData.NumberOfSales }}</td>
+                    <td>{{ vm.totalCostData.TotalIncome }}</td>
+                </tr>
+            </tfoot>
+        </table>-->
+        <div class="btn-group">
+            <button data-ng-click="vm.increaseNumberOfSales()" class="btn btn-default">Increase Number of Sales</button>
+            <button data-ng-click="vm.decreaseNumberOfSales()" class="btn btn-default">Decrease Number of Sales</button>
+            <button data-ng-click="vm.resetNumberOfSales()" class="btn btn-default">Reset Number of Sales</button>
+        </div>
+    </div>
+</div>
+<div class="row top-buffer">
+    <div class="col-md-12">
+        <p>
+            <b>Text from google docs</b><br />
+            In the current system, since that’s the only way to get more resources, majority of the organizations primary target is to maximize their profits.
+            However, this actually means that the organization gets more expensive to society in solving the issues.
+            This problem is one of the reasons that we have “Inequality” in the system.
+        </p>
+        <p>
+            If we can manage to create a system that helps us to support the organizations that can solve the issues with less cost to the society,
+            this may lead to a change in profit oriented structure and can reduce the gap between the rich and poor.
+        </p>
+        <p>
+            Organization “1x” solves the problem (produces and sells 100 phones) with the minimum possible cost (total revenue equals to total production cost).
+            Organization “4x” solves the same problem with four times higher cost.
+            Although “1x” shows a better performance in solving the problem (total cost to society is lesser), at the end of the race, “4x” will gain more resources than its competitor.
+            This is one of the paradoxes that we are having in the current system.
+        </p>
+        <p>
+            <b>Text from Overview page</b><br />
+            Total Cost Index: How much the organization costs to the society to provide its products / services?
+            In other words, how much the organization is profit oriented.
         </p>
     </div>
 </div>

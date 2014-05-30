@@ -19,7 +19,7 @@
             .when('/Chapters/3', { templateUrl: '/ViewsNg/Chapters/Chapter3.html' })
             .when('/Chapters/4', { templateUrl: '/ViewsNg/Chapters/Chapter4.html', controller: 'chapter4Controller as vm' })
             .when('/Chapters/5', { templateUrl: '/ViewsNg/Chapters/Chapter5.html', controller: 'chapter5Controller as vm' })
-            .when('/Chapters/6', { templateUrl: '/ViewsNg/Chapters/Chapter6.html' })
+            .when('/Chapters/6', { templateUrl: '/ViewsNg/Chapters/Chapter6.html', controller: 'chapter6Controller as vm' })
             .when('/Chapters/7', { templateUrl: '/ViewsNg/Chapters/Chapter7.html' })
             .when('/Chapters/8', { templateUrl: '/ViewsNg/Chapters/Chapter8.html' })
             .when('/Chapters/9', { templateUrl: '/ViewsNg/Chapters/Chapter9.html' })

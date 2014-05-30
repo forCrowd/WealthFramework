@@ -20,5 +20,17 @@ namespace Web.Controllers.Api
                 .AsEnumerable()
                 .Select(item => new License(item));
         }
+
+        // GET api/ResourcePoolCustom/SectorSet/1
+        [Route("SectorSet/{resourcePoolId:int}")]
+        public IEnumerable<Sector> GetSectorSet(int resourcePoolId)
+        {
+            var unitOfWork = new SectorUnitOfWork();
+            return unitOfWork
+                .AllLiveIncluding(item => item.UserSectorRatingSet)
+                .Where(item => item.ResourcePoolId == resourcePoolId)
+                .AsEnumerable()
+                .Select(item => new Sector(item));
+        }
     }
 }

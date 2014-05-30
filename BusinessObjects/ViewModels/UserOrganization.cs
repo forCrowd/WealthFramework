@@ -20,7 +20,7 @@
             TotalProfit = userOrganization.TotalProfit;
             TotalResourcePoolTax = userOrganization.TotalResourcePoolTax;
             TotalSalesRevenueIncludingResourcePoolTax = userOrganization.TotalSalesRevenueIncludingResourcePoolTax;
-            TotalCostIndexPercentage = userOrganization.TotalCostIndexPercentage;
+            TotalCostIndexPercentage = userOrganization.TotalCostIndexPercentageWithSalesPrice;
             TotalCostIndexPercentageWithNumberOfSales = userOrganization.TotalCostIndexPercentageWithNumberOfSales;
             TotalCostIndexPercentageWithNumberOfSalesWeighted = userOrganization.TotalCostIndexPercentageWithNumberOfSalesWeighted;
             TotalCostIndexIncome = userOrganization.TotalCostIndexIncome;

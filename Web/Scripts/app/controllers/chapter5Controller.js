@@ -35,6 +35,14 @@
             loadChartData();
 
             refreshTimeout = $timeout(refreshPage, 5000);
+
+            // When the DOM element is removed from the page,
+            // AngularJS will trigger the $destroy event on
+            // the scope. This gives us a chance to cancel any
+            // pending timer that we may have.
+            $scope.$on("$destroy", function (event) {
+                $timeout.cancel(refreshTimeout);
+            });
         }
 
         function refreshPage() {
@@ -45,14 +53,6 @@
 
             refreshTimeout = $timeout(refreshPage, 1000);
         }
-
-        // When the DOM element is removed from the page,
-        // AngularJS will trigger the $destroy event on
-        // the scope. This gives us a chance to cancel any
-        // pending timer that we may have.
-        $scope.$on("$destroy", function (event) {
-            $timeout.cancel(refreshTimeout);
-        });
 
         function decrease(index) {
             vm.chartData[index].y = vm.chartData[index].y - 5 < 0

@@ -8,6 +8,7 @@ An experimental resource management system that aims to provide a sustainable ec
 
 **0.12**
 * Chapters
+* TotalCostIndex calculation is now based on Sales Price again, instead of Profit
 
 **0.11.12**
 * Text updates

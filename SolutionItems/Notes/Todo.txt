@@ -34,20 +34,7 @@ or always calculate the total average based on invidiuals percentage? or both?
 . updrage to .net 4.5.1? APM doesn't have it right now
 http://msdn.microsoft.com/en-us/library/hh925568%28v=vs.110%29.aspx
 
-. web essentials; http://vswebessentials.com/
-. kendo ui; http://a.shinynew.me/post/82897588209/kendo-ui-core-the-free-jquery-widget-library
-. canonpy; web testing
-. webapi;
-http://www.asp.net/web-api/overview/working-with-http
-http://www.asp.net/web-api/overview/formats-and-model-binding
-http://www.asp.net/web-api/overview/testing-and-debugging
-. validation improvements;
-http://www.danielroot.info/2013/09/hooking-angularjs-validation-to-aspnet.html
-. http://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-web-api
-. http://www.asp.net/web-api/overview/security/preventing-cross-site-request-forgery-%28csrf%29-attacks
 . validateantiforgerytoken + bind attributes in odata controller?
-. http://www.asp.net/identity/overview/extensibility/overview-of-custom-storage-providers-for-aspnet-identity
-. http://maxgershkovich.wordpress.com/2013/12/12/microsoft-mvc-asp-net-identity-with-telerik-openaccess-awesomeness/
 
 . odata - paging (also filters?)
 querayable vs enablequerysupport
@@ -66,11 +53,10 @@ config.EnableQuerySupport(queryAttribute);
 
 . try to add indexes dynamically?
 
+. try to have a standard for css usage + html layout formats + also js script conventions
+
 . vs update 2 changes?
 .. asp.net identity
-
-. speech synt;
-http://msdn.microsoft.com/en-us/library/system.speech.synthesis.speechsynthesizer.aspx
 
 ---
 #1 - Profit Oriented Economy
@@ -78,13 +64,15 @@ http://msdn.microsoft.com/en-us/library/system.speech.synthesis.speechsynthesize
 #2 - Burden of the Consumer
 
 #4 - Seeing the overall
-display the average ratings
+update the text
 
 #5 - Global Knowledge Database
 default ratings should 50/50
 make the total always 100%
 
-#6 - Profit: Good? Bad & Ugly
+#6 - Total Cost Index: Profit Nonprofit Paradox
+High Coast vs. Most Effect
+let the cmrp be updated!
 
 #7 - Fair Share?
 
