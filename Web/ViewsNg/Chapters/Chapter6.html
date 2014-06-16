@@ -60,11 +60,11 @@
 <div class="row top-buffer">
     <div class="col-md-12">
         <p>
-            Organization "Lowlands" solves the issue in a more cost-effective way the other organization.
-            However, since currently being more expensive also brings more resources, at the end of the race, "High Coast" will always have more resources than its competitor.
+            Although organization "Lowlands" solves the issue in a more cost-effective way, since being more expensive to the society means more resources,
+            at the end of the race, "High Coast" will always have more resources than its competitor.
         </p>
         <p>
-            With this logic, we will keep encouring the organizations to maximize their profit and allocate less resources to the organizations that have a less cost on the society.
+            With this logic, we will keep encouraging the organizations to maximize their profit and allocate limited resources to the organizations that have a less cost on the society.
             This is one of the paradoxes that we are having in the current system.
         </p>
     </div>
@@ -79,9 +79,16 @@
         </p>
         <p class="top-buffer text-center">
             <i>
-                Please choose the compansation level for Total Cost Index. Sales Price will be multiplied by this percentage.
+                Please choose the compensation level for Total Cost Index. Sales Price will be multiplied by this percentage.
             </i>
         </p>
+        <div class="input-group col-md-offset-5 col-md-3">
+            <input type="text" data-ng-model="vm.totalCostData.ResourcePoolRate" class="form-control" required readonly>
+            <div class="input-group-btn">
+                <button type="button" data-ng-click="vm.increaseResourcePoolRate()" class="btn btn-default">+</button>
+                <button type="button" data-ng-click="vm.decreaseResourcePoolRate()" class="btn btn-default">-</button>
+            </div>
+        </div>        
     </div>
 </div>
 <div class="row top-buffer">
@@ -286,30 +293,5 @@
             <button data-ng-click="vm.decreaseNumberOfSales()" class="btn btn-default">Decrease Number of Sales</button>
             <button data-ng-click="vm.resetNumberOfSales()" class="btn btn-default">Reset Number of Sales</button>
         </div>
-    </div>
-</div>
-<div class="row top-buffer">
-    <div class="col-md-12">
-        <p>
-            <b>Text from google docs</b><br />
-            In the current system, since that’s the only way to get more resources, majority of the organizations primary target is to maximize their profits.
-            However, this actually means that the organization gets more expensive to society in solving the issues.
-            This problem is one of the reasons that we have “Inequality” in the system.
-        </p>
-        <p>
-            If we can manage to create a system that helps us to support the organizations that can solve the issues with less cost to the society,
-            this may lead to a change in profit oriented structure and can reduce the gap between the rich and poor.
-        </p>
-        <p>
-            Organization “1x” solves the problem (produces and sells 100 phones) with the minimum possible cost (total revenue equals to total production cost).
-            Organization “4x” solves the same problem with four times higher cost.
-            Although “1x” shows a better performance in solving the problem (total cost to society is lesser), at the end of the race, “4x” will gain more resources than its competitor.
-            This is one of the paradoxes that we are having in the current system.
-        </p>
-        <p>
-            <b>Text from Overview page</b><br />
-            Total Cost Index: How much the organization costs to the society to provide its products / services?
-            In other words, how much the organization is profit oriented.
-        </p>
     </div>
 </div>

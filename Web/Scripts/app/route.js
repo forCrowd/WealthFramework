@@ -23,7 +23,7 @@
             .when('/Chapters/7', { templateUrl: '/ViewsNg/Chapters/Chapter7.html' })
             .when('/Chapters/8', { templateUrl: '/ViewsNg/Chapters/Chapter8.html' })
             .when('/Chapters/9', { templateUrl: '/ViewsNg/Chapters/Chapter9.html' })
-            .when('/Chapters/10', { templateUrl: '/ViewsNg/Chapters/Chapter10.html' })
+            .when('/Chapters/10', { templateUrl: '/ViewsNg/Chapters/Chapter10.html', controller: 'chapter10Controller as vm' })
 
             .when('/User/Login', { templateUrl: '/ViewsNg/User/Login.html', controller: 'loginController as vm' })
             .when('/User/Register', { templateUrl: '/ViewsNg/User/Register.html', controller: 'registerController as vm' })

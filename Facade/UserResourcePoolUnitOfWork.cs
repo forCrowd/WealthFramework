@@ -94,9 +94,21 @@
             return await Context.SaveChangesAsync();
         }
 
+        public async Task<int> IncreaseResourcePoolRate(UserResourcePool userResourcePool)
+        {
+            userResourcePool.ResourcePoolRate += 5;
+            return await Context.SaveChangesAsync();
+        }
+
         public async Task<int> DecreaseNumberOfSales(UserResourcePool userResourcePool)
         {
             UpdateNumberOfSales(userResourcePool, UpdateNumberOfSalesActions.Decrease);
+            return await Context.SaveChangesAsync();
+        }
+
+        public async Task<int> DecreaseResourcePoolRate(UserResourcePool userResourcePool)
+        {
+            userResourcePool.ResourcePoolRate -= 5;
             return await Context.SaveChangesAsync();
         }
 

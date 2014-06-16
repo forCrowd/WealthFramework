@@ -111,6 +111,7 @@
     <Compile Include="Metadata\UserSectorRatingMetadata.cs" />
     <Compile Include="ViewModels\Sector.cs" />
     <Compile Include="ViewModels\License.cs" />
+    <Compile Include="ViewModels\ResourcePool.cs" />
     <Compile Include="ViewModels\UserResourcePool.cs" />
     <Compile Include="ViewModels\UserOrganization.cs" />
     <Compile Include="UserResourcePoolType.cs" />

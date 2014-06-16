@@ -58,32 +58,15 @@ config.EnableQuerySupport(queryAttribute);
 . vs update 2 changes?
 .. asp.net identity
 
----
-#1 - Profit Oriented Economy
+. appveyor
 
-#2 - Burden of the Consumer
+. try turning off lazy loading - then how it brings the data (resourcepool for instance?)
+.. currently there seem no good case that lazy loading is beneficial?
+. and how about disabling proxy classes? what will be the difference exactly?
 
-#4 - Seeing the overall
-update the text
+. replace userresourcepool - totalcostindexratingaverage with resourcePool.TotalCostIndexRatingAverage!
 
-#5 - Global Knowledge Database
-default ratings should 50/50
-make the total always 100%
+. check spelling of the content
 
-#6 - Total Cost Index: Profit Nonprofit Paradox
-High Coast vs. Most Effect
-let the cmrp be updated!
-
-#7 - Fair Share?
-
-#8 - Quality?
-
-#9 - Employee?
-
-#10 - Customer
-
-#11 - Distance
-
-#12 - Roadmap
-
-#13 - Risks?
+. default license ratings should be 50/50
+. and ratings total should always be 100%

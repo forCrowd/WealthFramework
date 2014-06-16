@@ -27,6 +27,83 @@ namespace BusinessObjects
 
         /* */
 
+        public decimal TotalCostIndexRatingAverage
+        {
+            get
+            {
+                if (!UserResourcePoolSet.Any())
+                    return 0;
+
+                return UserResourcePoolSet.Average(item => item.TotalCostIndexRating);
+            }
+        }
+
+        public decimal KnowledgeIndexRatingAverage
+        {
+            get
+            {
+                if (!UserResourcePoolSet.Any())
+                    return 0;
+
+                return UserResourcePoolSet.Average(item => item.KnowledgeIndexRating);
+            }
+        }
+
+        public decimal QualityIndexRatingAverage
+        {
+            get
+            {
+                if (!UserResourcePoolSet.Any())
+                    return 0;
+
+                return UserResourcePoolSet.Average(item => item.QualityIndexRating);
+            }
+        }
+
+        public decimal SectorIndexRatingAverage
+        {
+            get
+            {
+                if (!UserResourcePoolSet.Any())
+                    return 0;
+
+                return UserResourcePoolSet.Average(item => item.SectorIndexRating);
+            }
+        }
+
+        public decimal EmployeeSatisfactionIndexRatingAverage
+        {
+            get
+            {
+                if (!UserResourcePoolSet.Any())
+                    return 0;
+
+                return UserResourcePoolSet.Average(item => item.EmployeeSatisfactionIndexRating);
+            }
+        }
+
+        public decimal CustomerSatisfactionIndexRatingAverage
+        {
+            get
+            {
+                if (!UserResourcePoolSet.Any())
+                    return 0;
+
+                return UserResourcePoolSet.Average(item => item.CustomerSatisfactionIndexRating);
+            }
+        }
+
+        public decimal DistanceIndexRatingAverage
+        {
+            get
+            {
+                if (!UserResourcePoolSet.Any())
+                    return 0;
+
+                return UserResourcePoolSet.Average(item => item.DistanceIndexRating);
+            }
+        }
+
         public IEnumerable<Organization> OrganizationSet
         {
             get { return SectorSet.SelectMany(sector => sector.OrganizationSet); }

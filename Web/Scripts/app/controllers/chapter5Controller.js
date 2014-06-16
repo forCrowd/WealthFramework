@@ -87,7 +87,7 @@
                     }
                 },
                 series: [
-                    { name: "Gollem's Precious", data: [0] },
+                    { name: "My Precious", data: [0] },
                     { name: "Vicky's Secret", data: [0] },
                     { name: 'Imperial Stars', data: [0] },
                     { name: 'Xplore Eldorado', data: [0] }

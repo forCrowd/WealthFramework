@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace BusinessObjects.ViewModels
+﻿namespace BusinessObjects.ViewModels
 {
     public class License
     {
@@ -10,7 +7,7 @@ namespace BusinessObjects.ViewModels
         public License(BusinessObjects.License license)
         {
             LicenseName = license.Name;
-            RatingCount = license.UserLicenseRatingSet.Count();
+            RatingCount = license.UserLicenseRatingSet.Count;
             AverageRating = license.GetAverageRating();
         }
 

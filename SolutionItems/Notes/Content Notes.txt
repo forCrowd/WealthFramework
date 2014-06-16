@@ -1,0 +1,16 @@
+﻿Chapters
+
+#1 - Profit Oriented Economy
+Current Formula: Lower the cost, Maximize the Sales Price, Multiply it with Sales Number
+try to make the visual of the formula (lowering cost - maximizing sales price * number of sales) and it needs to be extended
+
+#2 - Burden of the Consumer
+[A game that the user tries to find the correct organization - Shows the benefits of the organizations for a limited time, hide them and ask the user to find the best one?]
+
+#6 - Total Cost Index: Profit Nonprofit Paradox
+High Coast vs. Most Effect
+
+#7 - Quality?
+The consumers will vote for the importance of the parameter(s). The experts should measure the parameters and enter their results to the system. The system should make the distribution based on these inputs.
+
+Check Overview page + Wealth Economy docs in google docs

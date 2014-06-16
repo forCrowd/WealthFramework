@@ -24,60 +24,63 @@
         </p>
     </div>
 </div>
-<div class="row top-buffer">
-    <div class="col-md-6">
-        <highchart config="vm.chartConfig"></highchart>
+<div class="hidden">
+     <!--Chart--> 
+    <div class="row top-buffer">
+        <div class="col-md-6">
+            <highchart config="vm.chartConfig"></highchart>
+        </div>
+        <div class="col-md-6">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th colspan="2">Organization Profile</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Name</td>
+                        <td>Unknown Profiting Object</td>
+                    </tr>
+                    <tr>
+                        <td>Sector</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Product / Service Quality</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Employee Satisfaction</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Customer Satisfaction</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Number of Sales</td>
+                        <td>{{ vm.chartData[0].data[0] }}</td>
+                    </tr>
+                    <tr>
+                        <td>Profit per Unit</td>
+                        <td>50</td>
+                    </tr>
+                    <tr>
+                        <td>Total Profit</td>
+                        <td>{{ vm.chartData[0].data[0] * 50 }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div class="col-md-6">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th colspan="2">Organization Profile</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Name</td>
-                    <td>Unknown Profiting Object</td>
-                </tr>
-                <tr>
-                    <td>Sector</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>Product / Service Quality</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>Employee Satisfaction</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>Customer Satisfaction</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>Number of Sales</td>
-                    <td>{{ vm.chartData[0].data[0] }}</td>
-                </tr>
-                <tr>
-                    <td>Profit per Unit</td>
-                    <td>50</td>
-                </tr>
-                <tr>
-                    <td>Total Profit</td>
-                    <td>{{ vm.chartData[0].data[0] * 50 }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="text-center">
-            <div class="btn-group">
-                <button type="button" data-ng-click="vm.increase()" class="btn btn-default">+</button>
-                <button type="button" data-ng-click="vm.decrease()" class="btn btn-default">-</button>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-center">
+                <div class="btn-group">
+                    <button type="button" data-ng-click="vm.increase()" class="btn btn-default">+</button>
+                    <button type="button" data-ng-click="vm.decrease()" class="btn btn-default">-</button>
+                </div>
             </div>
         </div>
     </div>

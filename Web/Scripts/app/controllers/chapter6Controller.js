@@ -19,7 +19,9 @@
         vm.totalCostChartConfig = null;
         vm.totalCost2ChartConfig = null;
         vm.decreaseNumberOfSales = decreaseNumberOfSales;
+        vm.decreaseResourcePoolRate = decreaseResourcePoolRate;
         vm.increaseNumberOfSales = increaseNumberOfSales;
+        vm.increaseResourcePoolRate = increaseResourcePoolRate;
         vm.resetNumberOfSales = resetNumberOfSales;
 
         initialize();
@@ -48,8 +50,22 @@
                 });
         }
 
+        function decreaseResourcePoolRate() {
+            userResourcePoolService.decreaseResourcePoolRate(vm.totalCostData.Id)
+                .success(function () {
+                    refreshChartData();
+                });
+        }
+
         function increaseNumberOfSales() {
             userResourcePoolService.increaseNumberOfSales(vm.totalCostData.Id)
+                .success(function () {
+                    refreshChartData();
+                });
+        }
+
+        function increaseResourcePoolRate() {
+            userResourcePoolService.increaseResourcePoolRate(vm.totalCostData.Id)
                 .success(function () {
                     refreshChartData();
                 });
@@ -104,7 +120,7 @@
             //        }
             //    },
             //    series: [
-            //        { name: "Gollem's Precious", data: [0] },
+            //        { name: "My Precious", data: [0] },
             //        { name: "Vicky's Secret", data: [0] },
             //        { name: 'Imperial Stars', data: [0] },
             //        { name: 'Xplore Eldorado', data: [0] }
@@ -204,7 +220,7 @@
             vm.totalCostChartConfig.loading = true;
             vm.totalCost2ChartConfig.loading = true;
 
-            userResourcePoolService.getUserResourcePoolByResourcePoolId(resourcePoolId)
+            userResourcePoolService.getUserResourcePoolCustomByResourcePoolId(resourcePoolId)
                 .success(function (userResourcePool) {
                     vm.totalCostData = userResourcePool;
 
@@ -266,7 +282,7 @@
             vm.totalCostChartConfig.loading = true;
             vm.totalCost2ChartConfig.loading = true;
 
-            userResourcePoolService.getUserResourcePoolByResourcePoolId(resourcePoolId)
+            userResourcePoolService.getUserResourcePoolCustomByResourcePoolId(resourcePoolId)
                 .success(function (userResourcePool) {
                     vm.totalCostData = userResourcePool;
 

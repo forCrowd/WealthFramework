@@ -277,6 +277,7 @@
     <Compile Include="Controllers\OData\ResourcePoolController.cs" />
     <Compile Include="Controllers\OData\LicenseController.cs" />
     <Compile Include="Controllers\OData\UserController.cs" />
+    <Compile Include="Controllers\OData\UserLicenseRatingController.cs" />
     <Compile Include="Controllers\OData\UserSectorRatingController.cs" />
     <Compile Include="Controllers\OData\UserResourcePoolController.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
@@ -312,6 +313,7 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\app\controllers\accountEditController.js" />
     <Content Include="Scripts\app\controllers\chapter1Controller.js" />
+    <Content Include="Scripts\app\controllers\chapter10Controller.js" />
     <Content Include="Scripts\app\controllers\chapter6Controller.js" />
     <Content Include="Scripts\app\controllers\chapter5Controller.js" />
     <Content Include="Scripts\app\controllers\chapter4Controller.js" />

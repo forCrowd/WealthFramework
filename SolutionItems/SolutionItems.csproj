@@ -35,6 +35,8 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="Notes\Content Notes.txt" />
+    <Content Include="Notes\Possible Indexes.txt" />
     <Content Include="Notes\Troubleshoot.txt" />
     <Content Include="Notes\Notes.txt" />
     <Content Include="Notes\Todo.txt" />

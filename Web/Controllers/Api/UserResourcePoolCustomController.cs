@@ -1,5 +1,7 @@
-﻿using BusinessObjects.ViewModels;
+﻿using BusinessObjects.Dto;
+using BusinessObjects.ViewModels;
 using Facade;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -16,15 +18,26 @@ namespace Web.Controllers.Api
 
         public UserResourcePoolUnitOfWork UserResourcePoolUnitOfWork { get; private set; }
 
-        // GET api/UserResourcePoolCustom/GetUserResourcePoolByResourcePoolId/1
-        [Route("GetUserResourcePoolByResourcePoolId/{resourcePoolId:int}")]
-        public UserResourcePool GetUserResourcePoolByResourcePoolId(int resourcePoolId)
+        // GET api/UserResourcePoolCustom/GetUserResourcePoolCustomByResourcePoolId/1
+        [Route("GetUserResourcePoolCustomByResourcePoolId/{resourcePoolId:int}")]
+        public UserResourcePool GetUserResourcePoolCustomByResourcePoolId(int resourcePoolId)
         {
             var unitOfWork = new UserResourcePoolUnitOfWork();
             var userResourcePool = unitOfWork.AllLive
                 .SingleOrDefault(item => item.UserId == ApplicationUser.Id
                     && item.ResourcePoolId == resourcePoolId);
             return new UserResourcePool(userResourcePool);
+        }
+
+        // GET api/UserResourcePoolCustom/GetUserResourcePoolDtoByResourcePoolId/1
+        [Route("GetUserResourcePoolDtoByResourcePoolId/{resourcePoolId:int}")]
+        public UserResourcePoolDto GetUserResourcePoolDtoByResourcePoolId(int resourcePoolId)
+        {
+            var unitOfWork = new UserResourcePoolUnitOfWork();
+            var userResourcePool = unitOfWork.AllLive
+                .SingleOrDefault(item => item.UserId == ApplicationUser.Id
+                    && item.ResourcePoolId == resourcePoolId);
+            return new UserResourcePoolDto(userResourcePool);
         }
 
         // POST api/UserResourcePoolCustom/IncreaseNumberOfSales/1
@@ -43,6 +56,22 @@ namespace Web.Controllers.Api
             return Ok();
         }
 
+        // POST api/UserResourcePoolCustom/IncreaseResourcePoolRate/1
+        [HttpPost]
+        [Route("IncreaseResourcePoolRate/{id:int}")]
+        public async Task<IHttpActionResult> IncreaseResourcePoolRate(int id)
+        {
+            var unitOfWork = new UserResourcePoolUnitOfWork();
+            var userResourcePool = await unitOfWork.FindAsync(id);
+
+            if (userResourcePool == null)
+                return NotFound();
+
+            await unitOfWork.IncreaseResourcePoolRate(userResourcePool);
+
+            return Ok();
+        }
+
         // POST api/UserResourcePoolCustom/DecreaseNumberOfSales/1
         [HttpPost]
         [Route("DecreaseNumberOfSales/{id:int}")]
@@ -55,6 +84,22 @@ namespace Web.Controllers.Api
                 return NotFound();
 
             await unitOfWork.DecreaseNumberOfSales(userResourcePool);
+
+            return Ok();
+        }
+
+        // POST api/UserResourcePoolCustom/DecreaseResourcePoolRate/1
+        [HttpPost]
+        [Route("DecreaseResourcePoolRate/{id:int}")]
+        public async Task<IHttpActionResult> DecreaseResourcePoolRate(int id)
+        {
+            var unitOfWork = new UserResourcePoolUnitOfWork();
+            var userResourcePool = await unitOfWork.FindAsync(id);
+
+            if (userResourcePool == null)
+                return NotFound();
+
+            await unitOfWork.DecreaseResourcePoolRate(userResourcePool);
 
             return Ok();
         }

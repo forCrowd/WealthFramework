@@ -12,17 +12,25 @@
         logger = logger.forSource(serviceId);
 
         // Service methods
-        $delegate.getUserResourcePoolByResourcePoolId = getUserResourcePoolByResourcePoolId;
+        $delegate.getUserResourcePoolCustomByResourcePoolId = getUserResourcePoolCustomByResourcePoolId;
+        $delegate.getUserResourcePoolDtoByResourcePoolId = getUserResourcePoolDtoByResourcePoolId;
         $delegate.decreaseNumberOfSales = decreaseNumberOfSales;
+        $delegate.decreaseResourcePoolRate = decreaseResourcePoolRate;
         $delegate.increaseNumberOfSales = increaseNumberOfSales;
+        $delegate.increaseResourcePoolRate = increaseResourcePoolRate;
         $delegate.resetNumberOfSales = resetNumberOfSales;
 
         return $delegate;
 
         /*** Implementations ***/
 
-        function getUserResourcePoolByResourcePoolId(resourcePoolId) {
-            var url = '/api/UserResourcePoolCustom/GetUserResourcePoolByResourcePoolId/' + resourcePoolId;
+        function getUserResourcePoolCustomByResourcePoolId(resourcePoolId) {
+            var url = '/api/UserResourcePoolCustom/GetUserResourcePoolCustomByResourcePoolId/' + resourcePoolId;
+            return $http.get(url);
+        }
+
+        function getUserResourcePoolDtoByResourcePoolId(resourcePoolId) {
+            var url = '/api/UserResourcePoolCustom/GetUserResourcePoolDtoByResourcePoolId/' + resourcePoolId;
             return $http.get(url);
         }
 
@@ -31,8 +39,18 @@
             return $http.post(url);
         }
 
+        function decreaseResourcePoolRate(userResourcePoolId) {
+            var url = '/api/UserResourcePoolCustom/DecreaseResourcePoolRate/' + userResourcePoolId;
+            return $http.post(url);
+        }
+
         function increaseNumberOfSales(userResourcePoolId) {
             var url = '/api/UserResourcePoolCustom/IncreaseNumberOfSales/' + userResourcePoolId;
+            return $http.post(url);
+        }
+
+        function increaseResourcePoolRate(userResourcePoolId) {
+            var url = '/api/UserResourcePoolCustom/IncreaseResourcePoolRate/' + userResourcePoolId;
             return $http.post(url);
         }
 
