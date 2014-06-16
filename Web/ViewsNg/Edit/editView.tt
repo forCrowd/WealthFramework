@@ -38,7 +38,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 	var entityDeleteMethod = string.Format("delete{0}", entityTypeName);
 	var primaryKey = entityType.KeyMembers[0];
     var simpleProperties = typeMapper.GetSimpleProperties(entityType);
-	var metadataProperties = typeMapper.GetMetadataProperties(entityTypeName);
+	var businessObjectProperties = typeMapper.GetBusinessObjectProperties(entityTypeName);
 	var outputFileName = string.Format(@"{0}Edit.html", entityVariable);
 
     fileManager.StartNewFile(outputFileName);
@@ -53,13 +53,13 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 <#
     foreach (var property in simpleProperties)
     {
-		// Get metadata property
-		var metadataProperty = metadataProperties.SingleOrDefault(p => p.Name == property.Name);
+		// Get business object property
+		var businessObjectProperty = businessObjectProperties.SingleOrDefault(p => p.Name == property.Name);
 
 		// Display the property?
-		if (metadataProperty != null)
+		if (businessObjectProperty != null)
         {
-			var displayOnEditAttribute = typeMapper.GetAttribute<DisplayOnEditViewAttribute>(metadataProperty);
+			var displayOnEditAttribute = typeMapper.GetAttribute<DisplayOnEditViewAttribute>(businessObjectProperty);
 			if (displayOnEditAttribute != null && !displayOnEditAttribute.Value)
 				continue;
         }
@@ -147,8 +147,8 @@ string GetPropertyInput(EdmProperty property, TypeMapper typeMapper, CodeStringG
 		var relatedEntitySet = string.Format("{0}Set", relatedEntityVariable);
 		var relatedEntityType = (EntityType)((RefType)navigationProperty.ToEndMember.TypeUsage.EdmType).ElementType;
 		var relatedEntityTypeName = typeMapper.GetTypeName(relatedEntityType);
-		var relatedEntityMetadataType = typeMapper.GetMetadataType(relatedEntityTypeName);
-		var defaultPropertyAttribute = typeMapper.GetAttribute<DefaultPropertyAttribute>(relatedEntityMetadataType);
+		var relatedEntityBusinessObjectType = typeMapper.GetBusinessObjectType(relatedEntityTypeName);
+		var defaultPropertyAttribute = typeMapper.GetAttribute<DefaultPropertyAttribute>(relatedEntityBusinessObjectType);
 
 		// Use the value of DefaultProperty attribute of the related entity
 		if (defaultPropertyAttribute != null)

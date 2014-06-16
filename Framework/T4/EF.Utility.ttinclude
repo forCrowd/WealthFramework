@@ -244,15 +244,15 @@ public class CodeStringGenerator
 		
 		if (navigationProperty == null)
 		{
-			var metadataProperties = _typeMapper.GetMetadataProperties(declaringTypeName);
-			var metadataProperty = metadataProperties.SingleOrDefault(p => p.Name == property.Name);
+			var businessObjectProperties = _typeMapper.GetBusinessObjectProperties(declaringTypeName);
+			var businessObjectProperty = businessObjectProperties.SingleOrDefault(p => p.Name == property.Name);
 
-			if (metadataProperty != null)
+			if (businessObjectProperty != null)
 			{
-				var displayAttribute = _typeMapper.GetAttribute<System.ComponentModel.DataAnnotations.DisplayAttribute>(metadataProperty);
+				var displayAttribute = _typeMapper.GetAttribute<System.ComponentModel.DataAnnotations.DisplayAttribute>(businessObjectProperty);
 				if (displayAttribute != null && !string.IsNullOrWhiteSpace(displayAttribute.Name))
 				{
-					// 2. Use the value of Display attribute of the metadata class
+					// 2. Use the value of Display attribute of the business object class
 					propertyTitle = displayAttribute.Name;
 				}
 			}
@@ -266,10 +266,10 @@ public class CodeStringGenerator
 			propertyTitle = relatedEntityTypeName;
 
 			// Check DefaultProperty attribute of the related entity
-			var relatedEntityMetadataType = _typeMapper.GetMetadataType(relatedEntityTypeName);
-			var relatedEntityMetadataProperties = _typeMapper.GetMetadataProperties(relatedEntityTypeName);
+			var relatedEntityBusinessObjectType = _typeMapper.GetBusinessObjectType(relatedEntityTypeName);
+			var relatedEntityBusinessObjectProperties = _typeMapper.GetBusinessObjectProperties(relatedEntityTypeName);
 
-			var defaultPropertyAttribute = _typeMapper.GetAttribute<DefaultPropertyAttribute>(relatedEntityMetadataType);
+			var defaultPropertyAttribute = _typeMapper.GetAttribute<DefaultPropertyAttribute>(relatedEntityBusinessObjectType);
 
 			if (defaultPropertyAttribute != null)
 			{
@@ -277,7 +277,7 @@ public class CodeStringGenerator
 				propertyTitle = defaultPropertyAttribute.Value;
 
 				// Check Display attribute of the DefaultProperty
-				var defaultProperty = relatedEntityMetadataProperties.SingleOrDefault(p => p.Name == defaultPropertyAttribute.Value);
+				var defaultProperty = relatedEntityBusinessObjectProperties.SingleOrDefault(p => p.Name == defaultPropertyAttribute.Value);
 
 				if (defaultProperty != null)
 				{
@@ -597,6 +597,16 @@ public class TypeMapper
 		var assembly = typeof(BusinessObjects.IEntity).Assembly;
 		var types = assembly.GetTypes();
 		return types.Single(type => type.Name == entityTypeName && type.Namespace == "BusinessObjects");
+	}
+
+	public IEnumerable<PropertyInfo> GetBusinessObjectProperties(string entityTypeName)
+    {
+		var businessObjectType = GetBusinessObjectType(entityTypeName);
+
+		if (businessObjectType == null)
+			return null;
+		
+		return businessObjectType.GetProperties();	
 	}
 
 	public Type GetMetadataType(string entityTypeName)

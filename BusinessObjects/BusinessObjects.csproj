@@ -114,7 +114,6 @@
     <Compile Include="ViewModels\ResourcePool.cs" />
     <Compile Include="ViewModels\UserResourcePool.cs" />
     <Compile Include="ViewModels\UserOrganization.cs" />
-    <Compile Include="UserResourcePoolType.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="WealthEconomyContext.cs" />
   </ItemGroup>

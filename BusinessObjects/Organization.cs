@@ -1,11 +1,12 @@
 namespace BusinessObjects
 {
-    using BusinessObjects.Metadata;
+    using BusinessObjects.Metadata.Attributes;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
-    [MetadataType(typeof(OrganizationMetadata))]
+    [DefaultProperty("Name")]
+    // [ODataControllerAuthorization("Administrator")]
     public partial class Organization : BaseEntity
     {
         public Organization()
@@ -13,11 +14,23 @@ namespace BusinessObjects
             this.UserOrganizationSet = new HashSet<UserOrganization>();
         }
 
+        [DisplayOnListView(false)]
+        [DisplayOnEditView(false)]
         public int Id { get; set; }
+
         public short SectorId { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        [Display(Name = "Organization")]
         public string Name { get; set; }
+
+        [Display(Name = "Production Cost")]
         public decimal ProductionCost { get; set; }
+
+        [Display(Name = "Sales Price")]
         public decimal SalesPrice { get; set; }
+
         public short LicenseId { get; set; }
         
         public virtual Sector Sector { get; set; }
@@ -58,27 +71,23 @@ namespace BusinessObjects
         /// <summary>
         /// a.k.a Markup percentage
         /// </summary>
-        [Display(Name = "Profit Percentage")]
         public decimal ProfitPercentage
         {
             get
             {
-                if (ProductionCost == 0)
-                    return 0;
-
-                return Profit / ProductionCost;
+                return ProductionCost == 0
+                    ? 0
+                    : Profit / ProductionCost;
             }
         }
 
-        [Display(Name = "Profit Margin")]
         public decimal ProfitMargin
         {
             get
             {
-                if (SalesPrice == 0)
-                    return 0;
-
-                return Profit / SalesPrice;
+                return SalesPrice == 0
+                    ? 0
+                    : Profit / SalesPrice;
             }
         }
     }

@@ -1,25 +1,33 @@
 namespace BusinessObjects
 {
-    using System;
+    using BusinessObjects.Metadata.Attributes;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
-    using BusinessObjects.Metadata;
-    using System.ComponentModel.DataAnnotations.Schema;
 
-    [MetadataType(typeof(ResourcePoolMetadata))]
+    [DefaultProperty("Name")]
+    // [ODataControllerAuthorization("Administrator")]
     public partial class ResourcePool : BaseEntity
     {
         public ResourcePool()
         {
             this.LicenseSet = new HashSet<License>();
-            this.OrganizationSet = new HashSet<Organization>();
             this.SectorSet = new HashSet<Sector>();
             this.UserResourcePoolSet = new HashSet<UserResourcePool>();
         }
 
+        [DisplayOnListView(false)]
+        [DisplayOnEditView(false)]
         public int Id { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        [Display(Name = "Resource Pool")]
         public string Name { get; set; }
+
+        [Required]
+        [DisplayOnListView(false)]
+        [DisplayOnEditView(false)]
         public bool IsSample { get; set; }
 
         public virtual ICollection<Sector> SectorSet { get; set; }
@@ -57,10 +65,9 @@ namespace BusinessObjects
         {
             get
             {
-                if (!UserResourcePoolSet.Any())
-                    return 0;
-
-                return UserResourcePoolSet.Average(item => item.TotalCostIndexRating);
+                return UserResourcePoolSet.Any()
+                    ? UserResourcePoolSet.Average(item => item.TotalCostIndexRating)
+                    : 0;
             }
         }
 
@@ -68,10 +75,9 @@ namespace BusinessObjects
         {
             get
             {
-                if (!UserResourcePoolSet.Any())
-                    return 0;
-
-                return UserResourcePoolSet.Average(item => item.KnowledgeIndexRating);
+                return UserResourcePoolSet.Any()
+                    ? UserResourcePoolSet.Average(item => item.KnowledgeIndexRating)
+                    : 0;
             }
         }
 
@@ -79,10 +85,9 @@ namespace BusinessObjects
         {
             get
             {
-                if (!UserResourcePoolSet.Any())
-                    return 0;
-
-                return UserResourcePoolSet.Average(item => item.QualityIndexRating);
+                return UserResourcePoolSet.Any()
+                    ? UserResourcePoolSet.Average(item => item.QualityIndexRating)
+                    : 0;
             }
         }
 
@@ -90,10 +95,9 @@ namespace BusinessObjects
         {
             get
             {
-                if (!UserResourcePoolSet.Any())
-                    return 0;
-
-                return UserResourcePoolSet.Average(item => item.SectorIndexRating);
+                return UserResourcePoolSet.Any()
+                    ? UserResourcePoolSet.Average(item => item.SectorIndexRating)
+                    : 0;
             }
         }
 
@@ -101,10 +105,9 @@ namespace BusinessObjects
         {
             get
             {
-                if (!UserResourcePoolSet.Any())
-                    return 0;
-
-                return UserResourcePoolSet.Average(item => item.EmployeeSatisfactionIndexRating);
+                return UserResourcePoolSet.Any()
+                    ? 0
+                    : UserResourcePoolSet.Average(item => item.EmployeeSatisfactionIndexRating);
             }
         }
 
@@ -112,10 +115,9 @@ namespace BusinessObjects
         {
             get
             {
-                if (!UserResourcePoolSet.Any())
-                    return 0;
-
-                return UserResourcePoolSet.Average(item => item.CustomerSatisfactionIndexRating);
+                return UserResourcePoolSet.Any()
+                    ? UserResourcePoolSet.Average(item => item.CustomerSatisfactionIndexRating)
+                    : 0;
             }
         }
 
@@ -123,10 +125,9 @@ namespace BusinessObjects
         {
             get
             {
-                if (!UserResourcePoolSet.Any())
-                    return 0;
-
-                return UserResourcePoolSet.Average(item => item.DistanceIndexRating);
+                return UserResourcePoolSet.Any()
+                    ? UserResourcePoolSet.Average(item => item.DistanceIndexRating)
+                    : 0;
             }
         }
 
@@ -147,73 +148,41 @@ namespace BusinessObjects
         public IEnumerable<Organization> OrganizationSet
         {
             get { return SectorSet.SelectMany(sector => sector.OrganizationSet); }
-            private set { }
         }
 
         public decimal ProductionCost
         {
-            get
-            {
-                if (!OrganizationSet.Any())
-                    return 0;
-                return OrganizationSet.Sum(organization => organization.ProductionCost);
-            }
-            private set { }
+            get { return OrganizationSet.Sum(organization => organization.ProductionCost); }
         }
 
         public decimal SalesPrice
         {
-            get
-            {
-                if (!OrganizationSet.Any())
-                    return 0;
-                return OrganizationSet.Sum(organization => organization.SalesPrice);
-            }
-            private set { }
+            get { return OrganizationSet.Sum(organization => organization.SalesPrice); }
         }
 
         public decimal Profit
         {
-            get
-            {
-                if (!OrganizationSet.Any())
-                    return 0;
-                return OrganizationSet.Sum(organization => organization.Profit);
-            }
-            private set { }
+            get { return OrganizationSet.Sum(organization => organization.Profit); }
         }
 
         public decimal ProfitPercentage
         {
             get
             {
-                if (!OrganizationSet.Any())
-                    return 0;
-                return OrganizationSet.Average(organization => organization.ProfitPercentage);
+                return OrganizationSet.Any()
+                    ? OrganizationSet.Average(organization => organization.ProfitPercentage)
+                    : 0;
             }
-            private set { }
         }
 
         public decimal ProfitMargin
         {
             get
             {
-                if (!OrganizationSet.Any())
-                    return 0;
-                return OrganizationSet.Average(organization => organization.ProfitMargin);
+                return OrganizationSet.Any()
+                    ? OrganizationSet.Average(organization => organization.ProfitMargin)
+                    : 0;
             }
-            private set { }
         }
-
-        //public decimal ResourcePoolTax
-        //{
-        //    get { return OrganizationSet.Sum(organization => organization.ResourcePoolTax); }
-        //}
-
-        //public decimal SalesPriceIncludingResourcePoolTax
-        //{
-        //    get { return OrganizationSet.Sum(organization => organization.SalesPriceIncludingResourcePoolTax); }
-        //}
-
     }
 }

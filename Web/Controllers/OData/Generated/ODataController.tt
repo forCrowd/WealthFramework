@@ -43,8 +43,8 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
     var simpleProperties = typeMapper.GetSimpleProperties(entityType);
     var relatedProperties = typeMapper.GetRelatedNavigationProperties(entityType);
 	var hasUserId = simpleProperties.Any(property => property.Name == "UserId");
-	var metadataType = typeMapper.GetMetadataType(entityTypeName);
-	var authorizationAttribute = typeMapper.GetAttribute<ODataControllerAuthorizationAttribute>(metadataType);
+	var businessObjectType = typeMapper.GetBusinessObjectType(entityTypeName);
+	var authorizationAttribute = typeMapper.GetAttribute<ODataControllerAuthorizationAttribute>(businessObjectType);
 	
 	var outputFileName = string.Format(@"{0}.cs", controllerName);
 

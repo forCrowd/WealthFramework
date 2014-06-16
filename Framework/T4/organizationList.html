@@ -10,13 +10,10 @@
 -->
 <h2>List</h2>
 <p>
-    <a href="#/Organization/new">Create New</a>
+    <a href="/Organization/new">Create New</a>
 </p>
 <table class="table">
     <tr>
-    <th>
-        Resource Pool
-    </th>
     <th>
         Sector
     </th>
@@ -36,9 +33,6 @@
     </tr>
     <tr data-ng-repeat="organization in vm.organizationSet">
         <td>
-            {{ organization.ResourcePool.Name }}
-        </td>
-        <td>
             {{ organization.Sector.Name }}
         </td>
         <td>
@@ -54,7 +48,7 @@
             {{ organization.License.Name }}
         </td>
         <td>
-            <a href="#/Organization/edit/{{ organization.Id }}">Edit</a> |
+            <a href="/Organization/edit/{{ organization.Id }}">Edit</a> |
             <a href="" data-ng-click="vm.deleteOrganization(organization)">
                 Delete
             </a>

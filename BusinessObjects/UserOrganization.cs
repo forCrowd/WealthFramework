@@ -1,21 +1,34 @@
 namespace BusinessObjects
 {
-    using BusinessObjects.Metadata;
+    using BusinessObjects.Metadata.Attributes;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
-    [MetadataType(typeof(UserOrganizationMetadata))]
+    [DefaultProperty("Name")]
     public partial class UserOrganization : BaseEntity
     {
+        [DisplayOnListView(false)]
+        [DisplayOnEditView(false)]
         public int Id { get; set; }
+
         public int UserId { get; set; }
+
         public int OrganizationId { get; set; }
+
+        [Display(Name = "Number of Sales")]
         public int NumberOfSales { get; set; }
+
+        [Display(Name = "Quality Rating")]
         public decimal QualityRating { get; set; }
+
+        [Display(Name = "Customer Satisfaction Rating")]
         public decimal CustomerSatisfactionRating { get; set; }
+
+        [Display(Name = "Employee Satisfaction Rating")]
         public decimal EmployeeSatisfactionRating { get; set; }
         
         public virtual Organization Organization { get; set; }
+
         public virtual User User { get; set; }
 
         /* */
@@ -42,42 +55,27 @@ namespace BusinessObjects
 
         public decimal TotalProductionCost
         {
-            get
-            {
-                return Organization.ProductionCost * NumberOfSales;
-            }
+            get { return Organization.ProductionCost * NumberOfSales; }
         }
 
         public decimal TotalSalesRevenue
         {
-            get
-            {
-                return Organization.SalesPrice * NumberOfSales;
-            }
+            get { return Organization.SalesPrice * NumberOfSales; }
         }
 
         public decimal TotalProfit
         {
-            get
-            {
-                return Organization.Profit * NumberOfSales;
-            }
+            get { return Organization.Profit * NumberOfSales; }
         }
 
         public decimal TotalResourcePoolTax
         {
-            get
-            {
-                return ResourcePoolTax * NumberOfSales;
-            }
+            get { return ResourcePoolTax * NumberOfSales; }
         }
 
         public decimal TotalSalesRevenueIncludingResourcePoolTax
         {
-            get
-            {
-                return SalesPriceIncludingResourcePoolTax * NumberOfSales;
-            }
+            get { return SalesPriceIncludingResourcePoolTax * NumberOfSales; }
         }
 
         #region - Total Cost Index -

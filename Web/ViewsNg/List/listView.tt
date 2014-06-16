@@ -38,7 +38,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 	var entityDeleteMethod = string.Format("delete{0}", entityTypeName);
 	var primaryKey = entityType.KeyMembers[0];
     var simpleProperties = typeMapper.GetSimpleProperties(entityType);
-	var metadataProperties = typeMapper.GetMetadataProperties(entityTypeName);
+	var businessObjectTypeProperties = typeMapper.GetBusinessObjectProperties(entityTypeName);
 	var outputFileName = string.Format(@"{0}List.html", entityVariable);
 
 	fileManager.StartNewFile(outputFileName);
@@ -54,13 +54,13 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 <#
     foreach (var property in simpleProperties)
     {
-		// Get metadata property
-		var metadataProperty = metadataProperties.SingleOrDefault(p => p.Name == property.Name);
+		// Get business object property
+		var businessObjectProperty = businessObjectTypeProperties.SingleOrDefault(item => item.Name == property.Name);
 
 		// Display the property?
-		if (metadataProperty != null)
+		if (businessObjectProperty != null)
         {
-			var displayOnListAttribute = typeMapper.GetAttribute<DisplayOnListViewAttribute>(metadataProperty);
+			var displayOnListAttribute = typeMapper.GetAttribute<DisplayOnListViewAttribute>(businessObjectProperty);
 			if (displayOnListAttribute != null && !displayOnListAttribute.Value)
 				continue;
         }
@@ -77,15 +77,21 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 <#
     foreach (var property in simpleProperties)
     {
-		var metadataProperty = metadataProperties.SingleOrDefault(p => p.Name == property.Name);
+		// TODO Try to make this better
+		// Hide BaseEntity properties
+		if (property.Name == "CreatedOn" || property.Name == "ModifiedOn" || property.Name == "DeletedOn" || property.Name == "RowVersion")
+			continue;
+
+		// Get business object property
+		var businessObjectProperty = businessObjectTypeProperties.SingleOrDefault(item => item.Name == property.Name);
 
 		// Display the property?
-		if (metadataProperty != null)
-		{
-			var displayOnListAttribute = typeMapper.GetAttribute<DisplayOnListViewAttribute>(metadataProperty);
+		if (businessObjectProperty != null)
+        {
+			var displayOnListAttribute = typeMapper.GetAttribute<DisplayOnListViewAttribute>(businessObjectProperty);
 			if (displayOnListAttribute != null && !displayOnListAttribute.Value)
 				continue;
-		}
+        }
 #>
         <td>
             {{ <#= GetPropertyPath(property, typeMapper, codeStringGenerator) #> }}
@@ -132,8 +138,8 @@ string GetPropertyPath(EdmProperty property, TypeMapper typeMapper, CodeStringGe
 		// Check DefaultProperty attribute of the related entity
 		var relatedEntityType = (EntityType)((RefType)navigationProperty.ToEndMember.TypeUsage.EdmType).ElementType;
 		var relatedEntityTypeName = typeMapper.GetTypeName(relatedEntityType);
-		var relatedEntityMetadataType = typeMapper.GetMetadataType(relatedEntityTypeName);
-		var defaultPropertyAttribute = typeMapper.GetAttribute<DefaultPropertyAttribute>(relatedEntityMetadataType);
+		var relatedEntityBusinessObjectType = typeMapper.GetBusinessObjectType(relatedEntityTypeName);
+		var defaultPropertyAttribute = typeMapper.GetAttribute<DefaultPropertyAttribute>(relatedEntityBusinessObjectType);
 
 		// 2. Use the value of DefaultProperty attribute of the related entity
 		if (defaultPropertyAttribute != null)

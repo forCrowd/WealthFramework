@@ -1,11 +1,12 @@
 namespace BusinessObjects
 {
-    using BusinessObjects.Metadata;
+    using BusinessObjects.Metadata.Attributes;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
-    [MetadataType(typeof(LicenseMetadata))]
+    [DefaultProperty("Name")]
+    // [ODataControllerAuthorization("Administrator")]
     public partial class License : BaseEntity
     {
         public License()
@@ -14,10 +15,21 @@ namespace BusinessObjects
             this.UserLicenseRatingSet = new HashSet<UserLicenseRating>();
         }
 
+        [DisplayOnListView(false)]
+        [DisplayOnEditView(false)]
         public short Id { get; set; }
+
         public int ResourcePoolId { get; set; }
+        
+        [Display(Name = "License")]
+        [Required]
+        [StringLength(50)]
         public string Name { get; set; }
+
         public string Description { get; set; }
+
+        [DisplayOnListView(false)]
+        [Required]
         public string Text { get; set; }
 
         public virtual ICollection<Organization> OrganizationSet { get; set; }

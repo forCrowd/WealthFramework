@@ -1,11 +1,12 @@
 namespace BusinessObjects
 {
-    using BusinessObjects.Metadata;
+    using BusinessObjects.Metadata.Attributes;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
-    [MetadataType(typeof(SectorMetadata))]
+    [DefaultProperty("Name")]
+    // [ODataControllerAuthorization("Administrator")]
     public partial class Sector : BaseEntity
     {
         public Sector()
@@ -14,9 +15,17 @@ namespace BusinessObjects
             this.UserSectorRatingSet = new HashSet<UserSectorRating>();
         }
 
+        [DisplayOnListView(false)]
+        [DisplayOnEditView(false)]
         public short Id { get; set; }
+
         public int ResourcePoolId { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        [Display(Name = "Sector")]
         public string Name { get; set; }
+
         public string Description { get; set; }
         
         public virtual ICollection<Organization> OrganizationSet { get; set; }

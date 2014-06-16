@@ -5,6 +5,9 @@ An experimental resource management system that aims to provide a sustainable ec
 ---
 
 ### Release Notes
+**0.12.2**
+* BusinessObjects and Metadata classes merge
+
 **0.12.1**
 * BusinessObjects revisions
 * UserResourcePool ResourcePoolType was removed

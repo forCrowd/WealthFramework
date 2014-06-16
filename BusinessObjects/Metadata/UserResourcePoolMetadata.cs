@@ -26,8 +26,7 @@ namespace BusinessObjects.Metadata
         
         public object TotalCostIndexRating { get; set; }
 
-        [Display(Name = "Knowledge Index")]
-        
+        [Display(Name = "Knowledge Index")]        
         public object KnowledgeIndexRating { get; set; }
 
         [Display(Name = "Quality Index")]
@@ -124,18 +123,22 @@ namespace BusinessObjects.Metadata
         [DisplayOnEditView(false)]
         [NotMapped]
         public object EmployeeSatisfactionIndexRatingWeightedAverage { get; set; }
+        
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         [NotMapped]
         public object CustomerSatisfactionIndexRatingWeightedAverage { get; set; }
+        
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         [NotMapped]
         public object DistanceIndexRatingWeightedAverage { get; set; }
+        
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         [NotMapped]
         public object ResourcePoolTax { get; set; }
+        
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         [NotMapped]
@@ -272,10 +275,12 @@ namespace BusinessObjects.Metadata
         [DisplayOnEditView(false)]
         [NotMapped]
         public object DistanceIndexIncome { get; set; }
+
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         [NotMapped]
         public object TotalResourcePoolIncome { get; set; }
+
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         [NotMapped]

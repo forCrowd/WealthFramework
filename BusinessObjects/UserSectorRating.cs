@@ -1,18 +1,23 @@
 namespace BusinessObjects
 {
-    using System;
-    using System.Collections.Generic;
+    using BusinessObjects.Metadata.Attributes;
     using System.ComponentModel.DataAnnotations;
-    using BusinessObjects.Metadata;
 
-    [MetadataType(typeof(UserSectorRatingMetadata))]
     public partial class UserSectorRating : BaseEntity
     {
+        [DisplayOnListView(false)]
+        [DisplayOnEditView(false)]
         public int Id { get; set; }
+
         public int UserId { get; set; }
+
         public short SectorId { get; set; }
+
+        [Display(Name = "Rating")]
         public decimal Rating { get; set; }
+
         public virtual Sector Sector { get; set; }
+
         public virtual User User { get; set; }
     }
 }
