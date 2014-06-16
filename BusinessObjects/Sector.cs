@@ -1,10 +1,9 @@
 namespace BusinessObjects
 {
-    using System;
+    using BusinessObjects.Metadata;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
-    using BusinessObjects.Metadata;
 
     [MetadataType(typeof(SectorMetadata))]
     public partial class Sector : BaseEntity
@@ -20,9 +19,6 @@ namespace BusinessObjects
         public string Name { get; set; }
         public string Description { get; set; }
         
-        
-        
-
         public virtual ICollection<Organization> OrganizationSet { get; set; }
         public virtual ICollection<UserSectorRating> UserSectorRatingSet { get; set; }
         public virtual ResourcePool ResourcePool { get; set; }
@@ -31,19 +27,9 @@ namespace BusinessObjects
 
         public decimal GetAverageRating()
         {
-            return GetAverageRating(0);
-        }
-
-        public decimal GetAverageRating(int userId)
-        {
-            var ratings = userId > 0
-                ? UserSectorRatingSet.Where(rating => rating.UserId == userId)
-                : UserSectorRatingSet;
-
-            if (!ratings.Any())
-                return 0;
-
-            return ratings.Average(rating => rating.Rating);
+            return UserSectorRatingSet.Any()
+                ? UserSectorRatingSet.Average(item => item.Rating)
+                : 0;
         }
     }
 }

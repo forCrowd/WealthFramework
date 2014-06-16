@@ -5,6 +5,7 @@ namespace BusinessObjects
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using BusinessObjects.Metadata;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     [MetadataType(typeof(ResourcePoolMetadata))]
     public partial class ResourcePool : BaseEntity
@@ -21,11 +22,36 @@ namespace BusinessObjects
         public string Name { get; set; }
         public bool IsSample { get; set; }
 
-        public virtual ICollection<License> LicenseSet { get; set; }
         public virtual ICollection<Sector> SectorSet { get; set; }
+        public virtual ICollection<License> LicenseSet { get; set; }
         public virtual ICollection<UserResourcePool> UserResourcePoolSet { get; set; }
 
         /* */
+
+        public decimal SectorRatingAverage
+        {
+            get { return SectorSet.Sum(sector => sector.GetAverageRating()); }
+        }
+
+        public decimal LicenseRatingAverage
+        {
+            get { return LicenseSet.Sum(license => license.GetAverageRating()); }
+        }
+
+        public decimal QualityRatingAverage
+        {
+            get { return OrganizationSet.Sum(item => item.GetAverageQualityRating()); }
+        }
+
+        public decimal EmployeeSatisfactionRatingAverage
+        {
+            get { return OrganizationSet.Sum(item => item.GetAverageEmployeeSatisfactionRating()); }
+        }
+
+        public decimal CustomerSatisfactionRatingAverage
+        {
+            get { return OrganizationSet.Sum(organization => organization.GetAverageCustomerSatisfactionRating()); }
+        }
 
         public decimal TotalCostIndexRatingAverage
         {
@@ -101,6 +127,20 @@ namespace BusinessObjects
                     return 0;
 
                 return UserResourcePoolSet.Average(item => item.DistanceIndexRating);
+            }
+        }
+
+        public decimal TotalIndexRating
+        {
+            get
+            {
+                return TotalCostIndexRatingAverage
+                    + KnowledgeIndexRatingAverage
+                    + QualityIndexRatingAverage
+                    + SectorIndexRatingAverage
+                    + EmployeeSatisfactionIndexRatingAverage
+                    + CustomerSatisfactionIndexRatingAverage
+                    + DistanceIndexRatingAverage;
             }
         }
 

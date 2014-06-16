@@ -12,10 +12,6 @@ namespace BusinessObjects
         public int UserId { get; set; }
         public short SectorId { get; set; }
         public decimal Rating { get; set; }
-        
-        
-        
-
         public virtual Sector Sector { get; set; }
         public virtual User User { get; set; }
     }

@@ -23,7 +23,7 @@ namespace Web.Controllers.Api
         public UserResourcePool GetUserResourcePoolCustomByResourcePoolId(int resourcePoolId)
         {
             var unitOfWork = new UserResourcePoolUnitOfWork();
-            var userResourcePool = unitOfWork.AllLive
+            var userResourcePool = unitOfWork.AllLiveIncluding(item => item.ResourcePool)
                 .SingleOrDefault(item => item.UserId == ApplicationUser.Id
                     && item.ResourcePoolId == resourcePoolId);
             return new UserResourcePool(userResourcePool);

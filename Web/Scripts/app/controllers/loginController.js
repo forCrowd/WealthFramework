@@ -17,7 +17,7 @@
                     $location.path('/');
                 })
                 .error(function (data) {
-                    logger.logError(data.error_description, null, true);
+                    logger.logError(data, null, true);
                 });
         }
     };

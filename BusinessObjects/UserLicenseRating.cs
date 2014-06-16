@@ -12,10 +12,6 @@ namespace BusinessObjects
         public int UserId { get; set; }
         public short LicenseId { get; set; }
         public decimal Rating { get; set; }
-        
-        
-        
-
         public virtual License License { get; set; }
         public virtual User User { get; set; }
     }

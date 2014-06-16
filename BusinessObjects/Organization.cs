@@ -1,10 +1,9 @@
 namespace BusinessObjects
 {
-    using System;
+    using BusinessObjects.Metadata;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
-    using BusinessObjects.Metadata;
 
     [MetadataType(typeof(OrganizationMetadata))]
     public partial class Organization : BaseEntity
@@ -37,53 +36,23 @@ namespace BusinessObjects
 
         public decimal GetAverageQualityRating()
         {
-            return GetAverageQualityRating(0);
-        }
-
-        public decimal GetAverageQualityRating(int userId)
-        {
-            var ratings = userId > 0
-                ? UserOrganizationSet.Where(rating => rating.UserId == userId)
-                : UserOrganizationSet;
-
-            if (!ratings.Any())
-                return 0;
-
-            return ratings.Average(rating => rating.QualityRating);
+            return UserOrganizationSet.Any()
+                ? UserOrganizationSet.Average(item => item.QualityRating)
+                : 0;
         }
 
         public decimal GetAverageEmployeeSatisfactionRating()
         {
-            return GetAverageEmployeeSatisfactionRating(0);
-        }
-
-        public decimal GetAverageEmployeeSatisfactionRating(int userId)
-        {
-            var ratings = userId > 0
-                ? UserOrganizationSet.Where(rating => rating.UserId == userId)
-                : UserOrganizationSet;
-
-            if (!ratings.Any())
-                return 0;
-
-            return ratings.Average(rating => rating.EmployeeSatisfactionRating);
+            return UserOrganizationSet.Any()
+                ? UserOrganizationSet.Average(rating => rating.EmployeeSatisfactionRating)
+                : 0;
         }
 
         public decimal GetAverageCustomerSatisfactionRating()
         {
-            return GetAverageCustomerSatisfactionRating(0);
-        }
-
-        public decimal GetAverageCustomerSatisfactionRating(int userId)
-        {
-            var ratings = userId > 0
-                ? UserOrganizationSet.Where(rating => rating.UserId == userId)
-                : UserOrganizationSet;
-
-            if (!ratings.Any())
-                return 0;
-
-            return ratings.Average(rating => rating.CustomerSatisfactionRating);
+            return UserOrganizationSet.Any()
+                ? UserOrganizationSet.Average(rating => rating.CustomerSatisfactionRating)
+                : 0;   
         }
 
         /// <summary>

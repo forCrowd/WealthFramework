@@ -12,7 +12,7 @@ namespace BusinessObjects.ViewModels
             Id = userResourcePool.Id;
             ResourcePoolRate = userResourcePool.ResourcePoolRate;
             ResourcePoolRatePercentage = userResourcePool.ResourcePoolRatePercentage;
-            UserResourcePoolRatingCount = userResourcePool.UserResourcePoolRatingCount;
+            UserResourcePoolRatingCount = userResourcePool.ResourcePool.UserResourcePoolSet.Count;
             UserOrganizationSet = userResourcePool
                 .UserOrganizationSet
                 .Select(item => new UserOrganization(item));

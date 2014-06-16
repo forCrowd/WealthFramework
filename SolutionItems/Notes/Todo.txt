@@ -5,7 +5,6 @@ either work with Ids, or try to work on merging unitofwork classes
 . find vs. deleted records? - findlive? or don't retrieve dead records at all?
 . exists should work with find or alllive.any() or all.any() ?
 . breeze - check save + has + get + reject changes. currently they don't work on entity level? - also prepareBatch method?
-. public vs. private didnt work for now with odata, try it later
 . use or try to remove scripts.render() + styles.render() from layout.cshtml - then mvc can be removed completely
 . automate .tt scripts with afterbuild?
 . sometimes cancel button doesn't allow to go back (fill required?)
@@ -26,12 +25,13 @@ userresourcepoolorganization -> userresourcepoolId organizationId rating
 . using numbers in sector chart page didn't work, it breaks the chart?
 . authorize only for admins didnt work - license, organization, resourcepool, sector
 any user should be able to access them. currently definitions link is only visible to admins - according to this, normal user may not use post action for instance? check these rules later on
+. check spelling of the texts!
 . update namespaces - osp.wealtheconomy.
 . in some delete cases, odatacontroller returns NotFound error? although it's deleted, the record stays on the page until refreshing the page
 . how to calculate average index? some people may enter 1,2,3 - some may enter 100,200,300? always force them to enter percentage?
 or always calculate the total average based on invidiuals percentage? or both?
 . __migrationhistory createdon field error - it seems there is not much to do, it also might be about glimpse?
-. updrage to .net 4.5.1? APM doesn't have it right now
+. upgrade to .net 4.5.1? APM doesn't have it right now
 http://msdn.microsoft.com/en-us/library/hh925568%28v=vs.110%29.aspx
 
 . validateantiforgerytoken + bind attributes in odata controller?
@@ -63,10 +63,6 @@ config.EnableQuerySupport(queryAttribute);
 . try turning off lazy loading - then how it brings the data (resourcepool for instance?)
 .. currently there seem no good case that lazy loading is beneficial?
 . and how about disabling proxy classes? what will be the difference exactly?
-
-. replace userresourcepool - totalcostindexratingaverage with resourcePool.TotalCostIndexRatingAverage!
-
-. check spelling of the content
 
 . default license ratings should be 50/50
 . and ratings total should always be 100%

@@ -50,66 +50,76 @@ namespace BusinessObjects.Metadata
         
         public object DistanceIndexRating { get; set; }
 
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
-        [NotMapped]
-        public object UserResourcePoolType { get; set; }
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
-        [NotMapped]
-        public object UserResourcePoolRatingCount { get; set; }
+        //[DisplayOnListView(false)]
+        //[DisplayOnEditView(false)]
+        //[NotMapped]
+        //public object UserResourcePoolRatingCount { get; set; }
+        
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         [NotMapped]
         public object ResourcePoolRatePercentage { get; set; }
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
-        [NotMapped]
-        public object TotalCostIndexRatingAverage { get; set; }
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
-        [NotMapped]
-        public object KnowledgeIndexRatingAverage { get; set; }
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
-        [NotMapped]
-        public object QualityIndexRatingAverage { get; set; }
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
-        [NotMapped]
-        public object SectorIndexRatingAverage { get; set; }
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
-        [NotMapped]
-        public object EmployeeSatisfactionIndexRatingAverage { get; set; }
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
-        [NotMapped]
-        public object CustomerSatisfactionIndexRatingAverage { get; set; }
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
-        [NotMapped]
-        public object DistanceIndexRatingAverage { get; set; }
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
-        [NotMapped]
-        public object TotalIndexRating { get; set; }
+
+        //[DisplayOnListView(false)]
+        //[DisplayOnEditView(false)]
+        //[NotMapped]
+        //public object TotalCostIndexRatingAverage { get; set; }
+
+        //[DisplayOnListView(false)]
+        //[DisplayOnEditView(false)]
+        //[NotMapped]
+        //public object KnowledgeIndexRatingAverage { get; set; }
+
+        //[DisplayOnListView(false)]
+        //[DisplayOnEditView(false)]
+        //[NotMapped]
+        //public object QualityIndexRatingAverage { get; set; }
+
+        //[DisplayOnListView(false)]
+        //[DisplayOnEditView(false)]
+        //[NotMapped]
+        //public object SectorIndexRatingAverage { get; set; }
+
+        //[DisplayOnListView(false)]
+        //[DisplayOnEditView(false)]
+        //[NotMapped]
+        //public object EmployeeSatisfactionIndexRatingAverage { get; set; }
+
+        //[DisplayOnListView(false)]
+        //[DisplayOnEditView(false)]
+        //[NotMapped]
+        //public object CustomerSatisfactionIndexRatingAverage { get; set; }
+
+        //[DisplayOnListView(false)]
+        //[DisplayOnEditView(false)]
+        //[NotMapped]
+        //public object DistanceIndexRatingAverage { get; set; }
+
+        //[DisplayOnListView(false)]
+        //[DisplayOnEditView(false)]
+        //[NotMapped]
+        //public object TotalIndexRating { get; set; }
+
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         [NotMapped]
         public object TotalCostIndexRatingWeightedAverage { get; set; }
+
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         [NotMapped]
         public object KnowledgeIndexRatingWeightedAverage { get; set; }
+
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         [NotMapped]
         public object QualityIndexRatingWeightedAverage { get; set; }
+
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         [NotMapped]
         public object SectorIndexRatingWeightedAverage { get; set; }
+
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         [NotMapped]
@@ -170,10 +180,10 @@ namespace BusinessObjects.Metadata
         [DisplayOnEditView(false)]
         [NotMapped]
         public object KnowledgeIndexShare { get; set; }
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
-        [NotMapped]
-        public object LicenseUserRating { get; set; }
+        //[DisplayOnListView(false)]
+        //[DisplayOnEditView(false)]
+        //[NotMapped]
+        //public object LicenseUserRating { get; set; }
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         [NotMapped]
@@ -186,10 +196,10 @@ namespace BusinessObjects.Metadata
         [DisplayOnEditView(false)]
         [NotMapped]
         public object QualityIndexShare { get; set; }
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
-        [NotMapped]
-        public object QualityUserRating { get; set; }
+        //[DisplayOnListView(false)]
+        //[DisplayOnEditView(false)]
+        //[NotMapped]
+        //public object QualityUserRating { get; set; }
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         [NotMapped]
@@ -202,10 +212,10 @@ namespace BusinessObjects.Metadata
         [DisplayOnEditView(false)]
         [NotMapped]
         public object SectorIndexShare { get; set; }
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
-        [NotMapped]
-        public object SectorUserRating { get; set; }
+        //[DisplayOnListView(false)]
+        //[DisplayOnEditView(false)]
+        //[NotMapped]
+        //public object SectorUserRating { get; set; }
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         [NotMapped]
@@ -218,10 +228,10 @@ namespace BusinessObjects.Metadata
         [DisplayOnEditView(false)]
         [NotMapped]
         public object EmployeeSatisfactionIndexShare { get; set; }
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
-        [NotMapped]
-        public object EmployeeSatisfactionUserRating { get; set; }
+        //[DisplayOnListView(false)]
+        //[DisplayOnEditView(false)]
+        //[NotMapped]
+        //public object EmployeeSatisfactionUserRating { get; set; }
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         [NotMapped]
@@ -234,10 +244,10 @@ namespace BusinessObjects.Metadata
         [DisplayOnEditView(false)]
         [NotMapped]
         public object CustomerSatisfactionIndexShare { get; set; }
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
-        [NotMapped]
-        public object CustomerSatisfactionUserRating { get; set; }
+        //[DisplayOnListView(false)]
+        //[DisplayOnEditView(false)]
+        //[NotMapped]
+        //public object CustomerSatisfactionUserRating { get; set; }
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         [NotMapped]

@@ -1,10 +1,8 @@
 namespace BusinessObjects
 {
-    using System;
-    using System.Collections.Generic;
+    using BusinessObjects.Metadata;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
-    using BusinessObjects.Metadata;
 
     [MetadataType(typeof(UserOrganizationMetadata))]
     public partial class UserOrganization : BaseEntity
@@ -17,14 +15,13 @@ namespace BusinessObjects
         public decimal CustomerSatisfactionRating { get; set; }
         public decimal EmployeeSatisfactionRating { get; set; }
         
-        
-        
-
         public virtual Organization Organization { get; set; }
         public virtual User User { get; set; }
 
         /* */
 
+        // A bit weird navigation property.
+        // To prevent this (or ideally), there needs to be a foreign key between this class and UserOrganization (UserResourcePoolId on UserOrganization).
         public UserResourcePool UserResourcePool
         {
             get { return User.UserResourcePoolSet.Single(item => item.ResourcePool == Organization.Sector.ResourcePool); }
@@ -89,10 +86,9 @@ namespace BusinessObjects
         {
             get
             {
-                if (UserResourcePool.ResourcePool.SalesPrice == 0)
-                    return 0;
-
-                return 1 - (Organization.SalesPrice / UserResourcePool.ResourcePool.SalesPrice);
+                return UserResourcePool.ResourcePool.SalesPrice == 0
+                    ? 0
+                    : 1 - (Organization.SalesPrice / UserResourcePool.ResourcePool.SalesPrice);
             }
         }
 
@@ -104,10 +100,9 @@ namespace BusinessObjects
         {
             get
             {
-                if (UserResourcePool.ResourcePool.Profit == 0)
-                    return 0;
-
-                return 1 - (Organization.Profit / UserResourcePool.ResourcePool.Profit);
+                return UserResourcePool.ResourcePool.Profit == 0
+                    ? 0
+                    : 1 - (Organization.Profit / UserResourcePool.ResourcePool.Profit);
             }
         }
 
@@ -123,10 +118,9 @@ namespace BusinessObjects
         {
             get
             {
-                if (UserResourcePool.TotalCostIndexPercentageWithNumberOfSales == 0)
-                    return 0;
-
-                return TotalCostIndexPercentageWithNumberOfSales / UserResourcePool.TotalCostIndexPercentageWithNumberOfSales;
+                return UserResourcePool.TotalCostIndexPercentageWithNumberOfSales == 0
+                    ? 0
+                    : TotalCostIndexPercentageWithNumberOfSales / UserResourcePool.TotalCostIndexPercentageWithNumberOfSales;
             }
         }
 
@@ -146,14 +140,9 @@ namespace BusinessObjects
         {
             get
             {
-                if (UserResourcePool.LicenseUserRating == 0)
-                    return 0;
-
-                var rating = UserResourcePool.UserResourcePoolType == UserResourcePoolType.Public
-                    ? Organization.License.GetAverageRating()
-                    : Organization.License.GetAverageRating(UserResourcePool.User.Id);
-
-                return rating / UserResourcePool.LicenseUserRating;
+                return UserResourcePool.ResourcePool.LicenseRatingAverage == 0
+                    ? 0
+                    : Organization.License.GetAverageRating() / UserResourcePool.ResourcePool.LicenseRatingAverage;
             }
         }
 
@@ -169,10 +158,9 @@ namespace BusinessObjects
         {
             get
             {
-                if (UserResourcePool.KnowledgeIndexPercentageWithNumberOfSales == 0)
-                    return 0;
-
-                return KnowledgeIndexPercentageWithNumberOfSales / UserResourcePool.KnowledgeIndexPercentageWithNumberOfSales;
+                return UserResourcePool.KnowledgeIndexPercentageWithNumberOfSales == 0
+                    ? 0
+                    : KnowledgeIndexPercentageWithNumberOfSales / UserResourcePool.KnowledgeIndexPercentageWithNumberOfSales;
             }
         }
 
@@ -188,35 +176,13 @@ namespace BusinessObjects
 
         #region - Quality Index -
 
-        //public decimal GetAverageQualityUserRating()
-        //{
-        //    return GetAverageQualityUserRating(0);
-        //}
-
-        //public decimal GetAverageQualityUserRating(int userId)
-        //{
-        //    var ratings = userId > 0
-        //        ? UserResourcePool.UserOrganizationSet.Where(rating => rating.UserId == userId)
-        //        : UserResourcePool.UserOrganizationSet;
-
-        //    if (!ratings.Any())
-        //        return 0;
-
-        //    return ratings.Average(rating => rating.QualityRating);
-        //}
-
         public decimal QualityIndexPercentage
         {
             get
             {
-                if (UserResourcePool.QualityUserRating == 0)
-                    return 0;
-
-                var rating = UserResourcePool.UserResourcePoolType == UserResourcePoolType.Public
-                    ? Organization.GetAverageQualityRating()
-                    : Organization.GetAverageQualityRating(UserResourcePool.User.Id);
-
-                return rating / UserResourcePool.QualityUserRating;
+                return UserResourcePool.ResourcePool.QualityRatingAverage == 0
+                    ? 0
+                    : Organization.GetAverageQualityRating() / UserResourcePool.ResourcePool.QualityRatingAverage;
             }
         }
 
@@ -232,10 +198,9 @@ namespace BusinessObjects
         {
             get
             {
-                if (UserResourcePool.QualityIndexPercentageWithNumberOfSales == 0)
-                    return 0;
-
-                return QualityIndexPercentageWithNumberOfSales / UserResourcePool.QualityIndexPercentageWithNumberOfSales;
+                return UserResourcePool.QualityIndexPercentageWithNumberOfSales == 0
+                    ? 0
+                    : QualityIndexPercentageWithNumberOfSales / UserResourcePool.QualityIndexPercentageWithNumberOfSales;
             }
         }
 
@@ -255,14 +220,9 @@ namespace BusinessObjects
         {
             get
             {
-                if (UserResourcePool.SectorUserRating == 0)
-                    return 0;
-
-                var rating = UserResourcePool.UserResourcePoolType == UserResourcePoolType.Public
-                    ? Organization.Sector.GetAverageRating()
-                    : Organization.Sector.GetAverageRating(UserResourcePool.User.Id);
-
-                return rating / UserResourcePool.SectorUserRating;
+                return UserResourcePool.ResourcePool.SectorRatingAverage == 0
+                    ? 0
+                    : Organization.Sector.GetAverageRating() / UserResourcePool.ResourcePool.SectorRatingAverage;
             }
         }
 
@@ -278,10 +238,9 @@ namespace BusinessObjects
         {
             get
             {
-                if (UserResourcePool.SectorIndexPercentageWithNumberOfSales == 0)
-                    return 0;
-
-                return SectorIndexPercentageWithNumberOfSales / UserResourcePool.SectorIndexPercentageWithNumberOfSales;
+                return UserResourcePool.SectorIndexPercentageWithNumberOfSales == 0
+                    ? 0
+                    : SectorIndexPercentageWithNumberOfSales / UserResourcePool.SectorIndexPercentageWithNumberOfSales;
             }
         }
 
@@ -297,39 +256,13 @@ namespace BusinessObjects
 
         #region - Employee Satisfaction Index -
 
-        //public decimal GetAverageEmployeeSatisfactionUserRating()
-        //{
-        //    return GetAverageEmployeeSatisfactionUserRating(0);
-        //}
-
-        //public decimal GetAverageEmployeeSatisfactionUserRating(int userId)
-        //{
-        //    var ratings = userId > 0
-        //        ? UserResourcePool.UserOrganizationSet.Where(rating => rating.UserId == userId)
-        //        : UserResourcePool.UserOrganizationSet;
-
-        //    if (!ratings.Any())
-        //        return 0;
-
-        //    return ratings.Average(rating => rating.EmployeeSatisfactionRating);
-        //}
-
         public decimal EmployeeSatisfactionIndexPercentage
         {
             get
             {
-                // TODO ?
-                if (UserResourcePool == null)
-                    return 0;
-
-                if (UserResourcePool.EmployeeSatisfactionUserRating == 0)
-                    return 0;
-
-                var rating = UserResourcePool.UserResourcePoolType == UserResourcePoolType.Public
-                    ? Organization.GetAverageEmployeeSatisfactionRating()
-                    : Organization.GetAverageEmployeeSatisfactionRating(UserResourcePool.User.Id);
-
-                return rating / UserResourcePool.EmployeeSatisfactionUserRating;
+                return UserResourcePool.ResourcePool.EmployeeSatisfactionRatingAverage == 0
+                    ? 0
+                    : Organization.GetAverageEmployeeSatisfactionRating() / UserResourcePool.ResourcePool.EmployeeSatisfactionRatingAverage;
             }
         }
 
@@ -345,10 +278,9 @@ namespace BusinessObjects
         {
             get
             {
-                if (UserResourcePool.EmployeeSatisfactionIndexPercentageWithNumberOfSales == 0)
-                    return 0;
-
-                return EmployeeSatisfactionIndexPercentageWithNumberOfSales / UserResourcePool.EmployeeSatisfactionIndexPercentageWithNumberOfSales;
+                return UserResourcePool.EmployeeSatisfactionIndexPercentageWithNumberOfSales == 0
+                    ? 0
+                    : EmployeeSatisfactionIndexPercentageWithNumberOfSales / UserResourcePool.EmployeeSatisfactionIndexPercentageWithNumberOfSales;
             }
         }
 
@@ -364,35 +296,13 @@ namespace BusinessObjects
 
         #region - Customer Satisfaction Index -
 
-        //public decimal GetAverageCustomerSatisfactionUserRating()
-        //{
-        //    return GetAverageCustomerSatisfactionUserRating(0);
-        //}
-
-        //public decimal GetAverageCustomerSatisfactionUserRating(int userId)
-        //{
-        //    var ratings = userId > 0
-        //        ? UserResourcePool.UserOrganizationSet.Where(rating => rating.UserId == userId)
-        //        : UserResourcePool.UserOrganizationSet;
-
-        //    if (!ratings.Any())
-        //        return 0;
-
-        //    return ratings.Average(rating => rating.CustomerSatisfactionRating);
-        //}
-
         public decimal CustomerSatisfactionIndexPercentage
         {
             get
             {
-                if (UserResourcePool.CustomerSatisfactionUserRating == 0)
-                    return 0;
-
-                var rating = UserResourcePool.UserResourcePoolType == UserResourcePoolType.Public
-                    ? Organization.GetAverageCustomerSatisfactionRating()
-                    : Organization.GetAverageCustomerSatisfactionRating(UserResourcePool.User.Id);
-
-                return rating / UserResourcePool.CustomerSatisfactionUserRating;
+                return UserResourcePool.ResourcePool.CustomerSatisfactionRatingAverage == 0
+                    ? 0
+                    : Organization.GetAverageCustomerSatisfactionRating() / UserResourcePool.ResourcePool.CustomerSatisfactionRatingAverage;
             }
         }
 
@@ -408,10 +318,9 @@ namespace BusinessObjects
         {
             get
             {
-                if (UserResourcePool.CustomerSatisfactionIndexPercentageWithNumberOfSales == 0)
-                    return 0;
-
-                return CustomerSatisfactionIndexPercentageWithNumberOfSales / UserResourcePool.CustomerSatisfactionIndexPercentageWithNumberOfSales;
+                return UserResourcePool.CustomerSatisfactionIndexPercentageWithNumberOfSales == 0
+                    ? 0
+                    : CustomerSatisfactionIndexPercentageWithNumberOfSales / UserResourcePool.CustomerSatisfactionIndexPercentageWithNumberOfSales;
             }
         }
 
@@ -439,14 +348,9 @@ namespace BusinessObjects
         {
             get
             {
-                // TODO ?
-                if (UserResourcePool == null)
-                    return 0;
-
-                if (UserResourcePool.DistanceRating == 0)
-                    return 0;
-
-                return DistanceRating / UserResourcePool.DistanceRating;
+                return UserResourcePool.DistanceRating == 0
+                    ? 0
+                    : DistanceRating / UserResourcePool.DistanceRating;
             }
         }
 
@@ -462,10 +366,9 @@ namespace BusinessObjects
         {
             get
             {
-                if (UserResourcePool.DistanceIndexPercentageWithNumberOfSales == 0)
-                    return 0;
-
-                return DistanceIndexPercentageWithNumberOfSales / UserResourcePool.DistanceIndexPercentageWithNumberOfSales;
+                return UserResourcePool.DistanceIndexPercentageWithNumberOfSales == 0
+                    ? 0
+                    : DistanceIndexPercentageWithNumberOfSales / UserResourcePool.DistanceIndexPercentageWithNumberOfSales;
             }
         }
 

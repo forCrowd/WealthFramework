@@ -5,9 +5,12 @@ An experimental resource management system that aims to provide a sustainable ec
 ---
 
 ### Release Notes
+**0.12.1**
+* BusinessObjects revisions
+* UserResourcePool ResourcePoolType was removed
 
 **0.12**
-* Chapters
+* Chapters - Since it's not good enough, it's hidden in the menu
 * TotalCostIndex calculation is now based on Sales Price again, instead of Profit
 
 **0.11.12**
