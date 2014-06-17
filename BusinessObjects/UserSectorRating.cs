@@ -3,7 +3,7 @@ namespace BusinessObjects
     using BusinessObjects.Attributes;
     using System.ComponentModel.DataAnnotations;
 
-    public partial class UserSectorRating : BaseEntity
+    public class UserSectorRating : BaseEntity
     {
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]

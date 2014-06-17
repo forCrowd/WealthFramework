@@ -4,7 +4,7 @@ namespace BusinessObjects
     using System.ComponentModel.DataAnnotations;
 
     [DefaultProperty("Name")]
-    public partial class UserLicenseRating : BaseEntity
+    public class UserLicenseRating : BaseEntity
     {
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]

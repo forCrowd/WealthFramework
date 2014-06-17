@@ -5,7 +5,7 @@ namespace BusinessObjects
     using System.Linq;
 
     [DefaultProperty("Name")]
-    public partial class UserOrganization : BaseEntity
+    public class UserOrganization : BaseEntity
     {
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]

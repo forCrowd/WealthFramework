@@ -29,6 +29,7 @@ any user should be able to access them. currently definitions link is only visib
 . try to have a standard for css usage + html layout formats + also js script conventions
 . check spelling of the texts!
 . update namespaces - osp.wealtheconomy.
+. enabled auto test for appveyor
 . in some delete cases, odatacontroller returns NotFound error? although it's deleted, the record stays on the page until refreshing the page
 . how to calculate average index? some people may enter 1,2,3 - some may enter 100,200,300? always force them to enter percentage?
 or always calculate the total average based on invidiuals percentage? or both?

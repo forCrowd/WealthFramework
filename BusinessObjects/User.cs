@@ -5,7 +5,7 @@ namespace BusinessObjects
     using System.ComponentModel.DataAnnotations;
 
     [DefaultProperty("Email")]
-    public partial class User : BaseEntity
+    public class User : BaseEntity
     {
         public User()
         {

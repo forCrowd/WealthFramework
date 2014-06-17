@@ -7,7 +7,7 @@ namespace BusinessObjects
     using System.Linq;
 
     [DefaultProperty("Name")]
-    public partial class UserResourcePool : BaseEntity
+    public class UserResourcePool : BaseEntity
     {
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]

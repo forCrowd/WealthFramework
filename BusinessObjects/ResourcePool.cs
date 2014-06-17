@@ -7,7 +7,7 @@ namespace BusinessObjects
 
     [DefaultProperty("Name")]
     // [ODataControllerAuthorization("Administrator")]
-    public partial class ResourcePool : BaseEntity
+    public class ResourcePool : BaseEntity
     {
         public ResourcePool()
         {

@@ -7,7 +7,7 @@ namespace BusinessObjects
 
     [DefaultProperty("Name")]
     // [ODataControllerAuthorization("Administrator")]
-    public partial class License : BaseEntity
+    public class License : BaseEntity
     {
         public License()
         {
