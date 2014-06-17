@@ -11,8 +11,8 @@ namespace BusinessObjects
     {
         public License()
         {
-            this.OrganizationSet = new HashSet<Organization>();
-            this.UserLicenseRatingSet = new HashSet<UserLicenseRating>();
+            OrganizationSet = new HashSet<Organization>();
+            UserLicenseRatingSet = new HashSet<UserLicenseRating>();
         }
 
         [DisplayOnListView(false)]

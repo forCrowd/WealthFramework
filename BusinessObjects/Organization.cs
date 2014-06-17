@@ -11,7 +11,7 @@ namespace BusinessObjects
     {
         public Organization()
         {
-            this.UserOrganizationSet = new HashSet<UserOrganization>();
+            UserOrganizationSet = new HashSet<UserOrganization>();
         }
 
         [DisplayOnListView(false)]
