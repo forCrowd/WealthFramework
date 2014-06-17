@@ -5,6 +5,9 @@ An experimental resource management system that aims to provide a sustainable ec
 ---
 
 ### Release Notes
+**0.13**
+* Introduction to Dynamic Indexes
+
 **0.12.4**
 * BusinessObjects minor revisions
 

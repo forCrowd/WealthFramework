@@ -11,6 +11,7 @@ namespace BusinessObjects
     {
         public ResourcePool()
         {
+            this.ResourcePoolIndexSet = new HashSet<ResourcePoolIndex>();
             this.LicenseSet = new HashSet<License>();
             this.SectorSet = new HashSet<Sector>();
             this.UserResourcePoolSet = new HashSet<UserResourcePool>();
@@ -30,6 +31,7 @@ namespace BusinessObjects
         [DisplayOnEditView(false)]
         public bool IsSample { get; set; }
 
+        public virtual ICollection<ResourcePoolIndex> ResourcePoolIndexSet { get; set; }
         public virtual ICollection<Sector> SectorSet { get; set; }
         public virtual ICollection<License> LicenseSet { get; set; }
         public virtual ICollection<UserResourcePool> UserResourcePoolSet { get; set; }

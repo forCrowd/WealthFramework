@@ -90,6 +90,7 @@
     <Compile Include="License.cs" />
     <Compile Include="Attributes\ODataControllerAuthorizationAttribute.cs" />
     <Compile Include="Organization.cs" />
+    <Compile Include="ResourcePoolIndex.cs" />
     <Compile Include="ResourcePool.cs" />
     <Compile Include="Sector.cs" />
     <Compile Include="User.cs" />
