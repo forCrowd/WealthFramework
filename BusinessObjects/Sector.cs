@@ -11,8 +11,8 @@ namespace BusinessObjects
     {
         public Sector()
         {
-            this.OrganizationSet = new HashSet<Organization>();
-            this.UserSectorRatingSet = new HashSet<UserSectorRating>();
+            OrganizationSet = new HashSet<Organization>();
+            UserSectorRatingSet = new HashSet<UserSectorRating>();
         }
 
         [DisplayOnListView(false)]

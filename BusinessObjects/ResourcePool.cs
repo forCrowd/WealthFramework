@@ -11,10 +11,10 @@ namespace BusinessObjects
     {
         public ResourcePool()
         {
-            this.ResourcePoolIndexSet = new HashSet<ResourcePoolIndex>();
-            this.LicenseSet = new HashSet<License>();
-            this.SectorSet = new HashSet<Sector>();
-            this.UserResourcePoolSet = new HashSet<UserResourcePool>();
+            ResourcePoolIndexSet = new HashSet<ResourcePoolIndex>();
+            LicenseSet = new HashSet<License>();
+            SectorSet = new HashSet<Sector>();
+            UserResourcePoolSet = new HashSet<UserResourcePool>();
         }
 
         [DisplayOnListView(false)]

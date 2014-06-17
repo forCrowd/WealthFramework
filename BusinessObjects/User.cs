@@ -9,10 +9,10 @@ namespace BusinessObjects
     {
         public User()
         {
-            this.UserLicenseRatingSet = new HashSet<UserLicenseRating>();
-            this.UserOrganizationSet = new HashSet<UserOrganization>();
-            this.UserResourcePoolSet = new HashSet<UserResourcePool>();
-            this.UserSectorRatingSet = new HashSet<UserSectorRating>();
+            UserLicenseRatingSet = new HashSet<UserLicenseRating>();
+            UserOrganizationSet = new HashSet<UserOrganization>();
+            UserResourcePoolSet = new HashSet<UserResourcePool>();
+            UserSectorRatingSet = new HashSet<UserSectorRating>();
         }
 
         [DisplayOnListView(false)]
