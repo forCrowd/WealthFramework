@@ -1,8 +1,9 @@
 namespace BusinessObjects
 {
-    using BusinessObjects.Metadata.Attributes;
+    using BusinessObjects.Attributes;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
     [DefaultProperty("Name")]
@@ -12,8 +13,10 @@ namespace BusinessObjects
         [DisplayOnEditView(false)]
         public int Id { get; set; }
 
+        [Index("IX_UserIdResourcePoolId", 1, IsUnique = true)]
         public int UserId { get; set; }
 
+        [Index("IX_UserIdResourcePoolId", 2, IsUnique = true)]
         public int ResourcePoolId { get; set; }
 
         [Display(Name = "CMRP Rate")]

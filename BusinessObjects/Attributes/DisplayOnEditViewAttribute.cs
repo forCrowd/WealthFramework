@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace BusinessObjects.Metadata.Attributes
+namespace BusinessObjects.Attributes
 {
     [AttributeUsage(AttributeTargets.Property)]
-    public class DisplayOnListViewAttribute : Attribute
+    public class DisplayOnEditViewAttribute : Attribute
     {
-        public DisplayOnListViewAttribute(bool value)
+        public DisplayOnEditViewAttribute(bool value)
         {
             Value = value;
         }

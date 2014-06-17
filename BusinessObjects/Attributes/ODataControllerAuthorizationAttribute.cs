@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BusinessObjects.Metadata.Attributes
+namespace BusinessObjects.Attributes
 {
     /// <summary>
     /// If specified, ODataControllers will be generated with this Authorization Role

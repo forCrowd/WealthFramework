@@ -1,6 +1,6 @@
 namespace BusinessObjects
 {
-    using BusinessObjects.Metadata.Attributes;
+    using BusinessObjects.Attributes;
     using System.ComponentModel.DataAnnotations;
 
     [DefaultProperty("Name")]

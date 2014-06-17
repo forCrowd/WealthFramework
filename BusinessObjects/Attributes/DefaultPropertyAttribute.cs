@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BusinessObjects.Metadata.Attributes
+namespace BusinessObjects.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class DefaultPropertyAttribute : Attribute

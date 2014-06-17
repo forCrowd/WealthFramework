@@ -88,7 +88,7 @@
     </Compile>
     <Compile Include="BaseEntity.cs" />
     <Compile Include="License.cs" />
-    <Compile Include="Metadata\Attributes\ODataControllerAuthorizationAttribute.cs" />
+    <Compile Include="Attributes\ODataControllerAuthorizationAttribute.cs" />
     <Compile Include="Organization.cs" />
     <Compile Include="ResourcePool.cs" />
     <Compile Include="Sector.cs" />
@@ -97,18 +97,9 @@
     <Compile Include="UserOrganization.cs" />
     <Compile Include="UserResourcePool.cs" />
     <Compile Include="UserSectorRating.cs" />
-    <Compile Include="Metadata\Attributes\DefaultPropertyAttribute.cs" />
-    <Compile Include="Metadata\Attributes\DisplayOnEditViewAttribute.cs" />
-    <Compile Include="Metadata\Attributes\DisplayOnListViewAttribute.cs" />
-    <Compile Include="Metadata\LicenseMetadata.cs" />
-    <Compile Include="Metadata\OrganizationMetadata.cs" />
-    <Compile Include="Metadata\SectorMetadata.cs" />
-    <Compile Include="Metadata\ResourcePoolMetadata.cs" />
-    <Compile Include="Metadata\UserLicenseRatingMetadata.cs" />
-    <Compile Include="Metadata\UserMetadata.cs" />
-    <Compile Include="Metadata\UserOrganizationMetadata.cs" />
-    <Compile Include="Metadata\UserResourcePoolMetadata.cs" />
-    <Compile Include="Metadata\UserSectorRatingMetadata.cs" />
+    <Compile Include="Attributes\DefaultPropertyAttribute.cs" />
+    <Compile Include="Attributes\DisplayOnEditViewAttribute.cs" />
+    <Compile Include="Attributes\DisplayOnListViewAttribute.cs" />
     <Compile Include="ViewModels\Sector.cs" />
     <Compile Include="ViewModels\License.cs" />
     <Compile Include="ViewModels\ResourcePool.cs" />
@@ -123,10 +114,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>BusinessObjectDto.txt</LastGenOutput>
     </None>
-    <None Include="Metadata\Generated\BusinessObjectMetadata.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>BusinessObjectMetadata.txt</LastGenOutput>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -137,11 +124,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
-    </Content>
-    <Content Include="Metadata\Generated\BusinessObjectMetadata.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BusinessObjectMetadata.tt</DependentUpon>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

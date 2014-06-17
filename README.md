@@ -5,6 +5,10 @@ An experimental resource management system that aims to provide a sustainable ec
 ---
 
 ### Release Notes
+**0.12.3**
+* UserResourcePool unique index on UserId + ResourcePoolId
+* appveyor.yml
+
 **0.12.2**
 * BusinessObjects and Metadata classes merge
 

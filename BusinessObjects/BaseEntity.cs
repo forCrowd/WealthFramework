@@ -1,4 +1,4 @@
-﻿using BusinessObjects.Metadata.Attributes;
+﻿using BusinessObjects.Attributes;
 using System;
 using System.ComponentModel.DataAnnotations;
 

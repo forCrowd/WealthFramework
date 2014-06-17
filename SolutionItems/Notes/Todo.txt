@@ -22,9 +22,11 @@ user - resourcepool - userresourcepoolId
 userresourcepoolsector -> userresourcepoolId sectorId rating
 userresourcepoollicense -> userresourcepoolId licenseId rating
 userresourcepoolorganization -> userresourcepoolId organizationId rating
+. exclude sample user from rating averages - or make them always 50 / 50?
 . using numbers in sector chart page didn't work, it breaks the chart?
 . authorize only for admins didnt work - license, organization, resourcepool, sector
 any user should be able to access them. currently definitions link is only visible to admins - according to this, normal user may not use post action for instance? check these rules later on
+. try to have a standard for css usage + html layout formats + also js script conventions
 . check spelling of the texts!
 . update namespaces - osp.wealtheconomy.
 . in some delete cases, odatacontroller returns NotFound error? although it's deleted, the record stays on the page until refreshing the page
@@ -49,16 +51,10 @@ config.EnableQuerySupport(queryAttribute);
 
 . loading animation? both for breeze + angular
 
-. exclude sample user from rating averages!
-
 . try to add indexes dynamically?
-
-. try to have a standard for css usage + html layout formats + also js script conventions
 
 . vs update 2 changes?
 .. asp.net identity
-
-. appveyor
 
 . try turning off lazy loading - then how it brings the data (resourcepool for instance?)
 .. currently there seem no good case that lazy loading is beneficial?
