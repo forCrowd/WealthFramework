@@ -3,3 +3,6 @@ configuration: Release
 # restore Nuget packages before running MSBuild
 before_build:
   - nuget restore
+
+# to disable automatic tests 
+test: off

@@ -46,6 +46,9 @@
     <Content Include="Scripts\Database\Sql\Local - Update Database.sql" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\appveyor.yml">
+      <Link>Scripts\Build\appveyor.yml</Link>
+    </None>
     <None Include="..\LICENSE">
       <Link>Notes\LICENSE</Link>
     </None>
