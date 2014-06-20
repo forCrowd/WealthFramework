@@ -63,3 +63,135 @@ config.EnableQuerySupport(queryAttribute);
 
 . default license ratings should be 50/50
 . and ratings total should always be 100%
+
+. cascade delete alterations;
+UserResourcePoolIndex..ForeignKey("dbo.ResourcePoolIndex", t => t.ResourcePoolIndexId, cascadeDelete: false)
+UserResourcePoolIndexValue.ForeignKey("dbo.Organization", t => t.OrganizationId, cascadeDelete: false)
+
+. this is not a correct calculation / it finds the average by dividing all users' total to current users total cost ?! test + fix all!
+        public decimal TotalCostIndexRatingWeightedAverage
+        {
+            get
+            {
+                if (ResourcePool.TotalIndexRating == 0)
+                    return 0;
+
+                return TotalCostIndexRating / ResourcePool.TotalIndexRating;
+            }
+        }
+		
+. this is not on a correct level - it had to be on organization level - fix all ?!
+        public decimal EmployeeSatisfactionIndexPercentage
+        {
+            get
+            {
+                return UserResourcePool.ResourcePool.EmployeeSatisfactionRatingAverage == 0
+                    ? 0
+                    : Organization.GetAverageEmployeeSatisfactionRating() / UserResourcePool.ResourcePool.EmployeeSatisfactionRatingAverage;
+            }
+        }
+
+. about indexvalue income calculation, there are two weighted average calculation, couldn't be only one? weighted -> weighted * number of sales -> weightedwithnumberofsales weighted?
+
+---
+user resource pool index dto! currently this gives an error;
+http://localhost:10001/api/ResourcePoolIndexCustom/ResourcePoolIndexOrganizationSet
+
+---
+try to create test cases - and also easy way to generate and manipulate the data?
+
+---
+check these properties
+
+resourcepool
+index
+organization
+
+userresourcepool -> rate
+userindex -> rating
+userorganization -> numberofsales
+userresourcepoolindexvalue -> rating
+
+---
+resourcepool
+. TotalDynamicIndexRatingAverage
+. TotalIndexRating + TotalDynamicIndexRatingAverage at the end!
+
+resourcepoolindex
+. indexratingcount
+. indexratingaverage
+. indexratingweightedaverage
+. IndexValueAverage
+
+ResourcePoolIndexOrganization
+. IndexValueCount
+. IndexValueAverage
+. IndexValueWeightedAverage
+
+UserResourcePoolIndexOrganization
+. IndexValueWeightedAverageWithNumberOfSales
+. IndexValueWeightedAverageWithNumberOfSalesWeightedAverage
+. IndexIncome
+
+UserResourcePoolIndex
+. IndexShare
+. IndexValueWeightedAverageWithNumberOfSales
+. IndexIncome
+
+---
+resourcepool
+index
+
+userresourcepool -> cmrp rate
+userresourcepoolindex -> rating
+userresourcepoolindexvalue -> organization index rating
+
+---
+sector index - just name and the rating
+license index - name + boolean variables and the rating
+organization total cost index - auto formula (organization sales price / resource pool sales price average)
+organization quality index (at this moment) - name and the rating
+organization emp sat index - name and the rating
+organization cust sat index - name and the rating
+
+three different levels (can more more)
+
+---
+resource pool types: realtime vs. static
+
+---
+resource pool types;
+. index samples
+. one big public
+. per user
+
+organizations - per resource pool?
+
+---
+Index Notes;
+
+total cost	-> lowest
+knowledge	-> highest
+quality		-> highest
+sector		-> highest
+employee	-> highest
+customer	-> highest
+distance	-> lowest
+
+user can rate;
+license (knowledge index)
+organization quality
+sector
+organization employee satisf.
+organization customer satisf.
+
+auto;
+total cost	= sales price - production cost
+distance	= production location - customer location
+
+---
+Using Total Cost Index without other Indexes wouldn't make sense.
+If the quality of the product is not known, rewarding low cost wouldn't mean much?
+Maybe it's better to start with another index?
+New comment: Actually this should be okay, because in the current economic system it's the same.
+We don't look quality and other details but just low cost + max. profit. Same ignorance.

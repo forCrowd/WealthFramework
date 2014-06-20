@@ -133,6 +133,11 @@ namespace BusinessObjects
             }
         }
 
+        public decimal TotalDynamicIndexRatingAverage
+        {
+            get { return ResourcePoolIndexSet.Sum(item => item.IndexRatingAverage); }
+        }
+
         public decimal TotalIndexRating
         {
             get

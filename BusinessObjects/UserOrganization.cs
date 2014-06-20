@@ -1,6 +1,7 @@
 namespace BusinessObjects
 {
     using BusinessObjects.Attributes;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
@@ -26,7 +27,7 @@ namespace BusinessObjects
 
         [Display(Name = "Employee Satisfaction Rating")]
         public decimal EmployeeSatisfactionRating { get; set; }
-        
+
         public virtual Organization Organization { get; set; }
 
         public virtual User User { get; set; }
@@ -38,6 +39,19 @@ namespace BusinessObjects
         public UserResourcePool UserResourcePool
         {
             get { return User.UserResourcePoolSet.Single(item => item.ResourcePool == Organization.Sector.ResourcePool); }
+        }
+
+        public IEnumerable<UserResourcePoolIndexOrganization> UserOrganizationResourcePoolIndexOrganizationSet
+        {
+            get
+            {
+                var list = new HashSet<UserResourcePoolIndexOrganization>();
+
+                foreach (var item in UserResourcePool.ResourcePool.ResourcePoolIndexSet)
+                    list.Add(new UserResourcePoolIndexOrganization(this, new ResourcePoolIndexOrganization(item, Organization)));
+
+                return list;
+            }
         }
 
         public decimal ResourcePoolTax

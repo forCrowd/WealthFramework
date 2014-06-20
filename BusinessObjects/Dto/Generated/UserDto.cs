@@ -12,7 +12,7 @@ namespace BusinessObjects.Dto
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    public class UserDto
+    public partial class UserDto
     {
         public UserDto()
         {
@@ -36,6 +36,7 @@ namespace BusinessObjects.Dto
         [Required]
         public int Id { get; set; }
 
+        [Required]
         public string AspNetUserId { get; set; }
 
         [Required]

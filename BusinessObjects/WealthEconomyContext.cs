@@ -32,7 +32,10 @@
         public virtual DbSet<UserLicenseRating> UserLicenseRating { get; set; }
         public virtual DbSet<UserSectorRating> UserSectorRating { get; set; }
         public virtual DbSet<ResourcePool> ResourcePool { get; set; }
+        public virtual DbSet<ResourcePoolIndex> ResourcePoolIndex { get; set; }
         public virtual DbSet<UserResourcePool> UserResourcePool { get; set; }
         public virtual DbSet<UserOrganization> UserOrganization { get; set; }
+        public virtual DbSet<UserResourcePoolIndex> UserResourcePoolIndex { get; set; }
+        public virtual DbSet<UserResourcePoolIndexValue> UserResourcePoolIndexValue { get; set; }
     }
 }

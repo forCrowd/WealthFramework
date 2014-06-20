@@ -81,6 +81,9 @@
     <Compile Include="Generated\OrganizationRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
+    <Compile Include="Generated\ResourcePoolIndexRepository.cs">
+      <DependentUpon>Repository.tt</DependentUpon>
+    </Compile>
     <Compile Include="Generated\ResourcePoolRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
@@ -94,6 +97,12 @@
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
     <Compile Include="Generated\UserRepository.cs">
+      <DependentUpon>Repository.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\UserResourcePoolIndexRepository.cs">
+      <DependentUpon>Repository.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\UserResourcePoolIndexValueRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
     <Compile Include="Generated\UserResourcePoolRepository.cs">
@@ -147,6 +156,10 @@
     <Compile Include="Migrations\201406170749550_V0_12_3.cs" />
     <Compile Include="Migrations\201406170749550_V0_12_3.Designer.cs">
       <DependentUpon>201406170749550_V0_12_3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201406181207339_V0_13.cs" />
+    <Compile Include="Migrations\201406181207339_V0_13.Designer.cs">
+      <DependentUpon>201406181207339_V0_13.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="DatabaseInitializer.cs" />
@@ -210,6 +223,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201406170749550_V0_12_3.resx">
       <DependentUpon>201406170749550_V0_12_3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201406181207339_V0_13.resx">
+      <DependentUpon>201406181207339_V0_13.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

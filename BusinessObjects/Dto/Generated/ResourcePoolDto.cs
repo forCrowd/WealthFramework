@@ -12,7 +12,7 @@ namespace BusinessObjects.Dto
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    public class ResourcePoolDto
+    public partial class ResourcePoolDto
     {
         public ResourcePoolDto()
         {
@@ -22,6 +22,7 @@ namespace BusinessObjects.Dto
         {
             this.Id = resourcePool.Id;
             this.Name = resourcePool.Name;
+            this.IsSample = resourcePool.IsSample;
             this.CreatedOn = resourcePool.CreatedOn;
             this.ModifiedOn = resourcePool.ModifiedOn;
             this.DeletedOn = resourcePool.DeletedOn;
@@ -33,6 +34,9 @@ namespace BusinessObjects.Dto
 
         [Required]
         public string Name { get; set; }
+
+        [Required]
+        public bool IsSample { get; set; }
 
         [Required]
         public System.DateTime CreatedOn { get; set; }
@@ -51,6 +55,7 @@ namespace BusinessObjects.Dto
             {
                 Id = Id,
                 Name = Name,
+                IsSample = IsSample,
                 CreatedOn = CreatedOn,
                 ModifiedOn = ModifiedOn,
                 DeletedOn = DeletedOn,

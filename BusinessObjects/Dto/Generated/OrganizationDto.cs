@@ -12,7 +12,7 @@ namespace BusinessObjects.Dto
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    public class OrganizationDto
+    public partial class OrganizationDto
     {
         public OrganizationDto()
         {
@@ -21,7 +21,6 @@ namespace BusinessObjects.Dto
         public OrganizationDto(Organization organization)
         {
             this.Id = organization.Id;
-            // this.ResourcePoolId = organization.ResourcePoolId;
             this.SectorId = organization.SectorId;
             this.Name = organization.Name;
             this.ProductionCost = organization.ProductionCost;
@@ -35,9 +34,6 @@ namespace BusinessObjects.Dto
 
         [Required]
         public int Id { get; set; }
-
-        [Required]
-        public int ResourcePoolId { get; set; }
 
         [Required]
         public short SectorId { get; set; }
@@ -70,7 +66,6 @@ namespace BusinessObjects.Dto
             return new Organization()
             {
                 Id = Id,
-                //ResourcePoolId = ResourcePoolId,
                 SectorId = SectorId,
                 Name = Name,
                 ProductionCost = ProductionCost,

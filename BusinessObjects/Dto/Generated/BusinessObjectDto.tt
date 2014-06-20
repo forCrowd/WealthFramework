@@ -49,7 +49,7 @@ namespace BusinessObjects.Dto
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    public class <#=entityDtoName#>
+    public partial class <#=entityDtoName#>
     {
 <#
 

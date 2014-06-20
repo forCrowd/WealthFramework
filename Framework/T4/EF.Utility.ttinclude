@@ -3,7 +3,7 @@
 <#@ assembly name="$(SolutionDir)DataObjects\bin\Debug\DataObjects.dll"#>
 <#@ import namespace="System.ComponentModel.DataAnnotations"#>
 <#@ import namespace="BusinessObjects"#>
-<#@ import namespace="BusinessObjects.Metadata.Attributes"#>
+<#@ import namespace="BusinessObjects.Attributes"#>
 <#@ import namespace="DataObjects"#>
 <#@ include file="EF6.Utility.ttinclude"#>
 <#+
@@ -643,7 +643,7 @@ public class TypeMapper
 		if (customAttributes == null)
 			return default(T);
 
-		var attribute = customAttributes.SingleOrDefault(a => ((MemberInfo)a.TypeId).Name == typeof(T).Name);
+		var attribute = customAttributes.SingleOrDefault(a => a.TypeId is TypeInfo && ((MemberInfo)a.TypeId).Name == typeof(T).Name);
 
 		if (attribute == null)
 			return default(T);

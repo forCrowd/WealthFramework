@@ -68,6 +68,9 @@
     <Compile Include="Dto\Generated\ResourcePoolDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
+    <Compile Include="Dto\Generated\ResourcePoolIndexDto.cs">
+      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
+    </Compile>
     <Compile Include="Dto\Generated\SectorDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
@@ -83,19 +86,32 @@
     <Compile Include="Dto\Generated\UserResourcePoolDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
+    <Compile Include="Dto\Generated\UserResourcePoolIndexDto.cs">
+      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Dto\Generated\UserResourcePoolIndexValueDto.cs">
+      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
+    </Compile>
     <Compile Include="Dto\Generated\UserSectorRatingDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
     <Compile Include="BaseEntity.cs" />
+    <Compile Include="Dto\ResourcePoolDto.cs" />
+    <Compile Include="Dto\UserResourcePoolIndexDto.cs" />
+    <Compile Include="Dto\ResourcePoolIndexDto.cs" />
     <Compile Include="License.cs" />
     <Compile Include="Attributes\ODataControllerAuthorizationAttribute.cs" />
     <Compile Include="Organization.cs" />
+    <Compile Include="ResourcePoolIndexOrganization.cs" />
     <Compile Include="ResourcePoolIndex.cs" />
     <Compile Include="ResourcePool.cs" />
     <Compile Include="Sector.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserLicenseRating.cs" />
+    <Compile Include="UserResourcePoolIndexOrganization.cs" />
     <Compile Include="UserOrganization.cs" />
+    <Compile Include="UserResourcePoolIndex.cs" />
+    <Compile Include="UserResourcePoolIndexValue.cs" />
     <Compile Include="UserResourcePool.cs" />
     <Compile Include="UserSectorRating.cs" />
     <Compile Include="Attributes\DefaultPropertyAttribute.cs" />

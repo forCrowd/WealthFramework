@@ -12,7 +12,7 @@ namespace BusinessObjects.Dto
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    public class UserResourcePoolDto
+    public partial class UserResourcePoolDto
     {
         public UserResourcePoolDto()
         {

@@ -1,0 +1,12 @@
+﻿namespace BusinessObjects.Dto
+{
+    using System;
+    using System.ComponentModel.DataAnnotations;
+
+    public partial class UserResourcePoolIndexDto
+    {
+        public decimal IndexShare { get; set; }
+        public decimal IndexValueWeightedAverageWithNumberOfSales { get; set; }
+        public decimal IndexIncome { get; set; }
+    }
+}

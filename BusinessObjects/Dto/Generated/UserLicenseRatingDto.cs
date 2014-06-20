@@ -12,7 +12,7 @@ namespace BusinessObjects.Dto
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    public class UserLicenseRatingDto
+    public partial class UserLicenseRatingDto
     {
         public UserLicenseRatingDto()
         {

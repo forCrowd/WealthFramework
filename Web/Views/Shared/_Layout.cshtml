@@ -21,11 +21,12 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="dropdown" data-ng-show="vm.userInfo && vm.userInfo.IsAdmin">
+                    <li class="dropdown" data-ng-show="vm.userInfo">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown">Definitions <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="/User/">User</a></li>
-                            <li><a href="/ResourcePool/">Resource Pool</a></li>
+                            <li><a href="/ResourcePool/">CMRP</a></li>
+                            <li><a href="/ResourcePoolIndex/">CMRP Index</a></li>
                             <li><a href="/Sector/">Sector</a></li>
                             <li><a href="/License/">License</a></li>
                             <li><a href="/Organization/">Organization</a></li>
@@ -47,10 +48,12 @@
                     <li class="dropdown" data-ng-show="vm.userInfo">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown">Ratings <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/UserResourcePool/">CMRP Index Rating</a></li>
-                            <li><a href="/UserOrganization/">Organization Rating</a></li>
-                            <li><a href="/UserSectorRating/">Sector Rating</a></li>
-                            <li><a href="/UserLicenseRating/">Licence Rating</a></li>
+                            <li><a href="/UserResourcePool/">User CMRP Index</a></li>
+                            <li><a href="/UserResourcePoolIndex/">User CMRP Index - Dynamic</a></li>
+                            <li><a href="/UserResourcePoolIndexValue/">User CMRP Index Value - Dynamic</a></li>
+                            <li><a href="/UserOrganization/">User Organization</a></li>
+                            <li><a href="/UserSectorRating/">User Sector Rating</a></li>
+                            <li><a href="/UserLicenseRating/">User Licence Rating</a></li>
                             <li><a href="/SectorChart/">Sector Chart</a></li>
                         </ul>
                     </li>
@@ -149,6 +152,10 @@
     <script src="/Scripts/app/controllers/resourcePoolListController.js"></script>
     <script src="/Scripts/app/controllers/resourcePoolEditController.js"></script>
 
+    <script src="/Scripts/app/services/generated/resourcePoolIndexService.js"></script>
+    <script src="/Scripts/app/controllers/resourcePoolIndexListController.js"></script>
+    <script src="/Scripts/app/controllers/resourcePoolIndexEditController.js"></script>
+
     <script src="/Scripts/app/services/generated/sectorService.js"></script>
     <script src="/Scripts/app/controllers/sectorListController.js"></script>
     <script src="/Scripts/app/controllers/sectorEditController.js"></script>
@@ -167,6 +174,14 @@
     <script src="/Scripts/app/services/generated/userResourcePoolService.js"></script>
     <script src="/Scripts/app/controllers/userResourcePoolListController.js"></script>
     <script src="/Scripts/app/controllers/userResourcePoolEditController.js"></script>
+
+    <script src="/Scripts/app/services/generated/userResourcePoolIndexService.js"></script>
+    <script src="/Scripts/app/controllers/userResourcePoolIndexListController.js"></script>
+    <script src="/Scripts/app/controllers/userResourcePoolIndexEditController.js"></script>
+
+    <script src="/Scripts/app/services/generated/userResourcePoolIndexValueService.js"></script>
+    <script src="/Scripts/app/controllers/userResourcePoolIndexValueListController.js"></script>
+    <script src="/Scripts/app/controllers/userResourcePoolIndexValueEditController.js"></script>
 
     <script src="/Scripts/app/services/generated/userOrganizationService.js"></script>
     <script src="/Scripts/app/controllers/userOrganizationListController.js"></script>

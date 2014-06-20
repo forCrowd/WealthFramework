@@ -6,7 +6,7 @@ namespace BusinessObjects
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    [DefaultProperty("Name")]
+    [DefaultProperty("Id")]
     public class UserResourcePool : BaseEntity
     {
         [DisplayOnListView(false)]
