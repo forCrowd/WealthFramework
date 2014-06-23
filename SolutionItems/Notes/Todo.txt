@@ -91,60 +91,16 @@ UserResourcePoolIndexValue.ForeignKey("dbo.Organization", t => t.OrganizationId,
             }
         }
 
-. about indexvalue income calculation, there are two weighted average calculation, couldn't be only one? weighted -> weighted * number of sales -> weightedwithnumberofsales weighted?
-
 ---
 user resource pool index dto! currently this gives an error;
 http://localhost:10001/api/ResourcePoolIndexCustom/ResourcePoolIndexOrganizationSet
 
 ---
-try to create test cases - and also easy way to generate and manipulate the data?
+test cases;
+. multiple index case - update index ratings and see!
 
----
-check these properties
-
-resourcepool
-index
-organization
-
-userresourcepool -> rate
-userindex -> rating
-userorganization -> numberofsales
-userresourcepoolindexvalue -> rating
-
----
-resourcepool
-. TotalDynamicIndexRatingAverage
-. TotalIndexRating + TotalDynamicIndexRatingAverage at the end!
-
-resourcepoolindex
-. indexratingcount
-. indexratingaverage
-. indexratingweightedaverage
-. IndexValueAverage
-
-ResourcePoolIndexOrganization
-. IndexValueCount
-. IndexValueAverage
-. IndexValueWeightedAverage
-
-UserResourcePoolIndexOrganization
-. IndexValueWeightedAverageWithNumberOfSales
-. IndexValueWeightedAverageWithNumberOfSalesWeightedAverage
-. IndexIncome
-
-UserResourcePoolIndex
-. IndexShare
-. IndexValueWeightedAverageWithNumberOfSales
-. IndexIncome
-
----
-resourcepool
-index
-
-userresourcepool -> cmrp rate
-userresourcepoolindex -> rating
-userresourcepoolindexvalue -> organization index rating
+. try to fix the following case and check ?!
+.. about indexvalue income calculation, there are two weighted average calculation, couldn't be only one? weighted -> weighted * number of sales -> weightedwithnumberofsales weighted?
 
 ---
 sector index - just name and the rating

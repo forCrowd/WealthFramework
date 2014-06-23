@@ -133,7 +133,7 @@ namespace BusinessObjects
             }
         }
 
-        public decimal TotalDynamicIndexRatingAverage
+        public decimal IndexRatingAverage
         {
             get { return ResourcePoolIndexSet.Sum(item => item.IndexRatingAverage); }
         }
@@ -148,7 +148,8 @@ namespace BusinessObjects
                     + SectorIndexRatingAverage
                     + EmployeeSatisfactionIndexRatingAverage
                     + CustomerSatisfactionIndexRatingAverage
-                    + DistanceIndexRatingAverage;
+                    + DistanceIndexRatingAverage
+                    + IndexRatingAverage;
             }
         }
 

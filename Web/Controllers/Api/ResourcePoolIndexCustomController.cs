@@ -44,7 +44,7 @@ namespace Web.Controllers.Api
                 .Select(item =>
                     new ResourcePoolDto(item)
                     {
-                        TotalDynamicIndexRating = item.TotalDynamicIndexRatingAverage
+                        TotalDynamicIndexRating = item.IndexRatingAverage
                     })
                 ;
             return list;

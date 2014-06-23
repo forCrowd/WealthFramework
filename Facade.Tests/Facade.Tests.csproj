@@ -64,7 +64,8 @@
     <Compile Include="..\SolutionItems\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ResourcePoolIndex.cs" />
+    <Compile Include="ResourcePoolTest.cs" />
+    <Compile Include="ResourcePoolIndexTest.cs" />
     <Compile Include="ResourcePoolUnitOfWorkTest.cs" />
     <Compile Include="UserResourcePoolUnitOfWorkTest.cs" />
     <Compile Include="OrganizationUnitOfWorkTest.cs" />

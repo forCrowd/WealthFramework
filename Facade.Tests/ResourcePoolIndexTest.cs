@@ -9,7 +9,7 @@
     using System.Text;
 
     [TestClass]
-    public class ResourcePoolIndex
+    public class ResourcePoolIndexTest
     {
         [TestMethod]
         public void Select()

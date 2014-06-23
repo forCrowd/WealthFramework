@@ -41,7 +41,7 @@ namespace BusinessObjects
             get { return User.UserResourcePoolSet.Single(item => item.ResourcePool == Organization.Sector.ResourcePool); }
         }
 
-        public IEnumerable<UserResourcePoolIndexOrganization> UserOrganizationResourcePoolIndexOrganizationSet
+        public IEnumerable<UserResourcePoolIndexOrganization> UserResourcePoolIndexOrganizationSet
         {
             get
             {
@@ -394,6 +394,11 @@ namespace BusinessObjects
 
         #endregion
 
+        public decimal IndexIncome
+        {
+            get { return UserResourcePoolIndexOrganizationSet.Sum(item => item.IndexIncome); }
+        }
+
         public decimal TotalResourcePoolIncome
         {
             get
@@ -404,7 +409,8 @@ namespace BusinessObjects
                     + SectorIndexIncome
                     + EmployeeSatisfactionIndexIncome
                     + CustomerSatisfactionIndexIncome
-                    + DistanceIndexIncome;
+                    + DistanceIndexIncome
+                    + IndexIncome;
             }
         }
 
