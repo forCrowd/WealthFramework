@@ -11,11 +11,11 @@ namespace BusinessObjects.ViewModels
         {
             SectorName = sector.Name;
             RatingCount = sector.UserSectorRatingSet.Count();
-            AverageRating = sector.GetAverageRating();
+            RatingAverage = sector.RatingAverage;
         }
 
         public string SectorName { get; set; }
         public int RatingCount { get; set; }
-        public decimal AverageRating { get; set; }
+        public decimal RatingAverage { get; set; }
     }
 }

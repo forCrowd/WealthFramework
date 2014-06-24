@@ -38,31 +38,8 @@ namespace BusinessObjects
 
         /* */
 
-        public decimal SectorRatingAverage
-        {
-            get { return SectorSet.Sum(sector => sector.GetAverageRating()); }
-        }
-
-        public decimal LicenseRatingAverage
-        {
-            get { return LicenseSet.Sum(license => license.GetAverageRating()); }
-        }
-
-        public decimal QualityRatingAverage
-        {
-            get { return OrganizationSet.Sum(item => item.GetAverageQualityRating()); }
-        }
-
-        public decimal EmployeeSatisfactionRatingAverage
-        {
-            get { return OrganizationSet.Sum(item => item.GetAverageEmployeeSatisfactionRating()); }
-        }
-
-        public decimal CustomerSatisfactionRatingAverage
-        {
-            get { return OrganizationSet.Sum(organization => organization.GetAverageCustomerSatisfactionRating()); }
-        }
-
+        #region - Indexes -
+        
         public decimal TotalCostIndexRatingAverage
         {
             get
@@ -70,6 +47,16 @@ namespace BusinessObjects
                 return UserResourcePoolSet.Any()
                     ? UserResourcePoolSet.Average(item => item.TotalCostIndexRating)
                     : 0;
+            }
+        }
+
+        public decimal TotalCostIndexRatingWeightedAverage
+        {
+            get
+            {
+                return TotalIndexRatingAverage == 0
+                    ? 0
+                    : TotalCostIndexRatingAverage / TotalIndexRatingAverage;
             }
         }
 
@@ -83,6 +70,16 @@ namespace BusinessObjects
             }
         }
 
+        public decimal KnowledgeIndexRatingWeightedAverage
+        {
+            get
+            {
+                return TotalIndexRatingAverage == 0
+                    ? 0
+                    : KnowledgeIndexRatingAverage / TotalIndexRatingAverage;
+            }
+        }
+        
         public decimal QualityIndexRatingAverage
         {
             get
@@ -90,6 +87,16 @@ namespace BusinessObjects
                 return UserResourcePoolSet.Any()
                     ? UserResourcePoolSet.Average(item => item.QualityIndexRating)
                     : 0;
+            }
+        }
+
+        public decimal QualityIndexRatingWeightedAverage
+        {
+            get
+            {
+                return TotalIndexRatingAverage == 0
+                    ? 0
+                    : QualityIndexRatingAverage / TotalIndexRatingAverage;
             }
         }
 
@@ -103,13 +110,33 @@ namespace BusinessObjects
             }
         }
 
+        public decimal SectorIndexRatingWeightedAverage
+        {
+            get
+            {
+                return TotalIndexRatingAverage == 0
+                    ? 0
+                    : SectorIndexRatingAverage / TotalIndexRatingAverage;
+            }
+        }
+
         public decimal EmployeeSatisfactionIndexRatingAverage
         {
             get
             {
                 return UserResourcePoolSet.Any()
+                    ? UserResourcePoolSet.Average(item => item.EmployeeSatisfactionIndexRating)
+                    : 0;
+            }
+        }
+
+        public decimal EmployeeSatisfactionIndexRatingWeightedAverage
+        {
+            get
+            {
+                return TotalIndexRatingAverage == 0
                     ? 0
-                    : UserResourcePoolSet.Average(item => item.EmployeeSatisfactionIndexRating);
+                    : EmployeeSatisfactionIndexRatingAverage / TotalIndexRatingAverage;
             }
         }
 
@@ -123,22 +150,42 @@ namespace BusinessObjects
             }
         }
 
-        public decimal DistanceIndexRatingAverage
+        public decimal CustomerSatisfactionIndexRatingWeightedAverage
         {
             get
             {
-                return UserResourcePoolSet.Any()
-                    ? UserResourcePoolSet.Average(item => item.DistanceIndexRating)
-                    : 0;
+                return TotalIndexRatingAverage == 0
+                    ? 0
+                    : CustomerSatisfactionIndexRatingAverage / TotalIndexRatingAverage;
             }
         }
+
+        //public decimal DistanceIndexRatingAverage
+        //{
+        //    get
+        //    {
+        //        return UserResourcePoolSet.Any()
+        //            ? UserResourcePoolSet.Average(item => item.DistanceIndexRating)
+        //            : 0;
+        //    }
+        //}
+
+        //public decimal DistanceIndexRatingWeightedAverage
+        //{
+        //    get
+        //    {
+        //        return TotalIndexRatingAverage == 0
+        //            ? 0
+        //            : DistanceIndexRatingAverage / TotalIndexRatingAverage;
+        //    }
+        //}
 
         public decimal IndexRatingAverage
         {
             get { return ResourcePoolIndexSet.Sum(item => item.IndexRatingAverage); }
         }
 
-        public decimal TotalIndexRating
+        public decimal TotalIndexRatingAverage
         {
             get
             {
@@ -148,9 +195,36 @@ namespace BusinessObjects
                     + SectorIndexRatingAverage
                     + EmployeeSatisfactionIndexRatingAverage
                     + CustomerSatisfactionIndexRatingAverage
-                    + DistanceIndexRatingAverage
+                    //+ DistanceIndexRatingAverage
                     + IndexRatingAverage;
             }
+        }
+
+        #endregion
+
+        public decimal SectorRatingAverage
+        {
+            get { return SectorSet.Sum(sector => sector.RatingAverage); }
+        }
+
+        public decimal LicenseRatingAverage
+        {
+            get { return LicenseSet.Sum(license => license.RatingAverage); }
+        }
+
+        public decimal QualityRatingAverage
+        {
+            get { return OrganizationSet.Sum(item => item.QualityRatingAverage); }
+        }
+
+        public decimal EmployeeSatisfactionRatingAverage
+        {
+            get { return OrganizationSet.Sum(item => item.EmployeeSatisfactionRatingAverage); }
+        }
+
+        public decimal CustomerSatisfactionRatingAverage
+        {
+            get { return OrganizationSet.Sum(organization => organization.CustomerSatisfactionRatingAverage); }
         }
 
         public IEnumerable<Organization> OrganizationSet

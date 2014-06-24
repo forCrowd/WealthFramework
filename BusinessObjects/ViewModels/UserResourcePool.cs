@@ -29,7 +29,7 @@ namespace BusinessObjects.ViewModels
             SectorIndexIncome = userResourcePool.SectorIndexIncome;
             EmployeeSatisfactionIndexIncome = userResourcePool.EmployeeSatisfactionIndexIncome;
             CustomerSatisfactionIndexIncome = userResourcePool.CustomerSatisfactionIndexIncome;
-            DistanceIndexIncome = userResourcePool.DistanceIndexIncome;
+            //DistanceIndexIncome = userResourcePool.DistanceIndexIncome;
             TotalResourcePoolIncome = userResourcePool.TotalResourcePoolIncome;
             TotalIncome = userResourcePool.TotalIncome;
         }
@@ -46,13 +46,13 @@ namespace BusinessObjects.ViewModels
         public decimal TotalProfit { get; set; }
         public decimal TotalResourcePoolTax { get; set; }
         public decimal TotalSalesRevenueIncludingResourcePoolTax { get; set; }
-        public decimal TotalCostIndexIncome { get; set; }
-        public decimal KnowledgeIndexIncome { get; set; }
-        public decimal QualityIndexIncome { get; set; }
         public decimal SectorIndexIncome { get; set; }
+        public decimal KnowledgeIndexIncome { get; set; }
+        public decimal TotalCostIndexIncome { get; set; }
+        public decimal QualityIndexIncome { get; set; }
         public decimal EmployeeSatisfactionIndexIncome { get; set; }
         public decimal CustomerSatisfactionIndexIncome { get; set; }
-        public decimal DistanceIndexIncome { get; set; }
+        //public decimal DistanceIndexIncome { get; set; }
         public decimal TotalResourcePoolIncome { get; set; }
         public decimal TotalIncome { get; set; }
     }

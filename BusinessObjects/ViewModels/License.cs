@@ -8,11 +8,11 @@
         {
             LicenseName = license.Name;
             RatingCount = license.UserLicenseRatingSet.Count;
-            AverageRating = license.GetAverageRating();
+            RatingAverage = license.RatingAverage;
         }
 
         public string LicenseName { get; set; }
         public int RatingCount { get; set; }
-        public decimal AverageRating { get; set; }
+        public decimal RatingAverage { get; set; }
     }
 }

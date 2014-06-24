@@ -16,7 +16,7 @@ namespace BusinessObjects.ViewModels
             SectorIndexRatingAverage = resourcePool.SectorIndexRatingAverage;
             EmployeeSatisfactionIndexRatingAverage = resourcePool.EmployeeSatisfactionIndexRatingAverage;
             CustomerSatisfactionIndexRatingAverage = resourcePool.CustomerSatisfactionIndexRatingAverage;
-            DistanceIndexRatingAverage = resourcePool.DistanceIndexRatingAverage;
+            //DistanceIndexRatingAverage = resourcePool.DistanceIndexRatingAverage;
         }
 
         public int Id { get; set; }
@@ -28,6 +28,6 @@ namespace BusinessObjects.ViewModels
         public decimal SectorIndexRatingAverage { get; set; }
         public decimal EmployeeSatisfactionIndexRatingAverage { get; set; }
         public decimal CustomerSatisfactionIndexRatingAverage { get; set; }
-        public decimal DistanceIndexRatingAverage { get; set; }
+        //public decimal DistanceIndexRatingAverage { get; set; }
     }
 }

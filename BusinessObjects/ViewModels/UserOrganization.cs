@@ -20,35 +20,32 @@
             TotalProfit = userOrganization.TotalProfit;
             TotalResourcePoolTax = userOrganization.TotalResourcePoolTax;
             TotalSalesRevenueIncludingResourcePoolTax = userOrganization.TotalSalesRevenueIncludingResourcePoolTax;
-            TotalCostIndexPercentage = userOrganization.TotalCostIndexPercentageWithSalesPrice;
-            TotalCostIndexPercentageWithNumberOfSales = userOrganization.TotalCostIndexPercentageWithNumberOfSales;
-            TotalCostIndexPercentageWithNumberOfSalesWeighted = userOrganization.TotalCostIndexPercentageWithNumberOfSalesWeighted;
-            TotalCostIndexIncome = userOrganization.TotalCostIndexIncome;
-            KnowledgeIndexPercentage = userOrganization.KnowledgeIndexPercentage;
-            KnowledgeIndexPercentageWithNumberOfSales = userOrganization.KnowledgeIndexPercentageWithNumberOfSales;
-            KnowledgeIndexPercentageWithNumberOfSalesWeighted = userOrganization.KnowledgeIndexPercentageWithNumberOfSalesWeighted;
-            KnowledgeIndexIncome = userOrganization.KnowledgeIndexIncome;
-            QualityIndexPercentage = userOrganization.QualityIndexPercentage;
-            QualityIndexPercentageWithNumberOfSales = userOrganization.QualityIndexPercentageWithNumberOfSales;
-            QualityIndexPercentageWithNumberOfSalesWeighted = userOrganization.QualityIndexPercentageWithNumberOfSalesWeighted;
-            QualityIndexIncome = userOrganization.QualityIndexIncome;
-            SectorIndexPercentage = userOrganization.SectorIndexPercentage;
-            SectorIndexPercentageWithNumberOfSales = userOrganization.SectorIndexPercentageWithNumberOfSales;
-            SectorIndexPercentageWithNumberOfSalesWeighted = userOrganization.SectorIndexPercentageWithNumberOfSalesWeighted;
+            //SectorIndexPercentage = userOrganization.Organization.Sector.RatingWeightedAverage;
+            SectorIndexPercentageWithNumberOfSales = userOrganization.SectorIndexValueWeightedAverageWithNumberOfSales;
+            SectorIndexPercentageWithNumberOfSalesWeighted = userOrganization.SectorIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
             SectorIndexIncome = userOrganization.SectorIndexIncome;
-            EmployeeSatisfactionIndexPercentage = userOrganization.EmployeeSatisfactionIndexPercentage;
-            EmployeeSatisfactionIndexPercentageWithNumberOfSales = userOrganization.EmployeeSatisfactionIndexPercentageWithNumberOfSales;
-            EmployeeSatisfactionIndexPercentageWithNumberOfSalesWeighted = userOrganization.EmployeeSatisfactionIndexPercentageWithNumberOfSalesWeighted;
+            //KnowledgeIndexPercentage = userOrganization.KnowledgeIndexPercentage;
+            KnowledgeIndexPercentageWithNumberOfSales = userOrganization.KnowledgeIndexValueWeightedAverageWithNumberOfSales;
+            KnowledgeIndexPercentageWithNumberOfSalesWeighted = userOrganization.KnowledgeIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
+            KnowledgeIndexIncome = userOrganization.KnowledgeIndexIncome;
+            //TotalCostIndexPercentage = userOrganization.TotalCostIndexPercentageWithSalesPrice;
+            TotalCostIndexPercentageWithNumberOfSales = userOrganization.TotalCostIndexValueWeightedAverageWithNumberOfSales;
+            TotalCostIndexPercentageWithNumberOfSalesWeighted = userOrganization.TotalCostIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
+            TotalCostIndexIncome = userOrganization.TotalCostIndexIncome;
+            QualityIndexPercentageWithNumberOfSales = userOrganization.QualityIndexValueWeightedAverageWithNumberOfSales;
+            QualityIndexPercentageWithNumberOfSalesWeighted = userOrganization.QualityIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
+            QualityIndexIncome = userOrganization.QualityIndexIncome;
+            EmployeeSatisfactionIndexPercentageWithNumberOfSales = userOrganization.EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSales;
+            EmployeeSatisfactionIndexPercentageWithNumberOfSalesWeighted = userOrganization.EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
             EmployeeSatisfactionIndexIncome = userOrganization.EmployeeSatisfactionIndexIncome;
-            CustomerSatisfactionIndexPercentage = userOrganization.CustomerSatisfactionIndexPercentage;
-            CustomerSatisfactionIndexPercentageWithNumberOfSales = userOrganization.CustomerSatisfactionIndexPercentageWithNumberOfSales;
-            CustomerSatisfactionIndexPercentageWithNumberOfSalesWeighted = userOrganization.CustomerSatisfactionIndexPercentageWithNumberOfSalesWeighted;
+            CustomerSatisfactionIndexPercentageWithNumberOfSales = userOrganization.CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSales;
+            CustomerSatisfactionIndexPercentageWithNumberOfSalesWeighted = userOrganization.CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
             CustomerSatisfactionIndexIncome = userOrganization.CustomerSatisfactionIndexIncome;
-            DistanceRating = userOrganization.DistanceRating;
-            DistanceIndexPercentage = userOrganization.DistanceIndexPercentage;
-            DistanceIndexPercentageWithNumberOfSales = userOrganization.DistanceIndexPercentageWithNumberOfSales;
-            DistanceIndexPercentageWithNumberOfSalesWeighted = userOrganization.DistanceIndexPercentageWithNumberOfSalesWeighted;
-            DistanceIndexIncome = userOrganization.DistanceIndexIncome;
+            //DistanceRating = userOrganization.DistanceRating;
+            //DistanceIndexPercentage = userOrganization.DistanceIndexPercentage;
+            //DistanceIndexPercentageWithNumberOfSales = userOrganization.DistanceIndexPercentageWithNumberOfSales;
+            //DistanceIndexPercentageWithNumberOfSalesWeighted = userOrganization.DistanceIndexPercentageWithNumberOfSalesWeighted;
+            //DistanceIndexIncome = userOrganization.DistanceIndexIncome;
             TotalResourcePoolIncome = userOrganization.TotalResourcePoolIncome;
             TotalIncome = userOrganization.TotalIncome;
         }
@@ -75,7 +72,6 @@
         public decimal KnowledgeIndexPercentageWithNumberOfSales { get; set; }
         public decimal KnowledgeIndexPercentageWithNumberOfSalesWeighted { get; set; }
         public decimal KnowledgeIndexIncome { get; set; }
-        public decimal QualityIndexPercentage { get; set; }
         public decimal QualityIndexPercentageWithNumberOfSales { get; set; }
         public decimal QualityIndexPercentageWithNumberOfSalesWeighted { get; set; }
         public decimal QualityIndexIncome { get; set; }
@@ -83,11 +79,9 @@
         public decimal SectorIndexPercentageWithNumberOfSales { get; set; }
         public decimal SectorIndexPercentageWithNumberOfSalesWeighted { get; set; }
         public decimal SectorIndexIncome { get; set; }
-        public decimal EmployeeSatisfactionIndexPercentage { get; set; }
         public decimal EmployeeSatisfactionIndexPercentageWithNumberOfSales { get; set; }
         public decimal EmployeeSatisfactionIndexPercentageWithNumberOfSalesWeighted { get; set; }
         public decimal EmployeeSatisfactionIndexIncome { get; set; }
-        public decimal CustomerSatisfactionIndexPercentage { get; set; }
         public decimal CustomerSatisfactionIndexPercentageWithNumberOfSales { get; set; }
         public decimal CustomerSatisfactionIndexPercentageWithNumberOfSalesWeighted { get; set; }
         public decimal CustomerSatisfactionIndexIncome { get; set; }

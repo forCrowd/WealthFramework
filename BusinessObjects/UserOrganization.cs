@@ -92,167 +92,23 @@ namespace BusinessObjects
             get { return SalesPriceIncludingResourcePoolTax * NumberOfSales; }
         }
 
-        #region - Total Cost Index -
-
-        public decimal TotalCostIndexPercentageWithSalesPrice
-        {
-            get
-            {
-                return UserResourcePool.ResourcePool.SalesPrice == 0
-                    ? 0
-                    : 1 - (Organization.SalesPrice / UserResourcePool.ResourcePool.SalesPrice);
-            }
-        }
-
-        /// <summary>
-        /// Old formula for Total Cost Index calculation, based on Profit
-        /// Keep it for a while as a sample (maybe both Profit and Sales Price could be used)
-        /// </summary>
-        public decimal TotalCostIndexPercentageWithProfit
-        {
-            get
-            {
-                return UserResourcePool.ResourcePool.Profit == 0
-                    ? 0
-                    : 1 - (Organization.Profit / UserResourcePool.ResourcePool.Profit);
-            }
-        }
-
-        public decimal TotalCostIndexPercentageWithNumberOfSales
-        {
-            get
-            {
-                return TotalCostIndexPercentageWithSalesPrice * NumberOfSales;
-            }
-        }
-
-        public decimal TotalCostIndexPercentageWithNumberOfSalesWeighted
-        {
-            get
-            {
-                return UserResourcePool.TotalCostIndexPercentageWithNumberOfSales == 0
-                    ? 0
-                    : TotalCostIndexPercentageWithNumberOfSales / UserResourcePool.TotalCostIndexPercentageWithNumberOfSales;
-            }
-        }
-
-        public decimal TotalCostIndexIncome
-        {
-            get
-            {
-                return UserResourcePool.TotalCostIndexShare * TotalCostIndexPercentageWithNumberOfSalesWeighted;
-            }
-        }
-
-        #endregion
-
-        #region - Knowledge Index -
-
-        public decimal KnowledgeIndexPercentage
-        {
-            get
-            {
-                return UserResourcePool.ResourcePool.LicenseRatingAverage == 0
-                    ? 0
-                    : Organization.License.GetAverageRating() / UserResourcePool.ResourcePool.LicenseRatingAverage;
-            }
-        }
-
-        public decimal KnowledgeIndexPercentageWithNumberOfSales
-        {
-            get
-            {
-                return KnowledgeIndexPercentage * NumberOfSales;
-            }
-        }
-
-        public decimal KnowledgeIndexPercentageWithNumberOfSalesWeighted
-        {
-            get
-            {
-                return UserResourcePool.KnowledgeIndexPercentageWithNumberOfSales == 0
-                    ? 0
-                    : KnowledgeIndexPercentageWithNumberOfSales / UserResourcePool.KnowledgeIndexPercentageWithNumberOfSales;
-            }
-        }
-
-        public decimal KnowledgeIndexIncome
-        {
-            get
-            {
-                return UserResourcePool.KnowledgeIndexShare * KnowledgeIndexPercentageWithNumberOfSalesWeighted;
-            }
-        }
-
-        #endregion
-
-        #region - Quality Index -
-
-        public decimal QualityIndexPercentage
-        {
-            get
-            {
-                return UserResourcePool.ResourcePool.QualityRatingAverage == 0
-                    ? 0
-                    : Organization.GetAverageQualityRating() / UserResourcePool.ResourcePool.QualityRatingAverage;
-            }
-        }
-
-        public decimal QualityIndexPercentageWithNumberOfSales
-        {
-            get
-            {
-                return QualityIndexPercentage * NumberOfSales;
-            }
-        }
-
-        public decimal QualityIndexPercentageWithNumberOfSalesWeighted
-        {
-            get
-            {
-                return UserResourcePool.QualityIndexPercentageWithNumberOfSales == 0
-                    ? 0
-                    : QualityIndexPercentageWithNumberOfSales / UserResourcePool.QualityIndexPercentageWithNumberOfSales;
-            }
-        }
-
-        public decimal QualityIndexIncome
-        {
-            get
-            {
-                return UserResourcePool.QualityIndexShare * QualityIndexPercentageWithNumberOfSalesWeighted;
-            }
-        }
-
-        #endregion
-
         #region - Sector Index -
 
-        public decimal SectorIndexPercentage
+        public decimal SectorIndexValueWeightedAverageWithNumberOfSales
         {
             get
             {
-                return UserResourcePool.ResourcePool.SectorRatingAverage == 0
-                    ? 0
-                    : Organization.Sector.GetAverageRating() / UserResourcePool.ResourcePool.SectorRatingAverage;
+                return Organization.Sector.RatingWeightedAverage * NumberOfSales;
             }
         }
 
-        public decimal SectorIndexPercentageWithNumberOfSales
+        public decimal SectorIndexValueWeightedAverageWithNumberOfSalesWeightedAverage
         {
             get
             {
-                return SectorIndexPercentage * NumberOfSales;
-            }
-        }
-
-        public decimal SectorIndexPercentageWithNumberOfSalesWeighted
-        {
-            get
-            {
-                return UserResourcePool.SectorIndexPercentageWithNumberOfSales == 0
+                return UserResourcePool.SectorIndexValueWeightedAverageWithNumberOfSales == 0
                     ? 0
-                    : SectorIndexPercentageWithNumberOfSales / UserResourcePool.SectorIndexPercentageWithNumberOfSales;
+                    : SectorIndexValueWeightedAverageWithNumberOfSales / UserResourcePool.SectorIndexValueWeightedAverageWithNumberOfSales;
             }
         }
 
@@ -260,7 +116,97 @@ namespace BusinessObjects
         {
             get
             {
-                return UserResourcePool.SectorIndexShare * SectorIndexPercentageWithNumberOfSalesWeighted;
+                return UserResourcePool.SectorIndexShare * SectorIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
+            }
+        }
+
+        #endregion
+
+        #region - Knowledge Index -
+
+        public decimal KnowledgeIndexValueWeightedAverageWithNumberOfSales
+        {
+            get
+            {
+                return Organization.License.RatingWeightedAverage * NumberOfSales;
+            }
+        }
+
+        public decimal KnowledgeIndexValueWeightedAverageWithNumberOfSalesWeightedAverage
+        {
+            get
+            {
+                return UserResourcePool.KnowledgeIndexValueWeightedAverageWithNumberOfSales == 0
+                    ? 0
+                    : KnowledgeIndexValueWeightedAverageWithNumberOfSales / UserResourcePool.KnowledgeIndexValueWeightedAverageWithNumberOfSales;
+            }
+        }
+
+        public decimal KnowledgeIndexIncome
+        {
+            get
+            {
+                return UserResourcePool.KnowledgeIndexShare * KnowledgeIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
+            }
+        }
+
+        #endregion
+
+        #region - Total Cost Index -
+
+        public decimal TotalCostIndexValueWeightedAverageWithNumberOfSales
+        {
+            get
+            {
+                return Organization.SalesPriceWeightedAverage * NumberOfSales;
+            }
+        }
+
+        public decimal TotalCostIndexValueWeightedAverageWithNumberOfSalesWeightedAverage
+        {
+            get
+            {
+                return UserResourcePool.TotalCostIndexValueWeightedAverageWithNumberOfSales == 0
+                    ? 0
+                    : TotalCostIndexValueWeightedAverageWithNumberOfSales / UserResourcePool.TotalCostIndexValueWeightedAverageWithNumberOfSales;
+            }
+        }
+
+        public decimal TotalCostIndexIncome
+        {
+            get
+            {
+                return UserResourcePool.TotalCostIndexShare * TotalCostIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
+            }
+        }
+
+        #endregion
+
+        #region - Quality Index -
+
+        public decimal QualityIndexValueWeightedAverageWithNumberOfSales
+        {
+            get
+            {
+                return Organization.QualityRatingWeightedAverage * NumberOfSales;
+            }
+        }
+
+        public decimal QualityIndexValueWeightedAverageWithNumberOfSalesWeightedAverage
+        {
+            get
+            {
+                return UserResourcePool.QualityIndexValueWeightedAverageWithNumberOfSales == 0
+                    ? 0
+                    : QualityIndexValueWeightedAverageWithNumberOfSales / UserResourcePool.QualityIndexValueWeightedAverageWithNumberOfSales;
+            }
+        }
+
+        public decimal QualityIndexIncome
+        {
+            get
+            {
+                return UserResourcePool.QualityIndexShare * QualityIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
             }
         }
 
@@ -268,31 +214,21 @@ namespace BusinessObjects
 
         #region - Employee Satisfaction Index -
 
-        public decimal EmployeeSatisfactionIndexPercentage
+        public decimal EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSales
         {
             get
             {
-                return UserResourcePool.ResourcePool.EmployeeSatisfactionRatingAverage == 0
-                    ? 0
-                    : Organization.GetAverageEmployeeSatisfactionRating() / UserResourcePool.ResourcePool.EmployeeSatisfactionRatingAverage;
+                return Organization.EmployeeSatisfactionRatingWeightedAverage * NumberOfSales;
             }
         }
 
-        public decimal EmployeeSatisfactionIndexPercentageWithNumberOfSales
+        public decimal EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSalesWeightedAverage
         {
             get
             {
-                return EmployeeSatisfactionIndexPercentage * NumberOfSales;
-            }
-        }
-
-        public decimal EmployeeSatisfactionIndexPercentageWithNumberOfSalesWeighted
-        {
-            get
-            {
-                return UserResourcePool.EmployeeSatisfactionIndexPercentageWithNumberOfSales == 0
+                return UserResourcePool.EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSales == 0
                     ? 0
-                    : EmployeeSatisfactionIndexPercentageWithNumberOfSales / UserResourcePool.EmployeeSatisfactionIndexPercentageWithNumberOfSales;
+                    : EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSales / UserResourcePool.EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSales;
             }
         }
 
@@ -300,7 +236,7 @@ namespace BusinessObjects
         {
             get
             {
-                return UserResourcePool.EmployeeSatisfactionIndexShare * EmployeeSatisfactionIndexPercentageWithNumberOfSalesWeighted;
+                return UserResourcePool.EmployeeSatisfactionIndexShare * EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
             }
         }
 
@@ -308,31 +244,21 @@ namespace BusinessObjects
 
         #region - Customer Satisfaction Index -
 
-        public decimal CustomerSatisfactionIndexPercentage
+        public decimal CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSales
         {
             get
             {
-                return UserResourcePool.ResourcePool.CustomerSatisfactionRatingAverage == 0
-                    ? 0
-                    : Organization.GetAverageCustomerSatisfactionRating() / UserResourcePool.ResourcePool.CustomerSatisfactionRatingAverage;
+                return Organization.CustomerSatisfactionRatingWeightedAverage * NumberOfSales;
             }
         }
 
-        public decimal CustomerSatisfactionIndexPercentageWithNumberOfSales
+        public decimal CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSalesWeightedAverage
         {
             get
             {
-                return CustomerSatisfactionIndexPercentage * NumberOfSales;
-            }
-        }
-
-        public decimal CustomerSatisfactionIndexPercentageWithNumberOfSalesWeighted
-        {
-            get
-            {
-                return UserResourcePool.CustomerSatisfactionIndexPercentageWithNumberOfSales == 0
+                return UserResourcePool.CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSales == 0
                     ? 0
-                    : CustomerSatisfactionIndexPercentageWithNumberOfSales / UserResourcePool.CustomerSatisfactionIndexPercentageWithNumberOfSales;
+                    : CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSales / UserResourcePool.CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSales;
             }
         }
 
@@ -340,55 +266,7 @@ namespace BusinessObjects
         {
             get
             {
-                return UserResourcePool.CustomerSatisfactionIndexShare * CustomerSatisfactionIndexPercentageWithNumberOfSalesWeighted;
-            }
-        }
-
-        #endregion
-
-        #region - Distance Index -
-
-        /// <summary>
-        /// TODO Distance Index has no calculation at the moment
-        /// </summary>
-        public decimal DistanceRating
-        {
-            get { return 1; }
-        }
-
-        public decimal DistanceIndexPercentage
-        {
-            get
-            {
-                return UserResourcePool.DistanceRating == 0
-                    ? 0
-                    : DistanceRating / UserResourcePool.DistanceRating;
-            }
-        }
-
-        public decimal DistanceIndexPercentageWithNumberOfSales
-        {
-            get
-            {
-                return DistanceIndexPercentage * NumberOfSales;
-            }
-        }
-
-        public decimal DistanceIndexPercentageWithNumberOfSalesWeighted
-        {
-            get
-            {
-                return UserResourcePool.DistanceIndexPercentageWithNumberOfSales == 0
-                    ? 0
-                    : DistanceIndexPercentageWithNumberOfSales / UserResourcePool.DistanceIndexPercentageWithNumberOfSales;
-            }
-        }
-
-        public decimal DistanceIndexIncome
-        {
-            get
-            {
-                return UserResourcePool.DistanceIndexShare * DistanceIndexPercentageWithNumberOfSalesWeighted;
+                return UserResourcePool.CustomerSatisfactionIndexShare * CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
             }
         }
 
@@ -409,7 +287,6 @@ namespace BusinessObjects
                     + SectorIndexIncome
                     + EmployeeSatisfactionIndexIncome
                     + CustomerSatisfactionIndexIncome
-                    + DistanceIndexIncome
                     + IndexIncome;
             }
         }

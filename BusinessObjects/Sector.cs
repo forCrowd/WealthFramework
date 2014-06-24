@@ -27,18 +27,31 @@ namespace BusinessObjects
         public string Name { get; set; }
 
         public string Description { get; set; }
-        
+
         public virtual ICollection<Organization> OrganizationSet { get; set; }
         public virtual ICollection<UserSectorRating> UserSectorRatingSet { get; set; }
         public virtual ResourcePool ResourcePool { get; set; }
 
         /* */
 
-        public decimal GetAverageRating()
+        public decimal RatingAverage
         {
-            return UserSectorRatingSet.Any()
-                ? UserSectorRatingSet.Average(item => item.Rating)
-                : 0;
+            get
+            {
+                return UserSectorRatingSet.Any()
+                    ? UserSectorRatingSet.Average(item => item.Rating)
+                    : 0;
+            }
+        }
+
+        public decimal RatingWeightedAverage
+        {
+            get
+            {
+                return ResourcePool.SectorRatingAverage == 0
+                    ? 0
+                    : RatingAverage / ResourcePool.SectorRatingAverage;
+            }
         }
     }
 }

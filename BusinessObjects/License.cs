@@ -20,7 +20,7 @@ namespace BusinessObjects
         public short Id { get; set; }
 
         public int ResourcePoolId { get; set; }
-        
+
         [Display(Name = "License")]
         [Required]
         [StringLength(50)]
@@ -38,11 +38,24 @@ namespace BusinessObjects
 
         /* */
 
-        public decimal GetAverageRating()
+        public decimal RatingAverage
         {
-            return UserLicenseRatingSet.Any()
-                ? UserLicenseRatingSet.Average(item => item.Rating)
-                : 0;
+            get
+            {
+                return UserLicenseRatingSet.Any()
+                    ? UserLicenseRatingSet.Average(item => item.Rating)
+                    : 0;
+            }
+        }
+
+        public decimal RatingWeightedAverage
+        {
+            get
+            {
+                return ResourcePool.LicenseRatingAverage == 0
+                    ? 0
+                    : RatingAverage / ResourcePool.LicenseRatingAverage;
+            }
         }
     }
 }

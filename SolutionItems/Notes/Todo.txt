@@ -68,39 +68,26 @@ config.EnableQuerySupport(queryAttribute);
 UserResourcePoolIndex..ForeignKey("dbo.ResourcePoolIndex", t => t.ResourcePoolIndexId, cascadeDelete: false)
 UserResourcePoolIndexValue.ForeignKey("dbo.Organization", t => t.OrganizationId, cascadeDelete: false)
 
-. this is not a correct calculation / it finds the average by dividing all users' total to current users total cost ?! test + fix all!
-        public decimal TotalCostIndexRatingWeightedAverage
-        {
-            get
-            {
-                if (ResourcePool.TotalIndexRating == 0)
-                    return 0;
-
-                return TotalCostIndexRating / ResourcePool.TotalIndexRating;
-            }
-        }
-		
-. this is not on a correct level - it had to be on organization level - fix all ?!
-        public decimal EmployeeSatisfactionIndexPercentage
-        {
-            get
-            {
-                return UserResourcePool.ResourcePool.EmployeeSatisfactionRatingAverage == 0
-                    ? 0
-                    : Organization.GetAverageEmployeeSatisfactionRating() / UserResourcePool.ResourcePool.EmployeeSatisfactionRatingAverage;
-            }
-        }
-
 ---
 user resource pool index dto! currently this gives an error;
 http://localhost:10001/api/ResourcePoolIndexCustom/ResourcePoolIndexOrganizationSet
 
 ---
-test cases;
-. multiple index case - update index ratings and see!
+. compare the results with statis indexes? - seems okay
+
+. indexpercentage -> weightedrating
+.. update .html files
+.. ViewModels / UserOrganization.cs needs to be updated
+
+. remove distance index field
 
 . try to fix the following case and check ?!
 .. about indexvalue income calculation, there are two weighted average calculation, couldn't be only one? weighted -> weighted * number of sales -> weightedwithnumberofsales weighted?
+.. THIS MIGHT BE USEFUL IN CASE OF BIG NUMBEROFSALES NUMBERS - TO PREVENT HAVING DECIMAL RANGE ISSUES? BUT CAN HAVE BETTER NAMING?
+
+. userResourcePoolIndex - index income and index share are the same!
+
+. create a new 'view' for dynamic index!
 
 ---
 sector index - just name and the rating

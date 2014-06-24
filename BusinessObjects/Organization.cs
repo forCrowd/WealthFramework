@@ -33,7 +33,7 @@ namespace BusinessObjects
         public decimal SalesPrice { get; set; }
 
         public short LicenseId { get; set; }
-        
+
         public virtual Sector Sector { get; set; }
         public virtual License License { get; set; }
         public virtual ICollection<UserOrganization> UserOrganizationSet { get; set; }
@@ -41,33 +41,14 @@ namespace BusinessObjects
 
         /* */
 
+        public ResourcePool ResourcePool { get { return Sector.ResourcePool; } }
+
         /// <summary>
         /// a.k.a. Markup
         /// </summary>
         public decimal Profit
         {
             get { return SalesPrice - ProductionCost; }
-        }
-
-        public decimal GetAverageQualityRating()
-        {
-            return UserOrganizationSet.Any()
-                ? UserOrganizationSet.Average(item => item.QualityRating)
-                : 0;
-        }
-
-        public decimal GetAverageEmployeeSatisfactionRating()
-        {
-            return UserOrganizationSet.Any()
-                ? UserOrganizationSet.Average(rating => rating.EmployeeSatisfactionRating)
-                : 0;
-        }
-
-        public decimal GetAverageCustomerSatisfactionRating()
-        {
-            return UserOrganizationSet.Any()
-                ? UserOrganizationSet.Average(rating => rating.CustomerSatisfactionRating)
-                : 0;   
         }
 
         /// <summary>
@@ -90,6 +71,79 @@ namespace BusinessObjects
                 return SalesPrice == 0
                     ? 0
                     : Profit / SalesPrice;
+            }
+        }
+
+        /// <summary>
+        /// Will be used in Total Cost Index calculation
+        /// </summary>
+        public decimal SalesPriceWeightedAverage
+        {
+            get
+            {
+                return ResourcePool.SalesPrice == 0
+                    ? 0
+                    : 1 - (SalesPrice / ResourcePool.SalesPrice);
+            }
+        }
+
+        public decimal QualityRatingAverage
+        {
+            get
+            {
+                return UserOrganizationSet.Any()
+                    ? UserOrganizationSet.Average(item => item.QualityRating)
+                    : 0;
+            }
+        }
+
+        public decimal QualityRatingWeightedAverage
+        {
+            get
+            {
+                return ResourcePool.QualityRatingAverage == 0
+                    ? 0
+                    : QualityRatingAverage / ResourcePool.QualityRatingAverage;
+            }
+        }
+
+        public decimal EmployeeSatisfactionRatingAverage
+        {
+            get
+            {
+                return UserOrganizationSet.Any()
+                    ? UserOrganizationSet.Average(rating => rating.EmployeeSatisfactionRating)
+                    : 0;
+            }
+        }
+
+        public decimal EmployeeSatisfactionRatingWeightedAverage
+        {
+            get
+            {
+                return ResourcePool.EmployeeSatisfactionRatingAverage == 0
+                    ? 0
+                    : EmployeeSatisfactionRatingAverage / ResourcePool.EmployeeSatisfactionRatingAverage;
+            }
+        }
+
+        public decimal CustomerSatisfactionRatingAverage
+        {
+            get
+            {
+                return UserOrganizationSet.Any()
+                    ? UserOrganizationSet.Average(rating => rating.CustomerSatisfactionRating)
+                    : 0;
+            }
+        }
+
+        public decimal CustomerSatisfactionRatingWeightedAverage
+        {
+            get
+            {
+                return ResourcePool.CustomerSatisfactionRatingAverage == 0
+                    ? 0
+                    : CustomerSatisfactionRatingAverage / ResourcePool.CustomerSatisfactionRatingAverage;
             }
         }
     }
