@@ -16,8 +16,8 @@ using System.Linq;
         public string OrganizationName { get { return Organization.Name; } }
         public decimal ResourcePoolIndex_IndexValueAverage { get { return ResourcePoolIndex.IndexValueAverage; } }
 
-        public ResourcePoolIndex ResourcePoolIndex { get; private set; }
-        public Organization Organization { get; private set; }
+        internal ResourcePoolIndex ResourcePoolIndex { get; private set; }
+        internal Organization Organization { get; private set; }
 
         internal IEnumerable<UserResourcePoolIndexValue> UserValueSet
         {

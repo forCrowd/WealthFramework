@@ -69,15 +69,7 @@ UserResourcePoolIndex..ForeignKey("dbo.ResourcePoolIndex", t => t.ResourcePoolIn
 UserResourcePoolIndexValue.ForeignKey("dbo.Organization", t => t.OrganizationId, cascadeDelete: false)
 
 ---
-user resource pool index dto! currently this gives an error;
-http://localhost:10001/api/ResourcePoolIndexCustom/ResourcePoolIndexOrganizationSet
-
----
-. compare the results with statis indexes? - seems okay
-
-. indexpercentage -> weightedrating
-.. update .html files
-.. ViewModels / UserOrganization.cs needs to be updated
+. create a new 'view' for dynamic index!
 
 . remove distance index field
 
@@ -85,9 +77,8 @@ http://localhost:10001/api/ResourcePoolIndexCustom/ResourcePoolIndexOrganization
 .. about indexvalue income calculation, there are two weighted average calculation, couldn't be only one? weighted -> weighted * number of sales -> weightedwithnumberofsales weighted?
 .. THIS MIGHT BE USEFUL IN CASE OF BIG NUMBEROFSALES NUMBERS - TO PREVENT HAVING DECIMAL RANGE ISSUES? BUT CAN HAVE BETTER NAMING?
 
-. userResourcePoolIndex - index income and index share are the same!
-
-. create a new 'view' for dynamic index!
+. compare the results with static indexes? - seems okay
+.. remove quality + employee + customer indexes
 
 ---
 sector index - just name and the rating

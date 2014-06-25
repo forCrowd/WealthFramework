@@ -46,13 +46,13 @@
             Total Sales Revenue incl. CMRP Tax
         </th>
         <th>
-            Quality Index Percentage
+            Quality Rating Weighted Average
         </th>
         <th>
             Quality Index with Nr of Sales
         </th>
         <th>
-            Quality Index with Nr of Sales Weighted
+            Quality Index with Nr of Sales Weighted Average
         </th>
         <th>
             Quality Index Income
@@ -96,13 +96,13 @@
             {{ item.TotalSalesRevenueIncludingResourcePoolTax | number:2 }}
         </td>
         <td>
-            {{ item.QualityIndexPercentage | percentage:2 }}
+            {{ item.OrganizationQualityRatingWeightedAverage | percentage:2 }}
         </td>
         <td>
-            {{ item.QualityIndexPercentageWithNumberOfSales | number:2 }}
+            {{ item.QualityIndexValueWeightedAverageWithNumberOfSales | number:2 }}
         </td>
         <td>
-            {{ item.QualityIndexPercentageWithNumberOfSalesWeighted | number:2 }}
+            {{ item.QualityIndexValueWeightedAverageWithNumberOfSalesWeightedAverage | number:2 }}
         </td>
         <td>
             {{ item.QualityIndexIncome | number:2 }}
@@ -155,7 +155,7 @@
             &nbsp;
         </td>
         <td>
-            {{ vm.userResourcePool.QualityIndexIncome | number:2 }}
+            {{ vm.userResourcePool.QualityIndexShare | number:2 }}
         </td>
         <td>
             {{ vm.userResourcePool.TotalIncome | number:2 }}

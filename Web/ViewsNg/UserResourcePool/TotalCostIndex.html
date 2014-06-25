@@ -46,13 +46,13 @@
             Total Sales Revenue incl. CMRP Tax
         </th>
         <th>
-            Total Cost Index Percentage
+            Sales Price Weighted Average
         </th>
         <th>
             Total Cost Index with Nr of Sales
         </th>
         <th>
-            Total Cost Index with Nr of Sales Weighted
+            Total Cost Index with Nr of Sales Weighted Average
         </th>
         <th>
             Total Cost Index Income
@@ -96,13 +96,13 @@
             {{ item.TotalSalesRevenueIncludingResourcePoolTax | number:2 }}
         </td>
         <td>
-            {{ item.TotalCostIndexPercentage | percentage:2 }}
+            {{ item.OrganizationSalesPriceWeightedAverage | percentage:2 }}
         </td>
         <td>
-            {{ item.TotalCostIndexPercentageWithNumberOfSales | number:2 }}
+            {{ item.TotalCostIndexValueWeightedAverageWithNumberOfSales | number:2 }}
         </td>
         <td>
-            {{ item.TotalCostIndexPercentageWithNumberOfSalesWeighted | number:2 }}
+            {{ item.TotalCostIndexValueWeightedAverageWithNumberOfSalesWeightedAverage | number:2 }}
         </td>
         <td>
             {{ item.TotalCostIndexIncome | number:2 }}
@@ -155,7 +155,7 @@
             &nbsp;
         </td>
         <td>
-            {{ vm.userResourcePool.TotalCostIndexIncome | number:2 }}
+            {{ vm.userResourcePool.TotalCostIndexShare | number:2 }}
         </td>
         <td>
             {{ vm.userResourcePool.TotalIncome | number:2 }}

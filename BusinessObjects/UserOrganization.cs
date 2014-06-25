@@ -128,6 +128,9 @@ namespace BusinessObjects
         {
             get
             {
+                if (Organization.License == null)
+                    return 0;
+
                 return Organization.License.RatingWeightedAverage * NumberOfSales;
             }
         }

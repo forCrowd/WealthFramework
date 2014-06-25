@@ -186,13 +186,13 @@
                         {{ item.TotalSalesRevenueIncludingResourcePoolTax | number:2 }}
                     </td>
                     <!--<td>
-                        {{ item.TotalCostIndexPercentage | percentage:2 }}
+                        {{ item.OrganizationSalesPriceWeightedAverage | percentage:2 }}
                     </td>
                     <td>
-                        {{ item.TotalCostIndexPercentageWithNumberOfSales | percentage:2 }}
+                        {{ item.TotalCostIndexValueWeightedAverageWithNumberOfSales | percentage:2 }}
                     </td>-->
                     <td>
-                        {{ item.TotalCostIndexPercentageWithNumberOfSalesWeighted | percentage:2 }}
+                        {{ item.TotalCostIndexValueWeightedAverageWithNumberOfSalesWeightedAverage | percentage:2 }}
                     </td>
                     <td>
                         {{ item.TotalCostIndexIncome | number:2 }}
@@ -247,7 +247,7 @@
                         &nbsp;
                     </td>
                     <td>
-                        {{ vm.totalCostData.TotalCostIndexIncome | number:2 }}
+                        {{ vm.totalCostData.TotalCostIndexShare | number:2 }}
                     </td>
                     <td>
                         {{ vm.totalCostData.TotalIncome | number:2 }}

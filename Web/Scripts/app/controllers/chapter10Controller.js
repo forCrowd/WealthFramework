@@ -89,13 +89,12 @@
 
                     // Convert userResourcePool to chart data
                     vm.indexChartData = [];
-                    vm.indexChartData.push({ name: 'Total Cost Index', y: userResourcePool.TotalCostIndexRating });
-                    vm.indexChartData.push({ name: 'Knowledge Index', y: userResourcePool.KnowledgeIndexRating });
-                    vm.indexChartData.push({ name: 'Quality Index', y: userResourcePool.QualityIndexRating });
                     vm.indexChartData.push({ name: 'Sector Index', y: userResourcePool.SectorIndexRating });
+                    vm.indexChartData.push({ name: 'Knowledge Index', y: userResourcePool.KnowledgeIndexRating });
+                    vm.indexChartData.push({ name: 'Total Cost Index', y: userResourcePool.TotalCostIndexRating });
+                    vm.indexChartData.push({ name: 'Quality Index', y: userResourcePool.QualityIndexRating });
                     vm.indexChartData.push({ name: 'Employee Satisfaction Index', y: userResourcePool.EmployeeSatisfactionIndexRating });
                     vm.indexChartData.push({ name: 'Customer Satisfaction Index', y: userResourcePool.CustomerSatisfactionIndexRating });
-                    vm.indexChartData.push({ name: 'Distance Index', y: userResourcePool.DistanceIndexRating });
 
                     vm.indexChartConfig.series = [{ data: vm.indexChartData }];
                     vm.indexChartConfig.loading = false;
@@ -111,13 +110,12 @@
 
                     // Convert resourcePoolViewModel to chart data
                     vm.indexResultsChartData = [];
-                    vm.indexResultsChartData.push({ name: 'Total Cost Index', y: resourcePoolViewModel.TotalCostIndexRatingAverage });
-                    vm.indexResultsChartData.push({ name: 'Knowledge Index', y: resourcePoolViewModel.KnowledgeIndexRatingAverage });
-                    vm.indexResultsChartData.push({ name: 'Quality Index', y: resourcePoolViewModel.QualityIndexRatingAverage });
                     vm.indexResultsChartData.push({ name: 'Sector Index', y: resourcePoolViewModel.SectorIndexRatingAverage });
+                    vm.indexResultsChartData.push({ name: 'Knowledge Index', y: resourcePoolViewModel.KnowledgeIndexRatingAverage });
+                    vm.indexResultsChartData.push({ name: 'Total Cost Index', y: resourcePoolViewModel.TotalCostIndexRatingAverage });
+                    vm.indexResultsChartData.push({ name: 'Quality Index', y: resourcePoolViewModel.QualityIndexRatingAverage });
                     vm.indexResultsChartData.push({ name: 'Employee Satisfaction Index', y: resourcePoolViewModel.EmployeeSatisfactionIndexRatingAverage });
                     vm.indexResultsChartData.push({ name: 'Customer Satisfaction Index', y: resourcePoolViewModel.CustomerSatisfactionIndexRatingAverage });
-                    vm.indexResultsChartData.push({ name: 'Distance Index', y: resourcePoolViewModel.DistanceIndexRatingAverage });
 
                     vm.indexResultsChartConfig.series = [{ data: vm.indexResultsChartData }];
                     vm.indexResultsChartConfig.loading = false;
@@ -140,7 +138,6 @@
                     userResourcePool.SectorIndexRating = vm.indexChartData[3].y;
                     userResourcePool.EmployeeSatisfactionIndexRating = vm.indexChartData[4].y;
                     userResourcePool.CustomerSatisfactionIndexRating = vm.indexChartData[5].y;
-                    userResourcePool.DistanceIndexRating = vm.indexChartData[6].y;
 
                     var rowVersion = userResourcePool.RowVersion;
                     userResourcePool.RowVersion = '';

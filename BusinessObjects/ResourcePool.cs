@@ -160,26 +160,6 @@ namespace BusinessObjects
             }
         }
 
-        //public decimal DistanceIndexRatingAverage
-        //{
-        //    get
-        //    {
-        //        return UserResourcePoolSet.Any()
-        //            ? UserResourcePoolSet.Average(item => item.DistanceIndexRating)
-        //            : 0;
-        //    }
-        //}
-
-        //public decimal DistanceIndexRatingWeightedAverage
-        //{
-        //    get
-        //    {
-        //        return TotalIndexRatingAverage == 0
-        //            ? 0
-        //            : DistanceIndexRatingAverage / TotalIndexRatingAverage;
-        //    }
-        //}
-
         public decimal IndexRatingAverage
         {
             get { return ResourcePoolIndexSet.Sum(item => item.IndexRatingAverage); }
@@ -195,7 +175,6 @@ namespace BusinessObjects
                     + SectorIndexRatingAverage
                     + EmployeeSatisfactionIndexRatingAverage
                     + CustomerSatisfactionIndexRatingAverage
-                    //+ DistanceIndexRatingAverage
                     + IndexRatingAverage;
             }
         }

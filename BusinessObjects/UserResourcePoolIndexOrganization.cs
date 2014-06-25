@@ -32,10 +32,6 @@ namespace BusinessObjects
         {
             get
             {
-                // TODO Necessary?
-                if (UserResourcePoolIndex == null)
-                    return 0;
-
                 return UserResourcePoolIndex.IndexValueWeightedAverageWithNumberOfSales == 0
                     ? 0
                     : IndexValueWeightedAverageWithNumberOfSales / UserResourcePoolIndex.IndexValueWeightedAverageWithNumberOfSales;

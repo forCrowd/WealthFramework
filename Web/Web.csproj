@@ -644,7 +644,6 @@
     </Content>
     <Content Include="ViewsNg\UserResourcePool\AllInOne.html" />
     <Content Include="ViewsNg\UserResourcePool\CustomerSatisfactionIndex.html" />
-    <Content Include="ViewsNg\UserResourcePool\DistanceIndex.html" />
     <Content Include="ViewsNg\UserResourcePool\EmployeeSatisfactionIndex.html" />
     <Content Include="ViewsNg\UserResourcePool\KnowledgeIndex.html" />
     <Content Include="ViewsNg\UserResourcePool\QualityIndex.html" />

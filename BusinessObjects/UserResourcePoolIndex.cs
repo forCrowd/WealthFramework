@@ -58,10 +58,5 @@ namespace BusinessObjects
         {
             get { return UserOrganizationResourcePoolIndexOrganizationSet.Sum(item => item.IndexValueWeightedAverageWithNumberOfSales); }
         }
-
-        public decimal IndexIncome
-        {
-            get { return UserOrganizationResourcePoolIndexOrganizationSet.Sum(item => item.IndexIncome); }
-        }
     }
 }

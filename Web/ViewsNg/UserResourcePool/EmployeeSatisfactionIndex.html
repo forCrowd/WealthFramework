@@ -46,16 +46,16 @@
             Total Sales Revenue incl. CMRP Tax
         </th>
         <th>
-            EmployeeSatisfaction Index Percentage
+            Employee Satisfaction Rating Weighted Average
         </th>
         <th>
-            EmployeeSatisfaction Index with Nr of Sales
+            Employee Satisfaction Index with Nr of Sales
         </th>
         <th>
-            EmployeeSatisfaction Index with Nr of Sales Weighted
+            Employee Satisfaction Index with Nr of Sales Weighted Average
         </th>
         <th>
-            EmployeeSatisfaction Index Income
+            Employee Satisfaction Index Income
         </th>
         <th>
             Total Income (Profit + CMRP)
@@ -96,13 +96,13 @@
             {{ item.TotalSalesRevenueIncludingResourcePoolTax | number:2 }}
         </td>
         <td>
-            {{ item.EmployeeSatisfactionIndexPercentage | percentage:2 }}
+            {{ item.OrganizationEmployeeSatisfactionRatingWeightedAverage | percentage:2 }}
         </td>
         <td>
-            {{ item.EmployeeSatisfactionIndexPercentageWithNumberOfSales | number:2 }}
+            {{ item.EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSales | number:2 }}
         </td>
         <td>
-            {{ item.EmployeeSatisfactionIndexPercentageWithNumberOfSalesWeighted | number:2 }}
+            {{ item.EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSalesWeightedAverage | number:2 }}
         </td>
         <td>
             {{ item.EmployeeSatisfactionIndexIncome | number:2 }}
@@ -155,7 +155,7 @@
             &nbsp;
         </td>
         <td>
-            {{ vm.userResourcePool.EmployeeSatisfactionIndexIncome | number:2 }}
+            {{ vm.userResourcePool.EmployeeSatisfactionIndexShare | number:2 }}
         </td>
         <td>
             {{ vm.userResourcePool.TotalIncome | number:2 }}

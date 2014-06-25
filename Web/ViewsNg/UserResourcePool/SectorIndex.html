@@ -46,13 +46,13 @@
             Total Sales Revenue incl. CMRP Tax
         </th>
         <th>
-            Sector Index Percentage
+            Sector Rating Weighted Average
         </th>
         <th>
             Sector Index with Nr of Sales
         </th>
         <th>
-            Sector Index with Nr of Sales Weighted
+            Sector Index with Nr of Sales Weighted Average
         </th>
         <th>
             Sector Index Income
@@ -96,13 +96,13 @@
             {{ item.TotalSalesRevenueIncludingResourcePoolTax | number:2 }}
         </td>
         <td>
-            {{ item.SectorIndexPercentage | percentage:2 }}
+            {{ item.OrganizationSectorRatingWeightedAverage | percentage:2 }}
         </td>
         <td>
-            {{ item.SectorIndexPercentageWithNumberOfSales | number:2 }}
+            {{ item.SectorIndexValueWeightedAverageWithNumberOfSales | number:2 }}
         </td>
         <td>
-            {{ item.SectorIndexPercentageWithNumberOfSalesWeighted | number:2 }}
+            {{ item.SectorIndexValueWeightedAverageWithNumberOfSalesWeightedAverage | number:2 }}
         </td>
         <td>
             {{ item.SectorIndexIncome | number:2 }}
@@ -155,7 +155,7 @@
             &nbsp;
         </td>
         <td>
-            {{ vm.userResourcePool.SectorIndexIncome | number:2 }}
+            {{ vm.userResourcePool.SectorIndexShare | number:2 }}
         </td>
         <td>
             {{ vm.userResourcePool.TotalIncome | number:2 }}

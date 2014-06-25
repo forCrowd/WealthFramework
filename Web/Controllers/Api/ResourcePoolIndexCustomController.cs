@@ -75,8 +75,7 @@ namespace Web.Controllers.Api
             return list.Select(item => new UserResourcePoolIndexDto(item)
             {
                 IndexShare = item.IndexShare,
-                IndexValueWeightedAverageWithNumberOfSales = item.IndexValueWeightedAverageWithNumberOfSales,
-                IndexIncome = item.IndexIncome
+                IndexValueWeightedAverageWithNumberOfSales = item.IndexValueWeightedAverageWithNumberOfSales
             });
         }
 
@@ -85,17 +84,11 @@ namespace Web.Controllers.Api
         public IEnumerable<UserResourcePoolIndexOrganization> GetUserResourcePoolIndexOrganizationSet()
         {
             var unitOfWork = new UserResourcePoolIndexUnitOfWork();
-            var list2 = unitOfWork
+            var userResourcePoolIndexSet = unitOfWork
                 .AllLiveIncluding(item => item.UserResourcePool, item => item.ResourcePoolIndex)
                 .AsEnumerable();
 
-            var list = new HashSet<UserResourcePoolIndexOrganization>();
-            foreach (var item in list2)
-                foreach (var userOrganization in item.UserResourcePool.UserOrganizationSet)
-                    foreach (var resourcePoolIndexOrganization in item.ResourcePoolIndex.ResourcePoolIndexOrganizationSet)
-                        if (userOrganization.Organization == resourcePoolIndexOrganization.Organization)
-                            list.Add(new UserResourcePoolIndexOrganization(userOrganization, resourcePoolIndexOrganization));
-            return list;
+            return userResourcePoolIndexSet.SelectMany(item => item.UserOrganizationResourcePoolIndexOrganizationSet);
         }
     }
 }

@@ -67,15 +67,15 @@
             .when('/UserSectorRating/new', { templateUrl: '/ViewsNg/edit/userSectorRatingEdit.html', controller: 'userSectorRatingEditController as vm' })
             .when('/UserSectorRating/edit/:Id', { templateUrl: '/ViewsNg/edit/UserSectorRatingEdit.html', controller: 'userSectorRatingEditController as vm' })
 
-            .when('/TotalCostIndex', { templateUrl: '/ViewsNg/UserResourcePool/TotalCostIndex.html', controller: 'userResourcePoolController as vm' })
+            .when('/SectorIndex', { templateUrl: '/ViewsNg/UserResourcePool/SectorIndex.html', controller: 'userResourcePoolController as vm' })
             .when('/KnowledgeIndex', { templateUrl: '/ViewsNg/UserResourcePool/KnowledgeIndex.html', controller: 'userResourcePoolController as vm' })
+            .when('/TotalCostIndex', { templateUrl: '/ViewsNg/UserResourcePool/TotalCostIndex.html', controller: 'userResourcePoolController as vm' })
             .when('/QualityIndex', { templateUrl: '/ViewsNg/UserResourcePool/QualityIndex.html', controller: 'userResourcePoolController as vm' })
             .when('/EmployeeSatisfactionIndex', { templateUrl: '/ViewsNg/UserResourcePool/EmployeeSatisfactionIndex.html', controller: 'userResourcePoolController as vm' })
             .when('/CustomerSatisfactionIndex', { templateUrl: '/ViewsNg/UserResourcePool/CustomerSatisfactionIndex.html', controller: 'userResourcePoolController as vm' })
-            .when('/SectorIndex', { templateUrl: '/ViewsNg/UserResourcePool/SectorIndex.html', controller: 'userResourcePoolController as vm' })
-            .when('/DistanceIndex', { templateUrl: '/ViewsNg/UserResourcePool/DistanceIndex.html', controller: 'userResourcePoolController as vm' })
             .when('/AllInOne', { templateUrl: '/ViewsNg/UserResourcePool/AllInOne.html', controller: 'userResourcePoolController as vm' })
 
+            // TODO Remove these..
             .when('/SectorChart', { templateUrl: '/ViewsNg/Sector/SectorChart.html', controller: 'sectorChartController as vm' })
 
             .otherwise({ redirectTo: '/' });

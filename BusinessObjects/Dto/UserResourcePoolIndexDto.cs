@@ -7,6 +7,5 @@
     {
         public decimal IndexShare { get; set; }
         public decimal IndexValueWeightedAverageWithNumberOfSales { get; set; }
-        public decimal IndexIncome { get; set; }
     }
 }

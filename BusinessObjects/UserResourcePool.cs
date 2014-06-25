@@ -84,7 +84,6 @@ namespace BusinessObjects
         public int NumberOfSales
         {
             get { return UserOrganizationSet.Sum(item => item.NumberOfSales); }
-
         }
         
         public decimal TotalProductionCost
@@ -112,11 +111,6 @@ namespace BusinessObjects
             get { return UserOrganizationSet.Sum(item => item.TotalSalesRevenueIncludingResourcePoolTax); }
         }
         
-        public decimal TotalResourcePoolIncome
-        {
-            get { return UserOrganizationSet.Sum(item => item.TotalResourcePoolIncome); }
-        }
-        
         public decimal TotalIncome
         {
             get { return UserOrganizationSet.Sum(item => item.TotalIncome); }
@@ -136,11 +130,6 @@ namespace BusinessObjects
             get { return UserOrganizationSet.Sum(item => item.SectorIndexValueWeightedAverageWithNumberOfSales); }
         }
 
-        public decimal SectorIndexIncome
-        {
-            get { return UserOrganizationSet.Sum(item => item.SectorIndexIncome); }
-        }
-
         #endregion
 
         #region - Knowledge Index -
@@ -153,11 +142,6 @@ namespace BusinessObjects
         public decimal KnowledgeIndexValueWeightedAverageWithNumberOfSales
         {
             get { return UserOrganizationSet.Sum(item => item.KnowledgeIndexValueWeightedAverageWithNumberOfSales); }
-        }
-
-        public decimal KnowledgeIndexIncome
-        {
-            get { return UserOrganizationSet.Sum(item => item.KnowledgeIndexIncome); }
         }
 
         #endregion
@@ -174,11 +158,6 @@ namespace BusinessObjects
             get { return UserOrganizationSet.Sum(item => item.TotalCostIndexValueWeightedAverageWithNumberOfSales); }
         }
         
-        public decimal TotalCostIndexIncome
-        {
-            get { return UserOrganizationSet.Sum(item => item.TotalCostIndexIncome); }
-        }
-
         #endregion
 
         #region - Quality Index -
@@ -191,11 +170,6 @@ namespace BusinessObjects
         public decimal QualityIndexValueWeightedAverageWithNumberOfSales
         {
             get { return UserOrganizationSet.Sum(item => item.QualityIndexValueWeightedAverageWithNumberOfSales); }
-        }
-
-        public decimal QualityIndexIncome
-        {
-            get { return UserOrganizationSet.Sum(item => item.QualityIndexIncome); }
         }
 
         #endregion
@@ -212,11 +186,6 @@ namespace BusinessObjects
             get { return UserOrganizationSet.Sum(item => item.EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSales); }
         }
 
-        public decimal EmployeeSatisfactionIndexIncome
-        {
-            get { return UserOrganizationSet.Sum(item => item.EmployeeSatisfactionIndexIncome); }
-        }
-
         #endregion
 
         #region - Customer Satifaction Index -
@@ -231,11 +200,6 @@ namespace BusinessObjects
             get { return UserOrganizationSet.Sum(item => item.CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSales); }
         }
         
-        public decimal CustomerSatisfactionIndexIncome
-        {
-            get { return UserOrganizationSet.Sum(item => item.CustomerSatisfactionIndexIncome); }
-        }
-
         #endregion
     }
 }
