@@ -22,17 +22,17 @@ namespace BusinessObjects
         [Display(Name = "CMRP Rate")]
         public decimal ResourcePoolRate { get; set; }
 
-        [Display(Name = "Total Cost Index")]
-        public decimal TotalCostIndexRating { get; set; }
+        [Display(Name = "Sector Index")]
+        public decimal SectorIndexRating { get; set; }
 
         [Display(Name = "Knowledge Index")]
         public decimal KnowledgeIndexRating { get; set; }
 
+        [Display(Name = "Total Cost Index")]
+        public decimal TotalCostIndexRating { get; set; }
+
         [Display(Name = "Quality Index")]
         public decimal QualityIndexRating { get; set; }
-
-        [Display(Name = "Sector Index")]
-        public decimal SectorIndexRating { get; set; }
 
         [Display(Name = "Employee Satisfaction Index")]
         public decimal EmployeeSatisfactionIndexRating { get; set; }
@@ -40,8 +40,8 @@ namespace BusinessObjects
         [Display(Name = "Customer Satisfaction Index")]
         public decimal CustomerSatisfactionIndexRating { get; set; }
 
-        [Display(Name = "Distance Index")]
-        public decimal DistanceIndexRating { get; set; }
+        //[Display(Name = "Distance Index")]
+        //public decimal DistanceIndexRating { get; set; }
 
         public virtual User User { get; set; }
 

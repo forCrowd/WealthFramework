@@ -52,8 +52,8 @@
                     QualityIndexRating = 0,
                     SectorIndexRating = 0,
                     EmployeeSatisfactionIndexRating = 0,
-                    CustomerSatisfactionIndexRating = 0,
-                    DistanceIndexRating = 0
+                    CustomerSatisfactionIndexRating = 0//,
+                    //DistanceIndexRating = 0
                 };
 
                 unitOfWork.InsertAsync(userResourcePool);

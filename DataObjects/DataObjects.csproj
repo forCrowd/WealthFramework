@@ -161,6 +161,10 @@
     <Compile Include="Migrations\201406181207339_V0_13.Designer.cs">
       <DependentUpon>201406181207339_V0_13.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201406251446120_V0_13_1.cs" />
+    <Compile Include="Migrations\201406251446120_V0_13_1.Designer.cs">
+      <DependentUpon>201406251446120_V0_13_1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="DatabaseInitializer.cs" />
   </ItemGroup>
@@ -226,6 +230,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201406181207339_V0_13.resx">
       <DependentUpon>201406181207339_V0_13.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201406251446120_V0_13_1.resx">
+      <DependentUpon>201406251446120_V0_13_1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

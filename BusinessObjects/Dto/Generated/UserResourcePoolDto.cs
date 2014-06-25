@@ -30,7 +30,7 @@ namespace BusinessObjects.Dto
             this.SectorIndexRating = userResourcePool.SectorIndexRating;
             this.EmployeeSatisfactionIndexRating = userResourcePool.EmployeeSatisfactionIndexRating;
             this.CustomerSatisfactionIndexRating = userResourcePool.CustomerSatisfactionIndexRating;
-            this.DistanceIndexRating = userResourcePool.DistanceIndexRating;
+            //this.DistanceIndexRating = userResourcePool.DistanceIndexRating;
             this.CreatedOn = userResourcePool.CreatedOn;
             this.ModifiedOn = userResourcePool.ModifiedOn;
             this.DeletedOn = userResourcePool.DeletedOn;
@@ -67,8 +67,8 @@ namespace BusinessObjects.Dto
         [Required]
         public decimal CustomerSatisfactionIndexRating { get; set; }
 
-        [Required]
-        public decimal DistanceIndexRating { get; set; }
+        //[Required]
+        //public decimal DistanceIndexRating { get; set; }
 
         [Required]
         public System.DateTime CreatedOn { get; set; }
@@ -95,7 +95,7 @@ namespace BusinessObjects.Dto
                 SectorIndexRating = SectorIndexRating,
                 EmployeeSatisfactionIndexRating = EmployeeSatisfactionIndexRating,
                 CustomerSatisfactionIndexRating = CustomerSatisfactionIndexRating,
-                DistanceIndexRating = DistanceIndexRating,
+                //DistanceIndexRating = DistanceIndexRating,
                 CreatedOn = CreatedOn,
                 ModifiedOn = ModifiedOn,
                 DeletedOn = DeletedOn,

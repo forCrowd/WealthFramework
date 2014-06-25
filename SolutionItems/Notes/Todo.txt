@@ -29,7 +29,7 @@ any user should be able to access them. currently definitions link is only visib
 . try to have a standard for css usage + html layout formats + also js script conventions
 . check spelling of the texts!
 . update namespaces - osp.wealtheconomy.
-. enabled auto test for appveyor
+. enable auto test for appveyor - currently it fails probably because it can't create the db?
 . in some delete cases, odatacontroller returns NotFound error? although it's deleted, the record stays on the page until refreshing the page
 . how to calculate average index? some people may enter 1,2,3 - some may enter 100,200,300? always force them to enter percentage?
 or always calculate the total average based on invidiuals percentage? or both?
@@ -52,8 +52,6 @@ config.EnableQuerySupport(queryAttribute);
 
 . loading animation? both for breeze + angular
 
-. try to add indexes dynamically?
-
 . vs update 2 changes?
 .. asp.net identity
 
@@ -71,14 +69,12 @@ UserResourcePoolIndexValue.ForeignKey("dbo.Organization", t => t.OrganizationId,
 ---
 . create a new 'view' for dynamic index!
 
-. remove distance index field
+. compare the results with static indexes? - seems okay
+.. remove quality + employee + customer indexes
 
 . try to fix the following case and check ?!
 .. about indexvalue income calculation, there are two weighted average calculation, couldn't be only one? weighted -> weighted * number of sales -> weightedwithnumberofsales weighted?
 .. THIS MIGHT BE USEFUL IN CASE OF BIG NUMBEROFSALES NUMBERS - TO PREVENT HAVING DECIMAL RANGE ISSUES? BUT CAN HAVE BETTER NAMING?
-
-. compare the results with static indexes? - seems okay
-.. remove quality + employee + customer indexes
 
 ---
 sector index - just name and the rating
@@ -87,45 +83,3 @@ organization total cost index - auto formula (organization sales price / resourc
 organization quality index (at this moment) - name and the rating
 organization emp sat index - name and the rating
 organization cust sat index - name and the rating
-
-three different levels (can more more)
-
----
-resource pool types: realtime vs. static
-
----
-resource pool types;
-. index samples
-. one big public
-. per user
-
-organizations - per resource pool?
-
----
-Index Notes;
-
-total cost	-> lowest
-knowledge	-> highest
-quality		-> highest
-sector		-> highest
-employee	-> highest
-customer	-> highest
-distance	-> lowest
-
-user can rate;
-license (knowledge index)
-organization quality
-sector
-organization employee satisf.
-organization customer satisf.
-
-auto;
-total cost	= sales price - production cost
-distance	= production location - customer location
-
----
-Using Total Cost Index without other Indexes wouldn't make sense.
-If the quality of the product is not known, rewarding low cost wouldn't mean much?
-Maybe it's better to start with another index?
-New comment: Actually this should be okay, because in the current economic system it's the same.
-We don't look quality and other details but just low cost + max. profit. Same ignorance.

@@ -121,8 +121,8 @@
                     TotalCostIndexRating = sampleUserResourcePool.TotalCostIndexRating,
                     QualityIndexRating = sampleUserResourcePool.QualityIndexRating,
                     EmployeeSatisfactionIndexRating = sampleUserResourcePool.EmployeeSatisfactionIndexRating,
-                    CustomerSatisfactionIndexRating = sampleUserResourcePool.CustomerSatisfactionIndexRating,
-                    DistanceIndexRating = sampleUserResourcePool.DistanceIndexRating,
+                    CustomerSatisfactionIndexRating = sampleUserResourcePool.CustomerSatisfactionIndexRating//,
+                    //DistanceIndexRating = sampleUserResourcePool.DistanceIndexRating,
                 };
                 UserResourcePoolRepository.Insert(userResourcePool);
             }

@@ -5,11 +5,15 @@ An experimental resource management system that aims to provide a sustainable ec
 ---
 
 ### Release Notes
+**0.13.1**
+* DistanceIndex field was removed from UserResourcePool
+
 **0.13**
 * Introduction to Dynamic Indexes
 * DistanceIndex was removed in from calcuations, field will be removed later on
 * IndexShare property calcuation bug fixed
 * Property naming updates
+* SectorChart page was removed
 
 **0.12.4**
 * BusinessObjects minor revisions
