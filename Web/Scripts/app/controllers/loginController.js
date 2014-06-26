@@ -16,8 +16,8 @@
                 .success(function () {
                     $location.path('/');
                 })
-                .error(function (data) {
-                    logger.logError(data, null, true);
+                .error(function (response) {
+                    logger.logError(response.error_description, null, true);
                 });
         }
     };

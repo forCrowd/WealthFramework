@@ -111,7 +111,7 @@
                     for (var i = 0; i < vm.resultsSectorSet.length; i++) {
                         var chartDataItem = {
                             name: vm.resultsSectorSet[i].SectorName,
-                            y: vm.resultsSectorSet[i].AverageRating
+                            y: vm.resultsSectorSet[i].RatingAverage
                         }
                         resultsChartData.push(chartDataItem);
                     }

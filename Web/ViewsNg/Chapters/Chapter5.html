@@ -137,19 +137,19 @@
                 <tr>
                     <th>License</th>
                     <th>Rating Count</th>
-                    <th>Average Rating</th>
+                    <th>Rating Average</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>{{ vm.licenseResultLicenseSet[0].LicenseName }}</td>
                     <td>{{ vm.licenseResultLicenseSet[0].RatingCount }}</td>
-                    <td>{{ vm.licenseResultLicenseSet[0].AverageRating | number:2 }}</td>
+                    <td>{{ vm.licenseResultLicenseSet[0].RatingAverage | number:2 }}</td>
                 </tr>
                 <tr>
                     <td>{{ vm.licenseResultLicenseSet[1].LicenseName }}</td>
                     <td>{{ vm.licenseResultLicenseSet[1].RatingCount }}</td>
-                    <td>{{ vm.licenseResultLicenseSet[1].AverageRating | number:2 }}</td>
+                    <td>{{ vm.licenseResultLicenseSet[1].RatingAverage | number:2 }}</td>
                 </tr>
             </tbody>
         </table>

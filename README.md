@@ -7,6 +7,9 @@ An experimental resource management system that aims to provide a sustainable ec
 ### Release Notes
 **0.13.1**
 * DistanceIndex field was removed from UserResourcePool
+* Nuget auto package restore
+* Chapter4 + Chapter5 fixes
+* login error fix
 
 **0.13**
 * Introduction to Dynamic Indexes

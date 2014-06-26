@@ -723,7 +723,6 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <PropertyGroup>
     <PostBuildEvent>REM Warm up script
 powershell -WindowStyle Hidden "$page = (New-Object System.Net.WebClient).DownloadStringAsync("""http://localhost:10001""")" 2&gt;nul 1&gt;nul

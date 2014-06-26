@@ -188,7 +188,7 @@
                     for (var i = 0; i < vm.licenseResultLicenseSet.length; i++) {
                         var chartDataItem = {
                             name: vm.licenseResultLicenseSet[i].LicenseName,
-                            y: vm.licenseResultLicenseSet[i].AverageRating
+                            y: vm.licenseResultLicenseSet[i].RatingAverage
                         }
                         licenseResultChartData.push(chartDataItem);
                     }

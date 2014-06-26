@@ -152,12 +152,12 @@ namespace DataObjects.Migrations
                             userRepository.Insert(sampleUser);
 
                             // Samples
-                            AddTotalCostIndexSample(sampleUser);
+                            AddSectorIndexSample(sampleUser);
                             AddKnowledgeIndexSample(sampleUser);
+                            AddTotalCostIndexSample(sampleUser);
                             AddQualityIndexSample(sampleUser);
                             AddEmployeeSatisfactionIndexSample(sampleUser);
                             AddCustomerSatisfactionIndexSample(sampleUser);
-                            AddSectorIndexSample(sampleUser);
                             AddAllInOneSample(sampleUser);
 
                             Context.SaveChanges();
@@ -168,117 +168,6 @@ namespace DataObjects.Migrations
                         }
                 }            
             }
-        }
-
-        void AddTotalCostIndexSample(BusinessObjects.User user)
-        {
-            var totalCostResourcePool = new BusinessObjects.ResourcePool() { Name = "Total Cost Index Sample", IsSample = true };
-            var totalCostSector = new BusinessObjects.Sector() { ResourcePool = totalCostResourcePool, Name = "Total Cost Index Generic Sector" };
-            var totalCostLicense = new BusinessObjects.License() { ResourcePool = totalCostResourcePool, Name = "Total Cost Index Generic License", Text = "License Text" };
-            var totalCostOrganization1 = new BusinessObjects.Organization() { Sector = totalCostSector, Name = "Lowlands", ProductionCost = 100, SalesPrice = 125, License = totalCostLicense };
-            var totalCostOrganization2 = new BusinessObjects.Organization() { Sector = totalCostSector, Name = "High Coast", ProductionCost = 100, SalesPrice = 175, License = totalCostLicense };
-            var totalCostUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = totalCostResourcePool, ResourcePoolRate = 101, TotalCostIndexRating = 100, KnowledgeIndexRating = 0, QualityIndexRating = 0, SectorIndexRating = 0, EmployeeSatisfactionIndexRating = 0, CustomerSatisfactionIndexRating = 0 };
-            var totalCostUserOrganization1 = new BusinessObjects.UserOrganization() { User = user, Organization = totalCostOrganization1, NumberOfSales = 0, QualityRating = 0, CustomerSatisfactionRating = 0, EmployeeSatisfactionRating = 0 };
-            var totalCostUserOrganization2 = new BusinessObjects.UserOrganization() { User = user, Organization = totalCostOrganization2, NumberOfSales = 0, QualityRating = 0, CustomerSatisfactionRating = 0, EmployeeSatisfactionRating = 0 };
-
-            ResourcePoolRepository.Insert(totalCostResourcePool);
-            SectorRepository.Insert(totalCostSector);
-            LicenseRepository.Insert(totalCostLicense);
-            OrganizationRepository.Insert(totalCostOrganization1);
-            OrganizationRepository.Insert(totalCostOrganization2);
-            UserResourcePoolRepository.Insert(totalCostUserResourcePool);
-            UserOrganizationRepository.Insert(totalCostUserOrganization1);
-            UserOrganizationRepository.Insert(totalCostUserOrganization2);
-        }
-
-        void AddKnowledgeIndexSample(BusinessObjects.User user)
-        {
-            var knowledgeResourcePool = new BusinessObjects.ResourcePool() { Name = "Knowledge Index Sample", IsSample = true };
-            var knowledgeSector = new BusinessObjects.Sector() { ResourcePool = knowledgeResourcePool, Name = "Knowledge Index Generic Sector" };
-            var knowledgeLicense1 = new BusinessObjects.License() { ResourcePool = knowledgeResourcePool, Name = "Open License", Description = "Open source license sample", Text = "When you use this license it allows everyone to use your license without any restriction" };
-            var knowledgeLicense2 = new BusinessObjects.License() { ResourcePool = knowledgeResourcePool, Name = "Restricted License", Description = "Restricted license sample", Text = "Can't, can't, can't" };
-            var knowledgeOrganization1 = new BusinessObjects.Organization() { Sector = knowledgeSector, Name = "True Source", ProductionCost = 100, SalesPrice = 150, License = knowledgeLicense1 };
-            var knowledgeOrganization2 = new BusinessObjects.Organization() { Sector = knowledgeSector, Name = "Hidden Knowledge", ProductionCost = 100, SalesPrice = 150, License = knowledgeLicense2 };
-            var knowledgeUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = knowledgeResourcePool, ResourcePoolRate = 101, TotalCostIndexRating = 0, KnowledgeIndexRating = 100, QualityIndexRating = 0, SectorIndexRating = 0, EmployeeSatisfactionIndexRating = 0, CustomerSatisfactionIndexRating = 0 };
-            var knowledgeUserLicenseRating1 = new BusinessObjects.UserLicenseRating() { User = user, License = knowledgeLicense1, Rating = 75 };
-            var knowledgeUserLicenseRating2 = new BusinessObjects.UserLicenseRating() { User = user, License = knowledgeLicense2, Rating = 25 };
-            var knowledgeUserOrganization1 = new BusinessObjects.UserOrganization() { User = user, Organization = knowledgeOrganization1, NumberOfSales = 0, QualityRating = 0, CustomerSatisfactionRating = 0, EmployeeSatisfactionRating = 0 };
-            var knowledgeUserOrganization2 = new BusinessObjects.UserOrganization() { User = user, Organization = knowledgeOrganization2, NumberOfSales = 0, QualityRating = 0, CustomerSatisfactionRating = 0, EmployeeSatisfactionRating = 0 };
-
-            ResourcePoolRepository.Insert(knowledgeResourcePool);
-            SectorRepository.Insert(knowledgeSector);
-            LicenseRepository.Insert(knowledgeLicense1);
-            LicenseRepository.Insert(knowledgeLicense2);
-            OrganizationRepository.Insert(knowledgeOrganization1);
-            OrganizationRepository.Insert(knowledgeOrganization2);
-            UserResourcePoolRepository.Insert(knowledgeUserResourcePool);
-            UserLicenseRatingRepository.Insert(knowledgeUserLicenseRating1);
-            UserLicenseRatingRepository.Insert(knowledgeUserLicenseRating2);
-            UserOrganizationRepository.Insert(knowledgeUserOrganization1);
-            UserOrganizationRepository.Insert(knowledgeUserOrganization2);
-        }
-
-        void AddQualityIndexSample(BusinessObjects.User user)
-        {
-            var qualityResourcePool = new BusinessObjects.ResourcePool() { Name = "Quality Index Sample", IsSample = true };
-            var qualitySector = new BusinessObjects.Sector() { ResourcePool = qualityResourcePool, Name = "Quality Index Generic Sector" };
-            var qualityLicense = new BusinessObjects.License() { ResourcePool = qualityResourcePool, Name = "Quality Index Generic License", Text = "License Text" };
-            var qualityOrganization1 = new BusinessObjects.Organization() { Sector = qualitySector, Name = "Wealth's Finest", ProductionCost = 100, SalesPrice = 150, License = qualityLicense };
-            var qualityOrganization2 = new BusinessObjects.Organization() { Sector = qualitySector, Name = "Poor Beggar", ProductionCost = 100, SalesPrice = 150, License = qualityLicense };
-            var qualityUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = qualityResourcePool, ResourcePoolRate = 101, TotalCostIndexRating = 0, KnowledgeIndexRating = 0, QualityIndexRating = 100, SectorIndexRating = 0, EmployeeSatisfactionIndexRating = 0, CustomerSatisfactionIndexRating = 0 };
-            var qualityUserOrganization1 = new BusinessObjects.UserOrganization() { User = user, Organization = qualityOrganization1, NumberOfSales = 0, QualityRating = 75, CustomerSatisfactionRating = 0, EmployeeSatisfactionRating = 0 };
-            var qualityUserOrganization2 = new BusinessObjects.UserOrganization() { User = user, Organization = qualityOrganization2, NumberOfSales = 0, QualityRating = 25, CustomerSatisfactionRating = 0, EmployeeSatisfactionRating = 0 };
-
-            ResourcePoolRepository.Insert(qualityResourcePool);
-            SectorRepository.Insert(qualitySector);
-            LicenseRepository.Insert(qualityLicense);
-            OrganizationRepository.Insert(qualityOrganization1);
-            OrganizationRepository.Insert(qualityOrganization2);
-            UserResourcePoolRepository.Insert(qualityUserResourcePool);
-            UserOrganizationRepository.Insert(qualityUserOrganization1);
-            UserOrganizationRepository.Insert(qualityUserOrganization2);
-        }
-
-        void AddEmployeeSatisfactionIndexSample(BusinessObjects.User user)
-        {
-            var employeeResourcePool = new BusinessObjects.ResourcePool() { Name = "Employee Satisfaction Index Sample", IsSample = true };
-            var employeeSector = new BusinessObjects.Sector() { ResourcePool = employeeResourcePool, Name = "Employee Satisfaction Index Generic Sector" };
-            var employeeLicense = new BusinessObjects.License() { ResourcePool = employeeResourcePool, Name = "Employee Satisfaction Index Generic License", Text = "License Text" };
-            var employeeOrganization1 = new BusinessObjects.Organization() { Sector = employeeSector, Name = "One Big Family", ProductionCost = 100, SalesPrice = 150, License = employeeLicense };
-            var employeeOrganization2 = new BusinessObjects.Organization() { Sector = employeeSector, Name = "Reckless Ones", ProductionCost = 100, SalesPrice = 150, License = employeeLicense };
-            var employeeUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = employeeResourcePool, ResourcePoolRate = 101, TotalCostIndexRating = 0, KnowledgeIndexRating = 0, QualityIndexRating = 0, SectorIndexRating = 0, EmployeeSatisfactionIndexRating = 100, CustomerSatisfactionIndexRating = 0 };
-            var employeeUserOrganization1 = new BusinessObjects.UserOrganization() { User = user, Organization = employeeOrganization1, NumberOfSales = 0, QualityRating = 0, CustomerSatisfactionRating = 0, EmployeeSatisfactionRating = 75 };
-            var employeeUserOrganization2 = new BusinessObjects.UserOrganization() { User = user, Organization = employeeOrganization2, NumberOfSales = 0, QualityRating = 0, CustomerSatisfactionRating = 0, EmployeeSatisfactionRating = 25 };
-
-            ResourcePoolRepository.Insert(employeeResourcePool);
-            SectorRepository.Insert(employeeSector);
-            LicenseRepository.Insert(employeeLicense);
-            OrganizationRepository.Insert(employeeOrganization1);
-            OrganizationRepository.Insert(employeeOrganization2);
-            UserResourcePoolRepository.Insert(employeeUserResourcePool);
-            UserOrganizationRepository.Insert(employeeUserOrganization1);
-            UserOrganizationRepository.Insert(employeeUserOrganization2);
-        }
-
-        void AddCustomerSatisfactionIndexSample(BusinessObjects.User user)
-        {
-            var customerResourcePool = new BusinessObjects.ResourcePool() { Name = "Customer Satisfaction Index Sample", IsSample = true };
-            var customerSector = new BusinessObjects.Sector() { ResourcePool = customerResourcePool, Name = "Customer Satisfaction Index Generic Sector" };
-            var customerLicense = new BusinessObjects.License() { ResourcePool = customerResourcePool, Name = "Customer Satisfaction Index Generic License", Text = "License Text" };
-            var customerOrganization1 = new BusinessObjects.Organization() { Sector = customerSector, Name = "Friendly Faieries", ProductionCost = 100, SalesPrice = 150, License = customerLicense };
-            var customerOrganization2 = new BusinessObjects.Organization() { Sector = customerSector, Name = "Clumsy Clowns", ProductionCost = 100, SalesPrice = 150, License = customerLicense };
-            var customerUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = customerResourcePool, ResourcePoolRate = 101, TotalCostIndexRating = 0, KnowledgeIndexRating = 0, QualityIndexRating = 0, SectorIndexRating = 0, EmployeeSatisfactionIndexRating = 0, CustomerSatisfactionIndexRating = 100 };
-            var customerUserOrganization1 = new BusinessObjects.UserOrganization() { User = user, Organization = customerOrganization1, NumberOfSales = 0, QualityRating = 0, CustomerSatisfactionRating = 75, EmployeeSatisfactionRating = 0 };
-            var customerUserOrganization2 = new BusinessObjects.UserOrganization() { User = user, Organization = customerOrganization2, NumberOfSales = 0, QualityRating = 0, CustomerSatisfactionRating = 25, EmployeeSatisfactionRating = 0 };
-
-            ResourcePoolRepository.Insert(customerResourcePool);
-            SectorRepository.Insert(customerSector);
-            LicenseRepository.Insert(customerLicense);
-            OrganizationRepository.Insert(customerOrganization1);
-            OrganizationRepository.Insert(customerOrganization2);
-            UserResourcePoolRepository.Insert(customerUserResourcePool);
-            UserOrganizationRepository.Insert(customerUserOrganization1);
-            UserOrganizationRepository.Insert(customerUserOrganization2);
         }
 
         void AddSectorIndexSample(BusinessObjects.User user)
@@ -362,6 +251,117 @@ namespace DataObjects.Migrations
             UserOrganizationRepository.Insert(sectorUserOrganization7);
             UserOrganizationRepository.Insert(sectorUserOrganization8);
             UserOrganizationRepository.Insert(sectorUserOrganization9);
+        }
+
+        void AddKnowledgeIndexSample(BusinessObjects.User user)
+        {
+            var knowledgeResourcePool = new BusinessObjects.ResourcePool() { Name = "Knowledge Index Sample", IsSample = true };
+            var knowledgeSector = new BusinessObjects.Sector() { ResourcePool = knowledgeResourcePool, Name = "Knowledge Index Generic Sector" };
+            var knowledgeLicense1 = new BusinessObjects.License() { ResourcePool = knowledgeResourcePool, Name = "Open License", Description = "Open source license sample", Text = "When you use this license it allows everyone to use your license without any restriction" };
+            var knowledgeLicense2 = new BusinessObjects.License() { ResourcePool = knowledgeResourcePool, Name = "Restricted License", Description = "Restricted license sample", Text = "Can't, can't, can't" };
+            var knowledgeOrganization1 = new BusinessObjects.Organization() { Sector = knowledgeSector, Name = "True Source", ProductionCost = 100, SalesPrice = 150, License = knowledgeLicense1 };
+            var knowledgeOrganization2 = new BusinessObjects.Organization() { Sector = knowledgeSector, Name = "Hidden Knowledge", ProductionCost = 100, SalesPrice = 150, License = knowledgeLicense2 };
+            var knowledgeUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = knowledgeResourcePool, ResourcePoolRate = 101, TotalCostIndexRating = 0, KnowledgeIndexRating = 100, QualityIndexRating = 0, SectorIndexRating = 0, EmployeeSatisfactionIndexRating = 0, CustomerSatisfactionIndexRating = 0 };
+            var knowledgeUserLicenseRating1 = new BusinessObjects.UserLicenseRating() { User = user, License = knowledgeLicense1, Rating = 75 };
+            var knowledgeUserLicenseRating2 = new BusinessObjects.UserLicenseRating() { User = user, License = knowledgeLicense2, Rating = 25 };
+            var knowledgeUserOrganization1 = new BusinessObjects.UserOrganization() { User = user, Organization = knowledgeOrganization1, NumberOfSales = 0, QualityRating = 0, CustomerSatisfactionRating = 0, EmployeeSatisfactionRating = 0 };
+            var knowledgeUserOrganization2 = new BusinessObjects.UserOrganization() { User = user, Organization = knowledgeOrganization2, NumberOfSales = 0, QualityRating = 0, CustomerSatisfactionRating = 0, EmployeeSatisfactionRating = 0 };
+
+            ResourcePoolRepository.Insert(knowledgeResourcePool);
+            SectorRepository.Insert(knowledgeSector);
+            LicenseRepository.Insert(knowledgeLicense1);
+            LicenseRepository.Insert(knowledgeLicense2);
+            OrganizationRepository.Insert(knowledgeOrganization1);
+            OrganizationRepository.Insert(knowledgeOrganization2);
+            UserResourcePoolRepository.Insert(knowledgeUserResourcePool);
+            UserLicenseRatingRepository.Insert(knowledgeUserLicenseRating1);
+            UserLicenseRatingRepository.Insert(knowledgeUserLicenseRating2);
+            UserOrganizationRepository.Insert(knowledgeUserOrganization1);
+            UserOrganizationRepository.Insert(knowledgeUserOrganization2);
+        }
+
+        void AddTotalCostIndexSample(BusinessObjects.User user)
+        {
+            var totalCostResourcePool = new BusinessObjects.ResourcePool() { Name = "Total Cost Index Sample", IsSample = true };
+            var totalCostSector = new BusinessObjects.Sector() { ResourcePool = totalCostResourcePool, Name = "Total Cost Index Generic Sector" };
+            var totalCostLicense = new BusinessObjects.License() { ResourcePool = totalCostResourcePool, Name = "Total Cost Index Generic License", Text = "License Text" };
+            var totalCostOrganization1 = new BusinessObjects.Organization() { Sector = totalCostSector, Name = "Lowlands", ProductionCost = 100, SalesPrice = 125, License = totalCostLicense };
+            var totalCostOrganization2 = new BusinessObjects.Organization() { Sector = totalCostSector, Name = "High Coast", ProductionCost = 100, SalesPrice = 175, License = totalCostLicense };
+            var totalCostUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = totalCostResourcePool, ResourcePoolRate = 101, TotalCostIndexRating = 100, KnowledgeIndexRating = 0, QualityIndexRating = 0, SectorIndexRating = 0, EmployeeSatisfactionIndexRating = 0, CustomerSatisfactionIndexRating = 0 };
+            var totalCostUserOrganization1 = new BusinessObjects.UserOrganization() { User = user, Organization = totalCostOrganization1, NumberOfSales = 0, QualityRating = 0, CustomerSatisfactionRating = 0, EmployeeSatisfactionRating = 0 };
+            var totalCostUserOrganization2 = new BusinessObjects.UserOrganization() { User = user, Organization = totalCostOrganization2, NumberOfSales = 0, QualityRating = 0, CustomerSatisfactionRating = 0, EmployeeSatisfactionRating = 0 };
+
+            ResourcePoolRepository.Insert(totalCostResourcePool);
+            SectorRepository.Insert(totalCostSector);
+            LicenseRepository.Insert(totalCostLicense);
+            OrganizationRepository.Insert(totalCostOrganization1);
+            OrganizationRepository.Insert(totalCostOrganization2);
+            UserResourcePoolRepository.Insert(totalCostUserResourcePool);
+            UserOrganizationRepository.Insert(totalCostUserOrganization1);
+            UserOrganizationRepository.Insert(totalCostUserOrganization2);
+        }
+
+        void AddQualityIndexSample(BusinessObjects.User user)
+        {
+            var qualityResourcePool = new BusinessObjects.ResourcePool() { Name = "Quality Index Sample", IsSample = true };
+            var qualitySector = new BusinessObjects.Sector() { ResourcePool = qualityResourcePool, Name = "Quality Index Generic Sector" };
+            var qualityLicense = new BusinessObjects.License() { ResourcePool = qualityResourcePool, Name = "Quality Index Generic License", Text = "License Text" };
+            var qualityOrganization1 = new BusinessObjects.Organization() { Sector = qualitySector, Name = "Wealth's Finest", ProductionCost = 100, SalesPrice = 150, License = qualityLicense };
+            var qualityOrganization2 = new BusinessObjects.Organization() { Sector = qualitySector, Name = "Poor Beggar", ProductionCost = 100, SalesPrice = 150, License = qualityLicense };
+            var qualityUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = qualityResourcePool, ResourcePoolRate = 101, TotalCostIndexRating = 0, KnowledgeIndexRating = 0, QualityIndexRating = 100, SectorIndexRating = 0, EmployeeSatisfactionIndexRating = 0, CustomerSatisfactionIndexRating = 0 };
+            var qualityUserOrganization1 = new BusinessObjects.UserOrganization() { User = user, Organization = qualityOrganization1, NumberOfSales = 0, QualityRating = 75, CustomerSatisfactionRating = 0, EmployeeSatisfactionRating = 0 };
+            var qualityUserOrganization2 = new BusinessObjects.UserOrganization() { User = user, Organization = qualityOrganization2, NumberOfSales = 0, QualityRating = 25, CustomerSatisfactionRating = 0, EmployeeSatisfactionRating = 0 };
+
+            ResourcePoolRepository.Insert(qualityResourcePool);
+            SectorRepository.Insert(qualitySector);
+            LicenseRepository.Insert(qualityLicense);
+            OrganizationRepository.Insert(qualityOrganization1);
+            OrganizationRepository.Insert(qualityOrganization2);
+            UserResourcePoolRepository.Insert(qualityUserResourcePool);
+            UserOrganizationRepository.Insert(qualityUserOrganization1);
+            UserOrganizationRepository.Insert(qualityUserOrganization2);
+        }
+
+        void AddEmployeeSatisfactionIndexSample(BusinessObjects.User user)
+        {
+            var employeeResourcePool = new BusinessObjects.ResourcePool() { Name = "Employee Satisfaction Index Sample", IsSample = true };
+            var employeeSector = new BusinessObjects.Sector() { ResourcePool = employeeResourcePool, Name = "Employee Satisfaction Index Generic Sector" };
+            var employeeLicense = new BusinessObjects.License() { ResourcePool = employeeResourcePool, Name = "Employee Satisfaction Index Generic License", Text = "License Text" };
+            var employeeOrganization1 = new BusinessObjects.Organization() { Sector = employeeSector, Name = "One Big Family", ProductionCost = 100, SalesPrice = 150, License = employeeLicense };
+            var employeeOrganization2 = new BusinessObjects.Organization() { Sector = employeeSector, Name = "Reckless Ones", ProductionCost = 100, SalesPrice = 150, License = employeeLicense };
+            var employeeUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = employeeResourcePool, ResourcePoolRate = 101, TotalCostIndexRating = 0, KnowledgeIndexRating = 0, QualityIndexRating = 0, SectorIndexRating = 0, EmployeeSatisfactionIndexRating = 100, CustomerSatisfactionIndexRating = 0 };
+            var employeeUserOrganization1 = new BusinessObjects.UserOrganization() { User = user, Organization = employeeOrganization1, NumberOfSales = 0, QualityRating = 0, CustomerSatisfactionRating = 0, EmployeeSatisfactionRating = 75 };
+            var employeeUserOrganization2 = new BusinessObjects.UserOrganization() { User = user, Organization = employeeOrganization2, NumberOfSales = 0, QualityRating = 0, CustomerSatisfactionRating = 0, EmployeeSatisfactionRating = 25 };
+
+            ResourcePoolRepository.Insert(employeeResourcePool);
+            SectorRepository.Insert(employeeSector);
+            LicenseRepository.Insert(employeeLicense);
+            OrganizationRepository.Insert(employeeOrganization1);
+            OrganizationRepository.Insert(employeeOrganization2);
+            UserResourcePoolRepository.Insert(employeeUserResourcePool);
+            UserOrganizationRepository.Insert(employeeUserOrganization1);
+            UserOrganizationRepository.Insert(employeeUserOrganization2);
+        }
+
+        void AddCustomerSatisfactionIndexSample(BusinessObjects.User user)
+        {
+            var customerResourcePool = new BusinessObjects.ResourcePool() { Name = "Customer Satisfaction Index Sample", IsSample = true };
+            var customerSector = new BusinessObjects.Sector() { ResourcePool = customerResourcePool, Name = "Customer Satisfaction Index Generic Sector" };
+            var customerLicense = new BusinessObjects.License() { ResourcePool = customerResourcePool, Name = "Customer Satisfaction Index Generic License", Text = "License Text" };
+            var customerOrganization1 = new BusinessObjects.Organization() { Sector = customerSector, Name = "Friendly Faieries", ProductionCost = 100, SalesPrice = 150, License = customerLicense };
+            var customerOrganization2 = new BusinessObjects.Organization() { Sector = customerSector, Name = "Clumsy Clowns", ProductionCost = 100, SalesPrice = 150, License = customerLicense };
+            var customerUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = customerResourcePool, ResourcePoolRate = 101, TotalCostIndexRating = 0, KnowledgeIndexRating = 0, QualityIndexRating = 0, SectorIndexRating = 0, EmployeeSatisfactionIndexRating = 0, CustomerSatisfactionIndexRating = 100 };
+            var customerUserOrganization1 = new BusinessObjects.UserOrganization() { User = user, Organization = customerOrganization1, NumberOfSales = 0, QualityRating = 0, CustomerSatisfactionRating = 75, EmployeeSatisfactionRating = 0 };
+            var customerUserOrganization2 = new BusinessObjects.UserOrganization() { User = user, Organization = customerOrganization2, NumberOfSales = 0, QualityRating = 0, CustomerSatisfactionRating = 25, EmployeeSatisfactionRating = 0 };
+
+            ResourcePoolRepository.Insert(customerResourcePool);
+            SectorRepository.Insert(customerSector);
+            LicenseRepository.Insert(customerLicense);
+            OrganizationRepository.Insert(customerOrganization1);
+            OrganizationRepository.Insert(customerOrganization2);
+            UserResourcePoolRepository.Insert(customerUserResourcePool);
+            UserOrganizationRepository.Insert(customerUserOrganization1);
+            UserOrganizationRepository.Insert(customerUserOrganization2);
         }
 
         void AddAllInOneSample(BusinessObjects.User user)

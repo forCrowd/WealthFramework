@@ -30,7 +30,7 @@
                 case '/EmployeeSatisfactionIndex': resourcePoolId = 4; break;
                 case '/CustomerSatisfactionIndex': resourcePoolId = 5; break;
                 case '/SectorIndex': resourcePoolId = 6; break;
-                case '/AllInOne': resourcePoolId = 8; break;
+                case '/AllInOne': resourcePoolId = 7; break;
             }
 
             userResourcePoolService.getUserResourcePoolCustomByResourcePoolId(resourcePoolId)

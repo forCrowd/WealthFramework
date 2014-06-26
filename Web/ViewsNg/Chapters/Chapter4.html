@@ -91,14 +91,14 @@
                 <tr>
                     <th>Sector</th>
                     <th>Rating Count</th>
-                    <th>Average Rating</th>
+                    <th>Rating Average</th>
                 </tr>
             </thead>
             <tbody>
                 <tr data-ng-repeat="item in vm.resultsSectorSet">
                     <td>{{ item.SectorName }}</td>
                     <td>{{ item.RatingCount }}</td>
-                    <td>{{ item.AverageRating | number:2 }}</td>
+                    <td>{{ item.RatingAverage | number:2 }}</td>
                 </tr>
             </tbody>
         </table>
