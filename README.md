@@ -5,9 +5,13 @@ An experimental resource management system that aims to provide a sustainable ec
 ---
 
 ### Release Notes
+**0.13.2**
+* 
+
 **0.13.1**
 * DistanceIndex field was removed from UserResourcePool
 * Nuget auto package restore
+* Sample data creation order was changed; Sector, Knowledge, TotalCost, Quality, Employee, Customer
 * Chapter4 + Chapter5 fixes
 * login error fix
 

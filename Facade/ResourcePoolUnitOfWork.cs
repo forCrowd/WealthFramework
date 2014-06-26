@@ -7,6 +7,7 @@
 
     public partial class ResourcePoolUnitOfWork
     {
+        ResourcePoolIndexRepository resourcePoolIndexRepository;
         SectorRepository sectorRepository;
         LicenseRepository licenseRepository;
         OrganizationRepository organizationRepository;
@@ -14,6 +15,11 @@
         UserSectorRatingRepository userSectorRatingRepository;
         UserLicenseRatingRepository userLicenseRatingRepository;
         UserOrganizationRepository userOrganizationRepository;
+
+        public ResourcePoolIndexRepository ResourcePoolIndexRepository
+        {
+            get { return resourcePoolIndexRepository ?? (resourcePoolIndexRepository = new ResourcePoolIndexRepository(Context)); }
+        }
 
         public SectorRepository SectorRepository
         {
@@ -54,6 +60,14 @@
             entity.IsSample = false;
 
             // Sample records
+            // TODO Enable this block in case if there will no static indexes left in the system
+            //var sampleResourcePoolIndex = new ResourcePoolIndex()
+            //{
+            //    ResourcePool = entity,
+            //    Name = "Generic Index"
+            //};
+            //ResourcePoolIndexRepository.Insert(sampleResourcePoolIndex);
+
             var sampleSector = new Sector()
             {
                 ResourcePool = entity,
@@ -107,13 +121,12 @@
                 UserId = userId,
                 ResourcePool = resourcePool,
                 ResourcePoolRate = 101,
-                TotalCostIndexRating = 0,
-                KnowledgeIndexRating = 0,
-                QualityIndexRating = 0,
                 SectorIndexRating = 0,
+                KnowledgeIndexRating = 0,
+                TotalCostIndexRating = 0,
+                QualityIndexRating = 0,
                 EmployeeSatisfactionIndexRating = 0,
-                CustomerSatisfactionIndexRating = 0//,
-                //DistanceIndexRating = 0
+                CustomerSatisfactionIndexRating = 0
             };
             UserResourcePoolRepository.Insert(userResourcePool);
 
