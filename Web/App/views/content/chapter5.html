@@ -1,0 +1,159 @@
+﻿<div data-ng-controller="chapter5Controller as vm">
+    <div class="page-header">
+        <h1>#5 Knowledge Index: Building the Global Knowledge Database</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            &nbsp;
+        </div>
+        <div class="col-md-4">
+            <div class="btn-group btn-group-sm pull-right">
+                <a href="/content/chapter4" class="btn btn-default">« Previous Chapter</a>
+                <a href="/content/chapter6" class="btn btn-default">Next Chapter »</a>
+            </div>
+        </div>
+    </div>
+    <div class="row top-buffer">
+        <div class="col-md-12">
+            <p>
+                While creating new products / services, organizations also produce the <i>knowledge</i> of how these products / services could be created.
+            </p>
+            <p>
+                Although this is a very unique and important asset to the society, majority of the organizations tend to use restricted licenses / patents / contracts to hide their knowledge.
+                This due to the fact that sharing the knowledge doesn't provide any benefit to them and they don't want to risk their investment.
+            </p>
+            <p>
+                In the long term, this 'overprotection' becomes a very counter-productive approach. Collabration between the organizations becomes much more difficult.
+                When the knowledge was not shared, every other organization has to spend a similar time and energy to get to the same level. In other words, we keep reinventing the same knowledge over and over again.
+            </p>
+            <p>
+                Rewarding the organizations that offer more flexible rights could reduce the chance of having these issues and let us build a common knowledge.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <highchart config="vm.oldSystemChartConfig"></highchart>
+        </div>
+        <div class="col-md-6">
+            <highchart config="vm.newSystemChartConfig"></highchart>
+        </div>
+    </div>
+    <div class="row top-buffer">
+        <div class="col-md-12">
+            <h2>
+                Rating the Licenses
+            </h2>
+            <p>
+                Knowledge Index allows us to compare the licenses side by side and rate them directly. The resources then could be distributed to the organizations based on their license choice.
+            </p>
+            <p class="top-buffer text-center">
+                <i>
+                    Which license offers more benefits and more resources should be allocated to it?<br />
+                    Please rate the licenses below. The results will appear after you save your ratings.
+                </i>
+            </p>
+        </div>
+    </div>
+    <div class="row top-buffer">
+        <div class="col-md-6">
+            <highchart config="vm.licenseChartConfig"></highchart>
+        </div>
+        <div class="col-md-6">
+            <form name="editForm" class="form-horizontal">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>License</th>
+                            <th>Use</th>
+                            <th>Copy</th>
+                            <th>Examine</th>
+                            <th>Modify</th>
+                            <th>Sell</th>
+                            <th>Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ vm.chartData[0].name }}</td>
+                            <td><span class="glyphicon glyphicon-ok text-success"></span></td>
+                            <td><span class="glyphicon glyphicon-ok text-success"></span></td>
+                            <td><span class="glyphicon glyphicon-ok text-success"></span></td>
+                            <td><span class="glyphicon glyphicon-ok text-success"></span></td>
+                            <td><span class="glyphicon glyphicon-ok text-success"></span></td>
+                            <td>
+                                <div class="input-group col-md-8">
+                                    <input type="text" data-ng-model="vm.chartData[0].y" class="form-control" required readonly>
+                                    <div class="input-group-btn">
+                                        <button type="button" data-ng-click="vm.increase(0)" class="btn btn-default">+</button>
+                                        <button type="button" data-ng-click="vm.decrease(0)" class="btn btn-default">-</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{ vm.chartData[1].name }}</td>
+                            <td><span class="glyphicon glyphicon-ok text-success"></span></td>
+                            <td><span class="glyphicon glyphicon-remove text-danger"></span></td>
+                            <td><span class="glyphicon glyphicon-remove text-danger"></span></td>
+                            <td><span class="glyphicon glyphicon-remove text-danger"></span></td>
+                            <td><span class="glyphicon glyphicon-remove text-danger"></span></td>
+                            <td>
+                                <div class="input-group col-md-8">
+                                    <input type="text" data-ng-model="vm.chartData[1].y" class="form-control" required readonly>
+                                    <div class="input-group-btn">
+                                        <button type="button" data-ng-click="vm.increase(1)" class="btn btn-default">+</button>
+                                        <button type="button" data-ng-click="vm.decrease(1)" class="btn btn-default">-</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="form-group row">
+                    <div class="col-md-offset-4 col-md-4">
+                        <button data-ng-click="vm.saveChanges()" data-ng-disabled="editForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
+                            Save
+                        </button>
+                        <button data-ng-click="vm.resetChanges()" class="btn btn-danger">
+                            Reset
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row top-buffer" data-ng-show="vm.displayLicenseResult">
+        <div class="col-md-12">
+            <h2>
+                Results
+            </h2>
+        </div>
+        <div class="col-md-6">
+            <highchart config="vm.licenseResultChartConfig"></highchart>
+        </div>
+        <div class="col-md-6">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>License</th>
+                        <th>Rating Count</th>
+                        <th>Rating Average</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ vm.licenseResultLicenseSet[0].LicenseName }}</td>
+                        <td>{{ vm.licenseResultLicenseSet[0].RatingCount }}</td>
+                        <td>{{ vm.licenseResultLicenseSet[0].RatingAverage | number:2 }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ vm.licenseResultLicenseSet[1].LicenseName }}</td>
+                        <td>{{ vm.licenseResultLicenseSet[1].RatingCount }}</td>
+                        <td>{{ vm.licenseResultLicenseSet[1].RatingAverage | number:2 }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

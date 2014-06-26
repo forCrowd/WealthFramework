@@ -301,6 +301,11 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\views\content\home.html" />
+    <Content Include="App\views\content\overview.html" />
+    <Content Include="App\views\content\technologies.html" />
+    <Content Include="App\views\manage\edit\userEdit2.html" />
+    <Content Include="App\views\manage\list\userList2.html" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -322,153 +327,152 @@
     <Content Include="Scripts\angular-route.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
-    <Content Include="Scripts\app\controllers\accountEditController.js" />
-    <Content Include="Scripts\app\controllers\chapter1Controller.js" />
-    <Content Include="Scripts\app\controllers\chapter10Controller.js" />
-    <Content Include="Scripts\app\controllers\chapter6Controller.js" />
-    <Content Include="Scripts\app\controllers\chapter5Controller.js" />
-    <Content Include="Scripts\app\controllers\chapter4Controller.js" />
-    <Content Include="Scripts\app\controllers\resourcePoolIndexEditController.js">
+    <Content Include="App\scripts\controllers\account\accountEditController.js" />
+    <Content Include="App\scripts\controllers\content\chapter1Controller.js" />
+    <Content Include="App\scripts\controllers\content\chapter10Controller.js" />
+    <Content Include="App\scripts\controllers\content\chapter6Controller.js" />
+    <Content Include="App\scripts\controllers\content\chapter5Controller.js" />
+    <Content Include="App\scripts\controllers\content\chapter4Controller.js" />
+    <Content Include="App\scripts\controllers\manage\edit\resourcePoolIndexEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\resourcePoolIndexListController.js">
+    <Content Include="App\scripts\controllers\manage\list\resourcePoolIndexListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\sectorChartController.js" />
-    <Content Include="Scripts\app\controllers\editController.txt">
+    <Content Include="App\scripts\controllers\manage\edit\editController.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\layoutController.js" />
-    <Content Include="Scripts\app\controllers\listController.txt">
+    <Content Include="App\scripts\controllers\layoutController.js" />
+    <Content Include="App\scripts\controllers\manage\list\listController.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\changePasswordController.js" />
-    <Content Include="Scripts\app\controllers\registerController.js" />
-    <Content Include="Scripts\app\controllers\loginController.js" />
-    <Content Include="Scripts\app\controllers\userOrganizationEditController.js">
+    <Content Include="App\scripts\controllers\account\changePasswordController.js" />
+    <Content Include="App\scripts\controllers\account\registerController.js" />
+    <Content Include="App\scripts\controllers\account\loginController.js" />
+    <Content Include="App\scripts\controllers\manage\edit\userOrganizationEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\userOrganizationListController.js">
+    <Content Include="App\scripts\controllers\manage\list\userOrganizationListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\userResourcePoolController.js" />
-    <Content Include="Scripts\app\controllers\licenseEditController.js">
+    <Content Include="App\scripts\controllers\userResourcePoolController.js" />
+    <Content Include="App\scripts\controllers\manage\edit\licenseEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\licenseListController.js">
+    <Content Include="App\scripts\controllers\manage\list\licenseListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\organizationEditController.js">
+    <Content Include="App\scripts\controllers\manage\edit\organizationEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\organizationListController.js">
+    <Content Include="App\scripts\controllers\manage\list\organizationListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\resourcePoolEditController.js">
+    <Content Include="App\scripts\controllers\manage\edit\resourcePoolEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\resourcePoolListController.js">
+    <Content Include="App\scripts\controllers\manage\list\resourcePoolListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\sectorEditController.js">
+    <Content Include="App\scripts\controllers\manage\edit\sectorEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\sectorListController.js">
+    <Content Include="App\scripts\controllers\manage\list\sectorListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\userEditController.js">
+    <Content Include="App\scripts\controllers\manage\edit\userEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\userLicenseRatingEditController.js">
+    <Content Include="App\scripts\controllers\manage\edit\userLicenseRatingEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\userLicenseRatingListController.js">
+    <Content Include="App\scripts\controllers\manage\list\userLicenseRatingListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\userListController.js">
+    <Content Include="App\scripts\controllers\manage\list\userListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\userResourcePoolEditController.js">
+    <Content Include="App\scripts\controllers\manage\edit\userResourcePoolEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\userResourcePoolIndexEditController.js">
+    <Content Include="App\scripts\controllers\manage\edit\userResourcePoolIndexEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\userResourcePoolIndexListController.js">
+    <Content Include="App\scripts\controllers\manage\list\userResourcePoolIndexListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\userResourcePoolIndexValueEditController.js">
+    <Content Include="App\scripts\controllers\manage\edit\userResourcePoolIndexValueEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\userResourcePoolIndexValueListController.js">
+    <Content Include="App\scripts\controllers\manage\list\userResourcePoolIndexValueListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\userResourcePoolListController.js">
+    <Content Include="App\scripts\controllers\manage\list\userResourcePoolListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\userSectorRatingEditController.js">
+    <Content Include="App\scripts\controllers\manage\edit\userSectorRatingEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\controllers\userSectorRatingListController.js">
+    <Content Include="App\scripts\controllers\manage\list\userSectorRatingListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\entityManagerFactory.js" />
-    <Content Include="Scripts\app\dataContext.js" />
-    <Content Include="Scripts\app\filters\angular-percentage.js" />
-    <Content Include="Scripts\app\logger.js" />
-    <Content Include="Scripts\app\route.js" />
-    <Content Include="Scripts\app\main.js" />
-    <Content Include="Scripts\app\services\generated\licenseService.js">
+    <Content Include="App\scripts\entityManagerFactory.js" />
+    <Content Include="App\scripts\dataContext.js" />
+    <Content Include="App\scripts\filters\angular-percentage.js" />
+    <Content Include="App\scripts\logger.js" />
+    <Content Include="App\scripts\route.js" />
+    <Content Include="App\scripts\main.js" />
+    <Content Include="App\scripts\services\generated\licenseService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\services\generated\organizationService.js">
+    <Content Include="App\scripts\services\generated\organizationService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\services\generated\resourcePoolIndexService.js">
+    <Content Include="App\scripts\services\generated\resourcePoolIndexService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\services\generated\resourcePoolService.js">
+    <Content Include="App\scripts\services\generated\resourcePoolService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\services\generated\sectorService.js">
+    <Content Include="App\scripts\services\generated\sectorService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <None Include="Scripts\app\services\generated\service.txt">
+    <None Include="App\scripts\services\generated\service.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>service.tt</DependentUpon>
     </None>
-    <Content Include="Scripts\app\services\generated\userLicenseRatingService.js">
+    <Content Include="App\scripts\services\generated\userLicenseRatingService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\services\generated\userOrganizationService.js">
+    <Content Include="App\scripts\services\generated\userOrganizationService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\services\generated\userResourcePoolIndexService.js">
+    <Content Include="App\scripts\services\generated\userResourcePoolIndexService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\services\generated\userResourcePoolIndexValueService.js">
+    <Content Include="App\scripts\services\generated\userResourcePoolIndexValueService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\services\generated\userResourcePoolService.js">
+    <Content Include="App\scripts\services\generated\userResourcePoolService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\services\generated\userSectorRatingService.js">
+    <Content Include="App\scripts\services\generated\userSectorRatingService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\services\generated\userService.js">
+    <Content Include="App\scripts\services\generated\userService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\app\services\mainService.js" />
-    <Content Include="Scripts\app\services\userLicenseRatingService.js" />
-    <Content Include="Scripts\app\services\resourcePoolService.js" />
-    <Content Include="Scripts\app\services\userSectorRatingService.js" />
-    <Content Include="Scripts\app\services\userService.js" />
-    <Content Include="Scripts\app\services\userResourcePoolService.js" />
+    <Content Include="App\scripts\services\mainService.js" />
+    <Content Include="App\scripts\services\userLicenseRatingService.js" />
+    <Content Include="App\scripts\services\resourcePoolService.js" />
+    <Content Include="App\scripts\services\userSectorRatingService.js" />
+    <Content Include="App\scripts\services\userService.js" />
+    <Content Include="App\scripts\services\userResourcePoolService.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -503,15 +507,15 @@
     <Content Include="Content\toastr.scss" />
     <Content Include="Content\toastr.less" />
     <None Include="Properties\PublishProfiles\Default.pubxml" />
-    <Content Include="Scripts\app\services\generated\service.tt">
+    <Content Include="App\scripts\services\generated\service.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>service.txt</LastGenOutput>
     </Content>
-    <None Include="Scripts\app\controllers\listController.tt">
+    <None Include="App\scripts\controllers\manage\list\listController.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>listController.txt</LastGenOutput>
     </None>
-    <None Include="Scripts\app\controllers\editController.tt">
+    <None Include="App\scripts\controllers\manage\edit\editController.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>editController.txt</LastGenOutput>
     </None>
@@ -538,122 +542,118 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\toastr.min.js" />
-    <None Include="ViewsNg\Edit\editView.txt">
+    <None Include="App\views\manage\edit\editView.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>editView.tt</DependentUpon>
     </None>
-    <Content Include="ViewsNg\Chapters\Chapter10.html" />
-    <Content Include="ViewsNg\Chapters\Chapter9.html" />
-    <Content Include="ViewsNg\Chapters\Chapter8.html" />
-    <Content Include="ViewsNg\Chapters\Chapter7.html" />
-    <Content Include="ViewsNg\Chapters\Chapter6.html" />
-    <Content Include="ViewsNg\Chapters\Chapter5.html" />
-    <Content Include="ViewsNg\Chapters\Chapter4.html" />
-    <Content Include="ViewsNg\Chapters\Chapter3.html" />
-    <Content Include="ViewsNg\Chapters\Chapter2.html" />
-    <Content Include="ViewsNg\Edit\licenseEdit.html">
+    <Content Include="App\views\content\chapter10.html" />
+    <Content Include="App\views\content\chapter9.html" />
+    <Content Include="App\views\content\chapter8.html" />
+    <Content Include="App\views\content\chapter7.html" />
+    <Content Include="App\views\content\chapter6.html" />
+    <Content Include="App\views\content\chapter5.html" />
+    <Content Include="App\views\content\chapter4.html" />
+    <Content Include="App\views\content\chapter3.html" />
+    <Content Include="App\views\content\chapter2.html" />
+    <Content Include="App\views\manage\edit\licenseEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\Edit\organizationEdit.html">
+    <Content Include="App\views\manage\edit\organizationEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\Edit\resourcePoolEdit.html">
+    <Content Include="App\views\manage\edit\resourcePoolEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\Edit\resourcePoolIndexEdit.html">
+    <Content Include="App\views\manage\edit\resourcePoolIndexEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\Edit\sectorEdit.html">
+    <Content Include="App\views\manage\edit\sectorEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\Edit\userEdit.html">
+    <Content Include="App\views\manage\edit\userEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\Edit\userLicenseRatingEdit.html">
+    <Content Include="App\views\manage\edit\userLicenseRatingEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\Edit\userOrganizationEdit.html">
+    <Content Include="App\views\manage\edit\userOrganizationEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\Edit\userResourcePoolEdit.html">
+    <Content Include="App\views\manage\edit\userResourcePoolEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\Edit\userResourcePoolIndexEdit.html">
+    <Content Include="App\views\manage\edit\userResourcePoolIndexEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\Edit\userResourcePoolIndexValueEdit.html">
+    <Content Include="App\views\manage\edit\userResourcePoolIndexValueEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\Edit\userSectorRatingEdit.html">
+    <Content Include="App\views\manage\edit\userSectorRatingEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\jquery-2.1.0.min.map" />
-    <Content Include="ViewsNg\Chapters\Chapter1.html" />
-    <Content Include="ViewsNg\List\licenseList.html">
+    <Content Include="App\views\content\chapter1.html" />
+    <Content Include="App\views\manage\list\licenseList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\List\listView.txt">
+    <Content Include="App\views\manage\list\listView.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
-    <None Include="ViewsNg\List\listView.tt">
+    <None Include="App\views\manage\list\listView.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>listView.txt</LastGenOutput>
     </None>
-    <Content Include="ViewsNg\Edit\editView.tt">
+    <Content Include="App\views\manage\edit\editView.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>editView.txt</LastGenOutput>
     </Content>
-    <Content Include="ViewsNg\Home\Index.html" />
-    <Content Include="ViewsNg\Home\Overview.html" />
-    <Content Include="ViewsNg\Home\Technologies.html" />
-    <Content Include="ViewsNg\List\organizationList.html">
+    <Content Include="App\views\manage\list\organizationList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\List\resourcePoolIndexList.html">
+    <Content Include="App\views\manage\list\resourcePoolIndexList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\List\resourcePoolList.html">
+    <Content Include="App\views\manage\list\resourcePoolList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\List\sectorList.html">
+    <Content Include="App\views\manage\list\sectorList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\List\userLicenseRatingList.html">
+    <Content Include="App\views\manage\list\userLicenseRatingList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\List\userList.html">
+    <Content Include="App\views\manage\list\userList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\List\userOrganizationList.html">
+    <Content Include="App\views\manage\list\userOrganizationList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\List\userResourcePoolIndexList.html">
+    <Content Include="App\views\manage\list\userResourcePoolIndexList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\List\userResourcePoolIndexValueList.html">
+    <Content Include="App\views\manage\list\userResourcePoolIndexValueList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\List\userResourcePoolList.html">
+    <Content Include="App\views\manage\list\userResourcePoolList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\List\userSectorRatingList.html">
+    <Content Include="App\views\manage\list\userSectorRatingList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
-    <Content Include="ViewsNg\UserResourcePool\AllInOne.html" />
-    <Content Include="ViewsNg\UserResourcePool\CustomerSatisfactionIndex.html" />
-    <Content Include="ViewsNg\UserResourcePool\EmployeeSatisfactionIndex.html" />
-    <Content Include="ViewsNg\UserResourcePool\KnowledgeIndex.html" />
-    <Content Include="ViewsNg\UserResourcePool\QualityIndex.html" />
-    <Content Include="ViewsNg\UserResourcePool\SectorIndex.html" />
-    <Content Include="ViewsNg\UserResourcePool\TotalCostIndex.html" />
-    <Content Include="ViewsNg\Sector\SectorChart.html" />
-    <Content Include="ViewsNg\User\AccountEdit.html" />
-    <Content Include="ViewsNg\User\ChangePassword.html" />
-    <Content Include="ViewsNg\User\Register.html" />
-    <Content Include="ViewsNg\User\Login.html" />
+    <Content Include="App\views\UserResourcePool\AllInOne.html" />
+    <Content Include="App\views\UserResourcePool\CustomerSatisfactionIndex.html" />
+    <Content Include="App\views\UserResourcePool\EmployeeSatisfactionIndex.html" />
+    <Content Include="App\views\UserResourcePool\KnowledgeIndex.html" />
+    <Content Include="App\views\UserResourcePool\QualityIndex.html" />
+    <Content Include="App\views\UserResourcePool\SectorIndex.html" />
+    <Content Include="App\views\UserResourcePool\TotalCostIndex.html" />
+    <Content Include="App\views\account\accountEdit.html" />
+    <Content Include="App\views\account\changePassword.html" />
+    <Content Include="App\views\account\register.html" />
+    <Content Include="App\views\account\login.html" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\toastr.min.js.map" />
     <None Include="Web.config">

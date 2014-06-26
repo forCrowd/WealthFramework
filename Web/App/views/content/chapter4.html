@@ -1,0 +1,108 @@
+﻿<div data-ng-controller="chapter4Controller as vm">
+    <div class="page-header">
+        <h1>#4 Sector Index: Seeing the Overall</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            &nbsp;
+        </div>
+        <div class="col-md-4">
+            <div class="btn-group btn-group-sm pull-right">
+                <a href="/content/chapter3" class="btn btn-default">« Previous Chapter</a>
+                <a href="/content/chapter5" class="btn btn-default">Next Chapter »</a>
+            </div>
+        </div>
+    </div>
+    <div class="row top-buffer">
+        <div class="col-md-12">
+            <p>
+                One of the issues in the current system is that we the consumers only interact with the organizations about our regular / daily needs.
+            </p>
+            <p>
+                For example, the consumer could think that education or healthcare sector is more important in the sense of society’s needs. However, if the consumer has no interaction with these sectors, there is no way to allocate resources to them. Instead, the consumer could spend its resources on clothing, cosmetics, electronics, gaming etc., that might have less priority in hierarchy of needs.
+            </p>
+            <p>
+                Sector Index aims to give the opportunity to the people to see the overall picture and allow them to manage the resources between the sectors by making comparisons.
+            </p>
+        </div>
+    </div>
+    <div class="row top-buffer">
+        <div class="col-md-12">
+            <p class="top-buffer text-center">
+                <i>
+                    Which sectors are more important and should control more resources?<br />
+                    Please rate the sectors below. The results will appear after you save your ratings.
+                </i>
+            </p>
+        </div>
+    </div>
+    <div class="row top-buffer">
+        <div class="col-md-6">
+            <highchart id="sectorChart" config="vm.chartConfig"></highchart>
+        </div>
+        <div class="col-md-6">
+            <form name="editForm" class="form-horizontal">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Sector</th>
+                            <th>Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="item in vm.chartData">
+                            <td>{{ item.name }}</td>
+                            <td>
+                                <div class="input-group col-md-8">
+                                    <input type="text" data-ng-model="item.y" class="form-control " required readonly>
+                                    <div class="input-group-btn">
+                                        <button type="button" data-ng-click="vm.increase($index)" class="btn btn-default">+</button>
+                                        <button type="button" data-ng-click="vm.decrease($index)" class="btn btn-default">-</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="form-group row">
+                    <div class="col-md-offset-4 col-md-4">
+                        <button data-ng-click="vm.saveChanges()" data-ng-disabled="editForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
+                            Save
+                        </button>
+                        <button data-ng-click="vm.resetChanges()" class="btn btn-danger">
+                            Reset
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row top-buffer" data-ng-show="vm.displayResults">
+        <div class="col-md-12">
+            <h2>
+                Results
+            </h2>
+        </div>
+        <div class="col-md-6">
+            <highchart config="vm.resultsChartConfig"></highchart>
+        </div>
+        <div class="col-md-6">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Sector</th>
+                        <th>Rating Count</th>
+                        <th>Rating Average</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="item in vm.resultsSectorSet">
+                        <td>{{ item.SectorName }}</td>
+                        <td>{{ item.RatingCount }}</td>
+                        <td>{{ item.RatingAverage | number:2 }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

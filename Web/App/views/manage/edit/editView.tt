@@ -1,0 +1,171 @@
+﻿<#@ template language="C#" debug="false" hostspecific="true"#>
+<#@ include file="$(SolutionDir)Framework\T4\EF.Utility.ttinclude"#>
+<#@ output extension=".txt"#><#
+
+// To be able to control whether it's going to be executed
+var executeMe = true;
+if (!executeMe)
+	return string.Empty;
+
+const string connectionString = @"Server=(LocalDb)\v11.0;Database=WealthEconomy;Integrated Security=True;MultipleActiveResultSets=True";
+
+var textTransform = DynamicTextTransformation.Create(this);
+var code = new CodeGenerationTools(this);
+var ef = new MetadataTools(this);
+var typeMapper = new TypeMapper(code, ef, textTransform.Errors);
+var codeStringGenerator = new CodeStringGenerator(code, typeMapper, ef);
+var	fileManager = EntityFrameworkTemplateFileManager.Create(this);
+var edmMetadataLoader = new EdmMetadataLoader(textTransform.Host, textTransform.Errors);
+IEnumerable<GlobalItem> itemCollection;
+using (var db = new WealthEconomyContext(connectionString))
+	itemCollection = edmMetadataLoader.CreateEdmItemCollection(db);
+
+if (!typeMapper.VerifyCaseInsensitiveTypeUniqueness(typeMapper.GetAllGlobalItems(itemCollection), connectionString))
+{
+    return string.Empty;
+}
+
+foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollection))
+{
+	// Variables
+	var entityTypeName = typeMapper.GetTypeName(entityType);
+
+	if (entityTypeName.StartsWith("Identity"))
+		continue;
+
+	var entityVariable = codeStringGenerator.GetCamelCase(entityTypeName);
+	var entityControllerName = string.Format("{0}EditController", entityVariable);
+	var entitySetName = string.Format("{0}Set", entityVariable);
+	var entityDeleteMethod = string.Format("delete{0}", entityTypeName);
+	var primaryKey = entityType.KeyMembers[0];
+    var simpleProperties = typeMapper.GetSimpleProperties(entityType);
+	var businessObjectProperties = typeMapper.GetBusinessObjectProperties(entityTypeName);
+	var outputFileName = string.Format(@"{0}Edit.html", entityVariable);
+
+    fileManager.StartNewFile(outputFileName);
+#>
+<!--
+<#= codeStringGenerator.WriteHeader() #>-->
+<div data-ng-controller="<#= entityControllerName #> as vm">
+    <h2>Edit</h2>
+    <form name="editForm">
+        <div class="form-horizontal">
+            <h4><#= entityTypeName #></h4>
+            <hr />
+<#
+    foreach (var property in simpleProperties)
+    {
+		// Get business object property
+		var businessObjectProperty = businessObjectProperties.SingleOrDefault(p => p.Name == property.Name);
+
+		// Display the property?
+		if (businessObjectProperty != null)
+        {
+			var displayOnEditAttribute = typeMapper.GetAttribute<DisplayOnEditViewAttribute>(businessObjectProperty);
+			if (displayOnEditAttribute != null && !displayOnEditAttribute.Value)
+				continue;
+        }
+#>
+            <div class="form-group">
+                <label for="<#= property.Name #>" class="control-label col-md-2"><#= codeStringGenerator.GetPropertyTitle(property) #></label>
+                <div class="col-md-10" data-ng-class="{'has-error': editForm.<#= property.Name #>.$invalid && !editForm.<#= property.Name #>.$pristine}">
+                    <#= GetPropertyInput(property, typeMapper, codeStringGenerator) #>
+                </div>
+            </div>
+<#
+    }
+#>
+            <div class="form-group">
+                <div class="col-md-10">
+                    <input id="RowVersion" name="RowVersion" data-ng-model="vm.<#= entityVariable #>.RowVersion" type="hidden">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button data-ng-click="vm.saveChanges()" data-ng-disabled="editForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
+                        Save
+                    </button>
+                    <button data-ng-click="vm.cancelChanges()" class="btn btn-danger">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<#
+}
+
+fileManager.Process();
+
+#>
+
+<#+
+
+string GetPropertyInput(EdmProperty property, TypeMapper typeMapper, CodeStringGenerator codeStringGenerator)
+{
+	// Variables
+	var propertyInput = string.Empty;
+	var requiredText = property.Nullable ? "" : "required ";
+	var declaringType = (EntityType)((EdmMember)property).DeclaringType;
+	var declaringTypeName = typeMapper.GetTypeName(declaringType);
+	var declaringTypeVariable = codeStringGenerator.GetCamelCase(declaringTypeName);
+	var navigationProperties = typeMapper.GetRelatedNavigationProperties(declaringType);
+
+	// Is navigation property?
+	var navigationProperty = navigationProperties.SingleOrDefault(related => ((AssociationType)related.RelationshipType)
+		.Constraint
+		.ToProperties
+		.Any(constraint => constraint.Name == property.Name));
+
+	if (navigationProperty == null)
+	{
+		// Simple type (textbox)
+		if (!property.IsEnumType)
+		{
+			propertyInput = string.Format(@"<input id=""{0}"" name=""{0}"" type=""text"" data-ng-model=""vm.{1}.{2}"" class=""form-control"" {3}/>",
+				property.Name,
+				declaringTypeVariable,
+				property.Name,
+				requiredText);
+		}
+		else // Enum type (dropdown)
+		{
+			var propertyInputOptions = new System.Text.StringBuilder();
+				
+			foreach (var item in property.EnumType.Members)
+				propertyInputOptions.AppendFormat(@"<option value=""{0}"">{1}</option>", item.Value, item.Name);
+				
+			propertyInput = string.Format(@"<select id=""{0}"" name=""{0}"" data-ng-model=""vm.{1}.{0}"" class=""form-control"" {2}>{3}</select>",
+				property.Name,
+				declaringTypeVariable,
+				requiredText,
+				propertyInputOptions);			
+		}
+	}
+	else // Navigation property case
+	{
+		// Check DefaultProperty attribute of the related entity
+		var relatedEntityVariable = codeStringGenerator.GetCamelCase(navigationProperty.Name);
+		var relatedEntitySet = string.Format("{0}Set", relatedEntityVariable);
+		var relatedEntityType = (EntityType)((RefType)navigationProperty.ToEndMember.TypeUsage.EdmType).ElementType;
+		var relatedEntityTypeName = typeMapper.GetTypeName(relatedEntityType);
+		var relatedEntityBusinessObjectType = typeMapper.GetBusinessObjectType(relatedEntityTypeName);
+		var defaultPropertyAttribute = typeMapper.GetAttribute<DefaultPropertyAttribute>(relatedEntityBusinessObjectType);
+
+		// Use the value of DefaultProperty attribute of the related entity
+		if (defaultPropertyAttribute != null)
+			propertyInput = string.Format(@"<select id=""{0}"" name=""{0}"" data-ng-model=""vm.{1}.{2}"" data-ng-options=""{3}.{4} for {3} in vm.{5}"" class=""form-control"" {6}></select>",
+				property.Name,
+				declaringTypeVariable,
+				navigationProperty.Name,
+				relatedEntityVariable,
+				defaultPropertyAttribute.Value,
+				relatedEntitySet,
+				requiredText);
+	}
+
+	return propertyInput;
+}
+
+#>

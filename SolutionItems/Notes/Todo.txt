@@ -66,6 +66,8 @@ config.EnableQuerySupport(queryAttribute);
 UserResourcePoolIndex..ForeignKey("dbo.ResourcePoolIndex", t => t.ResourcePoolIndexId, cascadeDelete: false)
 UserResourcePoolIndexValue.ForeignKey("dbo.Organization", t => t.OrganizationId, cascadeDelete: false)
 
+. accountEdit/:Id ??!?!
+
 ---
 . create a new 'view' for dynamic index!
 
