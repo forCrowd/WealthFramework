@@ -68,9 +68,9 @@ namespace BusinessObjects
         {
             get
             {
-                return ResourcePool.IndexRatingAverage == 0
+                return ResourcePool.TotalIndexRatingAverage == 0
                     ? 0
-                    : IndexRatingAverage / ResourcePool.IndexRatingAverage;
+                    : IndexRatingAverage / ResourcePool.TotalIndexRatingAverage;
             }
         }
 

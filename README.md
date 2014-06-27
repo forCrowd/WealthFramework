@@ -5,6 +5,9 @@ An experimental resource management system that aims to provide a sustainable ec
 ---
 
 ### Release Notes
+**0.13.3**
+* Web - UserResourcePool custom list + view
+
 **0.13.2**
 * Web - angular route was simplified + folder & file name structure was updated
 

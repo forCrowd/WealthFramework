@@ -117,9 +117,11 @@
     <Compile Include="Attributes\DefaultPropertyAttribute.cs" />
     <Compile Include="Attributes\DisplayOnEditViewAttribute.cs" />
     <Compile Include="Attributes\DisplayOnListViewAttribute.cs" />
+    <Compile Include="ViewModels\ResourcePoolIndex.cs" />
     <Compile Include="ViewModels\Sector.cs" />
     <Compile Include="ViewModels\License.cs" />
     <Compile Include="ViewModels\ResourcePool.cs" />
+    <Compile Include="ViewModels\UserResourcePoolIndexOrganization.cs" />
     <Compile Include="ViewModels\UserResourcePool.cs" />
     <Compile Include="ViewModels\UserOrganization.cs" />
     <Compile Include="IEntity.cs" />

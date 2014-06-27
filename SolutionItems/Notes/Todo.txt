@@ -66,13 +66,15 @@ config.EnableQuerySupport(queryAttribute);
 UserResourcePoolIndex..ForeignKey("dbo.ResourcePoolIndex", t => t.ResourcePoolIndexId, cascadeDelete: false)
 UserResourcePoolIndexValue.ForeignKey("dbo.Organization", t => t.OrganizationId, cascadeDelete: false)
 
+					. test the current situation + publish + then continue with removing q + e + c :)
+
+. should cmrp rate be on user level?
+
+. what happens if the resource pool index was created but not rated yet?
+
 . accountEdit/:Id ??!?!
 
----
-. create a new 'view' for dynamic index!
-
-. compare the results with static indexes? - seems okay
-.. remove quality + employee + customer indexes
+. inserting a new userresourcepoolindex gave an error?
 
 . try to fix the following case and check ?!
 .. about indexvalue income calculation, there are two weighted average calculation, couldn't be only one? weighted -> weighted * number of sales -> weightedwithnumberofsales weighted?

@@ -74,4 +74,6 @@
 /// <reference path="../app/scripts/services/generated/userresourcepoolservice.js" />
 /// <reference path="../app/scripts/services/generated/usersectorratingservice.js" />
 /// <reference path="../app/scripts/services/generated/userservice.js" />
+/// <reference path="../app/scripts/controllers/manage/userresourcepool/userresourcepoolcustomlistcontroller.js" />
+/// <reference path="../app/scripts/controllers/manage/userresourcepool/userresourcepoolcustomviewcontroller.js" />
 

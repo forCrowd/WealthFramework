@@ -12,6 +12,7 @@
         LicenseRepository licenseRepository;
         OrganizationRepository organizationRepository;
         UserResourcePoolRepository userResourcePoolRepository;
+        UserResourcePoolIndexRepository userResourcePoolIndexRepository;
         UserSectorRatingRepository userSectorRatingRepository;
         UserLicenseRatingRepository userLicenseRatingRepository;
         UserOrganizationRepository userOrganizationRepository;
@@ -37,6 +38,11 @@
         UserResourcePoolRepository UserResourcePoolRepository
         {
             get { return userResourcePoolRepository ?? (userResourcePoolRepository = new UserResourcePoolRepository(Context)); }
+        }
+
+        UserResourcePoolIndexRepository UserResourcePoolIndexRepository
+        {
+            get { return userResourcePoolIndexRepository ?? (userResourcePoolIndexRepository = new UserResourcePoolIndexRepository(Context)); }
         }
 
         UserSectorRatingRepository UserSectorRatingRepository
@@ -131,6 +137,19 @@
             UserResourcePoolRepository.Insert(userResourcePool);
 
             // Sample ratings
+            // TODO This is not going to work for now, because there is no ResourcePoolIndex records (it doesn't add a sample index)
+            var resourcePoolIndexes = resourcePool.ResourcePoolIndexSet;
+            foreach (var resourcePoolIndex in resourcePoolIndexes)
+            {
+                var sampleUserResourcePoolIndex = new UserResourcePoolIndex()
+                {
+                    UserResourcePool = userResourcePool,
+                    ResourcePoolIndex = resourcePoolIndex,
+                    Rating = 50 // TODO Is it correct? Or should be null?
+                };
+                UserResourcePoolIndexRepository.Insert(sampleUserResourcePoolIndex);
+            }
+
             var sectors = resourcePool.SectorSet;
             foreach (var sector in sectors)
             {

@@ -1,4 +1,4 @@
-﻿using BusinessObjects;
+﻿//using BusinessObjects;
 using BusinessObjects.Dto;
 using BusinessObjects.ViewModels;
 using Facade;
@@ -52,7 +52,7 @@ namespace Web.Controllers.Api
 
         // GET api/ResourcePoolIndexCustom/ResourcePoolIndexOrganizationSet
         [Route("ResourcePoolIndexOrganizationSet")]
-        public IEnumerable<ResourcePoolIndexOrganization> GetResourcePoolIndexOrganizationSet()
+        public IEnumerable<BusinessObjects.ResourcePoolIndexOrganization> GetResourcePoolIndexOrganizationSet()
         {
             var unitOfWork = new ResourcePoolUnitOfWork();
             var resourcePoolSet = unitOfWork
@@ -81,7 +81,7 @@ namespace Web.Controllers.Api
 
         // GET api/ResourcePoolIndexCustom/UserResourcePoolIndexOrganizationSet
         [Route("UserResourcePoolIndexOrganizationSet")]
-        public IEnumerable<UserResourcePoolIndexOrganization> GetUserResourcePoolIndexOrganizationSet()
+        public IEnumerable<BusinessObjects.UserResourcePoolIndexOrganization> GetUserResourcePoolIndexOrganizationSet()
         {
             var unitOfWork = new UserResourcePoolIndexUnitOfWork();
             var userResourcePoolIndexSet = unitOfWork

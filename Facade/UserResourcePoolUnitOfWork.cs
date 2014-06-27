@@ -8,6 +8,7 @@
     public partial class UserResourcePoolUnitOfWork
     {
         ResourcePoolRepository resourcePoolRepository;
+        UserResourcePoolIndexRepository userResourcePoolIndexRepository; 
         UserSectorRatingRepository userSectorRatingRepository;
         UserLicenseRatingRepository userLicenseRatingRepository;
         UserOrganizationRepository userOrganizationRepository;
@@ -15,6 +16,11 @@
         ResourcePoolRepository ResourcePoolRepository
         {
             get { return resourcePoolRepository ?? (resourcePoolRepository = new ResourcePoolRepository(Context)); }
+        }
+
+        UserResourcePoolIndexRepository UserResourcePoolIndexRepository
+        {
+            get { return userResourcePoolIndexRepository ?? (userResourcePoolIndexRepository = new UserResourcePoolIndexRepository(Context)); }
         }
 
         UserSectorRatingRepository UserSectorRatingRepository
@@ -46,6 +52,18 @@
             var resourcePool = ResourcePoolRepository.Find(userResourcePool.ResourcePoolId);
 
             // Sample ratings
+            var resourcePoolIndexes = resourcePool.ResourcePoolIndexSet;
+            foreach (var resourcePoolIndex in resourcePoolIndexes)
+            {
+                var sampleUserResourcePoolIndex = new UserResourcePoolIndex()
+                {
+                    UserResourcePool = userResourcePool,
+                    ResourcePoolIndex = resourcePoolIndex,
+                    Rating = 50 // TODO Is it correct? Or should be null?
+                };
+                UserResourcePoolIndexRepository.Insert(sampleUserResourcePoolIndex);
+            }
+            
             var sectors = resourcePool.SectorSet;
             foreach (var sector in sectors)
             {

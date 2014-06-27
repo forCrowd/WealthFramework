@@ -18,6 +18,17 @@ namespace Web.Controllers.Api
 
         public UserResourcePoolUnitOfWork UserResourcePoolUnitOfWork { get; private set; }
 
+        // GET api/UserResourcePoolCustom/GetUserResourcePoolCustomByUserResourcePoolId/1
+        [Route("GetUserResourcePoolCustomByUserResourcePoolId/{userResourcePoolId:int}")]
+        public UserResourcePool GetUserResourcePoolCustomByUserResourcePoolId(int userResourcePoolId)
+        {
+            var unitOfWork = new UserResourcePoolUnitOfWork();
+            var userResourcePool = unitOfWork.AllLiveIncluding(item => item.ResourcePool)
+                .SingleOrDefault(item => item.UserId == ApplicationUser.Id
+                    && item.Id == userResourcePoolId);
+            return new UserResourcePool(userResourcePool);
+        }
+
         // GET api/UserResourcePoolCustom/GetUserResourcePoolCustomByResourcePoolId/1
         [Route("GetUserResourcePoolCustomByResourcePoolId/{resourcePoolId:int}")]
         public UserResourcePool GetUserResourcePoolCustomByResourcePoolId(int resourcePoolId)

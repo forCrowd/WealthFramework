@@ -12,6 +12,7 @@
         logger = logger.forSource(serviceId);
 
         // Service methods
+        $delegate.getUserResourcePoolCustomByUserResourcePoolId = getUserResourcePoolCustomByUserResourcePoolId;
         $delegate.getUserResourcePoolCustomByResourcePoolId = getUserResourcePoolCustomByResourcePoolId;
         $delegate.getUserResourcePoolDtoByResourcePoolId = getUserResourcePoolDtoByResourcePoolId;
         $delegate.decreaseNumberOfSales = decreaseNumberOfSales;
@@ -23,6 +24,11 @@
         return $delegate;
 
         /*** Implementations ***/
+
+        function getUserResourcePoolCustomByUserResourcePoolId(userResourcePoolId) {
+            var url = '/api/UserResourcePoolCustom/GetUserResourcePoolCustomByUserResourcePoolId/' + userResourcePoolId;
+            return $http.get(url);
+        }
 
         function getUserResourcePoolCustomByResourcePoolId(resourcePoolId) {
             var url = '/api/UserResourcePoolCustom/GetUserResourcePoolCustomByResourcePoolId/' + resourcePoolId;

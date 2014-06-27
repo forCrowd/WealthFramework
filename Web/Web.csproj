@@ -301,11 +301,19 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\scripts\controllers\manage\list\userResourcePoolListController.js">
+      <DependentUpon>listController.tt</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\controllers\manage\userResourcePool\userResourcePoolCustomViewController.js" />
+    <Content Include="App\scripts\controllers\manage\userResourcePool\userResourcePoolCustomListController.js" />
     <Content Include="App\views\content\home.html" />
     <Content Include="App\views\content\overview.html" />
     <Content Include="App\views\content\technologies.html" />
-    <Content Include="App\views\manage\edit\userEdit2.html" />
-    <Content Include="App\views\manage\list\userList2.html" />
+    <Content Include="App\views\manage\list\userResourcePoolList.html">
+      <DependentUpon>listView.tt</DependentUpon>
+    </Content>
+    <Content Include="App\views\manage\userResourcePool\userResourcePoolCustomView.html" />
+    <Content Include="App\views\manage\userResourcePool\userResourcePoolCustomList.html" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -409,9 +417,6 @@
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
     <Content Include="App\scripts\controllers\manage\list\userResourcePoolIndexValueListController.js">
-      <DependentUpon>listController.tt</DependentUpon>
-    </Content>
-    <Content Include="App\scripts\controllers\manage\list\userResourcePoolListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
     <Content Include="App\scripts\controllers\manage\edit\userSectorRatingEditController.js">
@@ -635,9 +640,6 @@
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
     <Content Include="App\views\manage\list\userResourcePoolIndexValueList.html">
-      <DependentUpon>listView.tt</DependentUpon>
-    </Content>
-    <Content Include="App\views\manage\list\userResourcePoolList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
     <Content Include="App\views\manage\list\userSectorRatingList.html">

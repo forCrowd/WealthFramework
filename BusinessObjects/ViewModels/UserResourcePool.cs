@@ -10,9 +10,14 @@ namespace BusinessObjects.ViewModels
         public UserResourcePool(BusinessObjects.UserResourcePool userResourcePool)
         {
             Id = userResourcePool.Id;
+            ResourcePoolName = userResourcePool.ResourcePool.Name;
             ResourcePoolRate = userResourcePool.ResourcePoolRate;
             ResourcePoolRatePercentage = userResourcePool.ResourcePoolRatePercentage;
             UserResourcePoolRatingCount = userResourcePool.ResourcePool.UserResourcePoolSet.Count;
+            ResourcePoolIndexSet = userResourcePool
+                .ResourcePool
+                .ResourcePoolIndexSet
+                .Select(item => new ResourcePoolIndex(item));
             UserOrganizationSet = userResourcePool
                 .UserOrganizationSet
                 .Select(item => new UserOrganization(item));
@@ -33,9 +38,11 @@ namespace BusinessObjects.ViewModels
         }
 
         public int Id { get; set; }
+        public string ResourcePoolName { get; set; }
         public decimal ResourcePoolRate { get; set; }
         public decimal ResourcePoolRatePercentage { get; set; }
         public int UserResourcePoolRatingCount { get; set; }
+        public IEnumerable<ResourcePoolIndex> ResourcePoolIndexSet { get; set; }
         public IEnumerable<UserOrganization> UserOrganizationSet { get; set; }
         public decimal ResourcePoolProductionCost { get; set; }
         public decimal ResourcePoolSalesPrice { get; set; }

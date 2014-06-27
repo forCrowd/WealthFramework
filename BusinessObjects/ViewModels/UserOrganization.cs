@@ -1,4 +1,7 @@
-﻿namespace BusinessObjects.ViewModels
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace BusinessObjects.ViewModels
 {
     public class UserOrganization
     {
@@ -36,7 +39,7 @@
             TotalCostIndexValueWeightedAverageWithNumberOfSalesWeightedAverage = userOrganization.TotalCostIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
             TotalCostIndexIncome = userOrganization.TotalCostIndexIncome;
             QualityIndexValueWeightedAverageWithNumberOfSales = userOrganization.QualityIndexValueWeightedAverageWithNumberOfSales;
-            QualityIndexValueWeightedAverageWithNumberOfSalesWeighted = userOrganization.QualityIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
+            QualityIndexValueWeightedAverageWithNumberOfSalesWeightedAverage = userOrganization.QualityIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
             QualityIndexIncome = userOrganization.QualityIndexIncome;
             EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSales = userOrganization.EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSales;
             EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSalesWeightedAverage = userOrganization.EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
@@ -46,6 +49,10 @@
             CustomerSatisfactionIndexIncome = userOrganization.CustomerSatisfactionIndexIncome;
             TotalResourcePoolIncome = userOrganization.TotalResourcePoolIncome;
             TotalIncome = userOrganization.TotalIncome;
+
+            UserResourcePoolIndexOrganizationSet = userOrganization
+                .UserResourcePoolIndexOrganizationSet
+                .Select(item => new UserResourcePoolIndexOrganization(item));
         }
 
         public string OrganizationName { get; set; }
@@ -82,7 +89,7 @@
         public decimal TotalCostIndexIncome { get; set; }
 
         public decimal QualityIndexValueWeightedAverageWithNumberOfSales { get; set; }
-        public decimal QualityIndexValueWeightedAverageWithNumberOfSalesWeighted { get; set; }
+        public decimal QualityIndexValueWeightedAverageWithNumberOfSalesWeightedAverage { get; set; }
         public decimal QualityIndexIncome { get; set; }
 
         public decimal EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSales { get; set; }
@@ -95,5 +102,7 @@
 
         public decimal TotalResourcePoolIncome { get; set; }
         public decimal TotalIncome { get; set; }
+
+        public IEnumerable<UserResourcePoolIndexOrganization> UserResourcePoolIndexOrganizationSet { get; set; }
     }
 }

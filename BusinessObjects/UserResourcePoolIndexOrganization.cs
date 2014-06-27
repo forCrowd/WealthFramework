@@ -42,6 +42,10 @@ namespace BusinessObjects
         {
             get
             {
+                // TODO Is it possible to ensure that there is UserResourcePoolIndex?
+                if (UserResourcePoolIndex == null)
+                    return 0;
+
                 return UserResourcePoolIndex.IndexShare * IndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
             }
         }
