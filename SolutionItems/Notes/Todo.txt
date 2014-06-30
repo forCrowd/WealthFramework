@@ -74,6 +74,8 @@ UserResourcePoolIndexValue.ForeignKey("dbo.Organization", t => t.OrganizationId,
 
 . accountEdit/:Id ??!?!
 
+. handle all userresourcepool types in one page?
+
 . inserting a new userresourcepoolindex gave an error?
 
 . try to fix the following case and check ?!
