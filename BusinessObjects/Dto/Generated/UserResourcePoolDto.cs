@@ -24,13 +24,9 @@ namespace BusinessObjects.Dto
             this.UserId = userResourcePool.UserId;
             this.ResourcePoolId = userResourcePool.ResourcePoolId;
             this.ResourcePoolRate = userResourcePool.ResourcePoolRate;
-            this.TotalCostIndexRating = userResourcePool.TotalCostIndexRating;
-            this.KnowledgeIndexRating = userResourcePool.KnowledgeIndexRating;
-            this.QualityIndexRating = userResourcePool.QualityIndexRating;
             this.SectorIndexRating = userResourcePool.SectorIndexRating;
-            this.EmployeeSatisfactionIndexRating = userResourcePool.EmployeeSatisfactionIndexRating;
-            this.CustomerSatisfactionIndexRating = userResourcePool.CustomerSatisfactionIndexRating;
-            //this.DistanceIndexRating = userResourcePool.DistanceIndexRating;
+            this.KnowledgeIndexRating = userResourcePool.KnowledgeIndexRating;
+            this.TotalCostIndexRating = userResourcePool.TotalCostIndexRating;
             this.CreatedOn = userResourcePool.CreatedOn;
             this.ModifiedOn = userResourcePool.ModifiedOn;
             this.DeletedOn = userResourcePool.DeletedOn;
@@ -50,25 +46,13 @@ namespace BusinessObjects.Dto
         public decimal ResourcePoolRate { get; set; }
 
         [Required]
-        public decimal TotalCostIndexRating { get; set; }
+        public decimal SectorIndexRating { get; set; }
 
         [Required]
         public decimal KnowledgeIndexRating { get; set; }
 
         [Required]
-        public decimal QualityIndexRating { get; set; }
-
-        [Required]
-        public decimal SectorIndexRating { get; set; }
-
-        [Required]
-        public decimal EmployeeSatisfactionIndexRating { get; set; }
-
-        [Required]
-        public decimal CustomerSatisfactionIndexRating { get; set; }
-
-        //[Required]
-        //public decimal DistanceIndexRating { get; set; }
+        public decimal TotalCostIndexRating { get; set; }
 
         [Required]
         public System.DateTime CreatedOn { get; set; }
@@ -89,13 +73,9 @@ namespace BusinessObjects.Dto
                 UserId = UserId,
                 ResourcePoolId = ResourcePoolId,
                 ResourcePoolRate = ResourcePoolRate,
-                TotalCostIndexRating = TotalCostIndexRating,
-                KnowledgeIndexRating = KnowledgeIndexRating,
-                QualityIndexRating = QualityIndexRating,
                 SectorIndexRating = SectorIndexRating,
-                EmployeeSatisfactionIndexRating = EmployeeSatisfactionIndexRating,
-                CustomerSatisfactionIndexRating = CustomerSatisfactionIndexRating,
-                //DistanceIndexRating = DistanceIndexRating,
+                KnowledgeIndexRating = KnowledgeIndexRating,
+                TotalCostIndexRating = TotalCostIndexRating,
                 CreatedOn = CreatedOn,
                 ModifiedOn = ModifiedOn,
                 DeletedOn = DeletedOn,

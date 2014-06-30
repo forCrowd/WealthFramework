@@ -27,9 +27,6 @@
                 case '/SectorIndex': resourcePoolId = 1; break;
                 case '/KnowledgeIndex': resourcePoolId = 2; break;
                 case '/TotalCostIndex': resourcePoolId = 3; break;
-                case '/QualityIndex': resourcePoolId = 4; break;
-                case '/EmployeeSatisfactionIndex': resourcePoolId = 5; break;
-                case '/CustomerSatisfactionIndex': resourcePoolId = 6; break;
                 case '/AllInOne': resourcePoolId = 7; break;
             }
 

@@ -555,175 +555,175 @@
             Assert.IsTrue(userResourcePoolIndexOrganization2_2_2.IndexValueWeightedAverageWithNumberOfSalesWeightedAverage == 0.4M);
         }
 
-        [TestMethod]
-        public void QualityIndex_TwoUsers_TwoOrganizations()
-        {
-            var resourcePool = new ResourcePool();
+        //[TestMethod]
+        //public void QualityIndex_TwoUsers_TwoOrganizations()
+        //{
+        //    var resourcePool = new ResourcePool();
 
-            var sector = new Sector() { ResourcePool = resourcePool };
-            resourcePool.SectorSet.Add(sector);
+        //    var sector = new Sector() { ResourcePool = resourcePool };
+        //    resourcePool.SectorSet.Add(sector);
 
-            var organization1 = new Organization() { Sector = sector, ProductionCost = 100, SalesPrice = 200 };
-            sector.OrganizationSet.Add(organization1);
+        //    var organization1 = new Organization() { Sector = sector, ProductionCost = 100, SalesPrice = 200 };
+        //    sector.OrganizationSet.Add(organization1);
 
-            var organization2 = new Organization() { Sector = sector, ProductionCost = 100, SalesPrice = 200 };
-            sector.OrganizationSet.Add(organization2);
+        //    var organization2 = new Organization() { Sector = sector, ProductionCost = 100, SalesPrice = 200 };
+        //    sector.OrganizationSet.Add(organization2);
 
-            var user1 = new User();
+        //    var user1 = new User();
 
-            var userResourcePool1 = new UserResourcePool() { User = user1, ResourcePool = resourcePool, ResourcePoolRate = 100, QualityIndexRating = 100 };
-            user1.UserResourcePoolSet.Add(userResourcePool1);
-            resourcePool.UserResourcePoolSet.Add(userResourcePool1);
+        //    var userResourcePool1 = new UserResourcePool() { User = user1, ResourcePool = resourcePool, ResourcePoolRate = 100, QualityIndexRating = 100 };
+        //    user1.UserResourcePoolSet.Add(userResourcePool1);
+        //    resourcePool.UserResourcePoolSet.Add(userResourcePool1);
 
-            var userOrganization1_1 = new UserOrganization() { User = user1, Organization = organization1, NumberOfSales = 1, QualityRating = 80 };
-            user1.UserOrganizationSet.Add(userOrganization1_1);
-            organization1.UserOrganizationSet.Add(userOrganization1_1);
+        //    var userOrganization1_1 = new UserOrganization() { User = user1, Organization = organization1, NumberOfSales = 1, QualityRating = 80 };
+        //    user1.UserOrganizationSet.Add(userOrganization1_1);
+        //    organization1.UserOrganizationSet.Add(userOrganization1_1);
 
-            var userOrganization1_2 = new UserOrganization() { User = user1, Organization = organization2, NumberOfSales = 1, QualityRating = 20 };
-            user1.UserOrganizationSet.Add(userOrganization1_2);
-            organization2.UserOrganizationSet.Add(userOrganization1_2);
+        //    var userOrganization1_2 = new UserOrganization() { User = user1, Organization = organization2, NumberOfSales = 1, QualityRating = 20 };
+        //    user1.UserOrganizationSet.Add(userOrganization1_2);
+        //    organization2.UserOrganizationSet.Add(userOrganization1_2);
 
-            var user2 = new User();
+        //    var user2 = new User();
 
-            var userResourcePool2 = new UserResourcePool() { User = user2, ResourcePool = resourcePool, ResourcePoolRate = 100, QualityIndexRating = 100 };
-            user2.UserResourcePoolSet.Add(userResourcePool2);
-            resourcePool.UserResourcePoolSet.Add(userResourcePool2);
+        //    var userResourcePool2 = new UserResourcePool() { User = user2, ResourcePool = resourcePool, ResourcePoolRate = 100, QualityIndexRating = 100 };
+        //    user2.UserResourcePoolSet.Add(userResourcePool2);
+        //    resourcePool.UserResourcePoolSet.Add(userResourcePool2);
 
-            var userOrganization2_1 = new UserOrganization() { User = user2, Organization = organization1, NumberOfSales = 2, QualityRating = 40 };
-            user2.UserOrganizationSet.Add(userOrganization2_1);
-            organization1.UserOrganizationSet.Add(userOrganization2_1);
+        //    var userOrganization2_1 = new UserOrganization() { User = user2, Organization = organization1, NumberOfSales = 2, QualityRating = 40 };
+        //    user2.UserOrganizationSet.Add(userOrganization2_1);
+        //    organization1.UserOrganizationSet.Add(userOrganization2_1);
 
-            var userOrganization2_2 = new UserOrganization() { User = user2, Organization = organization2, NumberOfSales = 2, QualityRating = 60 };
-            user2.UserOrganizationSet.Add(userOrganization2_2);
-            organization2.UserOrganizationSet.Add(userOrganization2_2);
+        //    var userOrganization2_2 = new UserOrganization() { User = user2, Organization = organization2, NumberOfSales = 2, QualityRating = 60 };
+        //    user2.UserOrganizationSet.Add(userOrganization2_2);
+        //    organization2.UserOrganizationSet.Add(userOrganization2_2);
 
-            // Results
-            Assert.IsTrue(resourcePool.ProductionCost == 200);
-            Assert.IsTrue(resourcePool.Profit == 200);
-            Assert.IsTrue(resourcePool.SalesPrice == 400);
-            Assert.IsTrue(resourcePool.QualityIndexRatingWeightedAverage == 1);
-            Assert.IsTrue(resourcePool.TotalIndexRatingAverage == 100);
+        //    // Results
+        //    Assert.IsTrue(resourcePool.ProductionCost == 200);
+        //    Assert.IsTrue(resourcePool.Profit == 200);
+        //    Assert.IsTrue(resourcePool.SalesPrice == 400);
+        //    Assert.IsTrue(resourcePool.QualityIndexRatingWeightedAverage == 1);
+        //    Assert.IsTrue(resourcePool.TotalIndexRatingAverage == 100);
 
-            Assert.IsTrue(organization1.Profit == 100);
-            Assert.IsTrue(organization2.Profit == 100);
+        //    Assert.IsTrue(organization1.Profit == 100);
+        //    Assert.IsTrue(organization2.Profit == 100);
 
-            // User 1
-            Assert.IsTrue(userResourcePool1.NumberOfSales == 2);
-            Assert.IsTrue(userResourcePool1.QualityIndexValueWeightedAverageWithNumberOfSales == 1);
-            Assert.IsTrue(userResourcePool1.QualityIndexRating == 100);
-            Assert.IsTrue(userResourcePool1.QualityIndexShare == 400);
-            Assert.IsTrue(userResourcePool1.ResourcePoolTax == 400);
-            Assert.IsTrue(userResourcePool1.SalesPriceIncludingResourcePoolTax == 800);
-            Assert.IsTrue(userResourcePool1.TotalIncome == 600);
-            Assert.IsTrue(userResourcePool1.TotalProductionCost == 200);
-            Assert.IsTrue(userResourcePool1.TotalProfit == 200);
-            Assert.IsTrue(userResourcePool1.TotalResourcePoolTax == 400);
-            Assert.IsTrue(userResourcePool1.TotalSalesRevenue == 400);
-            Assert.IsTrue(userResourcePool1.TotalSalesRevenueIncludingResourcePoolTax == 800);
+        //    // User 1
+        //    Assert.IsTrue(userResourcePool1.NumberOfSales == 2);
+        //    Assert.IsTrue(userResourcePool1.QualityIndexValueWeightedAverageWithNumberOfSales == 1);
+        //    Assert.IsTrue(userResourcePool1.QualityIndexRating == 100);
+        //    Assert.IsTrue(userResourcePool1.QualityIndexShare == 400);
+        //    Assert.IsTrue(userResourcePool1.ResourcePoolTax == 400);
+        //    Assert.IsTrue(userResourcePool1.SalesPriceIncludingResourcePoolTax == 800);
+        //    Assert.IsTrue(userResourcePool1.TotalIncome == 600);
+        //    Assert.IsTrue(userResourcePool1.TotalProductionCost == 200);
+        //    Assert.IsTrue(userResourcePool1.TotalProfit == 200);
+        //    Assert.IsTrue(userResourcePool1.TotalResourcePoolTax == 400);
+        //    Assert.IsTrue(userResourcePool1.TotalSalesRevenue == 400);
+        //    Assert.IsTrue(userResourcePool1.TotalSalesRevenueIncludingResourcePoolTax == 800);
 
-            Assert.IsTrue(userOrganization1_1.ResourcePoolTax == 200);
-            Assert.IsTrue(userOrganization1_1.SalesPriceIncludingResourcePoolTax == 400);
-            Assert.IsTrue(userOrganization1_1.TotalIncome == 340);
-            Assert.IsTrue(userOrganization1_1.TotalProductionCost == 100);
-            Assert.IsTrue(userOrganization1_1.TotalProfit == 100);
-            Assert.IsTrue(userOrganization1_1.TotalResourcePoolIncome == 240);
-            Assert.IsTrue(userOrganization1_1.TotalResourcePoolTax == 200);
-            Assert.IsTrue(userOrganization1_1.TotalSalesRevenue == 200);
-            Assert.IsTrue(userOrganization1_1.TotalSalesRevenueIncludingResourcePoolTax == 400);
+        //    Assert.IsTrue(userOrganization1_1.ResourcePoolTax == 200);
+        //    Assert.IsTrue(userOrganization1_1.SalesPriceIncludingResourcePoolTax == 400);
+        //    Assert.IsTrue(userOrganization1_1.TotalIncome == 340);
+        //    Assert.IsTrue(userOrganization1_1.TotalProductionCost == 100);
+        //    Assert.IsTrue(userOrganization1_1.TotalProfit == 100);
+        //    Assert.IsTrue(userOrganization1_1.TotalResourcePoolIncome == 240);
+        //    Assert.IsTrue(userOrganization1_1.TotalResourcePoolTax == 200);
+        //    Assert.IsTrue(userOrganization1_1.TotalSalesRevenue == 200);
+        //    Assert.IsTrue(userOrganization1_1.TotalSalesRevenueIncludingResourcePoolTax == 400);
 
-            Assert.IsTrue(userOrganization1_2.ResourcePoolTax == 200);
-            Assert.IsTrue(userOrganization1_2.SalesPriceIncludingResourcePoolTax == 400);
-            Assert.IsTrue(userOrganization1_2.TotalIncome == 260);
-            Assert.IsTrue(userOrganization1_2.TotalProductionCost == 100);
-            Assert.IsTrue(userOrganization1_2.TotalProfit == 100);
-            Assert.IsTrue(userOrganization1_2.TotalResourcePoolIncome == 160);
-            Assert.IsTrue(userOrganization1_2.TotalResourcePoolTax == 200);
-            Assert.IsTrue(userOrganization1_2.TotalSalesRevenue == 200);
-            Assert.IsTrue(userOrganization1_2.TotalSalesRevenueIncludingResourcePoolTax == 400);
+        //    Assert.IsTrue(userOrganization1_2.ResourcePoolTax == 200);
+        //    Assert.IsTrue(userOrganization1_2.SalesPriceIncludingResourcePoolTax == 400);
+        //    Assert.IsTrue(userOrganization1_2.TotalIncome == 260);
+        //    Assert.IsTrue(userOrganization1_2.TotalProductionCost == 100);
+        //    Assert.IsTrue(userOrganization1_2.TotalProfit == 100);
+        //    Assert.IsTrue(userOrganization1_2.TotalResourcePoolIncome == 160);
+        //    Assert.IsTrue(userOrganization1_2.TotalResourcePoolTax == 200);
+        //    Assert.IsTrue(userOrganization1_2.TotalSalesRevenue == 200);
+        //    Assert.IsTrue(userOrganization1_2.TotalSalesRevenueIncludingResourcePoolTax == 400);
 
-            // User 2
-            Assert.IsTrue(userResourcePool2.NumberOfSales == 4);
-            Assert.IsTrue(userResourcePool2.QualityIndexValueWeightedAverageWithNumberOfSales == 2);
-            Assert.IsTrue(userResourcePool2.QualityIndexRating == 100);
-            Assert.IsTrue(userResourcePool2.QualityIndexShare == 800);
-            Assert.IsTrue(userResourcePool2.ResourcePoolTax == 400);
-            Assert.IsTrue(userResourcePool2.SalesPriceIncludingResourcePoolTax == 800);
-            Assert.IsTrue(userResourcePool2.TotalIncome == 1200);
-            Assert.IsTrue(userResourcePool2.TotalProductionCost == 400);
-            Assert.IsTrue(userResourcePool2.TotalProfit == 400);
-            Assert.IsTrue(userResourcePool2.TotalResourcePoolTax == 800);
-            Assert.IsTrue(userResourcePool2.TotalSalesRevenue == 800);
-            Assert.IsTrue(userResourcePool2.TotalSalesRevenueIncludingResourcePoolTax == 1600);
+        //    // User 2
+        //    Assert.IsTrue(userResourcePool2.NumberOfSales == 4);
+        //    Assert.IsTrue(userResourcePool2.QualityIndexValueWeightedAverageWithNumberOfSales == 2);
+        //    Assert.IsTrue(userResourcePool2.QualityIndexRating == 100);
+        //    Assert.IsTrue(userResourcePool2.QualityIndexShare == 800);
+        //    Assert.IsTrue(userResourcePool2.ResourcePoolTax == 400);
+        //    Assert.IsTrue(userResourcePool2.SalesPriceIncludingResourcePoolTax == 800);
+        //    Assert.IsTrue(userResourcePool2.TotalIncome == 1200);
+        //    Assert.IsTrue(userResourcePool2.TotalProductionCost == 400);
+        //    Assert.IsTrue(userResourcePool2.TotalProfit == 400);
+        //    Assert.IsTrue(userResourcePool2.TotalResourcePoolTax == 800);
+        //    Assert.IsTrue(userResourcePool2.TotalSalesRevenue == 800);
+        //    Assert.IsTrue(userResourcePool2.TotalSalesRevenueIncludingResourcePoolTax == 1600);
 
-            Assert.IsTrue(userOrganization2_1.ResourcePoolTax == 200);
-            Assert.IsTrue(userOrganization2_1.SalesPriceIncludingResourcePoolTax == 400);
-            Assert.IsTrue(userOrganization2_1.TotalIncome == 680);
-            Assert.IsTrue(userOrganization2_1.TotalProductionCost == 200);
-            Assert.IsTrue(userOrganization2_1.TotalProfit == 200);
-            Assert.IsTrue(userOrganization2_1.TotalResourcePoolIncome == 480);
-            Assert.IsTrue(userOrganization2_1.TotalResourcePoolTax == 400);
-            Assert.IsTrue(userOrganization2_1.TotalSalesRevenue == 400);
-            Assert.IsTrue(userOrganization2_1.TotalSalesRevenueIncludingResourcePoolTax == 800);
+        //    Assert.IsTrue(userOrganization2_1.ResourcePoolTax == 200);
+        //    Assert.IsTrue(userOrganization2_1.SalesPriceIncludingResourcePoolTax == 400);
+        //    Assert.IsTrue(userOrganization2_1.TotalIncome == 680);
+        //    Assert.IsTrue(userOrganization2_1.TotalProductionCost == 200);
+        //    Assert.IsTrue(userOrganization2_1.TotalProfit == 200);
+        //    Assert.IsTrue(userOrganization2_1.TotalResourcePoolIncome == 480);
+        //    Assert.IsTrue(userOrganization2_1.TotalResourcePoolTax == 400);
+        //    Assert.IsTrue(userOrganization2_1.TotalSalesRevenue == 400);
+        //    Assert.IsTrue(userOrganization2_1.TotalSalesRevenueIncludingResourcePoolTax == 800);
 
-            Assert.IsTrue(userOrganization2_2.ResourcePoolTax == 200);
-            Assert.IsTrue(userOrganization2_2.SalesPriceIncludingResourcePoolTax == 400);
-            Assert.IsTrue(userOrganization2_2.TotalIncome == 520);
-            Assert.IsTrue(userOrganization2_2.TotalProductionCost == 200);
-            Assert.IsTrue(userOrganization2_2.TotalProfit == 200);
-            Assert.IsTrue(userOrganization2_2.TotalResourcePoolIncome == 320);
-            Assert.IsTrue(userOrganization2_2.TotalResourcePoolTax == 400);
-            Assert.IsTrue(userOrganization2_2.TotalSalesRevenue == 400);
-            Assert.IsTrue(userOrganization2_2.TotalSalesRevenueIncludingResourcePoolTax == 800);
-        }
+        //    Assert.IsTrue(userOrganization2_2.ResourcePoolTax == 200);
+        //    Assert.IsTrue(userOrganization2_2.SalesPriceIncludingResourcePoolTax == 400);
+        //    Assert.IsTrue(userOrganization2_2.TotalIncome == 520);
+        //    Assert.IsTrue(userOrganization2_2.TotalProductionCost == 200);
+        //    Assert.IsTrue(userOrganization2_2.TotalProfit == 200);
+        //    Assert.IsTrue(userOrganization2_2.TotalResourcePoolIncome == 320);
+        //    Assert.IsTrue(userOrganization2_2.TotalResourcePoolTax == 400);
+        //    Assert.IsTrue(userOrganization2_2.TotalSalesRevenue == 400);
+        //    Assert.IsTrue(userOrganization2_2.TotalSalesRevenueIncludingResourcePoolTax == 800);
+        //}
 
-        /// <summary>
-        /// There was an issue with index rating weighted average calculation but it's fixed now / SH - 24 Jun. '14
-        /// </summary>
-        [TestMethod]
-        public void QualityIndex_TwoUsers_TwoOrganizations_BugHunt()
-        {
-            var resourcePool = new ResourcePool();
+        ///// <summary>
+        ///// There was an issue with index rating weighted average calculation but it's fixed now / SH - 24 Jun. '14
+        ///// </summary>
+        //[TestMethod]
+        //public void QualityIndex_TwoUsers_TwoOrganizations_BugHunt()
+        //{
+        //    var resourcePool = new ResourcePool();
 
-            var sector = new Sector() { ResourcePool = resourcePool };
-            resourcePool.SectorSet.Add(sector);
+        //    var sector = new Sector() { ResourcePool = resourcePool };
+        //    resourcePool.SectorSet.Add(sector);
 
-            var organization1 = new Organization() { Sector = sector, ProductionCost = 100, SalesPrice = 200 };
-            sector.OrganizationSet.Add(organization1);
+        //    var organization1 = new Organization() { Sector = sector, ProductionCost = 100, SalesPrice = 200 };
+        //    sector.OrganizationSet.Add(organization1);
 
-            var organization2 = new Organization() { Sector = sector, ProductionCost = 100, SalesPrice = 200 };
-            sector.OrganizationSet.Add(organization2);
+        //    var organization2 = new Organization() { Sector = sector, ProductionCost = 100, SalesPrice = 200 };
+        //    sector.OrganizationSet.Add(organization2);
 
-            var user1 = new User();
+        //    var user1 = new User();
 
-            var userResourcePool1 = new UserResourcePool() { User = user1, ResourcePool = resourcePool, ResourcePoolRate = 100, QualityIndexRating = 75, EmployeeSatisfactionIndexRating = 25 };
-            user1.UserResourcePoolSet.Add(userResourcePool1);
-            resourcePool.UserResourcePoolSet.Add(userResourcePool1);
+        //    var userResourcePool1 = new UserResourcePool() { User = user1, ResourcePool = resourcePool, ResourcePoolRate = 100, QualityIndexRating = 75, EmployeeSatisfactionIndexRating = 25 };
+        //    user1.UserResourcePoolSet.Add(userResourcePool1);
+        //    resourcePool.UserResourcePoolSet.Add(userResourcePool1);
 
-            var userOrganization1_1 = new UserOrganization() { User = user1, Organization = organization1, NumberOfSales = 1, QualityRating = 80 };
-            user1.UserOrganizationSet.Add(userOrganization1_1);
-            organization1.UserOrganizationSet.Add(userOrganization1_1);
+        //    var userOrganization1_1 = new UserOrganization() { User = user1, Organization = organization1, NumberOfSales = 1, QualityRating = 80 };
+        //    user1.UserOrganizationSet.Add(userOrganization1_1);
+        //    organization1.UserOrganizationSet.Add(userOrganization1_1);
 
-            var userOrganization1_2 = new UserOrganization() { User = user1, Organization = organization2, NumberOfSales = 1, QualityRating = 20 };
-            user1.UserOrganizationSet.Add(userOrganization1_2);
-            organization2.UserOrganizationSet.Add(userOrganization1_2);
+        //    var userOrganization1_2 = new UserOrganization() { User = user1, Organization = organization2, NumberOfSales = 1, QualityRating = 20 };
+        //    user1.UserOrganizationSet.Add(userOrganization1_2);
+        //    organization2.UserOrganizationSet.Add(userOrganization1_2);
 
-            var user2 = new User();
+        //    var user2 = new User();
 
-            var userResourcePool2 = new UserResourcePool() { User = user2, ResourcePool = resourcePool, ResourcePoolRate = 100, QualityIndexRating = 50, EmployeeSatisfactionIndexRating = 50 };
-            user2.UserResourcePoolSet.Add(userResourcePool2);
-            resourcePool.UserResourcePoolSet.Add(userResourcePool2);
+        //    var userResourcePool2 = new UserResourcePool() { User = user2, ResourcePool = resourcePool, ResourcePoolRate = 100, QualityIndexRating = 50, EmployeeSatisfactionIndexRating = 50 };
+        //    user2.UserResourcePoolSet.Add(userResourcePool2);
+        //    resourcePool.UserResourcePoolSet.Add(userResourcePool2);
 
-            var userOrganization2_1 = new UserOrganization() { User = user2, Organization = organization1, NumberOfSales = 2, QualityRating = 40 };
-            user2.UserOrganizationSet.Add(userOrganization2_1);
-            organization1.UserOrganizationSet.Add(userOrganization2_1);
+        //    var userOrganization2_1 = new UserOrganization() { User = user2, Organization = organization1, NumberOfSales = 2, QualityRating = 40 };
+        //    user2.UserOrganizationSet.Add(userOrganization2_1);
+        //    organization1.UserOrganizationSet.Add(userOrganization2_1);
 
-            var userOrganization2_2 = new UserOrganization() { User = user2, Organization = organization2, NumberOfSales = 2, QualityRating = 60 };
-            user2.UserOrganizationSet.Add(userOrganization2_2);
-            organization2.UserOrganizationSet.Add(userOrganization2_2);
+        //    var userOrganization2_2 = new UserOrganization() { User = user2, Organization = organization2, NumberOfSales = 2, QualityRating = 60 };
+        //    user2.UserOrganizationSet.Add(userOrganization2_2);
+        //    organization2.UserOrganizationSet.Add(userOrganization2_2);
 
-            // Results
-            Assert.IsTrue(resourcePool.QualityIndexRatingWeightedAverage == 0.625M);
-            Assert.IsTrue(resourcePool.EmployeeSatisfactionIndexRatingWeightedAverage == 0.375M);
-        }
+        //    // Results
+        //    Assert.IsTrue(resourcePool.QualityIndexRatingWeightedAverage == 0.625M);
+        //    Assert.IsTrue(resourcePool.EmployeeSatisfactionIndexRatingWeightedAverage == 0.375M);
+        //}
     }
 }

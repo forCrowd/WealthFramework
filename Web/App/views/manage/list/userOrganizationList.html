@@ -24,15 +24,6 @@
             <th>
                 Number of Sales
             </th>
-            <th>
-                Quality Rating
-            </th>
-            <th>
-                Customer Satisfaction Rating
-            </th>
-            <th>
-                Employee Satisfaction Rating
-            </th>
             <th></th>
         </tr>
         <tr data-ng-repeat="userOrganization in vm.userOrganizationSet">
@@ -44,15 +35,6 @@
             </td>
             <td>
                 {{ userOrganization.NumberOfSales }}
-            </td>
-            <td>
-                {{ userOrganization.QualityRating }}
-            </td>
-            <td>
-                {{ userOrganization.CustomerSatisfactionRating }}
-            </td>
-            <td>
-                {{ userOrganization.EmployeeSatisfactionRating }}
             </td>
             <td>
                 <a href="/manage/userOrganization/edit/{{ userOrganization.Id }}">Edit</a> |

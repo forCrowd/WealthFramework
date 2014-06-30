@@ -31,9 +31,9 @@ namespace BusinessObjects.ViewModels
             SectorIndexShare = userResourcePool.SectorIndexShare;
             KnowledgeIndexShare = userResourcePool.KnowledgeIndexShare;
             TotalCostIndexShare = userResourcePool.TotalCostIndexShare;
-            QualityIndexShare = userResourcePool.QualityIndexShare;
-            EmployeeSatisfactionIndexShare = userResourcePool.EmployeeSatisfactionIndexShare;
-            CustomerSatisfactionIndexShare = userResourcePool.CustomerSatisfactionIndexShare;
+            //QualityIndexShare = userResourcePool.QualityIndexShare;
+            //EmployeeSatisfactionIndexShare = userResourcePool.EmployeeSatisfactionIndexShare;
+            //CustomerSatisfactionIndexShare = userResourcePool.CustomerSatisfactionIndexShare;
             TotalIncome = userResourcePool.TotalIncome;
         }
 
@@ -54,9 +54,9 @@ namespace BusinessObjects.ViewModels
         public decimal SectorIndexShare { get; set; }
         public decimal KnowledgeIndexShare { get; set; }
         public decimal TotalCostIndexShare { get; set; }
-        public decimal QualityIndexShare { get; set; }
-        public decimal EmployeeSatisfactionIndexShare { get; set; }
-        public decimal CustomerSatisfactionIndexShare { get; set; }
+        //public decimal QualityIndexShare { get; set; }
+        //public decimal EmployeeSatisfactionIndexShare { get; set; }
+        //public decimal CustomerSatisfactionIndexShare { get; set; }
         public decimal TotalIncome { get; set; }
     }
 }

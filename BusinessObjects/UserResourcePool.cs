@@ -31,14 +31,14 @@ namespace BusinessObjects
         [Display(Name = "Total Cost Index")]
         public decimal TotalCostIndexRating { get; set; }
 
-        [Display(Name = "Quality Index")]
-        public decimal QualityIndexRating { get; set; }
+        //[Display(Name = "Quality Index")]
+        //public decimal QualityIndexRating { get; set; }
 
-        [Display(Name = "Employee Satisfaction Index")]
-        public decimal EmployeeSatisfactionIndexRating { get; set; }
+        //[Display(Name = "Employee Satisfaction Index")]
+        //public decimal EmployeeSatisfactionIndexRating { get; set; }
 
-        [Display(Name = "Customer Satisfaction Index")]
-        public decimal CustomerSatisfactionIndexRating { get; set; }
+        //[Display(Name = "Customer Satisfaction Index")]
+        //public decimal CustomerSatisfactionIndexRating { get; set; }
 
         //[Display(Name = "Distance Index")]
         //public decimal DistanceIndexRating { get; set; }
@@ -160,46 +160,46 @@ namespace BusinessObjects
         
         #endregion
 
-        #region - Quality Index -
+        //#region - Quality Index -
 
-        public decimal QualityIndexShare
-        {
-            get { return TotalResourcePoolTax * ResourcePool.QualityIndexRatingWeightedAverage; }
-        }
+        //public decimal QualityIndexShare
+        //{
+        //    get { return TotalResourcePoolTax * ResourcePool.QualityIndexRatingWeightedAverage; }
+        //}
         
-        public decimal QualityIndexValueWeightedAverageWithNumberOfSales
-        {
-            get { return UserOrganizationSet.Sum(item => item.QualityIndexValueWeightedAverageWithNumberOfSales); }
-        }
+        //public decimal QualityIndexValueWeightedAverageWithNumberOfSales
+        //{
+        //    get { return UserOrganizationSet.Sum(item => item.QualityIndexValueWeightedAverageWithNumberOfSales); }
+        //}
 
-        #endregion
+        //#endregion
 
-        #region - Employee Satifaction Index -
+        //#region - Employee Satifaction Index -
 
-        public decimal EmployeeSatisfactionIndexShare
-        {
-            get { return TotalResourcePoolTax * ResourcePool.EmployeeSatisfactionIndexRatingWeightedAverage; }
-        }
+        //public decimal EmployeeSatisfactionIndexShare
+        //{
+        //    get { return TotalResourcePoolTax * ResourcePool.EmployeeSatisfactionIndexRatingWeightedAverage; }
+        //}
         
-        public decimal EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSales
-        {
-            get { return UserOrganizationSet.Sum(item => item.EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSales); }
-        }
+        //public decimal EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSales
+        //{
+        //    get { return UserOrganizationSet.Sum(item => item.EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSales); }
+        //}
 
-        #endregion
+        //#endregion
 
-        #region - Customer Satifaction Index -
+        //#region - Customer Satifaction Index -
         
-        public decimal CustomerSatisfactionIndexShare
-        {
-            get { return TotalResourcePoolTax * ResourcePool.CustomerSatisfactionIndexRatingWeightedAverage; }
-        }
+        //public decimal CustomerSatisfactionIndexShare
+        //{
+        //    get { return TotalResourcePoolTax * ResourcePool.CustomerSatisfactionIndexRatingWeightedAverage; }
+        //}
         
-        public decimal CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSales
-        {
-            get { return UserOrganizationSet.Sum(item => item.CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSales); }
-        }
+        //public decimal CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSales
+        //{
+        //    get { return UserOrganizationSet.Sum(item => item.CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSales); }
+        //}
         
-        #endregion
+        //#endregion
     }
 }

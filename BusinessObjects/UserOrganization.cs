@@ -19,14 +19,14 @@ namespace BusinessObjects
         [Display(Name = "Number of Sales")]
         public int NumberOfSales { get; set; }
 
-        [Display(Name = "Quality Rating")]
-        public decimal QualityRating { get; set; }
+        //[Display(Name = "Quality Rating")]
+        //public decimal QualityRating { get; set; }
 
-        [Display(Name = "Customer Satisfaction Rating")]
-        public decimal CustomerSatisfactionRating { get; set; }
+        //[Display(Name = "Customer Satisfaction Rating")]
+        //public decimal CustomerSatisfactionRating { get; set; }
 
-        [Display(Name = "Employee Satisfaction Rating")]
-        public decimal EmployeeSatisfactionRating { get; set; }
+        //[Display(Name = "Employee Satisfaction Rating")]
+        //public decimal EmployeeSatisfactionRating { get; set; }
 
         public virtual Organization Organization { get; set; }
 
@@ -185,96 +185,99 @@ namespace BusinessObjects
 
         #endregion
 
-        #region - Quality Index -
+        //#region - Quality Index -
 
-        public decimal QualityIndexValueWeightedAverageWithNumberOfSales
-        {
-            get
-            {
-                return Organization.QualityRatingWeightedAverage * NumberOfSales;
-            }
-        }
+        //public decimal QualityIndexValueWeightedAverageWithNumberOfSales
+        //{
+        //    get
+        //    {
+        //        return Organization.QualityRatingWeightedAverage * NumberOfSales;
+        //    }
+        //}
 
-        public decimal QualityIndexValueWeightedAverageWithNumberOfSalesWeightedAverage
-        {
-            get
-            {
-                return UserResourcePool.QualityIndexValueWeightedAverageWithNumberOfSales == 0
-                    ? 0
-                    : QualityIndexValueWeightedAverageWithNumberOfSales / UserResourcePool.QualityIndexValueWeightedAverageWithNumberOfSales;
-            }
-        }
+        //public decimal QualityIndexValueWeightedAverageWithNumberOfSalesWeightedAverage
+        //{
+        //    get
+        //    {
+        //        return UserResourcePool.QualityIndexValueWeightedAverageWithNumberOfSales == 0
+        //            ? 0
+        //            : QualityIndexValueWeightedAverageWithNumberOfSales / UserResourcePool.QualityIndexValueWeightedAverageWithNumberOfSales;
+        //    }
+        //}
 
-        public decimal QualityIndexIncome
-        {
-            get
-            {
-                return UserResourcePool.QualityIndexShare * QualityIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
-            }
-        }
+        //public decimal QualityIndexIncome
+        //{
+        //    get
+        //    {
+        //        return UserResourcePool.QualityIndexShare * QualityIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
+        //    }
+        //}
 
-        #endregion
+        //#endregion
 
-        #region - Employee Satisfaction Index -
+        //#region - Employee Satisfaction Index -
 
-        public decimal EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSales
-        {
-            get
-            {
-                return Organization.EmployeeSatisfactionRatingWeightedAverage * NumberOfSales;
-            }
-        }
+        //public decimal EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSales
+        //{
+        //    get
+        //    {
+        //        return Organization.EmployeeSatisfactionRatingWeightedAverage * NumberOfSales;
+        //    }
+        //}
 
-        public decimal EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSalesWeightedAverage
-        {
-            get
-            {
-                return UserResourcePool.EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSales == 0
-                    ? 0
-                    : EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSales / UserResourcePool.EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSales;
-            }
-        }
+        //public decimal EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSalesWeightedAverage
+        //{
+        //    get
+        //    {
+        //        return UserResourcePool.EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSales == 0
+        //            ? 0
+        //            : EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSales / UserResourcePool.EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSales;
+        //    }
+        //}
 
-        public decimal EmployeeSatisfactionIndexIncome
-        {
-            get
-            {
-                return UserResourcePool.EmployeeSatisfactionIndexShare * EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
-            }
-        }
+        //public decimal EmployeeSatisfactionIndexIncome
+        //{
+        //    get
+        //    {
+        //        return UserResourcePool.EmployeeSatisfactionIndexShare * EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
+        //    }
+        //}
 
-        #endregion
+        //#endregion
 
-        #region - Customer Satisfaction Index -
+        //#region - Customer Satisfaction Index -
 
-        public decimal CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSales
-        {
-            get
-            {
-                return Organization.CustomerSatisfactionRatingWeightedAverage * NumberOfSales;
-            }
-        }
+        //public decimal CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSales
+        //{
+        //    get
+        //    {
+        //        return Organization.CustomerSatisfactionRatingWeightedAverage * NumberOfSales;
+        //    }
+        //}
 
-        public decimal CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSalesWeightedAverage
-        {
-            get
-            {
-                return UserResourcePool.CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSales == 0
-                    ? 0
-                    : CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSales / UserResourcePool.CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSales;
-            }
-        }
+        //public decimal CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSalesWeightedAverage
+        //{
+        //    get
+        //    {
+        //        return UserResourcePool.CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSales == 0
+        //            ? 0
+        //            : CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSales / UserResourcePool.CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSales;
+        //    }
+        //}
 
-        public decimal CustomerSatisfactionIndexIncome
-        {
-            get
-            {
-                return UserResourcePool.CustomerSatisfactionIndexShare * CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
-            }
-        }
+        //public decimal CustomerSatisfactionIndexIncome
+        //{
+        //    get
+        //    {
+        //        return UserResourcePool.CustomerSatisfactionIndexShare * CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
+        //    }
+        //}
 
-        #endregion
+        //#endregion
 
+        /// <summary>
+        /// Dynamic index income
+        /// </summary>
         public decimal IndexIncome
         {
             get { return UserResourcePoolIndexOrganizationSet.Sum(item => item.IndexIncome); }
@@ -284,12 +287,12 @@ namespace BusinessObjects
         {
             get
             {
-                return TotalCostIndexIncome
+                return SectorIndexIncome
                     + KnowledgeIndexIncome
-                    + QualityIndexIncome
-                    + SectorIndexIncome
-                    + EmployeeSatisfactionIndexIncome
-                    + CustomerSatisfactionIndexIncome
+                    + TotalCostIndexIncome
+                    //+ QualityIndexIncome
+                    //+ EmployeeSatisfactionIndexIncome
+                    //+ CustomerSatisfactionIndexIncome
                     + IndexIncome;
             }
         }

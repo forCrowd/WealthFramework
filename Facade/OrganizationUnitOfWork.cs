@@ -20,10 +20,7 @@
             {
                 UserId = userId,
                 Organization = entity,
-                NumberOfSales = 0,
-                QualityRating = 0,
-                CustomerSatisfactionRating = 0,
-                EmployeeSatisfactionRating = 0
+                NumberOfSales = 0
             };
             UserOrganizationRepository.Insert(sampleUserOrganization);
 

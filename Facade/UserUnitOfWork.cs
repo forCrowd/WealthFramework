@@ -118,11 +118,7 @@
                     ResourcePoolRate = sampleUserResourcePool.ResourcePoolRate,
                     SectorIndexRating = sampleUserResourcePool.SectorIndexRating,
                     KnowledgeIndexRating = sampleUserResourcePool.KnowledgeIndexRating,
-                    TotalCostIndexRating = sampleUserResourcePool.TotalCostIndexRating,
-                    QualityIndexRating = sampleUserResourcePool.QualityIndexRating,
-                    EmployeeSatisfactionIndexRating = sampleUserResourcePool.EmployeeSatisfactionIndexRating,
-                    CustomerSatisfactionIndexRating = sampleUserResourcePool.CustomerSatisfactionIndexRating//,
-                    //DistanceIndexRating = sampleUserResourcePool.DistanceIndexRating,
+                    TotalCostIndexRating = sampleUserResourcePool.TotalCostIndexRating
                 };
                 UserResourcePoolRepository.Insert(userResourcePool);
             }
@@ -173,10 +169,7 @@
                 {
                     User = targetUser,
                     Organization = sampleOrganization.Organization,
-                    NumberOfSales = sampleOrganization.NumberOfSales,
-                    QualityRating = sampleOrganization.QualityRating,
-                    CustomerSatisfactionRating = sampleOrganization.CustomerSatisfactionRating,
-                    EmployeeSatisfactionRating = sampleOrganization.EmployeeSatisfactionRating
+                    NumberOfSales = sampleOrganization.NumberOfSales
                 };
                 UserOrganizationRepository.Insert(userOrganization);
             }

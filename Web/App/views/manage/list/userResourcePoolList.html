@@ -33,15 +33,6 @@
             <th>
                 Total Cost Index
             </th>
-            <th>
-                Quality Index
-            </th>
-            <th>
-                Employee Satisfaction Index
-            </th>
-            <th>
-                Customer Satisfaction Index
-            </th>
             <th></th>
         </tr>
         <tr data-ng-repeat="userResourcePool in vm.userResourcePoolSet">
@@ -62,15 +53,6 @@
             </td>
             <td>
                 {{ userResourcePool.TotalCostIndexRating }}
-            </td>
-            <td>
-                {{ userResourcePool.QualityIndexRating }}
-            </td>
-            <td>
-                {{ userResourcePool.EmployeeSatisfactionIndexRating }}
-            </td>
-            <td>
-                {{ userResourcePool.CustomerSatisfactionIndexRating }}
             </td>
             <td>
                 <a href="/manage/userResourcePool/edit/{{ userResourcePool.Id }}">Edit</a> |

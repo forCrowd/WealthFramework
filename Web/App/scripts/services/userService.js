@@ -58,7 +58,7 @@
                     })
                     .error(function (data, status, headers, config) {
                         // TODO
-                        // If it return Unauthorized (status === 401), then it's not logged in yet and it's okay, no need to show an error
+                        // If it returns Unauthorized (status === 401), then it's not logged in yet and it's okay, no need to show an error
                         // It's something else, server may not be unreachle or internal error? Just say 'Something went wrong'?
                         deferred.reject({ data: data, status: status, headers: headers, config: config });
                     });

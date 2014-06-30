@@ -1,20 +1,24 @@
 ﻿. try to merge unit of work classes - resourcepool unitofwork could create sector + license + organization for instance?
+.. however, in the current structure, every entity will have a unitofwork + controller by default?
 . be careful about different contexts entities - license.resourcepool = sampleResourcePool was creating new resource pools!
 either work with Ids, or try to work on merging unitofwork classes
-. remove satisfaction word..?
-. find vs. deleted records? - findlive? or don't retrieve dead records at all?
-. exists should work with find or alllive.any() or all.any() ?
 . breeze - check save + has + get + reject changes. currently they don't work on entity level? - also prepareBatch method?
 . use or try to remove scripts.render() + styles.render() from layout.cshtml - then mvc can be removed completely
 . automate .tt scripts with afterbuild?
+
 . sometimes cancel button doesn't allow to go back (fill required?)
 .. use history.back sort of method, but first vm needs to be a new object, without createEntity
+
 . learn this disposable thingy? repo + unitofwork + context + controllers?
+
 . implement soft delete
+. find vs. deleted records? - findlive? or don't retrieve dead records at all?
+. exists should work with find or alllive.any() or all.any() ?
+. don't allow delete License if it's connected to an Organization (can't be deleted) - same goes for the others but License really can't be deleted
+
 . handling concurrency can be improved - load the new record and let the user choose which one is correct
 . html cache break - angular scripts + views etc.?
 . try to create initial data from facade, instead of dataobjects layer
-. don't allow delete License if it's connected to an Organization (can't be deleted) - same goes for the others but License really can't be deleted
 . create sample data with average rating value? or make the rating nullable
 . multiple pk for user organization + user sector + user license + user resource pool organization + resource pool organization
 . table structure - by this way, userresourcepool could reach to usersectorrating easily?;
@@ -23,12 +27,12 @@ userresourcepoolsector -> userresourcepoolId sectorId rating
 userresourcepoollicense -> userresourcepoolId licenseId rating
 userresourcepoolorganization -> userresourcepoolId organizationId rating
 . exclude sample user from rating averages - or make them always 50 / 50?
-. using numbers in sector chart page didn't work, it breaks the chart?
+. using texbox to update chart data didn't work, it breaks the chart?
 . authorize only for admins didnt work - license, organization, resourcepool, sector
 any user should be able to access them. currently definitions link is only visible to admins - according to this, normal user may not use post action for instance? check these rules later on
 . try to have a standard for css usage + html layout formats + also js script conventions
 . check spelling of the texts!
-. update namespaces - osp.wealtheconomy.
+. update namespaces - ?.wealtheconomy.
 . enable auto test for appveyor - currently it fails probably because it can't create the db?
 . in some delete cases, odatacontroller returns NotFound error? although it's deleted, the record stays on the page until refreshing the page
 . how to calculate average index? some people may enter 1,2,3 - some may enter 100,200,300? always force them to enter percentage?
@@ -66,15 +70,13 @@ config.EnableQuerySupport(queryAttribute);
 UserResourcePoolIndex..ForeignKey("dbo.ResourcePoolIndex", t => t.ResourcePoolIndexId, cascadeDelete: false)
 UserResourcePoolIndexValue.ForeignKey("dbo.Organization", t => t.OrganizationId, cascadeDelete: false)
 
-					. test the current situation + publish + then continue with removing q + e + c :)
-
 . should cmrp rate be on user level?
 
 . what happens if the resource pool index was created but not rated yet?
 
-. accountEdit/:Id ??!?!
-
 . handle all userresourcepool types in one page?
+
+. define sector + knowledge + total cost as a semi dynamic index?
 
 . inserting a new userresourcepoolindex gave an error?
 
@@ -86,6 +88,3 @@ UserResourcePoolIndexValue.ForeignKey("dbo.Organization", t => t.OrganizationId,
 sector index - just name and the rating
 license index - name + boolean variables and the rating
 organization total cost index - auto formula (organization sales price / resource pool sales price average)
-organization quality index (at this moment) - name and the rating
-organization emp sat index - name and the rating
-organization cust sat index - name and the rating

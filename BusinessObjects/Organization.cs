@@ -87,64 +87,64 @@ namespace BusinessObjects
             }
         }
 
-        public decimal QualityRatingAverage
-        {
-            get
-            {
-                return UserOrganizationSet.Any()
-                    ? UserOrganizationSet.Average(item => item.QualityRating)
-                    : 0;
-            }
-        }
+        //public decimal QualityRatingAverage
+        //{
+        //    get
+        //    {
+        //        return UserOrganizationSet.Any()
+        //            ? UserOrganizationSet.Average(item => item.QualityRating)
+        //            : 0;
+        //    }
+        //}
 
-        public decimal QualityRatingWeightedAverage
-        {
-            get
-            {
-                return ResourcePool.QualityRatingAverage == 0
-                    ? 0
-                    : QualityRatingAverage / ResourcePool.QualityRatingAverage;
-            }
-        }
+        //public decimal QualityRatingWeightedAverage
+        //{
+        //    get
+        //    {
+        //        return ResourcePool.QualityRatingAverage == 0
+        //            ? 0
+        //            : QualityRatingAverage / ResourcePool.QualityRatingAverage;
+        //    }
+        //}
 
-        public decimal EmployeeSatisfactionRatingAverage
-        {
-            get
-            {
-                return UserOrganizationSet.Any()
-                    ? UserOrganizationSet.Average(rating => rating.EmployeeSatisfactionRating)
-                    : 0;
-            }
-        }
+        //public decimal EmployeeSatisfactionRatingAverage
+        //{
+        //    get
+        //    {
+        //        return UserOrganizationSet.Any()
+        //            ? UserOrganizationSet.Average(rating => rating.EmployeeSatisfactionRating)
+        //            : 0;
+        //    }
+        //}
 
-        public decimal EmployeeSatisfactionRatingWeightedAverage
-        {
-            get
-            {
-                return ResourcePool.EmployeeSatisfactionRatingAverage == 0
-                    ? 0
-                    : EmployeeSatisfactionRatingAverage / ResourcePool.EmployeeSatisfactionRatingAverage;
-            }
-        }
+        //public decimal EmployeeSatisfactionRatingWeightedAverage
+        //{
+        //    get
+        //    {
+        //        return ResourcePool.EmployeeSatisfactionRatingAverage == 0
+        //            ? 0
+        //            : EmployeeSatisfactionRatingAverage / ResourcePool.EmployeeSatisfactionRatingAverage;
+        //    }
+        //}
 
-        public decimal CustomerSatisfactionRatingAverage
-        {
-            get
-            {
-                return UserOrganizationSet.Any()
-                    ? UserOrganizationSet.Average(rating => rating.CustomerSatisfactionRating)
-                    : 0;
-            }
-        }
+        //public decimal CustomerSatisfactionRatingAverage
+        //{
+        //    get
+        //    {
+        //        return UserOrganizationSet.Any()
+        //            ? UserOrganizationSet.Average(rating => rating.CustomerSatisfactionRating)
+        //            : 0;
+        //    }
+        //}
 
-        public decimal CustomerSatisfactionRatingWeightedAverage
-        {
-            get
-            {
-                return ResourcePool.CustomerSatisfactionRatingAverage == 0
-                    ? 0
-                    : CustomerSatisfactionRatingAverage / ResourcePool.CustomerSatisfactionRatingAverage;
-            }
-        }
+        //public decimal CustomerSatisfactionRatingWeightedAverage
+        //{
+        //    get
+        //    {
+        //        return ResourcePool.CustomerSatisfactionRatingAverage == 0
+        //            ? 0
+        //            : CustomerSatisfactionRatingAverage / ResourcePool.CustomerSatisfactionRatingAverage;
+        //    }
+        //}
     }
 }

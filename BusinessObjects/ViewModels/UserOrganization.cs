@@ -17,9 +17,9 @@ namespace BusinessObjects.ViewModels
             OrganizationSectorRatingWeightedAverage = userOrganization.Organization.Sector.RatingWeightedAverage;
             OrganizationLicenseRatingWeightedAverage = userOrganization.Organization.License.RatingWeightedAverage;
             OrganizationSalesPriceWeightedAverage = userOrganization.Organization.SalesPriceWeightedAverage;
-            OrganizationQualityRatingWeightedAverage = userOrganization.Organization.QualityRatingWeightedAverage;
-            OrganizationEmployeeSatisfactionRatingWeightedAverage = userOrganization.Organization.EmployeeSatisfactionRatingWeightedAverage;
-            OrganizationCustomerSatisfactionRatingWeightedAverage = userOrganization.Organization.CustomerSatisfactionRatingWeightedAverage;
+            //OrganizationQualityRatingWeightedAverage = userOrganization.Organization.QualityRatingWeightedAverage;
+            //OrganizationEmployeeSatisfactionRatingWeightedAverage = userOrganization.Organization.EmployeeSatisfactionRatingWeightedAverage;
+            //OrganizationCustomerSatisfactionRatingWeightedAverage = userOrganization.Organization.CustomerSatisfactionRatingWeightedAverage;
 
             ResourcePoolTax = userOrganization.ResourcePoolTax;
             SalesPriceIncludingResourcePoolTax = userOrganization.SalesPriceIncludingResourcePoolTax;
@@ -38,15 +38,15 @@ namespace BusinessObjects.ViewModels
             TotalCostIndexValueWeightedAverageWithNumberOfSales = userOrganization.TotalCostIndexValueWeightedAverageWithNumberOfSales;
             TotalCostIndexValueWeightedAverageWithNumberOfSalesWeightedAverage = userOrganization.TotalCostIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
             TotalCostIndexIncome = userOrganization.TotalCostIndexIncome;
-            QualityIndexValueWeightedAverageWithNumberOfSales = userOrganization.QualityIndexValueWeightedAverageWithNumberOfSales;
-            QualityIndexValueWeightedAverageWithNumberOfSalesWeightedAverage = userOrganization.QualityIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
-            QualityIndexIncome = userOrganization.QualityIndexIncome;
-            EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSales = userOrganization.EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSales;
-            EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSalesWeightedAverage = userOrganization.EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
-            EmployeeSatisfactionIndexIncome = userOrganization.EmployeeSatisfactionIndexIncome;
-            CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSales = userOrganization.CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSales;
-            CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSalesWeightedAverage = userOrganization.CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
-            CustomerSatisfactionIndexIncome = userOrganization.CustomerSatisfactionIndexIncome;
+            //QualityIndexValueWeightedAverageWithNumberOfSales = userOrganization.QualityIndexValueWeightedAverageWithNumberOfSales;
+            //QualityIndexValueWeightedAverageWithNumberOfSalesWeightedAverage = userOrganization.QualityIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
+            //QualityIndexIncome = userOrganization.QualityIndexIncome;
+            //EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSales = userOrganization.EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSales;
+            //EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSalesWeightedAverage = userOrganization.EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
+            //EmployeeSatisfactionIndexIncome = userOrganization.EmployeeSatisfactionIndexIncome;
+            //CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSales = userOrganization.CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSales;
+            //CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSalesWeightedAverage = userOrganization.CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
+            //CustomerSatisfactionIndexIncome = userOrganization.CustomerSatisfactionIndexIncome;
             TotalResourcePoolIncome = userOrganization.TotalResourcePoolIncome;
             TotalIncome = userOrganization.TotalIncome;
 
@@ -63,9 +63,9 @@ namespace BusinessObjects.ViewModels
         public decimal OrganizationSectorRatingWeightedAverage { get; set; }
         public decimal OrganizationLicenseRatingWeightedAverage { get; set; }
         public decimal OrganizationSalesPriceWeightedAverage { get; set; }
-        public decimal OrganizationQualityRatingWeightedAverage { get; set; }
-        public decimal OrganizationEmployeeSatisfactionRatingWeightedAverage { get; set; }
-        public decimal OrganizationCustomerSatisfactionRatingWeightedAverage { get; set; }
+        //public decimal OrganizationQualityRatingWeightedAverage { get; set; }
+        //public decimal OrganizationEmployeeSatisfactionRatingWeightedAverage { get; set; }
+        //public decimal OrganizationCustomerSatisfactionRatingWeightedAverage { get; set; }
 
         public decimal ResourcePoolTax { get; set; }
         public decimal SalesPriceIncludingResourcePoolTax { get; set; }
@@ -88,17 +88,17 @@ namespace BusinessObjects.ViewModels
         public decimal TotalCostIndexValueWeightedAverageWithNumberOfSalesWeightedAverage { get; set; }
         public decimal TotalCostIndexIncome { get; set; }
 
-        public decimal QualityIndexValueWeightedAverageWithNumberOfSales { get; set; }
-        public decimal QualityIndexValueWeightedAverageWithNumberOfSalesWeightedAverage { get; set; }
-        public decimal QualityIndexIncome { get; set; }
+        //public decimal QualityIndexValueWeightedAverageWithNumberOfSales { get; set; }
+        //public decimal QualityIndexValueWeightedAverageWithNumberOfSalesWeightedAverage { get; set; }
+        //public decimal QualityIndexIncome { get; set; }
 
-        public decimal EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSales { get; set; }
-        public decimal EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSalesWeightedAverage { get; set; }
-        public decimal EmployeeSatisfactionIndexIncome { get; set; }
+        //public decimal EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSales { get; set; }
+        //public decimal EmployeeSatisfactionIndexValueWeightedAverageWithNumberOfSalesWeightedAverage { get; set; }
+        //public decimal EmployeeSatisfactionIndexIncome { get; set; }
 
-        public decimal CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSales { get; set; }
-        public decimal CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSalesWeightedAverage { get; set; }
-        public decimal CustomerSatisfactionIndexIncome { get; set; }
+        //public decimal CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSales { get; set; }
+        //public decimal CustomerSatisfactionIndexValueWeightedAverageWithNumberOfSalesWeightedAverage { get; set; }
+        //public decimal CustomerSatisfactionIndexIncome { get; set; }
 
         public decimal TotalResourcePoolIncome { get; set; }
         public decimal TotalIncome { get; set; }

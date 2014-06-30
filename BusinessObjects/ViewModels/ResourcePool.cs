@@ -13,9 +13,9 @@ namespace BusinessObjects.ViewModels
             SectorIndexRatingAverage = resourcePool.SectorIndexRatingAverage;
             KnowledgeIndexRatingAverage = resourcePool.KnowledgeIndexRatingAverage;
             TotalCostIndexRatingAverage = resourcePool.TotalCostIndexRatingAverage;
-            QualityIndexRatingAverage = resourcePool.QualityIndexRatingAverage;
-            EmployeeSatisfactionIndexRatingAverage = resourcePool.EmployeeSatisfactionIndexRatingAverage;
-            CustomerSatisfactionIndexRatingAverage = resourcePool.CustomerSatisfactionIndexRatingAverage;
+            //QualityIndexRatingAverage = resourcePool.QualityIndexRatingAverage;
+            //EmployeeSatisfactionIndexRatingAverage = resourcePool.EmployeeSatisfactionIndexRatingAverage;
+            //CustomerSatisfactionIndexRatingAverage = resourcePool.CustomerSatisfactionIndexRatingAverage;
         }
 
         public int Id { get; set; }
@@ -24,8 +24,8 @@ namespace BusinessObjects.ViewModels
         public decimal SectorIndexRatingAverage { get; set; }
         public decimal KnowledgeIndexRatingAverage { get; set; }
         public decimal TotalCostIndexRatingAverage { get; set; }
-        public decimal QualityIndexRatingAverage { get; set; }
-        public decimal EmployeeSatisfactionIndexRatingAverage { get; set; }
-        public decimal CustomerSatisfactionIndexRatingAverage { get; set; }
+        //public decimal QualityIndexRatingAverage { get; set; }
+        //public decimal EmployeeSatisfactionIndexRatingAverage { get; set; }
+        //public decimal CustomerSatisfactionIndexRatingAverage { get; set; }
     }
 }

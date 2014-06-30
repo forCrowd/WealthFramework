@@ -646,10 +646,7 @@
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
     <Content Include="App\views\UserResourcePool\AllInOne.html" />
-    <Content Include="App\views\UserResourcePool\CustomerSatisfactionIndex.html" />
-    <Content Include="App\views\UserResourcePool\EmployeeSatisfactionIndex.html" />
     <Content Include="App\views\UserResourcePool\KnowledgeIndex.html" />
-    <Content Include="App\views\UserResourcePool\QualityIndex.html" />
     <Content Include="App\views\UserResourcePool\SectorIndex.html" />
     <Content Include="App\views\UserResourcePool\TotalCostIndex.html" />
     <Content Include="App\views\account\accountEdit.html" />

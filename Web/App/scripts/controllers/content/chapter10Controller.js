@@ -92,9 +92,6 @@
                     vm.indexChartData.push({ name: 'Sector Index', y: userResourcePool.SectorIndexRating });
                     vm.indexChartData.push({ name: 'Knowledge Index', y: userResourcePool.KnowledgeIndexRating });
                     vm.indexChartData.push({ name: 'Total Cost Index', y: userResourcePool.TotalCostIndexRating });
-                    vm.indexChartData.push({ name: 'Quality Index', y: userResourcePool.QualityIndexRating });
-                    vm.indexChartData.push({ name: 'Employee Satisfaction Index', y: userResourcePool.EmployeeSatisfactionIndexRating });
-                    vm.indexChartData.push({ name: 'Customer Satisfaction Index', y: userResourcePool.CustomerSatisfactionIndexRating });
 
                     vm.indexChartConfig.series = [{ data: vm.indexChartData }];
                     vm.indexChartConfig.loading = false;
@@ -113,9 +110,6 @@
                     vm.indexResultsChartData.push({ name: 'Sector Index', y: resourcePoolViewModel.SectorIndexRatingAverage });
                     vm.indexResultsChartData.push({ name: 'Knowledge Index', y: resourcePoolViewModel.KnowledgeIndexRatingAverage });
                     vm.indexResultsChartData.push({ name: 'Total Cost Index', y: resourcePoolViewModel.TotalCostIndexRatingAverage });
-                    vm.indexResultsChartData.push({ name: 'Quality Index', y: resourcePoolViewModel.QualityIndexRatingAverage });
-                    vm.indexResultsChartData.push({ name: 'Employee Satisfaction Index', y: resourcePoolViewModel.EmployeeSatisfactionIndexRatingAverage });
-                    vm.indexResultsChartData.push({ name: 'Customer Satisfaction Index', y: resourcePoolViewModel.CustomerSatisfactionIndexRatingAverage });
 
                     vm.indexResultsChartConfig.series = [{ data: vm.indexResultsChartData }];
                     vm.indexResultsChartConfig.loading = false;
@@ -132,12 +126,9 @@
             userResourcePoolService.getUserResourcePool(vm.allInOneUserResourcePool.Id, false)
                 .then(function (userResourcePool) {
 
-                    userResourcePool.TotalCostIndexRating = vm.indexChartData[0].y;
+                    userResourcePool.SectorIndexRating = vm.indexChartData[0].y;
                     userResourcePool.KnowledgeIndexRating = vm.indexChartData[1].y;
-                    userResourcePool.QualityIndexRating = vm.indexChartData[2].y;
-                    userResourcePool.SectorIndexRating = vm.indexChartData[3].y;
-                    userResourcePool.EmployeeSatisfactionIndexRating = vm.indexChartData[4].y;
-                    userResourcePool.CustomerSatisfactionIndexRating = vm.indexChartData[5].y;
+                    userResourcePool.TotalCostIndexRating = vm.indexChartData[2].y;
 
                     var rowVersion = userResourcePool.RowVersion;
                     userResourcePool.RowVersion = '';

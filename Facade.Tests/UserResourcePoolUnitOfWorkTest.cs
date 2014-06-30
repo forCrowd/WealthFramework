@@ -47,13 +47,9 @@
                     UserId = sampleUser.Id,
                     ResourcePoolId = sampleResourcePool.Id,
                     ResourcePoolRate = 101,
-                    TotalCostIndexRating = 0,
-                    KnowledgeIndexRating = 0,
-                    QualityIndexRating = 0,
                     SectorIndexRating = 0,
-                    EmployeeSatisfactionIndexRating = 0,
-                    CustomerSatisfactionIndexRating = 0//,
-                    //DistanceIndexRating = 0
+                    KnowledgeIndexRating = 0,
+                    TotalCostIndexRating = 0
                 };
 
                 unitOfWork.InsertAsync(userResourcePool);

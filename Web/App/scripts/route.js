@@ -14,7 +14,7 @@
 
             .when('/account/register', { templateUrl: '/App/views/account/register.html', controller: 'registerController as vm' })
             .when('/account/login', { templateUrl: '/App/views/account/login.html', controller: 'loginController as vm' })
-            .when('/account/accountEdit/:Id', { templateUrl: '/App/views/account/accountEdit.html', controller: 'accountEditController as vm' })
+            .when('/account/accountEdit', { templateUrl: '/App/views/account/accountEdit.html', controller: 'accountEditController as vm' })
             .when('/account/changePassword', { templateUrl: '/App/views/account/changePassword.html', controller: 'changePasswordController as vm' })
 
             /* Custom List + Edit pages */
@@ -29,9 +29,6 @@
             .when('/SectorIndex', { templateUrl: '/App/views/UserResourcePool/SectorIndex.html', controller: 'userResourcePoolController as vm' })
             .when('/KnowledgeIndex', { templateUrl: '/App/views/UserResourcePool/KnowledgeIndex.html', controller: 'userResourcePoolController as vm' })
             .when('/TotalCostIndex', { templateUrl: '/App/views/UserResourcePool/TotalCostIndex.html', controller: 'userResourcePoolController as vm' })
-            .when('/QualityIndex', { templateUrl: '/App/views/UserResourcePool/QualityIndex.html', controller: 'userResourcePoolController as vm' })
-            .when('/EmployeeSatisfactionIndex', { templateUrl: '/App/views/UserResourcePool/EmployeeSatisfactionIndex.html', controller: 'userResourcePoolController as vm' })
-            .when('/CustomerSatisfactionIndex', { templateUrl: '/App/views/UserResourcePool/CustomerSatisfactionIndex.html', controller: 'userResourcePoolController as vm' })
             .when('/AllInOne', { templateUrl: '/App/views/UserResourcePool/AllInOne.html', controller: 'userResourcePoolController as vm' })
 
             .otherwise({ redirectTo: '/' });

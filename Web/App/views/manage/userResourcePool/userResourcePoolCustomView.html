@@ -67,21 +67,9 @@
                 </table>
             </th>
             <th>
-                Quality Rating Weighted Average
-            </th>
-            <th>
-                Quality Index with Nr of Sales
-            </th>
-            <th>
-                Quality Index with Nr of Sales Weighted Average
-            </th>
-            <th>
-                Quality Index Income
-            </th>
-            <th>
                 Total Income (Profit + CMRP)
             </th>
-            </th>
+        </tr>
         <tr data-ng-repeat="item in vm.userResourcePool.UserOrganizationSet">
             <td>
                 {{ item.OrganizationName }}
@@ -133,18 +121,6 @@
                         </td>
                     </tr>
                 </table>
-            </td>
-            <td>
-                {{ item.OrganizationQualityRatingWeightedAverage | percentage:2 }}
-            </td>
-            <td>
-                {{ item.QualityIndexValueWeightedAverageWithNumberOfSales | number:2 }}
-            </td>
-            <td>
-                {{ item.QualityIndexValueWeightedAverageWithNumberOfSalesWeightedAverage | number:2 }}
-            </td>
-            <td>
-                {{ item.QualityIndexIncome | number:2 }}
             </td>
             <td>
                 {{ item.TotalIncome | number:2 }}
@@ -202,18 +178,6 @@
                     </tr>
                 </table>
             </th>
-            <td>
-                &nbsp;
-            </td>
-            <td>
-                &nbsp;
-            </td>
-            <td>
-                &nbsp;
-            </td>
-            <td>
-                {{ vm.userResourcePool.QualityIndexShare | number:2 }}
-            </td>
             <td>
                 {{ vm.userResourcePool.TotalIncome | number:2 }}
             </td>

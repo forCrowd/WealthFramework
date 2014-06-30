@@ -39,66 +39,6 @@ namespace BusinessObjects
         /* */
 
         #region - Indexes -
-        
-        public decimal TotalCostIndexRatingAverage
-        {
-            get
-            {
-                return UserResourcePoolSet.Any()
-                    ? UserResourcePoolSet.Average(item => item.TotalCostIndexRating)
-                    : 0;
-            }
-        }
-
-        public decimal TotalCostIndexRatingWeightedAverage
-        {
-            get
-            {
-                return TotalIndexRatingAverage == 0
-                    ? 0
-                    : TotalCostIndexRatingAverage / TotalIndexRatingAverage;
-            }
-        }
-
-        public decimal KnowledgeIndexRatingAverage
-        {
-            get
-            {
-                return UserResourcePoolSet.Any()
-                    ? UserResourcePoolSet.Average(item => item.KnowledgeIndexRating)
-                    : 0;
-            }
-        }
-
-        public decimal KnowledgeIndexRatingWeightedAverage
-        {
-            get
-            {
-                return TotalIndexRatingAverage == 0
-                    ? 0
-                    : KnowledgeIndexRatingAverage / TotalIndexRatingAverage;
-            }
-        }
-        
-        public decimal QualityIndexRatingAverage
-        {
-            get
-            {
-                return UserResourcePoolSet.Any()
-                    ? UserResourcePoolSet.Average(item => item.QualityIndexRating)
-                    : 0;
-            }
-        }
-
-        public decimal QualityIndexRatingWeightedAverage
-        {
-            get
-            {
-                return TotalIndexRatingAverage == 0
-                    ? 0
-                    : QualityIndexRatingAverage / TotalIndexRatingAverage;
-            }
-        }
 
         public decimal SectorIndexRatingAverage
         {
@@ -119,46 +59,106 @@ namespace BusinessObjects
                     : SectorIndexRatingAverage / TotalIndexRatingAverage;
             }
         }
-
-        public decimal EmployeeSatisfactionIndexRatingAverage
+        
+        public decimal KnowledgeIndexRatingAverage
         {
             get
             {
                 return UserResourcePoolSet.Any()
-                    ? UserResourcePoolSet.Average(item => item.EmployeeSatisfactionIndexRating)
+                    ? UserResourcePoolSet.Average(item => item.KnowledgeIndexRating)
                     : 0;
             }
         }
 
-        public decimal EmployeeSatisfactionIndexRatingWeightedAverage
+        public decimal KnowledgeIndexRatingWeightedAverage
         {
             get
             {
                 return TotalIndexRatingAverage == 0
                     ? 0
-                    : EmployeeSatisfactionIndexRatingAverage / TotalIndexRatingAverage;
+                    : KnowledgeIndexRatingAverage / TotalIndexRatingAverage;
             }
         }
 
-        public decimal CustomerSatisfactionIndexRatingAverage
+        public decimal TotalCostIndexRatingAverage
         {
             get
             {
                 return UserResourcePoolSet.Any()
-                    ? UserResourcePoolSet.Average(item => item.CustomerSatisfactionIndexRating)
+                    ? UserResourcePoolSet.Average(item => item.TotalCostIndexRating)
                     : 0;
             }
         }
 
-        public decimal CustomerSatisfactionIndexRatingWeightedAverage
+        public decimal TotalCostIndexRatingWeightedAverage
         {
             get
             {
                 return TotalIndexRatingAverage == 0
                     ? 0
-                    : CustomerSatisfactionIndexRatingAverage / TotalIndexRatingAverage;
+                    : TotalCostIndexRatingAverage / TotalIndexRatingAverage;
             }
         }
+
+        //public decimal QualityIndexRatingAverage
+        //{
+        //    get
+        //    {
+        //        return UserResourcePoolSet.Any()
+        //            ? UserResourcePoolSet.Average(item => item.QualityIndexRating)
+        //            : 0;
+        //    }
+        //}
+
+        //public decimal QualityIndexRatingWeightedAverage
+        //{
+        //    get
+        //    {
+        //        return TotalIndexRatingAverage == 0
+        //            ? 0
+        //            : QualityIndexRatingAverage / TotalIndexRatingAverage;
+        //    }
+        //}
+
+        //public decimal EmployeeSatisfactionIndexRatingAverage
+        //{
+        //    get
+        //    {
+        //        return UserResourcePoolSet.Any()
+        //            ? UserResourcePoolSet.Average(item => item.EmployeeSatisfactionIndexRating)
+        //            : 0;
+        //    }
+        //}
+
+        //public decimal EmployeeSatisfactionIndexRatingWeightedAverage
+        //{
+        //    get
+        //    {
+        //        return TotalIndexRatingAverage == 0
+        //            ? 0
+        //            : EmployeeSatisfactionIndexRatingAverage / TotalIndexRatingAverage;
+        //    }
+        //}
+
+        //public decimal CustomerSatisfactionIndexRatingAverage
+        //{
+        //    get
+        //    {
+        //        return UserResourcePoolSet.Any()
+        //            ? UserResourcePoolSet.Average(item => item.CustomerSatisfactionIndexRating)
+        //            : 0;
+        //    }
+        //}
+
+        //public decimal CustomerSatisfactionIndexRatingWeightedAverage
+        //{
+        //    get
+        //    {
+        //        return TotalIndexRatingAverage == 0
+        //            ? 0
+        //            : CustomerSatisfactionIndexRatingAverage / TotalIndexRatingAverage;
+        //    }
+        //}
 
         public decimal IndexRatingAverage
         {
@@ -169,12 +169,12 @@ namespace BusinessObjects
         {
             get
             {
-                return TotalCostIndexRatingAverage
+                return SectorIndexRatingAverage
                     + KnowledgeIndexRatingAverage
-                    + QualityIndexRatingAverage
-                    + SectorIndexRatingAverage
-                    + EmployeeSatisfactionIndexRatingAverage
-                    + CustomerSatisfactionIndexRatingAverage
+                    + TotalCostIndexRatingAverage
+                    //+ QualityIndexRatingAverage
+                    //+ EmployeeSatisfactionIndexRatingAverage
+                    //+ CustomerSatisfactionIndexRatingAverage
                     + IndexRatingAverage;
             }
         }
@@ -191,20 +191,20 @@ namespace BusinessObjects
             get { return LicenseSet.Sum(license => license.RatingAverage); }
         }
 
-        public decimal QualityRatingAverage
-        {
-            get { return OrganizationSet.Sum(item => item.QualityRatingAverage); }
-        }
+        //public decimal QualityRatingAverage
+        //{
+        //    get { return OrganizationSet.Sum(item => item.QualityRatingAverage); }
+        //}
 
-        public decimal EmployeeSatisfactionRatingAverage
-        {
-            get { return OrganizationSet.Sum(item => item.EmployeeSatisfactionRatingAverage); }
-        }
+        //public decimal EmployeeSatisfactionRatingAverage
+        //{
+        //    get { return OrganizationSet.Sum(item => item.EmployeeSatisfactionRatingAverage); }
+        //}
 
-        public decimal CustomerSatisfactionRatingAverage
-        {
-            get { return OrganizationSet.Sum(organization => organization.CustomerSatisfactionRatingAverage); }
-        }
+        //public decimal CustomerSatisfactionRatingAverage
+        //{
+        //    get { return OrganizationSet.Sum(organization => organization.CustomerSatisfactionRatingAverage); }
+        //}
 
         public IEnumerable<Organization> OrganizationSet
         {

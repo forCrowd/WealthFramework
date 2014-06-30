@@ -24,9 +24,6 @@ namespace BusinessObjects.Dto
             this.UserId = userOrganization.UserId;
             this.OrganizationId = userOrganization.OrganizationId;
             this.NumberOfSales = userOrganization.NumberOfSales;
-            this.QualityRating = userOrganization.QualityRating;
-            this.CustomerSatisfactionRating = userOrganization.CustomerSatisfactionRating;
-            this.EmployeeSatisfactionRating = userOrganization.EmployeeSatisfactionRating;
             this.CreatedOn = userOrganization.CreatedOn;
             this.ModifiedOn = userOrganization.ModifiedOn;
             this.DeletedOn = userOrganization.DeletedOn;
@@ -44,15 +41,6 @@ namespace BusinessObjects.Dto
 
         [Required]
         public int NumberOfSales { get; set; }
-
-        [Required]
-        public decimal QualityRating { get; set; }
-
-        [Required]
-        public decimal CustomerSatisfactionRating { get; set; }
-
-        [Required]
-        public decimal EmployeeSatisfactionRating { get; set; }
 
         [Required]
         public System.DateTime CreatedOn { get; set; }
@@ -73,9 +61,6 @@ namespace BusinessObjects.Dto
                 UserId = UserId,
                 OrganizationId = OrganizationId,
                 NumberOfSales = NumberOfSales,
-                QualityRating = QualityRating,
-                CustomerSatisfactionRating = CustomerSatisfactionRating,
-                EmployeeSatisfactionRating = EmployeeSatisfactionRating,
                 CreatedOn = CreatedOn,
                 ModifiedOn = ModifiedOn,
                 DeletedOn = DeletedOn,

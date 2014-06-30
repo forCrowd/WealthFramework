@@ -129,10 +129,7 @@
                 ResourcePoolRate = 101,
                 SectorIndexRating = 0,
                 KnowledgeIndexRating = 0,
-                TotalCostIndexRating = 0,
-                QualityIndexRating = 0,
-                EmployeeSatisfactionIndexRating = 0,
-                CustomerSatisfactionIndexRating = 0
+                TotalCostIndexRating = 0
             };
             UserResourcePoolRepository.Insert(userResourcePool);
 
@@ -168,10 +165,7 @@
                     {
                         UserId = userResourcePool.UserId,
                         Organization = organization,
-                        NumberOfSales = 0,
-                        QualityRating = 0,
-                        CustomerSatisfactionRating = 0,
-                        EmployeeSatisfactionRating = 0
+                        NumberOfSales = 0
                     };
                     UserOrganizationRepository.Insert(sampleUserOrganization);
                 }
