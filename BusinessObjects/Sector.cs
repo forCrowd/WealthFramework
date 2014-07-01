@@ -44,7 +44,7 @@ namespace BusinessObjects
             }
         }
 
-        public decimal RatingWeightedAverage
+        public decimal RatingPercentage
         {
             get
             {

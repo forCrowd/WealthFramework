@@ -6,6 +6,12 @@ An experimental resource management system that aims to provide a sustainable ec
 
 ### Release Notes
 
+**0.13.5**
+
+* IndexIncome calculation was modified
+* WeightedAverage -> Percentage
+* NumberOfSalesPercentage was added
+
 **0.13.4**
 
 * Quality + Employee + Custom static indexes were removed

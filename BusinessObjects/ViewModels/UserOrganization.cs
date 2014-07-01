@@ -14,9 +14,9 @@ namespace BusinessObjects.ViewModels
             OrganizationSalesPrice = userOrganization.Organization.SalesPrice;
             OrganizationProfitPercentage = userOrganization.Organization.ProfitPercentage;
             OrganizationLicenseName = userOrganization.Organization.License.Name;
-            OrganizationSectorRatingWeightedAverage = userOrganization.Organization.Sector.RatingWeightedAverage;
-            OrganizationLicenseRatingWeightedAverage = userOrganization.Organization.License.RatingWeightedAverage;
-            OrganizationSalesPriceWeightedAverage = userOrganization.Organization.SalesPriceWeightedAverage;
+            OrganizationSectorRatingPercentage = userOrganization.Organization.Sector.RatingPercentage;
+            OrganizationLicenseRatingPercentage = userOrganization.Organization.License.RatingPercentage;
+            OrganizationSalesPricePercentage = userOrganization.Organization.SalesPricePercentage;
             //OrganizationQualityRatingWeightedAverage = userOrganization.Organization.QualityRatingWeightedAverage;
             //OrganizationEmployeeSatisfactionRatingWeightedAverage = userOrganization.Organization.EmployeeSatisfactionRatingWeightedAverage;
             //OrganizationCustomerSatisfactionRatingWeightedAverage = userOrganization.Organization.CustomerSatisfactionRatingWeightedAverage;
@@ -29,14 +29,20 @@ namespace BusinessObjects.ViewModels
             TotalProfit = userOrganization.TotalProfit;
             TotalResourcePoolTax = userOrganization.TotalResourcePoolTax;
             TotalSalesRevenueIncludingResourcePoolTax = userOrganization.TotalSalesRevenueIncludingResourcePoolTax;
-            SectorIndexValueWeightedAverageWithNumberOfSales = userOrganization.SectorIndexValueWeightedAverageWithNumberOfSales;
-            SectorIndexValueWeightedAverageWithNumberOfSalesWeightedAverage = userOrganization.SectorIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
+            //SectorIndexValuePercentageWithNumberOfSales = userOrganization.SectorIndexValuePercentageWithNumberOfSales;
+            //SectorIndexValuePercentageWithNumberOfSalesPercentage = userOrganization.SectorIndexValuePercentageWithNumberOfSalesPercentage;
+            SectorIndexValueMultiplied = userOrganization.SectorIndexValueMultiplied;
+            SectorIndexValuePercentage = userOrganization.SectorIndexValuePercentage;
             SectorIndexIncome = userOrganization.SectorIndexIncome;
-            KnowledgeIndexValueWeightedAverageWithNumberOfSales = userOrganization.KnowledgeIndexValueWeightedAverageWithNumberOfSales;
-            KnowledgeIndexValueWeightedAverageWithNumberOfSalesWeightedAverage = userOrganization.KnowledgeIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
+            //KnowledgeIndexValuePercentageWithNumberOfSales = userOrganization.KnowledgeIndexValuePercentageWithNumberOfSales;
+            //KnowledgeIndexValuePercentageWithNumberOfSalesPercentage = userOrganization.KnowledgeIndexValuePercentageWithNumberOfSalesPercentage;
+            KnowledgeIndexValueMultiplied = userOrganization.KnowledgeIndexValueMultiplied;
+            KnowledgeIndexValuePercentage = userOrganization.KnowledgeIndexValuePercentage;
             KnowledgeIndexIncome = userOrganization.KnowledgeIndexIncome;
-            TotalCostIndexValueWeightedAverageWithNumberOfSales = userOrganization.TotalCostIndexValueWeightedAverageWithNumberOfSales;
-            TotalCostIndexValueWeightedAverageWithNumberOfSalesWeightedAverage = userOrganization.TotalCostIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
+            //TotalCostIndexValuePercentageWithNumberOfSales = userOrganization.TotalCostIndexValuePercentageWithNumberOfSales;
+            //TotalCostIndexValuePercentageWithNumberOfSalesPercentage = userOrganization.TotalCostIndexValuePercentageWithNumberOfSalesPercentage;
+            TotalCostIndexValueMultiplied = userOrganization.TotalCostIndexValueMultiplied;
+            TotalCostIndexValuePercentage = userOrganization.TotalCostIndexValuePercentage;
             TotalCostIndexIncome = userOrganization.TotalCostIndexIncome;
             //QualityIndexValueWeightedAverageWithNumberOfSales = userOrganization.QualityIndexValueWeightedAverageWithNumberOfSales;
             //QualityIndexValueWeightedAverageWithNumberOfSalesWeightedAverage = userOrganization.QualityIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
@@ -60,9 +66,9 @@ namespace BusinessObjects.ViewModels
         public decimal OrganizationSalesPrice { get; set; }
         public decimal OrganizationProfitPercentage { get; set; }
         public string OrganizationLicenseName { get; set; }
-        public decimal OrganizationSectorRatingWeightedAverage { get; set; }
-        public decimal OrganizationLicenseRatingWeightedAverage { get; set; }
-        public decimal OrganizationSalesPriceWeightedAverage { get; set; }
+        public decimal OrganizationSectorRatingPercentage { get; set; }
+        public decimal OrganizationLicenseRatingPercentage { get; set; }
+        public decimal OrganizationSalesPricePercentage { get; set; }
         //public decimal OrganizationQualityRatingWeightedAverage { get; set; }
         //public decimal OrganizationEmployeeSatisfactionRatingWeightedAverage { get; set; }
         //public decimal OrganizationCustomerSatisfactionRatingWeightedAverage { get; set; }
@@ -76,16 +82,22 @@ namespace BusinessObjects.ViewModels
         public decimal TotalResourcePoolTax { get; set; }
         public decimal TotalSalesRevenueIncludingResourcePoolTax { get; set; }
 
-        public decimal SectorIndexValueWeightedAverageWithNumberOfSales { get; set; }
-        public decimal SectorIndexValueWeightedAverageWithNumberOfSalesWeightedAverage { get; set; }
+        //public decimal SectorIndexValuePercentageWithNumberOfSales { get; set; }
+        //public decimal SectorIndexValuePercentageWithNumberOfSalesPercentage { get; set; }
+        public decimal SectorIndexValueMultiplied { get; set; }
+        public decimal SectorIndexValuePercentage { get; set; }
         public decimal SectorIndexIncome { get; set; }
 
-        public decimal KnowledgeIndexValueWeightedAverageWithNumberOfSales { get; set; }
-        public decimal KnowledgeIndexValueWeightedAverageWithNumberOfSalesWeightedAverage { get; set; }
+        //public decimal KnowledgeIndexValuePercentageWithNumberOfSales { get; set; }
+        //public decimal KnowledgeIndexValuePercentageWithNumberOfSalesPercentage { get; set; }
+        public decimal KnowledgeIndexValueMultiplied { get; set; }
+        public decimal KnowledgeIndexValuePercentage { get; set; }
         public decimal KnowledgeIndexIncome { get; set; }
 
-        public decimal TotalCostIndexValueWeightedAverageWithNumberOfSales { get; set; }
-        public decimal TotalCostIndexValueWeightedAverageWithNumberOfSalesWeightedAverage { get; set; }
+        //public decimal TotalCostIndexValuePercentageWithNumberOfSales { get; set; }
+        //public decimal TotalCostIndexValuePercentageWithNumberOfSalesPercentage { get; set; }
+        public decimal TotalCostIndexValueMultiplied { get; set; }
+        public decimal TotalCostIndexValuePercentage { get; set; }
         public decimal TotalCostIndexIncome { get; set; }
 
         //public decimal QualityIndexValueWeightedAverageWithNumberOfSales { get; set; }

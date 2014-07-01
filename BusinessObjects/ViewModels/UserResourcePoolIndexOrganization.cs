@@ -20,9 +20,11 @@ namespace BusinessObjects.ViewModels
             OrganizationName = userResourcePoolIndexOrganization.UserOrganization.Organization.Name;
             UserResourcePoolId = userResourcePoolIndexOrganization.UserResourcePoolIndex.UserResourcePoolId;
             UserResourcePoolIndexId = userResourcePoolIndexOrganization.UserResourcePoolIndex.Id;
-            IndexValueWeightedAverage = userResourcePoolIndexOrganization.ResourcePoolIndexOrganization.IndexValueWeightedAverage;
-            IndexValueWeightedAverageWithNumberOfSales = userResourcePoolIndexOrganization.IndexValueWeightedAverageWithNumberOfSales;
-            IndexValueWeightedAverageWithNumberOfSalesWeightedAverage = userResourcePoolIndexOrganization.IndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
+            ResourcePoolIndexOrganizationIndexValuePercentage = userResourcePoolIndexOrganization.ResourcePoolIndexOrganization.IndexValuePercentage;
+            //IndexValuePercentageWithNumberOfSales = userResourcePoolIndexOrganization.IndexValuePercentageWithNumberOfSales;
+            //IndexValuePercentageWithNumberOfSalesPercentage = userResourcePoolIndexOrganization.IndexValuePercentageWithNumberOfSalesPercentage;
+            IndexValueMultiplied = userResourcePoolIndexOrganization.IndexValueMultiplied;
+            IndexValuePercentage = userResourcePoolIndexOrganization.IndexValuePercentage;
             IndexIncome = userResourcePoolIndexOrganization.IndexIncome;
         }
 
@@ -37,9 +39,11 @@ namespace BusinessObjects.ViewModels
         public int UserResourcePoolId { get; set; }
         public int UserResourcePoolIndexId { get; set; }
 
-        public decimal IndexValueWeightedAverage { get; set; }
-        public decimal IndexValueWeightedAverageWithNumberOfSales { get; set; }
-        public decimal IndexValueWeightedAverageWithNumberOfSalesWeightedAverage { get; set; }
+        public decimal ResourcePoolIndexOrganizationIndexValuePercentage { get; set; }
+        //public decimal IndexValuePercentageWithNumberOfSales { get; set; }
+        //public decimal IndexValuePercentageWithNumberOfSalesPercentage { get; set; }
+        public decimal IndexValueMultiplied { get; set; }
+        public decimal IndexValuePercentage { get; set; }
         public decimal IndexIncome { get; set;}
     }
 }

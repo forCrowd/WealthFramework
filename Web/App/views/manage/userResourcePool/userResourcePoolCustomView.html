@@ -52,13 +52,13 @@
                 <table class="table">
                     <tr>
                         <th>
-                            Rating Weighted Average
+                            Rating Percentage
                         </th>
                         <th>
-                            With Nr of Sales
+                            Multiplied
                         </th>
                         <th>
-                            With Nr of Sales Weighted Average
+                            Percentage
                         </th>
                         <th>
                             Income
@@ -108,13 +108,13 @@
                 <table class="table">
                     <tr>
                         <td>
-                            {{ indexOrganization.IndexValueWeightedAverage }}
+                            {{ indexOrganization.IndexValuePercentage | percentage:2 }}
                         </td>
                         <td>
-                            {{ indexOrganization.IndexValueWeightedAverageWithNumberOfSales }}
+                            {{ indexOrganization.IndexValueMultiplied | number:2 }}
                         </td>
                         <td>
-                            {{ indexOrganization.IndexValueWeightedAverageWithNumberOfSalesWeightedAverage }}
+                            {{ indexOrganization.IndexValuePercentage | percentage:2 }}
                         </td>
                         <td>
                             {{ indexOrganization.IndexIncome }}

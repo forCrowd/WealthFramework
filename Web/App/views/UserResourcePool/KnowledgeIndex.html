@@ -49,13 +49,13 @@
             Total Sales Revenue incl. CMRP Tax
         </th>
         <th>
-            License Rating Weighted Average
+            License Rating Percentage
         </th>
         <th>
-            Knowledge Index with Nr of Sales
+            Knowledge Index Multiplied
         </th>
         <th>
-            Knowledge Index with Nr of Sales Weighted Average
+            Knowledge Index Percentage
         </th>
         <th>
             Knowledge Index Income
@@ -102,13 +102,13 @@
             {{ item.TotalSalesRevenueIncludingResourcePoolTax | number:2 }}
         </td>
         <td>
-            {{ item.OrganizationLicenseRatingWeightedAverage | percentage:2 }}
+            {{ item.OrganizationLicenseRatingPercentage | percentage:2 }}
         </td>
         <td>
-            {{ item.KnowledgeIndexValueWeightedAverageWithNumberOfSales | number:2 }}
+            {{ item.KnowledgeIndexValueMultiplied | number:2 }}
         </td>
         <td>
-            {{ item.KnowledgeIndexValueWeightedAverageWithNumberOfSalesWeightedAverage | number:2 }}
+            {{ item.KnowledgeIndexValuePercentage | percentage:2 }}
         </td>
         <td>
             {{ item.KnowledgeIndexIncome | number:2 }}

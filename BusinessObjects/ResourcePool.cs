@@ -38,6 +38,11 @@ namespace BusinessObjects
 
         /* */
 
+        public IEnumerable<Organization> OrganizationSet
+        {
+            get { return SectorSet.SelectMany(sector => sector.OrganizationSet); }
+        }
+
         #region - Indexes -
 
         public decimal SectorIndexRatingAverage
@@ -50,7 +55,7 @@ namespace BusinessObjects
             }
         }
 
-        public decimal SectorIndexRatingWeightedAverage
+        public decimal SectorIndexRatingPercentage
         {
             get
             {
@@ -70,7 +75,7 @@ namespace BusinessObjects
             }
         }
 
-        public decimal KnowledgeIndexRatingWeightedAverage
+        public decimal KnowledgeIndexRatingPercentage
         {
             get
             {
@@ -90,7 +95,7 @@ namespace BusinessObjects
             }
         }
 
-        public decimal TotalCostIndexRatingWeightedAverage
+        public decimal TotalCostIndexRatingPercentage
         {
             get
             {
@@ -205,11 +210,6 @@ namespace BusinessObjects
         //{
         //    get { return OrganizationSet.Sum(organization => organization.CustomerSatisfactionRatingAverage); }
         //}
-
-        public IEnumerable<Organization> OrganizationSet
-        {
-            get { return SectorSet.SelectMany(sector => sector.OrganizationSet); }
-        }
 
         public decimal ProductionCost
         {

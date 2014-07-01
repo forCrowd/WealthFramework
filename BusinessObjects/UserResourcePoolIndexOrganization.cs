@@ -20,21 +20,36 @@ namespace BusinessObjects
             get { return ResourcePoolIndexOrganization.ResourcePoolIndex.UserResourcePoolIndexSet.SingleOrDefault(item => item.UserResourcePool.User == UserOrganization.User); }
         }
 
-        public decimal IndexValueWeightedAverageWithNumberOfSales
+        //public decimal IndexValuePercentageWithNumberOfSales
+        //{
+        //    get
+        //    {
+        //        return ResourcePoolIndexOrganization.IndexValuePercentage * UserOrganization.NumberOfSales;
+        //    }
+        //}
+
+        //public decimal IndexValuePercentageWithNumberOfSalesPercentage
+        //{
+        //    get
+        //    {
+        //        return UserResourcePoolIndex.IndexValuePercentageWithNumberOfSales == 0
+        //            ? 0
+        //            : IndexValuePercentageWithNumberOfSales / UserResourcePoolIndex.IndexValuePercentageWithNumberOfSales;
+        //    }
+        //}
+
+        public decimal IndexValueMultiplied
         {
-            get
-            {
-                return ResourcePoolIndexOrganization.IndexValueWeightedAverage * UserOrganization.NumberOfSales;
-            }
+            get { return ResourcePoolIndexOrganization.IndexValuePercentage * UserOrganization.NumberOfSalesPercentage; }
         }
 
-        public decimal IndexValueWeightedAverageWithNumberOfSalesWeightedAverage
+        public decimal IndexValuePercentage
         {
             get
             {
-                return UserResourcePoolIndex.IndexValueWeightedAverageWithNumberOfSales == 0
+                return UserResourcePoolIndex.IndexValueMultiplied == 0
                     ? 0
-                    : IndexValueWeightedAverageWithNumberOfSales / UserResourcePoolIndex.IndexValueWeightedAverageWithNumberOfSales;
+                    : IndexValueMultiplied / UserResourcePoolIndex.IndexValueMultiplied;
             }
         }
 
@@ -46,7 +61,8 @@ namespace BusinessObjects
                 if (UserResourcePoolIndex == null)
                     return 0;
 
-                return UserResourcePoolIndex.IndexShare * IndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
+                //return UserResourcePoolIndex.IndexShare * IndexValuePercentageWithNumberOfSalesPercentage;
+                return UserResourcePoolIndex.IndexShare * IndexValuePercentage;
             }
         }
     }

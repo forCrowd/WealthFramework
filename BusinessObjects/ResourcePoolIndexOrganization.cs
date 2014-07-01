@@ -50,9 +50,9 @@ using System.Linq;
         }
 
         /// <summary>
-        /// Determines the weighted average rating of this index.
+        /// Determines the rating percentage of this index.
         /// </summary>
-        public decimal IndexValueWeightedAverage
+        public decimal IndexValuePercentage
         {
             get
             {

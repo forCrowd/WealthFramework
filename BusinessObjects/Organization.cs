@@ -77,7 +77,7 @@ namespace BusinessObjects
         /// <summary>
         /// Will be used in Total Cost Index calculation
         /// </summary>
-        public decimal SalesPriceWeightedAverage
+        public decimal SalesPricePercentage
         {
             get
             {

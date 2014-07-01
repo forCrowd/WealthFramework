@@ -46,13 +46,13 @@
             Total Sales Revenue incl. CMRP Tax
         </th>
         <th>
-            Sector Rating Weighted Average
+            Sector Rating Percentage
         </th>
         <th>
-            Sector Index with Nr of Sales
+            Sector Index Multiplied
         </th>
         <th>
-            Sector Index with Nr of Sales Weighted Average
+            Sector Index Percentage
         </th>
         <th>
             Sector Index Income
@@ -96,13 +96,13 @@
             {{ item.TotalSalesRevenueIncludingResourcePoolTax | number:2 }}
         </td>
         <td>
-            {{ item.OrganizationSectorRatingWeightedAverage | percentage:2 }}
+            {{ item.OrganizationSectorRatingPercentage | percentage:2 }}
         </td>
         <td>
-            {{ item.SectorIndexValueWeightedAverageWithNumberOfSales | number:2 }}
+            {{ item.SectorIndexValueMultiplied | number:2 }}
         </td>
         <td>
-            {{ item.SectorIndexValueWeightedAverageWithNumberOfSalesWeightedAverage | number:2 }}
+            {{ item.SectorIndexValuePercentage | percentage:2 }}
         </td>
         <td>
             {{ item.SectorIndexIncome | number:2 }}

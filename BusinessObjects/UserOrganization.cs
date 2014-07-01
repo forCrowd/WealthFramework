@@ -35,7 +35,7 @@ namespace BusinessObjects
         /* */
 
         // A bit weird navigation property.
-        // To prevent this (or ideally), there needs to be a foreign key between this class and UserOrganization (UserResourcePoolId on UserOrganization).
+        // To prevent this (or ideally), there needs to be a foreign key between this class and UserResourcePool (UserResourcePoolId on this class).
         public UserResourcePool UserResourcePool
         {
             get { return User.UserResourcePoolSet.Single(item => item.ResourcePool == Organization.Sector.ResourcePool); }
@@ -51,6 +51,16 @@ namespace BusinessObjects
                     list.Add(new UserResourcePoolIndexOrganization(this, new ResourcePoolIndexOrganization(item, Organization)));
 
                 return list;
+            }
+        }
+
+        public decimal NumberOfSalesPercentage
+        {
+            get
+            {
+                return UserResourcePool.NumberOfSales == 0
+                    ? 0
+                    : decimal.Divide(NumberOfSales, UserResourcePool.NumberOfSales);
             }
         }
 
@@ -94,54 +104,85 @@ namespace BusinessObjects
 
         #region - Sector Index -
 
-        public decimal SectorIndexValueWeightedAverageWithNumberOfSales
+        //public decimal SectorIndexValuePercentageWithNumberOfSales
+        //{
+        //    get { return Organization.Sector.RatingPercentage * NumberOfSales; }
+        //}
+
+        //public decimal SectorIndexValuePercentageWithNumberOfSalesPercentage
+        //{
+        //    get
+        //    {
+        //        return UserResourcePool.SectorIndexValuePercentageWithNumberOfSales == 0
+        //            ? 0
+        //            : SectorIndexValuePercentageWithNumberOfSales / UserResourcePool.SectorIndexValuePercentageWithNumberOfSales;
+        //    }
+        //}
+
+        public decimal SectorIndexValueMultiplied
         {
-            get
-            {
-                return Organization.Sector.RatingWeightedAverage * NumberOfSales;
-            }
+            get { return Organization.Sector.RatingPercentage * NumberOfSalesPercentage; }
         }
 
-        public decimal SectorIndexValueWeightedAverageWithNumberOfSalesWeightedAverage
+        public decimal SectorIndexValuePercentage
         {
             get
             {
-                return UserResourcePool.SectorIndexValueWeightedAverageWithNumberOfSales == 0
+                return UserResourcePool.SectorIndexValueMultiplied == 0
                     ? 0
-                    : SectorIndexValueWeightedAverageWithNumberOfSales / UserResourcePool.SectorIndexValueWeightedAverageWithNumberOfSales;
+                    : SectorIndexValueMultiplied / UserResourcePool.SectorIndexValueMultiplied;
             }
         }
 
         public decimal SectorIndexIncome
         {
-            get
-            {
-                return UserResourcePool.SectorIndexShare * SectorIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
-            }
+            //get { return UserResourcePool.SectorIndexShare * SectorIndexValuePercentageWithNumberOfSalesPercentage; }
+            get { return UserResourcePool.SectorIndexShare * SectorIndexValuePercentage; }
         }
 
         #endregion
 
         #region - Knowledge Index -
 
-        public decimal KnowledgeIndexValueWeightedAverageWithNumberOfSales
+        //public decimal KnowledgeIndexValuePercentageWithNumberOfSales
+        //{
+        //    get
+        //    {
+        //        if (Organization.License == null)
+        //            return 0;
+
+        //        return Organization.License.RatingPercentage * NumberOfSales;
+        //    }
+        //}
+
+        //public decimal KnowledgeIndexValuePercentageWithNumberOfSalesPercentage
+        //{
+        //    get
+        //    {
+        //        return UserResourcePool.KnowledgeIndexValuePercentageWithNumberOfSales == 0
+        //            ? 0
+        //            : KnowledgeIndexValuePercentageWithNumberOfSales / UserResourcePool.KnowledgeIndexValuePercentageWithNumberOfSales;
+        //    }
+        //}
+
+        public decimal KnowledgeIndexValueMultiplied
         {
             get
             {
                 if (Organization.License == null)
                     return 0;
 
-                return Organization.License.RatingWeightedAverage * NumberOfSales;
+                return Organization.License.RatingPercentage * NumberOfSalesPercentage;
             }
         }
 
-        public decimal KnowledgeIndexValueWeightedAverageWithNumberOfSalesWeightedAverage
+        public decimal KnowledgeIndexValuePercentage
         {
             get
             {
-                return UserResourcePool.KnowledgeIndexValueWeightedAverageWithNumberOfSales == 0
+                return UserResourcePool.KnowledgeIndexValueMultiplied == 0
                     ? 0
-                    : KnowledgeIndexValueWeightedAverageWithNumberOfSales / UserResourcePool.KnowledgeIndexValueWeightedAverageWithNumberOfSales;
+                    : KnowledgeIndexValueMultiplied / UserResourcePool.KnowledgeIndexValueMultiplied;
             }
         }
 
@@ -149,7 +190,8 @@ namespace BusinessObjects
         {
             get
             {
-                return UserResourcePool.KnowledgeIndexShare * KnowledgeIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
+                //return UserResourcePool.KnowledgeIndexShare * KnowledgeIndexValuePercentageWithNumberOfSalesPercentage;
+                return UserResourcePool.KnowledgeIndexShare * KnowledgeIndexValuePercentage;
             }
         }
 
@@ -157,21 +199,36 @@ namespace BusinessObjects
 
         #region - Total Cost Index -
 
-        public decimal TotalCostIndexValueWeightedAverageWithNumberOfSales
+        //public decimal TotalCostIndexValuePercentageWithNumberOfSales
+        //{
+        //    get
+        //    {
+        //        return Organization.SalesPricePercentage * NumberOfSales;
+        //    }
+        //}
+
+        //public decimal TotalCostIndexValuePercentageWithNumberOfSalesPercentage
+        //{
+        //    get
+        //    {
+        //        return UserResourcePool.TotalCostIndexValuePercentageWithNumberOfSales == 0
+        //            ? 0
+        //            : TotalCostIndexValuePercentageWithNumberOfSales / UserResourcePool.TotalCostIndexValuePercentageWithNumberOfSales;
+        //    }
+        //}
+
+        public decimal TotalCostIndexValueMultiplied
         {
-            get
-            {
-                return Organization.SalesPriceWeightedAverage * NumberOfSales;
-            }
+            get { return Organization.SalesPricePercentage * NumberOfSalesPercentage; }
         }
 
-        public decimal TotalCostIndexValueWeightedAverageWithNumberOfSalesWeightedAverage
+        public decimal TotalCostIndexValuePercentage
         {
             get
             {
-                return UserResourcePool.TotalCostIndexValueWeightedAverageWithNumberOfSales == 0
+                return UserResourcePool.TotalCostIndexValueMultiplied == 0
                     ? 0
-                    : TotalCostIndexValueWeightedAverageWithNumberOfSales / UserResourcePool.TotalCostIndexValueWeightedAverageWithNumberOfSales;
+                    : TotalCostIndexValueMultiplied / UserResourcePool.TotalCostIndexValueMultiplied;
             }
         }
 
@@ -179,7 +236,8 @@ namespace BusinessObjects
         {
             get
             {
-                return UserResourcePool.TotalCostIndexShare * TotalCostIndexValueWeightedAverageWithNumberOfSalesWeightedAverage;
+                //return UserResourcePool.TotalCostIndexShare * TotalCostIndexValuePercentageWithNumberOfSalesPercentage;
+                return UserResourcePool.TotalCostIndexShare * TotalCostIndexValuePercentage;
             }
         }
 

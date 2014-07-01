@@ -6,6 +6,6 @@
     public partial class UserResourcePoolIndexDto
     {
         public decimal IndexShare { get; set; }
-        public decimal IndexValueWeightedAverageWithNumberOfSales { get; set; }
+        public decimal IndexValueMultiplied { get; set; }
     }
 }

@@ -51,12 +51,17 @@ namespace BusinessObjects
 
         public decimal IndexShare
         {
-            get { return UserResourcePool.TotalResourcePoolTax * ResourcePoolIndex.IndexRatingWeightedAverage; }
+            get { return UserResourcePool.TotalResourcePoolTax * ResourcePoolIndex.IndexRatingPercentage; }
         }
 
-        public decimal IndexValueWeightedAverageWithNumberOfSales
+        //public decimal IndexValuePercentageWithNumberOfSales
+        //{
+        //    get { return UserOrganizationResourcePoolIndexOrganizationSet.Sum(item => item.IndexValuePercentageWithNumberOfSales); }
+        //}
+
+        public decimal IndexValueMultiplied
         {
-            get { return UserOrganizationResourcePoolIndexOrganizationSet.Sum(item => item.IndexValueWeightedAverageWithNumberOfSales); }
+            get { return UserOrganizationResourcePoolIndexOrganizationSet.Sum(item => item.IndexValueMultiplied); }
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Web.Controllers.Api
                     {
                         IndexRatingCount = item.IndexRatingCount,
                         IndexRatingAverage = item.IndexRatingAverage,
-                        IndexRatingWeightedAverage = item.IndexRatingWeightedAverage,
+                        IndexRatingPercentage = item.IndexRatingPercentage,
                         IndexValueAverage = item.IndexValueAverage
                     })
                 ;
@@ -75,7 +75,7 @@ namespace Web.Controllers.Api
             return list.Select(item => new UserResourcePoolIndexDto(item)
             {
                 IndexShare = item.IndexShare,
-                IndexValueWeightedAverageWithNumberOfSales = item.IndexValueWeightedAverageWithNumberOfSales
+                IndexValueMultiplied = item.IndexValueMultiplied
             });
         }
 

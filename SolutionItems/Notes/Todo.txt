@@ -71,18 +71,14 @@ UserResourcePoolIndex..ForeignKey("dbo.ResourcePoolIndex", t => t.ResourcePoolIn
 UserResourcePoolIndexValue.ForeignKey("dbo.Organization", t => t.OrganizationId, cascadeDelete: false)
 
 . should cmrp rate be on user level?
+.. there is no average for cmrp rate for now?
 
 . what happens if the resource pool index was created but not rated yet?
 
 . handle all userresourcepool types in one page?
-
-. define sector + knowledge + total cost as a semi dynamic index?
+.. define sector + knowledge + total cost as a semi dynamic index?
 
 . inserting a new userresourcepoolindex gave an error?
-
-. try to fix the following case and check ?!
-.. about indexvalue income calculation, there are two weighted average calculation, couldn't be only one? weighted -> weighted * number of sales -> weightedwithnumberofsales weighted?
-.. THIS MIGHT BE USEFUL IN CASE OF BIG NUMBEROFSALES NUMBERS - TO PREVENT HAVING DECIMAL RANGE ISSUES? BUT CAN HAVE BETTER NAMING?
 
 ---
 sector index - just name and the rating

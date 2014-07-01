@@ -11,13 +11,13 @@ namespace BusinessObjects.ViewModels
             Name = resourcePoolIndex.Name;
             IndexRatingCount = resourcePoolIndex.IndexRatingCount;
             IndexRatingAverage = resourcePoolIndex.IndexRatingAverage;
-            IndexRatingWeightedAverage = resourcePoolIndex.IndexRatingWeightedAverage;
+            IndexRatingPercentage = resourcePoolIndex.IndexRatingPercentage;
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
         public decimal IndexRatingCount { get; set; }
         public decimal IndexRatingAverage { get; set; }
-        public decimal IndexRatingWeightedAverage { get; set; }
+        public decimal IndexRatingPercentage { get; set; }
     }
 }
