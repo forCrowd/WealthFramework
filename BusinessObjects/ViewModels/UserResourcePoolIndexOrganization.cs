@@ -20,7 +20,7 @@ namespace BusinessObjects.ViewModels
             OrganizationName = userResourcePoolIndexOrganization.UserOrganization.Organization.Name;
             UserResourcePoolId = userResourcePoolIndexOrganization.UserResourcePoolIndex.UserResourcePoolId;
             UserResourcePoolIndexId = userResourcePoolIndexOrganization.UserResourcePoolIndex.Id;
-            ResourcePoolIndexOrganizationIndexValuePercentage = userResourcePoolIndexOrganization.ResourcePoolIndexOrganization.IndexValuePercentage;
+            //ResourcePoolIndexOrganizationIndexValuePercentage = userResourcePoolIndexOrganization.ResourcePoolIndexOrganization.IndexValuePercentage;
             //IndexValuePercentageWithNumberOfSales = userResourcePoolIndexOrganization.IndexValuePercentageWithNumberOfSales;
             //IndexValuePercentageWithNumberOfSalesPercentage = userResourcePoolIndexOrganization.IndexValuePercentageWithNumberOfSalesPercentage;
             IndexValueMultiplied = userResourcePoolIndexOrganization.IndexValueMultiplied;

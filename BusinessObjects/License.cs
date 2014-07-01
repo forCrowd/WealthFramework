@@ -52,9 +52,11 @@ namespace BusinessObjects
         {
             get
             {
-                return ResourcePool.LicenseRatingAverage == 0
+                return ResourcePool.KnowledgeIndex == null
                     ? 0
-                    : RatingAverage / ResourcePool.LicenseRatingAverage;
+                    : ResourcePool.KnowledgeIndex.IndexRatingAverage == 0
+                    ? 0
+                    : RatingAverage / ResourcePool.KnowledgeIndex.IndexRatingAverage;
             }
         }
     }

@@ -81,9 +81,11 @@ namespace BusinessObjects
         {
             get
             {
-                return ResourcePool.SalesPrice == 0
+                return ResourcePool.TotalCostIndex == null
                     ? 0
-                    : 1 - (SalesPrice / ResourcePool.SalesPrice);
+                    : ResourcePool.TotalCostIndex.IndexValueAverage == 0
+                    ? 0
+                    : 1 - (SalesPrice / ResourcePool.TotalCostIndex.IndexValueAverage);
             }
         }
 

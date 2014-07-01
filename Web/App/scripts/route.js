@@ -9,9 +9,11 @@
         // Routes
         $routeProvider
 
+            /* Content */
             .when('/', { templateUrl: getContentTemplateUrl })
             .when('/content/:key/', { templateUrl: getContentTemplateUrl })
 
+            /* Account */
             .when('/account/register', { templateUrl: '/App/views/account/register.html', controller: 'registerController as vm' })
             .when('/account/login', { templateUrl: '/App/views/account/login.html', controller: 'loginController as vm' })
             .when('/account/accountEdit', { templateUrl: '/App/views/account/accountEdit.html', controller: 'accountEditController as vm' })
@@ -26,11 +28,6 @@
             .when('/manage/:entity/:action', { templateUrl: getManageTemplateUrl })
             .when('/manage/:entity/:action/:Id', { templateUrl: getManageTemplateUrl })
 
-            .when('/SectorIndex', { templateUrl: '/App/views/UserResourcePool/SectorIndex.html', controller: 'userResourcePoolController as vm' })
-            .when('/KnowledgeIndex', { templateUrl: '/App/views/UserResourcePool/KnowledgeIndex.html', controller: 'userResourcePoolController as vm' })
-            .when('/TotalCostIndex', { templateUrl: '/App/views/UserResourcePool/TotalCostIndex.html', controller: 'userResourcePoolController as vm' })
-            .when('/AllInOne', { templateUrl: '/App/views/UserResourcePool/AllInOne.html', controller: 'userResourcePoolController as vm' })
-
             .otherwise({ redirectTo: '/' });
 
         // Html5Mode is on, if supported (# will not be used)
@@ -41,8 +38,8 @@
         function getManageTemplateUrl(params) {
 
             var templateUrl = '';
-
             var action = 'list';
+
             if (typeof params.action !== 'undefined')
                 action = params.action;
 

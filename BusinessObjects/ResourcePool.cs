@@ -45,65 +45,83 @@ namespace BusinessObjects
 
         #region - Indexes -
 
-        public decimal SectorIndexRatingAverage
+        public ResourcePoolIndex SectorIndex
         {
-            get
-            {
-                return UserResourcePoolSet.Any()
-                    ? UserResourcePoolSet.Average(item => item.SectorIndexRating)
-                    : 0;
-            }
+            // TODO Static types can only be defined once per ResourcePool
+            get { return ResourcePoolIndexSet.SingleOrDefault(item => item.ResourcePoolIndexType == (byte)ResourcePoolIndexType.SectorIndex); }
         }
 
-        public decimal SectorIndexRatingPercentage
+        public ResourcePoolIndex KnowledgeIndex
         {
-            get
-            {
-                return TotalIndexRatingAverage == 0
-                    ? 0
-                    : SectorIndexRatingAverage / TotalIndexRatingAverage;
-            }
-        }
-        
-        public decimal KnowledgeIndexRatingAverage
-        {
-            get
-            {
-                return UserResourcePoolSet.Any()
-                    ? UserResourcePoolSet.Average(item => item.KnowledgeIndexRating)
-                    : 0;
-            }
+            // TODO Static types can only be defined once per ResourcePool
+            get { return ResourcePoolIndexSet.SingleOrDefault(item => item.ResourcePoolIndexType == (byte)ResourcePoolIndexType.KnowledgeIndex); }
         }
 
-        public decimal KnowledgeIndexRatingPercentage
+        public ResourcePoolIndex TotalCostIndex
         {
-            get
-            {
-                return TotalIndexRatingAverage == 0
-                    ? 0
-                    : KnowledgeIndexRatingAverage / TotalIndexRatingAverage;
-            }
+            // TODO Static types can only be defined once per ResourcePool
+            get { return ResourcePoolIndexSet.SingleOrDefault(item => item.ResourcePoolIndexType == (byte)ResourcePoolIndexType.TotalCostIndex); }
         }
 
-        public decimal TotalCostIndexRatingAverage
-        {
-            get
-            {
-                return UserResourcePoolSet.Any()
-                    ? UserResourcePoolSet.Average(item => item.TotalCostIndexRating)
-                    : 0;
-            }
-        }
+        //public decimal SectorIndexRatingAverage
+        //{
+        //    get
+        //    {
+        //        return UserResourcePoolSet.Any()
+        //            ? UserResourcePoolSet.Average(item => item.SectorIndexRating)
+        //            : 0;
+        //    }
+        //}
 
-        public decimal TotalCostIndexRatingPercentage
-        {
-            get
-            {
-                return TotalIndexRatingAverage == 0
-                    ? 0
-                    : TotalCostIndexRatingAverage / TotalIndexRatingAverage;
-            }
-        }
+        //public decimal SectorIndexRatingPercentage
+        //{
+        //    get
+        //    {
+        //        return TotalIndexRatingAverage == 0
+        //            ? 0
+        //            : SectorIndexRatingAverage / TotalIndexRatingAverage;
+        //    }
+        //}
+
+        //public decimal KnowledgeIndexRatingAverage
+        //{
+        //    get
+        //    {
+        //        return UserResourcePoolSet.Any()
+        //            ? UserResourcePoolSet.Average(item => item.KnowledgeIndexRating)
+        //            : 0;
+        //    }
+        //}
+
+        //public decimal KnowledgeIndexRatingPercentage
+        //{
+        //    get
+        //    {
+        //        return TotalIndexRatingAverage == 0
+        //            ? 0
+        //            : KnowledgeIndexRatingAverage / TotalIndexRatingAverage;
+        //    }
+        //}
+
+        //public decimal TotalCostIndexRatingAverage
+        //{
+        //    get
+        //    {
+        //        return UserResourcePoolSet.Any()
+        //            ? UserResourcePoolSet.Average(item => item.TotalCostIndexRating)
+        //            : 0;
+        //    }
+        //}
+
+        //public decimal TotalCostIndexRatingPercentage
+        //{
+        //    get
+        //    {
+        //        return TotalIndexRatingAverage == 0
+        //            ? 0
+        //            : TotalCostIndexRatingAverage / TotalIndexRatingAverage;
+        //    }
+        //}
 
         //public decimal QualityIndexRatingAverage
         //{
@@ -174,27 +192,31 @@ namespace BusinessObjects
         {
             get
             {
-                return SectorIndexRatingAverage
-                    + KnowledgeIndexRatingAverage
-                    + TotalCostIndexRatingAverage
+                return
+                    //SectorIndexRatingAverage
+                    //+
+                    //KnowledgeIndexRatingAverage
+                    //+
+                    //TotalCostIndexRatingAverage
                     //+ QualityIndexRatingAverage
                     //+ EmployeeSatisfactionIndexRatingAverage
                     //+ CustomerSatisfactionIndexRatingAverage
-                    + IndexRatingAverage;
+                    //+
+                    IndexRatingAverage;
             }
         }
 
         #endregion
 
-        public decimal SectorRatingAverage
-        {
-            get { return SectorSet.Sum(sector => sector.RatingAverage); }
-        }
+        //public decimal SectorRatingAverage
+        //{
+        //    get { return SectorSet.Sum(sector => sector.RatingAverage); }
+        //}
 
-        public decimal LicenseRatingAverage
-        {
-            get { return LicenseSet.Sum(license => license.RatingAverage); }
-        }
+        //public decimal LicenseRatingAverage
+        //{
+        //    get { return LicenseSet.Sum(license => license.RatingAverage); }
+        //}
 
         //public decimal QualityRatingAverage
         //{

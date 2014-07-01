@@ -21,6 +21,9 @@
             <th>
                 Resource Pool Index
             </th>
+            <th>
+                Resource Pool Index Type
+            </th>
             <th></th>
         </tr>
         <tr data-ng-repeat="resourcePoolIndex in vm.resourcePoolIndexSet">
@@ -29,6 +32,9 @@
             </td>
             <td>
                 {{ resourcePoolIndex.Name }}
+            </td>
+            <td>
+                {{ resourcePoolIndex.ResourcePoolIndexType }}
             </td>
             <td>
                 <a href="/manage/resourcePoolIndex/edit/{{ resourcePoolIndex.Id }}">Edit</a> |

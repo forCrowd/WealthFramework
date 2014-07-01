@@ -102,6 +102,7 @@
     <Compile Include="License.cs" />
     <Compile Include="Attributes\ODataControllerAuthorizationAttribute.cs" />
     <Compile Include="Organization.cs" />
+    <Compile Include="ResourcePoolIndexType.cs" />
     <Compile Include="ResourcePoolIndexOrganization.cs" />
     <Compile Include="ResourcePoolIndex.cs" />
     <Compile Include="ResourcePool.cs" />

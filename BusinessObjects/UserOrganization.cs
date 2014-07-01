@@ -119,26 +119,26 @@ namespace BusinessObjects
         //    }
         //}
 
-        public decimal SectorIndexValueMultiplied
-        {
-            get { return Organization.Sector.RatingPercentage * NumberOfSalesPercentage; }
-        }
+        //public decimal SectorIndexValueMultiplied
+        //{
+        //    get { return Organization.Sector.RatingPercentage * NumberOfSalesPercentage; }
+        //}
 
-        public decimal SectorIndexValuePercentage
-        {
-            get
-            {
-                return UserResourcePool.SectorIndexValueMultiplied == 0
-                    ? 0
-                    : SectorIndexValueMultiplied / UserResourcePool.SectorIndexValueMultiplied;
-            }
-        }
+        //public decimal SectorIndexValuePercentage
+        //{
+        //    get
+        //    {
+        //        return UserResourcePool.SectorIndexValueMultiplied == 0
+        //            ? 0
+        //            : SectorIndexValueMultiplied / UserResourcePool.SectorIndexValueMultiplied;
+        //    }
+        //}
 
-        public decimal SectorIndexIncome
-        {
-            //get { return UserResourcePool.SectorIndexShare * SectorIndexValuePercentageWithNumberOfSalesPercentage; }
-            get { return UserResourcePool.SectorIndexShare * SectorIndexValuePercentage; }
-        }
+        //public decimal SectorIndexIncome
+        //{
+        //    //get { return UserResourcePool.SectorIndexShare * SectorIndexValuePercentageWithNumberOfSalesPercentage; }
+        //    get { return UserResourcePool.SectorIndexShare * SectorIndexValuePercentage; }
+        //}
 
         #endregion
 
@@ -165,35 +165,35 @@ namespace BusinessObjects
         //    }
         //}
 
-        public decimal KnowledgeIndexValueMultiplied
-        {
-            get
-            {
-                if (Organization.License == null)
-                    return 0;
+        //public decimal KnowledgeIndexValueMultiplied
+        //{
+        //    get
+        //    {
+        //        if (Organization.License == null)
+        //            return 0;
 
-                return Organization.License.RatingPercentage * NumberOfSalesPercentage;
-            }
-        }
+        //        return Organization.License.RatingPercentage * NumberOfSalesPercentage;
+        //    }
+        //}
 
-        public decimal KnowledgeIndexValuePercentage
-        {
-            get
-            {
-                return UserResourcePool.KnowledgeIndexValueMultiplied == 0
-                    ? 0
-                    : KnowledgeIndexValueMultiplied / UserResourcePool.KnowledgeIndexValueMultiplied;
-            }
-        }
+        //public decimal KnowledgeIndexValuePercentage
+        //{
+        //    get
+        //    {
+        //        return UserResourcePool.KnowledgeIndexValueMultiplied == 0
+        //            ? 0
+        //            : KnowledgeIndexValueMultiplied / UserResourcePool.KnowledgeIndexValueMultiplied;
+        //    }
+        //}
 
-        public decimal KnowledgeIndexIncome
-        {
-            get
-            {
-                //return UserResourcePool.KnowledgeIndexShare * KnowledgeIndexValuePercentageWithNumberOfSalesPercentage;
-                return UserResourcePool.KnowledgeIndexShare * KnowledgeIndexValuePercentage;
-            }
-        }
+        //public decimal KnowledgeIndexIncome
+        //{
+        //    get
+        //    {
+        //        //return UserResourcePool.KnowledgeIndexShare * KnowledgeIndexValuePercentageWithNumberOfSalesPercentage;
+        //        return UserResourcePool.KnowledgeIndexShare * KnowledgeIndexValuePercentage;
+        //    }
+        //}
 
         #endregion
 
@@ -217,29 +217,29 @@ namespace BusinessObjects
         //    }
         //}
 
-        public decimal TotalCostIndexValueMultiplied
-        {
-            get { return Organization.SalesPricePercentage * NumberOfSalesPercentage; }
-        }
+        //public decimal TotalCostIndexValueMultiplied
+        //{
+        //    get { return Organization.SalesPricePercentage * NumberOfSalesPercentage; }
+        //}
 
-        public decimal TotalCostIndexValuePercentage
-        {
-            get
-            {
-                return UserResourcePool.TotalCostIndexValueMultiplied == 0
-                    ? 0
-                    : TotalCostIndexValueMultiplied / UserResourcePool.TotalCostIndexValueMultiplied;
-            }
-        }
+        //public decimal TotalCostIndexValuePercentage
+        //{
+        //    get
+        //    {
+        //        return UserResourcePool.TotalCostIndexValueMultiplied == 0
+        //            ? 0
+        //            : TotalCostIndexValueMultiplied / UserResourcePool.TotalCostIndexValueMultiplied;
+        //    }
+        //}
 
-        public decimal TotalCostIndexIncome
-        {
-            get
-            {
-                //return UserResourcePool.TotalCostIndexShare * TotalCostIndexValuePercentageWithNumberOfSalesPercentage;
-                return UserResourcePool.TotalCostIndexShare * TotalCostIndexValuePercentage;
-            }
-        }
+        //public decimal TotalCostIndexIncome
+        //{
+        //    get
+        //    {
+        //        //return UserResourcePool.TotalCostIndexShare * TotalCostIndexValuePercentageWithNumberOfSalesPercentage;
+        //        return UserResourcePool.TotalCostIndexShare * TotalCostIndexValuePercentage;
+        //    }
+        //}
 
         #endregion
 
@@ -345,13 +345,17 @@ namespace BusinessObjects
         {
             get
             {
-                return SectorIndexIncome
-                    + KnowledgeIndexIncome
-                    + TotalCostIndexIncome
+                return
+                    //SectorIndexIncome
+                    //+
+                    //KnowledgeIndexIncome
+                    //+
+                    //TotalCostIndexIncome
                     //+ QualityIndexIncome
                     //+ EmployeeSatisfactionIndexIncome
                     //+ CustomerSatisfactionIndexIncome
-                    + IndexIncome;
+                    //+
+                    IndexIncome;
             }
         }
 

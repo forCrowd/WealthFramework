@@ -1,6 +1,7 @@
 namespace BusinessObjects
 {
     using BusinessObjects.Attributes;
+    using System;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
@@ -40,7 +41,22 @@ namespace BusinessObjects
 
         public decimal IndexValueMultiplied
         {
-            get { return ResourcePoolIndexOrganization.IndexValuePercentage * UserOrganization.NumberOfSalesPercentage; }
+            get
+            {
+                switch (UserResourcePoolIndex.ResourcePoolIndex.ResourcePoolIndexType)
+                {
+                    case (byte)ResourcePoolIndexType.SectorIndex:
+                        return UserOrganization.Organization.Sector.RatingPercentage * UserOrganization.NumberOfSalesPercentage;
+                    case (byte)ResourcePoolIndexType.KnowledgeIndex:
+                        return UserOrganization.Organization.License.RatingPercentage * UserOrganization.NumberOfSalesPercentage;
+                    case (byte)ResourcePoolIndexType.TotalCostIndex:
+                        return UserOrganization.Organization.SalesPricePercentage * UserOrganization.NumberOfSalesPercentage;
+                    case (byte)ResourcePoolIndexType.DynamicIndex:
+                        return ResourcePoolIndexOrganization.IndexValuePercentage * UserOrganization.NumberOfSalesPercentage;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
         }
 
         public decimal IndexValuePercentage

@@ -48,9 +48,11 @@ namespace BusinessObjects
         {
             get
             {
-                return ResourcePool.SectorRatingAverage == 0
+                return ResourcePool.SectorIndex == null
                     ? 0
-                    : RatingAverage / ResourcePool.SectorRatingAverage;
+                    : ResourcePool.SectorIndex.IndexRatingAverage == 0
+                    ? 0
+                    : RatingAverage / ResourcePool.SectorIndex.IndexRatingAverage;
             }
         }
     }

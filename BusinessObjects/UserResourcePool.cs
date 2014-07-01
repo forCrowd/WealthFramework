@@ -120,58 +120,58 @@ namespace BusinessObjects
 
         #region - Sector Index -
 
-        public decimal SectorIndexShare
-        {
-            get { return TotalResourcePoolTax * ResourcePool.SectorIndexRatingPercentage; }
-        }
+        //public decimal SectorIndexShare
+        //{
+        //    get { return TotalResourcePoolTax * ResourcePool.SectorIndexRatingPercentage; }
+        //}
 
         //public decimal SectorIndexValuePercentageWithNumberOfSales
         //{
         //    get { return UserOrganizationSet.Sum(item => item.SectorIndexValuePercentageWithNumberOfSales); }
         //}
 
-        public decimal SectorIndexValueMultiplied
-        {
-            get { return UserOrganizationSet.Sum(item => item.SectorIndexValueMultiplied); }
-        }
+        //public decimal SectorIndexValueMultiplied
+        //{
+        //    get { return UserOrganizationSet.Sum(item => item.SectorIndexValueMultiplied); }
+        //}
 
         #endregion
 
         #region - Knowledge Index -
 
-        public decimal KnowledgeIndexShare
-        {
-            get { return TotalResourcePoolTax * ResourcePool.KnowledgeIndexRatingPercentage; }
-        }
+        //public decimal KnowledgeIndexShare
+        //{
+        //    get { return TotalResourcePoolTax * ResourcePool.KnowledgeIndexRatingPercentage; }
+        //}
 
         //public decimal KnowledgeIndexValuePercentageWithNumberOfSales
         //{
         //    get { return UserOrganizationSet.Sum(item => item.KnowledgeIndexValuePercentageWithNumberOfSales); }
         //}
 
-        public decimal KnowledgeIndexValueMultiplied
-        {
-            get { return UserOrganizationSet.Sum(item => item.KnowledgeIndexValueMultiplied); }
-        }
+        //public decimal KnowledgeIndexValueMultiplied
+        //{
+        //    get { return UserOrganizationSet.Sum(item => item.KnowledgeIndexValueMultiplied); }
+        //}
 
         #endregion
 
         #region - Total Cost Index -
 
-        public decimal TotalCostIndexShare
-        {
-            get { return TotalResourcePoolTax * ResourcePool.TotalCostIndexRatingPercentage; }
-        }
-        
-        //public decimal TotalCostIndexValuePercentageWithNumberOfSales
+        //public decimal TotalCostIndexShare
         //{
-        //    get { return UserOrganizationSet.Sum(item => item.TotalCostIndexValuePercentageWithNumberOfSales); }
+        //    get { return TotalResourcePoolTax * ResourcePool.TotalCostIndexRatingPercentage; }
         //}
+        
+        ////public decimal TotalCostIndexValuePercentageWithNumberOfSales
+        ////{
+        ////    get { return UserOrganizationSet.Sum(item => item.TotalCostIndexValuePercentageWithNumberOfSales); }
+        ////}
 
-        public decimal TotalCostIndexValueMultiplied
-        {
-            get { return UserOrganizationSet.Sum(item => item.TotalCostIndexValueMultiplied); }
-        }
+        //public decimal TotalCostIndexValueMultiplied
+        //{
+        //    get { return UserOrganizationSet.Sum(item => item.TotalCostIndexValueMultiplied); }
+        //}
         
         #endregion
 

@@ -11,7 +11,7 @@
         {
             var resourcePool = new ResourcePool();
 
-            var resourcePoolIndex = new ResourcePoolIndex() {   ResourcePool = resourcePool };
+            var resourcePoolIndex = new ResourcePoolIndex() { ResourcePool = resourcePool, ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicIndex };
             resourcePool.ResourcePoolIndexSet.Add(resourcePoolIndex);
 
             var sector = new Sector() { ResourcePool = resourcePool };
@@ -126,7 +126,7 @@
         {
             var resourcePool = new ResourcePool();
 
-            var resourcePoolIndex = new ResourcePoolIndex() { ResourcePool = resourcePool };
+            var resourcePoolIndex = new ResourcePoolIndex() { ResourcePool = resourcePool, ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicIndex };
             resourcePool.ResourcePoolIndexSet.Add(resourcePoolIndex);
 
             var sector = new Sector() { ResourcePool = resourcePool };
@@ -314,10 +314,10 @@
         {
             var resourcePool = new ResourcePool();
 
-            var resourcePoolIndex1 = new ResourcePoolIndex() { ResourcePool = resourcePool };
+            var resourcePoolIndex1 = new ResourcePoolIndex() { ResourcePool = resourcePool, ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicIndex };
             resourcePool.ResourcePoolIndexSet.Add(resourcePoolIndex1);
 
-            var resourcePoolIndex2 = new ResourcePoolIndex() { ResourcePool = resourcePool };
+            var resourcePoolIndex2 = new ResourcePoolIndex() { ResourcePool = resourcePool, ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicIndex };
             resourcePool.ResourcePoolIndexSet.Add(resourcePoolIndex2);
 
             var sector = new Sector() { ResourcePool = resourcePool };

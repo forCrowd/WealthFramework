@@ -1,6 +1,7 @@
 namespace BusinessObjects
 {
     using BusinessObjects.Attributes;
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
@@ -25,6 +26,10 @@ namespace BusinessObjects
         [StringLength(50)]
         [Display(Name = "Resource Pool Index")]
         public string Name { get; set; }
+
+        [Required]
+        [Display(Name = "Resource Pool Index Type")]
+        public byte ResourcePoolIndexType { get; set; }
 
         public virtual ResourcePool ResourcePool { get; set; }
         public virtual ICollection<UserResourcePoolIndex> UserResourcePoolIndexSet { get; set; }
@@ -76,7 +81,21 @@ namespace BusinessObjects
 
         public decimal IndexValueAverage
         {
-            get { return ResourcePoolIndexOrganizationSet.Sum(item => item.IndexValueAverage); }
+            get
+            {
+                switch (ResourcePoolIndexType)
+                {
+                    case (byte)BusinessObjects.ResourcePoolIndexType.SectorIndex:
+                        return ResourcePool.SectorSet.Sum(item => item.RatingAverage);
+                    case (byte)BusinessObjects.ResourcePoolIndexType.KnowledgeIndex:
+                        return ResourcePool.LicenseSet.Sum(item => item.RatingAverage);
+                    case (byte)BusinessObjects.ResourcePoolIndexType.TotalCostIndex:
+                        return ResourcePool.OrganizationSet.Sum(item => item.SalesPrice);
+                    case (byte)BusinessObjects.ResourcePoolIndexType.DynamicIndex:
+                        return ResourcePoolIndexOrganizationSet.Sum(item => item.IndexValueAverage);
+                    default: throw new ArgumentOutOfRangeException();
+                }
+            }
         }
     }
 }

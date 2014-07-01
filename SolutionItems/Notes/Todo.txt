@@ -19,15 +19,15 @@ either work with Ids, or try to work on merging unitofwork classes
 . handling concurrency can be improved - load the new record and let the user choose which one is correct
 . html cache break - angular scripts + views etc.?
 . try to create initial data from facade, instead of dataobjects layer
-. create sample data with average rating value? or make the rating nullable
 . multiple pk for user organization + user sector + user license + user resource pool organization + resource pool organization
 . table structure - by this way, userresourcepool could reach to usersectorrating easily?;
 user - resourcepool - userresourcepoolId
 userresourcepoolsector -> userresourcepoolId sectorId rating
 userresourcepoollicense -> userresourcepoolId licenseId rating
 userresourcepoolorganization -> userresourcepoolId organizationId rating
-. exclude sample user from rating averages - or make them always 50 / 50?
+
 . using texbox to update chart data didn't work, it breaks the chart?
+
 . authorize only for admins didnt work - license, organization, resourcepool, sector
 any user should be able to access them. currently definitions link is only visible to admins - according to this, normal user may not use post action for instance? check these rules later on
 . try to have a standard for css usage + html layout formats + also js script conventions
@@ -35,11 +35,15 @@ any user should be able to access them. currently definitions link is only visib
 . update namespaces - ?.wealtheconomy.
 . enable auto test for appveyor - currently it fails probably because it can't create the db?
 . in some delete cases, odatacontroller returns NotFound error? although it's deleted, the record stays on the page until refreshing the page
+
+. create sample data with average rating value? or make the rating nullable
+. exclude sample user from rating averages - or make them always 50 / 50?
 . how to calculate average index? some people may enter 1,2,3 - some may enter 100,200,300? always force them to enter percentage?
 or always calculate the total average based on invidiuals percentage? or both?
 . should cmrp rate be on user level? if not, there is no average for cmrp rate for now?
 . in 'not rated index' case, userResourcePool view doesn't show the result
 . in 'not rated organizations' case, it's collecting the tax but not giving it back? - basically how to treat an organization that doesn't have any rating?
+
 . __migrationhistory createdon field error - it seems there is not much to do, it also might be about glimpse?
 . upgrade to .net 4.5.1? APM doesn't have it right now
 http://msdn.microsoft.com/en-us/library/hh925568%28v=vs.110%29.aspx
@@ -72,9 +76,6 @@ config.EnableQuerySupport(queryAttribute);
 . cascade delete alterations;
 UserResourcePoolIndex.ForeignKey("dbo.ResourcePoolIndex", t => t.ResourcePoolIndexId, cascadeDelete: false)
 UserResourcePoolIndexValue.ForeignKey("dbo.Organization", t => t.OrganizationId, cascadeDelete: false)
-
-. handle all userresourcepool types in one page?
-.. define sector + knowledge + total cost as a semi dynamic index?
 
 . inserting a new userresourcepoolindex gave an error?
 

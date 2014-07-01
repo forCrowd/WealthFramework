@@ -1,7 +1,8 @@
 namespace BusinessObjects
 {
+    using System;
     using System.Collections.Generic;
-using System.Linq;
+    using System.Linq;
 
     public class ResourcePoolIndexOrganization
     {
@@ -56,6 +57,9 @@ using System.Linq;
         {
             get
             {
+                if (ResourcePoolIndex.ResourcePoolIndexType != (byte)ResourcePoolIndexType.DynamicIndex)
+                    throw new InvalidOperationException("Invalid index type");
+
                 return ResourcePoolIndex.IndexValueAverage == 0
                     ? 0
                     : IndexValueAverage / ResourcePoolIndex.IndexValueAverage;
