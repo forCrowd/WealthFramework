@@ -115,10 +115,7 @@
                 {
                     User = targetUser,
                     ResourcePool = sampleUserResourcePool.ResourcePool,
-                    ResourcePoolRate = sampleUserResourcePool.ResourcePoolRate,
-                    SectorIndexRating = sampleUserResourcePool.SectorIndexRating,
-                    KnowledgeIndexRating = sampleUserResourcePool.KnowledgeIndexRating,
-                    TotalCostIndexRating = sampleUserResourcePool.TotalCostIndexRating
+                    ResourcePoolRate = sampleUserResourcePool.ResourcePoolRate
                 };
                 UserResourcePoolRepository.Insert(userResourcePool);
             }

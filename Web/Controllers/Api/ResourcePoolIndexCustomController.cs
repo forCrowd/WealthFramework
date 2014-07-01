@@ -27,7 +27,7 @@ namespace Web.Controllers.Api
                         IndexRatingCount = item.IndexRatingCount,
                         IndexRatingAverage = item.IndexRatingAverage,
                         IndexRatingPercentage = item.IndexRatingPercentage,
-                        IndexValueAverage = item.IndexValueAverage
+                        IndexValue = item.IndexValue
                     })
                 ;
             return list;

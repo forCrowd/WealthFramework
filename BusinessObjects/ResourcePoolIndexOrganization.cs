@@ -15,7 +15,7 @@ namespace BusinessObjects
         public string ResourcePoolName { get { return ResourcePoolIndex.ResourcePool.Name; } }
         public string ResourcePoolIndexName { get { return ResourcePoolIndex.Name; } }
         public string OrganizationName { get { return Organization.Name; } }
-        public decimal ResourcePoolIndex_IndexValueAverage { get { return ResourcePoolIndex.IndexValueAverage; } }
+        public decimal ResourcePoolIndex_IndexValue { get { return ResourcePoolIndex.IndexValue; } }
 
         internal ResourcePoolIndex ResourcePoolIndex { get; private set; }
         internal Organization Organization { get; private set; }
@@ -40,10 +40,13 @@ namespace BusinessObjects
         /// Determines the average rating of this index.
         /// It will be used to determine the weight of this index in its resource pool.
         /// </summary>
-        public decimal IndexValueAverage
+        public decimal DynamicIndexValueAverage
         {
             get
             {
+                if (ResourcePoolIndex.ResourcePoolIndexType != (byte)ResourcePoolIndexType.DynamicIndex)
+                    throw new InvalidOperationException("Invalid index type");
+
                 return UserValueSet.Any()
                     ? UserValueSet.Average(item => item.Rating)
                     : 0;
@@ -53,16 +56,16 @@ namespace BusinessObjects
         /// <summary>
         /// Determines the rating percentage of this index.
         /// </summary>
-        public decimal IndexValuePercentage
+        public decimal DynamicIndexValuePercentage
         {
             get
             {
                 if (ResourcePoolIndex.ResourcePoolIndexType != (byte)ResourcePoolIndexType.DynamicIndex)
                     throw new InvalidOperationException("Invalid index type");
 
-                return ResourcePoolIndex.IndexValueAverage == 0
+                return ResourcePoolIndex.IndexValue == 0
                     ? 0
-                    : IndexValueAverage / ResourcePoolIndex.IndexValueAverage;
+                    : DynamicIndexValueAverage / ResourcePoolIndex.IndexValue;
             }
         }
     }

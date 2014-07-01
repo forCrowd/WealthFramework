@@ -194,7 +194,7 @@ namespace DataObjects.Migrations
             var sectorOrganization7 = new BusinessObjects.Organization() { Sector = sectorSector7, Name = "Services", ProductionCost = 100, SalesPrice = 150, License = sectorLicense };
             var sectorOrganization8 = new BusinessObjects.Organization() { Sector = sectorSector8, Name = "Technology", ProductionCost = 100, SalesPrice = 150, License = sectorLicense };
             var sectorOrganization9 = new BusinessObjects.Organization() { Sector = sectorSector9, Name = "Utilities", ProductionCost = 100, SalesPrice = 150, License = sectorLicense };
-            var sectorUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = sectorResourcePool, ResourcePoolRate = 101, SectorIndexRating = 100, KnowledgeIndexRating = 0, TotalCostIndexRating = 0 };
+            var sectorUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = sectorResourcePool, ResourcePoolRate = 101 };
             var sectorUserSectorRating1 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector1, Rating = 12 };
             var sectorUserSectorRating2 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector2, Rating = 11 };
             var sectorUserSectorRating3 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector3, Rating = 11 };
@@ -263,7 +263,7 @@ namespace DataObjects.Migrations
             var knowledgeLicense2 = new BusinessObjects.License() { ResourcePool = knowledgeResourcePool, Name = "Restricted License", Description = "Restricted license sample", Text = "Can't, can't, can't" };
             var knowledgeOrganization1 = new BusinessObjects.Organization() { Sector = knowledgeSector, Name = "True Source", ProductionCost = 100, SalesPrice = 150, License = knowledgeLicense1 };
             var knowledgeOrganization2 = new BusinessObjects.Organization() { Sector = knowledgeSector, Name = "Hidden Knowledge", ProductionCost = 100, SalesPrice = 150, License = knowledgeLicense2 };
-            var knowledgeUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = knowledgeResourcePool, ResourcePoolRate = 101, SectorIndexRating = 0, KnowledgeIndexRating = 100, TotalCostIndexRating = 0 };
+            var knowledgeUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = knowledgeResourcePool, ResourcePoolRate = 101 };
             var knowledgeUserLicenseRating1 = new BusinessObjects.UserLicenseRating() { User = user, License = knowledgeLicense1, Rating = 75 };
             var knowledgeUserLicenseRating2 = new BusinessObjects.UserLicenseRating() { User = user, License = knowledgeLicense2, Rating = 25 };
             var knowledgeUserOrganization1 = new BusinessObjects.UserOrganization() { User = user, Organization = knowledgeOrganization1, NumberOfSales = 0 };
@@ -289,7 +289,7 @@ namespace DataObjects.Migrations
             var totalCostLicense = new BusinessObjects.License() { ResourcePool = totalCostResourcePool, Name = "Total Cost Index Generic License", Text = "License Text" };
             var totalCostOrganization1 = new BusinessObjects.Organization() { Sector = totalCostSector, Name = "Lowlands", ProductionCost = 100, SalesPrice = 125, License = totalCostLicense };
             var totalCostOrganization2 = new BusinessObjects.Organization() { Sector = totalCostSector, Name = "High Coast", ProductionCost = 100, SalesPrice = 175, License = totalCostLicense };
-            var totalCostUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = totalCostResourcePool, ResourcePoolRate = 101, SectorIndexRating = 0, KnowledgeIndexRating = 0, TotalCostIndexRating = 100 };
+            var totalCostUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = totalCostResourcePool, ResourcePoolRate = 101 };
             var totalCostUserOrganization1 = new BusinessObjects.UserOrganization() { User = user, Organization = totalCostOrganization1, NumberOfSales = 0 };
             var totalCostUserOrganization2 = new BusinessObjects.UserOrganization() { User = user, Organization = totalCostOrganization2, NumberOfSales = 0 };
 
@@ -310,7 +310,7 @@ namespace DataObjects.Migrations
             var qualityLicense = new BusinessObjects.License() { ResourcePool = qualityResourcePool, Name = "Quality Index Generic License", Text = "License Text" };
             var qualityOrganization1 = new BusinessObjects.Organization() { Sector = qualitySector, Name = "Wealth's Finest", ProductionCost = 100, SalesPrice = 150, License = qualityLicense };
             var qualityOrganization2 = new BusinessObjects.Organization() { Sector = qualitySector, Name = "Poor Beggar", ProductionCost = 100, SalesPrice = 150, License = qualityLicense };
-            var qualityUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = qualityResourcePool, ResourcePoolRate = 101, SectorIndexRating = 0, KnowledgeIndexRating = 0, TotalCostIndexRating = 0 };
+            var qualityUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = qualityResourcePool, ResourcePoolRate = 101 };
             var qualityUserOrganization1 = new BusinessObjects.UserOrganization() { User = user, Organization = qualityOrganization1, NumberOfSales = 0 };
             var qualityUserOrganization2 = new BusinessObjects.UserOrganization() { User = user, Organization = qualityOrganization2, NumberOfSales = 0 };
 
@@ -331,7 +331,7 @@ namespace DataObjects.Migrations
             var employeeLicense = new BusinessObjects.License() { ResourcePool = employeeResourcePool, Name = "Employee Satisfaction Index Generic License", Text = "License Text" };
             var employeeOrganization1 = new BusinessObjects.Organization() { Sector = employeeSector, Name = "One Big Family", ProductionCost = 100, SalesPrice = 150, License = employeeLicense };
             var employeeOrganization2 = new BusinessObjects.Organization() { Sector = employeeSector, Name = "Reckless Ones", ProductionCost = 100, SalesPrice = 150, License = employeeLicense };
-            var employeeUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = employeeResourcePool, ResourcePoolRate = 101, SectorIndexRating = 0, KnowledgeIndexRating = 0, TotalCostIndexRating = 0 };
+            var employeeUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = employeeResourcePool, ResourcePoolRate = 101 };
             var employeeUserOrganization1 = new BusinessObjects.UserOrganization() { User = user, Organization = employeeOrganization1, NumberOfSales = 0 };
             var employeeUserOrganization2 = new BusinessObjects.UserOrganization() { User = user, Organization = employeeOrganization2, NumberOfSales = 0 };
 
@@ -352,7 +352,7 @@ namespace DataObjects.Migrations
             var customerLicense = new BusinessObjects.License() { ResourcePool = customerResourcePool, Name = "Customer Satisfaction Index Generic License", Text = "License Text" };
             var customerOrganization1 = new BusinessObjects.Organization() { Sector = customerSector, Name = "Friendly Faieries", ProductionCost = 100, SalesPrice = 150, License = customerLicense };
             var customerOrganization2 = new BusinessObjects.Organization() { Sector = customerSector, Name = "Clumsy Clowns", ProductionCost = 100, SalesPrice = 150, License = customerLicense };
-            var customerUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = customerResourcePool, ResourcePoolRate = 101, SectorIndexRating = 0, KnowledgeIndexRating = 0, TotalCostIndexRating = 0 };
+            var customerUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = customerResourcePool, ResourcePoolRate = 101 };
             var customerUserOrganization1 = new BusinessObjects.UserOrganization() { User = user, Organization = customerOrganization1, NumberOfSales = 0 };
             var customerUserOrganization2 = new BusinessObjects.UserOrganization() { User = user, Organization = customerOrganization2, NumberOfSales = 0 };
 
@@ -373,7 +373,7 @@ namespace DataObjects.Migrations
             var allInOneResourcePool = new BusinessObjects.ResourcePool() { Name = "All in One Sample", IsSample = true };
             var allInOneGenericSector = new BusinessObjects.Sector() { ResourcePool = allInOneResourcePool, Name = "All in One Generic Sector" };
             var allInOneGenericLicense = new BusinessObjects.License() { ResourcePool = allInOneResourcePool, Name = "All in One Generic License", Text = "License Text" };
-            var allInOneUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = allInOneResourcePool, ResourcePoolRate = 101, SectorIndexRating = 17, KnowledgeIndexRating = 17, TotalCostIndexRating = 17 };
+            var allInOneUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = allInOneResourcePool, ResourcePoolRate = 101 };
             var allInOneUserGenericSectorRating = new BusinessObjects.UserSectorRating() { User = user, Sector = allInOneGenericSector, Rating = 50 };
             var allInOneUserGenericLicenseRating = new BusinessObjects.UserLicenseRating() { User = user, License = allInOneGenericLicense, Rating = 50 };
 

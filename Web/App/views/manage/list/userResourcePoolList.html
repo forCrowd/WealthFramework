@@ -24,15 +24,6 @@
             <th>
                 CMRP Rate
             </th>
-            <th>
-                Sector Index
-            </th>
-            <th>
-                Knowledge Index
-            </th>
-            <th>
-                Total Cost Index
-            </th>
             <th></th>
         </tr>
         <tr data-ng-repeat="userResourcePool in vm.userResourcePoolSet">
@@ -44,15 +35,6 @@
             </td>
             <td>
                 {{ userResourcePool.ResourcePoolRate }}
-            </td>
-            <td>
-                {{ userResourcePool.SectorIndexRating }}
-            </td>
-            <td>
-                {{ userResourcePool.KnowledgeIndexRating }}
-            </td>
-            <td>
-                {{ userResourcePool.TotalCostIndexRating }}
             </td>
             <td>
                 <a href="/manage/userResourcePool/edit/{{ userResourcePool.Id }}">Edit</a> |

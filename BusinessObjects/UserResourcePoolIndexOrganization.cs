@@ -21,24 +21,6 @@ namespace BusinessObjects
             get { return ResourcePoolIndexOrganization.ResourcePoolIndex.UserResourcePoolIndexSet.SingleOrDefault(item => item.UserResourcePool.User == UserOrganization.User); }
         }
 
-        //public decimal IndexValuePercentageWithNumberOfSales
-        //{
-        //    get
-        //    {
-        //        return ResourcePoolIndexOrganization.IndexValuePercentage * UserOrganization.NumberOfSales;
-        //    }
-        //}
-
-        //public decimal IndexValuePercentageWithNumberOfSalesPercentage
-        //{
-        //    get
-        //    {
-        //        return UserResourcePoolIndex.IndexValuePercentageWithNumberOfSales == 0
-        //            ? 0
-        //            : IndexValuePercentageWithNumberOfSales / UserResourcePoolIndex.IndexValuePercentageWithNumberOfSales;
-        //    }
-        //}
-
         public decimal IndexValueMultiplied
         {
             get
@@ -52,7 +34,7 @@ namespace BusinessObjects
                     case (byte)ResourcePoolIndexType.TotalCostIndex:
                         return UserOrganization.Organization.SalesPricePercentage * UserOrganization.NumberOfSalesPercentage;
                     case (byte)ResourcePoolIndexType.DynamicIndex:
-                        return ResourcePoolIndexOrganization.IndexValuePercentage * UserOrganization.NumberOfSalesPercentage;
+                        return ResourcePoolIndexOrganization.DynamicIndexValuePercentage * UserOrganization.NumberOfSalesPercentage;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }

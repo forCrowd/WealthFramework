@@ -73,13 +73,13 @@ namespace BusinessObjects
         {
             get
             {
-                return ResourcePool.TotalIndexRatingAverage == 0
+                return ResourcePool.IndexRatingAverage == 0
                     ? 0
-                    : IndexRatingAverage / ResourcePool.TotalIndexRatingAverage;
+                    : IndexRatingAverage / ResourcePool.IndexRatingAverage;
             }
         }
 
-        public decimal IndexValueAverage
+        public decimal IndexValue
         {
             get
             {
@@ -92,7 +92,7 @@ namespace BusinessObjects
                     case (byte)BusinessObjects.ResourcePoolIndexType.TotalCostIndex:
                         return ResourcePool.OrganizationSet.Sum(item => item.SalesPrice);
                     case (byte)BusinessObjects.ResourcePoolIndexType.DynamicIndex:
-                        return ResourcePoolIndexOrganizationSet.Sum(item => item.IndexValueAverage);
+                        return ResourcePoolIndexOrganizationSet.Sum(item => item.DynamicIndexValueAverage);
                     default: throw new ArgumentOutOfRangeException();
                 }
             }

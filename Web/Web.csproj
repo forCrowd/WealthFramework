@@ -645,10 +645,6 @@
     <Content Include="App\views\manage\list\userSectorRatingList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
-    <Content Include="App\views\UserResourcePool\AllInOne.html" />
-    <Content Include="App\views\UserResourcePool\KnowledgeIndex.html" />
-    <Content Include="App\views\UserResourcePool\SectorIndex.html" />
-    <Content Include="App\views\UserResourcePool\TotalCostIndex.html" />
     <Content Include="App\views\account\accountEdit.html" />
     <Content Include="App\views\account\changePassword.html" />
     <Content Include="App\views\account\register.html" />

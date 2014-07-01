@@ -24,9 +24,6 @@ namespace BusinessObjects.Dto
             this.UserId = userResourcePool.UserId;
             this.ResourcePoolId = userResourcePool.ResourcePoolId;
             this.ResourcePoolRate = userResourcePool.ResourcePoolRate;
-            this.SectorIndexRating = userResourcePool.SectorIndexRating;
-            this.KnowledgeIndexRating = userResourcePool.KnowledgeIndexRating;
-            this.TotalCostIndexRating = userResourcePool.TotalCostIndexRating;
             this.CreatedOn = userResourcePool.CreatedOn;
             this.ModifiedOn = userResourcePool.ModifiedOn;
             this.DeletedOn = userResourcePool.DeletedOn;
@@ -44,15 +41,6 @@ namespace BusinessObjects.Dto
 
         [Required]
         public decimal ResourcePoolRate { get; set; }
-
-        [Required]
-        public decimal SectorIndexRating { get; set; }
-
-        [Required]
-        public decimal KnowledgeIndexRating { get; set; }
-
-        [Required]
-        public decimal TotalCostIndexRating { get; set; }
 
         [Required]
         public System.DateTime CreatedOn { get; set; }
@@ -73,9 +61,6 @@ namespace BusinessObjects.Dto
                 UserId = UserId,
                 ResourcePoolId = ResourcePoolId,
                 ResourcePoolRate = ResourcePoolRate,
-                SectorIndexRating = SectorIndexRating,
-                KnowledgeIndexRating = KnowledgeIndexRating,
-                TotalCostIndexRating = TotalCostIndexRating,
                 CreatedOn = CreatedOn,
                 ModifiedOn = ModifiedOn,
                 DeletedOn = DeletedOn,

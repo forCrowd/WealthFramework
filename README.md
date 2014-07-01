@@ -6,6 +6,10 @@ An experimental resource management system that aims to provide a sustainable ec
 
 ### Release Notes
 
+**0.13.7**
+
+* Clean-up
+
 **0.13.6**
 
 * Sector + Knowledge + Total Cost indexes were moved under ResourcePoolIndex

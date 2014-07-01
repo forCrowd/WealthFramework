@@ -126,10 +126,7 @@
             {
                 UserId = userId,
                 ResourcePool = resourcePool,
-                ResourcePoolRate = 101,
-                SectorIndexRating = 0,
-                KnowledgeIndexRating = 0,
-                TotalCostIndexRating = 0
+                ResourcePoolRate = 101
             };
             UserResourcePoolRepository.Insert(userResourcePool);
 
