@@ -37,6 +37,9 @@ any user should be able to access them. currently definitions link is only visib
 . in some delete cases, odatacontroller returns NotFound error? although it's deleted, the record stays on the page until refreshing the page
 . how to calculate average index? some people may enter 1,2,3 - some may enter 100,200,300? always force them to enter percentage?
 or always calculate the total average based on invidiuals percentage? or both?
+. should cmrp rate be on user level? if not, there is no average for cmrp rate for now?
+. in 'not rated index' case, userResourcePool view doesn't show the result
+. in 'not rated organizations' case, it's collecting the tax but not giving it back? - basically how to treat an organization that doesn't have any rating?
 . __migrationhistory createdon field error - it seems there is not much to do, it also might be about glimpse?
 . upgrade to .net 4.5.1? APM doesn't have it right now
 http://msdn.microsoft.com/en-us/library/hh925568%28v=vs.110%29.aspx
@@ -67,13 +70,8 @@ config.EnableQuerySupport(queryAttribute);
 . and ratings total should always be 100%
 
 . cascade delete alterations;
-UserResourcePoolIndex..ForeignKey("dbo.ResourcePoolIndex", t => t.ResourcePoolIndexId, cascadeDelete: false)
+UserResourcePoolIndex.ForeignKey("dbo.ResourcePoolIndex", t => t.ResourcePoolIndexId, cascadeDelete: false)
 UserResourcePoolIndexValue.ForeignKey("dbo.Organization", t => t.OrganizationId, cascadeDelete: false)
-
-. should cmrp rate be on user level?
-.. there is no average for cmrp rate for now?
-
-. what happens if the resource pool index was created but not rated yet?
 
 . handle all userresourcepool types in one page?
 .. define sector + knowledge + total cost as a semi dynamic index?
