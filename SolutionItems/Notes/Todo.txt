@@ -1,24 +1,21 @@
-﻿. try to merge unit of work classes - resourcepool unitofwork could create sector + license + organization for instance?
-.. however, in the current structure, every entity will have a unitofwork + controller by default?
-. be careful about different contexts entities - license.resourcepool = sampleResourcePool was creating new resource pools!
-either work with Ids, or try to work on merging unitofwork classes
-. breeze - check save + has + get + reject changes. currently they don't work on entity level? - also prepareBatch method?
-. use or try to remove scripts.render() + styles.render() from layout.cshtml - then mvc can be removed completely
-. automate .tt scripts with afterbuild?
+﻿. breeze - check save + has + get + reject changes. currently they don't work on entity level? - also prepareBatch method?
 
 . sometimes cancel button doesn't allow to go back (fill required?)
 .. use history.back sort of method, but first vm needs to be a new object, without createEntity
 
 . learn this disposable thingy? repo + unitofwork + context + controllers?
+. handling concurrency can be improved - load the new record and let the user choose which one is correct
+. try to create initial data from facade, instead of dataobjects layer
+. try to merge unit of work classes - resourcepool unitofwork could create sector + license + organization for instance?
+.. however, in the current structure, every entity will have a unitofwork + controller by default?
+.. be careful about different contexts entities - license.resourcepool = sampleResourcePool was creating new resource pools!
+either work with Ids, or try to work on merging unitofwork classes
 
 . implement soft delete
 . find vs. deleted records? - findlive? or don't retrieve dead records at all?
 . exists should work with find or alllive.any() or all.any() ?
 . don't allow delete License if it's connected to an Organization (can't be deleted) - same goes for the others but License really can't be deleted
 
-. handling concurrency can be improved - load the new record and let the user choose which one is correct
-. html cache break - angular scripts + views etc.?
-. try to create initial data from facade, instead of dataobjects layer
 . multiple pk for user organization + user sector + user license + user resource pool organization + resource pool organization
 . table structure - by this way, userresourcepool could reach to usersectorrating easily?;
 user - resourcepool - userresourcepoolId
@@ -26,16 +23,26 @@ userresourcepoolsector -> userresourcepoolId sectorId rating
 userresourcepoollicense -> userresourcepoolId licenseId rating
 userresourcepoolorganization -> userresourcepoolId organizationId rating
 
-. using texbox to update chart data didn't work, it breaks the chart?
-
 . authorize only for admins didnt work - license, organization, resourcepool, sector
 any user should be able to access them. currently definitions link is only visible to admins - according to this, normal user may not use post action for instance? check these rules later on
+
+. loading animation? both for breeze + angular
+. enum data type didnt work with odata? or api?
+. html cache break - angular scripts + views etc.?
+. using texbox to update chart data didn't work, it breaks the chart?
+. use or try to remove scripts.render() + styles.render() from layout.cshtml - then mvc can be removed completely
+. automate .tt scripts with afterbuild?
 . try to have a standard for css usage + html layout formats + also js script conventions
 . check spelling of the texts!
 . update namespaces - ?.wealtheconomy.
 . enable auto test for appveyor - currently it fails probably because it can't create the db?
 . in some delete cases, odatacontroller returns NotFound error? although it's deleted, the record stays on the page until refreshing the page
+. __migrationhistory createdon field error - it seems there is not much to do, it also might be about glimpse?
+. upgrade to .net 4.5.1? APM doesn't have it right now
+http://msdn.microsoft.com/en-us/library/hh925568%28v=vs.110%29.aspx
 
+. default license ratings should be 50/50
+. and ratings total should always be 100%
 . create sample data with average rating value? or make the rating nullable
 . exclude sample user from rating averages - or make them always 50 / 50?
 . how to calculate average index? some people may enter 1,2,3 - some may enter 100,200,300? always force them to enter percentage?
@@ -44,9 +51,7 @@ or always calculate the total average based on invidiuals percentage? or both?
 . in 'not rated index' case, userResourcePool view doesn't show the result
 . in 'not rated organizations' case, it's collecting the tax but not giving it back? - basically how to treat an organization that doesn't have any rating?
 
-. __migrationhistory createdon field error - it seems there is not much to do, it also might be about glimpse?
-. upgrade to .net 4.5.1? APM doesn't have it right now
-http://msdn.microsoft.com/en-us/library/hh925568%28v=vs.110%29.aspx
+. inserting a new userresourcepoolindex gave an error?
 
 . validateantiforgerytoken + bind attributes in odata controller?
 
@@ -61,23 +66,15 @@ var queryAttribute = new QueryableAttribute()
 };
 config.EnableQuerySupport(queryAttribute);
 
-. loading animation? both for breeze + angular
-
-. vs update 2 changes?
-.. asp.net identity
-
 . try turning off lazy loading - then how it brings the data (resourcepool for instance?)
 .. currently there seem no good case that lazy loading is beneficial?
 . and how about disabling proxy classes? what will be the difference exactly?
 
-. default license ratings should be 50/50
-. and ratings total should always be 100%
+. vs update 2 changes -> asp.net identity
 
-. cascade delete alterations;
-UserResourcePoolIndex.ForeignKey("dbo.ResourcePoolIndex", t => t.ResourcePoolIndexId, cascadeDelete: false)
-UserResourcePoolIndexValue.ForeignKey("dbo.Organization", t => t.OrganizationId, cascadeDelete: false)
+. add new elements index type
 
-. inserting a new userresourcepoolindex gave an error?
+. fixed amount resourcepool
 
 ---
 sector index - just name and the rating
