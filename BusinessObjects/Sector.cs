@@ -5,7 +5,7 @@ namespace BusinessObjects
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
-    [DefaultProperty("Name")]
+    [BusinessObjects.Attributes.DefaultProperty("Name")]
     // [ODataControllerAuthorization("Administrator")]
     public class Sector : BaseEntity
     {

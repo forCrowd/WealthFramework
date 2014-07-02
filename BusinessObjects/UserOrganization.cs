@@ -2,10 +2,12 @@ namespace BusinessObjects
 {
     using BusinessObjects.Attributes;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
-    [DefaultProperty("Name")]
+    [DisplayName("User Organization")]
+    [BusinessObjects.Attributes.DefaultProperty("Name")]
     public class UserOrganization : BaseEntity
     {
         [DisplayOnListView(false)]

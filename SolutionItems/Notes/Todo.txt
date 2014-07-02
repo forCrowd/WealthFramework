@@ -72,7 +72,8 @@ config.EnableQuerySupport(queryAttribute);
 
 . vs update 2 changes -> asp.net identity
 
-. add new elements index type
+. add elements
+.. resourcepoolorganizationelement instead of organizationelemen -> resourcepoolId + elementId but it will show it on organization level
 
 . fixed amount resourcepool
 

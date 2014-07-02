@@ -2,9 +2,10 @@ namespace BusinessObjects
 {
     using BusinessObjects.Attributes;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
-    [DefaultProperty("Email")]
+    [BusinessObjects.Attributes.DefaultProperty("Email")]
     public class User : BaseEntity
     {
         public User()
@@ -44,11 +45,11 @@ namespace BusinessObjects
 
         [DisplayOnListView(false)]
         public string Notes { get; set; }
-        
+
         public virtual ICollection<UserLicenseRating> UserLicenseRatingSet { get; set; }
-        
+
         public virtual ICollection<UserOrganization> UserOrganizationSet { get; set; }
-        
+
         public virtual ICollection<UserResourcePool> UserResourcePoolSet { get; set; }
 
         public virtual ICollection<UserSectorRating> UserSectorRatingSet { get; set; }

@@ -25,8 +25,12 @@
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
 
+        public virtual DbSet<Element> Element { get; set; }
+        public virtual DbSet<ElementItem> ElementItem { get; set; }
         public virtual DbSet<License> License { get; set; }
         public virtual DbSet<Organization> Organization { get; set; }
+        public virtual DbSet<OrganizationElement> OrganizationElement { get; set; }
+        public virtual DbSet<OrganizationElementItem> OrganizationElementItem { get; set; }
         public virtual DbSet<Sector> Sector { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<UserLicenseRating> UserLicenseRating { get; set; }

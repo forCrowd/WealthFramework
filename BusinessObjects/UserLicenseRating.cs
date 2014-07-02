@@ -1,9 +1,10 @@
 namespace BusinessObjects
 {
     using BusinessObjects.Attributes;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
-    [DefaultProperty("Name")]
+    [DisplayName("User License Rating")]
     public class UserLicenseRating : BaseEntity
     {
         [DisplayOnListView(false)]
@@ -16,9 +17,9 @@ namespace BusinessObjects
 
         [Display(Name = "Rating")]
         public decimal Rating { get; set; }
-        
+
         public virtual License License { get; set; }
-        
+
         public virtual User User { get; set; }
     }
 }

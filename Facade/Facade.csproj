@@ -68,7 +68,19 @@
     <Compile Include="AspNetRoleManager.cs" />
     <Compile Include="AspNetUserManager.cs" />
     <Compile Include="BaseUnitOfWork.cs" />
+    <Compile Include="Generated\ElementItemUnitOfWork.cs">
+      <DependentUpon>UnitOfWork.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\ElementUnitOfWork.cs">
+      <DependentUpon>UnitOfWork.tt</DependentUpon>
+    </Compile>
     <Compile Include="Generated\LicenseUnitOfWork.cs">
+      <DependentUpon>UnitOfWork.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\OrganizationElementItemUnitOfWork.cs">
+      <DependentUpon>UnitOfWork.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\OrganizationElementUnitOfWork.cs">
       <DependentUpon>UnitOfWork.tt</DependentUpon>
     </Compile>
     <Compile Include="Generated\OrganizationUnitOfWork.cs">

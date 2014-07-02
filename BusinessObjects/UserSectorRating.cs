@@ -1,8 +1,10 @@
 namespace BusinessObjects
 {
     using BusinessObjects.Attributes;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
+    [DisplayName("User Sector Rating")]
     public class UserSectorRating : BaseEntity
     {
         [DisplayOnListView(false)]

@@ -2,10 +2,12 @@ namespace BusinessObjects
 {
     using BusinessObjects.Attributes;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
-    [DefaultProperty("Name")]
+    [DisplayName("CMRP")]
+    [BusinessObjects.Attributes.DefaultProperty("Name")]
     // [ODataControllerAuthorization("Administrator")]
     public class ResourcePool : BaseEntity
     {

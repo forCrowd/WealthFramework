@@ -3,11 +3,13 @@ namespace BusinessObjects
     using BusinessObjects.Attributes;
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    [DefaultProperty("Name")]
+    [DisplayName("CMRP Index")]
+    [BusinessObjects.Attributes.DefaultProperty("Name")]
     // [ODataControllerAuthorization("Administrator")]
     public class ResourcePoolIndex : BaseEntity
     {

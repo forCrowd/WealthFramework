@@ -1,9 +1,11 @@
 namespace BusinessObjects
 {
     using BusinessObjects.Attributes;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    [DefaultProperty("Id")]
+    [DisplayName("User CMRP Dynamic Index Value")]
+    [BusinessObjects.Attributes.DefaultProperty("Id")]
     public class UserResourcePoolIndexValue : BaseEntity
     {
         [DisplayOnListView(false)]

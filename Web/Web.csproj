@@ -246,10 +246,22 @@
     <Compile Include="Controllers\Api\ResourcePoolCustomController.cs" />
     <Compile Include="Controllers\Api\UserResourcePoolCustomController.cs" />
     <Compile Include="Controllers\Mvc\HomeController.cs" />
+    <Compile Include="Controllers\OData\Generated\ElementController.cs">
+      <DependentUpon>ODataController.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\OData\Generated\ElementItemController.cs">
+      <DependentUpon>ODataController.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\OData\Generated\LicenseController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\OData\Generated\OrganizationController.cs">
+      <DependentUpon>ODataController.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\OData\Generated\OrganizationElementController.cs">
+      <DependentUpon>ODataController.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\OData\Generated\OrganizationElementItemController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\OData\Generated\ResourcePoolController.cs">
@@ -301,14 +313,84 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\scripts\controllers\manage\edit\elementEditController.js">
+      <DependentUpon>editController.tt</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\controllers\manage\edit\elementItemEditController.js">
+      <DependentUpon>editController.tt</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\controllers\manage\edit\organizationElementEditController.js">
+      <DependentUpon>editController.tt</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\controllers\manage\edit\organizationElementItemEditController.js">
+      <DependentUpon>editController.tt</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\controllers\manage\list\elementItemListController.js">
+      <DependentUpon>listController.tt</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\controllers\manage\list\elementListController.js">
+      <DependentUpon>listController.tt</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\controllers\manage\list\organizationElementItemListController.js">
+      <DependentUpon>listController.tt</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\controllers\manage\list\organizationElementListController.js">
+      <DependentUpon>listController.tt</DependentUpon>
+    </Content>
     <Content Include="App\scripts\controllers\manage\list\userResourcePoolListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
     <Content Include="App\scripts\controllers\manage\userResourcePool\userResourcePoolCustomViewController.js" />
     <Content Include="App\scripts\controllers\manage\userResourcePool\userResourcePoolCustomListController.js" />
+    <Content Include="App\scripts\includes\manageMenu.js">
+      <DependentUpon>manageMenu.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Content>
+    <Content Include="App\scripts\includes\manageScripts.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>manageScripts.tt</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\services\generated\elementItemService.js">
+      <DependentUpon>service.tt</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\services\generated\elementService.js">
+      <DependentUpon>service.tt</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\services\generated\organizationElementItemService.js">
+      <DependentUpon>service.tt</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\services\generated\organizationElementService.js">
+      <DependentUpon>service.tt</DependentUpon>
+    </Content>
     <Content Include="App\views\content\home.html" />
     <Content Include="App\views\content\overview.html" />
     <Content Include="App\views\content\technologies.html" />
+    <Content Include="App\views\manage\edit\elementEdit.html">
+      <DependentUpon>editView.tt</DependentUpon>
+    </Content>
+    <Content Include="App\views\manage\edit\elementItemEdit.html">
+      <DependentUpon>editView.tt</DependentUpon>
+    </Content>
+    <Content Include="App\views\manage\edit\organizationElementEdit.html">
+      <DependentUpon>editView.tt</DependentUpon>
+    </Content>
+    <Content Include="App\views\manage\edit\organizationElementItemEdit.html">
+      <DependentUpon>editView.tt</DependentUpon>
+    </Content>
+    <Content Include="App\views\manage\list\elementItemList.html">
+      <DependentUpon>listView.tt</DependentUpon>
+    </Content>
+    <Content Include="App\views\manage\list\elementList.html">
+      <DependentUpon>listView.tt</DependentUpon>
+    </Content>
+    <Content Include="App\views\manage\list\organizationElementItemList.html">
+      <DependentUpon>listView.tt</DependentUpon>
+    </Content>
+    <Content Include="App\views\manage\list\organizationElementList.html">
+      <DependentUpon>listView.tt</DependentUpon>
+    </Content>
     <Content Include="App\views\manage\list\userResourcePoolList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
@@ -322,6 +404,14 @@
     <Content Include="Content\breeze.directives.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
+    <Content Include="App\scripts\includes\manageScripts.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>manageScripts.js</LastGenOutput>
+    </Content>
+    <Content Include="App\scripts\includes\manageMenu.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>manageMenu.js</LastGenOutput>
+    </Content>
     <None Include="Controllers\OData\Generated\ODataController.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -367,7 +457,6 @@
     <Content Include="App\scripts\controllers\manage\list\userOrganizationListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
-    <Content Include="App\scripts\controllers\userResourcePoolController.js" />
     <Content Include="App\scripts\controllers\manage\edit\licenseEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>

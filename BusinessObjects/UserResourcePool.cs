@@ -2,11 +2,13 @@ namespace BusinessObjects
 {
     using BusinessObjects.Attributes;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    [DefaultProperty("Id")]
+    [DisplayName("User CMRP")]
+    [BusinessObjects.Attributes.DefaultProperty("Id")]
     public class UserResourcePool : BaseEntity
     {
         [DisplayOnListView(false)]
@@ -64,12 +66,12 @@ namespace BusinessObjects
         {
             get { return UserOrganizationSet.Sum(item => item.NumberOfSales); }
         }
-        
+
         public decimal TotalProductionCost
         {
             get { return UserOrganizationSet.Sum(item => item.TotalProductionCost); }
         }
-        
+
         public decimal TotalSalesRevenue
         {
             get { return UserOrganizationSet.Sum(item => item.TotalSalesRevenue); }
@@ -79,17 +81,17 @@ namespace BusinessObjects
         {
             get { return UserOrganizationSet.Sum(item => item.TotalProfit); }
         }
-        
+
         public decimal TotalResourcePoolTax
         {
             get { return UserOrganizationSet.Sum(item => item.TotalResourcePoolTax); }
         }
-        
+
         public decimal TotalSalesRevenueIncludingResourcePoolTax
         {
             get { return UserOrganizationSet.Sum(item => item.TotalSalesRevenueIncludingResourcePoolTax); }
         }
-        
+
         public decimal TotalIncome
         {
             get { return UserOrganizationSet.Sum(item => item.TotalIncome); }

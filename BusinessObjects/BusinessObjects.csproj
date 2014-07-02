@@ -99,8 +99,12 @@
     <Compile Include="Dto\ResourcePoolDto.cs" />
     <Compile Include="Dto\UserResourcePoolIndexDto.cs" />
     <Compile Include="Dto\ResourcePoolIndexDto.cs" />
+    <Compile Include="ElementItem.cs" />
+    <Compile Include="Element.cs" />
     <Compile Include="License.cs" />
     <Compile Include="Attributes\ODataControllerAuthorizationAttribute.cs" />
+    <Compile Include="OrganizationElementItem.cs" />
+    <Compile Include="OrganizationElement.cs" />
     <Compile Include="Organization.cs" />
     <Compile Include="ResourcePoolIndexType.cs" />
     <Compile Include="ResourcePoolIndexOrganization.cs" />
