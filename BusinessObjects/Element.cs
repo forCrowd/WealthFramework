@@ -11,7 +11,9 @@ namespace BusinessObjects
     {
         public Element()
         {
+            ResourcePoolOrganizationElementSetSet = new HashSet<ResourcePoolOrganizationElement>();
             ElementItemSet = new HashSet<ElementItem>();
+            ResourcePoolIndexSet = new HashSet<ResourcePoolIndex>();
         }
 
         [DisplayOnListView(false)]
@@ -26,6 +28,15 @@ namespace BusinessObjects
         public string Name { get; set; }
 
         public virtual ResourcePool ResourcePool { get; set; }
+        public virtual ICollection<ResourcePoolOrganizationElement> ResourcePoolOrganizationElementSetSet { get; set; }
         public virtual ICollection<ElementItem> ElementItemSet { get; set; }
+        public virtual ICollection<ResourcePoolIndex> ResourcePoolIndexSet { get; set; }
+
+        /* */
+
+        public decimal RatingAverage
+        {
+            get { return ElementItemSet.Sum(item => item.RatingAverage); }
+        }
     }
 }

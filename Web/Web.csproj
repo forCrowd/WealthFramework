@@ -242,7 +242,6 @@
     <Compile Include="Controllers\Api\AccountController.cs" />
     <Compile Include="Controllers\Api\ApplicationController.cs" />
     <Compile Include="Controllers\Api\BaseApiController.cs" />
-    <Compile Include="Controllers\Api\ResourcePoolIndexCustomController.cs" />
     <Compile Include="Controllers\Api\ResourcePoolCustomController.cs" />
     <Compile Include="Controllers\Api\UserResourcePoolCustomController.cs" />
     <Compile Include="Controllers\Mvc\HomeController.cs" />
@@ -258,9 +257,6 @@
     <Compile Include="Controllers\OData\Generated\OrganizationController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\OData\Generated\OrganizationElementController.cs">
-      <DependentUpon>ODataController.tt</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\OData\Generated\OrganizationElementItemController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
@@ -270,10 +266,16 @@
     <Compile Include="Controllers\OData\Generated\ResourcePoolIndexController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\OData\Generated\ResourcePoolOrganizationElementController.cs">
+      <DependentUpon>ODataController.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\OData\Generated\SectorController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\OData\Generated\UserController.cs">
+      <DependentUpon>ODataController.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\OData\Generated\UserElementItemController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\OData\Generated\UserLicenseRatingController.cs">
@@ -286,6 +288,9 @@
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\OData\Generated\UserResourcePoolIndexController.cs">
+      <DependentUpon>ODataController.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\OData\Generated\UserResourcePoolIndexElementItemController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\OData\Generated\UserResourcePoolIndexValueController.cs">
@@ -319,10 +324,16 @@
     <Content Include="App\scripts\controllers\manage\edit\elementItemEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
-    <Content Include="App\scripts\controllers\manage\edit\organizationElementEditController.js">
+    <Content Include="App\scripts\controllers\manage\edit\organizationElementItemEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
-    <Content Include="App\scripts\controllers\manage\edit\organizationElementItemEditController.js">
+    <Content Include="App\scripts\controllers\manage\edit\resourcePoolOrganizationElementEditController.js">
+      <DependentUpon>editController.tt</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\controllers\manage\edit\userElementItemEditController.js">
+      <DependentUpon>editController.tt</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\controllers\manage\edit\userResourcePoolIndexElementItemEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
     <Content Include="App\scripts\controllers\manage\list\elementItemListController.js">
@@ -334,7 +345,13 @@
     <Content Include="App\scripts\controllers\manage\list\organizationElementItemListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
-    <Content Include="App\scripts\controllers\manage\list\organizationElementListController.js">
+    <Content Include="App\scripts\controllers\manage\list\resourcePoolOrganizationElementListController.js">
+      <DependentUpon>listController.tt</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\controllers\manage\list\userElementItemListController.js">
+      <DependentUpon>listController.tt</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\controllers\manage\list\userResourcePoolIndexElementItemListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
     <Content Include="App\scripts\controllers\manage\list\userResourcePoolListController.js">
@@ -361,7 +378,13 @@
     <Content Include="App\scripts\services\generated\organizationElementItemService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="App\scripts\services\generated\organizationElementService.js">
+    <Content Include="App\scripts\services\generated\resourcePoolOrganizationElementService.js">
+      <DependentUpon>service.tt</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\services\generated\userElementItemService.js">
+      <DependentUpon>service.tt</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\services\generated\userResourcePoolIndexElementItemService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
     <Content Include="App\views\content\home.html" />
@@ -373,10 +396,16 @@
     <Content Include="App\views\manage\edit\elementItemEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
-    <Content Include="App\views\manage\edit\organizationElementEdit.html">
+    <Content Include="App\views\manage\edit\organizationElementItemEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
-    <Content Include="App\views\manage\edit\organizationElementItemEdit.html">
+    <Content Include="App\views\manage\edit\resourcePoolOrganizationElementEdit.html">
+      <DependentUpon>editView.tt</DependentUpon>
+    </Content>
+    <Content Include="App\views\manage\edit\userElementItemEdit.html">
+      <DependentUpon>editView.tt</DependentUpon>
+    </Content>
+    <Content Include="App\views\manage\edit\userResourcePoolIndexElementItemEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
     <Content Include="App\views\manage\list\elementItemList.html">
@@ -388,7 +417,13 @@
     <Content Include="App\views\manage\list\organizationElementItemList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
-    <Content Include="App\views\manage\list\organizationElementList.html">
+    <Content Include="App\views\manage\list\resourcePoolOrganizationElementList.html">
+      <DependentUpon>listView.tt</DependentUpon>
+    </Content>
+    <Content Include="App\views\manage\list\userElementItemList.html">
+      <DependentUpon>listView.tt</DependentUpon>
+    </Content>
+    <Content Include="App\views\manage\list\userResourcePoolIndexElementItemList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
     <Content Include="App\views\manage\list\userResourcePoolList.html">

@@ -11,7 +11,6 @@ namespace BusinessObjects
     {
         public Organization()
         {
-            OrganizationElementSet = new HashSet<OrganizationElement>();
             OrganizationElementItemSet = new HashSet<OrganizationElementItem>();
             UserOrganizationSet = new HashSet<UserOrganization>();
             UserResourcePoolIndexValueSet = new HashSet<UserResourcePoolIndexValue>();
@@ -38,7 +37,6 @@ namespace BusinessObjects
 
         public virtual Sector Sector { get; set; }
         public virtual License License { get; set; }
-        public virtual ICollection<OrganizationElement> OrganizationElementSet { get; set; }
         public virtual ICollection<OrganizationElementItem> OrganizationElementItemSet { get; set; }
         public virtual ICollection<UserOrganization> UserOrganizationSet { get; set; }
         public virtual ICollection<UserResourcePoolIndexValue> UserResourcePoolIndexValueSet { get; set; }

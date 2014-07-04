@@ -38,6 +38,11 @@ namespace BusinessObjects
 
         /* */
 
+        public int RatingCount
+        {
+            get { return UserLicenseRatingSet.Count(); }
+        }
+
         public decimal RatingAverage
         {
             get
@@ -56,7 +61,7 @@ namespace BusinessObjects
                     ? 0
                     : ResourcePool.KnowledgeIndex.IndexRatingAverage == 0
                     ? 0
-                    : RatingAverage / ResourcePool.KnowledgeIndex.IndexRatingAverage;
+                    : RatingAverage / ResourcePool.KnowledgeIndex.IndexValue;
             }
         }
     }

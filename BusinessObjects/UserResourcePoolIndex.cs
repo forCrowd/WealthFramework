@@ -14,6 +14,7 @@ namespace BusinessObjects
         public UserResourcePoolIndex()
         {
             UserResourcePoolIndexValueSet = new HashSet<UserResourcePoolIndexValue>();
+            UserResourcePoolIndexElementItemSet = new HashSet<UserResourcePoolIndexElementItem>();
         }
 
         [DisplayOnListView(false)]
@@ -32,6 +33,7 @@ namespace BusinessObjects
         public virtual ResourcePoolIndex ResourcePoolIndex { get; set; }
 
         public virtual ICollection<UserResourcePoolIndexValue> UserResourcePoolIndexValueSet { get; set; }
+        public virtual ICollection<UserResourcePoolIndexElementItem> UserResourcePoolIndexElementItemSet { get; set; }
 
         public string Name
         {

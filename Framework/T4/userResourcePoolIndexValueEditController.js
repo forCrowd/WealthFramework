@@ -10,34 +10,34 @@
 (function () {
     'use strict';
 
-    var controllerId = 'organizationElementEditController';
+    var controllerId = 'userResourcePoolIndexValueEditController';
     angular.module('main')
-        .controller(controllerId, ['organizationElementService',
-            'elementService',
+        .controller(controllerId, ['userResourcePoolIndexValueService',
             'organizationService',
+            'userResourcePoolIndexService',
             'logger',
             '$location',
             '$routeParams',
-            organizationElementEditController]);
+            userResourcePoolIndexValueEditController]);
 
-    function organizationElementEditController(organizationElementService,
-		elementService,
+    function userResourcePoolIndexValueEditController(userResourcePoolIndexValueService,
 		organizationService,
+		userResourcePoolIndexService,
 		logger,
 		$location,
 		$routeParams) {
         logger = logger.forSource(controllerId);
 
-        var isNew = $location.path() === '/manage/organizationElement/new';
+        var isNew = $location.path() === '/manage/userResourcePoolIndexValue/new';
         var isSaving = false;
 
         // Controller methods (alphabetically)
         var vm = this;
-        vm.elementSet = [];
         vm.organizationSet = [];
+        vm.userResourcePoolIndexSet = [];
         vm.cancelChanges = cancelChanges;
         vm.isSaveDisabled = isSaveDisabled;
-        vm.organizationElement = null;
+        vm.userResourcePoolIndexValue = null;
         vm.saveChanges = saveChanges;
         vm.hasChanges = hasChanges;
 
@@ -47,37 +47,37 @@
 
         function cancelChanges() {
 
-            $location.path('/manage/organizationElement');
+            $location.path('/manage/userResourcePoolIndexValue');
 
-            if (organizationElementService.hasChanges()) {
-                organizationElementService.rejectChanges();
+            if (userResourcePoolIndexValueService.hasChanges()) {
+                userResourcePoolIndexValueService.rejectChanges();
                 logWarning('Discarded pending change(s)', null, true);
             }
         }
 
         function hasChanges() {
-            return organizationElementService.hasChanges();
+            return userResourcePoolIndexValueService.hasChanges();
         }
 
         function initialize() {
-
-            elementService.getElementSet(false)
-                .then(function (data) {
-                    vm.elementSet = data;
-                });
 
             organizationService.getOrganizationSet(false)
                 .then(function (data) {
                     vm.organizationSet = data;
                 });
 
+            userResourcePoolIndexService.getUserResourcePoolIndexSet(false)
+                .then(function (data) {
+                    vm.userResourcePoolIndexSet = data;
+                });
+
             if (isNew) {
                 // TODO For development enviroment, create test entity?
             }
             else {
-                organizationElementService.getOrganizationElement($routeParams.Id)
+                userResourcePoolIndexValueService.getUserResourcePoolIndexValue($routeParams.Id)
                     .then(function (data) {
-                        vm.organizationElement = data;
+                        vm.userResourcePoolIndexValue = data;
                     })
                     .catch(function (error) {
                         // TODO User-friendly message?
@@ -87,25 +87,25 @@
 
         function isSaveDisabled() {
             return isSaving ||
-                (!isNew && !organizationElementService.hasChanges());
+                (!isNew && !userResourcePoolIndexValueService.hasChanges());
         }
 
         function saveChanges() {
 
             if (isNew) {
-                organizationElementService.createOrganizationElement(vm.organizationElement);
+                userResourcePoolIndexValueService.createUserResourcePoolIndexValue(vm.userResourcePoolIndexValue);
             } else {
                 // To be able to do concurrency check, RowVersion field needs to be send to server
 				// Since breeze only sends the modified fields, a fake modification had to be applied to RowVersion field
-                var rowVersion = vm.organizationElement.RowVersion;
-                vm.organizationElement.RowVersion = '';
-                vm.organizationElement.RowVersion = rowVersion;
+                var rowVersion = vm.userResourcePoolIndexValue.RowVersion;
+                vm.userResourcePoolIndexValue.RowVersion = '';
+                vm.userResourcePoolIndexValue.RowVersion = rowVersion;
             }
 
             isSaving = true;
-            organizationElementService.saveChanges()
+            userResourcePoolIndexValueService.saveChanges()
                 .then(function (result) {
-                    $location.path('/manage/organizationElement');
+                    $location.path('/manage/userResourcePoolIndexValue');
                 })
                 .catch(function (error) {
                     // Conflict (Concurrency exception)

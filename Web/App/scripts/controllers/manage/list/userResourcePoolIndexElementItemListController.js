@@ -10,32 +10,32 @@
 (function () {
     'use strict';
 
-    var controllerId = 'organizationElementListController';
+    var controllerId = 'userResourcePoolIndexElementItemListController';
     angular.module('main')
-        .controller(controllerId, ['organizationElementService',
+        .controller(controllerId, ['userResourcePoolIndexElementItemService',
             'logger',
-			organizationElementListController]);
+			userResourcePoolIndexElementItemListController]);
 
-    function organizationElementListController(organizationElementService,
+    function userResourcePoolIndexElementItemListController(userResourcePoolIndexElementItemService,
         logger) {
         logger = logger.forSource(controllerId);
 
         var vm = this;
-        vm.deleteOrganizationElement = deleteOrganizationElement;
-        vm.organizationElementSet = [];
+        vm.deleteUserResourcePoolIndexElementItem = deleteUserResourcePoolIndexElementItem;
+        vm.userResourcePoolIndexElementItemSet = [];
 
         initialize();
 
         function initialize() {
-            getOrganizationElementSet();
+            getUserResourcePoolIndexElementItemSet();
         };
 
-        function deleteOrganizationElement(organizationElement) {
-            organizationElementService.deleteOrganizationElement(organizationElement);
+        function deleteUserResourcePoolIndexElementItem(userResourcePoolIndexElementItem) {
+            userResourcePoolIndexElementItemService.deleteUserResourcePoolIndexElementItem(userResourcePoolIndexElementItem);
 
-            organizationElementService.saveChanges()
+            userResourcePoolIndexElementItemService.saveChanges()
                 .then(function () {
-                    vm.organizationElementSet.splice(vm.organizationElementSet.indexOf(organizationElement), 1);
+                    vm.userResourcePoolIndexElementItemSet.splice(vm.userResourcePoolIndexElementItemSet.indexOf(userResourcePoolIndexElementItem), 1);
                     logger.logSuccess("Hooray we saved", null, true);
                 })
                 .catch(function (error) {
@@ -46,10 +46,10 @@
                 })
         };
 
-        function getOrganizationElementSet() {
-            organizationElementService.getOrganizationElementSet(false)
+        function getUserResourcePoolIndexElementItemSet() {
+            userResourcePoolIndexElementItemService.getUserResourcePoolIndexElementItemSet(false)
 			    .then(function (data) {
-                    vm.organizationElementSet = data;
+                    vm.userResourcePoolIndexElementItemSet = data;
                 });
         }
     };

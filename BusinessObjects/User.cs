@@ -10,10 +10,11 @@ namespace BusinessObjects
     {
         public User()
         {
-            UserLicenseRatingSet = new HashSet<UserLicenseRating>();
-            UserOrganizationSet = new HashSet<UserOrganization>();
             UserResourcePoolSet = new HashSet<UserResourcePool>();
             UserSectorRatingSet = new HashSet<UserSectorRating>();
+            UserLicenseRatingSet = new HashSet<UserLicenseRating>();
+            UserOrganizationSet = new HashSet<UserOrganization>();
+            UserElementItemSet = new HashSet<UserElementItem>();
         }
 
         [DisplayOnListView(false)]
@@ -46,12 +47,12 @@ namespace BusinessObjects
         [DisplayOnListView(false)]
         public string Notes { get; set; }
 
-        public virtual ICollection<UserLicenseRating> UserLicenseRatingSet { get; set; }
-
-        public virtual ICollection<UserOrganization> UserOrganizationSet { get; set; }
-
         public virtual ICollection<UserResourcePool> UserResourcePoolSet { get; set; }
-
         public virtual ICollection<UserSectorRating> UserSectorRatingSet { get; set; }
+        public virtual ICollection<UserLicenseRating> UserLicenseRatingSet { get; set; }
+        public virtual ICollection<UserOrganization> UserOrganizationSet { get; set; }
+        public virtual ICollection<UserElementItem> UserElementItemSet { get; set; }
+
+
     }
 }

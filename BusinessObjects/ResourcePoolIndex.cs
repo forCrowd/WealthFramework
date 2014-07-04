@@ -33,7 +33,10 @@ namespace BusinessObjects
         [Display(Name = "Resource Pool Index Type")]
         public byte ResourcePoolIndexType { get; set; }
 
+        public int ElementId { get; set; }
+
         public virtual ResourcePool ResourcePool { get; set; }
+        public virtual Element Element { get; set; }
         public virtual ICollection<UserResourcePoolIndex> UserResourcePoolIndexSet { get; set; }
 
         /* */
@@ -93,8 +96,10 @@ namespace BusinessObjects
                         return ResourcePool.LicenseSet.Sum(item => item.RatingAverage);
                     case (byte)BusinessObjects.ResourcePoolIndexType.TotalCostIndex:
                         return ResourcePool.OrganizationSet.Sum(item => item.SalesPrice);
-                    case (byte)BusinessObjects.ResourcePoolIndexType.DynamicIndex:
+                    case (byte)BusinessObjects.ResourcePoolIndexType.DynamicOrganizationIndex:
                         return ResourcePoolIndexOrganizationSet.Sum(item => item.DynamicIndexValueAverage);
+                    // case (byte)BusinessObjects.ResourcePoolIndexType.DynamicElementIndex:
+                        // return ResourcePoolIndexOrganizationSet.Sum(item => item.DynamicIndexValueAverage)
                     default: throw new ArgumentOutOfRangeException();
                 }
             }

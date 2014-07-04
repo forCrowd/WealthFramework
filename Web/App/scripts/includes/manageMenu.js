@@ -26,16 +26,18 @@ SH - 09 May '14
     <li><a href="/manage/elementItem">Element Item</a></li>\
     <li><a href="/manage/license">License</a></li>\
     <li><a href="/manage/organization">Organization</a></li>\
-    <li><a href="/manage/organizationElement">Organization Element</a></li>\
     <li><a href="/manage/organizationElementItem">Organization Element Item</a></li>\
     <li><a href="/manage/resourcePool">CMRP</a></li>\
     <li><a href="/manage/resourcePoolIndex">CMRP Index</a></li>\
+    <li><a href="/manage/resourcePoolOrganizationElement">CMRP Organization Element</a></li>\
     <li><a href="/manage/sector">Sector</a></li>\
     <li><a href="/manage/user">User</a></li>\
+    <li><a href="/manage/userElementItem">User Element Item</a></li>\
     <li><a href="/manage/userLicenseRating">User License Rating</a></li>\
     <li><a href="/manage/userOrganization">User Organization</a></li>\
     <li><a href="/manage/userResourcePool">User CMRP</a></li>\
     <li><a href="/manage/userResourcePoolIndex">User CMRP Index</a></li>\
+    <li><a href="/manage/userResourcePoolIndexElementItem">User CMRP Index Element Item</a></li>\
     <li><a href="/manage/userResourcePoolIndexValue">User CMRP Dynamic Index Value</a></li>\
     <li><a href="/manage/userSectorRating">User Sector Rating</a></li>\
     </ul>\

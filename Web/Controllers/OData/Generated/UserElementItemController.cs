@@ -20,46 +20,47 @@ namespace Web.Controllers.OData
     using System.Web.Http.ModelBinding;
     using System.Web.Http.OData;
 
-    public abstract class BaseOrganizationElementController : BaseODataController
+    public abstract class BaseUserElementItemController : BaseODataController
     {
-        public BaseOrganizationElementController()
+        public BaseUserElementItemController()
 		{
-			MainUnitOfWork = new OrganizationElementUnitOfWork();		
+			MainUnitOfWork = new UserElementItemUnitOfWork();		
 		}
 
-		protected OrganizationElementUnitOfWork MainUnitOfWork { get; private set; }
+		protected UserElementItemUnitOfWork MainUnitOfWork { get; private set; }
 
-        // GET odata/OrganizationElement
+        // GET odata/UserElementItem
         [Queryable]
-        public virtual IQueryable<OrganizationElement> Get()
+        public virtual IQueryable<UserElementItem> Get()
         {
 			var list = MainUnitOfWork.AllLive;
+			list = list.Where(item => item.UserId == ApplicationUser.Id);
             return list;
         }
 
-        // GET odata/OrganizationElement(5)
+        // GET odata/UserElementItem(5)
         [Queryable]
-        public virtual SingleResult<OrganizationElement> Get([FromODataUri] int key)
+        public virtual SingleResult<UserElementItem> Get([FromODataUri] int key)
         {
-            return SingleResult.Create(MainUnitOfWork.AllLive.Where(organizationElement => organizationElement.Id == key));
+            return SingleResult.Create(MainUnitOfWork.AllLive.Where(userElementItem => userElementItem.Id == key));
         }
 
-        // PUT odata/OrganizationElement(5)
-        public virtual async Task<IHttpActionResult> Put([FromODataUri] int key, OrganizationElement organizationElement)
+        // PUT odata/UserElementItem(5)
+        public virtual async Task<IHttpActionResult> Put([FromODataUri] int key, UserElementItem userElementItem)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (key != organizationElement.Id)
+            if (key != userElementItem.Id)
             {
                 return BadRequest();
             }
 
             try
             {
-                await MainUnitOfWork.UpdateAsync(organizationElement);
+                await MainUnitOfWork.UpdateAsync(userElementItem);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -73,11 +74,11 @@ namespace Web.Controllers.OData
                 }
             }
 
-            return Ok(organizationElement);
+            return Ok(userElementItem);
         }
 
-        // POST odata/OrganizationElement
-        public virtual async Task<IHttpActionResult> Post(OrganizationElement organizationElement)
+        // POST odata/UserElementItem
+        public virtual async Task<IHttpActionResult> Post(UserElementItem userElementItem)
         {
             if (!ModelState.IsValid)
             {
@@ -86,11 +87,11 @@ namespace Web.Controllers.OData
 
             try
             {
-                await MainUnitOfWork.InsertAsync(organizationElement);
+                await MainUnitOfWork.InsertAsync(userElementItem);
             }
             catch (DbUpdateException)
             {
-                if (MainUnitOfWork.Exists(organizationElement.Id))
+                if (MainUnitOfWork.Exists(userElementItem.Id))
                 {
                     return Conflict();
                 }
@@ -100,52 +101,52 @@ namespace Web.Controllers.OData
                 }
             }
 
-            return Created(organizationElement);
+            return Created(userElementItem);
         }
 
-        // PATCH odata/OrganizationElement(5)
+        // PATCH odata/UserElementItem(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<OrganizationElement> patch)
+        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<UserElementItem> patch)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var organizationElement = await MainUnitOfWork.FindAsync(key);
-            if (organizationElement == null)
+            var userElementItem = await MainUnitOfWork.FindAsync(key);
+            if (userElementItem == null)
             {
                 return NotFound();
             }
 
             var patchEntity = patch.GetEntity();
-            if (!organizationElement.RowVersion.SequenceEqual(patchEntity.RowVersion))
+            if (!userElementItem.RowVersion.SequenceEqual(patchEntity.RowVersion))
             {
                 return Conflict();
             }
 
-            patch.Patch(organizationElement);
-            await MainUnitOfWork.UpdateAsync(organizationElement);
+            patch.Patch(userElementItem);
+            await MainUnitOfWork.UpdateAsync(userElementItem);
 
-            return Ok(organizationElement);
+            return Ok(userElementItem);
         }
 
-        // DELETE odata/OrganizationElement(5)
+        // DELETE odata/UserElementItem(5)
         public virtual async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            var organizationElement = await MainUnitOfWork.FindAsync(key);
-            if (organizationElement == null)
+            var userElementItem = await MainUnitOfWork.FindAsync(key);
+            if (userElementItem == null)
             {
                 return NotFound();
             }
 
-            await MainUnitOfWork.DeleteAsync(organizationElement.Id);
+            await MainUnitOfWork.DeleteAsync(userElementItem.Id);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
     }
 
-    public partial class OrganizationElementController : BaseOrganizationElementController
+    public partial class UserElementItemController : BaseUserElementItemController
     {
 	}
 }

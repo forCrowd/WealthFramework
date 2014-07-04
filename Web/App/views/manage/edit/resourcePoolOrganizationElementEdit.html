@@ -8,27 +8,27 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 -->
-<div data-ng-controller="organizationElementEditController as vm">
+<div data-ng-controller="resourcePoolOrganizationElementEditController as vm">
     <h2>Edit</h2>
     <form name="editForm">
         <div class="form-horizontal">
-            <h4>OrganizationElement</h4>
+            <h4>ResourcePoolOrganizationElement</h4>
             <hr />
             <div class="form-group">
-                <label for="OrganizationId" class="control-label col-md-2">Organization</label>
-                <div class="col-md-10" data-ng-class="{'has-error': editForm.OrganizationId.$invalid && !editForm.OrganizationId.$pristine}">
-                    <select id="OrganizationId" name="OrganizationId" data-ng-model="vm.organizationElement.Organization" data-ng-options="organization.Name for organization in vm.organizationSet" class="form-control" required ></select>
+                <label for="ResourcePoolId" class="control-label col-md-2">Resource Pool</label>
+                <div class="col-md-10" data-ng-class="{'has-error': editForm.ResourcePoolId.$invalid && !editForm.ResourcePoolId.$pristine}">
+                    <select id="ResourcePoolId" name="ResourcePoolId" data-ng-model="vm.resourcePoolOrganizationElement.ResourcePool" data-ng-options="resourcePool.Name for resourcePool in vm.resourcePoolSet" class="form-control" required ></select>
                 </div>
             </div>
             <div class="form-group">
                 <label for="ElementId" class="control-label col-md-2">Element</label>
                 <div class="col-md-10" data-ng-class="{'has-error': editForm.ElementId.$invalid && !editForm.ElementId.$pristine}">
-                    <select id="ElementId" name="ElementId" data-ng-model="vm.organizationElement.Element" data-ng-options="element.Name for element in vm.elementSet" class="form-control" required ></select>
+                    <select id="ElementId" name="ElementId" data-ng-model="vm.resourcePoolOrganizationElement.Element" data-ng-options="element.Name for element in vm.elementSet" class="form-control" required ></select>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-md-10">
-                    <input id="RowVersion" name="RowVersion" data-ng-model="vm.organizationElement.RowVersion" type="hidden">
+                    <input id="RowVersion" name="RowVersion" data-ng-model="vm.resourcePoolOrganizationElement.RowVersion" type="hidden">
                 </div>
             </div>
             <div class="form-group">

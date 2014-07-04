@@ -20,6 +20,7 @@ namespace BusinessObjects
         public int Id { get; set; }
 
         public int OrganizationId { get; set; }
+
         public int ElementItemId { get; set; }
 
         public virtual Organization Organization { get; set; }

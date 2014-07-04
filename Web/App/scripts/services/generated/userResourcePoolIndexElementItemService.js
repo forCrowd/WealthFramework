@@ -10,11 +10,11 @@
 (function () {
     'use strict';
 
-    var serviceId = 'organizationElementService';
+    var serviceId = 'userResourcePoolIndexElementItemService';
     angular.module('main')
-        .factory(serviceId, ['dataContext', 'logger', organizationElementService]);
+        .factory(serviceId, ['dataContext', 'logger', userResourcePoolIndexElementItemService]);
 
-    function organizationElementService(dataContext, logger) {
+    function userResourcePoolIndexElementItemService(dataContext, logger) {
         logger = logger.forSource(serviceId);
 
         // To determine whether the data will be fecthed from server or local
@@ -23,12 +23,12 @@
 
         // Service methods (alphabetically)
         var service = {
-            createOrganizationElement: createOrganizationElement,
-            deleteOrganizationElement: deleteOrganizationElement,
+            createUserResourcePoolIndexElementItem: createUserResourcePoolIndexElementItem,
+            deleteUserResourcePoolIndexElementItem: deleteUserResourcePoolIndexElementItem,
             getChanges: getChanges,
             getChangesCount: getChangesCount,
-            getOrganizationElementSet: getOrganizationElementSet,
-            getOrganizationElement: getOrganizationElement,
+            getUserResourcePoolIndexElementItemSet: getUserResourcePoolIndexElementItemSet,
+            getUserResourcePoolIndexElementItem: getUserResourcePoolIndexElementItem,
             hasChanges: hasChanges,
             rejectChanges: rejectChanges,
             saveChanges: saveChanges
@@ -38,12 +38,12 @@
 
         /*** Implementations ***/
 
-        function createOrganizationElement(organizationElement) {
-            dataContext.createEntity('OrganizationElement', organizationElement);
+        function createUserResourcePoolIndexElementItem(userResourcePoolIndexElementItem) {
+            dataContext.createEntity('UserResourcePoolIndexElementItem', userResourcePoolIndexElementItem);
         }
 
-        function deleteOrganizationElement(organizationElement) {
-            organizationElement.entityAspect.setDeleted();
+        function deleteUserResourcePoolIndexElementItem(userResourcePoolIndexElementItem) {
+            userResourcePoolIndexElementItem.entityAspect.setDeleted();
         }
 
         function getChanges() {
@@ -54,7 +54,7 @@
             return dataContext.getChangesCount();
         }
 
-        function getOrganizationElementSet(forceRefresh) {
+        function getUserResourcePoolIndexElementItemSet(forceRefresh) {
             var count;
             if (forceRefresh) {
                 if (dataContext.hasChanges()) {
@@ -65,8 +65,8 @@
             }
 
             var query = breeze.EntityQuery
-				.from('OrganizationElement')
-				.expand(['Element', 'Organization'])
+				.from('UserResourcePoolIndexElementItem')
+				.expand(['ElementItem', 'UserResourcePoolIndex'])
             ;
 
             // Fetch the data from server, in case if it's not fetched earlier or forced
@@ -86,18 +86,18 @@
 
             function success(response) {
                 count = response.results.length;
-                logger.logSuccess('Got ' + count + ' organizationElement(s)', response, true);
+                logger.logSuccess('Got ' + count + ' userResourcePoolIndexElementItem(s)', response, true);
                 return response.results;
             }
 
             function failed(error) {
-                var message = error.message || 'OrganizationElement query failed';
+                var message = error.message || 'UserResourcePoolIndexElementItem query failed';
                 logger.logError(message, error, true);
             }
         }
 
-        function getOrganizationElement(organizationElementId, forceRefresh) {
-            return dataContext.fetchEntityByKey('OrganizationElement', organizationElementId, !forceRefresh)
+        function getUserResourcePoolIndexElementItem(userResourcePoolIndexElementItemId, forceRefresh) {
+            return dataContext.fetchEntityByKey('UserResourcePoolIndexElementItem', userResourcePoolIndexElementItemId, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {
@@ -105,7 +105,7 @@
             }
 
             function failed(error) {
-                var message = error.message || 'getOrganizationElement query failed';
+                var message = error.message || 'getUserResourcePoolIndexElementItem query failed';
                 logger.logError(message, error, true);
             }
         }

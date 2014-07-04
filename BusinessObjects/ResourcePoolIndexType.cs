@@ -11,6 +11,7 @@ namespace BusinessObjects
         SectorIndex = 1,
         KnowledgeIndex = 2,
         TotalCostIndex = 3,
-        DynamicIndex = 4
+        DynamicOrganizationIndex = 4,
+        DynamicElementIndex = 5
     }
 }

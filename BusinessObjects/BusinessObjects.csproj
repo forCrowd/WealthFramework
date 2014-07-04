@@ -104,7 +104,7 @@
     <Compile Include="License.cs" />
     <Compile Include="Attributes\ODataControllerAuthorizationAttribute.cs" />
     <Compile Include="OrganizationElementItem.cs" />
-    <Compile Include="OrganizationElement.cs" />
+    <Compile Include="ResourcePoolOrganizationElement.cs" />
     <Compile Include="Organization.cs" />
     <Compile Include="ResourcePoolIndexType.cs" />
     <Compile Include="ResourcePoolIndexOrganization.cs" />
@@ -112,7 +112,9 @@
     <Compile Include="ResourcePool.cs" />
     <Compile Include="Sector.cs" />
     <Compile Include="User.cs" />
+    <Compile Include="UserResourcePoolIndexElementItem.cs" />
     <Compile Include="UserLicenseRating.cs" />
+    <Compile Include="UserElementItem.cs" />
     <Compile Include="UserResourcePoolIndexOrganization.cs" />
     <Compile Include="UserOrganization.cs" />
     <Compile Include="UserResourcePoolIndex.cs" />

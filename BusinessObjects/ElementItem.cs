@@ -13,6 +13,9 @@ namespace BusinessObjects
     {
         public ElementItem()
         {
+            OrganizationElementItemSet = new HashSet<OrganizationElementItem>();
+            UserResourcePoolIndexElementItemSet = new HashSet<UserResourcePoolIndexElementItem>();
+            UserElementItemSet = new HashSet<UserElementItem>();
         }
 
         [DisplayOnListView(false)]
@@ -27,5 +30,36 @@ namespace BusinessObjects
         public int ElementId { get; set; }
 
         public virtual Element Element { get; set; }
+        public virtual ICollection<OrganizationElementItem> OrganizationElementItemSet { get; set; }
+        public virtual ICollection<UserResourcePoolIndexElementItem> UserResourcePoolIndexElementItemSet { get; set; }
+        public virtual ICollection<UserElementItem> UserElementItemSet { get; set; }
+
+        /* */
+
+        public int RatingCount
+        {
+            get { return UserElementItemSet.Count(); }
+        }
+
+        public decimal RatingAverage
+        {
+            get
+            {
+                return UserElementItemSet.Any()
+                    ? UserElementItemSet.Average(item => item.Rating)
+                    : 0;
+            }
+        }
+
+        public decimal RatingPercentage
+        {
+            get
+            {
+                return Element.RatingAverage == 0
+                    ? 0
+                    : RatingAverage / Element.RatingAverage;
+            }
+        }
+
     }
 }

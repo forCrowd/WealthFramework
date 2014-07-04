@@ -13,6 +13,8 @@ namespace BusinessObjects
     {
         public ResourcePool()
         {
+            ElementSet = new HashSet<Element>();
+            ResourcePoolOrganizationElementSet = new HashSet<ResourcePoolOrganizationElement>();
             ResourcePoolIndexSet = new HashSet<ResourcePoolIndex>();
             LicenseSet = new HashSet<License>();
             SectorSet = new HashSet<Sector>();
@@ -34,6 +36,8 @@ namespace BusinessObjects
         public bool IsSample { get; set; }
 
         public virtual ICollection<ResourcePoolIndex> ResourcePoolIndexSet { get; set; }
+        public virtual ICollection<Element> ElementSet { get; set; }
+        public virtual ICollection<ResourcePoolOrganizationElement> ResourcePoolOrganizationElementSet { get; set; }
         public virtual ICollection<Sector> SectorSet { get; set; }
         public virtual ICollection<License> LicenseSet { get; set; }
         public virtual ICollection<UserResourcePool> UserResourcePoolSet { get; set; }

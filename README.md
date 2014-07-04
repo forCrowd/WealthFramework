@@ -10,6 +10,7 @@ An experimental resource management system that aims to provide a sustainable ec
 
 * Elements
 * Web - manageScripts.js + manageMenu.js
+* Sector + Knowledge + Total Cost index tests were added
 
 **0.13.7**
 

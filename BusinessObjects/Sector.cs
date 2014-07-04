@@ -34,6 +34,11 @@ namespace BusinessObjects
 
         /* */
 
+        public int RatingCount
+        {
+            get { return UserSectorRatingSet.Count(); }
+        }
+
         public decimal RatingAverage
         {
             get
@@ -52,7 +57,7 @@ namespace BusinessObjects
                     ? 0
                     : ResourcePool.SectorIndex.IndexRatingAverage == 0
                     ? 0
-                    : RatingAverage / ResourcePool.SectorIndex.IndexRatingAverage;
+                    : RatingAverage / ResourcePool.SectorIndex.IndexValue;
             }
         }
     }
