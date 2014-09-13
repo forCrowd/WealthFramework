@@ -12,23 +12,21 @@ namespace BusinessObjects.Dto
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    public partial class ResourcePoolIndexDto
+    public partial class ElementDto
     {
-        public ResourcePoolIndexDto()
+        public ElementDto()
         {
         }
 
-        public ResourcePoolIndexDto(ResourcePoolIndex resourcePoolIndex)
+        public ElementDto(Element element)
         {
-            this.Id = resourcePoolIndex.Id;
-            this.ResourcePoolId = resourcePoolIndex.ResourcePoolId;
-            this.Name = resourcePoolIndex.Name;
-            this.ResourcePoolIndexType = resourcePoolIndex.ResourcePoolIndexType;
-            this.ElementId = resourcePoolIndex.ElementId;
-            this.CreatedOn = resourcePoolIndex.CreatedOn;
-            this.ModifiedOn = resourcePoolIndex.ModifiedOn;
-            this.DeletedOn = resourcePoolIndex.DeletedOn;
-            this.RowVersion = resourcePoolIndex.RowVersion;
+            this.Id = element.Id;
+            this.ResourcePoolId = element.ResourcePoolId;
+            this.Name = element.Name;
+            this.CreatedOn = element.CreatedOn;
+            this.ModifiedOn = element.ModifiedOn;
+            this.DeletedOn = element.DeletedOn;
+            this.RowVersion = element.RowVersion;
         }
 
         [Required]
@@ -41,12 +39,6 @@ namespace BusinessObjects.Dto
         public string Name { get; set; }
 
         [Required]
-        public byte ResourcePoolIndexType { get; set; }
-
-        [Required]
-        public Nullable<int> ElementId { get; set; }
-
-        [Required]
         public System.DateTime CreatedOn { get; set; }
 
         [Required]
@@ -57,15 +49,13 @@ namespace BusinessObjects.Dto
         [Required]
         public byte[] RowVersion { get; set; }
 
-        public ResourcePoolIndex ToBusinessObject()
+        public Element ToBusinessObject()
         {
-            return new ResourcePoolIndex()
+            return new Element()
             {
                 Id = Id,
                 ResourcePoolId = ResourcePoolId,
                 Name = Name,
-                ResourcePoolIndexType = ResourcePoolIndexType,
-                ElementId = ElementId,
                 CreatedOn = CreatedOn,
                 ModifiedOn = ModifiedOn,
                 DeletedOn = DeletedOn,

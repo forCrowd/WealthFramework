@@ -14,7 +14,6 @@ namespace BusinessObjects
         public ElementItem()
         {
             OrganizationElementItemSet = new HashSet<OrganizationElementItem>();
-            UserResourcePoolIndexElementItemSet = new HashSet<UserResourcePoolIndexElementItem>();
             UserElementItemSet = new HashSet<UserElementItem>();
         }
 
@@ -31,7 +30,6 @@ namespace BusinessObjects
 
         public virtual Element Element { get; set; }
         public virtual ICollection<OrganizationElementItem> OrganizationElementItemSet { get; set; }
-        public virtual ICollection<UserResourcePoolIndexElementItem> UserResourcePoolIndexElementItemSet { get; set; }
         public virtual ICollection<UserElementItem> UserElementItemSet { get; set; }
 
         /* */

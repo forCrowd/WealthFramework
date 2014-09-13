@@ -59,7 +59,7 @@ namespace BusinessObjects
             {
                 return ResourcePool.KnowledgeIndex == null
                     ? 0
-                    : ResourcePool.KnowledgeIndex.IndexRatingAverage == 0
+                    : ResourcePool.KnowledgeIndex.IndexValue == 0
                     ? 0
                     : RatingAverage / ResourcePool.KnowledgeIndex.IndexValue;
             }

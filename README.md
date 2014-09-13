@@ -10,7 +10,8 @@ An experimental resource management system that aims to provide a sustainable ec
 
 * Elements
 * Web - manageScripts.js + manageMenu.js
-* Sector + Knowledge + Total Cost index tests were added
+* Sector + Knowledge + Total Cost + Dynamic Element index tests were added
+* Knowledge & License combo was replaced with DynamicElement
 
 **0.13.7**
 

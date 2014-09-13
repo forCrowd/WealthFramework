@@ -67,56 +67,6 @@
     <None Include="T4\EF6.Utility.ttinclude" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="T4\elementEditController.js">
-      <DependentUpon>EF.Utility.ttinclude</DependentUpon>
-    </Content>
-    <Content Include="T4\elementItemEditController.js">
-      <DependentUpon>EF.Utility.ttinclude</DependentUpon>
-    </Content>
-    <Content Include="T4\licenseEditController.js">
-      <DependentUpon>EF.Utility.ttinclude</DependentUpon>
-    </Content>
-    <Content Include="T4\organizationEditController.js">
-      <DependentUpon>EF.Utility.ttinclude</DependentUpon>
-    </Content>
-    <Content Include="T4\organizationElementItemEditController.js">
-      <DependentUpon>EF.Utility.ttinclude</DependentUpon>
-    </Content>
-    <Content Include="T4\resourcePoolEditController.js">
-      <DependentUpon>EF.Utility.ttinclude</DependentUpon>
-    </Content>
-    <Content Include="T4\resourcePoolIndexEditController.js">
-      <DependentUpon>EF.Utility.ttinclude</DependentUpon>
-    </Content>
-    <Content Include="T4\resourcePoolOrganizationElementEditController.js">
-      <DependentUpon>EF.Utility.ttinclude</DependentUpon>
-    </Content>
-    <Content Include="T4\sectorEditController.js">
-      <DependentUpon>EF.Utility.ttinclude</DependentUpon>
-    </Content>
-    <Content Include="T4\userEditController.js">
-      <DependentUpon>EF.Utility.ttinclude</DependentUpon>
-    </Content>
-    <Content Include="T4\userLicenseRatingEditController.js">
-      <DependentUpon>EF.Utility.ttinclude</DependentUpon>
-    </Content>
-    <Content Include="T4\userOrganizationEditController.js">
-      <DependentUpon>EF.Utility.ttinclude</DependentUpon>
-    </Content>
-    <Content Include="T4\userResourcePoolEditController.js">
-      <DependentUpon>EF.Utility.ttinclude</DependentUpon>
-    </Content>
-    <Content Include="T4\userResourcePoolIndexEditController.js">
-      <DependentUpon>EF.Utility.ttinclude</DependentUpon>
-    </Content>
-    <Content Include="T4\userResourcePoolIndexValueEditController.js">
-      <DependentUpon>EF.Utility.ttinclude</DependentUpon>
-    </Content>
-    <Content Include="T4\userSectorRatingEditController.js">
-      <DependentUpon>EF.Utility.ttinclude</DependentUpon>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

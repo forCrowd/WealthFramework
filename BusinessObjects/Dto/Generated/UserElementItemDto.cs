@@ -12,39 +12,35 @@ namespace BusinessObjects.Dto
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    public partial class ResourcePoolIndexDto
+    public partial class UserElementItemDto
     {
-        public ResourcePoolIndexDto()
+        public UserElementItemDto()
         {
         }
 
-        public ResourcePoolIndexDto(ResourcePoolIndex resourcePoolIndex)
+        public UserElementItemDto(UserElementItem userElementItem)
         {
-            this.Id = resourcePoolIndex.Id;
-            this.ResourcePoolId = resourcePoolIndex.ResourcePoolId;
-            this.Name = resourcePoolIndex.Name;
-            this.ResourcePoolIndexType = resourcePoolIndex.ResourcePoolIndexType;
-            this.ElementId = resourcePoolIndex.ElementId;
-            this.CreatedOn = resourcePoolIndex.CreatedOn;
-            this.ModifiedOn = resourcePoolIndex.ModifiedOn;
-            this.DeletedOn = resourcePoolIndex.DeletedOn;
-            this.RowVersion = resourcePoolIndex.RowVersion;
+            this.Id = userElementItem.Id;
+            this.UserId = userElementItem.UserId;
+            this.ElementItemId = userElementItem.ElementItemId;
+            this.Rating = userElementItem.Rating;
+            this.CreatedOn = userElementItem.CreatedOn;
+            this.ModifiedOn = userElementItem.ModifiedOn;
+            this.DeletedOn = userElementItem.DeletedOn;
+            this.RowVersion = userElementItem.RowVersion;
         }
 
         [Required]
         public int Id { get; set; }
 
         [Required]
-        public int ResourcePoolId { get; set; }
+        public int UserId { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        public int ElementItemId { get; set; }
 
         [Required]
-        public byte ResourcePoolIndexType { get; set; }
-
-        [Required]
-        public Nullable<int> ElementId { get; set; }
+        public decimal Rating { get; set; }
 
         [Required]
         public System.DateTime CreatedOn { get; set; }
@@ -57,15 +53,14 @@ namespace BusinessObjects.Dto
         [Required]
         public byte[] RowVersion { get; set; }
 
-        public ResourcePoolIndex ToBusinessObject()
+        public UserElementItem ToBusinessObject()
         {
-            return new ResourcePoolIndex()
+            return new UserElementItem()
             {
                 Id = Id,
-                ResourcePoolId = ResourcePoolId,
-                Name = Name,
-                ResourcePoolIndexType = ResourcePoolIndexType,
-                ElementId = ElementId,
+                UserId = UserId,
+                ElementItemId = ElementItemId,
+                Rating = Rating,
                 CreatedOn = CreatedOn,
                 ModifiedOn = ModifiedOn,
                 DeletedOn = DeletedOn,

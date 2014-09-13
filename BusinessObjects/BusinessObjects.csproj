@@ -59,10 +59,19 @@
     <Compile Include="..\SolutionItems\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Dto\Generated\ElementDto.cs">
+      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Dto\Generated\ElementItemDto.cs">
+      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
+    </Compile>
     <Compile Include="Dto\Generated\LicenseDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
     <Compile Include="Dto\Generated\OrganizationDto.cs">
+      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Dto\Generated\OrganizationElementItemDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
     <Compile Include="Dto\Generated\ResourcePoolDto.cs">
@@ -75,6 +84,9 @@
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
     <Compile Include="Dto\Generated\UserDto.cs">
+      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Dto\Generated\UserElementItemDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
     <Compile Include="Dto\Generated\UserLicenseRatingDto.cs">
@@ -104,7 +116,6 @@
     <Compile Include="License.cs" />
     <Compile Include="Attributes\ODataControllerAuthorizationAttribute.cs" />
     <Compile Include="OrganizationElementItem.cs" />
-    <Compile Include="ResourcePoolOrganizationElement.cs" />
     <Compile Include="Organization.cs" />
     <Compile Include="ResourcePoolIndexType.cs" />
     <Compile Include="ResourcePoolIndexOrganization.cs" />
@@ -112,7 +123,6 @@
     <Compile Include="ResourcePool.cs" />
     <Compile Include="Sector.cs" />
     <Compile Include="User.cs" />
-    <Compile Include="UserResourcePoolIndexElementItem.cs" />
     <Compile Include="UserLicenseRating.cs" />
     <Compile Include="UserElementItem.cs" />
     <Compile Include="UserResourcePoolIndexOrganization.cs" />

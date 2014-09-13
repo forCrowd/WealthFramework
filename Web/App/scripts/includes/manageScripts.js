@@ -49,10 +49,6 @@ SH - 09 May '14
     <script src="/App/scripts/controllers/manage/list/resourcePoolIndexListController.js"></script>\
     <script src="/App/scripts/controllers/manage/edit/resourcePoolIndexEditController.js"></script>\
 	\
-    <script src="/App/scripts/services/generated/resourcePoolOrganizationElementService.js"></script>\
-    <script src="/App/scripts/controllers/manage/list/resourcePoolOrganizationElementListController.js"></script>\
-    <script src="/App/scripts/controllers/manage/edit/resourcePoolOrganizationElementEditController.js"></script>\
-	\
     <script src="/App/scripts/services/generated/sectorService.js"></script>\
     <script src="/App/scripts/controllers/manage/list/sectorListController.js"></script>\
     <script src="/App/scripts/controllers/manage/edit/sectorEditController.js"></script>\
@@ -80,10 +76,6 @@ SH - 09 May '14
     <script src="/App/scripts/services/generated/userResourcePoolIndexService.js"></script>\
     <script src="/App/scripts/controllers/manage/list/userResourcePoolIndexListController.js"></script>\
     <script src="/App/scripts/controllers/manage/edit/userResourcePoolIndexEditController.js"></script>\
-	\
-    <script src="/App/scripts/services/generated/userResourcePoolIndexElementItemService.js"></script>\
-    <script src="/App/scripts/controllers/manage/list/userResourcePoolIndexElementItemListController.js"></script>\
-    <script src="/App/scripts/controllers/manage/edit/userResourcePoolIndexElementItemEditController.js"></script>\
 	\
     <script src="/App/scripts/services/generated/userResourcePoolIndexValueService.js"></script>\
     <script src="/App/scripts/controllers/manage/list/userResourcePoolIndexValueListController.js"></script>\

@@ -55,7 +55,7 @@ namespace BusinessObjects
             {
                 return ResourcePool.SectorIndex == null
                     ? 0
-                    : ResourcePool.SectorIndex.IndexRatingAverage == 0
+                    : ResourcePool.SectorIndex.IndexValue == 0
                     ? 0
                     : RatingAverage / ResourcePool.SectorIndex.IndexValue;
             }

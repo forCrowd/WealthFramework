@@ -12,39 +12,31 @@ namespace BusinessObjects.Dto
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    public partial class ResourcePoolIndexDto
+    public partial class ElementItemDto
     {
-        public ResourcePoolIndexDto()
+        public ElementItemDto()
         {
         }
 
-        public ResourcePoolIndexDto(ResourcePoolIndex resourcePoolIndex)
+        public ElementItemDto(ElementItem elementItem)
         {
-            this.Id = resourcePoolIndex.Id;
-            this.ResourcePoolId = resourcePoolIndex.ResourcePoolId;
-            this.Name = resourcePoolIndex.Name;
-            this.ResourcePoolIndexType = resourcePoolIndex.ResourcePoolIndexType;
-            this.ElementId = resourcePoolIndex.ElementId;
-            this.CreatedOn = resourcePoolIndex.CreatedOn;
-            this.ModifiedOn = resourcePoolIndex.ModifiedOn;
-            this.DeletedOn = resourcePoolIndex.DeletedOn;
-            this.RowVersion = resourcePoolIndex.RowVersion;
+            this.Id = elementItem.Id;
+            this.Name = elementItem.Name;
+            this.ElementId = elementItem.ElementId;
+            this.CreatedOn = elementItem.CreatedOn;
+            this.ModifiedOn = elementItem.ModifiedOn;
+            this.DeletedOn = elementItem.DeletedOn;
+            this.RowVersion = elementItem.RowVersion;
         }
 
         [Required]
         public int Id { get; set; }
 
         [Required]
-        public int ResourcePoolId { get; set; }
-
-        [Required]
         public string Name { get; set; }
 
         [Required]
-        public byte ResourcePoolIndexType { get; set; }
-
-        [Required]
-        public Nullable<int> ElementId { get; set; }
+        public int ElementId { get; set; }
 
         [Required]
         public System.DateTime CreatedOn { get; set; }
@@ -57,14 +49,12 @@ namespace BusinessObjects.Dto
         [Required]
         public byte[] RowVersion { get; set; }
 
-        public ResourcePoolIndex ToBusinessObject()
+        public ElementItem ToBusinessObject()
         {
-            return new ResourcePoolIndex()
+            return new ElementItem()
             {
                 Id = Id,
-                ResourcePoolId = ResourcePoolId,
                 Name = Name,
-                ResourcePoolIndexType = ResourcePoolIndexType,
                 ElementId = ElementId,
                 CreatedOn = CreatedOn,
                 ModifiedOn = ModifiedOn,

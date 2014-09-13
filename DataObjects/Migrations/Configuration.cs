@@ -14,10 +14,16 @@ namespace DataObjects.Migrations
         readonly IEnumerable<string> pendingMigrations;
 
         ResourcePoolRepository resourcePoolRepository;
+        ElementRepository elementRepository;
+        ElementItemRepository elementItemRepository;
+        ResourcePoolIndexRepository resourcePoolIndexRepository;
         SectorRepository sectorRepository;
         LicenseRepository licenseRepository;
         OrganizationRepository organizationRepository;
+        OrganizationElementItemRepository organizationElementItemRepository;
         UserResourcePoolRepository userResourcePoolRepository;
+        UserResourcePoolIndexRepository userResourcePoolIndexRepository;
+        UserElementItemRepository userElementItemRepository;
         UserSectorRatingRepository userSectorRatingRepository;
         UserLicenseRatingRepository userLicenseRatingRepository;
         UserOrganizationRepository userOrganizationRepository;
@@ -30,6 +36,21 @@ namespace DataObjects.Migrations
             get { return resourcePoolRepository ?? (resourcePoolRepository = new ResourcePoolRepository(Context)); }
         }
 
+        public ElementRepository ElementRepository
+        {
+            get { return elementRepository ?? (elementRepository = new ElementRepository(Context)); }
+        }
+
+        public ElementItemRepository ElementItemRepository
+        {
+            get { return elementItemRepository ?? (elementItemRepository = new ElementItemRepository(Context)); }
+        }
+        
+        public ResourcePoolIndexRepository ResourcePoolIndexRepository
+        {
+            get { return resourcePoolIndexRepository ?? (resourcePoolIndexRepository = new ResourcePoolIndexRepository(Context)); }
+        }
+        
         public SectorRepository SectorRepository
         {
             get { return sectorRepository ?? (sectorRepository = new SectorRepository(Context)); }
@@ -44,9 +65,24 @@ namespace DataObjects.Migrations
             get { return organizationRepository ?? (organizationRepository = new OrganizationRepository(Context)); }
         }
 
+        public OrganizationElementItemRepository OrganizationElementItemRepository
+        {
+            get { return organizationElementItemRepository ?? (organizationElementItemRepository = new OrganizationElementItemRepository(Context)); }
+        }
+
         UserResourcePoolRepository UserResourcePoolRepository
         {
             get { return userResourcePoolRepository ?? (userResourcePoolRepository = new UserResourcePoolRepository(Context)); }
+        }
+
+        UserResourcePoolIndexRepository UserResourcePoolIndexRepository
+        {
+            get { return userResourcePoolIndexRepository ?? (userResourcePoolIndexRepository = new UserResourcePoolIndexRepository(Context)); }
+        }
+
+        UserElementItemRepository UserElementItemRepository
+        {
+            get { return userElementItemRepository ?? (userElementItemRepository = new UserElementItemRepository(Context)); }
         }
 
         UserSectorRatingRepository UserSectorRatingRepository
@@ -104,7 +140,7 @@ namespace DataObjects.Migrations
                             Context.SaveChanges();
                             break;
                         }
-                    case "201405080802306_V0_10_8":
+                    case "201407021158372_V0_14":
                         {
                             // Admin
                             var roleStore = new RoleStore<IdentityRole>(Context);
@@ -153,6 +189,7 @@ namespace DataObjects.Migrations
 
                             // Samples
                             AddSectorIndexSample(sampleUser);
+                            AddKnowledgeIndexSample_Old(sampleUser);
                             AddKnowledgeIndexSample(sampleUser);
                             AddTotalCostIndexSample(sampleUser);
 
@@ -175,6 +212,7 @@ namespace DataObjects.Migrations
         void AddSectorIndexSample(BusinessObjects.User user)
         {
             var sectorResourcePool = new BusinessObjects.ResourcePool() { Name = "Sector Index Sample", IsSample = true };
+            var sectorResourcePoolIndex = new BusinessObjects.ResourcePoolIndex() { ResourcePool = sectorResourcePool, Name = "Sector Index", ResourcePoolIndexType = (byte)ResourcePoolIndexType.SectorIndex };
             var sectorSector1 = new BusinessObjects.Sector() { ResourcePool = sectorResourcePool, Name = "Basic Materials" };
             var sectorSector2 = new BusinessObjects.Sector() { ResourcePool = sectorResourcePool, Name = "Conglomerates" };
             var sectorSector3 = new BusinessObjects.Sector() { ResourcePool = sectorResourcePool, Name = "Consumer Goods" };
@@ -195,6 +233,7 @@ namespace DataObjects.Migrations
             var sectorOrganization8 = new BusinessObjects.Organization() { Sector = sectorSector8, Name = "Technology", ProductionCost = 100, SalesPrice = 150, License = sectorLicense };
             var sectorOrganization9 = new BusinessObjects.Organization() { Sector = sectorSector9, Name = "Utilities", ProductionCost = 100, SalesPrice = 150, License = sectorLicense };
             var sectorUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = sectorResourcePool, ResourcePoolRate = 101 };
+            var sectorUserResourcePoolIndex = new BusinessObjects.UserResourcePoolIndex() { UserResourcePool = sectorUserResourcePool, ResourcePoolIndex = sectorResourcePoolIndex, Rating = 100 };
             var sectorUserSectorRating1 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector1, Rating = 12 };
             var sectorUserSectorRating2 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector2, Rating = 11 };
             var sectorUserSectorRating3 = new BusinessObjects.UserSectorRating() { User = user, Sector = sectorSector3, Rating = 11 };
@@ -215,6 +254,7 @@ namespace DataObjects.Migrations
             var sectorUserOrganization9 = new BusinessObjects.UserOrganization() { User = user, Organization = sectorOrganization9, NumberOfSales = 0 };
 
             ResourcePoolRepository.Insert(sectorResourcePool);
+            ResourcePoolIndexRepository.Insert(sectorResourcePoolIndex);
             SectorRepository.Insert(sectorSector1);
             SectorRepository.Insert(sectorSector2);
             SectorRepository.Insert(sectorSector3);
@@ -235,6 +275,7 @@ namespace DataObjects.Migrations
             OrganizationRepository.Insert(sectorOrganization8);
             OrganizationRepository.Insert(sectorOrganization9);
             UserResourcePoolRepository.Insert(sectorUserResourcePool);
+            UserResourcePoolIndexRepository.Insert(sectorUserResourcePoolIndex);
             UserSectorRatingRepository.Insert(sectorUserSectorRating1);
             UserSectorRatingRepository.Insert(sectorUserSectorRating2);
             UserSectorRatingRepository.Insert(sectorUserSectorRating3);
@@ -255,29 +296,72 @@ namespace DataObjects.Migrations
             UserOrganizationRepository.Insert(sectorUserOrganization9);
         }
 
-        void AddKnowledgeIndexSample(BusinessObjects.User user)
+        void AddKnowledgeIndexSample_Old(BusinessObjects.User user)
         {
-            var knowledgeResourcePool = new BusinessObjects.ResourcePool() { Name = "Knowledge Index Sample", IsSample = true };
-            var knowledgeSector = new BusinessObjects.Sector() { ResourcePool = knowledgeResourcePool, Name = "Knowledge Index Generic Sector" };
+            var knowledgeResourcePool = new BusinessObjects.ResourcePool() { Name = "Knowledge Index (Old) Sample", IsSample = true };
+            var knowledgeResourcePoolIndex = new BusinessObjects.ResourcePoolIndex() { ResourcePool = knowledgeResourcePool, Name = "Knowledge Index (Old)", ResourcePoolIndexType = (byte)ResourcePoolIndexType.KnowledgeIndex };
+            var knowledgeSector = new BusinessObjects.Sector() { ResourcePool = knowledgeResourcePool, Name = "Knowledge Index (Old) Generic Sector" };
             var knowledgeLicense1 = new BusinessObjects.License() { ResourcePool = knowledgeResourcePool, Name = "Open License", Description = "Open source license sample", Text = "When you use this license it allows everyone to use your license without any restriction" };
             var knowledgeLicense2 = new BusinessObjects.License() { ResourcePool = knowledgeResourcePool, Name = "Restricted License", Description = "Restricted license sample", Text = "Can't, can't, can't" };
             var knowledgeOrganization1 = new BusinessObjects.Organization() { Sector = knowledgeSector, Name = "True Source", ProductionCost = 100, SalesPrice = 150, License = knowledgeLicense1 };
             var knowledgeOrganization2 = new BusinessObjects.Organization() { Sector = knowledgeSector, Name = "Hidden Knowledge", ProductionCost = 100, SalesPrice = 150, License = knowledgeLicense2 };
             var knowledgeUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = knowledgeResourcePool, ResourcePoolRate = 101 };
+            var knowledgeUserResourcePoolIndex = new BusinessObjects.UserResourcePoolIndex() { UserResourcePool = knowledgeUserResourcePool, ResourcePoolIndex = knowledgeResourcePoolIndex, Rating = 100 };
             var knowledgeUserLicenseRating1 = new BusinessObjects.UserLicenseRating() { User = user, License = knowledgeLicense1, Rating = 75 };
             var knowledgeUserLicenseRating2 = new BusinessObjects.UserLicenseRating() { User = user, License = knowledgeLicense2, Rating = 25 };
             var knowledgeUserOrganization1 = new BusinessObjects.UserOrganization() { User = user, Organization = knowledgeOrganization1, NumberOfSales = 0 };
             var knowledgeUserOrganization2 = new BusinessObjects.UserOrganization() { User = user, Organization = knowledgeOrganization2, NumberOfSales = 0 };
 
             ResourcePoolRepository.Insert(knowledgeResourcePool);
+            ResourcePoolIndexRepository.Insert(knowledgeResourcePoolIndex);
             SectorRepository.Insert(knowledgeSector);
             LicenseRepository.Insert(knowledgeLicense1);
             LicenseRepository.Insert(knowledgeLicense2);
             OrganizationRepository.Insert(knowledgeOrganization1);
             OrganizationRepository.Insert(knowledgeOrganization2);
             UserResourcePoolRepository.Insert(knowledgeUserResourcePool);
+            UserResourcePoolIndexRepository.Insert(knowledgeUserResourcePoolIndex);
             UserLicenseRatingRepository.Insert(knowledgeUserLicenseRating1);
             UserLicenseRatingRepository.Insert(knowledgeUserLicenseRating2);
+            UserOrganizationRepository.Insert(knowledgeUserOrganization1);
+            UserOrganizationRepository.Insert(knowledgeUserOrganization2);
+        }
+
+        void AddKnowledgeIndexSample(BusinessObjects.User user)
+        {
+            var knowledgeResourcePool = new BusinessObjects.ResourcePool() { Name = "Knowledge Index Sample", IsSample = true };
+            var knowledgeLicenseElement = new Element() { ResourcePool = knowledgeResourcePool, Name = "License" };
+            var knowledgeLicenseItem1 = new ElementItem() { Element = knowledgeLicenseElement, Name = "Open License" };
+            var knowledgeLicenseItem2 = new ElementItem() { Element = knowledgeLicenseElement, Name = "Restricted License" };
+            var knowledgeResourcePoolIndex = new BusinessObjects.ResourcePoolIndex() { ResourcePool = knowledgeResourcePool, Name = "Knowledge Index", ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicElementIndex, Element = knowledgeLicenseElement };
+            var knowledgeSector = new BusinessObjects.Sector() { ResourcePool = knowledgeResourcePool, Name = "Knowledge Index Generic Sector" };
+            var knowledgeLicense = new BusinessObjects.License() { ResourcePool = knowledgeResourcePool, Name = "Knowledge Index Generic License", Text = "License Text" };
+            var knowledgeOrganization1 = new BusinessObjects.Organization() { Sector = knowledgeSector, Name = "True Source", ProductionCost = 100, SalesPrice = 150, License = knowledgeLicense };
+            var knowledgeOrganizationLicenseItem1 = new BusinessObjects.OrganizationElementItem() { Organization = knowledgeOrganization1, ElementItem = knowledgeLicenseItem1 };
+            var knowledgeOrganization2 = new BusinessObjects.Organization() { Sector = knowledgeSector, Name = "Hidden Knowledge", ProductionCost = 100, SalesPrice = 150, License = knowledgeLicense };
+            var knowledgeOrganizationLicenseItem2 = new BusinessObjects.OrganizationElementItem() { Organization = knowledgeOrganization2, ElementItem = knowledgeLicenseItem2 };
+            var knowledgeUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = knowledgeResourcePool, ResourcePoolRate = 101 };
+            var knowledgeUserResourcePoolIndex = new BusinessObjects.UserResourcePoolIndex() { UserResourcePool = knowledgeUserResourcePool, ResourcePoolIndex = knowledgeResourcePoolIndex, Rating = 100 };
+            var knowledgeUserLicenseItemRating1 = new BusinessObjects.UserElementItem() { User = user, ElementItem = knowledgeLicenseItem1, Rating = 75 };
+            var knowledgeUserLicenseItemRating2 = new BusinessObjects.UserElementItem() { User = user, ElementItem = knowledgeLicenseItem2, Rating = 25 };
+            var knowledgeUserOrganization1 = new BusinessObjects.UserOrganization() { User = user, Organization = knowledgeOrganization1, NumberOfSales = 0 };
+            var knowledgeUserOrganization2 = new BusinessObjects.UserOrganization() { User = user, Organization = knowledgeOrganization2, NumberOfSales = 0 };
+
+            ResourcePoolRepository.Insert(knowledgeResourcePool);
+            ElementRepository.Insert(knowledgeLicenseElement);
+            ElementItemRepository.Insert(knowledgeLicenseItem1);
+            ElementItemRepository.Insert(knowledgeLicenseItem2);
+            ResourcePoolIndexRepository.Insert(knowledgeResourcePoolIndex);
+            SectorRepository.Insert(knowledgeSector);
+            LicenseRepository.Insert(knowledgeLicense);
+            OrganizationRepository.Insert(knowledgeOrganization1);
+            OrganizationElementItemRepository.Insert(knowledgeOrganizationLicenseItem1);
+            OrganizationRepository.Insert(knowledgeOrganization2);
+            OrganizationElementItemRepository.Insert(knowledgeOrganizationLicenseItem2);
+            UserResourcePoolRepository.Insert(knowledgeUserResourcePool);
+            UserResourcePoolIndexRepository.Insert(knowledgeUserResourcePoolIndex);
+            UserElementItemRepository.Insert(knowledgeUserLicenseItemRating1);
+            UserElementItemRepository.Insert(knowledgeUserLicenseItemRating2);
             UserOrganizationRepository.Insert(knowledgeUserOrganization1);
             UserOrganizationRepository.Insert(knowledgeUserOrganization2);
         }
@@ -285,20 +369,24 @@ namespace DataObjects.Migrations
         void AddTotalCostIndexSample(BusinessObjects.User user)
         {
             var totalCostResourcePool = new BusinessObjects.ResourcePool() { Name = "Total Cost Index Sample", IsSample = true };
+            var totalCostResourcePoolIndex = new BusinessObjects.ResourcePoolIndex() { ResourcePool = totalCostResourcePool, Name = "Total Cost Index", ResourcePoolIndexType = (byte)ResourcePoolIndexType.TotalCostIndex };
             var totalCostSector = new BusinessObjects.Sector() { ResourcePool = totalCostResourcePool, Name = "Total Cost Index Generic Sector" };
             var totalCostLicense = new BusinessObjects.License() { ResourcePool = totalCostResourcePool, Name = "Total Cost Index Generic License", Text = "License Text" };
             var totalCostOrganization1 = new BusinessObjects.Organization() { Sector = totalCostSector, Name = "Lowlands", ProductionCost = 100, SalesPrice = 125, License = totalCostLicense };
             var totalCostOrganization2 = new BusinessObjects.Organization() { Sector = totalCostSector, Name = "High Coast", ProductionCost = 100, SalesPrice = 175, License = totalCostLicense };
             var totalCostUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = totalCostResourcePool, ResourcePoolRate = 101 };
+            var totalCostUserResourcePoolIndex = new BusinessObjects.UserResourcePoolIndex() { UserResourcePool = totalCostUserResourcePool, ResourcePoolIndex = totalCostResourcePoolIndex, Rating = 100 };
             var totalCostUserOrganization1 = new BusinessObjects.UserOrganization() { User = user, Organization = totalCostOrganization1, NumberOfSales = 0 };
             var totalCostUserOrganization2 = new BusinessObjects.UserOrganization() { User = user, Organization = totalCostOrganization2, NumberOfSales = 0 };
 
             ResourcePoolRepository.Insert(totalCostResourcePool);
+            ResourcePoolIndexRepository.Insert(totalCostResourcePoolIndex);
             SectorRepository.Insert(totalCostSector);
             LicenseRepository.Insert(totalCostLicense);
             OrganizationRepository.Insert(totalCostOrganization1);
             OrganizationRepository.Insert(totalCostOrganization2);
             UserResourcePoolRepository.Insert(totalCostUserResourcePool);
+            UserResourcePoolIndexRepository.Insert(totalCostUserResourcePoolIndex);
             UserOrganizationRepository.Insert(totalCostUserOrganization1);
             UserOrganizationRepository.Insert(totalCostUserOrganization2);
         }

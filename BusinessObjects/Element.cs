@@ -11,7 +11,6 @@ namespace BusinessObjects
     {
         public Element()
         {
-            ResourcePoolOrganizationElementSetSet = new HashSet<ResourcePoolOrganizationElement>();
             ElementItemSet = new HashSet<ElementItem>();
             ResourcePoolIndexSet = new HashSet<ResourcePoolIndex>();
         }
@@ -28,15 +27,19 @@ namespace BusinessObjects
         public string Name { get; set; }
 
         public virtual ResourcePool ResourcePool { get; set; }
-        public virtual ICollection<ResourcePoolOrganizationElement> ResourcePoolOrganizationElementSetSet { get; set; }
         public virtual ICollection<ElementItem> ElementItemSet { get; set; }
         public virtual ICollection<ResourcePoolIndex> ResourcePoolIndexSet { get; set; }
 
-        /* */
+        #region - ReadOnly Properties -
 
+        /// <summary>
+        /// REMARK: In other index types, this value is calculated on ResourcePoolIndex class level, under IndexValue property
+        /// </summary>
         public decimal RatingAverage
         {
             get { return ElementItemSet.Sum(item => item.RatingAverage); }
         }
+
+        #endregion
     }
 }

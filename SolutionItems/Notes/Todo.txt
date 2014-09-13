@@ -72,24 +72,17 @@ config.EnableQuerySupport(queryAttribute);
 
 . vs update 2 changes -> asp.net identity
 
-. add elements
-.. resourcepoolorganizationelement instead of organizationelemen -> resourcepoolId + elementId but it will show it on organization level
-
-. craete fixed amount resourcepooltype
-
-. sector.cs + license.cs - ratingpercentage - it should indexvalue ?!?!?!?!?!?!?!?!?!?!?!?!?! - THIS WAS FIXED FOR THE MOMENT, BUT IMPROVE TESTING TO BE ABLE TO NOTICE THESE ISSUES ?
-	return ResourcePool.SectorIndex == null
-		? 0
-		: ResourcePool.SectorIndex.IndexRatingAverage == 0
-		? 0
-		: RatingAverage / ResourcePool.SectorIndex.IndexRatingAverage;
+. create fixed amount resourcepooltype
 		
 . check user[x]rating tables usage, do they need filtering?
 
-. remove userresourcepoolindexelementitem, if not used
 . current db is 0.13.7, will be upgraded to 0.14.0 - then generate the files again
+
+. all in one sample is outdated
+
+. remove license
 
 ---
 sector index - just name and the rating
-license index - name + boolean variables and the rating
+license index - name + boolean variables (allows to see the code, allows modification, allows sell) and the rating
 organization total cost index - auto formula (organization sales price / resource pool sales price average)
