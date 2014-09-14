@@ -45,10 +45,6 @@ SH - 09 May '14
     <script src="/App/scripts/controllers/manage/list/resourcePoolIndexListController.js"></script>\
     <script src="/App/scripts/controllers/manage/edit/resourcePoolIndexEditController.js"></script>\
 	\
-    <script src="/App/scripts/services/generated/sectorService.js"></script>\
-    <script src="/App/scripts/controllers/manage/list/sectorListController.js"></script>\
-    <script src="/App/scripts/controllers/manage/edit/sectorEditController.js"></script>\
-	\
     <script src="/App/scripts/services/generated/userService.js"></script>\
     <script src="/App/scripts/controllers/manage/list/userListController.js"></script>\
     <script src="/App/scripts/controllers/manage/edit/userEditController.js"></script>\
@@ -72,10 +68,6 @@ SH - 09 May '14
     <script src="/App/scripts/services/generated/userResourcePoolIndexValueService.js"></script>\
     <script src="/App/scripts/controllers/manage/list/userResourcePoolIndexValueListController.js"></script>\
     <script src="/App/scripts/controllers/manage/edit/userResourcePoolIndexValueEditController.js"></script>\
-	\
-    <script src="/App/scripts/services/generated/userSectorRatingService.js"></script>\
-    <script src="/App/scripts/controllers/manage/list/userSectorRatingListController.js"></script>\
-    <script src="/App/scripts/controllers/manage/edit/userSectorRatingEditController.js"></script>\
 	\
 \
 ');

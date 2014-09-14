@@ -34,7 +34,7 @@ namespace BusinessObjects
         // To prevent this (or ideally), there needs to be a foreign key between this class and UserResourcePool (UserResourcePoolId on this class).
         public UserResourcePool UserResourcePool
         {
-            get { return User.UserResourcePoolSet.Single(item => item.ResourcePool == Organization.Sector.ResourcePool); }
+            get { return User.UserResourcePoolSet.Single(item => item.ResourcePool == Organization.ResourcePool); }
         }
 
         public IEnumerable<UserResourcePoolIndexOrganization> UserResourcePoolIndexOrganizationSet

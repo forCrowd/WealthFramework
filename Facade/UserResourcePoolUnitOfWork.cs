@@ -8,8 +8,8 @@
     public partial class UserResourcePoolUnitOfWork
     {
         ResourcePoolRepository resourcePoolRepository;
-        UserResourcePoolIndexRepository userResourcePoolIndexRepository; 
-        UserSectorRatingRepository userSectorRatingRepository;
+        UserResourcePoolIndexRepository userResourcePoolIndexRepository;
+        //UserSectorRatingRepository userSectorRatingRepository;
         //UserLicenseRatingRepository userLicenseRatingRepository;
         UserOrganizationRepository userOrganizationRepository;
 
@@ -23,10 +23,10 @@
             get { return userResourcePoolIndexRepository ?? (userResourcePoolIndexRepository = new UserResourcePoolIndexRepository(Context)); }
         }
 
-        UserSectorRatingRepository UserSectorRatingRepository
-        {
-            get { return userSectorRatingRepository ?? (userSectorRatingRepository = new UserSectorRatingRepository(Context)); }
-        }
+        //UserSectorRatingRepository UserSectorRatingRepository
+        //{
+        //    get { return userSectorRatingRepository ?? (userSectorRatingRepository = new UserSectorRatingRepository(Context)); }
+        //}
 
         //UserLicenseRatingRepository UserLicenseRatingRepository
         //{
@@ -63,30 +63,30 @@
                 };
                 UserResourcePoolIndexRepository.Insert(sampleUserResourcePoolIndex);
             }
-            
-            var sectors = resourcePool.SectorSet;
-            foreach (var sector in sectors)
+
+            var organizations = resourcePool.OrganizationSet;
+            //foreach (var sector in sectors)
+            //{
+            //    var sampleUserSectorRating = new UserSectorRating()
+            //    {
+            //        UserId = userResourcePool.UserId,
+            //        Sector = sector,
+            //        Rating = 0
+            //    };
+            //    UserSectorRatingRepository.Insert(sampleUserSectorRating);
+
+            //    var organizations = sector.OrganizationSet;
+            foreach (var organization in organizations)
             {
-                var sampleUserSectorRating = new UserSectorRating()
+                var sampleUserOrganization = new UserOrganization()
                 {
                     UserId = userResourcePool.UserId,
-                    Sector = sector,
-                    Rating = 0
+                    Organization = organization,
+                    NumberOfSales = 0
                 };
-                UserSectorRatingRepository.Insert(sampleUserSectorRating);
-
-                var organizations = sector.OrganizationSet;
-                foreach (var organization in organizations)
-                {
-                    var sampleUserOrganization = new UserOrganization()
-                    {
-                        UserId = userResourcePool.UserId,
-                        Organization = organization,
-                        NumberOfSales = 0
-                    };
-                    UserOrganizationRepository.Insert(sampleUserOrganization);                    
-                }
+                UserOrganizationRepository.Insert(sampleUserOrganization);
             }
+            //}
 
             //var licences = resourcePool.LicenseSet;
             //foreach (var license in licences)
@@ -162,14 +162,14 @@
             // Delete child items first
             UserOrganizationRepository.DeleteRange(userResourcePool.UserOrganizationSet);
 
-            var userSectorRatings = userResourcePool
-                .User
-                .UserSectorRatingSet
-                .Where(item => userResourcePool
-                    .ResourcePool
-                    .SectorSet
-                    .Any(sector => sector == item.Sector));
-            UserSectorRatingRepository.DeleteRange(userSectorRatings);
+            //var userSectorRatings = userResourcePool
+            //    .User
+            //    .UserSectorRatingSet
+            //    .Where(item => userResourcePool
+            //        .ResourcePool
+            //        .SectorSet
+            //        .Any(sector => sector == item.Sector));
+            //UserSectorRatingRepository.DeleteRange(userSectorRatings);
 
             //var userLicenseRatings = userResourcePool
             //    .User

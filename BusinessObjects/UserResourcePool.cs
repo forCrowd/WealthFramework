@@ -43,7 +43,7 @@ namespace BusinessObjects
             {
                 return User
                     .UserOrganizationSet
-                    .Where(item => item.Organization.Sector.ResourcePool == ResourcePool);
+                    .Where(item => item.Organization.ResourcePool == ResourcePool);
             }
         }
 

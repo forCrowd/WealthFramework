@@ -27,8 +27,8 @@ namespace BusinessObjects
             {
                 switch (UserResourcePoolIndex.ResourcePoolIndex.ResourcePoolIndexType)
                 {
-                    case (byte)ResourcePoolIndexType.SectorIndex:
-                        return UserOrganization.Organization.Sector.RatingPercentage * UserOrganization.NumberOfSalesPercentage;
+                    //case (byte)ResourcePoolIndexType.SectorIndex:
+                    //    return UserOrganization.Organization.Sector.RatingPercentage * UserOrganization.NumberOfSalesPercentage;
                     //case (byte)ResourcePoolIndexType.KnowledgeIndex:
                     //    return UserOrganization.Organization.License.RatingPercentage * UserOrganization.NumberOfSalesPercentage;
                     case (byte)ResourcePoolIndexType.TotalCostIndex:

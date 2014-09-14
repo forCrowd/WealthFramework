@@ -25,9 +25,9 @@
         [TestMethod]
         public void Insert()
         {
-            Sector sampleSector;
-            using (var unitOfWork = new SectorUnitOfWork())
-                sampleSector = unitOfWork.AllLive.First();
+            ResourcePool sampleResourcePool;
+            using (var unitOfWork = new ResourcePoolUnitOfWork())
+                sampleResourcePool = unitOfWork.AllLive.First();
 
             //License sampleLicense;
             //using (var unitOfWork = new LicenseUnitOfWork())
@@ -41,7 +41,7 @@
             {
                 var organization = new Organization()
                 {
-                    SectorId = sampleSector.Id,
+                    ResourcePoolId = sampleResourcePool.Id,
                     Name = "Test organization",
                     ProductionCost = 0,
                     SalesPrice = 0,

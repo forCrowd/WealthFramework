@@ -32,7 +32,7 @@
         public virtual DbSet<OrganizationElementItem> OrganizationElementItem { get; set; }
         public virtual DbSet<ResourcePool> ResourcePool { get; set; }
         public virtual DbSet<ResourcePoolIndex> ResourcePoolIndex { get; set; }
-        public virtual DbSet<Sector> Sector { get; set; }
+        //public virtual DbSet<Sector> Sector { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<UserElementItem> UserElementItem { get; set; }
         //public virtual DbSet<UserLicenseRating> UserLicenseRating { get; set; }
@@ -40,6 +40,6 @@
         public virtual DbSet<UserResourcePool> UserResourcePool { get; set; }
         public virtual DbSet<UserResourcePoolIndex> UserResourcePoolIndex { get; set; }
         public virtual DbSet<UserResourcePoolIndexValue> UserResourcePoolIndexValue { get; set; }
-        public virtual DbSet<UserSectorRating> UserSectorRating { get; set; }
+        //public virtual DbSet<UserSectorRating> UserSectorRating { get; set; }
     }
 }

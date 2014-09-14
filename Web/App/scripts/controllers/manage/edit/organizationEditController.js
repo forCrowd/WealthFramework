@@ -13,14 +13,14 @@
     var controllerId = 'organizationEditController';
     angular.module('main')
         .controller(controllerId, ['organizationService',
-            'sectorService',
+            'resourcePoolService',
             'logger',
             '$location',
             '$routeParams',
             organizationEditController]);
 
     function organizationEditController(organizationService,
-		sectorService,
+		resourcePoolService,
 		logger,
 		$location,
 		$routeParams) {
@@ -31,7 +31,7 @@
 
         // Controller methods (alphabetically)
         var vm = this;
-        vm.sectorSet = [];
+        vm.resourcePoolSet = [];
         vm.cancelChanges = cancelChanges;
         vm.isSaveDisabled = isSaveDisabled;
         vm.organization = null;
@@ -58,9 +58,9 @@
 
         function initialize() {
 
-            sectorService.getSectorSet(false)
+            resourcePoolService.getResourcePoolSet(false)
                 .then(function (data) {
-                    vm.sectorSet = data;
+                    vm.resourcePoolSet = data;
                 });
 
             if (isNew) {

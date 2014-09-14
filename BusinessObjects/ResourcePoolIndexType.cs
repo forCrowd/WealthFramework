@@ -2,7 +2,7 @@ namespace BusinessObjects
 {
     public enum ResourcePoolIndexType : byte
     {
-        SectorIndex = 1,
+        //SectorIndex = 1,
         //KnowledgeIndex = 2,
         TotalCostIndex = 3,
         DynamicOrganizationIndex = 4,

@@ -77,9 +77,6 @@
     <Compile Include="Dto\Generated\ResourcePoolIndexDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
-    <Compile Include="Dto\Generated\SectorDto.cs">
-      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
-    </Compile>
     <Compile Include="Dto\Generated\UserDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
@@ -96,9 +93,6 @@
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
     <Compile Include="Dto\Generated\UserResourcePoolIndexValueDto.cs">
-      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Dto\Generated\UserSectorRatingDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
     <Compile Include="BaseEntity.cs" />

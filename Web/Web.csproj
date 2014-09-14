@@ -263,9 +263,6 @@
     <Compile Include="Controllers\OData\Generated\ResourcePoolIndexController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\OData\Generated\SectorController.cs">
-      <DependentUpon>ODataController.tt</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\OData\Generated\UserController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
@@ -282,9 +279,6 @@
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\OData\Generated\UserResourcePoolIndexValueController.cs">
-      <DependentUpon>ODataController.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\OData\Generated\UserSectorRatingController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\OData\BaseODataController.cs" />
@@ -460,12 +454,6 @@
     <Content Include="App\scripts\controllers\manage\list\resourcePoolListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
-    <Content Include="App\scripts\controllers\manage\edit\sectorEditController.js">
-      <DependentUpon>editController.tt</DependentUpon>
-    </Content>
-    <Content Include="App\scripts\controllers\manage\list\sectorListController.js">
-      <DependentUpon>listController.tt</DependentUpon>
-    </Content>
     <Content Include="App\scripts\controllers\manage\edit\userEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
@@ -487,12 +475,6 @@
     <Content Include="App\scripts\controllers\manage\list\userResourcePoolIndexValueListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
-    <Content Include="App\scripts\controllers\manage\edit\userSectorRatingEditController.js">
-      <DependentUpon>editController.tt</DependentUpon>
-    </Content>
-    <Content Include="App\scripts\controllers\manage\list\userSectorRatingListController.js">
-      <DependentUpon>listController.tt</DependentUpon>
-    </Content>
     <Content Include="App\scripts\entityManagerFactory.js" />
     <Content Include="App\scripts\dataContext.js" />
     <Content Include="App\scripts\filters\angular-percentage.js" />
@@ -506,9 +488,6 @@
       <DependentUpon>service.tt</DependentUpon>
     </Content>
     <Content Include="App\scripts\services\generated\resourcePoolService.js">
-      <DependentUpon>service.tt</DependentUpon>
-    </Content>
-    <Content Include="App\scripts\services\generated\sectorService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
     <None Include="App\scripts\services\generated\service.txt">
@@ -526,9 +505,6 @@
       <DependentUpon>service.tt</DependentUpon>
     </Content>
     <Content Include="App\scripts\services\generated\userResourcePoolService.js">
-      <DependentUpon>service.tt</DependentUpon>
-    </Content>
-    <Content Include="App\scripts\services\generated\userSectorRatingService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
     <Content Include="App\scripts\services\generated\userService.js">
@@ -632,9 +608,6 @@
     <Content Include="App\views\manage\edit\resourcePoolIndexEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
-    <Content Include="App\views\manage\edit\sectorEdit.html">
-      <DependentUpon>editView.tt</DependentUpon>
-    </Content>
     <Content Include="App\views\manage\edit\userEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
@@ -648,9 +621,6 @@
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
     <Content Include="App\views\manage\edit\userResourcePoolIndexValueEdit.html">
-      <DependentUpon>editView.tt</DependentUpon>
-    </Content>
-    <Content Include="App\views\manage\edit\userSectorRatingEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
     <Content Include="Scripts\jquery-2.1.0.min.map" />
@@ -677,9 +647,6 @@
     <Content Include="App\views\manage\list\resourcePoolList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
-    <Content Include="App\views\manage\list\sectorList.html">
-      <DependentUpon>listView.tt</DependentUpon>
-    </Content>
     <Content Include="App\views\manage\list\userList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
@@ -690,9 +657,6 @@
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
     <Content Include="App\views\manage\list\userResourcePoolIndexValueList.html">
-      <DependentUpon>listView.tt</DependentUpon>
-    </Content>
-    <Content Include="App\views\manage\list\userSectorRatingList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
     <Content Include="App\views\account\accountEdit.html" />

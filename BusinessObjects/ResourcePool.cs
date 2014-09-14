@@ -16,7 +16,8 @@ namespace BusinessObjects
             ElementSet = new HashSet<Element>();
             ResourcePoolIndexSet = new HashSet<ResourcePoolIndex>();
             //LicenseSet = new HashSet<License>();
-            SectorSet = new HashSet<Sector>();
+            //SectorSet = new HashSet<Sector>();
+            OrganizationSet = new HashSet<Organization>();
             UserResourcePoolSet = new HashSet<UserResourcePool>();
         }
 
@@ -36,24 +37,25 @@ namespace BusinessObjects
 
         public virtual ICollection<ResourcePoolIndex> ResourcePoolIndexSet { get; set; }
         public virtual ICollection<Element> ElementSet { get; set; }
-        public virtual ICollection<Sector> SectorSet { get; set; }
+        //public virtual ICollection<Sector> SectorSet { get; set; }
+        public virtual ICollection<Organization> OrganizationSet { get; set; }
         //public virtual ICollection<License> LicenseSet { get; set; }
         public virtual ICollection<UserResourcePool> UserResourcePoolSet { get; set; }
 
         /* */
 
-        public IEnumerable<Organization> OrganizationSet
-        {
-            get { return SectorSet.SelectMany(sector => sector.OrganizationSet); }
-        }
+        //public IEnumerable<Organization> OrganizationSet
+        //{
+        //    get { return SectorSet.SelectMany(sector => sector.OrganizationSet); }
+        //}
 
         #region - Indexes -
 
-        public ResourcePoolIndex SectorIndex
-        {
-            // TODO Static types can only be defined once per ResourcePool
-            get { return ResourcePoolIndexSet.SingleOrDefault(item => item.ResourcePoolIndexType == (byte)ResourcePoolIndexType.SectorIndex); }
-        }
+        //public ResourcePoolIndex SectorIndex
+        //{
+        //    // TODO Static types can only be defined once per ResourcePool
+        //    get { return ResourcePoolIndexSet.SingleOrDefault(item => item.ResourcePoolIndexType == (byte)ResourcePoolIndexType.SectorIndex); }
+        //}
 
         //public ResourcePoolIndex KnowledgeIndex
         //{

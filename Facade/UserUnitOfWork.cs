@@ -9,10 +9,10 @@
     public partial class UserUnitOfWork
     {
         ResourcePoolRepository resourcePoolRepository;
-        SectorRepository sectorRepository;
+        //SectorRepository sectorRepository;
         //LicenseRepository licenseRepository;
         UserResourcePoolRepository userResourcePoolRepository;
-        UserSectorRatingRepository userSectorRatingRepository;
+        //UserSectorRatingRepository userSectorRatingRepository;
         //UserLicenseRatingRepository userLicenseRatingRepository;
         UserOrganizationRepository userOrganizationRepository;
 
@@ -21,10 +21,10 @@
             get { return resourcePoolRepository ?? (resourcePoolRepository = new ResourcePoolRepository(Context)); }
         }
 
-        SectorRepository SectorRepository
-        {
-            get { return sectorRepository ?? (sectorRepository = new SectorRepository(Context)); }
-        }
+        //SectorRepository SectorRepository
+        //{
+        //    get { return sectorRepository ?? (sectorRepository = new SectorRepository(Context)); }
+        //}
 
         //LicenseRepository LicenseRepository
         //{
@@ -36,10 +36,10 @@
             get { return userResourcePoolRepository ?? (userResourcePoolRepository = new UserResourcePoolRepository(Context)); }
         }
 
-        UserSectorRatingRepository UserSectorRatingRepository
-        {
-            get { return userSectorRatingRepository ?? (userSectorRatingRepository = new UserSectorRatingRepository(Context)); }
-        }
+        //UserSectorRatingRepository UserSectorRatingRepository
+        //{
+        //    get { return userSectorRatingRepository ?? (userSectorRatingRepository = new UserSectorRatingRepository(Context)); }
+        //}
 
         //UserLicenseRatingRepository UserLicenseRatingRepository
         //{
@@ -97,7 +97,7 @@
         {
             UserOrganizationRepository.DeleteRange(user.UserOrganizationSet);
             //UserLicenseRatingRepository.DeleteRange(user.UserLicenseRatingSet);
-            UserSectorRatingRepository.DeleteRange(user.UserSectorRatingSet);
+            //UserSectorRatingRepository.DeleteRange(user.UserSectorRatingSet);
             UserResourcePoolRepository.DeleteRange(user.UserResourcePoolSet);
         }
 
@@ -120,22 +120,22 @@
                 UserResourcePoolRepository.Insert(userResourcePool);
             }
 
-            // User sector ratings
-            var sampleSectorRatings = UserSectorRatingRepository
-                .AllLive
-                .Include(item => item.Sector)
-                .Where(item => item.UserId == sourceUserId && item.Sector.ResourcePool.IsSample);
+            //// User sector ratings
+            //var sampleSectorRatings = UserSectorRatingRepository
+            //    .AllLive
+            //    .Include(item => item.Sector)
+            //    .Where(item => item.UserId == sourceUserId && item.Sector.ResourcePool.IsSample);
 
-            foreach (var sampleSectorRating in sampleSectorRatings)
-            {
-                var userSectorRating = new UserSectorRating()
-                {
-                    User = targetUser,
-                    Sector = sampleSectorRating.Sector,
-                    Rating = sampleSectorRating.Rating
-                };
-                UserSectorRatingRepository.Insert(userSectorRating);
-            }
+            //foreach (var sampleSectorRating in sampleSectorRatings)
+            //{
+            //    var userSectorRating = new UserSectorRating()
+            //    {
+            //        User = targetUser,
+            //        Sector = sampleSectorRating.Sector,
+            //        Rating = sampleSectorRating.Rating
+            //    };
+            //    UserSectorRatingRepository.Insert(userSectorRating);
+            //}
 
             //// User license ratings
             //var sampleLicenseRatings = UserLicenseRatingRepository
@@ -158,7 +158,7 @@
             var sampleOrganizations = UserOrganizationRepository
                 .AllLive
                 .Include(item => item.Organization)
-                .Where(item => item.UserId == sourceUserId && item.Organization.Sector.ResourcePool.IsSample);
+                .Where(item => item.UserId == sourceUserId && item.Organization.ResourcePool.IsSample);
 
             foreach (var sampleOrganization in sampleOrganizations)
             {

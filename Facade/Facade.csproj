@@ -86,9 +86,6 @@
     <Compile Include="Generated\ResourcePoolUnitOfWork.cs">
       <DependentUpon>UnitOfWork.tt</DependentUpon>
     </Compile>
-    <Compile Include="Generated\SectorUnitOfWork.cs">
-      <DependentUpon>UnitOfWork.tt</DependentUpon>
-    </Compile>
     <Compile Include="Generated\UserElementItemUnitOfWork.cs">
       <DependentUpon>UnitOfWork.tt</DependentUpon>
     </Compile>
@@ -102,9 +99,6 @@
       <DependentUpon>UnitOfWork.tt</DependentUpon>
     </Compile>
     <Compile Include="Generated\UserResourcePoolUnitOfWork.cs">
-      <DependentUpon>UnitOfWork.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\UserSectorRatingUnitOfWork.cs">
       <DependentUpon>UnitOfWork.tt</DependentUpon>
     </Compile>
     <Compile Include="Generated\UserUnitOfWork.cs">
