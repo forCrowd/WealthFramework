@@ -82,9 +82,6 @@
     <Compile Include="Generated\ElementRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
-    <Compile Include="Generated\LicenseRepository.cs">
-      <DependentUpon>Repository.tt</DependentUpon>
-    </Compile>
     <Compile Include="Generated\OrganizationElementItemRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
@@ -101,9 +98,6 @@
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
     <Compile Include="Generated\UserElementItemRepository.cs">
-      <DependentUpon>Repository.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\UserLicenseRatingRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
     <Compile Include="Generated\UserOrganizationRepository.cs">

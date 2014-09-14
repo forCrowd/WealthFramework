@@ -43,7 +43,6 @@ namespace BusinessObjects.Dto
         [Required]
         public byte ResourcePoolIndexType { get; set; }
 
-        [Required]
         public Nullable<int> ElementId { get; set; }
 
         [Required]

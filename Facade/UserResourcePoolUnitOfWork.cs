@@ -10,7 +10,7 @@
         ResourcePoolRepository resourcePoolRepository;
         UserResourcePoolIndexRepository userResourcePoolIndexRepository; 
         UserSectorRatingRepository userSectorRatingRepository;
-        UserLicenseRatingRepository userLicenseRatingRepository;
+        //UserLicenseRatingRepository userLicenseRatingRepository;
         UserOrganizationRepository userOrganizationRepository;
 
         ResourcePoolRepository ResourcePoolRepository
@@ -28,10 +28,10 @@
             get { return userSectorRatingRepository ?? (userSectorRatingRepository = new UserSectorRatingRepository(Context)); }
         }
 
-        UserLicenseRatingRepository UserLicenseRatingRepository
-        {
-            get { return userLicenseRatingRepository ?? (userLicenseRatingRepository = new UserLicenseRatingRepository(Context)); }
-        }
+        //UserLicenseRatingRepository UserLicenseRatingRepository
+        //{
+        //    get { return userLicenseRatingRepository ?? (userLicenseRatingRepository = new UserLicenseRatingRepository(Context)); }
+        //}
 
         UserOrganizationRepository UserOrganizationRepository
         {
@@ -88,17 +88,17 @@
                 }
             }
 
-            var licences = resourcePool.LicenseSet;
-            foreach (var license in licences)
-            {
-                var sampleLicenseRating = new UserLicenseRating()
-                {
-                    UserId = userResourcePool.UserId,
-                    License = license,
-                    Rating = 0
-                };
-                UserLicenseRatingRepository.Insert(sampleLicenseRating);                
-            }
+            //var licences = resourcePool.LicenseSet;
+            //foreach (var license in licences)
+            //{
+            //    var sampleLicenseRating = new UserLicenseRating()
+            //    {
+            //        UserId = userResourcePool.UserId,
+            //        License = license,
+            //        Rating = 0
+            //    };
+            //    UserLicenseRatingRepository.Insert(sampleLicenseRating);                
+            //}
 
             return await base.InsertAsync(userResourcePool);
         }
@@ -171,14 +171,14 @@
                     .Any(sector => sector == item.Sector));
             UserSectorRatingRepository.DeleteRange(userSectorRatings);
 
-            var userLicenseRatings = userResourcePool
-                .User
-                .UserLicenseRatingSet
-                .Where(item => userResourcePool
-                    .ResourcePool
-                    .LicenseSet
-                    .Any(license => license == item.License));
-            UserLicenseRatingRepository.DeleteRange(userLicenseRatings);
+            //var userLicenseRatings = userResourcePool
+            //    .User
+            //    .UserLicenseRatingSet
+            //    .Where(item => userResourcePool
+            //        .ResourcePool
+            //        .LicenseSet
+            //        .Any(license => license == item.License));
+            //UserLicenseRatingRepository.DeleteRange(userLicenseRatings);
 
             // Delete main item
             return await base.DeleteAsync(id);

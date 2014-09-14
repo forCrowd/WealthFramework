@@ -9,12 +9,12 @@
     {
         ResourcePoolIndexRepository resourcePoolIndexRepository;
         SectorRepository sectorRepository;
-        LicenseRepository licenseRepository;
+        //LicenseRepository licenseRepository;
         OrganizationRepository organizationRepository;
         UserResourcePoolRepository userResourcePoolRepository;
         UserResourcePoolIndexRepository userResourcePoolIndexRepository;
         UserSectorRatingRepository userSectorRatingRepository;
-        UserLicenseRatingRepository userLicenseRatingRepository;
+        //UserLicenseRatingRepository userLicenseRatingRepository;
         UserOrganizationRepository userOrganizationRepository;
 
         public ResourcePoolIndexRepository ResourcePoolIndexRepository
@@ -26,10 +26,11 @@
         {
             get { return sectorRepository ?? (sectorRepository = new SectorRepository(Context)); }
         }
-        public LicenseRepository LicenseRepository
-        {
-            get { return licenseRepository ?? (licenseRepository = new LicenseRepository(Context)); }
-        }
+        //public LicenseRepository LicenseRepository
+        //{
+        //    get { return licenseRepository ?? (licenseRepository = new LicenseRepository(Context)); }
+        //}
+
         public OrganizationRepository OrganizationRepository
         {
             get { return organizationRepository ?? (organizationRepository = new OrganizationRepository(Context)); }
@@ -50,10 +51,10 @@
             get { return userSectorRatingRepository ?? (userSectorRatingRepository = new UserSectorRatingRepository(Context)); }
         }
 
-        UserLicenseRatingRepository UserLicenseRatingRepository
-        {
-            get { return userLicenseRatingRepository ?? (userLicenseRatingRepository = new UserLicenseRatingRepository(Context)); }
-        }
+        //UserLicenseRatingRepository UserLicenseRatingRepository
+        //{
+        //    get { return userLicenseRatingRepository ?? (userLicenseRatingRepository = new UserLicenseRatingRepository(Context)); }
+        //}
 
         UserOrganizationRepository UserOrganizationRepository
         {
@@ -81,21 +82,21 @@
             };
             SectorRepository.Insert(sampleSector);
 
-            var sampleLicense = new License()
-            {
-                ResourcePool = entity,
-                Name = "Generic License",
-                Text = "Generic License Text"
-            };
-            LicenseRepository.Insert(sampleLicense);
+            //var sampleLicense = new License()
+            //{
+            //    ResourcePool = entity,
+            //    Name = "Generic License",
+            //    Text = "Generic License Text"
+            //};
+            //LicenseRepository.Insert(sampleLicense);
 
             var sampleOrganization = new Organization()
             {
                 Sector = sampleSector,
                 Name = "Generic Organization",
                 ProductionCost = 0,
-                SalesPrice = 0,
-                License = sampleLicense
+                SalesPrice = 0
+                //, License = sampleLicense
             };
             OrganizationRepository.Insert(sampleOrganization);
 
@@ -109,7 +110,7 @@
             var resourcePoolId = (int)id[0];
 
             // Load the resource pool into the context with its child items, otherwise it fails to delete due to Foreign Key exception
-            var resourcePool = AllLiveIncluding(item => item.SectorSet, item => item.LicenseSet)
+            var resourcePool = AllLiveIncluding(item => item.SectorSet)
                 .SingleOrDefault(item => item.Id == resourcePoolId);
 
             if (resourcePool == null)
@@ -131,7 +132,7 @@
             UserResourcePoolRepository.Insert(userResourcePool);
 
             // Sample ratings
-            // TODO This is not going to work for now, because there is no ResourcePoolIndex records (it doesn't add a sample index)
+            // TODO This is not going to work for now, because there are no ResourcePoolIndex records (it doesn't add a sample index)
             var resourcePoolIndexes = resourcePool.ResourcePoolIndexSet;
             foreach (var resourcePoolIndex in resourcePoolIndexes)
             {
@@ -168,17 +169,17 @@
                 }
             }
 
-            var licences = resourcePool.LicenseSet;
-            foreach (var license in licences)
-            {
-                var sampleLicenseRating = new UserLicenseRating()
-                {
-                    UserId = userResourcePool.UserId,
-                    License = license,
-                    Rating = 0
-                };
-                UserLicenseRatingRepository.Insert(sampleLicenseRating);
-            }
+            //var licences = resourcePool.LicenseSet;
+            //foreach (var license in licences)
+            //{
+            //    var sampleLicenseRating = new UserLicenseRating()
+            //    {
+            //        UserId = userResourcePool.UserId,
+            //        License = license,
+            //        Rating = 0
+            //    };
+            //    UserLicenseRatingRepository.Insert(sampleLicenseRating);
+            //}
         }
 
         #endregion

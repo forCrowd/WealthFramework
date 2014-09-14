@@ -29,9 +29,9 @@
             using (var unitOfWork = new SectorUnitOfWork())
                 sampleSector = unitOfWork.AllLive.First();
 
-            License sampleLicense;
-            using (var unitOfWork = new LicenseUnitOfWork())
-                sampleLicense = unitOfWork.AllLive.First();
+            //License sampleLicense;
+            //using (var unitOfWork = new LicenseUnitOfWork())
+            //    sampleLicense = unitOfWork.AllLive.First();
 
             User sampleUser;
             using (var unitOfWork = new UserUnitOfWork())
@@ -45,11 +45,10 @@
                     Name = "Test organization",
                     ProductionCost = 0,
                     SalesPrice = 0,
-                    LicenseId = sampleLicense.Id
+                    //LicenseId = sampleLicense.Id
                 };
 
                 unitOfWork.InsertAsync(organization, sampleUser.Id);
-                //unitOfWork.Save();
             }
         }
 
@@ -62,7 +61,6 @@
                 organization.Name += string.Format("{0}Update test: {1:yyyyMMdd_HHmmss}", Environment.NewLine, DateTime.Now);
 
                 unitOfWork.UpdateAsync(organization);
-                //unitOfWork.Save();
             }
         }
 
@@ -74,7 +72,6 @@
                 var organization = unitOfWork.AllLive.OrderByDescending(item => item.CreatedOn).First();
 
                 unitOfWork.DeleteAsync(organization.Id);
-                //unitOfWork.Save();
             }
         }
     }

@@ -251,9 +251,6 @@
     <Compile Include="Controllers\OData\Generated\ElementItemController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\OData\Generated\LicenseController.cs">
-      <DependentUpon>ODataController.tt</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\OData\Generated\OrganizationController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
@@ -275,9 +272,6 @@
     <Compile Include="Controllers\OData\Generated\UserElementItemController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\OData\Generated\UserLicenseRatingController.cs">
-      <DependentUpon>ODataController.tt</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\OData\Generated\UserOrganizationController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
@@ -297,9 +291,7 @@
     <Compile Include="Controllers\OData\SectorController.cs" />
     <Compile Include="Controllers\OData\OrganizationController.cs" />
     <Compile Include="Controllers\OData\ResourcePoolController.cs" />
-    <Compile Include="Controllers\OData\LicenseController.cs" />
     <Compile Include="Controllers\OData\UserController.cs" />
-    <Compile Include="Controllers\OData\UserLicenseRatingController.cs" />
     <Compile Include="Controllers\OData\UserSectorRatingController.cs" />
     <Compile Include="Controllers\OData\UserResourcePoolController.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
@@ -456,12 +448,6 @@
     <Content Include="App\scripts\controllers\manage\list\userOrganizationListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
-    <Content Include="App\scripts\controllers\manage\edit\licenseEditController.js">
-      <DependentUpon>editController.tt</DependentUpon>
-    </Content>
-    <Content Include="App\scripts\controllers\manage\list\licenseListController.js">
-      <DependentUpon>listController.tt</DependentUpon>
-    </Content>
     <Content Include="App\scripts\controllers\manage\edit\organizationEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
@@ -482,12 +468,6 @@
     </Content>
     <Content Include="App\scripts\controllers\manage\edit\userEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
-    </Content>
-    <Content Include="App\scripts\controllers\manage\edit\userLicenseRatingEditController.js">
-      <DependentUpon>editController.tt</DependentUpon>
-    </Content>
-    <Content Include="App\scripts\controllers\manage\list\userLicenseRatingListController.js">
-      <DependentUpon>listController.tt</DependentUpon>
     </Content>
     <Content Include="App\scripts\controllers\manage\list\userListController.js">
       <DependentUpon>listController.tt</DependentUpon>
@@ -519,9 +499,6 @@
     <Content Include="App\scripts\logger.js" />
     <Content Include="App\scripts\route.js" />
     <Content Include="App\scripts\main.js" />
-    <Content Include="App\scripts\services\generated\licenseService.js">
-      <DependentUpon>service.tt</DependentUpon>
-    </Content>
     <Content Include="App\scripts\services\generated\organizationService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
@@ -539,9 +516,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>service.tt</DependentUpon>
     </None>
-    <Content Include="App\scripts\services\generated\userLicenseRatingService.js">
-      <DependentUpon>service.tt</DependentUpon>
-    </Content>
     <Content Include="App\scripts\services\generated\userOrganizationService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
@@ -649,9 +623,6 @@
     <Content Include="App\views\content\chapter4.html" />
     <Content Include="App\views\content\chapter3.html" />
     <Content Include="App\views\content\chapter2.html" />
-    <Content Include="App\views\manage\edit\licenseEdit.html">
-      <DependentUpon>editView.tt</DependentUpon>
-    </Content>
     <Content Include="App\views\manage\edit\organizationEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
@@ -665,9 +636,6 @@
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
     <Content Include="App\views\manage\edit\userEdit.html">
-      <DependentUpon>editView.tt</DependentUpon>
-    </Content>
-    <Content Include="App\views\manage\edit\userLicenseRatingEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
     <Content Include="App\views\manage\edit\userOrganizationEdit.html">
@@ -687,9 +655,6 @@
     </Content>
     <Content Include="Scripts\jquery-2.1.0.min.map" />
     <Content Include="App\views\content\chapter1.html" />
-    <Content Include="App\views\manage\list\licenseList.html">
-      <DependentUpon>listView.tt</DependentUpon>
-    </Content>
     <Content Include="App\views\manage\list\listView.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -713,9 +678,6 @@
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
     <Content Include="App\views\manage\list\sectorList.html">
-      <DependentUpon>listView.tt</DependentUpon>
-    </Content>
-    <Content Include="App\views\manage\list\userLicenseRatingList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
     <Content Include="App\views\manage\list\userList.html">

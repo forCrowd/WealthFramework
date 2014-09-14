@@ -13,7 +13,6 @@
     var controllerId = 'organizationEditController';
     angular.module('main')
         .controller(controllerId, ['organizationService',
-            'licenseService',
             'sectorService',
             'logger',
             '$location',
@@ -21,7 +20,6 @@
             organizationEditController]);
 
     function organizationEditController(organizationService,
-		licenseService,
 		sectorService,
 		logger,
 		$location,
@@ -33,7 +31,6 @@
 
         // Controller methods (alphabetically)
         var vm = this;
-        vm.licenseSet = [];
         vm.sectorSet = [];
         vm.cancelChanges = cancelChanges;
         vm.isSaveDisabled = isSaveDisabled;
@@ -60,11 +57,6 @@
         }
 
         function initialize() {
-
-            licenseService.getLicenseSet(false)
-                .then(function (data) {
-                    vm.licenseSet = data;
-                });
 
             sectorService.getSectorSet(false)
                 .then(function (data) {

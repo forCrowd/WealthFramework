@@ -27,9 +27,6 @@
             <th>
                 Sales Price
             </th>
-            <th>
-                License
-            </th>
             <th></th>
         </tr>
         <tr data-ng-repeat="organization in vm.organizationSet">
@@ -44,9 +41,6 @@
             </td>
             <td>
                 {{ organization.SalesPrice }}
-            </td>
-            <td>
-                {{ organization.License.Name }}
             </td>
             <td>
                 <a href="/manage/organization/edit/{{ organization.Id }}">Edit</a> |

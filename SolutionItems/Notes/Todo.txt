@@ -83,8 +83,9 @@ config.EnableQuerySupport(queryAttribute);
 
 . highcharts library loading perf?
 
-CONTINUE WITH;
-. remove license
+. check userunitofwork + resourcepoolunitofwork + userresourcepoolunitofwork for sample records + delete cases
+. ui changes? chapters knowledge index
+
 . how about sector?
 
 ---

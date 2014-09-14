@@ -7,6 +7,14 @@ namespace DataObjects.Migrations
     {
         public override void Up()
         {
+            DropForeignKey("dbo.Organization", "LicenseId", "dbo.License");
+            DropForeignKey("dbo.License", "ResourcePoolId", "dbo.ResourcePool");
+            DropForeignKey("dbo.UserLicenseRating", "LicenseId", "dbo.License");
+            DropForeignKey("dbo.UserLicenseRating", "UserId", "dbo.User");
+            DropIndex("dbo.License", new[] { "ResourcePoolId" });
+            DropIndex("dbo.Organization", new[] { "LicenseId" });
+            DropIndex("dbo.UserLicenseRating", new[] { "UserId" });
+            DropIndex("dbo.UserLicenseRating", new[] { "LicenseId" });
             DropIndex("dbo.UserOrganization", new[] { "UserId" });
             DropIndex("dbo.UserOrganization", new[] { "OrganizationId" });
             CreateTable(
@@ -80,15 +88,50 @@ namespace DataObjects.Migrations
             CreateIndex("dbo.ResourcePoolIndex", "ElementId");
             CreateIndex("dbo.UserOrganization", new[] { "UserId", "OrganizationId" }, unique: true, name: "IX_UserIdOrganizationId");
             AddForeignKey("dbo.ResourcePoolIndex", "ElementId", "dbo.Element", "Id");
+            DropColumn("dbo.Organization", "LicenseId");
+            DropTable("dbo.License");
+            DropTable("dbo.UserLicenseRating");
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.OrganizationElementItem", "OrganizationId", "dbo.Organization");
+            CreateTable(
+                "dbo.UserLicenseRating",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        UserId = c.Int(nullable: false),
+                        LicenseId = c.Short(nullable: false),
+                        Rating = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        CreatedOn = c.DateTime(nullable: false),
+                        ModifiedOn = c.DateTime(nullable: false),
+                        DeletedOn = c.DateTime(),
+                        RowVersion = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.License",
+                c => new
+                    {
+                        Id = c.Short(nullable: false, identity: true),
+                        ResourcePoolId = c.Int(nullable: false),
+                        Name = c.String(nullable: false, maxLength: 50),
+                        Description = c.String(),
+                        Text = c.String(nullable: false),
+                        CreatedOn = c.DateTime(nullable: false),
+                        ModifiedOn = c.DateTime(nullable: false),
+                        DeletedOn = c.DateTime(),
+                        RowVersion = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            AddColumn("dbo.Organization", "LicenseId", c => c.Short(nullable: false));
             DropForeignKey("dbo.UserElementItem", "UserId", "dbo.User");
             DropForeignKey("dbo.UserElementItem", "ElementItemId", "dbo.ElementItem");
             DropForeignKey("dbo.ResourcePoolIndex", "ElementId", "dbo.Element");
             DropForeignKey("dbo.Element", "ResourcePoolId", "dbo.ResourcePool");
+            DropForeignKey("dbo.OrganizationElementItem", "OrganizationId", "dbo.Organization");
             DropForeignKey("dbo.OrganizationElementItem", "ElementItemId", "dbo.ElementItem");
             DropForeignKey("dbo.ElementItem", "ElementId", "dbo.Element");
             DropIndex("dbo.UserOrganization", "IX_UserIdOrganizationId");
@@ -104,6 +147,14 @@ namespace DataObjects.Migrations
             DropTable("dbo.Element");
             CreateIndex("dbo.UserOrganization", "OrganizationId");
             CreateIndex("dbo.UserOrganization", "UserId");
+            CreateIndex("dbo.UserLicenseRating", "LicenseId");
+            CreateIndex("dbo.UserLicenseRating", "UserId");
+            CreateIndex("dbo.Organization", "LicenseId");
+            CreateIndex("dbo.License", "ResourcePoolId");
+            AddForeignKey("dbo.UserLicenseRating", "UserId", "dbo.User", "Id", cascadeDelete: true);
+            AddForeignKey("dbo.UserLicenseRating", "LicenseId", "dbo.License", "Id", cascadeDelete: true);
+            AddForeignKey("dbo.License", "ResourcePoolId", "dbo.ResourcePool", "Id", cascadeDelete: true);
+            AddForeignKey("dbo.Organization", "LicenseId", "dbo.License", "Id", cascadeDelete: true);
         }
     }
 }

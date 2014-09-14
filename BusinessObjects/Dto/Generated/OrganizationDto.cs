@@ -25,7 +25,6 @@ namespace BusinessObjects.Dto
             this.Name = organization.Name;
             this.ProductionCost = organization.ProductionCost;
             this.SalesPrice = organization.SalesPrice;
-            this.LicenseId = organization.LicenseId;
             this.CreatedOn = organization.CreatedOn;
             this.ModifiedOn = organization.ModifiedOn;
             this.DeletedOn = organization.DeletedOn;
@@ -48,9 +47,6 @@ namespace BusinessObjects.Dto
         public decimal SalesPrice { get; set; }
 
         [Required]
-        public short LicenseId { get; set; }
-
-        [Required]
         public System.DateTime CreatedOn { get; set; }
 
         [Required]
@@ -70,7 +66,6 @@ namespace BusinessObjects.Dto
                 Name = Name,
                 ProductionCost = ProductionCost,
                 SalesPrice = SalesPrice,
-                LicenseId = LicenseId,
                 CreatedOn = CreatedOn,
                 ModifiedOn = ModifiedOn,
                 DeletedOn = DeletedOn,

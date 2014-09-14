@@ -74,9 +74,6 @@
     <Compile Include="Generated\ElementUnitOfWork.cs">
       <DependentUpon>UnitOfWork.tt</DependentUpon>
     </Compile>
-    <Compile Include="Generated\LicenseUnitOfWork.cs">
-      <DependentUpon>UnitOfWork.tt</DependentUpon>
-    </Compile>
     <Compile Include="Generated\OrganizationElementItemUnitOfWork.cs">
       <DependentUpon>UnitOfWork.tt</DependentUpon>
     </Compile>
@@ -93,9 +90,6 @@
       <DependentUpon>UnitOfWork.tt</DependentUpon>
     </Compile>
     <Compile Include="Generated\UserElementItemUnitOfWork.cs">
-      <DependentUpon>UnitOfWork.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\UserLicenseRatingUnitOfWork.cs">
       <DependentUpon>UnitOfWork.tt</DependentUpon>
     </Compile>
     <Compile Include="Generated\UserOrganizationUnitOfWork.cs">

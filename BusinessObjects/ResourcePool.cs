@@ -15,7 +15,7 @@ namespace BusinessObjects
         {
             ElementSet = new HashSet<Element>();
             ResourcePoolIndexSet = new HashSet<ResourcePoolIndex>();
-            LicenseSet = new HashSet<License>();
+            //LicenseSet = new HashSet<License>();
             SectorSet = new HashSet<Sector>();
             UserResourcePoolSet = new HashSet<UserResourcePool>();
         }
@@ -37,7 +37,7 @@ namespace BusinessObjects
         public virtual ICollection<ResourcePoolIndex> ResourcePoolIndexSet { get; set; }
         public virtual ICollection<Element> ElementSet { get; set; }
         public virtual ICollection<Sector> SectorSet { get; set; }
-        public virtual ICollection<License> LicenseSet { get; set; }
+        //public virtual ICollection<License> LicenseSet { get; set; }
         public virtual ICollection<UserResourcePool> UserResourcePoolSet { get; set; }
 
         /* */
@@ -55,11 +55,11 @@ namespace BusinessObjects
             get { return ResourcePoolIndexSet.SingleOrDefault(item => item.ResourcePoolIndexType == (byte)ResourcePoolIndexType.SectorIndex); }
         }
 
-        public ResourcePoolIndex KnowledgeIndex
-        {
-            // TODO Static types can only be defined once per ResourcePool
-            get { return ResourcePoolIndexSet.SingleOrDefault(item => item.ResourcePoolIndexType == (byte)ResourcePoolIndexType.KnowledgeIndex); }
-        }
+        //public ResourcePoolIndex KnowledgeIndex
+        //{
+        //    // TODO Static types can only be defined once per ResourcePool
+        //    get { return ResourcePoolIndexSet.SingleOrDefault(item => item.ResourcePoolIndexType == (byte)ResourcePoolIndexType.KnowledgeIndex); }
+        //}
 
         public ResourcePoolIndex TotalCostIndex
         {

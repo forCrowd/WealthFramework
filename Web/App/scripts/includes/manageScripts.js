@@ -29,10 +29,6 @@ SH - 09 May '14
     <script src="/App/scripts/controllers/manage/list/elementItemListController.js"></script>\
     <script src="/App/scripts/controllers/manage/edit/elementItemEditController.js"></script>\
 	\
-    <script src="/App/scripts/services/generated/licenseService.js"></script>\
-    <script src="/App/scripts/controllers/manage/list/licenseListController.js"></script>\
-    <script src="/App/scripts/controllers/manage/edit/licenseEditController.js"></script>\
-	\
     <script src="/App/scripts/services/generated/organizationService.js"></script>\
     <script src="/App/scripts/controllers/manage/list/organizationListController.js"></script>\
     <script src="/App/scripts/controllers/manage/edit/organizationEditController.js"></script>\
@@ -60,10 +56,6 @@ SH - 09 May '14
     <script src="/App/scripts/services/generated/userElementItemService.js"></script>\
     <script src="/App/scripts/controllers/manage/list/userElementItemListController.js"></script>\
     <script src="/App/scripts/controllers/manage/edit/userElementItemEditController.js"></script>\
-	\
-    <script src="/App/scripts/services/generated/userLicenseRatingService.js"></script>\
-    <script src="/App/scripts/controllers/manage/list/userLicenseRatingListController.js"></script>\
-    <script src="/App/scripts/controllers/manage/edit/userLicenseRatingEditController.js"></script>\
 	\
     <script src="/App/scripts/services/generated/userOrganizationService.js"></script>\
     <script src="/App/scripts/controllers/manage/list/userOrganizationListController.js"></script>\

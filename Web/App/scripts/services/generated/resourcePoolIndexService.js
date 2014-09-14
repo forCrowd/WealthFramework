@@ -66,7 +66,7 @@
 
             var query = breeze.EntityQuery
 				.from('ResourcePoolIndex')
-				.expand(['Element', 'ResourcePool'])
+				.expand(['ResourcePool'])
             ;
 
             // Fetch the data from server, in case if it's not fetched earlier or forced

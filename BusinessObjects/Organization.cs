@@ -33,10 +33,10 @@ namespace BusinessObjects
         [Display(Name = "Sales Price")]
         public decimal SalesPrice { get; set; }
 
-        public short LicenseId { get; set; }
+        //public short LicenseId { get; set; }
 
         public virtual Sector Sector { get; set; }
-        public virtual License License { get; set; }
+        //public virtual License License { get; set; }
         public virtual ICollection<OrganizationElementItem> OrganizationElementItemSet { get; set; }
         public virtual ICollection<UserOrganization> UserOrganizationSet { get; set; }
         public virtual ICollection<UserResourcePoolIndexValue> UserResourcePoolIndexValueSet { get; set; }

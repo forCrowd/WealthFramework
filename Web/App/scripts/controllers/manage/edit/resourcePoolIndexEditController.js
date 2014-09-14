@@ -13,7 +13,6 @@
     var controllerId = 'resourcePoolIndexEditController';
     angular.module('main')
         .controller(controllerId, ['resourcePoolIndexService',
-            'elementService',
             'resourcePoolService',
             'logger',
             '$location',
@@ -21,7 +20,6 @@
             resourcePoolIndexEditController]);
 
     function resourcePoolIndexEditController(resourcePoolIndexService,
-		elementService,
 		resourcePoolService,
 		logger,
 		$location,
@@ -33,7 +31,6 @@
 
         // Controller methods (alphabetically)
         var vm = this;
-        vm.elementSet = [];
         vm.resourcePoolSet = [];
         vm.cancelChanges = cancelChanges;
         vm.isSaveDisabled = isSaveDisabled;
@@ -60,11 +57,6 @@
         }
 
         function initialize() {
-
-            elementService.getElementSet(false)
-                .then(function (data) {
-                    vm.elementSet = data;
-                });
 
             resourcePoolService.getResourcePoolSet(false)
                 .then(function (data) {
