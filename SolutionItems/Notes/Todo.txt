@@ -78,9 +78,14 @@ config.EnableQuerySupport(queryAttribute);
 
 . current db is 0.13.7, will be upgraded to 0.14.0 - then generate the files again
 
+. employee + customer + quality index samples are not there
 . all in one sample is outdated
 
+. highcharts library loading perf?
+
+CONTINUE WITH;
 . remove license
+. how about sector?
 
 ---
 sector index - just name and the rating

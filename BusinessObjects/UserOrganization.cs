@@ -4,6 +4,7 @@ namespace BusinessObjects
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
     [DisplayName("User Organization")]
@@ -14,8 +15,10 @@ namespace BusinessObjects
         [DisplayOnEditView(false)]
         public int Id { get; set; }
 
+        [Index("IX_UserIdOrganizationId", 1, IsUnique = true)]
         public int UserId { get; set; }
 
+        [Index("IX_UserIdOrganizationId", 2, IsUnique = true)]
         public int OrganizationId { get; set; }
 
         [Display(Name = "Number of Sales")]

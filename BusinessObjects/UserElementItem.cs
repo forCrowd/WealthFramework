@@ -4,6 +4,7 @@ namespace BusinessObjects
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
     [DisplayName("User Element Item")]
@@ -13,8 +14,10 @@ namespace BusinessObjects
         [DisplayOnEditView(false)]
         public int Id { get; set; }
 
+        [Index("IX_UserIdElementItemId", 1, IsUnique = true)]
         public int UserId { get; set; }
 
+        [Index("IX_UserIdElementItemId", 2, IsUnique = true)]
         public int ElementItemId { get; set; }
 
         public decimal Rating { get; set; }

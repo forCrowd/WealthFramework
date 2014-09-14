@@ -7,6 +7,8 @@ namespace DataObjects.Migrations
     {
         public override void Up()
         {
+            DropIndex("dbo.UserOrganization", new[] { "UserId" });
+            DropIndex("dbo.UserOrganization", new[] { "OrganizationId" });
             CreateTable(
                 "dbo.Element",
                 c => new
@@ -54,8 +56,7 @@ namespace DataObjects.Migrations
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.ElementItem", t => t.ElementItemId, cascadeDelete: true)
                 .ForeignKey("dbo.Organization", t => t.OrganizationId, cascadeDelete: false)
-                .Index(t => t.OrganizationId)
-                .Index(t => t.ElementItemId);
+                .Index(t => new { t.OrganizationId, t.ElementItemId }, unique: true, name: "IX_OrganizationIdElementItemId");
             
             CreateTable(
                 "dbo.UserElementItem",
@@ -73,11 +74,11 @@ namespace DataObjects.Migrations
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.ElementItem", t => t.ElementItemId, cascadeDelete: true)
                 .ForeignKey("dbo.User", t => t.UserId, cascadeDelete: false)
-                .Index(t => t.UserId)
-                .Index(t => t.ElementItemId);
+                .Index(t => new { t.UserId, t.ElementItemId }, unique: true, name: "IX_UserIdElementItemId");
             
             AddColumn("dbo.ResourcePoolIndex", "ElementId", c => c.Int());
             CreateIndex("dbo.ResourcePoolIndex", "ElementId");
+            CreateIndex("dbo.UserOrganization", new[] { "UserId", "OrganizationId" }, unique: true, name: "IX_UserIdOrganizationId");
             AddForeignKey("dbo.ResourcePoolIndex", "ElementId", "dbo.Element", "Id");
         }
         
@@ -90,11 +91,10 @@ namespace DataObjects.Migrations
             DropForeignKey("dbo.Element", "ResourcePoolId", "dbo.ResourcePool");
             DropForeignKey("dbo.OrganizationElementItem", "ElementItemId", "dbo.ElementItem");
             DropForeignKey("dbo.ElementItem", "ElementId", "dbo.Element");
-            DropIndex("dbo.UserElementItem", new[] { "ElementItemId" });
-            DropIndex("dbo.UserElementItem", new[] { "UserId" });
+            DropIndex("dbo.UserOrganization", "IX_UserIdOrganizationId");
+            DropIndex("dbo.UserElementItem", "IX_UserIdElementItemId");
             DropIndex("dbo.ResourcePoolIndex", new[] { "ElementId" });
-            DropIndex("dbo.OrganizationElementItem", new[] { "ElementItemId" });
-            DropIndex("dbo.OrganizationElementItem", new[] { "OrganizationId" });
+            DropIndex("dbo.OrganizationElementItem", "IX_OrganizationIdElementItemId");
             DropIndex("dbo.ElementItem", new[] { "ElementId" });
             DropIndex("dbo.Element", new[] { "ResourcePoolId" });
             DropColumn("dbo.ResourcePoolIndex", "ElementId");
@@ -102,6 +102,8 @@ namespace DataObjects.Migrations
             DropTable("dbo.OrganizationElementItem");
             DropTable("dbo.ElementItem");
             DropTable("dbo.Element");
+            CreateIndex("dbo.UserOrganization", "OrganizationId");
+            CreateIndex("dbo.UserOrganization", "UserId");
         }
     }
 }
