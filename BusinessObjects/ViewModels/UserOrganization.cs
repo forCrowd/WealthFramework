@@ -13,9 +13,7 @@ namespace BusinessObjects.ViewModels
             OrganizationProductionCost = userOrganization.Organization.ProductionCost;
             OrganizationSalesPrice = userOrganization.Organization.SalesPrice;
             OrganizationProfitPercentage = userOrganization.Organization.ProfitPercentage;
-            OrganizationLicenseName = userOrganization.Organization.License.Name;
-            OrganizationSectorRatingPercentage = userOrganization.Organization.Sector.RatingPercentage;
-            OrganizationLicenseRatingPercentage = userOrganization.Organization.License.RatingPercentage;
+            //OrganizationSectorRatingPercentage = userOrganization.Organization.Sector.RatingPercentage;
             OrganizationSalesPricePercentage = userOrganization.Organization.SalesPricePercentage;
 
             ResourcePoolTax = userOrganization.ResourcePoolTax;
@@ -38,9 +36,7 @@ namespace BusinessObjects.ViewModels
         public decimal OrganizationProductionCost { get; set; }
         public decimal OrganizationSalesPrice { get; set; }
         public decimal OrganizationProfitPercentage { get; set; }
-        public string OrganizationLicenseName { get; set; }
-        public decimal OrganizationSectorRatingPercentage { get; set; }
-        public decimal OrganizationLicenseRatingPercentage { get; set; }
+        //public decimal OrganizationSectorRatingPercentage { get; set; }
         public decimal OrganizationSalesPricePercentage { get; set; }
 
         public decimal ResourcePoolTax { get; set; }

@@ -2,18 +2,22 @@ namespace BusinessObjects
 {
     using BusinessObjects.Attributes;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
-    [DefaultProperty("Name")]
+    [DisplayName("CMRP")]
+    [BusinessObjects.Attributes.DefaultProperty("Name")]
     // [ODataControllerAuthorization("Administrator")]
     public class ResourcePool : BaseEntity
     {
         public ResourcePool()
         {
+            ElementSet = new HashSet<Element>();
             ResourcePoolIndexSet = new HashSet<ResourcePoolIndex>();
-            LicenseSet = new HashSet<License>();
-            SectorSet = new HashSet<Sector>();
+            //LicenseSet = new HashSet<License>();
+            //SectorSet = new HashSet<Sector>();
+            OrganizationSet = new HashSet<Organization>();
             UserResourcePoolSet = new HashSet<UserResourcePool>();
         }
 
@@ -32,30 +36,32 @@ namespace BusinessObjects
         public bool IsSample { get; set; }
 
         public virtual ICollection<ResourcePoolIndex> ResourcePoolIndexSet { get; set; }
-        public virtual ICollection<Sector> SectorSet { get; set; }
-        public virtual ICollection<License> LicenseSet { get; set; }
+        public virtual ICollection<Element> ElementSet { get; set; }
+        //public virtual ICollection<Sector> SectorSet { get; set; }
+        public virtual ICollection<Organization> OrganizationSet { get; set; }
+        //public virtual ICollection<License> LicenseSet { get; set; }
         public virtual ICollection<UserResourcePool> UserResourcePoolSet { get; set; }
 
         /* */
 
-        public IEnumerable<Organization> OrganizationSet
-        {
-            get { return SectorSet.SelectMany(sector => sector.OrganizationSet); }
-        }
+        //public IEnumerable<Organization> OrganizationSet
+        //{
+        //    get { return SectorSet.SelectMany(sector => sector.OrganizationSet); }
+        //}
 
         #region - Indexes -
 
-        public ResourcePoolIndex SectorIndex
-        {
-            // TODO Static types can only be defined once per ResourcePool
-            get { return ResourcePoolIndexSet.SingleOrDefault(item => item.ResourcePoolIndexType == (byte)ResourcePoolIndexType.SectorIndex); }
-        }
+        //public ResourcePoolIndex SectorIndex
+        //{
+        //    // TODO Static types can only be defined once per ResourcePool
+        //    get { return ResourcePoolIndexSet.SingleOrDefault(item => item.ResourcePoolIndexType == (byte)ResourcePoolIndexType.SectorIndex); }
+        //}
 
-        public ResourcePoolIndex KnowledgeIndex
-        {
-            // TODO Static types can only be defined once per ResourcePool
-            get { return ResourcePoolIndexSet.SingleOrDefault(item => item.ResourcePoolIndexType == (byte)ResourcePoolIndexType.KnowledgeIndex); }
-        }
+        //public ResourcePoolIndex KnowledgeIndex
+        //{
+        //    // TODO Static types can only be defined once per ResourcePool
+        //    get { return ResourcePoolIndexSet.SingleOrDefault(item => item.ResourcePoolIndexType == (byte)ResourcePoolIndexType.KnowledgeIndex); }
+        //}
 
         public ResourcePoolIndex TotalCostIndex
         {

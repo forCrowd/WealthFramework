@@ -27,14 +27,16 @@ namespace BusinessObjects
             {
                 switch (UserResourcePoolIndex.ResourcePoolIndex.ResourcePoolIndexType)
                 {
-                    case (byte)ResourcePoolIndexType.SectorIndex:
-                        return UserOrganization.Organization.Sector.RatingPercentage * UserOrganization.NumberOfSalesPercentage;
-                    case (byte)ResourcePoolIndexType.KnowledgeIndex:
-                        return UserOrganization.Organization.License.RatingPercentage * UserOrganization.NumberOfSalesPercentage;
+                    //case (byte)ResourcePoolIndexType.SectorIndex:
+                    //    return UserOrganization.Organization.Sector.RatingPercentage * UserOrganization.NumberOfSalesPercentage;
+                    //case (byte)ResourcePoolIndexType.KnowledgeIndex:
+                    //    return UserOrganization.Organization.License.RatingPercentage * UserOrganization.NumberOfSalesPercentage;
                     case (byte)ResourcePoolIndexType.TotalCostIndex:
                         return UserOrganization.Organization.SalesPricePercentage * UserOrganization.NumberOfSalesPercentage;
-                    case (byte)ResourcePoolIndexType.DynamicIndex:
+                    case (byte)ResourcePoolIndexType.DynamicOrganizationIndex:
                         return ResourcePoolIndexOrganization.DynamicIndexValuePercentage * UserOrganization.NumberOfSalesPercentage;
+                    case (byte)ResourcePoolIndexType.DynamicElementIndex:
+                        return ResourcePoolIndexOrganization.OrganizationElementItem.RatingPercentage * UserOrganization.NumberOfSalesPercentage;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
@@ -59,7 +61,6 @@ namespace BusinessObjects
                 if (UserResourcePoolIndex == null)
                     return 0;
 
-                //return UserResourcePoolIndex.IndexShare * IndexValuePercentageWithNumberOfSalesPercentage;
                 return UserResourcePoolIndex.IndexShare * IndexValuePercentage;
             }
         }

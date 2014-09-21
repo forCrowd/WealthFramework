@@ -3,11 +3,13 @@ namespace BusinessObjects
     using BusinessObjects.Attributes;
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    [DefaultProperty("Name")]
+    [DisplayName("CMRP Index")]
+    [BusinessObjects.Attributes.DefaultProperty("Name")]
     // [ODataControllerAuthorization("Administrator")]
     public class ResourcePoolIndex : BaseEntity
     {
@@ -31,7 +33,10 @@ namespace BusinessObjects
         [Display(Name = "Resource Pool Index Type")]
         public byte ResourcePoolIndexType { get; set; }
 
+        public Nullable<int> ElementId { get; set; }
+
         public virtual ResourcePool ResourcePool { get; set; }
+        public virtual Element Element { get; set; }
         public virtual ICollection<UserResourcePoolIndex> UserResourcePoolIndexSet { get; set; }
 
         /* */
@@ -85,13 +90,13 @@ namespace BusinessObjects
             {
                 switch (ResourcePoolIndexType)
                 {
-                    case (byte)BusinessObjects.ResourcePoolIndexType.SectorIndex:
-                        return ResourcePool.SectorSet.Sum(item => item.RatingAverage);
-                    case (byte)BusinessObjects.ResourcePoolIndexType.KnowledgeIndex:
-                        return ResourcePool.LicenseSet.Sum(item => item.RatingAverage);
+                    //case (byte)BusinessObjects.ResourcePoolIndexType.SectorIndex:
+                    //    return ResourcePool.SectorSet.Sum(item => item.RatingAverage);
+                    //case (byte)BusinessObjects.ResourcePoolIndexType.KnowledgeIndex:
+                    //    return ResourcePool.LicenseSet.Sum(item => item.RatingAverage);
                     case (byte)BusinessObjects.ResourcePoolIndexType.TotalCostIndex:
                         return ResourcePool.OrganizationSet.Sum(item => item.SalesPrice);
-                    case (byte)BusinessObjects.ResourcePoolIndexType.DynamicIndex:
+                    case (byte)BusinessObjects.ResourcePoolIndexType.DynamicOrganizationIndex:
                         return ResourcePoolIndexOrganizationSet.Sum(item => item.DynamicIndexValueAverage);
                     default: throw new ArgumentOutOfRangeException();
                 }

@@ -21,11 +21,10 @@ namespace BusinessObjects.Dto
         public OrganizationDto(Organization organization)
         {
             this.Id = organization.Id;
-            this.SectorId = organization.SectorId;
+            this.ResourcePoolId = organization.ResourcePoolId;
             this.Name = organization.Name;
             this.ProductionCost = organization.ProductionCost;
             this.SalesPrice = organization.SalesPrice;
-            this.LicenseId = organization.LicenseId;
             this.CreatedOn = organization.CreatedOn;
             this.ModifiedOn = organization.ModifiedOn;
             this.DeletedOn = organization.DeletedOn;
@@ -36,7 +35,7 @@ namespace BusinessObjects.Dto
         public int Id { get; set; }
 
         [Required]
-        public short SectorId { get; set; }
+        public int ResourcePoolId { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -46,9 +45,6 @@ namespace BusinessObjects.Dto
 
         [Required]
         public decimal SalesPrice { get; set; }
-
-        [Required]
-        public short LicenseId { get; set; }
 
         [Required]
         public System.DateTime CreatedOn { get; set; }
@@ -66,11 +62,10 @@ namespace BusinessObjects.Dto
             return new Organization()
             {
                 Id = Id,
-                SectorId = SectorId,
+                ResourcePoolId = ResourcePoolId,
                 Name = Name,
                 ProductionCost = ProductionCost,
                 SalesPrice = SalesPrice,
-                LicenseId = LicenseId,
                 CreatedOn = CreatedOn,
                 ModifiedOn = ModifiedOn,
                 DeletedOn = DeletedOn,

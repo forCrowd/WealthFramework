@@ -16,7 +16,7 @@
     <table class="table">
         <tr>
             <th>
-                Sector
+                Resource Pool
             </th>
             <th>
                 Organization
@@ -27,14 +27,11 @@
             <th>
                 Sales Price
             </th>
-            <th>
-                License
-            </th>
             <th></th>
         </tr>
         <tr data-ng-repeat="organization in vm.organizationSet">
             <td>
-                {{ organization.Sector.Name }}
+                {{ organization.ResourcePool.Name }}
             </td>
             <td>
                 {{ organization.Name }}
@@ -44,9 +41,6 @@
             </td>
             <td>
                 {{ organization.SalesPrice }}
-            </td>
-            <td>
-                {{ organization.License.Name }}
             </td>
             <td>
                 <a href="/manage/organization/edit/{{ organization.Id }}">Edit</a> |

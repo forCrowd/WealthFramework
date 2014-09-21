@@ -2,18 +2,23 @@ namespace BusinessObjects
 {
     using BusinessObjects.Attributes;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    [DefaultProperty("Name")]
+    [DisplayName("User Organization")]
+    [BusinessObjects.Attributes.DefaultProperty("Name")]
     public class UserOrganization : BaseEntity
     {
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         public int Id { get; set; }
 
+        [Index("IX_UserIdOrganizationId", 1, IsUnique = true)]
         public int UserId { get; set; }
 
+        [Index("IX_UserIdOrganizationId", 2, IsUnique = true)]
         public int OrganizationId { get; set; }
 
         [Display(Name = "Number of Sales")]
@@ -29,7 +34,7 @@ namespace BusinessObjects
         // To prevent this (or ideally), there needs to be a foreign key between this class and UserResourcePool (UserResourcePoolId on this class).
         public UserResourcePool UserResourcePool
         {
-            get { return User.UserResourcePoolSet.Single(item => item.ResourcePool == Organization.Sector.ResourcePool); }
+            get { return User.UserResourcePoolSet.Single(item => item.ResourcePool == Organization.ResourcePool); }
         }
 
         public IEnumerable<UserResourcePoolIndexOrganization> UserResourcePoolIndexOrganizationSet

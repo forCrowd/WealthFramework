@@ -23,6 +23,8 @@ namespace BusinessObjects.Dto
             this.Id = resourcePoolIndex.Id;
             this.ResourcePoolId = resourcePoolIndex.ResourcePoolId;
             this.Name = resourcePoolIndex.Name;
+            this.ResourcePoolIndexType = resourcePoolIndex.ResourcePoolIndexType;
+            this.ElementId = resourcePoolIndex.ElementId;
             this.CreatedOn = resourcePoolIndex.CreatedOn;
             this.ModifiedOn = resourcePoolIndex.ModifiedOn;
             this.DeletedOn = resourcePoolIndex.DeletedOn;
@@ -37,6 +39,11 @@ namespace BusinessObjects.Dto
 
         [Required]
         public string Name { get; set; }
+
+        [Required]
+        public byte ResourcePoolIndexType { get; set; }
+
+        public Nullable<int> ElementId { get; set; }
 
         [Required]
         public System.DateTime CreatedOn { get; set; }
@@ -56,6 +63,8 @@ namespace BusinessObjects.Dto
                 Id = Id,
                 ResourcePoolId = ResourcePoolId,
                 Name = Name,
+                ResourcePoolIndexType = ResourcePoolIndexType,
+                ElementId = ElementId,
                 CreatedOn = CreatedOn,
                 ModifiedOn = ModifiedOn,
                 DeletedOn = DeletedOn,

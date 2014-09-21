@@ -70,13 +70,28 @@ config.EnableQuerySupport(queryAttribute);
 .. currently there seem no good case that lazy loading is beneficial?
 . and how about disabling proxy classes? what will be the difference exactly?
 
-. vs update 2 changes -> asp.net identity
+. vs update 2 + 3 changes -> asp.net identity
 
-. add new elements index type
+. create fixed amount resourcepooltype
+		
+. check user[x]rating tables usage, do they need filtering?
 
-. fixed amount resourcepool
+. current db is 0.13.7, will be upgraded to 0.14.0 - then generate the files again
+
+. employee + customer + quality index samples are not there
+. all in one + sector samples are outdated
+
+. highcharts library loading perf?
+
+. check userunitofwork + resourcepoolunitofwork + userresourcepoolunitofwork for sample records + delete cases
+. check chapters knowledge + sector indexes
+
+. element fields; text, bool, integer, decimal
+. element parent + child structure
+
+. merge v0.14 with main?
 
 ---
 sector index - just name and the rating
-license index - name + boolean variables and the rating
+license index - name + boolean variables (allows to see the code, allows modification, allows sell) and the rating
 organization total cost index - auto formula (organization sales price / resource pool sales price average)

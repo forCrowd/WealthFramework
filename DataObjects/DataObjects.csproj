@@ -75,7 +75,14 @@
     <Compile Include="..\SolutionItems\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Generated\LicenseRepository.cs">
+    <Compile Include="BaseRepository.cs" />
+    <Compile Include="Generated\ElementItemRepository.cs">
+      <DependentUpon>Repository.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\ElementRepository.cs">
+      <DependentUpon>Repository.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\OrganizationElementItemRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
     <Compile Include="Generated\OrganizationRepository.cs">
@@ -87,10 +94,7 @@
     <Compile Include="Generated\ResourcePoolRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
-    <Compile Include="Generated\SectorRepository.cs">
-      <DependentUpon>Repository.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\UserLicenseRatingRepository.cs">
+    <Compile Include="Generated\UserElementItemRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
     <Compile Include="Generated\UserOrganizationRepository.cs">
@@ -108,10 +112,6 @@
     <Compile Include="Generated\UserResourcePoolRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
-    <Compile Include="Generated\UserSectorRatingRepository.cs">
-      <DependentUpon>Repository.tt</DependentUpon>
-    </Compile>
-    <Compile Include="BaseRepository.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="Migrations\201404271036016_InitialCreate.cs" />
     <Compile Include="Migrations\201404271036016_InitialCreate.Designer.cs">
@@ -176,6 +176,10 @@
     <Compile Include="Migrations\201407011757215_V0_13_7.cs" />
     <Compile Include="Migrations\201407011757215_V0_13_7.Designer.cs">
       <DependentUpon>201407011757215_V0_13_7.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201409141251059_V0_14.cs" />
+    <Compile Include="Migrations\201409141251059_V0_14.Designer.cs">
+      <DependentUpon>201409141251059_V0_14.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="DatabaseInitializer.cs" />
@@ -254,6 +258,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201407011757215_V0_13_7.resx">
       <DependentUpon>201407011757215_V0_13_7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201409141251059_V0_14.resx">
+      <DependentUpon>201409141251059_V0_14.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

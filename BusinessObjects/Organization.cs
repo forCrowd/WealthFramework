@@ -5,12 +5,13 @@ namespace BusinessObjects
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
-    [DefaultProperty("Name")]
+    [BusinessObjects.Attributes.DefaultProperty("Name")]
     // [ODataControllerAuthorization("Administrator")]
     public class Organization : BaseEntity
     {
         public Organization()
         {
+            OrganizationElementItemSet = new HashSet<OrganizationElementItem>();
             UserOrganizationSet = new HashSet<UserOrganization>();
             UserResourcePoolIndexValueSet = new HashSet<UserResourcePoolIndexValue>();
         }
@@ -19,7 +20,9 @@ namespace BusinessObjects
         [DisplayOnEditView(false)]
         public int Id { get; set; }
 
-        public short SectorId { get; set; }
+        public int ResourcePoolId { get; set; }
+
+        //public short SectorId { get; set; }
 
         [Required]
         [StringLength(100)]
@@ -32,16 +35,18 @@ namespace BusinessObjects
         [Display(Name = "Sales Price")]
         public decimal SalesPrice { get; set; }
 
-        public short LicenseId { get; set; }
+        //public short LicenseId { get; set; }
 
-        public virtual Sector Sector { get; set; }
-        public virtual License License { get; set; }
+        //public virtual Sector Sector { get; set; }
+        //public virtual License License { get; set; }
+        public virtual ResourcePool ResourcePool { get; set; }
+        public virtual ICollection<OrganizationElementItem> OrganizationElementItemSet { get; set; }
         public virtual ICollection<UserOrganization> UserOrganizationSet { get; set; }
         public virtual ICollection<UserResourcePoolIndexValue> UserResourcePoolIndexValueSet { get; set; }
 
         /* */
 
-        public ResourcePool ResourcePool { get { return Sector.ResourcePool; } }
+        // public ResourcePool ResourcePool { get { return Sector.ResourcePool; } }
 
         /// <summary>
         /// a.k.a. Markup

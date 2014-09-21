@@ -59,10 +59,16 @@
     <Compile Include="..\SolutionItems\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Dto\Generated\LicenseDto.cs">
+    <Compile Include="Dto\Generated\ElementDto.cs">
+      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Dto\Generated\ElementItemDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
     <Compile Include="Dto\Generated\OrganizationDto.cs">
+      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Dto\Generated\OrganizationElementItemDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
     <Compile Include="Dto\Generated\ResourcePoolDto.cs">
@@ -71,13 +77,10 @@
     <Compile Include="Dto\Generated\ResourcePoolIndexDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
-    <Compile Include="Dto\Generated\SectorDto.cs">
-      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
-    </Compile>
     <Compile Include="Dto\Generated\UserDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
-    <Compile Include="Dto\Generated\UserLicenseRatingDto.cs">
+    <Compile Include="Dto\Generated\UserElementItemDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
     <Compile Include="Dto\Generated\UserOrganizationDto.cs">
@@ -92,15 +95,15 @@
     <Compile Include="Dto\Generated\UserResourcePoolIndexValueDto.cs">
       <DependentUpon>BusinessObjectDto.tt</DependentUpon>
     </Compile>
-    <Compile Include="Dto\Generated\UserSectorRatingDto.cs">
-      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
-    </Compile>
     <Compile Include="BaseEntity.cs" />
     <Compile Include="Dto\ResourcePoolDto.cs" />
     <Compile Include="Dto\UserResourcePoolIndexDto.cs" />
     <Compile Include="Dto\ResourcePoolIndexDto.cs" />
+    <Compile Include="ElementItem.cs" />
+    <Compile Include="Element.cs" />
     <Compile Include="License.cs" />
     <Compile Include="Attributes\ODataControllerAuthorizationAttribute.cs" />
+    <Compile Include="OrganizationElementItem.cs" />
     <Compile Include="Organization.cs" />
     <Compile Include="ResourcePoolIndexType.cs" />
     <Compile Include="ResourcePoolIndexOrganization.cs" />
@@ -109,6 +112,7 @@
     <Compile Include="Sector.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserLicenseRating.cs" />
+    <Compile Include="UserElementItem.cs" />
     <Compile Include="UserResourcePoolIndexOrganization.cs" />
     <Compile Include="UserOrganization.cs" />
     <Compile Include="UserResourcePoolIndex.cs" />
