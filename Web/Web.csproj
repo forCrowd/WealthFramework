@@ -248,7 +248,13 @@
     <Compile Include="Controllers\OData\Generated\ElementController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\OData\Generated\ElementFieldController.cs">
+      <DependentUpon>ODataController.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\OData\Generated\ElementItemController.cs">
+      <DependentUpon>ODataController.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\OData\Generated\ElementItemElementFieldController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\OData\Generated\OrganizationController.cs">
@@ -299,7 +305,13 @@
     <Content Include="App\scripts\controllers\manage\edit\elementEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
+    <Content Include="App\scripts\controllers\manage\edit\elementFieldEditController.js">
+      <DependentUpon>editController.tt</DependentUpon>
+    </Content>
     <Content Include="App\scripts\controllers\manage\edit\elementItemEditController.js">
+      <DependentUpon>editController.tt</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\controllers\manage\edit\elementItemElementFieldEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
     <Content Include="App\scripts\controllers\manage\edit\organizationElementItemEditController.js">
@@ -307,6 +319,12 @@
     </Content>
     <Content Include="App\scripts\controllers\manage\edit\userElementItemEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\controllers\manage\list\elementFieldListController.js">
+      <DependentUpon>listController.tt</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\controllers\manage\list\elementItemElementFieldListController.js">
+      <DependentUpon>listController.tt</DependentUpon>
     </Content>
     <Content Include="App\scripts\controllers\manage\list\elementItemListController.js">
       <DependentUpon>listController.tt</DependentUpon>
@@ -335,6 +353,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>manageScripts.tt</DependentUpon>
     </Content>
+    <Content Include="App\scripts\services\generated\elementFieldService.js">
+      <DependentUpon>service.tt</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\services\generated\elementItemElementFieldService.js">
+      <DependentUpon>service.tt</DependentUpon>
+    </Content>
     <Content Include="App\scripts\services\generated\elementItemService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
@@ -353,7 +377,13 @@
     <Content Include="App\views\manage\edit\elementEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
+    <Content Include="App\views\manage\edit\elementFieldEdit.html">
+      <DependentUpon>editView.tt</DependentUpon>
+    </Content>
     <Content Include="App\views\manage\edit\elementItemEdit.html">
+      <DependentUpon>editView.tt</DependentUpon>
+    </Content>
+    <Content Include="App\views\manage\edit\elementItemElementFieldEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
     <Content Include="App\views\manage\edit\organizationElementItemEdit.html">
@@ -361,6 +391,12 @@
     </Content>
     <Content Include="App\views\manage\edit\userElementItemEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
+    </Content>
+    <Content Include="App\views\manage\list\elementFieldList.html">
+      <DependentUpon>listView.tt</DependentUpon>
+    </Content>
+    <Content Include="App\views\manage\list\elementItemElementFieldList.html">
+      <DependentUpon>listView.tt</DependentUpon>
     </Content>
     <Content Include="App\views\manage\list\elementItemList.html">
       <DependentUpon>listView.tt</DependentUpon>

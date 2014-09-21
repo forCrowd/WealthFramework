@@ -40,6 +40,7 @@ any user should be able to access them. currently definitions link is only visib
 . __migrationhistory createdon field error - it seems there is not much to do, it also might be about glimpse?
 . upgrade to .net 4.5.1? APM doesn't have it right now
 http://msdn.microsoft.com/en-us/library/hh925568%28v=vs.110%29.aspx
+. what to do these lines; datacontext.js - batches.push(manager.getEntities(['License'], [breeze.EntityState.Deleted]));
 
 . default license ratings should be 50/50
 . and ratings total should always be 100%
@@ -90,3 +91,8 @@ config.EnableQuerySupport(queryAttribute);
 sector index - just name and the rating
 license index - name + boolean variables (allows to see the code, allows modification, allows sell) and the rating
 organization total cost index - auto formula (organization sales price / resource pool sales price average)
+
+---
+element fields
+text version is okay
+continue with boolean + integer + decimal + datetime

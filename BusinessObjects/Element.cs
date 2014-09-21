@@ -11,6 +11,7 @@ namespace BusinessObjects
     {
         public Element()
         {
+            ElementFieldSet = new HashSet<ElementField>();
             ElementItemSet = new HashSet<ElementItem>();
             ResourcePoolIndexSet = new HashSet<ResourcePoolIndex>();
         }
@@ -27,6 +28,7 @@ namespace BusinessObjects
         public string Name { get; set; }
 
         public virtual ResourcePool ResourcePool { get; set; }
+        public virtual ICollection<ElementField> ElementFieldSet { get; set; }
         public virtual ICollection<ElementItem> ElementItemSet { get; set; }
         public virtual ICollection<ResourcePoolIndex> ResourcePoolIndexSet { get; set; }
 

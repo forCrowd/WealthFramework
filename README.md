@@ -6,6 +6,10 @@ An experimental resource management system that aims to provide a sustainable ec
 
 ### Release Notes
 
+**0.14.2**
+
+* Element Fields feature was added
+
 **0.14.1**
 
 * Clean-up

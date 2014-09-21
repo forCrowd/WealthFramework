@@ -76,6 +76,12 @@
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="BaseRepository.cs" />
+    <Compile Include="Generated\ElementFieldRepository.cs">
+      <DependentUpon>Repository.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\ElementItemElementFieldRepository.cs">
+      <DependentUpon>Repository.tt</DependentUpon>
+    </Compile>
     <Compile Include="Generated\ElementItemRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
@@ -181,6 +187,10 @@
     <Compile Include="Migrations\201409141251059_V0_14.Designer.cs">
       <DependentUpon>201409141251059_V0_14.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201409211323400_V0_14_2.cs" />
+    <Compile Include="Migrations\201409211323400_V0_14_2.Designer.cs">
+      <DependentUpon>201409211323400_V0_14_2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="DatabaseInitializer.cs" />
   </ItemGroup>
@@ -261,6 +271,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201409141251059_V0_14.resx">
       <DependentUpon>201409141251059_V0_14.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201409211323400_V0_14_2.resx">
+      <DependentUpon>201409211323400_V0_14_2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

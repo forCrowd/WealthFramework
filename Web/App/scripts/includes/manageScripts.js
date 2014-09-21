@@ -25,9 +25,17 @@ SH - 09 May '14
     <script src="/App/scripts/controllers/manage/list/elementListController.js"></script>\
     <script src="/App/scripts/controllers/manage/edit/elementEditController.js"></script>\
 	\
+    <script src="/App/scripts/services/generated/elementFieldService.js"></script>\
+    <script src="/App/scripts/controllers/manage/list/elementFieldListController.js"></script>\
+    <script src="/App/scripts/controllers/manage/edit/elementFieldEditController.js"></script>\
+	\
     <script src="/App/scripts/services/generated/elementItemService.js"></script>\
     <script src="/App/scripts/controllers/manage/list/elementItemListController.js"></script>\
     <script src="/App/scripts/controllers/manage/edit/elementItemEditController.js"></script>\
+	\
+    <script src="/App/scripts/services/generated/elementItemElementFieldService.js"></script>\
+    <script src="/App/scripts/controllers/manage/list/elementItemElementFieldListController.js"></script>\
+    <script src="/App/scripts/controllers/manage/edit/elementItemElementFieldEditController.js"></script>\
 	\
     <script src="/App/scripts/services/generated/organizationService.js"></script>\
     <script src="/App/scripts/controllers/manage/list/organizationListController.js"></script>\

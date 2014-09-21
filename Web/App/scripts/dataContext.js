@@ -136,8 +136,8 @@
                         * 4. Every other change
                         */
                         var batches = [];
-                        batches.push(manager.getEntities(['License'], [breeze.EntityState.Deleted]));
-                        batches.push(manager.getEntities(['License'], [breeze.EntityState.Added]));
+                        //batches.push(manager.getEntities(['License'], [breeze.EntityState.Deleted]));
+                        //batches.push(manager.getEntities(['License'], [breeze.EntityState.Added]));
                         batches.push(null); // empty = save all remaining pending changes
                         return batches;
                         /*

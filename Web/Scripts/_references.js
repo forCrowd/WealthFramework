@@ -75,4 +75,10 @@
 /// <reference path="../app/scripts/controllers/manage/list/userresourcepoolindexlistcontroller.js" />
 /// <reference path="../app/scripts/controllers/manage/list/userresourcepoolindexvaluelistcontroller.js" />
 /// <reference path="../app/scripts/controllers/manage/list/userresourcepoollistcontroller.js" />
+/// <reference path="../app/scripts/controllers/manage/edit/elementfieldeditcontroller.js" />
+/// <reference path="../app/scripts/controllers/manage/list/elementfieldlistcontroller.js" />
+/// <reference path="../app/scripts/services/generated/elementfieldservice.js" />
+/// <reference path="../app/scripts/services/generated/elementitemelementfieldservice.js" />
+/// <reference path="../app/scripts/controllers/manage/list/elementitemelementfieldlistcontroller.js" />
+/// <reference path="../app/scripts/controllers/manage/edit/elementitemelementfieldeditcontroller.js" />
 

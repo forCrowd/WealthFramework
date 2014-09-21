@@ -68,6 +68,12 @@
     <Compile Include="AspNetRoleManager.cs" />
     <Compile Include="AspNetUserManager.cs" />
     <Compile Include="BaseUnitOfWork.cs" />
+    <Compile Include="Generated\ElementFieldUnitOfWork.cs">
+      <DependentUpon>UnitOfWork.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\ElementItemElementFieldUnitOfWork.cs">
+      <DependentUpon>UnitOfWork.tt</DependentUpon>
+    </Compile>
     <Compile Include="Generated\ElementItemUnitOfWork.cs">
       <DependentUpon>UnitOfWork.tt</DependentUpon>
     </Compile>

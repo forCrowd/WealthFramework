@@ -29,10 +29,6 @@
             using (var unitOfWork = new ResourcePoolUnitOfWork())
                 sampleResourcePool = unitOfWork.AllLive.First();
 
-            //License sampleLicense;
-            //using (var unitOfWork = new LicenseUnitOfWork())
-            //    sampleLicense = unitOfWork.AllLive.First();
-
             User sampleUser;
             using (var unitOfWork = new UserUnitOfWork())
                 sampleUser = unitOfWork.AllLive.First();
@@ -45,7 +41,6 @@
                     Name = "Test organization",
                     ProductionCost = 0,
                     SalesPrice = 0,
-                    //LicenseId = sampleLicense.Id
                 };
 
                 unitOfWork.InsertAsync(organization, sampleUser.Id);

@@ -23,7 +23,9 @@ SH - 09 May '14
 	\
     <ul class="dropdown-menu">\
     <li><a href="/manage/element">Element</a></li>\
+    <li><a href="/manage/elementField">Element Field</a></li>\
     <li><a href="/manage/elementItem">Element Item</a></li>\
+    <li><a href="/manage/elementItemElementField">Element Item Field</a></li>\
     <li><a href="/manage/organization">Organization</a></li>\
     <li><a href="/manage/organizationElementItem">Organization Element Item</a></li>\
     <li><a href="/manage/resourcePool">CMRP</a></li>\

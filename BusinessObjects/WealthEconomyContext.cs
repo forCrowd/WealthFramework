@@ -26,7 +26,9 @@
         }
 
         public virtual DbSet<Element> Element { get; set; }
+        public virtual DbSet<ElementField> ElementField { get; set; }
         public virtual DbSet<ElementItem> ElementItem { get; set; }
+        public virtual DbSet<ElementItemElementField> ElementItemElementField { get; set; }
         public virtual DbSet<Organization> Organization { get; set; }
         public virtual DbSet<OrganizationElementItem> OrganizationElementItem { get; set; }
         public virtual DbSet<ResourcePool> ResourcePool { get; set; }
