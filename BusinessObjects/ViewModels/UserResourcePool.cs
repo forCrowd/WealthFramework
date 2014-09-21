@@ -28,12 +28,6 @@ namespace BusinessObjects.ViewModels
             TotalProfit = userResourcePool.TotalProfit;
             TotalResourcePoolTax = userResourcePool.TotalResourcePoolTax;
             TotalSalesRevenueIncludingResourcePoolTax = userResourcePool.TotalSalesRevenueIncludingResourcePoolTax;
-            //SectorIndexShare = userResourcePool.SectorIndexShare;
-            //KnowledgeIndexShare = userResourcePool.KnowledgeIndexShare;
-            //TotalCostIndexShare = userResourcePool.TotalCostIndexShare;
-            //QualityIndexShare = userResourcePool.QualityIndexShare;
-            //EmployeeSatisfactionIndexShare = userResourcePool.EmployeeSatisfactionIndexShare;
-            //CustomerSatisfactionIndexShare = userResourcePool.CustomerSatisfactionIndexShare;
             TotalIncome = userResourcePool.TotalIncome;
         }
 
@@ -51,12 +45,6 @@ namespace BusinessObjects.ViewModels
         public decimal TotalProfit { get; set; }
         public decimal TotalResourcePoolTax { get; set; }
         public decimal TotalSalesRevenueIncludingResourcePoolTax { get; set; }
-        //public decimal SectorIndexShare { get; set; }
-        //public decimal KnowledgeIndexShare { get; set; }
-        //public decimal TotalCostIndexShare { get; set; }
-        //public decimal QualityIndexShare { get; set; }
-        //public decimal EmployeeSatisfactionIndexShare { get; set; }
-        //public decimal CustomerSatisfactionIndexShare { get; set; }
         public decimal TotalIncome { get; set; }
     }
 }

@@ -90,10 +90,6 @@ namespace BusinessObjects
             {
                 switch (ResourcePoolIndexType)
                 {
-                    //case (byte)BusinessObjects.ResourcePoolIndexType.SectorIndex:
-                    //    return ResourcePool.SectorSet.Sum(item => item.RatingAverage);
-                    //case (byte)BusinessObjects.ResourcePoolIndexType.KnowledgeIndex:
-                    //    return ResourcePool.LicenseSet.Sum(item => item.RatingAverage);
                     case (byte)BusinessObjects.ResourcePoolIndexType.TotalCostIndex:
                         return ResourcePool.OrganizationSet.Sum(item => item.SalesPrice);
                     case (byte)BusinessObjects.ResourcePoolIndexType.DynamicOrganizationIndex:

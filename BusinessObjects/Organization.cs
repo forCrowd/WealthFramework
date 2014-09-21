@@ -22,8 +22,6 @@ namespace BusinessObjects
 
         public int ResourcePoolId { get; set; }
 
-        //public short SectorId { get; set; }
-
         [Required]
         [StringLength(100)]
         [Display(Name = "Organization")]
@@ -35,18 +33,12 @@ namespace BusinessObjects
         [Display(Name = "Sales Price")]
         public decimal SalesPrice { get; set; }
 
-        //public short LicenseId { get; set; }
-
-        //public virtual Sector Sector { get; set; }
-        //public virtual License License { get; set; }
         public virtual ResourcePool ResourcePool { get; set; }
         public virtual ICollection<OrganizationElementItem> OrganizationElementItemSet { get; set; }
         public virtual ICollection<UserOrganization> UserOrganizationSet { get; set; }
         public virtual ICollection<UserResourcePoolIndexValue> UserResourcePoolIndexValueSet { get; set; }
 
         /* */
-
-        // public ResourcePool ResourcePool { get { return Sector.ResourcePool; } }
 
         /// <summary>
         /// a.k.a. Markup

@@ -13,8 +13,6 @@ namespace BusinessObjects
             UserResourcePoolSet = new HashSet<UserResourcePool>();
             UserResourcePoolIndexSet = new HashSet<UserResourcePoolIndex>();
             UserResourcePoolIndexValueSet = new HashSet<UserResourcePoolIndexValue>();
-            //UserSectorRatingSet = new HashSet<UserSectorRating>();
-            //UserLicenseRatingSet = new HashSet<UserLicenseRating>();
             UserOrganizationSet = new HashSet<UserOrganization>();
             UserElementItemSet = new HashSet<UserElementItem>();
         }
@@ -52,8 +50,6 @@ namespace BusinessObjects
         public virtual ICollection<UserResourcePool> UserResourcePoolSet { get; set; }
         public virtual ICollection<UserResourcePoolIndex> UserResourcePoolIndexSet { get; set; }
         public virtual ICollection<UserResourcePoolIndexValue> UserResourcePoolIndexValueSet { get; set; }
-        //public virtual ICollection<UserSectorRating> UserSectorRatingSet { get; set; }
-        //public virtual ICollection<UserLicenseRating> UserLicenseRatingSet { get; set; }
         public virtual ICollection<UserOrganization> UserOrganizationSet { get; set; }
         public virtual ICollection<UserElementItem> UserElementItemSet { get; set; }
 

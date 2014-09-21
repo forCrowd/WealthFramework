@@ -8,28 +8,15 @@
     public partial class ResourcePoolUnitOfWork
     {
         ResourcePoolIndexRepository resourcePoolIndexRepository;
-        //SectorRepository sectorRepository;
-        //LicenseRepository licenseRepository;
         OrganizationRepository organizationRepository;
         UserResourcePoolRepository userResourcePoolRepository;
         UserResourcePoolIndexRepository userResourcePoolIndexRepository;
-        //UserSectorRatingRepository userSectorRatingRepository;
-        //UserLicenseRatingRepository userLicenseRatingRepository;
         UserOrganizationRepository userOrganizationRepository;
 
         public ResourcePoolIndexRepository ResourcePoolIndexRepository
         {
             get { return resourcePoolIndexRepository ?? (resourcePoolIndexRepository = new ResourcePoolIndexRepository(Context)); }
         }
-
-        //public SectorRepository SectorRepository
-        //{
-        //    get { return sectorRepository ?? (sectorRepository = new SectorRepository(Context)); }
-        //}
-        //public LicenseRepository LicenseRepository
-        //{
-        //    get { return licenseRepository ?? (licenseRepository = new LicenseRepository(Context)); }
-        //}
 
         public OrganizationRepository OrganizationRepository
         {
@@ -45,16 +32,6 @@
         {
             get { return userResourcePoolIndexRepository ?? (userResourcePoolIndexRepository = new UserResourcePoolIndexRepository(Context)); }
         }
-
-        //UserSectorRatingRepository UserSectorRatingRepository
-        //{
-        //    get { return userSectorRatingRepository ?? (userSectorRatingRepository = new UserSectorRatingRepository(Context)); }
-        //}
-
-        //UserLicenseRatingRepository UserLicenseRatingRepository
-        //{
-        //    get { return userLicenseRatingRepository ?? (userLicenseRatingRepository = new UserLicenseRatingRepository(Context)); }
-        //}
 
         UserOrganizationRepository UserOrganizationRepository
         {
@@ -75,29 +52,12 @@
             //};
             //ResourcePoolIndexRepository.Insert(sampleResourcePoolIndex);
 
-            //var sampleSector = new Sector()
-            //{
-            //    ResourcePool = entity,
-            //    Name = "Generic Sector"
-            //};
-            //SectorRepository.Insert(sampleSector);
-
-            //var sampleLicense = new License()
-            //{
-            //    ResourcePool = entity,
-            //    Name = "Generic License",
-            //    Text = "Generic License Text"
-            //};
-            //LicenseRepository.Insert(sampleLicense);
-
             var sampleOrganization = new Organization()
             {
                 ResourcePool = entity,
-                //Sector = sampleSector,
                 Name = "Generic Organization",
                 ProductionCost = 0,
                 SalesPrice = 0
-                //, License = sampleLicense
             };
             OrganizationRepository.Insert(sampleOrganization);
 
@@ -149,17 +109,6 @@
             }
 
             var organizations = resourcePool.OrganizationSet;
-            //foreach (var sector in sectors)
-            //{
-            //var sampleUserSectorRating = new UserSectorRating()
-            //{
-            //    UserId = userResourcePool.UserId,
-            //    Sector = sector,
-            //    Rating = 0
-            //};
-            //UserSectorRatingRepository.Insert(sampleUserSectorRating);
-
-            //var organizations = sector.OrganizationSet;
             foreach (var organization in organizations)
             {
                 var sampleUserOrganization = new UserOrganization()
@@ -170,19 +119,6 @@
                 };
                 UserOrganizationRepository.Insert(sampleUserOrganization);
             }
-            //}
-
-            //var licences = resourcePool.LicenseSet;
-            //foreach (var license in licences)
-            //{
-            //    var sampleLicenseRating = new UserLicenseRating()
-            //    {
-            //        UserId = userResourcePool.UserId,
-            //        License = license,
-            //        Rating = 0
-            //    };
-            //    UserLicenseRatingRepository.Insert(sampleLicenseRating);
-            //}
         }
 
         #endregion

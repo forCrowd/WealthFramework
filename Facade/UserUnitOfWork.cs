@@ -9,11 +9,7 @@
     public partial class UserUnitOfWork
     {
         ResourcePoolRepository resourcePoolRepository;
-        //SectorRepository sectorRepository;
-        //LicenseRepository licenseRepository;
         UserResourcePoolRepository userResourcePoolRepository;
-        //UserSectorRatingRepository userSectorRatingRepository;
-        //UserLicenseRatingRepository userLicenseRatingRepository;
         UserOrganizationRepository userOrganizationRepository;
 
         ResourcePoolRepository ResourcePoolRepository
@@ -21,30 +17,10 @@
             get { return resourcePoolRepository ?? (resourcePoolRepository = new ResourcePoolRepository(Context)); }
         }
 
-        //SectorRepository SectorRepository
-        //{
-        //    get { return sectorRepository ?? (sectorRepository = new SectorRepository(Context)); }
-        //}
-
-        //LicenseRepository LicenseRepository
-        //{
-        //    get { return licenseRepository ?? (licenseRepository = new LicenseRepository(Context)); }
-        //}
-
         UserResourcePoolRepository UserResourcePoolRepository
         {
             get { return userResourcePoolRepository ?? (userResourcePoolRepository = new UserResourcePoolRepository(Context)); }
         }
-
-        //UserSectorRatingRepository UserSectorRatingRepository
-        //{
-        //    get { return userSectorRatingRepository ?? (userSectorRatingRepository = new UserSectorRatingRepository(Context)); }
-        //}
-
-        //UserLicenseRatingRepository UserLicenseRatingRepository
-        //{
-        //    get { return userLicenseRatingRepository ?? (userLicenseRatingRepository = new UserLicenseRatingRepository(Context)); }
-        //}
 
         UserOrganizationRepository UserOrganizationRepository
         {
@@ -96,8 +72,6 @@
         void DeleteSampleData(User user)
         {
             UserOrganizationRepository.DeleteRange(user.UserOrganizationSet);
-            //UserLicenseRatingRepository.DeleteRange(user.UserLicenseRatingSet);
-            //UserSectorRatingRepository.DeleteRange(user.UserSectorRatingSet);
             UserResourcePoolRepository.DeleteRange(user.UserResourcePoolSet);
         }
 
@@ -119,40 +93,6 @@
                 };
                 UserResourcePoolRepository.Insert(userResourcePool);
             }
-
-            //// User sector ratings
-            //var sampleSectorRatings = UserSectorRatingRepository
-            //    .AllLive
-            //    .Include(item => item.Sector)
-            //    .Where(item => item.UserId == sourceUserId && item.Sector.ResourcePool.IsSample);
-
-            //foreach (var sampleSectorRating in sampleSectorRatings)
-            //{
-            //    var userSectorRating = new UserSectorRating()
-            //    {
-            //        User = targetUser,
-            //        Sector = sampleSectorRating.Sector,
-            //        Rating = sampleSectorRating.Rating
-            //    };
-            //    UserSectorRatingRepository.Insert(userSectorRating);
-            //}
-
-            //// User license ratings
-            //var sampleLicenseRatings = UserLicenseRatingRepository
-            //    .AllLive
-            //    .Include(item => item.License)
-            //    .Where(item => item.UserId == sourceUserId && item.License.ResourcePool.IsSample);
-
-            //foreach (var sampleLicenseRating in sampleLicenseRatings)
-            //{
-            //    var userLicenceRating = new UserLicenseRating()
-            //    {
-            //        User = targetUser,
-            //        License = sampleLicenseRating.License,
-            //        Rating = sampleLicenseRating.Rating
-            //    };
-            //    UserLicenseRatingRepository.Insert(userLicenceRating);
-            //}
 
             // User organizations
             var sampleOrganizations = UserOrganizationRepository

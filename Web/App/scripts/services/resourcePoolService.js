@@ -13,8 +13,6 @@
 
         // Service methods
         $delegate.getResourcePoolViewModel = getResourcePoolViewModel;
-        $delegate.getLicenseSet = getLicenseSet;
-        $delegate.getSectorSet = getSectorSet;
 
         return $delegate;
 
@@ -22,16 +20,6 @@
 
         function getResourcePoolViewModel(resourcePoolId) {
             var url = '/api/ResourcePoolCustom/ResourcePoolViewModel/' + resourcePoolId;
-            return $http.get(url);
-        }
-
-        function getLicenseSet(resourcePoolId) {
-            var url = '/api/ResourcePoolCustom/LicenseSet/' + resourcePoolId;
-            return $http.get(url);
-        }
-
-        function getSectorSet(resourcePoolId) {
-            var url = '/api/ResourcePoolCustom/SectorSet/' + resourcePoolId;
             return $http.get(url);
         }
     }

@@ -282,11 +282,9 @@
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\OData\BaseODataController.cs" />
-    <Compile Include="Controllers\OData\SectorController.cs" />
     <Compile Include="Controllers\OData\OrganizationController.cs" />
     <Compile Include="Controllers\OData\ResourcePoolController.cs" />
     <Compile Include="Controllers\OData\UserController.cs" />
-    <Compile Include="Controllers\OData\UserSectorRatingController.cs" />
     <Compile Include="Controllers\OData\UserResourcePoolController.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
@@ -511,9 +509,7 @@
       <DependentUpon>service.tt</DependentUpon>
     </Content>
     <Content Include="App\scripts\services\mainService.js" />
-    <Content Include="App\scripts\services\userLicenseRatingService.js" />
     <Content Include="App\scripts\services\resourcePoolService.js" />
-    <Content Include="App\scripts\services\userSectorRatingService.js" />
     <Content Include="App\scripts\services\userService.js" />
     <Content Include="App\scripts\services\userResourcePoolService.js" />
     <Content Include="Scripts\bootstrap.js" />

@@ -107,10 +107,8 @@
     <Compile Include="Utility.cs" />
     <Compile Include="UserResourcePoolUnitOfWork.cs" />
     <Compile Include="UserUnitOfWork.cs" />
-    <Compile Include="SectorUnitOfWork.cs" />
     <Compile Include="ResourcePoolUnitOfWork.cs" />
     <Compile Include="OrganizationUnitOfWork.cs" />
-    <Compile Include="LicenseUnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessObjects\BusinessObjects.csproj">
