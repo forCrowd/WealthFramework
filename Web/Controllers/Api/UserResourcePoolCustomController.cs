@@ -1,5 +1,4 @@
-﻿using BusinessObjects.Dto;
-using BusinessObjects.ViewModels;
+﻿using BusinessObjects.ViewModels;
 using Facade;
 using System.Data.Entity;
 using System.Linq;
@@ -42,13 +41,13 @@ namespace Web.Controllers.Api
 
         // GET api/UserResourcePoolCustom/GetUserResourcePoolDtoByResourcePoolId/1
         [Route("GetUserResourcePoolDtoByResourcePoolId/{resourcePoolId:int}")]
-        public UserResourcePoolDto GetUserResourcePoolDtoByResourcePoolId(int resourcePoolId)
+        public UserResourcePoolViewModel2 GetUserResourcePoolDtoByResourcePoolId(int resourcePoolId)
         {
             var unitOfWork = new UserResourcePoolUnitOfWork();
             var userResourcePool = unitOfWork.AllLive
                 .SingleOrDefault(item => item.UserId == ApplicationUser.Id
                     && item.ResourcePoolId == resourcePoolId);
-            return new UserResourcePoolDto(userResourcePool);
+            return new UserResourcePoolViewModel2(userResourcePool);
         }
 
         // POST api/UserResourcePoolCustom/IncreaseNumberOfSales/1

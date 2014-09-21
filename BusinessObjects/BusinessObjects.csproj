@@ -59,46 +59,8 @@
     <Compile Include="..\SolutionItems\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Dto\Generated\ElementDto.cs">
-      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Dto\Generated\ElementItemDto.cs">
-      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Dto\Generated\OrganizationDto.cs">
-      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Dto\Generated\OrganizationElementItemDto.cs">
-      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Dto\Generated\ResourcePoolDto.cs">
-      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Dto\Generated\ResourcePoolIndexDto.cs">
-      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Dto\Generated\UserDto.cs">
-      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Dto\Generated\UserElementItemDto.cs">
-      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Dto\Generated\UserOrganizationDto.cs">
-      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Dto\Generated\UserResourcePoolDto.cs">
-      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Dto\Generated\UserResourcePoolIndexDto.cs">
-      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Dto\Generated\UserResourcePoolIndexValueDto.cs">
-      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
-    </Compile>
     <Compile Include="BaseEntity.cs" />
-    <Compile Include="Dto\ResourcePoolDto.cs" />
-    <Compile Include="Dto\UserResourcePoolIndexDto.cs" />
-    <Compile Include="Dto\ResourcePoolIndexDto.cs" />
+    <Compile Include="ViewModels\UserResourcePoolViewModel2.cs" />
     <Compile Include="ElementItem.cs" />
     <Compile Include="Element.cs" />
     <Compile Include="Attributes\ODataControllerAuthorizationAttribute.cs" />
@@ -128,22 +90,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Dto\Generated\BusinessObjectDto.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>BusinessObjectDto.txt</LastGenOutput>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Dto\Generated\BusinessObjectDto.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BusinessObjectDto.tt</DependentUpon>
-    </Content>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
