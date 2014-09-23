@@ -20,6 +20,10 @@ namespace BusinessObjects
         [StringLength(50)]
         public string Name { get; set; }
 
+        [Required]
+        [Display(Name = "Element Field Type")]
+        public byte ElementFieldType { get; set; }
+
         public virtual Element Element { get; set; }
     }
 }

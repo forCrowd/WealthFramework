@@ -21,6 +21,9 @@
             <th>
                 Element Field
             </th>
+            <th>
+                Element Field Type
+            </th>
             <th></th>
         </tr>
         <tr data-ng-repeat="elementField in vm.elementFieldSet">
@@ -29,6 +32,9 @@
             </td>
             <td>
                 {{ elementField.Name }}
+            </td>
+            <td>
+                {{ elementField.ElementFieldType }}
             </td>
             <td>
                 <a href="/manage/elementField/edit/{{ elementField.Id }}">Edit</a> |

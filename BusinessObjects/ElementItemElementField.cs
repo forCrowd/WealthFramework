@@ -1,6 +1,7 @@
 namespace BusinessObjects
 {
     using BusinessObjects.Attributes;
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
@@ -22,7 +23,11 @@ namespace BusinessObjects
         [Index("IX_ElementItemIdElementFieldId", 2, IsUnique = true)]
         public int ElementFieldId { get; set; }
 
-        public string Value { get; set; }
+        public string StringValue { get; set; }
+        public Nullable<bool> BooleanValue { get; set; }
+        public Nullable<int> IntegerValue { get; set; }
+        public Nullable<decimal> DecimalValue { get; set; }
+        public Nullable<DateTime> DateTimeValue { get; set; }
 
         public virtual ElementItem ElementItem { get; set; }
         public virtual ElementField ElementField { get; set; }

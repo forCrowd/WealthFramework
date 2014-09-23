@@ -14,6 +14,7 @@ namespace DataObjects.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         ElementId = c.Int(nullable: false),
                         Name = c.String(nullable: false, maxLength: 50),
+                        ElementFieldType = c.Byte(nullable: false),
                         CreatedOn = c.DateTime(nullable: false),
                         ModifiedOn = c.DateTime(nullable: false),
                         DeletedOn = c.DateTime(),
@@ -30,15 +31,19 @@ namespace DataObjects.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         ElementItemId = c.Int(nullable: false),
                         ElementFieldId = c.Int(nullable: false),
-                        Value = c.String(),
+                        StringValue = c.String(),
+                        BooleanValue = c.Boolean(),
+                        IntegerValue = c.Int(),
+                        DecimalValue = c.Decimal(precision: 18, scale: 2),
+                        DateTimeValue = c.DateTime(),
                         CreatedOn = c.DateTime(nullable: false),
                         ModifiedOn = c.DateTime(nullable: false),
                         DeletedOn = c.DateTime(),
                         RowVersion = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.ElementField", t => t.ElementFieldId, cascadeDelete: true)
-                .ForeignKey("dbo.ElementItem", t => t.ElementItemId, cascadeDelete: false)
+                .ForeignKey("dbo.ElementField", t => t.ElementFieldId, cascadeDelete: false)
+                .ForeignKey("dbo.ElementItem", t => t.ElementItemId, cascadeDelete: true)
                 .Index(t => new { t.ElementItemId, t.ElementFieldId }, unique: true, name: "IX_ElementItemIdElementFieldId");
             
         }

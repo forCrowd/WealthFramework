@@ -22,7 +22,19 @@
                 Element Field
             </th>
             <th>
-                Value
+                StringValue
+            </th>
+            <th>
+                BooleanValue
+            </th>
+            <th>
+                IntegerValue
+            </th>
+            <th>
+                DecimalValue
+            </th>
+            <th>
+                DateTimeValue
             </th>
             <th></th>
         </tr>
@@ -34,7 +46,19 @@
                 {{ elementItemElementField.ElementField.Name }}
             </td>
             <td>
-                {{ elementItemElementField.Value }}
+                {{ elementItemElementField.StringValue }}
+            </td>
+            <td>
+                {{ elementItemElementField.BooleanValue }}
+            </td>
+            <td>
+                {{ elementItemElementField.IntegerValue }}
+            </td>
+            <td>
+                {{ elementItemElementField.DecimalValue }}
+            </td>
+            <td>
+                {{ elementItemElementField.DateTimeValue }}
             </td>
             <td>
                 <a href="/manage/elementItemElementField/edit/{{ elementItemElementField.Id }}">Edit</a> |

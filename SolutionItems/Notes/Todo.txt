@@ -96,3 +96,7 @@ organization total cost index - auto formula (organization sales price / resourc
 element fields
 text version is okay
 continue with boolean + integer + decimal + datetime
+
+where to have the index, on element level or element item level?
+make it on item level
+make even the name as a element item and create it automatically when the element is created
