@@ -31,6 +31,7 @@ any user should be able to access them. currently definitions link is only visib
 . html cache break - angular scripts + views etc.?
 . using texbox to update chart data didn't work, it breaks the chart?
 . use or try to remove scripts.render() + styles.render() from layout.cshtml - then mvc can be removed completely
+. use js + css minification - web essentials
 . automate .tt scripts with afterbuild?
 . try to have a standard for css usage + html layout formats + also js script conventions
 . check spelling of the texts!
