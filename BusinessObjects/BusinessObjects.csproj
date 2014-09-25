@@ -60,6 +60,7 @@
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="BaseEntity.cs" />
+    <Compile Include="RatingSortType.cs" />
     <Compile Include="ElementFieldType.cs" />
     <Compile Include="ElementField.cs" />
     <Compile Include="ElementItemElementField.cs" />

@@ -82,7 +82,7 @@ namespace BusinessObjects
                     ? 0
                     : ResourcePool.TotalCostIndex.IndexValue == 0
                     ? 0
-                    : 1 - (SalesPrice / ResourcePool.TotalCostIndex.IndexValue);
+                    : SalesPrice / ResourcePool.TotalCostIndex.IndexValue;
             }
         }
     }

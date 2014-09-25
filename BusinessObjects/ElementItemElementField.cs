@@ -51,7 +51,6 @@ namespace BusinessObjects
                     case (byte)ElementFieldType.Boolean:
                     case (byte)ElementFieldType.Integer:
                     case (byte)ElementFieldType.DateTime:
-                        throw new NotImplementedException();
                     case (byte)ElementFieldType.Decimal:
                         return 1; // There are no user level ratings
                     default:

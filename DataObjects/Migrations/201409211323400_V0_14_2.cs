@@ -42,8 +42,8 @@ namespace DataObjects.Migrations
                         RowVersion = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.ElementField", t => t.ElementFieldId, cascadeDelete: false)
-                .ForeignKey("dbo.ElementItem", t => t.ElementItemId, cascadeDelete: true)
+                .ForeignKey("dbo.ElementField", t => t.ElementFieldId, cascadeDelete: true)
+                .ForeignKey("dbo.ElementItem", t => t.ElementItemId, cascadeDelete: false)
                 .Index(t => new { t.ElementItemId, t.ElementFieldId }, unique: true, name: "IX_ElementItemIdElementFieldId");
             
             CreateTable(
@@ -65,6 +65,7 @@ namespace DataObjects.Migrations
                 .Index(t => new { t.UserId, t.ElementItemElementFieldId }, unique: true, name: "IX_UserIdElementItemElementFieldId");
             
             AddColumn("dbo.ResourcePoolIndex", "ElementFieldId", c => c.Int());
+            AddColumn("dbo.ResourcePoolIndex", "RatingSortType", c => c.Byte(nullable: false));
             CreateIndex("dbo.ResourcePoolIndex", "ElementFieldId");
             AddForeignKey("dbo.ResourcePoolIndex", "ElementFieldId", "dbo.ElementField", "Id");
         }
@@ -81,6 +82,7 @@ namespace DataObjects.Migrations
             DropIndex("dbo.ResourcePoolIndex", new[] { "ElementFieldId" });
             DropIndex("dbo.ElementItemElementField", "IX_ElementItemIdElementFieldId");
             DropIndex("dbo.ElementField", new[] { "ElementId" });
+            DropColumn("dbo.ResourcePoolIndex", "RatingSortType");
             DropColumn("dbo.ResourcePoolIndex", "ElementFieldId");
             DropTable("dbo.UserElementItemElementField");
             DropTable("dbo.ElementItemElementField");

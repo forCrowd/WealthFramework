@@ -32,9 +32,11 @@ namespace BusinessObjects
         [Required]
         [Display(Name = "Resource Pool Index Type")]
         public byte ResourcePoolIndexType { get; set; }
-
         public Nullable<int> ElementId { get; set; }
         public Nullable<int> ElementFieldId { get; set; }
+        
+        [Required]
+        public byte RatingSortType { get; set; }
 
         public virtual ResourcePool ResourcePool { get; set; }
         public virtual Element Element { get; set; }

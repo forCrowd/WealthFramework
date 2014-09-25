@@ -110,16 +110,40 @@ namespace BusinessObjects
         {
             get
             {
+                var indexValue = 0M;
+
                 switch (ResourcePoolIndex.ResourcePoolIndexType)
                 {
                     case (byte)ResourcePoolIndexType.TotalCostIndex:
-                        return Organization.SalesPricePercentage;
+                        {
+                            indexValue = Organization.SalesPricePercentage;
+                            break;
+                        }
                     case (byte)ResourcePoolIndexType.DynamicOrganizationIndex:
-                        return DynamicOrganizationIndexValuePercentage;
+                        {
+                            indexValue = DynamicOrganizationIndexValuePercentage;
+                            break;
+                        }
                     case (byte)ResourcePoolIndexType.DynamicElementIndex:
-                        return OrganizationElementItem.RatingPercentage;
+                        {
+                            indexValue = OrganizationElementItem.RatingPercentage;
+                            break;
+                        }
                     case (byte)ResourcePoolIndexType.DynamicElementFieldIndex:
-                        return OrganizationElementItemElementField.RatingPercentage;
+                        {
+                            indexValue = OrganizationElementItemElementField.RatingPercentage;
+                            break;
+                        }
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
+                switch (ResourcePoolIndex.RatingSortType)
+                {
+                    case (byte)RatingSortType.HighestToLowest:
+                        return indexValue;
+                    case (byte)RatingSortType.LowestToHighest:
+                        return 1 - indexValue;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }

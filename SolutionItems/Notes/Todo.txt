@@ -52,6 +52,8 @@ or always calculate the total average based on invidiuals percentage? or both?
 . in 'not rated index' case, userResourcePool view doesn't show the result
 . in 'not rated organizations' case, it's collecting the tax but not giving it back? - basically how to treat an organization that doesn't have any rating?
 
+. check [required] attribute for newer classes?
+
 . inserting a new userresourcepoolindex gave an error?
 
 . validateantiforgerytoken + bind attributes in odata controller?
@@ -83,11 +85,10 @@ config.EnableQuerySupport(queryAttribute);
 . check userunitofwork + resourcepoolunitofwork + userresourcepoolunitofwork for sample records + delete cases
 . check chapters knowledge + sector indexes
 
-. element fields; text, bool, integer, decimal, datetime
 . update configuration.cs with element fields
 . make even the name as a element item and create it automatically when the element is created
 . if that's really working, remove element index type
-. average of datetime (ticks)?
+. result of datetime (ticks) index is bit useless? need reference a start or end date as a reference?
 
 . element parent + child structure
 

@@ -13,7 +13,7 @@
         {
             var resourcePool = new ResourcePool();
 
-            var resourcePoolIndex = new ResourcePoolIndex() { ResourcePool = resourcePool, ResourcePoolIndexType = (byte)ResourcePoolIndexType.TotalCostIndex };
+            var resourcePoolIndex = new ResourcePoolIndex() { ResourcePool = resourcePool, ResourcePoolIndexType = (byte)ResourcePoolIndexType.TotalCostIndex, RatingSortType = (byte)RatingSortType.LowestToHighest };
             resourcePool.ResourcePoolIndexSet.Add(resourcePoolIndex);
 
             var organization1 = new Organization() { ResourcePool = resourcePool, ProductionCost = 25, SalesPrice = 25 };
@@ -57,10 +57,10 @@
             Assert.IsTrue(resourcePoolIndex.IndexValue == 100);
 
             Assert.IsTrue(organization1.Profit == 0);
-            Assert.IsTrue(organization1.SalesPricePercentage == 0.75M);
+            Assert.IsTrue(organization1.SalesPricePercentage == 0.25M);
 
             Assert.IsTrue(organization2.Profit == 0);
-            Assert.IsTrue(organization2.SalesPricePercentage == 0.25M);
+            Assert.IsTrue(organization2.SalesPricePercentage == 0.75M);
 
             Assert.IsTrue(userResourcePool.NumberOfSales == 2);
             Assert.IsTrue(userResourcePool.ResourcePoolTax == 100);
@@ -115,7 +115,7 @@
         {
             var resourcePool = new ResourcePool();
 
-            var resourcePoolIndex = new ResourcePoolIndex() { ResourcePool = resourcePool, ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicOrganizationIndex };
+            var resourcePoolIndex = new ResourcePoolIndex() { ResourcePool = resourcePool, ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicOrganizationIndex, RatingSortType = (byte)RatingSortType.HighestToLowest };
             resourcePool.ResourcePoolIndexSet.Add(resourcePoolIndex);
 
             var organization1 = new Organization() { ResourcePool = resourcePool, ProductionCost = 100, SalesPrice = 200 };
@@ -226,7 +226,7 @@
         {
             var resourcePool = new ResourcePool();
 
-            var resourcePoolIndex = new ResourcePoolIndex() { ResourcePool = resourcePool, ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicOrganizationIndex };
+            var resourcePoolIndex = new ResourcePoolIndex() { ResourcePool = resourcePool, ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicOrganizationIndex, RatingSortType = (byte)RatingSortType.HighestToLowest };
             resourcePool.ResourcePoolIndexSet.Add(resourcePoolIndex);
 
             var organization1 = new Organization() { ResourcePool = resourcePool, ProductionCost = 100, SalesPrice = 200 };
@@ -410,10 +410,10 @@
         {
             var resourcePool = new ResourcePool();
 
-            var resourcePoolIndex1 = new ResourcePoolIndex() { ResourcePool = resourcePool, ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicOrganizationIndex };
+            var resourcePoolIndex1 = new ResourcePoolIndex() { ResourcePool = resourcePool, ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicOrganizationIndex, RatingSortType = (byte)RatingSortType.HighestToLowest };
             resourcePool.ResourcePoolIndexSet.Add(resourcePoolIndex1);
 
-            var resourcePoolIndex2 = new ResourcePoolIndex() { ResourcePool = resourcePool, ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicOrganizationIndex };
+            var resourcePoolIndex2 = new ResourcePoolIndex() { ResourcePool = resourcePool, ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicOrganizationIndex, RatingSortType = (byte)RatingSortType.HighestToLowest };
             resourcePool.ResourcePoolIndexSet.Add(resourcePoolIndex2);
 
             var organization1 = new Organization() { ResourcePool = resourcePool, ProductionCost = 100, SalesPrice = 200 };
@@ -675,7 +675,7 @@
             var elementItem2 = new ElementItem() { Element = element };
             element.ElementItemSet.Add(elementItem2);
 
-            var resourcePoolIndex = new ResourcePoolIndex() { ResourcePool = resourcePool, ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicElementIndex, Element = element };
+            var resourcePoolIndex = new ResourcePoolIndex() { ResourcePool = resourcePool, ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicElementIndex, Element = element, RatingSortType = (byte)RatingSortType.HighestToLowest };
             resourcePool.ResourcePoolIndexSet.Add(resourcePoolIndex);
 
             var organization1 = new Organization() { ResourcePool = resourcePool, ProductionCost = 100, SalesPrice = 200 };
@@ -804,7 +804,7 @@
             var elementItem2 = new ElementItem() { Element = element };
             element.ElementItemSet.Add(elementItem2);
 
-            var resourcePoolIndex = new ResourcePoolIndex() { ResourcePool = resourcePool, ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicElementIndex, Element = element };
+            var resourcePoolIndex = new ResourcePoolIndex() { ResourcePool = resourcePool, ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicElementIndex, Element = element, RatingSortType = (byte)RatingSortType.HighestToLowest };
             resourcePool.ResourcePoolIndexSet.Add(resourcePoolIndex);
 
             var organization1 = new Organization() { ResourcePool = resourcePool, ProductionCost = 100, SalesPrice = 200 };
@@ -1004,7 +1004,7 @@
             var element = new Element() { ResourcePool = resourcePool };
             resourcePool.ElementSet.Add(element);
 
-            var elementField = new ElementField() { Element = element };
+            var elementField = new ElementField() { Element = element, ElementFieldType = (byte)ElementFieldType.String };
             element.ElementFieldSet.Add(elementField);
 
             var elementItem1 = new ElementItem() { Element = element };
@@ -1021,7 +1021,7 @@
             elementItem2.ElementItemElementFieldSet.Add(elementItemElementField2);
             elementField.ElementItemElementFieldSet.Add(elementItemElementField2);
 
-            var resourcePoolIndex = new ResourcePoolIndex() { ResourcePool = resourcePool, ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicElementFieldIndex, ElementField = elementField };
+            var resourcePoolIndex = new ResourcePoolIndex() { ResourcePool = resourcePool, ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicElementFieldIndex, ElementField = elementField, RatingSortType = (byte)RatingSortType.HighestToLowest };
             resourcePool.ResourcePoolIndexSet.Add(resourcePoolIndex);
 
             var organization1 = new Organization() { ResourcePool = resourcePool, ProductionCost = 100, SalesPrice = 200 };
@@ -1144,7 +1144,7 @@
             var element = new Element() { ResourcePool = resourcePool };
             resourcePool.ElementSet.Add(element);
 
-            var elementField = new ElementField() { Element = element };
+            var elementField = new ElementField() { Element = element, ElementFieldType = (byte)ElementFieldType.String };
             element.ElementFieldSet.Add(elementField);
 
             var elementItem1 = new ElementItem() { Element = element };
@@ -1161,7 +1161,7 @@
             elementItem2.ElementItemElementFieldSet.Add(elementItemElementField2);
             elementField.ElementItemElementFieldSet.Add(elementItemElementField2);
 
-            var resourcePoolIndex = new ResourcePoolIndex() { ResourcePool = resourcePool, ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicElementFieldIndex, ElementField = elementField };
+            var resourcePoolIndex = new ResourcePoolIndex() { ResourcePool = resourcePool, ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicElementFieldIndex, ElementField = elementField, RatingSortType = (byte)RatingSortType.HighestToLowest };
             resourcePool.ResourcePoolIndexSet.Add(resourcePoolIndex);
 
             var organization1 = new Organization() { ResourcePool = resourcePool, ProductionCost = 100, SalesPrice = 200 };

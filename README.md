@@ -8,7 +8,7 @@ An experimental resource management system that aims to provide a sustainable ec
 
 **0.14.2**
 
-* Element Fields feature was added with string, boolean, int32, decimal, datetime options
+* Element Fields feature was added with string, boolean, int32, decimal, datetime types & highest to lowest, lowest to highest sort options
 
 **0.14.1**
 

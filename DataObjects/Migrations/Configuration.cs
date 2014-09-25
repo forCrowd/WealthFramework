@@ -197,7 +197,7 @@ namespace DataObjects.Migrations
         void AddSectorIndexSample(BusinessObjects.User user)
         {
             var sectorResourcePool = new BusinessObjects.ResourcePool() { Name = "Sector Index Sample", IsSample = true };
-            var sectorResourcePoolIndex = new BusinessObjects.ResourcePoolIndex() { ResourcePool = sectorResourcePool, Name = "Sector Index", ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicOrganizationIndex };
+            var sectorResourcePoolIndex = new BusinessObjects.ResourcePoolIndex() { ResourcePool = sectorResourcePool, Name = "Sector Index", ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicOrganizationIndex, RatingSortType = (byte)RatingSortType.HighestToLowest };
             var sectorOrganization1 = new BusinessObjects.Organization() { ResourcePool = sectorResourcePool, Name = "Basic Materials", ProductionCost = 100, SalesPrice = 150 };
             var sectorOrganization2 = new BusinessObjects.Organization() { ResourcePool = sectorResourcePool, Name = "Conglomerates", ProductionCost = 100, SalesPrice = 150 };
             var sectorOrganization3 = new BusinessObjects.Organization() { ResourcePool = sectorResourcePool, Name = "Consumer Goods", ProductionCost = 100, SalesPrice = 150 };
@@ -267,7 +267,7 @@ namespace DataObjects.Migrations
             var knowledgeLicenseElement = new Element() { ResourcePool = knowledgeResourcePool, Name = "License" };
             var knowledgeLicenseItem1 = new ElementItem() { Element = knowledgeLicenseElement, Name = "Open License" };
             var knowledgeLicenseItem2 = new ElementItem() { Element = knowledgeLicenseElement, Name = "Restricted License" };
-            var knowledgeResourcePoolIndex = new BusinessObjects.ResourcePoolIndex() { ResourcePool = knowledgeResourcePool, Name = "Knowledge Index", ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicElementIndex, Element = knowledgeLicenseElement };
+            var knowledgeResourcePoolIndex = new BusinessObjects.ResourcePoolIndex() { ResourcePool = knowledgeResourcePool, Name = "Knowledge Index", ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicElementIndex, Element = knowledgeLicenseElement, RatingSortType = (byte)RatingSortType.LowestToHighest };
             var knowledgeOrganization1 = new BusinessObjects.Organization() { ResourcePool = knowledgeResourcePool, Name = "True Source", ProductionCost = 100, SalesPrice = 150 };
             var knowledgeOrganizationLicenseItem1 = new BusinessObjects.OrganizationElementItem() { Organization = knowledgeOrganization1, ElementItem = knowledgeLicenseItem1 };
             var knowledgeOrganization2 = new BusinessObjects.Organization() { ResourcePool = knowledgeResourcePool, Name = "Hidden Knowledge", ProductionCost = 100, SalesPrice = 150 };
@@ -299,7 +299,7 @@ namespace DataObjects.Migrations
         void AddTotalCostIndexSample(BusinessObjects.User user)
         {
             var totalCostResourcePool = new BusinessObjects.ResourcePool() { Name = "Total Cost Index Sample", IsSample = true };
-            var totalCostResourcePoolIndex = new BusinessObjects.ResourcePoolIndex() { ResourcePool = totalCostResourcePool, Name = "Total Cost Index", ResourcePoolIndexType = (byte)ResourcePoolIndexType.TotalCostIndex };
+            var totalCostResourcePoolIndex = new BusinessObjects.ResourcePoolIndex() { ResourcePool = totalCostResourcePool, Name = "Total Cost Index", ResourcePoolIndexType = (byte)ResourcePoolIndexType.TotalCostIndex, RatingSortType = (byte)RatingSortType.LowestToHighest };
             var totalCostOrganization1 = new BusinessObjects.Organization() { ResourcePool = totalCostResourcePool, Name = "Lowlands", ProductionCost = 100, SalesPrice = 125 };
             var totalCostOrganization2 = new BusinessObjects.Organization() { ResourcePool = totalCostResourcePool, Name = "High Coast", ProductionCost = 100, SalesPrice = 175 };
             var totalCostUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = totalCostResourcePool, ResourcePoolRate = 101 };
@@ -317,6 +317,7 @@ namespace DataObjects.Migrations
             UserOrganizationRepository.Insert(totalCostUserOrganization2);
         }
 
+        // TODO Update these samples
         void AddQualityIndexSample(BusinessObjects.User user)
         {
             var qualityResourcePool = new BusinessObjects.ResourcePool() { Name = "Quality Index Sample", IsSample = true };
