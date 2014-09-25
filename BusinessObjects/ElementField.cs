@@ -1,6 +1,7 @@
 namespace BusinessObjects
 {
     using BusinessObjects.Attributes;
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
@@ -41,7 +42,20 @@ namespace BusinessObjects
         /// </summary>
         public decimal RatingAverage
         {
-            get { return ElementItemElementFieldSet.Sum(item => item.RatingAverage); }
+            get
+            {
+                switch (ElementFieldType)
+                {
+                    case (byte)BusinessObjects.ElementFieldType.String:
+                    case (byte)BusinessObjects.ElementFieldType.Decimal:
+                    case (byte)BusinessObjects.ElementFieldType.Boolean:
+                    case (byte)BusinessObjects.ElementFieldType.Integer:
+                    case (byte)BusinessObjects.ElementFieldType.DateTime:
+                        return ElementItemElementFieldSet.Sum(item => item.RatingAverage);
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
         }
 
         #endregion

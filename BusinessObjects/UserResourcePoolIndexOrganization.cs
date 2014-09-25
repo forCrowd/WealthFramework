@@ -21,29 +21,9 @@ namespace BusinessObjects
             get { return ResourcePoolIndexOrganization.ResourcePoolIndex.UserResourcePoolIndexSet.SingleOrDefault(item => item.UserResourcePool.User == UserOrganization.User); }
         }
 
-        public decimal IndexValue
-        {
-            get
-            {
-                switch (UserResourcePoolIndex.ResourcePoolIndex.ResourcePoolIndexType)
-                {
-                    case (byte)ResourcePoolIndexType.TotalCostIndex:
-                        return UserOrganization.Organization.SalesPricePercentage;
-                    case (byte)ResourcePoolIndexType.DynamicOrganizationIndex:
-                        return ResourcePoolIndexOrganization.DynamicOrganizationIndexValuePercentage;
-                    case (byte)ResourcePoolIndexType.DynamicElementIndex:
-                        return ResourcePoolIndexOrganization.OrganizationElementItem.RatingPercentage;
-                    case (byte)ResourcePoolIndexType.DynamicElementFieldIndex:
-                        return ResourcePoolIndexOrganization.OrganizationElementItemElementField.RatingPercentage;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-            }        
-        }
-
         public decimal IndexValueMultiplied
         {
-            get { return IndexValue * UserOrganization.NumberOfSalesPercentage; }
+            get { return ResourcePoolIndexOrganization.IndexValue * UserOrganization.NumberOfSalesPercentage; }
         }
 
         public decimal IndexValuePercentage

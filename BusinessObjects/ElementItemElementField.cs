@@ -42,16 +42,45 @@ namespace BusinessObjects
 
         public int RatingCount
         {
-            get { return UserElementItemElementFieldSet.Count(); }
+            get
+            {
+                switch (ElementField.ElementFieldType)
+                {
+                    case (byte)ElementFieldType.String:
+                        return UserElementItemElementFieldSet.Count();
+                    case (byte)ElementFieldType.Boolean:
+                    case (byte)ElementFieldType.Integer:
+                    case (byte)ElementFieldType.DateTime:
+                        throw new NotImplementedException();
+                    case (byte)ElementFieldType.Decimal:
+                        return 1; // There are no user level ratings
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
         }
 
         public decimal RatingAverage
         {
             get
             {
-                return UserElementItemElementFieldSet.Any()
-                    ? UserElementItemElementFieldSet.Average(item => item.Rating)
-                    : 0;
+                switch (ElementField.ElementFieldType)
+                {
+                    case (byte)ElementFieldType.String:
+                        return UserElementItemElementFieldSet.Any()
+                            ? UserElementItemElementFieldSet.Average(item => item.Rating)
+                            : 0;
+                    case (byte)ElementFieldType.Boolean:
+                        return BooleanValue.HasValue ? Convert.ToDecimal(BooleanValue.Value) : 0;
+                    case (byte)ElementFieldType.Integer:
+                        return IntegerValue.HasValue ? Convert.ToDecimal(IntegerValue.Value) : 0;
+                    case (byte)ElementFieldType.DateTime:
+                        return DateTimeValue.HasValue ? Convert.ToDecimal(DateTimeValue.Value.Ticks) : 0;
+                    case (byte)ElementFieldType.Decimal:
+                        return DecimalValue.HasValue ? DecimalValue.Value : 0;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
             }
         }
 

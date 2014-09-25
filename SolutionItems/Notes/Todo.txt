@@ -83,10 +83,11 @@ config.EnableQuerySupport(queryAttribute);
 . check userunitofwork + resourcepoolunitofwork + userresourcepoolunitofwork for sample records + delete cases
 . check chapters knowledge + sector indexes
 
-. element fields; text, bool, integer, decimal
+. element fields; text, bool, integer, decimal, datetime
 . update configuration.cs with element fields
 . make even the name as a element item and create it automatically when the element is created
 . if that's really working, remove element index type
+. average of datetime (ticks)?
 
 . element parent + child structure
 

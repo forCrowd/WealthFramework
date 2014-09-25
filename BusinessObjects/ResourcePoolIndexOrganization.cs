@@ -106,6 +106,26 @@ namespace BusinessObjects
             }
         }
 
+        public decimal IndexValue
+        {
+            get
+            {
+                switch (ResourcePoolIndex.ResourcePoolIndexType)
+                {
+                    case (byte)ResourcePoolIndexType.TotalCostIndex:
+                        return Organization.SalesPricePercentage;
+                    case (byte)ResourcePoolIndexType.DynamicOrganizationIndex:
+                        return DynamicOrganizationIndexValuePercentage;
+                    case (byte)ResourcePoolIndexType.DynamicElementIndex:
+                        return OrganizationElementItem.RatingPercentage;
+                    case (byte)ResourcePoolIndexType.DynamicElementFieldIndex:
+                        return OrganizationElementItemElementField.RatingPercentage;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+
         ///// <summary>
         ///// How many users rated this index?
         ///// </summary>
