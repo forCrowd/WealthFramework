@@ -27,6 +27,9 @@
             <th>
                 ElementId
             </th>
+            <th>
+                ElementFieldId
+            </th>
             <th></th>
         </tr>
         <tr data-ng-repeat="resourcePoolIndex in vm.resourcePoolIndexSet">
@@ -41,6 +44,9 @@
             </td>
             <td>
                 {{ resourcePoolIndex.ElementId }}
+            </td>
+            <td>
+                {{ resourcePoolIndex.ElementFieldId }}
             </td>
             <td>
                 <a href="/manage/resourcePoolIndex/edit/{{ resourcePoolIndex.Id }}">Edit</a> |

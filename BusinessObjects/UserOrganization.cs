@@ -56,7 +56,7 @@ namespace BusinessObjects
             {
                 return UserResourcePool.NumberOfSales == 0
                     ? 0
-                    : decimal.Divide(NumberOfSales, UserResourcePool.NumberOfSales);
+                    : decimal.Divide(NumberOfSales, UserResourcePool.NumberOfSales); // To be able to get decimal ouput from integer / integer
             }
         }
 

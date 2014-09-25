@@ -61,6 +61,10 @@ SH - 09 May '14
     <script src="/App/scripts/controllers/manage/list/userElementItemListController.js"></script>\
     <script src="/App/scripts/controllers/manage/edit/userElementItemEditController.js"></script>\
 	\
+    <script src="/App/scripts/services/generated/userElementItemElementFieldService.js"></script>\
+    <script src="/App/scripts/controllers/manage/list/userElementItemElementFieldListController.js"></script>\
+    <script src="/App/scripts/controllers/manage/edit/userElementItemElementFieldEditController.js"></script>\
+	\
     <script src="/App/scripts/services/generated/userOrganizationService.js"></script>\
     <script src="/App/scripts/controllers/manage/list/userOrganizationListController.js"></script>\
     <script src="/App/scripts/controllers/manage/edit/userOrganizationEditController.js"></script>\

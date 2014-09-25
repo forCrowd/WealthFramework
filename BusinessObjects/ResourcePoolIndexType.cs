@@ -4,6 +4,7 @@ namespace BusinessObjects
     {
         TotalCostIndex = 3,
         DynamicOrganizationIndex = 4,
-        DynamicElementIndex = 5
+        DynamicElementIndex = 5,
+        DynamicElementFieldIndex = 6
     }
 }

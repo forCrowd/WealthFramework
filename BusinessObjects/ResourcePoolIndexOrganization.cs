@@ -43,10 +43,26 @@ namespace BusinessObjects
             }
         }
 
+        internal ElementItemElementField OrganizationElementItemElementField
+        {
+            get
+            {
+                if (ResourcePoolIndex.ResourcePoolIndexType != (byte)ResourcePoolIndexType.DynamicElementFieldIndex)
+                    throw new InvalidOperationException("Invalid index type");
+
+                var organizationElement = Organization.OrganizationElementItemSet.SingleOrDefault(item => item.ElementItem.ElementItemElementFieldSet.Any(itemField => itemField.ElementField == ResourcePoolIndex.ElementField));
+
+                if (organizationElement == null)
+                    return null;
+
+                return organizationElement.ElementItem.ElementItemElementFieldSet.SingleOrDefault(itemField => itemField.ElementField == ResourcePoolIndex.ElementField);
+            }
+        }
+
         /// <summary>
         /// How many users rated this index?
         /// </summary>
-        public decimal DynamicIndexValueCount
+        public decimal DynamicOrganizationIndexValueCount
         {
             get
             {
@@ -61,7 +77,7 @@ namespace BusinessObjects
         /// Determines the average rating of this index.
         /// It will be used to determine the weight of this index in its resource pool.
         /// </summary>
-        public decimal DynamicIndexValueAverage
+        public decimal DynamicOrganizationIndexValueAverage
         {
             get
             {
@@ -77,7 +93,7 @@ namespace BusinessObjects
         /// <summary>
         /// Determines the rating percentage of this index.
         /// </summary>
-        public decimal DynamicIndexValuePercentage
+        public decimal DynamicOrganizationIndexValuePercentage
         {
             get
             {
@@ -86,7 +102,7 @@ namespace BusinessObjects
 
                 return ResourcePoolIndex.IndexValue == 0
                     ? 0
-                    : DynamicIndexValueAverage / ResourcePoolIndex.IndexValue;
+                    : DynamicOrganizationIndexValueAverage / ResourcePoolIndex.IndexValue;
             }
         }
 

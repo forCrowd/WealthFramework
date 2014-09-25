@@ -13,6 +13,7 @@ namespace BusinessObjects
     {
         public ElementItem()
         {
+            ElementItemElementFieldSet = new HashSet<ElementItemElementField>();
             OrganizationElementItemSet = new HashSet<OrganizationElementItem>();
             UserElementItemSet = new HashSet<UserElementItem>();
         }
@@ -29,6 +30,7 @@ namespace BusinessObjects
         public int ElementId { get; set; }
 
         public virtual Element Element { get; set; }
+        public virtual ICollection<ElementItemElementField> ElementItemElementFieldSet { get; set; }
         public virtual ICollection<OrganizationElementItem> OrganizationElementItemSet { get; set; }
         public virtual ICollection<UserElementItem> UserElementItemSet { get; set; }
 
@@ -58,6 +60,5 @@ namespace BusinessObjects
                     : RatingAverage / Element.RatingAverage;
             }
         }
-
     }
 }

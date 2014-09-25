@@ -9,10 +9,15 @@ namespace BusinessObjects
     using System.Linq;
 
     [DisplayName("Element Item Field")]
-    // [BusinessObjects.Attributes.DefaultProperty("Name")]
+    [BusinessObjects.Attributes.DefaultProperty("Id")]
     // [ODataControllerAuthorization("Administrator")]
     public class ElementItemElementField : BaseEntity
     {
+        public ElementItemElementField()
+        {
+            UserElementItemElementFieldSet = new HashSet<UserElementItemElementField>();
+        }
+
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         public int Id { get; set; }
@@ -31,5 +36,33 @@ namespace BusinessObjects
 
         public virtual ElementItem ElementItem { get; set; }
         public virtual ElementField ElementField { get; set; }
+        public virtual ICollection<UserElementItemElementField> UserElementItemElementFieldSet { get; set; }
+
+        /* */
+
+        public int RatingCount
+        {
+            get { return UserElementItemElementFieldSet.Count(); }
+        }
+
+        public decimal RatingAverage
+        {
+            get
+            {
+                return UserElementItemElementFieldSet.Any()
+                    ? UserElementItemElementFieldSet.Average(item => item.Rating)
+                    : 0;
+            }
+        }
+
+        public decimal RatingPercentage
+        {
+            get
+            {
+                return ElementField.RatingAverage == 0
+                    ? 0
+                    : RatingAverage / ElementField.RatingAverage;
+            }
+        }
     }
 }

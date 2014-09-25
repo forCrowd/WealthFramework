@@ -34,9 +34,11 @@ namespace BusinessObjects
         public byte ResourcePoolIndexType { get; set; }
 
         public Nullable<int> ElementId { get; set; }
+        public Nullable<int> ElementFieldId { get; set; }
 
         public virtual ResourcePool ResourcePool { get; set; }
         public virtual Element Element { get; set; }
+        public virtual ElementField ElementField { get; set; }
         public virtual ICollection<UserResourcePoolIndex> UserResourcePoolIndexSet { get; set; }
 
         /* */
@@ -93,7 +95,7 @@ namespace BusinessObjects
                     case (byte)BusinessObjects.ResourcePoolIndexType.TotalCostIndex:
                         return ResourcePool.OrganizationSet.Sum(item => item.SalesPrice);
                     case (byte)BusinessObjects.ResourcePoolIndexType.DynamicOrganizationIndex:
-                        return ResourcePoolIndexOrganizationSet.Sum(item => item.DynamicIndexValueAverage);
+                        return ResourcePoolIndexOrganizationSet.Sum(item => item.DynamicOrganizationIndexValueAverage);
                     default: throw new ArgumentOutOfRangeException();
                 }
             }

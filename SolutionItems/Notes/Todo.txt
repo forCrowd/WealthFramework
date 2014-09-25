@@ -84,19 +84,17 @@ config.EnableQuerySupport(queryAttribute);
 . check chapters knowledge + sector indexes
 
 . element fields; text, bool, integer, decimal
+. update configuration.cs with element fields
+. make even the name as a element item and create it automatically when the element is created
+. if that's really working, remove element index type
+
 . element parent + child structure
+
 . fixed amount resourcepooltype
+
+. add multiple fields test
 
 ---
 sector index - just name and the rating
 license index - name + boolean variables (allows to see the code, allows modification, allows sell) and the rating
 organization total cost index - auto formula (organization sales price / resource pool sales price average)
-
----
-element fields
-text version is okay
-continue with boolean + integer + decimal + datetime
-
-where to have the index, on element level or element item level?
-make it on item level
-make even the name as a element item and create it automatically when the element is created

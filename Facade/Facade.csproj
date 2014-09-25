@@ -92,6 +92,9 @@
     <Compile Include="Generated\ResourcePoolUnitOfWork.cs">
       <DependentUpon>UnitOfWork.tt</DependentUpon>
     </Compile>
+    <Compile Include="Generated\UserElementItemElementFieldUnitOfWork.cs">
+      <DependentUpon>UnitOfWork.tt</DependentUpon>
+    </Compile>
     <Compile Include="Generated\UserElementItemUnitOfWork.cs">
       <DependentUpon>UnitOfWork.tt</DependentUpon>
     </Compile>

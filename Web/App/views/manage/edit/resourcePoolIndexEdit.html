@@ -39,6 +39,12 @@
                 </div>
             </div>
             <div class="form-group">
+                <label for="ElementFieldId" class="control-label col-md-2">ElementFieldId</label>
+                <div class="col-md-10" data-ng-class="{'has-error': editForm.ElementFieldId.$invalid && !editForm.ElementFieldId.$pristine}">
+                    <input id="ElementFieldId" name="ElementFieldId" type="text" data-ng-model="vm.resourcePoolIndex.ElementFieldId" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
                 <div class="col-md-10">
                     <input id="RowVersion" name="RowVersion" data-ng-model="vm.resourcePoolIndex.RowVersion" type="hidden">
                 </div>

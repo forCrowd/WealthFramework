@@ -63,6 +63,7 @@
     <Compile Include="ElementFieldType.cs" />
     <Compile Include="ElementField.cs" />
     <Compile Include="ElementItemElementField.cs" />
+    <Compile Include="UserElementItemElementField.cs" />
     <Compile Include="ViewModels\UserResourcePoolViewModel2.cs" />
     <Compile Include="ElementItem.cs" />
     <Compile Include="Element.cs" />

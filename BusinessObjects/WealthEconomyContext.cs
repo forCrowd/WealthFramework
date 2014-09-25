@@ -35,6 +35,7 @@
         public virtual DbSet<ResourcePoolIndex> ResourcePoolIndex { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<UserElementItem> UserElementItem { get; set; }
+        public virtual DbSet<UserElementItemElementField> UserElementItemElementField { get; set; }
         public virtual DbSet<UserOrganization> UserOrganization { get; set; }
         public virtual DbSet<UserResourcePool> UserResourcePool { get; set; }
         public virtual DbSet<UserResourcePoolIndex> UserResourcePoolIndex { get; set; }

@@ -1,14 +1,21 @@
 namespace BusinessObjects
 {
     using BusinessObjects.Attributes;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
+    using System.Linq;
 
     [DisplayName("Element Field")]
     [BusinessObjects.Attributes.DefaultProperty("Name")]
     // [ODataControllerAuthorization("Administrator")]
     public class ElementField : BaseEntity
     {
+        public ElementField()
+        {
+            ElementItemElementFieldSet = new HashSet<ElementItemElementField>();
+        }
+
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         public int Id { get; set; }
@@ -25,5 +32,18 @@ namespace BusinessObjects
         public byte ElementFieldType { get; set; }
 
         public virtual Element Element { get; set; }
+        public virtual ICollection<ElementItemElementField> ElementItemElementFieldSet { get; set; }
+
+        #region - ReadOnly Properties -
+
+        /// <summary>
+        /// REMARK: In other index types, this value is calculated on ResourcePoolIndex class level, under IndexValue property
+        /// </summary>
+        public decimal RatingAverage
+        {
+            get { return ElementItemElementFieldSet.Sum(item => item.RatingAverage); }
+        }
+
+        #endregion
     }
 }
