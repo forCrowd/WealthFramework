@@ -36,6 +36,7 @@ namespace BusinessObjects
         public Nullable<int> ElementFieldId { get; set; }
         
         [Required]
+        [Display(Name = "Rating Sort Type")]
         public byte RatingSortType { get; set; }
 
         public virtual ResourcePool ResourcePool { get; set; }

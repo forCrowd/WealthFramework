@@ -45,6 +45,12 @@
                 </div>
             </div>
             <div class="form-group">
+                <label for="RatingSortType" class="control-label col-md-2">Rating Sort Type</label>
+                <div class="col-md-10" data-ng-class="{'has-error': editForm.RatingSortType.$invalid && !editForm.RatingSortType.$pristine}">
+                    <input id="RatingSortType" name="RatingSortType" type="text" data-ng-model="vm.resourcePoolIndex.RatingSortType" class="form-control" required />
+                </div>
+            </div>
+            <div class="form-group">
                 <div class="col-md-10">
                     <input id="RowVersion" name="RowVersion" data-ng-model="vm.resourcePoolIndex.RowVersion" type="hidden">
                 </div>

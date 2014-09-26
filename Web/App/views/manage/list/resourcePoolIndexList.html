@@ -30,6 +30,9 @@
             <th>
                 ElementFieldId
             </th>
+            <th>
+                Rating Sort Type
+            </th>
             <th></th>
         </tr>
         <tr data-ng-repeat="resourcePoolIndex in vm.resourcePoolIndexSet">
@@ -47,6 +50,9 @@
             </td>
             <td>
                 {{ resourcePoolIndex.ElementFieldId }}
+            </td>
+            <td>
+                {{ resourcePoolIndex.RatingSortType }}
             </td>
             <td>
                 <a href="/manage/resourcePoolIndex/edit/{{ resourcePoolIndex.Id }}">Edit</a> |

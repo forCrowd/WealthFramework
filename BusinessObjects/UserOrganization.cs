@@ -43,8 +43,8 @@ namespace BusinessObjects
             {
                 var list = new HashSet<UserResourcePoolIndexOrganization>();
 
-                foreach (var item in UserResourcePool.ResourcePool.ResourcePoolIndexSet)
-                    list.Add(new UserResourcePoolIndexOrganization(this, new ResourcePoolIndexOrganization(item, Organization)));
+                foreach (var resourcePoolIndex in UserResourcePool.ResourcePool.ResourcePoolIndexSet)
+                    list.Add(new UserResourcePoolIndexOrganization(this, new ResourcePoolIndexOrganization(resourcePoolIndex, Organization)));
 
                 return list;
             }
