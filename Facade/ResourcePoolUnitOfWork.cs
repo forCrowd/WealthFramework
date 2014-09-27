@@ -56,7 +56,7 @@
             {
                 ResourcePool = entity,
                 Name = "Generic Organization",
-                ProductionCost = 0,
+                //ProductionCost = 0,
                 SalesPrice = 0
             };
             OrganizationRepository.Insert(sampleOrganization);

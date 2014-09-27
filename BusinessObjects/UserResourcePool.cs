@@ -67,20 +67,20 @@ namespace BusinessObjects
             get { return UserOrganizationSet.Sum(item => item.NumberOfSales); }
         }
 
-        public decimal TotalProductionCost
-        {
-            get { return UserOrganizationSet.Sum(item => item.TotalProductionCost); }
-        }
+        //public decimal TotalProductionCost
+        //{
+        //    get { return UserOrganizationSet.Sum(item => item.TotalProductionCost); }
+        //}
 
         public decimal TotalSalesRevenue
         {
             get { return UserOrganizationSet.Sum(item => item.TotalSalesRevenue); }
         }
 
-        public decimal TotalProfit
-        {
-            get { return UserOrganizationSet.Sum(item => item.TotalProfit); }
-        }
+        //public decimal TotalProfit
+        //{
+        //    get { return UserOrganizationSet.Sum(item => item.TotalProfit); }
+        //}
 
         public decimal TotalResourcePoolTax
         {

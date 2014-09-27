@@ -53,39 +53,39 @@ namespace BusinessObjects
 
         #endregion
 
-        public decimal ProductionCost
-        {
-            get { return OrganizationSet.Sum(organization => organization.ProductionCost); }
-        }
+        //public decimal ProductionCost
+        //{
+        //    get { return OrganizationSet.Sum(organization => organization.ProductionCost); }
+        //}
 
         public decimal SalesPrice
         {
             get { return OrganizationSet.Sum(organization => organization.SalesPrice); }
         }
 
-        public decimal Profit
-        {
-            get { return OrganizationSet.Sum(organization => organization.Profit); }
-        }
+        //public decimal Profit
+        //{
+        //    get { return OrganizationSet.Sum(organization => organization.Profit); }
+        //}
 
-        public decimal ProfitPercentage
-        {
-            get
-            {
-                return OrganizationSet.Any()
-                    ? OrganizationSet.Average(organization => organization.ProfitPercentage)
-                    : 0;
-            }
-        }
+        //public decimal ProfitPercentage
+        //{
+        //    get
+        //    {
+        //        return OrganizationSet.Any()
+        //            ? OrganizationSet.Average(organization => organization.ProfitPercentage)
+        //            : 0;
+        //    }
+        //}
 
-        public decimal ProfitMargin
-        {
-            get
-            {
-                return OrganizationSet.Any()
-                    ? OrganizationSet.Average(organization => organization.ProfitMargin)
-                    : 0;
-            }
-        }
+        //public decimal ProfitMargin
+        //{
+        //    get
+        //    {
+        //        return OrganizationSet.Any()
+        //            ? OrganizationSet.Average(organization => organization.ProfitMargin)
+        //            : 0;
+        //    }
+        //}
     }
 }

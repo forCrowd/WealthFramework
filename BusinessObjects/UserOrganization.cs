@@ -73,20 +73,20 @@ namespace BusinessObjects
             get { return Organization.SalesPrice + ResourcePoolTax; }
         }
 
-        public decimal TotalProductionCost
-        {
-            get { return Organization.ProductionCost * NumberOfSales; }
-        }
+        //public decimal TotalProductionCost
+        //{
+        //    get { return Organization.ProductionCost * NumberOfSales; }
+        //}
 
         public decimal TotalSalesRevenue
         {
             get { return Organization.SalesPrice * NumberOfSales; }
         }
 
-        public decimal TotalProfit
-        {
-            get { return Organization.Profit * NumberOfSales; }
-        }
+        //public decimal TotalProfit
+        //{
+        //    get { return Organization.Profit * NumberOfSales; }
+        //}
 
         public decimal TotalResourcePoolTax
         {
@@ -108,7 +108,10 @@ namespace BusinessObjects
 
         public decimal TotalIncome
         {
-            get { return TotalProfit + IndexIncome; }
+            get { return
+                //TotalProfit
+                TotalSalesRevenue
+                + IndexIncome; }
         }
 
     }

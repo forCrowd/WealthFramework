@@ -8,6 +8,10 @@ An experimental resource management system that aims to provide a sustainable ec
 
 **0.14.2**
 
+* ProductionCost field was removed from Organization table
+
+**0.14.2**
+
 * Element Fields feature was added with string, boolean, int32, decimal, datetime types & highest to lowest, lowest to highest sort options
 * TotalCostIndex, DynamicOrganizationIndex and DynamicElementIndex types were removed since it's possible to handle them with DynamicFieldIndex now
 

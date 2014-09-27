@@ -10,17 +10,17 @@ namespace BusinessObjects.ViewModels
         public UserOrganization(BusinessObjects.UserOrganization userOrganization)
         {
             OrganizationName = userOrganization.Organization.Name;
-            OrganizationProductionCost = userOrganization.Organization.ProductionCost;
+            //OrganizationProductionCost = userOrganization.Organization.ProductionCost;
             OrganizationSalesPrice = userOrganization.Organization.SalesPrice;
-            OrganizationProfitPercentage = userOrganization.Organization.ProfitPercentage;
+            //OrganizationProfitPercentage = userOrganization.Organization.ProfitPercentage;
             //OrganizationSalesPricePercentage = userOrganization.Organization.SalesPricePercentage;
 
             ResourcePoolTax = userOrganization.ResourcePoolTax;
             SalesPriceIncludingResourcePoolTax = userOrganization.SalesPriceIncludingResourcePoolTax;
             NumberOfSales = userOrganization.NumberOfSales;
-            TotalProductionCost = userOrganization.TotalProductionCost;
+            //TotalProductionCost = userOrganization.TotalProductionCost;
             TotalSalesRevenue = userOrganization.TotalSalesRevenue;
-            TotalProfit = userOrganization.TotalProfit;
+            //TotalProfit = userOrganization.TotalProfit;
             TotalResourcePoolTax = userOrganization.TotalResourcePoolTax;
             TotalSalesRevenueIncludingResourcePoolTax = userOrganization.TotalSalesRevenueIncludingResourcePoolTax;
             IndexIncome = userOrganization.IndexIncome;
@@ -40,9 +40,9 @@ namespace BusinessObjects.ViewModels
         public decimal ResourcePoolTax { get; set; }
         public decimal SalesPriceIncludingResourcePoolTax { get; set; }
         public int NumberOfSales { get; set; }
-        public decimal TotalProductionCost { get; set; }
+        //public decimal TotalProductionCost { get; set; }
         public decimal TotalSalesRevenue { get; set; }
-        public decimal TotalProfit { get; set; }
+        //public decimal TotalProfit { get; set; }
         public decimal TotalResourcePoolTax { get; set; }
         public decimal TotalSalesRevenueIncludingResourcePoolTax { get; set; }
         public decimal IndexIncome { get; set; }

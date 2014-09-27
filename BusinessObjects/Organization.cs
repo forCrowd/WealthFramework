@@ -27,8 +27,8 @@ namespace BusinessObjects
         [Display(Name = "Organization")]
         public string Name { get; set; }
 
-        [Display(Name = "Production Cost")]
-        public decimal ProductionCost { get; set; }
+        //[Display(Name = "Production Cost")]
+        //public decimal ProductionCost { get; set; }
 
         [Display(Name = "Sales Price")]
         public decimal SalesPrice { get; set; }
@@ -40,36 +40,36 @@ namespace BusinessObjects
 
         /* */
 
-        /// <summary>
-        /// a.k.a. Markup
-        /// </summary>
-        public decimal Profit
-        {
-            get { return SalesPrice - ProductionCost; }
-        }
+        ///// <summary>
+        ///// a.k.a. Markup
+        ///// </summary>
+        //public decimal Profit
+        //{
+        //    get { return SalesPrice - ProductionCost; }
+        //}
 
-        /// <summary>
-        /// a.k.a Markup percentage
-        /// </summary>
-        public decimal ProfitPercentage
-        {
-            get
-            {
-                return ProductionCost == 0
-                    ? 0
-                    : Profit / ProductionCost;
-            }
-        }
+        ///// <summary>
+        ///// a.k.a Markup percentage
+        ///// </summary>
+        //public decimal ProfitPercentage
+        //{
+        //    get
+        //    {
+        //        return ProductionCost == 0
+        //            ? 0
+        //            : Profit / ProductionCost;
+        //    }
+        //}
 
-        public decimal ProfitMargin
-        {
-            get
-            {
-                return SalesPrice == 0
-                    ? 0
-                    : Profit / SalesPrice;
-            }
-        }
+        //public decimal ProfitMargin
+        //{
+        //    get
+        //    {
+        //        return SalesPrice == 0
+        //            ? 0
+        //            : Profit / SalesPrice;
+        //    }
+        //}
 
         ///// <summary>
         ///// Will be used in Total Cost Index calculation

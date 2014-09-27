@@ -39,7 +39,7 @@
                 {
                     ResourcePoolId = sampleResourcePool.Id,
                     Name = "Test organization",
-                    ProductionCost = 0,
+                    //ProductionCost = 0,
                     SalesPrice = 0,
                 };
 
