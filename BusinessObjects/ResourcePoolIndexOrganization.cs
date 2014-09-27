@@ -114,11 +114,11 @@ namespace BusinessObjects
 
                 switch (ResourcePoolIndex.ResourcePoolIndexType)
                 {
-                    case (byte)ResourcePoolIndexType.TotalCostIndex:
-                        {
-                            indexValue = Organization.SalesPricePercentage;
-                            break;
-                        }
+                    //case (byte)ResourcePoolIndexType.TotalCostIndex:
+                    //    {
+                    //        indexValue = Organization.SalesPricePercentage;
+                    //        break;
+                    //    }
                     case (byte)ResourcePoolIndexType.DynamicOrganizationIndex:
                         {
                             indexValue = DynamicOrganizationIndexValuePercentage;

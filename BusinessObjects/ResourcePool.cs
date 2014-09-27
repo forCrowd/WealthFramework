@@ -40,11 +40,11 @@ namespace BusinessObjects
 
         #region - Indexes -
 
-        public ResourcePoolIndex TotalCostIndex
-        {
-            // TODO Static types can only be defined once per ResourcePool
-            get { return ResourcePoolIndexSet.SingleOrDefault(item => item.ResourcePoolIndexType == (byte)ResourcePoolIndexType.TotalCostIndex); }
-        }
+        //public ResourcePoolIndex TotalCostIndex
+        //{
+        //    // TODO Static types can only be defined once per ResourcePool
+        //    get { return ResourcePoolIndexSet.SingleOrDefault(item => item.ResourcePoolIndexType == (byte)ResourcePoolIndexType.TotalCostIndex); }
+        //}
 
         public decimal IndexRatingAverage
         {

@@ -298,8 +298,9 @@ namespace DataObjects.Migrations
 
         void AddTotalCostIndexSample(BusinessObjects.User user)
         {
+            // TODO Update this with Dynamic Field Index
             var totalCostResourcePool = new BusinessObjects.ResourcePool() { Name = "Total Cost Index Sample", IsSample = true };
-            var totalCostResourcePoolIndex = new BusinessObjects.ResourcePoolIndex() { ResourcePool = totalCostResourcePool, Name = "Total Cost Index", ResourcePoolIndexType = (byte)ResourcePoolIndexType.TotalCostIndex, RatingSortType = (byte)RatingSortType.LowestToHighest };
+            var totalCostResourcePoolIndex = new BusinessObjects.ResourcePoolIndex() { ResourcePool = totalCostResourcePool, Name = "Total Cost Index", ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicElementFieldIndex, RatingSortType = (byte)RatingSortType.LowestToHighest };
             var totalCostOrganization1 = new BusinessObjects.Organization() { ResourcePool = totalCostResourcePool, Name = "Lowlands", ProductionCost = 100, SalesPrice = 125 };
             var totalCostOrganization2 = new BusinessObjects.Organization() { ResourcePool = totalCostResourcePool, Name = "High Coast", ProductionCost = 100, SalesPrice = 175 };
             var totalCostUserResourcePool = new BusinessObjects.UserResourcePool() { User = user, ResourcePool = totalCostResourcePool, ResourcePoolRate = 101 };

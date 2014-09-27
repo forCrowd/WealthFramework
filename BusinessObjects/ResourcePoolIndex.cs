@@ -95,8 +95,8 @@ namespace BusinessObjects
             {
                 switch (ResourcePoolIndexType)
                 {
-                    case (byte)BusinessObjects.ResourcePoolIndexType.TotalCostIndex:
-                        return ResourcePool.OrganizationSet.Sum(item => item.SalesPrice);
+                    //case (byte)BusinessObjects.ResourcePoolIndexType.TotalCostIndex:
+                    //    return ResourcePool.OrganizationSet.Sum(item => item.SalesPrice);
                     case (byte)BusinessObjects.ResourcePoolIndexType.DynamicOrganizationIndex:
                         return ResourcePoolIndexOrganizationSet.Sum(item => item.DynamicOrganizationIndexValueAverage);
                     default: throw new ArgumentOutOfRangeException();

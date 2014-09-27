@@ -71,19 +71,19 @@ namespace BusinessObjects
             }
         }
 
-        /// <summary>
-        /// Will be used in Total Cost Index calculation
-        /// </summary>
-        public decimal SalesPricePercentage
-        {
-            get
-            {
-                return ResourcePool.TotalCostIndex == null
-                    ? 0
-                    : ResourcePool.TotalCostIndex.IndexValue == 0
-                    ? 0
-                    : SalesPrice / ResourcePool.TotalCostIndex.IndexValue;
-            }
-        }
+        ///// <summary>
+        ///// Will be used in Total Cost Index calculation
+        ///// </summary>
+        //public decimal SalesPricePercentage
+        //{
+        //    get
+        //    {
+        //        return ResourcePool.TotalCostIndex == null
+        //            ? 0
+        //            : ResourcePool.TotalCostIndex.IndexValue == 0
+        //            ? 0
+        //            : SalesPrice / ResourcePool.TotalCostIndex.IndexValue;
+        //    }
+        //}
     }
 }
