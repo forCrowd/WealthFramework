@@ -9,7 +9,7 @@ An experimental resource management system that aims to provide a sustainable ec
 **0.14.2**
 
 * Element Fields feature was added with string, boolean, int32, decimal, datetime types & highest to lowest, lowest to highest sort options
-* TotalCostIndex type was removed since now it's possible to handle it with DynamicFieldIndex
+* TotalCostIndex, DynamicOrganizationIndex and DynamicElementIndex types were removed since it's possible to handle them with DynamicFieldIndex now
 
 **0.14.1**
 

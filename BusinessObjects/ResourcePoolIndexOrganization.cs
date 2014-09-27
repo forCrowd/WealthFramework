@@ -27,21 +27,21 @@ namespace BusinessObjects
             }
         }
 
-        internal ElementItem OrganizationElementItem
-        {
-            get
-            {
-                if (ResourcePoolIndex.ResourcePoolIndexType != (byte)ResourcePoolIndexType.DynamicElementIndex)
-                    throw new InvalidOperationException("Invalid index type");
+        //internal ElementItem OrganizationElementItem
+        //{
+        //    get
+        //    {
+        //        if (ResourcePoolIndex.ResourcePoolIndexType != (byte)ResourcePoolIndexType.DynamicElementIndex)
+        //            throw new InvalidOperationException("Invalid index type");
 
-                var organizationElement = Organization.OrganizationElementItemSet.SingleOrDefault(item => item.ElementItem.Element == ResourcePoolIndex.Element);
+        //        var organizationElement = Organization.OrganizationElementItemSet.SingleOrDefault(item => item.ElementItem.Element == ResourcePoolIndex.Element);
 
-                if (organizationElement == null)
-                    return null;
+        //        if (organizationElement == null)
+        //            return null;
 
-                return organizationElement.ElementItem;
-            }
-        }
+        //        return organizationElement.ElementItem;
+        //    }
+        //}
 
         internal ElementItemElementField OrganizationElementItemElementField
         {
@@ -59,52 +59,52 @@ namespace BusinessObjects
             }
         }
 
-        /// <summary>
-        /// How many users rated this index?
-        /// </summary>
-        public decimal DynamicOrganizationIndexValueCount
-        {
-            get
-            {
-                if (ResourcePoolIndex.ResourcePoolIndexType != (byte)ResourcePoolIndexType.DynamicOrganizationIndex)
-                    throw new InvalidOperationException("Invalid index type");
+        ///// <summary>
+        ///// How many users rated this index?
+        ///// </summary>
+        //public decimal DynamicOrganizationIndexValueCount
+        //{
+        //    get
+        //    {
+        //        if (ResourcePoolIndex.ResourcePoolIndexType != (byte)ResourcePoolIndexType.DynamicOrganizationIndex)
+        //            throw new InvalidOperationException("Invalid index type");
 
-                return UserValueSet.Count();
-            }
-        }
+        //        return UserValueSet.Count();
+        //    }
+        //}
 
-        /// <summary>
-        /// Determines the average rating of this index.
-        /// It will be used to determine the weight of this index in its resource pool.
-        /// </summary>
-        public decimal DynamicOrganizationIndexValueAverage
-        {
-            get
-            {
-                if (ResourcePoolIndex.ResourcePoolIndexType != (byte)ResourcePoolIndexType.DynamicOrganizationIndex)
-                    throw new InvalidOperationException("Invalid index type");
+        ///// <summary>
+        ///// Determines the average rating of this index.
+        ///// It will be used to determine the weight of this index in its resource pool.
+        ///// </summary>
+        //public decimal DynamicOrganizationIndexValueAverage
+        //{
+        //    get
+        //    {
+        //        if (ResourcePoolIndex.ResourcePoolIndexType != (byte)ResourcePoolIndexType.DynamicOrganizationIndex)
+        //            throw new InvalidOperationException("Invalid index type");
 
-                return UserValueSet.Any()
-                    ? UserValueSet.Average(item => item.Rating)
-                    : 0;
-            }
-        }
+        //        return UserValueSet.Any()
+        //            ? UserValueSet.Average(item => item.Rating)
+        //            : 0;
+        //    }
+        //}
 
-        /// <summary>
-        /// Determines the rating percentage of this index.
-        /// </summary>
-        public decimal DynamicOrganizationIndexValuePercentage
-        {
-            get
-            {
-                if (ResourcePoolIndex.ResourcePoolIndexType != (byte)ResourcePoolIndexType.DynamicOrganizationIndex)
-                    throw new InvalidOperationException("Invalid index type");
+        ///// <summary>
+        ///// Determines the rating percentage of this index.
+        ///// </summary>
+        //public decimal DynamicOrganizationIndexValuePercentage
+        //{
+        //    get
+        //    {
+        //        if (ResourcePoolIndex.ResourcePoolIndexType != (byte)ResourcePoolIndexType.DynamicOrganizationIndex)
+        //            throw new InvalidOperationException("Invalid index type");
 
-                return ResourcePoolIndex.IndexValue == 0
-                    ? 0
-                    : DynamicOrganizationIndexValueAverage / ResourcePoolIndex.IndexValue;
-            }
-        }
+        //        return ResourcePoolIndex.IndexValue == 0
+        //            ? 0
+        //            : DynamicOrganizationIndexValueAverage / ResourcePoolIndex.IndexValue;
+        //    }
+        //}
 
         public decimal IndexValue
         {
@@ -119,16 +119,16 @@ namespace BusinessObjects
                     //        indexValue = Organization.SalesPricePercentage;
                     //        break;
                     //    }
-                    case (byte)ResourcePoolIndexType.DynamicOrganizationIndex:
-                        {
-                            indexValue = DynamicOrganizationIndexValuePercentage;
-                            break;
-                        }
-                    case (byte)ResourcePoolIndexType.DynamicElementIndex:
-                        {
-                            indexValue = OrganizationElementItem.RatingPercentage;
-                            break;
-                        }
+                    //case (byte)ResourcePoolIndexType.DynamicOrganizationIndex:
+                    //    {
+                    //        indexValue = DynamicOrganizationIndexValuePercentage;
+                    //        break;
+                    //    }
+                    //case (byte)ResourcePoolIndexType.DynamicElementIndex:
+                    //    {
+                    //        indexValue = OrganizationElementItem.RatingPercentage;
+                    //        break;
+                    //    }
                     case (byte)ResourcePoolIndexType.DynamicElementFieldIndex:
                         {
                             indexValue = OrganizationElementItemElementField.RatingPercentage;

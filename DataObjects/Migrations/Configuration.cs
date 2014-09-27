@@ -196,8 +196,10 @@ namespace DataObjects.Migrations
 
         void AddSectorIndexSample(BusinessObjects.User user)
         {
+            // TODO Update this with DynamicFieldIndex type
+
             var sectorResourcePool = new BusinessObjects.ResourcePool() { Name = "Sector Index Sample", IsSample = true };
-            var sectorResourcePoolIndex = new BusinessObjects.ResourcePoolIndex() { ResourcePool = sectorResourcePool, Name = "Sector Index", ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicOrganizationIndex, RatingSortType = (byte)RatingSortType.HighestToLowest };
+            var sectorResourcePoolIndex = new BusinessObjects.ResourcePoolIndex() { ResourcePool = sectorResourcePool, Name = "Sector Index", ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicElementFieldIndex, RatingSortType = (byte)RatingSortType.HighestToLowest };
             var sectorOrganization1 = new BusinessObjects.Organization() { ResourcePool = sectorResourcePool, Name = "Basic Materials", ProductionCost = 100, SalesPrice = 150 };
             var sectorOrganization2 = new BusinessObjects.Organization() { ResourcePool = sectorResourcePool, Name = "Conglomerates", ProductionCost = 100, SalesPrice = 150 };
             var sectorOrganization3 = new BusinessObjects.Organization() { ResourcePool = sectorResourcePool, Name = "Consumer Goods", ProductionCost = 100, SalesPrice = 150 };
@@ -263,11 +265,13 @@ namespace DataObjects.Migrations
 
         void AddKnowledgeIndexSample(BusinessObjects.User user)
         {
+            // Update this with DynamicFieldIndex type
+
             var knowledgeResourcePool = new BusinessObjects.ResourcePool() { Name = "Knowledge Index Sample", IsSample = true };
             var knowledgeLicenseElement = new Element() { ResourcePool = knowledgeResourcePool, Name = "License" };
             var knowledgeLicenseItem1 = new ElementItem() { Element = knowledgeLicenseElement, Name = "Open License" };
             var knowledgeLicenseItem2 = new ElementItem() { Element = knowledgeLicenseElement, Name = "Restricted License" };
-            var knowledgeResourcePoolIndex = new BusinessObjects.ResourcePoolIndex() { ResourcePool = knowledgeResourcePool, Name = "Knowledge Index", ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicElementIndex, Element = knowledgeLicenseElement, RatingSortType = (byte)RatingSortType.LowestToHighest };
+            var knowledgeResourcePoolIndex = new BusinessObjects.ResourcePoolIndex() { ResourcePool = knowledgeResourcePool, Name = "Knowledge Index", ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicElementFieldIndex, Element = knowledgeLicenseElement, RatingSortType = (byte)RatingSortType.LowestToHighest };
             var knowledgeOrganization1 = new BusinessObjects.Organization() { ResourcePool = knowledgeResourcePool, Name = "True Source", ProductionCost = 100, SalesPrice = 150 };
             var knowledgeOrganizationLicenseItem1 = new BusinessObjects.OrganizationElementItem() { Organization = knowledgeOrganization1, ElementItem = knowledgeLicenseItem1 };
             var knowledgeOrganization2 = new BusinessObjects.Organization() { ResourcePool = knowledgeResourcePool, Name = "Hidden Knowledge", ProductionCost = 100, SalesPrice = 150 };

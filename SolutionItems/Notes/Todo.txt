@@ -73,6 +73,8 @@ config.EnableQuerySupport(queryAttribute);
 .. currently there seem no good case that lazy loading is beneficial?
 . and how about disabling proxy classes? what will be the difference exactly?
 
+. result of datetime (ticks) index is bit useless? need reference a start or end date as a reference?
+
 . vs update 2 + 3 changes -> asp.net identity
 
 . check user[x]rating tables usage, do they need filtering?
@@ -87,16 +89,9 @@ config.EnableQuerySupport(queryAttribute);
 
 . update configuration.cs with element fields
 . make even the name as a element item and create it automatically when the element is created
-. if that's really working, remove element index type
-. result of datetime (ticks) index is bit useless? need reference a start or end date as a reference?
 
 . element parent + child structure
 
 . fixed amount resourcepooltype
 
 . add multiple fields test
-
----
-sector index - just name and the rating
-license index - name + boolean variables (allows to see the code, allows modification, allows sell) and the rating
-organization total cost index - auto formula (organization sales price / resource pool sales price average)
