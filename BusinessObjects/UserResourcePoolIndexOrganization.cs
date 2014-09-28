@@ -30,9 +30,9 @@ namespace BusinessObjects
         {
             get
             {
-                return UserResourcePoolIndex.IndexValueMultiplied == 0
+                return UserResourcePoolIndex.IndexOrganizationValueMultiplied == 0
                     ? 0
-                    : IndexValueMultiplied / UserResourcePoolIndex.IndexValueMultiplied;
+                    : IndexValueMultiplied / UserResourcePoolIndex.IndexOrganizationValueMultiplied;
             }
         }
 

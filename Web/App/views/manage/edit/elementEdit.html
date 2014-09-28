@@ -27,6 +27,12 @@
                 </div>
             </div>
             <div class="form-group">
+                <label for="IsMainElement" class="control-label col-md-2">Main Element</label>
+                <div class="col-md-10" data-ng-class="{'has-error': editForm.IsMainElement.$invalid && !editForm.IsMainElement.$pristine}">
+                    <input id="IsMainElement" name="IsMainElement" type="text" data-ng-model="vm.element.IsMainElement" class="form-control" required />
+                </div>
+            </div>
+            <div class="form-group">
                 <div class="col-md-10">
                     <input id="RowVersion" name="RowVersion" data-ng-model="vm.element.RowVersion" type="hidden">
                 </div>

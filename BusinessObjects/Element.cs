@@ -27,6 +27,9 @@ namespace BusinessObjects
         [StringLength(50)]
         public string Name { get; set; }
 
+        [Display(Name = "Main Element")]
+        public bool IsMainElement { get; set; }
+
         public virtual ResourcePool ResourcePool { get; set; }
         public virtual ICollection<ElementField> ElementFieldSet { get; set; }
         public virtual ICollection<ElementItem> ElementItemSet { get; set; }
@@ -40,6 +43,60 @@ namespace BusinessObjects
         public decimal RatingAverage
         {
             get { return ElementItemSet.Sum(item => item.RatingAverage); }
+        }
+
+        public IEnumerable<ElementField> BasicElementFieldSet
+        {
+            get
+            {
+                return ElementFieldSet.Where(item => item.ElementFieldType != (byte)ElementFieldType.ResourcePool
+                    && item.ElementFieldType != (byte)ElementFieldType.Multiplier);
+            }
+        }
+
+        public ElementField ResourcePoolField
+        {
+            get { return ElementFieldSet.SingleOrDefault(item => item.ElementFieldType == (byte)ElementFieldType.ResourcePool); }
+        }
+
+        public bool HasResourcePoolField
+        {
+            get { return ResourcePoolField != null; }
+        }
+
+        public string ResourcePoolFieldName
+        {
+            get
+            {
+                if (!HasResourcePoolField)
+                    return string.Empty;
+
+                return ResourcePoolField.Name;
+            }
+        }
+
+        public ElementField MultiplierField
+        {
+            get { return ElementFieldSet.SingleOrDefault(item => item.ElementFieldType == (byte)ElementFieldType.Multiplier); }
+        }
+
+        public bool HasMultiplierField
+        {
+            get
+            {
+                return MultiplierField != null;
+            }
+        }
+
+        public string MultiplierFieldName
+        {
+            get
+            {
+                if (!HasMultiplierField)
+                    return string.Empty;
+
+                return MultiplierField.Name;
+            }
         }
 
         #endregion

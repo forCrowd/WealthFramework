@@ -60,5 +60,111 @@ namespace BusinessObjects
                     : RatingAverage / Element.RatingAverage;
             }
         }
+
+        public IEnumerable<ElementItemElementField> BasicElementItemElementFieldSet
+        {
+            get
+            {
+                return ElementItemElementFieldSet.Where(item => item.ElementField.ElementFieldType != (byte)ElementFieldType.ResourcePool
+                    && item.ElementField.ElementFieldType != (byte)ElementFieldType.Multiplier);
+            }
+        }
+
+        public ElementItemElementField ResourcePoolFieldItem
+        {
+            get { return ElementItemElementFieldSet.SingleOrDefault(item => item.ElementField.ElementFieldType == (byte)ElementFieldType.ResourcePool); }
+        }
+
+        public bool HasResourcePoolFieldItem
+        {
+            get { return ResourcePoolFieldItem != null && ResourcePoolFieldItem.DecimalValue.HasValue; }
+        }
+
+        public decimal ResourcePoolFieldItemValue
+        {
+            get
+            {
+                if (!HasResourcePoolFieldItem)
+                    return 0;
+
+                return ResourcePoolFieldItem.DecimalValue.Value;
+            }
+        }
+
+        public decimal ResourcePoolAddition
+        {
+            get
+            {
+                if (!HasResourcePoolFieldItem)
+                    return 0;
+
+                return ResourcePoolFieldItemValue * ResourcePoolFieldItem.ElementField.Element.ResourcePool.ResourcePoolRatePercentage;
+            }
+        }
+
+        public decimal ResourcePoolFieldItemValueIncludingResourcePoolAddition
+        {
+            get
+            {
+                if (!HasResourcePoolFieldItem)
+                    return 0;
+
+                return ResourcePoolFieldItemValue + ResourcePoolAddition;
+            }
+        }
+
+        public ElementItemElementField MultiplierFieldItem
+        {
+            get { return ElementItemElementFieldSet.SingleOrDefault(item => item.ElementField.ElementFieldType == (byte)ElementFieldType.Multiplier); }
+        }
+
+        public bool HasMultiplierFieldItem
+        {
+            get { return MultiplierFieldItem != null && MultiplierFieldItem.DecimalValue.HasValue; }
+        }
+
+        public decimal MultiplierFieldItemValue
+        {
+            get
+            {
+                if (!HasMultiplierFieldItem)
+                    return 0;
+
+                return MultiplierFieldItem.DecimalValue.Value;
+            }
+        }
+
+        public decimal TotalResourcePoolFieldValue
+        {
+            get
+            {
+                if (!HasResourcePoolFieldItem || !HasMultiplierFieldItem)
+                    return 0;
+
+                return ResourcePoolFieldItemValue * MultiplierFieldItemValue;
+            }
+        }
+
+        public decimal TotalResourcePoolAddition
+        {
+            get
+            {
+                if (!HasMultiplierFieldItem)
+                    return 0;
+
+                return ResourcePoolAddition * MultiplierFieldItemValue;
+            }
+        }
+
+        public decimal TotalResourcePoolFieldItemValueIncludingResourcePoolAddition
+        {
+            get
+            {
+                if (!HasMultiplierFieldItem)
+                    return 0;
+
+                return ResourcePoolFieldItemValueIncludingResourcePoolAddition * MultiplierFieldItemValue;
+            }
+        }
     }
 }

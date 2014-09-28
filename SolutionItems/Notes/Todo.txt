@@ -48,7 +48,7 @@ http://msdn.microsoft.com/en-us/library/hh925568%28v=vs.110%29.aspx
 . exclude sample user from rating averages - or make them always 50 / 50?
 . how to calculate average index? some people may enter 1,2,3 - some may enter 100,200,300? always force them to enter percentage?
 or always calculate the total average based on invidiuals percentage? or both?
-. should cmrp rate be on user level? if not, there is no average for cmrp rate for now?
+. should cmrp rate be on user level? if not, there is no average for cmrp rate for now!!!
 . in 'not rated index' case, userResourcePool view doesn't show the result
 . in 'not rated organizations' case, it's collecting the tax but not giving it back? - basically how to treat an organization that doesn't have any rating?
 
@@ -77,10 +77,26 @@ config.EnableQuerySupport(queryAttribute);
 
 . vs update 2 + 3 changes -> asp.net identity
 
+. composite key definition;
+[Key]
+[Column(Order = 0)]
+public int LocationID { get; set; }
+[Key]
+[Column(Order = 1)]
+public int DayID { get; set; }
+[Key]
+[Column(Order = 2)]
+public int TimeID { get; set; }
+[Key]
+[Column(Order = 3)]
+public string LanguageID { get; set; }
+
 . check user[x]rating tables usage, do they need filtering?
 
 . employee + customer + quality index samples are not there
 . all in one + sector samples are outdated
+
+. ResourcePoolIndexOrganization class should be internal, not public - find the others! don't use them in tests
 
 . highcharts library loading perf?
 
@@ -90,8 +106,17 @@ config.EnableQuerySupport(queryAttribute);
 . update configuration.cs with element fields
 . make even the name as a element item and create it automatically when the element is created
 
+. currently multiplier + resource pool field types can only be added once per element (or resource pool) - check it again
+
 . element parent + child structure
 
 . fixed amount resourcepooltype
 
 . add multiple fields test
+
+. CONTINUE WITH INDEXES!
+userresourcepoolindexelement.cs ?! ratingpercentage - multiplied - percentage - income quadro
+and then total income!
+try to replace/remove the organization completely
+check seed function + test + chapters (samples) etc.
+then clean all the old stuff!

@@ -56,7 +56,7 @@ namespace BusinessObjects
             get { return UserResourcePool.TotalResourcePoolTax * ResourcePoolIndex.IndexRatingPercentage; }
         }
 
-        public decimal IndexValueMultiplied
+        public decimal IndexOrganizationValueMultiplied
         {
             get { return UserOrganizationResourcePoolIndexOrganizationSet.Sum(item => item.IndexValueMultiplied); }
         }

@@ -21,6 +21,9 @@
             <th>
                 Element
             </th>
+            <th>
+                Main Element
+            </th>
             <th></th>
         </tr>
         <tr data-ng-repeat="element in vm.elementSet">
@@ -29,6 +32,9 @@
             </td>
             <td>
                 {{ element.Name }}
+            </td>
+            <td>
+                {{ element.IsMainElement }}
             </td>
             <td>
                 <a href="/manage/element/edit/{{ element.Id }}">Edit</a> |

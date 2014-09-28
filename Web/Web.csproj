@@ -431,6 +431,8 @@
     <Content Include="App\views\manage\list\userResourcePoolList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
+    <Content Include="App\views\manage\userResourcePool2\userResourcePoolCustomList.html" />
+    <Content Include="App\views\manage\userResourcePool2\userResourcePoolCustomView.html" />
     <Content Include="App\views\manage\userResourcePool\userResourcePoolCustomView.html" />
     <Content Include="App\views\manage\userResourcePool\userResourcePoolCustomList.html" />
     <Content Include="Areas\HelpPage\HelpPage.css" />

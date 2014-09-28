@@ -1,0 +1,15 @@
+<div data-ng-controller="userResourcePoolCustomListController as vm">
+    <h2>List</h2>
+    <table class="table">
+        <tr>
+            <th>
+                Resource Pool
+            </th>
+        </tr>
+        <tr data-ng-repeat="userResourcePool in vm.userResourcePoolSet">
+            <td>
+                <a href="/manage/custom/userResourcePool2/{{ userResourcePool.Id }}">{{ userResourcePool.ResourcePool.Name }}</a>
+            </td>
+        </tr>
+    </table>
+</div>

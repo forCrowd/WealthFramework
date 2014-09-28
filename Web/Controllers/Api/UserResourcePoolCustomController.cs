@@ -28,6 +28,17 @@ namespace Web.Controllers.Api
             return new UserResourcePool(userResourcePool);
         }
 
+        //// GET api/UserResourcePoolCustom/GetUserResourcePoolCustom2ByUserResourcePoolId/1
+        //[Route("GetUserResourcePoolCustom2ByUserResourcePoolId/{userResourcePoolId:int}")]
+        //public UserResourcePool GetUserResourcePoolCustom2ByUserResourcePoolId(int userResourcePoolId)
+        //{
+        //    var unitOfWork = new UserResourcePoolUnitOfWork();
+        //    var userResourcePool = unitOfWork.AllLiveIncluding(item => item.ResourcePool)
+        //        .SingleOrDefault(item => item.UserId == ApplicationUser.Id
+        //            && item.Id == userResourcePoolId);
+        //    return new UserResourcePool(userResourcePool);
+        //}
+
         // GET api/UserResourcePoolCustom/GetUserResourcePoolCustomByResourcePoolId/1
         [Route("GetUserResourcePoolCustomByResourcePoolId/{resourcePoolId:int}")]
         public UserResourcePool GetUserResourcePoolCustomByResourcePoolId(int resourcePoolId)

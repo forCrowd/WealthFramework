@@ -6,7 +6,12 @@ An experimental resource management system that aims to provide a sustainable ec
 
 ### Release Notes
 
-**0.14.2**
+**0.14.4**
+
+* IsMainElement field was added to Element table
+* ResourcePool and Multipler field types were added
+
+**0.14.3**
 
 * ProductionCost field was removed from Organization table
 

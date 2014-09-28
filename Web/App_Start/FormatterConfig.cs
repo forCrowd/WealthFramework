@@ -10,6 +10,7 @@ namespace Web
             formatters.Remove(formatters.XmlFormatter);
 
             // Json formatter
+            //formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             //formatters.JsonFormatter.Indent = true; ?
             //formatters.JsonFormatter.SerializerSettings.Converters.Add(new StringEnumConverter());
             //formatters.JsonFormatter.MaxDepth = 1;

@@ -18,9 +18,16 @@ namespace BusinessObjects.ViewModels
                 .ResourcePool
                 .ResourcePoolIndexSet
                 .Select(item => new ResourcePoolIndex(item));
+            
             UserOrganizationSet = userResourcePool
                 .UserOrganizationSet
                 .Select(item => new UserOrganization(item));
+
+            ElementSet = userResourcePool.ResourcePool.ElementSet
+                .Select(element => new Element(element));
+
+            MainElement = ElementSet.SingleOrDefault(element => element.IsMainElement);
+
             //ResourcePoolProductionCost = userResourcePool.ResourcePool.ProductionCost;
             ResourcePoolSalesPrice = userResourcePool.ResourcePool.SalesPrice;
             SalesPriceIncludingResourcePoolTax = userResourcePool.SalesPriceIncludingResourcePoolTax;
@@ -38,6 +45,9 @@ namespace BusinessObjects.ViewModels
         public int UserResourcePoolRatingCount { get; set; }
         public IEnumerable<ResourcePoolIndex> ResourcePoolIndexSet { get; set; }
         public IEnumerable<UserOrganization> UserOrganizationSet { get; set; }
+        public IEnumerable<Element> ElementSet { get; set; }
+        public Element MainElement { get; set; }
+        public IEnumerable<UserElementItemElementField> UserElementItemElementFieldSet { get; set; }
         //public decimal ResourcePoolProductionCost { get; set; }
         public decimal ResourcePoolSalesPrice { get; set; }
         public decimal SalesPriceIncludingResourcePoolTax { get; set; }

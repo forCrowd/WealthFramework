@@ -23,6 +23,9 @@
             .when('/manage/custom/userResourcePool', { templateUrl: '/App/views/manage/userResourcePool/userResourcePoolCustomList.html' })
             .when('/manage/custom/userResourcePool/:Id', { templateUrl: '/App/views/manage/userResourcePool/userResourcePoolCustomView.html' })
 
+            .when('/manage/custom/userResourcePool2', { templateUrl: '/App/views/manage/userResourcePool2/userResourcePoolCustomList.html' })
+            .when('/manage/custom/userResourcePool2/:Id', { templateUrl: '/App/views/manage/userResourcePool2/userResourcePoolCustomView.html' })
+
             /* Default List + Edit pages */
             .when('/manage/:entity', { templateUrl: getManageTemplateUrl })
             .when('/manage/:entity/:action', { templateUrl: getManageTemplateUrl })

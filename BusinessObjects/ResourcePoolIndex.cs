@@ -57,6 +57,17 @@ namespace BusinessObjects
             }
         }
 
+        public IEnumerable<ResourcePoolIndexElementItemElementField> ResourcePoolIndexElementItemElementFieldSet
+        {
+            get
+            {
+                var list = new HashSet<ResourcePoolIndexElementItemElementField>();
+                foreach (var item in ElementField.ElementItemElementFieldSet)
+                    list.Add(new ResourcePoolIndexElementItemElementField(this, item));
+                return list;
+            }
+        }
+
         /// <summary>
         /// How many users rated this index?
         /// </summary>

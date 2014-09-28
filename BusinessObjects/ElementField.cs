@@ -32,6 +32,10 @@ namespace BusinessObjects
         [Display(Name = "Element Field Type")]
         public byte ElementFieldType { get; set; }
 
+        //[Required]
+        //[Display(Name = "Is CMRP Field")]
+        //public bool IsResourcePoolField { get; set; }
+
         public virtual Element Element { get; set; }
         public virtual ICollection<ElementItemElementField> ElementItemElementFieldSet { get; set; }
 

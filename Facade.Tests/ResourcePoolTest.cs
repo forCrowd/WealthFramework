@@ -1095,7 +1095,7 @@
             Assert.IsTrue(userResourcePool.NumberOfSales == 2);
             Assert.IsTrue(userResourcePool.ResourcePoolTax == 400);
             Assert.IsTrue(userResourcePool.SalesPriceIncludingResourcePoolTax == 800);
-            Assert.IsTrue(userResourcePool.TotalIncome == 600);
+            Assert.IsTrue(userResourcePool.TotalIncome == 800);
             //Assert.IsTrue(userResourcePool.TotalProductionCost == 200);
             //Assert.IsTrue(userResourcePool.TotalProfit == 200);
             Assert.IsTrue(userResourcePool.TotalResourcePoolTax == 400);
@@ -1103,13 +1103,13 @@
             Assert.IsTrue(userResourcePool.TotalSalesRevenueIncludingResourcePoolTax == 800);
 
             Assert.IsTrue(userResourcePoolIndex.IndexShare == 400);
-            Assert.IsTrue(userResourcePoolIndex.IndexValueMultiplied == 0.5M);
+            Assert.IsTrue(userResourcePoolIndex.IndexOrganizationValueMultiplied == 0.5M);
 
             Assert.IsTrue(userOrganization1.IndexIncome == 300);
             Assert.IsTrue(userOrganization1.NumberOfSalesPercentage == 0.5M);
             Assert.IsTrue(userOrganization1.ResourcePoolTax == 200);
             Assert.IsTrue(userOrganization1.SalesPriceIncludingResourcePoolTax == 400);
-            Assert.IsTrue(userOrganization1.TotalIncome == 400);
+            Assert.IsTrue(userOrganization1.TotalIncome == 500);
             //Assert.IsTrue(userOrganization1.TotalProductionCost == 100);
             //Assert.IsTrue(userOrganization1.TotalProfit == 100);
             Assert.IsTrue(userOrganization1.TotalResourcePoolTax == 200);
@@ -1120,7 +1120,7 @@
             Assert.IsTrue(userOrganization2.NumberOfSalesPercentage == 0.5M);
             Assert.IsTrue(userOrganization2.ResourcePoolTax == 200);
             Assert.IsTrue(userOrganization2.SalesPriceIncludingResourcePoolTax == 400);
-            Assert.IsTrue(userOrganization2.TotalIncome == 200);
+            Assert.IsTrue(userOrganization2.TotalIncome == 300);
             //Assert.IsTrue(userOrganization2.TotalProductionCost == 100);
             //Assert.IsTrue(userOrganization2.TotalProfit == 100);
             Assert.IsTrue(userOrganization2.TotalResourcePoolTax == 200);
@@ -1143,7 +1143,7 @@
             Assert.IsTrue(userOrganization1.NumberOfSalesPercentage == 0.5M);
             Assert.IsTrue(userOrganization1.ResourcePoolTax == 200);
             Assert.IsTrue(userOrganization1.SalesPriceIncludingResourcePoolTax == 400);
-            Assert.IsTrue(userOrganization1.TotalIncome == 200);
+            Assert.IsTrue(userOrganization1.TotalIncome == 300);
             //Assert.IsTrue(userOrganization1.TotalProductionCost == 100);
             //Assert.IsTrue(userOrganization1.TotalProfit == 100);
             Assert.IsTrue(userOrganization1.TotalResourcePoolTax == 200);
@@ -1154,7 +1154,7 @@
             Assert.IsTrue(userOrganization2.NumberOfSalesPercentage == 0.5M);
             Assert.IsTrue(userOrganization2.ResourcePoolTax == 200);
             Assert.IsTrue(userOrganization2.SalesPriceIncludingResourcePoolTax == 400);
-            Assert.IsTrue(userOrganization2.TotalIncome == 400);
+            Assert.IsTrue(userOrganization2.TotalIncome == 500);
             //Assert.IsTrue(userOrganization2.TotalProductionCost == 100);
             //Assert.IsTrue(userOrganization2.TotalProfit == 100);
             Assert.IsTrue(userOrganization2.TotalResourcePoolTax == 200);
@@ -1298,7 +1298,7 @@
             Assert.IsTrue(userResourcePool1.NumberOfSales == 2);
             Assert.IsTrue(userResourcePool1.ResourcePoolTax == 400);
             Assert.IsTrue(userResourcePool1.SalesPriceIncludingResourcePoolTax == 800);
-            Assert.IsTrue(userResourcePool1.TotalIncome == 600);
+            Assert.IsTrue(userResourcePool1.TotalIncome == 800);
             //Assert.IsTrue(userResourcePool1.TotalProductionCost == 200);
             //Assert.IsTrue(userResourcePool1.TotalProfit == 200);
             Assert.IsTrue(userResourcePool1.TotalResourcePoolTax == 400);
@@ -1306,13 +1306,13 @@
             Assert.IsTrue(userResourcePool1.TotalSalesRevenueIncludingResourcePoolTax == 800);
 
             Assert.IsTrue(userResourcePoolIndex1.IndexShare == 400);
-            Assert.IsTrue(userResourcePoolIndex1.IndexValueMultiplied == 0.5M);
+            Assert.IsTrue(userResourcePoolIndex1.IndexOrganizationValueMultiplied == 0.5M);
 
             Assert.IsTrue(userOrganization1_1.IndexIncome == 240);
             Assert.IsTrue(userOrganization1_1.NumberOfSalesPercentage == 0.5M);
             Assert.IsTrue(userOrganization1_1.ResourcePoolTax == 200);
             Assert.IsTrue(userOrganization1_1.SalesPriceIncludingResourcePoolTax == 400);
-            Assert.IsTrue(userOrganization1_1.TotalIncome == 340);
+            Assert.IsTrue(userOrganization1_1.TotalIncome == 440);
             //Assert.IsTrue(userOrganization1_1.TotalProductionCost == 100);
             //Assert.IsTrue(userOrganization1_1.TotalProfit == 100);
             Assert.IsTrue(userOrganization1_1.TotalResourcePoolTax == 200);
@@ -1323,7 +1323,7 @@
             Assert.IsTrue(userOrganization1_2.NumberOfSalesPercentage == 0.5M);
             Assert.IsTrue(userOrganization1_2.ResourcePoolTax == 200);
             Assert.IsTrue(userOrganization1_2.SalesPriceIncludingResourcePoolTax == 400);
-            Assert.IsTrue(userOrganization1_2.TotalIncome == 260);
+            Assert.IsTrue(userOrganization1_2.TotalIncome == 360);
             //Assert.IsTrue(userOrganization1_2.TotalProductionCost == 100);
             //Assert.IsTrue(userOrganization1_2.TotalProfit == 100);
             Assert.IsTrue(userOrganization1_2.TotalResourcePoolTax == 200);
@@ -1342,7 +1342,7 @@
             Assert.IsTrue(userResourcePool2.NumberOfSales == 4);
             Assert.IsTrue(userResourcePool2.ResourcePoolTax == 400);
             Assert.IsTrue(userResourcePool2.SalesPriceIncludingResourcePoolTax == 800);
-            Assert.IsTrue(userResourcePool2.TotalIncome == 1200);
+            Assert.IsTrue(userResourcePool2.TotalIncome == 1600);
             //Assert.IsTrue(userResourcePool2.TotalProductionCost == 400);
             //Assert.IsTrue(userResourcePool2.TotalProfit == 400);
             Assert.IsTrue(userResourcePool2.TotalResourcePoolTax == 800);
@@ -1350,13 +1350,13 @@
             Assert.IsTrue(userResourcePool2.TotalSalesRevenueIncludingResourcePoolTax == 1600);
 
             Assert.IsTrue(userResourcePoolIndex2.IndexShare == 800);
-            Assert.IsTrue(userResourcePoolIndex2.IndexValueMultiplied == 0.5M);
+            Assert.IsTrue(userResourcePoolIndex2.IndexOrganizationValueMultiplied == 0.5M);
 
             Assert.IsTrue(userOrganization2_1.IndexIncome == 480);
             Assert.IsTrue(userOrganization2_1.NumberOfSalesPercentage == 0.5M);
             Assert.IsTrue(userOrganization2_1.ResourcePoolTax == 200);
             Assert.IsTrue(userOrganization2_1.SalesPriceIncludingResourcePoolTax == 400);
-            Assert.IsTrue(userOrganization2_1.TotalIncome == 680);
+            Assert.IsTrue(userOrganization2_1.TotalIncome == 880);
             //Assert.IsTrue(userOrganization2_1.TotalProductionCost == 200);
             //Assert.IsTrue(userOrganization2_1.TotalProfit == 200);
             Assert.IsTrue(userOrganization2_1.TotalResourcePoolTax == 400);
@@ -1367,7 +1367,7 @@
             Assert.IsTrue(userOrganization2_2.NumberOfSalesPercentage == 0.5M);
             Assert.IsTrue(userOrganization2_2.ResourcePoolTax == 200);
             Assert.IsTrue(userOrganization2_2.SalesPriceIncludingResourcePoolTax == 400);
-            Assert.IsTrue(userOrganization2_2.TotalIncome == 520);
+            Assert.IsTrue(userOrganization2_2.TotalIncome == 720);
             //Assert.IsTrue(userOrganization2_2.TotalProductionCost == 200);
             //Assert.IsTrue(userOrganization2_2.TotalProfit == 200);
             Assert.IsTrue(userOrganization2_2.TotalResourcePoolTax == 400);

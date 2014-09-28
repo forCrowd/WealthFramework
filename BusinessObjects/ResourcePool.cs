@@ -1,6 +1,7 @@
 namespace BusinessObjects
 {
     using BusinessObjects.Attributes;
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
@@ -45,6 +46,21 @@ namespace BusinessObjects
         //    // TODO Static types can only be defined once per ResourcePool
         //    get { return ResourcePoolIndexSet.SingleOrDefault(item => item.ResourcePoolIndexType == (byte)ResourcePoolIndexType.TotalCostIndex); }
         //}
+
+        public decimal ResourcePoolRate
+        {
+            get
+            {
+                return UserResourcePoolSet.Any()
+                    ? UserResourcePoolSet.Average(item => item.ResourcePoolRate)
+                    : 0;
+            }
+        }
+
+        public decimal ResourcePoolRatePercentage
+        {
+            get { return ResourcePoolRate / 100; }
+        }
 
         public decimal IndexRatingAverage
         {

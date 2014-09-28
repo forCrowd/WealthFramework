@@ -6,6 +6,8 @@ namespace BusinessObjects
         Boolean = 2,
         Integer = 3,
         Decimal = 4,
-        DateTime = 5
+        DateTime = 5,
+        ResourcePool = 11,
+        Multiplier = 12
     }
 }

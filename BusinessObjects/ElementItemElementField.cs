@@ -92,5 +92,33 @@ namespace BusinessObjects
                     : RatingAverage / ElementField.RatingAverage;
             }
         }
+
+        //public decimal ResourcePoolAddition
+        //{
+        //    get
+        //    {
+        //        // TODO Is it correct to throw an exception over here? How about serialization?
+
+        //        //if (!ElementField.IsResourcePoolField)
+        //        //    throw new ArgumentException("Invalid element field: IsResourcePoolField = false", "elementItemElementField");
+
+        //        //if (ElementField.ElementFieldType != (byte)ElementFieldType.Decimal)
+        //        //    throw new ArgumentException(string.Format("Invalid element field type: {0}", ElementField.ElementFieldType), "elementItemElementField");
+
+        //        return DecimalValue.HasValue
+        //            ? DecimalValue.Value * ElementField.Element.ResourcePool.ResourcePoolRatePercentage
+        //            : 0;
+        //    }
+        //}
+
+        //public decimal ValueIncludingResourcePoolAddition
+        //{
+        //    get
+        //    {
+        //        return DecimalValue.HasValue
+        //            ? DecimalValue.Value + ResourcePoolAddition
+        //            : 0;
+        //    }
+        //}
     }
 }

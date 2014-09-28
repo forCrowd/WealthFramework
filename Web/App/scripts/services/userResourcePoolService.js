@@ -13,6 +13,7 @@
 
         // Service methods
         $delegate.getUserResourcePoolCustomByUserResourcePoolId = getUserResourcePoolCustomByUserResourcePoolId;
+        //$delegate.getUserResourcePoolCustom2ByUserResourcePoolId = getUserResourcePoolCustom2ByUserResourcePoolId;
         $delegate.getUserResourcePoolCustomByResourcePoolId = getUserResourcePoolCustomByResourcePoolId;
         $delegate.getUserResourcePoolDtoByResourcePoolId = getUserResourcePoolDtoByResourcePoolId;
         $delegate.decreaseNumberOfSales = decreaseNumberOfSales;
@@ -29,6 +30,11 @@
             var url = '/api/UserResourcePoolCustom/GetUserResourcePoolCustomByUserResourcePoolId/' + userResourcePoolId;
             return $http.get(url);
         }
+
+        //function getUserResourcePoolCustom2ByUserResourcePoolId(userResourcePoolId) {
+        //    var url = '/api/UserResourcePoolCustom/GetUserResourcePoolCustom2ByUserResourcePoolId/' + userResourcePoolId;
+        //    return $http.get(url);
+        //}
 
         function getUserResourcePoolCustomByResourcePoolId(resourcePoolId) {
             var url = '/api/UserResourcePoolCustom/GetUserResourcePoolCustomByResourcePoolId/' + resourcePoolId;
