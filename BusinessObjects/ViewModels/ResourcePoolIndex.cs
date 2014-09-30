@@ -1,4 +1,5 @@
 ﻿
+using System;
 namespace BusinessObjects.ViewModels
 {
     public class ResourcePoolIndex
@@ -8,6 +9,7 @@ namespace BusinessObjects.ViewModels
         public ResourcePoolIndex(BusinessObjects.ResourcePoolIndex resourcePoolIndex)
         {
             Id = resourcePoolIndex.Id;
+            ElementFieldId = resourcePoolIndex.ElementFieldId;
             Name = resourcePoolIndex.Name;
             IndexRatingCount = resourcePoolIndex.IndexRatingCount;
             IndexRatingAverage = resourcePoolIndex.IndexRatingAverage;
@@ -15,6 +17,7 @@ namespace BusinessObjects.ViewModels
         }
 
         public int Id { get; set; }
+        public Nullable<int> ElementFieldId { get; set; }
         public string Name { get; set; }
         public decimal IndexRatingCount { get; set; }
         public decimal IndexRatingAverage { get; set; }

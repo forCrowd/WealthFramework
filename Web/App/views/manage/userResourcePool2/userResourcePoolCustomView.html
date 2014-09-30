@@ -48,26 +48,23 @@
                 Total {{ vm.userResourcePool.MainElement.ResourcePoolFieldName }} incl. CMRP Addition
             </th>
             <!-- Indexes -->
-            <!--<th data-ng-repeat="item in vm.userResourcePool.ResourcePoolIndexSet">
+            <th data-ng-repeat="item in vm.userResourcePool.ResourcePoolIndexSet">
                 {{ item.Name }}
                 <br />
                 <table class="table">
                     <tr>
-                        <th>
-                            Rating Percentage
-                        </th>
-                        <th>
+                        <!--<th>
                             Multiplied
                         </th>
                         <th>
                             Percentage
-                        </th>
+                        </th>-->
                         <th>
                             Income
                         </th>
                     </tr>
                 </table>
-            </th>-->
+            </th>
             <!-- Totals -->
             <th>
                 Total Income
@@ -121,27 +118,26 @@
                 {{ elementItem.TotalResourcePoolFieldItemValueIncludingResourcePoolAddition | number: 2 }}
             </td>
             <!-- Indexes -->
-            <!--<td data-ng-repeat="indexOrganization in item.UserResourcePoolIndexOrganizationSet">
-                <table class="table">
-                    <tr>
-                        <td>
-                            {{ indexOrganization.IndexValuePercentage | percentage:2 }}
-                        </td>
-                        <td>
-                            {{ indexOrganization.IndexValueMultiplied | number:2 }}
-                        </td>
-                        <td>
-                            {{ indexOrganization.IndexValuePercentage | percentage:2 }}
-                        </td>
-                        <td>
-                            {{ indexOrganization.IndexIncome }}
-                        </td>
-                    </tr>
-                </table>
-            </td>-->
+            <td data-ng-repeat="item in vm.userResourcePool.ResourcePoolIndexSet">
+                <div data-ng-repeat="elementItemElementField in elementItem.ElementItemElementFieldSet">
+                    <table class="table">
+                        <tr>
+                            <!--<td>
+                                {{ indexOrganization.IndexValueMultiplied | number:2 }}
+                            </td>
+                            <td>
+                                {{ indexOrganization.IndexValuePercentage | percentage:2 }}
+                            </td>-->
+                            <td data-ng-show="item.ElementFieldId === elementItemElementField.ElementFieldId">
+                                {{ elementItemElementField.ResourcePoolIndexIncome }}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
             <!-- Totals -->
             <td>
-                {{ item.TotalIncome | number:2 }}
+                {{ elementItem.TotalIncome | number:2 }}
             </td>
         </tr>
         <!-- Footer -->
@@ -179,24 +175,21 @@
                 &nbsp;
             </td>
             <!-- Indexes -->
-            <!--<th data-ng-repeat="item in vm.userResourcePool.ResourcePoolIndexSet">
+            <td data-ng-repeat="item in vm.userResourcePool.ResourcePoolIndexSet">
                 <table class="table">
                     <tr>
-                        <th>
+                        <!--<th>
                             &nbsp;
                         </th>
                         <th>
                             &nbsp;
-                        </th>
-                        <th>
-                            &nbsp;
-                        </th>
+                        </th>-->
                         <th>
                             &nbsp;
                         </th>
                     </tr>
                 </table>
-            </th>-->
+            </td>
             <!-- Totals -->
             <td>
                 {{ vm.userResourcePool.TotalIncome | number:2 }}
@@ -237,9 +230,6 @@
                 <br />
                 <table class="table">
                     <tr>
-                        <th>
-                            Rating Percentage
-                        </th>
                         <th>
                             Multiplied
                         </th>
@@ -282,9 +272,6 @@
                 <table class="table">
                     <tr>
                         <td>
-                            {{ indexOrganization.IndexValuePercentage | percentage:2 }}
-                        </td>
-                        <td>
                             {{ indexOrganization.IndexValueMultiplied | number:2 }}
                         </td>
                         <td>
@@ -325,9 +312,6 @@
             <th data-ng-repeat="item in vm.userResourcePool.ResourcePoolIndexSet">
                 <table class="table">
                     <tr>
-                        <th>
-                            &nbsp;
-                        </th>
                         <th>
                             &nbsp;
                         </th>

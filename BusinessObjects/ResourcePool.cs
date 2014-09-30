@@ -39,8 +39,6 @@ namespace BusinessObjects
         public virtual ICollection<Organization> OrganizationSet { get; set; }
         public virtual ICollection<UserResourcePool> UserResourcePoolSet { get; set; }
 
-        #region - Indexes -
-
         //public ResourcePoolIndex TotalCostIndex
         //{
         //    // TODO Static types can only be defined once per ResourcePool
@@ -67,7 +65,45 @@ namespace BusinessObjects
             get { return ResourcePoolIndexSet.Sum(item => item.IndexRatingAverage); }
         }
 
-        #endregion
+        public Element MainElement
+        {
+            get { return ElementSet.SingleOrDefault(element => element.IsMainElement); }
+        }
+
+        public decimal ResourcePoolAddition
+        {
+            get { return MainElement.ElementItemSet.Sum(item => item.ResourcePoolAddition); }
+        }
+
+        public decimal ResourcePoolFieldItemValue
+        {
+            get { return MainElement.ElementItemSet.Sum(item => item.ResourcePoolFieldItemValue); }
+        }
+
+        public decimal ResourcePoolFieldItemValueIncludingResourcePoolAddition
+        {
+            get { return MainElement.ElementItemSet.Sum(item => item.ResourcePoolFieldItemValueIncludingResourcePoolAddition); }
+        }
+
+        public decimal TotalResourcePoolFieldValue
+        {
+            get { return MainElement.ElementItemSet.Sum(item => item.TotalResourcePoolFieldItemValue); }
+        }
+
+        public decimal TotalResourcePoolAddition
+        {
+            get { return MainElement.ElementItemSet.Sum(item => item.TotalResourcePoolAddition); }
+        }
+
+        public decimal TotalResourcePoolFieldItemValueIncludingResourcePoolAddition
+        {
+            get { return MainElement.ElementItemSet.Sum(item => item.TotalResourcePoolFieldItemValueIncludingResourcePoolAddition); }
+        }
+
+        public decimal TotalIncome
+        {
+            get { return MainElement.ElementItemSet.Sum(item => item.TotalIncome); }
+        }
 
         //public decimal ProductionCost
         //{

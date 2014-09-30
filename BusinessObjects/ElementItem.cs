@@ -134,7 +134,7 @@ namespace BusinessObjects
             }
         }
 
-        public decimal TotalResourcePoolFieldValue
+        public decimal TotalResourcePoolFieldItemValue
         {
             get
             {
@@ -165,6 +165,16 @@ namespace BusinessObjects
 
                 return ResourcePoolFieldItemValueIncludingResourcePoolAddition * MultiplierFieldItemValue;
             }
+        }
+
+        public decimal ResourcePoolIndexIncome
+        {
+            get { return ElementItemElementFieldSet.Sum(item => item.ResourcePoolIndexIncome); }
+        }
+
+        public decimal TotalIncome
+        {
+            get { return TotalResourcePoolFieldItemValue + ResourcePoolIndexIncome; }
         }
     }
 }

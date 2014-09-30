@@ -100,6 +100,11 @@ namespace BusinessObjects
             }
         }
 
+        public decimal IndexShare
+        {
+            get { return ResourcePool.TotalResourcePoolAddition * IndexRatingPercentage; }
+        }
+
         //public decimal IndexValue
         //{
         //    get

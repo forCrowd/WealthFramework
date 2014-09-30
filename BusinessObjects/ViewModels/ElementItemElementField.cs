@@ -17,6 +17,8 @@ namespace BusinessObjects.ViewModels
             IntegerValue = elementItemElementField.IntegerValue;
             DecimalValue = elementItemElementField.DecimalValue;
             DateTimeValue = elementItemElementField.DateTimeValue;
+
+            ResourcePoolIndexIncome = elementItemElementField.ResourcePoolIndexIncome;
         }
 
         public int Id { get; set; }
@@ -28,5 +30,7 @@ namespace BusinessObjects.ViewModels
         public Nullable<int> IntegerValue { get; set; }
         public Nullable<decimal> DecimalValue { get; set; }
         public Nullable<DateTime> DateTimeValue { get; set; }
+
+        public decimal ResourcePoolIndexIncome { get; set; }
     }
 }

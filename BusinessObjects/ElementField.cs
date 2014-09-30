@@ -15,6 +15,7 @@ namespace BusinessObjects
         public ElementField()
         {
             ElementItemElementFieldSet = new HashSet<ElementItemElementField>();
+            ResourcePoolIndexSet = new HashSet<ResourcePoolIndex>();
         }
 
         [DisplayOnListView(false)]
@@ -38,6 +39,7 @@ namespace BusinessObjects
 
         public virtual Element Element { get; set; }
         public virtual ICollection<ElementItemElementField> ElementItemElementFieldSet { get; set; }
+        public virtual ICollection<ResourcePoolIndex> ResourcePoolIndexSet { get; set; }
 
         #region - ReadOnly Properties -
 
@@ -48,18 +50,38 @@ namespace BusinessObjects
         {
             get
             {
-                switch (ElementFieldType)
-                {
-                    case (byte)BusinessObjects.ElementFieldType.String:
-                    case (byte)BusinessObjects.ElementFieldType.Decimal:
-                    case (byte)BusinessObjects.ElementFieldType.Boolean:
-                    case (byte)BusinessObjects.ElementFieldType.Integer:
-                    case (byte)BusinessObjects.ElementFieldType.DateTime:
-                        return ElementItemElementFieldSet.Sum(item => item.RatingAverage);
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
+                return ElementItemElementFieldSet.Sum(item => item.RatingAverage);
             }
+        }
+
+
+        public decimal RatingPercentageMultiplied
+        {
+            get
+            {
+                return ElementItemElementFieldSet.Sum(item => item.RatingPercentageMultiplied);
+            }
+        }
+
+        // TODO Although technically it's possible to define multiple indexes, there will be one per Field at the moment
+        public ResourcePoolIndex ResourcePoolIndex
+        {
+            get { return ResourcePoolIndexSet.SingleOrDefault(); }
+        }
+
+        public decimal ResourcePoolIndexShare
+        {
+            get
+            {
+                return ResourcePoolIndex == null
+                    ? 0
+                    : ResourcePoolIndex.IndexShare;
+            }
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
 
         #endregion

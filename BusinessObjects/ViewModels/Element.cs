@@ -17,6 +17,7 @@ namespace BusinessObjects.ViewModels
             ResourcePoolFieldName = element.ResourcePoolFieldName;
             HasMultiplierField = element.HasMultiplierField;
             MultiplierFieldName = element.MultiplierFieldName;
+            ElementFieldSet = element.ElementFieldSet.Select(item => new ElementField(item));
             BasicElementFieldSet = element.BasicElementFieldSet.Select(item => new ElementField(item));
             ElementItemSet = element.ElementItemSet.Select(item => new ElementItem(item));
             //UserResourcePool = userResourcePool;
@@ -29,7 +30,11 @@ namespace BusinessObjects.ViewModels
         public string ResourcePoolFieldName { get; set; }
         public bool HasMultiplierField { get; set; }
         public string MultiplierFieldName { get; set; }
+
+        // TODO Duplicate?
+        public IEnumerable<ElementField> ElementFieldSet { get; set; }
         public IEnumerable<ElementField> BasicElementFieldSet { get; set; }
+
         public IEnumerable<ElementItem> ElementItemSet { get; set; }
         // internal UserResourcePool UserResourcePool { get; private set; }
     }

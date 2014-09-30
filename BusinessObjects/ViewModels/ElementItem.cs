@@ -17,9 +17,11 @@ namespace BusinessObjects.ViewModels
             ResourcePoolFieldItemValueIncludingResourcePoolAddition = elementItem.ResourcePoolFieldItemValueIncludingResourcePoolAddition;
             HasMultiplierFieldItem = elementItem.HasMultiplierFieldItem;
             MultiplierFieldItemValue = elementItem.MultiplierFieldItemValue;
-            TotalResourcePoolFieldItemValue = elementItem.TotalResourcePoolFieldValue;
+            TotalResourcePoolFieldItemValue = elementItem.TotalResourcePoolFieldItemValue;
             TotalResourcePoolAddition = elementItem.TotalResourcePoolAddition;
             TotalResourcePoolFieldItemValueIncludingResourcePoolAddition = elementItem.TotalResourcePoolFieldItemValueIncludingResourcePoolAddition;
+            TotalIncome = elementItem.TotalIncome;
+            ElementItemElementFieldSet = elementItem.ElementItemElementFieldSet.Select(item => new ElementItemElementField(item));
             BasicElementItemElementFieldSet = elementItem.BasicElementItemElementFieldSet.Select(item => new ElementItemElementField(item));
         }
 
@@ -34,7 +36,10 @@ namespace BusinessObjects.ViewModels
         public decimal TotalResourcePoolFieldItemValue { get; set; }
         public decimal TotalResourcePoolAddition { get; set; }
         public decimal TotalResourcePoolFieldItemValueIncludingResourcePoolAddition { get; set; }
+        public decimal TotalIncome { get; set; }
 
+        // TODO Duplicate?
+        public IEnumerable<ElementItemElementField> ElementItemElementFieldSet { get; set; }
         public IEnumerable<ElementItemElementField> BasicElementItemElementFieldSet { get; set; }
     }
 }

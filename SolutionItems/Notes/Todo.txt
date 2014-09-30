@@ -77,6 +77,8 @@ config.EnableQuerySupport(queryAttribute);
 
 . vs update 2 + 3 changes -> asp.net identity
 
+. [Route("users/{id:int:min(1)}")] ?
+
 . composite key definition;
 [Key]
 [Column(Order = 0)]

@@ -14,6 +14,7 @@ namespace BusinessObjects.ViewModels
             ResourcePoolRate = userResourcePool.ResourcePoolRate;
             ResourcePoolRatePercentage = userResourcePool.ResourcePoolRatePercentage;
             UserResourcePoolRatingCount = userResourcePool.ResourcePool.UserResourcePoolSet.Count;
+
             ResourcePoolIndexSet = userResourcePool
                 .ResourcePool
                 .ResourcePoolIndexSet
@@ -26,7 +27,7 @@ namespace BusinessObjects.ViewModels
             ElementSet = userResourcePool.ResourcePool.ElementSet
                 .Select(element => new Element(element));
 
-            MainElement = ElementSet.SingleOrDefault(element => element.IsMainElement);
+            MainElement = new Element(userResourcePool.ResourcePool.MainElement);
 
             //ResourcePoolProductionCost = userResourcePool.ResourcePool.ProductionCost;
             ResourcePoolSalesPrice = userResourcePool.ResourcePool.SalesPrice;

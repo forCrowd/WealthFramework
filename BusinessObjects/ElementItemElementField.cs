@@ -73,12 +73,23 @@ namespace BusinessObjects
                         return BooleanValue.HasValue ? Convert.ToDecimal(BooleanValue.Value) : 0;
                     case (byte)ElementFieldType.Integer:
                         return IntegerValue.HasValue ? Convert.ToDecimal(IntegerValue.Value) : 0;
-                    case (byte)ElementFieldType.DateTime:
-                        return DateTimeValue.HasValue ? Convert.ToDecimal(DateTimeValue.Value.Ticks) : 0;
                     case (byte)ElementFieldType.Decimal:
                         return DecimalValue.HasValue ? DecimalValue.Value : 0;
+                    case (byte)ElementFieldType.DateTime:
+                        return DateTimeValue.HasValue ? Convert.ToDecimal(DateTimeValue.Value.Ticks) : 0;
+
+                    case (byte)ElementFieldType.ResourcePool:
+                        {
+                            // TODO This calculation is the same as Decimal type? Are we using the types in a wrong way?
+                            return DecimalValue.HasValue ? DecimalValue.Value : 0;
+                        }
                     default:
-                        throw new ArgumentOutOfRangeException();
+                        {
+                            return 0;
+
+                            // TODO Or throw an exception?
+                            //throw new ArgumentOutOfRangeException();
+                        }
                 }
             }
         }
@@ -90,6 +101,55 @@ namespace BusinessObjects
                 return ElementField.RatingAverage == 0
                     ? 0
                     : RatingAverage / ElementField.RatingAverage;
+            }
+        }
+
+        public decimal RatingPercentageMultiplied
+        {
+            get
+            {
+                var mainElement = ElementItem.Element.ResourcePool.MainElement;
+
+                if (!mainElement.HasMultiplierField)
+                    return 0;
+
+                // TODO BE CAREFUL ABOUT THIS, IT ASSUMES ALL ELEMENT ITEMS HAVE THE SAME MULTIPLIER VALUE, IMPROVE LATER!
+                var multiplierValue = mainElement.ElementItemSet.FirstOrDefault().MultiplierFieldItemValue;
+
+                return multiplierValue * RatingPercentage;
+            }
+        }
+
+        public decimal RatingPercentageMultipliedPercentage
+        {
+            get
+            {
+                return ElementField.RatingPercentageMultiplied == 0
+                    ? 0
+                    : RatingPercentageMultiplied / ElementField.RatingPercentageMultiplied;
+            }
+        }
+
+        public decimal ResourcePoolIndexIncome
+        {
+            get
+            {
+                if (ElementField.ResourcePoolIndex == null)
+                    return 0;
+
+                var value = RatingPercentageMultipliedPercentage;
+
+                switch (ElementField.ResourcePoolIndex.RatingSortType)
+                {
+                    case (byte)RatingSortType.HighestToLowest:
+                        /* Do nothing */ break;
+                    case (byte)RatingSortType.LowestToHighest:
+                        value = 1 - value; break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
+                return ElementField.ResourcePoolIndexShare * value;
             }
         }
 

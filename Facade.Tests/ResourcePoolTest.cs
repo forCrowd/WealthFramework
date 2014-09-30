@@ -126,7 +126,7 @@
 
         //    var resourcePoolIndexOrganization1 = new ResourcePoolIndexOrganization(resourcePoolIndex, organization1);
         //    var resourcePoolIndexOrganization2 = new ResourcePoolIndexOrganization(resourcePoolIndex, organization2);
-            
+
         //    var user = new User();
 
         //    var userResourcePool = new UserResourcePool() { User = user, ResourcePool = resourcePool, ResourcePoolRate = 100 };
@@ -1384,5 +1384,461 @@
         }
 
         #endregion
+
+        #region - Dynamic Element Field Index w/o Organization -
+
+        [TestMethod]
+        public void TwoElementItems_StringTypeIndex_SingleUser()
+        {
+            var resourcePool = new ResourcePool();
+
+            var organization = new Element() { ResourcePool = resourcePool, IsMainElement = true };
+            resourcePool.ElementSet.Add(organization);
+
+            var organizationName = new ElementField() { Element = organization, Name = "Organization Name", ElementFieldType = (byte)ElementFieldType.String };
+            organization.ElementFieldSet.Add(organizationName);
+
+            var salesPrice = new ElementField() { Element = organization, Name = "Sales Price", ElementFieldType = (byte)ElementFieldType.ResourcePool };
+            organization.ElementFieldSet.Add(salesPrice);
+
+            var salesNumber = new ElementField() { Element = organization, Name = "Sales Number", ElementFieldType = (byte)ElementFieldType.Multiplier };
+            organization.ElementFieldSet.Add(salesNumber);
+
+            var organization1 = new ElementItem() { Element = organization };
+            organization.ElementItemSet.Add(organization1);
+
+            var organizationName1 = new ElementItemElementField() { ElementField = organizationName, ElementItem = organization1, StringValue = "Organization 1" };
+            organization1.ElementItemElementFieldSet.Add(organizationName1);
+            organizationName.ElementItemElementFieldSet.Add(organizationName1);
+
+            var organizationSalesPrice1 = new ElementItemElementField() { ElementField = salesPrice, ElementItem = organization1, DecimalValue = 200 };
+            organization1.ElementItemElementFieldSet.Add(organizationSalesPrice1);
+            salesPrice.ElementItemElementFieldSet.Add(organizationSalesPrice1);
+
+            var organizationSalesNumber1 = new ElementItemElementField() { ElementField = salesNumber, ElementItem = organization1, DecimalValue = 1 };
+            organization1.ElementItemElementFieldSet.Add(organizationSalesNumber1);
+            salesNumber.ElementItemElementFieldSet.Add(organizationSalesNumber1);
+
+            var organization2 = new ElementItem() { Element = organization };
+            organization.ElementItemSet.Add(organization2);
+
+            var organizationName2 = new ElementItemElementField() { ElementField = organizationName, ElementItem = organization2, StringValue = "Organization 2" };
+            organization2.ElementItemElementFieldSet.Add(organizationName2);
+            organizationName.ElementItemElementFieldSet.Add(organizationName2);
+
+            var organizationSalesPrice2 = new ElementItemElementField() { ElementField = salesPrice, ElementItem = organization2, DecimalValue = 200 };
+            organization2.ElementItemElementFieldSet.Add(organizationSalesPrice2);
+            salesPrice.ElementItemElementFieldSet.Add(organizationSalesPrice2);
+
+            var organizationSalesNumber2 = new ElementItemElementField() { ElementField = salesNumber, ElementItem = organization2, DecimalValue = 1 };
+            organization2.ElementItemElementFieldSet.Add(organizationSalesNumber2);
+            salesNumber.ElementItemElementFieldSet.Add(organizationSalesNumber2);
+
+            var resourcePoolIndex = new ResourcePoolIndex()
+            {
+                ResourcePool = resourcePool,
+                ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicElementFieldIndex,
+                ElementField = organizationName,
+                RatingSortType = (byte)RatingSortType.HighestToLowest
+            };
+            resourcePool.ResourcePoolIndexSet.Add(resourcePoolIndex);
+            organizationName.ResourcePoolIndexSet.Add(resourcePoolIndex);
+
+            //var organization1 = new Organization() { ResourcePool = resourcePool, SalesPrice = 200 };
+            //resourcePool.OrganizationSet.Add(organization1);
+
+            //var organizationElementItem1 = new OrganizationElementItem() { Organization = organization1, ElementItem = organization1 };
+            //organization1.OrganizationElementItemSet.Add(organizationElementItem1);
+            //organization1.OrganizationElementItemSet.Add(organizationElementItem1);
+
+            //var organization2 = new Organization() { ResourcePool = resourcePool, SalesPrice = 200 };
+            //resourcePool.OrganizationSet.Add(organization2);
+
+            //var organizationElementItem2 = new OrganizationElementItem() { Organization = organization2, ElementItem = organization2 };
+            //organization2.OrganizationElementItemSet.Add(organizationElementItem2);
+            //organization2.OrganizationElementItemSet.Add(organizationElementItem2);
+
+            //var resourcePoolIndexOrganization1 = new ResourcePoolIndexOrganization(resourcePoolIndex, organization1);
+            //var resourcePoolIndexOrganization2 = new ResourcePoolIndexOrganization(resourcePoolIndex, organization2);
+
+            var user = new User();
+
+            var userResourcePool = new UserResourcePool() { User = user, ResourcePool = resourcePool, ResourcePoolRate = 100 };
+            user.UserResourcePoolSet.Add(userResourcePool);
+            resourcePool.UserResourcePoolSet.Add(userResourcePool);
+
+            var userResourcePoolIndex = new UserResourcePoolIndex() { UserResourcePool = userResourcePool, ResourcePoolIndex = resourcePoolIndex, Rating = 100 };
+            resourcePoolIndex.UserResourcePoolIndexSet.Add(userResourcePoolIndex);
+
+            var userOrganizationName1 = new UserElementItemElementField() { User = user, ElementItemElementField = organizationName1, Rating = 75 };
+            user.UserElementItemElementFieldSet.Add(userOrganizationName1);
+            organizationName1.UserElementItemElementFieldSet.Add(userOrganizationName1);
+
+            var userOrganizationName2 = new UserElementItemElementField() { User = user, ElementItemElementField = organizationName2, Rating = 25 };
+            user.UserElementItemElementFieldSet.Add(userOrganizationName1);
+            organizationName2.UserElementItemElementFieldSet.Add(userOrganizationName2);
+
+            //var userOrganization1 = new UserOrganization() { User = user, Organization = organization1, NumberOfSales = 1 };
+            //user.UserOrganizationSet.Add(userOrganization1);
+            //organization1.UserOrganizationSet.Add(userOrganization1);
+
+            //var userOrganization2 = new UserOrganization() { User = user, Organization = organization2, NumberOfSales = 1 };
+            //user.UserOrganizationSet.Add(userOrganization2);
+            //organization2.UserOrganizationSet.Add(userOrganization2);
+
+            //var userElementItemElementField1 = new UserElementItemElementField() { User = user, ElementItemElementField = organizationSalesPrice1, Rating = 75 };
+            //user.UserElementItemElementFieldSet.Add(userElementItemElementField1);
+            //organizationSalesPrice1.UserElementItemElementFieldSet.Add(userElementItemElementField1);
+
+            //var userElementItemElementField2 = new UserElementItemElementField() { User = user, ElementItemElementField = organizationSalesPrice2, Rating = 25 };
+            //user.UserElementItemElementFieldSet.Add(userElementItemElementField2);
+            //organizationSalesPrice2.UserElementItemElementFieldSet.Add(userElementItemElementField2);
+
+            //var userResourcePoolIndexOrganization1 = new UserResourcePoolIndexOrganization(userOrganization1, resourcePoolIndexOrganization1);
+            //var userResourcePoolIndexOrganization2 = new UserResourcePoolIndexOrganization(userOrganization2, resourcePoolIndexOrganization2);
+
+            // Results
+            Assert.IsTrue(resourcePool.IndexRatingAverage == 100);
+            //Assert.IsTrue(resourcePool.ProductionCost == 200);
+            //Assert.IsTrue(resourcePool.Profit == 200);
+            //Assert.IsTrue(resourcePool.SalesPrice == 400);
+
+            Assert.IsTrue(resourcePoolIndex.IndexRatingCount == 1);
+            Assert.IsTrue(resourcePoolIndex.IndexRatingAverage == 100);
+            Assert.IsTrue(resourcePoolIndex.IndexRatingPercentage == 1);
+
+            //Assert.IsTrue(organization1.Profit == 100);
+            //Assert.IsTrue(organization2.Profit == 100);
+
+            Assert.IsTrue(organizationName.RatingAverage == 100);
+
+            Assert.IsTrue(organizationName1.RatingCount == 1);
+            Assert.IsTrue(organizationName1.RatingAverage == 75);
+            Assert.IsTrue(organizationName1.RatingPercentage == 0.75M);
+
+            Assert.IsTrue(organizationName2.RatingCount == 1);
+            Assert.IsTrue(organizationName2.RatingAverage == 25);
+            Assert.IsTrue(organizationName2.RatingPercentage == 0.25M);
+
+            //Assert.IsTrue(userResourcePool.NumberOfSales == 2);
+            Assert.IsTrue(resourcePool.ResourcePoolAddition == 400);
+            Assert.IsTrue(resourcePool.ResourcePoolFieldItemValueIncludingResourcePoolAddition == 800);
+            //Assert.IsTrue(userResourcePool.TotalProductionCost == 200);
+            //Assert.IsTrue(userResourcePool.TotalProfit == 200);
+            Assert.IsTrue(resourcePool.TotalResourcePoolFieldValue == 400);
+            Assert.IsTrue(resourcePool.TotalResourcePoolAddition == 400);
+            Assert.IsTrue(resourcePool.TotalResourcePoolFieldItemValueIncludingResourcePoolAddition == 800);
+            Assert.IsTrue(resourcePool.TotalIncome == 800);
+
+            Assert.IsTrue(resourcePoolIndex.IndexShare == 400);
+            //Assert.IsTrue(userResourcePoolIndex.IndexOrganizationValueMultiplied == 0.5M);
+
+            //Assert.IsTrue(organization1.mul userOrganization1.NumberOfSalesPercentage == 0.5M);
+            Assert.IsTrue(organization1.ResourcePoolFieldItemValue == 200);
+            Assert.IsTrue(organization1.ResourcePoolAddition == 200);
+            Assert.IsTrue(organization1.ResourcePoolFieldItemValueIncludingResourcePoolAddition == 400);
+            //Assert.IsTrue(userOrganization1.TotalProductionCost == 100);
+            //Assert.IsTrue(userOrganization1.TotalProfit == 100);
+            Assert.IsTrue(organization1.TotalResourcePoolFieldItemValue == 200);
+            Assert.IsTrue(organization1.TotalResourcePoolAddition == 200);
+            Assert.IsTrue(organization1.TotalResourcePoolFieldItemValueIncludingResourcePoolAddition == 400);
+            Assert.IsTrue(organization1.ResourcePoolIndexIncome == 300);
+            Assert.IsTrue(organization1.TotalIncome == 500);
+
+            //Assert.IsTrue(organization2.NumberOfSalesPercentage == 0.5M);
+            Assert.IsTrue(organization2.ResourcePoolFieldItemValue == 200);
+            Assert.IsTrue(organization2.ResourcePoolAddition == 200);
+            Assert.IsTrue(organization2.ResourcePoolFieldItemValueIncludingResourcePoolAddition == 400);
+            //Assert.IsTrue(userOrganization2.TotalProductionCost == 100);
+            //Assert.IsTrue(userOrganization2.TotalProfit == 100);
+            Assert.IsTrue(organization2.TotalResourcePoolFieldItemValue == 200);
+            Assert.IsTrue(organization2.TotalResourcePoolAddition == 200);
+            Assert.IsTrue(organization2.TotalResourcePoolFieldItemValueIncludingResourcePoolAddition == 400);
+            Assert.IsTrue(organization2.ResourcePoolIndexIncome == 100);
+            Assert.IsTrue(organization2.TotalIncome == 300);
+
+            //Assert.IsTrue(userResourcePoolIndexOrganization1.IndexIncome == 300);
+            //Assert.IsTrue(userResourcePoolIndexOrganization1.IndexValueMultiplied == 0.375M);
+            //Assert.IsTrue(userResourcePoolIndexOrganization1.IndexValuePercentage == 0.75M);
+
+            //Assert.IsTrue(userResourcePoolIndexOrganization2.IndexIncome == 100);
+            //Assert.IsTrue(userResourcePoolIndexOrganization2.IndexValueMultiplied == 0.125M);
+            //Assert.IsTrue(userResourcePoolIndexOrganization2.IndexValuePercentage == 0.25M);
+
+            // ResourcePoolIndex - Rating Sort Type: Lowest to Highest
+            resourcePoolIndex.RatingSortType = (byte)RatingSortType.LowestToHighest;
+
+            // Results
+            //Assert.IsTrue(organization1.NumberOfSalesPercentage == 0.5M);
+            Assert.IsTrue(organization1.ResourcePoolFieldItemValue == 200);
+            Assert.IsTrue(organization1.ResourcePoolAddition == 200);
+            Assert.IsTrue(organization1.ResourcePoolFieldItemValueIncludingResourcePoolAddition == 400);
+            //Assert.IsTrue(userOrganization1.TotalProductionCost == 100);
+            //Assert.IsTrue(userOrganization1.TotalProfit == 100);
+            Assert.IsTrue(organization1.TotalResourcePoolFieldItemValue == 200);
+            Assert.IsTrue(organization1.TotalResourcePoolAddition == 200);
+            Assert.IsTrue(organization1.TotalResourcePoolFieldItemValueIncludingResourcePoolAddition == 400);
+            Assert.IsTrue(organization1.ResourcePoolIndexIncome == 100);
+            Assert.IsTrue(organization1.TotalIncome == 300);
+
+            //Assert.IsTrue(organization2.mul userOrganization2.NumberOfSalesPercentage == 0.5M);
+            Assert.IsTrue(organization2.ResourcePoolFieldItemValue == 200);
+            Assert.IsTrue(organization2.ResourcePoolAddition == 200);
+            Assert.IsTrue(organization2.ResourcePoolFieldItemValueIncludingResourcePoolAddition == 400);
+            //Assert.IsTrue(userOrganization2.TotalProductionCost == 100);
+            //Assert.IsTrue(userOrganization2.TotalProfit == 100);
+            Assert.IsTrue(organization2.TotalResourcePoolFieldItemValue == 200);
+            Assert.IsTrue(organization2.TotalResourcePoolAddition == 200);
+            Assert.IsTrue(organization2.TotalResourcePoolFieldItemValueIncludingResourcePoolAddition == 400);
+            Assert.IsTrue(organization2.ResourcePoolIndexIncome == 300);
+            Assert.IsTrue(organization2.TotalIncome == 500);
+
+            //Assert.IsTrue(userOrganization1.IndexIncome == 100);
+            //Assert.IsTrue(userOrganization1.NumberOfSalesPercentage == 0.5M);
+            //Assert.IsTrue(userOrganization1.ResourcePoolTax == 200);
+            //Assert.IsTrue(userOrganization1.SalesPriceIncludingResourcePoolTax == 400);
+            //Assert.IsTrue(userOrganization1.TotalIncome == 300);
+            ////Assert.IsTrue(userOrganization1.TotalProductionCost == 100);
+            ////Assert.IsTrue(userOrganization1.TotalProfit == 100);
+            //Assert.IsTrue(userOrganization1.TotalResourcePoolTax == 200);
+            //Assert.IsTrue(userOrganization1.TotalSalesRevenue == 200);
+            //Assert.IsTrue(userOrganization1.TotalSalesRevenueIncludingResourcePoolTax == 400);
+
+            //Assert.IsTrue(userOrganization2.IndexIncome == 300);
+            //Assert.IsTrue(userOrganization2.NumberOfSalesPercentage == 0.5M);
+            //Assert.IsTrue(userOrganization2.ResourcePoolTax == 200);
+            //Assert.IsTrue(userOrganization2.SalesPriceIncludingResourcePoolTax == 400);
+            //Assert.IsTrue(userOrganization2.TotalIncome == 500);
+            ////Assert.IsTrue(userOrganization2.TotalProductionCost == 100);
+            ////Assert.IsTrue(userOrganization2.TotalProfit == 100);
+            //Assert.IsTrue(userOrganization2.TotalResourcePoolTax == 200);
+            //Assert.IsTrue(userOrganization2.TotalSalesRevenue == 200);
+            //Assert.IsTrue(userOrganization2.TotalSalesRevenueIncludingResourcePoolTax == 400);
+
+            //Assert.IsTrue(userResourcePoolIndexOrganization1.IndexIncome == 100);
+            //Assert.IsTrue(userResourcePoolIndexOrganization1.IndexValueMultiplied == 0.125M);
+            //Assert.IsTrue(userResourcePoolIndexOrganization1.IndexValuePercentage == 0.25M);
+
+            //Assert.IsTrue(userResourcePoolIndexOrganization2.IndexIncome == 300);
+            //Assert.IsTrue(userResourcePoolIndexOrganization2.IndexValueMultiplied == 0.375M);
+            //Assert.IsTrue(userResourcePoolIndexOrganization2.IndexValuePercentage == 0.75M);
+        }
+
+        [TestMethod]
+        public void TwoElementItems_DecimalTypeIndex_SingleUser()
+        {
+            var resourcePool = new ResourcePool();
+
+            var organization = new Element() { ResourcePool = resourcePool, IsMainElement = true };
+            resourcePool.ElementSet.Add(organization);
+
+            var salesPrice = new ElementField() { Element = organization, Name = "Sales Price", ElementFieldType = (byte)ElementFieldType.ResourcePool };
+            organization.ElementFieldSet.Add(salesPrice);
+
+            var salesNumber = new ElementField() { Element = organization, Name = "Sales Number", ElementFieldType = (byte)ElementFieldType.Multiplier };
+            organization.ElementFieldSet.Add(salesNumber);
+
+            var organization1 = new ElementItem() { Element = organization };
+            organization.ElementItemSet.Add(organization1);
+
+            var organizationSalesPrice1 = new ElementItemElementField() { ElementField = salesPrice, ElementItem = organization1, DecimalValue = 25 };
+            organization1.ElementItemElementFieldSet.Add(organizationSalesPrice1);
+            salesPrice.ElementItemElementFieldSet.Add(organizationSalesPrice1);
+
+            var organizationSalesNumber1 = new ElementItemElementField() { ElementField = salesNumber, ElementItem = organization1, DecimalValue = 1 };
+            organization1.ElementItemElementFieldSet.Add(organizationSalesNumber1);
+            salesNumber.ElementItemElementFieldSet.Add(organizationSalesNumber1);
+
+            var organization2 = new ElementItem() { Element = organization };
+            organization.ElementItemSet.Add(organization2);
+
+            var organizationSalesPrice2 = new ElementItemElementField() { ElementField = salesPrice, ElementItem = organization2, DecimalValue = 75 };
+            organization2.ElementItemElementFieldSet.Add(organizationSalesPrice2);
+            salesPrice.ElementItemElementFieldSet.Add(organizationSalesPrice2);
+
+            var organizationSalesNumber2 = new ElementItemElementField() { ElementField = salesNumber, ElementItem = organization2, DecimalValue = 1 };
+            organization2.ElementItemElementFieldSet.Add(organizationSalesNumber2);
+            salesNumber.ElementItemElementFieldSet.Add(organizationSalesNumber2);
+
+            var resourcePoolIndex = new ResourcePoolIndex()
+            {
+                ResourcePool = resourcePool,
+                ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicElementFieldIndex,
+                ElementField = salesPrice,
+                RatingSortType = (byte)RatingSortType.LowestToHighest
+            };
+            resourcePool.ResourcePoolIndexSet.Add(resourcePoolIndex);
+            salesPrice.ResourcePoolIndexSet.Add(resourcePoolIndex);
+
+            //var organization1 = new Organization() { ResourcePool = resourcePool, SalesPrice = 200 };
+            //resourcePool.OrganizationSet.Add(organization1);
+
+            //var organizationElementItem1 = new OrganizationElementItem() { Organization = organization1, ElementItem = organization1 };
+            //organization1.OrganizationElementItemSet.Add(organizationElementItem1);
+            //organization1.OrganizationElementItemSet.Add(organizationElementItem1);
+
+            //var organization2 = new Organization() { ResourcePool = resourcePool, SalesPrice = 200 };
+            //resourcePool.OrganizationSet.Add(organization2);
+
+            //var organizationElementItem2 = new OrganizationElementItem() { Organization = organization2, ElementItem = organization2 };
+            //organization2.OrganizationElementItemSet.Add(organizationElementItem2);
+            //organization2.OrganizationElementItemSet.Add(organizationElementItem2);
+
+            //var resourcePoolIndexOrganization1 = new ResourcePoolIndexOrganization(resourcePoolIndex, organization1);
+            //var resourcePoolIndexOrganization2 = new ResourcePoolIndexOrganization(resourcePoolIndex, organization2);
+
+            var user = new User();
+
+            var userResourcePool = new UserResourcePool() { User = user, ResourcePool = resourcePool, ResourcePoolRate = 100 };
+            user.UserResourcePoolSet.Add(userResourcePool);
+            resourcePool.UserResourcePoolSet.Add(userResourcePool);
+
+            var userResourcePoolIndex = new UserResourcePoolIndex() { UserResourcePool = userResourcePool, ResourcePoolIndex = resourcePoolIndex, Rating = 100 };
+            resourcePoolIndex.UserResourcePoolIndexSet.Add(userResourcePoolIndex);
+
+            //var userOrganization1 = new UserOrganization() { User = user, Organization = organization1, NumberOfSales = 1 };
+            //user.UserOrganizationSet.Add(userOrganization1);
+            //organization1.UserOrganizationSet.Add(userOrganization1);
+
+            //var userOrganization2 = new UserOrganization() { User = user, Organization = organization2, NumberOfSales = 1 };
+            //user.UserOrganizationSet.Add(userOrganization2);
+            //organization2.UserOrganizationSet.Add(userOrganization2);
+
+            //var userElementItemElementField1 = new UserElementItemElementField() { User = user, ElementItemElementField = organizationSalesPrice1, Rating = 75 };
+            //user.UserElementItemElementFieldSet.Add(userElementItemElementField1);
+            //organizationSalesPrice1.UserElementItemElementFieldSet.Add(userElementItemElementField1);
+
+            //var userElementItemElementField2 = new UserElementItemElementField() { User = user, ElementItemElementField = organizationSalesPrice2, Rating = 25 };
+            //user.UserElementItemElementFieldSet.Add(userElementItemElementField2);
+            //organizationSalesPrice2.UserElementItemElementFieldSet.Add(userElementItemElementField2);
+
+            //var userResourcePoolIndexOrganization1 = new UserResourcePoolIndexOrganization(userOrganization1, resourcePoolIndexOrganization1);
+            //var userResourcePoolIndexOrganization2 = new UserResourcePoolIndexOrganization(userOrganization2, resourcePoolIndexOrganization2);
+
+            // Results
+            Assert.IsTrue(resourcePool.IndexRatingAverage == 100);
+            //Assert.IsTrue(resourcePool.ProductionCost == 200);
+            //Assert.IsTrue(resourcePool.Profit == 200);
+            //Assert.IsTrue(resourcePool.SalesPrice == 400);
+
+            Assert.IsTrue(resourcePoolIndex.IndexRatingCount == 1);
+            Assert.IsTrue(resourcePoolIndex.IndexRatingAverage == 100);
+            Assert.IsTrue(resourcePoolIndex.IndexRatingPercentage == 1);
+
+            //Assert.IsTrue(organization1.Profit == 100);
+            //Assert.IsTrue(organization2.Profit == 100);
+
+            Assert.IsTrue(salesPrice.RatingAverage == 100);
+
+            //Assert.IsTrue(userResourcePool.NumberOfSales == 2);
+            Assert.IsTrue(resourcePool.ResourcePoolAddition == 100);
+            Assert.IsTrue(resourcePool.ResourcePoolFieldItemValueIncludingResourcePoolAddition == 200);
+            //Assert.IsTrue(userResourcePool.TotalProductionCost == 200);
+            //Assert.IsTrue(userResourcePool.TotalProfit == 200);
+            Assert.IsTrue(resourcePool.TotalResourcePoolFieldValue == 100);
+            Assert.IsTrue(resourcePool.TotalResourcePoolAddition == 100);
+            Assert.IsTrue(resourcePool.TotalResourcePoolFieldItemValueIncludingResourcePoolAddition == 200);
+            Assert.IsTrue(resourcePool.TotalIncome == 200);
+
+            Assert.IsTrue(resourcePoolIndex.IndexShare == 100);
+            //Assert.IsTrue(userResourcePoolIndex.IndexOrganizationValueMultiplied == 0.5M);
+
+            //Assert.IsTrue(organization1.mul userOrganization1.NumberOfSalesPercentage == 0.5M);
+            Assert.IsTrue(organization1.ResourcePoolFieldItemValue == 25);
+            Assert.IsTrue(organization1.ResourcePoolAddition == 25);
+            Assert.IsTrue(organization1.ResourcePoolFieldItemValueIncludingResourcePoolAddition == 50);
+            //Assert.IsTrue(userOrganization1.TotalProductionCost == 100);
+            //Assert.IsTrue(userOrganization1.TotalProfit == 100);
+            Assert.IsTrue(organization1.TotalResourcePoolFieldItemValue == 25);
+            Assert.IsTrue(organization1.TotalResourcePoolAddition == 25);
+            Assert.IsTrue(organization1.TotalResourcePoolFieldItemValueIncludingResourcePoolAddition == 50);
+            Assert.IsTrue(organization1.ResourcePoolIndexIncome == 75);
+            Assert.IsTrue(organization1.TotalIncome == 100);
+
+            //Assert.IsTrue(organization2.NumberOfSalesPercentage == 0.5M);
+            Assert.IsTrue(organization2.ResourcePoolFieldItemValue == 75);
+            Assert.IsTrue(organization2.ResourcePoolAddition == 75);
+            Assert.IsTrue(organization2.ResourcePoolFieldItemValueIncludingResourcePoolAddition == 150);
+            //Assert.IsTrue(userOrganization2.TotalProductionCost == 100);
+            //Assert.IsTrue(userOrganization2.TotalProfit == 100);
+            Assert.IsTrue(organization2.TotalResourcePoolFieldItemValue == 75);
+            Assert.IsTrue(organization2.TotalResourcePoolAddition == 75);
+            Assert.IsTrue(organization2.TotalResourcePoolFieldItemValueIncludingResourcePoolAddition == 150);
+            Assert.IsTrue(organization2.ResourcePoolIndexIncome == 25);
+            Assert.IsTrue(organization2.TotalIncome == 100);
+
+            //Assert.IsTrue(userResourcePoolIndexOrganization1.IndexIncome == 300);
+            //Assert.IsTrue(userResourcePoolIndexOrganization1.IndexValueMultiplied == 0.375M);
+            //Assert.IsTrue(userResourcePoolIndexOrganization1.IndexValuePercentage == 0.75M);
+
+            //Assert.IsTrue(userResourcePoolIndexOrganization2.IndexIncome == 100);
+            //Assert.IsTrue(userResourcePoolIndexOrganization2.IndexValueMultiplied == 0.125M);
+            //Assert.IsTrue(userResourcePoolIndexOrganization2.IndexValuePercentage == 0.25M);
+
+            //// ResourcePoolIndex - Rating Sort Type: Lowest to Highest
+            //resourcePoolIndex.RatingSortType = (byte)RatingSortType.LowestToHighest;
+
+            //// Results
+            ////Assert.IsTrue(organization1.NumberOfSalesPercentage == 0.5M);
+            //Assert.IsTrue(organization1.ResourcePoolFieldItemValue == 25);
+            //Assert.IsTrue(organization1.ResourcePoolAddition == 200);
+            //Assert.IsTrue(organization1.ResourcePoolFieldItemValueIncludingResourcePoolAddition == 400);
+            ////Assert.IsTrue(userOrganization1.TotalProductionCost == 100);
+            ////Assert.IsTrue(userOrganization1.TotalProfit == 100);
+            //Assert.IsTrue(organization1.TotalResourcePoolFieldItemValue == 200);
+            //Assert.IsTrue(organization1.TotalResourcePoolAddition == 200);
+            //Assert.IsTrue(organization1.TotalResourcePoolFieldItemValueIncludingResourcePoolAddition == 400);
+            //Assert.IsTrue(organization1.ResourcePoolIndexIncome == 100);
+            //Assert.IsTrue(organization1.TotalIncome == 300);
+
+            ////Assert.IsTrue(organization2.mul userOrganization2.NumberOfSalesPercentage == 0.5M);
+            //Assert.IsTrue(organization2.ResourcePoolFieldItemValue == 25);
+            //Assert.IsTrue(organization2.ResourcePoolAddition == 200);
+            //Assert.IsTrue(organization2.ResourcePoolFieldItemValueIncludingResourcePoolAddition == 400);
+            ////Assert.IsTrue(userOrganization2.TotalProductionCost == 100);
+            ////Assert.IsTrue(userOrganization2.TotalProfit == 100);
+            //Assert.IsTrue(organization2.TotalResourcePoolFieldItemValue == 200);
+            //Assert.IsTrue(organization2.TotalResourcePoolAddition == 200);
+            //Assert.IsTrue(organization2.TotalResourcePoolFieldItemValueIncludingResourcePoolAddition == 400);
+            //Assert.IsTrue(organization2.ResourcePoolIndexIncome == 300);
+            //Assert.IsTrue(organization2.TotalIncome == 500);
+
+            ////Assert.IsTrue(userOrganization1.IndexIncome == 100);
+            ////Assert.IsTrue(userOrganization1.NumberOfSalesPercentage == 0.5M);
+            ////Assert.IsTrue(userOrganization1.ResourcePoolTax == 200);
+            ////Assert.IsTrue(userOrganization1.SalesPriceIncludingResourcePoolTax == 400);
+            ////Assert.IsTrue(userOrganization1.TotalIncome == 300);
+            //////Assert.IsTrue(userOrganization1.TotalProductionCost == 100);
+            //////Assert.IsTrue(userOrganization1.TotalProfit == 100);
+            ////Assert.IsTrue(userOrganization1.TotalResourcePoolTax == 200);
+            ////Assert.IsTrue(userOrganization1.TotalSalesRevenue == 200);
+            ////Assert.IsTrue(userOrganization1.TotalSalesRevenueIncludingResourcePoolTax == 400);
+
+            ////Assert.IsTrue(userOrganization2.IndexIncome == 300);
+            ////Assert.IsTrue(userOrganization2.NumberOfSalesPercentage == 0.5M);
+            ////Assert.IsTrue(userOrganization2.ResourcePoolTax == 200);
+            ////Assert.IsTrue(userOrganization2.SalesPriceIncludingResourcePoolTax == 400);
+            ////Assert.IsTrue(userOrganization2.TotalIncome == 500);
+            //////Assert.IsTrue(userOrganization2.TotalProductionCost == 100);
+            //////Assert.IsTrue(userOrganization2.TotalProfit == 100);
+            ////Assert.IsTrue(userOrganization2.TotalResourcePoolTax == 200);
+            ////Assert.IsTrue(userOrganization2.TotalSalesRevenue == 200);
+            ////Assert.IsTrue(userOrganization2.TotalSalesRevenueIncludingResourcePoolTax == 400);
+
+            ////Assert.IsTrue(userResourcePoolIndexOrganization1.IndexIncome == 100);
+            ////Assert.IsTrue(userResourcePoolIndexOrganization1.IndexValueMultiplied == 0.125M);
+            ////Assert.IsTrue(userResourcePoolIndexOrganization1.IndexValuePercentage == 0.25M);
+
+            ////Assert.IsTrue(userResourcePoolIndexOrganization2.IndexIncome == 300);
+            ////Assert.IsTrue(userResourcePoolIndexOrganization2.IndexValueMultiplied == 0.375M);
+            ////Assert.IsTrue(userResourcePoolIndexOrganization2.IndexValuePercentage == 0.75M);
+        }
+
+        // TODO !
+        //[TestMethod]
+        // public void TwoElementItems_SingleIndex_TwoUsers()
+
+        #endregion
+
     }
 }
