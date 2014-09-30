@@ -55,12 +55,17 @@ namespace BusinessObjects
         }
 
 
-        public decimal RatingPercentageMultiplied
+        //public decimal RatingPercentageMultiplied
+        //{
+        //    get
+        //    {
+        //        return ElementItemElementFieldSet.Sum(item => item.RatingPercentageMultiplied);
+        //    }
+        //}
+
+        public decimal RatingAverageMultiplied
         {
-            get
-            {
-                return ElementItemElementFieldSet.Sum(item => item.RatingPercentageMultiplied);
-            }
+            get { return ElementItemElementFieldSet.Sum(item => item.RatingAverageMultiplied); }
         }
 
         // TODO Although technically it's possible to define multiple indexes, there will be one per Field at the moment

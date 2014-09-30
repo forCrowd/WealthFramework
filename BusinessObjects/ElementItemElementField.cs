@@ -94,39 +94,29 @@ namespace BusinessObjects
             }
         }
 
-        public decimal RatingPercentage
-        {
-            get
-            {
-                return ElementField.RatingAverage == 0
-                    ? 0
-                    : RatingAverage / ElementField.RatingAverage;
-            }
-        }
-
-        public decimal RatingPercentageMultiplied
+        public decimal RatingAverageMultiplied
         {
             get
             {
                 var mainElement = ElementItem.Element.ResourcePool.MainElement;
 
-                if (!mainElement.HasMultiplierField)
-                    return 0;
+                if (mainElement == null || !mainElement.HasMultiplierField)
+                    return RatingAverage;
 
                 // TODO BE CAREFUL ABOUT THIS, IT ASSUMES ALL ELEMENT ITEMS HAVE THE SAME MULTIPLIER VALUE, IMPROVE LATER!
                 var multiplierValue = mainElement.ElementItemSet.FirstOrDefault().MultiplierFieldItemValue;
 
-                return multiplierValue * RatingPercentage;
+                return multiplierValue * RatingAverage;
             }
         }
 
-        public decimal RatingPercentageMultipliedPercentage
+        public decimal RatingPercentage
         {
             get
             {
-                return ElementField.RatingPercentageMultiplied == 0
+                return ElementField.RatingAverageMultiplied == 0
                     ? 0
-                    : RatingPercentageMultiplied / ElementField.RatingPercentageMultiplied;
+                    : RatingAverageMultiplied / ElementField.RatingAverageMultiplied;
             }
         }
 
@@ -137,7 +127,7 @@ namespace BusinessObjects
                 if (ElementField.ResourcePoolIndex == null)
                     return 0;
 
-                var value = RatingPercentageMultipliedPercentage;
+                var value = RatingPercentage;
 
                 switch (ElementField.ResourcePoolIndex.RatingSortType)
                 {
@@ -152,33 +142,5 @@ namespace BusinessObjects
                 return ElementField.ResourcePoolIndexShare * value;
             }
         }
-
-        //public decimal ResourcePoolAddition
-        //{
-        //    get
-        //    {
-        //        // TODO Is it correct to throw an exception over here? How about serialization?
-
-        //        //if (!ElementField.IsResourcePoolField)
-        //        //    throw new ArgumentException("Invalid element field: IsResourcePoolField = false", "elementItemElementField");
-
-        //        //if (ElementField.ElementFieldType != (byte)ElementFieldType.Decimal)
-        //        //    throw new ArgumentException(string.Format("Invalid element field type: {0}", ElementField.ElementFieldType), "elementItemElementField");
-
-        //        return DecimalValue.HasValue
-        //            ? DecimalValue.Value * ElementField.Element.ResourcePool.ResourcePoolRatePercentage
-        //            : 0;
-        //    }
-        //}
-
-        //public decimal ValueIncludingResourcePoolAddition
-        //{
-        //    get
-        //    {
-        //        return DecimalValue.HasValue
-        //            ? DecimalValue.Value + ResourcePoolAddition
-        //            : 0;
-        //    }
-        //}
     }
 }

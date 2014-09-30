@@ -9,7 +9,7 @@ An experimental resource management system that aims to provide a sustainable ec
 **0.14.4**
 
 * IsMainElement field was added to Element table
-* ResourcePool and Multipler field types were added
+* ResourcePool and Multipler field types were added; Elemen table was replaced Organization table
 
 **0.14.3**
 

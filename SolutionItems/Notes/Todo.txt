@@ -103,7 +103,6 @@ public string LanguageID { get; set; }
 . highcharts library loading perf?
 
 . check userunitofwork + resourcepoolunitofwork + userresourcepoolunitofwork for sample records + delete cases
-. check chapters knowledge + sector indexes
 
 . update configuration.cs with element fields
 . make even the name as a element item and create it automatically when the element is created
@@ -116,9 +115,17 @@ public string LanguageID { get; set; }
 
 . add multiple fields test
 
-. CONTINUE WITH INDEXES!
-userresourcepoolindexelement.cs ?! ratingpercentage - multiplied - percentage - income quadro
-and then total income!
-try to replace/remove the organization completely
+. ismainelement -> DefaultElement
+. elementfield -> elementColumn
+. elementitem -> elementRow
+. elementitemelementfield -> elementcell
+. resourcepoolindex can be a field for elementfield table? Index boolean?
+. multiplier field type -> userelementitemelementfield can hold just the value but will be used as it is, not it's average (like Rating)
+currently number of sales is not on user level, but on elementitem level!
+. userelementitemelementfield rating -> value?
+. TotalResourcePoolFieldItemValueIncludingResourcePoolAddition -> !?!?!?!?
+. instead of MainElement boolean on Element level, can it be done with MainElement field on ResourcePool level?
+
+. CONTINUE WITH;
 check seed function + test + chapters (samples) etc.
-then clean all the old stuff!
+then clean all the obsolete stuff, including organization ?!
