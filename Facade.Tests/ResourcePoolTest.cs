@@ -1437,7 +1437,7 @@
             var resourcePoolIndex = new ResourcePoolIndex()
             {
                 ResourcePool = resourcePool,
-                ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicElementFieldIndex,
+                //ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicElementFieldIndex,
                 ElementField = organizationName,
                 RatingSortType = (byte)RatingSortType.HighestToLowest
             };
@@ -1663,7 +1663,7 @@
             var resourcePoolIndex = new ResourcePoolIndex()
             {
                 ResourcePool = resourcePool,
-                ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicElementFieldIndex,
+                //ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicElementFieldIndex,
                 ElementField = salesPrice,
                 RatingSortType = (byte)RatingSortType.LowestToHighest
             };

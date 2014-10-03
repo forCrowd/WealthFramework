@@ -29,9 +29,9 @@ namespace BusinessObjects
         [Display(Name = "Resource Pool Index")]
         public string Name { get; set; }
 
-        [Required]
-        [Display(Name = "Resource Pool Index Type")]
-        public byte ResourcePoolIndexType { get; set; }
+        //[Required]
+        //[Display(Name = "Resource Pool Index Type")]
+        //public byte ResourcePoolIndexType { get; set; }
         public Nullable<int> ElementId { get; set; }
         public Nullable<int> ElementFieldId { get; set; }
         
