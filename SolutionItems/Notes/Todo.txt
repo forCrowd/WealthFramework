@@ -133,8 +133,6 @@ public string LanguageID { get; set; }
 
 . add multiple fields test
 
-. models to Models folder
-
 . ismainelement -> DefaultElement
 . elementfield -> elementColumn
 . elementitem -> elementRow
