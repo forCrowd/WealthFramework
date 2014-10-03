@@ -12,10 +12,10 @@ namespace BusinessObjects
         {
             UserResourcePoolSet = new HashSet<UserResourcePool>();
             UserResourcePoolIndexSet = new HashSet<UserResourcePoolIndex>();
-            UserResourcePoolIndexValueSet = new HashSet<UserResourcePoolIndexValue>();
-            UserOrganizationSet = new HashSet<UserOrganization>();
+            //UserResourcePoolIndexValueSet = new HashSet<UserResourcePoolIndexValue>();
+            //UserOrganizationSet = new HashSet<UserOrganization>();
             UserElementItemElementFieldSet = new HashSet<UserElementItemElementField>();
-            UserElementItemSet = new HashSet<UserElementItem>();
+            //UserElementItemSet = new HashSet<UserElementItem>();
         }
 
         [DisplayOnListView(false)]
@@ -50,10 +50,10 @@ namespace BusinessObjects
 
         public virtual ICollection<UserResourcePool> UserResourcePoolSet { get; set; }
         public virtual ICollection<UserResourcePoolIndex> UserResourcePoolIndexSet { get; set; }
-        public virtual ICollection<UserResourcePoolIndexValue> UserResourcePoolIndexValueSet { get; set; }
-        public virtual ICollection<UserOrganization> UserOrganizationSet { get; set; }
+        //public virtual ICollection<UserResourcePoolIndexValue> UserResourcePoolIndexValueSet { get; set; }
+        //public virtual ICollection<UserOrganization> UserOrganizationSet { get; set; }
         public virtual ICollection<UserElementItemElementField> UserElementItemElementFieldSet { get; set; }
-        public virtual ICollection<UserElementItem> UserElementItemSet { get; set; }
+        //public virtual ICollection<UserElementItem> UserElementItemSet { get; set; }
 
 
     }

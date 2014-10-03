@@ -35,67 +35,67 @@ namespace BusinessObjects
             get { return string.Format("{0} - {1}", User.Email, ResourcePool.Name); }
         }
 
-        // A bit weird navigation property.
-        // To prevent this (or ideally), there needs to be a foreign key between this class and UserOrganization (UserResourcePoolId on UserOrganization).
-        public IEnumerable<UserOrganization> UserOrganizationSet
-        {
-            get
-            {
-                return User
-                    .UserOrganizationSet
-                    .Where(item => item.Organization.ResourcePool == ResourcePool);
-            }
-        }
+        //// A bit weird navigation property.
+        //// To prevent this (or ideally), there needs to be a foreign key between this class and UserOrganization (UserResourcePoolId on UserOrganization).
+        //public IEnumerable<UserOrganization> UserOrganizationSet
+        //{
+        //    get
+        //    {
+        //        return User
+        //            .UserOrganizationSet
+        //            .Where(item => item.Organization.ResourcePool == ResourcePool);
+        //    }
+        //}
 
-        public decimal ResourcePoolRatePercentage
-        {
-            get { return ResourcePoolRate / 100; }
-        }
+        //public decimal ResourcePoolRatePercentage
+        //{
+        //    get { return ResourcePoolRate / 100; }
+        //}
 
-        public decimal ResourcePoolTax
-        {
-            get { return UserOrganizationSet.Sum(item => item.ResourcePoolTax); }
-        }
+        //public decimal ResourcePoolTax
+        //{
+        //    get { return UserOrganizationSet.Sum(item => item.ResourcePoolTax); }
+        //}
 
-        public decimal SalesPriceIncludingResourcePoolTax
-        {
-            get { return UserOrganizationSet.Sum(item => item.SalesPriceIncludingResourcePoolTax); }
-        }
+        //public decimal SalesPriceIncludingResourcePoolTax
+        //{
+        //    get { return UserOrganizationSet.Sum(item => item.SalesPriceIncludingResourcePoolTax); }
+        //}
 
-        public int NumberOfSales
-        {
-            get { return UserOrganizationSet.Sum(item => item.NumberOfSales); }
-        }
+        //public int NumberOfSales
+        //{
+        //    get { return UserOrganizationSet.Sum(item => item.NumberOfSales); }
+        //}
 
         //public decimal TotalProductionCost
         //{
         //    get { return UserOrganizationSet.Sum(item => item.TotalProductionCost); }
         //}
 
-        public decimal TotalSalesRevenue
-        {
-            get { return UserOrganizationSet.Sum(item => item.TotalSalesRevenue); }
-        }
+        //public decimal TotalSalesRevenue
+        //{
+        //    get { return UserOrganizationSet.Sum(item => item.TotalSalesRevenue); }
+        //}
 
         //public decimal TotalProfit
         //{
         //    get { return UserOrganizationSet.Sum(item => item.TotalProfit); }
         //}
 
-        public decimal TotalResourcePoolTax
-        {
-            get { return UserOrganizationSet.Sum(item => item.TotalResourcePoolTax); }
-        }
+        //public decimal TotalResourcePoolTax
+        //{
+        //    get { return UserOrganizationSet.Sum(item => item.TotalResourcePoolTax); }
+        //}
 
-        public decimal TotalSalesRevenueIncludingResourcePoolTax
-        {
-            get { return UserOrganizationSet.Sum(item => item.TotalSalesRevenueIncludingResourcePoolTax); }
-        }
+        //public decimal TotalSalesRevenueIncludingResourcePoolTax
+        //{
+        //    get { return UserOrganizationSet.Sum(item => item.TotalSalesRevenueIncludingResourcePoolTax); }
+        //}
 
-        public decimal TotalIncome
-        {
-            get { return UserOrganizationSet.Sum(item => item.TotalIncome); }
-        }
+        //public decimal TotalIncome
+        //{
+        //    get { return UserOrganizationSet.Sum(item => item.TotalIncome); }
+        //}
 
         #endregion
     }

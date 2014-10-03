@@ -12,7 +12,7 @@ namespace BusinessObjects.ViewModels
             Id = userResourcePool.Id;
             ResourcePoolName = userResourcePool.ResourcePool.Name;
             ResourcePoolRate = userResourcePool.ResourcePoolRate;
-            ResourcePoolRatePercentage = userResourcePool.ResourcePoolRatePercentage;
+            ResourcePoolRatePercentage = userResourcePool.ResourcePool.ResourcePoolRatePercentage;
             UserResourcePoolRatingCount = userResourcePool.ResourcePool.UserResourcePoolSet.Count;
 
             ResourcePoolIndexSet = userResourcePool
@@ -30,12 +30,12 @@ namespace BusinessObjects.ViewModels
             MainElement = new Element(userResourcePool.ResourcePool.MainElement);
 
             //ResourcePoolProductionCost = userResourcePool.ResourcePool.ProductionCost;
-            ResourcePoolSalesPrice = userResourcePool.ResourcePool.SalesPrice;
-            SalesPriceIncludingResourcePoolTax = userResourcePool.SalesPriceIncludingResourcePoolTax;
-            NumberOfSales = userResourcePool.NumberOfSales;
+            //ResourcePoolSalesPrice = userResourcePool.ResourcePool.SalesPrice;
+            //SalesPriceIncludingResourcePoolTax = userResourcePool.SalesPriceIncludingResourcePoolTax;
+            //NumberOfSales = userResourcePool.NumberOfSales;
             //TotalProfit = userResourcePool.TotalProfit;
-            TotalResourcePoolTax = userResourcePool.TotalResourcePoolTax;
-            TotalSalesRevenueIncludingResourcePoolTax = userResourcePool.TotalSalesRevenueIncludingResourcePoolTax;
+            //TotalResourcePoolTax = userResourcePool.TotalResourcePoolTax;
+            //TotalSalesRevenueIncludingResourcePoolTax = userResourcePool.TotalSalesRevenueIncludingResourcePoolTax;
             TotalIncome = userResourcePool.ResourcePool.TotalIncome;
         }
 
@@ -45,7 +45,7 @@ namespace BusinessObjects.ViewModels
         public decimal ResourcePoolRatePercentage { get; set; }
         public int UserResourcePoolRatingCount { get; set; }
         public IEnumerable<ResourcePoolIndex> ResourcePoolIndexSet { get; set; }
-        public IEnumerable<UserOrganization> UserOrganizationSet { get; set; }
+        //public IEnumerable<UserOrganization> UserOrganizationSet { get; set; }
         public IEnumerable<Element> ElementSet { get; set; }
         public Element MainElement { get; set; }
         public IEnumerable<UserElementItemElementField> UserElementItemElementFieldSet { get; set; }

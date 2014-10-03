@@ -40,10 +40,10 @@ namespace BusinessObjects
         /// <summary>
         /// REMARK: In other index types, this value is calculated on ResourcePoolIndex class level, under IndexValue property
         /// </summary>
-        public decimal RatingAverage
-        {
-            get { return ElementItemSet.Sum(item => item.RatingAverage); }
-        }
+        //public decimal RatingAverage
+        //{
+        //    get { return ElementItemSet.Sum(item => item.RatingAverage); }
+        //}
 
         public IEnumerable<ElementField> BasicElementFieldSet
         {

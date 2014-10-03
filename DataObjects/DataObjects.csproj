@@ -88,12 +88,6 @@
     <Compile Include="Generated\ElementRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
-    <Compile Include="Generated\OrganizationElementItemRepository.cs">
-      <DependentUpon>Repository.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\OrganizationRepository.cs">
-      <DependentUpon>Repository.tt</DependentUpon>
-    </Compile>
     <Compile Include="Generated\ResourcePoolIndexRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
@@ -103,19 +97,10 @@
     <Compile Include="Generated\UserElementItemElementFieldRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
-    <Compile Include="Generated\UserElementItemRepository.cs">
-      <DependentUpon>Repository.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\UserOrganizationRepository.cs">
-      <DependentUpon>Repository.tt</DependentUpon>
-    </Compile>
     <Compile Include="Generated\UserRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
     <Compile Include="Generated\UserResourcePoolIndexRepository.cs">
-      <DependentUpon>Repository.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\UserResourcePoolIndexValueRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
     <Compile Include="Generated\UserResourcePoolRepository.cs">
@@ -205,6 +190,10 @@
     <Compile Include="Migrations\201410030814090_V0_14_5.cs" />
     <Compile Include="Migrations\201410030814090_V0_14_5.Designer.cs">
       <DependentUpon>201410030814090_V0_14_5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201410031210308_V0_14_6.cs" />
+    <Compile Include="Migrations\201410031210308_V0_14_6.Designer.cs">
+      <DependentUpon>201410031210308_V0_14_6.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="DatabaseInitializer.cs" />
@@ -298,6 +287,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201410030814090_V0_14_5.resx">
       <DependentUpon>201410030814090_V0_14_5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201410031210308_V0_14_6.resx">
+      <DependentUpon>201410031210308_V0_14_6.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

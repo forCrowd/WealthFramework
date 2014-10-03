@@ -133,6 +133,8 @@ public string LanguageID { get; set; }
 
 . add multiple fields test
 
+. models to Models folder
+
 . ismainelement -> DefaultElement
 . elementfield -> elementColumn
 . elementitem -> elementRow
@@ -146,6 +148,8 @@ currently number of sales is not on user level, but on elementitem level!
 . subtotals; sales price, sales price incl. tax, number of sales, total tax, total sales price incl. tax, total income
 . userelementitemelementfield ratings + counts?
 . display index's own ratings + counts?
+
+. userResourcePool view recursive selectedElementItem part
 
 . CONTINUE WITH;
 check seed function + test + chapters (samples) etc.

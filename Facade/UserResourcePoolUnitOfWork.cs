@@ -9,7 +9,7 @@
     {
         ResourcePoolRepository resourcePoolRepository;
         UserResourcePoolIndexRepository userResourcePoolIndexRepository;
-        UserOrganizationRepository userOrganizationRepository;
+        //UserOrganizationRepository userOrganizationRepository;
 
         ResourcePoolRepository ResourcePoolRepository
         {
@@ -21,10 +21,10 @@
             get { return userResourcePoolIndexRepository ?? (userResourcePoolIndexRepository = new UserResourcePoolIndexRepository(Context)); }
         }
 
-        UserOrganizationRepository UserOrganizationRepository
-        {
-            get { return userOrganizationRepository ?? (userOrganizationRepository = new UserOrganizationRepository(Context)); }
-        }
+        //UserOrganizationRepository UserOrganizationRepository
+        //{
+        //    get { return userOrganizationRepository ?? (userOrganizationRepository = new UserOrganizationRepository(Context)); }
+        //}
 
         public enum UpdateNumberOfSalesActions
         {
@@ -52,17 +52,17 @@
                 UserResourcePoolIndexRepository.Insert(sampleUserResourcePoolIndex);
             }
 
-            var organizations = resourcePool.OrganizationSet;
-            foreach (var organization in organizations)
-            {
-                var sampleUserOrganization = new UserOrganization()
-                {
-                    UserId = userResourcePool.UserId,
-                    Organization = organization,
-                    NumberOfSales = 0
-                };
-                UserOrganizationRepository.Insert(sampleUserOrganization);
-            }
+            //var organizations = resourcePool.OrganizationSet;
+            //foreach (var organization in organizations)
+            //{
+            //    var sampleUserOrganization = new UserOrganization()
+            //    {
+            //        UserId = userResourcePool.UserId,
+            //        Organization = organization,
+            //        NumberOfSales = 0
+            //    };
+            //    UserOrganizationRepository.Insert(sampleUserOrganization);
+            //}
 
             return await base.InsertAsync(userResourcePool);
         }
@@ -99,23 +99,23 @@
 
         void UpdateNumberOfSales(UserResourcePool userResourcePool, UpdateNumberOfSalesActions action)
         {
-            foreach (var organization in userResourcePool.UserOrganizationSet)
-            {
-                switch (action)
-                {
-                    case UpdateNumberOfSalesActions.Increase:
-                        organization.NumberOfSales++;
-                        break;
-                    case UpdateNumberOfSalesActions.Decrease:
-                        if (organization.NumberOfSales > 0)
-                            organization.NumberOfSales--;
-                        break;
-                    case UpdateNumberOfSalesActions.Reset:
-                        organization.NumberOfSales = 0;
-                        break;
-                }
-                UserOrganizationRepository.Update(organization);
-            }
+            //foreach (var organization in userResourcePool.UserOrganizationSet)
+            //{
+            //    switch (action)
+            //    {
+            //        case UpdateNumberOfSalesActions.Increase:
+            //            organization.NumberOfSales++;
+            //            break;
+            //        case UpdateNumberOfSalesActions.Decrease:
+            //            if (organization.NumberOfSales > 0)
+            //                organization.NumberOfSales--;
+            //            break;
+            //        case UpdateNumberOfSalesActions.Reset:
+            //            organization.NumberOfSales = 0;
+            //            break;
+            //    }
+            //    UserOrganizationRepository.Update(organization);
+            //}
         }
 
         public override async Task<int> DeleteAsync(params object[] id)
@@ -123,8 +123,8 @@
             // TODO How about retrieving it by using Include?
             var userResourcePool = Find(id);
 
-            // Delete child items first
-            UserOrganizationRepository.DeleteRange(userResourcePool.UserOrganizationSet);
+            //// Delete child items first
+            //UserOrganizationRepository.DeleteRange(userResourcePool.UserOrganizationSet);
 
             // Delete main item
             return await base.DeleteAsync(id);

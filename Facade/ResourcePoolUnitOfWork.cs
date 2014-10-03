@@ -8,20 +8,20 @@
     public partial class ResourcePoolUnitOfWork
     {
         ResourcePoolIndexRepository resourcePoolIndexRepository;
-        OrganizationRepository organizationRepository;
+        //OrganizationRepository organizationRepository;
         UserResourcePoolRepository userResourcePoolRepository;
         UserResourcePoolIndexRepository userResourcePoolIndexRepository;
-        UserOrganizationRepository userOrganizationRepository;
+        //UserOrganizationRepository userOrganizationRepository;
 
         public ResourcePoolIndexRepository ResourcePoolIndexRepository
         {
             get { return resourcePoolIndexRepository ?? (resourcePoolIndexRepository = new ResourcePoolIndexRepository(Context)); }
         }
 
-        public OrganizationRepository OrganizationRepository
-        {
-            get { return organizationRepository ?? (organizationRepository = new OrganizationRepository(Context)); }
-        }
+        //public OrganizationRepository OrganizationRepository
+        //{
+        //    get { return organizationRepository ?? (organizationRepository = new OrganizationRepository(Context)); }
+        //}
 
         UserResourcePoolRepository UserResourcePoolRepository
         {
@@ -33,10 +33,10 @@
             get { return userResourcePoolIndexRepository ?? (userResourcePoolIndexRepository = new UserResourcePoolIndexRepository(Context)); }
         }
 
-        UserOrganizationRepository UserOrganizationRepository
-        {
-            get { return userOrganizationRepository ?? (userOrganizationRepository = new UserOrganizationRepository(Context)); }
-        }
+        //UserOrganizationRepository UserOrganizationRepository
+        //{
+        //    get { return userOrganizationRepository ?? (userOrganizationRepository = new UserOrganizationRepository(Context)); }
+        //}
 
         public async Task<int> InsertAsync(ResourcePool entity, int userId)
         {
@@ -52,14 +52,14 @@
             //};
             //ResourcePoolIndexRepository.Insert(sampleResourcePoolIndex);
 
-            var sampleOrganization = new Organization()
-            {
-                ResourcePool = entity,
-                Name = "Generic Organization",
-                //ProductionCost = 0,
-                SalesPrice = 0
-            };
-            OrganizationRepository.Insert(sampleOrganization);
+            //var sampleOrganization = new Organization()
+            //{
+            //    ResourcePool = entity,
+            //    Name = "Generic Organization",
+            //    //ProductionCost = 0,
+            //    SalesPrice = 0
+            //};
+            //OrganizationRepository.Insert(sampleOrganization);
 
             CreateUserResourcePool(entity, userId);
 
@@ -108,17 +108,17 @@
                 UserResourcePoolIndexRepository.Insert(sampleUserResourcePoolIndex);
             }
 
-            var organizations = resourcePool.OrganizationSet;
-            foreach (var organization in organizations)
-            {
-                var sampleUserOrganization = new UserOrganization()
-                {
-                    UserId = userResourcePool.UserId,
-                    Organization = organization,
-                    NumberOfSales = 0
-                };
-                UserOrganizationRepository.Insert(sampleUserOrganization);
-            }
+            //var organizations = resourcePool.OrganizationSet;
+            //foreach (var organization in organizations)
+            //{
+            //    var sampleUserOrganization = new UserOrganization()
+            //    {
+            //        UserId = userResourcePool.UserId,
+            //        Organization = organization,
+            //        NumberOfSales = 0
+            //    };
+            //    UserOrganizationRepository.Insert(sampleUserOrganization);
+            //}
         }
 
         #endregion

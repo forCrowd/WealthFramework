@@ -16,8 +16,8 @@ namespace BusinessObjects
         {
             ElementItemElementFieldSet = new HashSet<ElementItemElementField>();
             ElementItemElementFieldSelectedElementItemSet = new HashSet<ElementItemElementField>();
-            OrganizationElementItemSet = new HashSet<OrganizationElementItem>();
-            UserElementItemSet = new HashSet<UserElementItem>();
+            //OrganizationElementItemSet = new HashSet<OrganizationElementItem>();
+            //UserElementItemSet = new HashSet<UserElementItem>();
         }
 
         [DisplayOnListView(false)]
@@ -35,35 +35,35 @@ namespace BusinessObjects
         public virtual ICollection<ElementItemElementField> ElementItemElementFieldSet { get; set; }
         [InverseProperty("SelectedElementItem")]
         public virtual ICollection<ElementItemElementField> ElementItemElementFieldSelectedElementItemSet { get; set; }
-        public virtual ICollection<OrganizationElementItem> OrganizationElementItemSet { get; set; }
-        public virtual ICollection<UserElementItem> UserElementItemSet { get; set; }
+        //public virtual ICollection<OrganizationElementItem> OrganizationElementItemSet { get; set; }
+        //public virtual ICollection<UserElementItem> UserElementItemSet { get; set; }
 
         /* */
 
-        public int RatingCount
-        {
-            get { return UserElementItemSet.Count(); }
-        }
+        //public int RatingCount
+        //{
+        //    get { return UserElementItemSet.Count(); }
+        //}
 
-        public decimal RatingAverage
-        {
-            get
-            {
-                return UserElementItemSet.Any()
-                    ? UserElementItemSet.Average(item => item.Rating)
-                    : 0;
-            }
-        }
+        //public decimal RatingAverage
+        //{
+        //    get
+        //    {
+        //        return UserElementItemSet.Any()
+        //            ? UserElementItemSet.Average(item => item.Rating)
+        //            : 0;
+        //    }
+        //}
 
-        public decimal RatingPercentage
-        {
-            get
-            {
-                return Element.RatingAverage == 0
-                    ? 0
-                    : RatingAverage / Element.RatingAverage;
-            }
-        }
+        //public decimal RatingPercentage
+        //{
+        //    get
+        //    {
+        //        return Element.RatingAverage == 0
+        //            ? 0
+        //            : RatingAverage / Element.RatingAverage;
+        //    }
+        //}
 
         public IEnumerable<ElementItemElementField> BasicElementItemElementFieldSet
         {

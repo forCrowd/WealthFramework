@@ -37,14 +37,6 @@ SH - 09 May '14
     <script src="/App/scripts/controllers/manage/list/elementItemElementFieldListController.js"></script>\
     <script src="/App/scripts/controllers/manage/edit/elementItemElementFieldEditController.js"></script>\
 	\
-    <script src="/App/scripts/services/generated/organizationService.js"></script>\
-    <script src="/App/scripts/controllers/manage/list/organizationListController.js"></script>\
-    <script src="/App/scripts/controllers/manage/edit/organizationEditController.js"></script>\
-	\
-    <script src="/App/scripts/services/generated/organizationElementItemService.js"></script>\
-    <script src="/App/scripts/controllers/manage/list/organizationElementItemListController.js"></script>\
-    <script src="/App/scripts/controllers/manage/edit/organizationElementItemEditController.js"></script>\
-	\
     <script src="/App/scripts/services/generated/resourcePoolService.js"></script>\
     <script src="/App/scripts/controllers/manage/list/resourcePoolListController.js"></script>\
     <script src="/App/scripts/controllers/manage/edit/resourcePoolEditController.js"></script>\
@@ -57,17 +49,9 @@ SH - 09 May '14
     <script src="/App/scripts/controllers/manage/list/userListController.js"></script>\
     <script src="/App/scripts/controllers/manage/edit/userEditController.js"></script>\
 	\
-    <script src="/App/scripts/services/generated/userElementItemService.js"></script>\
-    <script src="/App/scripts/controllers/manage/list/userElementItemListController.js"></script>\
-    <script src="/App/scripts/controllers/manage/edit/userElementItemEditController.js"></script>\
-	\
     <script src="/App/scripts/services/generated/userElementItemElementFieldService.js"></script>\
     <script src="/App/scripts/controllers/manage/list/userElementItemElementFieldListController.js"></script>\
     <script src="/App/scripts/controllers/manage/edit/userElementItemElementFieldEditController.js"></script>\
-	\
-    <script src="/App/scripts/services/generated/userOrganizationService.js"></script>\
-    <script src="/App/scripts/controllers/manage/list/userOrganizationListController.js"></script>\
-    <script src="/App/scripts/controllers/manage/edit/userOrganizationEditController.js"></script>\
 	\
     <script src="/App/scripts/services/generated/userResourcePoolService.js"></script>\
     <script src="/App/scripts/controllers/manage/list/userResourcePoolListController.js"></script>\
@@ -76,10 +60,6 @@ SH - 09 May '14
     <script src="/App/scripts/services/generated/userResourcePoolIndexService.js"></script>\
     <script src="/App/scripts/controllers/manage/list/userResourcePoolIndexListController.js"></script>\
     <script src="/App/scripts/controllers/manage/edit/userResourcePoolIndexEditController.js"></script>\
-	\
-    <script src="/App/scripts/services/generated/userResourcePoolIndexValueService.js"></script>\
-    <script src="/App/scripts/controllers/manage/list/userResourcePoolIndexValueListController.js"></script>\
-    <script src="/App/scripts/controllers/manage/edit/userResourcePoolIndexValueEditController.js"></script>\
 	\
 \
 ');

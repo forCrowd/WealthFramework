@@ -16,7 +16,7 @@ namespace BusinessObjects
         {
             ElementSet = new HashSet<Element>();
             ResourcePoolIndexSet = new HashSet<ResourcePoolIndex>();
-            OrganizationSet = new HashSet<Organization>();
+            //OrganizationSet = new HashSet<Organization>();
             UserResourcePoolSet = new HashSet<UserResourcePool>();
         }
 
@@ -36,7 +36,7 @@ namespace BusinessObjects
 
         public virtual ICollection<ResourcePoolIndex> ResourcePoolIndexSet { get; set; }
         public virtual ICollection<Element> ElementSet { get; set; }
-        public virtual ICollection<Organization> OrganizationSet { get; set; }
+        //public virtual ICollection<Organization> OrganizationSet { get; set; }
         public virtual ICollection<UserResourcePool> UserResourcePoolSet { get; set; }
 
         //public ResourcePoolIndex TotalCostIndex
@@ -110,10 +110,10 @@ namespace BusinessObjects
         //    get { return OrganizationSet.Sum(organization => organization.ProductionCost); }
         //}
 
-        public decimal SalesPrice
-        {
-            get { return OrganizationSet.Sum(organization => organization.SalesPrice); }
-        }
+        //public decimal SalesPrice
+        //{
+        //    get { return OrganizationSet.Sum(organization => organization.SalesPrice); }
+        //}
 
         //public decimal Profit
         //{

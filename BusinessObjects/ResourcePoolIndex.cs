@@ -46,16 +46,16 @@ namespace BusinessObjects
 
         /* */
 
-        public IEnumerable<ResourcePoolIndexOrganization> ResourcePoolIndexOrganizationSet
-        {
-            get
-            {
-                var list = new HashSet<ResourcePoolIndexOrganization>();
-                foreach (var item in ResourcePool.OrganizationSet)
-                    list.Add(new ResourcePoolIndexOrganization(this, item));
-                return list;
-            }
-        }
+        //public IEnumerable<ResourcePoolIndexOrganization> ResourcePoolIndexOrganizationSet
+        //{
+        //    get
+        //    {
+        //        var list = new HashSet<ResourcePoolIndexOrganization>();
+        //        foreach (var item in ResourcePool.OrganizationSet)
+        //            list.Add(new ResourcePoolIndexOrganization(this, item));
+        //        return list;
+        //    }
+        //}
 
         //public IEnumerable<ResourcePoolIndexElementItemElementField> ResourcePoolIndexElementItemElementFieldSet
         //{

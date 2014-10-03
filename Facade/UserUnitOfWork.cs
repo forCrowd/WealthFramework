@@ -10,7 +10,7 @@
     {
         ResourcePoolRepository resourcePoolRepository;
         UserResourcePoolRepository userResourcePoolRepository;
-        UserOrganizationRepository userOrganizationRepository;
+        //UserOrganizationRepository userOrganizationRepository;
 
         ResourcePoolRepository ResourcePoolRepository
         {
@@ -22,10 +22,10 @@
             get { return userResourcePoolRepository ?? (userResourcePoolRepository = new UserResourcePoolRepository(Context)); }
         }
 
-        UserOrganizationRepository UserOrganizationRepository
-        {
-            get { return userOrganizationRepository ?? (userOrganizationRepository = new UserOrganizationRepository(Context)); }
-        }
+        //UserOrganizationRepository UserOrganizationRepository
+        //{
+        //    get { return userOrganizationRepository ?? (userOrganizationRepository = new UserOrganizationRepository(Context)); }
+        //}
 
         public async Task<int> InsertAsync(User user, int sampleUserId)
         {
@@ -71,7 +71,7 @@
 
         void DeleteSampleData(User user)
         {
-            UserOrganizationRepository.DeleteRange(user.UserOrganizationSet);
+            //UserOrganizationRepository.DeleteRange(user.UserOrganizationSet);
             UserResourcePoolRepository.DeleteRange(user.UserResourcePoolSet);
         }
 
@@ -94,22 +94,22 @@
                 UserResourcePoolRepository.Insert(userResourcePool);
             }
 
-            // User organizations
-            var sampleOrganizations = UserOrganizationRepository
-                .AllLive
-                .Include(item => item.Organization)
-                .Where(item => item.UserId == sourceUserId && item.Organization.ResourcePool.IsSample);
+            //// User organizations
+            //var sampleOrganizations = UserOrganizationRepository
+            //    .AllLive
+            //    .Include(item => item.Organization)
+            //    .Where(item => item.UserId == sourceUserId && item.Organization.ResourcePool.IsSample);
 
-            foreach (var sampleOrganization in sampleOrganizations)
-            {
-                var userOrganization = new UserOrganization()
-                {
-                    User = targetUser,
-                    Organization = sampleOrganization.Organization,
-                    NumberOfSales = sampleOrganization.NumberOfSales
-                };
-                UserOrganizationRepository.Insert(userOrganization);
-            }
+            //foreach (var sampleOrganization in sampleOrganizations)
+            //{
+            //    var userOrganization = new UserOrganization()
+            //    {
+            //        User = targetUser,
+            //        Organization = sampleOrganization.Organization,
+            //        NumberOfSales = sampleOrganization.NumberOfSales
+            //    };
+            //    UserOrganizationRepository.Insert(userOrganization);
+            //}
         }
 
         #endregion

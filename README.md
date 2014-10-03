@@ -6,6 +6,10 @@ An experimental resource management system that aims to provide a sustainable ec
 
 ### Release Notes
 
+**0.14.6**
+
+* Clean-up
+
 **0.14.5**
 
 * Element parent - child structure
