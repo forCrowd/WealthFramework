@@ -75,7 +75,23 @@ config.EnableQuerySupport(queryAttribute);
 
 . result of datetime (ticks) index is bit useless? need reference a start or end date as a reference?
 
-. vs update 2 + 3 changes -> asp.net identity
+. vs update 2 + 3 changes -> asp.net identity + odata4
+
+. Install-Package Microsoft.AspNet.WebApi.HelpPage
+
+.. gather these under performance / optimization
+. web.config httpcompression?
+. miniprofiler - is this similar with glimpse?
+
+. automapper?
+
+. javascript logging; http://jsnlog.com/
+
+. what happened to appveyor?
+
+. karma js tester?
+
+. http://ricostacruz.com/nprogress/ ?
 
 . [Route("users/{id:int:min(1)}")] ?
 
@@ -102,6 +118,8 @@ public string LanguageID { get; set; }
 
 . highcharts library loading perf?
 
+. warm-up script?
+
 . check userunitofwork + resourcepoolunitofwork + userresourcepoolunitofwork for sample records + delete cases
 
 . update configuration.cs with element fields
@@ -125,6 +143,9 @@ currently number of sales is not on user level, but on elementitem level!
 . userelementitemelementfield rating -> value?
 . TotalResourcePoolFieldItemValueIncludingResourcePoolAddition -> !?!?!?!?
 . instead of MainElement boolean on Element level, can it be done with MainElement field on ResourcePool level?
+. subtotals; sales price, sales price incl. tax, number of sales, total tax, total sales price incl. tax, total income
+. userelementitemelementfield ratings + counts?
+. display index's own ratings + counts?
 
 . CONTINUE WITH;
 check seed function + test + chapters (samples) etc.

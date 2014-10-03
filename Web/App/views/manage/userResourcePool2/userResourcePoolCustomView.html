@@ -53,12 +53,12 @@
                 <br />
                 <table class="table">
                     <tr>
-                        <!--<th>
-                            Multiplied
+                        <th>
+                            Rating Avg. Multiplied
                         </th>
                         <th>
-                            Percentage
-                        </th>-->
+                            Rating Percentage
+                        </th>
                         <th>
                             Income
                         </th>
@@ -120,16 +120,16 @@
             <!-- Indexes -->
             <td data-ng-repeat="item in vm.userResourcePool.ResourcePoolIndexSet">
                 <div data-ng-repeat="elementItemElementField in elementItem.ElementItemElementFieldSet">
-                    <table class="table">
+                    <table class="table" data-ng-show="item.ElementFieldId === elementItemElementField.ElementFieldId">
                         <tr>
-                            <!--<td>
-                                {{ indexOrganization.IndexValueMultiplied | number:2 }}
+                            <td>
+                                {{ elementItemElementField.RatingAverageMultiplied | number:2 }}
                             </td>
                             <td>
-                                {{ indexOrganization.IndexValuePercentage | percentage:2 }}
-                            </td>-->
-                            <td data-ng-show="item.ElementFieldId === elementItemElementField.ElementFieldId">
-                                {{ elementItemElementField.ResourcePoolIndexIncome }}
+                                {{ elementItemElementField.RatingPercentage | percentage:2 }}
+                            </td>
+                            <td>
+                                {{ elementItemElementField.ResourcePoolIndexIncome | number:2 }}
                             </td>
                         </tr>
                     </table>
@@ -178,15 +178,9 @@
             <td data-ng-repeat="item in vm.userResourcePool.ResourcePoolIndexSet">
                 <table class="table">
                     <tr>
-                        <!--<th>
+                        <td colspan="3">
                             &nbsp;
-                        </th>
-                        <th>
-                            &nbsp;
-                        </th>-->
-                        <th>
-                            &nbsp;
-                        </th>
+                        </td>
                     </tr>
                 </table>
             </td>

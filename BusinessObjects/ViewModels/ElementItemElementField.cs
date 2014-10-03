@@ -18,6 +18,8 @@ namespace BusinessObjects.ViewModels
             DecimalValue = elementItemElementField.DecimalValue;
             DateTimeValue = elementItemElementField.DateTimeValue;
 
+            RatingAverageMultiplied = elementItemElementField.RatingAverageMultiplied;
+            RatingPercentage = elementItemElementField.RatingPercentage;
             ResourcePoolIndexIncome = elementItemElementField.ResourcePoolIndexIncome;
         }
 
@@ -31,6 +33,8 @@ namespace BusinessObjects.ViewModels
         public Nullable<decimal> DecimalValue { get; set; }
         public Nullable<DateTime> DateTimeValue { get; set; }
 
+        public decimal RatingAverageMultiplied { get; set; }
+        public decimal RatingPercentage { get; set; }
         public decimal ResourcePoolIndexIncome { get; set; }
     }
 }
