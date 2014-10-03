@@ -8,10 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 -->
-<div data-ng-controller="elementItemElementFieldListController as vm">
+<div data-ng-controller="elementCellListController as vm">
     <h2>List</h2>
     <p>
-        <a href="/manage/elementItemElementField/new">Create New</a>
+        <a href="/manage/elementCell/new">Create New</a>
     </p>
     <table class="table">
         <tr>
@@ -41,34 +41,34 @@
             </th>
             <th></th>
         </tr>
-        <tr data-ng-repeat="elementItemElementField in vm.elementItemElementFieldSet">
+        <tr data-ng-repeat="elementCell in vm.elementCellSet">
             <td>
-                {{ elementItemElementField.ElementItem.Name }}
+                {{ elementCell.ElementItem.Name }}
             </td>
             <td>
-                {{ elementItemElementField.ElementField.Name }}
+                {{ elementCell.ElementField.Name }}
             </td>
             <td>
-                {{ elementItemElementField.StringValue }}
+                {{ elementCell.StringValue }}
             </td>
             <td>
-                {{ elementItemElementField.BooleanValue }}
+                {{ elementCell.BooleanValue }}
             </td>
             <td>
-                {{ elementItemElementField.IntegerValue }}
+                {{ elementCell.IntegerValue }}
             </td>
             <td>
-                {{ elementItemElementField.DecimalValue }}
+                {{ elementCell.DecimalValue }}
             </td>
             <td>
-                {{ elementItemElementField.DateTimeValue }}
+                {{ elementCell.DateTimeValue }}
             </td>
             <td>
-                {{ elementItemElementField.SelectedElementItemId }}
+                {{ elementCell.SelectedElementItemId }}
             </td>
             <td>
-                <a href="/manage/elementItemElementField/edit/{{ elementItemElementField.Id }}">Edit</a> |
-                <a href="" data-ng-click="vm.deleteElementItemElementField(elementItemElementField)">
+                <a href="/manage/elementCell/edit/{{ elementCell.Id }}">Edit</a> |
+                <a href="" data-ng-click="vm.deleteElementCell(elementCell)">
                     Delete
                 </a>
             </td>

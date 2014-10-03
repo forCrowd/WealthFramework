@@ -1407,30 +1407,30 @@
             var organization1 = new ElementItem() { Element = organization };
             organization.ElementItemSet.Add(organization1);
 
-            var organizationName1 = new ElementItemElementField() { ElementField = organizationName, ElementItem = organization1, StringValue = "Organization 1" };
+            var organizationName1 = new ElementCell() { ElementField = organizationName, ElementItem = organization1, StringValue = "Organization 1" };
             organization1.ElementItemElementFieldSet.Add(organizationName1);
             organizationName.ElementItemElementFieldSet.Add(organizationName1);
 
-            var organizationSalesPrice1 = new ElementItemElementField() { ElementField = salesPrice, ElementItem = organization1, DecimalValue = 200 };
+            var organizationSalesPrice1 = new ElementCell() { ElementField = salesPrice, ElementItem = organization1, DecimalValue = 200 };
             organization1.ElementItemElementFieldSet.Add(organizationSalesPrice1);
             salesPrice.ElementItemElementFieldSet.Add(organizationSalesPrice1);
 
-            var organizationSalesNumber1 = new ElementItemElementField() { ElementField = salesNumber, ElementItem = organization1, DecimalValue = 1 };
+            var organizationSalesNumber1 = new ElementCell() { ElementField = salesNumber, ElementItem = organization1, DecimalValue = 1 };
             organization1.ElementItemElementFieldSet.Add(organizationSalesNumber1);
             salesNumber.ElementItemElementFieldSet.Add(organizationSalesNumber1);
 
             var organization2 = new ElementItem() { Element = organization };
             organization.ElementItemSet.Add(organization2);
 
-            var organizationName2 = new ElementItemElementField() { ElementField = organizationName, ElementItem = organization2, StringValue = "Organization 2" };
+            var organizationName2 = new ElementCell() { ElementField = organizationName, ElementItem = organization2, StringValue = "Organization 2" };
             organization2.ElementItemElementFieldSet.Add(organizationName2);
             organizationName.ElementItemElementFieldSet.Add(organizationName2);
 
-            var organizationSalesPrice2 = new ElementItemElementField() { ElementField = salesPrice, ElementItem = organization2, DecimalValue = 200 };
+            var organizationSalesPrice2 = new ElementCell() { ElementField = salesPrice, ElementItem = organization2, DecimalValue = 200 };
             organization2.ElementItemElementFieldSet.Add(organizationSalesPrice2);
             salesPrice.ElementItemElementFieldSet.Add(organizationSalesPrice2);
 
-            var organizationSalesNumber2 = new ElementItemElementField() { ElementField = salesNumber, ElementItem = organization2, DecimalValue = 1 };
+            var organizationSalesNumber2 = new ElementCell() { ElementField = salesNumber, ElementItem = organization2, DecimalValue = 1 };
             organization2.ElementItemElementFieldSet.Add(organizationSalesNumber2);
             salesNumber.ElementItemElementFieldSet.Add(organizationSalesNumber2);
 
@@ -1470,13 +1470,13 @@
             var userResourcePoolIndex = new UserResourcePoolIndex() { UserResourcePool = userResourcePool, ResourcePoolIndex = resourcePoolIndex, Rating = 100 };
             resourcePoolIndex.UserResourcePoolIndexSet.Add(userResourcePoolIndex);
 
-            var userOrganizationName1 = new UserElementItemElementField() { User = user, ElementItemElementField = organizationName1, Rating = 75 };
+            var userOrganizationName1 = new UserElementCell() { User = user, ElementCell = organizationName1, Rating = 75 };
             user.UserElementItemElementFieldSet.Add(userOrganizationName1);
-            organizationName1.UserElementItemElementFieldSet.Add(userOrganizationName1);
+            organizationName1.UserElementCell.Add(userOrganizationName1);
 
-            var userOrganizationName2 = new UserElementItemElementField() { User = user, ElementItemElementField = organizationName2, Rating = 25 };
+            var userOrganizationName2 = new UserElementCell() { User = user, ElementCell = organizationName2, Rating = 25 };
             user.UserElementItemElementFieldSet.Add(userOrganizationName1);
-            organizationName2.UserElementItemElementFieldSet.Add(userOrganizationName2);
+            organizationName2.UserElementCell.Add(userOrganizationName2);
 
             //var userOrganization1 = new UserOrganization() { User = user, Organization = organization1, NumberOfSales = 1 };
             //user.UserOrganizationSet.Add(userOrganization1);
@@ -1641,22 +1641,22 @@
             var organization1 = new ElementItem() { Element = organization };
             organization.ElementItemSet.Add(organization1);
 
-            var organizationSalesPrice1 = new ElementItemElementField() { ElementField = salesPrice, ElementItem = organization1, DecimalValue = 25 };
+            var organizationSalesPrice1 = new ElementCell() { ElementField = salesPrice, ElementItem = organization1, DecimalValue = 25 };
             organization1.ElementItemElementFieldSet.Add(organizationSalesPrice1);
             salesPrice.ElementItemElementFieldSet.Add(organizationSalesPrice1);
 
-            var organizationSalesNumber1 = new ElementItemElementField() { ElementField = salesNumber, ElementItem = organization1, DecimalValue = 1 };
+            var organizationSalesNumber1 = new ElementCell() { ElementField = salesNumber, ElementItem = organization1, DecimalValue = 1 };
             organization1.ElementItemElementFieldSet.Add(organizationSalesNumber1);
             salesNumber.ElementItemElementFieldSet.Add(organizationSalesNumber1);
 
             var organization2 = new ElementItem() { Element = organization };
             organization.ElementItemSet.Add(organization2);
 
-            var organizationSalesPrice2 = new ElementItemElementField() { ElementField = salesPrice, ElementItem = organization2, DecimalValue = 75 };
+            var organizationSalesPrice2 = new ElementCell() { ElementField = salesPrice, ElementItem = organization2, DecimalValue = 75 };
             organization2.ElementItemElementFieldSet.Add(organizationSalesPrice2);
             salesPrice.ElementItemElementFieldSet.Add(organizationSalesPrice2);
 
-            var organizationSalesNumber2 = new ElementItemElementField() { ElementField = salesNumber, ElementItem = organization2, DecimalValue = 1 };
+            var organizationSalesNumber2 = new ElementCell() { ElementField = salesNumber, ElementItem = organization2, DecimalValue = 1 };
             organization2.ElementItemElementFieldSet.Add(organizationSalesNumber2);
             salesNumber.ElementItemElementFieldSet.Add(organizationSalesNumber2);
 

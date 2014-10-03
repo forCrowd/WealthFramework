@@ -6,7 +6,7 @@ namespace BusinessObjects.ViewModels
     {
         public ElementItemElementField() { }
 
-        public ElementItemElementField(BusinessObjects.ElementItemElementField elementItemElementField)
+        public ElementItemElementField(BusinessObjects.ElementCell elementItemElementField)
         {
             Id = elementItemElementField.Id;
             ElementItemId = elementItemElementField.ElementItemId;

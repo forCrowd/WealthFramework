@@ -11,7 +11,7 @@ namespace Facade
 {
     using BusinessObjects;
 
-    public partial class UserElementItemElementFieldUnitOfWork : BaseUnitOfWork<UserElementItemElementField>
+    public partial class UserElementCellUnitOfWork : BaseUnitOfWork<UserElementCell>
     {
     }
 }

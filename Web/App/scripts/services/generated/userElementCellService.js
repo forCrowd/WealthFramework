@@ -10,11 +10,11 @@
 (function () {
     'use strict';
 
-    var serviceId = 'organizationElementItemService';
+    var serviceId = 'userElementCellService';
     angular.module('main')
-        .factory(serviceId, ['dataContext', 'logger', organizationElementItemService]);
+        .factory(serviceId, ['dataContext', 'logger', userElementCellService]);
 
-    function organizationElementItemService(dataContext, logger) {
+    function userElementCellService(dataContext, logger) {
         logger = logger.forSource(serviceId);
 
         // To determine whether the data will be fecthed from server or local
@@ -23,12 +23,12 @@
 
         // Service methods (alphabetically)
         var service = {
-            createOrganizationElementItem: createOrganizationElementItem,
-            deleteOrganizationElementItem: deleteOrganizationElementItem,
+            createUserElementCell: createUserElementCell,
+            deleteUserElementCell: deleteUserElementCell,
             getChanges: getChanges,
             getChangesCount: getChangesCount,
-            getOrganizationElementItemSet: getOrganizationElementItemSet,
-            getOrganizationElementItem: getOrganizationElementItem,
+            getUserElementCellSet: getUserElementCellSet,
+            getUserElementCell: getUserElementCell,
             hasChanges: hasChanges,
             rejectChanges: rejectChanges,
             saveChanges: saveChanges
@@ -38,12 +38,12 @@
 
         /*** Implementations ***/
 
-        function createOrganizationElementItem(organizationElementItem) {
-            dataContext.createEntity('OrganizationElementItem', organizationElementItem);
+        function createUserElementCell(userElementCell) {
+            dataContext.createEntity('UserElementCell', userElementCell);
         }
 
-        function deleteOrganizationElementItem(organizationElementItem) {
-            organizationElementItem.entityAspect.setDeleted();
+        function deleteUserElementCell(userElementCell) {
+            userElementCell.entityAspect.setDeleted();
         }
 
         function getChanges() {
@@ -54,7 +54,7 @@
             return dataContext.getChangesCount();
         }
 
-        function getOrganizationElementItemSet(forceRefresh) {
+        function getUserElementCellSet(forceRefresh) {
             var count;
             if (forceRefresh) {
                 if (dataContext.hasChanges()) {
@@ -65,8 +65,8 @@
             }
 
             var query = breeze.EntityQuery
-				.from('OrganizationElementItem')
-				.expand(['ElementItem', 'Organization'])
+				.from('UserElementCell')
+				.expand(['ElementCell', 'User'])
             ;
 
             // Fetch the data from server, in case if it's not fetched earlier or forced
@@ -86,18 +86,18 @@
 
             function success(response) {
                 count = response.results.length;
-                logger.logSuccess('Got ' + count + ' organizationElementItem(s)', response, true);
+                logger.logSuccess('Got ' + count + ' userElementCell(s)', response, true);
                 return response.results;
             }
 
             function failed(error) {
-                var message = error.message || 'OrganizationElementItem query failed';
+                var message = error.message || 'UserElementCell query failed';
                 logger.logError(message, error, true);
             }
         }
 
-        function getOrganizationElementItem(organizationElementItemId, forceRefresh) {
-            return dataContext.fetchEntityByKey('OrganizationElementItem', organizationElementItemId, !forceRefresh)
+        function getUserElementCell(userElementCellId, forceRefresh) {
+            return dataContext.fetchEntityByKey('UserElementCell', userElementCellId, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {
@@ -105,7 +105,7 @@
             }
 
             function failed(error) {
-                var message = error.message || 'getOrganizationElementItem query failed';
+                var message = error.message || 'getUserElementCell query failed';
                 logger.logError(message, error, true);
             }
         }

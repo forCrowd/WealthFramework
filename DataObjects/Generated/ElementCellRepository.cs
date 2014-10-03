@@ -11,9 +11,9 @@ namespace DataObjects
 {
     using BusinessObjects;
 
-    public partial class ElementItemElementFieldRepository : BaseRepository<ElementItemElementField>
+    public partial class ElementCellRepository : BaseRepository<ElementCell>
     {
-        public ElementItemElementFieldRepository(WealthEconomyContext context)
+        public ElementCellRepository(WealthEconomyContext context)
             : base(context)
         {
         }

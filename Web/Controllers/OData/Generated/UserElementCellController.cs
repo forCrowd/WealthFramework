@@ -20,47 +20,47 @@ namespace Web.Controllers.OData
     using System.Web.Http.ModelBinding;
     using System.Web.Http.OData;
 
-    public abstract class BaseUserElementItemElementFieldController : BaseODataController
+    public abstract class BaseUserElementCellController : BaseODataController
     {
-        public BaseUserElementItemElementFieldController()
+        public BaseUserElementCellController()
 		{
-			MainUnitOfWork = new UserElementItemElementFieldUnitOfWork();		
+			MainUnitOfWork = new UserElementCellUnitOfWork();		
 		}
 
-		protected UserElementItemElementFieldUnitOfWork MainUnitOfWork { get; private set; }
+		protected UserElementCellUnitOfWork MainUnitOfWork { get; private set; }
 
-        // GET odata/UserElementItemElementField
+        // GET odata/UserElementCell
         [Queryable]
-        public virtual IQueryable<UserElementItemElementField> Get()
+        public virtual IQueryable<UserElementCell> Get()
         {
 			var list = MainUnitOfWork.AllLive;
 			list = list.Where(item => item.UserId == ApplicationUser.Id);
             return list;
         }
 
-        // GET odata/UserElementItemElementField(5)
+        // GET odata/UserElementCell(5)
         [Queryable]
-        public virtual SingleResult<UserElementItemElementField> Get([FromODataUri] int key)
+        public virtual SingleResult<UserElementCell> Get([FromODataUri] int key)
         {
-            return SingleResult.Create(MainUnitOfWork.AllLive.Where(userElementItemElementField => userElementItemElementField.Id == key));
+            return SingleResult.Create(MainUnitOfWork.AllLive.Where(userElementCell => userElementCell.Id == key));
         }
 
-        // PUT odata/UserElementItemElementField(5)
-        public virtual async Task<IHttpActionResult> Put([FromODataUri] int key, UserElementItemElementField userElementItemElementField)
+        // PUT odata/UserElementCell(5)
+        public virtual async Task<IHttpActionResult> Put([FromODataUri] int key, UserElementCell userElementCell)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (key != userElementItemElementField.Id)
+            if (key != userElementCell.Id)
             {
                 return BadRequest();
             }
 
             try
             {
-                await MainUnitOfWork.UpdateAsync(userElementItemElementField);
+                await MainUnitOfWork.UpdateAsync(userElementCell);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -74,11 +74,11 @@ namespace Web.Controllers.OData
                 }
             }
 
-            return Ok(userElementItemElementField);
+            return Ok(userElementCell);
         }
 
-        // POST odata/UserElementItemElementField
-        public virtual async Task<IHttpActionResult> Post(UserElementItemElementField userElementItemElementField)
+        // POST odata/UserElementCell
+        public virtual async Task<IHttpActionResult> Post(UserElementCell userElementCell)
         {
             if (!ModelState.IsValid)
             {
@@ -87,11 +87,11 @@ namespace Web.Controllers.OData
 
             try
             {
-                await MainUnitOfWork.InsertAsync(userElementItemElementField);
+                await MainUnitOfWork.InsertAsync(userElementCell);
             }
             catch (DbUpdateException)
             {
-                if (MainUnitOfWork.Exists(userElementItemElementField.Id))
+                if (MainUnitOfWork.Exists(userElementCell.Id))
                 {
                     return Conflict();
                 }
@@ -101,52 +101,52 @@ namespace Web.Controllers.OData
                 }
             }
 
-            return Created(userElementItemElementField);
+            return Created(userElementCell);
         }
 
-        // PATCH odata/UserElementItemElementField(5)
+        // PATCH odata/UserElementCell(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<UserElementItemElementField> patch)
+        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<UserElementCell> patch)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var userElementItemElementField = await MainUnitOfWork.FindAsync(key);
-            if (userElementItemElementField == null)
+            var userElementCell = await MainUnitOfWork.FindAsync(key);
+            if (userElementCell == null)
             {
                 return NotFound();
             }
 
             var patchEntity = patch.GetEntity();
-            if (!userElementItemElementField.RowVersion.SequenceEqual(patchEntity.RowVersion))
+            if (!userElementCell.RowVersion.SequenceEqual(patchEntity.RowVersion))
             {
                 return Conflict();
             }
 
-            patch.Patch(userElementItemElementField);
-            await MainUnitOfWork.UpdateAsync(userElementItemElementField);
+            patch.Patch(userElementCell);
+            await MainUnitOfWork.UpdateAsync(userElementCell);
 
-            return Ok(userElementItemElementField);
+            return Ok(userElementCell);
         }
 
-        // DELETE odata/UserElementItemElementField(5)
+        // DELETE odata/UserElementCell(5)
         public virtual async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            var userElementItemElementField = await MainUnitOfWork.FindAsync(key);
-            if (userElementItemElementField == null)
+            var userElementCell = await MainUnitOfWork.FindAsync(key);
+            if (userElementCell == null)
             {
                 return NotFound();
             }
 
-            await MainUnitOfWork.DeleteAsync(userElementItemElementField.Id);
+            await MainUnitOfWork.DeleteAsync(userElementCell.Id);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
     }
 
-    public partial class UserElementItemElementFieldController : BaseUserElementItemElementFieldController
+    public partial class UserElementCellController : BaseUserElementCellController
     {
 	}
 }

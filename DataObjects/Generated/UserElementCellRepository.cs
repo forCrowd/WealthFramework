@@ -7,11 +7,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Facade
+namespace DataObjects
 {
     using BusinessObjects;
 
-    public partial class ElementItemElementFieldUnitOfWork : BaseUnitOfWork<ElementItemElementField>
+    public partial class UserElementCellRepository : BaseRepository<UserElementCell>
     {
+        public UserElementCellRepository(WealthEconomyContext context)
+            : base(context)
+        {
+        }
     }
 }

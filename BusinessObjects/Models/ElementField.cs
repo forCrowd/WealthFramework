@@ -14,7 +14,7 @@ namespace BusinessObjects
     {
         public ElementField()
         {
-            ElementItemElementFieldSet = new HashSet<ElementItemElementField>();
+            ElementItemElementFieldSet = new HashSet<ElementCell>();
             ResourcePoolIndexSet = new HashSet<ResourcePoolIndex>();
         }
 
@@ -38,7 +38,7 @@ namespace BusinessObjects
         //public bool IsResourcePoolField { get; set; }
 
         public virtual Element Element { get; set; }
-        public virtual ICollection<ElementItemElementField> ElementItemElementFieldSet { get; set; }
+        public virtual ICollection<ElementCell> ElementItemElementFieldSet { get; set; }
         public virtual ICollection<ResourcePoolIndex> ResourcePoolIndexSet { get; set; }
 
         #region - ReadOnly Properties -

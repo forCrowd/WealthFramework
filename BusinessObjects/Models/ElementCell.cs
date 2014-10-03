@@ -11,21 +11,21 @@ namespace BusinessObjects
     [DisplayName("Element Item Field")]
     [BusinessObjects.Attributes.DefaultProperty("Id")]
     // [ODataControllerAuthorization("Administrator")]
-    public class ElementItemElementField : BaseEntity
+    public class ElementCell : BaseEntity
     {
-        public ElementItemElementField()
+        public ElementCell()
         {
-            UserElementItemElementFieldSet = new HashSet<UserElementItemElementField>();
+            UserElementCell = new HashSet<UserElementCell>();
         }
 
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         public int Id { get; set; }
 
-        [Index("IX_ElementItemIdElementFieldId", 1, IsUnique = true)]
+        [Index("IX_ElementCellId", 1, IsUnique = true)]
         public int ElementItemId { get; set; }
 
-        [Index("IX_ElementItemIdElementFieldId", 2, IsUnique = true)]
+        [Index("IX_ElementCellId", 2, IsUnique = true)]
         public int ElementFieldId { get; set; }
 
         public string StringValue { get; set; }
@@ -38,7 +38,7 @@ namespace BusinessObjects
         public virtual ElementItem ElementItem { get; set; }
         public virtual ElementField ElementField { get; set; }
         public virtual ElementItem SelectedElementItem { get; set; }
-        public virtual ICollection<UserElementItemElementField> UserElementItemElementFieldSet { get; set; }
+        public virtual ICollection<UserElementCell> UserElementCell { get; set; }
 
         /* */
 
@@ -49,7 +49,7 @@ namespace BusinessObjects
                 switch (ElementField.ElementFieldType)
                 {
                     case (byte)ElementFieldType.String:
-                        return UserElementItemElementFieldSet.Count();
+                        return UserElementCell.Count();
                     case (byte)ElementFieldType.Boolean:
                     case (byte)ElementFieldType.Integer:
                     case (byte)ElementFieldType.DateTime:
@@ -72,8 +72,8 @@ namespace BusinessObjects
                 switch (ElementField.ElementFieldType)
                 {
                     case (byte)ElementFieldType.String:
-                        return UserElementItemElementFieldSet.Any()
-                            ? UserElementItemElementFieldSet.Average(item => item.Rating)
+                        return UserElementCell.Any()
+                            ? UserElementCell.Average(item => item.Rating)
                             : 0;
                     case (byte)ElementFieldType.Boolean:
                         return BooleanValue.HasValue ? Convert.ToDecimal(BooleanValue.Value) : 0;

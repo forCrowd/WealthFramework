@@ -10,11 +10,11 @@
 (function () {
     'use strict';
 
-    var serviceId = 'userElementItemElementFieldService';
+    var serviceId = 'elementCellService';
     angular.module('main')
-        .factory(serviceId, ['dataContext', 'logger', userElementItemElementFieldService]);
+        .factory(serviceId, ['dataContext', 'logger', elementCellService]);
 
-    function userElementItemElementFieldService(dataContext, logger) {
+    function elementCellService(dataContext, logger) {
         logger = logger.forSource(serviceId);
 
         // To determine whether the data will be fecthed from server or local
@@ -23,12 +23,12 @@
 
         // Service methods (alphabetically)
         var service = {
-            createUserElementItemElementField: createUserElementItemElementField,
-            deleteUserElementItemElementField: deleteUserElementItemElementField,
+            createElementCell: createElementCell,
+            deleteElementCell: deleteElementCell,
             getChanges: getChanges,
             getChangesCount: getChangesCount,
-            getUserElementItemElementFieldSet: getUserElementItemElementFieldSet,
-            getUserElementItemElementField: getUserElementItemElementField,
+            getElementCellSet: getElementCellSet,
+            getElementCell: getElementCell,
             hasChanges: hasChanges,
             rejectChanges: rejectChanges,
             saveChanges: saveChanges
@@ -38,12 +38,12 @@
 
         /*** Implementations ***/
 
-        function createUserElementItemElementField(userElementItemElementField) {
-            dataContext.createEntity('UserElementItemElementField', userElementItemElementField);
+        function createElementCell(elementCell) {
+            dataContext.createEntity('ElementCell', elementCell);
         }
 
-        function deleteUserElementItemElementField(userElementItemElementField) {
-            userElementItemElementField.entityAspect.setDeleted();
+        function deleteElementCell(elementCell) {
+            elementCell.entityAspect.setDeleted();
         }
 
         function getChanges() {
@@ -54,7 +54,7 @@
             return dataContext.getChangesCount();
         }
 
-        function getUserElementItemElementFieldSet(forceRefresh) {
+        function getElementCellSet(forceRefresh) {
             var count;
             if (forceRefresh) {
                 if (dataContext.hasChanges()) {
@@ -65,8 +65,8 @@
             }
 
             var query = breeze.EntityQuery
-				.from('UserElementItemElementField')
-				.expand(['ElementItemElementField', 'User'])
+				.from('ElementCell')
+				.expand(['ElementField', 'ElementItem'])
             ;
 
             // Fetch the data from server, in case if it's not fetched earlier or forced
@@ -86,18 +86,18 @@
 
             function success(response) {
                 count = response.results.length;
-                logger.logSuccess('Got ' + count + ' userElementItemElementField(s)', response, true);
+                logger.logSuccess('Got ' + count + ' elementCell(s)', response, true);
                 return response.results;
             }
 
             function failed(error) {
-                var message = error.message || 'UserElementItemElementField query failed';
+                var message = error.message || 'ElementCell query failed';
                 logger.logError(message, error, true);
             }
         }
 
-        function getUserElementItemElementField(userElementItemElementFieldId, forceRefresh) {
-            return dataContext.fetchEntityByKey('UserElementItemElementField', userElementItemElementFieldId, !forceRefresh)
+        function getElementCell(elementCellId, forceRefresh) {
+            return dataContext.fetchEntityByKey('ElementCell', elementCellId, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {
@@ -105,7 +105,7 @@
             }
 
             function failed(error) {
-                var message = error.message || 'getUserElementItemElementField query failed';
+                var message = error.message || 'getElementCell query failed';
                 logger.logError(message, error, true);
             }
         }

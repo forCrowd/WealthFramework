@@ -10,32 +10,32 @@
 (function () {
     'use strict';
 
-    var controllerId = 'elementItemElementFieldListController';
+    var controllerId = 'elementCellListController';
     angular.module('main')
-        .controller(controllerId, ['elementItemElementFieldService',
+        .controller(controllerId, ['elementCellService',
             'logger',
-			elementItemElementFieldListController]);
+			elementCellListController]);
 
-    function elementItemElementFieldListController(elementItemElementFieldService,
+    function elementCellListController(elementCellService,
         logger) {
         logger = logger.forSource(controllerId);
 
         var vm = this;
-        vm.deleteElementItemElementField = deleteElementItemElementField;
-        vm.elementItemElementFieldSet = [];
+        vm.deleteElementCell = deleteElementCell;
+        vm.elementCellSet = [];
 
         initialize();
 
         function initialize() {
-            getElementItemElementFieldSet();
+            getElementCellSet();
         };
 
-        function deleteElementItemElementField(elementItemElementField) {
-            elementItemElementFieldService.deleteElementItemElementField(elementItemElementField);
+        function deleteElementCell(elementCell) {
+            elementCellService.deleteElementCell(elementCell);
 
-            elementItemElementFieldService.saveChanges()
+            elementCellService.saveChanges()
                 .then(function () {
-                    vm.elementItemElementFieldSet.splice(vm.elementItemElementFieldSet.indexOf(elementItemElementField), 1);
+                    vm.elementCellSet.splice(vm.elementCellSet.indexOf(elementCell), 1);
                     logger.logSuccess("Hooray we saved", null, true);
                 })
                 .catch(function (error) {
@@ -46,10 +46,10 @@
                 })
         };
 
-        function getElementItemElementFieldSet() {
-            elementItemElementFieldService.getElementItemElementFieldSet(false)
+        function getElementCellSet() {
+            elementCellService.getElementCellSet(false)
 			    .then(function (data) {
-                    vm.elementItemElementFieldSet = data;
+                    vm.elementCellSet = data;
                 });
         }
     };

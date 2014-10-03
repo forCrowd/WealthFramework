@@ -10,34 +10,34 @@
 (function () {
     'use strict';
 
-    var controllerId = 'userElementItemElementFieldEditController';
+    var controllerId = 'userElementCellEditController';
     angular.module('main')
-        .controller(controllerId, ['userElementItemElementFieldService',
-            'elementItemElementFieldService',
+        .controller(controllerId, ['userElementCellService',
+            'elementCellService',
             'userService',
             'logger',
             '$location',
             '$routeParams',
-            userElementItemElementFieldEditController]);
+            userElementCellEditController]);
 
-    function userElementItemElementFieldEditController(userElementItemElementFieldService,
-		elementItemElementFieldService,
+    function userElementCellEditController(userElementCellService,
+		elementCellService,
 		userService,
 		logger,
 		$location,
 		$routeParams) {
         logger = logger.forSource(controllerId);
 
-        var isNew = $location.path() === '/manage/userElementItemElementField/new';
+        var isNew = $location.path() === '/manage/userElementCell/new';
         var isSaving = false;
 
         // Controller methods (alphabetically)
         var vm = this;
-        vm.elementItemElementFieldSet = [];
+        vm.elementCellSet = [];
         vm.userSet = [];
         vm.cancelChanges = cancelChanges;
         vm.isSaveDisabled = isSaveDisabled;
-        vm.userElementItemElementField = null;
+        vm.userElementCell = null;
         vm.saveChanges = saveChanges;
         vm.hasChanges = hasChanges;
 
@@ -47,23 +47,23 @@
 
         function cancelChanges() {
 
-            $location.path('/manage/userElementItemElementField');
+            $location.path('/manage/userElementCell');
 
-            if (userElementItemElementFieldService.hasChanges()) {
-                userElementItemElementFieldService.rejectChanges();
+            if (userElementCellService.hasChanges()) {
+                userElementCellService.rejectChanges();
                 logWarning('Discarded pending change(s)', null, true);
             }
         }
 
         function hasChanges() {
-            return userElementItemElementFieldService.hasChanges();
+            return userElementCellService.hasChanges();
         }
 
         function initialize() {
 
-            elementItemElementFieldService.getElementItemElementFieldSet(false)
+            elementCellService.getElementCellSet(false)
                 .then(function (data) {
-                    vm.elementItemElementFieldSet = data;
+                    vm.elementCellSet = data;
                 });
 
             userService.getUserSet(false)
@@ -75,9 +75,9 @@
                 // TODO For development enviroment, create test entity?
             }
             else {
-                userElementItemElementFieldService.getUserElementItemElementField($routeParams.Id)
+                userElementCellService.getUserElementCell($routeParams.Id)
                     .then(function (data) {
-                        vm.userElementItemElementField = data;
+                        vm.userElementCell = data;
                     })
                     .catch(function (error) {
                         // TODO User-friendly message?
@@ -87,25 +87,25 @@
 
         function isSaveDisabled() {
             return isSaving ||
-                (!isNew && !userElementItemElementFieldService.hasChanges());
+                (!isNew && !userElementCellService.hasChanges());
         }
 
         function saveChanges() {
 
             if (isNew) {
-                userElementItemElementFieldService.createUserElementItemElementField(vm.userElementItemElementField);
+                userElementCellService.createUserElementCell(vm.userElementCell);
             } else {
                 // To be able to do concurrency check, RowVersion field needs to be send to server
 				// Since breeze only sends the modified fields, a fake modification had to be applied to RowVersion field
-                var rowVersion = vm.userElementItemElementField.RowVersion;
-                vm.userElementItemElementField.RowVersion = '';
-                vm.userElementItemElementField.RowVersion = rowVersion;
+                var rowVersion = vm.userElementCell.RowVersion;
+                vm.userElementCell.RowVersion = '';
+                vm.userElementCell.RowVersion = rowVersion;
             }
 
             isSaving = true;
-            userElementItemElementFieldService.saveChanges()
+            userElementCellService.saveChanges()
                 .then(function (result) {
-                    $location.path('/manage/userElementItemElementField');
+                    $location.path('/manage/userElementCell');
                 })
                 .catch(function (error) {
                     // Conflict (Concurrency exception)

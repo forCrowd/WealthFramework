@@ -48,7 +48,7 @@ namespace BusinessObjects.ViewModels
         //public IEnumerable<UserOrganization> UserOrganizationSet { get; set; }
         public IEnumerable<Element> ElementSet { get; set; }
         public Element MainElement { get; set; }
-        public IEnumerable<UserElementItemElementField> UserElementItemElementFieldSet { get; set; }
+        public IEnumerable<UserElementCell> UserElementItemElementFieldSet { get; set; }
         //public decimal ResourcePoolProductionCost { get; set; }
         public decimal ResourcePoolSalesPrice { get; set; }
         public decimal SalesPriceIncludingResourcePoolTax { get; set; }

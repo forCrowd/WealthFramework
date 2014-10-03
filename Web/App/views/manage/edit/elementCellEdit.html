@@ -8,63 +8,63 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 -->
-<div data-ng-controller="elementItemElementFieldEditController as vm">
+<div data-ng-controller="elementCellEditController as vm">
     <h2>Edit</h2>
     <form name="editForm">
         <div class="form-horizontal">
-            <h4>ElementItemElementField</h4>
+            <h4>ElementCell</h4>
             <hr />
             <div class="form-group">
                 <label for="ElementItemId" class="control-label col-md-2">Element Item</label>
                 <div class="col-md-10" data-ng-class="{'has-error': editForm.ElementItemId.$invalid && !editForm.ElementItemId.$pristine}">
-                    <select id="ElementItemId" name="ElementItemId" data-ng-model="vm.elementItemElementField.ElementItem" data-ng-options="elementItem.Name for elementItem in vm.elementItemSet" class="form-control" required ></select>
+                    <select id="ElementItemId" name="ElementItemId" data-ng-model="vm.elementCell.ElementItem" data-ng-options="elementItem.Name for elementItem in vm.elementItemSet" class="form-control" required ></select>
                 </div>
             </div>
             <div class="form-group">
                 <label for="ElementFieldId" class="control-label col-md-2">Element Field</label>
                 <div class="col-md-10" data-ng-class="{'has-error': editForm.ElementFieldId.$invalid && !editForm.ElementFieldId.$pristine}">
-                    <select id="ElementFieldId" name="ElementFieldId" data-ng-model="vm.elementItemElementField.ElementField" data-ng-options="elementField.Name for elementField in vm.elementFieldSet" class="form-control" required ></select>
+                    <select id="ElementFieldId" name="ElementFieldId" data-ng-model="vm.elementCell.ElementField" data-ng-options="elementField.Name for elementField in vm.elementFieldSet" class="form-control" required ></select>
                 </div>
             </div>
             <div class="form-group">
                 <label for="StringValue" class="control-label col-md-2">StringValue</label>
                 <div class="col-md-10" data-ng-class="{'has-error': editForm.StringValue.$invalid && !editForm.StringValue.$pristine}">
-                    <input id="StringValue" name="StringValue" type="text" data-ng-model="vm.elementItemElementField.StringValue" class="form-control" />
+                    <input id="StringValue" name="StringValue" type="text" data-ng-model="vm.elementCell.StringValue" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 <label for="BooleanValue" class="control-label col-md-2">BooleanValue</label>
                 <div class="col-md-10" data-ng-class="{'has-error': editForm.BooleanValue.$invalid && !editForm.BooleanValue.$pristine}">
-                    <input id="BooleanValue" name="BooleanValue" type="text" data-ng-model="vm.elementItemElementField.BooleanValue" class="form-control" />
+                    <input id="BooleanValue" name="BooleanValue" type="text" data-ng-model="vm.elementCell.BooleanValue" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 <label for="IntegerValue" class="control-label col-md-2">IntegerValue</label>
                 <div class="col-md-10" data-ng-class="{'has-error': editForm.IntegerValue.$invalid && !editForm.IntegerValue.$pristine}">
-                    <input id="IntegerValue" name="IntegerValue" type="text" data-ng-model="vm.elementItemElementField.IntegerValue" class="form-control" />
+                    <input id="IntegerValue" name="IntegerValue" type="text" data-ng-model="vm.elementCell.IntegerValue" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 <label for="DecimalValue" class="control-label col-md-2">DecimalValue</label>
                 <div class="col-md-10" data-ng-class="{'has-error': editForm.DecimalValue.$invalid && !editForm.DecimalValue.$pristine}">
-                    <input id="DecimalValue" name="DecimalValue" type="text" data-ng-model="vm.elementItemElementField.DecimalValue" class="form-control" />
+                    <input id="DecimalValue" name="DecimalValue" type="text" data-ng-model="vm.elementCell.DecimalValue" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 <label for="DateTimeValue" class="control-label col-md-2">DateTimeValue</label>
                 <div class="col-md-10" data-ng-class="{'has-error': editForm.DateTimeValue.$invalid && !editForm.DateTimeValue.$pristine}">
-                    <input id="DateTimeValue" name="DateTimeValue" type="text" data-ng-model="vm.elementItemElementField.DateTimeValue" class="form-control" />
+                    <input id="DateTimeValue" name="DateTimeValue" type="text" data-ng-model="vm.elementCell.DateTimeValue" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 <label for="SelectedElementItemId" class="control-label col-md-2">SelectedElementItemId</label>
                 <div class="col-md-10" data-ng-class="{'has-error': editForm.SelectedElementItemId.$invalid && !editForm.SelectedElementItemId.$pristine}">
-                    <input id="SelectedElementItemId" name="SelectedElementItemId" type="text" data-ng-model="vm.elementItemElementField.SelectedElementItemId" class="form-control" />
+                    <input id="SelectedElementItemId" name="SelectedElementItemId" type="text" data-ng-model="vm.elementCell.SelectedElementItemId" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-md-10">
-                    <input id="RowVersion" name="RowVersion" data-ng-model="vm.elementItemElementField.RowVersion" type="hidden">
+                    <input id="RowVersion" name="RowVersion" data-ng-model="vm.elementCell.RowVersion" type="hidden">
                 </div>
             </div>
             <div class="form-group">

@@ -63,8 +63,8 @@
     <Compile Include="Models\RatingSortType.cs" />
     <Compile Include="Models\ElementFieldType.cs" />
     <Compile Include="Models\ElementField.cs" />
-    <Compile Include="Models\ElementItemElementField.cs" />
-    <Compile Include="Models\UserElementItemElementField.cs" />
+    <Compile Include="Models\ElementCell.cs" />
+    <Compile Include="Models\UserElementCell.cs" />
     <Compile Include="ViewModels\ElementItemElementField.cs" />
     <Compile Include="ViewModels\ElementItem.cs" />
     <Compile Include="ViewModels\ElementField.cs" />

@@ -6,9 +6,13 @@ An experimental resource management system that aims to provide a sustainable ec
 
 ### Release Notes
 
+**0.14.6.1**
+
+* Clean-up; ElementItemElementField to ElementCell
+
 **0.14.6**
 
-* Clean-up
+* Clean-up; remove Organization and related parts
 
 **0.14.5**
 

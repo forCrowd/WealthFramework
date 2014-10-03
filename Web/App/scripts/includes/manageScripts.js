@@ -25,6 +25,10 @@ SH - 09 May '14
     <script src="/App/scripts/controllers/manage/list/elementListController.js"></script>\
     <script src="/App/scripts/controllers/manage/edit/elementEditController.js"></script>\
 	\
+    <script src="/App/scripts/services/generated/elementCellService.js"></script>\
+    <script src="/App/scripts/controllers/manage/list/elementCellListController.js"></script>\
+    <script src="/App/scripts/controllers/manage/edit/elementCellEditController.js"></script>\
+	\
     <script src="/App/scripts/services/generated/elementFieldService.js"></script>\
     <script src="/App/scripts/controllers/manage/list/elementFieldListController.js"></script>\
     <script src="/App/scripts/controllers/manage/edit/elementFieldEditController.js"></script>\
@@ -32,10 +36,6 @@ SH - 09 May '14
     <script src="/App/scripts/services/generated/elementItemService.js"></script>\
     <script src="/App/scripts/controllers/manage/list/elementItemListController.js"></script>\
     <script src="/App/scripts/controllers/manage/edit/elementItemEditController.js"></script>\
-	\
-    <script src="/App/scripts/services/generated/elementItemElementFieldService.js"></script>\
-    <script src="/App/scripts/controllers/manage/list/elementItemElementFieldListController.js"></script>\
-    <script src="/App/scripts/controllers/manage/edit/elementItemElementFieldEditController.js"></script>\
 	\
     <script src="/App/scripts/services/generated/resourcePoolService.js"></script>\
     <script src="/App/scripts/controllers/manage/list/resourcePoolListController.js"></script>\
@@ -49,9 +49,9 @@ SH - 09 May '14
     <script src="/App/scripts/controllers/manage/list/userListController.js"></script>\
     <script src="/App/scripts/controllers/manage/edit/userEditController.js"></script>\
 	\
-    <script src="/App/scripts/services/generated/userElementItemElementFieldService.js"></script>\
-    <script src="/App/scripts/controllers/manage/list/userElementItemElementFieldListController.js"></script>\
-    <script src="/App/scripts/controllers/manage/edit/userElementItemElementFieldEditController.js"></script>\
+    <script src="/App/scripts/services/generated/userElementCellService.js"></script>\
+    <script src="/App/scripts/controllers/manage/list/userElementCellListController.js"></script>\
+    <script src="/App/scripts/controllers/manage/edit/userElementCellEditController.js"></script>\
 	\
     <script src="/App/scripts/services/generated/userResourcePoolService.js"></script>\
     <script src="/App/scripts/controllers/manage/list/userResourcePoolListController.js"></script>\

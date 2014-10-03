@@ -10,17 +10,17 @@
 (function () {
     'use strict';
 
-    var controllerId = 'elementItemElementFieldEditController';
+    var controllerId = 'elementCellEditController';
     angular.module('main')
-        .controller(controllerId, ['elementItemElementFieldService',
+        .controller(controllerId, ['elementCellService',
             'elementFieldService',
             'elementItemService',
             'logger',
             '$location',
             '$routeParams',
-            elementItemElementFieldEditController]);
+            elementCellEditController]);
 
-    function elementItemElementFieldEditController(elementItemElementFieldService,
+    function elementCellEditController(elementCellService,
 		elementFieldService,
 		elementItemService,
 		logger,
@@ -28,7 +28,7 @@
 		$routeParams) {
         logger = logger.forSource(controllerId);
 
-        var isNew = $location.path() === '/manage/elementItemElementField/new';
+        var isNew = $location.path() === '/manage/elementCell/new';
         var isSaving = false;
 
         // Controller methods (alphabetically)
@@ -37,7 +37,7 @@
         vm.elementItemSet = [];
         vm.cancelChanges = cancelChanges;
         vm.isSaveDisabled = isSaveDisabled;
-        vm.elementItemElementField = null;
+        vm.elementCell = null;
         vm.saveChanges = saveChanges;
         vm.hasChanges = hasChanges;
 
@@ -47,16 +47,16 @@
 
         function cancelChanges() {
 
-            $location.path('/manage/elementItemElementField');
+            $location.path('/manage/elementCell');
 
-            if (elementItemElementFieldService.hasChanges()) {
-                elementItemElementFieldService.rejectChanges();
+            if (elementCellService.hasChanges()) {
+                elementCellService.rejectChanges();
                 logWarning('Discarded pending change(s)', null, true);
             }
         }
 
         function hasChanges() {
-            return elementItemElementFieldService.hasChanges();
+            return elementCellService.hasChanges();
         }
 
         function initialize() {
@@ -75,9 +75,9 @@
                 // TODO For development enviroment, create test entity?
             }
             else {
-                elementItemElementFieldService.getElementItemElementField($routeParams.Id)
+                elementCellService.getElementCell($routeParams.Id)
                     .then(function (data) {
-                        vm.elementItemElementField = data;
+                        vm.elementCell = data;
                     })
                     .catch(function (error) {
                         // TODO User-friendly message?
@@ -87,25 +87,25 @@
 
         function isSaveDisabled() {
             return isSaving ||
-                (!isNew && !elementItemElementFieldService.hasChanges());
+                (!isNew && !elementCellService.hasChanges());
         }
 
         function saveChanges() {
 
             if (isNew) {
-                elementItemElementFieldService.createElementItemElementField(vm.elementItemElementField);
+                elementCellService.createElementCell(vm.elementCell);
             } else {
                 // To be able to do concurrency check, RowVersion field needs to be send to server
 				// Since breeze only sends the modified fields, a fake modification had to be applied to RowVersion field
-                var rowVersion = vm.elementItemElementField.RowVersion;
-                vm.elementItemElementField.RowVersion = '';
-                vm.elementItemElementField.RowVersion = rowVersion;
+                var rowVersion = vm.elementCell.RowVersion;
+                vm.elementCell.RowVersion = '';
+                vm.elementCell.RowVersion = rowVersion;
             }
 
             isSaving = true;
-            elementItemElementFieldService.saveChanges()
+            elementCellService.saveChanges()
                 .then(function (result) {
-                    $location.path('/manage/elementItemElementField');
+                    $location.path('/manage/elementCell');
                 })
                 .catch(function (error) {
                     // Conflict (Concurrency exception)

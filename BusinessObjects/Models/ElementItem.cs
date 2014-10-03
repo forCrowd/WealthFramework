@@ -14,8 +14,8 @@ namespace BusinessObjects
     {
         public ElementItem()
         {
-            ElementItemElementFieldSet = new HashSet<ElementItemElementField>();
-            ElementItemElementFieldSelectedElementItemSet = new HashSet<ElementItemElementField>();
+            ElementItemElementFieldSet = new HashSet<ElementCell>();
+            ElementItemElementFieldSelectedElementItemSet = new HashSet<ElementCell>();
             //OrganizationElementItemSet = new HashSet<OrganizationElementItem>();
             //UserElementItemSet = new HashSet<UserElementItem>();
         }
@@ -32,9 +32,9 @@ namespace BusinessObjects
         public int ElementId { get; set; }
 
         public virtual Element Element { get; set; }
-        public virtual ICollection<ElementItemElementField> ElementItemElementFieldSet { get; set; }
+        public virtual ICollection<ElementCell> ElementItemElementFieldSet { get; set; }
         [InverseProperty("SelectedElementItem")]
-        public virtual ICollection<ElementItemElementField> ElementItemElementFieldSelectedElementItemSet { get; set; }
+        public virtual ICollection<ElementCell> ElementItemElementFieldSelectedElementItemSet { get; set; }
         //public virtual ICollection<OrganizationElementItem> OrganizationElementItemSet { get; set; }
         //public virtual ICollection<UserElementItem> UserElementItemSet { get; set; }
 
@@ -65,7 +65,7 @@ namespace BusinessObjects
         //    }
         //}
 
-        public IEnumerable<ElementItemElementField> BasicElementItemElementFieldSet
+        public IEnumerable<ElementCell> BasicElementItemElementFieldSet
         {
             get
             {
@@ -74,7 +74,7 @@ namespace BusinessObjects
             }
         }
 
-        public ElementItemElementField ResourcePoolFieldItem
+        public ElementCell ResourcePoolFieldItem
         {
             get { return ElementItemElementFieldSet.SingleOrDefault(item => item.ElementField.ElementFieldType == (byte)ElementFieldType.ResourcePool); }
         }
@@ -117,7 +117,7 @@ namespace BusinessObjects
             }
         }
 
-        public ElementItemElementField MultiplierFieldItem
+        public ElementCell MultiplierFieldItem
         {
             get { return ElementItemElementFieldSet.SingleOrDefault(item => item.ElementField.ElementFieldType == (byte)ElementFieldType.Multiplier); }
         }
