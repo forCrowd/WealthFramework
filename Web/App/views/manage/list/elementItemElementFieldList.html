@@ -36,6 +36,9 @@
             <th>
                 DateTimeValue
             </th>
+            <th>
+                SelectedElementItemId
+            </th>
             <th></th>
         </tr>
         <tr data-ng-repeat="elementItemElementField in vm.elementItemElementFieldSet">
@@ -59,6 +62,9 @@
             </td>
             <td>
                 {{ elementItemElementField.DateTimeValue }}
+            </td>
+            <td>
+                {{ elementItemElementField.SelectedElementItemId }}
             </td>
             <td>
                 <a href="/manage/elementItemElementField/edit/{{ elementItemElementField.Id }}">Edit</a> |

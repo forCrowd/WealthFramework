@@ -4,6 +4,7 @@ namespace BusinessObjects
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
     [DisplayName("Element Item")]
@@ -14,6 +15,7 @@ namespace BusinessObjects
         public ElementItem()
         {
             ElementItemElementFieldSet = new HashSet<ElementItemElementField>();
+            ElementItemElementFieldSelectedElementItemSet = new HashSet<ElementItemElementField>();
             OrganizationElementItemSet = new HashSet<OrganizationElementItem>();
             UserElementItemSet = new HashSet<UserElementItem>();
         }
@@ -31,6 +33,8 @@ namespace BusinessObjects
 
         public virtual Element Element { get; set; }
         public virtual ICollection<ElementItemElementField> ElementItemElementFieldSet { get; set; }
+        [InverseProperty("SelectedElementItem")]
+        public virtual ICollection<ElementItemElementField> ElementItemElementFieldSelectedElementItemSet { get; set; }
         public virtual ICollection<OrganizationElementItem> OrganizationElementItemSet { get; set; }
         public virtual ICollection<UserElementItem> UserElementItemSet { get; set; }
 

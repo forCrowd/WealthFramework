@@ -33,9 +33,11 @@ namespace BusinessObjects
         public Nullable<int> IntegerValue { get; set; }
         public Nullable<decimal> DecimalValue { get; set; }
         public Nullable<DateTime> DateTimeValue { get; set; }
+        public Nullable<int> SelectedElementItemId { get; set; }
 
         public virtual ElementItem ElementItem { get; set; }
         public virtual ElementField ElementField { get; set; }
+        public virtual ElementItem SelectedElementItem { get; set; }
         public virtual ICollection<UserElementItemElementField> UserElementItemElementFieldSet { get; set; }
 
         /* */
@@ -52,7 +54,11 @@ namespace BusinessObjects
                     case (byte)ElementFieldType.Integer:
                     case (byte)ElementFieldType.DateTime:
                     case (byte)ElementFieldType.Decimal:
-                        return 1; // There are no user level ratings
+                        // There are no user level ratings for these field types
+                        return 1;
+                    case (byte)ElementFieldType.Element:
+                        // TODO This property should never be used for this 'Element' field type?
+                        return 0;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
@@ -77,7 +83,9 @@ namespace BusinessObjects
                         return DecimalValue.HasValue ? DecimalValue.Value : 0;
                     case (byte)ElementFieldType.DateTime:
                         return DateTimeValue.HasValue ? Convert.ToDecimal(DateTimeValue.Value.Ticks) : 0;
-
+                    case (byte)ElementFieldType.Element:
+                        // TODO This property should never be used for this 'Element' field type?
+                        return 0;
                     case (byte)ElementFieldType.ResourcePool:
                         {
                             // TODO This calculation is the same as Decimal type? Are we using the types in a wrong way?
@@ -125,14 +133,19 @@ namespace BusinessObjects
             get
             {
                 if (ElementField.ResourcePoolIndex == null)
-                    return 0;
+                {
+                    return ElementField.ElementFieldType == (byte)ElementFieldType.Element && SelectedElementItem != null
+                        ? SelectedElementItem.ResourcePoolIndexIncome
+                        : 0;
+                }
 
                 var value = RatingPercentage;
 
                 switch (ElementField.ResourcePoolIndex.RatingSortType)
                 {
                     case (byte)RatingSortType.HighestToLowest:
-                        /* Do nothing */ break;
+                        /* Do nothing */
+                        break;
                     case (byte)RatingSortType.LowestToHighest:
                         value = 1 - value; break;
                     default:

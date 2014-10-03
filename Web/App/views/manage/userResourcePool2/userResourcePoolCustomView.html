@@ -118,21 +118,45 @@
                 {{ elementItem.TotalResourcePoolFieldItemValueIncludingResourcePoolAddition | number: 2 }}
             </td>
             <!-- Indexes -->
-            <td data-ng-repeat="item in vm.userResourcePool.ResourcePoolIndexSet">
+            <td data-ng-repeat="resourcePoolIndex in vm.userResourcePool.ResourcePoolIndexSet">
                 <div data-ng-repeat="elementItemElementField in elementItem.ElementItemElementFieldSet">
-                    <table class="table" data-ng-show="item.ElementFieldId === elementItemElementField.ElementFieldId">
-                        <tr>
-                            <td>
-                                {{ elementItemElementField.RatingAverageMultiplied | number:2 }}
-                            </td>
-                            <td>
-                                {{ elementItemElementField.RatingPercentage | percentage:2 }}
-                            </td>
-                            <td>
-                                {{ elementItemElementField.ResourcePoolIndexIncome | number:2 }}
-                            </td>
-                        </tr>
-                    </table>
+                    <div data-ng-show="elementItemElementField.ElementFieldType !== 6">
+                        <table class="table" data-ng-show="resourcePoolIndex.ElementFieldId === elementItemElementField.ElementFieldId">
+                            <tr>
+                                <td>
+                                    {{ elementItemElementField.RatingAverageMultiplied | number:2 }}
+                                </td>
+                                <td>
+                                    {{ elementItemElementField.RatingPercentage | percentage:2 }}
+                                </td>
+                                <td>
+                                    {{ elementItemElementField.ResourcePoolIndexIncome | number:2 }}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div data-ng-show="elementItemElementField.ElementFieldType === 6">
+                        <div data-ng-repeat="selectedElementItemElementField in elementItemElementField.SelectedElementItem.ElementItemElementFieldSet">
+                            <div data-ng-show="selectedElementItemElementField.ElementFieldType !== 6">
+                                <table class="table" data-ng-show="resourcePoolIndex.ElementFieldId === selectedElementItemElementField.ElementFieldId">
+                                    <tr>
+                                        <td>
+                                            {{ selectedElementItemElementField.RatingAverageMultiplied | number:2 }}
+                                        </td>
+                                        <td>
+                                            {{ selectedElementItemElementField.RatingPercentage | percentage:2 }}
+                                        </td>
+                                        <td>
+                                            {{ selectedElementItemElementField.ResourcePoolIndexIncome | number:2 }}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div data-ng-show="selectedElementItemElementField.ElementFieldType === 6">
+                                <!-- TODO Goes recursively... -->
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </td>
             <!-- Totals -->

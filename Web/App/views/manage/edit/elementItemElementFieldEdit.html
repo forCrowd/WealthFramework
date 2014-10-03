@@ -57,6 +57,12 @@
                 </div>
             </div>
             <div class="form-group">
+                <label for="SelectedElementItemId" class="control-label col-md-2">SelectedElementItemId</label>
+                <div class="col-md-10" data-ng-class="{'has-error': editForm.SelectedElementItemId.$invalid && !editForm.SelectedElementItemId.$pristine}">
+                    <input id="SelectedElementItemId" name="SelectedElementItemId" type="text" data-ng-model="vm.elementItemElementField.SelectedElementItemId" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
                 <div class="col-md-10">
                     <input id="RowVersion" name="RowVersion" data-ng-model="vm.elementItemElementField.RowVersion" type="hidden">
                 </div>

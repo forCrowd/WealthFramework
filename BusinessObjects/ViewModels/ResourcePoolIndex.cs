@@ -14,6 +14,7 @@ namespace BusinessObjects.ViewModels
             IndexRatingCount = resourcePoolIndex.IndexRatingCount;
             IndexRatingAverage = resourcePoolIndex.IndexRatingAverage;
             IndexRatingPercentage = resourcePoolIndex.IndexRatingPercentage;
+            IndexShare = resourcePoolIndex.IndexShare;
         }
 
         public int Id { get; set; }
@@ -22,5 +23,6 @@ namespace BusinessObjects.ViewModels
         public decimal IndexRatingCount { get; set; }
         public decimal IndexRatingAverage { get; set; }
         public decimal IndexRatingPercentage { get; set; }
+        public decimal IndexShare { get; set; }
     }
 }

@@ -20,9 +20,9 @@ namespace BusinessObjects.ViewModels
                 .ResourcePoolIndexSet
                 .Select(item => new ResourcePoolIndex(item));
             
-            UserOrganizationSet = userResourcePool
-                .UserOrganizationSet
-                .Select(item => new UserOrganization(item));
+            //UserOrganizationSet = userResourcePool
+            //    .UserOrganizationSet
+            //    .Select(item => new UserOrganization(item));
 
             ElementSet = userResourcePool.ResourcePool.ElementSet
                 .Select(element => new Element(element));
@@ -36,7 +36,7 @@ namespace BusinessObjects.ViewModels
             //TotalProfit = userResourcePool.TotalProfit;
             TotalResourcePoolTax = userResourcePool.TotalResourcePoolTax;
             TotalSalesRevenueIncludingResourcePoolTax = userResourcePool.TotalSalesRevenueIncludingResourcePoolTax;
-            TotalIncome = userResourcePool.TotalIncome;
+            TotalIncome = userResourcePool.ResourcePool.TotalIncome;
         }
 
         public int Id { get; set; }

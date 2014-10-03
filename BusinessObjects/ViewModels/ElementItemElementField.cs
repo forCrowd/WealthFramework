@@ -17,6 +17,8 @@ namespace BusinessObjects.ViewModels
             IntegerValue = elementItemElementField.IntegerValue;
             DecimalValue = elementItemElementField.DecimalValue;
             DateTimeValue = elementItemElementField.DateTimeValue;
+            if (elementItemElementField.SelectedElementItem != null)
+                SelectedElementItem = new ElementItem(elementItemElementField.SelectedElementItem);
 
             RatingAverageMultiplied = elementItemElementField.RatingAverageMultiplied;
             RatingPercentage = elementItemElementField.RatingPercentage;
@@ -32,6 +34,7 @@ namespace BusinessObjects.ViewModels
         public Nullable<int> IntegerValue { get; set; }
         public Nullable<decimal> DecimalValue { get; set; }
         public Nullable<DateTime> DateTimeValue { get; set; }
+        public ElementItem SelectedElementItem { get; set; }
 
         public decimal RatingAverageMultiplied { get; set; }
         public decimal RatingPercentage { get; set; }
