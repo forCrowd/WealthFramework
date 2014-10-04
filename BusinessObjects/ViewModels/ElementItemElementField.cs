@@ -2,27 +2,27 @@
 using System;
 namespace BusinessObjects.ViewModels
 {
-    public class ElementItemElementField
+    public class ElementCell
     {
-        public ElementItemElementField() { }
+        public ElementCell() { }
 
-        public ElementItemElementField(BusinessObjects.ElementCell elementItemElementField)
+        public ElementCell(BusinessObjects.ElementCell elementCell)
         {
-            Id = elementItemElementField.Id;
-            ElementItemId = elementItemElementField.ElementItemId;
-            ElementFieldId = elementItemElementField.ElementFieldId;
-            ElementFieldType = elementItemElementField.ElementField.ElementFieldType;
-            StringValue = elementItemElementField.StringValue;
-            BooleanValue = elementItemElementField.BooleanValue;
-            IntegerValue = elementItemElementField.IntegerValue;
-            DecimalValue = elementItemElementField.DecimalValue;
-            DateTimeValue = elementItemElementField.DateTimeValue;
-            if (elementItemElementField.SelectedElementItem != null)
-                SelectedElementItem = new ElementItem(elementItemElementField.SelectedElementItem);
+            Id = elementCell.Id;
+            ElementItemId = elementCell.ElementItemId;
+            ElementFieldId = elementCell.ElementFieldId;
+            ElementFieldType = elementCell.ElementField.ElementFieldType;
+            StringValue = elementCell.StringValue;
+            BooleanValue = elementCell.BooleanValue;
+            IntegerValue = elementCell.IntegerValue;
+            DecimalValue = elementCell.DecimalValue;
+            DateTimeValue = elementCell.DateTimeValue;
+            if (elementCell.SelectedElementItem != null)
+                SelectedElementItem = new ElementItem(elementCell.SelectedElementItem);
 
-            RatingAverageMultiplied = elementItemElementField.RatingAverageMultiplied;
-            RatingPercentage = elementItemElementField.RatingPercentage;
-            ResourcePoolIndexIncome = elementItemElementField.ResourcePoolIndexIncome;
+            RatingAverageMultiplied = elementCell.RatingAverageMultiplied;
+            RatingPercentage = elementCell.RatingPercentage;
+            ResourcePoolIndexIncome = elementCell.ResourcePoolIndexIncome;
         }
 
         public int Id { get; set; }

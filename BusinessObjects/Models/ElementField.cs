@@ -14,7 +14,7 @@ namespace BusinessObjects
     {
         public ElementField()
         {
-            ElementItemElementFieldSet = new HashSet<ElementCell>();
+            ElementCellSet = new HashSet<ElementCell>();
             ResourcePoolIndexSet = new HashSet<ResourcePoolIndex>();
         }
 
@@ -38,7 +38,7 @@ namespace BusinessObjects
         //public bool IsResourcePoolField { get; set; }
 
         public virtual Element Element { get; set; }
-        public virtual ICollection<ElementCell> ElementItemElementFieldSet { get; set; }
+        public virtual ICollection<ElementCell> ElementCellSet { get; set; }
         public virtual ICollection<ResourcePoolIndex> ResourcePoolIndexSet { get; set; }
 
         #region - ReadOnly Properties -
@@ -50,7 +50,7 @@ namespace BusinessObjects
         {
             get
             {
-                return ElementItemElementFieldSet.Sum(item => item.RatingAverage);
+                return ElementCellSet.Sum(item => item.RatingAverage);
             }
         }
 
@@ -59,13 +59,13 @@ namespace BusinessObjects
         //{
         //    get
         //    {
-        //        return ElementItemElementFieldSet.Sum(item => item.RatingPercentageMultiplied);
+        //        return ElementCellSet.Sum(item => item.RatingPercentageMultiplied);
         //    }
         //}
 
         public decimal RatingAverageMultiplied
         {
-            get { return ElementItemElementFieldSet.Sum(item => item.RatingAverageMultiplied); }
+            get { return ElementCellSet.Sum(item => item.RatingAverageMultiplied); }
         }
 
         // TODO Although technically it's possible to define multiple indexes, there will be one per Field at the moment

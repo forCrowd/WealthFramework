@@ -73,23 +73,23 @@
         <!-- Rows -->
         <tr data-ng-repeat="elementItem in vm.userResourcePool.MainElement.ElementItemSet">
             <!-- Fields -->
-            <td data-ng-repeat="elementItemElementField in elementItem.BasicElementItemElementFieldSet">
+            <td data-ng-repeat="elementCell in elementItem.BasicElementCellSet">
                 <table class="table">
                     <tr>
-                        <td data-ng-show="elementItemElementField.ElementFieldType === 1">
-                            {{ elementItemElementField.StringValue }}
+                        <td data-ng-show="elementCell.ElementFieldType === 1">
+                            {{ elementCell.StringValue }}
                         </td>
-                        <td data-ng-show="elementItemElementField.ElementFieldType === 2">
-                            {{ elementItemElementField.BooleanValue }}
+                        <td data-ng-show="elementCell.ElementFieldType === 2">
+                            {{ elementCell.BooleanValue }}
                         </td>
-                        <td data-ng-show="elementItemElementField.ElementFieldType === 3">
-                            {{ elementItemElementField.IntegerValue }}
+                        <td data-ng-show="elementCell.ElementFieldType === 3">
+                            {{ elementCell.IntegerValue }}
                         </td>
-                        <td data-ng-show="elementItemElementField.ElementFieldType === 4">
-                            {{ elementItemElementField.DecimalValue }}
+                        <td data-ng-show="elementCell.ElementFieldType === 4">
+                            {{ elementCell.DecimalValue }}
                         </td>
-                        <td data-ng-show="elementItemElementField.ElementFieldType === 5">
-                            {{ elementItemElementField.DateTimeValue }}
+                        <td data-ng-show="elementCell.ElementFieldType === 5">
+                            {{ elementCell.DateTimeValue }}
                         </td>
                     </tr>
                 </table>
@@ -119,40 +119,40 @@
             </td>
             <!-- Indexes -->
             <td data-ng-repeat="resourcePoolIndex in vm.userResourcePool.ResourcePoolIndexSet">
-                <div data-ng-repeat="elementItemElementField in elementItem.ElementItemElementFieldSet">
-                    <div data-ng-show="elementItemElementField.ElementFieldType !== 6">
-                        <table class="table" data-ng-show="resourcePoolIndex.ElementFieldId === elementItemElementField.ElementFieldId">
+                <div data-ng-repeat="elementCell in elementItem.ElementCellSet">
+                    <div data-ng-show="elementCell.ElementFieldType !== 6">
+                        <table class="table" data-ng-show="resourcePoolIndex.ElementFieldId === elementCell.ElementFieldId">
                             <tr>
                                 <td>
-                                    {{ elementItemElementField.RatingAverageMultiplied | number:2 }}
+                                    {{ elementCell.RatingAverageMultiplied | number:2 }}
                                 </td>
                                 <td>
-                                    {{ elementItemElementField.RatingPercentage | percentage:2 }}
+                                    {{ elementCell.RatingPercentage | percentage:2 }}
                                 </td>
                                 <td>
-                                    {{ elementItemElementField.ResourcePoolIndexIncome | number:2 }}
+                                    {{ elementCell.ResourcePoolIndexIncome | number:2 }}
                                 </td>
                             </tr>
                         </table>
                     </div>
-                    <div data-ng-show="elementItemElementField.ElementFieldType === 6">
-                        <div data-ng-repeat="selectedElementItemElementField in elementItemElementField.SelectedElementItem.ElementItemElementFieldSet">
-                            <div data-ng-show="selectedElementItemElementField.ElementFieldType !== 6">
-                                <table class="table" data-ng-show="resourcePoolIndex.ElementFieldId === selectedElementItemElementField.ElementFieldId">
+                    <div data-ng-show="elementCell.ElementFieldType === 6">
+                        <div data-ng-repeat="selectedElementCell in elementCell.SelectedElementItem.ElementCellSet">
+                            <div data-ng-show="selectedElementCell.ElementFieldType !== 6">
+                                <table class="table" data-ng-show="resourcePoolIndex.ElementFieldId === selectedElementCell.ElementFieldId">
                                     <tr>
                                         <td>
-                                            {{ selectedElementItemElementField.RatingAverageMultiplied | number:2 }}
+                                            {{ selectedElementCell.RatingAverageMultiplied | number:2 }}
                                         </td>
                                         <td>
-                                            {{ selectedElementItemElementField.RatingPercentage | percentage:2 }}
+                                            {{ selectedElementCell.RatingPercentage | percentage:2 }}
                                         </td>
                                         <td>
-                                            {{ selectedElementItemElementField.ResourcePoolIndexIncome | number:2 }}
+                                            {{ selectedElementCell.ResourcePoolIndexIncome | number:2 }}
                                         </td>
                                     </tr>
                                 </table>
                             </div>
-                            <div data-ng-show="selectedElementItemElementField.ElementFieldType === 6">
+                            <div data-ng-show="selectedElementCell.ElementFieldType === 6">
                                 <!-- TODO Goes recursively... -->
                             </div>
                         </div>

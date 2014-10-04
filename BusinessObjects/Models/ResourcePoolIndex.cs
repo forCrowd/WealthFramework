@@ -57,13 +57,13 @@ namespace BusinessObjects
         //    }
         //}
 
-        //public IEnumerable<ResourcePoolIndexElementItemElementField> ResourcePoolIndexElementItemElementFieldSet
+        //public IEnumerable<ResourcePoolIndexElementCell> ResourcePoolIndexElementCellSet
         //{
         //    get
         //    {
-        //        var list = new HashSet<ResourcePoolIndexElementItemElementField>();
-        //        foreach (var item in ElementField.ElementItemElementFieldSet)
-        //            list.Add(new ResourcePoolIndexElementItemElementField(this, item));
+        //        var list = new HashSet<ResourcePoolIndexElementCell>();
+        //        foreach (var item in ElementField.ElementCellSet)
+        //            list.Add(new ResourcePoolIndexElementCell(this, item));
         //        return list;
         //    }
         //}

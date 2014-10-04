@@ -21,8 +21,8 @@ namespace BusinessObjects.ViewModels
             TotalResourcePoolAddition = elementItem.TotalResourcePoolAddition;
             TotalResourcePoolFieldItemValueIncludingResourcePoolAddition = elementItem.TotalResourcePoolFieldItemValueIncludingResourcePoolAddition;
             TotalIncome = elementItem.TotalIncome;
-            ElementItemElementFieldSet = elementItem.ElementItemElementFieldSet.Select(item => new ElementItemElementField(item));
-            BasicElementItemElementFieldSet = elementItem.BasicElementItemElementFieldSet.Select(item => new ElementItemElementField(item));
+            ElementCellSet = elementItem.ElementCellSet.Select(item => new ElementCell(item));
+            BasicElementCellSet = elementItem.BasicElementCellSet.Select(item => new ElementCell(item));
         }
 
         public int Id { get; set; }
@@ -39,7 +39,7 @@ namespace BusinessObjects.ViewModels
         public decimal TotalIncome { get; set; }
 
         // TODO Duplicate?
-        public IEnumerable<ElementItemElementField> ElementItemElementFieldSet { get; set; }
-        public IEnumerable<ElementItemElementField> BasicElementItemElementFieldSet { get; set; }
+        public IEnumerable<ElementCell> ElementCellSet { get; set; }
+        public IEnumerable<ElementCell> BasicElementCellSet { get; set; }
     }
 }

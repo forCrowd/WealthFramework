@@ -8,7 +8,7 @@ namespace BusinessObjects
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    [DisplayName("Element Item Field")]
+    [DisplayName("Element Cell")]
     [BusinessObjects.Attributes.DefaultProperty("Id")]
     // [ODataControllerAuthorization("Administrator")]
     public class ElementCell : BaseEntity

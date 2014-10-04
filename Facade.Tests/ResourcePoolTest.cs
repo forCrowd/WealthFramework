@@ -1010,16 +1010,16 @@
         //    var elementItem1 = new ElementItem() { Element = element };
         //    element.ElementItemSet.Add(elementItem1);
 
-        //    var elementItemElementField1 = new ElementItemElementField() { ElementItem = elementItem1, ElementField = elementField };
-        //    elementItem1.ElementItemElementFieldSet.Add(elementItemElementField1);
-        //    elementField.ElementItemElementFieldSet.Add(elementItemElementField1);
+        //    var elementCell1 = new ElementCell() { ElementItem = elementItem1, ElementField = elementField };
+        //    elementItem1.ElementCellSet.Add(elementCell1);
+        //    elementField.ElementCellSet.Add(elementCell1);
 
         //    var elementItem2 = new ElementItem() { Element = element };
         //    element.ElementItemSet.Add(elementItem2);
 
-        //    var elementItemElementField2 = new ElementItemElementField() { ElementItem = elementItem2, ElementField = elementField };
-        //    elementItem2.ElementItemElementFieldSet.Add(elementItemElementField2);
-        //    elementField.ElementItemElementFieldSet.Add(elementItemElementField2);
+        //    var elementCell2 = new ElementCell() { ElementItem = elementItem2, ElementField = elementField };
+        //    elementItem2.ElementCellSet.Add(elementCell2);
+        //    elementField.ElementCellSet.Add(elementCell2);
 
         //    var resourcePoolIndex = new ResourcePoolIndex() { ResourcePool = resourcePool, ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicElementFieldIndex, ElementField = elementField, RatingSortType = (byte)RatingSortType.HighestToLowest };
         //    resourcePool.ResourcePoolIndexSet.Add(resourcePoolIndex);
@@ -1058,13 +1058,13 @@
         //    user.UserOrganizationSet.Add(userOrganization2);
         //    organization2.UserOrganizationSet.Add(userOrganization2);
 
-        //    var userElementItemElementField1 = new UserElementItemElementField() { User = user, ElementItemElementField = elementItemElementField1, Rating = 75 };
-        //    user.UserElementItemElementFieldSet.Add(userElementItemElementField1);
-        //    elementItemElementField1.UserElementItemElementFieldSet.Add(userElementItemElementField1);
+        //    var userElementCell1 = new UserElementCell() { User = user, ElementCell = elementCell1, Rating = 75 };
+        //    user.UserElementCellSet.Add(userElementCell1);
+        //    elementCell1.UserElementCellSet.Add(userElementCell1);
 
-        //    var userElementItemElementField2 = new UserElementItemElementField() { User = user, ElementItemElementField = elementItemElementField2, Rating = 25 };
-        //    user.UserElementItemElementFieldSet.Add(userElementItemElementField2);
-        //    elementItemElementField2.UserElementItemElementFieldSet.Add(userElementItemElementField2);
+        //    var userElementCell2 = new UserElementCell() { User = user, ElementCell = elementCell2, Rating = 25 };
+        //    user.UserElementCellSet.Add(userElementCell2);
+        //    elementCell2.UserElementCellSet.Add(userElementCell2);
 
         //    var userResourcePoolIndexOrganization1 = new UserResourcePoolIndexOrganization(userOrganization1, resourcePoolIndexOrganization1);
         //    var userResourcePoolIndexOrganization2 = new UserResourcePoolIndexOrganization(userOrganization2, resourcePoolIndexOrganization2);
@@ -1084,13 +1084,13 @@
 
         //    Assert.IsTrue(elementField.RatingAverage == 100);
 
-        //    Assert.IsTrue(elementItemElementField1.RatingCount == 1);
-        //    Assert.IsTrue(elementItemElementField1.RatingAverage == 75);
-        //    Assert.IsTrue(elementItemElementField1.RatingPercentage == 0.75M);
+        //    Assert.IsTrue(elementCell1.RatingCount == 1);
+        //    Assert.IsTrue(elementCell1.RatingAverage == 75);
+        //    Assert.IsTrue(elementCell1.RatingPercentage == 0.75M);
 
-        //    Assert.IsTrue(elementItemElementField2.RatingCount == 1);
-        //    Assert.IsTrue(elementItemElementField2.RatingAverage == 25);
-        //    Assert.IsTrue(elementItemElementField2.RatingPercentage == 0.25M);
+        //    Assert.IsTrue(elementCell2.RatingCount == 1);
+        //    Assert.IsTrue(elementCell2.RatingAverage == 25);
+        //    Assert.IsTrue(elementCell2.RatingPercentage == 0.25M);
 
         //    Assert.IsTrue(userResourcePool.NumberOfSales == 2);
         //    Assert.IsTrue(userResourcePool.ResourcePoolTax == 400);
@@ -1184,16 +1184,16 @@
         //    var elementItem1 = new ElementItem() { Element = element };
         //    element.ElementItemSet.Add(elementItem1);
 
-        //    var elementItemElementField1 = new ElementItemElementField() { ElementItem = elementItem1, ElementField = elementField };
-        //    elementItem1.ElementItemElementFieldSet.Add(elementItemElementField1);
-        //    elementField.ElementItemElementFieldSet.Add(elementItemElementField1);
+        //    var elementCell1 = new ElementCell() { ElementItem = elementItem1, ElementField = elementField };
+        //    elementItem1.ElementCellSet.Add(elementCell1);
+        //    elementField.ElementCellSet.Add(elementCell1);
 
         //    var elementItem2 = new ElementItem() { Element = element };
         //    element.ElementItemSet.Add(elementItem2);
 
-        //    var elementItemElementField2 = new ElementItemElementField() { ElementItem = elementItem2, ElementField = elementField };
-        //    elementItem2.ElementItemElementFieldSet.Add(elementItemElementField2);
-        //    elementField.ElementItemElementFieldSet.Add(elementItemElementField2);
+        //    var elementCell2 = new ElementCell() { ElementItem = elementItem2, ElementField = elementField };
+        //    elementItem2.ElementCellSet.Add(elementCell2);
+        //    elementField.ElementCellSet.Add(elementCell2);
 
         //    var resourcePoolIndex = new ResourcePoolIndex() { ResourcePool = resourcePool, ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicElementFieldIndex, ElementField = elementField, RatingSortType = (byte)RatingSortType.HighestToLowest };
         //    resourcePool.ResourcePoolIndexSet.Add(resourcePoolIndex);
@@ -1232,13 +1232,13 @@
         //    user1.UserOrganizationSet.Add(userOrganization1_2);
         //    organization2.UserOrganizationSet.Add(userOrganization1_2);
 
-        //    var userElementItemElementField1_1 = new UserElementItemElementField() { User = user1, ElementItemElementField = elementItemElementField1, Rating = 80 };
-        //    user1.UserElementItemElementFieldSet.Add(userElementItemElementField1_1);
-        //    elementItemElementField1.UserElementItemElementFieldSet.Add(userElementItemElementField1_1);
+        //    var userElementCell1_1 = new UserElementCell() { User = user1, ElementCell = elementCell1, Rating = 80 };
+        //    user1.UserElementCellSet.Add(userElementCell1_1);
+        //    elementCell1.UserElementCellSet.Add(userElementCell1_1);
 
-        //    var userElementItemElementField1_2 = new UserElementItemElementField() { User = user1, ElementItemElementField = elementItemElementField2, Rating = 20 };
-        //    user1.UserElementItemElementFieldSet.Add(userElementItemElementField1_2);
-        //    elementItemElementField2.UserElementItemElementFieldSet.Add(userElementItemElementField1_2);
+        //    var userElementCell1_2 = new UserElementCell() { User = user1, ElementCell = elementCell2, Rating = 20 };
+        //    user1.UserElementCellSet.Add(userElementCell1_2);
+        //    elementCell2.UserElementCellSet.Add(userElementCell1_2);
 
         //    var userResourcePoolIndexOrganization1_1 = new UserResourcePoolIndexOrganization(userOrganization1_1, resourcePoolIndexOrganization1);
         //    var userResourcePoolIndexOrganization1_2 = new UserResourcePoolIndexOrganization(userOrganization1_2, resourcePoolIndexOrganization2);
@@ -1260,13 +1260,13 @@
         //    user2.UserOrganizationSet.Add(userOrganization2_2);
         //    organization2.UserOrganizationSet.Add(userOrganization2_2);
 
-        //    var userElementItemElementField2_1 = new UserElementItemElementField() { User = user2, ElementItemElementField = elementItemElementField1, Rating = 40 };
-        //    user1.UserElementItemElementFieldSet.Add(userElementItemElementField2_1);
-        //    elementItemElementField1.UserElementItemElementFieldSet.Add(userElementItemElementField2_1);
+        //    var userElementCell2_1 = new UserElementCell() { User = user2, ElementCell = elementCell1, Rating = 40 };
+        //    user1.UserElementCellSet.Add(userElementCell2_1);
+        //    elementCell1.UserElementCellSet.Add(userElementCell2_1);
 
-        //    var userElementItemElementField2_2 = new UserElementItemElementField() { User = user2, ElementItemElementField = elementItemElementField2, Rating = 60 };
-        //    user1.UserElementItemElementFieldSet.Add(userElementItemElementField2_2);
-        //    elementItemElementField2.UserElementItemElementFieldSet.Add(userElementItemElementField2_2);
+        //    var userElementCell2_2 = new UserElementCell() { User = user2, ElementCell = elementCell2, Rating = 60 };
+        //    user1.UserElementCellSet.Add(userElementCell2_2);
+        //    elementCell2.UserElementCellSet.Add(userElementCell2_2);
 
         //    var userResourcePoolIndexOrganization2_1 = new UserResourcePoolIndexOrganization(userOrganization2_1, resourcePoolIndexOrganization1);
         //    var userResourcePoolIndexOrganization2_2 = new UserResourcePoolIndexOrganization(userOrganization2_2, resourcePoolIndexOrganization2);
@@ -1286,13 +1286,13 @@
 
         //    Assert.IsTrue(elementField.RatingAverage == 100);
 
-        //    Assert.IsTrue(elementItemElementField1.RatingCount == 2);
-        //    Assert.IsTrue(elementItemElementField1.RatingAverage == 60);
-        //    Assert.IsTrue(elementItemElementField1.RatingPercentage == 0.6M);
+        //    Assert.IsTrue(elementCell1.RatingCount == 2);
+        //    Assert.IsTrue(elementCell1.RatingAverage == 60);
+        //    Assert.IsTrue(elementCell1.RatingPercentage == 0.6M);
 
-        //    Assert.IsTrue(elementItemElementField2.RatingCount == 2);
-        //    Assert.IsTrue(elementItemElementField2.RatingAverage == 40);
-        //    Assert.IsTrue(elementItemElementField2.RatingPercentage == 0.4M);
+        //    Assert.IsTrue(elementCell2.RatingCount == 2);
+        //    Assert.IsTrue(elementCell2.RatingAverage == 40);
+        //    Assert.IsTrue(elementCell2.RatingPercentage == 0.4M);
 
         //    // User 1
         //    Assert.IsTrue(userResourcePool1.NumberOfSales == 2);
@@ -1408,31 +1408,31 @@
             organization.ElementItemSet.Add(organization1);
 
             var organizationName1 = new ElementCell() { ElementField = organizationName, ElementItem = organization1, StringValue = "Organization 1" };
-            organization1.ElementItemElementFieldSet.Add(organizationName1);
-            organizationName.ElementItemElementFieldSet.Add(organizationName1);
+            organization1.ElementCellSet.Add(organizationName1);
+            organizationName.ElementCellSet.Add(organizationName1);
 
             var organizationSalesPrice1 = new ElementCell() { ElementField = salesPrice, ElementItem = organization1, DecimalValue = 200 };
-            organization1.ElementItemElementFieldSet.Add(organizationSalesPrice1);
-            salesPrice.ElementItemElementFieldSet.Add(organizationSalesPrice1);
+            organization1.ElementCellSet.Add(organizationSalesPrice1);
+            salesPrice.ElementCellSet.Add(organizationSalesPrice1);
 
             var organizationSalesNumber1 = new ElementCell() { ElementField = salesNumber, ElementItem = organization1, DecimalValue = 1 };
-            organization1.ElementItemElementFieldSet.Add(organizationSalesNumber1);
-            salesNumber.ElementItemElementFieldSet.Add(organizationSalesNumber1);
+            organization1.ElementCellSet.Add(organizationSalesNumber1);
+            salesNumber.ElementCellSet.Add(organizationSalesNumber1);
 
             var organization2 = new ElementItem() { Element = organization };
             organization.ElementItemSet.Add(organization2);
 
             var organizationName2 = new ElementCell() { ElementField = organizationName, ElementItem = organization2, StringValue = "Organization 2" };
-            organization2.ElementItemElementFieldSet.Add(organizationName2);
-            organizationName.ElementItemElementFieldSet.Add(organizationName2);
+            organization2.ElementCellSet.Add(organizationName2);
+            organizationName.ElementCellSet.Add(organizationName2);
 
             var organizationSalesPrice2 = new ElementCell() { ElementField = salesPrice, ElementItem = organization2, DecimalValue = 200 };
-            organization2.ElementItemElementFieldSet.Add(organizationSalesPrice2);
-            salesPrice.ElementItemElementFieldSet.Add(organizationSalesPrice2);
+            organization2.ElementCellSet.Add(organizationSalesPrice2);
+            salesPrice.ElementCellSet.Add(organizationSalesPrice2);
 
             var organizationSalesNumber2 = new ElementCell() { ElementField = salesNumber, ElementItem = organization2, DecimalValue = 1 };
-            organization2.ElementItemElementFieldSet.Add(organizationSalesNumber2);
-            salesNumber.ElementItemElementFieldSet.Add(organizationSalesNumber2);
+            organization2.ElementCellSet.Add(organizationSalesNumber2);
+            salesNumber.ElementCellSet.Add(organizationSalesNumber2);
 
             var resourcePoolIndex = new ResourcePoolIndex()
             {
@@ -1471,11 +1471,11 @@
             resourcePoolIndex.UserResourcePoolIndexSet.Add(userResourcePoolIndex);
 
             var userOrganizationName1 = new UserElementCell() { User = user, ElementCell = organizationName1, Rating = 75 };
-            user.UserElementItemElementFieldSet.Add(userOrganizationName1);
+            user.UserElementCellSet.Add(userOrganizationName1);
             organizationName1.UserElementCell.Add(userOrganizationName1);
 
             var userOrganizationName2 = new UserElementCell() { User = user, ElementCell = organizationName2, Rating = 25 };
-            user.UserElementItemElementFieldSet.Add(userOrganizationName1);
+            user.UserElementCellSet.Add(userOrganizationName1);
             organizationName2.UserElementCell.Add(userOrganizationName2);
 
             //var userOrganization1 = new UserOrganization() { User = user, Organization = organization1, NumberOfSales = 1 };
@@ -1486,13 +1486,13 @@
             //user.UserOrganizationSet.Add(userOrganization2);
             //organization2.UserOrganizationSet.Add(userOrganization2);
 
-            //var userElementItemElementField1 = new UserElementItemElementField() { User = user, ElementItemElementField = organizationSalesPrice1, Rating = 75 };
-            //user.UserElementItemElementFieldSet.Add(userElementItemElementField1);
-            //organizationSalesPrice1.UserElementItemElementFieldSet.Add(userElementItemElementField1);
+            //var userElementCell1 = new UserElementCell() { User = user, ElementCell = organizationSalesPrice1, Rating = 75 };
+            //user.UserElementCellSet.Add(userElementCell1);
+            //organizationSalesPrice1.UserElementCellSet.Add(userElementCell1);
 
-            //var userElementItemElementField2 = new UserElementItemElementField() { User = user, ElementItemElementField = organizationSalesPrice2, Rating = 25 };
-            //user.UserElementItemElementFieldSet.Add(userElementItemElementField2);
-            //organizationSalesPrice2.UserElementItemElementFieldSet.Add(userElementItemElementField2);
+            //var userElementCell2 = new UserElementCell() { User = user, ElementCell = organizationSalesPrice2, Rating = 25 };
+            //user.UserElementCellSet.Add(userElementCell2);
+            //organizationSalesPrice2.UserElementCellSet.Add(userElementCell2);
 
             //var userResourcePoolIndexOrganization1 = new UserResourcePoolIndexOrganization(userOrganization1, resourcePoolIndexOrganization1);
             //var userResourcePoolIndexOrganization2 = new UserResourcePoolIndexOrganization(userOrganization2, resourcePoolIndexOrganization2);
@@ -1642,23 +1642,23 @@
             organization.ElementItemSet.Add(organization1);
 
             var organizationSalesPrice1 = new ElementCell() { ElementField = salesPrice, ElementItem = organization1, DecimalValue = 25 };
-            organization1.ElementItemElementFieldSet.Add(organizationSalesPrice1);
-            salesPrice.ElementItemElementFieldSet.Add(organizationSalesPrice1);
+            organization1.ElementCellSet.Add(organizationSalesPrice1);
+            salesPrice.ElementCellSet.Add(organizationSalesPrice1);
 
             var organizationSalesNumber1 = new ElementCell() { ElementField = salesNumber, ElementItem = organization1, DecimalValue = 1 };
-            organization1.ElementItemElementFieldSet.Add(organizationSalesNumber1);
-            salesNumber.ElementItemElementFieldSet.Add(organizationSalesNumber1);
+            organization1.ElementCellSet.Add(organizationSalesNumber1);
+            salesNumber.ElementCellSet.Add(organizationSalesNumber1);
 
             var organization2 = new ElementItem() { Element = organization };
             organization.ElementItemSet.Add(organization2);
 
             var organizationSalesPrice2 = new ElementCell() { ElementField = salesPrice, ElementItem = organization2, DecimalValue = 75 };
-            organization2.ElementItemElementFieldSet.Add(organizationSalesPrice2);
-            salesPrice.ElementItemElementFieldSet.Add(organizationSalesPrice2);
+            organization2.ElementCellSet.Add(organizationSalesPrice2);
+            salesPrice.ElementCellSet.Add(organizationSalesPrice2);
 
             var organizationSalesNumber2 = new ElementCell() { ElementField = salesNumber, ElementItem = organization2, DecimalValue = 1 };
-            organization2.ElementItemElementFieldSet.Add(organizationSalesNumber2);
-            salesNumber.ElementItemElementFieldSet.Add(organizationSalesNumber2);
+            organization2.ElementCellSet.Add(organizationSalesNumber2);
+            salesNumber.ElementCellSet.Add(organizationSalesNumber2);
 
             var resourcePoolIndex = new ResourcePoolIndex()
             {
@@ -1704,13 +1704,13 @@
             //user.UserOrganizationSet.Add(userOrganization2);
             //organization2.UserOrganizationSet.Add(userOrganization2);
 
-            //var userElementItemElementField1 = new UserElementItemElementField() { User = user, ElementItemElementField = organizationSalesPrice1, Rating = 75 };
-            //user.UserElementItemElementFieldSet.Add(userElementItemElementField1);
-            //organizationSalesPrice1.UserElementItemElementFieldSet.Add(userElementItemElementField1);
+            //var userElementCell1 = new UserElementCell() { User = user, ElementCell = organizationSalesPrice1, Rating = 75 };
+            //user.UserElementCellSet.Add(userElementCell1);
+            //organizationSalesPrice1.UserElementCellSet.Add(userElementCell1);
 
-            //var userElementItemElementField2 = new UserElementItemElementField() { User = user, ElementItemElementField = organizationSalesPrice2, Rating = 25 };
-            //user.UserElementItemElementFieldSet.Add(userElementItemElementField2);
-            //organizationSalesPrice2.UserElementItemElementFieldSet.Add(userElementItemElementField2);
+            //var userElementCell2 = new UserElementCell() { User = user, ElementCell = organizationSalesPrice2, Rating = 25 };
+            //user.UserElementCellSet.Add(userElementCell2);
+            //organizationSalesPrice2.UserElementCellSet.Add(userElementCell2);
 
             //var userResourcePoolIndexOrganization1 = new UserResourcePoolIndexOrganization(userOrganization1, resourcePoolIndexOrganization1);
             //var userResourcePoolIndexOrganization2 = new UserResourcePoolIndexOrganization(userOrganization2, resourcePoolIndexOrganization2);

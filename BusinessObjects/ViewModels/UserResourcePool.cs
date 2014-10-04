@@ -24,8 +24,8 @@ namespace BusinessObjects.ViewModels
             //    .UserOrganizationSet
             //    .Select(item => new UserOrganization(item));
 
-            ElementSet = userResourcePool.ResourcePool.ElementSet
-                .Select(element => new Element(element));
+            //ElementSet = userResourcePool.ResourcePool.ElementSet
+            //    .Select(element => new Element(element));
 
             MainElement = new Element(userResourcePool.ResourcePool.MainElement);
 
@@ -46,16 +46,16 @@ namespace BusinessObjects.ViewModels
         public int UserResourcePoolRatingCount { get; set; }
         public IEnumerable<ResourcePoolIndex> ResourcePoolIndexSet { get; set; }
         //public IEnumerable<UserOrganization> UserOrganizationSet { get; set; }
-        public IEnumerable<Element> ElementSet { get; set; }
+        //public IEnumerable<Element> ElementSet { get; set; }
         public Element MainElement { get; set; }
-        public IEnumerable<UserElementCell> UserElementItemElementFieldSet { get; set; }
+        //public IEnumerable<UserElementCell> UserElementCellSet { get; set; }
         //public decimal ResourcePoolProductionCost { get; set; }
-        public decimal ResourcePoolSalesPrice { get; set; }
-        public decimal SalesPriceIncludingResourcePoolTax { get; set; }
-        public int NumberOfSales { get; set; }
+        //public decimal ResourcePoolSalesPrice { get; set; }
+        //public decimal SalesPriceIncludingResourcePoolTax { get; set; }
+        //public int NumberOfSales { get; set; }
         //public decimal TotalProfit { get; set; }
-        public decimal TotalResourcePoolTax { get; set; }
-        public decimal TotalSalesRevenueIncludingResourcePoolTax { get; set; }
+        //public decimal TotalResourcePoolTax { get; set; }
+        //public decimal TotalSalesRevenueIncludingResourcePoolTax { get; set; }
         public decimal TotalIncome { get; set; }
     }
 }

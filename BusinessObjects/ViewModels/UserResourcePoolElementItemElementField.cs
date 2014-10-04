@@ -11,27 +11,27 @@
 
 //    //[DisplayName("User Organization")]
 //    //[BusinessObjects.Attributes.DefaultProperty("Name")]
-//    public class UserResourcePoolElementItemElementField
+//    public class UserResourcePoolElementCell
 //    {
-//        public UserResourcePoolElementItemElementField(BusinessObjects.UserResourcePool userResourcePool, BusinessObjects.ElementItemElementField elementItemElementField)
+//        public UserResourcePoolElementCell(BusinessObjects.UserResourcePool userResourcePool, BusinessObjects.ElementCell elementCell)
 //        {
 //            // Validations
 //            if (UserResourcePool == null)
 //                throw new ArgumentNullException("UserResourcePool"); 
-            
-//            if (elementItemElementField == null)
-//                throw new ArgumentNullException("elementItemElementField");
 
-//            if (!elementItemElementField.ElementField.IsResourcePoolField)
-//                throw new ArgumentException("Invalid element field: IsResourcePoolField = false", "elementItemElementField"); 
-            
-//            if (elementItemElementField.ElementField.ElementFieldType != (byte)ElementFieldType.Decimal)
-//                throw new ArgumentException(string.Format("Invalid element field type: {0}", elementItemElementField.ElementField.ElementFieldType), "elementItemElementField");
+//            if (elementCell == null)
+//                throw new ArgumentNullException("elementCell");
+
+//            if (!elementCell.ElementField.IsResourcePoolField)
+//                throw new ArgumentException("Invalid element field: IsResourcePoolField = false", "elementCell"); 
+
+//            if (elementCell.ElementField.ElementFieldType != (byte)ElementFieldType.Decimal)
+//                throw new ArgumentException(string.Format("Invalid element field type: {0}", elementCell.ElementField.ElementFieldType), "elementCell");
 
 //            // ResourcePoolAddition = element
 
 //            UserResourcePool = userResourcePool;
-//            ElementItemElementField = elementItemElementField;
+//            ElementCell = elementCell;
 //        }
 
 //        /* */

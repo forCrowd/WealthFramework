@@ -14,8 +14,8 @@ namespace BusinessObjects
     {
         public ElementItem()
         {
-            ElementItemElementFieldSet = new HashSet<ElementCell>();
-            ElementItemElementFieldSelectedElementItemSet = new HashSet<ElementCell>();
+            ElementCellSet = new HashSet<ElementCell>();
+            ElementCellSelectedElementItemSet = new HashSet<ElementCell>();
             //OrganizationElementItemSet = new HashSet<OrganizationElementItem>();
             //UserElementItemSet = new HashSet<UserElementItem>();
         }
@@ -32,9 +32,9 @@ namespace BusinessObjects
         public int ElementId { get; set; }
 
         public virtual Element Element { get; set; }
-        public virtual ICollection<ElementCell> ElementItemElementFieldSet { get; set; }
+        public virtual ICollection<ElementCell> ElementCellSet { get; set; }
         [InverseProperty("SelectedElementItem")]
-        public virtual ICollection<ElementCell> ElementItemElementFieldSelectedElementItemSet { get; set; }
+        public virtual ICollection<ElementCell> ElementCellSelectedElementItemSet { get; set; }
         //public virtual ICollection<OrganizationElementItem> OrganizationElementItemSet { get; set; }
         //public virtual ICollection<UserElementItem> UserElementItemSet { get; set; }
 
@@ -65,18 +65,18 @@ namespace BusinessObjects
         //    }
         //}
 
-        public IEnumerable<ElementCell> BasicElementItemElementFieldSet
+        public IEnumerable<ElementCell> BasicElementCellSet
         {
             get
             {
-                return ElementItemElementFieldSet.Where(item => item.ElementField.ElementFieldType != (byte)ElementFieldType.ResourcePool
+                return ElementCellSet.Where(item => item.ElementField.ElementFieldType != (byte)ElementFieldType.ResourcePool
                     && item.ElementField.ElementFieldType != (byte)ElementFieldType.Multiplier);
             }
         }
 
         public ElementCell ResourcePoolFieldItem
         {
-            get { return ElementItemElementFieldSet.SingleOrDefault(item => item.ElementField.ElementFieldType == (byte)ElementFieldType.ResourcePool); }
+            get { return ElementCellSet.SingleOrDefault(item => item.ElementField.ElementFieldType == (byte)ElementFieldType.ResourcePool); }
         }
 
         public bool HasResourcePoolFieldItem
@@ -119,7 +119,7 @@ namespace BusinessObjects
 
         public ElementCell MultiplierFieldItem
         {
-            get { return ElementItemElementFieldSet.SingleOrDefault(item => item.ElementField.ElementFieldType == (byte)ElementFieldType.Multiplier); }
+            get { return ElementCellSet.SingleOrDefault(item => item.ElementField.ElementFieldType == (byte)ElementFieldType.Multiplier); }
         }
 
         public bool HasMultiplierFieldItem
@@ -173,7 +173,7 @@ namespace BusinessObjects
 
         public decimal ResourcePoolIndexIncome
         {
-            get { return ElementItemElementFieldSet.Sum(item => item.ResourcePoolIndexIncome); }
+            get { return ElementCellSet.Sum(item => item.ResourcePoolIndexIncome); }
         }
 
         public decimal TotalIncome
