@@ -6,7 +6,7 @@
 . learn this disposable thingy? repo + unitofwork + context + controllers?
 . handling concurrency can be improved - load the new record and let the user choose which one is correct
 . try to create initial data from facade, instead of dataobjects layer
-. try to merge unit of work classes - resourcepool unitofwork could create sector + license + organization for instance?
+. check whether unit of work classes need merging
 .. however, in the current structure, every entity will have a unitofwork + controller by default?
 .. be careful about different contexts entities - license.resourcepool = sampleResourcePool was creating new resource pools!
 either work with Ids, or try to work on merging unitofwork classes
@@ -16,12 +16,10 @@ either work with Ids, or try to work on merging unitofwork classes
 . exists should work with find or alllive.any() or all.any() ?
 . don't allow delete License if it's connected to an Organization (can't be deleted) - same goes for the others but License really can't be deleted
 
-. multiple pk for user organization + user sector + user license + user resource pool organization + resource pool organization
-. table structure - by this way, userresourcepool could reach to usersectorrating easily?;
-user - resourcepool - userresourcepoolId
-userresourcepoolsector -> userresourcepoolId sectorId rating
-userresourcepoollicense -> userresourcepoolId licenseId rating
-userresourcepoolorganization -> userresourcepoolId organizationId rating
+. multiple pk cases for user organization + user sector + user license + user resource pool organization + resource pool organization
+. table structure - by this way, userresourcepool could reach to ratings/values easily;
+User - Resourcepool - UserresourcepoolId
+UserResourcePoolElementCell -> UserResourcePoolId ElementCellId?
 
 . authorize only for admins didnt work - license, organization, resourcepool, sector
 any user should be able to access them. currently definitions link is only visible to admins - according to this, normal user may not use post action for instance? check these rules later on
@@ -34,11 +32,9 @@ any user should be able to access them. currently definitions link is only visib
 . automate .tt scripts with afterbuild?
 . try to have a standard for css usage + html layout formats + also js script conventions
 . check spelling of the texts!
-. update namespaces - ?.wealtheconomy.
 . enable auto test for appveyor - currently it fails probably because it can't create the db?
-. in some delete cases, odatacontroller returns NotFound error? although it's deleted, the record stays on the page until refreshing the page
 . __migrationhistory createdon field error - it seems there is not much to do, it also might be about glimpse?
-. upgrade to .net 4.5.1? APM doesn't have it right now
+. upgrade to .net 4.5.1?
 http://msdn.microsoft.com/en-us/library/hh925568%28v=vs.110%29.aspx
 . what to do these lines; datacontext.js - batches.push(manager.getEntities(['License'], [breeze.EntityState.Deleted]));
 
@@ -48,13 +44,8 @@ http://msdn.microsoft.com/en-us/library/hh925568%28v=vs.110%29.aspx
 . exclude sample user from rating averages - or make them always 50 / 50?
 . how to calculate average index? some people may enter 1,2,3 - some may enter 100,200,300? always force them to enter percentage?
 or always calculate the total average based on invidiuals percentage? or both?
-. should cmrp rate be on user level? if not, there is no average for cmrp rate for now!!!
 . in 'not rated index' case, userResourcePool view doesn't show the result
 . in 'not rated organizations' case, it's collecting the tax but not giving it back? - basically how to treat an organization that doesn't have any rating?
-
-. check [required] attribute for newer classes?
-
-. inserting a new userresourcepoolindex gave an error?
 
 . validateantiforgerytoken + bind attributes in odata controller?
 
@@ -109,30 +100,26 @@ public int TimeID { get; set; }
 [Column(Order = 3)]
 public string LanguageID { get; set; }
 
-. check user[x]rating tables usage, do they need filtering?
-
+. update configuration.cs with element fields
 . employee + customer + quality index samples are not there
 . all in one + sector samples are outdated
-
-. ResourcePoolIndexOrganization class should be internal, not public - find the others! don't use them in tests
+. check userunitofwork + resourcepoolunitofwork + userresourcepoolunitofwork for sample records + delete cases
+. add multiple fields test
+. check [required] attribute for newer classes?
 
 . highcharts library loading perf?
 
 . warm-up script?
 
-. check userunitofwork + resourcepoolunitofwork + userresourcepoolunitofwork for sample records + delete cases
-
-. update configuration.cs with element fields
 . make even the name as a element item and create it automatically when the element is created
 
 . currently multiplier + resource pool field types can only be added once per element (or resource pool) - check it again
 
 . fixed amount resourcepooltype
 
-. add multiple fields test
+. resourcepoolindex can be a field for elementfield table? Index boolean?
 
 . ismainelement -> DefaultElement
-. resourcepoolindex can be a field for elementfield table? Index boolean?
 . multiplier field type -> userelementcell can hold just the value but will be used as it is, not it's average (like Rating)
 currently number of sales is not on user level, but on elementitem level!
 . userelementcell rating -> value?
