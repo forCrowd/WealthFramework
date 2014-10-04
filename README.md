@@ -8,15 +8,17 @@ An experimental resource management system that aims to provide a sustainable ec
 
 **0.14.6.1**
 
-* Clean-up; ElementItemElementField to ElementCell
+* Clean-up
+ * ElementItemElementField was renamed to ElementCell
+ * Long property names were shortened
 
 **0.14.6**
 
-* Clean-up; remove Organization and related parts
+* Clean-up; Organization and related parts were removed
 
 **0.14.5**
 
-* Element parent - child structure
+* Element parent - child structure was partially added
 
 **0.14.4**
 
@@ -183,7 +185,7 @@ An experimental resource management system that aims to provide a sustainable ec
 **0.10.9**
 
 * T4 files update to use IdentityContext
-  * Dependencies folder was created under Framework - T4 folder, that contains IdentityContext libraries
+ * Dependencies folder was created under Framework - T4 folder, that contains IdentityContext libraries
 * EntityFramework.dll + EntityFramework.SqlServer.dll files under  
 C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE folder  
 were replaced with Entity Framework 6.1 versions.
@@ -206,9 +208,9 @@ were replaced with Entity Framework 6.1 versions.
 **0.10.5**
 
 * routing fixes
-  * if it's supported, angular html5Mode is on
-  * href fixes
-  * mvc routing always goes to HomeController, so angular can handle the requests
+ * if it's supported, angular html5Mode is on
+ * href fixes
+ * mvc routing always goes to HomeController, so angular can handle the requests
 
 **0.10.4**
 
@@ -240,9 +242,9 @@ were replaced with Entity Framework 6.1 versions.
 **0.9.2**
 
 * BusinessObjects
-  * Merge generated and custom classes
-  * BaseEntity class
-  * Clean up + finetuning
+ * Merge generated and custom classes
+ * BaseEntity class
+ * Clean up + finetuning
 * Framework - T4 files fixes
 
 **0.9.1**
@@ -252,11 +254,11 @@ were replaced with Entity Framework 6.1 versions.
 **0.9**
 
 * Application
-  * Converted to Code First approach from Database First
-    * T4 files were updated to read from Code First metadata
-    * EF6.Utility.cs was moved to the solution
-  * Switched to LocalDb instead of SQL Server 2008 R2
-  * T4 include files are now under Framework\T4 folder
+ * Converted to Code First approach from Database First
+     * T4 files were updated to read from Code First metadata
+     * EF6.Utility.cs was moved to the solution
+ * Switched to LocalDb instead of SQL Server 2008 R2
+ * T4 include files are now under Framework\T4 folder
 
 **0.8.1**
 
@@ -265,8 +267,8 @@ were replaced with Entity Framework 6.1 versions.
 **0.8**
 
 * Database
-  * ResourcePool table became the main container for Organization, License and Sector tables
-  * UserResourcePoolOrganization was dropped and UserOrganization was introduced
+ * ResourcePool table became the main container for Organization, License and Sector tables
+ * UserResourcePoolOrganization was dropped and UserOrganization was introduced
 
 **0.7**
 
@@ -297,7 +299,7 @@ were replaced with Entity Framework 6.1 versions.
 
 * SolutionItems - Local_UpdateDatabase.sql was updated to remove doktrosizlar db items
 * Business + DataObjects
-  * To support tables with multiple primary key, IEntity interface Id property was replaced with IsNew
+ * To support tables with multiple primary key, IEntity interface Id property was replaced with IsNew
 * Web - Controllers finetuning
 
 **0.4.2**.2
@@ -319,38 +321,38 @@ were replaced with Entity Framework 6.1 versions.
 **0.4**
 
 * DataObjects
-  * Utility.ttinclude: Common code blocks from t4 files were moved to this file
-  * Repositories were updated
+ * Utility.ttinclude: Common code blocks from t4 files were moved to this file
+ * Repositories were updated
 * BusinessObjects
-  * Metadata.t4 was moved under "Generated" folder and was modified to generated the files for once.
+ * Metadata.t4 was moved under "Generated" folder and was modified to generated the files for once.
 * Facade
-  * UnitOfWork classes were created for each entity
+ * UnitOfWork classes were created for each entity
 * Web
-  * Repositories + UnitOfWork updates
+ * Repositories + UnitOfWork updates
 * General
-  * config files connectionstrings were updated
-  * github repository reset
+ * config files connectionstrings were updated
+ * github repository reset
 
 **0.3**
 
 * BusinessObjects
-  * OrganizationGroupType was renamed to UserResourcePoolType
-  * UserDistributionIndexRatingAverage class was merged into UserResourcePool
-  * BusinessObjectsDto.t4 was add to be able create Dto classes
-  * OrganizationGroupType was renamed to UserResourcePoolType
+ * OrganizationGroupType was renamed to UserResourcePoolType
+ * UserDistributionIndexRatingAverage class was merged into UserResourcePool
+ * BusinessObjectsDto.t4 was add to be able create Dto classes
+ * OrganizationGroupType was renamed to UserResourcePoolType
 * Web
-  * Number of ratings info was added to CMRP views
-  * Create / Edit operations were modified to use Dto classes
+ * Number of ratings info was added to CMRP views
+ * Create / Edit operations were modified to use Dto classes
 * Database + General
-  * UserResourcePool table ResourcePoolRate field percentage update - values were divided to 100
+ * UserResourcePool table ResourcePoolRate field percentage update - values were divided to 100
 
 **0.2**
 
 * Database + General
-  * ResourcePool + ResourcePoolOrganization + UserResourcePool + UserResourcePoolOrganization tables were added
-  * User table ResourcePoolRate was removed
-  * UserDistributionIndexRating table was removed
-  * UserOrganizationRating table was removed
+ * ResourcePool + ResourcePoolOrganization + UserResourcePool + UserResourcePoolOrganization tables were added
+ * User table ResourcePoolRate was removed
+ * UserDistributionIndexRating table was removed
+ * UserOrganizationRating table was removed
 * General - Versioning method was updated: Minor version number will be increased in every update
 
 **0.1.9**.1 - 06 Mar '14
@@ -361,15 +363,15 @@ were replaced with Entity Framework 6.1 versions.
 
 * SolutionItems - Maintenance scripts
 * Database
-  * Organization table UserId + NumberOfSales fields were removed
-  * UserOrganizationRating table NumberOfSales field was added
-  * All tables CreatedOn + ModifiedOn default values
+ * Organization table UserId + NumberOfSales fields were removed
+ * UserOrganizationRating table NumberOfSales field was added
+ * All tables CreatedOn + ModifiedOn default values
 * Web
-  * Quality Private + Public views
-  * Sector Private + Public views
-  * Employee Satisfaction Private + Public views
-  * Customer Satisfaction Private + Public views
-  * All in One Private + Public views
+ * Quality Private + Public views
+ * Sector Private + Public views
+ * Employee Satisfaction Private + Public views
+ * Customer Satisfaction Private + Public views
+ * All in One Private + Public views
 
 **0.1.8** - 04 Mar '14
 

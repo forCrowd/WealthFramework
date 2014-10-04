@@ -133,7 +133,7 @@ public string LanguageID { get; set; }
 
 . ismainelement -> DefaultElement
 . resourcepoolindex can be a field for elementfield table? Index boolean?
-. multiplier field type -> userelementitemelementfield can hold just the value but will be used as it is, not it's average (like Rating)
+. multiplier field type -> userelementcell can hold just the value but will be used as it is, not it's average (like Rating)
 currently number of sales is not on user level, but on elementitem level!
 . userelementcell rating -> value?
 . instead of MainElement boolean on Element level, can it be done with MainElement field on ResourcePool level? yes, with InverseProperty
