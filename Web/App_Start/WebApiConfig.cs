@@ -29,16 +29,52 @@ namespace Web
             //config.Routes.MapODataRoute(
             //    routeName: "ODataRoute",
             //    routePrefix: "odata",
-            //    //routePrefix: string.Empty,
             //    model: edm,
-            //    batchHandler: new DefaultODataBatchHandler(GlobalConfiguration.DefaultServer));
+            //    batchHandler: new BatchHandler(GlobalConfiguration.DefaultServer));
 
             config.Routes.MapODataServiceRoute(
                 routeName: "ODataRoute",
                 routePrefix: "odata",
                 //routePrefix: string.Empty,
                 model: edm,
-                batchHandler: new DefaultODataBatchHandler(GlobalConfiguration.DefaultServer));
+                batchHandler: new BatchHandler(GlobalConfiguration.DefaultServer));
+        }
+    }
+
+    public class BatchHandler : DefaultODataBatchHandler
+    {
+        public BatchHandler(HttpServer httpServer)
+            : base(httpServer)
+        { }
+
+        public override System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> CreateResponseMessageAsync(System.Collections.Generic.IEnumerable<ODataBatchResponseItem> responses, System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken)
+        {
+            return base.CreateResponseMessageAsync(responses, request, cancellationToken);
+        }
+
+        public override System.Threading.Tasks.Task<System.Collections.Generic.IList<ODataBatchResponseItem>> ExecuteRequestMessagesAsync(System.Collections.Generic.IEnumerable<ODataBatchRequestItem> requests, System.Threading.CancellationToken cancellationToken)
+        {
+            return base.ExecuteRequestMessagesAsync(requests, cancellationToken);
+        }
+
+        public override System.Threading.Tasks.Task<System.Collections.Generic.IList<ODataBatchRequestItem>> ParseBatchRequestsAsync(System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken)
+        {
+            return base.ParseBatchRequestsAsync(request, cancellationToken);
+        }
+
+        public override System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> ProcessBatchAsync(System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken)
+        {
+            return base.ProcessBatchAsync(request, cancellationToken);
+        }
+
+        public override void ValidateRequest(System.Net.Http.HttpRequestMessage request)
+        {
+            base.ValidateRequest(request);
+        }
+
+        public override System.Uri GetBaseUri(System.Net.Http.HttpRequestMessage request)
+        {
+            return base.GetBaseUri(request);
         }
     }
 }

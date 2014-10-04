@@ -107,6 +107,8 @@ public string LanguageID { get; set; }
 . add multiple fields test
 . check [required] attribute for newer classes?
 
+. breeze.debug.js, commented out -> //if (prefix[0] === '/') { prefix = prefix.substr(1); } // drop leading '/'  (all but IE)      
+
 . highcharts library loading perf?
 
 . warm-up script?

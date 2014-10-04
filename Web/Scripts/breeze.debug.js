@@ -15832,7 +15832,7 @@ breeze.SaveOptions= SaveOptions;
         var helper = entityManager.helper;
         var id = 0;
         var routePrefix = saveContext.routePrefix;
-        routePrefix = '';
+        //routePrefix = '';
 
         saveBundle.entities.forEach(function (entity, index) {
             var aspect = entity.entityAspect;
@@ -15981,7 +15981,7 @@ breeze.SaveOptions= SaveOptions;
             parser = url.parse(dataService.serviceName);           
         }
         var prefix = parser.pathname;
-        if (prefix[0] === '/') { prefix = prefix.substr(1); } // drop leading '/'  (all but IE)      
+        //if (prefix[0] === '/') { prefix = prefix.substr(1); } // drop leading '/'  (all but IE)      
         if (prefix.substr(-1) !== '/'){ prefix += '/'; }      // ensure trailing '/'
         return prefix;
     }; 
