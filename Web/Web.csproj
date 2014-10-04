@@ -547,9 +547,9 @@
     <Content Include="Scripts\breeze.min.js" />
     <Content Include="Scripts\datajs-1.1.2.js" />
     <Content Include="Scripts\datajs-1.1.2.min.js" />
-    <None Include="Scripts\jquery-2.1.0.intellisense.js" />
-    <Content Include="Scripts\jquery-2.1.0.js" />
-    <Content Include="Scripts\jquery-2.1.0.min.js" />
+    <None Include="Scripts\jquery-2.1.1.intellisense.js" />
+    <Content Include="Scripts\jquery-2.1.1.js" />
+    <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\modernizr-2.7.2.js" />
     <Content Include="Scripts\q.js" />
@@ -589,7 +589,6 @@
     <Content Include="App\views\manage\edit\userResourcePoolIndexEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
-    <Content Include="Scripts\jquery-2.1.0.min.map" />
     <Content Include="App\views\content\chapter1.html" />
     <Content Include="App\views\manage\list\listView.txt">
       <AutoGen>True</AutoGen>
@@ -622,6 +621,7 @@
     <Content Include="App\views\account\login.html" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\toastr.min.js.map" />
+    <Content Include="Scripts\jquery-2.1.1.min.map" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>
