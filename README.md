@@ -11,6 +11,7 @@ An experimental resource management system that aims to provide a sustainable ec
 * Clean-up
  * ElementItemElementField was renamed to ElementCell
  * Long property names were shortened
+* Package updates
 
 **0.14.6**
 

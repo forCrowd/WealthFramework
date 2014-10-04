@@ -1,5 +1,6 @@
 ﻿using System.Web.Http;
 using System.Web.Http.OData.Batch;
+using System.Web.Http.OData.Extensions;
 
 namespace Web
 {
@@ -24,9 +25,18 @@ namespace Web
             var edm = Facade.Utility.GetWealthEconomyContextEdm();
 
             // OData routes
-            config.Routes.MapODataRoute(
+
+            //config.Routes.MapODataRoute(
+            //    routeName: "ODataRoute",
+            //    routePrefix: "odata",
+            //    //routePrefix: string.Empty,
+            //    model: edm,
+            //    batchHandler: new DefaultODataBatchHandler(GlobalConfiguration.DefaultServer));
+
+            config.Routes.MapODataServiceRoute(
                 routeName: "ODataRoute",
                 routePrefix: "odata",
+                //routePrefix: string.Empty,
                 model: edm,
                 batchHandler: new DefaultODataBatchHandler(GlobalConfiguration.DefaultServer));
         }

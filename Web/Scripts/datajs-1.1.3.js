@@ -6883,7 +6883,7 @@
         /// <returns type="string">Value after formatting</returns>
 
         value = "" + formatRowLiteral(value, type);
-        value = encodeURIComponent(value.replace("'", "''"));
+        value = encodeURIComponent(value.replace(/'/g, "''"));
         switch ((type)) {
             case "Edm.Binary":
                 return "X'" + value + "'";
@@ -7115,7 +7115,7 @@
             }
         }
 
-        var fragment = metadataUri.substring(fragmentStart + 1, fragmentEnd);
+        var fragment = decodeURIComponent(metadataUri.substring(fragmentStart + 1, fragmentEnd));
         if (fragment.indexOf("/$links/") > 0) {
             return jsonLightMakePayloadInfo(PAYLOADTYPE_LINKS);
         }
