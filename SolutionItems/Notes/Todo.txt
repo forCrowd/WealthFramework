@@ -127,28 +127,19 @@ public string LanguageID { get; set; }
 
 . currently multiplier + resource pool field types can only be added once per element (or resource pool) - check it again
 
-. element parent + child structure
-
 . fixed amount resourcepooltype
 
 . add multiple fields test
 
 . ismainelement -> DefaultElement
-. elementfield -> elementColumn
-. elementitem -> elementRow
-. elementitemelementfield -> elementcell
 . resourcepoolindex can be a field for elementfield table? Index boolean?
 . multiplier field type -> userelementitemelementfield can hold just the value but will be used as it is, not it's average (like Rating)
 currently number of sales is not on user level, but on elementitem level!
-. userelementitemelementfield rating -> value?
-. TotalResourcePoolFieldItemValueIncludingResourcePoolAddition -> !?!?!?!?
+. userelementcell rating -> value?
 . instead of MainElement boolean on Element level, can it be done with MainElement field on ResourcePool level? yes, with InverseProperty
 . subtotals; sales price, sales price incl. tax, number of sales, total tax, total sales price incl. tax, total income
-. userelementitemelementfield ratings + counts?
+. userelementcell ratings + counts?
 . display index's own ratings + counts?
 
+. element parent + child structure
 . userResourcePool view recursive selectedElementItem part
-
-. CONTINUE WITH;
-check seed function + test + chapters (samples) etc.
-then clean all the obsolete stuff, including organization ?!

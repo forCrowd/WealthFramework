@@ -74,24 +74,23 @@ namespace BusinessObjects
             }
         }
 
-        public ElementCell ResourcePoolFieldItem
+        public ElementCell ResourcePoolCell
         {
             get { return ElementCellSet.SingleOrDefault(item => item.ElementField.ElementFieldType == (byte)ElementFieldType.ResourcePool); }
         }
 
-        public bool HasResourcePoolFieldItem
+        public bool HasResourcePoolCell
         {
-            get { return ResourcePoolFieldItem != null && ResourcePoolFieldItem.DecimalValue.HasValue; }
+            get { return ResourcePoolCell != null && ResourcePoolCell.DecimalValue.HasValue; }
         }
 
-        public decimal ResourcePoolFieldItemValue
+        public decimal ResourcePoolCellValue
         {
             get
             {
-                if (!HasResourcePoolFieldItem)
-                    return 0;
-
-                return ResourcePoolFieldItem.DecimalValue.Value;
+                return HasResourcePoolCell
+                    ? ResourcePoolCell.DecimalValue.Value
+                    : 0;
             }
         }
 
@@ -99,53 +98,44 @@ namespace BusinessObjects
         {
             get
             {
-                if (!HasResourcePoolFieldItem)
-                    return 0;
-
-                return ResourcePoolFieldItemValue * ResourcePoolFieldItem.ElementField.Element.ResourcePool.ResourcePoolRatePercentage;
+                return ResourcePoolCellValue * Element.ResourcePool.ResourcePoolRatePercentage;
             }
         }
 
-        public decimal ResourcePoolFieldItemValueIncludingResourcePoolAddition
+        public decimal ResourcePoolValueIncludingAddition
         {
             get
             {
-                if (!HasResourcePoolFieldItem)
-                    return 0;
-
-                return ResourcePoolFieldItemValue + ResourcePoolAddition;
+                return ResourcePoolCellValue + ResourcePoolAddition;
             }
         }
 
-        public ElementCell MultiplierFieldItem
+        public ElementCell MultiplierCell
         {
             get { return ElementCellSet.SingleOrDefault(item => item.ElementField.ElementFieldType == (byte)ElementFieldType.Multiplier); }
         }
 
-        public bool HasMultiplierFieldItem
+        public bool HasMultiplierCell
         {
-            get { return MultiplierFieldItem != null && MultiplierFieldItem.DecimalValue.HasValue; }
+            get { return MultiplierCell != null && MultiplierCell.DecimalValue.HasValue; }
         }
 
-        public decimal MultiplierFieldItemValue
+        public decimal MultiplierCellValue
         {
             get
             {
-                if (!HasMultiplierFieldItem)
+                if (!HasMultiplierCell)
                     return 0;
 
-                return MultiplierFieldItem.DecimalValue.Value;
+                return MultiplierCell.DecimalValue.Value;
             }
         }
 
-        public decimal TotalResourcePoolFieldItemValue
+        public decimal TotalResourcePoolValue
         {
             get
             {
-                if (!HasResourcePoolFieldItem || !HasMultiplierFieldItem)
-                    return 0;
-
-                return ResourcePoolFieldItemValue * MultiplierFieldItemValue;
+                return ResourcePoolCellValue * MultiplierCellValue;
             }
         }
 
@@ -153,21 +143,15 @@ namespace BusinessObjects
         {
             get
             {
-                if (!HasMultiplierFieldItem)
-                    return 0;
-
-                return ResourcePoolAddition * MultiplierFieldItemValue;
+                return ResourcePoolAddition * MultiplierCellValue;
             }
         }
 
-        public decimal TotalResourcePoolFieldItemValueIncludingResourcePoolAddition
+        public decimal TotalResourcePoolValueIncludingAddition
         {
             get
             {
-                if (!HasMultiplierFieldItem)
-                    return 0;
-
-                return ResourcePoolFieldItemValueIncludingResourcePoolAddition * MultiplierFieldItemValue;
+                return ResourcePoolValueIncludingAddition * MultiplierCellValue;
             }
         }
 
@@ -178,7 +162,7 @@ namespace BusinessObjects
 
         public decimal TotalIncome
         {
-            get { return TotalResourcePoolFieldItemValue + ResourcePoolIndexIncome; }
+            get { return TotalResourcePoolValue + ResourcePoolIndexIncome; }
         }
     }
 }

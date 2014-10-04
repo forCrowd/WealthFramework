@@ -11,15 +11,15 @@ namespace BusinessObjects.ViewModels
         {
             Id = elementItem.Id;
             Name = elementItem.Name;
-            HasResourcePoolFieldItem = elementItem.HasResourcePoolFieldItem;
-            ResourcePoolFieldItemValue = elementItem.ResourcePoolFieldItemValue;
+            HasResourcePoolCell = elementItem.HasResourcePoolCell;
+            ResourcePoolCellValue = elementItem.ResourcePoolCellValue;
             ResourcePoolAddition = elementItem.ResourcePoolAddition;
-            ResourcePoolFieldItemValueIncludingResourcePoolAddition = elementItem.ResourcePoolFieldItemValueIncludingResourcePoolAddition;
-            HasMultiplierFieldItem = elementItem.HasMultiplierFieldItem;
-            MultiplierFieldItemValue = elementItem.MultiplierFieldItemValue;
-            TotalResourcePoolFieldItemValue = elementItem.TotalResourcePoolFieldItemValue;
+            ResourcePoolValueIncludingAddition = elementItem.ResourcePoolValueIncludingAddition;
+            HasMultiplierCell = elementItem.HasMultiplierCell;
+            MultiplierCellValue = elementItem.MultiplierCellValue;
+            TotalResourcePoolValue = elementItem.TotalResourcePoolValue;
             TotalResourcePoolAddition = elementItem.TotalResourcePoolAddition;
-            TotalResourcePoolFieldItemValueIncludingResourcePoolAddition = elementItem.TotalResourcePoolFieldItemValueIncludingResourcePoolAddition;
+            TotalResourcePoolValueIncludingAddition = elementItem.TotalResourcePoolValueIncludingAddition;
             TotalIncome = elementItem.TotalIncome;
             ElementCellSet = elementItem.ElementCellSet.Select(item => new ElementCell(item));
             BasicElementCellSet = elementItem.BasicElementCellSet.Select(item => new ElementCell(item));
@@ -27,15 +27,15 @@ namespace BusinessObjects.ViewModels
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public bool HasResourcePoolFieldItem { get; set; }
-        public decimal ResourcePoolFieldItemValue { get; set; }
+        public bool HasResourcePoolCell { get; set; }
+        public decimal ResourcePoolCellValue { get; set; }
         public decimal ResourcePoolAddition { get; set; }
-        public decimal ResourcePoolFieldItemValueIncludingResourcePoolAddition { get; set; }
-        public bool HasMultiplierFieldItem { get; set; }
-        public decimal MultiplierFieldItemValue { get; set; }
-        public decimal TotalResourcePoolFieldItemValue { get; set; }
+        public decimal ResourcePoolValueIncludingAddition { get; set; }
+        public bool HasMultiplierCell { get; set; }
+        public decimal MultiplierCellValue { get; set; }
+        public decimal TotalResourcePoolValue { get; set; }
         public decimal TotalResourcePoolAddition { get; set; }
-        public decimal TotalResourcePoolFieldItemValueIncludingResourcePoolAddition { get; set; }
+        public decimal TotalResourcePoolValueIncludingAddition { get; set; }
         public decimal TotalIncome { get; set; }
 
         // TODO Duplicate?

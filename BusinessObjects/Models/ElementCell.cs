@@ -112,7 +112,7 @@ namespace BusinessObjects
                     return RatingAverage;
 
                 // TODO BE CAREFUL ABOUT THIS, IT ASSUMES ALL ELEMENT ITEMS HAVE THE SAME MULTIPLIER VALUE, IMPROVE LATER!
-                var multiplierValue = mainElement.ElementItemSet.FirstOrDefault().MultiplierFieldItemValue;
+                var multiplierValue = mainElement.ElementItemSet.FirstOrDefault().MultiplierCellValue;
 
                 return multiplierValue * RatingAverage;
             }

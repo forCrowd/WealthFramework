@@ -96,26 +96,26 @@
             </td>
 
             <!-- CMRP Field(s) + Multiplier(s) + Totals -->
-            <td data-ng-show="elementItem.HasResourcePoolFieldItem">
-                {{ elementItem.ResourcePoolFieldItemValue | number: 2 }}
+            <td data-ng-show="elementItem.HasResourcePoolCell">
+                {{ elementItem.ResourcePoolCellValue | number: 2 }}
             </td>
-            <td data-ng-show="elementItem.HasResourcePoolFieldItem">
+            <td data-ng-show="elementItem.HasResourcePoolCell">
                 {{ elementItem.ResourcePoolAddition | number: 2 }}
             </td>
-            <td data-ng-show="elementItem.HasResourcePoolFieldItem">
-                {{ elementItem.ResourcePoolFieldItemValueIncludingResourcePoolAddition | number: 2 }}
+            <td data-ng-show="elementItem.HasResourcePoolCell">
+                {{ elementItem.ResourcePoolValueIncludingAddition | number: 2 }}
             </td>
-            <td data-ng-show="elementItem.HasMultiplierFieldItem">
-                {{ elementItem.MultiplierFieldItemValue | number: 2 }}
+            <td data-ng-show="elementItem.HasMultiplierCell">
+                {{ elementItem.MultiplierCellValue | number: 2 }}
             </td>
-            <td data-ng-show="elementItem.HasResourcePoolFieldItem && elementItem.HasResourcePoolFieldItem">
-                {{ elementItem.TotalResourcePoolFieldItemValue | number: 2 }}
+            <td data-ng-show="elementItem.HasResourcePoolCell && elementItem.HasResourcePoolCell">
+                {{ elementItem.TotalResourcePoolValue | number: 2 }}
             </td>
-            <td data-ng-show="elementItem.HasResourcePoolFieldItem && elementItem.HasResourcePoolFieldItem">
+            <td data-ng-show="elementItem.HasResourcePoolCell && elementItem.HasResourcePoolCell">
                 {{ elementItem.TotalResourcePoolAddition | number: 2 }}
             </td>
-            <td data-ng-show="elementItem.HasResourcePoolFieldItem && elementItem.HasResourcePoolFieldItem">
-                {{ elementItem.TotalResourcePoolFieldItemValueIncludingResourcePoolAddition | number: 2 }}
+            <td data-ng-show="elementItem.HasResourcePoolCell && elementItem.HasResourcePoolCell">
+                {{ elementItem.TotalResourcePoolValueIncludingAddition | number: 2 }}
             </td>
             <!-- Indexes -->
             <td data-ng-repeat="resourcePoolIndex in vm.userResourcePool.ResourcePoolIndexSet">

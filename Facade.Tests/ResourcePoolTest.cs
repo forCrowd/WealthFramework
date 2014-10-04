@@ -1522,38 +1522,38 @@
 
             //Assert.IsTrue(userResourcePool.NumberOfSales == 2);
             Assert.IsTrue(resourcePool.ResourcePoolAddition == 400);
-            Assert.IsTrue(resourcePool.ResourcePoolFieldItemValueIncludingResourcePoolAddition == 800);
+            Assert.IsTrue(resourcePool.ResourcePoolValueIncludingAddition == 800);
             //Assert.IsTrue(userResourcePool.TotalProductionCost == 200);
             //Assert.IsTrue(userResourcePool.TotalProfit == 200);
-            Assert.IsTrue(resourcePool.TotalResourcePoolFieldValue == 400);
+            Assert.IsTrue(resourcePool.TotalResourcePoolValue == 400);
             Assert.IsTrue(resourcePool.TotalResourcePoolAddition == 400);
-            Assert.IsTrue(resourcePool.TotalResourcePoolFieldItemValueIncludingResourcePoolAddition == 800);
+            Assert.IsTrue(resourcePool.TotalResourcePoolValueIncludingAddition == 800);
             Assert.IsTrue(resourcePool.TotalIncome == 800);
 
             Assert.IsTrue(resourcePoolIndex.IndexShare == 400);
             //Assert.IsTrue(userResourcePoolIndex.IndexOrganizationValueMultiplied == 0.5M);
 
             //Assert.IsTrue(organization1.mul userOrganization1.NumberOfSalesPercentage == 0.5M);
-            Assert.IsTrue(organization1.ResourcePoolFieldItemValue == 200);
+            Assert.IsTrue(organization1.ResourcePoolCellValue == 200);
             Assert.IsTrue(organization1.ResourcePoolAddition == 200);
-            Assert.IsTrue(organization1.ResourcePoolFieldItemValueIncludingResourcePoolAddition == 400);
+            Assert.IsTrue(organization1.ResourcePoolValueIncludingAddition == 400);
             //Assert.IsTrue(userOrganization1.TotalProductionCost == 100);
             //Assert.IsTrue(userOrganization1.TotalProfit == 100);
-            Assert.IsTrue(organization1.TotalResourcePoolFieldItemValue == 200);
+            Assert.IsTrue(organization1.TotalResourcePoolValue == 200);
             Assert.IsTrue(organization1.TotalResourcePoolAddition == 200);
-            Assert.IsTrue(organization1.TotalResourcePoolFieldItemValueIncludingResourcePoolAddition == 400);
+            Assert.IsTrue(organization1.TotalResourcePoolValueIncludingAddition == 400);
             Assert.IsTrue(organization1.ResourcePoolIndexIncome == 300);
             Assert.IsTrue(organization1.TotalIncome == 500);
 
             //Assert.IsTrue(organization2.NumberOfSalesPercentage == 0.5M);
-            Assert.IsTrue(organization2.ResourcePoolFieldItemValue == 200);
+            Assert.IsTrue(organization2.ResourcePoolCellValue == 200);
             Assert.IsTrue(organization2.ResourcePoolAddition == 200);
-            Assert.IsTrue(organization2.ResourcePoolFieldItemValueIncludingResourcePoolAddition == 400);
+            Assert.IsTrue(organization2.ResourcePoolValueIncludingAddition == 400);
             //Assert.IsTrue(userOrganization2.TotalProductionCost == 100);
             //Assert.IsTrue(userOrganization2.TotalProfit == 100);
-            Assert.IsTrue(organization2.TotalResourcePoolFieldItemValue == 200);
+            Assert.IsTrue(organization2.TotalResourcePoolValue == 200);
             Assert.IsTrue(organization2.TotalResourcePoolAddition == 200);
-            Assert.IsTrue(organization2.TotalResourcePoolFieldItemValueIncludingResourcePoolAddition == 400);
+            Assert.IsTrue(organization2.TotalResourcePoolValueIncludingAddition == 400);
             Assert.IsTrue(organization2.ResourcePoolIndexIncome == 100);
             Assert.IsTrue(organization2.TotalIncome == 300);
 
@@ -1570,26 +1570,26 @@
 
             // Results
             //Assert.IsTrue(organization1.NumberOfSalesPercentage == 0.5M);
-            Assert.IsTrue(organization1.ResourcePoolFieldItemValue == 200);
+            Assert.IsTrue(organization1.ResourcePoolCellValue == 200);
             Assert.IsTrue(organization1.ResourcePoolAddition == 200);
-            Assert.IsTrue(organization1.ResourcePoolFieldItemValueIncludingResourcePoolAddition == 400);
+            Assert.IsTrue(organization1.ResourcePoolValueIncludingAddition == 400);
             //Assert.IsTrue(userOrganization1.TotalProductionCost == 100);
             //Assert.IsTrue(userOrganization1.TotalProfit == 100);
-            Assert.IsTrue(organization1.TotalResourcePoolFieldItemValue == 200);
+            Assert.IsTrue(organization1.TotalResourcePoolValue == 200);
             Assert.IsTrue(organization1.TotalResourcePoolAddition == 200);
-            Assert.IsTrue(organization1.TotalResourcePoolFieldItemValueIncludingResourcePoolAddition == 400);
+            Assert.IsTrue(organization1.TotalResourcePoolValueIncludingAddition == 400);
             Assert.IsTrue(organization1.ResourcePoolIndexIncome == 100);
             Assert.IsTrue(organization1.TotalIncome == 300);
 
             //Assert.IsTrue(organization2.mul userOrganization2.NumberOfSalesPercentage == 0.5M);
-            Assert.IsTrue(organization2.ResourcePoolFieldItemValue == 200);
+            Assert.IsTrue(organization2.ResourcePoolCellValue == 200);
             Assert.IsTrue(organization2.ResourcePoolAddition == 200);
-            Assert.IsTrue(organization2.ResourcePoolFieldItemValueIncludingResourcePoolAddition == 400);
+            Assert.IsTrue(organization2.ResourcePoolValueIncludingAddition == 400);
             //Assert.IsTrue(userOrganization2.TotalProductionCost == 100);
             //Assert.IsTrue(userOrganization2.TotalProfit == 100);
-            Assert.IsTrue(organization2.TotalResourcePoolFieldItemValue == 200);
+            Assert.IsTrue(organization2.TotalResourcePoolValue == 200);
             Assert.IsTrue(organization2.TotalResourcePoolAddition == 200);
-            Assert.IsTrue(organization2.TotalResourcePoolFieldItemValueIncludingResourcePoolAddition == 400);
+            Assert.IsTrue(organization2.TotalResourcePoolValueIncludingAddition == 400);
             Assert.IsTrue(organization2.ResourcePoolIndexIncome == 300);
             Assert.IsTrue(organization2.TotalIncome == 500);
 
@@ -1732,38 +1732,38 @@
 
             //Assert.IsTrue(userResourcePool.NumberOfSales == 2);
             Assert.IsTrue(resourcePool.ResourcePoolAddition == 100);
-            Assert.IsTrue(resourcePool.ResourcePoolFieldItemValueIncludingResourcePoolAddition == 200);
+            Assert.IsTrue(resourcePool.ResourcePoolValueIncludingAddition == 200);
             //Assert.IsTrue(userResourcePool.TotalProductionCost == 200);
             //Assert.IsTrue(userResourcePool.TotalProfit == 200);
-            Assert.IsTrue(resourcePool.TotalResourcePoolFieldValue == 100);
+            Assert.IsTrue(resourcePool.TotalResourcePoolValue == 100);
             Assert.IsTrue(resourcePool.TotalResourcePoolAddition == 100);
-            Assert.IsTrue(resourcePool.TotalResourcePoolFieldItemValueIncludingResourcePoolAddition == 200);
+            Assert.IsTrue(resourcePool.TotalResourcePoolValueIncludingAddition == 200);
             Assert.IsTrue(resourcePool.TotalIncome == 200);
 
             Assert.IsTrue(resourcePoolIndex.IndexShare == 100);
             //Assert.IsTrue(userResourcePoolIndex.IndexOrganizationValueMultiplied == 0.5M);
 
             //Assert.IsTrue(organization1.mul userOrganization1.NumberOfSalesPercentage == 0.5M);
-            Assert.IsTrue(organization1.ResourcePoolFieldItemValue == 25);
+            Assert.IsTrue(organization1.ResourcePoolCellValue == 25);
             Assert.IsTrue(organization1.ResourcePoolAddition == 25);
-            Assert.IsTrue(organization1.ResourcePoolFieldItemValueIncludingResourcePoolAddition == 50);
+            Assert.IsTrue(organization1.ResourcePoolValueIncludingAddition == 50);
             //Assert.IsTrue(userOrganization1.TotalProductionCost == 100);
             //Assert.IsTrue(userOrganization1.TotalProfit == 100);
-            Assert.IsTrue(organization1.TotalResourcePoolFieldItemValue == 25);
+            Assert.IsTrue(organization1.TotalResourcePoolValue == 25);
             Assert.IsTrue(organization1.TotalResourcePoolAddition == 25);
-            Assert.IsTrue(organization1.TotalResourcePoolFieldItemValueIncludingResourcePoolAddition == 50);
+            Assert.IsTrue(organization1.TotalResourcePoolValueIncludingAddition == 50);
             Assert.IsTrue(organization1.ResourcePoolIndexIncome == 75);
             Assert.IsTrue(organization1.TotalIncome == 100);
 
             //Assert.IsTrue(organization2.NumberOfSalesPercentage == 0.5M);
-            Assert.IsTrue(organization2.ResourcePoolFieldItemValue == 75);
+            Assert.IsTrue(organization2.ResourcePoolCellValue == 75);
             Assert.IsTrue(organization2.ResourcePoolAddition == 75);
-            Assert.IsTrue(organization2.ResourcePoolFieldItemValueIncludingResourcePoolAddition == 150);
+            Assert.IsTrue(organization2.ResourcePoolValueIncludingAddition == 150);
             //Assert.IsTrue(userOrganization2.TotalProductionCost == 100);
             //Assert.IsTrue(userOrganization2.TotalProfit == 100);
-            Assert.IsTrue(organization2.TotalResourcePoolFieldItemValue == 75);
+            Assert.IsTrue(organization2.TotalResourcePoolValue == 75);
             Assert.IsTrue(organization2.TotalResourcePoolAddition == 75);
-            Assert.IsTrue(organization2.TotalResourcePoolFieldItemValueIncludingResourcePoolAddition == 150);
+            Assert.IsTrue(organization2.TotalResourcePoolValueIncludingAddition == 150);
             Assert.IsTrue(organization2.ResourcePoolIndexIncome == 25);
             Assert.IsTrue(organization2.TotalIncome == 100);
 

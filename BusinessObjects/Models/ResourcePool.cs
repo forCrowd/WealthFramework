@@ -75,19 +75,19 @@ namespace BusinessObjects
             get { return MainElement.ElementItemSet.Sum(item => item.ResourcePoolAddition); }
         }
 
-        public decimal ResourcePoolFieldItemValue
+        public decimal ResourcePoolCellValue
         {
-            get { return MainElement.ElementItemSet.Sum(item => item.ResourcePoolFieldItemValue); }
+            get { return MainElement.ElementItemSet.Sum(item => item.ResourcePoolCellValue); }
         }
 
-        public decimal ResourcePoolFieldItemValueIncludingResourcePoolAddition
+        public decimal ResourcePoolValueIncludingAddition
         {
-            get { return MainElement.ElementItemSet.Sum(item => item.ResourcePoolFieldItemValueIncludingResourcePoolAddition); }
+            get { return MainElement.ElementItemSet.Sum(item => item.ResourcePoolValueIncludingAddition); }
         }
 
-        public decimal TotalResourcePoolFieldValue
+        public decimal TotalResourcePoolValue
         {
-            get { return MainElement.ElementItemSet.Sum(item => item.TotalResourcePoolFieldItemValue); }
+            get { return MainElement.ElementItemSet.Sum(item => item.TotalResourcePoolValue); }
         }
 
         public decimal TotalResourcePoolAddition
@@ -95,9 +95,9 @@ namespace BusinessObjects
             get { return MainElement.ElementItemSet.Sum(item => item.TotalResourcePoolAddition); }
         }
 
-        public decimal TotalResourcePoolFieldItemValueIncludingResourcePoolAddition
+        public decimal TotalResourcePoolValueIncludingAddition
         {
-            get { return MainElement.ElementItemSet.Sum(item => item.TotalResourcePoolFieldItemValueIncludingResourcePoolAddition); }
+            get { return MainElement.ElementItemSet.Sum(item => item.TotalResourcePoolValueIncludingAddition); }
         }
 
         public decimal TotalIncome
