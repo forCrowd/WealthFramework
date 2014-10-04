@@ -102,7 +102,6 @@
     <Compile Include="UserResourcePoolUnitOfWork.cs" />
     <Compile Include="UserUnitOfWork.cs" />
     <Compile Include="ResourcePoolUnitOfWork.cs" />
-    <Compile Include="OrganizationUnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessObjects\BusinessObjects.csproj">

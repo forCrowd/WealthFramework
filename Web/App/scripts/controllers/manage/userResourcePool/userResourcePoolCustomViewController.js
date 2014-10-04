@@ -30,7 +30,7 @@
 
         function getUserResourcePool() {
 
-            userResourcePoolService.getUserResourcePoolCustomByUserResourcePoolId(userResourcePoolId)
+            userResourcePoolService.getUserResourcePool(userResourcePoolId)
                 .success(function (userResourcePool) {
                     vm.userResourcePool = userResourcePool;
                 });

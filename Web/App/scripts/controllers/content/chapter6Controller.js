@@ -220,37 +220,42 @@
             vm.totalCostChartConfig.loading = true;
             vm.totalCost2ChartConfig.loading = true;
 
-            userResourcePoolService.getUserResourcePoolCustomByResourcePoolId(resourcePoolId)
-                .success(function (userResourcePool) {
-                    vm.totalCostData = userResourcePool;
+            // TODO !
+            //userResourcePoolService. getUserResourcePool ... (resourcePoolId)
+            //    .success(function (userResourcePool) {
+            //        vm.totalCostData = userResourcePool;
 
-                    // Convert
-                    var chartData = [];
-                    var chartData2 = [];
-                    for (var i = 0; i < vm.totalCostData.UserOrganizationSet.length; i++) {
+            //        // Convert
+            //        var chartData = [];
+            //        var chartData2 = [];
+            //        for (var i = 0; i < vm.totalCostData.UserOrganizationSet.length; i++) {
 
-                        // Old
-                        var chartDataItem = {
-                            name: vm.totalCostData.UserOrganizationSet[i].OrganizationName,
-                            data: [vm.totalCostData.UserOrganizationSet[i].TotalProfit]
-                        }
-                        chartData.push(chartDataItem);
+            //            // Old
+            //            var chartDataItem = {
+            //                name: vm.totalCostData.UserOrganizationSet[i].OrganizationName,
+            //                data: [vm.totalCostData.UserOrganizationSet[i].TotalProfit]
+            //            }
+            //            chartData.push(chartDataItem);
 
-                        // New
-                        var chartDataItem2 = {
-                            name: vm.totalCostData.UserOrganizationSet[i].OrganizationName,
-                            data: [vm.totalCostData.UserOrganizationSet[i].TotalIncome]
-                        }
-                        chartData2.push(chartDataItem2);
-                    }
+            //            // New
+            //            var chartDataItem2 = {
+            //                name: vm.totalCostData.UserOrganizationSet[i].OrganizationName,
+            //                data: [vm.totalCostData.UserOrganizationSet[i].TotalIncome]
+            //            }
+            //            chartData2.push(chartDataItem2);
+            //        }
 
-                    vm.totalCostChartConfig.series = chartData;
-                    vm.totalCost2ChartConfig.series = chartData2;
+            //        vm.totalCostChartConfig.series = chartData;
+            //        vm.totalCost2ChartConfig.series = chartData2;
 
-                    vm.totalCostChartConfig.loading = false;
-                    vm.totalCost2ChartConfig.loading = false;
+            //        vm.totalCostChartConfig.loading = false;
+            //        vm.totalCost2ChartConfig.loading = false;
 
-                });
+            //    });
+
+
+
+
 
             //// License Result Chart
 
@@ -282,24 +287,27 @@
             vm.totalCostChartConfig.loading = true;
             vm.totalCost2ChartConfig.loading = true;
 
-            userResourcePoolService.getUserResourcePoolCustomByResourcePoolId(resourcePoolId)
-                .success(function (userResourcePool) {
-                    vm.totalCostData = userResourcePool;
 
-                    // Convert
-                    // Old
-                    for (var i = 0; i < vm.totalCostData.UserOrganizationSet.length; i++) {
-                        vm.totalCostChartConfig.series[i].data[0] = vm.totalCostData.UserOrganizationSet[i].TotalProfit;
-                    }
+            // TODO
 
-                    // New
-                    for (var i = 0; i < vm.totalCostData.UserOrganizationSet.length; i++) {
-                        vm.totalCost2ChartConfig.series[i].data[0] = vm.totalCostData.UserOrganizationSet[i].TotalIncome;
-                    }
+            //userResourcePoolService. getUserResourcePool ... (resourcePoolId)
+            //    .success(function (userResourcePool) {
+            //        vm.totalCostData = userResourcePool;
 
-                    vm.totalCostChartConfig.loading = false;
-                    vm.totalCost2ChartConfig.loading = false;
-                });
+            //        // Convert
+            //        // Old
+            //        for (var i = 0; i < vm.totalCostData.UserOrganizationSet.length; i++) {
+            //            vm.totalCostChartConfig.series[i].data[0] = vm.totalCostData.UserOrganizationSet[i].TotalProfit;
+            //        }
+
+            //        // New
+            //        for (var i = 0; i < vm.totalCostData.UserOrganizationSet.length; i++) {
+            //            vm.totalCost2ChartConfig.series[i].data[0] = vm.totalCostData.UserOrganizationSet[i].TotalIncome;
+            //        }
+
+            //        vm.totalCostChartConfig.loading = false;
+            //        vm.totalCost2ChartConfig.loading = false;
+            //    });
         }
 
         //function resetChanges() {

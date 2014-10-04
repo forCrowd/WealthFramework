@@ -23,7 +23,6 @@
 /// <reference path="../app/scripts/controllers/layoutcontroller.js" />
 /// <reference path="../app/scripts/filters/angular-percentage.js" />
 /// <reference path="../app/scripts/services/mainservice.js" />
-/// <reference path="../app/scripts/services/resourcepoolservice.js" />
 /// <reference path="../app/scripts/services/userresourcepoolservice.js" />
 /// <reference path="../app/scripts/services/userservice.js" />
 /// <reference path="../app/scripts/controllers/account/accounteditcontroller.js" />

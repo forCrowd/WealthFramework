@@ -29,9 +29,6 @@ namespace BusinessObjects
         [Display(Name = "Resource Pool Index")]
         public string Name { get; set; }
 
-        //[Required]
-        //[Display(Name = "Resource Pool Index Type")]
-        //public byte ResourcePoolIndexType { get; set; }
         public Nullable<int> ElementId { get; set; }
         public Nullable<int> ElementFieldId { get; set; }
         
@@ -45,28 +42,6 @@ namespace BusinessObjects
         public virtual ICollection<UserResourcePoolIndex> UserResourcePoolIndexSet { get; set; }
 
         /* */
-
-        //public IEnumerable<ResourcePoolIndexOrganization> ResourcePoolIndexOrganizationSet
-        //{
-        //    get
-        //    {
-        //        var list = new HashSet<ResourcePoolIndexOrganization>();
-        //        foreach (var item in ResourcePool.OrganizationSet)
-        //            list.Add(new ResourcePoolIndexOrganization(this, item));
-        //        return list;
-        //    }
-        //}
-
-        //public IEnumerable<ResourcePoolIndexElementCell> ResourcePoolIndexElementCellSet
-        //{
-        //    get
-        //    {
-        //        var list = new HashSet<ResourcePoolIndexElementCell>();
-        //        foreach (var item in ElementField.ElementCellSet)
-        //            list.Add(new ResourcePoolIndexElementCell(this, item));
-        //        return list;
-        //    }
-        //}
 
         /// <summary>
         /// How many users rated this index?
@@ -104,20 +79,5 @@ namespace BusinessObjects
         {
             get { return ResourcePool.TotalResourcePoolAddition * IndexRatingPercentage; }
         }
-
-        //public decimal IndexValue
-        //{
-        //    get
-        //    {
-        //        switch (ResourcePoolIndexType)
-        //        {
-        //            //case (byte)BusinessObjects.ResourcePoolIndexType.TotalCostIndex:
-        //            //    return ResourcePool.OrganizationSet.Sum(item => item.SalesPrice);
-        //            //case (byte)BusinessObjects.ResourcePoolIndexType.DynamicOrganizationIndex:
-        //            //    return ResourcePoolIndexOrganizationSet.Sum(item => item.DynamicOrganizationIndexValueAverage);
-        //            default: throw new ArgumentOutOfRangeException();
-        //        }
-        //    }
-        //}
     }
 }

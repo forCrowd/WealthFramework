@@ -81,40 +81,43 @@
 
             vm.indexChartConfig.loading = true;
 
-            userResourcePoolService.getUserResourcePoolDtoByResourcePoolId(resourcePoolId, false)
-                .success(function (userResourcePool) {
+            // TODO !
+            //userResourcePoolService.getUserResourcePool ... (resourcePoolId, false)
+            //    .success(function (userResourcePool) {
 
-                    // Original data
-                    vm.allInOneUserResourcePool = userResourcePool;
+            //        // Original data
+            //        vm.allInOneUserResourcePool = userResourcePool;
 
-                    // Convert userResourcePool to chart data
-                    vm.indexChartData = [];
-                    vm.indexChartData.push({ name: 'Sector Index', y: userResourcePool.SectorIndexRating });
-                    vm.indexChartData.push({ name: 'Knowledge Index', y: userResourcePool.KnowledgeIndexRating });
-                    vm.indexChartData.push({ name: 'Total Cost Index', y: userResourcePool.TotalCostIndexRating });
+            //        // Convert userResourcePool to chart data
+            //        vm.indexChartData = [];
+            //        vm.indexChartData.push({ name: 'Sector Index', y: userResourcePool.SectorIndexRating });
+            //        vm.indexChartData.push({ name: 'Knowledge Index', y: userResourcePool.KnowledgeIndexRating });
+            //        vm.indexChartData.push({ name: 'Total Cost Index', y: userResourcePool.TotalCostIndexRating });
 
-                    vm.indexChartConfig.series = [{ data: vm.indexChartData }];
-                    vm.indexChartConfig.loading = false;
-                });
+            //        vm.indexChartConfig.series = [{ data: vm.indexChartData }];
+            //        vm.indexChartConfig.loading = false;
+            //    });
 
             // Results chart
             vm.indexResultsChartConfig.loading = true;
 
-            resourcePoolService.getResourcePoolViewModel(resourcePoolId)
-                .success(function (resourcePoolViewModel) {
+            // TODO !
 
-                    vm.allInOneResourcePool = resourcePoolViewModel;
+            //resourcePoolService. getResourcePool ... (resourcePoolId)
+            //    .success(function (resourcePoolViewModel) {
 
-                    // Convert resourcePoolViewModel to chart data
-                    vm.indexResultsChartData = [];
-                    vm.indexResultsChartData.push({ name: 'Sector Index', y: resourcePoolViewModel.SectorIndexRatingAverage });
-                    vm.indexResultsChartData.push({ name: 'Knowledge Index', y: resourcePoolViewModel.KnowledgeIndexRatingAverage });
-                    vm.indexResultsChartData.push({ name: 'Total Cost Index', y: resourcePoolViewModel.TotalCostIndexRatingAverage });
+            //        vm.allInOneResourcePool = resourcePoolViewModel;
 
-                    vm.indexResultsChartConfig.series = [{ data: vm.indexResultsChartData }];
-                    vm.indexResultsChartConfig.loading = false;
+            //        // Convert resourcePoolViewModel to chart data
+            //        vm.indexResultsChartData = [];
+            //        vm.indexResultsChartData.push({ name: 'Sector Index', y: resourcePoolViewModel.SectorIndexRatingAverage });
+            //        vm.indexResultsChartData.push({ name: 'Knowledge Index', y: resourcePoolViewModel.KnowledgeIndexRatingAverage });
+            //        vm.indexResultsChartData.push({ name: 'Total Cost Index', y: resourcePoolViewModel.TotalCostIndexRatingAverage });
 
-                });
+            //        vm.indexResultsChartConfig.series = [{ data: vm.indexResultsChartData }];
+            //        vm.indexResultsChartConfig.loading = false;
+
+            //    });
         }
 
         function resetChanges() {

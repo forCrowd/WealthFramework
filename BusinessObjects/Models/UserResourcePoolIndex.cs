@@ -13,7 +13,6 @@ namespace BusinessObjects
     {
         public UserResourcePoolIndex()
         {
-            //UserResourcePoolIndexValueSet = new HashSet<UserResourcePoolIndexValue>();
         }
 
         [DisplayOnListView(false)]
@@ -31,34 +30,9 @@ namespace BusinessObjects
         public virtual UserResourcePool UserResourcePool { get; set; }
         public virtual ResourcePoolIndex ResourcePoolIndex { get; set; }
 
-        //public virtual ICollection<UserResourcePoolIndexValue> UserResourcePoolIndexValueSet { get; set; }
-
         public string Name
         {
             get { return string.Format("{0} - {1}", UserResourcePool.Name, ResourcePoolIndex.Name); }
         }
-
-        //public IEnumerable<UserResourcePoolIndexOrganization> UserOrganizationResourcePoolIndexOrganizationSet
-        //{
-        //    get
-        //    {
-        //        var list = new HashSet<UserResourcePoolIndexOrganization>();
-        //        foreach (var userOrganization in UserResourcePool.UserOrganizationSet)
-        //            foreach (var resourcePoolIndexOrganization in ResourcePoolIndex.ResourcePoolIndexOrganizationSet)
-        //                if (userOrganization.Organization == resourcePoolIndexOrganization.Organization)
-        //                    list.Add(new UserResourcePoolIndexOrganization(userOrganization, resourcePoolIndexOrganization));
-        //        return list;
-        //    }
-        //}
-
-        //public decimal IndexShare
-        //{
-        //    get { return UserResourcePool.TotalResourcePoolTax * ResourcePoolIndex.IndexRatingPercentage; }
-        //}
-
-        //public decimal IndexOrganizationValueMultiplied
-        //{
-        //    get { return UserOrganizationResourcePoolIndexOrganizationSet.Sum(item => item.IndexValueMultiplied); }
-        //}
     }
 }

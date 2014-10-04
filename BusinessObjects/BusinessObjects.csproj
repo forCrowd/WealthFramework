@@ -65,12 +65,10 @@
     <Compile Include="Models\ElementField.cs" />
     <Compile Include="Models\ElementCell.cs" />
     <Compile Include="Models\UserElementCell.cs" />
-    <Compile Include="ViewModels\ElementItemElementField.cs" />
+    <Compile Include="ViewModels\ElementCell.cs" />
     <Compile Include="ViewModels\ElementItem.cs" />
     <Compile Include="ViewModels\ElementField.cs" />
     <Compile Include="ViewModels\Element.cs" />
-    <Compile Include="ViewModels\UserResourcePoolElementItemElementField.cs" />
-    <Compile Include="ViewModels\UserResourcePoolViewModel2.cs" />
     <Compile Include="Models\ElementItem.cs" />
     <Compile Include="Models\Element.cs" />
     <Compile Include="Attributes\ODataControllerAuthorizationAttribute.cs" />
@@ -83,10 +81,7 @@
     <Compile Include="Attributes\DisplayOnEditViewAttribute.cs" />
     <Compile Include="Attributes\DisplayOnListViewAttribute.cs" />
     <Compile Include="ViewModels\ResourcePoolIndex.cs" />
-    <Compile Include="ViewModels\ResourcePool.cs" />
-    <Compile Include="ViewModels\UserResourcePoolIndexOrganization.cs" />
     <Compile Include="ViewModels\UserResourcePool.cs" />
-    <Compile Include="ViewModels\UserOrganization.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="WealthEconomyContext.cs" />
   </ItemGroup>

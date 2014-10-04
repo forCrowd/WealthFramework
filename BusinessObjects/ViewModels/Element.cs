@@ -7,7 +7,6 @@ namespace BusinessObjects.ViewModels
     {
         public Element() { }
 
-        //public Element(BusinessObjects.Element element, UserResourcePool userResourcePool)
         public Element(BusinessObjects.Element element)
         {
             Id = element.Id;
@@ -20,7 +19,6 @@ namespace BusinessObjects.ViewModels
             ElementFieldSet = element.ElementFieldSet.Select(item => new ElementField(item));
             BasicElementFieldSet = element.BasicElementFieldSet.Select(item => new ElementField(item));
             ElementItemSet = element.ElementItemSet.Select(item => new ElementItem(item));
-            //UserResourcePool = userResourcePool;
         }
 
         public int Id { get; set; }
@@ -36,6 +34,5 @@ namespace BusinessObjects.ViewModels
         public IEnumerable<ElementField> BasicElementFieldSet { get; set; }
 
         public IEnumerable<ElementItem> ElementItemSet { get; set; }
-        // internal UserResourcePool UserResourcePool { get; private set; }
     }
 }

@@ -16,7 +16,6 @@ namespace BusinessObjects
         {
             ElementSet = new HashSet<Element>();
             ResourcePoolIndexSet = new HashSet<ResourcePoolIndex>();
-            //OrganizationSet = new HashSet<Organization>();
             UserResourcePoolSet = new HashSet<UserResourcePool>();
         }
 
@@ -36,14 +35,7 @@ namespace BusinessObjects
 
         public virtual ICollection<ResourcePoolIndex> ResourcePoolIndexSet { get; set; }
         public virtual ICollection<Element> ElementSet { get; set; }
-        //public virtual ICollection<Organization> OrganizationSet { get; set; }
         public virtual ICollection<UserResourcePool> UserResourcePoolSet { get; set; }
-
-        //public ResourcePoolIndex TotalCostIndex
-        //{
-        //    // TODO Static types can only be defined once per ResourcePool
-        //    get { return ResourcePoolIndexSet.SingleOrDefault(item => item.ResourcePoolIndexType == (byte)ResourcePoolIndexType.TotalCostIndex); }
-        //}
 
         public decimal ResourcePoolRate
         {
@@ -104,40 +96,5 @@ namespace BusinessObjects
         {
             get { return MainElement.ElementItemSet.Sum(item => item.TotalIncome); }
         }
-
-        //public decimal ProductionCost
-        //{
-        //    get { return OrganizationSet.Sum(organization => organization.ProductionCost); }
-        //}
-
-        //public decimal SalesPrice
-        //{
-        //    get { return OrganizationSet.Sum(organization => organization.SalesPrice); }
-        //}
-
-        //public decimal Profit
-        //{
-        //    get { return OrganizationSet.Sum(organization => organization.Profit); }
-        //}
-
-        //public decimal ProfitPercentage
-        //{
-        //    get
-        //    {
-        //        return OrganizationSet.Any()
-        //            ? OrganizationSet.Average(organization => organization.ProfitPercentage)
-        //            : 0;
-        //    }
-        //}
-
-        //public decimal ProfitMargin
-        //{
-        //    get
-        //    {
-        //        return OrganizationSet.Any()
-        //            ? OrganizationSet.Average(organization => organization.ProfitMargin)
-        //            : 0;
-        //    }
-        //}
     }
 }

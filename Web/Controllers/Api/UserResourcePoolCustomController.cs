@@ -17,48 +17,15 @@ namespace Web.Controllers.Api
 
         public UserResourcePoolUnitOfWork UserResourcePoolUnitOfWork { get; private set; }
 
-        // GET api/UserResourcePoolCustom/GetUserResourcePoolCustomByUserResourcePoolId/1
-        [Route("GetUserResourcePoolCustomByUserResourcePoolId/{userResourcePoolId:int}")]
-        public UserResourcePool GetUserResourcePoolCustomByUserResourcePoolId(int userResourcePoolId)
+        // GET api/UserResourcePoolCustom/GetUserResourcePool/1
+        [Route("GetUserResourcePool/{userResourcePoolId:int}")]
+        public UserResourcePool GetUserResourcePool(int userResourcePoolId)
         {
             var unitOfWork = new UserResourcePoolUnitOfWork();
             var userResourcePool = unitOfWork.AllLiveIncluding(item => item.ResourcePool)
                 .SingleOrDefault(item => item.UserId == ApplicationUser.Id
                     && item.Id == userResourcePoolId);
             return new UserResourcePool(userResourcePool);
-        }
-
-        //// GET api/UserResourcePoolCustom/GetUserResourcePoolCustom2ByUserResourcePoolId/1
-        //[Route("GetUserResourcePoolCustom2ByUserResourcePoolId/{userResourcePoolId:int}")]
-        //public UserResourcePool GetUserResourcePoolCustom2ByUserResourcePoolId(int userResourcePoolId)
-        //{
-        //    var unitOfWork = new UserResourcePoolUnitOfWork();
-        //    var userResourcePool = unitOfWork.AllLiveIncluding(item => item.ResourcePool)
-        //        .SingleOrDefault(item => item.UserId == ApplicationUser.Id
-        //            && item.Id == userResourcePoolId);
-        //    return new UserResourcePool(userResourcePool);
-        //}
-
-        // GET api/UserResourcePoolCustom/GetUserResourcePoolCustomByResourcePoolId/1
-        [Route("GetUserResourcePoolCustomByResourcePoolId/{resourcePoolId:int}")]
-        public UserResourcePool GetUserResourcePoolCustomByResourcePoolId(int resourcePoolId)
-        {
-            var unitOfWork = new UserResourcePoolUnitOfWork();
-            var userResourcePool = unitOfWork.AllLiveIncluding(item => item.ResourcePool)
-                .SingleOrDefault(item => item.UserId == ApplicationUser.Id
-                    && item.ResourcePoolId == resourcePoolId);
-            return new UserResourcePool(userResourcePool);
-        }
-
-        // GET api/UserResourcePoolCustom/GetUserResourcePoolDtoByResourcePoolId/1
-        [Route("GetUserResourcePoolDtoByResourcePoolId/{resourcePoolId:int}")]
-        public UserResourcePoolViewModel2 GetUserResourcePoolDtoByResourcePoolId(int resourcePoolId)
-        {
-            var unitOfWork = new UserResourcePoolUnitOfWork();
-            var userResourcePool = unitOfWork.AllLive
-                .SingleOrDefault(item => item.UserId == ApplicationUser.Id
-                    && item.ResourcePoolId == resourcePoolId);
-            return new UserResourcePoolViewModel2(userResourcePool);
         }
 
         // POST api/UserResourcePoolCustom/IncreaseNumberOfSales/1

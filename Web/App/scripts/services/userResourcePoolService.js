@@ -12,10 +12,7 @@
         logger = logger.forSource(serviceId);
 
         // Service methods
-        $delegate.getUserResourcePoolCustomByUserResourcePoolId = getUserResourcePoolCustomByUserResourcePoolId;
-        //$delegate.getUserResourcePoolCustom2ByUserResourcePoolId = getUserResourcePoolCustom2ByUserResourcePoolId;
-        $delegate.getUserResourcePoolCustomByResourcePoolId = getUserResourcePoolCustomByResourcePoolId;
-        $delegate.getUserResourcePoolDtoByResourcePoolId = getUserResourcePoolDtoByResourcePoolId;
+        $delegate.getUserResourcePool = getUserResourcePool;
         $delegate.decreaseNumberOfSales = decreaseNumberOfSales;
         $delegate.decreaseResourcePoolRate = decreaseResourcePoolRate;
         $delegate.increaseNumberOfSales = increaseNumberOfSales;
@@ -26,23 +23,8 @@
 
         /*** Implementations ***/
 
-        function getUserResourcePoolCustomByUserResourcePoolId(userResourcePoolId) {
-            var url = '/api/UserResourcePoolCustom/GetUserResourcePoolCustomByUserResourcePoolId/' + userResourcePoolId;
-            return $http.get(url);
-        }
-
-        //function getUserResourcePoolCustom2ByUserResourcePoolId(userResourcePoolId) {
-        //    var url = '/api/UserResourcePoolCustom/GetUserResourcePoolCustom2ByUserResourcePoolId/' + userResourcePoolId;
-        //    return $http.get(url);
-        //}
-
-        function getUserResourcePoolCustomByResourcePoolId(resourcePoolId) {
-            var url = '/api/UserResourcePoolCustom/GetUserResourcePoolCustomByResourcePoolId/' + resourcePoolId;
-            return $http.get(url);
-        }
-
-        function getUserResourcePoolDtoByResourcePoolId(resourcePoolId) {
-            var url = '/api/UserResourcePoolCustom/GetUserResourcePoolDtoByResourcePoolId/' + resourcePoolId;
+        function getUserResourcePool(userResourcePoolId) {
+            var url = '/api/UserResourcePoolCustom/GetUserResourcePool/' + userResourcePoolId;
             return $http.get(url);
         }
 

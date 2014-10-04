@@ -68,7 +68,6 @@
     <Compile Include="ResourcePoolIndexTest.cs" />
     <Compile Include="ResourcePoolUnitOfWorkTest.cs" />
     <Compile Include="UserResourcePoolUnitOfWorkTest.cs" />
-    <Compile Include="OrganizationUnitOfWorkTest.cs" />
     <Compile Include="UserUnitOfWorkTest.cs" />
   </ItemGroup>
   <ItemGroup>

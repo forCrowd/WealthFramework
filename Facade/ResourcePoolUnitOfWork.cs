@@ -8,20 +8,13 @@
     public partial class ResourcePoolUnitOfWork
     {
         ResourcePoolIndexRepository resourcePoolIndexRepository;
-        //OrganizationRepository organizationRepository;
         UserResourcePoolRepository userResourcePoolRepository;
         UserResourcePoolIndexRepository userResourcePoolIndexRepository;
-        //UserOrganizationRepository userOrganizationRepository;
 
         public ResourcePoolIndexRepository ResourcePoolIndexRepository
         {
             get { return resourcePoolIndexRepository ?? (resourcePoolIndexRepository = new ResourcePoolIndexRepository(Context)); }
         }
-
-        //public OrganizationRepository OrganizationRepository
-        //{
-        //    get { return organizationRepository ?? (organizationRepository = new OrganizationRepository(Context)); }
-        //}
 
         UserResourcePoolRepository UserResourcePoolRepository
         {
@@ -33,33 +26,12 @@
             get { return userResourcePoolIndexRepository ?? (userResourcePoolIndexRepository = new UserResourcePoolIndexRepository(Context)); }
         }
 
-        //UserOrganizationRepository UserOrganizationRepository
-        //{
-        //    get { return userOrganizationRepository ?? (userOrganizationRepository = new UserOrganizationRepository(Context)); }
-        //}
-
         public async Task<int> InsertAsync(ResourcePool entity, int userId)
         {
             // Sample resource pool could only be created during DatabaseInitialization at the moment
             entity.IsSample = false;
 
-            // Sample records
-            // TODO Enable this block in case if there will no static indexes left in the system
-            //var sampleResourcePoolIndex = new ResourcePoolIndex()
-            //{
-            //    ResourcePool = entity,
-            //    Name = "Generic Index"
-            //};
-            //ResourcePoolIndexRepository.Insert(sampleResourcePoolIndex);
-
-            //var sampleOrganization = new Organization()
-            //{
-            //    ResourcePool = entity,
-            //    Name = "Generic Organization",
-            //    //ProductionCost = 0,
-            //    SalesPrice = 0
-            //};
-            //OrganizationRepository.Insert(sampleOrganization);
+            // TODO Samples ...
 
             CreateUserResourcePool(entity, userId);
 
@@ -108,17 +80,7 @@
                 UserResourcePoolIndexRepository.Insert(sampleUserResourcePoolIndex);
             }
 
-            //var organizations = resourcePool.OrganizationSet;
-            //foreach (var organization in organizations)
-            //{
-            //    var sampleUserOrganization = new UserOrganization()
-            //    {
-            //        UserId = userResourcePool.UserId,
-            //        Organization = organization,
-            //        NumberOfSales = 0
-            //    };
-            //    UserOrganizationRepository.Insert(sampleUserOrganization);
-            //}
+            // TODO Samples ...
         }
 
         #endregion

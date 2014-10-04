@@ -38,7 +38,6 @@
     <Content Include="Notes\Content Notes.txt" />
     <Content Include="Notes\Possible Indexes.txt" />
     <Content Include="Notes\Troubleshoot.txt" />
-    <Content Include="Notes\Notes.txt" />
     <Content Include="Notes\Todo.txt" />
     <Content Include="Scripts\Database\Sql\Live - Backup Database.sql" />
     <Content Include="Scripts\Database\Sql\Local - Backup Database.sql" />
