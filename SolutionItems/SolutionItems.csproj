@@ -39,6 +39,7 @@
     <Content Include="Notes\Possible Indexes.txt" />
     <Content Include="Notes\Troubleshoot.txt" />
     <Content Include="Notes\Todo.txt" />
+    <Content Include="Scripts\Build\WarmUpResult.txt" />
     <Content Include="Scripts\Database\Sql\Live - Backup Database.sql" />
     <Content Include="Scripts\Database\Sql\Local - Backup Database.sql" />
     <Content Include="Scripts\Database\Sql\Local - Create Login + User.sql" />
@@ -58,6 +59,7 @@
     <None Include="Links\Sector List - Yahoo! Finance Industry Browser.URL" />
     <None Include="Scripts\Build\IISExpress.bat" />
     <None Include="Scripts\Build\MSBuild.bat" />
+    <None Include="Scripts\Build\WarmUp.ps1" />
     <None Include="Scripts\Database\Local_BackupDatabase.bat" />
     <None Include="Scripts\Database\Local_UpdateDatabase.bat" />
   </ItemGroup>
@@ -72,6 +74,10 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

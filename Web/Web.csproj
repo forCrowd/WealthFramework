@@ -700,9 +700,7 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>REM Warm up script
-powershell -WindowStyle Hidden "$page = (New-Object System.Net.WebClient).DownloadStringAsync("""http://localhost:10001""")" 2&gt;nul 1&gt;nul
-EXIT 0</PostBuildEvent>
+    <PostBuildEvent>powershell.exe -file "$(SolutionDir)SolutionItems\Scripts\Build\WarmUp.ps1"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
