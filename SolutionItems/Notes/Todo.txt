@@ -113,6 +113,8 @@ public string LanguageID { get; set; }
 
 . warm-up script?
 
+. odata4 upgrade was failed; breeze doesn't support it yet!
+
 . make even the name as a element item and create it automatically when the element is created
 
 . currently multiplier + resource pool field types can only be added once per element (or resource pool) - check it again
