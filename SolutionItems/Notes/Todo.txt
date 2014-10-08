@@ -67,6 +67,9 @@ config.EnableQuerySupport(queryAttribute);
 . result of datetime (ticks) index is bit useless? need reference a start or end date as a reference?
 
 . vs update 2 + 3 changes -> asp.net identity + odata4
+.. merge user + identityuser tables -> appuser, approle etc.? - Change Primary Key for Users in ASP.NET Identity
+
+. request validation -> html agility pack?
 
 . Install-Package Microsoft.AspNet.WebApi.HelpPage
 
@@ -122,6 +125,32 @@ public string LanguageID { get; set; }
 . fixed amount resourcepooltype
 
 . resourcepoolindex can be a field for elementfield table? Index boolean?
+
+. web api throttling!
+
+. unit testing;
+.. webapi library tests or webapi tests as web service?
+
+. azure websites?
+
+html minifier
+. https://github.com/deanhume/html-minifier
+
+. elmah!
+
+. cors
+
+. template pattern for elementfield + fieldtype classes!
+
+Generalizing Validation via Custom Validation Filter Attribute -> general filter for ModelState.IsValid check!
+. http://www.dotnetcurry.com/showarticle.aspx?ID=927
+
+. one to one relation;
+    {
+        [Key, ForeignKey("Player")]
+        public long PlayerId { get; set; }
+        public virtual Player Player { get; set; }
+    }
 
 . ismainelement -> DefaultElement
 . multiplier field type -> userelementcell can hold just the value but will be used as it is, not it's average (like Rating)

@@ -87,16 +87,6 @@
             dbSet.RemoveRange(entities);
         }
 
-        //public int SaveChanges()
-        //{
-        //    return Context.SaveChanges();
-        //}
-
-        //public async Task<int> SaveChangesAsync()
-        //{
-        //    return await Context.SaveChangesAsync();
-        //}
-
         public void Dispose()
         {
             Context.Dispose();

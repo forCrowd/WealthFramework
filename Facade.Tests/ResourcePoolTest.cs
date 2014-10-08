@@ -6,11 +6,17 @@
     [TestClass]
     public class ResourcePoolTest
     {
+        ResourcePool resourcePool;
+
+        [TestInitialize]
+        public void Initialize()
+        {
+            resourcePool = new ResourcePool();
+        }
+
         [TestMethod]
         public void TwoElementItems_StringTypeIndex_SingleUser()
         {
-            var resourcePool = new ResourcePool();
-
             var organization = new Element() { ResourcePool = resourcePool, IsMainElement = true };
             resourcePool.ElementSet.Add(organization);
 
@@ -149,8 +155,6 @@
         [TestMethod]
         public void TwoElementItems_DecimalTypeIndex_SingleUser()
         {
-            var resourcePool = new ResourcePool();
-
             var organization = new Element() { ResourcePool = resourcePool, IsMainElement = true };
             resourcePool.ElementSet.Add(organization);
 
