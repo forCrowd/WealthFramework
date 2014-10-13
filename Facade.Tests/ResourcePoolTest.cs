@@ -17,6 +17,7 @@
         [TestMethod]
         public void TwoElementItems_StringTypeIndex_SingleUser()
         {
+            // Arrange + act
             var organization = new Element() { ResourcePool = resourcePool, IsMainElement = true };
             resourcePool.ElementSet.Add(organization);
 
@@ -85,7 +86,7 @@
             user.UserElementCellSet.Add(userOrganizationName1);
             organizationName2.UserElementCell.Add(userOrganizationName2);
 
-            // Results
+            // Assert
             Assert.IsTrue(resourcePool.IndexRatingAverage == 100);
 
             Assert.IsTrue(resourcePoolIndex.IndexRatingCount == 1);
@@ -129,10 +130,12 @@
             Assert.IsTrue(organization2.ResourcePoolIndexIncome == 100);
             Assert.IsTrue(organization2.TotalIncome == 300);
 
-            // ResourcePoolIndex - Rating Sort Type: Lowest to Highest
+            // Arrange + act 2
+            // TODO Since creating the whole scenario needs too much configuration,
+            // it contains two different tests, try to separate them
             resourcePoolIndex.RatingSortType = (byte)RatingSortType.LowestToHighest;
 
-            // Results
+            // Assert 2
             Assert.IsTrue(organization1.ResourcePoolCellValue == 200);
             Assert.IsTrue(organization1.ResourcePoolAddition == 200);
             Assert.IsTrue(organization1.ResourcePoolValueIncludingAddition == 400);
@@ -155,6 +158,7 @@
         [TestMethod]
         public void TwoElementItems_DecimalTypeIndex_SingleUser()
         {
+            // Arrange + act
             var organization = new Element() { ResourcePool = resourcePool, IsMainElement = true };
             resourcePool.ElementSet.Add(organization);
 
@@ -204,7 +208,7 @@
             var userResourcePoolIndex = new UserResourcePoolIndex() { UserResourcePool = userResourcePool, ResourcePoolIndex = resourcePoolIndex, Rating = 100 };
             resourcePoolIndex.UserResourcePoolIndexSet.Add(userResourcePoolIndex);
 
-            // Results
+            // Assert
             Assert.IsTrue(resourcePool.IndexRatingAverage == 100);
 
             Assert.IsTrue(resourcePoolIndex.IndexRatingCount == 1);

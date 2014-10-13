@@ -66,8 +66,17 @@ config.EnableQuerySupport(queryAttribute);
 
 . result of datetime (ticks) index is bit useless? need reference a start or end date as a reference?
 
-. vs update 2 + 3 changes -> asp.net identity + odata4
+. vs update 2 + 3 changes?
+
+. asp.net identity
+http://blogs.msdn.com/b/webdev/archive/2014/03/20/test-announcing-rtm-of-asp-net-identity-2-0-0.aspx
+http://typecastexception.com/post/2014/04/20/ASPNET-Identity-20-Setting-Up-Account-Validation-and-Two-Factor-Authorization.aspx
+http://www.codeproject.com/Articles/823263/ASP-NET-Identity-Introduction-to-Working-with-Iden
 .. merge user + identityuser tables -> appuser, approle etc.? - Change Primary Key for Users in ASP.NET Identity
+
+. odata4
+http://damienbod.wordpress.com/2014/06/10/getting-started-with-web-api-and-odata-v4/
+http://blogs.msdn.com/b/webdev/archive/2013/11/01/introducing-batch-support-in-web-api-and-web-api-odata.aspx
 
 . request validation -> html agility pack?
 
@@ -84,6 +93,8 @@ config.EnableQuerySupport(queryAttribute);
 . what happened to appveyor?
 
 . karma js tester?
+
+. coded ui test or canopy or ..? web iu testers?
 
 . http://ricostacruz.com/nprogress/ ?
 
@@ -103,12 +114,23 @@ public int TimeID { get; set; }
 [Column(Order = 3)]
 public string LanguageID { get; set; }
 
+find
+public IEnumerable<T> FindBy(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
+       {
+ 
+           IEnumerable<T> query = _dbset.Where(predicate).AsEnumerable(); 
+           return query;
+       }
+
 . update configuration.cs with element fields
 . employee + customer + quality index samples are not there
 . all in one + sector samples are outdated
 . check userunitofwork + resourcepoolunitofwork + userresourcepoolunitofwork for sample records + delete cases
 . add multiple fields test
 . check [required] attribute for newer classes?
+
+. unitofwork taking dbcontext as a parameter in the constructor case? passing an initialized context, is it safe at all?
+check asp.net identity
 
 . breeze.debug.js, commented out -> //if (prefix[0] === '/') { prefix = prefix.substr(1); } // drop leading '/'  (all but IE)      
 
@@ -138,12 +160,49 @@ html minifier
 
 . elmah!
 
-. cors
+. cors;
+http://www.dotnetcurry.com/showarticle.aspx?ID=921
+http://msdn.microsoft.com/en-us/magazine/dn532203.aspx
+http://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-web-api
+
+. code contracts?
+
+. how to create nuget packages!
 
 . template pattern for elementfield + fieldtype classes!
 
+. dependency injection frameworks? ninject, unity, castle, spring?
+also dbcontext -> aanmeldencontext -> resourcepoolmanager?
++ dbset<t> -> resourcepoolrepository?
+
+. ignore warmupresult.txt
+
 Generalizing Validation via Custom Validation Filter Attribute -> general filter for ModelState.IsValid check!
 . http://www.dotnetcurry.com/showarticle.aspx?ID=927
+
+. http client for testing?
+private async void btnGet_Click(object sender, EventArgs e)
+{
+  CustomHandlerA chA = new CustomHandlerA();
+  CustomHandlerB chB = new CustomHandlerB();
+  HttpClient client = HttpClientFactory.Create(chA, chB);
+
+  client.BaseAddress = new Uri("http://localhost:15324/");
+  client.DefaultRequestHeaders.Accept.Clear();
+  client.DefaultRequestHeaders.Accept.Add(
+    new MediaTypeWithQualityHeaderValue("application/json"));
+            
+  HttpResponseMessage response = await client.GetAsync("api/car");
+  if (response.IsSuccessStatusCode)
+  {
+    Car[] myCarArray = await response.Content.ReadAsAsync<Car[]>();
+    foreach (Car myCar in myCarArray)
+    {
+      txtResults.AppendText(string.Format("{0}\t {1}\t {2}\n\n", myCar.Id, myCar.Make, 
+        myCar.Model));
+    }                    
+  }   
+}
 
 . one to one relation;
     {
