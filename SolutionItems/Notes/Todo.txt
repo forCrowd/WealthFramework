@@ -160,12 +160,23 @@ html minifier
 
 . elmah!
 
+. http://smtp4dev.codeplex.com/
+
+. http://www.postsharp.net/aspects#examples
+
 . cors;
 http://www.dotnetcurry.com/showarticle.aspx?ID=921
 http://msdn.microsoft.com/en-us/magazine/dn532203.aspx
 http://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-web-api
 
 . code contracts?
+
+. http://www.hanselman.com/blog/crossbrowserdebuggingintegratedintovisualstudiowithbrowserstack.aspx
+
+. https://www.runscope.com/signup
+
+. autofac or ninject or windsor or unity?
+check the websites
 
 . how to create nuget packages!
 
