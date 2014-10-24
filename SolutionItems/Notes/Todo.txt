@@ -171,12 +171,23 @@ http://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-w
 
 . code contracts?
 
+. Install-Package DynamicQuery?
+
 . http://www.hanselman.com/blog/crossbrowserdebuggingintegratedintovisualstudiowithbrowserstack.aspx
 
 . https://www.runscope.com/signup
 
 . autofac or ninject or windsor or unity?
 check the websites
+http://www.dimecasts.net/Casts/ByTag/Ninject
+
+. object level validation
+IValidatableObject
+
+. extend dbcontext validation errors - check spaanjaars sample
+.. and use them in webapp with modelstate blocks?
+
+. calling saveChanges in dispose of unitofwork?
 
 . how to create nuget packages!
 
