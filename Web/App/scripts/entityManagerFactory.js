@@ -18,7 +18,6 @@
 
         var serviceRoot = window.location.protocol + '//' + window.location.host + '/';
         var serviceName = serviceRoot + 'odata/';
-        //var serviceName = serviceRoot;
         var factory = {
             newManager: newManager,
             serviceName: serviceName

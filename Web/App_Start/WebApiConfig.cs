@@ -35,7 +35,6 @@ namespace Web
             config.Routes.MapODataServiceRoute(
                 routeName: "ODataRoute",
                 routePrefix: "odata",
-                //routePrefix: string.Empty,
                 model: edm,
                 batchHandler: new BatchHandler(GlobalConfiguration.DefaultServer));
         }

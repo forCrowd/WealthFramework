@@ -47,8 +47,6 @@ or always calculate the total average based on invidiuals percentage? or both?
 . in 'not rated index' case, userResourcePool view doesn't show the result
 . in 'not rated organizations' case, it's collecting the tax but not giving it back? - basically how to treat an organization that doesn't have any rating?
 
-. validateantiforgerytoken + bind attributes in odata controller?
-
 . odata - paging (also filters?)
 querayable vs enablequerysupport
 [Queryable(PageSize=10)]
@@ -78,27 +76,7 @@ http://www.codeproject.com/Articles/823263/ASP-NET-Identity-Introduction-to-Work
 http://damienbod.wordpress.com/2014/06/10/getting-started-with-web-api-and-odata-v4/
 http://blogs.msdn.com/b/webdev/archive/2013/11/01/introducing-batch-support-in-web-api-and-web-api-odata.aspx
 
-. request validation -> html agility pack?
-
-. Install-Package Microsoft.AspNet.WebApi.HelpPage
-
-.. gather these under performance / optimization
-. web.config httpcompression?
-. miniprofiler - is this similar with glimpse?
-
-. automapper?
-
-. javascript logging; http://jsnlog.com/
-
 . what happened to appveyor?
-
-. karma js tester?
-
-. coded ui test or canopy or ..? web iu testers?
-
-. http://ricostacruz.com/nprogress/ ?
-
-. [Route("users/{id:int:min(1)}")] ?
 
 . composite key definition;
 [Key]
@@ -132,75 +110,24 @@ public IEnumerable<T> FindBy(System.Linq.Expressions.Expression<Func<T, bool>> p
 . unitofwork taking dbcontext as a parameter in the constructor case? passing an initialized context, is it safe at all?
 check asp.net identity
 
-. breeze.debug.js, commented out -> //if (prefix[0] === '/') { prefix = prefix.substr(1); } // drop leading '/'  (all but IE)      
-
-. highcharts library loading perf?
-
-. odata4 upgrade was failed; breeze doesn't support it yet!
+. breeze.debug.js, commented out -> //prefix = prefix.substr(1);
+but not on breeze.min.js!
 
 . make even the name as a element item and create it automatically when the element is created
-
-. try to convert other batch files to ps scripts as well
-
 . currently multiplier + resource pool field types can only be added once per element (or resource pool) - check it again
-
 . fixed amount resourcepooltype
 
 . resourcepoolindex can be a field for elementfield table? Index boolean?
 
-. web api throttling!
-
 . unit testing;
 .. webapi library tests or webapi tests as web service?
-
-. azure websites?
-
-html minifier
-. https://github.com/deanhume/html-minifier
-
-. elmah!
-
-. http://smtp4dev.codeplex.com/
-
-. http://www.postsharp.net/aspects#examples
-
-. cors;
-http://www.dotnetcurry.com/showarticle.aspx?ID=921
-http://msdn.microsoft.com/en-us/magazine/dn532203.aspx
-http://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-web-api
-
-. code contracts?
-
-. Install-Package DynamicQuery?
-
-. http://www.hanselman.com/blog/crossbrowserdebuggingintegratedintovisualstudiowithbrowserstack.aspx
-
-. https://www.runscope.com/signup
-
-. autofac or ninject or windsor or unity?
-check the websites
-http://www.dimecasts.net/Casts/ByTag/Ninject
-
-. object level validation
-IValidatableObject
 
 . extend dbcontext validation errors - check spaanjaars sample
 .. and use them in webapp with modelstate blocks?
 
 . calling saveChanges in dispose of unitofwork?
 
-. how to create nuget packages!
-
 . template pattern for elementfield + fieldtype classes!
-
-. dependency injection frameworks? ninject, unity, castle, spring?
-also dbcontext -> aanmeldencontext -> resourcepoolmanager?
-+ dbset<t> -> resourcepoolrepository?
-
-. ignore warmupresult.txt
-
-Generalizing Validation via Custom Validation Filter Attribute -> general filter for ModelState.IsValid check!
-. http://www.dotnetcurry.com/showarticle.aspx?ID=927
 
 . http client for testing?
 private async void btnGet_Click(object sender, EventArgs e)
@@ -244,3 +171,48 @@ currently number of sales is not on user level, but on elementitem level!
 
 . element parent + child structure
 . userResourcePool view recursive selectedElementItem part
+
+---
+TECHNICAL
+
+Possible Improvements
+. Merge Asp.Net Identity models with into the context
+. Unit testing for controllers + unitofwork etc.?
+. autofac or ninject or windsor or unity or spring?
+check the websites
+http://www.dimecasts.net/Casts/ByTag/Ninject
+. dbcontext -> aanmeldencontext -> resourcepoolmanager?
+. dbset<t> -> resourcepoolrepository?
+. Elmah!
+. azure websites?
+. separate web into webclient / webservice
+.. cors;
+http://www.dotnetcurry.com/showarticle.aspx?ID=921
+http://msdn.microsoft.com/en-us/magazine/dn532203.aspx
+http://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-web-api
+. javascript logging; http://jsnlog.com/
+. automapper?
+. try to convert other batch files to ps scripts as well
+. highcharts library loading perf?
+
+Check Later
+. code contracts?
+. Install-Package DynamicQuery?
+. http://www.hanselman.com/blog/crossbrowserdebuggingintegratedintovisualstudiowithbrowserstack.aspx
+. https://www.runscope.com/signup
+. html minifier: https://github.com/deanhume/html-minifier
+. Install-Package Microsoft.AspNet.WebApi.HelpPage
+. karma js tester?
+. web api throttling!
+. http://smtp4dev.codeplex.com/
+. http://ricostacruz.com/nprogress/ ?
+. request validation -> html agility pack?
+. web.config httpcompression?
+. miniprofiler - is this similar with glimpse?
+. coded ui test or canopy or ..? web iu testers?
+. object level validation IValidatableObject
+. http://www.postsharp.net/aspects#examples
+. Generalizing Validation via Custom Validation Filter Attribute -> general filter for ModelState.IsValid check! http://www.dotnetcurry.com/showarticle.aspx?ID=927
+. validateantiforgerytoken + bind attributes in odata controller?
+. [Route("users/{id:int:min(1)}")] ?
+. odata4 upgrade was failed; breeze doesn't support it yet!
