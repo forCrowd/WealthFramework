@@ -14,6 +14,7 @@ An experimental resource management system that aims to provide a sustainable ec
 * Package updates
 * Warm-up script was converted to PowerShell + gitignore was modified for WarmUpResult.txt
 * Version number fix; 0.14.6.1 -> 0.14.7
+* Elmah
 
 **0.14.6**
 

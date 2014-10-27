@@ -37,6 +37,12 @@
   <ItemGroup>
     <Content Include="Notes\Content Notes.txt" />
     <Content Include="Notes\Possible Indexes.txt" />
+    <None Include="..\.gitattributes">
+      <Link>GitHub\.gitattributes</Link>
+    </None>
+    <None Include="..\.gitignore">
+      <Link>GitHub\.gitignore</Link>
+    </None>
     <None Include="Notes\Todo.md" />
     <Content Include="Notes\Troubleshoot.txt" />
     <Content Include="Scripts\Database\Sql\Live - Backup Database.sql" />

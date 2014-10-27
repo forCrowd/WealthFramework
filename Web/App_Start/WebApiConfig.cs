@@ -1,6 +1,8 @@
 ﻿using System.Web.Http;
+using System.Web.Http.ExceptionHandling;
 using System.Web.Http.OData.Batch;
 using System.Web.Http.OData.Extensions;
+using Web.ExceptionHandling;
 
 namespace Web
 {
@@ -37,6 +39,13 @@ namespace Web
                 routePrefix: "odata",
                 model: edm,
                 batchHandler: new BatchHandler(GlobalConfiguration.DefaultServer));
+
+            // Exception logger
+            config.Services.Add(typeof(IExceptionLogger), new ElmahExceptionLogger());
+
+            // Exception handler
+            config.Services.Replace(typeof(IExceptionHandler), new GenericExceptionHandler());
+
         }
     }
 

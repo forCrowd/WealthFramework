@@ -28,7 +28,6 @@ currently number of sales is not on user level, but on elementitem level!
 
 ### Technical
 
-* Elmah!
 * Merge Asp.Net Identity models with into the context
 * Unit testing for controllers + unitofwork etc.?
 * autofac or ninject or windsor or unity or spring?
