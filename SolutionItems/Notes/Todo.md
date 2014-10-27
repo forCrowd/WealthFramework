@@ -1,7 +1,5 @@
 ﻿# Todo
 
----
-
 ## Short Term
 
 ### Functional
