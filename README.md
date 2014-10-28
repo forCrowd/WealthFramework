@@ -11,7 +11,7 @@ An experimental resource management system that aims to provide a sustainable ec
 * Clean-up
  * ElementItemElementField was renamed to ElementCell
  * Long property names were shortened
-* Package updates
+* Package updates & breeze - Microsoft AspNet WebApi OData 5.3.x conflict fix
 * Warm-up script was converted to PowerShell + gitignore was modified for WarmUpResult.txt
 * Version number fix; 0.14.6.1 -> 0.14.7
 * Exception handling & Elmah

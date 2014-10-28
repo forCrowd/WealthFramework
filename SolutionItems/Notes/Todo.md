@@ -46,7 +46,6 @@ http://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-w
 * javascript logging; http://jsnlog.com/
 * automapper?
 * highcharts library loading perf?
-* don't forget to min modified breeze!
 * vs update 2 + 3 changes?
 * asp.net identity  
 http://blogs.msdn.com/b/webdev/archive/2014/03/20/test-announcing-rtm-of-asp-net-identity-2-0-0.aspx  
