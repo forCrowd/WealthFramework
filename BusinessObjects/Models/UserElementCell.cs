@@ -12,7 +12,7 @@ namespace BusinessObjects
         public int Id { get; set; }
 
         [Index("IX_UserIdElementCellId", 1, IsUnique = true)]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         [Index("IX_UserIdElementCellId", 2, IsUnique = true)]
         public int ElementCellId { get; set; }

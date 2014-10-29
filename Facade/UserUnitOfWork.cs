@@ -21,9 +21,9 @@
             get { return userResourcePoolRepository ?? (userResourcePoolRepository = new UserResourcePoolRepository(Context)); }
         }
 
-        public async Task<int> InsertAsync(User user, int sampleUserId)
+        public async Task<int> InsertAsync(User user, string sampleUserId)
         {
-            CopySampleData(user, sampleUserId);
+            // CopySampleData(user, sampleUserId);
 
             return await base.InsertAsync(user);
         }
@@ -32,7 +32,7 @@
         {
             var user = await FindAsync(id);
 
-            DeleteSampleData(user);
+            // DeleteSampleData(user);
 
             return await base.DeleteAsync(id);
         }
@@ -41,9 +41,9 @@
         {
             var targetUser = await FindAsync(targetUserId);
 
-            DeleteSampleData(targetUser);
+            // DeleteSampleData(targetUser);
 
-            CopySampleData(targetUser, sourceUserId);
+            // CopySampleData(targetUser, sourceUserId);
 
             await Context.SaveChangesAsync();
         }
@@ -52,41 +52,41 @@
         {
             var targetUser = Find(targetUserId);
 
-            DeleteSampleData(targetUser);
+            // DeleteSampleData(targetUser);
 
-            CopySampleData(targetUser, sourceUserId);
+            // CopySampleData(targetUser, sourceUserId);
 
             Context.SaveChanges();
         }
 
         #region - Private Methods -
         
-        void DeleteSampleData(User user)
-        {
-            UserResourcePoolRepository.DeleteRange(user.UserResourcePoolSet);
-        }
+        //void DeleteSampleData(User user)
+        //{
+        //    UserResourcePoolRepository.DeleteRange(user.UserResourcePoolSet);
+        //}
 
-        void CopySampleData(User targetUser, int sourceUserId)
-        {
-            // User resource pools
-            var sampleUserResourcePools = UserResourcePoolRepository
-                .AllLive
-                .Include(item => item.ResourcePool)
-                .Where(item => item.UserId == sourceUserId && item.ResourcePool.IsSample);
+        //void CopySampleData(User targetUser, string sourceUserId)
+        //{
+        //    // User resource pools
+        //    var sampleUserResourcePools = UserResourcePoolRepository
+        //        .AllLive
+        //        .Include(item => item.ResourcePool)
+        //        .Where(item => item.UserId == sourceUserId && item.ResourcePool.IsSample);
 
-            foreach (var sampleUserResourcePool in sampleUserResourcePools)
-            {
-                var userResourcePool = new UserResourcePool()
-                {
-                    User = targetUser,
-                    ResourcePool = sampleUserResourcePool.ResourcePool,
-                    ResourcePoolRate = sampleUserResourcePool.ResourcePoolRate
-                };
-                UserResourcePoolRepository.Insert(userResourcePool);
-            }
+        //    foreach (var sampleUserResourcePool in sampleUserResourcePools)
+        //    {
+        //        var userResourcePool = new UserResourcePool()
+        //        {
+        //            User = targetUser,
+        //            ResourcePool = sampleUserResourcePool.ResourcePool,
+        //            ResourcePoolRate = sampleUserResourcePool.ResourcePoolRate
+        //        };
+        //        UserResourcePoolRepository.Insert(userResourcePool);
+        //    }
 
-            // TODO Samples ...
-        }
+        //    // TODO Samples ...
+        //}
 
         #endregion
     }

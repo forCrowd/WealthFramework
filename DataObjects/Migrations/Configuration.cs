@@ -7,7 +7,6 @@ namespace DataObjects.Migrations
     using System;
     using System.Collections.Generic;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
     internal sealed class Configuration : DbMigrationsConfiguration<WealthEconomyContext>
     {
@@ -17,13 +16,8 @@ namespace DataObjects.Migrations
         ElementRepository elementRepository;
         ElementItemRepository elementItemRepository;
         ResourcePoolIndexRepository resourcePoolIndexRepository;
-        //OrganizationRepository organizationRepository;
-        //OrganizationElementItemRepository organizationElementItemRepository;
         UserResourcePoolRepository userResourcePoolRepository;
         UserResourcePoolIndexRepository userResourcePoolIndexRepository;
-        //UserResourcePoolIndexValueRepository userResourcePoolIndexValueRepository;
-        //UserElementItemRepository userElementItemRepository;
-        //UserOrganizationRepository userOrganizationRepository;
 
         // For an unknown reason, context variable doesn't work with RoleManager and UserManager
         public WealthEconomyContext Context { get; private set; }
@@ -42,21 +36,11 @@ namespace DataObjects.Migrations
         {
             get { return elementItemRepository ?? (elementItemRepository = new ElementItemRepository(Context)); }
         }
-        
+
         public ResourcePoolIndexRepository ResourcePoolIndexRepository
         {
             get { return resourcePoolIndexRepository ?? (resourcePoolIndexRepository = new ResourcePoolIndexRepository(Context)); }
         }
-        
-        //public OrganizationRepository OrganizationRepository
-        //{
-        //    get { return organizationRepository ?? (organizationRepository = new OrganizationRepository(Context)); }
-        //}
-
-        //public OrganizationElementItemRepository OrganizationElementItemRepository
-        //{
-        //    get { return organizationElementItemRepository ?? (organizationElementItemRepository = new OrganizationElementItemRepository(Context)); }
-        //}
 
         UserResourcePoolRepository UserResourcePoolRepository
         {
@@ -67,21 +51,6 @@ namespace DataObjects.Migrations
         {
             get { return userResourcePoolIndexRepository ?? (userResourcePoolIndexRepository = new UserResourcePoolIndexRepository(Context)); }
         }
-
-        //UserResourcePoolIndexValueRepository UserResourcePoolIndexValueRepository
-        //{
-        //    get { return userResourcePoolIndexValueRepository ?? (userResourcePoolIndexValueRepository = new UserResourcePoolIndexValueRepository(Context));}
-        //}
-
-        //UserElementItemRepository UserElementItemRepository
-        //{
-        //    get { return userElementItemRepository ?? (userElementItemRepository = new UserElementItemRepository(Context)); }
-        //}
-
-        //UserOrganizationRepository UserOrganizationRepository
-        //{
-        //    get { return userOrganizationRepository ?? (userOrganizationRepository = new UserOrganizationRepository(Context)); }
-        //}
 
         public Configuration()
         {
@@ -116,17 +85,7 @@ namespace DataObjects.Migrations
 
                 switch (migrationVersion)
                 {
-                    case "V0_11_10":
-                        {
-                            // Set first 8 resource pool records as sample (for existing databases)
-                            const int maxSampleResourcePoolId = 8;
-                            var list = ResourcePoolRepository.All.Where(item => item.Id <= maxSampleResourcePoolId).AsEnumerable();
-                            foreach (var item in list)
-                                item.IsSample = true;
-                            Context.SaveChanges();
-                            break;
-                        }
-                    case "V0_14":
+                    case "V0_14_7_3":
                         {
                             // Admin
                             var roleStore = new RoleStore<IdentityRole>(Context);
@@ -138,40 +97,46 @@ namespace DataObjects.Migrations
                             if (adminRoleResult == null)
                                 return;
 
-                            var userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(Context));
-                            var adminIdentityUser = new IdentityUser("admin");
-                            var adminIdentityUserPassword = DateTime.Now.ToString("yyyyMMdd");
-                            
+                            var userManager = new UserManager<User>(new UserStore<User>(Context));
+                            var adminUser = new User() { UserName = "admin", Email = "admin", CreatedOn = DateTime.UtcNow, ModifiedOn = DateTime.UtcNow };
+                            var adminUserPassword = DateTime.Now.ToString("yyyyMMdd");
+
                             // TODO Make this better?
-                            var adminIdentityUserResult = userManager.Create(adminIdentityUser, adminIdentityUserPassword);
+                            var adminUserResult = userManager.Create(adminUser, adminUserPassword);
 
                             // TODO result error check?
-                            if (adminIdentityUserResult == null)
+                            if (adminUserResult == null)
                                 return;
 
-                            var addAdminIdentityUserToRoleResult = userManager.AddToRole(adminIdentityUser.Id, "Administrator");
+                            var addAdminUserToRoleResult = userManager.AddToRole(adminUser.Id, "Administrator");
 
                             // TODO result error check?
-                            if (addAdminIdentityUserToRoleResult == null)
+                            if (addAdminUserToRoleResult == null)
                                 return;
-
-                            var adminUser = new BusinessObjects.User() { AspNetUserId = adminIdentityUser.Id, Email = adminIdentityUser.UserName };
-                            var userRepository = new UserRepository(Context);
-                            userRepository.Insert(adminUser);
 
                             // Sample user
-                            var sampleIdentityUser = new IdentityUser("sample");
-                            var sampleIdentityUserPassword = DateTime.Now.ToString("yyyyMMdd");
+                            var sampleUser = new User() { UserName = "sample", Email = "sample", CreatedOn = DateTime.UtcNow, ModifiedOn = DateTime.UtcNow };
+                            var sampleUserPassword = DateTime.Now.ToString("yyyyMMdd");
 
-                            // TODO Make this better?
-                            var sampleIdentityUserResult = userManager.Create(sampleIdentityUser, sampleIdentityUserPassword);
+                            // TODO ?!
+                            IdentityResult sampleIdentityUserResult = null;
+                            try
+                            {
+                                sampleIdentityUserResult = userManager.Create(sampleUser, sampleUserPassword);
+                            }
+                            catch (System.Data.Entity.Validation.DbEntityValidationException entityException)
+                            {
+                                var errors = entityException.EntityValidationErrors;
+                                var result = new System.Text.StringBuilder();
+                                foreach (var error in errors)
+                                    foreach (var validationError in error.ValidationErrors)
+                                        result.AppendFormat("\r\n  Entity of type {0} has validation error \"{1}\" for property {2}.\r\n", error.Entry.Entity.GetType().ToString(), validationError.ErrorMessage, validationError.PropertyName);
+                                throw new Exception(result.ToString(), entityException);
+                            }
 
                             // TODO result error check?
                             if (sampleIdentityUserResult == null)
                                 return;
-
-                            var sampleUser = new BusinessObjects.User() { AspNetUserId = sampleIdentityUser.Id, Email = sampleIdentityUser.UserName };
-                            userRepository.Insert(sampleUser);
 
                             // Samples
                             //AddSectorIndexSample(sampleUser);
@@ -184,13 +149,26 @@ namespace DataObjects.Migrations
                             //AddCustomerSatisfactionIndexSample(sampleUser);
                             //AddAllInOneSample(sampleUser);
 
-                            Context.SaveChanges();
+                            // TODO ?!
+                            try
+                            {
+                                Context.SaveChanges();
+                            }
+                            catch (System.Data.Entity.Validation.DbEntityValidationException entityException)
+                            {
+                                var errors = entityException.EntityValidationErrors;
+                                var result = new System.Text.StringBuilder();
+                                foreach (var error in errors)
+                                    foreach (var validationError in error.ValidationErrors)
+                                        result.AppendFormat("\r\n  Entity of type {0} has validation error \"{1}\" for property {2}.\r\n", error.Entry.Entity.GetType().ToString(), validationError.ErrorMessage, validationError.PropertyName);
+                                throw new Exception(result.ToString(), entityException);
+                            }
 
                             // TODO Handle this Seed operation by raising an event and catching it in Facade layer, so UnitOfWork classes could be used?
 
                             break;
                         }
-                }            
+                }
             }
         }
 
@@ -386,7 +364,7 @@ namespace DataObjects.Migrations
         //    var allInOneTotalCostOrganization2 = new BusinessObjects.Organization() { ResourcePool = allInOneResourcePool, Name = "High Coast", SalesPrice = 175 };
         //    var allInOneUserTotalCostOrganization1 = new BusinessObjects.UserOrganization() { User = user, Organization = allInOneTotalCostOrganization1, NumberOfSales = 0 };
         //    var allInOneUserTotalCostOrganization2 = new BusinessObjects.UserOrganization() { User = user, Organization = allInOneTotalCostOrganization2, NumberOfSales = 0 };
-            
+
         //    // Knowledge
         //    // TODO
         //    var knowledgeOrganization1 = new BusinessObjects.Organization() { ResourcePool = allInOneResourcePool, Name = "True Source", SalesPrice = 150 };
@@ -452,7 +430,7 @@ namespace DataObjects.Migrations
         //    // Insert
         //    ResourcePoolRepository.Insert(allInOneResourcePool);
         //    UserResourcePoolRepository.Insert(allInOneUserResourcePool);
-            
+
         //    OrganizationRepository.Insert(allInOneTotalCostOrganization1);
         //    OrganizationRepository.Insert(allInOneTotalCostOrganization2);
         //    UserOrganizationRepository.Insert(allInOneUserTotalCostOrganization1);
@@ -496,7 +474,7 @@ namespace DataObjects.Migrations
         //    UserOrganizationRepository.Insert(sectorUserOrganization7);
         //    UserOrganizationRepository.Insert(sectorUserOrganization8);
         //    UserOrganizationRepository.Insert(sectorUserOrganization9);
-            
+
         //    OrganizationRepository.Insert(distanceOrganization1);
         //    OrganizationRepository.Insert(distanceOrganization2);
         //    UserOrganizationRepository.Insert(distanceUserOrganization1);

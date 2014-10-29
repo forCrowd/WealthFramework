@@ -211,4 +211,25 @@ public string LanguageID { get; set; }
 
 ### Misc - Unsorted
 
-* .
+copysampledata
+resetsampledata
+odata patch?
+deletesampledata
+merge userunitofwork + usermanager
+.tt files reaction?
+remove excluded files
+
+---
+User
+IdentityUser
+ApplicationUser
+AspNetUsers
+
+Role
+IdentityRole
+ApplicationRole
+AspNetRoles
+
+AspNetUserLogins
+AspNetUserClaims
+AspNetUserRoles

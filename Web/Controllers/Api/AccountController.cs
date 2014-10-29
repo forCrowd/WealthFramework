@@ -19,20 +19,31 @@ namespace Web.Controllers.Api
     {
         private const string LocalLoginProvider = "Local";
 
+        //public AccountController()
+        //    : this(Startup.UserManagerFactory(), Startup.OAuthOptions.AccessTokenFormat)
+        //{
+        //}
+
+        //public AccountController(AspNetUserManager userManager,
+        //    ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
+        //{
+        //    UserManager = userManager;
+        //    AccessTokenFormat = accessTokenFormat;
+        //}
+
         public AccountController()
-            : this(Startup.UserManagerFactory(), Startup.OAuthOptions.AccessTokenFormat)
+            : this(Startup.UserManagerFactory())
         {
         }
 
-        public AccountController(AspNetUserManager userManager,
-            ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
+        public AccountController(AspNetUserManager userManager)
         {
             UserManager = userManager;
-            AccessTokenFormat = accessTokenFormat;
         }
 
+
         public AspNetUserManager UserManager { get; private set; }
-        public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
+        // public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
         // POST api/Account/ChangePassword
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
@@ -56,18 +67,22 @@ namespace Web.Controllers.Api
 
         // GET api/Account/UserInfo
         [Route("UserInfo")]
-        public UserInfoViewModel GetUserInfo()
+        public async Task<UserInfoViewModel> GetUserInfo()
         {
-            var aspNetUserId = User.Identity.GetUserId();
-            User currentUser;
-            using (var unitOfWork = new UserUnitOfWork())
-                currentUser = unitOfWork.AllLive.Single(user => user.AspNetUserId == aspNetUserId);
+            // var aspNetUserId = User.Identity.GetUserId();
+            //User currentUser;
+            //using (var unitOfWork = new UserUnitOfWork())
+            //    currentUser = unitOfWork.AllLive.Single(user => user.AspNetUserId == aspNetUserId);
+
+            // var appUser = User.Identity.
+
+            var currentUser = await UserManager.FindByIdAsync(User.Identity.GetUserId()); 
 
             return new UserInfoViewModel
             {
                 Id = currentUser.Id,
                 Email = currentUser.Email,
-                IsAdmin = User.IsInRole("Administrator")
+                IsAdmin =  User.IsInRole("Administrator")
             };
         }
 
@@ -87,9 +102,10 @@ namespace Web.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            var aspNetUser = new IdentityUser
+            var aspNetUser = new User
             {
-                UserName = model.Email
+                UserName = model.Email,
+                Email = model.Email
             };
 
             // Create AspNetUser
@@ -101,17 +117,17 @@ namespace Web.Controllers.Api
                 return errorResult;
             }
 
-            // Create the application user in relation with AspNetUser
-            using (var unitOfWork = new UserUnitOfWork())
-            {
-                var user = new User()
-                {
-                    AspNetUserId = aspNetUser.Id,
-                    Email = aspNetUser.UserName,
-                };
+            //// Create the application user in relation with AspNetUser
+            //using (var unitOfWork = new UserUnitOfWork())
+            //{
+            //    var user = new User()
+            //    {
+            //        //AspNetUserId = aspNetUser.Id,
+            //        Email = aspNetUser.UserName,
+            //    };
 
-                await unitOfWork.InsertAsync(user, ApplicationSettings.SampleUserId);
-            }
+            //    await unitOfWork.InsertAsync(user, ApplicationSettings.SampleUserId);
+            //}
 
             return Ok();
         }
@@ -120,12 +136,16 @@ namespace Web.Controllers.Api
         [HttpPost]
         public async Task<IHttpActionResult> ResetSampleData()
         {
-            var aspNetUserId = User.Identity.GetUserId();
-            using (var unitOfWork = new UserUnitOfWork())
-            {
-                var currentUser = unitOfWork.AllLive.Single(user => user.AspNetUserId == aspNetUserId);
-                await unitOfWork.ResetSampleDataAsync(currentUser.Id, ApplicationSettings.SampleUserId);
-            }
+            throw new System.NotImplementedException("yet");
+
+            var currentUser = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+
+            // var aspNetUserId = User.Identity.GetUserId();
+            //using (var unitOfWork = new UserUnitOfWork())
+            //{
+            //    var currentUser = unitOfWork.AllLive.Single(user => user.AspNetUserId == aspNetUserId);
+            //    await unitOfWork.ResetSampleDataAsync(currentUser.Id, ApplicationSettings.SampleUserId);
+            //}
 
             return Ok();
         }

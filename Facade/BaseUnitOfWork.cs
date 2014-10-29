@@ -66,16 +66,6 @@
             return await Context.SaveChangesAsync();
         }
 
-        //public int Save()
-        //{
-        //    return Context.SaveChanges();
-        //}
-
-        //public async Task<int> SaveAsync()
-        //{
-        //    return await Context.SaveChangesAsync();
-        //}
-
         private bool disposed = false;
 
         protected virtual void Dispose(bool disposing)

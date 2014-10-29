@@ -16,13 +16,13 @@ namespace Web.Controllers.OData
 
             // Only admin can get all
             if (!IsAdmin)
-                list = list.Where(item => item.AspNetUserId == AspNetUserId);
+                list = list.Where(item => item.Id == AspNetUserId);
 
             return list;
         }
 
         // GET odata/User(5)
-        public override SingleResult<User> Get([FromODataUri] int key)
+        public override SingleResult<User> Get([FromODataUri] string key)
         {
             if (key != ApplicationUser.Id && !IsAdmin)
                 throw new HttpResponseException(HttpStatusCode.Unauthorized);
@@ -31,7 +31,7 @@ namespace Web.Controllers.OData
         }
 
         // PUT odata/User(5)
-        public override async Task<IHttpActionResult> Put([FromODataUri] int key, User user)
+        public override async Task<IHttpActionResult> Put([FromODataUri] string key, User user)
         {
             if (user.Id != ApplicationUser.Id && !IsAdmin)
                 return Unauthorized();
@@ -47,21 +47,25 @@ namespace Web.Controllers.OData
         }
 
         // PATCH odata/User(5)
-        public override async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<User> patch)
-        {
-            if (key != ApplicationUser.Id && !IsAdmin)
-                return Unauthorized();
+        //public override async Task<IHttpActionResult> Patch([FromODataUri] string key, Delta<User> patch)
+        //{
+        //    throw new System.NotImplementedException("yet");
 
-            return await base.Patch(key, patch);
-        }
+        //    //if (key != ApplicationUser.Id && !IsAdmin)
+        //    //    return Unauthorized();
 
-        // DELETE odata/User(5)
-        public override async Task<IHttpActionResult> Delete([FromODataUri] int key)
-        {
-            if (key != ApplicationUser.Id && !IsAdmin)
-                return Unauthorized();
+        //    //return await base.Patch(key, patch);
+        //}
 
-            return await base.Delete(key);
-        }
+        //// DELETE odata/User(5)
+        //public override async Task<IHttpActionResult> Delete([FromODataUri] string key)
+        //{
+        //    throw new System.NotImplementedException("yet");
+
+        //    //if (key != ApplicationUser.Id && !IsAdmin)
+        //    //    return Unauthorized();
+
+        //    //return await base.Delete(key);
+        //}
 	}
 }

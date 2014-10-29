@@ -39,13 +39,13 @@ namespace Web.Controllers.OData
 
         // GET odata/User(5)
         [Queryable]
-        public virtual SingleResult<User> Get([FromODataUri] int key)
+        public virtual SingleResult<User> Get([FromODataUri] string key)
         {
             return SingleResult.Create(MainUnitOfWork.AllLive.Where(user => user.Id == key));
         }
 
         // PUT odata/User(5)
-        public virtual async Task<IHttpActionResult> Put([FromODataUri] int key, User user)
+        public virtual async Task<IHttpActionResult> Put([FromODataUri] string key, User user)
         {
             if (!ModelState.IsValid)
             {

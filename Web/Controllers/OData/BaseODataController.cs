@@ -8,6 +8,18 @@ namespace Web.Controllers.OData
 {
     public abstract class BaseODataController : ODataController
     {
+        public BaseODataController()
+            : this(Startup.UserManagerFactory())
+        {
+        }
+
+        public BaseODataController(AspNetUserManager userManager)
+        {
+            UserManager = userManager;
+        }
+
+        public AspNetUserManager UserManager { get; private set; }
+
         internal string AspNetUserId
         {
             get
@@ -27,8 +39,12 @@ namespace Web.Controllers.OData
         {
             get
             {
-                using (var userUnitOfWork = new UserUnitOfWork())
-                    return userUnitOfWork.AllLive.Single(user => user.AspNetUserId == AspNetUserId);
+                return UserManager.FindById(AspNetUserId);
+
+                //using (var userUnitOfWork = new UserUnitOfWork())
+                //    return userUnitOfWork.AllLive.Single(user => user.AspNetUserId == AspNetUserId);
+
+                // return usermana
             }
         }
     }

@@ -97,7 +97,7 @@ namespace DataObjects.Migrations
                 "dbo.User",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
+                        Id = c.Int(nullable: false, identity: false),
                         Email = c.String(nullable: false),
                         Password = c.String(nullable: false),
                         FirstName = c.String(),

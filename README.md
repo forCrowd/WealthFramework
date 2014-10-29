@@ -15,6 +15,7 @@ An experimental resource management system that aims to provide a sustainable ec
 * Warm-up script was converted to PowerShell + gitignore was modified for WarmUpResult.txt
 * Version number fix; 0.14.6.1 -> 0.14.7
 * Exception handling & Elmah
+* IdentityUser & User classes merge
 
 **0.14.6**
 

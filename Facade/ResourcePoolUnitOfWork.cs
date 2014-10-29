@@ -26,7 +26,7 @@
             get { return userResourcePoolIndexRepository ?? (userResourcePoolIndexRepository = new UserResourcePoolIndexRepository(Context)); }
         }
 
-        public async Task<int> InsertAsync(ResourcePool entity, int userId)
+        public async Task<int> InsertAsync(ResourcePool entity, string userId)
         {
             // Sample resource pool could only be created during DatabaseInitialization at the moment
             entity.IsSample = false;
@@ -56,7 +56,7 @@
 
         #region - Private Methods -
 
-        void CreateUserResourcePool(ResourcePool resourcePool, int userId)
+        void CreateUserResourcePool(ResourcePool resourcePool, string userId)
         {
             var userResourcePool = new UserResourcePool()
             {
