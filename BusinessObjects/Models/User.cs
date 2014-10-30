@@ -7,7 +7,7 @@ namespace BusinessObjects
     using System.ComponentModel.DataAnnotations;
 
     // [BusinessObjects.Attributes.DefaultProperty("Email")]
-    public class User : IdentityUser, IEntity
+    public class User : IdentityUser<int, UserLogin, UserRole, UserClaim>, IEntity
     {
         public User()
         {

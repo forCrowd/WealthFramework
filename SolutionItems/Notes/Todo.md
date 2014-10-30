@@ -218,6 +218,13 @@ deletesampledata
 merge userunitofwork + usermanager
 .tt files reaction?
 remove excluded files
+seed method ?!
+compare the current stuff with update3 templates!
+search for datetime.utcnow
+store vs manager?
+
+---
+when creating resourcepool is gives tons of errors but then does the operation and says ok in UI?!
 
 ---
 User

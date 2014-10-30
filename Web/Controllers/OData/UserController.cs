@@ -22,7 +22,7 @@ namespace Web.Controllers.OData
         }
 
         // GET odata/User(5)
-        public override SingleResult<User> Get([FromODataUri] string key)
+        public override SingleResult<User> Get([FromODataUri] int key)
         {
             if (key != ApplicationUser.Id && !IsAdmin)
                 throw new HttpResponseException(HttpStatusCode.Unauthorized);
@@ -31,7 +31,7 @@ namespace Web.Controllers.OData
         }
 
         // PUT odata/User(5)
-        public override async Task<IHttpActionResult> Put([FromODataUri] string key, User user)
+        public override async Task<IHttpActionResult> Put([FromODataUri] int key, User user)
         {
             if (user.Id != ApplicationUser.Id && !IsAdmin)
                 return Unauthorized();

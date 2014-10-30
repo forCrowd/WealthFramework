@@ -53,7 +53,7 @@ namespace Web.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.CurrentPassword,
+            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId<int>(), model.CurrentPassword,
                 model.NewPassword);
             var errorResult = GetErrorResult(result);
 
@@ -76,7 +76,8 @@ namespace Web.Controllers.Api
 
             // var appUser = User.Identity.
 
-            var currentUser = await UserManager.FindByIdAsync(User.Identity.GetUserId()); 
+            var userId = User.Identity.GetUserId<int>();
+            var currentUser = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>()); 
 
             return new UserInfoViewModel
             {
@@ -105,7 +106,9 @@ namespace Web.Controllers.Api
             var aspNetUser = new User
             {
                 UserName = model.Email,
-                Email = model.Email
+                Email = model.Email,
+                CreatedOn = System.DateTime.UtcNow,
+                ModifiedOn = System.DateTime.UtcNow
             };
 
             // Create AspNetUser
@@ -138,7 +141,7 @@ namespace Web.Controllers.Api
         {
             throw new System.NotImplementedException("yet");
 
-            var currentUser = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            var currentUser = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
 
             // var aspNetUserId = User.Identity.GetUserId();
             //using (var unitOfWork = new UserUnitOfWork())

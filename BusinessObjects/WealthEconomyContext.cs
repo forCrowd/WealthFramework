@@ -4,7 +4,7 @@
     using System.Data.Entity;
     using System.Data.Entity.ModelConfiguration.Conventions;
 
-    public class WealthEconomyContext : IdentityDbContext<User>
+    public class WealthEconomyContext : IdentityDbContext<User, Role, int, UserLogin, UserRole, UserClaim>
     {
         public WealthEconomyContext()
             : base(nameOrConnectionString: "WealthEconomyContext")
@@ -26,10 +26,10 @@
 
             // Table names
             modelBuilder.Entity<User>().ToTable("User");
-            modelBuilder.Entity<IdentityUserClaim>().ToTable("UserClaim");
-            modelBuilder.Entity<IdentityUserLogin>().ToTable("UserLogin");
-            modelBuilder.Entity<IdentityUserRole>().ToTable("UserRole");
-            modelBuilder.Entity<IdentityRole>().ToTable("Role");
+            modelBuilder.Entity<UserClaim>().ToTable("UserClaim");
+            modelBuilder.Entity<UserLogin>().ToTable("UserLogin");
+            modelBuilder.Entity<UserRole>().ToTable("UserRole");
+            modelBuilder.Entity<Role>().ToTable("Role");
         }
 
         public virtual DbSet<Element> Element { get; set; }

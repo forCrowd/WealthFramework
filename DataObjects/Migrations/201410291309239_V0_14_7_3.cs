@@ -60,9 +60,9 @@ namespace DataObjects.Migrations
                         RowVersion = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.ElementField", t => t.ElementFieldId, cascadeDelete: true)
+                .ForeignKey("dbo.ElementField", t => t.ElementFieldId, cascadeDelete: false)
                 .ForeignKey("dbo.ElementItem", t => t.SelectedElementItemId)
-                .ForeignKey("dbo.ElementItem", t => t.ElementItemId, cascadeDelete: false)
+                .ForeignKey("dbo.ElementItem", t => t.ElementItemId, cascadeDelete: true)
                 .Index(t => new { t.ElementItemId, t.ElementFieldId }, unique: true, name: "IX_ElementCellId")
                 .Index(t => t.SelectedElementItemId);
             
@@ -87,7 +87,7 @@ namespace DataObjects.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        UserId = c.String(maxLength: 128),
+                        UserId = c.Int(nullable: false),
                         ElementCellId = c.Int(nullable: false),
                         Rating = c.Decimal(nullable: false, precision: 18, scale: 2),
                         CreatedOn = c.DateTime(nullable: false),
@@ -97,14 +97,14 @@ namespace DataObjects.Migrations
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.ElementCell", t => t.ElementCellId, cascadeDelete: true)
-                .ForeignKey("dbo.User", t => t.UserId)
+                .ForeignKey("dbo.User", t => t.UserId, cascadeDelete: false)
                 .Index(t => new { t.UserId, t.ElementCellId }, unique: true, name: "IX_UserIdElementCellId");
             
             CreateTable(
                 "dbo.User",
                 c => new
                     {
-                        Id = c.String(nullable: false, maxLength: 128),
+                        Id = c.Int(nullable: false, identity: true),
                         FirstName = c.String(maxLength: 50),
                         MiddleName = c.String(maxLength: 50),
                         LastName = c.String(maxLength: 50),
@@ -133,7 +133,11 @@ namespace DataObjects.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        UserId = c.String(nullable: false, maxLength: 128),
+                        CreatedOn = c.DateTime(nullable: false),
+                        ModifiedOn = c.DateTime(nullable: false),
+                        DeletedOn = c.DateTime(),
+                        RowVersion = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
+                        UserId = c.Int(nullable: false),
                         ClaimType = c.String(),
                         ClaimValue = c.String(),
                     })
@@ -147,7 +151,11 @@ namespace DataObjects.Migrations
                     {
                         LoginProvider = c.String(nullable: false, maxLength: 128),
                         ProviderKey = c.String(nullable: false, maxLength: 128),
-                        UserId = c.String(nullable: false, maxLength: 128),
+                        UserId = c.Int(nullable: false),
+                        CreatedOn = c.DateTime(nullable: false),
+                        ModifiedOn = c.DateTime(nullable: false),
+                        DeletedOn = c.DateTime(),
+                        RowVersion = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
                     })
                 .PrimaryKey(t => new { t.LoginProvider, t.ProviderKey, t.UserId })
                 .ForeignKey("dbo.User", t => t.UserId, cascadeDelete: true)
@@ -157,8 +165,12 @@ namespace DataObjects.Migrations
                 "dbo.UserRole",
                 c => new
                     {
-                        UserId = c.String(nullable: false, maxLength: 128),
-                        RoleId = c.String(nullable: false, maxLength: 128),
+                        UserId = c.Int(nullable: false),
+                        RoleId = c.Int(nullable: false),
+                        CreatedOn = c.DateTime(nullable: false),
+                        ModifiedOn = c.DateTime(nullable: false),
+                        DeletedOn = c.DateTime(),
+                        RowVersion = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
                     })
                 .PrimaryKey(t => new { t.UserId, t.RoleId })
                 .ForeignKey("dbo.User", t => t.UserId, cascadeDelete: true)
@@ -171,7 +183,7 @@ namespace DataObjects.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        UserId = c.String(maxLength: 128),
+                        UserId = c.Int(nullable: false),
                         ResourcePoolId = c.Int(nullable: false),
                         ResourcePoolRate = c.Decimal(nullable: false, precision: 18, scale: 2),
                         CreatedOn = c.DateTime(nullable: false),
@@ -181,7 +193,7 @@ namespace DataObjects.Migrations
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.ResourcePool", t => t.ResourcePoolId, cascadeDelete: true)
-                .ForeignKey("dbo.User", t => t.UserId)
+                .ForeignKey("dbo.User", t => t.UserId, cascadeDelete: false)
                 .Index(t => new { t.UserId, t.ResourcePoolId }, unique: true, name: "IX_UserIdResourcePoolId");
             
             CreateTable(
@@ -243,7 +255,11 @@ namespace DataObjects.Migrations
                 "dbo.Role",
                 c => new
                     {
-                        Id = c.String(nullable: false, maxLength: 128),
+                        Id = c.Int(nullable: false, identity: true),
+                        CreatedOn = c.DateTime(nullable: false),
+                        ModifiedOn = c.DateTime(nullable: false),
+                        DeletedOn = c.DateTime(),
+                        RowVersion = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
                         Name = c.String(nullable: false, maxLength: 256),
                     })
                 .PrimaryKey(t => t.Id)

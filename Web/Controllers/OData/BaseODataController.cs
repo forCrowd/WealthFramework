@@ -20,13 +20,13 @@ namespace Web.Controllers.OData
 
         public AspNetUserManager UserManager { get; private set; }
 
-        internal string AspNetUserId
+        internal int? AspNetUserId
         {
             get
             {
                 if (User == null)
-                    return string.Empty;
-                return User.Identity.GetUserId();
+                    return null;
+                return User.Identity.GetUserId<int>();
             }
         }
 
@@ -39,7 +39,9 @@ namespace Web.Controllers.OData
         {
             get
             {
-                return UserManager.FindById(AspNetUserId);
+                if (AspNetUserId == null)
+                    return null;
+                return UserManager.FindById(AspNetUserId.Value);
 
                 //using (var userUnitOfWork = new UserUnitOfWork())
                 //    return userUnitOfWork.AllLive.Single(user => user.AspNetUserId == AspNetUserId);

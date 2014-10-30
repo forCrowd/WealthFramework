@@ -67,6 +67,10 @@
     <Compile Include="Models\ElementFieldType.cs" />
     <Compile Include="Models\ElementField.cs" />
     <Compile Include="Models\ElementCell.cs" />
+    <Compile Include="Models\UserLogin.cs" />
+    <Compile Include="Models\UserClaim.cs" />
+    <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\UserRole.cs" />
     <Compile Include="Models\UserElementCell.cs" />
     <Compile Include="ViewModels\ElementCell.cs" />
     <Compile Include="ViewModels\ElementItem.cs" />

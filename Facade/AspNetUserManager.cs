@@ -4,12 +4,14 @@
     using DataObjects;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
-using System.Threading.Tasks;
+    using System.Threading.Tasks;
 
-    public class AspNetUserManager : UserManager<User>
+    public class AspNetUserManager : UserManager<User, int>
     {
-        public AspNetUserManager()
-            : base(new AspNetUserStore())
+        public AspNetUserManager() : base(new AspNetUserStore()) { }
+
+        public AspNetUserManager(IUserStore<User, int> store)
+            : base(store)
         {
             // contextx
 
@@ -71,7 +73,7 @@ using System.Threading.Tasks;
 
             //// TODO Samples ...
 
-#endregion
+            #endregion
         }
 
         #endregion
