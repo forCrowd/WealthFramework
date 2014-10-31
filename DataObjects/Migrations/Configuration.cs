@@ -87,7 +87,7 @@ namespace DataObjects.Migrations
 
                 switch (migrationVersion)
                 {
-                    case "V0_14_7_3":
+                    case "V0_14_7":
                         {
                             // Admin
                             var roleStore = new RoleStore(Context);
