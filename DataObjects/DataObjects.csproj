@@ -75,6 +75,8 @@
     <Compile Include="..\SolutionItems\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="RoleStore.cs" />
+    <Compile Include="UserStore.cs" />
     <Compile Include="BaseRepository.cs" />
     <Compile Include="Generated\ElementCellRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>

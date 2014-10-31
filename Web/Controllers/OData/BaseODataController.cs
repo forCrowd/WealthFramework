@@ -13,12 +13,12 @@ namespace Web.Controllers.OData
         {
         }
 
-        public BaseODataController(AspNetUserManager userManager)
+        public BaseODataController(UserManager userManager)
         {
             UserManager = userManager;
         }
 
-        public AspNetUserManager UserManager { get; private set; }
+        public UserManager UserManager { get; private set; }
 
         internal int? AspNetUserId
         {

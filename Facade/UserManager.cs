@@ -6,30 +6,14 @@
     using Microsoft.AspNet.Identity.EntityFramework;
     using System.Threading.Tasks;
 
-    public class AspNetUserManager : UserManager<User, int>
+    public class UserManager : UserManager<User, int>
     {
-        public AspNetUserManager() : base(new AspNetUserStore()) { }
+        public UserManager() : base(new UserStore()) { }
 
-        public AspNetUserManager(IUserStore<User, int> store)
+        public UserManager(IUserStore<User, int> store)
             : base(store)
         {
-            // contextx
-
-            // Store
         }
-
-        //ResourcePoolRepository resourcePoolRepository;
-        //UserResourcePoolRepository userResourcePoolRepository;
-
-        //ResourcePoolRepository ResourcePoolRepository
-        //{
-        //    get { return resourcePoolRepository ?? (resourcePoolRepository = new ResourcePoolRepository(Store. Context)); }
-        //}
-
-        //UserResourcePoolRepository UserResourcePoolRepository
-        //{
-        //    get { return userResourcePoolRepository ?? (userResourcePoolRepository = new UserResourcePoolRepository(Context)); }
-        //}
 
         public Task<IdentityResult> CreateAsync(User user, string password, string sampleUserId)
         {

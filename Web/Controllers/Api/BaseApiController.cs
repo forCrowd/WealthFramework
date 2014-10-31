@@ -13,12 +13,12 @@ namespace Web.Controllers.Api
         {
         }
 
-        public BaseApiController(AspNetUserManager userManager)
+        public BaseApiController(UserManager userManager)
         {
             UserManager = userManager;
         }
 
-        public AspNetUserManager UserManager { get; private set; }
+        public UserManager UserManager { get; private set; }
 
         internal int? AspNetUserId
         {

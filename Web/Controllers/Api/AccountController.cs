@@ -36,13 +36,13 @@ namespace Web.Controllers.Api
         {
         }
 
-        public AccountController(AspNetUserManager userManager)
+        public AccountController(UserManager userManager)
         {
             UserManager = userManager;
         }
 
 
-        public AspNetUserManager UserManager { get; private set; }
+        public UserManager UserManager { get; private set; }
         // public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
         // POST api/Account/ChangePassword

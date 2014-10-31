@@ -5,9 +5,9 @@
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
 
-    public class AspNetRoleManager : RoleManager<IdentityRole>
+    public class RoleManager : RoleManager<IdentityRole>
     {
-        public AspNetRoleManager()
+        public RoleManager()
             : base(new RoleStore<IdentityRole>(new WealthEconomyContext()))
         {
         }

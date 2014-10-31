@@ -3,13 +3,23 @@ namespace DataObjects.Migrations
     using BusinessObjects;
     using DataObjects;
     using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.Identity.EntityFramework;
     using System;
     using System.Collections.Generic;
     using System.Data.Entity.Migrations;
 
     internal sealed class Configuration : DbMigrationsConfiguration<WealthEconomyContext>
     {
+        public Configuration()
+        {
+            Context = new WealthEconomyContext();
+            ContextKey = "DataObjects.WealthEconomyContext";
+
+            AutomaticMigrationsEnabled = false;
+
+            var migrator = new DbMigrator(this);
+            pendingMigrations = migrator.GetPendingMigrations();
+        }
+
         readonly IEnumerable<string> pendingMigrations;
 
         ResourcePoolRepository resourcePoolRepository;
@@ -52,125 +62,121 @@ namespace DataObjects.Migrations
             get { return userResourcePoolIndexRepository ?? (userResourcePoolIndexRepository = new UserResourcePoolIndexRepository(Context)); }
         }
 
-        public Configuration()
+        // TODO how to handle this method properly? It would be nice if it could use managers but they're Facade layer?
+        // It's also not transactional at the moment?
+
+        protected override void Seed(WealthEconomyContext context)
         {
-            AutomaticMigrationsEnabled = false;
-            ContextKey = "DataObjects.WealthEconomyContext";
+            //  This method will be called after migrating to the latest version.
 
-            var migrator = new DbMigrator(this);
-            pendingMigrations = migrator.GetPendingMigrations();
+            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
+            //  to avoid creating duplicate seed data. E.g.
+            //
+            //    context.People.AddOrUpdate(
+            //      p => p.FullName,
+            //      new Person { FullName = "Andrew Peters" },
+            //      new Person { FullName = "Brice Lambson" },
+            //      new Person { FullName = "Rowan Miller" }
+            //    );
+            //
 
-            Context = new WealthEconomyContext();
+            foreach (var migration in pendingMigrations)
+            {
+                // Get the version number
+                var migrationVersion = migration.Substring(migration.IndexOf("_") + 1);
+
+                switch (migrationVersion)
+                {
+                    case "V0_14_7_3":
+                        {
+                            // Admin
+                            var roleStore = new RoleStore(Context);
+                            var roleManager = new RoleManager<Role, int>(roleStore);
+                            var adminRole = new Role("Administrator") { CreatedOn = DateTime.UtcNow, ModifiedOn = DateTime.UtcNow };
+                            var adminRoleResult = roleManager.Create(adminRole);
+
+                            // TODO result error check?
+                            if (adminRoleResult == null)
+                                return;
+
+                            var userStore = new UserStore(Context);
+                            var userManager = new UserManager<User, int>(userStore);
+
+                            var adminUser = new User() { UserName = "admin", Email = "admin", CreatedOn = DateTime.UtcNow, ModifiedOn = DateTime.UtcNow };
+                            var adminUserPassword = DateTime.Now.ToString("yyyyMMdd");
+
+                            // TODO Make this better?
+                            var adminUserResult = userManager.Create(adminUser, adminUserPassword);
+
+                            // TODO result error check?
+                            if (adminUserResult == null)
+                                return;
+
+                            // Console.WriteLine(adminUserResult);
+
+                            var addAdminUserToRoleResult = userManager.AddToRole(adminUser.Id, "Administrator");
+
+                            // TODO result error check?
+                            if (addAdminUserToRoleResult == null)
+                                return;
+
+                            // Sample user
+                            var sampleUser = new User() { UserName = "sample", Email = "sample", CreatedOn = DateTime.UtcNow, ModifiedOn = DateTime.UtcNow };
+                            var sampleUserPassword = DateTime.Now.ToString("yyyyMMdd");
+
+                            // TODO ?!
+                            IdentityResult sampleIdentityUserResult = null;
+                            try
+                            {
+                                sampleIdentityUserResult = userManager.Create(sampleUser, sampleUserPassword);
+                            }
+                            catch (System.Data.Entity.Validation.DbEntityValidationException entityException)
+                            {
+                                var errors = entityException.EntityValidationErrors;
+                                var result = new System.Text.StringBuilder();
+                                foreach (var error in errors)
+                                    foreach (var validationError in error.ValidationErrors)
+                                        result.AppendFormat("\r\n  Entity of type {0} has validation error \"{1}\" for property {2}.\r\n", error.Entry.Entity.GetType().ToString(), validationError.ErrorMessage, validationError.PropertyName);
+                                throw new Exception(result.ToString(), entityException);
+                            }
+
+                            // TODO result error check?
+                            if (sampleIdentityUserResult == null)
+                                return;
+
+                            // Samples
+                            //AddSectorIndexSample(sampleUser);
+                            //AddKnowledgeIndexSample(sampleUser);
+                            //AddTotalCostIndexSample(sampleUser);
+
+                            // TODO Update these with dynamic indexes!
+                            //AddQualityIndexSample(sampleUser);
+                            //AddEmployeeSatisfactionIndexSample(sampleUser);
+                            //AddCustomerSatisfactionIndexSample(sampleUser);
+                            //AddAllInOneSample(sampleUser);
+
+                            // TODO ?!
+                            try
+                            {
+                                Context.SaveChanges();
+                            }
+                            catch (System.Data.Entity.Validation.DbEntityValidationException entityException)
+                            {
+                                var errors = entityException.EntityValidationErrors;
+                                var result = new System.Text.StringBuilder();
+                                foreach (var error in errors)
+                                    foreach (var validationError in error.ValidationErrors)
+                                        result.AppendFormat("\r\n  Entity of type {0} has validation error \"{1}\" for property {2}.\r\n", error.Entry.Entity.GetType().ToString(), validationError.ErrorMessage, validationError.PropertyName);
+                                throw new Exception(result.ToString(), entityException);
+                            }
+
+                            // TODO Handle this Seed operation by raising an event and catching it in Facade layer, so UnitOfWork classes could be used?
+
+                            break;
+                        }
+                }
+            }
         }
-
-        //protected override void Seed(WealthEconomyContext context)
-        //{
-        //    //  This method will be called after migrating to the latest version.
-
-        //    //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-        //    //  to avoid creating duplicate seed data. E.g.
-        //    //
-        //    //    context.People.AddOrUpdate(
-        //    //      p => p.FullName,
-        //    //      new Person { FullName = "Andrew Peters" },
-        //    //      new Person { FullName = "Brice Lambson" },
-        //    //      new Person { FullName = "Rowan Miller" }
-        //    //    );
-        //    //
-
-        //    foreach (var migration in pendingMigrations)
-        //    {
-        //        // Get the version number
-        //        var migrationVersion = migration.Substring(migration.IndexOf("_") + 1);
-
-        //        switch (migrationVersion)
-        //        {
-        //            case "V0_14_7_3":
-        //                {
-        //                    // Admin
-        //                    var roleStore = new RoleStore<IdentityRole>(Context);
-        //                    var roleManager = new RoleManager<IdentityRole>(roleStore);
-        //                    var adminRole = new IdentityRole("Administrator");
-        //                    var adminRoleResult = roleManager.Create(adminRole);
-
-        //                    // TODO result error check?
-        //                    if (adminRoleResult == null)
-        //                        return;
-
-        //                    var userManager = new AspNetUserManager<User>(new UserStore<User>(Context));
-        //                    var adminUser = new User() { UserName = "admin", Email = "admin", CreatedOn = DateTime.UtcNow, ModifiedOn = DateTime.UtcNow };
-        //                    var adminUserPassword = DateTime.Now.ToString("yyyyMMdd");
-
-        //                    // TODO Make this better?
-        //                    var adminUserResult = userManager.Create(adminUser, adminUserPassword);
-
-        //                    // TODO result error check?
-        //                    if (adminUserResult == null)
-        //                        return;
-
-        //                    var addAdminUserToRoleResult = userManager.AddToRole(adminUser.Id, "Administrator");
-
-        //                    // TODO result error check?
-        //                    if (addAdminUserToRoleResult == null)
-        //                        return;
-
-        //                    // Sample user
-        //                    var sampleUser = new User() { UserName = "sample", Email = "sample", CreatedOn = DateTime.UtcNow, ModifiedOn = DateTime.UtcNow };
-        //                    var sampleUserPassword = DateTime.Now.ToString("yyyyMMdd");
-
-        //                    // TODO ?!
-        //                    IdentityResult sampleIdentityUserResult = null;
-        //                    try
-        //                    {
-        //                        sampleIdentityUserResult = userManager.Create(sampleUser, sampleUserPassword);
-        //                    }
-        //                    catch (System.Data.Entity.Validation.DbEntityValidationException entityException)
-        //                    {
-        //                        var errors = entityException.EntityValidationErrors;
-        //                        var result = new System.Text.StringBuilder();
-        //                        foreach (var error in errors)
-        //                            foreach (var validationError in error.ValidationErrors)
-        //                                result.AppendFormat("\r\n  Entity of type {0} has validation error \"{1}\" for property {2}.\r\n", error.Entry.Entity.GetType().ToString(), validationError.ErrorMessage, validationError.PropertyName);
-        //                        throw new Exception(result.ToString(), entityException);
-        //                    }
-
-        //                    // TODO result error check?
-        //                    if (sampleIdentityUserResult == null)
-        //                        return;
-
-        //                    // Samples
-        //                    //AddSectorIndexSample(sampleUser);
-        //                    //AddKnowledgeIndexSample(sampleUser);
-        //                    //AddTotalCostIndexSample(sampleUser);
-
-        //                    // TODO Update these with dynamic indexes!
-        //                    //AddQualityIndexSample(sampleUser);
-        //                    //AddEmployeeSatisfactionIndexSample(sampleUser);
-        //                    //AddCustomerSatisfactionIndexSample(sampleUser);
-        //                    //AddAllInOneSample(sampleUser);
-
-        //                    // TODO ?!
-        //                    try
-        //                    {
-        //                        Context.SaveChanges();
-        //                    }
-        //                    catch (System.Data.Entity.Validation.DbEntityValidationException entityException)
-        //                    {
-        //                        var errors = entityException.EntityValidationErrors;
-        //                        var result = new System.Text.StringBuilder();
-        //                        foreach (var error in errors)
-        //                            foreach (var validationError in error.ValidationErrors)
-        //                                result.AppendFormat("\r\n  Entity of type {0} has validation error \"{1}\" for property {2}.\r\n", error.Entry.Entity.GetType().ToString(), validationError.ErrorMessage, validationError.PropertyName);
-        //                        throw new Exception(result.ToString(), entityException);
-        //                    }
-
-        //                    // TODO Handle this Seed operation by raising an event and catching it in Facade layer, so UnitOfWork classes could be used?
-
-        //                    break;
-        //                }
-        //        }
-        //    }
-        //}
 
         //void AddSectorIndexSample(BusinessObjects.User user)
         //{

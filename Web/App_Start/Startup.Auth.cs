@@ -19,7 +19,7 @@ namespace Web
         {
             PublicClientId = "self";
 
-            UserManagerFactory = () => new AspNetUserManager();
+            UserManagerFactory = () => new UserManager();
 
             OAuthOptions = new OAuthAuthorizationServerOptions
             {
@@ -33,7 +33,7 @@ namespace Web
 
         public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
 
-        public static Func<AspNetUserManager> UserManagerFactory { get; set; }
+        public static Func<UserManager> UserManagerFactory { get; set; }
 
         public static string PublicClientId { get; private set; }
 
