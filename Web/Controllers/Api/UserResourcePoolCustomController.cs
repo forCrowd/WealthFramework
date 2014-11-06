@@ -19,11 +19,12 @@ namespace Web.Controllers.Api
 
         // GET api/UserResourcePoolCustom/GetUserResourcePool/1
         [Route("GetUserResourcePool/{userResourcePoolId:int}")]
-        public UserResourcePool GetUserResourcePool(int userResourcePoolId)
+        public async Task<UserResourcePool> GetUserResourcePool(int userResourcePoolId)
         {
             var unitOfWork = new UserResourcePoolUnitOfWork();
+            var currentUser = await GetCurrentUserAsync();
             var userResourcePool = unitOfWork.AllLiveIncluding(item => item.ResourcePool)
-                .SingleOrDefault(item => item.UserId == ApplicationUser.Id
+                .SingleOrDefault(item => item.UserId == currentUser.Id
                     && item.Id == userResourcePoolId);
             return new UserResourcePool(userResourcePool);
         }

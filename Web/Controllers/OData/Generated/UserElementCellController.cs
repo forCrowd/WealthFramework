@@ -31,10 +31,11 @@ namespace Web.Controllers.OData
 
         // GET odata/UserElementCell
         [Queryable]
-        public virtual IQueryable<UserElementCell> Get()
+        public virtual async Task<IQueryable<UserElementCell>> Get()
         {
 			var list = MainUnitOfWork.AllLive;
-			list = list.Where(item => item.UserId == ApplicationUser.Id);
+            var currentUser = await GetCurrentUserAsync();
+            list = list.Where(item => item.UserId == currentUser.Id);
             return list;
         }
 

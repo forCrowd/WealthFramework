@@ -39,9 +39,10 @@ namespace Web.Controllers.OData
 
         // GET odata/User(5)
         [Queryable]
-        public virtual SingleResult<User> Get([FromODataUri] int key)
+        public virtual Task<SingleResult<User>> Get([FromODataUri] int key)
         {
-            return SingleResult.Create(MainUnitOfWork.AllLive.Where(user => user.Id == key));
+            var users = MainUnitOfWork.AllLive.Where(user => user.Id == key);
+            return Task.FromResult(SingleResult.Create(users));
         }
 
         // PUT odata/User(5)

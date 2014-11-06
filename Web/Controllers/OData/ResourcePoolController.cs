@@ -17,7 +17,8 @@ namespace Web.Controllers.OData
 
             try
             {
-                await MainUnitOfWork.InsertAsync(resourcePool, ApplicationUser.Id);
+                var currentUser = await GetCurrentUserAsync();
+                await MainUnitOfWork.InsertAsync(resourcePool, currentUser.Id);
             }
             catch (DbUpdateException)
             {

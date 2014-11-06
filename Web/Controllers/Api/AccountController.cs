@@ -11,11 +11,12 @@ using System.Web.Http;
 using System.Web.Http.ModelBinding;
 using Web.App_Code;
 using Web.Models;
+using Web.Controllers.Extensions;
 
 namespace Web.Controllers.Api
 {
     [RoutePrefix("api/Account")]
-    public class AccountController : ApiController
+    public class AccountController : BaseApiController
     {
         private const string LocalLoginProvider = "Local";
 
@@ -31,18 +32,18 @@ namespace Web.Controllers.Api
         //    AccessTokenFormat = accessTokenFormat;
         //}
 
-        public AccountController()
-            : this(Startup.UserManagerFactory())
-        {
-        }
+        //public AccountController()
+        //    : this(Startup.UserManagerFactory())
+        //{
+        //}
 
-        public AccountController(UserManager userManager)
-        {
-            UserManager = userManager;
-        }
+        //public AccountController(UserManager userManager)
+        //{
+        //    UserManager = userManager;
+        //}
 
 
-        public UserManager UserManager { get; private set; }
+        //public UserManager UserManager { get; private set; }
         // public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
         // POST api/Account/ChangePassword
@@ -53,7 +54,13 @@ namespace Web.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId<int>(), model.CurrentPassword,
+            var currentUserId = this.GetCurrentUserId();
+
+            // TODO Is this correct result?
+            if (!currentUserId.HasValue)
+                return InternalServerError();
+
+            var result = await UserManager.ChangePasswordAsync(currentUserId.Value, model.CurrentPassword,
                 model.NewPassword);
             var errorResult = GetErrorResult(result);
 
@@ -69,21 +76,12 @@ namespace Web.Controllers.Api
         [Route("UserInfo")]
         public async Task<UserInfoViewModel> GetUserInfo()
         {
-            // var aspNetUserId = User.Identity.GetUserId();
-            //User currentUser;
-            //using (var unitOfWork = new UserUnitOfWork())
-            //    currentUser = unitOfWork.AllLive.Single(user => user.AspNetUserId == aspNetUserId);
-
-            // var appUser = User.Identity.
-
-            var userId = User.Identity.GetUserId<int>();
-            var currentUser = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>()); 
-
+            var currentUser = await GetCurrentUserAsync();
             return new UserInfoViewModel
             {
                 Id = currentUser.Id,
                 Email = currentUser.Email,
-                IsAdmin =  User.IsInRole("Administrator")
+                IsAdmin = this.GetCurrentUserIsAdmin()
             };
         }
 
@@ -103,34 +101,19 @@ namespace Web.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            var aspNetUser = new User
+            var user = new User
             {
                 UserName = model.Email,
-                Email = model.Email,
-                CreatedOn = System.DateTime.UtcNow,
-                ModifiedOn = System.DateTime.UtcNow
+                Email = model.Email
             };
 
-            // Create AspNetUser
-            var result = await UserManager.CreateAsync(aspNetUser, model.Password);
+            var result = await UserManager.CreateAsync(user, model.Password);
             var errorResult = GetErrorResult(result);
 
             if (errorResult != null)
             {
                 return errorResult;
             }
-
-            //// Create the application user in relation with AspNetUser
-            //using (var unitOfWork = new UserUnitOfWork())
-            //{
-            //    var user = new User()
-            //    {
-            //        //AspNetUserId = aspNetUser.Id,
-            //        Email = aspNetUser.UserName,
-            //    };
-
-            //    await unitOfWork.InsertAsync(user, ApplicationSettings.SampleUserId);
-            //}
 
             return Ok();
         }
@@ -139,16 +122,13 @@ namespace Web.Controllers.Api
         [HttpPost]
         public async Task<IHttpActionResult> ResetSampleData()
         {
-            throw new System.NotImplementedException("yet");
+            var currentUserId = this.GetCurrentUserId();
 
-            var currentUser = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
+            // TODO Is this correct result?
+            if (!currentUserId.HasValue)
+                return InternalServerError();
 
-            // var aspNetUserId = User.Identity.GetUserId();
-            //using (var unitOfWork = new UserUnitOfWork())
-            //{
-            //    var currentUser = unitOfWork.AllLive.Single(user => user.AspNetUserId == aspNetUserId);
-            //    await unitOfWork.ResetSampleDataAsync(currentUser.Id, ApplicationSettings.SampleUserId);
-            //}
+            await UserManager.ResetSampleDataAsync(currentUserId.Value);
 
             return Ok();
         }

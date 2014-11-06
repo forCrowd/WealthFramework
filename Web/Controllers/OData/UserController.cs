@@ -6,6 +6,7 @@ namespace Web.Controllers.OData
     using System.Threading.Tasks;
     using System.Web.Http;
     using System.Web.Http.OData;
+    using Web.Controllers.Extensions;
 
     public partial class UserController
     {
@@ -15,25 +16,31 @@ namespace Web.Controllers.OData
             var list = base.Get();
 
             // Only admin can get all
-            if (!IsAdmin)
-                list = list.Where(item => item.Id == AspNetUserId);
+            var userId = this.GetCurrentUserId();
+            var isAdmin = this.GetCurrentUserIsAdmin();
+            if (userId.HasValue && !isAdmin)
+                list = list.Where(item => item.Id == userId.Value);
 
             return list;
         }
 
         // GET odata/User(5)
-        public override SingleResult<User> Get([FromODataUri] int key)
+        public override async Task<SingleResult<User>> Get([FromODataUri] int key)
         {
-            if (key != ApplicationUser.Id && !IsAdmin)
+            var currentUser = await GetCurrentUserAsync();
+            var isAdmin = this.GetCurrentUserIsAdmin();
+            if (key != currentUser.Id && !isAdmin)
                 throw new HttpResponseException(HttpStatusCode.Unauthorized);
 
-            return base.Get(key);
+            return await base.Get(key);
         }
 
         // PUT odata/User(5)
         public override async Task<IHttpActionResult> Put([FromODataUri] int key, User user)
         {
-            if (user.Id != ApplicationUser.Id && !IsAdmin)
+            var currentUser = await GetCurrentUserAsync();
+            var isAdmin = this.GetCurrentUserIsAdmin();
+            if (user.Id != currentUser.Id && !isAdmin)
                 return Unauthorized();
 
             return await base.Put(key, user);

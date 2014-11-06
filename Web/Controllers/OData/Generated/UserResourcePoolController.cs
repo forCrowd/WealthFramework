@@ -31,10 +31,11 @@ namespace Web.Controllers.OData
 
         // GET odata/UserResourcePool
         [Queryable]
-        public virtual IQueryable<UserResourcePool> Get()
+        public virtual async Task<IQueryable<UserResourcePool>> Get()
         {
 			var list = MainUnitOfWork.AllLive;
-			list = list.Where(item => item.UserId == ApplicationUser.Id);
+            var currentUser = await GetCurrentUserAsync();
+            list = list.Where(item => item.UserId == currentUser.Id);
             return list;
         }
 

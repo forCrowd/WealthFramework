@@ -257,6 +257,7 @@
     <Compile Include="Controllers\Api\BaseApiController.cs" />
     <Compile Include="Controllers\Api\Test\ResultsController.cs" />
     <Compile Include="Controllers\Api\UserResourcePoolCustomController.cs" />
+    <Compile Include="Controllers\Extensions\ControllerExtensions.cs" />
     <Compile Include="Controllers\Mvc\HomeController.cs" />
     <Compile Include="Controllers\OData\Generated\ElementCellController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>

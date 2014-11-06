@@ -2,7 +2,9 @@
 using Facade;
 using Microsoft.AspNet.Identity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
+using Web.Controllers.Extensions;
 
 namespace Web.Controllers.Api
 {
@@ -20,32 +22,12 @@ namespace Web.Controllers.Api
 
         public UserManager UserManager { get; private set; }
 
-        internal int? AspNetUserId
+        public async Task<User> GetCurrentUserAsync()
         {
-            get
-            {
-                if (User == null)
-                    return null;
-                return User.Identity.GetUserId<int>();
-            }
-        }
-
-        internal bool IsAdmin
-        {
-            get { return User.IsInRole("Administrator"); }
-        }
-
-        internal User ApplicationUser
-        {
-            get
-            {
-                if (AspNetUserId == null)
-                    return null;
-                return UserManager.FindById(AspNetUserId.Value);
-                
-                //using (var userUnitOfWork = new UserUnitOfWork())
-                //    return userUnitOfWork.AllLive.Single(user => user.AspNetUserId == AspNetUserId);
-            }
+            var userId = this.GetCurrentUserId();
+            if (userId.HasValue)
+                return await UserManager.FindByIdAsync(userId.Value);
+            return null;
         }
     }
 }

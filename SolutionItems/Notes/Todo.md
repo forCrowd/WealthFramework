@@ -28,6 +28,8 @@ currently number of sales is not on user level, but on elementitem level!
 
 ### Technical
 
+* user.issample field? + web.config         <add key="SampleUserId" value="2" />
+* db tables -> [x]set?
 * Merge Asp.Net Identity models with into the context
 * Unit testing for controllers + unitofwork etc.?
 * autofac or ninject or windsor or unity or spring?
@@ -37,6 +39,7 @@ unitofwork taking dbcontext as a parameter in the constructor case? passing an i
 check asp.net identity as a sample  
 * dbcontext -> aanmeldencontext -> resourcepoolmanager?
 * generic dbset to resourcepoolrepository?
+* remove repositories?
 * azure websites?
 * separate web into webclient / webservice
 * cors;  
@@ -70,6 +73,8 @@ or always calculate the total average based on invidiuals percentage? or both?
 * in'not rated organizations' case, it's collecting the tax but not giving it back? - basically how to treat an organization that doesn't have any rating?
 
 ### Technical
+
+* When creating resourcepool is gives tons of errors but then does the operation and says ok in UI?!
 
 * breeze - check save + has + get + reject changes  
 currently they don't work on entity level? - also prepareBatch method?
@@ -211,32 +216,12 @@ public string LanguageID { get; set; }
 
 ### Misc - Unsorted
 
-copysampledata
-resetsampledata
-odata patch?
-deletesampledata
-merge userunitofwork + usermanager
-.tt files reaction?
-remove excluded files
-seed method ?!
+check the latest updates in general
+try to create simple tests, especially for userstore & usermanager!
+
+if these are okay, identity + userunitofwork merge could be finished?
+continue with the next item!
+
 compare the current stuff with update3 templates!
-search for datetime.utcnow
-store vs manager?
-
----
-when creating resourcepool is gives tons of errors but then does the operation and says ok in UI?!
-
----
-User
-IdentityUser
-ApplicationUser
-AspNetUsers
-
-Role
-IdentityRole
-ApplicationRole
-AspNetRoles
-
-AspNetUserLogins
-AspNetUserClaims
-AspNetUserRoles
+odata patch?
+.tt files reaction?

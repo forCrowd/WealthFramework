@@ -6,14 +6,6 @@ namespace BusinessObjects
 
     public class UserRole : IdentityUserRole<int>, IEntity
     {
-        public UserRole()
-        {
-            // TODO To be able handle UserManager.AddToRole() method call in DataObjects.Migrations.Configuration.cs, these properties had to have a initial value
-            // Check it later / SH - 30 Oct. '14
-            CreatedOn = System.DateTime.UtcNow;
-            ModifiedOn = System.DateTime.UtcNow;
-        }
-
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         public System.DateTime CreatedOn { get; set; }

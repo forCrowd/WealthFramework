@@ -62,23 +62,10 @@ namespace DataObjects.Migrations
             get { return userResourcePoolIndexRepository ?? (userResourcePoolIndexRepository = new UserResourcePoolIndexRepository(Context)); }
         }
 
-        // TODO how to handle this method properly? It would be nice if it could use managers but they're Facade layer?
-        // It's also not transactional at the moment?
-
         protected override void Seed(WealthEconomyContext context)
         {
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            // TODO how to handle this method properly? It would be nice if it could use managers but they're in Facade layer?
+            // Also after Identity it's not transactional?
 
             foreach (var migration in pendingMigrations)
             {
@@ -89,30 +76,27 @@ namespace DataObjects.Migrations
                 {
                     case "V0_14_7":
                         {
-                            // Admin
                             var roleStore = new RoleStore(Context);
                             var roleManager = new RoleManager<Role, int>(roleStore);
-                            var adminRole = new Role("Administrator") { CreatedOn = DateTime.UtcNow, ModifiedOn = DateTime.UtcNow };
+                            var userStore = new UserStore(Context);
+                            var userManager = new UserManager<User, int>(userStore);
+
+                            // Admin role
+                            var adminRole = new Role("Administrator");
                             var adminRoleResult = roleManager.Create(adminRole);
 
                             // TODO result error check?
                             if (adminRoleResult == null)
                                 return;
 
-                            var userStore = new UserStore(Context);
-                            var userManager = new UserManager<User, int>(userStore);
-
-                            var adminUser = new User() { UserName = "admin", Email = "admin", CreatedOn = DateTime.UtcNow, ModifiedOn = DateTime.UtcNow };
+                            // Admin user
+                            var adminUser = new User() { UserName = "admin", Email = "admin" };
                             var adminUserPassword = DateTime.Now.ToString("yyyyMMdd");
-
-                            // TODO Make this better?
                             var adminUserResult = userManager.Create(adminUser, adminUserPassword);
 
                             // TODO result error check?
                             if (adminUserResult == null)
                                 return;
-
-                            // Console.WriteLine(adminUserResult);
 
                             var addAdminUserToRoleResult = userManager.AddToRole(adminUser.Id, "Administrator");
 
@@ -121,24 +105,9 @@ namespace DataObjects.Migrations
                                 return;
 
                             // Sample user
-                            var sampleUser = new User() { UserName = "sample", Email = "sample", CreatedOn = DateTime.UtcNow, ModifiedOn = DateTime.UtcNow };
+                            var sampleUser = new User() { UserName = "sample", Email = "sample" };
                             var sampleUserPassword = DateTime.Now.ToString("yyyyMMdd");
-
-                            // TODO ?!
-                            IdentityResult sampleIdentityUserResult = null;
-                            try
-                            {
-                                sampleIdentityUserResult = userManager.Create(sampleUser, sampleUserPassword);
-                            }
-                            catch (System.Data.Entity.Validation.DbEntityValidationException entityException)
-                            {
-                                var errors = entityException.EntityValidationErrors;
-                                var result = new System.Text.StringBuilder();
-                                foreach (var error in errors)
-                                    foreach (var validationError in error.ValidationErrors)
-                                        result.AppendFormat("\r\n  Entity of type {0} has validation error \"{1}\" for property {2}.\r\n", error.Entry.Entity.GetType().ToString(), validationError.ErrorMessage, validationError.PropertyName);
-                                throw new Exception(result.ToString(), entityException);
-                            }
+                            var sampleIdentityUserResult = userManager.Create(sampleUser, sampleUserPassword);
 
                             // TODO result error check?
                             if (sampleIdentityUserResult == null)
@@ -155,20 +124,7 @@ namespace DataObjects.Migrations
                             //AddCustomerSatisfactionIndexSample(sampleUser);
                             //AddAllInOneSample(sampleUser);
 
-                            // TODO ?!
-                            try
-                            {
-                                Context.SaveChanges();
-                            }
-                            catch (System.Data.Entity.Validation.DbEntityValidationException entityException)
-                            {
-                                var errors = entityException.EntityValidationErrors;
-                                var result = new System.Text.StringBuilder();
-                                foreach (var error in errors)
-                                    foreach (var validationError in error.ValidationErrors)
-                                        result.AppendFormat("\r\n  Entity of type {0} has validation error \"{1}\" for property {2}.\r\n", error.Entry.Entity.GetType().ToString(), validationError.ErrorMessage, validationError.PropertyName);
-                                throw new Exception(result.ToString(), entityException);
-                            }
+                            Context.SaveChanges();
 
                             // TODO Handle this Seed operation by raising an event and catching it in Facade layer, so UnitOfWork classes could be used?
 
