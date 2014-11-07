@@ -404,7 +404,6 @@
     </Content>
     <Content Include="App\views\manage\userResourcePool\userResourcePoolCustomList.html" />
     <Content Include="App\views\manage\userResourcePool\userResourcePoolCustomView.html" />
-    <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
