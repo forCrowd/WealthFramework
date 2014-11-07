@@ -1,10 +1,1 @@
-﻿/*
-EntityFramework.dll + EntityFramework.SqlServer.dll files under
-C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE folder
-were replaced with Entity Framework 6.1 versions.
-v0.10.9
-SH - 09 May '14
-*/
-
-
-
+﻿

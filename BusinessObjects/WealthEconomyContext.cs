@@ -22,6 +22,17 @@
         {
         }
 
+        // These definitions are used in generating OData metadata at the moment / SH - 07 Nov '14
+        public virtual DbSet<Element> Element { get; set; }
+        public virtual DbSet<ElementField> ElementField { get; set; }
+        public virtual DbSet<ElementItem> ElementItem { get; set; }
+        public virtual DbSet<ElementCell> ElementCell { get; set; }
+        public virtual DbSet<ResourcePool> ResourcePool { get; set; }
+        public virtual DbSet<ResourcePoolIndex> ResourcePoolIndex { get; set; }
+        public virtual DbSet<UserElementCell> UserElementCell { get; set; }
+        public virtual DbSet<UserResourcePool> UserResourcePool { get; set; }
+        public virtual DbSet<UserResourcePoolIndex> UserResourcePoolIndex { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
