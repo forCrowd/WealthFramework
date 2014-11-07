@@ -16,6 +16,7 @@ An experimental resource management system that aims to provide a sustainable ec
 * Version number fix; 0.14.6.1 -> 0.14.7
 * Exception handling & Elmah
 * IdentityUser & User classes merge
+* Switched to SQL Server 2014 Express LocalDB
 
 **0.14.6**
 
