@@ -22,6 +22,11 @@
         {
         }
 
+        public static WealthEconomyContext Create()
+        {
+            return new WealthEconomyContext();
+        }
+
         // These definitions are used in generating OData metadata at the moment / SH - 07 Nov '14
         public virtual DbSet<Element> Element { get; set; }
         public virtual DbSet<ElementField> ElementField { get; set; }

@@ -214,6 +214,7 @@
     <Compile Include="..\SolutionItems\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\FormatterConfig.cs" />
     <Compile Include="App_Start\DatabaseConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />

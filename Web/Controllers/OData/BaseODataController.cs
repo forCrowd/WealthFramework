@@ -1,8 +1,10 @@
 ﻿using BusinessObjects;
 using Facade;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.OData;
 using Web.Controllers.Extensions;
@@ -11,8 +13,9 @@ namespace Web.Controllers.OData
 {
     public abstract class BaseODataController : ODataController
     {
+        private UserManager _userManager;
+
         public BaseODataController()
-            : this(Startup.UserManagerFactory())
         {
         }
 
@@ -21,37 +24,17 @@ namespace Web.Controllers.OData
             UserManager = userManager;
         }
 
-        public UserManager UserManager { get; private set; }
-
-        //internal int? AspNetUserId
-        //{
-        //    get
-        //    {
-        //        if (base.User == null)
-        //            return null;
-        //        return base.User.Identity.GetUserId<int>();
-        //    }
-        //}
-
-        //internal bool IsAdmin
-        //{
-        //    get { return base.User.IsInRole("Administrator"); }
-        //}
-
-        //internal User ApplicationUser
-        //{
-        //    get
-        //    {
-        //        if (AspNetUserId == null)
-        //            return null;
-        //        return UserManager.FindById(AspNetUserId.Value);
-
-        //        //using (var userUnitOfWork = new UserUnitOfWork())
-        //        //    return userUnitOfWork.AllLive.Single(user => user.AspNetUserId == AspNetUserId);
-
-        //        // return usermana
-        //    }
-        //}
+        public UserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.Current.GetOwinContext().GetUserManager<UserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
 
         public async Task<User> GetCurrentUserAsync()
         {

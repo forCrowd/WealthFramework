@@ -59,6 +59,7 @@ merge user + identityuser tables -> appuser, approle etc.? - Change Primary Key 
 * add multiple fields test
 * check [required] attribute for newer classes?
 * try to convert other batch files to ps scripts as well
+* elmah for glimpse?
 
 ## Long Term
 
@@ -133,7 +134,6 @@ http://msdn.microsoft.com/en-us/library/hh925568%28v=vs.110%29.aspx
 * http://smtp4dev.codeplex.com/
 * request validation -> html agility pack?
 * web.config httpcompression?
-* miniprofiler - is this similar with glimpse?
 * coded ui test or canopy or ..? web iu testers?
 * object level validation IValidatableObject
 * http://www.postsharp.net/aspects#examples
@@ -226,3 +226,20 @@ compare the current stuff with update3 templates!
 usercontrollers don't work?
 odata patch?
 .tt files reaction?
+
+. invalid model state error !
+. getuserinfo fails but no error?
+. account edit doesn't work (probably user edit as well)
+
+Update 3
+. dbcontext.create?
+. usermanager - owin parts?
+
+. only bearer token?
+// Configure Web API to use only bearer token authentication.
+config.SuppressDefaultHostAuthentication();
+config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
+
+sessionStorage?
+
+http://www.asp.net/web-api/overview/security/preventing-cross-site-request-forgery-(csrf)-attacks

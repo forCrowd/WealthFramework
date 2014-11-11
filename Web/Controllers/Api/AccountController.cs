@@ -2,11 +2,16 @@
 using Facade;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using System.Linq;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Web;
+//using System.Web.Mvc;
+// using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
 using Web.App_Code;
@@ -20,31 +25,29 @@ namespace Web.Controllers.Api
     {
         private const string LocalLoginProvider = "Local";
 
-        //public AccountController()
-        //    : this(Startup.UserManagerFactory(), Startup.OAuthOptions.AccessTokenFormat)
-        //{
-        //}
+        public AccountController()
+        {
+        }
 
-        //public AccountController(AspNetUserManager userManager,
-        //    ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
-        //{
-        //    UserManager = userManager;
-        //    AccessTokenFormat = accessTokenFormat;
-        //}
+        public AccountController(ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
+        {
+            AccessTokenFormat = accessTokenFormat;
+        }
 
-        //public AccountController()
-        //    : this(Startup.UserManagerFactory())
-        //{
-        //}
+        public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
-        //public AccountController(UserManager userManager)
-        //{
-        //    UserManager = userManager;
-        //}
-
-
-        //public UserManager UserManager { get; private set; }
-        // public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
+        // GET api/Account/UserInfo
+        [Route("UserInfo")]
+        public async Task<UserInfoViewModel> GetUserInfo()
+        {
+            var currentUser = await GetCurrentUserAsync();
+            return new UserInfoViewModel
+            {
+                Id = currentUser.Id,
+                Email = currentUser.Email,
+                IsAdmin = this.GetCurrentUserIsAdmin()
+            };
+        }
 
         // POST api/Account/ChangePassword
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
@@ -72,23 +75,10 @@ namespace Web.Controllers.Api
             return Ok();
         }
 
-        // GET api/Account/UserInfo
-        [Route("UserInfo")]
-        public async Task<UserInfoViewModel> GetUserInfo()
-        {
-            var currentUser = await GetCurrentUserAsync();
-            return new UserInfoViewModel
-            {
-                Id = currentUser.Id,
-                Email = currentUser.Email,
-                IsAdmin = this.GetCurrentUserIsAdmin()
-            };
-        }
-
         // POST api/Account/Logout
         public IHttpActionResult Logout()
         {
-            Request.GetOwinContext().Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
+            Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
             return Ok();
         }
 
@@ -144,6 +134,11 @@ namespace Web.Controllers.Api
         }
 
         #region Helpers
+
+        private IAuthenticationManager Authentication
+        {
+            get { return Request.GetOwinContext().Authentication; }
+        }
 
         private IHttpActionResult GetErrorResult(IdentityResult result)
         {
