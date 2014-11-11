@@ -5,10 +5,10 @@
     var serviceId = 'userService';
     angular.module('main')
         .config(function ($provide) {
-            $provide.decorator(serviceId, ['$delegate', 'dataContext', '$http', '$q', '$rootScope', 'logger', userService]);
+            $provide.decorator(serviceId, ['$delegate', 'dataContext', '$http', '$q', '$rootScope', '$window', 'logger', userService]);
         });
 
-    function userService($delegate, dataContext, $http, $q, $rootScope, logger) {
+    function userService($delegate, dataContext, $http, $q, $rootScope, $window, logger) {
         logger = logger.forSource(serviceId);
 
         var accessTokenUrl = '/api/Token';
@@ -40,6 +40,28 @@
 
             return $http.post(accessTokenUrl, accessTokenData, { 'Content-Type': 'application/x-www-form-urlencoded' })
                 .success(function (data) {
+
+                    // Set access token to the session
+                    $window.sessionStorage.setItem('access_token', data.access_token);
+
+                    // Web Api authentication
+                    $http.defaults.headers.common.Authorization = 'Bearer ' + data.access_token;
+
+                    //// OData authentication
+                    //var oldClient = OData.defaultHttpClient;
+                    //var myClient = {
+                    //    request: function (request, success, error) {
+                    //        $window.console.log('OData httpclient login');
+                    //        request.headers.Authorization = 'Bearer ' + data.access_token;
+                    //        return oldClient.request(request, success, error);
+                    //    }
+                    //};
+                    //OData.defaultHttpClient = myClient;
+
+                    //$window.console.log('OData httpclient login');
+                    //OData.defaultHttpClient.request.headers.Authorization = 'Bearer ' + data.access_token;
+
+                    // Raise logged in event
                     $rootScope.$broadcast('userLoggedIn');
                     // TODO in case cookies are disabled?
                 })
@@ -70,6 +92,28 @@
         function logout() {
             return $http.post(logoutUrl)
                 .success(function () {
+
+                    // Remove access token from the session
+                    $window.sessionStorage.removeItem('access_token');
+
+                    // Clear Web Api authentication
+                    delete $http.defaults.headers.common.Authorization;
+
+                    // Clear OData authentication
+                    //var oldClient = OData.defaultHttpClient;
+                    //var myClient = {
+                    //    request: function (request, success, error) {
+                    //        $window.console.log('OData httpclient logout');
+                    //        delete request.headers.Authorization;
+                    //        return oldClient.request(request, success, error);
+                    //    }
+                    //};
+                    // OData.defaultHttpClient = myClient;
+
+                    //$window.console.log('OData httpclient logout');
+                    //delete OData.defaultHttpClient.request.Authorization;
+
+                    // Raise logged outevent
                     $rootScope.$broadcast('userLoggedOut');
                 })
                 .error(function (data, status, headers, config) {

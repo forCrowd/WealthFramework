@@ -224,9 +224,8 @@ public string LanguageID { get; set; }
 . dbcontext.create?
 . usermanager - owin parts?
 
-. only bearer token?
-// Configure Web API to use only bearer token authentication.
-config.SuppressDefaultHostAuthentication();
-config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
+$logger error?
+continue with odata bearer!
 
-sessionStorage?
+last attempt seems fine, test it again, then clean it a bit
+breeze localstorage must be cleared as well. also it should not navigate to list/edit pages

@@ -18,6 +18,7 @@ An experimental resource management system that aims to provide a sustainable ec
 * IdentityUser & User classes merge
 * Switched to SQL Server 2014 Express LocalDB
 
+
 **0.14.6**
 
 * Clean-up; Organization and related parts were removed
