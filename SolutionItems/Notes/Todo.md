@@ -216,22 +216,11 @@ public string LanguageID { get; set; }
 
 ### Misc - Unsorted
 
-check the latest updates in general
-try to create simple tests, especially for userstore & usermanager!
-
-if these are okay, identity + userunitofwork merge could be finished?
-continue with the next item!
-
-compare the current stuff with update3 templates!
-usercontrollers don't work?
-odata patch?
-.tt files reaction?
-
+. odata patch?
+. .tt files reaction?
 . invalid model state error !
 . getuserinfo fails but no error?
 . account edit doesn't work (probably user edit as well)
-
-Update 3
 . dbcontext.create?
 . usermanager - owin parts?
 
@@ -241,5 +230,3 @@ config.SuppressDefaultHostAuthentication();
 config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
 sessionStorage?
-
-http://www.asp.net/web-api/overview/security/preventing-cross-site-request-forgery-(csrf)-attacks
