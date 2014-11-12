@@ -44,26 +44,8 @@
                     // Set access token to the session
                     $window.sessionStorage.setItem('access_token', data.access_token);
 
-                    // Web Api authentication
-                    $http.defaults.headers.common.Authorization = 'Bearer ' + data.access_token;
-
-                    //// OData authentication
-                    //var oldClient = OData.defaultHttpClient;
-                    //var myClient = {
-                    //    request: function (request, success, error) {
-                    //        $window.console.log('OData httpclient login');
-                    //        request.headers.Authorization = 'Bearer ' + data.access_token;
-                    //        return oldClient.request(request, success, error);
-                    //    }
-                    //};
-                    //OData.defaultHttpClient = myClient;
-
-                    //$window.console.log('OData httpclient login');
-                    //OData.defaultHttpClient.request.headers.Authorization = 'Bearer ' + data.access_token;
-
                     // Raise logged in event
                     $rootScope.$broadcast('userLoggedIn');
-                    // TODO in case cookies are disabled?
                 })
         }
 
@@ -96,22 +78,11 @@
                     // Remove access token from the session
                     $window.sessionStorage.removeItem('access_token');
 
-                    // Clear Web Api authentication
-                    delete $http.defaults.headers.common.Authorization;
+                    // Clear userInfo
+                    userInfo = null;
 
-                    // Clear OData authentication
-                    //var oldClient = OData.defaultHttpClient;
-                    //var myClient = {
-                    //    request: function (request, success, error) {
-                    //        $window.console.log('OData httpclient logout');
-                    //        delete request.headers.Authorization;
-                    //        return oldClient.request(request, success, error);
-                    //    }
-                    //};
-                    // OData.defaultHttpClient = myClient;
-
-                    //$window.console.log('OData httpclient logout');
-                    //delete OData.defaultHttpClient.request.Authorization;
+                    // Clear breeze's metadata store
+                    dataContext.initializeStore();
 
                     // Raise logged outevent
                     $rootScope.$broadcast('userLoggedOut');

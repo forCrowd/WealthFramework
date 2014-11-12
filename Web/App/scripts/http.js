@@ -2,145 +2,38 @@
     'use strict';
 
     angular.module('main')
-        .run(httpConfig);
+        .run(['$http', '$window', 'logger', httpConfig]);
 
-    //var serviceId = 'httpService';
-    //angular.module('main')
-    //    .factory(serviceId, ['$http', 'logger', httpService]);
-
-    function httpConfig($http, $window) {
-
-        $window.console.log('ng http config');
+    /* Sets Authorization headers of both angular's http and datajs's OData
+     * by checking whether the current session has an access code or not
+     */
+    function httpConfig($http, $window, logger) {
 
         setWebApi();
 
         setOData();
 
-        //// Get the token
-        //var access_token = $window.sessionStorage.getItem('access_token');
-        
-        //// Web Api
-        //if (access_token !== null) {
-        //    $http.defaults.headers.common.Authorization = 'Bearer ' + access_token;
-        //}
+        function setWebApi() {
+            $http.defaults.headers.common.Authorization = getAuthorizationHeader; // Use the function itself
+        }
 
-        //// OData
-        //var oldClient = OData.defaultHttpClient;
-        //var myClient = {
-        //    request: function (request, success, error) {
+        function setOData() {
+            var oldClient = $window.OData.defaultHttpClient;
+            var newClient = {
+                request: function (request, success, error) {
+                    request.headers.Authorization = getAuthorizationHeader(); // Use the function result
+                    return oldClient.request(request, success, error);
+                }
+            };
+            $window.OData.defaultHttpClient = newClient;
+        }
 
-        //        $window.console.log('OData httpclient request begin');
-
-        //        $window.console.log('OData httpclient request access_token: ' + access_token);
-
-        //        if (access_token === null) {
-        //            $window.console.log('OData httpclient request NO');
-        //            delete request.headers.Authorization;
-        //        } else {
-        //            $window.console.log('OData httpclient request YES');
-        //            request.headers.Authorization = 'Bearer ' + access_token;
-        //        }
-
-        //        $window.console.log('OData httpclient request end');
-
-        //        return oldClient.request(request, success, error);
-        //    }
-        //};
-        //OData.defaultHttpClient = myClient;
-
-        //$window.console.log('OData httpclient run');
-        //// OData.defaultHttpClient.request.headers.Authorization = 'Bearer ' + access_token;
-
-    }
-
-    function setWebApi() {
-        // Get the token
-        var access_token = window.sessionStorage.getItem('access_token');
-
-        // Web Api
-        if (access_token !== null) {
-            $http.defaults.headers.common.Authorization = 'Bearer ' + access_token;
+        function getAuthorizationHeader() {
+            var access_token = $window.sessionStorage.getItem('access_token');
+            return access_token !== null
+                ? 'Bearer ' + access_token
+                : 'None'; // TODO Remove the authorization header instead?
         }
     }
-
-    function setOData() {
-
-        // OData
-        var oldClient = OData.defaultHttpClient;
-        var myClient = {
-            request: function (request, success, error) {
-
-                window.console.log('OData httpclient request begin');
-
-                // Get the token
-                var access_token = window.sessionStorage.getItem('access_token');
-
-                window.console.log('OData httpclient request access_token: ' + access_token);
-
-                if (access_token === null) {
-                    window.console.log('OData httpclient request NO');
-                    delete request.headers.Authorization;
-                } else {
-                    window.console.log('OData httpclient request YES');
-                    request.headers.Authorization = 'Bearer ' + access_token;
-                }
-
-                window.console.log('OData httpclient request end');
-
-                return oldClient.request(request, success, error);
-            }
-        };
-
-        OData.defaultHttpClient = myClient;
-
-        window.console.log('OData httpclient run');
-    }
-
-    //function httpService($http, logger) {
-    //    logger = logger.forSource(serviceId);
-
-    //    // Service methods
-    //    var service = {
-    //        setToken: setToken,
-    //        configureHttpClients: configureHttpClients,
-    //        removeToken: removeToken
-    //    };
-
-    //    return service;
-
-    //    /*** Implementations ***/
-
-    //    function setToken(accessToken) {
-
-
-
-    //    }
-
-    //    function configureHttpClients() {
-
-    //        // Web Api token
-    //        var access_token = $window.sessionStorage.getItem('access_token');
-    //        if (access_token !== null) {
-
-    //            $http.defaults.headers.common.Authorization = 'Bearer ' + access_token;
-
-    //            // OData authentication
-    //            var oldClient = OData.defaultHttpClient;
-    //            var myClient = {
-    //                request: function (request, success, error) {
-    //                    $window.console.log('OData httpclient run');
-    //                    request.headers.Authorization = 'Bearer ' + access_token;
-    //                    return oldClient.request(request, success, error);
-    //                }
-    //            };
-    //            OData.defaultHttpClient = myClient;
-
-    //        }
-
-    //        function removeToken() {
-
-    //        }
-    //    }
-    //}
 
 })();

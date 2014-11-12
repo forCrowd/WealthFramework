@@ -3,9 +3,9 @@
 
     var controllerId = 'layoutController';
     angular.module('main')
-        .controller(controllerId, ['mainService', 'userService', '$rootScope', '$location', 'logger', layoutController]);
+        .controller(controllerId, ['mainService', 'userService', '$rootScope', '$location', '$window', 'logger', layoutController]);
 
-    function layoutController(mainService, userService, $rootScope, $location, logger) {
+    function layoutController(mainService, userService, $rootScope, $location, $window, logger) {
         logger = logger.forSource(controllerId);
 
         var vm = this;

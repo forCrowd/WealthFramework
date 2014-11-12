@@ -20,8 +20,9 @@
         var logSuccess = logger.logSuccess;
         var logWarning = logger.logWarning;
 
-        // entityManager
-        var manager = entityManagerFactory.newManager();
+        // Manager
+        var manager = null;
+        initializeStore();
 
         // Service methods
         var service = {
@@ -31,6 +32,7 @@
             getChanges: getChanges,
             getChangesCount: getChangesCount,
             hasChanges: hasChanges,
+            initializeStore: initializeStore,
             rejectChanges: rejectChanges,
             saveChanges: saveChanges
         };
@@ -64,6 +66,10 @@
 
         function hasChanges() {
             return manager.hasChanges();
+        }
+
+        function initializeStore() {
+            manager = entityManagerFactory.newManager();
         }
 
         function metadataReady() {

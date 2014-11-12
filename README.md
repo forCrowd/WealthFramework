@@ -17,7 +17,7 @@ An experimental resource management system that aims to provide a sustainable ec
 * Exception handling & Elmah
 * IdentityUser & User classes merge
 * Switched to SQL Server 2014 Express LocalDB
-
+* Cookie authentication was disabled and bearer token is now the only method
 
 **0.14.6**
 
