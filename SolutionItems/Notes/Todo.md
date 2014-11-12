@@ -216,16 +216,9 @@ public string LanguageID { get; set; }
 
 ### Misc - Unsorted
 
-. odata patch?
 . .tt files reaction?
 . invalid model state error !
 . getuserinfo fails but no error?
 . account edit doesn't work (probably user edit as well)
 . dbcontext.create?
 . usermanager - owin parts?
-
-$logger error?
-continue with odata bearer!
-
-last attempt seems fine, test it again, then clean it a bit
-breeze localstorage must be cleared as well. also it should not navigate to list/edit pages

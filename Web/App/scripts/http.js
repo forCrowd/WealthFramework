@@ -9,8 +9,11 @@
      */
     function httpConfig($http, $window, logger) {
 
-        setWebApi();
+        // Logger
+        logger = logger.forSource('httpConfig');
 
+        // Configure
+        setWebApi();
         setOData();
 
         function setWebApi() {

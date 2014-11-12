@@ -16,9 +16,6 @@
 
         // Logger
         logger = logger.forSource(serviceId);
-        var logError = logger.logError;
-        var logSuccess = logger.logSuccess;
-        var logWarning = logger.logWarning;
 
         // Manager
         var manager = null;
@@ -114,7 +111,7 @@
                     return promise.then(success).catch(failed);
 
                     function success(result) {
-                        logSuccess('Saved ' + count + ' change(s)', result, true);
+                        logger.logSuccess('Saved ' + count + ' change(s)', result, true);
                     }
 
                     function failed(error) {
