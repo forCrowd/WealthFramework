@@ -2,10 +2,14 @@ namespace BusinessObjects
 {
     using BusinessObjects.Attributes;
     using Microsoft.AspNet.Identity.EntityFramework;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
+    [DisplayName("User Login")]
     public class UserLogin : IdentityUserLogin<int>, IEntity
     {
+        public virtual User User { get; set; }
+
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         public System.DateTime CreatedOn { get; set; }

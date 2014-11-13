@@ -8,7 +8,7 @@ namespace Web.Controllers.OData
     using System.Web.Http.OData;
     using Web.Controllers.Extensions;
 
-    public partial class UserController
+    public partial class UsersController
     {
         // GET odata/User
         public override IQueryable<User> Get()
@@ -24,15 +24,25 @@ namespace Web.Controllers.OData
             return list;
         }
 
-        // GET odata/User(5)
-        public override async Task<SingleResult<User>> Get([FromODataUri] int key)
+        //// GET odata/User(5)
+        //[EnableQuery]
+        //public override async SingleResult<User> Get([FromODataUri] int key)
+        //{
+        //    var currentUser = await GetCurrentUserAsync();
+        //    var isAdmin = this.GetCurrentUserIsAdmin();
+        //    if (key != currentUser.Id && !isAdmin)
+        //        throw new HttpResponseException(HttpStatusCode.Unauthorized);
+
+        //    return base.Get(key);
+        //}
+
+        public new async Task<SingleResult<User>> Get(int key)
         {
             var currentUser = await GetCurrentUserAsync();
             var isAdmin = this.GetCurrentUserIsAdmin();
             if (key != currentUser.Id && !isAdmin)
                 throw new HttpResponseException(HttpStatusCode.Unauthorized);
-
-            return await base.Get(key);
+            return base.Get(key);
         }
 
         // PUT odata/User(5)

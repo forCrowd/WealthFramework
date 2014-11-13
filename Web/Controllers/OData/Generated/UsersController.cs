@@ -20,9 +20,9 @@ namespace Web.Controllers.OData
     using System.Web.Http.ModelBinding;
     using System.Web.Http.OData;
 
-    public abstract class BaseUserController : BaseODataController
+    public abstract class BaseUsersController : BaseODataController
     {
-        public BaseUserController()
+        public BaseUsersController()
 		{
 			MainUnitOfWork = new UserUnitOfWork();		
 		}
@@ -30,7 +30,7 @@ namespace Web.Controllers.OData
 		protected UserUnitOfWork MainUnitOfWork { get; private set; }
 
         // GET odata/User
-        [Queryable]
+        //[Queryable]
         public virtual IQueryable<User> Get()
         {
 			var list = MainUnitOfWork.AllLive;
@@ -38,11 +38,10 @@ namespace Web.Controllers.OData
         }
 
         // GET odata/User(5)
-        [Queryable]
-        public virtual Task<SingleResult<User>> Get([FromODataUri] int key)
+        //[Queryable]
+        public virtual SingleResult<User> Get([FromODataUri] int key)
         {
-            var users = MainUnitOfWork.AllLive.Where(user => user.Id == key);
-            return Task.FromResult(SingleResult.Create(users));
+            return SingleResult.Create(MainUnitOfWork.AllLive.Where(user => user.Id == key));
         }
 
         // PUT odata/User(5)
@@ -146,7 +145,7 @@ namespace Web.Controllers.OData
         }
     }
 
-    public partial class UserController : BaseUserController
+    public partial class UsersController : BaseUsersController
     {
 	}
 }

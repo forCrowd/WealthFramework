@@ -45,13 +45,25 @@ SH - 09 May '14
     <script src="/App/scripts/controllers/manage/list/resourcePoolIndexListController.js"></script>\
     <script src="/App/scripts/controllers/manage/edit/resourcePoolIndexEditController.js"></script>\
 	\
+    <script src="/App/scripts/services/generated/roleService.js"></script>\
+    <script src="/App/scripts/controllers/manage/list/roleListController.js"></script>\
+    <script src="/App/scripts/controllers/manage/edit/roleEditController.js"></script>\
+	\
     <script src="/App/scripts/services/generated/userService.js"></script>\
     <script src="/App/scripts/controllers/manage/list/userListController.js"></script>\
     <script src="/App/scripts/controllers/manage/edit/userEditController.js"></script>\
 	\
+    <script src="/App/scripts/services/generated/userClaimService.js"></script>\
+    <script src="/App/scripts/controllers/manage/list/userClaimListController.js"></script>\
+    <script src="/App/scripts/controllers/manage/edit/userClaimEditController.js"></script>\
+	\
     <script src="/App/scripts/services/generated/userElementCellService.js"></script>\
     <script src="/App/scripts/controllers/manage/list/userElementCellListController.js"></script>\
     <script src="/App/scripts/controllers/manage/edit/userElementCellEditController.js"></script>\
+	\
+    <script src="/App/scripts/services/generated/userLoginService.js"></script>\
+    <script src="/App/scripts/controllers/manage/list/userLoginListController.js"></script>\
+    <script src="/App/scripts/controllers/manage/edit/userLoginEditController.js"></script>\
 	\
     <script src="/App/scripts/services/generated/userResourcePoolService.js"></script>\
     <script src="/App/scripts/controllers/manage/list/userResourcePoolListController.js"></script>\
@@ -60,6 +72,10 @@ SH - 09 May '14
     <script src="/App/scripts/services/generated/userResourcePoolIndexService.js"></script>\
     <script src="/App/scripts/controllers/manage/list/userResourcePoolIndexListController.js"></script>\
     <script src="/App/scripts/controllers/manage/edit/userResourcePoolIndexEditController.js"></script>\
+	\
+    <script src="/App/scripts/services/generated/userRoleService.js"></script>\
+    <script src="/App/scripts/controllers/manage/list/userRoleListController.js"></script>\
+    <script src="/App/scripts/controllers/manage/edit/userRoleEditController.js"></script>\
 	\
 \
 ');

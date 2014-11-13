@@ -17,10 +17,7 @@ namespace Web
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
-            // This is already on?
-            //config.EnableQuerySupport();
-
-            // Web API routes
+            // Routes
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
@@ -29,9 +26,11 @@ namespace Web
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            var edm = Facade.Utility.GetWealthEconomyContextEdm();
+            // OData
 
-            // OData routes
+            // Query support
+            //config.EnableQuerySupport();
+            config.AddODataQueryFilter();
 
             //config.Routes.MapODataRoute(
             //    routeName: "ODataRoute",
@@ -39,6 +38,8 @@ namespace Web
             //    model: edm,
             //    batchHandler: new BatchHandler(GlobalConfiguration.DefaultServer));
 
+            // Routes
+            var edm = Facade.Utility.GetWealthEconomyContextEdm();
             config.Routes.MapODataServiceRoute(
                 routeName: "ODataRoute",
                 routePrefix: "odata",
@@ -50,7 +51,6 @@ namespace Web
 
             // Exception handler
             config.Services.Replace(typeof(IExceptionHandler), new GenericExceptionHandler());
-
         }
     }
 

@@ -7,7 +7,7 @@ namespace BusinessObjects
     using System.ComponentModel.DataAnnotations;
     using System.Threading.Tasks;
 
-    // [BusinessObjects.Attributes.DefaultProperty("Email")]
+    [BusinessObjects.Attributes.DefaultProperty("Email")]
     public class User : IdentityUser<int, UserLogin, UserRole, UserClaim>, IEntity
     {
         public User()

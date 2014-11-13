@@ -115,7 +115,7 @@
                     }
 
                     function failed(error) {
-                        if (error.status === '409') {
+                        if (error.status  !== 'undefined' && error.status === '409') {
                             logger.logError('Save failed!<br />The record you attempted to edit was modified by another user after you got the original value. The edit operation was canceled.', null, true);
                         } else {
                             logger.logError('Save failed!', error, true);

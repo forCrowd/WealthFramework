@@ -16,7 +16,7 @@
     <table class="table">
         <tr>
             <th>
-                Email
+                Id
             </th>
             <th>
                 First Name
@@ -27,11 +27,44 @@
             <th>
                 Last Name
             </th>
+            <th>
+                Email
+            </th>
+            <th>
+                EmailConfirmed
+            </th>
+            <th>
+                PasswordHash
+            </th>
+            <th>
+                SecurityStamp
+            </th>
+            <th>
+                PhoneNumber
+            </th>
+            <th>
+                PhoneNumberConfirmed
+            </th>
+            <th>
+                TwoFactorEnabled
+            </th>
+            <th>
+                LockoutEndDateUtc
+            </th>
+            <th>
+                LockoutEnabled
+            </th>
+            <th>
+                AccessFailedCount
+            </th>
+            <th>
+                UserName
+            </th>
             <th></th>
         </tr>
         <tr data-ng-repeat="user in vm.userSet">
             <td>
-                {{ user.Email }}
+                {{ user.Id }}
             </td>
             <td>
                 {{ user.FirstName }}
@@ -41,6 +74,39 @@
             </td>
             <td>
                 {{ user.LastName }}
+            </td>
+            <td>
+                {{ user.Email }}
+            </td>
+            <td>
+                {{ user.EmailConfirmed }}
+            </td>
+            <td>
+                {{ user.PasswordHash }}
+            </td>
+            <td>
+                {{ user.SecurityStamp }}
+            </td>
+            <td>
+                {{ user.PhoneNumber }}
+            </td>
+            <td>
+                {{ user.PhoneNumberConfirmed }}
+            </td>
+            <td>
+                {{ user.TwoFactorEnabled }}
+            </td>
+            <td>
+                {{ user.LockoutEndDateUtc }}
+            </td>
+            <td>
+                {{ user.LockoutEnabled }}
+            </td>
+            <td>
+                {{ user.AccessFailedCount }}
+            </td>
+            <td>
+                {{ user.UserName }}
             </td>
             <td>
                 <a href="/manage/user/edit/{{ user.Id }}">Edit</a> |

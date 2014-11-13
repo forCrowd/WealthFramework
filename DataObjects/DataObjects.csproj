@@ -76,6 +76,18 @@
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Extensions\DbSetExtensions.cs" />
+    <Compile Include="Generated\RoleRepository.cs">
+      <DependentUpon>Repository.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\UserClaimRepository.cs">
+      <DependentUpon>Repository.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\UserLoginRepository.cs">
+      <DependentUpon>Repository.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\UserRoleRepository.cs">
+      <DependentUpon>Repository.tt</DependentUpon>
+    </Compile>
     <Compile Include="RoleStore.cs" />
     <Compile Include="UserStore.cs" />
     <Compile Include="BaseRepository.cs" />

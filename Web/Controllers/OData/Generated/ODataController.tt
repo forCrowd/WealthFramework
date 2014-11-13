@@ -3,7 +3,7 @@
 <#@ output extension=".txt"#><#
 
 // To be able to control whether it's going to be executed
-var executeMe = false;
+var executeMe = true;
 if (!executeMe)
 	return string.Empty;
 
@@ -19,22 +19,21 @@ var edmMetadataLoader = new EdmMetadataLoader(textTransform.Host, textTransform.
 IEnumerable<GlobalItem> itemCollection;
 using (var db = new WealthEconomyContext(connectionString))
 	itemCollection = edmMetadataLoader.CreateEdmItemCollection(db);
+var container = itemCollection.OfType<EntityContainer>().FirstOrDefault();
 
 if (!typeMapper.VerifyCaseInsensitiveTypeUniqueness(typeMapper.GetAllGlobalItems(itemCollection), connectionString))
 {
     return string.Empty;
 }
 
-foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollection))
+foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
 {
 	// Variables
+	var entitySetName = entitySet.Name;
+	var entityType = entitySet.ElementType;
 	var entityTypeName = typeMapper.GetTypeName(entityType);
-
-	if (entityTypeName.StartsWith("Identity"))
-		continue;
-
 	var entityVariable = codeStringGenerator.GetCamelCase(entityTypeName);
-	var controllerName = string.Format("{0}Controller", entityTypeName);
+	var controllerName = string.Format("{0}Controller", entitySetName);
 	var baseControllerName = string.Format("Base{0}", controllerName);
     var unitOfWorkName = string.Format("{0}UnitOfWork", entityTypeName);	
 	var primaryKey = entityType.KeyMembers[0];
@@ -63,6 +62,9 @@ namespace Web.Controllers.OData
     using System.Web.Http;
     using System.Web.Http.ModelBinding;
     using System.Web.Http.OData;
+<# if (hasUserId) { #>
+    using Web.Controllers.Extensions;
+<# } #>
 
 <# if (authorizationAttribute != null) { #>
     [Authorize(Roles="<#= authorizationAttribute.Value #>")]
@@ -77,18 +79,24 @@ namespace Web.Controllers.OData
 		protected <#= unitOfWorkName #> MainUnitOfWork { get; private set; }
 
         // GET <#= routePrefix #>
-        [Queryable]
+        //[Queryable]
         public virtual IQueryable<<#= entityTypeName #>> Get()
         {
+<# if (hasUserId) { #>
+			var userId = this.GetCurrentUserId();
+			if (!userId.HasValue)
+                throw new HttpResponseException(HttpStatusCode.Unauthorized);	
+
+<# } #>
 			var list = MainUnitOfWork.AllLive;
 <# if (hasUserId) { #>
-			list = list.Where(item => item.UserId == ApplicationUser.Id);
+			list = list.Where(item => item.UserId == userId.Value);
 <# } #>
             return list;
         }
 
         // GET <#= routePrefix #>(5)
-        [Queryable]
+        //[Queryable]
         public virtual SingleResult<<#= entityTypeName #>> Get([FromODataUri] <#= primaryKeyShortTypeName #> key)
         {
             return SingleResult.Create(MainUnitOfWork.AllLive.Where(<#= entityVariable #> => <#= entityVariable #>.<#= primaryKey #> == key));

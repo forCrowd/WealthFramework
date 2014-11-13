@@ -18,6 +18,9 @@ An experimental resource management system that aims to provide a sustainable ec
 * IdentityUser & User classes merge
 * Switched to SQL Server 2014 Express LocalDB
 * Cookie authentication was disabled and bearer token is now the only method
+* tt files were updated with Identity
+* ValidationErrors on client-side
+* Mvc general & 404 error handling
 
 **0.14.6**
 

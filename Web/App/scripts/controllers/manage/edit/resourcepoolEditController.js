@@ -31,6 +31,7 @@
         var vm = this;
         vm.cancelChanges = cancelChanges;
         vm.isSaveDisabled = isSaveDisabled;
+        vm.entityErrors = [];
         vm.resourcePool = null;
         vm.saveChanges = saveChanges;
         vm.hasChanges = hasChanges;
@@ -93,8 +94,10 @@
                 })
                 .catch(function (error) {
                     // Conflict (Concurrency exception)
-                    if (error.status === '409') {
+                    if (error.status !== 'undefined' && error.status === '409') {
                         // TODO Try to recover!
+                    } else if (error.entityErrors !== 'undefined') {
+                        vm.entityErrors = error.entityErrors;
                     }
                 })
                 .finally(function () {

@@ -259,6 +259,7 @@
     <Compile Include="Controllers\Api\Test\ResultsController.cs" />
     <Compile Include="Controllers\Api\UserResourcePoolCustomController.cs" />
     <Compile Include="Controllers\Extensions\ControllerExtensions.cs" />
+    <Compile Include="Controllers\Mvc\ErrorController.cs" />
     <Compile Include="Controllers\Mvc\HomeController.cs" />
     <Compile Include="Controllers\OData\Generated\ElementCellController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
@@ -278,10 +279,16 @@
     <Compile Include="Controllers\OData\Generated\ResourcePoolIndexController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\OData\Generated\UserController.cs">
+    <Compile Include="Controllers\OData\Generated\RolesController.cs">
+      <DependentUpon>ODataController.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\OData\Generated\UserClaimsController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\OData\Generated\UserElementCellController.cs">
+      <DependentUpon>ODataController.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\OData\Generated\UserLoginsController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\OData\Generated\UserResourcePoolController.cs">
@@ -291,6 +298,12 @@
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\OData\BaseODataController.cs" />
+    <Compile Include="Controllers\OData\Generated\UserRolesController.cs">
+      <DependentUpon>ODataController.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\OData\Generated\UsersController.cs">
+      <DependentUpon>ODataController.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\OData\ResourcePoolController.cs" />
     <Compile Include="Controllers\OData\UserController.cs" />
     <Compile Include="Controllers\OData\UserResourcePoolController.cs" />
@@ -319,7 +332,19 @@
     <Content Include="App\scripts\controllers\manage\edit\elementItemEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
+    <Content Include="App\scripts\controllers\manage\edit\roleEditController.js">
+      <DependentUpon>editController.tt</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\controllers\manage\edit\userClaimEditController.js">
+      <DependentUpon>editController.tt</DependentUpon>
+    </Content>
     <Content Include="App\scripts\controllers\manage\edit\userElementCellEditController.js">
+      <DependentUpon>editController.tt</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\controllers\manage\edit\userLoginEditController.js">
+      <DependentUpon>editController.tt</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\controllers\manage\edit\userRoleEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
     <Content Include="App\scripts\controllers\manage\list\elementCellListController.js">
@@ -334,10 +359,22 @@
     <Content Include="App\scripts\controllers\manage\list\elementListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
+    <Content Include="App\scripts\controllers\manage\list\roleListController.js">
+      <DependentUpon>listController.tt</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\controllers\manage\list\userClaimListController.js">
+      <DependentUpon>listController.tt</DependentUpon>
+    </Content>
     <Content Include="App\scripts\controllers\manage\list\userElementCellListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
+    <Content Include="App\scripts\controllers\manage\list\userLoginListController.js">
+      <DependentUpon>listController.tt</DependentUpon>
+    </Content>
     <Content Include="App\scripts\controllers\manage\list\userResourcePoolListController.js">
+      <DependentUpon>listController.tt</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\controllers\manage\list\userRoleListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
     <Content Include="App\scripts\controllers\manage\userResourcePool\userResourcePoolCustomViewController.js" />
@@ -365,7 +402,19 @@
     <Content Include="App\scripts\services\generated\elementService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
+    <Content Include="App\scripts\services\generated\roleService.js">
+      <DependentUpon>service.tt</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\services\generated\userClaimService.js">
+      <DependentUpon>service.tt</DependentUpon>
+    </Content>
     <Content Include="App\scripts\services\generated\userElementCellService.js">
+      <DependentUpon>service.tt</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\services\generated\userLoginService.js">
+      <DependentUpon>service.tt</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\services\generated\userRoleService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
     <Content Include="App\views\content\home.html" />
@@ -383,7 +432,19 @@
     <Content Include="App\views\manage\edit\elementItemEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
+    <Content Include="App\views\manage\edit\roleEdit.html">
+      <DependentUpon>editView.tt</DependentUpon>
+    </Content>
+    <Content Include="App\views\manage\edit\userClaimEdit.html">
+      <DependentUpon>editView.tt</DependentUpon>
+    </Content>
     <Content Include="App\views\manage\edit\userElementCellEdit.html">
+      <DependentUpon>editView.tt</DependentUpon>
+    </Content>
+    <Content Include="App\views\manage\edit\userLoginEdit.html">
+      <DependentUpon>editView.tt</DependentUpon>
+    </Content>
+    <Content Include="App\views\manage\edit\userRoleEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
     <Content Include="App\views\manage\list\elementCellList.html">
@@ -398,10 +459,22 @@
     <Content Include="App\views\manage\list\elementList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
+    <Content Include="App\views\manage\list\roleList.html">
+      <DependentUpon>listView.tt</DependentUpon>
+    </Content>
+    <Content Include="App\views\manage\list\userClaimList.html">
+      <DependentUpon>listView.tt</DependentUpon>
+    </Content>
     <Content Include="App\views\manage\list\userElementCellList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
+    <Content Include="App\views\manage\list\userLoginList.html">
+      <DependentUpon>listView.tt</DependentUpon>
+    </Content>
     <Content Include="App\views\manage\list\userResourcePoolList.html">
+      <DependentUpon>listView.tt</DependentUpon>
+    </Content>
+    <Content Include="App\views\manage\list\userRoleList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
     <Content Include="App\views\manage\userResourcePool\userResourcePoolCustomList.html" />
@@ -641,6 +714,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
     <Content Include="Scripts\toastr.min.js.map" />
+    <Content Include="Views\Shared\NotFound.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>

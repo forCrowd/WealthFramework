@@ -39,7 +39,7 @@
         /*** Implementations ***/
 
         function createUser(user) {
-            dataContext.createEntity('User', user);
+            dataContext.createEntity('Users', user);
         }
 
         function deleteUser(user) {
@@ -65,7 +65,7 @@
             }
 
             var query = breeze.EntityQuery
-				.from('User')
+				.from('Users')
             ;
 
             // Fetch the data from server, in case if it's not fetched earlier or forced

@@ -30,7 +30,7 @@ namespace Web.Controllers.OData
 		protected ElementItemUnitOfWork MainUnitOfWork { get; private set; }
 
         // GET odata/ElementItem
-        [Queryable]
+        //[Queryable]
         public virtual IQueryable<ElementItem> Get()
         {
 			var list = MainUnitOfWork.AllLive;
@@ -38,7 +38,7 @@ namespace Web.Controllers.OData
         }
 
         // GET odata/ElementItem(5)
-        [Queryable]
+        //[Queryable]
         public virtual SingleResult<ElementItem> Get([FromODataUri] int key)
         {
             return SingleResult.Create(MainUnitOfWork.AllLive.Where(elementItem => elementItem.Id == key));

@@ -19,6 +19,7 @@ namespace Web.Controllers.OData
     using System.Web.Http;
     using System.Web.Http.ModelBinding;
     using System.Web.Http.OData;
+    using Web.Controllers.Extensions;
 
     public abstract class BaseUserResourcePoolController : BaseODataController
     {
@@ -30,17 +31,20 @@ namespace Web.Controllers.OData
 		protected UserResourcePoolUnitOfWork MainUnitOfWork { get; private set; }
 
         // GET odata/UserResourcePool
-        [Queryable]
-        public virtual async Task<IQueryable<UserResourcePool>> Get()
+        //[Queryable]
+        public virtual IQueryable<UserResourcePool> Get()
         {
+			var userId = this.GetCurrentUserId();
+			if (!userId.HasValue)
+                throw new HttpResponseException(HttpStatusCode.Unauthorized);	
+
 			var list = MainUnitOfWork.AllLive;
-            var currentUser = await GetCurrentUserAsync();
-            list = list.Where(item => item.UserId == currentUser.Id);
+			list = list.Where(item => item.UserId == userId.Value);
             return list;
         }
 
         // GET odata/UserResourcePool(5)
-        [Queryable]
+        //[Queryable]
         public virtual SingleResult<UserResourcePool> Get([FromODataUri] int key)
         {
             return SingleResult.Create(MainUnitOfWork.AllLive.Where(userResourcePool => userResourcePool.Id == key));

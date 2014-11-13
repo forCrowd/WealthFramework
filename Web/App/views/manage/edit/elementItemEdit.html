@@ -12,8 +12,15 @@
     <h2>Edit</h2>
     <form name="editForm">
         <div class="form-horizontal">
-            <h4>ElementItem</h4>
+            <h4>Element Item</h4>
             <hr />
+            <div class="form-group has-error" data-ng-show="vm.entityErrors">
+                <ul>
+                    <li data-ng-repeat="error in vm.entityErrors">
+                        <label class="control-label">{{ error.errorMessage }}</label>
+                    </li>
+                </ul>
+            </div>
             <div class="form-group">
                 <label for="Name" class="control-label col-md-2">Element Item</label>
                 <div class="col-md-10" data-ng-class="{'has-error': editForm.Name.$invalid && !editForm.Name.$pristine}">

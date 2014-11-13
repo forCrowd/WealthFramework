@@ -3,7 +3,7 @@
 <#@ output extension=".txt"#><#
 
 // To be able to control whether it's going to be executed
-var executeMe = false;
+var executeMe = true;
 if (!executeMe)
 	return string.Empty;
 
@@ -29,10 +29,6 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 {
 	// Variables
 	var entityTypeName = typeMapper.GetTypeName(entityType);
-
-	if (entityTypeName.StartsWith("Identity"))
-		continue;
-
 	var entityVariable = codeStringGenerator.GetCamelCase(entityTypeName);
 	var entitySetName = string.Format("{0}Set", entityVariable);
 	var controllerId = string.Format("{0}EditController", entityVariable);
@@ -94,6 +90,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 <# } #>
         vm.cancelChanges = cancelChanges;
         vm.isSaveDisabled = isSaveDisabled;
+        vm.entityErrors = [];
         vm.<#= entityVariable #> = null;
         vm.saveChanges = saveChanges;
         vm.hasChanges = hasChanges;
@@ -170,8 +167,10 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
                 })
                 .catch(function (error) {
                     // Conflict (Concurrency exception)
-                    if (error.status === '409') {
+                    if (error.status !== 'undefined' && error.status === '409') {
                         // TODO Try to recover!
+                    } else if (error.entityErrors !== 'undefined') {
+                        vm.entityErrors = error.entityErrors;
                     }
                 })
                 .finally(function () {

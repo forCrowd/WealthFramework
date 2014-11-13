@@ -30,7 +30,7 @@ namespace Web.Controllers.OData
 		protected ResourcePoolUnitOfWork MainUnitOfWork { get; private set; }
 
         // GET odata/ResourcePool
-        [Queryable]
+        //[Queryable]
         public virtual IQueryable<ResourcePool> Get()
         {
 			var list = MainUnitOfWork.AllLive;
@@ -38,7 +38,7 @@ namespace Web.Controllers.OData
         }
 
         // GET odata/ResourcePool(5)
-        [Queryable]
+        //[Queryable]
         public virtual SingleResult<ResourcePool> Get([FromODataUri] int key)
         {
             return SingleResult.Create(MainUnitOfWork.AllLive.Where(resourcePool => resourcePool.Id == key));

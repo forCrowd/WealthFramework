@@ -30,7 +30,7 @@ namespace Web.Controllers.OData
 		protected UserResourcePoolIndexUnitOfWork MainUnitOfWork { get; private set; }
 
         // GET odata/UserResourcePoolIndex
-        [Queryable]
+        //[Queryable]
         public virtual IQueryable<UserResourcePoolIndex> Get()
         {
 			var list = MainUnitOfWork.AllLive;
@@ -38,7 +38,7 @@ namespace Web.Controllers.OData
         }
 
         // GET odata/UserResourcePoolIndex(5)
-        [Queryable]
+        //[Queryable]
         public virtual SingleResult<UserResourcePoolIndex> Get([FromODataUri] int key)
         {
             return SingleResult.Create(MainUnitOfWork.AllLive.Where(userResourcePoolIndex => userResourcePoolIndex.Id == key));

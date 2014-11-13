@@ -3,7 +3,7 @@
 <#@ output extension=".txt"#><#
 
 // To be able to control whether it's going to be executed
-var executeMe = false;
+var executeMe = true;
 if (!executeMe)
 	return string.Empty;
 
@@ -19,20 +19,19 @@ var edmMetadataLoader = new EdmMetadataLoader(textTransform.Host, textTransform.
 IEnumerable<GlobalItem> itemCollection;
 using (var db = new WealthEconomyContext(connectionString))
 	itemCollection = edmMetadataLoader.CreateEdmItemCollection(db);
+var container = itemCollection.OfType<EntityContainer>().FirstOrDefault();
 
 if (!typeMapper.VerifyCaseInsensitiveTypeUniqueness(typeMapper.GetAllGlobalItems(itemCollection), connectionString))
 {
     return string.Empty;
 }
 
-foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollection))
+foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
 {
 	// Variables
+	var entitySetName = entitySet.Name;
+	var entityType = entitySet.ElementType;
 	var entityTypeName = typeMapper.GetTypeName(entityType);
-
-	if (entityTypeName.StartsWith("Identity"))
-		continue;
-
 	var entityVariable = codeStringGenerator.GetCamelCase(entityTypeName);
 	var serviceId = string.Format("{0}Service", entityVariable);
 	var primaryKey = entityType.KeyMembers[0];
@@ -77,7 +76,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
         /*** Implementations ***/
 
         function create<#= entityTypeName #>(<#= entityVariable #>) {
-            dataContext.createEntity('<#= entityTypeName #>', <#= entityVariable #>);
+            dataContext.createEntity('<#= entitySetName #>', <#= entityVariable #>);
         }
 
         function delete<#= entityTypeName #>(<#= entityVariable #>) {
@@ -103,7 +102,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
             }
 
             var query = breeze.EntityQuery
-				.from('<#= entityTypeName #>')
+				.from('<#= entitySetName #>')
 <# if (relatedProperties.Any()) {
 	var expandQueryJoin = String.Join(", ", relatedProperties.Select(property => string.Format("'{0}'", property.Name)));
 	var expandQuery = string.Format(".expand([{0}])", expandQueryJoin); #>

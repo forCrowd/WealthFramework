@@ -30,7 +30,6 @@ currently number of sales is not on user level, but on elementitem level!
 
 * user.issample field? + web.config         <add key="SampleUserId" value="2" />
 * db tables -> [x]set?
-* Merge Asp.Net Identity models with into the context
 * Unit testing for controllers + unitofwork etc.?
 * autofac or ninject or windsor or unity or spring?
 check the websites  
@@ -49,17 +48,14 @@ http://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-w
 * javascript logging; http://jsnlog.com/
 * automapper?
 * highcharts library loading perf?
-* vs update 2 + 3 changes?
-* asp.net identity  
-http://blogs.msdn.com/b/webdev/archive/2014/03/20/test-announcing-rtm-of-asp-net-identity-2-0-0.aspx  
-http://typecastexception.com/post/2014/04/20/ASPNET-Identity-20-Setting-Up-Account-Validation-and-Two-Factor-Authorization.aspx  
-http://www.codeproject.com/Articles/823263/ASP-NET-Identity-Introduction-to-Working-with-Iden  
-merge user + identityuser tables -> appuser, approle etc.? - Change Primary Key for Users in ASP.NET Identity
+* asp.net identity - two factor auth. + account lockout + confirmation + pass reset + security stamp? + social logins + samples
 * what happened to appveyor?
 * add multiple fields test
 * check [required] attribute for newer classes?
 * try to convert other batch files to ps scripts as well
 * elmah for glimpse?
+* dbcontext.create?
+* usermanager - owin parts?
 
 ## Long Term
 
@@ -213,12 +209,3 @@ public intTimeID { get; set; }
 [Key]  
 [Column(Order = 3)]  
 public string LanguageID { get; set; }  
-
-### Misc - Unsorted
-
-. .tt files reaction?
-. invalid model state error !
-. getuserinfo fails but no error?
-. account edit doesn't work (probably user edit as well)
-. dbcontext.create?
-. usermanager - owin parts?
