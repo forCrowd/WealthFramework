@@ -612,7 +612,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="Properties\PublishProfiles\Azure.pubxml" />
-    <None Include="Properties\PublishProfiles\Default.pubxml" />
     <Content Include="App\scripts\services\generated\service.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>service.txt</LastGenOutput>
