@@ -4,7 +4,7 @@
 
 ### Functional
 
-* Prepare resource pool view  
+* Prepare resource pool view 
 UserResourcePool view recursive selectedElementItem part
 * Work on the samples again  
 Update configuration.cs withelement fields  
@@ -28,8 +28,6 @@ currently number of sales is not on user level, but on elementitem level!
 
 ### Technical
 
-* user.issample field? + web.config         <add key="SampleUserId" value="2" />
-* db tables -> [x]set?
 * Unit testing for controllers + unitofwork etc.?
 * autofac or ninject or windsor or unity or spring?
 check the websites  
@@ -56,6 +54,8 @@ http://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-w
 * elmah for glimpse?
 * dbcontext.create?
 * usermanager - owin parts?
+* user.issample field? + web.config         <add key="SampleUserId" value="2" />
+* db tables -> [x]set?
 
 ## Long Term
 
@@ -209,3 +209,8 @@ public intTimeID { get; set; }
 [Key]  
 [Column(Order = 3)]  
 public string LanguageID { get; set; }  
+
+### Misc - Unsorted
+
+* 
+

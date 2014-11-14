@@ -5,7 +5,7 @@
 # coni2k - 05 Oct. '14
 
 # Make an async request
-(New-Object System.Net.WebClient).DownloadStringAsync("http://localhost:10001")
+(New-Object System.Net.WebClient).DownloadStringAsync("http://localhost:15001")
 
 # Write the script execution time on a text file
 $currentDate = Get-Date

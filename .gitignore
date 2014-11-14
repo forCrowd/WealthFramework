@@ -108,7 +108,10 @@ Backup*/
 UpgradeLog*.XML
 
 # WarmUp script result file
-SolutionItems/Scripts/Build/WarmUpResult.txt
+WarmUpResult.txt
 
 # Elmah log folder
 Web/App_Data/
+
+# Publish profiles
+*.pubxml

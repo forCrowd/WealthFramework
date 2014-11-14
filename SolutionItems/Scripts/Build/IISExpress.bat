@@ -1,6 +1,6 @@
 @echo off
 
-REM Runs IISExpress for "Web" project on port 10001
+REM Runs IISExpress for "Web" project on port 15001
 REM SH - 07 May '14
 
 REM Confirmation
@@ -12,6 +12,6 @@ cd /d %~dp0\..\..\..
 
 echo.
 REM TODO IIS Express folder could differ
-"C:\Program Files\IIS Express\iisexpress" /path:"%cd%\Web" /port:10001 /systray:true
+"C:\Program Files\IIS Express\iisexpress" /path:"%cd%\Web" /port:15001 /systray:true
 echo.
 pause
