@@ -113,5 +113,5 @@ WarmUpResult.txt
 # Elmah log folder
 App_Data
 
-# Publish profiles
-PublishProfiles/
+# Publish profiles - Doesn't work properly, still adding new files under this folder?
+PublishProfiles
