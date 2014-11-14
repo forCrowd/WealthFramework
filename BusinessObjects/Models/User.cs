@@ -51,6 +51,7 @@ namespace BusinessObjects
         public virtual ICollection<UserResourcePool> UserResourcePoolSet { get; set; }
         public virtual ICollection<UserElementCell> UserElementCellSet { get; set; }
 
+        // TODO Block from Web Api Identity template?
         //public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager <ApplicationUser> manager)
         //{
         //    // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

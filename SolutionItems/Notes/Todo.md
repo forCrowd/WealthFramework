@@ -37,8 +37,9 @@ check asp.net identity as a sample
 * dbcontext -> aanmeldencontext -> resourcepoolmanager?
 * generic dbset to resourcepoolrepository?
 * remove repositories?
+
 * separate web into webclient / webservice
-* cors;  
+* cors;
 http://www.dotnetcurry.com/showarticle.aspx?ID=921  
 http://msdn.microsoft.com/en-us/magazine/dn532203.aspx  
 http://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-web-api  
@@ -55,6 +56,9 @@ http://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-w
 * usermanager - owin parts?
 * user.issample field? + web.config         <add key="SampleUserId" value="2" />
 * db tables -> [x]set?
+* azure publish profile uses the old db pass?
+* public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager <ApplicationUser> manager) - ?
+* remove MultipleActiveResultSets=True from web.config
 
 ## Long Term
 
@@ -100,6 +104,7 @@ UserResourcePoolElementCell -> UserResourcePoolId ElementCellId?
 any user should be able to access them but only the owners and admins can update them?  
 according to this, normal user may not use post action for instance? check these rules later on  
 
+* glimpse on remote server? http://blog.getglimpse.com/2013/12/09/protect-glimpse-axd-with-your-custom-runtime-policy/
 * implement soft delete
 * exists should work with find or alllive.any() or all.any()?  
 * find vs deleted records? - findlive? or don't retrieve dead records at all?
@@ -211,4 +216,7 @@ public string LanguageID { get; set; }
 
 ### Misc - Unsorted
 
-* 
+* try to make stores (repositories), managers and controllers (also business objects) testable?
+what are the dependencies? work on separation of concerns.
+where to create memorydbcontext? on dbobjects or business objects? also do we need IoC framework? ninject looks quite easy but is it necessary?
+instead of dataobjects, it should be dataobjects.EF? create a separate test folder? move framework to solutionitems?
