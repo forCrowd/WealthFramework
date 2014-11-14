@@ -10,6 +10,10 @@ namespace Web
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "Error",
+                url: "{controller}/{action}");
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{*catchall}",
                 defaults: new { controller = "Home", action = "Index" });
