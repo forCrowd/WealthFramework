@@ -37,7 +37,6 @@ check asp.net identity as a sample
 * dbcontext -> aanmeldencontext -> resourcepoolmanager?
 * generic dbset to resourcepoolrepository?
 * remove repositories?
-* azure websites?
 * separate web into webclient / webservice
 * cors;  
 http://www.dotnetcurry.com/showarticle.aspx?ID=921  
@@ -213,4 +212,3 @@ public string LanguageID { get; set; }
 ### Misc - Unsorted
 
 * 
-
