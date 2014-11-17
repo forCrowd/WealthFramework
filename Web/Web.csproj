@@ -389,7 +389,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>manageScripts.tt</DependentUpon>
     </Content>
-    <Content Include="App\scripts\http.js" />
+    <Content Include="App\scripts\authorization.js" />
     <Content Include="App\scripts\services\generated\elementCellService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>

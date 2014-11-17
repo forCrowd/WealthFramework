@@ -220,3 +220,4 @@ public string LanguageID { get; set; }
 what are the dependencies? work on separation of concerns.
 where to create memorydbcontext? on dbobjects or business objects? also do we need IoC framework? ninject looks quite easy but is it necessary?
 instead of dataobjects, it should be dataobjects.EF? create a separate test folder? move framework to solutionitems?
+* check todo items
