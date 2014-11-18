@@ -6,67 +6,24 @@ namespace DataObjects.Migrations
     using System;
     using System.Collections.Generic;
     using System.Data.Entity.Migrations;
+    using System.Threading.Tasks;
 
     internal sealed class Configuration : DbMigrationsConfiguration<WealthEconomyContext>
     {
+        readonly IEnumerable<string> pendingMigrations;
+
         public Configuration()
         {
-            Context = new WealthEconomyContext();
-            ContextKey = "DataObjects.WealthEconomyContext";
-
+            ContextKey = "WealthEconomyContext";
             AutomaticMigrationsEnabled = false;
 
+            // Get the migrations
             var migrator = new DbMigrator(this);
             pendingMigrations = migrator.GetPendingMigrations();
         }
 
-        readonly IEnumerable<string> pendingMigrations;
-
-        ResourcePoolRepository resourcePoolRepository;
-        ElementRepository elementRepository;
-        ElementItemRepository elementItemRepository;
-        ResourcePoolIndexRepository resourcePoolIndexRepository;
-        UserResourcePoolRepository userResourcePoolRepository;
-        UserResourcePoolIndexRepository userResourcePoolIndexRepository;
-
-        // For an unknown reason, context variable doesn't work with RoleManager and UserManager
-        public WealthEconomyContext Context { get; private set; }
-
-        public ResourcePoolRepository ResourcePoolRepository
-        {
-            get { return resourcePoolRepository ?? (resourcePoolRepository = new ResourcePoolRepository(Context)); }
-        }
-
-        public ElementRepository ElementRepository
-        {
-            get { return elementRepository ?? (elementRepository = new ElementRepository(Context)); }
-        }
-
-        public ElementItemRepository ElementItemRepository
-        {
-            get { return elementItemRepository ?? (elementItemRepository = new ElementItemRepository(Context)); }
-        }
-
-        public ResourcePoolIndexRepository ResourcePoolIndexRepository
-        {
-            get { return resourcePoolIndexRepository ?? (resourcePoolIndexRepository = new ResourcePoolIndexRepository(Context)); }
-        }
-
-        UserResourcePoolRepository UserResourcePoolRepository
-        {
-            get { return userResourcePoolRepository ?? (userResourcePoolRepository = new UserResourcePoolRepository(Context)); }
-        }
-
-        UserResourcePoolIndexRepository UserResourcePoolIndexRepository
-        {
-            get { return userResourcePoolIndexRepository ?? (userResourcePoolIndexRepository = new UserResourcePoolIndexRepository(Context)); }
-        }
-
         protected override void Seed(WealthEconomyContext context)
         {
-            // TODO how to handle this method properly? It would be nice if it could use managers but they're in Facade layer?
-            // Also after Identity it's not transactional?
-
             foreach (var migration in pendingMigrations)
             {
                 // Get the version number
@@ -76,42 +33,25 @@ namespace DataObjects.Migrations
                 {
                     case "V0_14_7":
                         {
-                            var roleStore = new RoleStore(Context);
+                            var roleStore = new RoleStore(context);
                             var roleManager = new RoleManager<Role, int>(roleStore);
-                            var userStore = new UserStore(Context);
+                            var userStore = new UserStore(context);
                             var userManager = new UserManager<User, int>(userStore);
 
                             // Admin role
                             var adminRole = new Role("Administrator");
-                            var adminRoleResult = roleManager.Create(adminRole);
-
-                            // TODO result error check?
-                            if (adminRoleResult == null)
-                                return;
+                            roleManager.Create(adminRole);
 
                             // Admin user
                             var adminUser = new User() { UserName = "admin", Email = "admin" };
                             var adminUserPassword = DateTime.Now.ToString("yyyyMMdd");
-                            var adminUserResult = userManager.Create(adminUser, adminUserPassword);
-
-                            // TODO result error check?
-                            if (adminUserResult == null)
-                                return;
-
-                            var addAdminUserToRoleResult = userManager.AddToRole(adminUser.Id, "Administrator");
-
-                            // TODO result error check?
-                            if (addAdminUserToRoleResult == null)
-                                return;
+                            userManager.Create(adminUser, adminUserPassword);
+                            userManager.AddToRole(adminUser.Id, "Administrator");
 
                             // Sample user
                             var sampleUser = new User() { UserName = "sample", Email = "sample" };
                             var sampleUserPassword = DateTime.Now.ToString("yyyyMMdd");
-                            var sampleIdentityUserResult = userManager.Create(sampleUser, sampleUserPassword);
-
-                            // TODO result error check?
-                            if (sampleIdentityUserResult == null)
-                                return;
+                            userManager.Create(sampleUser, sampleUserPassword);
 
                             // Samples
                             //AddSectorIndexSample(sampleUser);
@@ -124,9 +64,7 @@ namespace DataObjects.Migrations
                             //AddCustomerSatisfactionIndexSample(sampleUser);
                             //AddAllInOneSample(sampleUser);
 
-                            Context.SaveChanges();
-
-                            // TODO Handle this Seed operation by raising an event and catching it in Facade layer, so UnitOfWork classes could be used?
+                            //Context.SaveChanges();
 
                             break;
                         }

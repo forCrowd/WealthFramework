@@ -7,9 +7,12 @@
 
     public class RoleStore : RoleStore<Role, int, UserRole>
     {
+        public RoleStore()
+            : base(new WealthEconomyContext())
+        { }
+
         public RoleStore(WealthEconomyContext context)
             : base(context)
-        {
-        }
+        { }
     }
 }

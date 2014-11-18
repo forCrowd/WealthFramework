@@ -28,7 +28,6 @@
         public override Task CreateAsync(User user)
         {
             CopySampleData(user);
-
             return base.CreateAsync(user);
         }
 
@@ -45,13 +44,9 @@
             DeleteSampleData(targetUser);
             CopySampleData(targetUser);
 
+            // TODO Store should not save?
             await UpdateAsync(targetUser);
             await Context.SaveChangesAsync();
-        }
-
-        public override Task AddToRoleAsync(User user, string roleName)
-        {
-            return base.AddToRoleAsync(user, roleName);
         }
 
         void CopySampleData(User targetUser)

@@ -60,7 +60,7 @@ namespace DataObjects.Migrations
                         RowVersion = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.ElementField", t => t.ElementFieldId, cascadeDelete: false)
+                .ForeignKey("dbo.ElementField", t => t.ElementFieldId)
                 .ForeignKey("dbo.ElementItem", t => t.SelectedElementItemId)
                 .ForeignKey("dbo.ElementItem", t => t.ElementItemId, cascadeDelete: true)
                 .Index(t => new { t.ElementItemId, t.ElementFieldId }, unique: true, name: "IX_ElementCellId")
@@ -97,7 +97,7 @@ namespace DataObjects.Migrations
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.ElementCell", t => t.ElementCellId, cascadeDelete: true)
-                .ForeignKey("dbo.User", t => t.UserId, cascadeDelete: false)
+                .ForeignKey("dbo.User", t => t.UserId)
                 .Index(t => new { t.UserId, t.ElementCellId }, unique: true, name: "IX_UserIdElementCellId");
             
             CreateTable(
@@ -173,7 +173,7 @@ namespace DataObjects.Migrations
                         RowVersion = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
                     })
                 .PrimaryKey(t => new { t.UserId, t.RoleId })
-                .ForeignKey("dbo.Role", t => t.RoleId, cascadeDelete: false)
+                .ForeignKey("dbo.Role", t => t.RoleId, cascadeDelete: true)
                 .ForeignKey("dbo.User", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId)
                 .Index(t => t.RoleId);
@@ -207,7 +207,7 @@ namespace DataObjects.Migrations
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.ResourcePool", t => t.ResourcePoolId, cascadeDelete: true)
-                .ForeignKey("dbo.User", t => t.UserId, cascadeDelete: false)
+                .ForeignKey("dbo.User", t => t.UserId)
                 .Index(t => new { t.UserId, t.ResourcePoolId }, unique: true, name: "IX_UserIdResourcePoolId");
             
             CreateTable(
@@ -262,13 +262,14 @@ namespace DataObjects.Migrations
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.ResourcePoolIndex", t => t.ResourcePoolIndexId, cascadeDelete: true)
-                .ForeignKey("dbo.UserResourcePool", t => t.UserResourcePoolId, cascadeDelete: false)
+                .ForeignKey("dbo.UserResourcePool", t => t.UserResourcePoolId)
                 .Index(t => new { t.UserResourcePoolId, t.ResourcePoolIndexId }, unique: true, name: "IX_UserResourcePoolIdResourcePoolIndexId");
             
         }
         
         public override void Down()
         {
+            DropForeignKey("dbo.UserElementCell", "UserId", "dbo.User");
             DropForeignKey("dbo.UserResourcePool", "UserId", "dbo.User");
             DropForeignKey("dbo.UserResourcePool", "ResourcePoolId", "dbo.ResourcePool");
             DropForeignKey("dbo.UserResourcePoolIndex", "UserResourcePoolId", "dbo.UserResourcePool");
@@ -277,7 +278,6 @@ namespace DataObjects.Migrations
             DropForeignKey("dbo.ResourcePoolIndex", "ElementFieldId", "dbo.ElementField");
             DropForeignKey("dbo.ResourcePoolIndex", "ElementId", "dbo.Element");
             DropForeignKey("dbo.Element", "ResourcePoolId", "dbo.ResourcePool");
-            DropForeignKey("dbo.UserElementCell", "UserId", "dbo.User");
             DropForeignKey("dbo.UserRole", "UserId", "dbo.User");
             DropForeignKey("dbo.UserRole", "RoleId", "dbo.Role");
             DropForeignKey("dbo.UserLogin", "UserId", "dbo.User");

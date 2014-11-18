@@ -7,7 +7,15 @@
     {
         public static void Initialize()
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<WealthEconomyContext, Configuration>());
+        }
+
+        public static void Initialize(bool liveDatabase = true)
+        {
+            var initializer = liveDatabase
+                ? (IDatabaseInitializer<WealthEconomyContext>) new MigrateDatabaseToLatestVersion<WealthEconomyContext, Configuration>()
+                : (IDatabaseInitializer<WealthEconomyContext>) new DropCreateDatabaseAlways<WealthEconomyContext>();
+            
+            Database.SetInitializer(initializer);
         }
     }
 }

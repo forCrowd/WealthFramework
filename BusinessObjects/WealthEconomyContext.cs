@@ -43,7 +43,6 @@
             base.OnModelCreating(modelBuilder);
 
             // Conventions
-            // a. Don't pluralize
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
             // Table names
@@ -52,6 +51,35 @@
             modelBuilder.Entity<UserLogin>().ToTable("UserLogin");
             modelBuilder.Entity<UserRole>().ToTable("UserRole");
             modelBuilder.Entity<Role>().ToTable("Role");
+
+            // Cascade deletes
+            modelBuilder.Entity<ElementCell>()
+                .HasRequired<ElementField>(item => item.ElementField)
+                .WithMany(item => item.ElementCellSet)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<UserElementCell>()
+                .HasRequired<User>(item => item.User)
+                .WithMany(item => item.UserElementCellSet)
+                .WillCascadeOnDelete(false);
+
+            //modelBuilder.Entity<UserRole>()
+            //    .HasOptional<
+            //    .HasRequired<Role>(item => item.Role)
+            //    //.WithRequiredDependent()
+            //    .WithRequiredPrincipal()
+            //    //.WithMany(item => item.Users)
+            //    .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<UserResourcePool>()
+                .HasRequired<User>(item => item.User)
+                .WithMany(item => item.UserResourcePoolSet)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<UserResourcePoolIndex>()
+                .HasRequired<UserResourcePool>(item => item.UserResourcePool)
+                .WithMany(item => item.UserResourcePoolIndexSet)
+                .WillCascadeOnDelete(false);
         }
 
         public override int SaveChanges()

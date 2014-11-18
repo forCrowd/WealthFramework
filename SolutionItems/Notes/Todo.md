@@ -220,4 +220,15 @@ public string LanguageID { get; set; }
 what are the dependencies? work on separation of concerns.
 where to create memorydbcontext? on dbobjects or business objects? also do we need IoC framework? ninject looks quite easy but is it necessary?
 instead of dataobjects, it should be dataobjects.EF? create a separate test folder? move framework to solutionitems?
+
 * check todo items
+
+* dataobjects.tests going fine
+be sure how dropcreatealways works? it doesn't drop it at the moment!
+do we need context.db.init(true) ?
+does assemblyinit works at all?
+
+* continue with managers! try to finish this testing part asap
+continue with cmrp samples? try to publish chapters again!
+
+* these updated will be commited. if there is a problem in general, check the history!

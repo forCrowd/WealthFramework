@@ -11,6 +11,11 @@ namespace BusinessObjects
     [BusinessObjects.Attributes.DefaultProperty("Id")]
     public class UserResourcePool : BaseEntity
     {
+        public UserResourcePool()
+        {
+            UserResourcePoolIndexSet = new HashSet<UserResourcePoolIndex>();
+        }
+
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         public int Id { get; set; }
@@ -27,6 +32,8 @@ namespace BusinessObjects
         public virtual User User { get; set; }
 
         public virtual ResourcePool ResourcePool { get; set; }
+
+        public virtual ICollection<UserResourcePoolIndex> UserResourcePoolIndexSet { get; set; }
 
         #region - General -
 
