@@ -2,81 +2,98 @@
 {
     using BusinessObjects;
     using DataObjects.Extensions;
+    using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
     using System.Threading.Tasks;
 
     public class UserStore : UserStore<User, Role, int, UserLogin, UserRole, UserClaim>
     {
-        // TODO Replaece it with IsSample field in User table?
-        const int SAMPLEUSERID = 2;
-
-        public UserStore() : base(new WealthEconomyContext()) { }
+        public UserStore()
+            : this(new WealthEconomyContext())
+        {
+        }
 
         public UserStore(WealthEconomyContext context)
             : base(context)
         {
+            AutoSaveChanges = false;
         }
 
-        internal new WealthEconomyContext Context { get { return (WealthEconomyContext)base.Context; } }
+        // TODO This doesn't hide base.Context, UserManager can still access to Store.Context?
+        private new WealthEconomyContext Context { get { return (WealthEconomyContext)base.Context; } }
 
         private DbSet<ResourcePool> ResourcePoolSet { get { return Context.Set<ResourcePool>(); } }
         private DbSet<UserResourcePool> UserResourcePoolSet { get { return Context.Set<UserResourcePool>(); } }
 
-        public override Task CreateAsync(User user)
+        public async Task SaveChangesAsync()
         {
-            CopySampleData(user);
-            return base.CreateAsync(user);
-        }
-
-        public override Task DeleteAsync(User user)
-        {
-            DeleteSampleData(user);
-            return base.DeleteAsync(user);
-        }
-
-        public async Task ResetSampleDataAsync(int userId)
-        {
-            var targetUser = await FindByIdAsync(userId);
-
-            DeleteSampleData(targetUser);
-            CopySampleData(targetUser);
-
-            // TODO Store should not save?
-            await UpdateAsync(targetUser);
             await Context.SaveChangesAsync();
         }
 
-        void CopySampleData(User targetUser)
+        public async Task CopySampleDataAsync(int sourceUserId, User targetUser)
         {
-            if (targetUser == null)
-            {
-                throw new ArgumentNullException("targetUser");
-            }
+            Framework.Validation.ArgumentNotNull(targetUser);
 
-            // User resource pools
-            var sampleUserResourcePools = UserResourcePoolSet
-                .Get(item => item.UserId == SAMPLEUSERID && item.ResourcePool.IsSample, item => item.ResourcePool);
+            var sampleUserResourcePools = await UserResourcePoolSet
+                .Get(item => item.UserId == sourceUserId && item.ResourcePool.IsSample, item => item.ResourcePool)
+                .ToListAsync();
 
             foreach (var sampleUserResourcePool in sampleUserResourcePools)
             {
                 var userResourcePool = new UserResourcePool()
                 {
-                    User = targetUser,
+                    UserId = targetUser.Id,
                     ResourcePool = sampleUserResourcePool.ResourcePool,
                     ResourcePoolRate = sampleUserResourcePool.ResourcePoolRate
                 };
                 UserResourcePoolSet.Add(userResourcePool);
-            }
 
-            // TODO Samples?
+                // Indexes?
+
+                // User cells?
+            }
         }
 
-        void DeleteSampleData(User user)
+        public async Task ResetSampleDataAsync(int userId, int sampleUserId)
         {
-            UserResourcePoolSet.RemoveRange(user.UserResourcePoolSet);
+            await DeleteSampleDataAsync(userId);
+
+            var targetUser = await FindByIdAsync(userId);
+            await CopySampleDataAsync(sampleUserId, targetUser);
+        }
+
+        public async Task DeleteSampleDataAsync(int userId)
+        {
+            var sampleResourcePools = await ResourcePoolSet
+                .Get(item => item.IsSample)
+                .Select(item => item.Id)
+                .ToListAsync();
+
+            foreach (var resourcePoolId in sampleResourcePools)
+                await DeleteResourcePoolDataByIdAsync(userId, resourcePoolId);
+        }
+
+        public async Task DeleteResourcePoolDataAsync(int userId)
+        {
+            var resourcePoolData = await UserResourcePoolSet
+                .Get(item => item.UserId == userId)
+                .ToListAsync();
+
+            UserResourcePoolSet.RemoveRange(resourcePoolData);
+        }
+
+        public async Task DeleteResourcePoolDataByIdAsync(int userId, int resourcePoolId)
+        {
+            var resourcePoolData = await UserResourcePoolSet
+                .Get(item => item.UserId == userId
+                    && item.ResourcePoolId == resourcePoolId)
+                .ToListAsync();
+
+            UserResourcePoolSet.RemoveRange(resourcePoolData);
         }
     }
 }

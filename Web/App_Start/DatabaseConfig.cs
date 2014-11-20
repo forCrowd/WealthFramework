@@ -6,7 +6,7 @@ namespace Web
     {
         public static void Initialize()
         {
-            Utility.InitializeDatabase();
+            DbUtility.InitializeDatabase();
         }
     }
 }

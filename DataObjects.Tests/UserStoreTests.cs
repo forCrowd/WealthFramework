@@ -9,37 +9,29 @@ using System.Data.Entity;
 namespace DataObjects.Tests
 {
     [TestClass]
-    public class UserStoreTests
+    public class UserStoreTests : BaseTests
     {
         #region - Variables & Initialize & Cleanup -
 
-        WealthEconomyContext context;
-        RoleStore roleStore;
         UserStore userStore;
 
         [TestInitialize]
         public void Initialize()
         {
-            context = new WealthEconomyContext();
-            context.Database.Initialize(true);
-
-            userStore = new UserStore(context);
+            userStore = new UserStore(Context);
             userStore.AutoSaveChanges = false;
-            
-            roleStore = new RoleStore(context);
         }
 
         [TestCleanup]
         public void Cleanup()
         {
             userStore.Dispose();
-            context.Dispose();
         }
 
         #endregion
 
         [TestMethod]
-        public async Task CreateValidUser()
+        public async Task CreateValidUserAsync()
         {
             // Arrange + act
             var user = await CreateUserAsync();
@@ -49,7 +41,7 @@ namespace DataObjects.Tests
         }
 
         [TestMethod]
-        public async Task UserNameValidationException()
+        public async Task UserNameValidationExceptionAsync()
         {
             // Arrange
             var user = new User();
@@ -58,7 +50,7 @@ namespace DataObjects.Tests
             try
             {
                 // Act
-                await context.SaveChangesAsync();
+                await Context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -89,7 +81,7 @@ namespace DataObjects.Tests
         }
 
         [TestMethod]
-        public async Task UpdateUser()
+        public async Task UpdateUserAsync()
         {
             // Arrange
             var user = await CreateUserAsync();
@@ -99,7 +91,7 @@ namespace DataObjects.Tests
             user.FirstName = "First Name";
             user.LastName = "Last Name";
             await userStore.UpdateAsync(user);
-            await context.SaveChangesAsync();
+            await Context.SaveChangesAsync();
             var updatedUser = await userStore.FindByIdAsync(userId);
 
             // Assert
@@ -109,7 +101,7 @@ namespace DataObjects.Tests
         }
 
         [TestMethod]
-        public async Task DeleteUser()
+        public async Task DeleteUserAsync()
         {
             // Arrange
             var user = await CreateUserAsync();
@@ -117,7 +109,7 @@ namespace DataObjects.Tests
 
             // Act
             await userStore.DeleteAsync(user);
-            await context.SaveChangesAsync();
+            await Context.SaveChangesAsync();
             var deletedUser = await userStore.FindByIdAsync(userId);
 
             // Assert
@@ -125,23 +117,37 @@ namespace DataObjects.Tests
         }
 
         [TestMethod]
-        public async Task AddToRole()
+        public async Task AddToRoleAsync()
         {
             // Arrange
-            const string roleName = "test role";
-            var role = new Role(roleName);
-            if (!roleStore.Roles.Any(item => item.Name == roleName))
-                await roleStore.CreateAsync(role);
+            const string roleName = "Administrator"; // Already created in seed method
             var user = await CreateUserAsync();
 
             // Act
             await userStore.AddToRoleAsync(user, roleName);
-            await context.SaveChangesAsync();
+            await Context.SaveChangesAsync();
             var foundUser = await userStore.FindByIdAsync(user.Id);
 
             // Assert
             var isInRole = await userStore.IsInRoleAsync(foundUser, roleName);
             Assert.IsTrue(isInRole);
+        }
+
+        [TestMethod]
+        public async Task CopySampleDataAsync()
+        {
+            // Act & arrange
+            var sourceUser = await userStore.FindByIdAsync(2); // Already created in seed method
+            var targetUser = await CreateUserAsync();
+
+            // Arrange
+            await userStore.CopySampleDataAsync(sourceUser.Id, targetUser);
+            await userStore.SaveChangesAsync();
+
+            // Assert
+            Assert.IsTrue(targetUser.UserResourcePoolSet.Count == 1);
+            Assert.IsTrue(targetUser.UserResourcePoolSet.Single().ResourcePool.Name == "Sector Index Sample");
+            //Assert.IsTrue(targetUser.UserResourcePoolSet.Single().ResourcePoolRate == 101);
         }
 
         async Task<User> CreateUserAsync()
@@ -152,7 +158,7 @@ namespace DataObjects.Tests
             // TODO Add password validation?
 
             await userStore.CreateAsync(user);
-            await context.SaveChangesAsync();
+            await Context.SaveChangesAsync();
 
             return user;
         }

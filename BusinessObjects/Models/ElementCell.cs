@@ -15,7 +15,7 @@ namespace BusinessObjects
     {
         public ElementCell()
         {
-            UserElementCell = new HashSet<UserElementCell>();
+            UserElementCellSet = new HashSet<UserElementCell>();
         }
 
         [DisplayOnListView(false)]
@@ -38,7 +38,7 @@ namespace BusinessObjects
         public virtual ElementItem ElementItem { get; set; }
         public virtual ElementField ElementField { get; set; }
         public virtual ElementItem SelectedElementItem { get; set; }
-        public virtual ICollection<UserElementCell> UserElementCell { get; set; }
+        public virtual ICollection<UserElementCell> UserElementCellSet { get; set; }
 
         /* */
 
@@ -49,7 +49,7 @@ namespace BusinessObjects
                 switch (ElementField.ElementFieldType)
                 {
                     case (byte)ElementFieldType.String:
-                        return UserElementCell.Count();
+                        return UserElementCellSet.Count();
                     case (byte)ElementFieldType.Boolean:
                     case (byte)ElementFieldType.Integer:
                     case (byte)ElementFieldType.DateTime:
@@ -72,8 +72,8 @@ namespace BusinessObjects
                 switch (ElementField.ElementFieldType)
                 {
                     case (byte)ElementFieldType.String:
-                        return UserElementCell.Any()
-                            ? UserElementCell.Average(item => item.Rating)
+                        return UserElementCellSet.Any()
+                            ? UserElementCellSet.Average(item => item.Rating)
                             : 0;
                     case (byte)ElementFieldType.Boolean:
                         return BooleanValue.HasValue ? Convert.ToDecimal(BooleanValue.Value) : 0;

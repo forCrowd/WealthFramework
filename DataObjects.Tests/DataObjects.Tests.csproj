@@ -70,7 +70,8 @@
     <Compile Include="..\SolutionItems\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Initialize.cs" />
+    <Compile Include="AssemblyInitializer.cs" />
+    <Compile Include="BaseTests.cs" />
     <Compile Include="UserStoreTests.cs" />
   </ItemGroup>
   <ItemGroup>

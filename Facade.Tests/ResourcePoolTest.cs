@@ -80,11 +80,11 @@
 
             var userOrganizationName1 = new UserElementCell() { User = user, ElementCell = organizationName1, Rating = 75 };
             user.UserElementCellSet.Add(userOrganizationName1);
-            organizationName1.UserElementCell.Add(userOrganizationName1);
+            organizationName1.UserElementCellSet.Add(userOrganizationName1);
 
             var userOrganizationName2 = new UserElementCell() { User = user, ElementCell = organizationName2, Rating = 25 };
             user.UserElementCellSet.Add(userOrganizationName1);
-            organizationName2.UserElementCell.Add(userOrganizationName2);
+            organizationName2.UserElementCellSet.Add(userOrganizationName2);
 
             // Assert
             Assert.IsTrue(resourcePool.IndexRatingAverage == 100);

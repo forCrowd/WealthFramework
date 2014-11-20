@@ -97,7 +97,7 @@ namespace Web.Controllers.Api
                 Email = model.Email
             };
 
-            var result = await UserManager.CreateAsync(user, model.Password);
+            var result = await UserManager.CreateWithSampleDataAsync(user, model.Password, ApplicationSettings.SampleUserId);
             var errorResult = GetErrorResult(result);
 
             if (errorResult != null)
@@ -118,7 +118,7 @@ namespace Web.Controllers.Api
             if (!currentUserId.HasValue)
                 return InternalServerError();
 
-            await UserManager.ResetSampleDataAsync(currentUserId.Value);
+            await UserManager.ResetSampleDataAsync(currentUserId.Value, ApplicationSettings.SampleUserId);
 
             return Ok();
         }

@@ -40,7 +40,7 @@
 
         #endregion
 
-        #region All records except deleted records
+        #region All records except deleted ones
 
         public static IQueryable<TEntity> Get<TEntity>(this DbSet<TEntity> dbSet) where TEntity : class, IEntity
         {

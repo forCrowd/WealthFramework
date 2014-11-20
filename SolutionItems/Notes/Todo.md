@@ -59,6 +59,8 @@ http://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-w
 * azure publish profile uses the old db pass?
 * public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager <ApplicationUser> manager) - ?
 * remove MultipleActiveResultSets=True from web.config
+* check validation cases - null is okay but how about Id check - Id > 0?
+* use fluent approach on element + item + field + cell
 
 ## Long Term
 
@@ -202,11 +204,11 @@ public virtual Player Player { get; set; }
 [Column(Order = 0)]  
 public int LocationID { get; set; }  
 
-[Key]  
+[Key]
 [Column(Order = 1)]  
 public int DayID { get; set; }  
 
-[Key]  
+[Key]
 [Column(Order = 2)]  
 public intTimeID { get; set; }  
 
@@ -219,16 +221,29 @@ public string LanguageID { get; set; }
 * try to make stores (repositories), managers and controllers (also business objects) testable?
 what are the dependencies? work on separation of concerns.
 where to create memorydbcontext? on dbobjects or business objects? also do we need IoC framework? ninject looks quite easy but is it necessary?
-instead of dataobjects, it should be dataobjects.EF? create a separate test folder? move framework to solutionitems?
+instead of dataobjects, it should be dataobjects.EF?
 
 * check todo items
-
-* dataobjects.tests going fine
-be sure how dropcreatealways works? it doesn't drop it at the moment!
-do we need context.db.init(true) ?
-does assemblyinit works at all?
 
 * continue with managers! try to finish this testing part asap
 continue with cmrp samples? try to publish chapters again!
 
 * these updated will be commited. if there is a problem in general, check the history!
+
+* continue with CopySampleDataAsync test
+it only copies userresourcepool
+how about user indexes + cells?
+
+---
+http://www.asp.net/web-api/overview/testing-and-debugging/mocking-entity-framework-when-unit-testing-aspnet-web-api-2
+
+string - n/a
+
+bool - indexable (fixed / user)
+int - indexable (fixed / user)
+decimal - indexable (fixed / user) - resource pool - multiplier
+datetime - indexable (fixed / user)
+
+element - n/a
+resource - ~decimal
+multiplier - n/a

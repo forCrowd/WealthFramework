@@ -39,7 +39,7 @@ namespace Web
             //    batchHandler: new BatchHandler(GlobalConfiguration.DefaultServer));
 
             // Routes
-            var edm = Facade.Utility.GetWealthEconomyContextEdm();
+            var edm = Facade.DbUtility.GetWealthEconomyContextEdm();
             config.Routes.MapODataServiceRoute(
                 routeName: "ODataRoute",
                 routePrefix: "odata",
