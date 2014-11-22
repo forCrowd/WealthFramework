@@ -22,6 +22,7 @@ An experimental resource management system that aims to provide a sustainable ec
 * ValidationErrors on client-side
 * Mvc general & 404 error handling
 * Azure websites; http://wealth.azurewebsites.net
+* Local Restore Database sql script (experimental)
 
 **0.14.6**
 

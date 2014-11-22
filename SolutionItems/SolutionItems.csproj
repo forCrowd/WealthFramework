@@ -37,6 +37,7 @@
   <ItemGroup>
     <Content Include="Notes\Content Notes.txt" />
     <Content Include="Notes\Possible Indexes.txt" />
+    <Content Include="Scripts\Database\Sql\Local - Restore Database.sql" />
     <None Include="..\.gitattributes">
       <Link>GitHub\.gitattributes</Link>
     </None>
