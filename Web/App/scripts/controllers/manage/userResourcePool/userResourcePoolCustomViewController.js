@@ -4,6 +4,7 @@
     var controllerId = 'userResourcePoolCustomViewController';
     angular.module('main')
         .controller(controllerId, ['userService',
+            'resourcePoolService',
             'userResourcePoolService',
             'mainService',
             '$location',
@@ -11,13 +12,18 @@
             'logger',
             userResourcePoolCustomViewController]);
 
-    function userResourcePoolCustomViewController(userService, userResourcePoolService, mainService, $location, $routeParams, logger) {
+    function userResourcePoolCustomViewController(userService, resourcePoolService, userResourcePoolService, mainService, $location, $routeParams, logger) {
         logger = logger.forSource(controllerId);
 
         var userResourcePoolId = $routeParams.Id;
 
         var vm = this;
         vm.userResourcePool = null;
+
+        vm.decreaseMultiplier = decreaseMultiplier;
+        vm.increaseMultiplier = increaseMultiplier;
+        vm.resetMultiplier = resetMultiplier;
+
         vm.decreaseNumberOfSales = decreaseNumberOfSales;
         vm.increaseNumberOfSales = increaseNumberOfSales;
         vm.resetNumberOfSales = resetNumberOfSales;
@@ -33,6 +39,27 @@
             userResourcePoolService.getUserResourcePool(userResourcePoolId)
                 .success(function (userResourcePool) {
                     vm.userResourcePool = userResourcePool;
+                });
+        }
+
+        function decreaseMultiplier() {
+            resourcePoolService.decreaseMultiplier(userResourcePoolId)
+                .success(function () {
+                    getUserResourcePool();
+                });
+        }
+
+        function increaseMultiplier() {
+            resourcePoolService.increaseMultiplier(userResourcePoolId)
+                .success(function () {
+                    getUserResourcePool();
+                });
+        }
+
+        function resetMultiplier() {
+            resourcePoolService.resetMultiplier(userResourcePoolId)
+                .success(function () {
+                    getUserResourcePool();
                 });
         }
 

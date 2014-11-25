@@ -257,6 +257,7 @@
     <Compile Include="Controllers\Api\ApplicationController.cs" />
     <Compile Include="Controllers\Api\BaseApiController.cs" />
     <Compile Include="Controllers\Api\Test\ResultsController.cs" />
+    <Compile Include="Controllers\Api\ResourcePoolCustomController.cs" />
     <Compile Include="Controllers\Api\UserResourcePoolCustomController.cs" />
     <Compile Include="Controllers\Extensions\ControllerExtensions.cs" />
     <Compile Include="Controllers\Mvc\ErrorController.cs" />
@@ -417,6 +418,7 @@
     <Content Include="App\scripts\services\generated\userRoleService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
+    <Content Include="App\scripts\services\resourcePoolService.js" />
     <Content Include="App\views\content\home.html" />
     <Content Include="App\views\content\overview.html" />
     <Content Include="App\views\content\technologies.html" />

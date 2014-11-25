@@ -7,6 +7,8 @@ namespace Web.Controllers.OData
 {
     public partial class UserResourcePoolController
     {
+        // Obsolete!
+
         // POST odata/UserResourcePool(1)/IncreaseNumberOfSales
         [HttpPost]
         public async Task<IHttpActionResult> IncreaseNumberOfSales([FromODataUri] int key)

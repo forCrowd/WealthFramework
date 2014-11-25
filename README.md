@@ -23,6 +23,8 @@ An experimental resource management system that aims to provide a sustainable ec
 * Mvc general & 404 error handling
 * Azure websites; http://wealth.azurewebsites.net
 * Local Restore Database sql script (experimental)
+* Unit testing improvements
+* Part of the initial sample data was updated according to the latest updates
 
 **0.14.6**
 

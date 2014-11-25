@@ -7,25 +7,33 @@
 
     public partial class ResourcePoolUnitOfWork
     {
-        ResourcePoolIndexRepository resourcePoolIndexRepository;
-        UserResourcePoolRepository userResourcePoolRepository;
-        UserResourcePoolIndexRepository userResourcePoolIndexRepository;
-
-        public ResourcePoolIndexRepository ResourcePoolIndexRepository
+        public async Task<ResourcePool> FindByUserResourcePoolIdAsync(int userResourcePoolId)
         {
-            get { return resourcePoolIndexRepository ?? (resourcePoolIndexRepository = new ResourcePoolIndexRepository(Context)); }
+            var repository = new ResourcePoolRepository(Context);
+            return await repository.FindByUserResourcePoolIdAsync(userResourcePoolId);
         }
 
-        UserResourcePoolRepository UserResourcePoolRepository
+        public async Task IncreaseMultiplierAsync(int resourcePoolId)
         {
-            get { return userResourcePoolRepository ?? (userResourcePoolRepository = new UserResourcePoolRepository(Context)); }
+            var resourcePool = await base.FindAsync(resourcePoolId);
+            resourcePool.IncreaseMultiplier();
+            await base.UpdateAsync(resourcePool);
         }
 
-        UserResourcePoolIndexRepository UserResourcePoolIndexRepository
+        public async Task DecreaseMultiplierAsync(int resourcePoolId)
         {
-            get { return userResourcePoolIndexRepository ?? (userResourcePoolIndexRepository = new UserResourcePoolIndexRepository(Context)); }
+            var resourcePool = await base.FindAsync(resourcePoolId);
+            resourcePool.DecreaseMultiplier();
+            await base.UpdateAsync(resourcePool);
         }
 
+        public async Task ResetMultiplierAsync(int resourcePoolId)
+        {
+            var resourcePool = await base.FindAsync(resourcePoolId);
+            resourcePool.ResetMultiplier();
+            await base.UpdateAsync(resourcePool);
+        }
+        
         public async Task<int> InsertAsync(ResourcePool entity, int userId)
         {
             // Sample resource pool could only be created during DatabaseInitialization at the moment
@@ -58,27 +66,29 @@
 
         void CreateUserResourcePool(ResourcePool resourcePool, int userId)
         {
-            var userResourcePool = new UserResourcePool()
-            {
-                UserId = userId,
-                ResourcePool = resourcePool,
-                ResourcePoolRate = 101
-            };
-            UserResourcePoolRepository.Insert(userResourcePool);
+            // TODO
 
-            // Sample ratings
-            // TODO This is not going to work for now, because there are no ResourcePoolIndex records (it doesn't add a sample index)
-            var resourcePoolIndexes = resourcePool.ResourcePoolIndexSet;
-            foreach (var resourcePoolIndex in resourcePoolIndexes)
-            {
-                var sampleUserResourcePoolIndex = new UserResourcePoolIndex()
-                {
-                    UserResourcePool = userResourcePool,
-                    ResourcePoolIndex = resourcePoolIndex,
-                    Rating = 50 // TODO Is it correct? Or should be null?
-                };
-                UserResourcePoolIndexRepository.Insert(sampleUserResourcePoolIndex);
-            }
+            //var userResourcePool = new UserResourcePool()
+            //{
+            //    UserId = userId,
+            //    ResourcePool = resourcePool,
+            //    ResourcePoolRate = 101
+            //};
+            //UserResourcePoolRepository.Insert(userResourcePool);
+
+            //// Sample ratings
+            //// TODO This is not going to work for now, because there are no ResourcePoolIndex records (it doesn't add a sample index)
+            //var resourcePoolIndexes = resourcePool.ResourcePoolIndexSet;
+            //foreach (var resourcePoolIndex in resourcePoolIndexes)
+            //{
+            //    var sampleUserResourcePoolIndex = new UserResourcePoolIndex()
+            //    {
+            //        UserResourcePool = userResourcePool,
+            //        ResourcePoolIndex = resourcePoolIndex,
+            //        Rating = 50 // TODO Is it correct? Or should be null?
+            //    };
+            //    UserResourcePoolIndexRepository.Insert(sampleUserResourcePoolIndex);
+            //}
 
             // TODO Samples ...
         }

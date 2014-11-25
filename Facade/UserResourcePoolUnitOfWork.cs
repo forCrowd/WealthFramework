@@ -49,6 +49,13 @@
             return await base.InsertAsync(userResourcePool);
         }
 
+        public async Task IncreaseMultiplier(UserResourcePool userResourcePool)
+        {
+            userResourcePool.ResourcePool.IncreaseMultiplier();
+            await Context.SaveChangesAsync();
+        }
+
+        
         public async Task<int> IncreaseNumberOfSales(UserResourcePool userResourcePool)
         {
             UpdateNumberOfSales(userResourcePool, UpdateNumberOfSalesActions.Increase);

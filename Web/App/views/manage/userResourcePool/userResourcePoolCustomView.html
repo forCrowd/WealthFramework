@@ -1,13 +1,13 @@
 ﻿<div data-ng-controller="userResourcePoolCustomViewController as vm">
     <h2>{{ vm.userResourcePool.ResourcePoolName }}</h2>
 
-    <!--<p>
+    <p>
         <div class="btn-group">
-            <button type="submit" data-ng-click="vm.increaseNumberOfSales()" class="btn btn-default">Increase Number of Sales</button>
-            <button type="submit" data-ng-click="vm.decreaseNumberOfSales()" class="btn btn-default">Decrease Number of Sales</button>
-            <button type="submit" data-ng-click="vm.resetNumberOfSales()" class="btn btn-default">Reset Number of Sales</button>
+            <button type="submit" data-ng-click="vm.increaseMultiplier()" class="btn btn-default">Increase {{ vm.userResourcePool.MainElement.MultiplierFieldName }}</button>
+            <button type="submit" data-ng-click="vm.decreaseMultiplier()" class="btn btn-default">Decrease {{ vm.userResourcePool.MainElement.MultiplierFieldName }}</button>
+            <button type="submit" data-ng-click="vm.resetMultiplier()" class="btn btn-default">Reset {{ vm.userResourcePool.MainElement.MultiplierFieldName }}</button>
         </div>
-    </p>-->
+    </p>
     <p>
         CMRP Rate: {{ vm.userResourcePool.ResourcePoolRatePercentage | percentage:2 }} - Number of ratings: {{ vm.userResourcePool.UserResourcePoolRatingCount }}
     </p>

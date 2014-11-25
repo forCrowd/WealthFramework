@@ -26,9 +26,9 @@
         // TODO This doesn't hide base.Context, UserManager can still access to Store.Context?
         private new WealthEconomyContext Context { get { return (WealthEconomyContext)base.Context; } }
 
-        private DbSet<ResourcePool> ResourcePoolSet { get { return Context.Set<ResourcePool>(); } }
-        private DbSet<UserResourcePool> UserResourcePoolSet { get { return Context.Set<UserResourcePool>(); } }
-        private DbSet<UserElementCell> UserElementCellSet { get { return Context.Set<UserElementCell>(); } }
+        DbSet<ResourcePool> ResourcePoolSet { get { return Context.Set<ResourcePool>(); } }
+        DbSet<UserResourcePool> UserResourcePoolSet { get { return Context.Set<UserResourcePool>(); } }
+        DbSet<UserElementCell> UserElementCellSet { get { return Context.Set<UserElementCell>(); } }
 
         public async Task SaveChangesAsync()
         {

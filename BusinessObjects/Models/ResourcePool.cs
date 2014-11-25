@@ -123,6 +123,33 @@ namespace BusinessObjects
             return this;
         }
 
+        public ResourcePool IncreaseMultiplier()
+        {
+            if (MainElement != null && MainElement.HasMultiplierField)
+                foreach (var item in MainElement.ElementItemSet)
+                    item.MultiplierCell.DecimalValue++;
+            
+            return this;
+        }
+
+        public ResourcePool DecreaseMultiplier()
+        {
+            if (MainElement != null && MainElement.HasMultiplierField)
+                foreach (var item in MainElement.ElementItemSet)
+                    item.MultiplierCell.DecimalValue--;
+
+            return this;
+        }
+
+        public ResourcePool ResetMultiplier()
+        {
+            if (MainElement != null && MainElement.HasMultiplierField)
+                foreach (var item in MainElement.ElementItemSet)
+                    item.MultiplierCell.DecimalValue = 0;
+
+            return this;
+        }
+
         #endregion
     }
 }

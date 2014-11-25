@@ -1,15 +1,25 @@
 ﻿namespace DataObjects
 {
     using BusinessObjects;
-    using System;
-    using System.Collections.Generic;
+    using DataObjects.Extensions;
+    using System.Data.Entity;
     using System.Linq;
-    using System.Linq.Expressions;
     using System.Threading.Tasks;
 
     public partial class ResourcePoolRepository
     {
         const int DEFAULTNUMBEROFITEMS = 2;
+
+        DbSet<ResourcePool> ResourcePoolSet { get { return Context.Set<ResourcePool>(); } }
+
+        public async Task<ResourcePool> FindByUserResourcePoolIdAsync(int userResourcePoolId)
+        {
+            var list = ResourcePoolSet.Get(item => item.UserResourcePoolSet.Any(item2 => item2.Id == userResourcePoolId));
+
+            return list.Any()
+                ? await list.SingleOrDefaultAsync()
+                : null;
+        }
 
         public ResourcePool CreateSectorIndexSample(User user)
         {
@@ -119,14 +129,14 @@
             {
                 // Item
                 var itemName = string.Format("Item {0}", i);
-                
+
                 // TODO Try to do this part more fluent by using constructors
                 // Set element in the constructor, currently it's doing it in both here and in AddItem() method
                 var item = new ElementItem() { Element = mainElement, Name = itemName }
                         .AddCell(new ElementCell() { ElementField = resourcePoolField, DecimalValue = 100 })
                         .AddCell(new ElementCell() { ElementField = multiplierField, DecimalValue = 0 });
                 mainElement.AddItem(item);
-                
+
                 // User rating for the item
                 item.NameCell.AddUserCell(new UserElementCell() { User = user, Rating = itemRating });
             }

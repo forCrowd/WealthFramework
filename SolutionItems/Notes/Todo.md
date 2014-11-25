@@ -231,7 +231,7 @@ instead of dataobjects, it should be dataobjects.EF?
 
 * check error handling again, it was handling api errors as well?
 
-* continue with increase multipliers!
+* continue with highcharts
 then check + update chapters
 
 ---
