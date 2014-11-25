@@ -100,5 +100,27 @@ namespace BusinessObjects
         }
 
         #endregion
+
+        #region - Methods -
+
+        public Element AddField(ElementField field)
+        {
+            // TODO Validation - Same name?
+
+            field.Element = this;
+            ElementFieldSet.Add(field);
+            return this;
+        }
+
+        public Element AddItem(ElementItem item)
+        {
+            // TODO Validation - Same name?
+
+            item.Element = this;
+            ElementItemSet.Add(item);
+            return this;
+        }
+
+        #endregion
     }
 }

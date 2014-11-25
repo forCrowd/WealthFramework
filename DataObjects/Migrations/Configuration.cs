@@ -24,9 +24,6 @@ namespace DataObjects.Migrations
 
         protected override void Seed(WealthEconomyContext context)
         {
-            // Initial data
-            DatabaseInitializer.SeedInitialData(context);
-
             // Data per migration
             foreach (var migration in pendingMigrations)
             {
@@ -35,9 +32,10 @@ namespace DataObjects.Migrations
 
                 switch (migrationVersion)
                 {
-                    case "V0_14_7":
+                    case "V0_14_7": // Currently the initial migration
                         {
-                            // Seed data specific for this migration
+                            // Initial data
+                            DatabaseInitializer.SeedInitialData(context);
                             break;
                         }
                 }

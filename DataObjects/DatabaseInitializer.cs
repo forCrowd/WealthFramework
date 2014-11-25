@@ -8,15 +8,15 @@
 
     public static class DatabaseInitializer
     {
-        static ResourcePoolRepository resourcePoolRepository = null;
-        static ElementRepository elementRepository = null;
-        static ElementFieldRepository elementFieldRepository = null;
-        static ElementItemRepository elementItemRepository = null;
-        static ElementCellRepository elementCellRepository = null;
-        static ResourcePoolIndexRepository resourcePoolIndexRepository = null;
-        static UserResourcePoolRepository userResourcePoolRepository = null;
-        static UserResourcePoolIndexRepository userResourcePoolIndexRepository = null;
-        static UserElementCellRepository userElementCellRepository = null;
+        //static ResourcePoolRepository resourcePoolRepository = null;
+        //static ElementRepository elementRepository = null;
+        //static ElementFieldRepository elementFieldRepository = null;
+        //static ElementItemRepository elementItemRepository = null;
+        //static ElementCellRepository elementCellRepository = null;
+        //static ResourcePoolIndexRepository resourcePoolIndexRepository = null;
+        //static UserResourcePoolRepository userResourcePoolRepository = null;
+        //static UserResourcePoolIndexRepository userResourcePoolIndexRepository = null;
+        //static UserElementCellRepository userElementCellRepository = null;
 
         public static void Initialize(bool liveDatabase = true)
         {
@@ -37,15 +37,7 @@
             userStore.AutoSaveChanges = true;
             var userManager = new UserManager<User, int>(userStore);
 
-            resourcePoolRepository = new ResourcePoolRepository(context);
-            elementRepository = new ElementRepository(context);
-            elementFieldRepository = new ElementFieldRepository(context);
-            elementItemRepository = new ElementItemRepository(context);
-            elementCellRepository = new ElementCellRepository(context);
-            resourcePoolIndexRepository = new ResourcePoolIndexRepository(context);
-            userResourcePoolRepository = new UserResourcePoolRepository(context);
-            userResourcePoolIndexRepository = new UserResourcePoolIndexRepository(context);
-            userElementCellRepository = new UserElementCellRepository(context);
+            var resourcePoolRepository = new ResourcePoolRepository(context);
 
             // Admin role
             var adminRole = new Role("Administrator");
@@ -62,246 +54,101 @@
             var sampleUserPassword = DateTime.Now.ToString("yyyyMMdd");
             userManager.Create(sampleUser, sampleUserPassword);
 
-            // Samples
-            AddSectorIndexSample(sampleUser);
-            //AddKnowledgeIndexSample(sampleUser);
-            //AddTotalCostIndexSample(sampleUser);
+            // Sample resource pools
+            resourcePoolRepository.Insert(resourcePoolRepository.CreateSectorIndexSample(sampleUser));
+            resourcePoolRepository.Insert(resourcePoolRepository.CreateKnowledgeIndexSample(sampleUser));
+            resourcePoolRepository.Insert(resourcePoolRepository.CreateTotalCostIndexSample(sampleUser));
 
-            // TODO Update these with dynamic indexes!
-            //AddQualityIndexSample(sampleUser);
-            //AddEmployeeSatisfactionIndexSample(sampleUser);
-            //AddCustomerSatisfactionIndexSample(sampleUser);
-            //AddAllInOneSample(sampleUser);
-
+            // Save
             context.SaveChanges();
         }
 
-        static void AddSectorIndexSample(User user)
-        {
-            var sectorResourcePool = new ResourcePool() { Name = "Sector Index Sample", IsSample = true };
-            
-            var sectorElement = new Element() { ResourcePool = sectorResourcePool, Name = "Sector", IsMainElement = true };
-            var sectorNameField = new ElementField() { Element = sectorElement, Name = "Name", ElementFieldType = (byte)ElementFieldType.String };
-            var sectorSalesPriceField = new ElementField() { Element = sectorElement, Name = "Sales Price", ElementFieldType = (byte)ElementFieldType.ResourcePool };
-            var sectorSalesNumberField = new ElementField() { Element = sectorElement, Name = "Sales Number", ElementFieldType = (byte)ElementFieldType.Multiplier };
-            
-            var sectorItem1 = new ElementItem() { Element = sectorElement, Name = "Basic Materials Sector" };
-            var sectorItem2 = new ElementItem() { Element = sectorElement, Name = "Conglomerates Sector" };
-            var sectorItem3 = new ElementItem() { Element = sectorElement, Name = "Consumer Goods Sector" };
-            var sectorItem4 = new ElementItem() { Element = sectorElement, Name = "Financial Sector" };
-            var sectorItem5 = new ElementItem() { Element = sectorElement, Name = "Healthcare Sector" };
-            var sectorItem6 = new ElementItem() { Element = sectorElement, Name = "Industrial Goods Sector" };
-            var sectorItem7 = new ElementItem() { Element = sectorElement, Name = "Services Sector" };
-            var sectorItem8 = new ElementItem() { Element = sectorElement, Name = "Technology Sector" };
-            var sectorItem9 = new ElementItem() { Element = sectorElement, Name = "Utilities Sector" };
-
-            var sectorNameCell1 = new ElementCell() { ElementField = sectorNameField, ElementItem = sectorItem1, StringValue = "Basic Materials" };
-            var sectorNameCell2 = new ElementCell() { ElementField = sectorNameField, ElementItem = sectorItem2, StringValue = "Conglomerates" };
-            var sectorNameCell3 = new ElementCell() { ElementField = sectorNameField, ElementItem = sectorItem3, StringValue = "Consumer Goods" };
-            var sectorNameCell4 = new ElementCell() { ElementField = sectorNameField, ElementItem = sectorItem4, StringValue = "Financial" };
-            var sectorNameCell5 = new ElementCell() { ElementField = sectorNameField, ElementItem = sectorItem5, StringValue = "Healthcare" };
-            var sectorNameCell6 = new ElementCell() { ElementField = sectorNameField, ElementItem = sectorItem6, StringValue = "Industrial Goods" };
-            var sectorNameCell7 = new ElementCell() { ElementField = sectorNameField, ElementItem = sectorItem7, StringValue = "Services" };
-            var sectorNameCell8 = new ElementCell() { ElementField = sectorNameField, ElementItem = sectorItem8, StringValue = "Technology" };
-            var sectorNameCell9 = new ElementCell() { ElementField = sectorNameField, ElementItem = sectorItem9, StringValue = "Utilities" };
-
-            var sectorSalesPriceCell1 = new ElementCell() { ElementField = sectorSalesPriceField, ElementItem = sectorItem1, DecimalValue = 150 };
-            var sectorSalesPriceCell2 = new ElementCell() { ElementField = sectorSalesPriceField, ElementItem = sectorItem2, DecimalValue = 150 };
-            var sectorSalesPriceCell3 = new ElementCell() { ElementField = sectorSalesPriceField, ElementItem = sectorItem3, DecimalValue = 150 };
-            var sectorSalesPriceCell4 = new ElementCell() { ElementField = sectorSalesPriceField, ElementItem = sectorItem4, DecimalValue = 150 };
-            var sectorSalesPriceCell5 = new ElementCell() { ElementField = sectorSalesPriceField, ElementItem = sectorItem5, DecimalValue = 150 };
-            var sectorSalesPriceCell6 = new ElementCell() { ElementField = sectorSalesPriceField, ElementItem = sectorItem6, DecimalValue = 150 };
-            var sectorSalesPriceCell7 = new ElementCell() { ElementField = sectorSalesPriceField, ElementItem = sectorItem7, DecimalValue = 150 };
-            var sectorSalesPriceCell8 = new ElementCell() { ElementField = sectorSalesPriceField, ElementItem = sectorItem8, DecimalValue = 150 };
-            var sectorSalesPriceCell9 = new ElementCell() { ElementField = sectorSalesPriceField, ElementItem = sectorItem9, DecimalValue = 150 };
-
-            var sectorSalesNumberCell1 = new ElementCell() { ElementField = sectorSalesNumberField, ElementItem = sectorItem1, DecimalValue = 0 };
-            var sectorSalesNumberCell2 = new ElementCell() { ElementField = sectorSalesNumberField, ElementItem = sectorItem2, DecimalValue = 0 };
-            var sectorSalesNumberCell3 = new ElementCell() { ElementField = sectorSalesNumberField, ElementItem = sectorItem3, DecimalValue = 0 };
-            var sectorSalesNumberCell4 = new ElementCell() { ElementField = sectorSalesNumberField, ElementItem = sectorItem4, DecimalValue = 0 };
-            var sectorSalesNumberCell5 = new ElementCell() { ElementField = sectorSalesNumberField, ElementItem = sectorItem5, DecimalValue = 0 };
-            var sectorSalesNumberCell6 = new ElementCell() { ElementField = sectorSalesNumberField, ElementItem = sectorItem6, DecimalValue = 0 };
-            var sectorSalesNumberCell7 = new ElementCell() { ElementField = sectorSalesNumberField, ElementItem = sectorItem7, DecimalValue = 0 };
-            var sectorSalesNumberCell8 = new ElementCell() { ElementField = sectorSalesNumberField, ElementItem = sectorItem8, DecimalValue = 0 };
-            var sectorSalesNumberCell9 = new ElementCell() { ElementField = sectorSalesNumberField, ElementItem = sectorItem9, DecimalValue = 0 };
-
-            // Importance Index
-            // TODO Will be updated with new field / index combo
-            var sectorImportanceIndex = new ResourcePoolIndex() { ResourcePool = sectorResourcePool, Name = "Importance Index", ElementField = sectorNameField, RatingSortType = (byte)RatingSortType.HighestToLowest };
-
-            var userResourcePool = new UserResourcePool() { User = user, ResourcePool = sectorResourcePool };
-            var userResourcePoolIndex = new UserResourcePoolIndex() { UserResourcePool = userResourcePool, Rating = 101 };
-            var userImportanceIndexValue1 = new UserElementCell() { User = user, ElementCell = sectorNameCell1, Rating = 12 };
-            var userImportanceIndexValue2 = new UserElementCell() { User = user, ElementCell = sectorNameCell2, Rating = 11 };
-            var userImportanceIndexValue3 = new UserElementCell() { User = user, ElementCell = sectorNameCell3, Rating = 11 };
-            var userImportanceIndexValue4 = new UserElementCell() { User = user, ElementCell = sectorNameCell4, Rating = 11 };
-            var userImportanceIndexValue5 = new UserElementCell() { User = user, ElementCell = sectorNameCell5, Rating = 11 };
-            var userImportanceIndexValue6 = new UserElementCell() { User = user, ElementCell = sectorNameCell6, Rating = 11 };
-            var userImportanceIndexValue7 = new UserElementCell() { User = user, ElementCell = sectorNameCell7, Rating = 11 };
-            var userImportanceIndexValue8 = new UserElementCell() { User = user, ElementCell = sectorNameCell8, Rating = 11 };
-            var userImportanceIndexValue9 = new UserElementCell() { User = user, ElementCell = sectorNameCell9, Rating = 11 };
-
-            // Inserts
-            resourcePoolRepository.Insert(sectorResourcePool);
-
-            elementRepository.Insert(sectorElement);
-            elementFieldRepository.Insert(sectorNameField);
-            elementFieldRepository.Insert(sectorSalesPriceField);
-            elementFieldRepository.Insert(sectorSalesNumberField);
-
-            elementItemRepository.Insert(sectorItem1);
-            elementItemRepository.Insert(sectorItem2);
-            elementItemRepository.Insert(sectorItem3);
-            elementItemRepository.Insert(sectorItem4);
-            elementItemRepository.Insert(sectorItem5);
-            elementItemRepository.Insert(sectorItem6);
-            elementItemRepository.Insert(sectorItem7);
-            elementItemRepository.Insert(sectorItem8);
-            elementItemRepository.Insert(sectorItem9);
-
-            elementCellRepository.Insert(sectorNameCell1);
-            elementCellRepository.Insert(sectorNameCell2);
-            elementCellRepository.Insert(sectorNameCell3);
-            elementCellRepository.Insert(sectorNameCell4);
-            elementCellRepository.Insert(sectorNameCell5);
-            elementCellRepository.Insert(sectorNameCell6);
-            elementCellRepository.Insert(sectorNameCell7);
-            elementCellRepository.Insert(sectorNameCell8);
-            elementCellRepository.Insert(sectorNameCell9);
-
-            elementCellRepository.Insert(sectorSalesPriceCell1);
-            elementCellRepository.Insert(sectorSalesPriceCell2);
-            elementCellRepository.Insert(sectorSalesPriceCell3);
-            elementCellRepository.Insert(sectorSalesPriceCell4);
-            elementCellRepository.Insert(sectorSalesPriceCell5);
-            elementCellRepository.Insert(sectorSalesPriceCell6);
-            elementCellRepository.Insert(sectorSalesPriceCell7);
-            elementCellRepository.Insert(sectorSalesPriceCell8);
-            elementCellRepository.Insert(sectorSalesPriceCell9);
-
-            elementCellRepository.Insert(sectorSalesNumberCell1);
-            elementCellRepository.Insert(sectorSalesNumberCell2);
-            elementCellRepository.Insert(sectorSalesNumberCell3);
-            elementCellRepository.Insert(sectorSalesNumberCell4);
-            elementCellRepository.Insert(sectorSalesNumberCell5);
-            elementCellRepository.Insert(sectorSalesNumberCell6);
-            elementCellRepository.Insert(sectorSalesNumberCell7);
-            elementCellRepository.Insert(sectorSalesNumberCell8);
-            elementCellRepository.Insert(sectorSalesNumberCell9);
-
-            resourcePoolIndexRepository.Insert(sectorImportanceIndex);
-
-            userResourcePoolRepository.Insert(userResourcePool);
-            userResourcePoolIndexRepository.Insert(userResourcePoolIndex);
-            userElementCellRepository.Insert(userImportanceIndexValue1);
-            userElementCellRepository.Insert(userImportanceIndexValue2);
-            userElementCellRepository.Insert(userImportanceIndexValue3);
-            userElementCellRepository.Insert(userImportanceIndexValue4);
-            userElementCellRepository.Insert(userImportanceIndexValue5);
-            userElementCellRepository.Insert(userImportanceIndexValue6);
-            userElementCellRepository.Insert(userImportanceIndexValue7);
-            userElementCellRepository.Insert(userImportanceIndexValue8);
-            userElementCellRepository.Insert(userImportanceIndexValue9);
-
-            //var sectorImportanceIndex = new ResourcePoolIndex() { ResourcePool = sectorResourcePool, Name = "Sector Index", ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicElementFieldIndex, RatingSortType = (byte)RatingSortType.HighestToLowest };
-            //var sectorOrganization1 = new Organization() { ResourcePool = sectorResourcePool, Name = "Basic Materials", SalesPrice = 150 };
-            //var sectorOrganization2 = new Organization() { ResourcePool = sectorResourcePool, Name = "Conglomerates", SalesPrice = 150 };
-            //var sectorOrganization3 = new Organization() { ResourcePool = sectorResourcePool, Name = "Consumer Goods", SalesPrice = 150 };
-            //var sectorOrganization4 = new Organization() { ResourcePool = sectorResourcePool, Name = "Financial", SalesPrice = 150 };
-            //var sectorOrganization5 = new Organization() { ResourcePool = sectorResourcePool, Name = "Healthcare", SalesPrice = 150 };
-            //var sectorOrganization6 = new Organization() { ResourcePool = sectorResourcePool, Name = "Industrial Goods", SalesPrice = 150 };
-            //var sectorOrganization7 = new Organization() { ResourcePool = sectorResourcePool, Name = "Services", SalesPrice = 150 };
-            //var sectorOrganization8 = new Organization() { ResourcePool = sectorResourcePool, Name = "Technology", SalesPrice = 150 };
-            //var sectorOrganization9 = new Organization() { ResourcePool = sectorResourcePool, Name = "Utilities", SalesPrice = 150 };
-            //var sectorUserResourcePool = new UserResourcePool() { User = user, ResourcePool = sectorResourcePool, ResourcePoolRate = 101 };
-            //var sectorUserResourcePoolIndex = new UserResourcePoolIndex() { UserResourcePool = sectorUserResourcePool, ResourcePoolIndex = sectorImportanceIndex, Rating = 100 };
-            //var sectorUserResourcePoolIndexValue1 = new UserResourcePoolIndexValue() { UserResourcePoolIndex = sectorUserResourcePoolIndex, Organization = sectorOrganization1, Rating = 12 };
-            //var sectorUserResourcePoolIndexValue2 = new UserResourcePoolIndexValue() { UserResourcePoolIndex = sectorUserResourcePoolIndex, Organization = sectorOrganization2, Rating = 11 };
-            //var sectorUserResourcePoolIndexValue3 = new UserResourcePoolIndexValue() { UserResourcePoolIndex = sectorUserResourcePoolIndex, Organization = sectorOrganization3, Rating = 11 };
-            //var sectorUserResourcePoolIndexValue4 = new UserResourcePoolIndexValue() { UserResourcePoolIndex = sectorUserResourcePoolIndex, Organization = sectorOrganization4, Rating = 11 };
-            //var sectorUserResourcePoolIndexValue5 = new UserResourcePoolIndexValue() { UserResourcePoolIndex = sectorUserResourcePoolIndex, Organization = sectorOrganization5, Rating = 11 };
-            //var sectorUserResourcePoolIndexValue6 = new UserResourcePoolIndexValue() { UserResourcePoolIndex = sectorUserResourcePoolIndex, Organization = sectorOrganization6, Rating = 11 };
-            //var sectorUserResourcePoolIndexValue7 = new UserResourcePoolIndexValue() { UserResourcePoolIndex = sectorUserResourcePoolIndex, Organization = sectorOrganization7, Rating = 11 };
-            //var sectorUserResourcePoolIndexValue8 = new UserResourcePoolIndexValue() { UserResourcePoolIndex = sectorUserResourcePoolIndex, Organization = sectorOrganization8, Rating = 11 };
-            //var sectorUserResourcePoolIndexValue9 = new UserResourcePoolIndexValue() { UserResourcePoolIndex = sectorUserResourcePoolIndex, Organization = sectorOrganization9, Rating = 11 };
-            //var sectorUserOrganization1 = new UserOrganization() { User = user, Organization = sectorOrganization1, NumberOfSales = 0 };
-            //var sectorUserOrganization2 = new UserOrganization() { User = user, Organization = sectorOrganization2, NumberOfSales = 0 };
-            //var sectorUserOrganization3 = new UserOrganization() { User = user, Organization = sectorOrganization3, NumberOfSales = 0 };
-            //var sectorUserOrganization4 = new UserOrganization() { User = user, Organization = sectorOrganization4, NumberOfSales = 0 };
-            //var sectorUserOrganization5 = new UserOrganization() { User = user, Organization = sectorOrganization5, NumberOfSales = 0 };
-            //var sectorUserOrganization6 = new UserOrganization() { User = user, Organization = sectorOrganization6, NumberOfSales = 0 };
-            //var sectorUserOrganization7 = new UserOrganization() { User = user, Organization = sectorOrganization7, NumberOfSales = 0 };
-            //var sectorUserOrganization8 = new UserOrganization() { User = user, Organization = sectorOrganization8, NumberOfSales = 0 };
-            //var sectorUserOrganization9 = new UserOrganization() { User = user, Organization = sectorOrganization9, NumberOfSales = 0 };
-
-            //ResourcePoolRepository.Insert(sectorResourcePool);
-            //ResourcePoolIndexRepository.Insert(sectorImportanceIndex);
-            //OrganizationRepository.Insert(sectorOrganization1);
-            //OrganizationRepository.Insert(sectorOrganization2);
-            //OrganizationRepository.Insert(sectorOrganization3);
-            //OrganizationRepository.Insert(sectorOrganization4);
-            //OrganizationRepository.Insert(sectorOrganization5);
-            //OrganizationRepository.Insert(sectorOrganization6);
-            //OrganizationRepository.Insert(sectorOrganization7);
-            //OrganizationRepository.Insert(sectorOrganization8);
-            //OrganizationRepository.Insert(sectorOrganization9);
-            //UserResourcePoolRepository.Insert(sectorUserResourcePool);
-            //UserResourcePoolIndexRepository.Insert(sectorUserResourcePoolIndex);
-            //UserResourcePoolIndexValueRepository.Insert(sectorUserResourcePoolIndexValue1);
-            //UserResourcePoolIndexValueRepository.Insert(sectorUserResourcePoolIndexValue2);
-            //UserResourcePoolIndexValueRepository.Insert(sectorUserResourcePoolIndexValue3);
-            //UserResourcePoolIndexValueRepository.Insert(sectorUserResourcePoolIndexValue4);
-            //UserResourcePoolIndexValueRepository.Insert(sectorUserResourcePoolIndexValue5);
-            //UserResourcePoolIndexValueRepository.Insert(sectorUserResourcePoolIndexValue6);
-            //UserResourcePoolIndexValueRepository.Insert(sectorUserResourcePoolIndexValue7);
-            //UserResourcePoolIndexValueRepository.Insert(sectorUserResourcePoolIndexValue8);
-            //UserResourcePoolIndexValueRepository.Insert(sectorUserResourcePoolIndexValue9);
-            //UserOrganizationRepository.Insert(sectorUserOrganization1);
-            //UserOrganizationRepository.Insert(sectorUserOrganization2);
-            //UserOrganizationRepository.Insert(sectorUserOrganization3);
-            //UserOrganizationRepository.Insert(sectorUserOrganization4);
-            //UserOrganizationRepository.Insert(sectorUserOrganization5);
-            //UserOrganizationRepository.Insert(sectorUserOrganization6);
-            //UserOrganizationRepository.Insert(sectorUserOrganization7);
-            //UserOrganizationRepository.Insert(sectorUserOrganization8);
-            //UserOrganizationRepository.Insert(sectorUserOrganization9);
-        }
-
-        //void AddKnowledgeIndexSample(User user)
+        //static void AddSectorIndexSample(User user)
         //{
-        //    // Update this with DynamicFieldIndex type
+        //    // Resource pool
+        //    var sectorResourcePool = new ResourcePool() { Name = "Sector Index Sample", IsSample = true };
+            
+        //    // Main element
+        //    var sectorElement = new Element() { Name = "Sector", IsMainElement = true };
+        //    sectorResourcePool.AddElement(sectorElement);
 
-        //    var knowledgeResourcePool = new ResourcePool() { Name = "Knowledge Index Sample", IsSample = true };
-        //    var knowledgeLicenseElement = new Element() { ResourcePool = knowledgeResourcePool, Name = "License" };
-        //    var knowledgeLicenseItem1 = new ElementItem() { Element = knowledgeLicenseElement, Name = "Open License" };
-        //    var knowledgeLicenseItem2 = new ElementItem() { Element = knowledgeLicenseElement, Name = "Restricted License" };
-        //    var knowledgeResourcePoolIndex = new ResourcePoolIndex() { ResourcePool = knowledgeResourcePool, Name = "Knowledge Index", ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicElementFieldIndex, Element = knowledgeLicenseElement, RatingSortType = (byte)RatingSortType.LowestToHighest };
-        //    var knowledgeOrganization1 = new Organization() { ResourcePool = knowledgeResourcePool, Name = "True Source", SalesPrice = 150 };
-        //    var knowledgeOrganizationLicenseItem1 = new OrganizationElementItem() { Organization = knowledgeOrganization1, ElementItem = knowledgeLicenseItem1 };
-        //    var knowledgeOrganization2 = new Organization() { ResourcePool = knowledgeResourcePool, Name = "Hidden Knowledge", SalesPrice = 150 };
-        //    var knowledgeOrganizationLicenseItem2 = new OrganizationElementItem() { Organization = knowledgeOrganization2, ElementItem = knowledgeLicenseItem2 };
-        //    var knowledgeUserResourcePool = new UserResourcePool() { User = user, ResourcePool = knowledgeResourcePool, ResourcePoolRate = 101 };
-        //    var knowledgeUserResourcePoolIndex = new UserResourcePoolIndex() { UserResourcePool = knowledgeUserResourcePool, ResourcePoolIndex = knowledgeResourcePoolIndex, Rating = 100 };
-        //    var knowledgeUserLicenseItemRating1 = new UserElementItem() { User = user, ElementItem = knowledgeLicenseItem1, Rating = 75 };
-        //    var knowledgeUserLicenseItemRating2 = new UserElementItem() { User = user, ElementItem = knowledgeLicenseItem2, Rating = 25 };
-        //    var knowledgeUserOrganization1 = new UserOrganization() { User = user, Organization = knowledgeOrganization1, NumberOfSales = 0 };
-        //    var knowledgeUserOrganization2 = new UserOrganization() { User = user, Organization = knowledgeOrganization2, NumberOfSales = 0 };
+        //    // Fields
+        //    var sectorNameField = new ElementField() { Name = "Name", ElementFieldType = (byte)ElementFieldType.String };
+        //    var sectorSalesPriceField = new ElementField() { Name = "Sales Price", ElementFieldType = (byte)ElementFieldType.ResourcePool };
+        //    var sectorSalesNumberField = new ElementField() { Name = "Sales Number", ElementFieldType = (byte)ElementFieldType.Multiplier };
 
-        //    ResourcePoolRepository.Insert(knowledgeResourcePool);
-        //    ElementRepository.Insert(knowledgeLicenseElement);
-        //    ElementItemRepository.Insert(knowledgeLicenseItem1);
-        //    ElementItemRepository.Insert(knowledgeLicenseItem2);
-        //    ResourcePoolIndexRepository.Insert(knowledgeResourcePoolIndex);
-        //    OrganizationRepository.Insert(knowledgeOrganization1);
-        //    OrganizationElementItemRepository.Insert(knowledgeOrganizationLicenseItem1);
-        //    OrganizationRepository.Insert(knowledgeOrganization2);
-        //    OrganizationElementItemRepository.Insert(knowledgeOrganizationLicenseItem2);
-        //    UserResourcePoolRepository.Insert(knowledgeUserResourcePool);
-        //    UserResourcePoolIndexRepository.Insert(knowledgeUserResourcePoolIndex);
-        //    UserElementItemRepository.Insert(knowledgeUserLicenseItemRating1);
-        //    UserElementItemRepository.Insert(knowledgeUserLicenseItemRating2);
-        //    UserOrganizationRepository.Insert(knowledgeUserOrganization1);
-        //    UserOrganizationRepository.Insert(knowledgeUserOrganization2);
+        //    sectorElement
+        //        .AddField(sectorNameField)
+        //        .AddField(sectorSalesPriceField)
+        //        .AddField(sectorSalesNumberField);
+
+        //    // Importance Index
+        //    // TODO Will be updated with new field / index combo
+        //    sectorResourcePool.AddIndex(new ResourcePoolIndex() { Name = "Importance Index", ElementField = sectorNameField, RatingSortType = (byte)RatingSortType.HighestToLowest });
+
+        //    // Items, cell, user cells
+        //    sectorElement
+        //        .AddItem(new ElementItem() { Name = "Basic Materials Sector" }
+        //            .AddCell(new ElementCell() { ElementField = sectorNameField, StringValue = "Basic Materials" }
+        //                .AddUserCell(new UserElementCell() { User = user, Rating = 12 }))
+        //            .AddCell(new ElementCell() { ElementField = sectorSalesPriceField, DecimalValue = 100 })
+        //            .AddCell(new ElementCell() { ElementField = sectorSalesNumberField, DecimalValue = 0 }))
+
+        //        .AddItem(new ElementItem() { Name = "Conglomerates Sector" }
+        //            .AddCell(new ElementCell() { ElementField = sectorNameField, StringValue = "Conglomerates" }
+        //                .AddUserCell(new UserElementCell() { User = user, Rating = 11 }))
+        //            .AddCell(new ElementCell() { ElementField = sectorSalesPriceField, DecimalValue = 100 })
+        //            .AddCell(new ElementCell() { ElementField = sectorSalesNumberField, DecimalValue = 0 }))
+
+        //        .AddItem(new ElementItem() { Name = "Consumer Goods Sector" }
+        //            .AddCell(new ElementCell() { ElementField = sectorNameField, StringValue = "Consumer Goods" }
+        //                .AddUserCell(new UserElementCell() { User = user, Rating = 11 }))
+        //            .AddCell(new ElementCell() { ElementField = sectorSalesPriceField, DecimalValue = 100 })
+        //            .AddCell(new ElementCell() { ElementField = sectorSalesNumberField, DecimalValue = 0 }))
+
+        //        .AddItem(new ElementItem() { Name = "Financial Sector" }
+        //            .AddCell(new ElementCell() { ElementField = sectorNameField, StringValue = "Financial" }
+        //                .AddUserCell(new UserElementCell() { User = user, Rating = 11 }))
+        //            .AddCell(new ElementCell() { ElementField = sectorSalesPriceField, DecimalValue = 100 })
+        //            .AddCell(new ElementCell() { ElementField = sectorSalesNumberField, DecimalValue = 0 }))
+
+        //        .AddItem(new ElementItem() { Name = "Healthcare Sector" }
+        //            .AddCell(new ElementCell() { ElementField = sectorNameField, StringValue = "Healthcare" }
+        //                .AddUserCell(new UserElementCell() { User = user, Rating = 11 }))
+        //            .AddCell(new ElementCell() { ElementField = sectorSalesPriceField, DecimalValue = 100 })
+        //            .AddCell(new ElementCell() { ElementField = sectorSalesNumberField, DecimalValue = 0 }))
+
+        //        .AddItem(new ElementItem() { Name = "Industrial Goods Sector" }
+        //            .AddCell(new ElementCell() { ElementField = sectorNameField, StringValue = "Industrial Goods" }
+        //                .AddUserCell(new UserElementCell() { User = user, Rating = 11 }))
+        //            .AddCell(new ElementCell() { ElementField = sectorSalesPriceField, DecimalValue = 100 })
+        //            .AddCell(new ElementCell() { ElementField = sectorSalesNumberField, DecimalValue = 0 }))
+
+        //        .AddItem(new ElementItem() { Name = "Services Sector" }
+        //            .AddCell(new ElementCell() { ElementField = sectorNameField, StringValue = "Services" }
+        //                .AddUserCell(new UserElementCell() { User = user, Rating = 11 }))
+        //            .AddCell(new ElementCell() { ElementField = sectorSalesPriceField, DecimalValue = 100 })
+        //            .AddCell(new ElementCell() { ElementField = sectorSalesNumberField, DecimalValue = 0 }))
+
+        //        .AddItem(new ElementItem() { Name = "Technology Sector" }
+        //            .AddCell(new ElementCell() { ElementField = sectorNameField, StringValue = "Technology" }
+        //                .AddUserCell(new UserElementCell() { User = user, Rating = 11 }))
+        //            .AddCell(new ElementCell() { ElementField = sectorSalesPriceField, DecimalValue = 100 })
+        //            .AddCell(new ElementCell() { ElementField = sectorSalesNumberField, DecimalValue = 0 }))
+
+        //        .AddItem(new ElementItem() { Name = "Utilities Sector" }
+        //            .AddCell(new ElementCell() { ElementField = sectorNameField, StringValue = "Utilities" }
+        //                .AddUserCell(new UserElementCell() { User = user, Rating = 11 }))
+        //            .AddCell(new ElementCell() { ElementField = sectorSalesPriceField, DecimalValue = 100 })
+        //            .AddCell(new ElementCell() { ElementField = sectorSalesNumberField, DecimalValue = 0 }));
+
+        //    // User resource pool, index
+        //    sectorResourcePool
+        //        .AddUserResourcePool(new UserResourcePool() { User = user, ResourcePoolRate = 101 }
+        //            .AddIndex(new UserResourcePoolIndex() { Rating = 100 }));
+
+        //    // Insert
+        //    resourcePoolRepository.Insert(sectorResourcePool);
         //}
 
         //void AddTotalCostIndexSample(User user)

@@ -9,9 +9,9 @@ namespace Web
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute(
-                name: "Error",
-                url: "{controller}/{action}");
+            //routes.MapRoute(
+            //    name: "Error",
+            //    url: "Error/{action}");
 
             routes.MapRoute(
                 name: "Default",

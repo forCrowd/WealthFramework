@@ -136,7 +136,7 @@ namespace DataObjects.Tests
         [TestMethod]
         public async Task CopySampleDataAsync()
         {
-            // Act & arrange
+            // Act
             var sourceUser = await userStore.FindByIdAsync(2); // Already created in seed method
             var targetUser = await CreateUserAsync();
 
@@ -145,9 +145,19 @@ namespace DataObjects.Tests
             await userStore.SaveChangesAsync();
 
             // Assert
-            Assert.IsTrue(targetUser.UserResourcePoolSet.Count == 1);
-            Assert.IsTrue(targetUser.UserResourcePoolSet.Single().ResourcePool.Name == "Sector Index Sample");
-            //Assert.IsTrue(targetUser.UserResourcePoolSet.Single().ResourcePoolRate == 101);
+            var userResourcePools = targetUser.UserResourcePoolSet.Where(item => item.ResourcePool.IsSample);
+            Assert.IsTrue(userResourcePools.Any());
+
+            foreach (var userResourcePool in userResourcePools)
+            {
+                // Must have 101 (tax) rate and one Index with 100 rating
+                Assert.IsTrue(userResourcePool.ResourcePoolRate == 101);
+                Assert.IsTrue(userResourcePool.UserResourcePoolIndexSet.Count == 1);
+                Assert.IsTrue(userResourcePool.UserResourcePoolIndexSet.First().Rating == 100);
+
+                // And must have at least one cell
+                Assert.IsTrue(targetUser.UserElementCellSet.Any(cell => cell.ElementCell.ElementField.Element.ResourcePool == userResourcePool.ResourcePool));
+            }
         }
 
         async Task<User> CreateUserAsync()

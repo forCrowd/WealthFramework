@@ -76,6 +76,10 @@ or always calculate the total average based on invidiuals percentage? or both?
 
 ### Technical
 
+* move resource pool samples to a better location than dbinitializer? resourcepool or its store?
+
+* pass entity or entityId - check CopySampleDataAsync() method - sourceUserId vs targetUser?
+
 * When creating resourcepool is gives tons of errors but then does the operation and says ok in UI?!
 
 * breeze - check save + has + get + reject changes  
@@ -225,14 +229,10 @@ instead of dataobjects, it should be dataobjects.EF?
 
 * check todo items
 
-* continue with managers! try to finish this testing part asap
-continue with cmrp samples? try to publish chapters again!
+* check error handling again, it was handling api errors as well?
 
-* these updated will be commited. if there is a problem in general, check the history!
-
-* continue with CopySampleDataAsync test
-it only copies userresourcepool
-how about user indexes + cells?
+* continue with increase multipliers!
+then check + update chapters
 
 ---
 http://www.asp.net/web-api/overview/testing-and-debugging/mocking-entity-framework-when-unit-testing-aspnet-web-api-2

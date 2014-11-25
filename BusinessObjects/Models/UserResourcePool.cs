@@ -43,5 +43,18 @@ namespace BusinessObjects
         }
 
         #endregion
+
+        #region - Methods -
+
+        public UserResourcePool AddIndex(UserResourcePoolIndex index)
+        {
+            // TODO Validation?
+            index.UserResourcePool = this;
+            UserResourcePoolIndexSet.Add(index);
+            return this;
+        }
+
+        #endregion
+
     }
 }

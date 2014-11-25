@@ -155,5 +155,21 @@ namespace BusinessObjects
                 return ElementField.ResourcePoolIndexShare * value;
             }
         }
+
+        #region - Methods -
+
+        public ElementCell AddUserCell(UserElementCell userCell)
+        {
+            // Validate
+            // TODO userCell.User null check?
+            if (UserElementCellSet.Any(item => item.User == userCell.User))
+                throw new Exception("An element cell can't have more than one user element cell for the same user");
+
+            userCell.ElementCell = this;
+            UserElementCellSet.Add(userCell);
+            return this;
+        }
+
+        #endregion
     }
 }

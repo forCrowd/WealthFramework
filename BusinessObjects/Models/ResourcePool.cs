@@ -96,5 +96,33 @@ namespace BusinessObjects
         {
             get { return MainElement.ElementItemSet.Sum(item => item.TotalIncome); }
         }
+
+        #region - Methods -
+
+        public ResourcePool AddIndex(ResourcePoolIndex index)
+        {
+            // TODO Validation?
+            index.ResourcePool = this;
+            ResourcePoolIndexSet.Add(index);
+            return this;
+        }
+
+        public ResourcePool AddElement(Element element)
+        {
+            // TODO Validation?
+            element.ResourcePool = this;
+            ElementSet.Add(element);
+            return this;
+        }
+
+        public ResourcePool AddUserResourcePool(UserResourcePool userResourcePool)
+        {
+            // TODO Validation?
+            userResourcePool.ResourcePool = this;
+            UserResourcePoolSet.Add(userResourcePool);
+            return this;
+        }
+
+        #endregion
     }
 }

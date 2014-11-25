@@ -1,6 +1,7 @@
 namespace BusinessObjects
 {
     using BusinessObjects.Attributes;
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
@@ -12,6 +13,8 @@ namespace BusinessObjects
     // [ODataControllerAuthorization("Administrator")]
     public class ElementItem : BaseEntity
     {
+        string _name;
+
         public ElementItem()
         {
             ElementCellSet = new HashSet<ElementCell>();
@@ -25,7 +28,28 @@ namespace BusinessObjects
         [Display(Name = "Element Item")]
         [Required]
         [StringLength(50)]
-        public string Name { get; set; }
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                // Always add/update name cell
+                if (Element != null)
+                {
+                    var nameField = Element.ElementFieldSet.SingleOrDefault(field => field.Name == "Name");
+
+                    if (nameField != null)
+                    {
+                        if (NameCell == null)
+                            AddCell(new ElementCell() { ElementField = nameField });
+                        else
+                            NameCell.StringValue = value;
+                    }
+
+                    _name = value;
+                }
+            }
+        }
 
         public int ElementId { get; set; }
 
@@ -43,6 +67,11 @@ namespace BusinessObjects
                 return ElementCellSet.Where(item => item.ElementField.ElementFieldType != (byte)ElementFieldType.ResourcePool
                     && item.ElementField.ElementFieldType != (byte)ElementFieldType.Multiplier);
             }
+        }
+
+        public ElementCell NameCell
+        {
+            get { return ElementCellSet.SingleOrDefault(item => item.ElementField.Name == "Name"); }
         }
 
         public ElementCell ResourcePoolCell
@@ -135,5 +164,21 @@ namespace BusinessObjects
         {
             get { return TotalResourcePoolValue + ResourcePoolIndexIncome; }
         }
+
+        #region - Methods -
+
+        public ElementItem AddCell(ElementCell cell)
+        {
+            // Validate
+            // TODO Cell.Field null check?
+            if (ElementCellSet.Any(item => item.ElementField == cell.ElementField))
+                throw new Exception("An element item can't have more than one cell for the same field");
+
+            cell.ElementItem = this;
+            ElementCellSet.Add(cell);
+            return this;
+        }
+
+        #endregion
     }
 }

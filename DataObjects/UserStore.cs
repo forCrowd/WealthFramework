@@ -28,33 +28,67 @@
 
         private DbSet<ResourcePool> ResourcePoolSet { get { return Context.Set<ResourcePool>(); } }
         private DbSet<UserResourcePool> UserResourcePoolSet { get { return Context.Set<UserResourcePool>(); } }
+        private DbSet<UserElementCell> UserElementCellSet { get { return Context.Set<UserElementCell>(); } }
 
         public async Task SaveChangesAsync()
         {
             await Context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Copies sample data of the source user to the target
+        /// </summary>
+        /// <param name="sourceUserId">Must be a persistent entity's Id</param>
+        /// <param name="targetUser">Might a new or persistent entity</param>
+        /// <returns></returns>
         public async Task CopySampleDataAsync(int sourceUserId, User targetUser)
         {
+            // TODO sourceUserId validation
             Framework.Validation.ArgumentNotNull(targetUser);
 
-            var sampleUserResourcePools = await UserResourcePoolSet
-                .Get(item => item.UserId == sourceUserId && item.ResourcePool.IsSample, item => item.ResourcePool)
+            // Resource pools
+            var sourceUserResourcePools = await UserResourcePoolSet
+                .Get(item => item.UserId == sourceUserId && item.ResourcePool.IsSample)
                 .ToListAsync();
 
-            foreach (var sampleUserResourcePool in sampleUserResourcePools)
+            foreach (var sourceUserResourcePool in sourceUserResourcePools)
             {
-                var userResourcePool = new UserResourcePool()
+                var targetUserResourcePool = new UserResourcePool()
                 {
                     UserId = targetUser.Id,
-                    ResourcePool = sampleUserResourcePool.ResourcePool,
-                    ResourcePoolRate = sampleUserResourcePool.ResourcePoolRate
+                    ResourcePool = sourceUserResourcePool.ResourcePool,
+                    ResourcePoolRate = sourceUserResourcePool.ResourcePoolRate,
                 };
-                UserResourcePoolSet.Add(userResourcePool);
+                UserResourcePoolSet.Add(targetUserResourcePool);
 
-                // Indexes?
+                // Indexes
+                var sourceUserResourcePoolIndexes = sourceUserResourcePool.UserResourcePoolIndexSet;
+                foreach (var sourceUserResourcePoolIndex in sourceUserResourcePoolIndexes)
+                {
+                    var targetUserResourcePoolIndex = new UserResourcePoolIndex()
+                    {
+                        UserResourcePool = targetUserResourcePool,
+                        ResourcePoolIndex = sourceUserResourcePoolIndex.ResourcePoolIndex,
+                        Rating = sourceUserResourcePoolIndex.Rating
+                    };
+                    targetUserResourcePool.UserResourcePoolIndexSet.Add(targetUserResourcePoolIndex);
+                }
+            }
 
-                // User cells?
+            // Element cells
+            var sourceUserElementCells = await UserElementCellSet
+                .Get(item => item.UserId == sourceUserId && item.ElementCell.ElementField.Element.ResourcePool.IsSample)
+                .ToListAsync();
+
+            foreach (var sourceUserElementCell in sourceUserElementCells)
+            {
+                var targetUserElementCell = new UserElementCell()
+                {
+                    UserId = targetUser.Id,
+                    ElementCell = sourceUserElementCell.ElementCell,
+                    Rating = sourceUserElementCell.Rating
+                };
+                targetUser.UserElementCellSet.Add(targetUserElementCell);
             }
         }
 
