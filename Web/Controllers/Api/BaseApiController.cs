@@ -38,6 +38,8 @@ namespace Web.Controllers.Api
         public async Task<User> GetCurrentUserAsync()
         {
             var userId = this.GetCurrentUserId();
+            
+            // TODO Can't it just pass userId, even if it's null?
             if (userId.HasValue)
                 return await UserManager.FindByIdAsync(userId.Value);
             return null;

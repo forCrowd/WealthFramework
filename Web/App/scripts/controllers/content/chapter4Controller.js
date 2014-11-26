@@ -3,15 +3,20 @@
 
     var controllerId = 'chapter4Controller';
     angular.module('main')
-        .controller(controllerId, ['userSectorRatingService', 'resourcePoolService', 'logger', chapter4Controller]);
+        .controller(controllerId, ['resourcePoolService',
+            'logger',
+            chapter4Controller]);
 
-    function chapter4Controller(userSectorRatingService, resourcePoolService, logger) {
+    function chapter4Controller(resourcePoolService, logger) {
         logger = logger.forSource(controllerId);
 
         // TODO Static?
-        var resourcePoolId = 6;
+        var resourcePoolId = 1;
 
         var vm = this;
+        vm.userResourcePool = null;
+
+
         vm.chartConfig = null;
         vm.chartData = null;
         vm.decrease = decrease;
@@ -27,8 +32,19 @@
         /* Implementations */
 
         function initialize() {
+            //getUserResourcePool();
+
             configureChart();
-            loadChartData();
+            loadChartData2();
+            //loadChartData();
+        }
+
+        function getUserResourcePool() {
+
+            resourcePoolService.getUserResourcePool(resourcePoolId)
+                .success(function (userResourcePool) {
+                    vm.userResourcePool = userResourcePool;
+                });
         }
 
         function decrease(index) {
@@ -74,6 +90,29 @@
                     }
                 }
             };
+        }
+
+        function loadChartData2() {
+
+            resourcePoolService.getUserResourcePool(resourcePoolId)
+                .success(function (userResourcePool) {
+                    vm.userResourcePool = userResourcePool;
+
+                    // Convert userSectorRating to chart data
+                    vm.chartData = [];
+                    for (var i = 0; i < vm.userResourcePool.MainElement.ElementItemSet.length; i++) {
+                        var chartDataItem = {
+                            name: vm.userResourcePool.MainElement.ElementItemSet[i].Name,
+                            y: vm.userResourcePool.MainElement.ElementItemSet[i].TotalRating
+                        }
+                        vm.chartData.push(chartDataItem);
+                    }
+
+                    vm.chartConfig.series = [{ data: vm.chartData }];
+                    vm.chartConfig.loading = false;
+
+                });
+
         }
 
         function loadChartData() {
@@ -136,8 +175,7 @@
                         var dataItem = data[i];
                         var chartDataItem = vm.chartData[i];
 
-                        if (dataItem.Rating !== chartDataItem.y)
-                        {
+                        if (dataItem.Rating !== chartDataItem.y) {
                             dataItem.Rating = chartDataItem.y;
 
                             var rowVersion = dataItem.RowVersion;

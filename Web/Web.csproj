@@ -258,7 +258,6 @@
     <Compile Include="Controllers\Api\BaseApiController.cs" />
     <Compile Include="Controllers\Api\Test\ResultsController.cs" />
     <Compile Include="Controllers\Api\ResourcePoolCustomController.cs" />
-    <Compile Include="Controllers\Api\UserResourcePoolCustomController.cs" />
     <Compile Include="Controllers\Extensions\ControllerExtensions.cs" />
     <Compile Include="Controllers\Mvc\ErrorController.cs" />
     <Compile Include="Controllers\Mvc\HomeController.cs" />
@@ -307,7 +306,6 @@
     </Compile>
     <Compile Include="Controllers\OData\ResourcePoolController.cs" />
     <Compile Include="Controllers\OData\UserController.cs" />
-    <Compile Include="Controllers\OData\UserResourcePoolController.cs" />
     <Compile Include="ExceptionHandling\ElmahExceptionLogger.cs" />
     <Compile Include="ExceptionHandling\GenericExceptionHandler.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
@@ -378,8 +376,8 @@
     <Content Include="App\scripts\controllers\manage\list\userRoleListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
-    <Content Include="App\scripts\controllers\manage\userResourcePool\userResourcePoolCustomViewController.js" />
-    <Content Include="App\scripts\controllers\manage\userResourcePool\userResourcePoolCustomListController.js" />
+    <Content Include="App\scripts\controllers\manage\resourcePool\resourcePoolCustomViewController.js" />
+    <Content Include="App\scripts\controllers\manage\resourcePool\resourcePoolCustomListController.js" />
     <Content Include="App\scripts\includes\manageMenu.js">
       <DependentUpon>manageMenu.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -479,8 +477,8 @@
     <Content Include="App\views\manage\list\userRoleList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
-    <Content Include="App\views\manage\userResourcePool\userResourcePoolCustomList.html" />
-    <Content Include="App\views\manage\userResourcePool\userResourcePoolCustomView.html" />
+    <Content Include="App\views\manage\resourcePool\resourcePoolCustomList.html" />
+    <Content Include="App\views\manage\resourcePool\resourcePoolCustomView.html" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -605,7 +603,6 @@
     </Content>
     <Content Include="App\scripts\services\mainService.js" />
     <Content Include="App\scripts\services\userService.js" />
-    <Content Include="App\scripts\services\userResourcePoolService.js" />
     <Content Include="Controllers\OData\Generated\ODataController.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ODataController.txt</LastGenOutput>

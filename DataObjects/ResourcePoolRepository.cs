@@ -11,6 +11,14 @@
         const int DEFAULTNUMBEROFITEMS = 2;
 
         DbSet<ResourcePool> ResourcePoolSet { get { return Context.Set<ResourcePool>(); } }
+        DbSet<UserResourcePool> UserResourcePoolSet { get { return Context.Set<UserResourcePool>(); } }
+
+        public async Task<UserResourcePool> FindUserResourcePoolAsync(int userId, int resourcePoolId)
+        {
+            return await UserResourcePoolSet
+                .Get(item => item.UserId == userId && item.ResourcePoolId == resourcePoolId)
+                .SingleOrDefaultAsync();
+        }
 
         public async Task<ResourcePool> FindByUserResourcePoolIdAsync(int userResourcePoolId)
         {
@@ -35,6 +43,7 @@
             mainElement.MultiplierField.Name = "Sales Number";
 
             // Items, cell, user cells
+            // TODO How about ToList()[0]?
             mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Basic Materials";
             mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Conglomerates";
             mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Consumer Goods";

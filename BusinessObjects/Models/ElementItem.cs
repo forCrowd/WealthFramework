@@ -33,6 +33,8 @@ namespace BusinessObjects
             get { return _name; }
             set
             {
+                _name = value;
+
                 // Always add/update name cell
                 if (Element != null)
                 {
@@ -45,8 +47,6 @@ namespace BusinessObjects
                         else
                             NameCell.StringValue = value;
                     }
-
-                    _name = value;
                 }
             }
         }
@@ -128,6 +128,21 @@ namespace BusinessObjects
                     return 0;
 
                 return MultiplierCell.DecimalValue.Value;
+            }
+        }
+
+        public decimal TotalRating
+        {
+            get
+            {
+                var indexCellSet = ElementCellSet
+                    .Where(item => Element.ResourcePool.ResourcePoolIndexSet
+                        .Any(index => index.ElementField == item.ElementField));
+
+                return indexCellSet.Sum(item => item.ElementField.ElementFieldType == (byte)ElementFieldType.String
+                    ? item.UserElementCellSet.Sum(userCell => userCell.Rating)
+                    : 0);
+                // return ElementCellSet.Where(item => item.ElementField.)
             }
         }
 

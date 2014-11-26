@@ -28,7 +28,7 @@
                             <li><a href="/content/technologies">Technologies</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown hide">
+                    <li class="dropdown">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown">Chapters <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="/content/chapter1">Chapter 1</a></li>
@@ -49,11 +49,8 @@
                         <script src="/App/scripts/includes/manageMenu.js"></script>
                     </li>
                     <li class="dropdown" data-ng-show="vm.userInfo">
-                        <a href="/manage/custom/userResourcePool">CMRP</a>
+                        <a href="/manage/custom/resourcePool">CMRP</a>
                     </li>
-                    @*<li class="dropdown" data-ng-show="vm.userInfo">
-                        <a href="/manage/custom/userResourcePool2">CMRP 2</a>
-                    </li>*@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown" data-ng-show="vm.userInfo">
@@ -131,16 +128,15 @@
     <script src="/App/scripts/controllers/account/changePasswordController.js"></script>
 
     @* Manage Scripts - Custom *@
-    <script src="/App/scripts/controllers/manage/userResourcePool/userResourcePoolCustomListController.js"></script>
-    <script src="/App/scripts/controllers/manage/userResourcePool/userResourcePoolCustomViewController.js"></script>
+    <script src="/App/scripts/controllers/manage/resourcePool/resourcePoolCustomListController.js"></script>
+    <script src="/App/scripts/controllers/manage/resourcePool/resourcePoolCustomViewController.js"></script>
 
     @* Manage Scripts - Generated *@
     <script src="/App/scripts/includes/manageScripts.js"></script>
 
     @* Service extensions *@
-    <script src="/App/scripts/services/resourcePoolService.js"></script>
     <script src="/App/scripts/services/userService.js"></script>
-    <script src="/App/scripts/services/userResourcePoolService.js"></script>
+    <script src="/App/scripts/services/resourcePoolService.js"></script>
 
 </body>
 </html>

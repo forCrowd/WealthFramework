@@ -61,6 +61,7 @@ http://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-w
 * remove MultipleActiveResultSets=True from web.config
 * check validation cases - null is okay but how about Id check - Id > 0?
 * use fluent approach on element + item + field + cell
+* viewmodels don't belong to business layer?!
 
 ## Long Term
 
@@ -231,8 +232,8 @@ instead of dataobjects, it should be dataobjects.EF?
 
 * check error handling again, it was handling api errors as well?
 
-* continue with highcharts
-then check + update chapters
+* chapter4controller - continue with save operation
+retrieve userelementcellset that only belongs to the current user and save the changes of these..
 
 ---
 http://www.asp.net/web-api/overview/testing-and-debugging/mocking-entity-framework-when-unit-testing-aspnet-web-api-2

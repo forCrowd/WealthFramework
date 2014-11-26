@@ -20,11 +20,8 @@
             .when('/account/changePassword', { templateUrl: '/App/views/account/changePassword.html', controller: 'changePasswordController as vm' })
 
             /* Custom List + Edit pages */
-            .when('/manage/custom/userResourcePool', { templateUrl: '/App/views/manage/userResourcePool/userResourcePoolCustomList.html' })
-            .when('/manage/custom/userResourcePool/:Id', { templateUrl: '/App/views/manage/userResourcePool/userResourcePoolCustomView.html' })
-
-            .when('/manage/custom/userResourcePool2', { templateUrl: '/App/views/manage/userResourcePool2/userResourcePoolCustomList.html' })
-            .when('/manage/custom/userResourcePool2/:Id', { templateUrl: '/App/views/manage/userResourcePool2/userResourcePoolCustomView.html' })
+            .when('/manage/custom/resourcePool', { templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomList.html' })
+            .when('/manage/custom/resourcePool/:Id', { templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomView.html' })
 
             /* Default List + Edit pages */
             .when('/manage/:entity', { templateUrl: getManageTemplateUrl })

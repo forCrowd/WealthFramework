@@ -17,6 +17,7 @@ namespace BusinessObjects.ViewModels
             ResourcePoolValueIncludingAddition = elementItem.ResourcePoolValueIncludingAddition;
             HasMultiplierCell = elementItem.HasMultiplierCell;
             MultiplierCellValue = elementItem.MultiplierCellValue;
+            TotalRating = elementItem.TotalRating;
             TotalResourcePoolValue = elementItem.TotalResourcePoolValue;
             TotalResourcePoolAddition = elementItem.TotalResourcePoolAddition;
             TotalResourcePoolValueIncludingAddition = elementItem.TotalResourcePoolValueIncludingAddition;
@@ -33,6 +34,7 @@ namespace BusinessObjects.ViewModels
         public decimal ResourcePoolValueIncludingAddition { get; set; }
         public bool HasMultiplierCell { get; set; }
         public decimal MultiplierCellValue { get; set; }
+        public decimal TotalRating { get; set; }
         public decimal TotalResourcePoolValue { get; set; }
         public decimal TotalResourcePoolAddition { get; set; }
         public decimal TotalResourcePoolValueIncludingAddition { get; set; }

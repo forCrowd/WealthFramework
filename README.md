@@ -37,7 +37,7 @@ An experimental resource management system that aims to provide a sustainable ec
 **0.14.4**
 
 * IsMainElement field was added to Element table
-* ResourcePool and Multipler field types were added; Elemen table was replaced Organization table
+* ResourcePool and Multiplier field types were added; Element table was replaced Organization table
 
 **0.14.3**
 
@@ -99,8 +99,8 @@ An experimental resource management system that aims to provide a sustainable ec
 **0.13**
 
 * Introduction to Dynamic Indexes
-* DistanceIndex was removed in from calcuations, field will be removed later on
-* IndexShare property calcuation bug fixed
+* DistanceIndex was removed in from calculations, field will be removed later on
+* IndexShare property calculation bug fixed
 * Property naming updates
 * SectorChart page was removed
 
@@ -159,7 +159,7 @@ An experimental resource management system that aims to provide a sustainable ec
 
 **0.11.7**
 
-* UnitOfWork methods are now saving the changes at the end. Save method is not public anymore
+* UnitOfWork methods are now saving the changes at the end. Save method is not public any more
 * DecreaseNumberOfSales method was implemented
 * SectorChart page only shows Sector resource pool related data + negative values fix
 * DataObjects.Tests project was removed
@@ -167,7 +167,7 @@ An experimental resource management system that aims to provide a sustainable ec
 
 **0.11.6**
 
-* Cascase delete option enabled
+* Cascade delete option enabled
 * Sample child records will be added when creating a new ResourcePool, Sector, License, Organization, User ResourcePool entities
 
 **0.11.5**
@@ -258,7 +258,7 @@ were replaced with Entity Framework 6.1 versions.
 * BusinessObjects
  * Merge generated and custom classes
  * BaseEntity class
- * Clean up + finetuning
+ * Clean up + fine-tuning
 * Framework - T4 files fixes
 
 **0.9.1**
@@ -305,7 +305,7 @@ were replaced with Entity Framework 6.1 versions.
 
 **0.6**
 
-* Facade - UnitOfWork finetuning
+* Facade - UnitOfWork fine-tuning
 * General - Password for User table + basic authentication
 * Web - Controller.tt was created
 
@@ -314,7 +314,7 @@ were replaced with Entity Framework 6.1 versions.
 * SolutionItems - Local_UpdateDatabase.sql was updated to remove doktrosizlar db items
 * Business + DataObjects
  * To support tables with multiple primary key, IEntity interface Id property was replaced with IsNew
-* Web - Controllers finetuning
+* Web - Controllers fine-tuning
 
 **0.4.2**.2
 

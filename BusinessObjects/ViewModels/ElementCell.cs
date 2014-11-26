@@ -1,5 +1,7 @@
-﻿
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace BusinessObjects.ViewModels
 {
     public class ElementCell
@@ -23,6 +25,10 @@ namespace BusinessObjects.ViewModels
             RatingAverageMultiplied = elementCell.RatingAverageMultiplied;
             RatingPercentage = elementCell.RatingPercentage;
             ResourcePoolIndexIncome = elementCell.ResourcePoolIndexIncome;
+
+            UserElementSet = elementCell.UserElementCellSet
+//                .Where(item => item.UserId == )
+                .Select(item => new UserElementCell(item));
         }
 
         public int Id { get; set; }
@@ -39,5 +45,7 @@ namespace BusinessObjects.ViewModels
         public decimal RatingAverageMultiplied { get; set; }
         public decimal RatingPercentage { get; set; }
         public decimal ResourcePoolIndexIncome { get; set; }
+
+        public IEnumerable<UserElementCell> UserElementSet { get; set; }
     }
 }

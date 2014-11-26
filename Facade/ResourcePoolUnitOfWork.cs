@@ -7,6 +7,12 @@
 
     public partial class ResourcePoolUnitOfWork
     {
+        public async Task<UserResourcePool> FindUserResourcePoolAsync(int userId, int resourcePoolId)
+        {
+            var repository = new ResourcePoolRepository(Context);
+            return await repository.FindUserResourcePoolAsync(userId, resourcePoolId);
+        }
+
         public async Task<ResourcePool> FindByUserResourcePoolIdAsync(int userResourcePoolId)
         {
             var repository = new ResourcePoolRepository(Context);

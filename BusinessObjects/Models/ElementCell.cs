@@ -111,7 +111,7 @@ namespace BusinessObjects
                 if (mainElement == null || !mainElement.HasMultiplierField)
                     return RatingAverage;
 
-                // TODO BE CAREFUL ABOUT THIS, IT ASSUMES ALL ELEMENT ITEMS HAVE THE SAME MULTIPLIER VALUE, IMPROVE LATER!
+                // Todo BE CAREFUL ABOUT THIS, IT ASSUMES ALL ELEMENT ITEMS HAVE THE SAME MULTIPLIER VALUE, IMPROVE LATER!
                 var multiplierValue = mainElement.ElementItemSet.FirstOrDefault().MultiplierCellValue;
 
                 return multiplierValue * RatingAverage;

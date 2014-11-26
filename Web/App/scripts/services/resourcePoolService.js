@@ -9,9 +9,12 @@
         });
 
     function resourcePoolService($delegate, $http, logger) {
+
+        // Logger
         logger = logger.forSource(serviceId);
 
         // Service methods
+        $delegate.getUserResourcePool = getUserResourcePool;
         $delegate.decreaseMultiplier = decreaseMultiplier;
         $delegate.increaseMultiplier = increaseMultiplier;
         $delegate.resetMultiplier = resetMultiplier;
@@ -19,6 +22,11 @@
         return $delegate;
 
         /*** Implementations ***/
+
+        function getUserResourcePool(resourcePoolId) {
+            var url = '/api/ResourcePoolCustom/GetUserResourcePool/' + resourcePoolId;
+            return $http.get(url);
+        }
 
         function decreaseMultiplier(userResourcePoolId) {
             var url = '/api/ResourcePoolCustom/DecreaseMultiplier/' + userResourcePoolId;
