@@ -7,7 +7,7 @@ namespace BusinessObjects.ViewModels
     {
         public ElementItem() { }
 
-        public ElementItem(BusinessObjects.ElementItem elementItem)
+        public ElementItem(BusinessObjects.ElementItem elementItem, int userId)
         {
             Id = elementItem.Id;
             Name = elementItem.Name;
@@ -17,13 +17,15 @@ namespace BusinessObjects.ViewModels
             ResourcePoolValueIncludingAddition = elementItem.ResourcePoolValueIncludingAddition;
             HasMultiplierCell = elementItem.HasMultiplierCell;
             MultiplierCellValue = elementItem.MultiplierCellValue;
-            TotalRating = elementItem.TotalRating;
+            RatingCount = elementItem.RatingCount;
+            RatingAverage = elementItem.RatingAverage;
+            //TotalRating = elementItem.TotalRating;
             TotalResourcePoolValue = elementItem.TotalResourcePoolValue;
             TotalResourcePoolAddition = elementItem.TotalResourcePoolAddition;
             TotalResourcePoolValueIncludingAddition = elementItem.TotalResourcePoolValueIncludingAddition;
             TotalIncome = elementItem.TotalIncome;
-            ElementCellSet = elementItem.ElementCellSet.Select(item => new ElementCell(item));
-            BasicElementCellSet = elementItem.BasicElementCellSet.Select(item => new ElementCell(item));
+            ElementCellSet = elementItem.ElementCellSet.Select(item => new ElementCell(item, userId));
+            BasicElementCellSet = elementItem.BasicElementCellSet.Select(item => new ElementCell(item, userId));
         }
 
         public int Id { get; set; }
@@ -34,7 +36,9 @@ namespace BusinessObjects.ViewModels
         public decimal ResourcePoolValueIncludingAddition { get; set; }
         public bool HasMultiplierCell { get; set; }
         public decimal MultiplierCellValue { get; set; }
-        public decimal TotalRating { get; set; }
+        public int RatingCount { get; set; }
+        public decimal RatingAverage { get; set; }
+        //public decimal TotalRating { get; set; }
         public decimal TotalResourcePoolValue { get; set; }
         public decimal TotalResourcePoolAddition { get; set; }
         public decimal TotalResourcePoolValueIncludingAddition { get; set; }

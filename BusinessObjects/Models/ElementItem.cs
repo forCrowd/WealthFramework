@@ -131,20 +131,43 @@ namespace BusinessObjects
             }
         }
 
-        public decimal TotalRating
+        public int RatingCount
         {
             get
             {
-                var indexCellSet = ElementCellSet
-                    .Where(item => Element.ResourcePool.ResourcePoolIndexSet
-                        .Any(index => index.ElementField == item.ElementField));
-
-                return indexCellSet.Sum(item => item.ElementField.ElementFieldType == (byte)ElementFieldType.String
-                    ? item.UserElementCellSet.Sum(userCell => userCell.Rating)
-                    : 0);
-                // return ElementCellSet.Where(item => item.ElementField.)
+                var indexCells = ElementCellSet.Where(item => Element.ResourcePool.ResourcePoolIndexSet.Any(index => index.ElementField == item.ElementField));
+                return indexCells.Any()
+                    ? indexCells.Sum(item => item.RatingCount)
+                    : 0;
             }
         }
+
+        // TODO Sum is correct? Or Average?
+        public decimal RatingAverage
+        {
+            get
+            {
+                var indexCells = ElementCellSet.Where(item => Element.ResourcePool.ResourcePoolIndexSet.Any(index => index.ElementField == item.ElementField));
+                return indexCells.Any()
+                    ? indexCells.Sum(item => item.RatingAverage)
+                    : 0;
+            }
+        }
+
+        //// TODO Review!
+        //public decimal TotalRating
+        //{
+        //    get
+        //    {
+        //        var indexCellSet = ElementCellSet
+        //            .Where(item => Element.ResourcePool.ResourcePoolIndexSet
+        //                .Any(index => index.ElementField == item.ElementField));
+
+        //        return indexCellSet.Sum(item => item.ElementField.ElementFieldType == (byte)ElementFieldType.String
+        //            ? item.UserElementCellSet.Average(userCell => userCell.Rating)
+        //            : 0);
+        //    }
+        //}
 
         public decimal TotalResourcePoolValue
         {

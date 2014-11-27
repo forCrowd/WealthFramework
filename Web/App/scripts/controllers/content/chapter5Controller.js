@@ -3,9 +3,9 @@
 
     var controllerId = 'chapter5Controller';
     angular.module('main')
-        .controller(controllerId, ['userLicenseRatingService', 'resourcePoolService', '$scope', '$timeout', 'logger', chapter5Controller]);
+        .controller(controllerId, ['resourcePoolService', 'userElementCellService', '$scope', '$timeout', 'logger', chapter5Controller]);
 
-    function chapter5Controller(userLicenseRatingService, resourcePoolService, $scope, $timeout, logger) {
+    function chapter5Controller(resourcePoolService, userElementCellService, $scope, $timeout, logger) {
         logger = logger.forSource(controllerId);
 
         // TODO Static?
@@ -32,7 +32,7 @@
 
         function initialize() {
             configureCharts();
-            loadChartData();
+            //loadChartData();
 
             refreshTimeout = $timeout(refreshPage, 5000);
 
@@ -88,9 +88,9 @@
                 },
                 series: [
                     { name: "My Precious", data: [0] },
+                    { name: 'Death Star Plans', data: [0] },
                     { name: "Vicky's Secret", data: [0] },
-                    { name: 'Imperial Stars', data: [0] },
-                    { name: 'Xplore Eldorado', data: [0] }
+                    { name: 'Nuka Cola Formula', data: [0] }
                 ]
             };
 
@@ -151,6 +151,57 @@
                     }
                 }
             };
+        }
+
+        function loadChartData2() {
+
+            vm.chartConfig.loading = true;
+            vm.resultsChartConfig.loading = true;
+
+            resourcePoolService.getUserResourcePool(resourcePoolId)
+                .success(function (userResourcePool) {
+                    vm.userResourcePool = userResourcePool;
+
+                    // Convert userSectorRating to chart data
+                    vm.chartData = [];
+
+                    userElementCellService.getUserElementCellSetByResourcePoolId(vm.userResourcePool.Id, true)
+                        .then(function (userElementCellSet) {
+
+                            for (var userElementCellIndex = 0; userElementCellIndex < userElementCellSet.length; userElementCellIndex++) {
+
+                                var userElementCell = userElementCellSet[userElementCellIndex];
+
+                                var chartDataItem = {
+                                    name: userElementCell.ElementCell.ElementItem.Name,
+                                    y: userElementCell.Rating
+                                };
+
+                                vm.chartData.push(chartDataItem);
+                            }
+
+                            vm.licenseChartConfig.loading = true;
+                            vm.chartConfig.series = [{ data: vm.chartData }];
+                            vm.chartConfig.loading = false;
+
+                        });
+
+                    // Results
+                    vm.resultsSectorSet = [];
+
+                    for (var i = 0; i < vm.userResourcePool.MainElement.ElementItemSet.length; i++) {
+                        var chartDataItem = {
+                            name: vm.userResourcePool.MainElement.ElementItemSet[i].Name,
+                            y: vm.userResourcePool.MainElement.ElementItemSet[i].RatingAverage
+                        }
+                        vm.resultsSectorSet.push(chartDataItem);
+                    }
+
+                    vm.resultsChartConfig.series = [{ data: vm.resultsSectorSet }];
+                    vm.resultsChartConfig.loading = false;
+
+                });
+
         }
 
         function loadChartData() {

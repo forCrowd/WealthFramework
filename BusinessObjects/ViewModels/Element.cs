@@ -7,7 +7,7 @@ namespace BusinessObjects.ViewModels
     {
         public Element() { }
 
-        public Element(BusinessObjects.Element element)
+        public Element(BusinessObjects.Element element, int userId)
         {
             Id = element.Id;
             Name = element.Name;
@@ -18,7 +18,9 @@ namespace BusinessObjects.ViewModels
             MultiplierFieldName = element.MultiplierFieldName;
             ElementFieldSet = element.ElementFieldSet.Select(item => new ElementField(item));
             BasicElementFieldSet = element.BasicElementFieldSet.Select(item => new ElementField(item));
-            ElementItemSet = element.ElementItemSet.Select(item => new ElementItem(item));
+            ElementItemSet = element.ElementItemSet
+                //.Take(2) // TODO For testing
+                .Select(item => new ElementItem(item, userId));
         }
 
         public int Id { get; set; }

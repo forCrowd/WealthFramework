@@ -20,7 +20,7 @@ namespace BusinessObjects.ViewModels
                 .ResourcePoolIndexSet
                 .Select(item => new ResourcePoolIndex(item));
             
-            MainElement = new Element(userResourcePool.ResourcePool.MainElement);
+            MainElement = new Element(userResourcePool.ResourcePool.MainElement, userResourcePool.UserId);
 
             TotalIncome = userResourcePool.ResourcePool.TotalIncome;
         }

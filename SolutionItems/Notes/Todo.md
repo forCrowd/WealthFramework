@@ -232,9 +232,6 @@ instead of dataobjects, it should be dataobjects.EF?
 
 * check error handling again, it was handling api errors as well?
 
-* chapter4controller - continue with save operation
-retrieve userelementcellset that only belongs to the current user and save the changes of these..
-
 ---
 http://www.asp.net/web-api/overview/testing-and-debugging/mocking-entity-framework-when-unit-testing-aspnet-web-api-2
 
@@ -248,3 +245,8 @@ datetime - indexable (fixed / user)
 element - n/a
 resource - ~decimal
 multiplier - n/a
+
+---
+security disabled for the moment!
+
+continue with chapter5 knowledge

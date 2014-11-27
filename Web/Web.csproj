@@ -417,6 +417,7 @@
       <DependentUpon>service.tt</DependentUpon>
     </Content>
     <Content Include="App\scripts\services\resourcePoolService.js" />
+    <Content Include="App\scripts\services\userElementCellService.js" />
     <Content Include="App\views\content\home.html" />
     <Content Include="App\views\content\overview.html" />
     <Content Include="App\views\content\technologies.html" />

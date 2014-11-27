@@ -4,10 +4,11 @@
     var controllerId = 'chapter4Controller';
     angular.module('main')
         .controller(controllerId, ['resourcePoolService',
+            'userElementCellService',
             'logger',
             chapter4Controller]);
 
-    function chapter4Controller(resourcePoolService, logger) {
+    function chapter4Controller(resourcePoolService, userElementCellService, logger) {
         logger = logger.forSource(controllerId);
 
         // TODO Static?
@@ -15,7 +16,6 @@
 
         var vm = this;
         vm.userResourcePool = null;
-
 
         vm.chartConfig = null;
         vm.chartData = null;
@@ -32,11 +32,8 @@
         /* Implementations */
 
         function initialize() {
-            //getUserResourcePool();
-
             configureChart();
-            loadChartData2();
-            //loadChartData();
+            loadChartData();
         }
 
         function getUserResourcePool() {
@@ -92,7 +89,10 @@
             };
         }
 
-        function loadChartData2() {
+        function loadChartData() {
+
+            vm.chartConfig.loading = true;
+            vm.resultsChartConfig.loading = true;
 
             resourcePoolService.getUserResourcePool(resourcePoolId)
                 .success(function (userResourcePool) {
@@ -100,62 +100,39 @@
 
                     // Convert userSectorRating to chart data
                     vm.chartData = [];
+
+                    userElementCellService.getUserElementCellSetByResourcePoolId(vm.userResourcePool.Id, true)
+                        .then(function (userElementCellSet) {
+
+                            for (var userElementCellIndex = 0; userElementCellIndex < userElementCellSet.length; userElementCellIndex++) {
+
+                                var userElementCell = userElementCellSet[userElementCellIndex];
+
+                                var chartDataItem = {
+                                    name: userElementCell.ElementCell.ElementItem.Name,
+                                    y: userElementCell.Rating
+                                };
+
+                                vm.chartData.push(chartDataItem);
+                            }
+
+                            vm.chartConfig.series = [{ data: vm.chartData }];
+                            vm.chartConfig.loading = false;
+
+                        });
+
+                    // Results
+                    vm.resultsSectorSet = [];
+
                     for (var i = 0; i < vm.userResourcePool.MainElement.ElementItemSet.length; i++) {
                         var chartDataItem = {
                             name: vm.userResourcePool.MainElement.ElementItemSet[i].Name,
-                            y: vm.userResourcePool.MainElement.ElementItemSet[i].TotalRating
+                            y: vm.userResourcePool.MainElement.ElementItemSet[i].RatingAverage
                         }
-                        vm.chartData.push(chartDataItem);
+                        vm.resultsSectorSet.push(chartDataItem);
                     }
 
-                    vm.chartConfig.series = [{ data: vm.chartData }];
-                    vm.chartConfig.loading = false;
-
-                });
-
-        }
-
-        function loadChartData() {
-
-            vm.chartConfig.loading = true;
-
-            userSectorRatingService.getUserSectorRatingSetByResourcePoolId(resourcePoolId, false)
-                .then(function (data) {
-
-                    // Convert userSectorRating to chart data
-                    vm.chartData = [];
-                    for (var i = 0; i < data.length; i++) {
-                        var chartDataItem = {
-                            name: data[i].Sector.Name,
-                            y: data[i].Rating
-                        }
-                        vm.chartData.push(chartDataItem);
-                    }
-
-                    vm.chartConfig.series = [{ data: vm.chartData }];
-                    vm.chartConfig.loading = false;
-                });
-
-            // Results chart
-
-            vm.resultsChartConfig.loading = true;
-
-            resourcePoolService.getSectorSet(resourcePoolId)
-                .success(function (sectorSet) {
-
-                    vm.resultsSectorSet = sectorSet;
-
-                    // Convert sectorSet to chart data
-                    var resultsChartData = [];
-                    for (var i = 0; i < vm.resultsSectorSet.length; i++) {
-                        var chartDataItem = {
-                            name: vm.resultsSectorSet[i].SectorName,
-                            y: vm.resultsSectorSet[i].RatingAverage
-                        }
-                        resultsChartData.push(chartDataItem);
-                    }
-
-                    vm.resultsChartConfig.series = [{ data: resultsChartData }];
+                    vm.resultsChartConfig.series = [{ data: vm.resultsSectorSet }];
                     vm.resultsChartConfig.loading = false;
 
                 });
@@ -167,12 +144,11 @@
 
         function saveChanges() {
 
-            userSectorRatingService.getUserSectorRatingSetByResourcePoolId(resourcePoolId, false)
-                .then(function (data) {
+            userElementCellService.getUserElementCellSetByResourcePoolId(vm.userResourcePool.Id, true)
+                .then(function (userElementCellSet) {
 
-                    // Convert chart data to userSectorRating
                     for (var i = 0; i < vm.chartData.length; i++) {
-                        var dataItem = data[i];
+                        var dataItem = userElementCellSet[i];
                         var chartDataItem = vm.chartData[i];
 
                         if (dataItem.Rating !== chartDataItem.y) {
@@ -184,7 +160,7 @@
                         }
                     }
 
-                    userSectorRatingService.saveChanges()
+                    userElementCellService.saveChanges()
                         .then(function () {
                             logger.logSuccess('Your changes have been saved!', null, true);
 

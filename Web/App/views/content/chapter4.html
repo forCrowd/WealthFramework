@@ -96,8 +96,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr data-ng-repeat="item in vm.resultsSectorSet">
-                        <td>{{ item.SectorName }}</td>
+                    <tr data-ng-repeat="item in vm.userResourcePool.MainElement.ElementItemSet">
+                        <td>{{ item.Name }}</td>
                         <td>{{ item.RatingCount }}</td>
                         <td>{{ item.RatingAverage | number:2 }}</td>
                     </tr>

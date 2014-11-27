@@ -8,7 +8,7 @@ namespace BusinessObjects.ViewModels
     {
         public ElementCell() { }
 
-        public ElementCell(BusinessObjects.ElementCell elementCell)
+        public ElementCell(BusinessObjects.ElementCell elementCell, int userId)
         {
             Id = elementCell.Id;
             ElementItemId = elementCell.ElementItemId;
@@ -20,14 +20,14 @@ namespace BusinessObjects.ViewModels
             DecimalValue = elementCell.DecimalValue;
             DateTimeValue = elementCell.DateTimeValue;
             if (elementCell.SelectedElementItem != null)
-                SelectedElementItem = new ElementItem(elementCell.SelectedElementItem);
+                SelectedElementItem = new ElementItem(elementCell.SelectedElementItem, userId);
 
             RatingAverageMultiplied = elementCell.RatingAverageMultiplied;
             RatingPercentage = elementCell.RatingPercentage;
             ResourcePoolIndexIncome = elementCell.ResourcePoolIndexIncome;
 
-            UserElementSet = elementCell.UserElementCellSet
-//                .Where(item => item.UserId == )
+            UserElementCellSet = elementCell.UserElementCellSet
+                .Where(item => item.UserId == userId)
                 .Select(item => new UserElementCell(item));
         }
 
@@ -46,6 +46,6 @@ namespace BusinessObjects.ViewModels
         public decimal RatingPercentage { get; set; }
         public decimal ResourcePoolIndexIncome { get; set; }
 
-        public IEnumerable<UserElementCell> UserElementSet { get; set; }
+        public IEnumerable<UserElementCell> UserElementCellSet { get; set; }
     }
 }
