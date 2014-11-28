@@ -19,10 +19,10 @@
         vm.oldSystemChartConfig = null;
         vm.newSystemChartConfig = null;
         vm.increase = increase;
-        vm.licenseChartConfig = null;
-        vm.displayLicenseResult = false;
-        vm.licenseResultChartConfig = null;
-        vm.licenseResultLicenseSet = [];
+        vm.chartConfig = null;
+        vm.displayResults = false;
+        vm.resultsChartConfig = null;
+        vm.resultsSectorSet = [];
         vm.resetChanges = resetChanges;
         vm.saveChanges = saveChanges;
 
@@ -32,7 +32,7 @@
 
         function initialize() {
             configureCharts();
-            //loadChartData();
+            loadChartData();
 
             refreshTimeout = $timeout(refreshPage, 5000);
 
@@ -119,7 +119,7 @@
                 ]
             };
 
-            vm.licenseChartConfig = {
+            vm.chartConfig = {
                 title: {
                     //text: 'Sectors'
                     text: ''
@@ -136,7 +136,7 @@
                 }
             };
 
-            vm.licenseResultChartConfig = {
+            vm.resultsChartConfig = {
                 title: {
                     text: ''
                 },
@@ -153,7 +153,7 @@
             };
         }
 
-        function loadChartData2() {
+        function loadChartData() {
 
             vm.chartConfig.loading = true;
             vm.resultsChartConfig.loading = true;
@@ -180,7 +180,7 @@
                                 vm.chartData.push(chartDataItem);
                             }
 
-                            vm.licenseChartConfig.loading = true;
+                            // vm.licenseChartConfig.loading = true;
                             vm.chartConfig.series = [{ data: vm.chartData }];
                             vm.chartConfig.loading = false;
 
@@ -204,64 +204,17 @@
 
         }
 
-        function loadChartData() {
-
-            vm.licenseChartConfig.loading = true;
-
-            userLicenseRatingService.getUserLicenseRatingSetByResourcePoolId(resourcePoolId, false)
-                .then(function (data) {
-
-                    // Convert userLicenseRating to chart data
-                    vm.chartData = [];
-                    for (var i = 0; i < data.length; i++) {
-                        var chartDataItem = {
-                            name: data[i].License.Name,
-                            y: data[i].Rating
-                        }
-                        vm.chartData.push(chartDataItem);
-                    }
-
-                    vm.licenseChartConfig.series = [{ data: vm.chartData }];
-                    vm.licenseChartConfig.loading = false;
-                });
-
-            // License Result Chart
-
-            vm.licenseResultChartConfig.loading = true;
-
-            resourcePoolService.getLicenseSet(resourcePoolId)
-                .success(function (licenseSet) {
-
-                    vm.licenseResultLicenseSet = licenseSet;
-
-                    // Convert licenseSet to chart data
-                    var licenseResultChartData = [];
-                    for (var i = 0; i < vm.licenseResultLicenseSet.length; i++) {
-                        var chartDataItem = {
-                            name: vm.licenseResultLicenseSet[i].LicenseName,
-                            y: vm.licenseResultLicenseSet[i].RatingAverage
-                        }
-                        licenseResultChartData.push(chartDataItem);
-                    }
-
-                    vm.licenseResultChartConfig.series = [{ data: licenseResultChartData }];
-                    vm.licenseResultChartConfig.loading = false;
-
-                });
-        }
-
         function resetChanges() {
             loadChartData();
         }
 
         function saveChanges() {
 
-            userLicenseRatingService.getUserLicenseRatingSetByResourcePoolId(resourcePoolId, false)
-                .then(function (data) {
+            userElementCellService.getUserElementCellSetByResourcePoolId(vm.userResourcePool.Id, true)
+                .then(function (userElementCellSet) {
 
-                    // Convert chart data to userSectorRating
                     for (var i = 0; i < vm.chartData.length; i++) {
-                        var dataItem = data[i];
+                        var dataItem = userElementCellSet[i];
                         var chartDataItem = vm.chartData[i];
 
                         if (dataItem.Rating !== chartDataItem.y) {
@@ -273,11 +226,11 @@
                         }
                     }
 
-                    userLicenseRatingService.saveChanges()
+                    userElementCellService.saveChanges()
                         .then(function () {
                             logger.logSuccess('Your changes have been saved!', null, true);
 
-                            vm.displayLicenseResult = true;
+                            vm.displayResults = true;
 
                             loadChartData();
                         });

@@ -319,6 +319,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\scripts\controllers\content\chapter6ControllerBackup.js" />
     <Content Include="App\scripts\controllers\manage\edit\elementCellEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
@@ -418,6 +419,7 @@
     </Content>
     <Content Include="App\scripts\services\resourcePoolService.js" />
     <Content Include="App\scripts\services\userElementCellService.js" />
+    <Content Include="App\views\content\chapter6Backup.html" />
     <Content Include="App\views\content\home.html" />
     <Content Include="App\views\content\overview.html" />
     <Content Include="App\views\content\technologies.html" />

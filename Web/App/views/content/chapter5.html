@@ -123,7 +123,7 @@
             </form>
         </div>
     </div>
-    <div class="row top-buffer" data-ng-show="vm.displayLicenseResult">
+    <div class="row top-buffer" data-ng-show="vm.displayResults">
         <div class="col-md-12">
             <h2>
                 Results
@@ -142,7 +142,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr data-ng-repeat="item in vm.userResourcePool.MainElement.ElementItemSet">
+                        <td>{{ item.Name }}</td>
+                        <td>{{ item.RatingCount }}</td>
+                        <td>{{ item.RatingAverage | number:2 }}</td>
+                    </tr>
+                    <!--<tr>
                         <td>{{ vm.licenseResultLicenseSet[0].LicenseName }}</td>
                         <td>{{ vm.licenseResultLicenseSet[0].RatingCount }}</td>
                         <td>{{ vm.licenseResultLicenseSet[0].RatingAverage | number:2 }}</td>
@@ -151,7 +156,7 @@
                         <td>{{ vm.licenseResultLicenseSet[1].LicenseName }}</td>
                         <td>{{ vm.licenseResultLicenseSet[1].RatingCount }}</td>
                         <td>{{ vm.licenseResultLicenseSet[1].RatingAverage | number:2 }}</td>
-                    </tr>
+                    </tr>-->
                 </tbody>
             </table>
         </div>

@@ -119,7 +119,6 @@
         }
 
         function saveChanges() {
-            logger.log(dataContext, dataContext);
             return dataContext.saveChanges();
         }
     }

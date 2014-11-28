@@ -3,26 +3,23 @@
 
     var controllerId = 'chapter6Controller';
     angular.module('main')
-        .controller(controllerId, ['userResourcePoolService', 'logger', chapter6Controller]);
+        .controller(controllerId, ['resourcePoolService', 'userElementCellService', 'logger', chapter6Controller]);
 
-    function chapter6Controller(userResourcePoolService, logger) {
+    function chapter6Controller(resourcePoolService, userElementCellService, logger) {
         logger = logger.forSource(controllerId);
 
         // TODO Static?
-        var resourcePoolId = 1;
-        //var resourcePoolId = 2;
+        var resourcePoolId = 3;
 
         //var refreshTimeout = null;
 
         var vm = this;
         vm.totalCostData = null;
-        vm.totalCostChartConfig = null;
-        vm.totalCost2ChartConfig = null;
-        vm.decreaseNumberOfSales = decreaseNumberOfSales;
-        vm.decreaseResourcePoolRate = decreaseResourcePoolRate;
-        vm.increaseNumberOfSales = increaseNumberOfSales;
-        vm.increaseResourcePoolRate = increaseResourcePoolRate;
-        vm.resetNumberOfSales = resetNumberOfSales;
+        vm.chartConfig = null;
+        vm.resultsChartConfig = null;
+        vm.decreaseMultiplier = decreaseMultiplier;
+        vm.increaseMultiplier = increaseMultiplier;
+        vm.resetMultiplier = resetMultiplier;
 
         initialize();
 
@@ -31,52 +28,63 @@
         function initialize() {
             configureCharts();
             loadChartData();
-
-            //refreshTimeout = $timeout(refreshPage, 5000);
-
-            //// When the DOM element is removed from the page,
-            //// AngularJS will trigger the $destroy event on
-            //// the scope. This gives us a chance to cancel any
-            //// pending timer that we may have.
-            //$scope.$on("$destroy", function (event) {
-            //    $timeout.cancel(refreshTimeout);
-            //});
         }
 
-        function decreaseNumberOfSales() {
-            userResourcePoolService.decreaseNumberOfSales(vm.totalCostData.Id)
+        function decreaseMultiplier() {
+            resourcePoolService.decreaseMultiplier(resourcePoolId)
                 .success(function () {
-                    refreshChartData();
+                    loadChartData();
                 });
         }
 
-        function decreaseResourcePoolRate() {
-            userResourcePoolService.decreaseResourcePoolRate(vm.totalCostData.Id)
+        function increaseMultiplier() {
+            resourcePoolService.increaseMultiplier(resourcePoolId)
                 .success(function () {
-                    refreshChartData();
+                    loadChartData();
                 });
         }
 
-        function increaseNumberOfSales() {
-            userResourcePoolService.increaseNumberOfSales(vm.totalCostData.Id)
+        function resetMultiplier() {
+            resourcePoolService.resetMultiplier(resourcePoolId)
                 .success(function () {
-                    refreshChartData();
+                    loadChartData();
                 });
         }
 
-        function increaseResourcePoolRate() {
-            userResourcePoolService.increaseResourcePoolRate(vm.totalCostData.Id)
-                .success(function () {
-                    refreshChartData();
-                });
-        }
+        //function decreaseMultiplier() {
+        //    userResourcePoolService.decreaseMultiplier(vm.totalCostData.Id)
+        //        .success(function () {
+        //            refreshChartData();
+        //        });
+        //}
 
-        function resetNumberOfSales() {
-            userResourcePoolService.resetNumberOfSales(vm.totalCostData.Id)
-                .success(function () {
-                    refreshChartData();
-                });
-        }
+        //function decreaseResourcePoolRate() {
+        //    userResourcePoolService.decreaseResourcePoolRate(vm.totalCostData.Id)
+        //        .success(function () {
+        //            refreshChartData();
+        //        });
+        //}
+
+        //function increaseMultiplier() {
+        //    userResourcePoolService.increaseMultiplier(vm.totalCostData.Id)
+        //        .success(function () {
+        //            refreshChartData();
+        //        });
+        //}
+
+        //function increaseResourcePoolRate() {
+        //    userResourcePoolService.increaseResourcePoolRate(vm.totalCostData.Id)
+        //        .success(function () {
+        //            refreshChartData();
+        //        });
+        //}
+
+        //function resetMultiplier() {
+        //    userResourcePoolService.resetMultiplier(vm.totalCostData.Id)
+        //        .success(function () {
+        //            refreshChartData();
+        //        });
+        //}
 
         //function refreshPage() {
 
@@ -99,61 +107,8 @@
 
         function configureCharts() {
 
-            //vm.oldSystemChartConfig = {
-            //    title: {
-            //        text: ''
-            //    },
-            //    options: {
-            //        chart: {
-            //            type: 'column'
-            //        },
-            //        yAxis: {
-            //            title: { text: 'Development process' },
-            //            min: 0,
-            //            allowDecimals: false
-            //        },
-            //        xAxis: { categories: ['Knowledge'] },
-            //        plotOptions: {
-            //            column: {
-            //                pointWidth: 15
-            //            }
-            //        }
-            //    },
-            //    series: [
-            //        { name: "My Precious", data: [0] },
-            //        { name: "Vicky's Secret", data: [0] },
-            //        { name: 'Imperial Stars', data: [0] },
-            //        { name: 'Xplore Eldorado', data: [0] }
-            //    ]
-            //};
-
-            //vm.newSystemChartConfig = {
-            //    title: {
-            //        text: ''
-            //    },
-            //    options: {
-            //        chart: {
-            //            type: 'column'
-            //        },
-            //        yAxis: {
-            //            title: { text: 'Development process' },
-            //            min: 0,
-            //            allowDecimals: false
-            //        },
-            //        xAxis: { categories: ['Knowledge'] },
-            //        plotOptions: {
-            //            column: {
-            //                pointWidth: 15
-            //            }
-            //        }
-            //    },
-            //    series: [
-            //        { name: 'Global Knowledge Database', data: [0] }
-            //    ]
-            //};
-            
             // Old
-            vm.totalCostChartConfig = {
+            vm.chartConfig = {
                 title: {
                     text: ''
                 },
@@ -176,7 +131,7 @@
             };
 
             // New
-            vm.totalCost2ChartConfig = {
+            vm.resultsChartConfig = {
                 title: {
                     text: ''
                 },
@@ -197,28 +152,80 @@
                     }
                 }
             };
-
-            //vm.licenseResultChartConfig = {
-            //    title: {
-            //        text: ''
-            //    },
-            //    options: {
-            //        chart: {
-            //            type: 'pie'
-            //        },
-            //        plotOptions: {
-            //            pie: {
-            //                allowPointSelect: true
-            //            }
-            //        }
-            //    }
-            //};
         }
 
         function loadChartData() {
 
-            vm.totalCostChartConfig.loading = true;
-            vm.totalCost2ChartConfig.loading = true;
+            vm.chartConfig.loading = true;
+            vm.resultsChartConfig.loading = true;
+
+            resourcePoolService.getUserResourcePool(resourcePoolId)
+                .success(function (userResourcePool) {
+
+                    vm.userResourcePool = userResourcePool;
+
+                    // Convert userSectorRating to chart data
+                    vm.chartData = [];
+
+                    for (var elementItemIndex = 0; elementItemIndex < vm.userResourcePool.MainElement.ElementItemSet.length; elementItemIndex++) {
+
+                        var elementItem = vm.userResourcePool.MainElement.ElementItemSet[elementItemIndex];
+
+                        var chartDataItem = {
+                            name: elementItem.Name,
+                            data: [elementItem.TotalResourcePoolValue]
+                        };
+
+                        vm.chartData.push(chartDataItem);
+
+                    }
+
+                    //userElementCellService.getUserElementCellSetByResourcePoolId(vm.userResourcePool.Id, true)
+                    //    .then(function (userElementCellSet) {
+
+                    //        for (var userElementCellIndex = 0; userElementCellIndex < userElementCellSet.length; userElementCellIndex++) {
+
+                    //            var userElementCell = userElementCellSet[userElementCellIndex];
+
+                    //            var chartDataItem = {
+                    //                name: vm.totalCostData.UserOrganizationSet[i].OrganizationName,
+                    //                data: [vm.totalCostData.UserOrganizationSet[i].TotalProfit]
+                    //            }
+
+                    //            var chartDataItem = {
+                    //                name: userElementCell.ElementCell.ElementItem.Name,
+                    //                data: [ userElementCell.Rating ]
+                    //            };
+
+                    //            vm.chartData.push(chartDataItem);
+                    //        }
+
+
+                    //    });
+
+                    //vm.chartConfig.series = [{ data: vm.chartData }];
+                    vm.chartConfig.series = vm.chartData;
+                    vm.chartConfig.loading = false;
+
+                    // Results
+                    vm.resultsSectorSet = [];
+
+                    for (var i = 0; i < vm.userResourcePool.MainElement.ElementItemSet.length; i++) {
+                        var chartDataItem = {
+                            name: vm.userResourcePool.MainElement.ElementItemSet[i].Name,
+                            data: [vm.userResourcePool.MainElement.ElementItemSet[i].TotalIncome]
+                        }
+                        vm.resultsSectorSet.push(chartDataItem);
+                    }
+
+                    // vm.resultsChartConfig.series = [{ data: vm.resultsSectorSet }];
+                    vm.resultsChartConfig.series = vm.resultsSectorSet;
+                    vm.resultsChartConfig.loading = false;
+
+                });
+
+            //vm.chartConfig.loading = true;
+            //vm.resultsChartConfig.loading = true;
 
             // TODO !
             //userResourcePoolService. getUserResourcePool ... (resourcePoolId)
@@ -245,48 +252,19 @@
             //            chartData2.push(chartDataItem2);
             //        }
 
-            //        vm.totalCostChartConfig.series = chartData;
-            //        vm.totalCost2ChartConfig.series = chartData2;
+            //        vm.chartConfig.series = chartData;
+            //        vm.resultsChartConfig.series = chartData2;
 
-            //        vm.totalCostChartConfig.loading = false;
-            //        vm.totalCost2ChartConfig.loading = false;
-
-            //    });
-
-
-
-
-
-            //// License Result Chart
-
-            //vm.licenseResultChartConfig.loading = true;
-
-            //resourcePoolService.getLicenseSet(resourcePoolId)
-            //    .success(function (licenseSet) {
-
-            //        vm.licenseResultLicenseSet = licenseSet;
-
-            //        // Convert licenseSet to chart data
-            //        var licenseResultChartData = [];
-            //        for (var i = 0; i < vm.licenseResultLicenseSet.length; i++) {
-            //            var chartDataItem = {
-            //                name: vm.licenseResultLicenseSet[i].LicenseName,
-            //                y: vm.licenseResultLicenseSet[i].AverageRating
-            //            }
-            //            licenseResultChartData.push(chartDataItem);
-            //        }
-
-            //        vm.licenseResultChartConfig.series = [{ data: licenseResultChartData }];
-            //        vm.licenseResultChartConfig.loading = false;
+            //        vm.chartConfig.loading = false;
+            //        vm.resultsChartConfig.loading = false;
 
             //    });
         }
 
         function refreshChartData() {
 
-            vm.totalCostChartConfig.loading = true;
-            vm.totalCost2ChartConfig.loading = true;
-
+            vm.chartConfig.loading = true;
+            vm.resultsChartConfig.loading = true;
 
             // TODO
 
@@ -297,16 +275,16 @@
             //        // Convert
             //        // Old
             //        for (var i = 0; i < vm.totalCostData.UserOrganizationSet.length; i++) {
-            //            vm.totalCostChartConfig.series[i].data[0] = vm.totalCostData.UserOrganizationSet[i].TotalProfit;
+            //            vm.chartConfig.series[i].data[0] = vm.totalCostData.UserOrganizationSet[i].TotalProfit;
             //        }
 
             //        // New
             //        for (var i = 0; i < vm.totalCostData.UserOrganizationSet.length; i++) {
-            //            vm.totalCost2ChartConfig.series[i].data[0] = vm.totalCostData.UserOrganizationSet[i].TotalIncome;
+            //            vm.resultsChartConfig.series[i].data[0] = vm.totalCostData.UserOrganizationSet[i].TotalIncome;
             //        }
 
-            //        vm.totalCostChartConfig.loading = false;
-            //        vm.totalCost2ChartConfig.loading = false;
+            //        vm.chartConfig.loading = false;
+            //        vm.resultsChartConfig.loading = false;
             //    });
         }
 

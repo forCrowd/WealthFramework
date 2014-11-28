@@ -62,6 +62,7 @@ http://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-w
 * check validation cases - null is okay but how about Id check - Id > 0?
 * use fluent approach on element + item + field + cell
 * viewmodels don't belong to business layer?!
+* find a better approach for rowversion fix on client-side before saving?
 
 ## Long Term
 
@@ -250,3 +251,9 @@ multiplier - n/a
 security disabled for the moment!
 
 continue with chapter5 knowledge
+
+resourcepoolindex . elementid ??
+
+chapter 10?!
+
+total cost index doesn't work right, it gives the same amount to both of the elements
