@@ -248,12 +248,12 @@ resource - ~decimal
 multiplier - n/a
 
 ---
-security disabled for the moment!
-
-continue with chapter5 knowledge
-
 resourcepoolindex . elementid ??
 
-chapter 10?!
+chapter 7, 8, 9, 10 ?!
 
 total cost index doesn't work right, it gives the same amount to both of the elements
+
+again publish profile issue ?!
+
+test live! - clear db?

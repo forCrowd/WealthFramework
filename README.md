@@ -25,6 +25,7 @@ An experimental resource management system that aims to provide a sustainable ec
 * Local Restore Database sql script (experimental)
 * Unit testing improvements
 * Part of the initial sample data was updated according to the latest updates
+* Chapters visible again, although some one the pages still need to be updated
 
 **0.14.6**
 
