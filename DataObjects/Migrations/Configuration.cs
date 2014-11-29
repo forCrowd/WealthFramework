@@ -32,7 +32,7 @@ namespace DataObjects.Migrations
 
                 switch (migrationVersion)
                 {
-                    case "V0_14_7": // Currently the initial migration
+                    case "V0_14_8": // Currently the initial migration
                         {
                             // Initial data
                             DatabaseInitializer.SeedInitialData(context);

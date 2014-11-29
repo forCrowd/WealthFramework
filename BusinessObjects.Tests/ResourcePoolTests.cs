@@ -1,24 +1,24 @@
-﻿namespace Facade.Tests
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace BusinessObjects.Tests
 {
-    using BusinessObjects;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-
     [TestClass]
-    public class ResourcePoolTest
+    public class ResourcePoolTests
     {
-        ResourcePool resourcePool;
-
-        [TestInitialize]
-        public void Initialize()
+        [TestMethod]
+        public void NewResourcePool()
         {
-            resourcePool = new ResourcePool();
+            var newResourcePool = new ResourcePool();
         }
 
         [TestMethod]
         public void TwoElementItems_StringTypeIndex_SingleUser()
         {
             // Arrange + act
-            var organization = new Element() { ResourcePool = resourcePool, IsMainElement = true };
+            var resourcePool = new ResourcePool("Default");
+
+            var organization = new Element(resourcePool, "Organization") { IsMainElement = true };
             resourcePool.ElementSet.Add(organization);
 
             var organizationName = new ElementField() { Element = organization, Name = "Organization Name", ElementFieldType = (byte)ElementFieldType.String };
@@ -159,7 +159,9 @@
         public void TwoElementItems_DecimalTypeIndex_SingleUser()
         {
             // Arrange + act
-            var organization = new Element() { ResourcePool = resourcePool, IsMainElement = true };
+            var resourcePool = new ResourcePool("Default");
+            
+            var organization = new Element(resourcePool, "Main Element") { IsMainElement = true };
             resourcePool.ElementSet.Add(organization);
 
             var salesPrice = new ElementField() { Element = organization, Name = "Sales Price", ElementFieldType = (byte)ElementFieldType.ResourcePool };
@@ -244,9 +246,5 @@
             Assert.IsTrue(organization2.ResourcePoolIndexIncome == 25);
             Assert.IsTrue(organization2.TotalIncome == 100);
         }
-
-        // TODO !
-        //[TestMethod]
-        // public void TwoElementItems_SingleIndex_TwoUsers()
     }
 }

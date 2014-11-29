@@ -248,12 +248,8 @@ resource - ~decimal
 multiplier - n/a
 
 ---
-resourcepoolindex . elementid ??
-
 chapter 7, 8, 9, 10 ?!
 
 total cost index doesn't work right, it gives the same amount to both of the elements
 
-again publish profile issue ?!
-
-test live! - clear db?
+isnullordefault looks good but check it bit more!

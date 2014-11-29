@@ -3,7 +3,7 @@ namespace DataObjects.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class V0_14_7 : DbMigration
+    public partial class V0_14_8 : DbMigration
     {
         public override void Up()
         {
@@ -231,21 +231,21 @@ namespace DataObjects.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         ResourcePoolId = c.Int(nullable: false),
                         Name = c.String(nullable: false, maxLength: 50),
-                        ElementId = c.Int(),
                         ElementFieldId = c.Int(),
                         RatingSortType = c.Byte(nullable: false),
                         CreatedOn = c.DateTime(nullable: false),
                         ModifiedOn = c.DateTime(nullable: false),
                         DeletedOn = c.DateTime(),
                         RowVersion = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
+                        Element_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Element", t => t.ElementId)
                 .ForeignKey("dbo.ElementField", t => t.ElementFieldId)
                 .ForeignKey("dbo.ResourcePool", t => t.ResourcePoolId, cascadeDelete: true)
+                .ForeignKey("dbo.Element", t => t.Element_Id)
                 .Index(t => t.ResourcePoolId)
-                .Index(t => t.ElementId)
-                .Index(t => t.ElementFieldId);
+                .Index(t => t.ElementFieldId)
+                .Index(t => t.Element_Id);
             
             CreateTable(
                 "dbo.UserResourcePoolIndex",
@@ -269,6 +269,7 @@ namespace DataObjects.Migrations
         
         public override void Down()
         {
+            DropForeignKey("dbo.ResourcePoolIndex", "Element_Id", "dbo.Element");
             DropForeignKey("dbo.UserElementCell", "UserId", "dbo.User");
             DropForeignKey("dbo.UserResourcePool", "UserId", "dbo.User");
             DropForeignKey("dbo.UserResourcePool", "ResourcePoolId", "dbo.ResourcePool");
@@ -276,7 +277,6 @@ namespace DataObjects.Migrations
             DropForeignKey("dbo.UserResourcePoolIndex", "ResourcePoolIndexId", "dbo.ResourcePoolIndex");
             DropForeignKey("dbo.ResourcePoolIndex", "ResourcePoolId", "dbo.ResourcePool");
             DropForeignKey("dbo.ResourcePoolIndex", "ElementFieldId", "dbo.ElementField");
-            DropForeignKey("dbo.ResourcePoolIndex", "ElementId", "dbo.Element");
             DropForeignKey("dbo.Element", "ResourcePoolId", "dbo.ResourcePool");
             DropForeignKey("dbo.UserRole", "UserId", "dbo.User");
             DropForeignKey("dbo.UserRole", "RoleId", "dbo.Role");
@@ -289,8 +289,8 @@ namespace DataObjects.Migrations
             DropForeignKey("dbo.ElementCell", "ElementFieldId", "dbo.ElementField");
             DropForeignKey("dbo.ElementField", "ElementId", "dbo.Element");
             DropIndex("dbo.UserResourcePoolIndex", "IX_UserResourcePoolIdResourcePoolIndexId");
+            DropIndex("dbo.ResourcePoolIndex", new[] { "Element_Id" });
             DropIndex("dbo.ResourcePoolIndex", new[] { "ElementFieldId" });
-            DropIndex("dbo.ResourcePoolIndex", new[] { "ElementId" });
             DropIndex("dbo.ResourcePoolIndex", new[] { "ResourcePoolId" });
             DropIndex("dbo.UserResourcePool", "IX_UserIdResourcePoolId");
             DropIndex("dbo.Role", "RoleNameIndex");

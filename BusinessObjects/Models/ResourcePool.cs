@@ -12,8 +12,12 @@ namespace BusinessObjects
     // [ODataControllerAuthorization("Administrator")]
     public class ResourcePool : BaseEntity
     {
-        public ResourcePool()
+        [Obsolete("Parameterless constructors used in Web - Controllers. Remove them when possible")]
+        public ResourcePool() : this(string.Empty) { }
+
+        public ResourcePool(string name)
         {
+            Name = name;
             ElementSet = new HashSet<Element>();
             ResourcePoolIndexSet = new HashSet<ResourcePoolIndex>();
             UserResourcePoolSet = new HashSet<UserResourcePool>();
@@ -98,6 +102,12 @@ namespace BusinessObjects
         }
 
         #region - Methods -
+
+        public ResourcePoolIndex AddIndex()
+        {
+            var newIndex = new ResourcePoolIndex();
+            return newIndex;
+        }
 
         public ResourcePool AddIndex(ResourcePoolIndex index)
         {

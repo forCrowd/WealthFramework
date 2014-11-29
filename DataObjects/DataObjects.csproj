@@ -89,6 +89,10 @@
     <Compile Include="Generated\UserRoleRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201411282045150_V0_14_8.cs" />
+    <Compile Include="Migrations\201411282045150_V0_14_8.Designer.cs">
+      <DependentUpon>201411282045150_V0_14_8.cs</DependentUpon>
+    </Compile>
     <Compile Include="ResourcePoolRepository.cs" />
     <Compile Include="RoleStore.cs" />
     <Compile Include="UserStore.cs" />
@@ -124,10 +128,6 @@
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
     <Compile Include="IRepository.cs" />
-    <Compile Include="Migrations\201410291309239_V0_14_7.cs" />
-    <Compile Include="Migrations\201410291309239_V0_14_7.Designer.cs">
-      <DependentUpon>201410291309239_V0_14_7.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="DatabaseInitializer.cs" />
   </ItemGroup>
@@ -162,8 +162,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201410291309239_V0_14_7.resx">
-      <DependentUpon>201410291309239_V0_14_7.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201411282045150_V0_14_8.resx">
+      <DependentUpon>201411282045150_V0_14_8.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -13,8 +13,18 @@ namespace BusinessObjects
     // [ODataControllerAuthorization("Administrator")]
     public class ResourcePoolIndex : BaseEntity
     {
-        public ResourcePoolIndex()
+        public ResourcePoolIndex() : this(new ResourcePool("Default"), "Default Index", new ElementField())
         {
+        }
+
+        public ResourcePoolIndex(ResourcePool resourcePool, string name, ElementField field)
+        {
+            Framework.Validation.ArgumentNullOrDefault(resourcePool, "resourcePool");
+            Framework.Validation.ArgumentNullOrDefault(name, "name");
+
+            ResourcePool = resourcePool;
+            Name = name;
+            ElementField = field;
             UserResourcePoolIndexSet = new HashSet<UserResourcePoolIndex>();
         }
 
@@ -29,7 +39,7 @@ namespace BusinessObjects
         [Display(Name = "Resource Pool Index")]
         public string Name { get; set; }
 
-        public Nullable<int> ElementId { get; set; }
+        //public Nullable<int> ElementId { get; set; }
         public Nullable<int> ElementFieldId { get; set; }
         
         [Required]
@@ -37,7 +47,7 @@ namespace BusinessObjects
         public byte RatingSortType { get; set; }
 
         public virtual ResourcePool ResourcePool { get; set; }
-        public virtual Element Element { get; set; }
+        // public virtual Element Element { get; set; }
         public virtual ElementField ElementField { get; set; }
         public virtual ICollection<UserResourcePoolIndex> UserResourcePoolIndexSet { get; set; }
 

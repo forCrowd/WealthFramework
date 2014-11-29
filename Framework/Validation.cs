@@ -6,11 +6,19 @@ namespace Framework
 {
     public static class Validation
     {
-        public static void ArgumentNotNull<T>(T arg) where T : class
+        public static void ArgumentNullOrDefault<T>(T arg, string paramName)
         {
-            if (arg == null)
+            if (arg.IsNullOrDefault())
             {
-                throw new ArgumentNullException(arg.GetType().GetProperties()[0].Name);
+                throw new ArgumentNullOrDefaultException(paramName);
+            }
+        }
+
+        public static void ArgumentNullOrDefault<T>(T? arg, string paramName) where T : struct
+        {
+            if (arg.IsNullOrDefault())
+            {
+                throw new ArgumentNullOrDefaultException(paramName);
             }
         }
     }

@@ -1,6 +1,7 @@
 namespace BusinessObjects
 {
     using BusinessObjects.Attributes;
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
@@ -9,8 +10,13 @@ namespace BusinessObjects
     // [ODataControllerAuthorization("Administrator")]
     public class Element : BaseEntity
     {
-        public Element()
+        [Obsolete("Parameterless constructors used in Web - Controllers. Remove them when possible")]
+        public Element() : this(null, string.Empty) { }
+
+        public Element(ResourcePool resourcePool, string name)
         {
+            ResourcePool = resourcePool;
+            Name = name;
             ElementFieldSet = new HashSet<ElementField>();
             ElementItemSet = new HashSet<ElementItem>();
             ResourcePoolIndexSet = new HashSet<ResourcePoolIndex>();

@@ -6,6 +6,11 @@ An experimental resource management system that aims to provide a sustainable ec
 
 ### Release Notes
 
+**0.14.8**
+
+* BusinessObjects.Tests project created
+* Framework.Tests project created - TypeExtensionsTests & ValidationTests added
+
 **0.14.7**
 
 * Clean-up
@@ -24,6 +29,7 @@ An experimental resource management system that aims to provide a sustainable ec
 * Azure websites; http://wealth.azurewebsites.net
 * Local Restore Database sql script (experimental)
 * Unit testing improvements
+* Bit of fluent interface
 * Part of the initial sample data was updated according to the latest updates
 * Chapters visible again, although some one the pages still need to be updated
 

@@ -110,10 +110,10 @@
         public ResourcePool CreateDefaultResourcePool(User user, short numberOfItems)
         {
             // Resource pool
-            var resourcePool = new ResourcePool() { Name = "Default" };
+            var resourcePool = new ResourcePool("Default");
 
             // Main element
-            var mainElement = new Element() { Name = "Main Element", IsMainElement = true };
+            var mainElement = new Element(resourcePool, "Main Element") { IsMainElement = true };
             resourcePool.AddElement(mainElement);
 
             // Fields

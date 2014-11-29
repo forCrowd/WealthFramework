@@ -43,8 +43,8 @@
         /// <returns></returns>
         public async Task CopySampleDataAsync(int sourceUserId, User targetUser)
         {
-            // TODO sourceUserId validation
-            Framework.Validation.ArgumentNotNull(targetUser);
+            Framework.Validation.ArgumentNullOrDefault(sourceUserId, "sourceUserId");
+            Framework.Validation.ArgumentNullOrDefault(targetUser, "targetUser");
 
             // Resource pools
             var sourceUserResourcePools = await UserResourcePoolSet
