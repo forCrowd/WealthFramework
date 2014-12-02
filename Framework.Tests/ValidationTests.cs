@@ -16,7 +16,21 @@ namespace Framework.Tests
         [TestMethod]
         public void String_Default_ShouldFail()
         {
-            string test = default(string);
+            string test = default(string); // null
+            Validate(test);
+        }
+
+        [TestMethod]
+        public void String_Empty_ShouldFail()
+        {
+            string test = string.Empty;
+            Validate(test);
+        }
+
+        [TestMethod]
+        public void String_Whitespace_ShouldFail()
+        {
+            string test = " ";
             Validate(test);
         }
 
@@ -37,7 +51,7 @@ namespace Framework.Tests
         [TestMethod]
         public void NullableInt_Default_ShouldFail()
         {
-            int? test = default(int);
+            int? test = default(int); // null
             Validate(test);
         }
 
@@ -56,16 +70,16 @@ namespace Framework.Tests
         }
 
         [TestMethod]
-        public void Int_Default_ShouldFail()
+        public void Int_0_ShouldFail()
         {
-            int test = default(int);
+            int test = 0;
             Validate(test);
         }
 
         [TestMethod]
-        public void Int_0_ShouldFail()
+        public void Int_Default_ShouldFail()
         {
-            int test = 0;
+            int test = default(int); // 0
             Validate(test);
         }
 
@@ -90,16 +104,18 @@ namespace Framework.Tests
             Validate(test, false);
         }
 
+        // For classes and structs, except nullables
         void Validate<T>(T test, bool isNullOrDefault = true)
         {
             try
             {
-                Framework.Validation.ArgumentNullOrDefault(test, "test");
+                Framework.Validations.ArgumentNullOrDefault(test, "test");
 
                 if (isNullOrDefault)
                     Assert.Fail();
             }
             catch (ArgumentNullOrDefaultException ex)
+            //catch (ArgumentNullException ex)
             {
                 if (!isNullOrDefault)
                     Assert.Fail();
@@ -108,16 +124,18 @@ namespace Framework.Tests
             }
         }
 
+        // For nullables
         void Validate<T>(T? test, bool isNullOrDefault = true) where T : struct
         {
             try
             {
-                Framework.Validation.ArgumentNullOrDefault(test, "test");
+                Framework.Validations.ArgumentNullOrDefault(test, "test");
 
                 if (isNullOrDefault)
                     Assert.Fail();
             }
             catch (ArgumentNullOrDefaultException ex)
+            //catch (ArgumentNullException ex)
             {
                 if (!isNullOrDefault)
                     Assert.Fail();

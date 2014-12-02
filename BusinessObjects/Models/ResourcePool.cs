@@ -1,6 +1,7 @@
 namespace BusinessObjects
 {
     using BusinessObjects.Attributes;
+    using Framework;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -12,11 +13,15 @@ namespace BusinessObjects
     // [ODataControllerAuthorization("Administrator")]
     public class ResourcePool : BaseEntity
     {
-        [Obsolete("Parameterless constructors used in Web - Controllers. Remove them when possible")]
-        public ResourcePool() : this(string.Empty) { }
+        [Obsolete("Parameterless constructors used in Web - Controllers. Make them private them when possible")]
+        public ResourcePool()
+            //: this("Default CMRP")
+        { }
 
         public ResourcePool(string name)
         {
+            Validations.ArgumentNullOrDefault(name, "name");
+
             Name = name;
             ElementSet = new HashSet<Element>();
             ResourcePoolIndexSet = new HashSet<ResourcePoolIndex>();
@@ -103,34 +108,37 @@ namespace BusinessObjects
 
         #region - Methods -
 
-        public ResourcePoolIndex AddIndex()
+        public ResourcePoolIndex AddIndex(string name, ElementField field)
         {
-            var newIndex = new ResourcePoolIndex();
-            return newIndex;
+            return AddIndex(name, field, null);
         }
 
-        public ResourcePool AddIndex(ResourcePoolIndex index)
+        public ResourcePoolIndex AddIndex(string name, ElementField field, RatingSortType? sortType)
         {
-            // TODO Validation?
-            index.ResourcePool = this;
+            var index = new ResourcePoolIndex(this, name, field);
+
+            if (sortType.HasValue)
+                index.RatingSortType = (byte)sortType;
+
+            field.ResourcePoolIndexSet.Add(index);
             ResourcePoolIndexSet.Add(index);
-            return this;
+            return index;
         }
 
-        public ResourcePool AddElement(Element element)
+        public Element AddElement(string name)
         {
-            // TODO Validation?
-            element.ResourcePool = this;
+            var element = new Element(this, name);
             ElementSet.Add(element);
-            return this;
+            return element;
         }
 
-        public ResourcePool AddUserResourcePool(UserResourcePool userResourcePool)
+        public UserResourcePool AddUserResourcePool(User user, decimal rate)
         {
-            // TODO Validation?
-            userResourcePool.ResourcePool = this;
+            // Todo Validation?
+            var userResourcePool = new UserResourcePool(user, this, rate);
+            user.UserResourcePoolSet.Add(userResourcePool);
             UserResourcePoolSet.Add(userResourcePool);
-            return this;
+            return userResourcePool;
         }
 
         public ResourcePool IncreaseMultiplier()
@@ -138,7 +146,7 @@ namespace BusinessObjects
             if (MainElement != null && MainElement.HasMultiplierField)
                 foreach (var item in MainElement.ElementItemSet)
                     item.MultiplierCell.DecimalValue++;
-            
+
             return this;
         }
 

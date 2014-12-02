@@ -1,6 +1,7 @@
 namespace BusinessObjects
 {
     using BusinessObjects.Attributes;
+    using Framework;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -10,14 +11,23 @@ namespace BusinessObjects
     // [ODataControllerAuthorization("Administrator")]
     public class Element : BaseEntity
     {
-        [Obsolete("Parameterless constructors used in Web - Controllers. Remove them when possible")]
-        public Element() : this(null, string.Empty) { }
+        [Obsolete("Parameterless constructors used in Web - Controllers. Make them private them when possible")]
+        public Element()
+            //: this(new ResourcePool(), "Default Element")
+        { }
 
         public Element(ResourcePool resourcePool, string name)
         {
+            Validations.ArgumentNullOrDefault(resourcePool, "resourcePool");
+            Validations.ArgumentNullOrDefault(name, "name");
+
             ResourcePool = resourcePool;
             Name = name;
+            IsMainElement = !ResourcePool.ElementSet.Any();
+            
             ElementFieldSet = new HashSet<ElementField>();
+            AddField("Name", ElementFieldTypes.String);
+
             ElementItemSet = new HashSet<ElementItem>();
             ResourcePoolIndexSet = new HashSet<ResourcePoolIndex>();
         }
@@ -55,14 +65,24 @@ namespace BusinessObjects
         {
             get
             {
-                return ElementFieldSet.Where(item => item.ElementFieldType != (byte)ElementFieldType.ResourcePool
-                    && item.ElementFieldType != (byte)ElementFieldType.Multiplier);
+                return ElementFieldSet.Where(item => item.ElementFieldType != (byte)ElementFieldTypes.ResourcePool
+                    && item.ElementFieldType != (byte)ElementFieldTypes.Multiplier);
             }
+        }
+
+        public ElementField NameField
+        {
+            get { return BasicElementFieldSet.SingleOrDefault(item => item.Name == "Name"); }
+        }
+
+        public bool HasNameField
+        {
+            get { return NameField != null; }
         }
 
         public ElementField ResourcePoolField
         {
-            get { return ElementFieldSet.SingleOrDefault(item => item.ElementFieldType == (byte)ElementFieldType.ResourcePool); }
+            get { return ElementFieldSet.SingleOrDefault(item => item.ElementFieldType == (byte)ElementFieldTypes.ResourcePool); }
         }
 
         public bool HasResourcePoolField
@@ -83,7 +103,7 @@ namespace BusinessObjects
 
         public ElementField MultiplierField
         {
-            get { return ElementFieldSet.SingleOrDefault(item => item.ElementFieldType == (byte)ElementFieldType.Multiplier); }
+            get { return ElementFieldSet.SingleOrDefault(item => item.ElementFieldType == (byte)ElementFieldTypes.Multiplier); }
         }
 
         public bool HasMultiplierField
@@ -109,22 +129,22 @@ namespace BusinessObjects
 
         #region - Methods -
 
-        public Element AddField(ElementField field)
+        public ElementField AddField(string name, ElementFieldTypes fieldType)
         {
             // TODO Validation - Same name?
 
-            field.Element = this;
+            var field = new ElementField(this, name, fieldType);
             ElementFieldSet.Add(field);
-            return this;
+            return field;
         }
 
-        public Element AddItem(ElementItem item)
+        public ElementItem AddItem(string name)
         {
             // TODO Validation - Same name?
-
-            item.Element = this;
+            
+            var item = new ElementItem(this, name);
             ElementItemSet.Add(item);
-            return this;
+            return item;
         }
 
         #endregion

@@ -1,6 +1,8 @@
 namespace BusinessObjects
 {
     using BusinessObjects.Attributes;
+    using Framework;
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
@@ -11,8 +13,19 @@ namespace BusinessObjects
     [BusinessObjects.Attributes.DefaultProperty("Id")]
     public class UserResourcePool : BaseEntity
     {
+        [Obsolete("Parameterless constructors used in Web - Controllers. Make them private them when possible")]
         public UserResourcePool()
+            //: this(new User(), new ResourcePool(), 0)
+        { }
+
+        public UserResourcePool(User user, ResourcePool resourcePool, decimal resourcePoolRate)
         {
+            Validations.ArgumentNullOrDefault(user, "user");
+            Validations.ArgumentNullOrDefault(resourcePool, "resourcePool");
+
+            User = user;
+            ResourcePool = resourcePool;
+            ResourcePoolRate = resourcePoolRate;
             UserResourcePoolIndexSet = new HashSet<UserResourcePoolIndex>();
         }
 
@@ -46,12 +59,13 @@ namespace BusinessObjects
 
         #region - Methods -
 
-        public UserResourcePool AddIndex(UserResourcePoolIndex index)
+        public UserResourcePoolIndex AddIndex(ResourcePoolIndex resourcePoolIndex, decimal rating)
         {
             // TODO Validation?
-            index.UserResourcePool = this;
+            var index = new UserResourcePoolIndex(this, resourcePoolIndex, rating);
+            resourcePoolIndex.UserResourcePoolIndexSet.Add(index);
             UserResourcePoolIndexSet.Add(index);
-            return this;
+            return index;
         }
 
         #endregion

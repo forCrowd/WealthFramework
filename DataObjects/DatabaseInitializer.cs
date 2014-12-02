@@ -44,13 +44,13 @@
             roleManager.Create(adminRole);
 
             // Admin user
-            var adminUser = new User() { UserName = "admin", Email = "admin" };
+            var adminUser = new User("admin");
             var adminUserPassword = DateTime.Now.ToString("yyyyMMdd");
             userManager.Create(adminUser, adminUserPassword);
             userManager.AddToRole(adminUser.Id, "Administrator");
 
             // Sample user
-            var sampleUser = new User() { UserName = "sample", Email = "sample" };
+            var sampleUser = new User("sample");
             var sampleUserPassword = DateTime.Now.ToString("yyyyMMdd");
             userManager.Create(sampleUser, sampleUserPassword);
 

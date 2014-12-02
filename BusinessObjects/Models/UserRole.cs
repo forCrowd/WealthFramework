@@ -8,6 +8,8 @@ namespace BusinessObjects
     [DisplayName("User Role")]
     public class UserRole : IdentityUserRole<int>, IEntity
     {
+        // Todo Constructors?
+
         public virtual User User { get; set; }
         public virtual Role Role { get; set; }
 

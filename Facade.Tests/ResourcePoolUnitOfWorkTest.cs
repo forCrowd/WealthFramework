@@ -24,23 +24,23 @@
             }
         }
 
-        [TestMethod]
-        public void Insert()
-        {
-            User sampleUser;
-            using (var unitOfWork = new UserUnitOfWork())
-                sampleUser = unitOfWork.AllLive.First();
+        //[TestMethod]
+        //public void Insert()
+        //{
+        //    User sampleUser;
+        //    using (var unitOfWork = new UserUnitOfWork())
+        //        sampleUser = unitOfWork.AllLive.First();
 
-            using (var unitOfWork = new ResourcePoolUnitOfWork())
-            {
-                var resourcePool = new ResourcePool()
-                {
-                    Name = "Test Resource Pool"
-                };
+        //    using (var unitOfWork = new ResourcePoolUnitOfWork())
+        //    {
+        //        var resourcePool = new ResourcePool()
+        //        {
+        //            Name = "Test Resource Pool"
+        //        };
 
-                unitOfWork.InsertAsync(resourcePool, sampleUser.Id);
-            }
-        }
+        //        unitOfWork.InsertAsync(resourcePool, sampleUser.Id);
+        //    }
+        //}
 
         [TestMethod]
         public void Update()

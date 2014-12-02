@@ -1,7 +1,9 @@
 namespace BusinessObjects
 {
     using BusinessObjects.Attributes;
+    using Framework;
     using Microsoft.AspNet.Identity.EntityFramework;
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
@@ -10,8 +12,18 @@ namespace BusinessObjects
     [BusinessObjects.Attributes.DefaultProperty("Email")]
     public class User : IdentityUser<int, UserLogin, UserRole, UserClaim>, IEntity
     {
+        [Obsolete("Parameterless constructors used in Web - Controllers. Make them private them when possible")]
         public User()
+            //: this("A valid email?")
+        { }
+
+        public User(string email)
         {
+            Validations.ArgumentNullOrDefault(email, "email");
+            // TODO Email address validation?
+
+            Email = email;
+            UserName = email;
             UserResourcePoolSet = new HashSet<UserResourcePool>();
             UserElementCellSet = new HashSet<UserElementCell>();
         }

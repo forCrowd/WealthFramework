@@ -1,6 +1,7 @@
 namespace BusinessObjects
 {
     using BusinessObjects.Attributes;
+    using Framework;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -12,8 +13,19 @@ namespace BusinessObjects
     // [ODataControllerAuthorization("Administrator")]
     public class ElementField : BaseEntity
     {
+        [Obsolete("Parameterless constructors used in Web - Controllers. Make them private them when possible")]
         public ElementField()
+            //: this(new Element(), "Default Field", ElementFieldTypes.Boolean)
+        { }
+
+        public ElementField(Element element, string name, ElementFieldTypes fieldType)
         {
+            Validations.ArgumentNullOrDefault(element, "element");
+            Validations.ArgumentNullOrDefault(name, "name");
+
+            Element = element;
+            Name = name;
+            ElementFieldType = (byte)fieldType;
             ElementCellSet = new HashSet<ElementCell>();
             ResourcePoolIndexSet = new HashSet<ResourcePoolIndex>();
         }

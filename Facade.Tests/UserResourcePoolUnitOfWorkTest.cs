@@ -23,36 +23,36 @@
             }
         }
 
-        [TestMethod]
-        public void Insert()
-        {
-            ResourcePool sampleResourcePool;
-            using (var unitOfWork = new ResourcePoolUnitOfWork())
-                sampleResourcePool = unitOfWork.AllLive.First();
+        //[TestMethod]
+        //public void Insert()
+        //{
+        //    ResourcePool sampleResourcePool;
+        //    using (var unitOfWork = new ResourcePoolUnitOfWork())
+        //        sampleResourcePool = unitOfWork.AllLive.First();
 
-            User sampleUser;
-            using (var unitOfWork = new UserUnitOfWork())
-                sampleUser = unitOfWork.AllLive.First();
+        //    User sampleUser;
+        //    using (var unitOfWork = new UserUnitOfWork())
+        //        sampleUser = unitOfWork.AllLive.First();
 
-            using (var unitOfWork = new UserResourcePoolUnitOfWork())
-            {
-                var existingList = unitOfWork.AllLive.Where(item => item.UserId == sampleUser.Id
-                    && item.ResourcePoolId == sampleResourcePool.Id);
+        //    using (var unitOfWork = new UserResourcePoolUnitOfWork())
+        //    {
+        //        var existingList = unitOfWork.AllLive.Where(item => item.UserId == sampleUser.Id
+        //            && item.ResourcePoolId == sampleResourcePool.Id);
                 
-                foreach (var item in existingList)
-                    unitOfWork.DeleteAsync(item.Id);
+        //        foreach (var item in existingList)
+        //            unitOfWork.DeleteAsync(item.Id);
 
-                var userResourcePool = new UserResourcePool()
-                {
-                    UserId = sampleUser.Id,
-                    ResourcePoolId = sampleResourcePool.Id,
-                    ResourcePoolRate = 101
-                };
+        //        var userResourcePool = new UserResourcePool()
+        //        {
+        //            UserId = sampleUser.Id,
+        //            ResourcePoolId = sampleResourcePool.Id,
+        //            ResourcePoolRate = 101
+        //        };
 
-                unitOfWork.InsertAsync(userResourcePool);
-                //unitOfWork.Save();
-            }
-        }
+        //        unitOfWork.InsertAsync(userResourcePool);
+        //        //unitOfWork.Save();
+        //    }
+        //}
 
         [TestMethod]
         public void Update()

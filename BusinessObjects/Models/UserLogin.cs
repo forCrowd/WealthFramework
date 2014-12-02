@@ -8,6 +8,8 @@ namespace BusinessObjects
     [DisplayName("User Login")]
     public class UserLogin : IdentityUserLogin<int>, IEntity
     {
+        // Todo Constructors?
+
         public virtual User User { get; set; }
 
         [DisplayOnListView(false)]

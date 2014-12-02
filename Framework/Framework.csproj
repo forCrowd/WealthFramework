@@ -59,7 +59,7 @@
     </Compile>
     <Compile Include="Data\EdmBuilder.cs" />
     <Compile Include="Exceptions.cs" />
-    <Compile Include="Validation.cs" />
+    <Compile Include="Validations.cs" />
     <Compile Include="TypeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

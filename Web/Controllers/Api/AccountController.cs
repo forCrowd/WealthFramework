@@ -91,11 +91,7 @@ namespace Web.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            var user = new User
-            {
-                UserName = model.Email,
-                Email = model.Email
-            };
+            var user = new User(model.Email);
 
             var result = await UserManager.CreateWithSampleDataAsync(user, model.Password, ApplicationSettings.SampleUserId);
             var errorResult = GetErrorResult(result);

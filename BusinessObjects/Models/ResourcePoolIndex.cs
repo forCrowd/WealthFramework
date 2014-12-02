@@ -1,6 +1,7 @@
 namespace BusinessObjects
 {
     using BusinessObjects.Attributes;
+    using Framework;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -13,14 +14,16 @@ namespace BusinessObjects
     // [ODataControllerAuthorization("Administrator")]
     public class ResourcePoolIndex : BaseEntity
     {
-        public ResourcePoolIndex() : this(new ResourcePool("Default"), "Default Index", new ElementField())
-        {
-        }
+        [Obsolete("Parameterless constructors used in Web - Controllers. Make them private them when possible")]
+        public ResourcePoolIndex()
+            //: this(new ResourcePool(), "Default Index", new ElementField())
+        { }
 
         public ResourcePoolIndex(ResourcePool resourcePool, string name, ElementField field)
         {
-            Framework.Validation.ArgumentNullOrDefault(resourcePool, "resourcePool");
-            Framework.Validation.ArgumentNullOrDefault(name, "name");
+            Validations.ArgumentNullOrDefault(resourcePool, "resourcePool");
+            Validations.ArgumentNullOrDefault(name, "name");
+            Validations.ArgumentNullOrDefault(field, "field");
 
             ResourcePool = resourcePool;
             Name = name;
@@ -41,7 +44,7 @@ namespace BusinessObjects
 
         //public Nullable<int> ElementId { get; set; }
         public Nullable<int> ElementFieldId { get; set; }
-        
+
         [Required]
         [Display(Name = "Rating Sort Type")]
         public byte RatingSortType { get; set; }

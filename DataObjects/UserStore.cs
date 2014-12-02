@@ -2,6 +2,7 @@
 {
     using BusinessObjects;
     using DataObjects.Extensions;
+    using Framework;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using System;
@@ -43,8 +44,8 @@
         /// <returns></returns>
         public async Task CopySampleDataAsync(int sourceUserId, User targetUser)
         {
-            Framework.Validation.ArgumentNullOrDefault(sourceUserId, "sourceUserId");
-            Framework.Validation.ArgumentNullOrDefault(targetUser, "targetUser");
+            Validations.ArgumentNullOrDefault(sourceUserId, "sourceUserId");
+            Validations.ArgumentNullOrDefault(targetUser, "targetUser");
 
             // Resource pools
             var sourceUserResourcePools = await UserResourcePoolSet
@@ -53,26 +54,13 @@
 
             foreach (var sourceUserResourcePool in sourceUserResourcePools)
             {
-                var targetUserResourcePool = new UserResourcePool()
-                {
-                    UserId = targetUser.Id,
-                    ResourcePool = sourceUserResourcePool.ResourcePool,
-                    ResourcePoolRate = sourceUserResourcePool.ResourcePoolRate,
-                };
-                UserResourcePoolSet.Add(targetUserResourcePool);
+                var targetUserResourcePool = sourceUserResourcePool.ResourcePool
+                    .AddUserResourcePool(targetUser, sourceUserResourcePool.ResourcePoolRate);
 
                 // Indexes
                 var sourceUserResourcePoolIndexes = sourceUserResourcePool.UserResourcePoolIndexSet;
-                foreach (var sourceUserResourcePoolIndex in sourceUserResourcePoolIndexes)
-                {
-                    var targetUserResourcePoolIndex = new UserResourcePoolIndex()
-                    {
-                        UserResourcePool = targetUserResourcePool,
-                        ResourcePoolIndex = sourceUserResourcePoolIndex.ResourcePoolIndex,
-                        Rating = sourceUserResourcePoolIndex.Rating
-                    };
-                    targetUserResourcePool.UserResourcePoolIndexSet.Add(targetUserResourcePoolIndex);
-                }
+                foreach (var sourceIndex in sourceUserResourcePoolIndexes)
+                    targetUserResourcePool.AddIndex(sourceIndex.ResourcePoolIndex, sourceIndex.Rating);
             }
 
             // Element cells
@@ -81,15 +69,7 @@
                 .ToListAsync();
 
             foreach (var sourceUserElementCell in sourceUserElementCells)
-            {
-                var targetUserElementCell = new UserElementCell()
-                {
-                    UserId = targetUser.Id,
-                    ElementCell = sourceUserElementCell.ElementCell,
-                    Rating = sourceUserElementCell.Rating
-                };
-                targetUser.UserElementCellSet.Add(targetUserElementCell);
-            }
+                sourceUserElementCell.ElementCell.AddUserCell(targetUser, sourceUserElementCell.Rating);
         }
 
         public async Task ResetSampleDataAsync(int userId, int sampleUserId)

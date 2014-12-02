@@ -1,6 +1,8 @@
 namespace BusinessObjects
 {
     using BusinessObjects.Attributes;
+    using Framework;
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
@@ -11,8 +13,20 @@ namespace BusinessObjects
     [BusinessObjects.Attributes.DefaultProperty("Id")]
     public class UserResourcePoolIndex : BaseEntity
     {
+        [Obsolete("Parameterless constructors used in Web - Controllers. Make them private them when possible")]
         public UserResourcePoolIndex()
+            // : this(new UserResourcePool(), new ResourcePoolIndex(), 0)
+            //: this(new UserResourcePool(), new ResourcePoolIndex(), 0)
+        { }
+
+        public UserResourcePoolIndex(UserResourcePool userResourcePool, ResourcePoolIndex resourcePoolIndex, decimal rating)
         {
+            Validations.ArgumentNullOrDefault(userResourcePool, "userResourcePool");
+            Validations.ArgumentNullOrDefault(resourcePoolIndex, "resourcePoolIndex");
+
+            UserResourcePool = userResourcePool;
+            ResourcePoolIndex = resourcePoolIndex;
+            Rating = rating;
         }
 
         [DisplayOnListView(false)]

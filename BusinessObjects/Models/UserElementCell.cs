@@ -1,12 +1,29 @@
 namespace BusinessObjects
 {
     using BusinessObjects.Attributes;
+    using Framework;
+    using System;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations.Schema;
 
     [DisplayName("User Element Cell")]
     public class UserElementCell : BaseEntity
     {
+        [Obsolete("Parameterless constructors used in Web - Controllers. Make them private them when possible")]
+        public UserElementCell()
+            //: this(new User(), new ElementCell(), 0)
+        { }
+
+        public UserElementCell(User user, ElementCell elementCell, decimal rating)
+        {
+            Validations.ArgumentNullOrDefault(user, "user");
+            Validations.ArgumentNullOrDefault(elementCell, "elementCell");
+
+            User = user;
+            ElementCell = elementCell;
+            Rating = rating;
+        }
+
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         public int Id { get; set; }

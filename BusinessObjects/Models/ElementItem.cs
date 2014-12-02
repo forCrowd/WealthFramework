@@ -1,6 +1,7 @@
 namespace BusinessObjects
 {
     using BusinessObjects.Attributes;
+    using Framework;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -15,16 +16,37 @@ namespace BusinessObjects
     {
         string _name;
 
+        [Obsolete("Parameterless constructors used in Web - Controllers. Make them private them when possible")]
         public ElementItem()
+            //: this(new Element(), "Default Item")
         {
             ElementCellSet = new HashSet<ElementCell>();
+        }
+
+        public ElementItem(Element element, string name)
+        {
+            Validations.ArgumentNullOrDefault(element, "element");
+            Validations.ArgumentNullOrDefault(name, "name");
+
+            Element = element;
+
+            ElementCellSet = new HashSet<ElementCell>();
+            
+            // Add a fixed 'Name' cell
+            AddCell(Element.NameField);
+            Name = name;
+
             ElementCellSelectedElementItemSet = new HashSet<ElementCell>();
+
+            Name = name;
         }
 
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         public int Id { get; set; }
 
+        public int ElementId { get; set; }
+        
         [Display(Name = "Element Item")]
         [Required]
         [StringLength(50)]
@@ -35,23 +57,11 @@ namespace BusinessObjects
             {
                 _name = value;
 
-                // Always add/update name cell
-                if (Element != null)
-                {
-                    var nameField = Element.ElementFieldSet.SingleOrDefault(field => field.Name == "Name");
-
-                    if (nameField != null)
-                    {
-                        if (NameCell == null)
-                            AddCell(new ElementCell() { ElementField = nameField });
-                        else
-                            NameCell.StringValue = value;
-                    }
-                }
+                // Always update 'Name' cell as well
+                if (NameCell != null)
+                    NameCell.SetValue(value);
             }
         }
-
-        public int ElementId { get; set; }
 
         public virtual Element Element { get; set; }
         public virtual ICollection<ElementCell> ElementCellSet { get; set; }
@@ -64,8 +74,8 @@ namespace BusinessObjects
         {
             get
             {
-                return ElementCellSet.Where(item => item.ElementField.ElementFieldType != (byte)ElementFieldType.ResourcePool
-                    && item.ElementField.ElementFieldType != (byte)ElementFieldType.Multiplier);
+                return ElementCellSet.Where(item => item.ElementField.ElementFieldType != (byte)ElementFieldTypes.ResourcePool
+                    && item.ElementField.ElementFieldType != (byte)ElementFieldTypes.Multiplier);
             }
         }
 
@@ -76,7 +86,7 @@ namespace BusinessObjects
 
         public ElementCell ResourcePoolCell
         {
-            get { return ElementCellSet.SingleOrDefault(item => item.ElementField.ElementFieldType == (byte)ElementFieldType.ResourcePool); }
+            get { return ElementCellSet.SingleOrDefault(item => item.ElementField.ElementFieldType == (byte)ElementFieldTypes.ResourcePool); }
         }
 
         public bool HasResourcePoolCell
@@ -112,7 +122,7 @@ namespace BusinessObjects
 
         public ElementCell MultiplierCell
         {
-            get { return ElementCellSet.SingleOrDefault(item => item.ElementField.ElementFieldType == (byte)ElementFieldType.Multiplier); }
+            get { return ElementCellSet.SingleOrDefault(item => item.ElementField.ElementFieldType == (byte)ElementFieldTypes.Multiplier); }
         }
 
         public bool HasMultiplierCell
@@ -205,16 +215,17 @@ namespace BusinessObjects
 
         #region - Methods -
 
-        public ElementItem AddCell(ElementCell cell)
+        public ElementCell AddCell(ElementField field)
         {
-            // Validate
-            // TODO Cell.Field null check?
-            if (ElementCellSet.Any(item => item.ElementField == cell.ElementField))
-                throw new Exception("An element item can't have more than one cell for the same field");
+            Validations.ArgumentNullOrDefault(field, "field");
 
-            cell.ElementItem = this;
+            if (ElementCellSet.Any(item => item.ElementField == field))
+                throw new Exception("An element item can't have more than one cell for the same field.");
+
+            var cell = new ElementCell(field, this);
+            field.ElementCellSet.Add(cell);
             ElementCellSet.Add(cell);
-            return this;
+            return cell;
         }
 
         #endregion

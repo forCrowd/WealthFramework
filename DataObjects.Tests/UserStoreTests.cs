@@ -44,7 +44,8 @@ namespace DataObjects.Tests
         public async Task UserNameValidationExceptionAsync()
         {
             // Arrange
-            var user = new User();
+            var user = GenerateUser();
+            user.Email = string.Empty;
             await userStore.CreateAsync(user);
 
             try
@@ -138,7 +139,8 @@ namespace DataObjects.Tests
         {
             // Act
             var sourceUser = await userStore.FindByIdAsync(2); // Already created in seed method
-            var targetUser = await CreateUserAsync();
+            // var targetUser = await CreateUserAsync();
+            var targetUser = GenerateUser();
 
             // Arrange
             await userStore.CopySampleDataAsync(sourceUser.Id, targetUser);
@@ -160,10 +162,15 @@ namespace DataObjects.Tests
             }
         }
 
+        User GenerateUser()
+        {
+            var email = string.Format("user_{0:yyyyMMdd_HHmmssfff}@wealth.azurewebsites.com", DateTime.Now);
+            return new User(email);
+        }
+
         async Task<User> CreateUserAsync()
         {
-            var userName = string.Format("user_{0:yyyyMMdd_HHmmssfff}@wealth.azurewebsites.com", DateTime.Now);
-            var user = new User() { Email = userName, UserName = userName };
+            var user = GenerateUser();
 
             // TODO Add password validation?
 

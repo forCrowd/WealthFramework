@@ -8,8 +8,11 @@ An experimental resource management system that aims to provide a sustainable ec
 
 **0.14.8**
 
-* BusinessObjects.Tests project created
-* Framework.Tests project created - TypeExtensionsTests & ValidationTests added
+* BusinessObjects.Tests project was created
+* Framework.Tests project was created - TypeExtensionsTests & ValidationTests classes were added
+* More fluent interface
+* Business Objects, constructors with parameters
+* TotalCostIndex sample fix
 
 **0.14.7**
 

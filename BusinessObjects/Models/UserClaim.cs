@@ -8,6 +8,8 @@ namespace BusinessObjects
     [DisplayName("User Claim")]
     public class UserClaim : IdentityUserClaim<int>, IEntity
     {
+        // Todo Constructors?
+
         public virtual User User { get; set; }
 
         [DisplayOnListView(false)]

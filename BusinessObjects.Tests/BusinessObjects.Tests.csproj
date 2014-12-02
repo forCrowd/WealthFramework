@@ -69,6 +69,15 @@
     <Compile Include="..\SolutionItems\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ElementCellTests.cs" />
+    <Compile Include="ElementItemTests.cs" />
+    <Compile Include="ElementFieldTests.cs" />
+    <Compile Include="ResourcePoolIndexTests.cs" />
+    <Compile Include="UserTests.cs" />
+    <Compile Include="UserElementCellTests.cs" />
+    <Compile Include="UserResourcePoolTests.cs" />
+    <Compile Include="UserResourcePoolIndexTests.cs" />
+    <Compile Include="ElementTests.cs" />
     <Compile Include="ResourcePoolTests.cs" />
   </ItemGroup>
   <ItemGroup>

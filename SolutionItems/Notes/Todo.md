@@ -6,14 +6,10 @@
 
 * Prepare resource pool view 
 UserResourcePool view recursive selectedElementItem part
-* Work on the samples again  
-Update configuration.cs withelement fields  
-employee + customer + quality index samples are not there  
-all in one sample is outdated  
-* Check userunitofwork + resourcepoolunitofwork + userresourcepoolunitofwork for sample records + delete cases
+* Employee + customer + quality index samples are not there - all in one sample is outdated  
 * Work on the chapters again  
+* Check userunitofwork + resourcepoolunitofwork + userresourcepoolunitofwork for sample records + delete cases
 * Initial (fixed) amount for resource pool
-* Make even the name as a element item and create it automatically when the element is created
 * Currently multiplier + resource pool field types can only be added once per element (or resource pool) - check it again
 * ResourcePoolIndex can be a field for elementfield table? Index boolean?
 * Element parent + child structure
@@ -63,6 +59,7 @@ http://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-w
 * use fluent approach on element + item + field + cell
 * viewmodels don't belong to business layer?!
 * find a better approach for rowversion fix on client-side before saving?
+* ignore web - scripts folder?
 
 ## Long Term
 
@@ -250,6 +247,4 @@ multiplier - n/a
 ---
 chapter 7, 8, 9, 10 ?!
 
-total cost index doesn't work right, it gives the same amount to both of the elements
-
-isnullordefault looks good but check it bit more!
+argumentnullordefaultexception?

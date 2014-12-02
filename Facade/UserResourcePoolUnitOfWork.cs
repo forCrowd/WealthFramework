@@ -27,27 +27,27 @@
             Reset
         }
 
-        public override async Task<int> InsertAsync(UserResourcePool userResourcePool)
-        {
-            // TODO This is only for temporary, try to find a way to handle these cases better!
-            // Currently it's not certain that userResourcePool.ResourcePool property has a value but ResourcePoolId definitely filled.. ?!
-            var resourcePool = ResourcePoolRepository.Find(userResourcePool.ResourcePoolId);
+        //public override async Task<int> InsertAsync(UserResourcePool userResourcePool)
+        //{
+        //    // TODO This is only for temporary, try to find a way to handle these cases better!
+        //    // Currently it's not certain that userResourcePool.ResourcePool property has a value but ResourcePoolId definitely filled.. ?!
+        //    var resourcePool = ResourcePoolRepository.Find(userResourcePool.ResourcePoolId);
 
-            // Sample ratings
-            var resourcePoolIndexes = resourcePool.ResourcePoolIndexSet;
-            foreach (var resourcePoolIndex in resourcePoolIndexes)
-            {
-                var sampleUserResourcePoolIndex = new UserResourcePoolIndex()
-                {
-                    UserResourcePool = userResourcePool,
-                    ResourcePoolIndex = resourcePoolIndex,
-                    Rating = 50 // TODO Is it correct? Or should be null?
-                };
-                UserResourcePoolIndexRepository.Insert(sampleUserResourcePoolIndex);
-            }
+        //    // Sample ratings
+        //    var resourcePoolIndexes = resourcePool.ResourcePoolIndexSet;
+        //    foreach (var resourcePoolIndex in resourcePoolIndexes)
+        //    {
+        //        var sampleUserResourcePoolIndex = new UserResourcePoolIndex()
+        //        {
+        //            UserResourcePool = userResourcePool,
+        //            ResourcePoolIndex = resourcePoolIndex,
+        //            Rating = 50 // TODO Is it correct? Or should be null?
+        //        };
+        //        UserResourcePoolIndexRepository.Insert(sampleUserResourcePoolIndex);
+        //    }
 
-            return await base.InsertAsync(userResourcePool);
-        }
+        //    return await base.InsertAsync(userResourcePool);
+        //}
 
         public async Task IncreaseMultiplier(UserResourcePool userResourcePool)
         {

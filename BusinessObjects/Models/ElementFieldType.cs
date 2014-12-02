@@ -1,6 +1,6 @@
 namespace BusinessObjects
 {
-    public enum ElementFieldType : byte
+    public enum ElementFieldTypes : byte
     {
         /// <summary>
         /// A field that holds string value.

@@ -92,11 +92,20 @@
             mainElement.ResourcePoolField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Sales Number";
 
+            // Resource pool index; change it to Sales Price itself, instead of User ratings
+            resourcePool.ResourcePoolIndexSet.Clear();
+            resourcePool.MainElement.NameField.ResourcePoolIndexSet.Clear();
+            resourcePool.UserResourcePoolSet.First().UserResourcePoolIndexSet.Clear();
+            var totalCostIndex = resourcePool.AddIndex("Total Cost Index", resourcePool.MainElement.ResourcePoolField, RatingSortType.LowestToHighest);
+            resourcePool.UserResourcePoolSet.First().AddIndex(totalCostIndex, 100);
+            
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Lowlands";
             mainElement.ElementItemSet.Skip(0).Take(1).Single().ResourcePoolCell.DecimalValue = 125;
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().NameCell.UserElementCellSet.Clear();
             mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "High Coast";
             mainElement.ElementItemSet.Skip(1).Take(1).Single().ResourcePoolCell.DecimalValue = 175;
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().NameCell.UserElementCellSet.Clear();
 
             // Return
             return resourcePool;
@@ -109,51 +118,35 @@
 
         public ResourcePool CreateDefaultResourcePool(User user, short numberOfItems)
         {
-            // Resource pool
+            // Resource pool, main element, fields
             var resourcePool = new ResourcePool("Default");
+            resourcePool
+                .AddElement("Main Element")
+                    .AddField("Resource Pool Field", ElementFieldTypes.ResourcePool)
+                .Element
+                    .AddField("Multiplier", ElementFieldTypes.Multiplier);
 
-            // Main element
-            var mainElement = new Element(resourcePool, "Main Element") { IsMainElement = true };
-            resourcePool.AddElement(mainElement);
+            // Items, cells, user cells
+            var itemRating = numberOfItems > 0 ? 100 / numberOfItems : 0;
+            for (var i = 1; i <= numberOfItems; i++)
+            {
+                var itemName = string.Format("Item {0}", i);
 
-            // Fields
-            var nameField = new ElementField() { Name = "Name", ElementFieldType = (byte)ElementFieldType.String };
-            var resourcePoolField = new ElementField() { Name = "Resource Pool Field", ElementFieldType = (byte)ElementFieldType.ResourcePool };
-            var multiplierField = new ElementField() { Name = "Multiplier", ElementFieldType = (byte)ElementFieldType.Multiplier };
-
-            mainElement
-                .AddField(nameField)
-                .AddField(resourcePoolField)
-                .AddField(multiplierField);
+                resourcePool.MainElement
+                    .AddItem(itemName)
+                        .AddCell(resourcePool.MainElement.ResourcePoolField).SetValue(100M)
+                    .ElementItem
+                        .AddCell(resourcePool.MainElement.MultiplierField).SetValue(0M)
+                    .ElementItem
+                        .NameCell.AddUserCell(user, itemRating); // Rating for importance index
+            }
 
             // Importance Index
             // TODO Will be updated with new field / index combo
-            var importanceIndex = new ResourcePoolIndex() { Name = "Importance Index", ElementField = nameField, RatingSortType = (byte)RatingSortType.HighestToLowest };
-            resourcePool.AddIndex(importanceIndex);
-
-            // Items, cell, user cells
-            var itemRating = numberOfItems > 0 ? 100 / numberOfItems : 0;
-
-            for (var i = 1; i <= numberOfItems; i++)
-            {
-                // Item
-                var itemName = string.Format("Item {0}", i);
-
-                // TODO Try to do this part more fluent by using constructors
-                // Set element in the constructor, currently it's doing it in both here and in AddItem() method
-                var item = new ElementItem() { Element = mainElement, Name = itemName }
-                        .AddCell(new ElementCell() { ElementField = resourcePoolField, DecimalValue = 100 })
-                        .AddCell(new ElementCell() { ElementField = multiplierField, DecimalValue = 0 });
-                mainElement.AddItem(item);
-
-                // User rating for the item
-                item.NameCell.AddUserCell(new UserElementCell() { User = user, Rating = itemRating });
-            }
+            var importanceIndex = resourcePool.AddIndex("Importance Index", resourcePool.MainElement.NameField, RatingSortType.HighestToLowest);
 
             // User resource pool, index
-            resourcePool
-                .AddUserResourcePool(new UserResourcePool() { User = user, ResourcePoolRate = 101 }
-                    .AddIndex(new UserResourcePoolIndex() { ResourcePoolIndex = importanceIndex, Rating = 100 }));
+            resourcePool.AddUserResourcePool(user, 101).AddIndex(importanceIndex, 100);
 
             // Return
             return resourcePool;
