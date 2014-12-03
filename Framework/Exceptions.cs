@@ -1,21 +1,19 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
-using System.Security;
 
 namespace Framework
 {
-    // Summary:
-    //     The exception that is thrown when a null reference, default or empty value 
-    //     is passed to a method that does not accept it as a valid argument.
+    /// <summary>
+    /// The exception that is thrown when a null reference, default or empty value is passed to a method that does not accept it as a valid argument.
+    /// REMARK: When this exception occurs within Update-Database operation of Entity Framework migrations,
+    /// it fails to load it and display 'Type is not resolved for member 'Framework.ArgumentNullOrDefaultException ...' message.
+    /// TODO Probably this exception needs to be installed to GAC to resolved this issue?
+    /// </summary>
     [Serializable]
-    [ComVisible(true)]
-    public class ArgumentNullOrDefaultException : ArgumentNullException
-    //public class ArgumentNullOrDefaultException : Exception
+    public class ArgumentNullOrDefaultException : ArgumentNullException, ISerializable
     {
         public ArgumentNullOrDefaultException() : base() { }
         public ArgumentNullOrDefaultException(string paramName) : base(paramName) { }
-        [SecurityCritical]
         protected ArgumentNullOrDefaultException(SerializationInfo info, StreamingContext context) : base(info, context) { }
         public ArgumentNullOrDefaultException(string message, Exception innerException) : base(message, innerException) { }
         public ArgumentNullOrDefaultException(string paramName, string message) : base(paramName, message) { }

@@ -246,5 +246,3 @@ multiplier - n/a
 
 ---
 chapter 7, 8, 9, 10 ?!
-
-argumentnullordefaultexception?
