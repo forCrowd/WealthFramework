@@ -11,9 +11,8 @@ namespace BusinessObjects
     // [ODataControllerAuthorization("Administrator")]
     public class Element : BaseEntity
     {
-        [Obsolete("Parameterless constructors used in Web - Controllers. Make them private them when possible")]
+        [Obsolete("Parameterless constructors used by OData & EF. Make them private when possible.")]
         public Element()
-            //: this(new ResourcePool(), "Default Element")
         { }
 
         public Element(ResourcePool resourcePool, string name)

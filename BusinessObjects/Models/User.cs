@@ -12,9 +12,8 @@ namespace BusinessObjects
     [BusinessObjects.Attributes.DefaultProperty("Email")]
     public class User : IdentityUser<int, UserLogin, UserRole, UserClaim>, IEntity
     {
-        [Obsolete("Parameterless constructors used in Web - Controllers. Make them private them when possible")]
+        [Obsolete("Parameterless constructors used by OData & EF. Make them private when possible.")]
         public User()
-            //: this("A valid email?")
         { }
 
         public User(string email)

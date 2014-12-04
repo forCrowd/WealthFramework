@@ -8,9 +8,8 @@ namespace BusinessObjects
 
     public class Role : IdentityRole<int, UserRole>, IEntity
     {
-        [Obsolete("Parameterless constructors used in Web - Controllers. Make them private them when possible")]
+        [Obsolete("Parameterless constructors used by OData & EF. Make them private when possible.")]
         public Role()
-            //: this("Default Role")
         { }
 
         public Role(string name)

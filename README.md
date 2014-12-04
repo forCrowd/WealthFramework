@@ -6,6 +6,10 @@ An experimental resource management system that aims to provide a sustainable ec
 
 ### Release Notes
 
+**0.14.9**
+
+* UserCell fields
+
 **0.14.8**
 
 * BusinessObjects.Tests project was created

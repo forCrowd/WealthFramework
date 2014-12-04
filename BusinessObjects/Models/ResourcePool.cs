@@ -13,9 +13,8 @@ namespace BusinessObjects
     // [ODataControllerAuthorization("Administrator")]
     public class ResourcePool : BaseEntity
     {
-        [Obsolete("Parameterless constructors used in Web - Controllers. Make them private them when possible")]
+        [Obsolete("Parameterless constructors used by OData & EF. Make them private when possible.")]
         public ResourcePool()
-            //: this("Default CMRP")
         { }
 
         public ResourcePool(string name)

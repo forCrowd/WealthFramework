@@ -13,9 +13,8 @@ namespace BusinessObjects
     // [ODataControllerAuthorization("Administrator")]
     public class ElementField : BaseEntity
     {
-        [Obsolete("Parameterless constructors used in Web - Controllers. Make them private them when possible")]
+        [Obsolete("Parameterless constructors used by OData & EF. Make them private when possible.")]
         public ElementField()
-            //: this(new Element(), "Default Field", ElementFieldTypes.Boolean)
         { }
 
         public ElementField(Element element, string name, ElementFieldTypes fieldType)

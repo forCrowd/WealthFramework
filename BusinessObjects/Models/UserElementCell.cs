@@ -9,9 +9,8 @@ namespace BusinessObjects
     [DisplayName("User Element Cell")]
     public class UserElementCell : BaseEntity
     {
-        [Obsolete("Parameterless constructors used in Web - Controllers. Make them private them when possible")]
+        [Obsolete("Parameterless constructors used by OData & EF. Make them private when possible.")]
         public UserElementCell()
-            //: this(new User(), new ElementCell(), 0)
         { }
 
         public UserElementCell(User user, ElementCell elementCell, decimal rating)

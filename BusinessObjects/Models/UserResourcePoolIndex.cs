@@ -13,10 +13,8 @@ namespace BusinessObjects
     [BusinessObjects.Attributes.DefaultProperty("Id")]
     public class UserResourcePoolIndex : BaseEntity
     {
-        [Obsolete("Parameterless constructors used in Web - Controllers. Make them private them when possible")]
+        [Obsolete("Parameterless constructors used by OData & EF. Make them private when possible.")]
         public UserResourcePoolIndex()
-            // : this(new UserResourcePool(), new ResourcePoolIndex(), 0)
-            //: this(new UserResourcePool(), new ResourcePoolIndex(), 0)
         { }
 
         public UserResourcePoolIndex(UserResourcePool userResourcePool, ResourcePoolIndex resourcePoolIndex, decimal rating)

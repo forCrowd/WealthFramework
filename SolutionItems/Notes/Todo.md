@@ -235,10 +235,10 @@ http://www.asp.net/web-api/overview/testing-and-debugging/mocking-entity-framewo
 
 string - n/a
 
-bool - indexable (fixed / user)
-int - indexable (fixed / user)
-decimal - indexable (fixed / user) - resource pool - multiplier
-datetime - indexable (fixed / user)
+bool - indexable (fixed / user (only current - rating average))
+int - indexable (fixed / user (only current - rating average))
+decimal - indexable (fixed / user (only current - rating average)) - resource pool (fixed) - multiplier (user - only current)
+datetime - indexable (fixed / user (only current - rating average))
 
 element - n/a
 resource - ~decimal

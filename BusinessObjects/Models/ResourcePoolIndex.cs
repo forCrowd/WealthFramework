@@ -14,9 +14,8 @@ namespace BusinessObjects
     // [ODataControllerAuthorization("Administrator")]
     public class ResourcePoolIndex : BaseEntity
     {
-        [Obsolete("Parameterless constructors used in Web - Controllers. Make them private them when possible")]
+        [Obsolete("Parameterless constructors used by OData & EF. Make them private when possible.")]
         public ResourcePoolIndex()
-            //: this(new ResourcePool(), "Default Index", new ElementField())
         { }
 
         public ResourcePoolIndex(ResourcePool resourcePool, string name, ElementField field)

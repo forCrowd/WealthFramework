@@ -16,9 +16,8 @@ namespace BusinessObjects
     {
         string _name;
 
-        [Obsolete("Parameterless constructors used in Web - Controllers. Make them private them when possible")]
+        [Obsolete("Parameterless constructors used by OData & EF. Make them private when possible.")]
         public ElementItem()
-            //: this(new Element(), "Default Item")
         {
             ElementCellSet = new HashSet<ElementCell>();
         }
