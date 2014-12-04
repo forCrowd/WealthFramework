@@ -19,11 +19,16 @@ namespace BusinessObjects.ViewModels
             IntegerValue = elementCell.IntegerValue;
             DecimalValue = elementCell.DecimalValue;
             DateTimeValue = elementCell.DateTimeValue;
+
             if (elementCell.SelectedElementItem != null)
                 SelectedElementItem = new ElementItem(elementCell.SelectedElementItem, userId);
 
-            RatingAverageMultiplied = elementCell.RatingAverageMultiplied;
-            RatingPercentage = elementCell.RatingPercentage;
+            if (elementCell.ElementField.ElementFieldType != (byte)ElementFieldTypes.String
+                && elementCell.ElementField.ElementFieldType != (byte)ElementFieldTypes.Element)
+            {
+                RatingAverageMultiplied = elementCell.RatingAverageMultiplied;
+                RatingPercentage = elementCell.RatingPercentage;
+            }
             ResourcePoolIndexIncome = elementCell.ResourcePoolIndexIncome;
 
             UserElementCellSet = elementCell.UserElementCellSet

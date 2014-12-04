@@ -69,7 +69,12 @@
                 .ToListAsync();
 
             foreach (var sourceUserElementCell in sourceUserElementCells)
-                sourceUserElementCell.ElementCell.AddUserCell(targetUser, sourceUserElementCell.Rating);
+                sourceUserElementCell.ElementCell
+                    .AddUserCell(targetUser)
+                    .SetValue(sourceUserElementCell.BooleanValue)
+                    .SetValue(sourceUserElementCell.IntegerValue)
+                    .SetValue(sourceUserElementCell.DecimalValue)
+                    .SetValue(sourceUserElementCell.DateTimeValue);
         }
 
         public async Task ResetSampleDataAsync(int userId, int sampleUserId)

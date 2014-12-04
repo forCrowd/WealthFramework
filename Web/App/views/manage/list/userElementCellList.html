@@ -22,7 +22,16 @@
                 Id
             </th>
             <th>
-                Rating
+                BooleanValue
+            </th>
+            <th>
+                IntegerValue
+            </th>
+            <th>
+                DecimalValue
+            </th>
+            <th>
+                DateTimeValue
             </th>
             <th></th>
         </tr>
@@ -34,7 +43,16 @@
                 {{ userElementCell.ElementCell.Id }}
             </td>
             <td>
-                {{ userElementCell.Rating }}
+                {{ userElementCell.BooleanValue }}
+            </td>
+            <td>
+                {{ userElementCell.IntegerValue }}
+            </td>
+            <td>
+                {{ userElementCell.DecimalValue }}
+            </td>
+            <td>
+                {{ userElementCell.DateTimeValue }}
             </td>
             <td>
                 <a href="/manage/userElementCell/edit/{{ userElementCell.Id }}">Edit</a> |

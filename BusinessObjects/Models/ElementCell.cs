@@ -39,11 +39,11 @@ namespace BusinessObjects
         public int ElementFieldId { get; set; }
 
         public string StringValue { get; set; }
-        public Nullable<bool> BooleanValue { get; set; }
-        public Nullable<int> IntegerValue { get; set; }
-        public Nullable<decimal> DecimalValue { get; set; }
-        public Nullable<DateTime> DateTimeValue { get; set; }
-        public Nullable<int> SelectedElementItemId { get; set; }
+        public bool? BooleanValue { get; set; }
+        public int? IntegerValue { get; set; }
+        public decimal? DecimalValue { get; set; }
+        public DateTime? DateTimeValue { get; set; }
+        public int? SelectedElementItemId { get; set; }
 
         public virtual ElementItem ElementItem { get; set; }
         public virtual ElementField ElementField { get; set; }
@@ -52,26 +52,58 @@ namespace BusinessObjects
 
         /* */
 
+        public decimal Rating
+        {
+            get
+            {
+                var fieldType = (ElementFieldTypes)ElementField.ElementFieldType;
+
+                switch (fieldType)
+                {
+                    case ElementFieldTypes.Boolean:
+                        return Convert.ToDecimal(BooleanValue.GetValueOrDefault());
+                    case ElementFieldTypes.Integer:
+                        return Convert.ToDecimal(IntegerValue.GetValueOrDefault());
+                    case ElementFieldTypes.Decimal:
+                    // TODO This calculation is the same as Decimal type? Are we using the types in a wrong way?
+                    case ElementFieldTypes.ResourcePool:
+                    case ElementFieldTypes.Multiplier:
+                        return DecimalValue.GetValueOrDefault();
+                    case ElementFieldTypes.DateTime:
+                        // TODO Check GetValueOrDefault() method for this type
+                        return Convert.ToDecimal(DateTimeValue.GetValueOrDefault());
+                    case ElementFieldTypes.String:
+                    case ElementFieldTypes.Element:
+                        // TODO At least for now
+                        throw new InvalidOperationException("Rating property is not available for this field type");
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+
         public int RatingCount
         {
             get
             {
-                switch (ElementField.ElementFieldType)
+                var fieldType = (ElementFieldTypes)ElementField.ElementFieldType;
+
+                switch (fieldType)
                 {
-                    case (byte)ElementFieldTypes.String:
-                        return UserElementCellSet.Count();
-                    case (byte)ElementFieldTypes.Boolean:
-                    case (byte)ElementFieldTypes.Integer:
-                    case (byte)ElementFieldTypes.DateTime:
-                    case (byte)ElementFieldTypes.Decimal:
-                        // There are no user level ratings for these field types
-                        return 1;
-                    case (byte)ElementFieldTypes.Element:
-                        // TODO This property should never be used for this 'Element' field type?
-                        return 0;
-                    case (byte)ElementFieldTypes.ResourcePool:
-                        // There are no user level ratings for these field types - same as decimal type
-                        return 1;
+                    case ElementFieldTypes.Boolean:
+                    case ElementFieldTypes.Integer:
+                    case ElementFieldTypes.DateTime:
+                    case ElementFieldTypes.Decimal:
+                    // TODO This calculation is the same as Decimal type? Are we using the types in a wrong way?
+                    case ElementFieldTypes.ResourcePool:
+                    case ElementFieldTypes.Multiplier:
+                        return ElementField.FixedValue
+                            ? 1
+                            : UserElementCellSet.Count();
+                    case ElementFieldTypes.String:
+                    case ElementFieldTypes.Element:
+                        // TODO At least for now
+                        throw new InvalidOperationException("RatingCount property is not available for this field type");
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
@@ -82,35 +114,30 @@ namespace BusinessObjects
         {
             get
             {
-                switch (ElementField.ElementFieldType)
-                {
-                    case (byte)ElementFieldTypes.String:
-                        return UserElementCellSet.Any()
-                            ? UserElementCellSet.Average(item => item.Rating)
-                            : 0;
-                    case (byte)ElementFieldTypes.Boolean:
-                        return BooleanValue.HasValue ? Convert.ToDecimal(BooleanValue.Value) : 0;
-                    case (byte)ElementFieldTypes.Integer:
-                        return IntegerValue.HasValue ? Convert.ToDecimal(IntegerValue.Value) : 0;
-                    case (byte)ElementFieldTypes.Decimal:
-                        return DecimalValue.HasValue ? DecimalValue.Value : 0;
-                    case (byte)ElementFieldTypes.DateTime:
-                        return DateTimeValue.HasValue ? Convert.ToDecimal(DateTimeValue.Value.Ticks) : 0;
-                    case (byte)ElementFieldTypes.Element:
-                        // TODO This property should never be used for this 'Element' field type?
-                        return 0;
-                    case (byte)ElementFieldTypes.ResourcePool:
-                        {
-                            // TODO This calculation is the same as Decimal type? Are we using the types in a wrong way?
-                            return DecimalValue.HasValue ? DecimalValue.Value : 0;
-                        }
-                    default:
-                        {
-                            return 0;
+                var fieldType = (ElementFieldTypes)ElementField.ElementFieldType;
 
-                            // TODO Or throw an exception?
-                            //throw new ArgumentOutOfRangeException();
+                switch (fieldType)
+                {
+                    case ElementFieldTypes.Boolean:
+                    case ElementFieldTypes.Integer:
+                    case ElementFieldTypes.Decimal:
+                    case ElementFieldTypes.DateTime:
+                    // TODO This calculation is the same as Decimal type? Are we using the types in a wrong way?
+                    case ElementFieldTypes.ResourcePool:
+                    case ElementFieldTypes.Multiplier:
+                        {
+                            return ElementField.FixedValue
+                                ? Rating
+                                : UserElementCellSet.Any()
+                                ? UserElementCellSet.Average(item => item.Rating)
+                                : 0;
                         }
+                    case ElementFieldTypes.String:
+                    case ElementFieldTypes.Element:
+                        // TODO At least for now
+                        throw new InvalidOperationException("RatingAverage property is not available for this field type");
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
             }
         }
@@ -177,25 +204,25 @@ namespace BusinessObjects
             return this;
         }
 
-        public ElementCell SetValue(bool value)
+        public ElementCell SetValue(bool? value)
         {
             BooleanValue = value;
             return this;
         }
 
-        public ElementCell SetValue(int value)
+        public ElementCell SetValue(int? value)
         {
             IntegerValue = value;
             return this;
         }
 
-        public ElementCell SetValue(decimal value)
+        public ElementCell SetValue(decimal? value)
         {
             DecimalValue = value;
             return this;
         }
 
-        public ElementCell SetValue(DateTime value)
+        public ElementCell SetValue(DateTime? value)
         {
             DateTimeValue = value;
             return this;
@@ -207,14 +234,14 @@ namespace BusinessObjects
             return this;
         }
 
-        public UserElementCell AddUserCell(User user, decimal rating)
+        public UserElementCell AddUserCell(User user)
         {
             Validations.ArgumentNullOrDefault(user, "user");
 
             if (UserElementCellSet.Any(item => item.User == user))
                 throw new Exception("An element cell can't have more than one user element cell for the same user.");
 
-            var userCell = new UserElementCell(user, this, rating);
+            var userCell = new UserElementCell(user, this);
             user.UserElementCellSet.Add(userCell);
             UserElementCellSet.Add(userCell);
             return userCell;

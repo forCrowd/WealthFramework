@@ -13,7 +13,7 @@ namespace BusinessObjects.Tests
         }
 
         [TestMethod]
-        public void TwoElementItems_StringTypeIndex_SingleUser()
+        public void TwoElementItems_ImportanceIndex_SingleUser()
         {
             // Arrange + act
             var user = new User("Email");
@@ -23,25 +23,28 @@ namespace BusinessObjects.Tests
             var organization = resourcePool.AddElement("Organization");
 
             organization
-                    .AddField("Sales Price", ElementFieldTypes.ResourcePool)
+                    .AddField("Sales Price", true, ElementFieldTypes.ResourcePool)
                 .Element
-                    .AddField("Sales Number", ElementFieldTypes.Multiplier);
+                    .AddField("Sales Number", true, ElementFieldTypes.Multiplier);
+            var importanceField = resourcePool.MainElement.AddField("Importance Field", false, ElementFieldTypes.Decimal);
 
-            var resourcePoolIndex = resourcePool.AddIndex("Importance Index", organization.NameField, RatingSortType.HighestToLowest);
+            var resourcePoolIndex = resourcePool.AddIndex("Importance Index", importanceField, RatingSortType.HighestToLowest);
 
             var organization1 = organization.AddItem("Organization 1");
             organization1
                     .AddCell(organization.ResourcePoolField).SetValue(200M)
                 .ElementItem
                     .AddCell(organization.MultiplierField).SetValue(1M)
-                .ElementItem.NameCell.AddUserCell(user, 75);
+                .ElementItem
+                    .AddCell(importanceField).AddUserCell(user).SetValue(75M);
 
             var organization2 = organization.AddItem("Organization 2");
             organization2
                     .AddCell(organization.ResourcePoolField).SetValue(200M)
                 .ElementItem
                     .AddCell(organization.MultiplierField).SetValue(1M)
-                .ElementItem.NameCell.AddUserCell(user, 25);
+                .ElementItem
+                    .AddCell(importanceField).AddUserCell(user).SetValue(25M);
 
             resourcePool.AddUserResourcePool(user, 100)
                 .AddIndex(resourcePoolIndex, 100);
@@ -112,7 +115,7 @@ namespace BusinessObjects.Tests
         }
 
         [TestMethod]
-        public void TwoElementItems_DecimalTypeIndex_SingleUser()
+        public void TwoElementItems_SalesPriceIndex_SingleUser()
         {
             // Arrange + act
             var user = new User("Email");
@@ -122,9 +125,9 @@ namespace BusinessObjects.Tests
             var organization = resourcePool.AddElement("Organization");
 
             organization
-                    .AddField("Sales Price", ElementFieldTypes.ResourcePool)
+                    .AddField("Sales Price", true, ElementFieldTypes.ResourcePool)
                 .Element
-                    .AddField("Sales Number", ElementFieldTypes.Multiplier);
+                    .AddField("Sales Number", true, ElementFieldTypes.Multiplier);
 
             var resourcePoolIndex = resourcePool.AddIndex("Importance Index", organization.ResourcePoolField, RatingSortType.LowestToHighest);
 

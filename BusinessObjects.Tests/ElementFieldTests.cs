@@ -12,6 +12,7 @@ namespace BusinessObjects.Tests
             var newElementField = new ElementField(
                 new Element(new ResourcePool("CMRP"), "Element"),
                 "Default field",
+                true,
                 ElementFieldTypes.Boolean);
         }
     }

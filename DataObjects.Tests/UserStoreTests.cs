@@ -156,9 +156,6 @@ namespace DataObjects.Tests
                 Assert.IsTrue(userResourcePool.ResourcePoolRate == 101);
                 Assert.IsTrue(userResourcePool.UserResourcePoolIndexSet.Count == 1);
                 Assert.IsTrue(userResourcePool.UserResourcePoolIndexSet.First().Rating == 100);
-
-                // And must have at least one cell
-                Assert.IsTrue(targetUser.UserElementCellSet.Any(cell => cell.ElementCell.ElementField.Element.ResourcePool == userResourcePool.ResourcePool));
             }
         }
 

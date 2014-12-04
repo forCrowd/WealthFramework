@@ -17,13 +17,14 @@ namespace BusinessObjects
         public ElementField()
         { }
 
-        public ElementField(Element element, string name, ElementFieldTypes fieldType)
+        public ElementField(Element element, string name, bool fixedValue, ElementFieldTypes fieldType)
         {
             Validations.ArgumentNullOrDefault(element, "element");
             Validations.ArgumentNullOrDefault(name, "name");
 
             Element = element;
             Name = name;
+            FixedValue = fixedValue;
             ElementFieldType = (byte)fieldType;
             ElementCellSet = new HashSet<ElementCell>();
             ResourcePoolIndexSet = new HashSet<ResourcePoolIndex>();
@@ -39,6 +40,13 @@ namespace BusinessObjects
         [Required]
         [StringLength(50)]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Determines whether this field will use a fixed value from the CMRP owner or it will have user rateable values
+        /// </summary>
+        [Display(Name = "Fixed Value")]
+        [Required]
+        public bool FixedValue { get; set; }
 
         [Required]
         [Display(Name = "Element Field Type")]

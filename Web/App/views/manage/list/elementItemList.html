@@ -16,19 +16,19 @@
     <table class="table">
         <tr>
             <th>
-                Element Item
+                Element
             </th>
             <th>
-                Element
+                Element Item
             </th>
             <th></th>
         </tr>
         <tr data-ng-repeat="elementItem in vm.elementItemSet">
             <td>
-                {{ elementItem.Name }}
+                {{ elementItem.Element.Name }}
             </td>
             <td>
-                {{ elementItem.Element.Name }}
+                {{ elementItem.Name }}
             </td>
             <td>
                 <a href="/manage/elementItem/edit/{{ elementItem.Id }}">Edit</a> |

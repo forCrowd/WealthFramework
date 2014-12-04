@@ -3,7 +3,7 @@ namespace DataObjects.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class V0_14_8 : DbMigration
+    public partial class V0_14_9 : DbMigration
     {
         public override void Up()
         {
@@ -31,6 +31,7 @@ namespace DataObjects.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         ElementId = c.Int(nullable: false),
                         Name = c.String(nullable: false, maxLength: 50),
+                        FixedValue = c.Boolean(nullable: false),
                         ElementFieldType = c.Byte(nullable: false),
                         CreatedOn = c.DateTime(nullable: false),
                         ModifiedOn = c.DateTime(nullable: false),
@@ -71,8 +72,8 @@ namespace DataObjects.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 50),
                         ElementId = c.Int(nullable: false),
+                        Name = c.String(nullable: false, maxLength: 50),
                         CreatedOn = c.DateTime(nullable: false),
                         ModifiedOn = c.DateTime(nullable: false),
                         DeletedOn = c.DateTime(),
@@ -89,7 +90,10 @@ namespace DataObjects.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         UserId = c.Int(nullable: false),
                         ElementCellId = c.Int(nullable: false),
-                        Rating = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        BooleanValue = c.Boolean(),
+                        IntegerValue = c.Int(),
+                        DecimalValue = c.Decimal(precision: 18, scale: 2),
+                        DateTimeValue = c.DateTime(),
                         CreatedOn = c.DateTime(nullable: false),
                         ModifiedOn = c.DateTime(nullable: false),
                         DeletedOn = c.DateTime(),

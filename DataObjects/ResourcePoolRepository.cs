@@ -32,7 +32,7 @@
         public ResourcePool CreateSectorIndexSample(User user)
         {
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user, 9);
+            var resourcePool = CreateDefaultResourcePool(user, true, 9);
             resourcePool.Name = "Sector Index Sample";
             resourcePool.IsSample = true;
 
@@ -61,7 +61,7 @@
         public ResourcePool CreateKnowledgeIndexSample(User user)
         {
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user);
+            var resourcePool = CreateDefaultResourcePool(user, true);
             resourcePool.Name = "Knowledge Index Sample";
             resourcePool.IsSample = true;
 
@@ -82,7 +82,7 @@
         public ResourcePool CreateTotalCostIndexSample(User user)
         {
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user);
+            var resourcePool = CreateDefaultResourcePool(user, false);
             resourcePool.Name = "Total Cost Index Sample";
             resourcePool.IsSample = true;
 
@@ -93,9 +93,6 @@
             mainElement.MultiplierField.Name = "Sales Number";
 
             // Resource pool index; change it to Sales Price itself, instead of User ratings
-            resourcePool.ResourcePoolIndexSet.Clear();
-            resourcePool.MainElement.NameField.ResourcePoolIndexSet.Clear();
-            resourcePool.UserResourcePoolSet.First().UserResourcePoolIndexSet.Clear();
             var totalCostIndex = resourcePool.AddIndex("Total Cost Index", resourcePool.MainElement.ResourcePoolField, RatingSortType.LowestToHighest);
             resourcePool.UserResourcePoolSet.First().AddIndex(totalCostIndex, 100);
             
@@ -111,43 +108,54 @@
             return resourcePool;
         }
 
-        public ResourcePool CreateDefaultResourcePool(User user)
+        public ResourcePool CreateDefaultResourcePool(User user, bool createImportanceIndex)
         {
-            return CreateDefaultResourcePool(user, DEFAULTNUMBEROFITEMS);
+            return CreateDefaultResourcePool(user, createImportanceIndex, DEFAULTNUMBEROFITEMS);
         }
 
-        public ResourcePool CreateDefaultResourcePool(User user, short numberOfItems)
+        public ResourcePool CreateDefaultResourcePool(User user, bool createImportanceIndex, short numberOfItems)
         {
             // Resource pool, main element, fields
             var resourcePool = new ResourcePool("Default");
             resourcePool
                 .AddElement("Main Element")
-                    .AddField("Resource Pool Field", ElementFieldTypes.ResourcePool)
+                    .AddField("Resource Pool Field", true, ElementFieldTypes.ResourcePool)
                 .Element
-                    .AddField("Multiplier", ElementFieldTypes.Multiplier);
+                    .AddField("Multiplier", true, ElementFieldTypes.Multiplier);
+
+            // Importance field
+            ElementField importanceField = null;
+            if (createImportanceIndex)
+                importanceField = resourcePool.MainElement.AddField("Importance Field", false, ElementFieldTypes.Decimal);
 
             // Items, cells, user cells
-            var itemRating = numberOfItems > 0 ? 100 / numberOfItems : 0;
+            var itemRating = numberOfItems > 0 ? 100M / numberOfItems : 0;
             for (var i = 1; i <= numberOfItems; i++)
             {
                 var itemName = string.Format("Item {0}", i);
 
-                resourcePool.MainElement
+                var item = resourcePool.MainElement
                     .AddItem(itemName)
                         .AddCell(resourcePool.MainElement.ResourcePoolField).SetValue(100M)
                     .ElementItem
                         .AddCell(resourcePool.MainElement.MultiplierField).SetValue(0M)
-                    .ElementItem
-                        .NameCell.AddUserCell(user, itemRating); // Rating for importance index
+                    .ElementItem;
+
+                if (createImportanceIndex)
+                    item.AddCell(importanceField).AddUserCell(user).SetValue(itemRating);
             }
 
+            // User resource pool, index
+            var userResourcePool = resourcePool.AddUserResourcePool(user, 101);
+            
             // Importance Index
             // TODO Will be updated with new field / index combo
-            var importanceIndex = resourcePool.AddIndex("Importance Index", resourcePool.MainElement.NameField, RatingSortType.HighestToLowest);
-
-            // User resource pool, index
-            resourcePool.AddUserResourcePool(user, 101).AddIndex(importanceIndex, 100);
-
+            if (createImportanceIndex)
+            {
+                var importanceIndex = resourcePool.AddIndex("Importance Index", importanceField, RatingSortType.HighestToLowest);
+                userResourcePool.AddIndex(importanceIndex, 100);
+            }
+            
             // Return
             return resourcePool;
         }

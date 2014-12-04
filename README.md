@@ -8,7 +8,7 @@ An experimental resource management system that aims to provide a sustainable ec
 
 **0.14.9**
 
-* UserCell fields
+* UserElementCell table has now BooleanValue, IntegerValue, DecimalValue, DateTimeValue like ElementCell. Rating column was dropped
 
 **0.14.8**
 

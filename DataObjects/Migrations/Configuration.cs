@@ -2,11 +2,8 @@ namespace DataObjects.Migrations
 {
     using BusinessObjects;
     using DataObjects;
-    using Microsoft.AspNet.Identity;
-    using System;
     using System.Collections.Generic;
     using System.Data.Entity.Migrations;
-    using System.Threading.Tasks;
 
     internal sealed class Configuration : DbMigrationsConfiguration<WealthEconomyContext>
     {
@@ -32,7 +29,7 @@ namespace DataObjects.Migrations
 
                 switch (migrationVersion)
                 {
-                    case "V0_14_8": // Currently the initial migration
+                    case "V0_14_9": // Currently the initial migration
                         {
                             // Initial data
                             DatabaseInitializer.SeedInitialData(context);

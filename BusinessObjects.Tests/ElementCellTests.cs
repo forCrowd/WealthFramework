@@ -11,7 +11,7 @@ namespace BusinessObjects.Tests
         {
             var newElement = new Element(new ResourcePool("CMRP"), "Element");
             var newElementCell = new ElementCell(
-                new ElementField(newElement, "Field", ElementFieldTypes.Boolean),
+                new ElementField(newElement, "Field", true, ElementFieldTypes.Boolean),
                 new ElementItem(newElement, "Item"));
         }
     }

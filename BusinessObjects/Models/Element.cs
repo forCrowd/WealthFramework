@@ -25,7 +25,7 @@ namespace BusinessObjects
             IsMainElement = !ResourcePool.ElementSet.Any();
             
             ElementFieldSet = new HashSet<ElementField>();
-            AddField("Name", ElementFieldTypes.String);
+            AddField("Name", true, ElementFieldTypes.String);
 
             ElementItemSet = new HashSet<ElementItem>();
             ResourcePoolIndexSet = new HashSet<ResourcePoolIndex>();
@@ -128,11 +128,11 @@ namespace BusinessObjects
 
         #region - Methods -
 
-        public ElementField AddField(string name, ElementFieldTypes fieldType)
+        public ElementField AddField(string name, bool fixedValue, ElementFieldTypes fieldType)
         {
             // TODO Validation - Same name?
 
-            var field = new ElementField(this, name, fieldType);
+            var field = new ElementField(this, name, fixedValue, fieldType);
             ElementFieldSet.Add(field);
             return field;
         }
