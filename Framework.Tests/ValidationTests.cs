@@ -115,7 +115,6 @@ namespace Framework.Tests
                     Assert.Fail();
             }
             catch (ArgumentNullOrDefaultException ex)
-            //catch (ArgumentNullException ex)
             {
                 if (!isNullOrDefault)
                     Assert.Fail();
@@ -135,7 +134,6 @@ namespace Framework.Tests
                     Assert.Fail();
             }
             catch (ArgumentNullOrDefaultException ex)
-            //catch (ArgumentNullException ex)
             {
                 if (!isNullOrDefault)
                     Assert.Fail();

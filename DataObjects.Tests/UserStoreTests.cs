@@ -13,11 +13,14 @@ namespace DataObjects.Tests
     {
         #region - Variables & Initialize & Cleanup -
 
+        public TestContext TestContext { get; set; }
         UserStore userStore;
 
         [TestInitialize]
         public void Initialize()
         {
+            TestContext.WriteLine("Initializing");
+
             userStore = new UserStore(Context);
             userStore.AutoSaveChanges = false;
         }
@@ -25,6 +28,8 @@ namespace DataObjects.Tests
         [TestCleanup]
         public void Cleanup()
         {
+            TestContext.WriteLine("Cleaning up");
+
             userStore.Dispose();
         }
 

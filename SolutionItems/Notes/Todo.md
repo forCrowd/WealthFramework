@@ -253,3 +253,157 @@ check fixed / user level values
 business rules like fixedvalue = false cant be applied to string ?!
 resourcepoolview doesnt look good with new importance field
 convert rating properties to methods
+
+---
+anti forgery: AntiForgery.GetTokens
+
+---
+
+public class CountryController : Controller
+  {
+      //initialize service object
+      ICountryService _CountryService;
+ 
+      public CountryController(ICountryService CountryService)
+      {
+	  }
+  }
+  
+public interface IContext
+   {
+       IDbSet<Person> Persons { get; set; }
+       IDbSet<Country> Countries { get; set; }
+       
+       DbSet<TEntity> Set<TEntity>() where TEntity : class;
+       DbEntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
+ 
+       int SaveChanges();
+   }
+ 
+ 
+   public class SampleArchContext : DbContext, IContext
+   {
+ 
+       public SampleArchContext()
+           : base("Name=SampleArchContext")
+       {
+           //this.Configuration.LazyLoadingEnabled = false; 
+       }
+ 
+       public IDbSet<Person> Persons { get; set; }
+       public IDbSet<Country> Countries { get; set; }
+        
+       protected override void OnModelCreating(DbModelBuilder modelBuilder)
+       {
+           modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();  
+           base.OnModelCreating(modelBuilder);
+       }
+ 
+       public override int SaveChanges()
+       {
+           var modifiedEntries = ChangeTracker.Entries()
+               .Where(x => x.Entity is IAuditableEntity
+                   && (x.State == System.Data.Entity.EntityState.Added || x.State == System.Data.Entity.EntityState.Modified));
+ 
+           foreach (var entry in modifiedEntries)
+           {
+               IAuditableEntity entity = entry.Entity as IAuditableEntity;
+               if (entity != null)
+               {
+                   string identityName = Thread.CurrentPrincipal.Identity.Name;
+                   DateTime now = DateTime.UtcNow;
+ 
+                   if (entry.State == System.Data.Entity.EntityState.Added)
+                   {
+                       entity.CreatedBy = identityName;
+                       entity.CreatedDate = now;
+                   }
+                   else {
+                       base.Entry(entity).Property(x => x.CreatedBy).IsModified = false;
+                       base.Entry(entity).Property(x => x.CreatedDate).IsModified = false;                   
+                   }
+ 
+                   entity.UpdatedBy = identityName;
+                   entity.UpdatedDate = now;
+               }
+           }
+ 
+           return base.SaveChanges();
+       }       
+   }
+   
+---
+https://github.com/hazzik/DelegateDecompiler
+
+---
+        // POST api/Account/Register
+        [AllowAnonymous]
+        [Route("Register")]
+        public async Task<IHttpActionResult> Register(UserModel userModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+ 
+            IdentityResult result = await _repo.RegisterUser(userModel);
+ 
+            IHttpActionResult errorResult = GetErrorResult(result);
+ 
+            if (errorResult != null)
+            {
+                return errorResult;
+            }
+ 
+            return Ok();
+        }
+ 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _repo.Dispose();
+            }
+ 
+            base.Dispose(disposing);
+        }
+ 
+        private IHttpActionResult GetErrorResult(IdentityResult result)
+        {
+            if (result == null)
+            {
+                return InternalServerError();
+            }
+ 
+            if (!result.Succeeded)
+            {
+                if (result.Errors != null)
+                {
+                    foreach (string error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error);
+                    }
+                }
+ 
+                if (ModelState.IsValid)
+                {
+                    // No ModelState errors are available to send, so just return an empty BadRequest.
+                    return BadRequest();
+                }
+ 
+                return BadRequest(ModelState);
+            }
+ 
+            return null;
+        }
+    }
+	
+---
+refresh tokens?
+
+cors (ngclient + api separation)
+http://bitoftech.net/2014/06/09/angularjs-token-authentication-using-asp-net-web-api-2-owin-asp-net-identity/
+https://github.com/tjoudeh/AngularJSAuthentication
+
+X-InlineCount
+X-Pagination
