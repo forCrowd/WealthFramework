@@ -65,10 +65,16 @@
     <Compile Include="..\SolutionItems\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Generated\ElementFieldIndexUnitOfWork.cs">
+      <DependentUpon>UnitOfWork.tt</DependentUpon>
+    </Compile>
     <Compile Include="Generated\RoleUnitOfWork.cs">
       <DependentUpon>UnitOfWork.tt</DependentUpon>
     </Compile>
     <Compile Include="Generated\UserClaimUnitOfWork.cs">
+      <DependentUpon>UnitOfWork.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\UserElementFieldIndexUnitOfWork.cs">
       <DependentUpon>UnitOfWork.tt</DependentUpon>
     </Compile>
     <Compile Include="Generated\UserLoginUnitOfWork.cs">
@@ -92,16 +98,10 @@
     <Compile Include="Generated\ElementUnitOfWork.cs">
       <DependentUpon>UnitOfWork.tt</DependentUpon>
     </Compile>
-    <Compile Include="Generated\ResourcePoolIndexUnitOfWork.cs">
-      <DependentUpon>UnitOfWork.tt</DependentUpon>
-    </Compile>
     <Compile Include="Generated\ResourcePoolUnitOfWork.cs">
       <DependentUpon>UnitOfWork.tt</DependentUpon>
     </Compile>
     <Compile Include="Generated\UserElementCellUnitOfWork.cs">
-      <DependentUpon>UnitOfWork.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\UserResourcePoolIndexUnitOfWork.cs">
       <DependentUpon>UnitOfWork.tt</DependentUpon>
     </Compile>
     <Compile Include="Generated\UserResourcePoolUnitOfWork.cs">

@@ -33,6 +33,10 @@ SH - 09 May '14
     <script src="/App/scripts/controllers/manage/list/elementFieldListController.js"></script>\
     <script src="/App/scripts/controllers/manage/edit/elementFieldEditController.js"></script>\
 	\
+    <script src="/App/scripts/services/generated/elementFieldIndexService.js"></script>\
+    <script src="/App/scripts/controllers/manage/list/elementFieldIndexListController.js"></script>\
+    <script src="/App/scripts/controllers/manage/edit/elementFieldIndexEditController.js"></script>\
+	\
     <script src="/App/scripts/services/generated/elementItemService.js"></script>\
     <script src="/App/scripts/controllers/manage/list/elementItemListController.js"></script>\
     <script src="/App/scripts/controllers/manage/edit/elementItemEditController.js"></script>\
@@ -40,10 +44,6 @@ SH - 09 May '14
     <script src="/App/scripts/services/generated/resourcePoolService.js"></script>\
     <script src="/App/scripts/controllers/manage/list/resourcePoolListController.js"></script>\
     <script src="/App/scripts/controllers/manage/edit/resourcePoolEditController.js"></script>\
-	\
-    <script src="/App/scripts/services/generated/resourcePoolIndexService.js"></script>\
-    <script src="/App/scripts/controllers/manage/list/resourcePoolIndexListController.js"></script>\
-    <script src="/App/scripts/controllers/manage/edit/resourcePoolIndexEditController.js"></script>\
 	\
     <script src="/App/scripts/services/generated/roleService.js"></script>\
     <script src="/App/scripts/controllers/manage/list/roleListController.js"></script>\
@@ -61,6 +61,10 @@ SH - 09 May '14
     <script src="/App/scripts/controllers/manage/list/userElementCellListController.js"></script>\
     <script src="/App/scripts/controllers/manage/edit/userElementCellEditController.js"></script>\
 	\
+    <script src="/App/scripts/services/generated/userElementFieldIndexService.js"></script>\
+    <script src="/App/scripts/controllers/manage/list/userElementFieldIndexListController.js"></script>\
+    <script src="/App/scripts/controllers/manage/edit/userElementFieldIndexEditController.js"></script>\
+	\
     <script src="/App/scripts/services/generated/userLoginService.js"></script>\
     <script src="/App/scripts/controllers/manage/list/userLoginListController.js"></script>\
     <script src="/App/scripts/controllers/manage/edit/userLoginEditController.js"></script>\
@@ -68,10 +72,6 @@ SH - 09 May '14
     <script src="/App/scripts/services/generated/userResourcePoolService.js"></script>\
     <script src="/App/scripts/controllers/manage/list/userResourcePoolListController.js"></script>\
     <script src="/App/scripts/controllers/manage/edit/userResourcePoolEditController.js"></script>\
-	\
-    <script src="/App/scripts/services/generated/userResourcePoolIndexService.js"></script>\
-    <script src="/App/scripts/controllers/manage/list/userResourcePoolIndexListController.js"></script>\
-    <script src="/App/scripts/controllers/manage/edit/userResourcePoolIndexEditController.js"></script>\
 	\
     <script src="/App/scripts/services/generated/userRoleService.js"></script>\
     <script src="/App/scripts/controllers/manage/list/userRoleListController.js"></script>\

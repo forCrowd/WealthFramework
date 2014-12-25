@@ -168,20 +168,20 @@ namespace BusinessObjects
             }
         }
 
-        public decimal ResourcePoolIndexIncome
+        public decimal ElementFieldIndexIncome
         {
             get
             {
-                if (ElementField.ResourcePoolIndex == null)
+                if (ElementField.ElementFieldIndex == null)
                 {
                     return ElementField.ElementFieldType == (byte)ElementFieldTypes.Element && SelectedElementItem != null
-                        ? SelectedElementItem.ResourcePoolIndexIncome
+                        ? SelectedElementItem.ElementFieldIndexIncome
                         : 0;
                 }
 
                 var value = RatingPercentage;
 
-                switch (ElementField.ResourcePoolIndex.RatingSortType)
+                switch (ElementField.ElementFieldIndex.RatingSortType)
                 {
                     case (byte)RatingSortType.HighestToLowest:
                         /* Do nothing */
@@ -192,7 +192,7 @@ namespace BusinessObjects
                         throw new ArgumentOutOfRangeException();
                 }
 
-                return ElementField.ResourcePoolIndexShare * value;
+                return ElementField.ElementFieldIndexShare * value;
             }
         }
 

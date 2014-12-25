@@ -8,10 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 -->
-<div data-ng-controller="userResourcePoolIndexListController as vm">
+<div data-ng-controller="userElementFieldIndexListController as vm">
     <h2>List</h2>
     <p>
-        <a href="/manage/userResourcePoolIndex/new">Create New</a>
+        <a href="/manage/userElementFieldIndex/new">Create New</a>
     </p>
     <table class="table">
         <tr>
@@ -19,26 +19,26 @@
                 Id
             </th>
             <th>
-                Resource Pool Index
+                Element Field Index
             </th>
             <th>
                 Rating
             </th>
             <th></th>
         </tr>
-        <tr data-ng-repeat="userResourcePoolIndex in vm.userResourcePoolIndexSet">
+        <tr data-ng-repeat="userElementFieldIndex in vm.userElementFieldIndexSet">
             <td>
-                {{ userResourcePoolIndex.UserResourcePool.Id }}
+                {{ userElementFieldIndex.UserResourcePool.Id }}
             </td>
             <td>
-                {{ userResourcePoolIndex.ResourcePoolIndex.Name }}
+                {{ userElementFieldIndex.ElementFieldIndex.Name }}
             </td>
             <td>
-                {{ userResourcePoolIndex.Rating }}
+                {{ userElementFieldIndex.Rating }}
             </td>
             <td>
-                <a href="/manage/userResourcePoolIndex/edit/{{ userResourcePoolIndex.Id }}">Edit</a> |
-                <a href="" data-ng-click="vm.deleteUserResourcePoolIndex(userResourcePoolIndex)">
+                <a href="/manage/userElementFieldIndex/edit/{{ userElementFieldIndex.Id }}">Edit</a> |
+                <a href="" data-ng-click="vm.deleteUserElementFieldIndex(userElementFieldIndex)">
                     Delete
                 </a>
             </td>

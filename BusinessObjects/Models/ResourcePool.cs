@@ -23,7 +23,7 @@ namespace BusinessObjects
 
             Name = name;
             ElementSet = new HashSet<Element>();
-            ResourcePoolIndexSet = new HashSet<ResourcePoolIndex>();
+            //ElementFieldIndexSet = new HashSet<ElementFieldIndex>();
             UserResourcePoolSet = new HashSet<UserResourcePool>();
         }
 
@@ -41,9 +41,13 @@ namespace BusinessObjects
         [DisplayOnEditView(false)]
         public bool IsSample { get; set; }
 
-        public virtual ICollection<ResourcePoolIndex> ResourcePoolIndexSet { get; set; }
         public virtual ICollection<Element> ElementSet { get; set; }
         public virtual ICollection<UserResourcePool> UserResourcePoolSet { get; set; }
+
+        public IEnumerable<ElementFieldIndex> ElementFieldIndexSet
+        {
+            get { return ElementSet.SelectMany(item => item.ElementFieldIndexSet); }
+        }
 
         public decimal ResourcePoolRate
         {
@@ -62,7 +66,7 @@ namespace BusinessObjects
 
         public decimal IndexRatingAverage
         {
-            get { return ResourcePoolIndexSet.Sum(item => item.IndexRatingAverage); }
+            get { return ElementFieldIndexSet.Sum(item => item.IndexRatingAverage); }
         }
 
         public Element MainElement
@@ -107,22 +111,22 @@ namespace BusinessObjects
 
         #region - Methods -
 
-        public ResourcePoolIndex AddIndex(string name, ElementField field)
-        {
-            return AddIndex(name, field, null);
-        }
+        //public ElementFieldIndex AddIndex(string name, ElementField field)
+        //{
+        //    return AddIndex(name, field, null);
+        //}
 
-        public ResourcePoolIndex AddIndex(string name, ElementField field, RatingSortType? sortType)
-        {
-            var index = new ResourcePoolIndex(this, name, field);
+        //public ElementFieldIndex AddIndex(string name, ElementField field, RatingSortType? sortType)
+        //{
+        //    var index = new ElementFieldIndex(this, name, field);
 
-            if (sortType.HasValue)
-                index.RatingSortType = (byte)sortType;
+        //    if (sortType.HasValue)
+        //        index.RatingSortType = (byte)sortType;
 
-            field.ResourcePoolIndexSet.Add(index);
-            ResourcePoolIndexSet.Add(index);
-            return index;
-        }
+        //    field.ElementFieldIndexSet.Add(index);
+        //    ElementFieldIndexSet.Add(index);
+        //    return index;
+        //}
 
         public Element AddElement(string name)
         {

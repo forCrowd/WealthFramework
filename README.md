@@ -9,6 +9,7 @@ An experimental resource management system that aims to provide a sustainable ec
 **0.14.9**
 
 * UserElementCell table has now BooleanValue, IntegerValue, DecimalValue, DateTimeValue like ElementCell. Rating column was dropped
+* ResourcePoolIndex was changed to ElementFieldIndex
 
 **0.14.8**
 

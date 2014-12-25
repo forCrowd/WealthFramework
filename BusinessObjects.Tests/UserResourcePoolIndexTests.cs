@@ -4,27 +4,26 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace BusinessObjects.Tests
 {
     [TestClass]
-    public class UserResourcePoolIndexTests
+    public class UserElementFieldIndexTests
     {
         [TestMethod]
-        public void NewUserResourcePoolIndexShouldCreate()
+        public void NewUserElementFieldIndexShouldCreate()
         {
             var newResourcePool = new ResourcePool("CMRP");
-            var newResourcePoolIndex = new ResourcePoolIndex(
-                newResourcePool,
-                "Default index",
+            var newElementFieldIndex = new ElementFieldIndex(
                 new ElementField(
                     new Element(new ResourcePool("CMRP"), "Element"),
                     "Field",
                     true,
-                    ElementFieldTypes.Boolean));
+                    ElementFieldTypes.Boolean),
+                "Default index");
 
-            var newUserResourcePoolIndex = new UserResourcePoolIndex(
+            var newUserElementFieldIndex = new UserElementFieldIndex(
                 new UserResourcePool(
                     new User("email"),
                     newResourcePool,
                     0),
-                    newResourcePoolIndex,
+                    newElementFieldIndex,
                     0);
         }
     }

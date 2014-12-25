@@ -8,16 +8,16 @@
     public partial class UserResourcePoolUnitOfWork
     {
         ResourcePoolRepository resourcePoolRepository;
-        UserResourcePoolIndexRepository userResourcePoolIndexRepository;
+        UserElementFieldIndexRepository userElementFieldIndexRepository;
 
         ResourcePoolRepository ResourcePoolRepository
         {
             get { return resourcePoolRepository ?? (resourcePoolRepository = new ResourcePoolRepository(Context)); }
         }
 
-        UserResourcePoolIndexRepository UserResourcePoolIndexRepository
+        UserElementFieldIndexRepository UserElementFieldIndexRepository
         {
-            get { return userResourcePoolIndexRepository ?? (userResourcePoolIndexRepository = new UserResourcePoolIndexRepository(Context)); }
+            get { return userElementFieldIndexRepository ?? (userElementFieldIndexRepository = new UserElementFieldIndexRepository(Context)); }
         }
 
         public enum UpdateNumberOfSalesActions

@@ -144,7 +144,7 @@ namespace BusinessObjects
         {
             get
             {
-                var indexCells = ElementCellSet.Where(item => Element.ResourcePool.ResourcePoolIndexSet.Any(index => index.ElementField == item.ElementField));
+                var indexCells = ElementCellSet.Where(item => item.ElementField.ElementFieldIndexSet.Any());
                 return indexCells.Any()
                     ? indexCells.Sum(item => item.RatingCount)
                     : 0;
@@ -156,7 +156,7 @@ namespace BusinessObjects
         {
             get
             {
-                var indexCells = ElementCellSet.Where(item => Element.ResourcePool.ResourcePoolIndexSet.Any(index => index.ElementField == item.ElementField));
+                var indexCells = ElementCellSet.Where(item => item.ElementField.ElementFieldIndexSet.Any());
                 return indexCells.Any()
                     ? indexCells.Sum(item => item.RatingAverage)
                     : 0;
@@ -202,14 +202,14 @@ namespace BusinessObjects
             }
         }
 
-        public decimal ResourcePoolIndexIncome
+        public decimal ElementFieldIndexIncome
         {
-            get { return ElementCellSet.Sum(item => item.ResourcePoolIndexIncome); }
+            get { return ElementCellSet.Sum(item => item.ElementFieldIndexIncome); }
         }
 
         public decimal TotalIncome
         {
-            get { return TotalResourcePoolValue + ResourcePoolIndexIncome; }
+            get { return TotalResourcePoolValue + ElementFieldIndexIncome; }
         }
 
         #region - Methods -

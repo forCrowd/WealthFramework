@@ -77,10 +77,16 @@
     </Compile>
     <Compile Include="DropCreateDatabaseAlways.cs" />
     <Compile Include="Extensions\DbSetExtensions.cs" />
+    <Compile Include="Generated\ElementFieldIndexRepository.cs">
+      <DependentUpon>Repository.tt</DependentUpon>
+    </Compile>
     <Compile Include="Generated\RoleRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
     <Compile Include="Generated\UserClaimRepository.cs">
+      <DependentUpon>Repository.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\UserElementFieldIndexRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
     <Compile Include="Generated\UserLoginRepository.cs">
@@ -109,9 +115,6 @@
     <Compile Include="Generated\ElementRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
-    <Compile Include="Generated\ResourcePoolIndexRepository.cs">
-      <DependentUpon>Repository.tt</DependentUpon>
-    </Compile>
     <Compile Include="Generated\ResourcePoolRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
@@ -119,9 +122,6 @@
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
     <Compile Include="Generated\UserRepository.cs">
-      <DependentUpon>Repository.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Generated\UserResourcePoolIndexRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
     <Compile Include="Generated\UserResourcePoolRepository.cs">

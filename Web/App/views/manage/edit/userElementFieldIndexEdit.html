@@ -8,11 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 -->
-<div data-ng-controller="userResourcePoolIndexEditController as vm">
+<div data-ng-controller="userElementFieldIndexEditController as vm">
     <h2>Edit</h2>
     <form name="editForm">
         <div class="form-horizontal">
-            <h4>User CMRP Index</h4>
+            <h4>User Element Field Index</h4>
             <hr />
             <div class="form-group has-error" data-ng-show="vm.entityErrors">
                 <ul>
@@ -24,24 +24,24 @@
             <div class="form-group">
                 <label for="UserResourcePoolId" class="control-label col-md-2">Id</label>
                 <div class="col-md-10" data-ng-class="{'has-error': editForm.UserResourcePoolId.$invalid && !editForm.UserResourcePoolId.$pristine}">
-                    <select id="UserResourcePoolId" name="UserResourcePoolId" data-ng-model="vm.userResourcePoolIndex.UserResourcePool" data-ng-options="userResourcePool.Id for userResourcePool in vm.userResourcePoolSet" class="form-control" required ></select>
+                    <select id="UserResourcePoolId" name="UserResourcePoolId" data-ng-model="vm.userElementFieldIndex.UserResourcePool" data-ng-options="userResourcePool.Id for userResourcePool in vm.userResourcePoolSet" class="form-control" required ></select>
                 </div>
             </div>
             <div class="form-group">
-                <label for="ResourcePoolIndexId" class="control-label col-md-2">Resource Pool Index</label>
-                <div class="col-md-10" data-ng-class="{'has-error': editForm.ResourcePoolIndexId.$invalid && !editForm.ResourcePoolIndexId.$pristine}">
-                    <select id="ResourcePoolIndexId" name="ResourcePoolIndexId" data-ng-model="vm.userResourcePoolIndex.ResourcePoolIndex" data-ng-options="resourcePoolIndex.Name for resourcePoolIndex in vm.resourcePoolIndexSet" class="form-control" required ></select>
+                <label for="ElementFieldIndexId" class="control-label col-md-2">Element Field Index</label>
+                <div class="col-md-10" data-ng-class="{'has-error': editForm.ElementFieldIndexId.$invalid && !editForm.ElementFieldIndexId.$pristine}">
+                    <select id="ElementFieldIndexId" name="ElementFieldIndexId" data-ng-model="vm.userElementFieldIndex.ElementFieldIndex" data-ng-options="elementFieldIndex.Name for elementFieldIndex in vm.elementFieldIndexSet" class="form-control" required ></select>
                 </div>
             </div>
             <div class="form-group">
                 <label for="Rating" class="control-label col-md-2">Rating</label>
                 <div class="col-md-10" data-ng-class="{'has-error': editForm.Rating.$invalid && !editForm.Rating.$pristine}">
-                    <input id="Rating" name="Rating" type="text" data-ng-model="vm.userResourcePoolIndex.Rating" class="form-control" required />
+                    <input id="Rating" name="Rating" type="text" data-ng-model="vm.userElementFieldIndex.Rating" class="form-control" required />
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-md-10">
-                    <input id="RowVersion" name="RowVersion" data-ng-model="vm.userResourcePoolIndex.RowVersion" type="hidden">
+                    <input id="RowVersion" name="RowVersion" data-ng-model="vm.userElementFieldIndex.RowVersion" type="hidden">
                 </div>
             </div>
             <div class="form-group">

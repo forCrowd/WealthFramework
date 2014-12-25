@@ -10,14 +10,13 @@ namespace BusinessObjects.Tests
         public void NewUserResourcePoolShouldCreate()
         {
             var newResourcePool = new ResourcePool("CMRP");
-            var newResourcePoolIndex = new ResourcePoolIndex(
-                newResourcePool,
-                "Default index",
+            var newElementFieldIndex = new ElementFieldIndex(
                 new ElementField(
                     new Element(new ResourcePool("CMRP"), "Element"),
                     "Field",
                     true,
-                    ElementFieldTypes.Boolean));
+                    ElementFieldTypes.Boolean),
+                "Default index");
 
                 new UserResourcePool(
                     new User("email"),

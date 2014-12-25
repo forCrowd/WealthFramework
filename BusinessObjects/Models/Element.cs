@@ -28,7 +28,6 @@ namespace BusinessObjects
             AddField("Name", true, ElementFieldTypes.String);
 
             ElementItemSet = new HashSet<ElementItem>();
-            ResourcePoolIndexSet = new HashSet<ResourcePoolIndex>();
         }
 
         [DisplayOnListView(false)]
@@ -48,12 +47,11 @@ namespace BusinessObjects
         public virtual ResourcePool ResourcePool { get; set; }
         public virtual ICollection<ElementField> ElementFieldSet { get; set; }
         public virtual ICollection<ElementItem> ElementItemSet { get; set; }
-        public virtual ICollection<ResourcePoolIndex> ResourcePoolIndexSet { get; set; }
 
         #region - ReadOnly Properties -
 
         /// <summary>
-        /// REMARK: In other index types, this value is calculated on ResourcePoolIndex class level, under IndexValue property
+        /// REMARK: In other index types, this value is calculated on ElementFieldIndex class level, under IndexValue property
         /// </summary>
         //public decimal RatingAverage
         //{
@@ -66,6 +64,16 @@ namespace BusinessObjects
             {
                 return ElementFieldSet.Where(item => item.ElementFieldType != (byte)ElementFieldTypes.ResourcePool
                     && item.ElementFieldType != (byte)ElementFieldTypes.Multiplier);
+            }
+        }
+
+        public IEnumerable<ElementFieldIndex> ElementFieldIndexSet
+        {
+            get
+            {
+                return ElementFieldSet
+                    .Where(item => item.ElementFieldIndex != null)
+                    .Select(field => field.ElementFieldIndex);
             }
         }
 

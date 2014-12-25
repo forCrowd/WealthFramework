@@ -20,46 +20,46 @@ namespace Web.Controllers.OData
     using System.Web.Http.ModelBinding;
     using System.Web.Http.OData;
 
-    public abstract class BaseUserResourcePoolIndexController : BaseODataController
+    public abstract class BaseUserElementFieldIndexController : BaseODataController
     {
-        public BaseUserResourcePoolIndexController()
+        public BaseUserElementFieldIndexController()
 		{
-			MainUnitOfWork = new UserResourcePoolIndexUnitOfWork();		
+			MainUnitOfWork = new UserElementFieldIndexUnitOfWork();		
 		}
 
-		protected UserResourcePoolIndexUnitOfWork MainUnitOfWork { get; private set; }
+		protected UserElementFieldIndexUnitOfWork MainUnitOfWork { get; private set; }
 
-        // GET odata/UserResourcePoolIndex
+        // GET odata/UserElementFieldIndex
         //[Queryable]
-        public virtual IQueryable<UserResourcePoolIndex> Get()
+        public virtual IQueryable<UserElementFieldIndex> Get()
         {
 			var list = MainUnitOfWork.AllLive;
             return list;
         }
 
-        // GET odata/UserResourcePoolIndex(5)
+        // GET odata/UserElementFieldIndex(5)
         //[Queryable]
-        public virtual SingleResult<UserResourcePoolIndex> Get([FromODataUri] int key)
+        public virtual SingleResult<UserElementFieldIndex> Get([FromODataUri] int key)
         {
-            return SingleResult.Create(MainUnitOfWork.AllLive.Where(userResourcePoolIndex => userResourcePoolIndex.Id == key));
+            return SingleResult.Create(MainUnitOfWork.AllLive.Where(userElementFieldIndex => userElementFieldIndex.Id == key));
         }
 
-        // PUT odata/UserResourcePoolIndex(5)
-        public virtual async Task<IHttpActionResult> Put([FromODataUri] int key, UserResourcePoolIndex userResourcePoolIndex)
+        // PUT odata/UserElementFieldIndex(5)
+        public virtual async Task<IHttpActionResult> Put([FromODataUri] int key, UserElementFieldIndex userElementFieldIndex)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (key != userResourcePoolIndex.Id)
+            if (key != userElementFieldIndex.Id)
             {
                 return BadRequest();
             }
 
             try
             {
-                await MainUnitOfWork.UpdateAsync(userResourcePoolIndex);
+                await MainUnitOfWork.UpdateAsync(userElementFieldIndex);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -73,11 +73,11 @@ namespace Web.Controllers.OData
                 }
             }
 
-            return Ok(userResourcePoolIndex);
+            return Ok(userElementFieldIndex);
         }
 
-        // POST odata/UserResourcePoolIndex
-        public virtual async Task<IHttpActionResult> Post(UserResourcePoolIndex userResourcePoolIndex)
+        // POST odata/UserElementFieldIndex
+        public virtual async Task<IHttpActionResult> Post(UserElementFieldIndex userElementFieldIndex)
         {
             if (!ModelState.IsValid)
             {
@@ -86,11 +86,11 @@ namespace Web.Controllers.OData
 
             try
             {
-                await MainUnitOfWork.InsertAsync(userResourcePoolIndex);
+                await MainUnitOfWork.InsertAsync(userElementFieldIndex);
             }
             catch (DbUpdateException)
             {
-                if (MainUnitOfWork.Exists(userResourcePoolIndex.Id))
+                if (MainUnitOfWork.Exists(userElementFieldIndex.Id))
                 {
                     return Conflict();
                 }
@@ -100,52 +100,52 @@ namespace Web.Controllers.OData
                 }
             }
 
-            return Created(userResourcePoolIndex);
+            return Created(userElementFieldIndex);
         }
 
-        // PATCH odata/UserResourcePoolIndex(5)
+        // PATCH odata/UserElementFieldIndex(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<UserResourcePoolIndex> patch)
+        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<UserElementFieldIndex> patch)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var userResourcePoolIndex = await MainUnitOfWork.FindAsync(key);
-            if (userResourcePoolIndex == null)
+            var userElementFieldIndex = await MainUnitOfWork.FindAsync(key);
+            if (userElementFieldIndex == null)
             {
                 return NotFound();
             }
 
             var patchEntity = patch.GetEntity();
-            if (!userResourcePoolIndex.RowVersion.SequenceEqual(patchEntity.RowVersion))
+            if (!userElementFieldIndex.RowVersion.SequenceEqual(patchEntity.RowVersion))
             {
                 return Conflict();
             }
 
-            patch.Patch(userResourcePoolIndex);
-            await MainUnitOfWork.UpdateAsync(userResourcePoolIndex);
+            patch.Patch(userElementFieldIndex);
+            await MainUnitOfWork.UpdateAsync(userElementFieldIndex);
 
-            return Ok(userResourcePoolIndex);
+            return Ok(userElementFieldIndex);
         }
 
-        // DELETE odata/UserResourcePoolIndex(5)
+        // DELETE odata/UserElementFieldIndex(5)
         public virtual async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            var userResourcePoolIndex = await MainUnitOfWork.FindAsync(key);
-            if (userResourcePoolIndex == null)
+            var userElementFieldIndex = await MainUnitOfWork.FindAsync(key);
+            if (userElementFieldIndex == null)
             {
                 return NotFound();
             }
 
-            await MainUnitOfWork.DeleteAsync(userResourcePoolIndex.Id);
+            await MainUnitOfWork.DeleteAsync(userElementFieldIndex.Id);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
     }
 
-    public partial class UserResourcePoolIndexController : BaseUserResourcePoolIndexController
+    public partial class UserElementFieldIndexController : BaseUserElementFieldIndexController
     {
 	}
 }

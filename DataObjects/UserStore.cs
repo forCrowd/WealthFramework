@@ -58,9 +58,9 @@
                     .AddUserResourcePool(targetUser, sourceUserResourcePool.ResourcePoolRate);
 
                 // Indexes
-                var sourceUserResourcePoolIndexes = sourceUserResourcePool.UserResourcePoolIndexSet;
-                foreach (var sourceIndex in sourceUserResourcePoolIndexes)
-                    targetUserResourcePool.AddIndex(sourceIndex.ResourcePoolIndex, sourceIndex.Rating);
+                var sourceUserElementFieldIndexes = sourceUserResourcePool.UserElementFieldIndexSet;
+                foreach (var sourceIndex in sourceUserElementFieldIndexes)
+                    targetUserResourcePool.AddIndex(sourceIndex.ElementFieldIndex, sourceIndex.Rating);
             }
 
             // Element cells

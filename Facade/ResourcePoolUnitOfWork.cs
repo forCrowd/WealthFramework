@@ -83,7 +83,7 @@
             //UserResourcePoolRepository.Insert(userResourcePool);
 
             //// Sample ratings
-            //// TODO This is not going to work for now, because there are no ResourcePoolIndex records (it doesn't add a sample index)
+            //// TODO This is not going to work for now, because there are no ElementFieldIndex records (it doesn't add a sample index)
             //var resourcePoolIndexes = resourcePool.ResourcePoolIndexSet;
             //foreach (var resourcePoolIndex in resourcePoolIndexes)
             //{

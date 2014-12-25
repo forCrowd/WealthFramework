@@ -27,7 +27,7 @@ namespace BusinessObjects
             FixedValue = fixedValue;
             ElementFieldType = (byte)fieldType;
             ElementCellSet = new HashSet<ElementCell>();
-            ResourcePoolIndexSet = new HashSet<ResourcePoolIndex>();
+            ElementFieldIndexSet = new HashSet<ElementFieldIndex>();
         }
 
         [DisplayOnListView(false)]
@@ -58,12 +58,12 @@ namespace BusinessObjects
 
         public virtual Element Element { get; set; }
         public virtual ICollection<ElementCell> ElementCellSet { get; set; }
-        public virtual ICollection<ResourcePoolIndex> ResourcePoolIndexSet { get; set; }
+        public virtual ICollection<ElementFieldIndex> ElementFieldIndexSet { get; set; }
 
         #region - ReadOnly Properties -
 
         /// <summary>
-        /// REMARK: In other index types, this value is calculated on ResourcePoolIndex class level, under IndexValue property
+        /// REMARK: In other index types, this value is calculated on ElementFieldIndex class level, under IndexValue property
         /// </summary>
         public decimal RatingAverage
         {
@@ -88,19 +88,34 @@ namespace BusinessObjects
         }
 
         // TODO Although technically it's possible to define multiple indexes, there will be one per Field at the moment
-        public ResourcePoolIndex ResourcePoolIndex
+        public ElementFieldIndex ElementFieldIndex
         {
-            get { return ResourcePoolIndexSet.SingleOrDefault(); }
+            get { return ElementFieldIndexSet.SingleOrDefault(); }
         }
 
-        public decimal ResourcePoolIndexShare
+        public decimal ElementFieldIndexShare
         {
             get
             {
-                return ResourcePoolIndex == null
+                return ElementFieldIndex == null
                     ? 0
-                    : ResourcePoolIndex.IndexShare;
+                    : ElementFieldIndex.IndexShare;
             }
+        }
+
+#endregion
+
+        #region - Methods -
+
+        public ElementFieldIndex AddIndex(string name, RatingSortType? sortType)
+        {
+            var index = new ElementFieldIndex(this, name);
+
+            if (sortType.HasValue)
+                index.RatingSortType = (byte)sortType;
+
+            ElementFieldIndexSet.Add(index);
+            return index;
         }
 
         public override string ToString()

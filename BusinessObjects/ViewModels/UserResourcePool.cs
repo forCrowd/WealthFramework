@@ -15,10 +15,10 @@ namespace BusinessObjects.ViewModels
             ResourcePoolRatePercentage = userResourcePool.ResourcePool.ResourcePoolRatePercentage;
             UserResourcePoolRatingCount = userResourcePool.ResourcePool.UserResourcePoolSet.Count;
 
-            ResourcePoolIndexSet = userResourcePool
+            ElementFieldIndexSet = userResourcePool
                 .ResourcePool
-                .ResourcePoolIndexSet
-                .Select(item => new ResourcePoolIndex(item));
+                .ElementFieldIndexSet
+                .Select(item => new ElementFieldIndex(item));
             
             MainElement = new Element(userResourcePool.ResourcePool.MainElement, userResourcePool.UserId);
 
@@ -30,7 +30,7 @@ namespace BusinessObjects.ViewModels
         public decimal ResourcePoolRate { get; set; }
         public decimal ResourcePoolRatePercentage { get; set; }
         public int UserResourcePoolRatingCount { get; set; }
-        public IEnumerable<ResourcePoolIndex> ResourcePoolIndexSet { get; set; }
+        public IEnumerable<ElementFieldIndex> ElementFieldIndexSet { get; set; }
         public Element MainElement { get; set; }
         public decimal TotalIncome { get; set; }
     }

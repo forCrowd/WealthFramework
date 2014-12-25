@@ -9,14 +9,14 @@
     using System.Text;
 
     [TestClass]
-    public class ResourcePoolIndexTest
+    public class ElementFieldIndexTest
     {
         [TestMethod]
         public void Select()
         {
-            using (var unitOfWork = new ResourcePoolIndexUnitOfWork())
+            using (var unitOfWork = new ElementFieldIndexUnitOfWork())
             {
-                var list = unitOfWork.AllLiveIncluding(item => item.UserResourcePoolIndexSet);
+                var list = unitOfWork.AllLiveIncluding(item => item.UserElementFieldIndexSet);
 
                 var sbOutput = new StringBuilder();
 

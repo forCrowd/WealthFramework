@@ -10,11 +10,11 @@
 (function () {
     'use strict';
 
-    var serviceId = 'userResourcePoolIndexService';
+    var serviceId = 'elementFieldIndexService';
     angular.module('main')
-        .factory(serviceId, ['dataContext', 'logger', userResourcePoolIndexService]);
+        .factory(serviceId, ['dataContext', 'logger', elementFieldIndexService]);
 
-    function userResourcePoolIndexService(dataContext, logger) {
+    function elementFieldIndexService(dataContext, logger) {
         logger = logger.forSource(serviceId);
 
         // To determine whether the data will be fecthed from server or local
@@ -23,12 +23,12 @@
 
         // Service methods (alphabetically)
         var service = {
-            createUserResourcePoolIndex: createUserResourcePoolIndex,
-            deleteUserResourcePoolIndex: deleteUserResourcePoolIndex,
+            createElementFieldIndex: createElementFieldIndex,
+            deleteElementFieldIndex: deleteElementFieldIndex,
             getChanges: getChanges,
             getChangesCount: getChangesCount,
-            getUserResourcePoolIndexSet: getUserResourcePoolIndexSet,
-            getUserResourcePoolIndex: getUserResourcePoolIndex,
+            getElementFieldIndexSet: getElementFieldIndexSet,
+            getElementFieldIndex: getElementFieldIndex,
             hasChanges: hasChanges,
             rejectChanges: rejectChanges,
             saveChanges: saveChanges
@@ -38,12 +38,12 @@
 
         /*** Implementations ***/
 
-        function createUserResourcePoolIndex(userResourcePoolIndex) {
-            dataContext.createEntity('UserResourcePoolIndex', userResourcePoolIndex);
+        function createElementFieldIndex(elementFieldIndex) {
+            dataContext.createEntity('ElementFieldIndex', elementFieldIndex);
         }
 
-        function deleteUserResourcePoolIndex(userResourcePoolIndex) {
-            userResourcePoolIndex.entityAspect.setDeleted();
+        function deleteElementFieldIndex(elementFieldIndex) {
+            elementFieldIndex.entityAspect.setDeleted();
         }
 
         function getChanges() {
@@ -54,7 +54,7 @@
             return dataContext.getChangesCount();
         }
 
-        function getUserResourcePoolIndexSet(forceRefresh) {
+        function getElementFieldIndexSet(forceRefresh) {
             var count;
             if (forceRefresh) {
                 if (dataContext.hasChanges()) {
@@ -65,8 +65,8 @@
             }
 
             var query = breeze.EntityQuery
-				.from('UserResourcePoolIndex')
-				.expand(['ResourcePoolIndex', 'UserResourcePool'])
+				.from('ElementFieldIndex')
+				.expand(['ElementField'])
             ;
 
             // Fetch the data from server, in case if it's not fetched earlier or forced
@@ -86,18 +86,18 @@
 
             function success(response) {
                 count = response.results.length;
-                logger.logSuccess('Got ' + count + ' userResourcePoolIndex(s)', response, true);
+                logger.logSuccess('Got ' + count + ' elementFieldIndex(s)', response, true);
                 return response.results;
             }
 
             function failed(error) {
-                var message = error.message || 'UserResourcePoolIndex query failed';
+                var message = error.message || 'ElementFieldIndex query failed';
                 logger.logError(message, error, true);
             }
         }
 
-        function getUserResourcePoolIndex(userResourcePoolIndexId, forceRefresh) {
-            return dataContext.fetchEntityByKey('UserResourcePoolIndex', userResourcePoolIndexId, !forceRefresh)
+        function getElementFieldIndex(elementFieldIndexId, forceRefresh) {
+            return dataContext.fetchEntityByKey('ElementFieldIndex', elementFieldIndexId, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {
@@ -105,7 +105,7 @@
             }
 
             function failed(error) {
-                var message = error.message || 'getUserResourcePoolIndex query failed';
+                var message = error.message || 'getElementFieldIndex query failed';
                 logger.logError(message, error, true);
             }
         }

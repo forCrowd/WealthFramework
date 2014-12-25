@@ -10,32 +10,32 @@
 (function () {
     'use strict';
 
-    var controllerId = 'userResourcePoolIndexListController';
+    var controllerId = 'elementFieldIndexListController';
     angular.module('main')
-        .controller(controllerId, ['userResourcePoolIndexService',
+        .controller(controllerId, ['elementFieldIndexService',
             'logger',
-			userResourcePoolIndexListController]);
+			elementFieldIndexListController]);
 
-    function userResourcePoolIndexListController(userResourcePoolIndexService,
+    function elementFieldIndexListController(elementFieldIndexService,
         logger) {
         logger = logger.forSource(controllerId);
 
         var vm = this;
-        vm.deleteUserResourcePoolIndex = deleteUserResourcePoolIndex;
-        vm.userResourcePoolIndexSet = [];
+        vm.deleteElementFieldIndex = deleteElementFieldIndex;
+        vm.elementFieldIndexSet = [];
 
         initialize();
 
         function initialize() {
-            getUserResourcePoolIndexSet();
+            getElementFieldIndexSet();
         };
 
-        function deleteUserResourcePoolIndex(userResourcePoolIndex) {
-            userResourcePoolIndexService.deleteUserResourcePoolIndex(userResourcePoolIndex);
+        function deleteElementFieldIndex(elementFieldIndex) {
+            elementFieldIndexService.deleteElementFieldIndex(elementFieldIndex);
 
-            userResourcePoolIndexService.saveChanges()
+            elementFieldIndexService.saveChanges()
                 .then(function () {
-                    vm.userResourcePoolIndexSet.splice(vm.userResourcePoolIndexSet.indexOf(userResourcePoolIndex), 1);
+                    vm.elementFieldIndexSet.splice(vm.elementFieldIndexSet.indexOf(elementFieldIndex), 1);
                     logger.logSuccess("Hooray we saved", null, true);
                 })
                 .catch(function (error) {
@@ -46,10 +46,10 @@
                 })
         };
 
-        function getUserResourcePoolIndexSet() {
-            userResourcePoolIndexService.getUserResourcePoolIndexSet(false)
+        function getElementFieldIndexSet() {
+            elementFieldIndexService.getElementFieldIndexSet(false)
 			    .then(function (data) {
-                    vm.userResourcePoolIndexSet = data;
+                    vm.elementFieldIndexSet = data;
                 });
         }
     };

@@ -9,21 +9,21 @@ namespace BusinessObjects
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    [DisplayName("User CMRP Index")]
+    [DisplayName("User Element Field Index")]
     [BusinessObjects.Attributes.DefaultProperty("Id")]
-    public class UserResourcePoolIndex : BaseEntity
+    public class UserElementFieldIndex : BaseEntity
     {
         [Obsolete("Parameterless constructors used by OData & EF. Make them private when possible.")]
-        public UserResourcePoolIndex()
+        public UserElementFieldIndex()
         { }
 
-        public UserResourcePoolIndex(UserResourcePool userResourcePool, ResourcePoolIndex resourcePoolIndex, decimal rating)
+        public UserElementFieldIndex(UserResourcePool userResourcePool, ElementFieldIndex elementFieldIndex, decimal rating)
         {
             Validations.ArgumentNullOrDefault(userResourcePool, "userResourcePool");
-            Validations.ArgumentNullOrDefault(resourcePoolIndex, "resourcePoolIndex");
+            Validations.ArgumentNullOrDefault(elementFieldIndex, "elementFieldIndex");
 
             UserResourcePool = userResourcePool;
-            ResourcePoolIndex = resourcePoolIndex;
+            ElementFieldIndex = elementFieldIndex;
             Rating = rating;
         }
 
@@ -31,20 +31,20 @@ namespace BusinessObjects
         [DisplayOnEditView(false)]
         public int Id { get; set; }
 
-        [Index("IX_UserResourcePoolIdResourcePoolIndexId", 1, IsUnique = true)]
+        [Index("IX_UserResourcePoolIdElementFieldIndexId", 1, IsUnique = true)]
         public int UserResourcePoolId { get; set; }
 
-        [Index("IX_UserResourcePoolIdResourcePoolIndexId", 2, IsUnique = true)]
-        public int ResourcePoolIndexId { get; set; }
+        [Index("IX_UserResourcePoolIdElementFieldIndexId", 2, IsUnique = true)]
+        public int ElementFieldIndexId { get; set; }
 
         public decimal Rating { get; set; }
 
         public virtual UserResourcePool UserResourcePool { get; set; }
-        public virtual ResourcePoolIndex ResourcePoolIndex { get; set; }
+        public virtual ElementFieldIndex ElementFieldIndex { get; set; }
 
         public string Name
         {
-            get { return string.Format("{0} - {1}", UserResourcePool.Name, ResourcePoolIndex.Name); }
+            get { return string.Format("{0} - {1}", UserResourcePool.Name, ElementFieldIndex.Name); }
         }
     }
 }

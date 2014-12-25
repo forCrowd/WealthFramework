@@ -20,46 +20,46 @@ namespace Web.Controllers.OData
     using System.Web.Http.ModelBinding;
     using System.Web.Http.OData;
 
-    public abstract class BaseResourcePoolIndexController : BaseODataController
+    public abstract class BaseElementFieldIndexController : BaseODataController
     {
-        public BaseResourcePoolIndexController()
+        public BaseElementFieldIndexController()
 		{
-			MainUnitOfWork = new ResourcePoolIndexUnitOfWork();		
+			MainUnitOfWork = new ElementFieldIndexUnitOfWork();		
 		}
 
-		protected ResourcePoolIndexUnitOfWork MainUnitOfWork { get; private set; }
+		protected ElementFieldIndexUnitOfWork MainUnitOfWork { get; private set; }
 
-        // GET odata/ResourcePoolIndex
+        // GET odata/ElementFieldIndex
         //[Queryable]
-        public virtual IQueryable<ResourcePoolIndex> Get()
+        public virtual IQueryable<ElementFieldIndex> Get()
         {
 			var list = MainUnitOfWork.AllLive;
             return list;
         }
 
-        // GET odata/ResourcePoolIndex(5)
+        // GET odata/ElementFieldIndex(5)
         //[Queryable]
-        public virtual SingleResult<ResourcePoolIndex> Get([FromODataUri] int key)
+        public virtual SingleResult<ElementFieldIndex> Get([FromODataUri] int key)
         {
-            return SingleResult.Create(MainUnitOfWork.AllLive.Where(resourcePoolIndex => resourcePoolIndex.Id == key));
+            return SingleResult.Create(MainUnitOfWork.AllLive.Where(elementFieldIndex => elementFieldIndex.Id == key));
         }
 
-        // PUT odata/ResourcePoolIndex(5)
-        public virtual async Task<IHttpActionResult> Put([FromODataUri] int key, ResourcePoolIndex resourcePoolIndex)
+        // PUT odata/ElementFieldIndex(5)
+        public virtual async Task<IHttpActionResult> Put([FromODataUri] int key, ElementFieldIndex elementFieldIndex)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (key != resourcePoolIndex.Id)
+            if (key != elementFieldIndex.Id)
             {
                 return BadRequest();
             }
 
             try
             {
-                await MainUnitOfWork.UpdateAsync(resourcePoolIndex);
+                await MainUnitOfWork.UpdateAsync(elementFieldIndex);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -73,11 +73,11 @@ namespace Web.Controllers.OData
                 }
             }
 
-            return Ok(resourcePoolIndex);
+            return Ok(elementFieldIndex);
         }
 
-        // POST odata/ResourcePoolIndex
-        public virtual async Task<IHttpActionResult> Post(ResourcePoolIndex resourcePoolIndex)
+        // POST odata/ElementFieldIndex
+        public virtual async Task<IHttpActionResult> Post(ElementFieldIndex elementFieldIndex)
         {
             if (!ModelState.IsValid)
             {
@@ -86,11 +86,11 @@ namespace Web.Controllers.OData
 
             try
             {
-                await MainUnitOfWork.InsertAsync(resourcePoolIndex);
+                await MainUnitOfWork.InsertAsync(elementFieldIndex);
             }
             catch (DbUpdateException)
             {
-                if (MainUnitOfWork.Exists(resourcePoolIndex.Id))
+                if (MainUnitOfWork.Exists(elementFieldIndex.Id))
                 {
                     return Conflict();
                 }
@@ -100,52 +100,52 @@ namespace Web.Controllers.OData
                 }
             }
 
-            return Created(resourcePoolIndex);
+            return Created(elementFieldIndex);
         }
 
-        // PATCH odata/ResourcePoolIndex(5)
+        // PATCH odata/ElementFieldIndex(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<ResourcePoolIndex> patch)
+        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<ElementFieldIndex> patch)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var resourcePoolIndex = await MainUnitOfWork.FindAsync(key);
-            if (resourcePoolIndex == null)
+            var elementFieldIndex = await MainUnitOfWork.FindAsync(key);
+            if (elementFieldIndex == null)
             {
                 return NotFound();
             }
 
             var patchEntity = patch.GetEntity();
-            if (!resourcePoolIndex.RowVersion.SequenceEqual(patchEntity.RowVersion))
+            if (!elementFieldIndex.RowVersion.SequenceEqual(patchEntity.RowVersion))
             {
                 return Conflict();
             }
 
-            patch.Patch(resourcePoolIndex);
-            await MainUnitOfWork.UpdateAsync(resourcePoolIndex);
+            patch.Patch(elementFieldIndex);
+            await MainUnitOfWork.UpdateAsync(elementFieldIndex);
 
-            return Ok(resourcePoolIndex);
+            return Ok(elementFieldIndex);
         }
 
-        // DELETE odata/ResourcePoolIndex(5)
+        // DELETE odata/ElementFieldIndex(5)
         public virtual async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            var resourcePoolIndex = await MainUnitOfWork.FindAsync(key);
-            if (resourcePoolIndex == null)
+            var elementFieldIndex = await MainUnitOfWork.FindAsync(key);
+            if (elementFieldIndex == null)
             {
                 return NotFound();
             }
 
-            await MainUnitOfWork.DeleteAsync(resourcePoolIndex.Id);
+            await MainUnitOfWork.DeleteAsync(elementFieldIndex.Id);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
     }
 
-    public partial class ResourcePoolIndexController : BaseResourcePoolIndexController
+    public partial class ElementFieldIndexController : BaseElementFieldIndexController
     {
 	}
 }

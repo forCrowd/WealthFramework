@@ -48,7 +48,7 @@
                 Total {{ vm.userResourcePool.MainElement.ResourcePoolFieldName }} incl. CMRP Addition
             </th>
             <!-- Indexes -->
-            <th data-ng-repeat="item in vm.userResourcePool.ResourcePoolIndexSet">
+            <th data-ng-repeat="item in vm.userResourcePool.ElementFieldIndexSet">
                 {{ item.Name }}
                 <br />
                 <table class="table">
@@ -118,7 +118,7 @@
                 {{ elementItem.TotalResourcePoolValueIncludingAddition | number: 2 }}
             </td>
             <!-- Indexes -->
-            <td data-ng-repeat="resourcePoolIndex in vm.userResourcePool.ResourcePoolIndexSet">
+            <td data-ng-repeat="resourcePoolIndex in vm.userResourcePool.ElementFieldIndexSet">
                 <div data-ng-repeat="elementCell in elementItem.ElementCellSet">
                     <div data-ng-show="elementCell.ElementFieldType !== 6">
                         <table class="table" data-ng-show="resourcePoolIndex.ElementFieldId === elementCell.ElementFieldId">
@@ -199,7 +199,7 @@
                 &nbsp;
             </td>
             <!-- Indexes -->
-            <td data-ng-repeat="item in vm.userResourcePool.ResourcePoolIndexSet">
+            <td data-ng-repeat="item in vm.userResourcePool.ElementFieldIndexSet">
                 <table class="table">
                     <tr>
                         <td colspan="3">

@@ -10,35 +10,35 @@
 (function () {
     'use strict';
 
-    var controllerId = 'userResourcePoolIndexEditController';
+    var controllerId = 'userElementFieldIndexEditController';
     angular.module('main')
-        .controller(controllerId, ['userResourcePoolIndexService',
-            'resourcePoolIndexService',
+        .controller(controllerId, ['userElementFieldIndexService',
+            'elementFieldIndexService',
             'userResourcePoolService',
             'logger',
             '$location',
             '$routeParams',
-            userResourcePoolIndexEditController]);
+            userElementFieldIndexEditController]);
 
-    function userResourcePoolIndexEditController(userResourcePoolIndexService,
-		resourcePoolIndexService,
+    function userElementFieldIndexEditController(userElementFieldIndexService,
+		elementFieldIndexService,
 		userResourcePoolService,
 		logger,
 		$location,
 		$routeParams) {
         logger = logger.forSource(controllerId);
 
-        var isNew = $location.path() === '/manage/userResourcePoolIndex/new';
+        var isNew = $location.path() === '/manage/userElementFieldIndex/new';
         var isSaving = false;
 
         // Controller methods (alphabetically)
         var vm = this;
-        vm.resourcePoolIndexSet = [];
+        vm.elementFieldIndexSet = [];
         vm.userResourcePoolSet = [];
         vm.cancelChanges = cancelChanges;
         vm.isSaveDisabled = isSaveDisabled;
         vm.entityErrors = [];
-        vm.userResourcePoolIndex = null;
+        vm.userElementFieldIndex = null;
         vm.saveChanges = saveChanges;
         vm.hasChanges = hasChanges;
 
@@ -48,23 +48,23 @@
 
         function cancelChanges() {
 
-            $location.path('/manage/userResourcePoolIndex');
+            $location.path('/manage/userElementFieldIndex');
 
-            if (userResourcePoolIndexService.hasChanges()) {
-                userResourcePoolIndexService.rejectChanges();
+            if (userElementFieldIndexService.hasChanges()) {
+                userElementFieldIndexService.rejectChanges();
                 logWarning('Discarded pending change(s)', null, true);
             }
         }
 
         function hasChanges() {
-            return userResourcePoolIndexService.hasChanges();
+            return userElementFieldIndexService.hasChanges();
         }
 
         function initialize() {
 
-            resourcePoolIndexService.getResourcePoolIndexSet(false)
+            elementFieldIndexService.getElementFieldIndexSet(false)
                 .then(function (data) {
-                    vm.resourcePoolIndexSet = data;
+                    vm.elementFieldIndexSet = data;
                 });
 
             userResourcePoolService.getUserResourcePoolSet(false)
@@ -76,9 +76,9 @@
                 // TODO For development enviroment, create test entity?
             }
             else {
-                userResourcePoolIndexService.getUserResourcePoolIndex($routeParams.Id)
+                userElementFieldIndexService.getUserElementFieldIndex($routeParams.Id)
                     .then(function (data) {
-                        vm.userResourcePoolIndex = data;
+                        vm.userElementFieldIndex = data;
                     })
                     .catch(function (error) {
                         // TODO User-friendly message?
@@ -88,25 +88,25 @@
 
         function isSaveDisabled() {
             return isSaving ||
-                (!isNew && !userResourcePoolIndexService.hasChanges());
+                (!isNew && !userElementFieldIndexService.hasChanges());
         }
 
         function saveChanges() {
 
             if (isNew) {
-                userResourcePoolIndexService.createUserResourcePoolIndex(vm.userResourcePoolIndex);
+                userElementFieldIndexService.createUserElementFieldIndex(vm.userElementFieldIndex);
             } else {
                 // To be able to do concurrency check, RowVersion field needs to be send to server
 				// Since breeze only sends the modified fields, a fake modification had to be applied to RowVersion field
-                var rowVersion = vm.userResourcePoolIndex.RowVersion;
-                vm.userResourcePoolIndex.RowVersion = '';
-                vm.userResourcePoolIndex.RowVersion = rowVersion;
+                var rowVersion = vm.userElementFieldIndex.RowVersion;
+                vm.userElementFieldIndex.RowVersion = '';
+                vm.userElementFieldIndex.RowVersion = rowVersion;
             }
 
             isSaving = true;
-            userResourcePoolIndexService.saveChanges()
+            userElementFieldIndexService.saveChanges()
                 .then(function (result) {
-                    $location.path('/manage/userResourcePoolIndex');
+                    $location.path('/manage/userElementFieldIndex');
                 })
                 .catch(function (error) {
                     // Conflict (Concurrency exception)

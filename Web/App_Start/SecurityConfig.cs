@@ -9,7 +9,7 @@ namespace Web
         {
             // Authorize required by default
             // TODO Enable this before production?
-            filters.Add(new AuthorizeAttribute());
+            //filters.Add(new AuthorizeAttribute());
         }
     }
 }

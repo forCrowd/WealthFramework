@@ -29,7 +29,7 @@ namespace BusinessObjects.ViewModels
                 RatingAverageMultiplied = elementCell.RatingAverageMultiplied;
                 RatingPercentage = elementCell.RatingPercentage;
             }
-            ResourcePoolIndexIncome = elementCell.ResourcePoolIndexIncome;
+            ElementFieldIndexIncome = elementCell.ElementFieldIndexIncome;
 
             UserElementCellSet = elementCell.UserElementCellSet
                 .Where(item => item.UserId == userId)
@@ -49,7 +49,7 @@ namespace BusinessObjects.ViewModels
 
         public decimal RatingAverageMultiplied { get; set; }
         public decimal RatingPercentage { get; set; }
-        public decimal ResourcePoolIndexIncome { get; set; }
+        public decimal ElementFieldIndexIncome { get; set; }
 
         public IEnumerable<UserElementCell> UserElementCellSet { get; set; }
     }

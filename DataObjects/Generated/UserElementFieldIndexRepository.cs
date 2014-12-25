@@ -11,9 +11,9 @@ namespace DataObjects
 {
     using BusinessObjects;
 
-    public partial class UserResourcePoolIndexRepository : BaseRepository<UserResourcePoolIndex>
+    public partial class UserElementFieldIndexRepository : BaseRepository<UserElementFieldIndex>
     {
-        public UserResourcePoolIndexRepository(WealthEconomyContext context)
+        public UserElementFieldIndexRepository(WealthEconomyContext context)
             : base(context)
         {
         }

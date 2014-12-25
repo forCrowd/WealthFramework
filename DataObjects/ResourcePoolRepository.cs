@@ -93,7 +93,7 @@
             mainElement.MultiplierField.Name = "Sales Number";
 
             // Resource pool index; change it to Sales Price itself, instead of User ratings
-            var totalCostIndex = resourcePool.AddIndex("Total Cost Index", resourcePool.MainElement.ResourcePoolField, RatingSortType.LowestToHighest);
+            var totalCostIndex = resourcePool.MainElement.ResourcePoolField.AddIndex("Total Cost Index", RatingSortType.LowestToHighest);
             resourcePool.UserResourcePoolSet.First().AddIndex(totalCostIndex, 100);
             
             // Items, cell, user cells
@@ -152,7 +152,7 @@
             // TODO Will be updated with new field / index combo
             if (createImportanceIndex)
             {
-                var importanceIndex = resourcePool.AddIndex("Importance Index", importanceField, RatingSortType.HighestToLowest);
+                var importanceIndex = importanceField.AddIndex("Importance Index", RatingSortType.HighestToLowest);
                 userResourcePool.AddIndex(importanceIndex, 100);
             }
             

@@ -11,7 +11,7 @@ namespace Facade
 {
     using BusinessObjects;
 
-    public partial class UserResourcePoolIndexUnitOfWork : BaseUnitOfWork<UserResourcePoolIndex>
+    public partial class ElementFieldIndexUnitOfWork : BaseUnitOfWork<ElementFieldIndex>
     {
     }
 }

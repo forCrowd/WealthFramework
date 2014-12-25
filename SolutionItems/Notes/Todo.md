@@ -248,11 +248,12 @@ multiplier - n/a
 chapter 7, 8, 9, 10 ?!
 
 ---
-continue with field + index merge
 check fixed / user level values
 business rules like fixedvalue = false cant be applied to string ?!
 resourcepoolview doesnt look good with new importance field
 convert rating properties to methods
+
+elementfield.addindex().adduserindex()?
 
 ---
 anti forgery: AntiForgery.GetTokens

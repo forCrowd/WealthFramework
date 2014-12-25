@@ -9,49 +9,49 @@ namespace BusinessObjects
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    [DisplayName("CMRP Index")]
+    [DisplayName("Element Field Index")]
     [BusinessObjects.Attributes.DefaultProperty("Name")]
     // [ODataControllerAuthorization("Administrator")]
-    public class ResourcePoolIndex : BaseEntity
+    public class ElementFieldIndex : BaseEntity
     {
         [Obsolete("Parameterless constructors used by OData & EF. Make them private when possible.")]
-        public ResourcePoolIndex()
+        public ElementFieldIndex()
         { }
 
-        public ResourcePoolIndex(ResourcePool resourcePool, string name, ElementField field)
+        public ElementFieldIndex(ElementField field, string name)
         {
-            Validations.ArgumentNullOrDefault(resourcePool, "resourcePool");
-            Validations.ArgumentNullOrDefault(name, "name");
+            //Validations.ArgumentNullOrDefault(resourcePool, "resourcePool");
             Validations.ArgumentNullOrDefault(field, "field");
+            Validations.ArgumentNullOrDefault(name, "name");
 
-            ResourcePool = resourcePool;
+            //ResourcePool = resourcePool;
             Name = name;
             ElementField = field;
-            UserResourcePoolIndexSet = new HashSet<UserResourcePoolIndex>();
+            UserElementFieldIndexSet = new HashSet<UserElementFieldIndex>();
         }
 
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         public int Id { get; set; }
 
-        public int ResourcePoolId { get; set; }
+        //public int ResourcePoolId { get; set; }
+        public int ElementFieldId { get; set; }
 
         [Required]
         [StringLength(50)]
-        [Display(Name = "Resource Pool Index")]
+        [Display(Name = "Element Field Index")]
         public string Name { get; set; }
 
         //public Nullable<int> ElementId { get; set; }
-        public Nullable<int> ElementFieldId { get; set; }
 
         [Required]
         [Display(Name = "Rating Sort Type")]
         public byte RatingSortType { get; set; }
 
-        public virtual ResourcePool ResourcePool { get; set; }
+        //public virtual ResourcePool ResourcePool { get; set; }
         // public virtual Element Element { get; set; }
         public virtual ElementField ElementField { get; set; }
-        public virtual ICollection<UserResourcePoolIndex> UserResourcePoolIndexSet { get; set; }
+        public virtual ICollection<UserElementFieldIndex> UserElementFieldIndexSet { get; set; }
 
         /* */
 
@@ -60,7 +60,7 @@ namespace BusinessObjects
         /// </summary>
         public decimal IndexRatingCount
         {
-            get { return UserResourcePoolIndexSet.Count(); }
+            get { return UserElementFieldIndexSet.Count(); }
         }
 
         /// <summary>
@@ -71,8 +71,8 @@ namespace BusinessObjects
         {
             get
             {
-                return UserResourcePoolIndexSet.Any()
-                    ? UserResourcePoolIndexSet.Average(item => item.Rating)
+                return UserElementFieldIndexSet.Any()
+                    ? UserElementFieldIndexSet.Average(item => item.Rating)
                     : 0;
             }
         }
@@ -81,15 +81,15 @@ namespace BusinessObjects
         {
             get
             {
-                return ResourcePool.IndexRatingAverage == 0
+                return ElementField.Element.ResourcePool.IndexRatingAverage == 0
                     ? 0
-                    : IndexRatingAverage / ResourcePool.IndexRatingAverage;
+                    : IndexRatingAverage / ElementField.Element.ResourcePool.IndexRatingAverage;
             }
         }
 
         public decimal IndexShare
         {
-            get { return ResourcePool.TotalResourcePoolAddition * IndexRatingPercentage; }
+            get { return ElementField.Element.ResourcePool.TotalResourcePoolAddition * IndexRatingPercentage; }
         }
     }
 }

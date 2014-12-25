@@ -10,32 +10,32 @@
 (function () {
     'use strict';
 
-    var controllerId = 'resourcePoolIndexEditController';
+    var controllerId = 'elementFieldIndexEditController';
     angular.module('main')
-        .controller(controllerId, ['resourcePoolIndexService',
-            'resourcePoolService',
+        .controller(controllerId, ['elementFieldIndexService',
+            'elementFieldService',
             'logger',
             '$location',
             '$routeParams',
-            resourcePoolIndexEditController]);
+            elementFieldIndexEditController]);
 
-    function resourcePoolIndexEditController(resourcePoolIndexService,
-		resourcePoolService,
+    function elementFieldIndexEditController(elementFieldIndexService,
+		elementFieldService,
 		logger,
 		$location,
 		$routeParams) {
         logger = logger.forSource(controllerId);
 
-        var isNew = $location.path() === '/manage/resourcePoolIndex/new';
+        var isNew = $location.path() === '/manage/elementFieldIndex/new';
         var isSaving = false;
 
         // Controller methods (alphabetically)
         var vm = this;
-        vm.resourcePoolSet = [];
+        vm.elementFieldSet = [];
         vm.cancelChanges = cancelChanges;
         vm.isSaveDisabled = isSaveDisabled;
         vm.entityErrors = [];
-        vm.resourcePoolIndex = null;
+        vm.elementFieldIndex = null;
         vm.saveChanges = saveChanges;
         vm.hasChanges = hasChanges;
 
@@ -45,32 +45,32 @@
 
         function cancelChanges() {
 
-            $location.path('/manage/resourcePoolIndex');
+            $location.path('/manage/elementFieldIndex');
 
-            if (resourcePoolIndexService.hasChanges()) {
-                resourcePoolIndexService.rejectChanges();
+            if (elementFieldIndexService.hasChanges()) {
+                elementFieldIndexService.rejectChanges();
                 logWarning('Discarded pending change(s)', null, true);
             }
         }
 
         function hasChanges() {
-            return resourcePoolIndexService.hasChanges();
+            return elementFieldIndexService.hasChanges();
         }
 
         function initialize() {
 
-            resourcePoolService.getResourcePoolSet(false)
+            elementFieldService.getElementFieldSet(false)
                 .then(function (data) {
-                    vm.resourcePoolSet = data;
+                    vm.elementFieldSet = data;
                 });
 
             if (isNew) {
                 // TODO For development enviroment, create test entity?
             }
             else {
-                resourcePoolIndexService.getResourcePoolIndex($routeParams.Id)
+                elementFieldIndexService.getElementFieldIndex($routeParams.Id)
                     .then(function (data) {
-                        vm.resourcePoolIndex = data;
+                        vm.elementFieldIndex = data;
                     })
                     .catch(function (error) {
                         // TODO User-friendly message?
@@ -80,25 +80,25 @@
 
         function isSaveDisabled() {
             return isSaving ||
-                (!isNew && !resourcePoolIndexService.hasChanges());
+                (!isNew && !elementFieldIndexService.hasChanges());
         }
 
         function saveChanges() {
 
             if (isNew) {
-                resourcePoolIndexService.createResourcePoolIndex(vm.resourcePoolIndex);
+                elementFieldIndexService.createElementFieldIndex(vm.elementFieldIndex);
             } else {
                 // To be able to do concurrency check, RowVersion field needs to be send to server
 				// Since breeze only sends the modified fields, a fake modification had to be applied to RowVersion field
-                var rowVersion = vm.resourcePoolIndex.RowVersion;
-                vm.resourcePoolIndex.RowVersion = '';
-                vm.resourcePoolIndex.RowVersion = rowVersion;
+                var rowVersion = vm.elementFieldIndex.RowVersion;
+                vm.elementFieldIndex.RowVersion = '';
+                vm.elementFieldIndex.RowVersion = rowVersion;
             }
 
             isSaving = true;
-            resourcePoolIndexService.saveChanges()
+            elementFieldIndexService.saveChanges()
                 .then(function (result) {
-                    $location.path('/manage/resourcePoolIndex');
+                    $location.path('/manage/elementFieldIndex');
                 })
                 .catch(function (error) {
                     // Conflict (Concurrency exception)
