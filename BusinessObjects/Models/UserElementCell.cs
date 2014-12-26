@@ -146,10 +146,10 @@ namespace BusinessObjects
 
         void ClearValues()
         {
-            BooleanValue = null;
-            IntegerValue = null;
-            DecimalValue = null;
-            DateTimeValue = null;
+            booleanValue = null;
+            integerValue = null;
+            decimalValue = null;
+            dateTimeValue = null;
         }
 
         #endregion
