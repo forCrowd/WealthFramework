@@ -10,6 +10,7 @@ An experimental resource management system that aims to provide a sustainable ec
 
 * UserElementCell table has now BooleanValue, IntegerValue, DecimalValue, DateTimeValue like ElementCell. Rating column was dropped
 * ResourcePoolIndex was changed to ElementFieldIndex
+* Multiplier cell value is now on user level (UserElementCell) instead of a fixed value (ElementCell)
 
 **0.14.8**
 

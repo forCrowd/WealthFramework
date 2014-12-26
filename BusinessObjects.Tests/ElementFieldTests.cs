@@ -7,13 +7,20 @@ namespace BusinessObjects.Tests
     public class ElementFieldTests
     {
         [TestMethod]
-        public void NewElementFieldShouldCreate()
+        public void NewElementField_ShouldCreate()
         {
-            var newElementField = new ElementField(
-                new Element(new ResourcePool("CMRP"), "Element"),
-                "Default field",
-                true,
-                ElementFieldTypes.Boolean);
+            new ResourcePool("CMRP")
+                .AddElement("Element")
+                .AddField("Field", ElementFieldTypes.String);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void NewElementWithInvalidConstructor_Exception()
+        {
+            new ResourcePool("CMRP")
+            .AddElement("Element")
+            .AddField("Field", ElementFieldTypes.Boolean);
         }
     }
 

@@ -90,7 +90,8 @@ namespace BusinessObjects
 
         public bool HasResourcePoolCell
         {
-            get { return ResourcePoolCell != null && ResourcePoolCell.DecimalValue.HasValue; }
+            // get { return ResourcePoolCell != null && ResourcePoolCell.DecimalValue.HasValue; }
+            get { return ResourcePoolCell != null; }
         }
 
         public decimal ResourcePoolCellValue
@@ -98,7 +99,7 @@ namespace BusinessObjects
             get
             {
                 return HasResourcePoolCell
-                    ? ResourcePoolCell.DecimalValue.Value
+                    ? ResourcePoolCell.Value
                     : 0;
             }
         }
@@ -126,7 +127,8 @@ namespace BusinessObjects
 
         public bool HasMultiplierCell
         {
-            get { return MultiplierCell != null && MultiplierCell.DecimalValue.HasValue; }
+            get { return MultiplierCell != null; }
+            //get { return MultiplierCell != null && MultiplierCell.DecimalValue.HasValue; }
         }
 
         public decimal MultiplierCellValue
@@ -136,29 +138,29 @@ namespace BusinessObjects
                 if (!HasMultiplierCell)
                     return 0;
 
-                return MultiplierCell.DecimalValue.Value;
-            }
-        }
-
-        public int RatingCount
-        {
-            get
-            {
-                var indexCells = ElementCellSet.Where(item => item.ElementField.ElementFieldIndexSet.Any());
-                return indexCells.Any()
-                    ? indexCells.Sum(item => item.RatingCount)
-                    : 0;
+                return MultiplierCell.Value;
             }
         }
 
         // TODO Sum is correct? Or Average?
-        public decimal RatingAverage
+        public decimal Value
         {
             get
             {
                 var indexCells = ElementCellSet.Where(item => item.ElementField.ElementFieldIndexSet.Any());
                 return indexCells.Any()
-                    ? indexCells.Sum(item => item.RatingAverage)
+                    ? indexCells.Sum(item => item.Value)
+                    : 0;
+            }
+        }
+
+        public int ValueCount
+        {
+            get
+            {
+                var indexCells = ElementCellSet.Where(item => item.ElementField.ElementFieldIndexSet.Any());
+                return indexCells.Any()
+                    ? indexCells.Sum(item => item.ValueCount)
                     : 0;
             }
         }

@@ -144,29 +144,29 @@ namespace BusinessObjects
             return userResourcePool;
         }
 
-        public ResourcePool IncreaseMultiplier()
+        public ResourcePool IncreaseMultiplier(User user)
         {
             if (MainElement != null && MainElement.HasMultiplierField)
                 foreach (var item in MainElement.ElementItemSet)
-                    item.MultiplierCell.DecimalValue++;
+                    item.MultiplierCell.SetValue(item.MultiplierCell.Value + 1, user);
 
             return this;
         }
 
-        public ResourcePool DecreaseMultiplier()
+        public ResourcePool DecreaseMultiplier(User user)
         {
             if (MainElement != null && MainElement.HasMultiplierField)
                 foreach (var item in MainElement.ElementItemSet)
-                    item.MultiplierCell.DecimalValue--;
+                    item.MultiplierCell.SetValue(item.MultiplierCell.Value - 1, user);
 
             return this;
         }
 
-        public ResourcePool ResetMultiplier()
+        public ResourcePool ResetMultiplier(User user)
         {
             if (MainElement != null && MainElement.HasMultiplierField)
                 foreach (var item in MainElement.ElementItemSet)
-                    item.MultiplierCell.DecimalValue = 0;
+                    item.MultiplierCell.SetValue(0M, user);
 
             return this;
         }

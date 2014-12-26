@@ -245,15 +245,13 @@ resource - ~decimal
 multiplier - n/a
 
 ---
-chapter 7, 8, 9, 10 ?!
-
----
-check fixed / user level values
-business rules like fixedvalue = false cant be applied to string ?!
 resourcepoolview doesnt look good with new importance field
 convert rating properties to methods
 
 elementfield.addindex().adduserindex()?
+
+---
+chapter 7, 8, 9, 10 ?!
 
 ---
 anti forgery: AntiForgery.GetTokens

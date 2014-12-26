@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Framework
+namespace Framework.Exceptions
 {
     /// <summary>
     /// The exception that is thrown when a null reference, default or empty value is passed to a method that does not accept it as a valid argument.

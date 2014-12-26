@@ -118,19 +118,19 @@
                 {{ elementItem.TotalResourcePoolValueIncludingAddition | number: 2 }}
             </td>
             <!-- Indexes -->
-            <td data-ng-repeat="resourcePoolIndex in vm.userResourcePool.ElementFieldIndexSet">
+            <td data-ng-repeat="elementFieldIndex in vm.userResourcePool.ElementFieldIndexSet">
                 <div data-ng-repeat="elementCell in elementItem.ElementCellSet">
                     <div data-ng-show="elementCell.ElementFieldType !== 6">
-                        <table class="table" data-ng-show="resourcePoolIndex.ElementFieldId === elementCell.ElementFieldId">
+                        <table class="table" data-ng-show="elementFieldIndex.ElementFieldId === elementCell.ElementFieldId">
                             <tr>
                                 <td>
-                                    {{ elementCell.RatingAverageMultiplied | number:2 }}
+                                    {{ elementCell.ValueMultiplied | number:2 }}
                                 </td>
                                 <td>
-                                    {{ elementCell.RatingPercentage | percentage:2 }}
+                                    {{ elementCell.ValuePercentage | percentage:2 }}
                                 </td>
                                 <td>
-                                    {{ elementCell.ResourcePoolIndexIncome | number:2 }}
+                                    {{ elementCell.ElementFieldIndexIncome | number:2 }}
                                 </td>
                             </tr>
                         </table>
@@ -138,16 +138,16 @@
                     <div data-ng-show="elementCell.ElementFieldType === 6">
                         <div data-ng-repeat="selectedElementCell in elementCell.SelectedElementItem.ElementCellSet">
                             <div data-ng-show="selectedElementCell.ElementFieldType !== 6">
-                                <table class="table" data-ng-show="resourcePoolIndex.ElementFieldId === selectedElementCell.ElementFieldId">
+                                <table class="table" data-ng-show="elementFieldIndex.ElementFieldId === selectedElementCell.ElementFieldId">
                                     <tr>
                                         <td>
-                                            {{ selectedElementCell.RatingAverageMultiplied | number:2 }}
+                                            {{ selectedElementCell.ValueMultiplied | number:2 }}
                                         </td>
                                         <td>
-                                            {{ selectedElementCell.RatingPercentage | percentage:2 }}
+                                            {{ selectedElementCell.ValuePercentage | percentage:2 }}
                                         </td>
                                         <td>
-                                            {{ selectedElementCell.ResourcePoolIndexIncome | number:2 }}
+                                            {{ selectedElementCell.ElementFieldIndexIncome | number:2 }}
                                         </td>
                                     </tr>
                                 </table>

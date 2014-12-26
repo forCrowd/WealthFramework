@@ -7,16 +7,19 @@ namespace BusinessObjects.Tests
     public class UserElementCellTests
     {
         [TestMethod]
-        public void NewUserElementCellShouldCreate()
+        public void NewUserElementCell_ShouldCreate()
         {
-            var newElement = new Element(new ResourcePool("CMRP"), "Element");
-            var newElementCell = new ElementCell(
-                new ElementField(newElement, "Field", true, ElementFieldTypes.Boolean),
-                new ElementItem(newElement, "Item"));
+            var newUser = new User("Email");
+            
+            var newElement = new ResourcePool("CMRP")
+                .AddElement("Element");
 
-            var newUserElementCell = new UserElementCell(
-                new User("Email"),
-                newElementCell);
+            var newField = newElement.AddField("Field", ElementFieldTypes.Integer, false);
+
+            newElement
+                .AddItem("Item")
+                .AddCell(newField)
+                .SetValue(0, newUser);
         }
     }
 }

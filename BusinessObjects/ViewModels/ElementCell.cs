@@ -26,8 +26,8 @@ namespace BusinessObjects.ViewModels
             if (elementCell.ElementField.ElementFieldType != (byte)ElementFieldTypes.String
                 && elementCell.ElementField.ElementFieldType != (byte)ElementFieldTypes.Element)
             {
-                RatingAverageMultiplied = elementCell.RatingAverageMultiplied;
-                RatingPercentage = elementCell.RatingPercentage;
+                ValueMultiplied = elementCell.ValueMultiplied;
+                ValuePercentage = elementCell.ValuePercentage;
             }
             ElementFieldIndexIncome = elementCell.ElementFieldIndexIncome;
 
@@ -47,8 +47,8 @@ namespace BusinessObjects.ViewModels
         public Nullable<DateTime> DateTimeValue { get; set; }
         public ElementItem SelectedElementItem { get; set; }
 
-        public decimal RatingAverageMultiplied { get; set; }
-        public decimal RatingPercentage { get; set; }
+        public decimal ValueMultiplied { get; set; }
+        public decimal ValuePercentage { get; set; }
         public decimal ElementFieldIndexIncome { get; set; }
 
         public IEnumerable<UserElementCell> UserElementCellSet { get; set; }

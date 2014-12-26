@@ -9,12 +9,12 @@ namespace BusinessObjects.ViewModels
         public UserElementCell(BusinessObjects.UserElementCell userElementCell)
         {
             Id = userElementCell.Id;
-            Rating = userElementCell.Rating;
+            Value = userElementCell.Value;
             RowVersion = userElementCell.RowVersion;
         }
 
         public int Id { get; set; }
-        public decimal Rating { get; set; }
+        public decimal Value { get; set; }
         public byte[] RowVersion { get; set; }
     }
 }

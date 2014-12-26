@@ -7,9 +7,9 @@ namespace BusinessObjects.Tests
     public class UserTests
     {
         [TestMethod]
-        public void NewUserShouldCreate()
+        public void NewUser_ShouldCreate()
         {
-            var newUser = new User("a valid email address?");
+            new User("a valid email address?");
         }
     }
 }

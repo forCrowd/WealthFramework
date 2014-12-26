@@ -40,7 +40,9 @@ namespace Web.Controllers.Api
             if (resourcePool == null)
                 return NotFound();
 
-            await manager.IncreaseMultiplierAsync(resourcePool.Id);
+            var currentUserId = this.GetCurrentUserId().Value;
+
+            await manager.IncreaseMultiplierAsync(resourcePool, currentUserId);
 
             return Ok();
         }
@@ -56,7 +58,9 @@ namespace Web.Controllers.Api
             if (resourcePool == null)
                 return NotFound();
 
-            await manager.DecreaseMultiplierAsync(resourcePoolId);
+            var currentUserId = this.GetCurrentUserId().Value;
+
+            await manager.DecreaseMultiplierAsync(resourcePool, currentUserId);
 
             return Ok();
         }
@@ -73,7 +77,9 @@ namespace Web.Controllers.Api
                 if (resourcePool == null)
                     return NotFound();
 
-                await manager.ResetMultiplierAsync(resourcePoolId);
+                var currentUserId = this.GetCurrentUserId().Value;
+
+                await manager.ResetMultiplierAsync(resourcePool, currentUserId);
 
                 return Ok();
             }

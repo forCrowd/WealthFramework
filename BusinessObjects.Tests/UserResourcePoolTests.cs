@@ -7,21 +7,12 @@ namespace BusinessObjects.Tests
     public class UserResourcePoolTests
     {
         [TestMethod]
-        public void NewUserResourcePoolShouldCreate()
+        public void NewUserResourcePool_ShouldCreate()
         {
-            var newResourcePool = new ResourcePool("CMRP");
-            var newElementFieldIndex = new ElementFieldIndex(
-                new ElementField(
-                    new Element(new ResourcePool("CMRP"), "Element"),
-                    "Field",
-                    true,
-                    ElementFieldTypes.Boolean),
-                "Default index");
+            var newUser = new User("Email");
 
-                new UserResourcePool(
-                    new User("email"),
-                    newResourcePool,
-                    0);
+            var newResourcePool = new ResourcePool("CMRP")
+                .AddUserResourcePool(newUser, 0);
         }
     }
 }

@@ -7,9 +7,9 @@ namespace BusinessObjects.Tests
     public class ResourcePoolTests
     {
         [TestMethod]
-        public void NewResourcePoolShouldCreate()
+        public void NewResourcePool_ShouldCreate()
         {
-            var newResourcePool = new ResourcePool("Default");
+            new ResourcePool("Default");
         }
 
         [TestMethod]
@@ -23,10 +23,10 @@ namespace BusinessObjects.Tests
             var organization = resourcePool.AddElement("Organization");
 
             organization
-                    .AddField("Sales Price", true, ElementFieldTypes.ResourcePool)
+                    .AddField("Sales Price", ElementFieldTypes.ResourcePool, true)
                 .Element
-                    .AddField("Sales Number", true, ElementFieldTypes.Multiplier);
-            var importanceField = resourcePool.MainElement.AddField("Importance Field", false, ElementFieldTypes.Decimal);
+                    .AddField("Sales Number", ElementFieldTypes.Multiplier);
+            var importanceField = resourcePool.MainElement.AddField("Importance Field", ElementFieldTypes.Decimal, false);
 
             var elementFieldIndex = importanceField.AddIndex("Importance Index", RatingSortType.HighestToLowest);
 
@@ -34,17 +34,17 @@ namespace BusinessObjects.Tests
             organization1
                     .AddCell(organization.ResourcePoolField).SetValue(200M)
                 .ElementItem
-                    .AddCell(organization.MultiplierField).SetValue(1M)
+                    .AddCell(organization.MultiplierField).SetValue(1M, user)
                 .ElementItem
-                    .AddCell(importanceField).AddUserCell(user).SetValue(75M);
+                    .AddCell(importanceField).SetValue(75M, user);
 
             var organization2 = organization.AddItem("Organization 2");
             organization2
                     .AddCell(organization.ResourcePoolField).SetValue(200M)
                 .ElementItem
-                    .AddCell(organization.MultiplierField).SetValue(1M)
+                    .AddCell(organization.MultiplierField).SetValue(1M, user)
                 .ElementItem
-                    .AddCell(importanceField).AddUserCell(user).SetValue(25M);
+                    .AddCell(importanceField).SetValue(25M, user);
 
             resourcePool.AddUserResourcePool(user, 100)
                 .AddIndex(elementFieldIndex, 100);
@@ -63,8 +63,8 @@ namespace BusinessObjects.Tests
             Assert.IsTrue(elementFieldIndex.IndexRatingPercentage == 1);
             Assert.IsTrue(elementFieldIndex.IndexShare == 400);
 
-            Assert.IsTrue(organization1.RatingCount == 1);
-            Assert.IsTrue(organization1.RatingAverage == 75);
+            Assert.IsTrue(organization1.ValueCount == 1);
+            Assert.IsTrue(organization1.Value == 75);
             Assert.IsTrue(organization1.ResourcePoolCellValue == 200);
             Assert.IsTrue(organization1.ResourcePoolAddition == 200);
             Assert.IsTrue(organization1.ResourcePoolValueIncludingAddition == 400);
@@ -74,8 +74,8 @@ namespace BusinessObjects.Tests
             Assert.IsTrue(organization1.ElementFieldIndexIncome == 300);
             Assert.IsTrue(organization1.TotalIncome == 500);
 
-            Assert.IsTrue(organization2.RatingCount == 1);
-            Assert.IsTrue(organization2.RatingAverage == 25);
+            Assert.IsTrue(organization2.ValueCount == 1);
+            Assert.IsTrue(organization2.Value == 25);
             Assert.IsTrue(organization2.ResourcePoolCellValue == 200);
             Assert.IsTrue(organization2.ResourcePoolAddition == 200);
             Assert.IsTrue(organization2.ResourcePoolValueIncludingAddition == 400);
@@ -91,8 +91,8 @@ namespace BusinessObjects.Tests
             elementFieldIndex.RatingSortType = (byte)RatingSortType.LowestToHighest;
 
             // Assert 2
-            Assert.IsTrue(organization1.RatingCount == 1);
-            Assert.IsTrue(organization1.RatingAverage == 75);
+            Assert.IsTrue(organization1.ValueCount == 1);
+            Assert.IsTrue(organization1.Value == 75);
             Assert.IsTrue(organization1.ResourcePoolCellValue == 200);
             Assert.IsTrue(organization1.ResourcePoolAddition == 200);
             Assert.IsTrue(organization1.ResourcePoolValueIncludingAddition == 400);
@@ -102,8 +102,8 @@ namespace BusinessObjects.Tests
             Assert.IsTrue(organization1.ElementFieldIndexIncome == 100);
             Assert.IsTrue(organization1.TotalIncome == 300);
 
-            Assert.IsTrue(organization2.RatingCount == 1);
-            Assert.IsTrue(organization2.RatingAverage == 25);
+            Assert.IsTrue(organization2.ValueCount == 1);
+            Assert.IsTrue(organization2.Value == 25);
             Assert.IsTrue(organization2.ResourcePoolCellValue == 200);
             Assert.IsTrue(organization2.ResourcePoolAddition == 200);
             Assert.IsTrue(organization2.ResourcePoolValueIncludingAddition == 400);
@@ -125,9 +125,9 @@ namespace BusinessObjects.Tests
             var organization = resourcePool.AddElement("Organization");
 
             organization
-                    .AddField("Sales Price", true, ElementFieldTypes.ResourcePool)
+                    .AddField("Sales Price", ElementFieldTypes.ResourcePool, true)
                 .Element
-                    .AddField("Sales Number", true, ElementFieldTypes.Multiplier);
+                    .AddField("Sales Number", ElementFieldTypes.Multiplier);
 
             var elementFieldIndex = organization.ResourcePoolField.AddIndex("Importance Index", RatingSortType.LowestToHighest);
 
@@ -135,13 +135,13 @@ namespace BusinessObjects.Tests
             organization1
                     .AddCell(organization.ResourcePoolField).SetValue(25M)
                 .ElementItem
-                    .AddCell(organization.MultiplierField).SetValue(1M);
+                    .AddCell(organization.MultiplierField).SetValue(1M, user);
 
             var organization2 = organization.AddItem("Organization 2");
             organization2
                     .AddCell(organization.ResourcePoolField).SetValue(75M)
                 .ElementItem
-                    .AddCell(organization.MultiplierField).SetValue(1M);
+                    .AddCell(organization.MultiplierField).SetValue(1M, user);
 
             resourcePool.AddUserResourcePool(user, 100)
                 .AddIndex(elementFieldIndex, 100);
@@ -160,8 +160,8 @@ namespace BusinessObjects.Tests
             Assert.IsTrue(elementFieldIndex.IndexRatingPercentage == 1);
             Assert.IsTrue(elementFieldIndex.IndexShare == 100);
 
-            Assert.IsTrue(organization1.RatingCount == 1);
-            Assert.IsTrue(organization1.RatingAverage == 25);
+            Assert.IsTrue(organization1.ValueCount == 1);
+            Assert.IsTrue(organization1.Value == 25);
             Assert.IsTrue(organization1.ResourcePoolCellValue == 25);
             Assert.IsTrue(organization1.ResourcePoolAddition == 25);
             Assert.IsTrue(organization1.ResourcePoolValueIncludingAddition == 50);
@@ -171,8 +171,8 @@ namespace BusinessObjects.Tests
             Assert.IsTrue(organization1.ElementFieldIndexIncome == 75);
             Assert.IsTrue(organization1.TotalIncome == 100);
 
-            Assert.IsTrue(organization2.RatingCount == 1);
-            Assert.IsTrue(organization2.RatingAverage == 75);
+            Assert.IsTrue(organization2.ValueCount == 1);
+            Assert.IsTrue(organization2.Value == 75);
             Assert.IsTrue(organization2.ResourcePoolCellValue == 75);
             Assert.IsTrue(organization2.ResourcePoolAddition == 75);
             Assert.IsTrue(organization2.ResourcePoolValueIncludingAddition == 150);

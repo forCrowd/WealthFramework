@@ -7,9 +7,17 @@
 
     public partial class ResourcePoolUnitOfWork
     {
+        UserStore userStore;
+
+        public UserStore UserStore
+        {
+            get { return userStore ?? (userStore = new UserStore(Context)); }
+        }
+
         public async Task<UserResourcePool> FindUserResourcePoolAsync(int userId, int resourcePoolId)
         {
             var repository = new ResourcePoolRepository(Context);
+
             return await repository.FindUserResourcePoolAsync(userId, resourcePoolId);
         }
 
@@ -19,24 +27,36 @@
             return await repository.FindByUserResourcePoolIdAsync(userResourcePoolId);
         }
 
-        public async Task IncreaseMultiplierAsync(int resourcePoolId)
+        public async Task IncreaseMultiplierAsync(ResourcePool resourcePool, int userId)
         {
-            var resourcePool = await base.FindAsync(resourcePoolId);
-            resourcePool.IncreaseMultiplier();
+            Framework.Validations.ArgumentNullOrDefault(resourcePool, "resourcePool");
+            Framework.Validations.ArgumentNullOrDefault(userId, "userId");
+
+            var user = await UserStore.FindByIdAsync(userId);
+
+            resourcePool.IncreaseMultiplier(user);
             await base.UpdateAsync(resourcePool);
         }
 
-        public async Task DecreaseMultiplierAsync(int resourcePoolId)
+        public async Task DecreaseMultiplierAsync(ResourcePool resourcePool, int userId)
         {
-            var resourcePool = await base.FindAsync(resourcePoolId);
-            resourcePool.DecreaseMultiplier();
+            Framework.Validations.ArgumentNullOrDefault(resourcePool, "resourcePool");
+            Framework.Validations.ArgumentNullOrDefault(userId, "userId");
+
+            var user = await UserStore.FindByIdAsync(userId);
+
+            resourcePool.DecreaseMultiplier(user);
             await base.UpdateAsync(resourcePool);
         }
 
-        public async Task ResetMultiplierAsync(int resourcePoolId)
+        public async Task ResetMultiplierAsync(ResourcePool resourcePool, int userId)
         {
-            var resourcePool = await base.FindAsync(resourcePoolId);
-            resourcePool.ResetMultiplier();
+            Framework.Validations.ArgumentNullOrDefault(resourcePool, "resourcePool");
+            Framework.Validations.ArgumentNullOrDefault(userId, "userId");
+
+            var user = await UserStore.FindByIdAsync(userId);
+
+            resourcePool.ResetMultiplier(user);
             await base.UpdateAsync(resourcePool);
         }
         

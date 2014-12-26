@@ -7,9 +7,10 @@ namespace BusinessObjects.Tests
     public class ElementTests
     {
         [TestMethod]
-        public void NewElementShouldCreate()
+        public void NewElement_ShouldCreate()
         {
-            var newElement = new Element(new ResourcePool("CMRP"), "Default element");
+            new ResourcePool("CMRP")
+                .AddElement("Element");
         }
     }
 }

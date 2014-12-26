@@ -7,11 +7,11 @@ namespace BusinessObjects.Tests
     public class ElementItemTests
     {
         [TestMethod]
-        public void NewElementItemShouldCreate()
+        public void NewElementItem_ShouldCreate()
         {
-            var newElementItem = new ElementItem(
-                new Element(new ResourcePool("CMRP"), "Element"),
-                "Default item");
+            new ResourcePool("CMRP")
+                .AddElement("Element")
+                .AddItem("Item");
         }
     }
 }

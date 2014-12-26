@@ -68,13 +68,32 @@
                 .Get(item => item.UserId == sourceUserId && item.ElementCell.ElementField.Element.ResourcePool.IsSample)
                 .ToListAsync();
 
+            // TODO Can this part be improved?
             foreach (var sourceUserElementCell in sourceUserElementCells)
-                sourceUserElementCell.ElementCell
-                    .AddUserCell(targetUser)
-                    .SetValue(sourceUserElementCell.BooleanValue)
-                    .SetValue(sourceUserElementCell.IntegerValue)
-                    .SetValue(sourceUserElementCell.DecimalValue)
-                    .SetValue(sourceUserElementCell.DateTimeValue);
+            {
+                var elementCell = sourceUserElementCell.ElementCell;
+                var fieldType = (ElementFieldTypes)elementCell.ElementField.ElementFieldType;
+
+                switch (fieldType)
+                {
+                    case ElementFieldTypes.Boolean:
+                        if (sourceUserElementCell.BooleanValue.HasValue)
+                            elementCell.SetValue(sourceUserElementCell.BooleanValue.Value, targetUser);
+                        break;
+                    case ElementFieldTypes.Integer:
+                        if (sourceUserElementCell.IntegerValue.HasValue)
+                            elementCell.SetValue(sourceUserElementCell.IntegerValue.Value, targetUser);
+                        break;
+                    case ElementFieldTypes.Decimal:
+                        if (sourceUserElementCell.DecimalValue.HasValue)
+                            elementCell.SetValue(sourceUserElementCell.DecimalValue.Value, targetUser);
+                        break;
+                    case ElementFieldTypes.DateTime:
+                        if (sourceUserElementCell.DateTimeValue.HasValue)
+                            elementCell.SetValue(sourceUserElementCell.DateTimeValue.Value, targetUser);
+                        break;
+                }
+            }
         }
 
         public async Task ResetSampleDataAsync(int userId, int sampleUserId)

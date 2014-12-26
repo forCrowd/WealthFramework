@@ -24,6 +24,11 @@ namespace BusinessObjects
             Validations.ArgumentNullOrDefault(field, "field");
             Validations.ArgumentNullOrDefault(name, "name");
 
+            // Field type validation
+            if (field.ElementFieldType == (byte)ElementFieldTypes.String
+                || field.ElementFieldType == (byte)ElementFieldTypes.Element)
+                throw new ArgumentException("Invalid field: Index can't be created on 'String' or 'Element' typed fields", "field");
+
             //ResourcePool = resourcePool;
             Name = name;
             ElementField = field;

@@ -49,47 +49,47 @@
         //    return await base.InsertAsync(userResourcePool);
         //}
 
-        public async Task IncreaseMultiplier(UserResourcePool userResourcePool)
-        {
-            userResourcePool.ResourcePool.IncreaseMultiplier();
-            await Context.SaveChangesAsync();
-        }
+        //public async Task IncreaseMultiplier(UserResourcePool userResourcePool)
+        //{
+        //    userResourcePool.ResourcePool.IncreaseMultiplier();
+        //    await Context.SaveChangesAsync();
+        //}
 
         
-        public async Task<int> IncreaseNumberOfSales(UserResourcePool userResourcePool)
-        {
-            UpdateNumberOfSales(userResourcePool, UpdateNumberOfSalesActions.Increase);
-            return await Context.SaveChangesAsync();
-        }
+        //public async Task<int> IncreaseNumberOfSales(UserResourcePool userResourcePool)
+        //{
+        //    UpdateNumberOfSales(userResourcePool, UpdateNumberOfSalesActions.Increase);
+        //    return await Context.SaveChangesAsync();
+        //}
 
-        public async Task<int> IncreaseResourcePoolRate(UserResourcePool userResourcePool)
-        {
-            userResourcePool.ResourcePoolRate += 5;
-            return await Context.SaveChangesAsync();
-        }
+        //public async Task<int> IncreaseResourcePoolRate(UserResourcePool userResourcePool)
+        //{
+        //    userResourcePool.ResourcePoolRate += 5;
+        //    return await Context.SaveChangesAsync();
+        //}
 
-        public async Task<int> DecreaseNumberOfSales(UserResourcePool userResourcePool)
-        {
-            UpdateNumberOfSales(userResourcePool, UpdateNumberOfSalesActions.Decrease);
-            return await Context.SaveChangesAsync();
-        }
+        //public async Task<int> DecreaseNumberOfSales(UserResourcePool userResourcePool)
+        //{
+        //    UpdateNumberOfSales(userResourcePool, UpdateNumberOfSalesActions.Decrease);
+        //    return await Context.SaveChangesAsync();
+        //}
 
-        public async Task<int> DecreaseResourcePoolRate(UserResourcePool userResourcePool)
-        {
-            userResourcePool.ResourcePoolRate -= 5;
-            return await Context.SaveChangesAsync();
-        }
+        //public async Task<int> DecreaseResourcePoolRate(UserResourcePool userResourcePool)
+        //{
+        //    userResourcePool.ResourcePoolRate -= 5;
+        //    return await Context.SaveChangesAsync();
+        //}
 
-        public async Task<int> ResetNumberOfSales(UserResourcePool userResourcePool)
-        {
-            UpdateNumberOfSales(userResourcePool, UpdateNumberOfSalesActions.Reset);
-            return await Context.SaveChangesAsync();
-        }
+        //public async Task<int> ResetNumberOfSales(UserResourcePool userResourcePool)
+        //{
+        //    UpdateNumberOfSales(userResourcePool, UpdateNumberOfSalesActions.Reset);
+        //    return await Context.SaveChangesAsync();
+        //}
 
-        void UpdateNumberOfSales(UserResourcePool userResourcePool, UpdateNumberOfSalesActions action)
-        {
-            // TODO
-        }
+        //void UpdateNumberOfSales(UserResourcePool userResourcePool, UpdateNumberOfSalesActions action)
+        //{
+        //    // TODO
+        //}
 
         public override async Task<int> DeleteAsync(params object[] id)
         {

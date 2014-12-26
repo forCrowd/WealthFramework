@@ -7,12 +7,14 @@ namespace BusinessObjects.Tests
     public class ElementCellTests
     {
         [TestMethod]
-        public void NewElementCellShouldCreate()
+        public void NewElementCell_ShouldCreate()
         {
-            var newElement = new Element(new ResourcePool("CMRP"), "Element");
-            var newElementCell = new ElementCell(
-                new ElementField(newElement, "Field", true, ElementFieldTypes.Boolean),
-                new ElementItem(newElement, "Item"));
+            var newElement = new ResourcePool("CMRP")
+                .AddElement("Element");
+
+            var newField = newElement.AddField("Field", ElementFieldTypes.String);
+
+            newElement.AddItem("Item").AddCell(newField);
         }
     }
 }

@@ -98,10 +98,10 @@
             
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Lowlands";
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().ResourcePoolCell.DecimalValue = 125;
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().ResourcePoolCell.SetValue(125);
             mainElement.ElementItemSet.Skip(0).Take(1).Single().NameCell.UserElementCellSet.Clear();
             mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "High Coast";
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().ResourcePoolCell.DecimalValue = 175;
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().ResourcePoolCell.SetValue(175);
             mainElement.ElementItemSet.Skip(1).Take(1).Single().NameCell.UserElementCellSet.Clear();
 
             // Return
@@ -119,17 +119,17 @@
             var resourcePool = new ResourcePool("Default");
             resourcePool
                 .AddElement("Main Element")
-                    .AddField("Resource Pool Field", true, ElementFieldTypes.ResourcePool)
+                    .AddField("Resource Pool Field", ElementFieldTypes.ResourcePool, true)
                 .Element
-                    .AddField("Multiplier", true, ElementFieldTypes.Multiplier);
+                    .AddField("Multiplier", ElementFieldTypes.Multiplier);
 
             // Importance field
             ElementField importanceField = null;
             if (createImportanceIndex)
-                importanceField = resourcePool.MainElement.AddField("Importance Field", false, ElementFieldTypes.Decimal);
+                importanceField = resourcePool.MainElement.AddField("Importance Field", ElementFieldTypes.Decimal, false);
 
             // Items, cells, user cells
-            var itemRating = numberOfItems > 0 ? 100M / numberOfItems : 0;
+            var itemValue = numberOfItems > 0 ? 100M / numberOfItems : 0;
             for (var i = 1; i <= numberOfItems; i++)
             {
                 var itemName = string.Format("Item {0}", i);
@@ -138,11 +138,11 @@
                     .AddItem(itemName)
                         .AddCell(resourcePool.MainElement.ResourcePoolField).SetValue(100M)
                     .ElementItem
-                        .AddCell(resourcePool.MainElement.MultiplierField).SetValue(0M)
+                        .AddCell(resourcePool.MainElement.MultiplierField).SetValue(0M, user)
                     .ElementItem;
 
                 if (createImportanceIndex)
-                    item.AddCell(importanceField).AddUserCell(user).SetValue(itemRating);
+                    item.AddCell(importanceField).SetValue(itemValue, user);
             }
 
             // User resource pool, index
