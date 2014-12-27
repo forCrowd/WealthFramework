@@ -94,14 +94,10 @@ namespace BusinessObjects
         /// <summary>
         /// REMARK: In other index types, this value is calculated on ElementFieldIndex class level, under IndexValue property
         /// </summary>
-        public decimal Value
+        public decimal Value()
         {
-            get
-            {
-                return ElementCellSet.Sum(item => item.Value);
-            }
+            return ElementCellSet.Sum(item => item.Value());
         }
-
 
         //public decimal RatingPercentageMultiplied
         //{
@@ -111,9 +107,9 @@ namespace BusinessObjects
         //    }
         //}
 
-        public decimal ValueMultiplied
+        public decimal ValueMultiplied(User multiplierUser)
         {
-            get { return ElementCellSet.Sum(item => item.ValueMultiplied); }
+            return ElementCellSet.Sum(item => item.ValueMultiplied(multiplierUser));
         }
 
         // TODO Although technically it's possible to define multiple indexes, there will be one per Field at the moment
@@ -122,17 +118,14 @@ namespace BusinessObjects
             get { return ElementFieldIndexSet.SingleOrDefault(); }
         }
 
-        public decimal ElementFieldIndexShare
+        public decimal ElementFieldIndexShare(User multiplierUser)
         {
-            get
-            {
-                return ElementFieldIndex == null
-                    ? 0
-                    : ElementFieldIndex.IndexShare;
-            }
+            return ElementFieldIndex == null
+                ? 0
+                : ElementFieldIndex.IndexShare(multiplierUser);
         }
 
-#endregion
+        #endregion
 
         #region - Methods -
 

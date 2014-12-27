@@ -12,17 +12,17 @@ namespace BusinessObjects.ViewModels
             Id = userResourcePool.Id;
             ResourcePoolName = userResourcePool.ResourcePool.Name;
             ResourcePoolRate = userResourcePool.ResourcePoolRate;
-            ResourcePoolRatePercentage = userResourcePool.ResourcePool.ResourcePoolRatePercentage;
+            ResourcePoolRatePercentage = userResourcePool.ResourcePool.ResourcePoolRatePercentage();
             UserResourcePoolRatingCount = userResourcePool.ResourcePool.UserResourcePoolSet.Count;
 
             ElementFieldIndexSet = userResourcePool
                 .ResourcePool
                 .ElementFieldIndexSet
-                .Select(item => new ElementFieldIndex(item));
+                .Select(item => new ElementFieldIndex(item, userResourcePool.User));
             
-            MainElement = new Element(userResourcePool.ResourcePool.MainElement, userResourcePool.UserId);
+            MainElement = new Element(userResourcePool.ResourcePool.MainElement, userResourcePool.User);
 
-            TotalIncome = userResourcePool.ResourcePool.TotalIncome;
+            TotalIncome = userResourcePool.ResourcePool.TotalIncome(userResourcePool.User);
         }
 
         public int Id { get; set; }

@@ -246,10 +246,8 @@ multiplier - n/a
 
 ---
 resourcepoolview doesnt look good with new importance field
-convert rating properties to methods
 
 elementfield.addindex().adduserindex()?
-
 ---
 chapter 7, 8, 9, 10 ?!
 

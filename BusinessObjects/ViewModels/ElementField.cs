@@ -5,12 +5,12 @@ namespace BusinessObjects.ViewModels
     {
         public ElementField() { }
 
-        public ElementField(BusinessObjects.ElementField elementField)
+        public ElementField(BusinessObjects.ElementField elementField, User user)
         {
             Id = elementField.Id;
             Name = elementField.Name;
             ElementFieldType = elementField.ElementFieldType;
-            ElementFieldIndexShare = elementField.ElementFieldIndexShare;
+            ElementFieldIndexShare = elementField.ElementFieldIndexShare(user);
         }
 
         public int Id { get; set; }

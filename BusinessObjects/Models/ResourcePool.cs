@@ -49,24 +49,21 @@ namespace BusinessObjects
             get { return ElementSet.SelectMany(item => item.ElementFieldIndexSet); }
         }
 
-        public decimal ResourcePoolRate
+        public decimal ResourcePoolRate()
         {
-            get
-            {
-                return UserResourcePoolSet.Any()
-                    ? UserResourcePoolSet.Average(item => item.ResourcePoolRate)
-                    : 0;
-            }
+            return UserResourcePoolSet.Any()
+                ? UserResourcePoolSet.Average(item => item.ResourcePoolRate)
+                : 0;
         }
 
-        public decimal ResourcePoolRatePercentage
+        public decimal ResourcePoolRatePercentage()
         {
-            get { return ResourcePoolRate / 100; }
+            return ResourcePoolRate() / 100;
         }
 
-        public decimal IndexRatingAverage
+        public decimal IndexRatingAverage()
         {
-            get { return ElementFieldIndexSet.Sum(item => item.IndexRatingAverage); }
+            return ElementFieldIndexSet.Sum(item => item.IndexRatingAverage());
         }
 
         public Element MainElement
@@ -74,39 +71,39 @@ namespace BusinessObjects
             get { return ElementSet.SingleOrDefault(element => element.IsMainElement); }
         }
 
-        public decimal ResourcePoolAddition
+        public decimal ResourcePoolAddition()
         {
-            get { return MainElement.ElementItemSet.Sum(item => item.ResourcePoolAddition); }
+            return MainElement.ElementItemSet.Sum(item => item.ResourcePoolAddition());
         }
 
-        public decimal ResourcePoolCellValue
+        public decimal ResourcePoolCellValue()
         {
-            get { return MainElement.ElementItemSet.Sum(item => item.ResourcePoolCellValue); }
+            return MainElement.ElementItemSet.Sum(item => item.ResourcePoolCellValue());
         }
 
-        public decimal ResourcePoolValueIncludingAddition
+        public decimal ResourcePoolValueIncludingAddition()
         {
-            get { return MainElement.ElementItemSet.Sum(item => item.ResourcePoolValueIncludingAddition); }
+            return MainElement.ElementItemSet.Sum(item => item.ResourcePoolValueIncludingAddition());
         }
 
-        public decimal TotalResourcePoolValue
+        public decimal TotalResourcePoolValue(User multiplierUser)
         {
-            get { return MainElement.ElementItemSet.Sum(item => item.TotalResourcePoolValue); }
+            return MainElement.ElementItemSet.Sum(item => item.TotalResourcePoolValue(multiplierUser));
         }
 
-        public decimal TotalResourcePoolAddition
+        public decimal TotalResourcePoolAddition(User multiplierUser)
         {
-            get { return MainElement.ElementItemSet.Sum(item => item.TotalResourcePoolAddition); }
+            return MainElement.ElementItemSet.Sum(item => item.TotalResourcePoolAddition(multiplierUser));
         }
 
-        public decimal TotalResourcePoolValueIncludingAddition
+        public decimal TotalResourcePoolValueIncludingAddition(User multiplierUser)
         {
-            get { return MainElement.ElementItemSet.Sum(item => item.TotalResourcePoolValueIncludingAddition); }
+            return MainElement.ElementItemSet.Sum(item => item.TotalResourcePoolValueIncludingAddition(multiplierUser));
         }
 
-        public decimal TotalIncome
+        public decimal TotalIncome(User multiplierUser)
         {
-            get { return MainElement.ElementItemSet.Sum(item => item.TotalIncome); }
+            return MainElement.ElementItemSet.Sum(item => item.TotalIncome(multiplierUser));
         }
 
         #region - Methods -
@@ -148,7 +145,7 @@ namespace BusinessObjects
         {
             if (MainElement != null && MainElement.HasMultiplierField)
                 foreach (var item in MainElement.ElementItemSet)
-                    item.MultiplierCell.SetValue(item.MultiplierCell.Value + 1, user);
+                    item.MultiplierCell.SetValue(item.MultiplierCellValue(user) + 1M, user);
 
             return this;
         }
@@ -157,7 +154,7 @@ namespace BusinessObjects
         {
             if (MainElement != null && MainElement.HasMultiplierField)
                 foreach (var item in MainElement.ElementItemSet)
-                    item.MultiplierCell.SetValue(item.MultiplierCell.Value - 1, user);
+                    item.MultiplierCell.SetValue(item.MultiplierCellValue(user) - 1M, user);
 
             return this;
         }

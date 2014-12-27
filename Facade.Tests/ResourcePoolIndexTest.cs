@@ -23,8 +23,8 @@
                 foreach (var item in list)
                 {
                     sbOutput.AppendFormat("Name: {0}", item.Name).AppendLine();
-                    sbOutput.AppendFormat("IndexRatingCount: {0}", item.IndexRatingCount).AppendLine();
-                    sbOutput.AppendFormat("IndexRatingAverage: {0}", item.IndexRatingAverage).AppendLine();
+                    sbOutput.AppendFormat("IndexRatingCount: {0}", item.IndexRatingCount()).AppendLine();
+                    sbOutput.AppendFormat("IndexRatingAverage: {0}", item.IndexRatingAverage()).AppendLine();
                 }
 
                 Console.WriteLine(sbOutput);

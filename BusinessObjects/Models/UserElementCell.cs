@@ -44,8 +44,11 @@ namespace BusinessObjects
             get { return booleanValue; }
             set
             {
-                ClearValues();
-                booleanValue = value;
+                if (booleanValue != value)
+                {
+                    ClearValues();
+                    booleanValue = value;
+                }
             }
         }
 
@@ -54,8 +57,11 @@ namespace BusinessObjects
             get { return integerValue; }
             set
             {
-                ClearValues();
-                integerValue = value;
+                if (integerValue != value)
+                {
+                    ClearValues();
+                    integerValue = value;
+                }
             }
         }
 
@@ -64,8 +70,11 @@ namespace BusinessObjects
             get { return decimalValue; }
             set
             {
-                ClearValues();
-                decimalValue = value;
+                if (decimalValue != value)
+                {
+                    ClearValues();
+                    decimalValue = value;
+                }
             }
         }
 
@@ -74,8 +83,11 @@ namespace BusinessObjects
             get { return dateTimeValue; }
             set
             {
-                ClearValues();
-                dateTimeValue = value;
+                if (dateTimeValue != value)
+                {
+                    ClearValues();
+                    dateTimeValue = value;
+                }
             }
         }
 
@@ -144,6 +156,9 @@ namespace BusinessObjects
             return this;
         }
 
+        /// <summary>
+        /// Clears all the fields, to be sure that there is no value one them, except the one that's being used
+        /// </summary>
         void ClearValues()
         {
             booleanValue = null;

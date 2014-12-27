@@ -7,7 +7,7 @@ namespace BusinessObjects.ViewModels
     {
         public Element() { }
 
-        public Element(BusinessObjects.Element element, int userId)
+        public Element(BusinessObjects.Element element, User user)
         {
             Id = element.Id;
             Name = element.Name;
@@ -16,11 +16,11 @@ namespace BusinessObjects.ViewModels
             ResourcePoolFieldName = element.ResourcePoolFieldName;
             HasMultiplierField = element.HasMultiplierField;
             MultiplierFieldName = element.MultiplierFieldName;
-            ElementFieldSet = element.ElementFieldSet.Select(item => new ElementField(item));
-            BasicElementFieldSet = element.BasicElementFieldSet.Select(item => new ElementField(item));
+            ElementFieldSet = element.ElementFieldSet.Select(item => new ElementField(item, user));
+            BasicElementFieldSet = element.BasicElementFieldSet.Select(item => new ElementField(item, user));
             ElementItemSet = element.ElementItemSet
                 //.Take(2) // TODO For testing
-                .Select(item => new ElementItem(item, userId));
+                .Select(item => new ElementItem(item, user));
         }
 
         public int Id { get; set; }

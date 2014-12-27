@@ -8,7 +8,7 @@ namespace BusinessObjects.ViewModels
     {
         public ElementCell() { }
 
-        public ElementCell(BusinessObjects.ElementCell elementCell, int userId)
+        public ElementCell(BusinessObjects.ElementCell elementCell, User user)
         {
             Id = elementCell.Id;
             ElementItemId = elementCell.ElementItemId;
@@ -21,18 +21,18 @@ namespace BusinessObjects.ViewModels
             DateTimeValue = elementCell.DateTimeValue;
 
             if (elementCell.SelectedElementItem != null)
-                SelectedElementItem = new ElementItem(elementCell.SelectedElementItem, userId);
+                SelectedElementItem = new ElementItem(elementCell.SelectedElementItem, user);
 
             if (elementCell.ElementField.ElementFieldType != (byte)ElementFieldTypes.String
                 && elementCell.ElementField.ElementFieldType != (byte)ElementFieldTypes.Element)
             {
-                ValueMultiplied = elementCell.ValueMultiplied;
-                ValuePercentage = elementCell.ValuePercentage;
+                ValueMultiplied = elementCell.ValueMultiplied(user);
+                ValuePercentage = elementCell.ValuePercentage(user);
             }
-            ElementFieldIndexIncome = elementCell.ElementFieldIndexIncome;
+            ElementFieldIndexIncome = elementCell.ElementFieldIndexIncome(user);
 
             UserElementCellSet = elementCell.UserElementCellSet
-                .Where(item => item.UserId == userId)
+                .Where(item => item.User == user)
                 .Select(item => new UserElementCell(item));
         }
 

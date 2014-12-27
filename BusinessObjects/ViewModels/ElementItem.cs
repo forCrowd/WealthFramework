@@ -7,25 +7,25 @@ namespace BusinessObjects.ViewModels
     {
         public ElementItem() { }
 
-        public ElementItem(BusinessObjects.ElementItem elementItem, int userId)
+        public ElementItem(BusinessObjects.ElementItem elementItem, User user)
         {
             Id = elementItem.Id;
             Name = elementItem.Name;
             HasResourcePoolCell = elementItem.HasResourcePoolCell;
-            ResourcePoolCellValue = elementItem.ResourcePoolCellValue;
-            ResourcePoolAddition = elementItem.ResourcePoolAddition;
-            ResourcePoolValueIncludingAddition = elementItem.ResourcePoolValueIncludingAddition;
+            ResourcePoolCellValue = elementItem.ResourcePoolCellValue();
+            ResourcePoolAddition = elementItem.ResourcePoolAddition();
+            ResourcePoolValueIncludingAddition = elementItem.ResourcePoolValueIncludingAddition();
             HasMultiplierCell = elementItem.HasMultiplierCell;
-            MultiplierCellValue = elementItem.MultiplierCellValue;
-            ValueCount = elementItem.ValueCount;
-            Value = elementItem.Value;
+            MultiplierCellValue = elementItem.MultiplierCellValue(user);
+            ValueCount = elementItem.ValueCount();
+            Value = elementItem.Value();
             //TotalRating = elementItem.TotalRating;
-            TotalResourcePoolValue = elementItem.TotalResourcePoolValue;
-            TotalResourcePoolAddition = elementItem.TotalResourcePoolAddition;
-            TotalResourcePoolValueIncludingAddition = elementItem.TotalResourcePoolValueIncludingAddition;
-            TotalIncome = elementItem.TotalIncome;
-            ElementCellSet = elementItem.ElementCellSet.Select(item => new ElementCell(item, userId));
-            BasicElementCellSet = elementItem.BasicElementCellSet.Select(item => new ElementCell(item, userId));
+            TotalResourcePoolValue = elementItem.TotalResourcePoolValue(user);
+            TotalResourcePoolAddition = elementItem.TotalResourcePoolAddition(user);
+            TotalResourcePoolValueIncludingAddition = elementItem.TotalResourcePoolValueIncludingAddition(user);
+            TotalIncome = elementItem.TotalIncome(user);
+            ElementCellSet = elementItem.ElementCellSet.Select(item => new ElementCell(item, user));
+            BasicElementCellSet = elementItem.BasicElementCellSet.Select(item => new ElementCell(item, user));
         }
 
         public int Id { get; set; }

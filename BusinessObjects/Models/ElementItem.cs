@@ -30,7 +30,7 @@ namespace BusinessObjects
             Element = element;
 
             ElementCellSet = new HashSet<ElementCell>();
-            
+
             // Add a fixed 'Name' cell
             AddCell(Element.NameField);
             Name = name;
@@ -45,7 +45,7 @@ namespace BusinessObjects
         public int Id { get; set; }
 
         public int ElementId { get; set; }
-        
+
         [Display(Name = "Element Item")]
         [Required]
         [StringLength(50)]
@@ -94,30 +94,21 @@ namespace BusinessObjects
             get { return ResourcePoolCell != null; }
         }
 
-        public decimal ResourcePoolCellValue
+        public decimal ResourcePoolCellValue()
         {
-            get
-            {
-                return HasResourcePoolCell
-                    ? ResourcePoolCell.Value
-                    : 0;
-            }
+            return HasResourcePoolCell
+                ? ResourcePoolCell.Value()
+                : 0;
         }
 
-        public decimal ResourcePoolAddition
+        public decimal ResourcePoolAddition()
         {
-            get
-            {
-                return ResourcePoolCellValue * Element.ResourcePool.ResourcePoolRatePercentage;
-            }
+            return ResourcePoolCellValue() * Element.ResourcePool.ResourcePoolRatePercentage();
         }
 
-        public decimal ResourcePoolValueIncludingAddition
+        public decimal ResourcePoolValueIncludingAddition()
         {
-            get
-            {
-                return ResourcePoolCellValue + ResourcePoolAddition;
-            }
+            return ResourcePoolCellValue() + ResourcePoolAddition();
         }
 
         public ElementCell MultiplierCell
@@ -131,38 +122,29 @@ namespace BusinessObjects
             //get { return MultiplierCell != null && MultiplierCell.DecimalValue.HasValue; }
         }
 
-        public decimal MultiplierCellValue
+        public decimal MultiplierCellValue(User multiplierUser)
         {
-            get
-            {
-                if (!HasMultiplierCell)
-                    return 0;
+            if (!HasMultiplierCell)
+                return 0;
 
-                return MultiplierCell.Value;
-            }
+            return MultiplierCell.Value(multiplierUser);
         }
 
         // TODO Sum is correct? Or Average?
-        public decimal Value
+        public decimal Value()
         {
-            get
-            {
-                var indexCells = ElementCellSet.Where(item => item.ElementField.ElementFieldIndexSet.Any());
-                return indexCells.Any()
-                    ? indexCells.Sum(item => item.Value)
-                    : 0;
-            }
+            var indexCells = ElementCellSet.Where(item => item.ElementField.ElementFieldIndexSet.Any());
+            return indexCells.Any()
+                ? indexCells.Sum(item => item.Value())
+                : 0;
         }
 
-        public int ValueCount
+        public int ValueCount()
         {
-            get
-            {
-                var indexCells = ElementCellSet.Where(item => item.ElementField.ElementFieldIndexSet.Any());
-                return indexCells.Any()
-                    ? indexCells.Sum(item => item.ValueCount)
-                    : 0;
-            }
+            var indexCells = ElementCellSet.Where(item => item.ElementField.ElementFieldIndexSet.Any());
+            return indexCells.Any()
+                ? indexCells.Sum(item => item.ValueCount())
+                : 0;
         }
 
         //// TODO Review!
@@ -180,38 +162,29 @@ namespace BusinessObjects
         //    }
         //}
 
-        public decimal TotalResourcePoolValue
+        public decimal TotalResourcePoolValue(User multiplierUser)
         {
-            get
-            {
-                return ResourcePoolCellValue * MultiplierCellValue;
-            }
+            return ResourcePoolCellValue() * MultiplierCellValue(multiplierUser);
         }
 
-        public decimal TotalResourcePoolAddition
+        public decimal TotalResourcePoolAddition(User multiplierUser)
         {
-            get
-            {
-                return ResourcePoolAddition * MultiplierCellValue;
-            }
+            return ResourcePoolAddition() * MultiplierCellValue(multiplierUser);
         }
 
-        public decimal TotalResourcePoolValueIncludingAddition
+        public decimal TotalResourcePoolValueIncludingAddition(User multiplierUser)
         {
-            get
-            {
-                return ResourcePoolValueIncludingAddition * MultiplierCellValue;
-            }
+            return ResourcePoolValueIncludingAddition() * MultiplierCellValue(multiplierUser);
         }
 
-        public decimal ElementFieldIndexIncome
+        public decimal ElementFieldIndexIncome(User multiplierUser)
         {
-            get { return ElementCellSet.Sum(item => item.ElementFieldIndexIncome); }
+            return ElementCellSet.Sum(item => item.ElementFieldIndexIncome(multiplierUser));
         }
 
-        public decimal TotalIncome
+        public decimal TotalIncome(User multiplierUser)
         {
-            get { return TotalResourcePoolValue + ElementFieldIndexIncome; }
+            return TotalResourcePoolValue(multiplierUser) + ElementFieldIndexIncome(multiplierUser);
         }
 
         #region - Methods -
