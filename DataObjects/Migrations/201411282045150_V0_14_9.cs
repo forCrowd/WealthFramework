@@ -197,6 +197,41 @@ namespace DataObjects.Migrations
                 .Index(t => t.Name, unique: true, name: "RoleNameIndex");
             
             CreateTable(
+                "dbo.UserElementFieldIndex",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        UserId = c.Int(nullable: false),
+                        ElementFieldIndexId = c.Int(nullable: false),
+                        Rating = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        CreatedOn = c.DateTime(nullable: false),
+                        ModifiedOn = c.DateTime(nullable: false),
+                        DeletedOn = c.DateTime(),
+                        RowVersion = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.ElementFieldIndex", t => t.ElementFieldIndexId, cascadeDelete: true)
+                .ForeignKey("dbo.User", t => t.UserId)
+                .Index(t => new { t.UserId, t.ElementFieldIndexId }, unique: true, name: "IX_UserIdElementFieldIndexId");
+            
+            CreateTable(
+                "dbo.ElementFieldIndex",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        ElementFieldId = c.Int(nullable: false),
+                        Name = c.String(nullable: false, maxLength: 50),
+                        RatingSortType = c.Byte(nullable: false),
+                        CreatedOn = c.DateTime(nullable: false),
+                        ModifiedOn = c.DateTime(nullable: false),
+                        DeletedOn = c.DateTime(),
+                        RowVersion = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.ElementField", t => t.ElementFieldId, cascadeDelete: true)
+                .Index(t => t.ElementFieldId);
+            
+            CreateTable(
                 "dbo.UserResourcePool",
                 c => new
                     {
@@ -228,52 +263,17 @@ namespace DataObjects.Migrations
                     })
                 .PrimaryKey(t => t.Id);
             
-            CreateTable(
-                "dbo.UserElementFieldIndex",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        UserResourcePoolId = c.Int(nullable: false),
-                        ElementFieldIndexId = c.Int(nullable: false),
-                        Rating = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        CreatedOn = c.DateTime(nullable: false),
-                        ModifiedOn = c.DateTime(nullable: false),
-                        DeletedOn = c.DateTime(),
-                        RowVersion = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.ElementFieldIndex", t => t.ElementFieldIndexId, cascadeDelete: true)
-                .ForeignKey("dbo.UserResourcePool", t => t.UserResourcePoolId)
-                .Index(t => new { t.UserResourcePoolId, t.ElementFieldIndexId }, unique: true, name: "IX_UserResourcePoolIdElementFieldIndexId");
-            
-            CreateTable(
-                "dbo.ElementFieldIndex",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        ElementFieldId = c.Int(nullable: false),
-                        Name = c.String(nullable: false, maxLength: 50),
-                        RatingSortType = c.Byte(nullable: false),
-                        CreatedOn = c.DateTime(nullable: false),
-                        ModifiedOn = c.DateTime(nullable: false),
-                        DeletedOn = c.DateTime(),
-                        RowVersion = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.ElementField", t => t.ElementFieldId, cascadeDelete: true)
-                .Index(t => t.ElementFieldId);
-            
         }
         
         public override void Down()
         {
             DropForeignKey("dbo.UserElementCell", "UserId", "dbo.User");
-            DropForeignKey("dbo.UserElementFieldIndex", "UserResourcePoolId", "dbo.UserResourcePool");
-            DropForeignKey("dbo.UserElementFieldIndex", "ElementFieldIndexId", "dbo.ElementFieldIndex");
-            DropForeignKey("dbo.ElementFieldIndex", "ElementFieldId", "dbo.ElementField");
             DropForeignKey("dbo.UserResourcePool", "UserId", "dbo.User");
             DropForeignKey("dbo.UserResourcePool", "ResourcePoolId", "dbo.ResourcePool");
             DropForeignKey("dbo.Element", "ResourcePoolId", "dbo.ResourcePool");
+            DropForeignKey("dbo.UserElementFieldIndex", "UserId", "dbo.User");
+            DropForeignKey("dbo.UserElementFieldIndex", "ElementFieldIndexId", "dbo.ElementFieldIndex");
+            DropForeignKey("dbo.ElementFieldIndex", "ElementFieldId", "dbo.ElementField");
             DropForeignKey("dbo.UserRole", "UserId", "dbo.User");
             DropForeignKey("dbo.UserRole", "RoleId", "dbo.Role");
             DropForeignKey("dbo.UserLogin", "UserId", "dbo.User");
@@ -284,9 +284,9 @@ namespace DataObjects.Migrations
             DropForeignKey("dbo.ElementItem", "ElementId", "dbo.Element");
             DropForeignKey("dbo.ElementCell", "ElementFieldId", "dbo.ElementField");
             DropForeignKey("dbo.ElementField", "ElementId", "dbo.Element");
-            DropIndex("dbo.ElementFieldIndex", new[] { "ElementFieldId" });
-            DropIndex("dbo.UserElementFieldIndex", "IX_UserResourcePoolIdElementFieldIndexId");
             DropIndex("dbo.UserResourcePool", "IX_UserIdResourcePoolId");
+            DropIndex("dbo.ElementFieldIndex", new[] { "ElementFieldId" });
+            DropIndex("dbo.UserElementFieldIndex", "IX_UserIdElementFieldIndexId");
             DropIndex("dbo.Role", "RoleNameIndex");
             DropIndex("dbo.UserRole", new[] { "RoleId" });
             DropIndex("dbo.UserRole", new[] { "UserId" });
@@ -299,10 +299,10 @@ namespace DataObjects.Migrations
             DropIndex("dbo.ElementCell", "IX_ElementCellId");
             DropIndex("dbo.ElementField", new[] { "ElementId" });
             DropIndex("dbo.Element", new[] { "ResourcePoolId" });
-            DropTable("dbo.ElementFieldIndex");
-            DropTable("dbo.UserElementFieldIndex");
             DropTable("dbo.ResourcePool");
             DropTable("dbo.UserResourcePool");
+            DropTable("dbo.ElementFieldIndex");
+            DropTable("dbo.UserElementFieldIndex");
             DropTable("dbo.Role");
             DropTable("dbo.UserRole");
             DropTable("dbo.UserLogin");

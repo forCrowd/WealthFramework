@@ -90,6 +90,7 @@
     <Compile Include="Attributes\DisplayOnEditViewAttribute.cs" />
     <Compile Include="Attributes\DisplayOnListViewAttribute.cs" />
     <Compile Include="ViewModels\ElementFieldIndex.cs" />
+    <Compile Include="ViewModels\ResourcePool.cs" />
     <Compile Include="ViewModels\UserResourcePool.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="WealthEconomyContext.cs" />

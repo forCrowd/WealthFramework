@@ -11,12 +11,7 @@ UserResourcePool view recursive selectedElementItem part
 * Check userunitofwork + resourcepoolunitofwork + userresourcepoolunitofwork for sample records + delete cases
 * Initial (fixed) amount for resource pool
 * Currently multiplier + resource pool field types can only be added once per element (or resource pool) - check it again
-* ResourcePoolIndex can be a field for elementfield table? Index boolean?
-* Element parent + child structure
-* ismainelement -> DefaultElement  
-* multiplier field type -> userelementcell can hold just the value but will be used as it is, not it's average (like Rating)
-currently number of sales is not on user level, but on elementitem level!
-* userelementcell rating -> value?
+* ismainelement -> DefaultElement
 * instead of MainElement boolean on Element level, can it be done with MainElement field on ResourcePool level? yes, with InverseProperty
 * subtotals; sales price, sales price incl. tax, number of sales, total tax, total sales price incl. tax, total income
 * userelementcell ratings + counts?
@@ -247,7 +242,11 @@ multiplier - n/a
 ---
 resourcepoolview doesnt look good with new importance field
 
-elementfield.addindex().adduserindex()?
+			. continue with getresourcepool api method improvement
+			remove basicelementfieldset
+			
+                <table class="table" data-ng-if="field.ElementFieldType !== 11 && field.ElementFieldType !== 12">
+
 ---
 chapter 7, 8, 9, 10 ?!
 

@@ -93,9 +93,10 @@
             mainElement.MultiplierField.Name = "Sales Number";
 
             // Resource pool index; change it to Sales Price itself, instead of User ratings
-            var totalCostIndex = resourcePool.MainElement.ResourcePoolField.AddIndex("Total Cost Index", RatingSortType.LowestToHighest);
-            resourcePool.UserResourcePoolSet.First().AddIndex(totalCostIndex, 100);
-            
+            resourcePool.MainElement.ResourcePoolField
+                .AddIndex("Total Cost Index", RatingSortType.LowestToHighest)
+                .AddUserRating(user, 100);
+
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Lowlands";
             mainElement.ElementItemSet.Skip(0).Take(1).Single().ResourcePoolCell.SetValue(125);
@@ -117,6 +118,8 @@
         {
             // Resource pool, main element, fields
             var resourcePool = new ResourcePool("Default");
+            resourcePool.AddUserResourcePool(user, 101);
+
             resourcePool
                 .AddElement("Main Element")
                     .AddField("Resource Pool Field", ElementFieldTypes.ResourcePool, true)
@@ -126,7 +129,12 @@
             // Importance field
             ElementField importanceField = null;
             if (createImportanceIndex)
+            {
                 importanceField = resourcePool.MainElement.AddField("Importance Field", ElementFieldTypes.Decimal, false);
+                importanceField
+                    .AddIndex("Importance Index", RatingSortType.HighestToLowest)
+                    .AddUserRating(user, 100);
+            }
 
             // Items, cells, user cells
             var itemValue = numberOfItems > 0 ? 100M / numberOfItems : 0;
@@ -145,17 +153,6 @@
                     item.AddCell(importanceField).SetValue(itemValue, user);
             }
 
-            // User resource pool, index
-            var userResourcePool = resourcePool.AddUserResourcePool(user, 101);
-            
-            // Importance Index
-            // TODO Will be updated with new field / index combo
-            if (createImportanceIndex)
-            {
-                var importanceIndex = importanceField.AddIndex("Importance Index", RatingSortType.HighestToLowest);
-                userResourcePool.AddIndex(importanceIndex, 100);
-            }
-            
             // Return
             return resourcePool;
         }

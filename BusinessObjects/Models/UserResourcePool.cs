@@ -25,7 +25,7 @@ namespace BusinessObjects
             User = user;
             ResourcePool = resourcePool;
             ResourcePoolRate = resourcePoolRate;
-            UserElementFieldIndexSet = new HashSet<UserElementFieldIndex>();
+            //UserElementFieldIndexSet = new HashSet<UserElementFieldIndex>();
         }
 
         [DisplayOnListView(false)]
@@ -45,7 +45,7 @@ namespace BusinessObjects
 
         public virtual ResourcePool ResourcePool { get; set; }
 
-        public virtual ICollection<UserElementFieldIndex> UserElementFieldIndexSet { get; set; }
+        //public virtual ICollection<UserElementFieldIndex> UserElementFieldIndexSet { get; set; }
 
         #region - General -
 
@@ -58,14 +58,16 @@ namespace BusinessObjects
 
         #region - Methods -
 
-        public UserElementFieldIndex AddIndex(ElementFieldIndex elementFieldIndex, decimal rating)
-        {
-            // TODO Validation?
-            var index = new UserElementFieldIndex(this, elementFieldIndex, rating);
-            elementFieldIndex.UserElementFieldIndexSet.Add(index);
-            UserElementFieldIndexSet.Add(index);
-            return index;
-        }
+        //public UserElementFieldIndex AddIndex(ElementFieldIndex elementFieldIndex, decimal rating)
+        //{
+        //    //// TODO Validation?
+        //    //var index = new UserElementFieldIndex(this, elementFieldIndex, rating);
+        //    //elementFieldIndex.UserElementFieldIndexSet.Add(index);
+        //    ////UserElementFieldIndexSet.Add(index);
+        //    //return index;
+
+        //    return null;
+        //}
 
         #endregion
 

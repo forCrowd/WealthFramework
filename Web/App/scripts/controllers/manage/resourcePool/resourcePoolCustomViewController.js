@@ -14,7 +14,7 @@
         var resourcePoolId = $routeParams.Id;
 
         var vm = this;
-        vm.userResourcePool = null;
+        vm.resourcePool = null;
         vm.decreaseMultiplier = decreaseMultiplier;
         vm.increaseMultiplier = increaseMultiplier;
         vm.resetMultiplier = resetMultiplier;
@@ -28,8 +28,8 @@
         function getUserResourcePool() {
 
             resourcePoolService.getUserResourcePool(resourcePoolId)
-                .success(function (userResourcePool) {
-                    vm.userResourcePool = userResourcePool;
+                .success(function (resourcePool) {
+                    vm.resourcePool = resourcePool;
                 });
         }
 

@@ -24,7 +24,7 @@
         /*** Implementations ***/
 
         function getUserResourcePool(resourcePoolId) {
-            var url = '/api/ResourcePoolCustom/GetUserResourcePool/' + resourcePoolId;
+            var url = '/api/ResourcePoolCustom/GetResourcePool/' + resourcePoolId;
             return $http.get(url);
         }
 

@@ -60,6 +60,15 @@ namespace BusinessObjects
 
         /* */
 
+        public UserElementFieldIndex AddUserRating(User user, decimal rating)
+        {
+            // TODO Validation?
+            var index = new UserElementFieldIndex(user, this, rating);
+            user.UserElementFieldIndexSet.Add(index);
+            UserElementFieldIndexSet.Add(index);
+            return index;
+        }
+
         /// <summary>
         /// How many users rated this index?
         /// </summary>
@@ -81,7 +90,7 @@ namespace BusinessObjects
 
         public decimal IndexRatingPercentage()
         {
-            var resourcePoolIndexRatingAverage = ElementField.Element.ResourcePool.IndexRatingAverage();
+            var resourcePoolIndexRatingAverage = ElementField.Element.IndexRatingAverage();
 
             return resourcePoolIndexRatingAverage == 0
                 ? 0

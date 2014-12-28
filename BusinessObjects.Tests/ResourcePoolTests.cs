@@ -82,6 +82,7 @@ namespace BusinessObjects.Tests
             var user = new User("Email");
 
             var resourcePool = new ResourcePool("Default");
+            resourcePool.AddUserResourcePool(user, 100);
 
             var organization = resourcePool.AddElement("Organization");
 
@@ -91,7 +92,8 @@ namespace BusinessObjects.Tests
                     .AddField("Sales Number", ElementFieldTypes.Multiplier);
             var importanceField = resourcePool.MainElement.AddField("Importance Field", ElementFieldTypes.Decimal, false);
 
-            var elementFieldIndex = importanceField.AddIndex("Importance Index", RatingSortType.HighestToLowest);
+            var importanceFieldIndex = importanceField.AddIndex("Importance Index", RatingSortType.HighestToLowest);
+            importanceFieldIndex.AddUserRating(user, 100);
 
             var organization1 = organization.AddItem("Organization 1");
             organization1
@@ -109,11 +111,7 @@ namespace BusinessObjects.Tests
                 .ElementItem
                     .AddCell(importanceField).SetValue(25M, user);
 
-            resourcePool.AddUserResourcePool(user, 100)
-                .AddIndex(elementFieldIndex, 100);
-
             // Assert
-            Assert.IsTrue(resourcePool.IndexRatingAverage() == 100);
             Assert.IsTrue(resourcePool.ResourcePoolAddition() == 400);
             Assert.IsTrue(resourcePool.ResourcePoolValueIncludingAddition() == 800);
             Assert.IsTrue(resourcePool.TotalResourcePoolValue(user) == 400);
@@ -121,10 +119,12 @@ namespace BusinessObjects.Tests
             Assert.IsTrue(resourcePool.TotalResourcePoolValueIncludingAddition(user) == 800);
             Assert.IsTrue(resourcePool.TotalIncome(user) == 800);
 
-            Assert.IsTrue(elementFieldIndex.IndexRatingCount() == 1);
-            Assert.IsTrue(elementFieldIndex.IndexRatingAverage() == 100);
-            Assert.IsTrue(elementFieldIndex.IndexRatingPercentage() == 1);
-            Assert.IsTrue(elementFieldIndex.IndexShare(user) == 400);
+            Assert.IsTrue(organization.IndexRatingAverage() == 100);
+
+            Assert.IsTrue(importanceFieldIndex.IndexRatingCount() == 1);
+            Assert.IsTrue(importanceFieldIndex.IndexRatingAverage() == 100);
+            Assert.IsTrue(importanceFieldIndex.IndexRatingPercentage() == 1);
+            Assert.IsTrue(importanceFieldIndex.IndexShare(user) == 400);
 
             Assert.IsTrue(organization1.ValueCount() == 1);
             Assert.IsTrue(organization1.Value() == 75);
@@ -151,7 +151,7 @@ namespace BusinessObjects.Tests
             // Arrange + act 2
             // TODO Since creating the whole scenario needs too much configuration,
             // it contains two different tests, try to separate them
-            elementFieldIndex.RatingSortType = (byte)RatingSortType.LowestToHighest;
+            importanceFieldIndex.RatingSortType = (byte)RatingSortType.LowestToHighest;
 
             // Assert 2
             Assert.IsTrue(organization1.ValueCount() == 1);
@@ -184,6 +184,7 @@ namespace BusinessObjects.Tests
             var user = new User("Email");
 
             var resourcePool = new ResourcePool("Default");
+            resourcePool.AddUserResourcePool(user, 100);
 
             var organization = resourcePool.AddElement("Organization");
 
@@ -191,8 +192,9 @@ namespace BusinessObjects.Tests
                     .AddField("Sales Price", ElementFieldTypes.ResourcePool, true)
                 .Element
                     .AddField("Sales Number", ElementFieldTypes.Multiplier);
-
+            
             var elementFieldIndex = organization.ResourcePoolField.AddIndex("Importance Index", RatingSortType.LowestToHighest);
+            elementFieldIndex.AddUserRating(user, 100);
 
             var organization1 = organization.AddItem("Organization 1");
             organization1
@@ -206,17 +208,15 @@ namespace BusinessObjects.Tests
                 .ElementItem
                     .AddCell(organization.MultiplierField).SetValue(1M, user);
 
-            resourcePool.AddUserResourcePool(user, 100)
-                .AddIndex(elementFieldIndex, 100);
-
             // Assert
-            Assert.IsTrue(resourcePool.IndexRatingAverage() == 100);
             Assert.IsTrue(resourcePool.ResourcePoolAddition() == 100);
             Assert.IsTrue(resourcePool.ResourcePoolValueIncludingAddition() == 200);
             Assert.IsTrue(resourcePool.TotalResourcePoolValue(user) == 100);
             Assert.IsTrue(resourcePool.TotalResourcePoolAddition(user) == 100);
             Assert.IsTrue(resourcePool.TotalResourcePoolValueIncludingAddition(user) == 200);
             Assert.IsTrue(resourcePool.TotalIncome(user) == 200);
+
+            Assert.IsTrue(organization.IndexRatingAverage() == 100);
 
             Assert.IsTrue(elementFieldIndex.IndexRatingCount() == 1);
             Assert.IsTrue(elementFieldIndex.IndexRatingAverage() == 100);
@@ -256,6 +256,7 @@ namespace BusinessObjects.Tests
             var user2 = new User("User 2");
 
             var resourcePool = new ResourcePool("Default");
+            resourcePool.AddUserResourcePool(user1, 100);
 
             var organization = resourcePool.AddElement("Organization");
 
@@ -266,6 +267,7 @@ namespace BusinessObjects.Tests
             var importanceField = resourcePool.MainElement.AddField("Importance Field", ElementFieldTypes.Decimal, false);
 
             var elementFieldIndex = importanceField.AddIndex("Importance Index", RatingSortType.HighestToLowest);
+            elementFieldIndex.AddUserRating(user1, 100);
 
             var organization1 = organization.AddItem("Organization 1");
             organization1
@@ -287,17 +289,15 @@ namespace BusinessObjects.Tests
                 .ElementItem
                     .AddCell(importanceField).SetValue(25M, user1);
 
-            resourcePool.AddUserResourcePool(user1, 100)
-                .AddIndex(elementFieldIndex, 100);
-
             // Assert
-            Assert.IsTrue(resourcePool.IndexRatingAverage() == 100);
             Assert.IsTrue(resourcePool.ResourcePoolAddition() == 400);
             Assert.IsTrue(resourcePool.ResourcePoolValueIncludingAddition() == 800);
             Assert.IsTrue(resourcePool.TotalResourcePoolValue(user1) == 400);
             Assert.IsTrue(resourcePool.TotalResourcePoolAddition(user1) == 400);
             Assert.IsTrue(resourcePool.TotalResourcePoolValueIncludingAddition(user1) == 800);
             Assert.IsTrue(resourcePool.TotalIncome(user1) == 800);
+
+            Assert.IsTrue(organization.IndexRatingAverage() == 100);
 
             Assert.IsTrue(elementFieldIndex.IndexRatingCount() == 1);
             Assert.IsTrue(elementFieldIndex.IndexRatingAverage() == 100);

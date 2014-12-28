@@ -24,6 +24,7 @@ namespace BusinessObjects
             Email = email;
             UserName = email;
             UserResourcePoolSet = new HashSet<UserResourcePool>();
+            UserElementFieldIndexSet = new HashSet<UserElementFieldIndex>();
             UserElementCellSet = new HashSet<UserElementCell>();
         }
 
@@ -60,6 +61,7 @@ namespace BusinessObjects
         public byte[] RowVersion { get; set; }
 
         public virtual ICollection<UserResourcePool> UserResourcePoolSet { get; set; }
+        public virtual ICollection<UserElementFieldIndex> UserElementFieldIndexSet { get; set; }
         public virtual ICollection<UserElementCell> UserElementCellSet { get; set; }
 
         // TODO Block from Web Api Identity template?

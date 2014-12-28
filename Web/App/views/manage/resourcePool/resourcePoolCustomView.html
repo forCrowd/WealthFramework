@@ -1,21 +1,21 @@
 ﻿<div data-ng-controller="resourcePoolCustomViewController as vm">
-    <h2>{{ vm.userResourcePool.ResourcePoolName }}</h2>
+    <h2>{{ vm.resourcePool.Name }}</h2>
 
     <p>
         <div class="btn-group">
-            <button type="submit" data-ng-click="vm.increaseMultiplier()" class="btn btn-default">Increase {{ vm.userResourcePool.MainElement.MultiplierFieldName }}</button>
-            <button type="submit" data-ng-click="vm.decreaseMultiplier()" class="btn btn-default">Decrease {{ vm.userResourcePool.MainElement.MultiplierFieldName }}</button>
-            <button type="submit" data-ng-click="vm.resetMultiplier()" class="btn btn-default">Reset {{ vm.userResourcePool.MainElement.MultiplierFieldName }}</button>
+            <button type="submit" data-ng-click="vm.increaseMultiplier()" class="btn btn-default">Increase {{ vm.resourcePool.MainElement.MultiplierFieldName }}</button>
+            <button type="submit" data-ng-click="vm.decreaseMultiplier()" class="btn btn-default">Decrease {{ vm.resourcePool.MainElement.MultiplierFieldName }}</button>
+            <button type="submit" data-ng-click="vm.resetMultiplier()" class="btn btn-default">Reset {{ vm.resourcePool.MainElement.MultiplierFieldName }}</button>
         </div>
     </p>
     <p>
-        CMRP Rate: {{ vm.userResourcePool.ResourcePoolRatePercentage | percentage:2 }} - Number of ratings: {{ vm.userResourcePool.UserResourcePoolRatingCount }}
+        CMRP Rate: {{ vm.resourcePool.ResourcePoolRatePercentage | percentage:2 }} - Number of ratings: {{ vm.resourcePool.UserResourcePoolRatingCount }}
     </p>
     <table class="table">
         <!-- Header -->
         <tr>
             <!-- Fields -->
-            <td data-ng-repeat="field in vm.userResourcePool.MainElement.BasicElementFieldSet">
+            <td data-ng-repeat="field in vm.resourcePool.MainElement.BasicElementFieldSet">
                 <table class="table">
                     <tr>
                         <th>
@@ -26,29 +26,29 @@
             </td>
 
             <!-- CMRP Field(s) + Multiplier(s) + Totals -->
-            <th data-ng-show="vm.userResourcePool.MainElement.HasResourcePoolField">
-                {{ vm.userResourcePool.MainElement.ResourcePoolFieldName }}
+            <th data-ng-show="vm.resourcePool.MainElement.HasResourcePoolField">
+                {{ vm.resourcePool.MainElement.ResourcePoolFieldName }}
             </th>
-            <th data-ng-show="vm.userResourcePool.MainElement.HasResourcePoolField">
+            <th data-ng-show="vm.resourcePool.MainElement.HasResourcePoolField">
                 CMRP Addition
             </th>
-            <th data-ng-show="vm.userResourcePool.MainElement.HasResourcePoolField">
-                {{ vm.userResourcePool.MainElement.ResourcePoolFieldName }} incl. CMRP Addition
+            <th data-ng-show="vm.resourcePool.MainElement.HasResourcePoolField">
+                {{ vm.resourcePool.MainElement.ResourcePoolFieldName }} incl. CMRP Addition
             </th>
-            <th data-ng-show="vm.userResourcePool.MainElement.HasMultiplierField">
-                {{ vm.userResourcePool.MainElement.MultiplierFieldName }}
+            <th data-ng-show="vm.resourcePool.MainElement.HasMultiplierField">
+                {{ vm.resourcePool.MainElement.MultiplierFieldName }}
             </th>
-            <th data-ng-show="vm.userResourcePool.MainElement.HasResourcePoolField && vm.userResourcePool.MainElement.HasMultiplierField">
-                Total {{ vm.userResourcePool.MainElement.ResourcePoolFieldName }}
+            <th data-ng-show="vm.resourcePool.MainElement.HasResourcePoolField && vm.resourcePool.MainElement.HasMultiplierField">
+                Total {{ vm.resourcePool.MainElement.ResourcePoolFieldName }}
             </th>
-            <th data-ng-show="vm.userResourcePool.MainElement.HasResourcePoolField && vm.userResourcePool.MainElement.HasMultiplierField">
+            <th data-ng-show="vm.resourcePool.MainElement.HasResourcePoolField && vm.resourcePool.MainElement.HasMultiplierField">
                 Total CMRP Addition
             </th>
-            <th data-ng-show="vm.userResourcePool.MainElement.HasResourcePoolField && vm.userResourcePool.MainElement.HasMultiplierField">
-                Total {{ vm.userResourcePool.MainElement.ResourcePoolFieldName }} incl. CMRP Addition
+            <th data-ng-show="vm.resourcePool.MainElement.HasResourcePoolField && vm.resourcePool.MainElement.HasMultiplierField">
+                Total {{ vm.resourcePool.MainElement.ResourcePoolFieldName }} incl. CMRP Addition
             </th>
             <!-- Indexes -->
-            <th data-ng-repeat="item in vm.userResourcePool.ElementFieldIndexSet">
+            <th data-ng-repeat="item in vm.resourcePool.MainElement.ElementFieldIndexSet">
                 {{ item.Name }}
                 <br />
                 <table class="table">
@@ -71,7 +71,7 @@
             </th>
         </tr>
         <!-- Rows -->
-        <tr data-ng-repeat="elementItem in vm.userResourcePool.MainElement.ElementItemSet">
+        <tr data-ng-repeat="elementItem in vm.resourcePool.MainElement.ElementItemSet">
             <!-- Fields -->
             <td data-ng-repeat="elementCell in elementItem.BasicElementCellSet">
                 <table class="table">
@@ -118,7 +118,7 @@
                 {{ elementItem.TotalResourcePoolValueIncludingAddition | number: 2 }}
             </td>
             <!-- Indexes -->
-            <td data-ng-repeat="elementFieldIndex in vm.userResourcePool.ElementFieldIndexSet">
+            <td data-ng-repeat="elementFieldIndex in vm.resourcePool.MainElement.ElementFieldIndexSet">
                 <div data-ng-repeat="elementCell in elementItem.ElementCellSet">
                     <div data-ng-show="elementCell.ElementFieldType !== 6">
                         <table class="table" data-ng-show="elementFieldIndex.ElementFieldId === elementCell.ElementFieldId">
@@ -167,7 +167,7 @@
         <!-- Footer -->
         <tr>
             <!-- Fields -->
-            <td data-ng-repeat="field in vm.userResourcePool.MainElement.BasicElementFieldSet">
+            <td data-ng-repeat="field in vm.resourcePool.MainElement.BasicElementFieldSet">
                 <table class="table">
                     <tr>
                         <td>
@@ -177,29 +177,29 @@
                 </table>
             </td>
             <!-- CMRP Field(s) + Multiplier(s) + Totals -->
-            <td data-ng-show="vm.userResourcePool.MainElement.HasResourcePoolField">
+            <td data-ng-show="vm.resourcePool.MainElement.HasResourcePoolField">
                 &nbsp;
             </td>
-            <td data-ng-show="vm.userResourcePool.MainElement.HasResourcePoolField">
+            <td data-ng-show="vm.resourcePool.MainElement.HasResourcePoolField">
                 &nbsp;
             </td>
-            <td data-ng-show="vm.userResourcePool.MainElement.HasResourcePoolField">
+            <td data-ng-show="vm.resourcePool.MainElement.HasResourcePoolField">
                 &nbsp;
             </td>
-            <td data-ng-show="vm.userResourcePool.MainElement.HasMultiplierField">
+            <td data-ng-show="vm.resourcePool.MainElement.HasMultiplierField">
                 &nbsp;
             </td>
-            <td data-ng-show="vm.userResourcePool.MainElement.HasResourcePoolField && vm.userResourcePool.MainElement.HasMultiplierField">
+            <td data-ng-show="vm.resourcePool.MainElement.HasResourcePoolField && vm.resourcePool.MainElement.HasMultiplierField">
                 &nbsp;
             </td>
-            <td data-ng-show="vm.userResourcePool.MainElement.HasResourcePoolField && vm.userResourcePool.MainElement.HasMultiplierField">
+            <td data-ng-show="vm.resourcePool.MainElement.HasResourcePoolField && vm.resourcePool.MainElement.HasMultiplierField">
                 &nbsp;
             </td>
-            <td data-ng-show="vm.userResourcePool.MainElement.HasResourcePoolField && vm.userResourcePool.MainElement.HasMultiplierField">
+            <td data-ng-show="vm.resourcePool.MainElement.HasResourcePoolField && vm.resourcePool.MainElement.HasMultiplierField">
                 &nbsp;
             </td>
             <!-- Indexes -->
-            <td data-ng-repeat="item in vm.userResourcePool.ElementFieldIndexSet">
+            <td data-ng-repeat="item in vm.resourcePool.MainElement.ElementFieldIndexSet">
                 <table class="table">
                     <tr>
                         <td colspan="3">
@@ -210,7 +210,7 @@
             </td>
             <!-- Totals -->
             <td>
-                {{ vm.userResourcePool.TotalIncome | number:2 }}
+                {{ vm.resourcePool.TotalIncome | number:2 }}
             </td>
         </tr>
     </table>

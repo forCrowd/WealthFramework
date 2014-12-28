@@ -9,9 +9,14 @@
     {
         UserStore userStore;
 
-        public UserStore UserStore
+        UserStore UserStore
         {
             get { return userStore ?? (userStore = new UserStore(Context)); }
+        }
+
+        public async Task<User> FindUserById(int userId)
+        {
+            return await UserStore.FindByIdAsync(userId);
         }
 
         public async Task<UserResourcePool> FindUserResourcePoolAsync(int userId, int resourcePoolId)

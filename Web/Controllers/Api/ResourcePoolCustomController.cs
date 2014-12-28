@@ -16,17 +16,33 @@ namespace Web.Controllers.Api
         {
         }
 
-        // GET api/ResourcePoolCustom/GetUserResourcePool/1
-        [Route("GetUserResourcePool/{resourcePoolId:int:min(1)}")]
-        public async Task<UserResourcePool> GetUserResourcePool(int resourcePoolId)
-        {
-            var unitOfWork = new ResourcePoolUnitOfWork();
-            var userResourcePool = await unitOfWork.FindUserResourcePoolAsync(this.GetCurrentUserId().Value, resourcePoolId);
+        //// GET api/ResourcePoolCustom/GetUserResourcePool/1
+        //[Route("GetUserResourcePool/{resourcePoolId:int:min(1)}")]
+        //public async Task<UserResourcePool> GetUserResourcePool(int resourcePoolId)
+        //{
+        //    var unitOfWork = new ResourcePoolUnitOfWork();
+        //    var userResourcePool = await unitOfWork.FindUserResourcePoolAsync(this.GetCurrentUserId().Value, resourcePoolId);
 
-            if (userResourcePool == null)
+        //    if (userResourcePool == null)
+        //        throw new HttpResponseException(HttpStatusCode.NotFound);
+
+        //    return new UserResourcePool(userResourcePool);
+        //}
+
+        // GET api/ResourcePoolCustom/GetResourcePool/1
+        [Route("GetResourcePool/{resourcePoolId:int:min(1)}")]
+        public async Task<ResourcePool> GetResourcePool(int resourcePoolId)
+        {
+            var manager = new ResourcePoolUnitOfWork();
+            var resourcePool = await manager.FindAsync(resourcePoolId); //.FindUserResourcePoolAsync(this.GetCurrentUserId().Value, resourcePoolId);
+
+            if (resourcePool == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
-            return new UserResourcePool(userResourcePool);
+            var currentUserId = this.GetCurrentUserId().Value;
+            var currentUser = await manager.FindUserById(currentUserId);
+
+            return new ResourcePool(resourcePool, currentUser);
         }
 
         // POST api/ResourcePoolCustom/IncreaseMultiplier/1

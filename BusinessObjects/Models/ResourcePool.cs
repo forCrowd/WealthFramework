@@ -44,10 +44,15 @@ namespace BusinessObjects
         public virtual ICollection<Element> ElementSet { get; set; }
         public virtual ICollection<UserResourcePool> UserResourcePoolSet { get; set; }
 
-        public IEnumerable<ElementFieldIndex> ElementFieldIndexSet
+        public Element MainElement
         {
-            get { return ElementSet.SelectMany(item => item.ElementFieldIndexSet); }
+            get { return ElementSet.SingleOrDefault(element => element.IsMainElement); }
         }
+
+        //public IEnumerable<ElementFieldIndex> ElementFieldIndexSet
+        //{
+        //    get { return ElementSet.SelectMany(item => item.ElementFieldIndexSet); }
+        //}
 
         public decimal ResourcePoolRate()
         {
@@ -59,16 +64,6 @@ namespace BusinessObjects
         public decimal ResourcePoolRatePercentage()
         {
             return ResourcePoolRate() / 100;
-        }
-
-        public decimal IndexRatingAverage()
-        {
-            return ElementFieldIndexSet.Sum(item => item.IndexRatingAverage());
-        }
-
-        public Element MainElement
-        {
-            get { return ElementSet.SingleOrDefault(element => element.IsMainElement); }
         }
 
         public decimal ResourcePoolAddition()

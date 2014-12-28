@@ -18,6 +18,7 @@ namespace BusinessObjects.ViewModels
             MultiplierFieldName = element.MultiplierFieldName;
             ElementFieldSet = element.ElementFieldSet.Select(item => new ElementField(item, user));
             BasicElementFieldSet = element.BasicElementFieldSet.Select(item => new ElementField(item, user));
+            ElementFieldIndexSet = element.ElementFieldIndexSet.Select(item => new ElementFieldIndex(item, user));
             ElementItemSet = element.ElementItemSet
                 //.Take(2) // TODO For testing
                 .Select(item => new ElementItem(item, user));
@@ -34,6 +35,7 @@ namespace BusinessObjects.ViewModels
         // TODO Duplicate?
         public IEnumerable<ElementField> ElementFieldSet { get; set; }
         public IEnumerable<ElementField> BasicElementFieldSet { get; set; }
+        public IEnumerable<ElementFieldIndex> ElementFieldIndexSet { get; set; }
 
         public IEnumerable<ElementItem> ElementItemSet { get; set; }
     }

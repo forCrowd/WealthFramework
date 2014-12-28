@@ -136,6 +136,11 @@ namespace BusinessObjects
 
         #region - Methods -
 
+        public decimal IndexRatingAverage()
+        {
+            return ElementFieldIndexSet.Sum(item => item.IndexRatingAverage());
+        }
+
         public ElementField AddField(string name, ElementFieldTypes fieldType)
         {
             var field = new ElementField(this, name, fieldType);

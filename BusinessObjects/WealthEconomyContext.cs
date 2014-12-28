@@ -58,27 +58,19 @@
                 .WithMany(item => item.ElementCellSet)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<UserElementCell>()
-                .HasRequired<User>(item => item.User)
-                .WithMany(item => item.UserElementCellSet)
-                .WillCascadeOnDelete(false);
-
-            //modelBuilder.Entity<UserRole>()
-            //    .HasOptional<
-            //    .HasRequired<Role>(item => item.Role)
-            //    //.WithRequiredDependent()
-            //    .WithRequiredPrincipal()
-            //    //.WithMany(item => item.Users)
-            //    .WillCascadeOnDelete(false);
-
             modelBuilder.Entity<UserResourcePool>()
                 .HasRequired<User>(item => item.User)
                 .WithMany(item => item.UserResourcePoolSet)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<UserElementFieldIndex>()
-                .HasRequired<UserResourcePool>(item => item.UserResourcePool)
+                .HasRequired<User>(item => item.User)
                 .WithMany(item => item.UserElementFieldIndexSet)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<UserElementCell>()
+                .HasRequired<User>(item => item.User)
+                .WithMany(item => item.UserElementCellSet)
                 .WillCascadeOnDelete(false);
         }
 

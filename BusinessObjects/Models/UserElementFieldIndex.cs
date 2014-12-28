@@ -17,12 +17,12 @@ namespace BusinessObjects
         public UserElementFieldIndex()
         { }
 
-        public UserElementFieldIndex(UserResourcePool userResourcePool, ElementFieldIndex elementFieldIndex, decimal rating)
+        public UserElementFieldIndex(User user, ElementFieldIndex elementFieldIndex, decimal rating)
         {
-            Validations.ArgumentNullOrDefault(userResourcePool, "userResourcePool");
+            Validations.ArgumentNullOrDefault(user, "user");
             Validations.ArgumentNullOrDefault(elementFieldIndex, "elementFieldIndex");
 
-            UserResourcePool = userResourcePool;
+            User = user;
             ElementFieldIndex = elementFieldIndex;
             Rating = rating;
         }
@@ -31,20 +31,20 @@ namespace BusinessObjects
         [DisplayOnEditView(false)]
         public int Id { get; set; }
 
-        [Index("IX_UserResourcePoolIdElementFieldIndexId", 1, IsUnique = true)]
-        public int UserResourcePoolId { get; set; }
+        [Index("IX_UserIdElementFieldIndexId", 1, IsUnique = true)]
+        public int UserId { get; set; }
 
-        [Index("IX_UserResourcePoolIdElementFieldIndexId", 2, IsUnique = true)]
+        [Index("IX_UserIdElementFieldIndexId", 2, IsUnique = true)]
         public int ElementFieldIndexId { get; set; }
 
         public decimal Rating { get; set; }
 
-        public virtual UserResourcePool UserResourcePool { get; set; }
+        public virtual User User { get; set; }
         public virtual ElementFieldIndex ElementFieldIndex { get; set; }
 
         public string Name
         {
-            get { return string.Format("{0} - {1}", UserResourcePool.Name, ElementFieldIndex.Name); }
+            get { return string.Format("{0} - {1}", User.Email, ElementFieldIndex.Name); }
         }
     }
 }
