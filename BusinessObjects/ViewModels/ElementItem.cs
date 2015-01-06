@@ -24,8 +24,9 @@ namespace BusinessObjects.ViewModels
             TotalResourcePoolAddition = elementItem.TotalResourcePoolAddition(user);
             TotalResourcePoolValueIncludingAddition = elementItem.TotalResourcePoolValueIncludingAddition(user);
             TotalIncome = elementItem.TotalIncome(user);
-            ElementCellSet = elementItem.ElementCellSet.Select(item => new ElementCell(item, user));
-            BasicElementCellSet = elementItem.BasicElementCellSet.Select(item => new ElementCell(item, user));
+            ElementCellSet = elementItem.ElementCellSet
+                .OrderBy(item => item.ElementField.SortOrder)
+                .Select(item => new ElementCell(item, user));
         }
 
         public int Id { get; set; }
@@ -46,6 +47,5 @@ namespace BusinessObjects.ViewModels
 
         // TODO Duplicate?
         public IEnumerable<ElementCell> ElementCellSet { get; set; }
-        public IEnumerable<ElementCell> BasicElementCellSet { get; set; }
     }
 }

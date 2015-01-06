@@ -17,27 +17,46 @@ namespace BusinessObjects
         public ElementField()
         { }
 
-        public ElementField(Element element, string name, ElementFieldTypes fieldType)
-        {
-            bool? fixedValue = null;
+        //public ElementField(Element element, string name, ElementFieldTypes fieldType, byte sortOrder)
+        //{
+        //    bool? fixedValue = null;
 
+        //    if (fieldType == ElementFieldTypes.Multiplier)
+        //        fixedValue = false;
+
+        //    Init(element, name, fieldType, fixedValue, sortOrder);
+        //}
+
+        //public ElementField(Element element, string name, ElementFieldTypes fieldType, bool fixedValue, byte sortOrder)
+        //{
+        //    Init(element, name, fieldType, fixedValue, sortOrder);
+        //}
+
+        //public ElementField(Element element, string name, ElementFieldTypes fieldType, byte sortOrder)
+        //{
+        //    bool? fixedValue = null;
+
+        //    if (fieldType == ElementFieldTypes.Multiplier)
+        //        fixedValue = false;
+
+        //    Init(element, name, fieldType, fixedValue, sortOrder);
+        //}
+
+        public ElementField(Element element, string name, ElementFieldTypes fieldType, byte sortOrder, bool? fixedValue = null)
+        {
+            //Init(element, name, fieldType, fixedValue, sortOrder);
+        //}
+
+        //void Init(Element element, string name, ElementFieldTypes fieldType, bool? fixedValue, byte sortOrder)
+        //{
+            Validations.ArgumentNullOrDefault(element, "element");
+            Validations.ArgumentNullOrDefault(name, "name");
+            Validations.ArgumentNullOrDefault(sortOrder, "sortOrder");
+
+            // fixedValue fix + validations
             if (fieldType == ElementFieldTypes.Multiplier)
                 fixedValue = false;
 
-            Init(element, name, fieldType, fixedValue);
-        }
-
-        public ElementField(Element element, string name, ElementFieldTypes fieldType, bool fixedValue)
-        {
-            Init(element, name, fieldType, fixedValue);
-        }
-
-        void Init(Element element, string name, ElementFieldTypes fieldType, bool? fixedValue)
-        {
-            Validations.ArgumentNullOrDefault(element, "element");
-            Validations.ArgumentNullOrDefault(name, "name");
-
-            // fixedValue validations
             if ((fieldType == ElementFieldTypes.String
                 || fieldType == ElementFieldTypes.Element)
                 && fixedValue.HasValue)
@@ -56,6 +75,7 @@ namespace BusinessObjects
             Name = name;
             ElementFieldType = (byte)fieldType;
             FixedValue = fixedValue;
+            SortOrder = sortOrder;
             ElementCellSet = new HashSet<ElementCell>();
             ElementFieldIndexSet = new HashSet<ElementFieldIndex>();
         }
@@ -80,6 +100,9 @@ namespace BusinessObjects
         /// </summary>
         [Display(Name = "Fixed Value")]
         public bool? FixedValue { get; set; }
+
+        [Display(Name = "Sort Order")]
+        public byte SortOrder { get; set; }
 
         //[Required]
         //[Display(Name = "Is CMRP Field")]

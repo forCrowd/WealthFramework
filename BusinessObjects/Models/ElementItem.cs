@@ -69,15 +69,6 @@ namespace BusinessObjects
 
         /* */
 
-        public IEnumerable<ElementCell> BasicElementCellSet
-        {
-            get
-            {
-                return ElementCellSet.Where(item => item.ElementField.ElementFieldType != (byte)ElementFieldTypes.ResourcePool
-                    && item.ElementField.ElementFieldType != (byte)ElementFieldTypes.Multiplier);
-            }
-        }
-
         public ElementCell NameCell
         {
             get { return ElementCellSet.SingleOrDefault(item => item.ElementField.Name == "Name"); }

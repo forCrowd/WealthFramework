@@ -15,8 +15,8 @@
         <!-- Header -->
         <tr>
             <!-- Fields -->
-            <td data-ng-repeat="field in vm.resourcePool.MainElement.BasicElementFieldSet">
-                <table class="table">
+            <td data-ng-repeat="field in vm.resourcePool.MainElement.ElementFieldSet">
+                <table class="table" data-ng-if="field.ElementFieldType !== 11 && field.ElementFieldType !== 12">
                     <tr>
                         <th>
                             {{ field.Name }}
@@ -73,8 +73,8 @@
         <!-- Rows -->
         <tr data-ng-repeat="elementItem in vm.resourcePool.MainElement.ElementItemSet">
             <!-- Fields -->
-            <td data-ng-repeat="elementCell in elementItem.BasicElementCellSet">
-                <table class="table">
+            <td data-ng-repeat="elementCell in elementItem.ElementCellSet">
+                <table class="table" data-ng-if="elementCell.ElementFieldType !== 11 && elementCell.ElementFieldType !== 12">
                     <tr>
                         <td data-ng-show="elementCell.ElementFieldType === 1">
                             {{ elementCell.StringValue }}
@@ -167,8 +167,8 @@
         <!-- Footer -->
         <tr>
             <!-- Fields -->
-            <td data-ng-repeat="field in vm.resourcePool.MainElement.BasicElementFieldSet">
-                <table class="table">
+            <td data-ng-repeat="field in vm.resourcePool.MainElement.ElementFieldSet">
+                <table class="table" data-ng-if="field.ElementFieldType !== 11 && field.ElementFieldType !== 12">
                     <tr>
                         <td>
                             &nbsp;

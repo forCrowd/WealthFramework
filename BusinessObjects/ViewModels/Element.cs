@@ -16,8 +16,9 @@ namespace BusinessObjects.ViewModels
             ResourcePoolFieldName = element.ResourcePoolFieldName;
             HasMultiplierField = element.HasMultiplierField;
             MultiplierFieldName = element.MultiplierFieldName;
-            ElementFieldSet = element.ElementFieldSet.Select(item => new ElementField(item, user));
-            BasicElementFieldSet = element.BasicElementFieldSet.Select(item => new ElementField(item, user));
+            ElementFieldSet = element.ElementFieldSet
+                .OrderBy(item => item.SortOrder)
+                .Select(item => new ElementField(item, user));
             ElementFieldIndexSet = element.ElementFieldIndexSet.Select(item => new ElementFieldIndex(item, user));
             ElementItemSet = element.ElementItemSet
                 //.Take(2) // TODO For testing
@@ -34,7 +35,6 @@ namespace BusinessObjects.ViewModels
 
         // TODO Duplicate?
         public IEnumerable<ElementField> ElementFieldSet { get; set; }
-        public IEnumerable<ElementField> BasicElementFieldSet { get; set; }
         public IEnumerable<ElementFieldIndex> ElementFieldIndexSet { get; set; }
 
         public IEnumerable<ElementItem> ElementItemSet { get; set; }

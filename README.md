@@ -12,6 +12,7 @@ An experimental resource management system that aims to provide a sustainable ec
 * ResourcePoolIndex was changed to ElementFieldIndex
 * Multiplier cell value is now on user level (UserElementCell) instead of a fixed value (ElementCell)
 * ElementFieldIndex is now on User level, instead of UserResourcePool
+* SortOrder field was added to ElementField
 
 **0.14.8**
 

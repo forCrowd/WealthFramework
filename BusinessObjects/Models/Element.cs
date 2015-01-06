@@ -58,15 +58,6 @@ namespace BusinessObjects
         //    get { return ElementItemSet.Sum(item => item.RatingAverage); }
         //}
 
-        public IEnumerable<ElementField> BasicElementFieldSet
-        {
-            get
-            {
-                return ElementFieldSet.Where(item => item.ElementFieldType != (byte)ElementFieldTypes.ResourcePool
-                    && item.ElementFieldType != (byte)ElementFieldTypes.Multiplier);
-            }
-        }
-
         public IEnumerable<ElementFieldIndex> ElementFieldIndexSet
         {
             get
@@ -79,7 +70,7 @@ namespace BusinessObjects
 
         public ElementField NameField
         {
-            get { return BasicElementFieldSet.SingleOrDefault(item => item.Name == "Name"); }
+            get { return ElementFieldSet.SingleOrDefault(item => item.Name == "Name"); }
         }
 
         public bool HasNameField
@@ -141,23 +132,27 @@ namespace BusinessObjects
             return ElementFieldIndexSet.Sum(item => item.IndexRatingAverage());
         }
 
-        public ElementField AddField(string name, ElementFieldTypes fieldType)
-        {
-            var field = new ElementField(this, name, fieldType);
-            return AddField(field);
-        }
+        //public ElementField AddField(string name, ElementFieldTypes fieldType)
+        //{
+        //    var sortOrder = (byte)(ElementFieldSet.Count + 1);
+        //    var field = new ElementField(this, name, fieldType, sortOrder);
+        //    return AddField(field);
+        //}
 
-        public ElementField AddField(string name, ElementFieldTypes fieldType, bool fixedValue)
+        public ElementField AddField(string name, ElementFieldTypes fieldType, bool? fixedValue = null)
         {
-            var field = new ElementField(this, name, fieldType, fixedValue);
-            return AddField(field);
-        }
+            var sortOrder = Convert.ToByte(ElementFieldSet.Count + 1); 
+            var field = new ElementField(this, name, fieldType, sortOrder, fixedValue);
+            
+            //return AddField(field);
+        //}
 
-        ElementField AddField(ElementField field)
-        {
+        //ElementField AddField(ElementField field)
+        //{
             // TODO Validation - Same name?
 
             ElementFieldSet.Add(field);
+            
             return field;
         }
 

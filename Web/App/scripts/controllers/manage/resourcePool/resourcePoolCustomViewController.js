@@ -26,7 +26,6 @@
         };
 
         function getUserResourcePool() {
-
             resourcePoolService.getUserResourcePool(resourcePoolId)
                 .success(function (resourcePool) {
                     vm.resourcePool = resourcePool;

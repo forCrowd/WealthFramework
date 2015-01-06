@@ -28,6 +28,7 @@ check asp.net identity as a sample
 * dbcontext -> aanmeldencontext -> resourcepoolmanager?
 * generic dbset to resourcepoolrepository?
 * remove repositories?
+* ElementFields - SortOrder field errors + validations?
 
 * separate web into webclient / webservice
 * cors;
@@ -242,11 +243,8 @@ multiplier - n/a
 ---
 resourcepoolview doesnt look good with new importance field
 
-			. continue with getresourcepool api method improvement
-			remove basicelementfieldset
+. continue with getresourcepool api method improvement
 			
-                <table class="table" data-ng-if="field.ElementFieldType !== 11 && field.ElementFieldType !== 12">
-
 ---
 chapter 7, 8, 9, 10 ?!
 
