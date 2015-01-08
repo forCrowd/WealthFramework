@@ -247,6 +247,14 @@ chapter 7, 8, 9, 10 ?!
 addfield method should create new elementcells for this new field for the existing items!
 
 ---
+cell is always showing the same info, not per index???
+
+<table class="table test" data-ng-repeat="index in elementCell.ElementField.ElementFieldIndexSet">
+	<tr>
+		<td>
+			{{ elementCell.ValueMultiplied | number:2 }}
+
+---
 anti forgery: AntiForgery.GetTokens
 
 ---

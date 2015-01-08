@@ -16,6 +16,19 @@ textarea {
     max-width: 280px;
 }
 
+.table.cmrp {
+    margin-bottom: 0px;
+}
+
+    .table.cmrp > thead > tr > th,
+    .table.cmrp > tbody > tr > th,
+    .table.cmrp > tfoot > tr > th,
+    .table.cmrp > thead > tr > td,
+    .table.cmrp > tbody > tr > td,
+    .table.cmrp > tfoot > tr > td {
+        padding: 0px;
+    }
+
 /* styles for validation helpers */
 .field-validation-error {
     color: #b94a48;
