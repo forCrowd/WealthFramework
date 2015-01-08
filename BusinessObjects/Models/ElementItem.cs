@@ -85,7 +85,7 @@ namespace BusinessObjects
             get { return ResourcePoolCell != null; }
         }
 
-        public decimal ResourcePoolCellValue()
+        public decimal ResourcePoolValue()
         {
             return HasResourcePoolCell
                 ? ResourcePoolCell.Value()
@@ -94,12 +94,12 @@ namespace BusinessObjects
 
         public decimal ResourcePoolAddition()
         {
-            return ResourcePoolCellValue() * Element.ResourcePool.ResourcePoolRatePercentage();
+            return ResourcePoolValue() * Element.ResourcePool.ResourcePoolRatePercentage();
         }
 
         public decimal ResourcePoolValueIncludingAddition()
         {
-            return ResourcePoolCellValue() + ResourcePoolAddition();
+            return ResourcePoolValue() + ResourcePoolAddition();
         }
 
         public ElementCell MultiplierCell
@@ -113,7 +113,7 @@ namespace BusinessObjects
             //get { return MultiplierCell != null && MultiplierCell.DecimalValue.HasValue; }
         }
 
-        public decimal MultiplierCellValue(User multiplierUser)
+        public decimal MultiplierValue(User multiplierUser)
         {
             if (!HasMultiplierCell)
                 return 0;
@@ -155,17 +155,17 @@ namespace BusinessObjects
 
         public decimal TotalResourcePoolValue(User multiplierUser)
         {
-            return ResourcePoolCellValue() * MultiplierCellValue(multiplierUser);
+            return ResourcePoolValue() * MultiplierValue(multiplierUser);
         }
 
         public decimal TotalResourcePoolAddition(User multiplierUser)
         {
-            return ResourcePoolAddition() * MultiplierCellValue(multiplierUser);
+            return ResourcePoolAddition() * MultiplierValue(multiplierUser);
         }
 
         public decimal TotalResourcePoolValueIncludingAddition(User multiplierUser)
         {
-            return ResourcePoolValueIncludingAddition() * MultiplierCellValue(multiplierUser);
+            return ResourcePoolValueIncludingAddition() * MultiplierValue(multiplierUser);
         }
 
         public decimal ElementFieldIndexIncome(User multiplierUser)

@@ -69,6 +69,21 @@ namespace BusinessObjects
             return index;
         }
 
+        public decimal ValueMultiplied(User multiplierUser)
+        {
+            return ElementField.ElementCellSet.Sum(item => item.ValueMultiplied(multiplierUser));
+        }
+
+        public decimal ValuePercentage(User multiplierUser)
+        {
+            return ElementField.ElementCellSet.Sum(item => item.ValuePercentage(multiplierUser));
+        }
+
+        public decimal ElementFieldIndexIncome(User multiplierUser)
+        {
+            return ElementField.ElementCellSet.Sum(item => item.ElementFieldIndexIncome(multiplierUser));
+        }
+
         /// <summary>
         /// How many users rated this index?
         /// </summary>

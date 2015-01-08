@@ -1,6 +1,5 @@
 ﻿<div data-ng-controller="resourcePoolCustomViewController as vm">
     <h2>{{ vm.resourcePool.Name }}</h2>
-
     <p>
         <div class="btn-group">
             <button type="submit" data-ng-click="vm.increaseMultiplier()" class="btn btn-default">Increase {{ vm.resourcePool.MainElement.MultiplierFieldName }}</button>
@@ -15,52 +14,85 @@
         <!-- Header -->
         <tr>
             <!-- Fields -->
-            <td data-ng-repeat="field in vm.resourcePool.MainElement.ElementFieldSet">
-                <table class="table" data-ng-if="field.ElementFieldType !== 11 && field.ElementFieldType !== 12">
+            <th data-ng-repeat="field in vm.resourcePool.MainElement.ElementFieldSet">
+                <!-- String -->
+                <div data-ng-if="field.ElementFieldType === 1">
+                    {{ field.Name }}
+                </div>
+                <!-- Boolean, Integer, Decimal, DateTime -->
+                <div data-ng-if="field.ElementFieldType === 2
+                      || field.ElementFieldType === 3
+                      || field.ElementFieldType === 4
+                      || field.ElementFieldType === 5">
+                    {{ field.Name }}
+                    <!-- Indexes -->
+                    <table class="table" data-ng-repeat="index in field.ElementFieldIndexSet">
+                        <tr>
+                            <th colspan="3">{{ index.Name }}</th>
+                        </tr>
+                        <tr>
+                            <th>
+                                Rating Avg. Multiplied
+                            </th>
+                            <th>
+                                Rating Percentage
+                            </th>
+                            <th>
+                                Income
+                            </th>
+                        </tr>
+                    </table>
+                </div>
+                <!-- Element -->
+                <div data-ng-if="field.ElementFieldType === 6">
+                    {{ field.Name }}
+                </div>
+                <!-- ResourcePool -->
+                <table class="table" data-ng-if="field.ElementFieldType === 11">
+                    <tr>
+                        <th>
+                            {{ field.Name }}
+                            <!-- Indexes -->
+                            <table class="table" data-ng-repeat="index in field.ElementFieldIndexSet">
+                                <tr>
+                                    <th colspan="3">{{ index.Name }}</th>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        Rating Avg. Multiplied
+                                    </th>
+                                    <th>
+                                        Rating Percentage
+                                    </th>
+                                    <th>
+                                        Income
+                                    </th>
+                                </tr>
+                            </table>
+                        </th>
+                        <th>
+                            CMRP Addition
+                        </th>
+                        <th>
+                            {{ field.Name }} incl. CMRP Addition
+                        </th>
+                    </tr>
+                </table>
+                <!-- Multiplier -->
+                <table class="table" data-ng-if="field.ElementFieldType === 12">
                     <tr>
                         <th>
                             {{ field.Name }}
                         </th>
-                    </tr>
-                </table>
-            </td>
-
-            <!-- CMRP Field(s) + Multiplier(s) + Totals -->
-            <th data-ng-show="vm.resourcePool.MainElement.HasResourcePoolField">
-                {{ vm.resourcePool.MainElement.ResourcePoolFieldName }}
-            </th>
-            <th data-ng-show="vm.resourcePool.MainElement.HasResourcePoolField">
-                CMRP Addition
-            </th>
-            <th data-ng-show="vm.resourcePool.MainElement.HasResourcePoolField">
-                {{ vm.resourcePool.MainElement.ResourcePoolFieldName }} incl. CMRP Addition
-            </th>
-            <th data-ng-show="vm.resourcePool.MainElement.HasMultiplierField">
-                {{ vm.resourcePool.MainElement.MultiplierFieldName }}
-            </th>
-            <th data-ng-show="vm.resourcePool.MainElement.HasResourcePoolField && vm.resourcePool.MainElement.HasMultiplierField">
-                Total {{ vm.resourcePool.MainElement.ResourcePoolFieldName }}
-            </th>
-            <th data-ng-show="vm.resourcePool.MainElement.HasResourcePoolField && vm.resourcePool.MainElement.HasMultiplierField">
-                Total CMRP Addition
-            </th>
-            <th data-ng-show="vm.resourcePool.MainElement.HasResourcePoolField && vm.resourcePool.MainElement.HasMultiplierField">
-                Total {{ vm.resourcePool.MainElement.ResourcePoolFieldName }} incl. CMRP Addition
-            </th>
-            <!-- Indexes -->
-            <th data-ng-repeat="item in vm.resourcePool.MainElement.ElementFieldIndexSet">
-                {{ item.Name }}
-                <br />
-                <table class="table">
-                    <tr>
-                        <th>
-                            Rating Avg. Multiplied
+                        <!-- Todo Can we create a container for these 3 columns and use single if for "HasResourcePoolField" property -->
+                        <th data-ng-show="vm.resourcePool.MainElement.HasResourcePoolField">
+                            Total {{ vm.resourcePool.MainElement.ResourcePoolFieldName }}
                         </th>
-                        <th>
-                            Rating Percentage
+                        <th data-ng-show="vm.resourcePool.MainElement.HasResourcePoolField">
+                            Total CMRP Addition
                         </th>
-                        <th>
-                            Income
+                        <th data-ng-show="vm.resourcePool.MainElement.HasResourcePoolField">
+                            Total {{ vm.resourcePool.MainElement.ResourcePoolFieldName }} incl. CMRP Addition
                         </th>
                     </tr>
                 </table>
@@ -72,92 +104,95 @@
         </tr>
         <!-- Rows -->
         <tr data-ng-repeat="elementItem in vm.resourcePool.MainElement.ElementItemSet">
-            <!-- Fields -->
+            <!-- Cells -->
             <td data-ng-repeat="elementCell in elementItem.ElementCellSet">
-                <table class="table" data-ng-if="elementCell.ElementFieldType !== 11 && elementCell.ElementFieldType !== 12">
+                <!-- String -->
+                <div data-ng-if="elementCell.ElementFieldType === 1">
+                    {{ elementCell.StringValue }}
+                </div>
+                <!-- Boolean, Integer, Decimal, DateTime -->
+                <div data-ng-if="elementCell.ElementFieldType === 2
+                      || elementCell.ElementFieldType === 3
+                      || elementCell.ElementFieldType === 4
+                      || elementCell.ElementFieldType === 5">
+                    <span data-ng-if="elementCell.ElementFieldType === 2">
+                        {{ elementCell.BooleanValue }}
+                    </span>
+                    <span data-ng-if="elementCell.ElementFieldType === 3">
+                        {{ elementCell.IntegerValue }}
+                    </span>
+                    <span data-ng-if="elementCell.ElementFieldType === 4">
+                        {{ elementCell.DecimalValue }}
+                    </span>
+                    <span data-ng-if="elementCell.ElementFieldType === 5">
+                        {{ elementCell.DateTimeValue }}
+                    </span>
+                    <!-- Indexes -->
+                    <table class="table" data-ng-repeat="index in elementCell.ElementField.ElementFieldIndexSet">
+                        <tr>
+                            <td>
+                                {{ elementCell.ValueMultiplied | number:2 }}
+                            </td>
+                            <td>
+                                {{ elementCell.ValuePercentage | percentage:2 }}
+                            </td>
+                            <td>
+                                {{ elementCell.ElementFieldIndexIncome | number:2 }}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- Element -->
+                <div data-ng-if="elementCell.ElementFieldType === 6">
+                    <!-- Element value ? -->
+                </div>
+                <!-- ResourcePool -->
+                <table class="table" data-ng-if="elementCell.ElementFieldType === 11">
                     <tr>
-                        <td data-ng-show="elementCell.ElementFieldType === 1">
-                            {{ elementCell.StringValue }}
+                        <td>
+                            {{ elementItem.ResourcePoolValue | number: 2 }}
+                            <!-- Indexes -->
+                            <table class="table" data-ng-repeat="index in elementCell.ElementField.ElementFieldIndexSet">
+                                <tr>
+                                    <td>
+                                        {{ elementCell.ValueMultiplied | number:2 }}
+                                    </td>
+                                    <td>
+                                        {{ elementCell.ValuePercentage | percentage:2 }}
+                                    </td>
+                                    <td>
+                                        {{ elementCell.ElementFieldIndexIncome | number:2 }}
+                                    </td>
+                                </tr>
+                            </table>
                         </td>
-                        <td data-ng-show="elementCell.ElementFieldType === 2">
-                            {{ elementCell.BooleanValue }}
+                        <td>
+                            {{ elementItem.ResourcePoolAddition | number: 2 }}
                         </td>
-                        <td data-ng-show="elementCell.ElementFieldType === 3">
-                            {{ elementCell.IntegerValue }}
-                        </td>
-                        <td data-ng-show="elementCell.ElementFieldType === 4">
-                            {{ elementCell.DecimalValue }}
-                        </td>
-                        <td data-ng-show="elementCell.ElementFieldType === 5">
-                            {{ elementCell.DateTimeValue }}
+                        <td>
+                            {{ elementItem.ResourcePoolValueIncludingAddition | number: 2 }}
                         </td>
                     </tr>
                 </table>
-            </td>
+                <!-- Multiplier -->
+                <table class="table" data-ng-if="elementCell.ElementFieldType === 12">
+                    <tr>
+                        <td>
+                            {{ elementItem.MultiplierValue }}
+                        </td>
+                        <!-- Todo Can we create a container for these 3 columns and use single if for "HasResourcePoolCell" property-->
+                        <td data-ng-show="elementItem.HasResourcePoolCell">
+                            {{ elementItem.TotalResourcePoolValue | number: 2 }}
+                        </td>
+                        <td data-ng-show="elementItem.HasResourcePoolCell">
+                            {{ elementItem.TotalResourcePoolAddition | number: 2 }}
+                        </td>
+                        <td data-ng-show="elementItem.HasResourcePoolCell">
+                            {{ elementItem.TotalResourcePoolValueIncludingAddition | number: 2 }}
+                        </td>
 
-            <!-- CMRP Field(s) + Multiplier(s) + Totals -->
-            <td data-ng-show="elementItem.HasResourcePoolCell">
-                {{ elementItem.ResourcePoolCellValue | number: 2 }}
-            </td>
-            <td data-ng-show="elementItem.HasResourcePoolCell">
-                {{ elementItem.ResourcePoolAddition | number: 2 }}
-            </td>
-            <td data-ng-show="elementItem.HasResourcePoolCell">
-                {{ elementItem.ResourcePoolValueIncludingAddition | number: 2 }}
-            </td>
-            <td data-ng-show="elementItem.HasMultiplierCell">
-                {{ elementItem.MultiplierCellValue | number: 2 }}
-            </td>
-            <td data-ng-show="elementItem.HasResourcePoolCell && elementItem.HasResourcePoolCell">
-                {{ elementItem.TotalResourcePoolValue | number: 2 }}
-            </td>
-            <td data-ng-show="elementItem.HasResourcePoolCell && elementItem.HasResourcePoolCell">
-                {{ elementItem.TotalResourcePoolAddition | number: 2 }}
-            </td>
-            <td data-ng-show="elementItem.HasResourcePoolCell && elementItem.HasResourcePoolCell">
-                {{ elementItem.TotalResourcePoolValueIncludingAddition | number: 2 }}
-            </td>
-            <!-- Indexes -->
-            <td data-ng-repeat="elementFieldIndex in vm.resourcePool.MainElement.ElementFieldIndexSet">
-                <div data-ng-repeat="elementCell in elementItem.ElementCellSet">
-                    <div data-ng-show="elementCell.ElementFieldType !== 6">
-                        <table class="table" data-ng-show="elementFieldIndex.ElementFieldId === elementCell.ElementFieldId">
-                            <tr>
-                                <td>
-                                    {{ elementCell.ValueMultiplied | number:2 }}
-                                </td>
-                                <td>
-                                    {{ elementCell.ValuePercentage | percentage:2 }}
-                                </td>
-                                <td>
-                                    {{ elementCell.ElementFieldIndexIncome | number:2 }}
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div data-ng-show="elementCell.ElementFieldType === 6">
-                        <div data-ng-repeat="selectedElementCell in elementCell.SelectedElementItem.ElementCellSet">
-                            <div data-ng-show="selectedElementCell.ElementFieldType !== 6">
-                                <table class="table" data-ng-show="elementFieldIndex.ElementFieldId === selectedElementCell.ElementFieldId">
-                                    <tr>
-                                        <td>
-                                            {{ selectedElementCell.ValueMultiplied | number:2 }}
-                                        </td>
-                                        <td>
-                                            {{ selectedElementCell.ValuePercentage | percentage:2 }}
-                                        </td>
-                                        <td>
-                                            {{ selectedElementCell.ElementFieldIndexIncome | number:2 }}
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <div data-ng-show="selectedElementCell.ElementFieldType === 6">
-                                <!-- TODO Goes recursively... -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    </tr>
+                </table>
             </td>
             <!-- Totals -->
             <td>
@@ -168,49 +203,96 @@
         <tr>
             <!-- Fields -->
             <td data-ng-repeat="field in vm.resourcePool.MainElement.ElementFieldSet">
-                <table class="table" data-ng-if="field.ElementFieldType !== 11 && field.ElementFieldType !== 12">
+                <!-- String -->
+                <div data-ng-if="field.ElementFieldType === 1">
+                    &nbsp;
+                </div>
+                <!-- Boolean, Integer, Decimal, DateTime -->
+                <div data-ng-if="field.ElementFieldType === 2
+                      || field.ElementFieldType === 3
+                      || field.ElementFieldType === 4
+                      || field.ElementFieldType === 5">
+                    <span data-ng-if="field.ElementFieldType === 2">
+                        <!-- TODO Grand Total? -->
+                    </span>
+                    <span data-ng-if="field.ElementFieldType === 3">
+                        <!-- TODO Grand Total? -->
+                    </span>
+                    <span data-ng-if="field.ElementFieldType === 4">
+                        <!-- TODO Grand Total? -->
+                    </span>
+                    <span data-ng-if="field.ElementFieldType === 5">
+                        <!-- TODO Grand Total? -->
+                    </span>
+                    <!-- Indexes -->
+                    <table class="table" data-ng-repeat="index in field.ElementFieldIndexSet">
+                        <tr>
+                            <td>
+                                {{ index.ValueMultiplied | number:2 }}
+                            </td>
+                            <td>
+                                {{ index.ValuePercentage | percentage:2 }}
+                            </td>
+                            <td>
+                                {{ index.ElementFieldIndexIncome | number:2 }}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- Element -->
+                <div data-ng-if="field.ElementFieldType === 6">
+                    &nbsp;
+                </div>
+                <!-- ResourcePool -->
+                <table class="table" data-ng-if="field.ElementFieldType === 11">
                     <tr>
                         <td>
-                            &nbsp;
+                            {{ vm.resourcePool.MainElement.ResourcePoolValue | number: 2 }}
+                            <!-- Indexes -->
+                            <table class="table" data-ng-repeat="index in field.ElementFieldIndexSet">
+                                <tr>
+                                    <td>
+                                        {{ index.ValueMultiplied | number:2 }}
+                                    </td>
+                                    <td>
+                                        {{ index.ValuePercentage | percentage:2 }}
+                                    </td>
+                                    <td>
+                                        {{ index.ElementFieldIndexIncome | number:2 }}
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            {{ vm.resourcePool.MainElement.ResourcePoolAddition | number: 2 }}
+                        </td>
+                        <td>
+                            {{ vm.resourcePool.MainElement.ResourcePoolValueIncludingAddition | number: 2 }}
                         </td>
                     </tr>
                 </table>
-            </td>
-            <!-- CMRP Field(s) + Multiplier(s) + Totals -->
-            <td data-ng-show="vm.resourcePool.MainElement.HasResourcePoolField">
-                &nbsp;
-            </td>
-            <td data-ng-show="vm.resourcePool.MainElement.HasResourcePoolField">
-                &nbsp;
-            </td>
-            <td data-ng-show="vm.resourcePool.MainElement.HasResourcePoolField">
-                &nbsp;
-            </td>
-            <td data-ng-show="vm.resourcePool.MainElement.HasMultiplierField">
-                &nbsp;
-            </td>
-            <td data-ng-show="vm.resourcePool.MainElement.HasResourcePoolField && vm.resourcePool.MainElement.HasMultiplierField">
-                &nbsp;
-            </td>
-            <td data-ng-show="vm.resourcePool.MainElement.HasResourcePoolField && vm.resourcePool.MainElement.HasMultiplierField">
-                &nbsp;
-            </td>
-            <td data-ng-show="vm.resourcePool.MainElement.HasResourcePoolField && vm.resourcePool.MainElement.HasMultiplierField">
-                &nbsp;
-            </td>
-            <!-- Indexes -->
-            <td data-ng-repeat="item in vm.resourcePool.MainElement.ElementFieldIndexSet">
-                <table class="table">
+                <!-- Multiplier -->
+                <table class="table" data-ng-if="field.ElementFieldType === 12">
                     <tr>
-                        <td colspan="3">
-                            &nbsp;
+                        <td>
+                            {{ vm.resourcePool.MainElement.MultiplierValue | number: 2 }}
+                        </td>
+                        <!-- Todo Can we create a container for these 3 columns and use single if for "HasResourcePoolField" property -->
+                        <td data-ng-show="vm.resourcePool.MainElement.HasResourcePoolField">
+                            {{ vm.resourcePool.MainElement.TotalResourcePoolValue | number: 2 }}
+                        </td>
+                        <td data-ng-show="vm.resourcePool.MainElement.HasResourcePoolField">
+                            {{ vm.resourcePool.MainElement.TotalResourcePoolAddition | number: 2 }}
+                        </td>
+                        <td data-ng-show="vm.resourcePool.MainElement.HasResourcePoolField">
+                            {{ vm.resourcePool.MainElement.TotalResourcePoolValueIncludingAddition | number: 2 }}
                         </td>
                     </tr>
                 </table>
             </td>
             <!-- Totals -->
             <td>
-                {{ vm.resourcePool.TotalIncome | number:2 }}
+                {{ vm.resourcePool.MainElement.TotalIncome | number: 2 }}
             </td>
         </tr>
     </table>

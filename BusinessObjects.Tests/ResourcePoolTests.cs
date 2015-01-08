@@ -29,8 +29,8 @@ namespace BusinessObjects.Tests
             resourcePool.IncreaseMultiplier(user);
 
             // Assert
-            Assert.IsTrue(element1.MultiplierCellValue(user) == 2M);
-            Assert.IsTrue(element2.MultiplierCellValue(user) == 11M);
+            Assert.IsTrue(element1.MultiplierValue(user) == 2M);
+            Assert.IsTrue(element2.MultiplierValue(user) == 11M);
         }
 
         [TestMethod]
@@ -50,8 +50,8 @@ namespace BusinessObjects.Tests
             resourcePool.DecreaseMultiplier(user);
 
             // Assert
-            Assert.IsTrue(element1.MultiplierCellValue(user) == 4M);
-            Assert.IsTrue(element2.MultiplierCellValue(user) == 9M);
+            Assert.IsTrue(element1.MultiplierValue(user) == 4M);
+            Assert.IsTrue(element2.MultiplierValue(user) == 9M);
         }
 
         [TestMethod]
@@ -71,8 +71,8 @@ namespace BusinessObjects.Tests
             resourcePool.ResetMultiplier(user);
 
             // Assert
-            Assert.IsTrue(element1.MultiplierCellValue(user) == 0M);
-            Assert.IsTrue(element2.MultiplierCellValue(user) == 0M);
+            Assert.IsTrue(element1.MultiplierValue(user) == 0M);
+            Assert.IsTrue(element2.MultiplierValue(user) == 0M);
         }
 
         [TestMethod]
@@ -128,7 +128,7 @@ namespace BusinessObjects.Tests
 
             Assert.IsTrue(organization1.ValueCount() == 1);
             Assert.IsTrue(organization1.Value() == 75);
-            Assert.IsTrue(organization1.ResourcePoolCellValue() == 200);
+            Assert.IsTrue(organization1.ResourcePoolValue() == 200);
             Assert.IsTrue(organization1.ResourcePoolAddition() == 200);
             Assert.IsTrue(organization1.ResourcePoolValueIncludingAddition() == 400);
             Assert.IsTrue(organization1.TotalResourcePoolValue(user) == 200);
@@ -139,7 +139,7 @@ namespace BusinessObjects.Tests
 
             Assert.IsTrue(organization2.ValueCount() == 1);
             Assert.IsTrue(organization2.Value() == 25);
-            Assert.IsTrue(organization2.ResourcePoolCellValue() == 200);
+            Assert.IsTrue(organization2.ResourcePoolValue() == 200);
             Assert.IsTrue(organization2.ResourcePoolAddition() == 200);
             Assert.IsTrue(organization2.ResourcePoolValueIncludingAddition() == 400);
             Assert.IsTrue(organization2.TotalResourcePoolValue(user) == 200);
@@ -156,7 +156,7 @@ namespace BusinessObjects.Tests
             // Assert 2
             Assert.IsTrue(organization1.ValueCount() == 1);
             Assert.IsTrue(organization1.Value() == 75);
-            Assert.IsTrue(organization1.ResourcePoolCellValue() == 200);
+            Assert.IsTrue(organization1.ResourcePoolValue() == 200);
             Assert.IsTrue(organization1.ResourcePoolAddition() == 200);
             Assert.IsTrue(organization1.ResourcePoolValueIncludingAddition() == 400);
             Assert.IsTrue(organization1.TotalResourcePoolValue(user) == 200);
@@ -167,7 +167,7 @@ namespace BusinessObjects.Tests
 
             Assert.IsTrue(organization2.ValueCount() == 1);
             Assert.IsTrue(organization2.Value() == 25);
-            Assert.IsTrue(organization2.ResourcePoolCellValue() == 200);
+            Assert.IsTrue(organization2.ResourcePoolValue() == 200);
             Assert.IsTrue(organization2.ResourcePoolAddition() == 200);
             Assert.IsTrue(organization2.ResourcePoolValueIncludingAddition() == 400);
             Assert.IsTrue(organization2.TotalResourcePoolValue(user) == 200);
@@ -225,7 +225,7 @@ namespace BusinessObjects.Tests
 
             Assert.IsTrue(organization1.ValueCount() == 1);
             Assert.IsTrue(organization1.Value() == 25);
-            Assert.IsTrue(organization1.ResourcePoolCellValue() == 25);
+            Assert.IsTrue(organization1.ResourcePoolValue() == 25);
             Assert.IsTrue(organization1.ResourcePoolAddition() == 25);
             Assert.IsTrue(organization1.ResourcePoolValueIncludingAddition() == 50);
             Assert.IsTrue(organization1.TotalResourcePoolValue(user) == 25);
@@ -236,7 +236,7 @@ namespace BusinessObjects.Tests
 
             Assert.IsTrue(organization2.ValueCount() == 1);
             Assert.IsTrue(organization2.Value() == 75);
-            Assert.IsTrue(organization2.ResourcePoolCellValue() == 75);
+            Assert.IsTrue(organization2.ResourcePoolValue() == 75);
             Assert.IsTrue(organization2.ResourcePoolAddition() == 75);
             Assert.IsTrue(organization2.ResourcePoolValueIncludingAddition() == 150);
             Assert.IsTrue(organization2.TotalResourcePoolValue(user) == 75);
@@ -306,7 +306,7 @@ namespace BusinessObjects.Tests
 
             Assert.IsTrue(organization1.ValueCount() == 1);
             Assert.IsTrue(organization1.Value() == 75);
-            Assert.IsTrue(organization1.ResourcePoolCellValue() == 200);
+            Assert.IsTrue(organization1.ResourcePoolValue() == 200);
             Assert.IsTrue(organization1.ResourcePoolAddition() == 200);
             Assert.IsTrue(organization1.ResourcePoolValueIncludingAddition() == 400);
             Assert.IsTrue(organization1.TotalResourcePoolValue(user1) == 200);
@@ -317,7 +317,7 @@ namespace BusinessObjects.Tests
 
             Assert.IsTrue(organization2.ValueCount() == 1);
             Assert.IsTrue(organization2.Value() == 25);
-            Assert.IsTrue(organization2.ResourcePoolCellValue() == 200);
+            Assert.IsTrue(organization2.ResourcePoolValue() == 200);
             Assert.IsTrue(organization2.ResourcePoolAddition() == 200);
             Assert.IsTrue(organization2.ResourcePoolValueIncludingAddition() == 400);
             Assert.IsTrue(organization2.TotalResourcePoolValue(user1) == 200);
@@ -334,7 +334,7 @@ namespace BusinessObjects.Tests
             // Assert 2
             Assert.IsTrue(organization1.ValueCount() == 1);
             Assert.IsTrue(organization1.Value() == 75);
-            Assert.IsTrue(organization1.ResourcePoolCellValue() == 200);
+            Assert.IsTrue(organization1.ResourcePoolValue() == 200);
             Assert.IsTrue(organization1.ResourcePoolAddition() == 200);
             Assert.IsTrue(organization1.ResourcePoolValueIncludingAddition() == 400);
             Assert.IsTrue(organization1.TotalResourcePoolValue(user1) == 200);
@@ -345,7 +345,7 @@ namespace BusinessObjects.Tests
 
             Assert.IsTrue(organization2.ValueCount() == 1);
             Assert.IsTrue(organization2.Value() == 25);
-            Assert.IsTrue(organization2.ResourcePoolCellValue() == 200);
+            Assert.IsTrue(organization2.ResourcePoolValue() == 200);
             Assert.IsTrue(organization2.ResourcePoolAddition() == 200);
             Assert.IsTrue(organization2.ResourcePoolValueIncludingAddition() == 400);
             Assert.IsTrue(organization2.TotalResourcePoolValue(user1) == 200);

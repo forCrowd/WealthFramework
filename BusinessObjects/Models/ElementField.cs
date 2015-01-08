@@ -114,13 +114,13 @@ namespace BusinessObjects
 
         #region - ReadOnly Properties -
 
-        /// <summary>
-        /// REMARK: In other index types, this value is calculated on ElementFieldIndex class level, under IndexValue property
-        /// </summary>
-        public decimal Value()
-        {
-            return ElementCellSet.Sum(item => item.Value());
-        }
+        ///// <summary>
+        ///// REMARK: In other index types, this value is calculated on ElementFieldIndex class level, under IndexValue property
+        ///// </summary>
+        //public decimal Value()
+        //{
+        //    return ElementCellSet.Sum(item => item.Value());
+        //}
 
         //public decimal RatingPercentageMultiplied
         //{

@@ -12,6 +12,7 @@ namespace BusinessObjects.ViewModels
         {
             Id = elementCell.Id;
             ElementItemId = elementCell.ElementItemId;
+            ElementField = new ElementField(elementCell.ElementField, user);
             ElementFieldId = elementCell.ElementFieldId;
             ElementFieldType = elementCell.ElementField.ElementFieldType;
             StringValue = elementCell.StringValue;
@@ -38,6 +39,7 @@ namespace BusinessObjects.ViewModels
 
         public int Id { get; set; }
         public int ElementItemId { get; set; }
+        public ElementField ElementField { get; set; }
         public int ElementFieldId { get; set; }
         public byte ElementFieldType { get; set; }
         public string StringValue { get; set; }

@@ -241,12 +241,10 @@ resource - ~decimal
 multiplier - n/a
 
 ---
-resourcepoolview doesnt look good with new importance field
-
-. continue with getresourcepool api method improvement
-			
----
 chapter 7, 8, 9, 10 ?!
+
+---
+addfield method should create new elementcells for this new field for the existing items!
 
 ---
 anti forgery: AntiForgery.GetTokens

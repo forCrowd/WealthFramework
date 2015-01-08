@@ -73,7 +73,7 @@ namespace BusinessObjects
 
         public decimal ResourcePoolCellValue()
         {
-            return MainElement.ElementItemSet.Sum(item => item.ResourcePoolCellValue());
+            return MainElement.ElementItemSet.Sum(item => item.ResourcePoolValue());
         }
 
         public decimal ResourcePoolValueIncludingAddition()
@@ -140,7 +140,7 @@ namespace BusinessObjects
         {
             if (MainElement != null && MainElement.HasMultiplierField)
                 foreach (var item in MainElement.ElementItemSet)
-                    item.MultiplierCell.SetValue(item.MultiplierCellValue(user) + 1M, user);
+                    item.MultiplierCell.SetValue(item.MultiplierValue(user) + 1M, user);
 
             return this;
         }
@@ -149,7 +149,7 @@ namespace BusinessObjects
         {
             if (MainElement != null && MainElement.HasMultiplierField)
                 foreach (var item in MainElement.ElementItemSet)
-                    item.MultiplierCell.SetValue(item.MultiplierCellValue(user) - 1M, user);
+                    item.MultiplierCell.SetValue(item.MultiplierValue(user) - 1M, user);
 
             return this;
         }

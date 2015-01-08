@@ -99,6 +99,21 @@ namespace BusinessObjects
             }
         }
 
+        public decimal ResourcePoolValue()
+        {
+            return ElementItemSet.Sum(item => item.ResourcePoolValue());
+        }
+
+        public decimal ResourcePoolAddition()
+        {
+            return ElementItemSet.Sum(item => item.ResourcePoolAddition());
+        }
+
+        public decimal ResourcePoolValueIncludingAddition()
+        {
+            return ElementItemSet.Sum(item => item.ResourcePoolValueIncludingAddition());
+        }
+
         public ElementField MultiplierField
         {
             get { return ElementFieldSet.SingleOrDefault(item => item.ElementFieldType == (byte)ElementFieldTypes.Multiplier); }
@@ -121,6 +136,31 @@ namespace BusinessObjects
 
                 return MultiplierField.Name;
             }
+        }
+
+        public decimal MultiplierValue(User multiplierUser)
+        {
+            return ElementItemSet.Sum(item => item.MultiplierValue(multiplierUser));
+        }
+
+        public decimal TotalResourcePoolValue(User multiplierUser)
+        {
+            return ElementItemSet.Sum(item => item.TotalResourcePoolValue(multiplierUser));
+        }
+
+        public decimal TotalResourcePoolAddition(User multiplierUser)
+        {
+            return ElementItemSet.Sum(item => item.TotalResourcePoolAddition(multiplierUser));
+        }
+
+        public decimal TotalResourcePoolValueIncludingAddition(User multiplierUser)
+        {
+            return ElementItemSet.Sum(item => item.TotalResourcePoolValueIncludingAddition(multiplierUser));
+        }
+
+        public decimal TotalIncome(User multiplierUser)
+        {
+            return ElementItemSet.Sum(item => item.TotalIncome(multiplierUser));
         }
 
         #endregion

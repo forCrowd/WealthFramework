@@ -71,6 +71,11 @@
             mainElement.ResourcePoolField.Name = "Sales Price"; // TODO It does not fit! Update this after having Initial Amount on RP!
             mainElement.MultiplierField.Name = "Sales Number";
 
+            // TODO Just for test - remove later!
+            var decimalField = mainElement.AddField("Decimal Field", ElementFieldTypes.Decimal, true);
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(decimalField).DecimalValue = 11;
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(decimalField).DecimalValue = 22;
+
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Open Source License";
             mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Restricted License";
@@ -99,10 +104,10 @@
 
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Lowlands";
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().ResourcePoolCell.SetValue(125);
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().ResourcePoolCell.SetValue(125M);
             mainElement.ElementItemSet.Skip(0).Take(1).Single().NameCell.UserElementCellSet.Clear();
             mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "High Coast";
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().ResourcePoolCell.SetValue(175);
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().ResourcePoolCell.SetValue(175M);
             mainElement.ElementItemSet.Skip(1).Take(1).Single().NameCell.UserElementCellSet.Clear();
 
             // Return

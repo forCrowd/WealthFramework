@@ -200,7 +200,7 @@ namespace BusinessObjects
                 return Value();
 
             // Todo BE CAREFUL ABOUT THIS, IT ASSUMES ALL ELEMENT ITEMS HAVE THE SAME MULTIPLIER VALUE, IMPROVE IT LATER!
-            var multiplierValue = mainElement.ElementItemSet.FirstOrDefault().MultiplierCellValue(multiplierUser);
+            var multiplierValue = mainElement.ElementItemSet.FirstOrDefault().MultiplierValue(multiplierUser);
 
             return multiplierValue * Value();
         }
