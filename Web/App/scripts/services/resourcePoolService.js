@@ -14,32 +14,38 @@
         logger = logger.forSource(serviceId);
 
         // Service methods
-        $delegate.getUserResourcePool = getUserResourcePool;
+        $delegate.getResourcePool = getResourcePool;
         $delegate.decreaseMultiplier = decreaseMultiplier;
         $delegate.increaseMultiplier = increaseMultiplier;
         $delegate.resetMultiplier = resetMultiplier;
+        $delegate.updateResourcePoolRate = updateResourcePoolRate;
 
         return $delegate;
 
         /*** Implementations ***/
 
-        function getUserResourcePool(resourcePoolId) {
+        function getResourcePool(resourcePoolId) {
             var url = '/api/ResourcePoolCustom/GetResourcePool/' + resourcePoolId;
             return $http.get(url);
         }
 
-        function decreaseMultiplier(userResourcePoolId) {
-            var url = '/api/ResourcePoolCustom/DecreaseMultiplier/' + userResourcePoolId;
+        function decreaseMultiplier(resourcePoolId) {
+            var url = '/api/ResourcePoolCustom/DecreaseMultiplier/' + resourcePoolId;
             return $http.post(url);
         }
 
-        function increaseMultiplier(userResourcePoolId) {
-            var url = '/api/ResourcePoolCustom/IncreaseMultiplier/' + userResourcePoolId;
+        function increaseMultiplier(resourcePoolId) {
+            var url = '/api/ResourcePoolCustom/IncreaseMultiplier/' + resourcePoolId;
             return $http.post(url);
         }
 
-        function resetMultiplier(userResourcePoolId) {
-            var url = '/api/ResourcePoolCustom/ResetMultiplier/' + userResourcePoolId;
+        function resetMultiplier(resourcePoolId) {
+            var url = '/api/ResourcePoolCustom/ResetMultiplier/' + resourcePoolId;
+            return $http.post(url);
+        }
+
+        function updateResourcePoolRate(resourcePoolId, resourcePoolRate) {
+            var url = '/api/ResourcePoolCustom/UpdateResourcePoolRate/' + resourcePoolId + '/' + resourcePoolRate;
             return $http.post(url);
         }
     }

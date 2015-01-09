@@ -9,19 +9,19 @@
     [TestClass]
     public class UserResourcePoolUnitOfWorkTest
     {
-        [TestMethod]
-        public void Select()
-        {
-            using (var unitOfWork = new UserResourcePoolUnitOfWork())
-            {
-                var list = unitOfWork.AllLive;
+        //[TestMethod]
+        //public void Select()
+        //{
+        //    using (var unitOfWork = new UserResourcePoolUnitOfWork())
+        //    {
+        //        var list = unitOfWork.AllLive;
 
-                foreach (var item in list)
-                {
-                    Console.WriteLine(item.Name);
-                }
-            }
-        }
+        //        foreach (var item in list)
+        //        {
+        //            Console.WriteLine(item.Name);
+        //        }
+        //    }
+        //}
 
         //[TestMethod]
         //public void Insert()

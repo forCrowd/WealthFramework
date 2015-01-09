@@ -18,15 +18,18 @@
         vm.decreaseMultiplier = decreaseMultiplier;
         vm.increaseMultiplier = increaseMultiplier;
         vm.resetMultiplier = resetMultiplier;
+        vm.decreaseResourcePoolRate = decreaseResourcePoolRate;
+        vm.increaseResourcePoolRate = increaseResourcePoolRate;
+        vm.resetResourcePoolRate = resetResourcePoolRate;
 
         initialize();
 
         function initialize() {
-            getUserResourcePool();
+            getResourcePool();
         };
 
-        function getUserResourcePool() {
-            resourcePoolService.getUserResourcePool(resourcePoolId)
+        function getResourcePool() {
+            resourcePoolService.getResourcePool(resourcePoolId)
                 .success(function (resourcePool) {
                     vm.resourcePool = resourcePool;
                 });
@@ -35,21 +38,42 @@
         function decreaseMultiplier() {
             resourcePoolService.decreaseMultiplier(resourcePoolId)
                 .success(function () {
-                    getUserResourcePool();
+                    getResourcePool();
                 });
         }
 
         function increaseMultiplier() {
             resourcePoolService.increaseMultiplier(resourcePoolId)
                 .success(function () {
-                    getUserResourcePool();
+                    getResourcePool();
                 });
         }
 
         function resetMultiplier() {
             resourcePoolService.resetMultiplier(resourcePoolId)
                 .success(function () {
-                    getUserResourcePool();
+                    getResourcePool();
+                });
+        }
+
+        function decreaseResourcePoolRate() {
+            resourcePoolService.updateResourcePoolRate(resourcePoolId, vm.resourcePool.ResourcePoolRate - 5)
+                .success(function () {
+                    getResourcePool();
+                });
+        }
+
+        function increaseResourcePoolRate() {
+            resourcePoolService.updateResourcePoolRate(resourcePoolId, vm.resourcePool.ResourcePoolRate + 5)
+                .success(function () {
+                    getResourcePool();
+                });
+        }
+
+        function resetResourcePoolRate() {
+            resourcePoolService.updateResourcePoolRate(resourcePoolId, 0)
+                .success(function () {
+                    getResourcePool();
                 });
         }
     };

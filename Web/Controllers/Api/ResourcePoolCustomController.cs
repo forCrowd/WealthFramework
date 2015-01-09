@@ -1,5 +1,6 @@
 ﻿using BusinessObjects.ViewModels;
 using Facade;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -51,7 +52,7 @@ namespace Web.Controllers.Api
         public async Task<IHttpActionResult> IncreaseMultiplier(int resourcePoolId)
         {
             var manager = new ResourcePoolUnitOfWork();
-            var resourcePool = await manager.FindByUserResourcePoolIdAsync(resourcePoolId);
+            var resourcePool = await manager.FindAsync(resourcePoolId);
 
             if (resourcePool == null)
                 return NotFound();
@@ -69,7 +70,7 @@ namespace Web.Controllers.Api
         public async Task<IHttpActionResult> DecreaseMultiplier(int resourcePoolId)
         {
             var manager = new ResourcePoolUnitOfWork();
-            var resourcePool = await manager.FindByUserResourcePoolIdAsync(resourcePoolId);
+            var resourcePool = await manager.FindAsync(resourcePoolId);
 
             if (resourcePool == null)
                 return NotFound();
@@ -88,7 +89,7 @@ namespace Web.Controllers.Api
         {
             using (var manager = new ResourcePoolUnitOfWork())
             {
-                var resourcePool = await manager.FindByUserResourcePoolIdAsync(resourcePoolId);
+                var resourcePool = await manager.FindAsync(resourcePoolId);
 
                 if (resourcePool == null)
                     return NotFound();
@@ -96,6 +97,26 @@ namespace Web.Controllers.Api
                 var currentUserId = this.GetCurrentUserId().Value;
 
                 await manager.ResetMultiplierAsync(resourcePool, currentUserId);
+
+                return Ok();
+            }
+        }
+
+        // POST api/ResourcePoolCustom/UpdateResourcePoolRate/1/11.11
+        [HttpPost]
+        [Route("UpdateResourcePoolRate/{resourcePoolId:int:min(1)}/{resourcePoolRate:decimal:min(0)}")]
+        public async Task<IHttpActionResult> UpdateResourcePoolRate(int resourcePoolId, decimal resourcePoolRate)
+        {
+            using (var manager = new ResourcePoolUnitOfWork())
+            {
+                var resourcePool = await manager.FindAsync(resourcePoolId);
+
+                if (resourcePool == null)
+                    return NotFound();
+
+                var currentUserId = this.GetCurrentUserId().Value;
+
+                await manager.UpdateResourcePoolRateAsync(resourcePool, currentUserId, resourcePoolRate);
 
                 return Ok();
             }

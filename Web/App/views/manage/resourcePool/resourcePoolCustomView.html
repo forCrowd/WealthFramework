@@ -1,11 +1,7 @@
 ﻿<div data-ng-controller="resourcePoolCustomViewController as vm">
     <h2>{{ vm.resourcePool.Name }}</h2>
     <p>
-        <div class="btn-group">
-            <button type="submit" data-ng-click="vm.increaseMultiplier()" class="btn btn-default">Increase {{ vm.resourcePool.MainElement.MultiplierFieldName }}</button>
-            <button type="submit" data-ng-click="vm.decreaseMultiplier()" class="btn btn-default">Decrease {{ vm.resourcePool.MainElement.MultiplierFieldName }}</button>
-            <button type="submit" data-ng-click="vm.resetMultiplier()" class="btn btn-default">Reset {{ vm.resourcePool.MainElement.MultiplierFieldName }}</button>
-        </div>
+
     </p>
     <p>
         CMRP Rate: {{ vm.resourcePool.ResourcePoolRatePercentage | percentage:2 }} - Number of ratings: {{ vm.resourcePool.UserResourcePoolRatingCount }}
@@ -230,15 +226,35 @@
                                             </tr>
                                         </thead>
                                     </table>
+                                    <!-- Multiplier functions -->
+                                    <div data-ng-if="field.ElementFieldType === 12">
+                                        <div class="clearfix"></div>
+                                        <div class="btn-group" role="group">
+                                            <button type="submit" data-ng-click="vm.increaseMultiplier()" class="btn btn-default btn-xs">+</button>
+                                            <button type="submit" data-ng-click="vm.decreaseMultiplier()" class="btn btn-default btn-xs">-</button>
+                                            <button type="submit" data-ng-click="vm.resetMultiplier()" class="btn btn-default btn-xs">0</button>
+                                        </div>
+                                    </div>
                                 </th>
                                 <!-- ResourcePool -->
                                 <!-- TODO Single container for these fields? -->
                                 <th data-ng-if="field.ElementFieldType === 11">
-                                    CMRP Add.
+                                    CMRP Add.<br />
+                                    Rate {{ vm.resourcePool.ResourcePoolRatePercentage | percentage:2 }}<br />
+                                    # {{ vm.resourcePool.UserResourcePoolRatingCount }}
+                                    <!-- ResourcePool functions -->
+                                    <div data-ng-if="field.ElementFieldType === 11">
+                                        <div class="clearfix"></div>
+                                        <div class="btn-group" role="group">
+                                            <button type="submit" data-ng-click="vm.increaseResourcePoolRate()" class="btn btn-default btn-xs">+</button>
+                                            <button type="submit" data-ng-click="vm.decreaseResourcePoolRate()" class="btn btn-default btn-xs">-</button>
+                                            <button type="submit" data-ng-click="vm.resetResourcePoolRate()" class="btn btn-default btn-xs">0</button>
+                                        </div>
+                                    </div>
                                 </th>
                                 <th data-ng-if="field.ElementFieldType === 11">
-                                    {{ field.Name }}
-                                    <br />incl. CMRP Add.
+                                    {{ field.Name }}<br />
+                                    incl. CMRP Add.
                                 </th>
                                 <!-- Multiplier -->
                                 <!-- TODO Single container for these fields? -->
@@ -250,7 +266,7 @@
                                 </th>-->
                                 <th data-ng-if="field.ElementFieldType === 12 && vm.resourcePool.MainElement.HasResourcePoolField">
                                     Tot. {{ vm.resourcePool.MainElement.ResourcePoolFieldName }}
-                                    <br/>incl. CMRP Add.
+                                    <br />incl. CMRP Add.
                                 </th>
                             </tr>
                         </thead>

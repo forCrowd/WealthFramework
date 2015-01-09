@@ -49,10 +49,10 @@ namespace BusinessObjects
 
         #region - General -
 
-        public string Name
-        {
-            get { return string.Format("{0} - {1}", User.Email, ResourcePool.Name); }
-        }
+        //public string Name
+        //{
+        //    get { return string.Format("{0} - {1}", User.Email, ResourcePool.Name); }
+        //}
 
         #endregion
 

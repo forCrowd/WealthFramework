@@ -138,27 +138,55 @@ namespace BusinessObjects
 
         public ResourcePool IncreaseMultiplier(User user)
         {
-            if (MainElement != null && MainElement.HasMultiplierField)
-                foreach (var item in MainElement.ElementItemSet)
-                    item.MultiplierCell.SetValue(item.MultiplierValue(user) + 1M, user);
+            MultiplierMethodValidations(user);
+
+            foreach (var item in MainElement.ElementItemSet)
+                item.MultiplierCell.SetValue(item.MultiplierValue(user) + 1M, user);
 
             return this;
         }
 
         public ResourcePool DecreaseMultiplier(User user)
         {
-            if (MainElement != null && MainElement.HasMultiplierField)
-                foreach (var item in MainElement.ElementItemSet)
-                    item.MultiplierCell.SetValue(item.MultiplierValue(user) - 1M, user);
+            MultiplierMethodValidations(user);
+
+            foreach (var item in MainElement.ElementItemSet)
+                item.MultiplierCell.SetValue(item.MultiplierValue(user) - 1M, user);
 
             return this;
         }
 
         public ResourcePool ResetMultiplier(User user)
         {
-            if (MainElement != null && MainElement.HasMultiplierField)
-                foreach (var item in MainElement.ElementItemSet)
-                    item.MultiplierCell.SetValue(0M, user);
+            MultiplierMethodValidations(user);
+
+            foreach (var item in MainElement.ElementItemSet)
+                item.MultiplierCell.SetValue(0M, user);
+
+            return this;
+        }
+
+        void MultiplierMethodValidations(User user)
+        {
+            Validations.ArgumentNullOrDefault(user, "user");
+
+            if (MainElement == null)
+                throw new InvalidOperationException("ResourcePool has no MainElement");
+
+            if (!MainElement.HasMultiplierField)
+                throw new InvalidOperationException("MainElement has no multiplier field");
+        }
+
+        public ResourcePool UpdateResourcePoolRate(User user, decimal rate)
+        {
+            Validations.ArgumentNullOrDefault(user, "user");
+
+            var userResourcePool = UserResourcePoolSet.SingleOrDefault(item => item.UserId == user.Id);
+
+            if (userResourcePool == null)
+                userResourcePool = AddUserResourcePool(user, rate);
+            else
+                userResourcePool.ResourcePoolRate = rate;
 
             return this;
         }

@@ -64,6 +64,17 @@
             resourcePool.ResetMultiplier(user);
             await base.UpdateAsync(resourcePool);
         }
+
+        public async Task UpdateResourcePoolRateAsync(ResourcePool resourcePool, int userId, decimal rate)
+        {
+            Framework.Validations.ArgumentNullOrDefault(resourcePool, "resourcePool");
+            Framework.Validations.ArgumentNullOrDefault(userId, "userId");
+
+            var user = await UserStore.FindByIdAsync(userId);
+
+            resourcePool.UpdateResourcePoolRate(user, rate);
+            await base.UpdateAsync(resourcePool);
+        }
         
         public async Task<int> InsertAsync(ResourcePool entity, int userId)
         {
