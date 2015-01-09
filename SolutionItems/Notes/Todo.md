@@ -247,6 +247,15 @@ chapter 7, 8, 9, 10 ?!
 addfield method should create new elementcells for this new field for the existing items!
 
 ---
+one elementfieldindex per elementfield ?!?!?!
+
+	---
+	continue with Increase / Decrease Multiplier?
+	CMRP Rate?
+	Field Order?
+	Resource Pool + Field Index case!
+
+---
 cell is always showing the same info, not per index???
 
 <table class="table test" data-ng-repeat="index in elementCell.ElementField.ElementFieldIndexSet">

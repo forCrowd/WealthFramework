@@ -16,17 +16,46 @@ textarea {
     max-width: 280px;
 }
 
-.table.cmrp {
-    margin-bottom: 0px;
+.resourcePoolTable {
+    font-family: Tahoma;
+    /*font-family: Verdana, Geneva, Tahoma, sans-serif;*/
+    font-size: 11px;
+    /*table-layout: fixed;*/
 }
 
-    .table.cmrp > thead > tr > th,
-    .table.cmrp > tbody > tr > th,
-    .table.cmrp > tfoot > tr > th,
-    .table.cmrp > thead > tr > td,
-    .table.cmrp > tbody > tr > td,
-    .table.cmrp > tfoot > tr > td {
-        padding: 0px;
+    .resourcePoolTable th,
+    .resourcePoolTable td {
+        overflow: hidden; /* Hide text outside the cell */
+        vertical-align: top;
+    }
+
+    .resourcePoolTable > thead > tr > th,
+    .resourcePoolTable > tbody > tr > td,
+    .resourcePoolTable > tfoot > tr > td,
+    .resourcePoolTable .resourcePoolFieldsTable > thead > tr > th,
+    .resourcePoolTable .resourcePoolFieldsTable > tbody > tr > td,
+    .resourcePoolTable .resourcePoolFieldsTable > tfoot > tr > td {
+        min-width: 90px;
+    }
+
+    .resourcePoolTable .resourcePoolFieldsTable {
+        /*background-color: green;*/
+    }
+
+    .resourcePoolTable .resourcePoolFieldsTable .fieldIndexTable {
+        /*background-color: red;*/
+    }
+
+    /*.resourcePoolTable .resourcePoolFieldsTable .fieldIndexTable > colgroup > col.valueMultipliedField {
+        width: 75px;
+    }*/
+    
+    .resourcePoolTable .resourcePoolFieldsTable .fieldIndexTable > colgroup > col.valuePercentageField {
+        width: 50px;
+    }
+    
+    .resourcePoolTable .resourcePoolFieldsTable .fieldIndexTable > colgroup > col.indexIncomeField {
+        width: 75px;
     }
 
 /* styles for validation helpers */
