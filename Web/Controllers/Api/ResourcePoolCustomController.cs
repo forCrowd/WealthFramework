@@ -102,11 +102,15 @@ namespace Web.Controllers.Api
             }
         }
 
-        // POST api/ResourcePoolCustom/UpdateResourcePoolRate/1/11.11
+        // POST api/ResourcePoolCustom/UpdateResourcePoolRate/1
         [HttpPost]
-        [Route("UpdateResourcePoolRate/{resourcePoolId:int:min(1)}/{resourcePoolRate:decimal:min(0)}")]
-        public async Task<IHttpActionResult> UpdateResourcePoolRate(int resourcePoolId, decimal resourcePoolRate)
+        [Route("UpdateResourcePoolRate/{resourcePoolId:int:min(1)}")]
+        public async Task<IHttpActionResult> UpdateResourcePoolRate(int resourcePoolId, [FromBody] decimal resourcePoolRate)
         {
+            // Validation
+            if (resourcePoolRate < 0)
+                throw new ArgumentException("Value cannot be lower than zero", "resourcePoolRate");
+
             using (var manager = new ResourcePoolUnitOfWork())
             {
                 var resourcePool = await manager.FindAsync(resourcePoolId);

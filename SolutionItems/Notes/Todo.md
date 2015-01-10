@@ -249,11 +249,8 @@ addfield method should create new elementcells for this new field for the existi
 ---
 one elementfieldindex per elementfield ?!?!?!
 
-	---
-	continue with Increase / Decrease Multiplier?
-	CMRP Rate?
-	Field Order?
-	Resource Pool + Field Index case!
+---	
+resourcepoolview - Resource Pool + Field Index combo - should the fields be separate? income part can be at the end?
 
 ---
 cell is always showing the same info, not per index???

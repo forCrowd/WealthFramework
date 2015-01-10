@@ -75,7 +75,7 @@
             resourcePool.UpdateResourcePoolRate(user, rate);
             await base.UpdateAsync(resourcePool);
         }
-        
+
         public async Task<int> InsertAsync(ResourcePool entity, int userId)
         {
             // Sample resource pool could only be created during DatabaseInitialization at the moment

@@ -45,8 +45,8 @@
         }
 
         function updateResourcePoolRate(resourcePoolId, resourcePoolRate) {
-            var url = '/api/ResourcePoolCustom/UpdateResourcePoolRate/' + resourcePoolId + '/' + resourcePoolRate;
-            return $http.post(url);
+            var url = '/api/ResourcePoolCustom/UpdateResourcePoolRate/' + resourcePoolId;
+            return $http.post(url, resourcePoolRate);
         }
     }
 })();
