@@ -66,7 +66,7 @@
 
             var query = breeze.EntityQuery
 				.from('UserElementFieldIndex')
-				.expand(['ElementFieldIndex', 'UserResourcePool'])
+				.expand(['ElementFieldIndex', 'User'])
             ;
 
             // Fetch the data from server, in case if it's not fetched earlier or forced

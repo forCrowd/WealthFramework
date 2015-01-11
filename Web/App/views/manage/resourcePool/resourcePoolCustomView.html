@@ -1,5 +1,8 @@
 ﻿<div data-ng-controller="resourcePoolCustomViewController as vm">
     <h2>{{ vm.resourcePool.Name }}</h2>
+
+    <resource-pool-editor resource-pool-id="vm.resourcePoolId"></resource-pool-editor>
+
     <!--
     <table class="resourcePoolTable">
         <thead>

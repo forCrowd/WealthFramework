@@ -46,7 +46,7 @@
                     <li class="dropdown" data-ng-show="vm.userInfo">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown">Manage <b class="caret"></b></a>
                         @* Manage Menu - Generated *@
-                        <script src="/App/scripts/includes/manageMenu.js"></script>
+                        <script src="/App/includes/manageMenu.js"></script>
                     </li>
                     <li class="dropdown" data-ng-show="vm.userInfo">
                         <a href="/manage/custom/resourcePool">CMRP</a>
@@ -103,41 +103,44 @@
     <script src="https://rawgithub.com/pablojim/highcharts-ng/master/src/highcharts-ng.js"></script>
     @*<script src="http://code.highcharts.com/modules/exporting.js"></script>*@
 
-    <script src="/App/scripts/main.js"></script>
-    <script src="/App/scripts/logger.js"></script>
-    <script src="/App/scripts/route.js"></script>
-    <script src="/App/scripts/authorization.js"></script>
-    <script src="/App/scripts/entityManagerFactory.js"></script>
-    <script src="/App/scripts/dataContext.js"></script>
-    <script src="/App/scripts/filters/angular-percentage.js"></script>
+    <script src="/App/main.js"></script>
+    <script src="/App/logger.js"></script>
+    <script src="/App/route.js"></script>
+    <script src="/App/authorization.js"></script>
+    <script src="/App/entityManagerFactory.js"></script>
+    <script src="/App/dataContext.js"></script>
+    <script src="/App/filters/angular-percentage.js"></script>
 
-    <script src="/App/scripts/services/mainService.js"></script>
-    <script src="/App/scripts/controllers/layoutController.js"></script>
+    <script src="/App/services/mainService.js"></script>
+    <script src="/App/controllers/layoutController.js"></script>
 
     @* Content *@
-    <script src="/App/scripts/controllers/content/chapter1Controller.js"></script>
-    <script src="/App/scripts/controllers/content/chapter4Controller.js"></script>
-    <script src="/App/scripts/controllers/content/chapter5Controller.js"></script>
-    <script src="/App/scripts/controllers/content/chapter6Controller.js"></script>
-    <script src="/App/scripts/controllers/content/chapter10Controller.js"></script>
+    <script src="/App/controllers/content/chapter1Controller.js"></script>
+    <script src="/App/controllers/content/chapter4Controller.js"></script>
+    <script src="/App/controllers/content/chapter5Controller.js"></script>
+    <script src="/App/controllers/content/chapter6Controller.js"></script>
+    <script src="/App/controllers/content/chapter10Controller.js"></script>
 
     @* Account *@
-    <script src="/App/scripts/controllers/account/loginController.js"></script>
-    <script src="/App/scripts/controllers/account/registerController.js"></script>
-    <script src="/App/scripts/controllers/account/accountEditController.js"></script>
-    <script src="/App/scripts/controllers/account/changePasswordController.js"></script>
+    <script src="/App/controllers/account/loginController.js"></script>
+    <script src="/App/controllers/account/registerController.js"></script>
+    <script src="/App/controllers/account/accountEditController.js"></script>
+    <script src="/App/controllers/account/changePasswordController.js"></script>
 
     @* Manage Scripts - Custom *@
-    <script src="/App/scripts/controllers/manage/resourcePool/resourcePoolCustomListController.js"></script>
-    <script src="/App/scripts/controllers/manage/resourcePool/resourcePoolCustomViewController.js"></script>
+    <script src="/App/controllers/manage/resourcePool/resourcePoolCustomListController.js"></script>
+    <script src="/App/controllers/manage/resourcePool/resourcePoolCustomViewController.js"></script>
 
     @* Manage Scripts - Generated *@
-    <script src="/App/scripts/includes/manageScripts.js"></script>
+    <script src="/App/includes/manageScripts.js"></script>
 
     @* Service extensions *@
-    <script src="/App/scripts/services/userService.js"></script>
-    <script src="/App/scripts/services/resourcePoolService.js"></script>
-    <script src="/App/scripts/services/userElementCellService.js"></script>
+    <script src="/App/services/userService.js"></script>
+    <script src="/App/services/resourcePoolService.js"></script>
+    <script src="/App/services/userElementCellService.js"></script>
+
+    @* Directives *@
+    <script src="/App/directives/resourcePoolEditor.js"></script>
 
 </body>
 </html>

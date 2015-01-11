@@ -14,6 +14,10 @@
         var resourcePoolId = $routeParams.Id;
 
         var vm = this;
+
+        // TODO This is just for test
+        vm.resourcePoolId = $routeParams.Id;
+
         vm.resourcePool = null;
         vm.decreaseMultiplier = decreaseMultiplier;
         vm.increaseMultiplier = increaseMultiplier;
@@ -32,6 +36,11 @@
             resourcePoolService.getResourcePool(resourcePoolId)
                 .success(function (resourcePool) {
                     vm.resourcePool = resourcePool;
+
+                    vm.resourcePool.xxx = 'xxx';
+                    vm.resourcePool.increaseMultiplier = function () {
+                        alert('multiplier increased!');
+                    }
                 });
         }
 

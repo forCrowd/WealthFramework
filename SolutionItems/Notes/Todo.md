@@ -244,6 +244,20 @@ multiplier - n/a
 chapter 7, 8, 9, 10 ?!
 
 ---
+	continue with;
+	. angular directives
+	. displaying element + recursive!
+
+---
+???
+<!-- directive: my-dir exp -->
+
+-
+We would expect Angular to be able to bind to this, but when we check the console we see something like Error: Invalid value for attribute cx="{{cx}}". Because of the SVG DOM API's restrictions, you cannot simply write cx="{{cx}}".
+
+With ng-attr-cx you can work around this problem.
+
+---
 addfield method should create new elementcells for this new field for the existing items!
 
 ---

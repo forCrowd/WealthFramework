@@ -14,7 +14,7 @@
     angular.module('main')
         .controller(controllerId, ['userElementFieldIndexService',
             'elementFieldIndexService',
-            'userResourcePoolService',
+            'userService',
             'logger',
             '$location',
             '$routeParams',
@@ -22,7 +22,7 @@
 
     function userElementFieldIndexEditController(userElementFieldIndexService,
 		elementFieldIndexService,
-		userResourcePoolService,
+		userService,
 		logger,
 		$location,
 		$routeParams) {
@@ -34,7 +34,7 @@
         // Controller methods (alphabetically)
         var vm = this;
         vm.elementFieldIndexSet = [];
-        vm.userResourcePoolSet = [];
+        vm.userSet = [];
         vm.cancelChanges = cancelChanges;
         vm.isSaveDisabled = isSaveDisabled;
         vm.entityErrors = [];
@@ -67,9 +67,9 @@
                     vm.elementFieldIndexSet = data;
                 });
 
-            userResourcePoolService.getUserResourcePoolSet(false)
+            userService.getUserSet(false)
                 .then(function (data) {
-                    vm.userResourcePoolSet = data;
+                    vm.userSet = data;
                 });
 
             if (isNew) {

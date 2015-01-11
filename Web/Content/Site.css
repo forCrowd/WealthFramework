@@ -16,10 +16,14 @@ textarea {
     max-width: 280px;
 }
 
+.btn-xs {
+    font-size: 10px;
+}
+
 .resourcePoolTable {
     font-family: Tahoma;
     /*font-family: Verdana, Geneva, Tahoma, sans-serif;*/
-    font-size: 11px;
+    font-size: 10px;
     /*table-layout: fixed;*/
 }
 
@@ -27,6 +31,7 @@ textarea {
     .resourcePoolTable td {
         overflow: hidden; /* Hide text outside the cell */
         vertical-align: top;
+        padding: 2px;
     }
 
     .resourcePoolTable > thead > tr > th,

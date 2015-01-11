@@ -42,9 +42,9 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 	var entityListControllerScriptFileName = string.Format("{0}ListController.js", entityVariable);
 	var entityEditControllerScriptFileName = string.Format("{0}EditController.js", entityVariable);
 #>
-    <script src="/App/scripts/services/generated/<#= entityServiceScriptFileName #>"></script>\
-    <script src="/App/scripts/controllers/manage/list/<#= entityListControllerScriptFileName #>"></script>\
-    <script src="/App/scripts/controllers/manage/edit/<#= entityEditControllerScriptFileName #>"></script>\
+    <script src="/App/services/generated/<#= entityServiceScriptFileName #>"></script>\
+    <script src="/App/controllers/manage/list/<#= entityListControllerScriptFileName #>"></script>\
+    <script src="/App/controllers/manage/edit/<#= entityEditControllerScriptFileName #>"></script>\
 	\
 <#
 }
