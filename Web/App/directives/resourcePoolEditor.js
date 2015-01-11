@@ -19,11 +19,9 @@
             scope.increaseResourcePoolRate = increaseResourcePoolRate;
             scope.resetResourcePoolRate = resetResourcePoolRate;
 
-            initialize();
-
-            function initialize() {
+            scope.$watch('resourcePoolId', function () {
                 getResourcePool();
-            };
+            }, true);
 
             function getResourcePool() {
                 resourcePoolService.getResourcePool(scope.resourcePoolId)

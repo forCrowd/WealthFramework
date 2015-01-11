@@ -1,6 +1,11 @@
 ﻿<table class="resourcePoolTable table-striped">
     <thead>
         <tr>
+            <th colspan="{{ resourcePool.MainElement.ElementFieldSet.length + 1 }}">
+                <h4>{{ resourcePool.Name }}</h4>
+            </th>
+        </tr>
+        <tr>
             <!-- Fields -->
             <th data-ng-repeat="field in resourcePool.MainElement.ElementFieldSet">
                 <table class="resourcePoolFieldsTable">

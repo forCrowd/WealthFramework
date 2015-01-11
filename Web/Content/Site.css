@@ -34,6 +34,11 @@ textarea {
         padding: 2px;
     }
 
+    .resourcePoolTable .header {
+        padding: 10px 0;
+        background-color: red;
+    }
+
     .resourcePoolTable > thead > tr > th,
     .resourcePoolTable > tbody > tr > td,
     .resourcePoolTable > tfoot > tr > td,
