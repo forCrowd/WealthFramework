@@ -15,9 +15,7 @@
             scope.decreaseMultiplier = decreaseMultiplier;
             scope.increaseMultiplier = increaseMultiplier;
             scope.resetMultiplier = resetMultiplier;
-            scope.decreaseResourcePoolRate = decreaseResourcePoolRate;
-            scope.increaseResourcePoolRate = increaseResourcePoolRate;
-            scope.resetResourcePoolRate = resetResourcePoolRate;
+            scope.updateResourcePoolRate = updateResourcePoolRate;
 
             scope.$watch('resourcePoolId', function () {
                 getResourcePool();
@@ -51,22 +49,8 @@
                     });
             }
 
-            function decreaseResourcePoolRate() {
-                resourcePoolService.updateResourcePoolRate(scope.resourcePoolId, scope.resourcePool.ResourcePoolRate - 5)
-                    .success(function () {
-                        getResourcePool();
-                    });
-            }
-
-            function increaseResourcePoolRate() {
-                resourcePoolService.updateResourcePoolRate(scope.resourcePoolId, scope.resourcePool.ResourcePoolRate + 5)
-                    .success(function () {
-                        getResourcePool();
-                    });
-            }
-
-            function resetResourcePoolRate() {
-                resourcePoolService.updateResourcePoolRate(scope.resourcePoolId, 0)
+            function updateResourcePoolRate(rate) {
+                resourcePoolService.updateResourcePoolRate(scope.resourcePoolId, rate)
                     .success(function () {
                         getResourcePool();
                     });

@@ -59,9 +59,9 @@
                                 <div data-ng-if="field.ElementFieldType === 11">
                                     <div class="clearfix"></div>
                                     <div class="btn-group" role="group">
-                                        <button type="submit" data-ng-click="increaseResourcePoolRate()" class="btn btn-default btn-xs">+</button>
-                                        <button type="submit" data-ng-click="decreaseResourcePoolRate()" class="btn btn-default btn-xs">-</button>
-                                        <button type="submit" data-ng-click="resetResourcePoolRate()" class="btn btn-default btn-xs">0</button>
+                                        <button type="submit" data-ng-click="updateResourcePoolRate((resourcePool.ResourcePoolRatePercentage * 100) + 5)" class="btn btn-default btn-xs">+5</button>
+                                        <button type="submit" data-ng-click="updateResourcePoolRate((resourcePool.ResourcePoolRatePercentage * 100) - 5)" class="btn btn-default btn-xs">-5</button>
+                                        <button type="submit" data-ng-click="updateResourcePoolRate(0)" class="btn btn-default btn-xs">0</button>
                                     </div>
                                 </div>
                             </th>

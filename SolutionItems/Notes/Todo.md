@@ -241,32 +241,18 @@ resource - ~decimal
 multiplier - n/a
 
 ---
-chapter 7, 8, 9, 10 ?!
+. chapter 7, 8, 9, 10 ?!
 
----
-	continue with;
-	. angular directives
-	. displaying element + recursive!
-
----
-
-angular ?
-. <!-- directive: my-dir exp -->
-
-. We would expect Angular to be able to bind to this, but when we check the console we see something like Error: Invalid value for attribute cx="{{cx}}". Because of the SVG DOM API's restrictions, you cannot simply write cx="{{cx}}".
-With ng-attr-cx you can work around this problem.
+. displaying element + recursive!
 
 . directive link vs controller
 . directive using service inside of a directive?
 
----
-addfield method should create new elementcells for this new field for the existing items!
+. addfield method should create new elementcells for this new field for the existing items!
 
----
-one elementfieldindex per elementfield ?!?!?!
+. one elementfieldindex per elementfield ?!?!?!
 
----	
-resourcepoolview - Resource Pool + Field Index combo - should the fields be separate? income part can be at the end?
+. resourcepoolview - Resource Pool + Field Index combo - should the fields be separate? income part can be at the end?
 
 ---
 cell is always showing the same info, not per index???
