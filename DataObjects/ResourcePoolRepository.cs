@@ -29,16 +29,64 @@
                 : null;
         }
 
+        public ResourcePool CreateUPOSample(User user)
+        {
+            // Resource pool
+            var resourcePool = CreateDefaultResourcePool(user, false, true, true, false, 1);
+            resourcePool.Name = "UPO";
+            resourcePool.EnableResourcePoolAddition = false;
+            resourcePool.EnableSubtotals = false;
+            resourcePool.IsSample = true;
+
+            // Main element
+            var mainElement = resourcePool.MainElement;
+            mainElement.Name = "Organization";
+            mainElement.NameField.Name = "Organization";
+            mainElement.ResourcePoolField.Name = "Sales Price"; // TODO It does not fit! Update this after having Initial Amount on RP!
+            mainElement.MultiplierField.Name = "Sales Number";
+
+            // Items, cell, user cells
+            // TODO How about ToList()[0]?
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "UPO";
+
+            // Return
+            return resourcePool;
+        }
+
+        public ResourcePool CreateBasicSample(User user)
+        {
+            // Resource pool
+            var resourcePool = CreateDefaultResourcePool(user, false, false, false, true, 2);
+            resourcePool.Name = "Basic Sample";
+            resourcePool.InitialValue = 100;
+            resourcePool.IsSample = true;
+
+            // Main element
+            var mainElement = resourcePool.MainElement;
+            mainElement.Name = "Organization";
+            mainElement.NameField.Name = "Organization";
+            //mainElement.ResourcePoolField.Name = "Sales Price";
+            //mainElement.MultiplierField.Name = "Sales Number";
+
+            // Items, cell, user cells
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Organization A";
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Organization B";
+
+            // Return
+            return resourcePool;
+        }
+
         public ResourcePool CreateSectorIndexSample(User user)
         {
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user, true, 9);
+            var resourcePool = CreateDefaultResourcePool(user, true, true, true, true, 9);
             resourcePool.Name = "Sector Index Sample";
             resourcePool.IsSample = true;
 
             // Main element
             var mainElement = resourcePool.MainElement;
             mainElement.Name = "Sector";
+            mainElement.NameField.Name = "Sector";
             mainElement.ResourcePoolField.Name = "Sales Price"; // TODO It does not fit! Update this after having Initial Amount on RP!
             mainElement.MultiplierField.Name = "Sales Number";
 
@@ -68,13 +116,9 @@
             // Main element
             var mainElement = resourcePool.MainElement;
             mainElement.Name = "License";
+            mainElement.NameField.Name = "License";
             mainElement.ResourcePoolField.Name = "Sales Price"; // TODO It does not fit! Update this after having Initial Amount on RP!
             mainElement.MultiplierField.Name = "Sales Number";
-
-            // TODO Just for test - remove later!
-            var decimalField = mainElement.AddField("Decimal Field", ElementFieldTypes.Decimal, true);
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(decimalField).DecimalValue = 11;
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(decimalField).DecimalValue = 22;
 
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Open Source License";
@@ -94,6 +138,7 @@
             // Main element
             var mainElement = resourcePool.MainElement;
             mainElement.Name = "Organization";
+            mainElement.NameField.Name = "Organization";
             mainElement.ResourcePoolField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Sales Number";
 
@@ -114,26 +159,33 @@
             return resourcePool;
         }
 
-        public ResourcePool CreateDefaultResourcePool(User user, bool createImportanceIndex)
+        public ResourcePool CreateDefaultResourcePool(User user, bool addImportanceIndex)
         {
-            return CreateDefaultResourcePool(user, createImportanceIndex, DEFAULTNUMBEROFITEMS);
+            return CreateDefaultResourcePool(user, true, true, true, addImportanceIndex, DEFAULTNUMBEROFITEMS);
         }
 
-        public ResourcePool CreateDefaultResourcePool(User user, bool createImportanceIndex, short numberOfItems)
+        public ResourcePool CreateDefaultResourcePool(User user, bool addUserResourcePool, bool addResourcePoolField, bool addMultiplierField, bool addImportanceIndex, short numberOfItems)
         {
             // Resource pool, main element, fields
             var resourcePool = new ResourcePool("Default");
-            resourcePool.AddUserResourcePool(user, 101);
 
-            resourcePool
-                .AddElement("Main Element")
-                    .AddField("Resource Pool Field", ElementFieldTypes.ResourcePool, true)
-                .Element
-                    .AddField("Multiplier", ElementFieldTypes.Multiplier);
+            // User resource pool
+            if (addUserResourcePool)
+                resourcePool.AddUserResourcePool(user, 101);
+
+            var element = resourcePool.AddElement("Main Element");
+
+            // Resource pool field
+            if (addResourcePoolField)
+                element.AddField("Resource Pool Field", ElementFieldTypes.ResourcePool, true);
+
+            // Multiplier field
+            if (addMultiplierField)
+                element.AddField("Multiplier", ElementFieldTypes.Multiplier);
 
             // Importance field
             ElementField importanceField = null;
-            if (createImportanceIndex)
+            if (addImportanceIndex)
             {
                 importanceField = resourcePool.MainElement.AddField("Importance Field", ElementFieldTypes.Decimal, false);
                 importanceField
@@ -147,14 +199,15 @@
             {
                 var itemName = string.Format("Item {0}", i);
 
-                var item = resourcePool.MainElement
-                    .AddItem(itemName)
-                        .AddCell(resourcePool.MainElement.ResourcePoolField).SetValue(100M)
-                    .ElementItem
-                        .AddCell(resourcePool.MainElement.MultiplierField).SetValue(0M, user)
-                    .ElementItem;
+                var item = resourcePool.MainElement.AddItem(itemName);
 
-                if (createImportanceIndex)
+                if (addResourcePoolField)
+                    item.AddCell(resourcePool.MainElement.ResourcePoolField).SetValue(100M);
+
+                if (addMultiplierField)
+                    item.AddCell(resourcePool.MainElement.MultiplierField).SetValue(0M, user);
+
+                if (addImportanceIndex)
                     item.AddCell(importanceField).SetValue(itemValue, user);
             }
 

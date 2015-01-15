@@ -42,7 +42,7 @@
                 .success(function (data) {
 
                     // Set access token to the session
-                    $window.sessionStorage.setItem('access_token', data.access_token);
+                    $window.localStorage.setItem('access_token', data.access_token);
 
                     // Raise logged in event
                     $rootScope.$broadcast('userLoggedIn');
@@ -76,7 +76,7 @@
                 .success(function () {
 
                     // Remove access token from the session
-                    $window.sessionStorage.removeItem('access_token');
+                    $window.localStorage.removeItem('access_token');
 
                     // Clear userInfo
                     userInfo = null;

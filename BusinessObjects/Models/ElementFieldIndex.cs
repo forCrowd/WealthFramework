@@ -114,7 +114,7 @@ namespace BusinessObjects
 
         public decimal IndexShare(User multiplierUser)
         {
-            return ElementField.Element.ResourcePool.TotalResourcePoolAddition(multiplierUser) * IndexRatingPercentage();
+            return ElementField.Element.ResourcePool.TotalResourcePoolValue(multiplierUser) * IndexRatingPercentage();
         }
     }
 }

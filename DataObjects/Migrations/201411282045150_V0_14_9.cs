@@ -256,6 +256,9 @@ namespace DataObjects.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false, maxLength: 50),
+                        InitialValue = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        EnableResourcePoolAddition = c.Boolean(nullable: false),
+                        EnableSubtotals = c.Boolean(nullable: false),
                         IsSample = c.Boolean(nullable: false),
                         CreatedOn = c.DateTime(nullable: false),
                         ModifiedOn = c.DateTime(nullable: false),

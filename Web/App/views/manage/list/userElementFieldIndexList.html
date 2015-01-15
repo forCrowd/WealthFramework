@@ -16,7 +16,7 @@
     <table class="table">
         <tr>
             <th>
-                Id
+                Email
             </th>
             <th>
                 Element Field Index
@@ -28,7 +28,7 @@
         </tr>
         <tr data-ng-repeat="userElementFieldIndex in vm.userElementFieldIndexSet">
             <td>
-                {{ userElementFieldIndex.UserResourcePool.Id }}
+                {{ userElementFieldIndex.User.Email }}
             </td>
             <td>
                 {{ userElementFieldIndex.ElementFieldIndex.Name }}

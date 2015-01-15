@@ -8,8 +8,9 @@ namespace Web
         public static void RegisterSecurityFilters(HttpFilterCollection filters)
         {
             // Authorize required by default
-            // TODO Enable this before production?
-            //filters.Add(new AuthorizeAttribute());
+#if !DEBUG
+            filters.Add(new AuthorizeAttribute());
+#endif
         }
     }
 }

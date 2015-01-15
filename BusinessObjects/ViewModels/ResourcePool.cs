@@ -11,6 +11,8 @@ namespace BusinessObjects.ViewModels
         {
             Id = resourcePool.Id;
             Name = resourcePool.Name;
+            EnableResourcePoolAddition = resourcePool.EnableResourcePoolAddition;
+            EnableSubtotals = resourcePool.EnableSubtotals;
             ResourcePoolRate = resourcePool.ResourcePoolRate();
             ResourcePoolRatePercentage = resourcePool.ResourcePoolRatePercentage();
             UserResourcePoolRatingCount = resourcePool.UserResourcePoolSet.Count;
@@ -20,6 +22,8 @@ namespace BusinessObjects.ViewModels
 
         public int Id { get; set; }
         public string Name { get; set; }
+        public bool EnableResourcePoolAddition { get; set; }
+        public bool EnableSubtotals { get; set; }
         public decimal ResourcePoolRate { get; set; }
         public decimal ResourcePoolRatePercentage { get; set; }
         public int UserResourcePoolRatingCount { get; set; }

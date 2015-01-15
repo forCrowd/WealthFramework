@@ -70,7 +70,8 @@ namespace BusinessObjects
 
         public ElementField NameField
         {
-            get { return ElementFieldSet.SingleOrDefault(item => item.Name == "Name"); }
+            // TODO Is it correct approach?
+            get { return ElementFieldSet.Single(item => item.SortOrder == 1); }
         }
 
         public bool HasNameField

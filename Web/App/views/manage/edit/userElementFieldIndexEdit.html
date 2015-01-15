@@ -22,9 +22,9 @@
                 </ul>
             </div>
             <div class="form-group">
-                <label for="UserResourcePoolId" class="control-label col-md-2">Id</label>
-                <div class="col-md-10" data-ng-class="{'has-error': editForm.UserResourcePoolId.$invalid && !editForm.UserResourcePoolId.$pristine}">
-                    <select id="UserResourcePoolId" name="UserResourcePoolId" data-ng-model="vm.userElementFieldIndex.UserResourcePool" data-ng-options="userResourcePool.Id for userResourcePool in vm.userResourcePoolSet" class="form-control" required ></select>
+                <label for="UserId" class="control-label col-md-2">Email</label>
+                <div class="col-md-10" data-ng-class="{'has-error': editForm.UserId.$invalid && !editForm.UserId.$pristine}">
+                    <select id="UserId" name="UserId" data-ng-model="vm.userElementFieldIndex.User" data-ng-options="user.Email for user in vm.userSet" class="form-control" required ></select>
                 </div>
             </div>
             <div class="form-group">

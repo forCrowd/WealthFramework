@@ -27,6 +27,9 @@
             <th>
                 Fixed Value
             </th>
+            <th>
+                Sort Order
+            </th>
             <th></th>
         </tr>
         <tr data-ng-repeat="elementField in vm.elementFieldSet">
@@ -41,6 +44,9 @@
             </td>
             <td>
                 {{ elementField.FixedValue }}
+            </td>
+            <td>
+                {{ elementField.SortOrder }}
             </td>
             <td>
                 <a href="/manage/elementField/edit/{{ elementField.Id }}">Edit</a> |

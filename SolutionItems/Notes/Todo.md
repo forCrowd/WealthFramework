@@ -217,6 +217,35 @@ public string LanguageID { get; set; }
 
 ### Misc - Unsorted
 
+* H2020;
+
+Calls
+28 May
+http://ec.europa.eu/research/participants/portal/desktop/en/opportunities/h2020/calls/h2020-inso-2015-cnect.html
+http://ec.europa.eu/research/participants/portal/desktop/en/opportunities/h2020/calls/h2020-inso-2015.html
+http://ec.europa.eu/research/participants/portal/desktop/en/opportunities/h2020/calls/h2020-euro-society-2015.html
+http://ec.europa.eu/research/participants/portal/desktop/en/opportunities/h2020/calls/h2020-euro-6-2015.html
+
+Schedule
+Jan, Feb, Mar -> develop
+Apr -> deploy + open to public test
+May -> prepare for calls
+
+						CONTINUE WITH BASIC SAMPLE!
+						FIRST, WITHOUT INDEX -> 50 - 50
+						THEN INTRODUCE THE EMPLOYEE SATISFACTION INDEX -> ...
+
+* Content related;
+dynamic pricing - low price is good but can't be zero because then it's not sustainable as well?
+
+* resourcepoolfield -> incomefield?
+total[x] props -> [x]Multiplied?
+
+* resourcepool is a mandatory field? without it, we can't calculate the income?!
+
+* cmrp rate visibility or resourcepool has it?
+(total) resource pool field incl. CMRP Add. field visibility?
+
 * try to make stores (repositories), managers and controllers (also business objects) testable?
 what are the dependencies? work on separation of concerns.
 where to create memorydbcontext? on dbobjects or business objects? also do we need IoC framework? ninject looks quite easy but is it necessary?

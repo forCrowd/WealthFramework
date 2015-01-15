@@ -33,7 +33,7 @@
         return {
             request: function (config) {
                 config.headers = config.headers || {};
-                var access_token = $window.sessionStorage.getItem('access_token');
+                var access_token = $window.localStorage.getItem('access_token');
                 if (access_token !== null)
                     config.headers.Authorization = 'Bearer ' + access_token;
                 return config;
@@ -57,7 +57,7 @@
         var newClient = {
             request: function (request, success, error) {
                 request.headers = request.headers || {};
-                var access_token = $window.sessionStorage.getItem('access_token');
+                var access_token = $window.localStorage.getItem('access_token');
                 if (access_token !== null)
                     request.headers.Authorization = 'Bearer ' + access_token;
                 return oldClient.request(request, success, error);

@@ -14,6 +14,8 @@ An experimental resource management system that aims to provide a sustainable ec
 * ElementFieldIndex is now on User level, instead of UserResourcePool
 * SortOrder field was added to ElementField
 * resourcePoolEditor angular directive
+* InitialValue on ResourcePool class
+* sessionStorage was replaced with localStorage to keep "access_token"
 
 **0.14.8**
 

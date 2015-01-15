@@ -71,7 +71,8 @@ namespace BusinessObjects
 
         public ElementCell NameCell
         {
-            get { return ElementCellSet.SingleOrDefault(item => item.ElementField.Name == "Name"); }
+            // TODO Is it correct approach?
+            get { return ElementCellSet.SingleOrDefault(item => item.ElementField.SortOrder == 1); }
         }
 
         public ElementCell ResourcePoolCell

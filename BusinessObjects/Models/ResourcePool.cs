@@ -22,6 +22,8 @@ namespace BusinessObjects
             Validations.ArgumentNullOrDefault(name, "name");
 
             Name = name;
+            EnableResourcePoolAddition = true;
+            EnableSubtotals = true;
             ElementSet = new HashSet<Element>();
             //ElementFieldIndexSet = new HashSet<ElementFieldIndex>();
             UserResourcePoolSet = new HashSet<UserResourcePool>();
@@ -36,7 +38,15 @@ namespace BusinessObjects
         [Display(Name = "Resource Pool")]
         public string Name { get; set; }
 
-        [Required]
+        [Display(Name = "Initial Value")]
+        public decimal InitialValue { get; set; }
+
+        [Display(Name = "Enable CMRP Addition")]
+        public bool EnableResourcePoolAddition { get; set; }
+
+        [Display(Name = "Enable Subtotals")]
+        public bool EnableSubtotals { get; set; }
+
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         public bool IsSample { get; set; }
@@ -81,14 +91,19 @@ namespace BusinessObjects
             return MainElement.ElementItemSet.Sum(item => item.ResourcePoolValueIncludingAddition());
         }
 
-        public decimal TotalResourcePoolValue(User multiplierUser)
-        {
-            return MainElement.ElementItemSet.Sum(item => item.TotalResourcePoolValue(multiplierUser));
-        }
+        //public decimal TotalResourcePoolValue(User multiplierUser)
+        //{
+        //    return MainElement.ElementItemSet.Sum(item => item.TotalResourcePoolValue(multiplierUser));
+        //}
 
         public decimal TotalResourcePoolAddition(User multiplierUser)
         {
             return MainElement.ElementItemSet.Sum(item => item.TotalResourcePoolAddition(multiplierUser));
+        }
+
+        public decimal TotalResourcePoolValue(User multiplierUser)
+        {
+            return InitialValue + TotalResourcePoolAddition(multiplierUser);
         }
 
         public decimal TotalResourcePoolValueIncludingAddition(User multiplierUser)
@@ -151,7 +166,8 @@ namespace BusinessObjects
             MultiplierMethodValidations(user);
 
             foreach (var item in MainElement.ElementItemSet)
-                item.MultiplierCell.SetValue(item.MultiplierValue(user) - 1M, user);
+                if (item.MultiplierValue(user) > 0)
+                    item.MultiplierCell.SetValue(item.MultiplierValue(user) - 1M, user);
 
             return this;
         }
