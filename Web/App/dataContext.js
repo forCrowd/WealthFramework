@@ -111,14 +111,15 @@
                     return promise.then(success).catch(failed);
 
                     function success(result) {
-                        logger.logSuccess('Saved ' + count + ' change(s)', result, true);
+                        logger.logSuccess('Saved ' + count + ' change(s)', result);
+                        return result;
                     }
 
                     function failed(error) {
                         if (error.status  !== 'undefined' && error.status === '409') {
                             logger.logError('Save failed!<br />The record you attempted to edit was modified by another user after you got the original value. The edit operation was canceled.', null, true);
                         } else {
-                            logger.logError('Save failed!', error, true);
+                            logger.logError('Save failed!', error);
                         }
                         return $q.reject(error); // pass error along to next handler
                     }

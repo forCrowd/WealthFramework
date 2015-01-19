@@ -4,11 +4,12 @@
     var directiveId = 'resourcePoolEditor';
     angular.module('main')
         .directive(directiveId, ['resourcePoolService',
+            'userElementCellService',
             '$rootScope',
             'logger',
             resourcePoolEditor]);
 
-    function resourcePoolEditor(resourcePoolService, $rootScope, logger) {
+    function resourcePoolEditor(resourcePoolService, userElementCellService, $rootScope, logger) {
         logger = logger.forSource(directiveId);
 
         function link(scope, element, attrs) {
@@ -29,7 +30,7 @@
                     options: {
                         chart: {
                             type: 'column'
-                            //, height: 200
+                            , height: 250
                         },
                         yAxis: {
                             min: 0,
@@ -50,16 +51,38 @@
                 }, true);
 
                 // Listen resource pool updated event
-                $rootScope.$on('resourcePoolUpdated', function (event, resourcePoolId) {
+                $rootScope.$on('resourcePool_MultiplierIncreased', resourcePoolUpdated);
+                $rootScope.$on('resourcePool_MultiplierDecreased', resourcePoolUpdated);
+                $rootScope.$on('resourcePool_MultiplierReset', resourcePoolUpdated);
+                $rootScope.$on('resourcePool_ResourcePoolRateUpdated', resourcePoolUpdated);
+                $rootScope.$on('resourcePool_Saved', resourcePoolUpdated);
+
+                function resourcePoolUpdated(event, resourcePoolId) {
                     if (scope.resourcePoolId === resourcePoolId)
                         getResourcePool();
-                });
+                }
             }
 
             function getResourcePool() {
-                resourcePoolService.getResourcePool(scope.resourcePoolId)
+
+                resourcePoolService.getResourcePoolCustom(scope.resourcePoolId)
                     .success(function (resourcePool) {
                         scope.resourcePool = resourcePool;
+
+                        angular.forEach(scope.resourcePool.MainElement.ElementItemSet, function (elementItem) {
+                            angular.forEach(elementItem.ElementCellSet, function (elementCell) {
+                                if (elementCell.ElementField.ElementFieldIndexSet.length > 0) {
+
+                                    elementCell.increaseIndexCellValue = function () {
+                                        updateIndexCellValue(elementCell, 'increase');
+                                    }
+
+                                    elementCell.decreaseIndexCellValue = function () {
+                                        updateIndexCellValue(elementCell, 'decrease');
+                                    }
+                                }
+                            });
+                        })
 
                         // Update Highchart data
                         scope.chartConfig.loading = true;
@@ -91,6 +114,39 @@
                         scope.chartConfig.loading = false;
 
                     });
+
+                function updateIndexCellValue(elementCell, type) {
+
+                    userElementCellService.getUserElementCellSetByElementCellId(elementCell.Id, true)
+                        .then(function (userElementCellSet) {
+
+                            var userElementCell = null;
+
+                            if (userElementCellSet.length > 0) {
+                                userElementCell = userElementCellSet[0];
+                                userElementCell.DecimalValue = type === 'increase'
+                                    ? userElementCell.DecimalValue + 10
+                                    : userElementCell.DecimalValue - 10;
+                                var rowVersion = userElementCell.RowVersion;
+                                userElementCell.RowVersion = '';
+                                userElementCell.RowVersion = rowVersion;
+                            }
+                            else {
+                                // TODO UserId?
+                                userElementCell.ElementCellId = elementCell.Id;
+                                userElementCell.DecimalValue = type === 'increase' // TODO ?
+                                    ? 55
+                                    : 45;
+                                userElementCellService.createUserElementCell(userElementCell);
+                            }
+
+                            userElementCellService.saveChanges()
+                                .then(function () {
+                                    //logger.logSuccess('Your changes have been saved!');
+                                    getResourcePool();
+                                });
+                        });
+                }
             }
 
             function decreaseMultiplier() {

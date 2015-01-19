@@ -56,7 +56,8 @@
 
             // Sample resource pools
             resourcePoolRepository.Insert(resourcePoolRepository.CreateUPOSample(sampleUser));
-            resourcePoolRepository.Insert(resourcePoolRepository.CreateBasicSample(sampleUser));
+            resourcePoolRepository.Insert(resourcePoolRepository.CreateBasicsExistingSystemSample(sampleUser));
+            resourcePoolRepository.Insert(resourcePoolRepository.CreateBasicsNewSystemSample(sampleUser));
             resourcePoolRepository.Insert(resourcePoolRepository.CreateSectorIndexSample(sampleUser));
             resourcePoolRepository.Insert(resourcePoolRepository.CreateKnowledgeIndexSample(sampleUser));
             resourcePoolRepository.Insert(resourcePoolRepository.CreateTotalCostIndexSample(sampleUser));

@@ -62,6 +62,7 @@
             else {
                 resourcePoolService.getResourcePool($routeParams.Id)
                     .then(function (data) {
+                        logger.log('resourcePool', data);
                         vm.resourcePool = data;
                     })
                     .catch(function (error) {

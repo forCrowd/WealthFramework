@@ -25,6 +25,7 @@
                                                     <!--<col class="valueMultipliedField" />-->
                                                     <col class="valuePercentageField" />
                                                     <col class="indexIncomeField" />
+                                                    <col class="indexFunctionsField" />
                                                 </colgroup>
                                                 <thead>
                                                     <tr>
@@ -41,6 +42,9 @@
                                                         </th>
                                                         <th>
                                                             Income
+                                                        </th>
+                                                        <th>
+                                                            &nbsp;
                                                         </th>
                                                     </tr>
                                                 </thead>
@@ -136,6 +140,7 @@
                                                     <!--<col class="valueMultipliedField" />-->
                                                     <col class="valuePercentageField" />
                                                     <col class="indexIncomeField" />
+                                                    <col class="indexFunctionsField" />
                                                 </colgroup>
                                                 <tbody>
                                                     <tr>
@@ -148,8 +153,13 @@
                                                         <td>
                                                             {{ elementCell.ElementFieldIndexIncome | number:2 }}
                                                         </td>
+                                                        <td>
+                                                            <div class="btn-group" role="group">
+                                                                <button type="submit" data-ng-click="elementCell.increaseIndexCellValue()" class="btn btn-default btn-xs">+10</button>
+                                                                <button type="submit" data-ng-click="elementCell.decreaseIndexCellValue()" class="btn btn-default btn-xs">-10</button>
+                                                            </div>
+                                                        </td>
                                                     </tr>
-                                                    </
                                                 </tbody>
                                             </table>
                                         </td>
@@ -209,6 +219,7 @@
                                                     <!--<col class="valueMultipliedField" />-->
                                                     <col class="valuePercentageField" />
                                                     <col class="indexIncomeField" />
+                                                    <col class="indexFunctionsField" />
                                                 </colgroup>
                                                 <tfoot>
                                                     <tr>
@@ -220,6 +231,9 @@
                                                         </td>
                                                         <td>
                                                             {{ index.ElementFieldIndexIncome | number:2 }}
+                                                        </td>
+                                                        <td>
+                                                            &nbsp;
                                                         </td>
                                                     </tr>
                                                 </tfoot>

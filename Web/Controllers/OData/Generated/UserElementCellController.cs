@@ -12,6 +12,7 @@ namespace Web.Controllers.OData
     using BusinessObjects;
     using Facade;
     using Microsoft.AspNet.Identity;
+    using System;
     using System.Data.Entity.Infrastructure;
     using System.Linq;
     using System.Net;
@@ -34,12 +35,12 @@ namespace Web.Controllers.OData
         //[Queryable]
         public virtual IQueryable<UserElementCell> Get()
         {
-			var userId = this.GetCurrentUserId();
-			if (!userId.HasValue)
-                throw new HttpResponseException(HttpStatusCode.Unauthorized);	
+            var userId = this.GetCurrentUserId();
+            if (!userId.HasValue)
+                throw new HttpResponseException(HttpStatusCode.Unauthorized);
 
-			var list = MainUnitOfWork.AllLive;
-			list = list.Where(item => item.UserId == userId.Value);
+            var list = MainUnitOfWork.AllLive;
+            list = list.Where(item => item.UserId == userId.Value);
             return list;
         }
 
@@ -125,6 +126,11 @@ namespace Web.Controllers.OData
             }
 
             var patchEntity = patch.GetEntity();
+
+            // TODO How is passed ModelState.IsValid?
+            if (patchEntity.RowVersion == null)
+                throw new InvalidOperationException("RowVersion property of the entity cannot be null");
+
             if (!userElementCell.RowVersion.SequenceEqual(patchEntity.RowVersion))
             {
                 return Conflict();

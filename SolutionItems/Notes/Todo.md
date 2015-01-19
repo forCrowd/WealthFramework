@@ -231,9 +231,18 @@ Jan, Feb, Mar -> develop
 Apr -> deploy + open to public test
 May -> prepare for calls
 
-						CONTINUE WITH BASIC SAMPLE!
-						FIRST, WITHOUT INDEX -> 50 - 50
-						THEN INTRODUCE THE EMPLOYEE SATISFACTION INDEX -> ...
+			continue with basic sample - initialvalue didnt work! maybe again using number of sales?
+			and/or continue with index rating!
+			
+			
+			continue with sector index - user rating average explanation!
+			
+			
+			* find a way to get userelementcell to breeze? update + save on elementcell level?
+			
+* elastic search?
+
+* using resourcePool initialValue for Basic Sample is not a good idea - it's not on user level?!
 
 * Content related;
 dynamic pricing - low price is good but can't be zero because then it's not sustainable as well?

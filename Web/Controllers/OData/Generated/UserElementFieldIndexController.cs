@@ -12,6 +12,7 @@ namespace Web.Controllers.OData
     using BusinessObjects;
     using Facade;
     using Microsoft.AspNet.Identity;
+    using System;
     using System.Data.Entity.Infrastructure;
     using System.Linq;
     using System.Net;
@@ -19,6 +20,7 @@ namespace Web.Controllers.OData
     using System.Web.Http;
     using System.Web.Http.ModelBinding;
     using System.Web.Http.OData;
+    using Web.Controllers.Extensions;
 
     public abstract class BaseUserElementFieldIndexController : BaseODataController
     {
@@ -33,7 +35,12 @@ namespace Web.Controllers.OData
         //[Queryable]
         public virtual IQueryable<UserElementFieldIndex> Get()
         {
+			var userId = this.GetCurrentUserId();
+			if (!userId.HasValue)
+                throw new HttpResponseException(HttpStatusCode.Unauthorized);	
+
 			var list = MainUnitOfWork.AllLive;
+			list = list.Where(item => item.UserId == userId.Value);
             return list;
         }
 
@@ -119,6 +126,11 @@ namespace Web.Controllers.OData
             }
 
             var patchEntity = patch.GetEntity();
+
+            // TODO How is passed ModelState.IsValid?
+            if (patchEntity.RowVersion == null)
+                throw new InvalidOperationException("RowVersion property of the entity cannot be null");
+
             if (!userElementFieldIndex.RowVersion.SequenceEqual(patchEntity.RowVersion))
             {
                 return Conflict();

@@ -17,9 +17,70 @@ textarea {
     max-width: 280px;
 }
 
+p.bg-info {
+    padding: 15px;
+}
+
 .btn-xs {
     font-size: 10px;
+    height: 18px;
+    width: 18px;
 }
+
+/* Callout Begin */
+
+.bs-callout{
+	padding:20px;
+	margin:20px 0;
+	border:1px solid #eee;
+	border-left-width:5px;
+	border-radius:3px
+}
+
+.bs-callout h4{
+	margin-top:0;
+	margin-bottom:5px
+}
+
+.bs-callout p:last-child{
+	margin-bottom:0
+}
+
+.bs-callout code{
+	border-radius:3px
+}
+
+.bs-callout+.bs-callout{
+	margin-top:-5px
+}
+
+.bs-callout-danger{
+	border-left-color:#d9534f
+}
+
+.bs-callout-danger h4{
+	color:#d9534f
+}
+
+.bs-callout-warning{
+	border-left-color:#f0ad4e
+}
+
+.bs-callout-warning h4{
+	color:#f0ad4e
+}
+
+.bs-callout-info{
+	border-left-color:#5bc0de
+}
+
+.bs-callout-info h4{
+	color:#5bc0de
+}
+
+/* Callout End */
+
+/* ResourcePoolEditor Begin */
 
 .resourcePoolEditor {
     font-family: Tahoma;
@@ -31,10 +92,16 @@ textarea {
     /*table-layout: fixed;*/
 }
 
-    .resourcePoolTable th,
-    .resourcePoolTable td {
-        overflow: hidden; /* Hide text outside the cell */
+    /*.resourcePoolTable th,
+    .resourcePoolTable td {*/
+    .resourcePoolTable > thead > tr > th {
         vertical-align: top;
+    }
+
+    .resourcePoolTable > thead > tr > th,
+    .resourcePoolTable > tbody > tr > td,
+    .resourcePoolTable > tfoot > tr > td {
+        overflow: hidden; /* Hide text outside the cell */
         padding: 2px;
     }
 
@@ -71,6 +138,12 @@ textarea {
     .resourcePoolTable .resourcePoolFieldsTable .fieldIndexTable > colgroup > col.indexIncomeField {
         width: 75px;
     }
+
+    .resourcePoolTable .resourcePoolFieldsTable .fieldIndexTable > colgroup > col.indexFunctionsField {
+        width: 45px;
+    }
+
+/* ResourcePoolEditor End */
 
 /* styles for validation helpers */
 .field-validation-error {

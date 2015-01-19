@@ -53,20 +53,52 @@
             return resourcePool;
         }
 
-        public ResourcePool CreateBasicSample(User user)
+        public ResourcePool CreateBasicsExistingSystemSample(User user)
         {
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user, false, false, false, true, 2);
-            resourcePool.Name = "Basic Sample";
-            resourcePool.InitialValue = 100;
+            var resourcePool = CreateDefaultResourcePool(user, false, true, true, false, 2);
+            resourcePool.Name = "Basics - Existing Model";
+            resourcePool.EnableResourcePoolAddition = false;
+            //resourcePool.EnableSubtotals = false;
             resourcePool.IsSample = true;
 
             // Main element
             var mainElement = resourcePool.MainElement;
             mainElement.Name = "Organization";
             mainElement.NameField.Name = "Organization";
-            //mainElement.ResourcePoolField.Name = "Sales Price";
-            //mainElement.MultiplierField.Name = "Sales Number";
+            mainElement.ResourcePoolField.Name = "Sales Price";
+            mainElement.MultiplierField.Name = "Sales Number";
+
+            // Items, cell, user cells
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Organization A";
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Organization B";
+
+            // Return
+            return resourcePool;
+        }
+
+        public ResourcePool CreateBasicsNewSystemSample(User user)
+        {
+            // Resource pool
+            var resourcePool = CreateDefaultResourcePool(user, true, true, true, true, 2);
+            resourcePool.Name = "Basics - New Model";
+            resourcePool.EnableResourcePoolAddition = false;
+            //resourcePool.EnableSubtotals = false;
+            resourcePool.IsSample = true;
+
+            // User resource pool
+            var userResourcePool = resourcePool.UserResourcePoolSet.Single().ResourcePoolRate = 15;
+
+            // Main element
+            var mainElement = resourcePool.MainElement;
+            mainElement.Name = "Organization";
+            mainElement.NameField.Name = "Organization";
+            
+            // Fields
+            mainElement.ResourcePoolField.Name = "Sales Price";
+            mainElement.MultiplierField.Name = "Sales Number";
+            mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).Name = "-";
+            mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).ElementFieldIndex.Name = "Employee Satisfaction";
 
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Organization A";

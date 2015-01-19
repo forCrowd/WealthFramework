@@ -19,7 +19,13 @@
                 Resource Pool
             </th>
             <th>
+                Initial Value
+            </th>
+            <th>
                 Enable CMRP Addition
+            </th>
+            <th>
+                Enable Subtotals
             </th>
             <th></th>
         </tr>
@@ -28,7 +34,13 @@
                 {{ resourcePool.Name }}
             </td>
             <td>
+                {{ resourcePool.InitialValue }}
+            </td>
+            <td>
                 {{ resourcePool.EnableResourcePoolAddition }}
+            </td>
+            <td>
+                {{ resourcePool.EnableSubtotals }}
             </td>
             <td>
                 <a href="/manage/resourcePool/edit/{{ resourcePool.Id }}">Edit</a> |

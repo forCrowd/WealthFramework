@@ -12,6 +12,7 @@ namespace Web.Controllers.OData
     using BusinessObjects;
     using Facade;
     using Microsoft.AspNet.Identity;
+    using System;
     using System.Data.Entity.Infrastructure;
     using System.Linq;
     using System.Net;
@@ -125,6 +126,11 @@ namespace Web.Controllers.OData
             }
 
             var patchEntity = patch.GetEntity();
+
+            // TODO How is passed ModelState.IsValid?
+            if (patchEntity.RowVersion == null)
+                throw new InvalidOperationException("RowVersion property of the entity cannot be null");
+
             if (!userResourcePool.RowVersion.SequenceEqual(patchEntity.RowVersion))
             {
                 return Conflict();
