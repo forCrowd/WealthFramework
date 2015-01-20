@@ -29,25 +29,32 @@
                 scope.chartConfig = {
                     options: {
                         chart: {
-                            type: 'column'
-                            , height: 250
+                            type: ''
                         },
-                        yAxis: {
-                            min: 0,
-                            allowDecimals: false
-                        },
-                        xAxis: { categories: [''] },
                         plotOptions: {
                             column: {
+                                allowPointSelect: true,
                                 pointWidth: 15
+                            },
+                            pie: {
+                                allowPointSelect: true
                             }
+                        },
+                        xAxis: { categories: [''] },
+                        yAxis: {
+                            allowDecimals: false,
+                            min: 0
                         }
                     }
-                }
+                };
 
-                // List resourcePoolId property change
+                // Watches
                 scope.$watch('resourcePoolId', function () {
                     getResourcePool();
+                }, true);
+
+                scope.$watch('chartHeight', function () {
+                    scope.chartConfig.options.chart.height = scope.chartHeight;
                 }, true);
 
                 // Listen resource pool updated event
@@ -67,10 +74,16 @@
 
                 resourcePoolService.getResourcePoolCustom(scope.resourcePoolId)
                     .success(function (resourcePool) {
+
+                        // Resource pool
                         scope.resourcePool = resourcePool;
 
-                        angular.forEach(scope.resourcePool.MainElement.ElementItemSet, function (elementItem) {
-                            angular.forEach(elementItem.ElementCellSet, function (elementCell) {
+                        for (var i = 0; i < resourcePool.MainElement.ElementItemSet.length; i++) {
+                            var elementItem = resourcePool.MainElement.ElementItemSet[i];
+
+                            for (var x = 0; x < elementItem.ElementCellSet.length; x++) {
+                                var elementCell = elementItem.ElementCellSet[x];
+
                                 if (elementCell.ElementField.ElementFieldIndexSet.length > 0) {
 
                                     elementCell.increaseIndexCellValue = function () {
@@ -81,8 +94,8 @@
                                         updateIndexCellValue(elementCell, 'decrease');
                                     }
                                 }
-                            });
-                        })
+                            }
+                        }
 
                         // Update Highchart data
                         scope.chartConfig.loading = true;
@@ -93,21 +106,67 @@
 
                             scope.chartConfig.resourcePoolId = resourcePool.Id;
                             scope.chartConfig.title = resourcePool.Name;
-                            //scope.chartConfig.options.yAxis.title = { text: resourcePool.MainElement.MultiplierFieldName };
-                            scope.chartConfig.options.yAxis.title = { text: 'Total Income' };
                             scope.chartConfig.series = [];
 
-                            for (var i = 0; i < resourcePool.MainElement.ElementItemSet.length; i++) {
-                                var elementItemChartData = {
-                                    name: resourcePool.MainElement.ElementItemSet[i].Name,
-                                    data: [resourcePool.MainElement.ElementItemSet[i].TotalIncome]
-                                };
-                                scope.chartConfig.series.push(elementItemChartData);
+                            // Column type
+                            if (resourcePool.MainElement.HasResourcePoolField) {
+
+                                scope.chartConfig.options.chart.type = 'column';
+                                scope.chartConfig.options.yAxis.title = { text: 'Total Income' };
+
+                                for (var i = 0; i < resourcePool.MainElement.ElementItemSet.length; i++) {
+                                    var elementItem = resourcePool.MainElement.ElementItemSet[i];
+                                    var chartDataItem = {
+                                        name: elementItem.Name,
+                                        data: [elementItem.TotalIncome]
+                                    };
+                                    scope.chartConfig.series.push(chartDataItem);
+                                }
+                            } else {
+
+                                // Pie type
+                                scope.chartConfig.options.chart.type = 'pie';
+                                scope.chartConfig.options.yAxis.title = { text: '' };
+
+                                var chartData = [];
+                                for (var i = 0; i < resourcePool.MainElement.ElementItemSet.length; i++) {
+                                    var elementItem = resourcePool.MainElement.ElementItemSet[i];
+
+                                    for (var x = 0; x < elementItem.ElementCellSet.length; x++) {
+                                        var elementCell = elementItem.ElementCellSet[x];
+
+                                        if (elementCell.ElementField.ElementFieldIndexSet.length > 0) {
+                                            var chartDataItem = {
+                                                name: elementItem.Name,
+                                                y: elementCell.ValuePercentage
+                                            };
+                                            chartData.push(chartDataItem);
+                                        }
+                                    }
+                                }
+
+                                scope.chartConfig.series = [{ data: chartData }];
                             }
-                        }
-                        else {
-                            for (var i = 0; i < resourcePool.MainElement.ElementItemSet.length; i++) {
-                                scope.chartConfig.series[i].data = [resourcePool.MainElement.ElementItemSet[i].TotalIncome];
+                        } else {
+                            if (resourcePool.MainElement.HasResourcePoolField) {
+                                for (var i = 0; i < resourcePool.MainElement.ElementItemSet.length; i++) {
+                                    var elementItem = resourcePool.MainElement.ElementItemSet[i];
+                                    var chartDataItem = scope.chartConfig.series[i];
+                                    chartDataItem.data = [elementItem.TotalIncome];
+                                }
+                            } else {
+                                for (var i = 0; i < resourcePool.MainElement.ElementItemSet.length; i++) {
+                                    var elementItem = resourcePool.MainElement.ElementItemSet[i];
+
+                                    for (var x = 0; x < elementItem.ElementCellSet.length; x++) {
+                                        var elementCell = elementItem.ElementCellSet[x];
+
+                                        if (elementCell.ElementField.ElementFieldIndexSet.length > 0) {
+                                            var chartDataItem = scope.chartConfig.series[0].data[i];
+                                            chartDataItem.y = elementCell.ValuePercentage;
+                                        }
+                                    }
+                                }
                             }
                         }
 
@@ -170,7 +229,8 @@
             restrict: 'E',
             templateUrl: '/App/views/directives/resourcePoolEditor.html',
             scope: {
-                resourcePoolId: '='
+                resourcePoolId: '=',
+                chartHeight: '='
             },
             link: link
         };

@@ -8,8 +8,13 @@
     function chapter0Controller(resourcePoolService, $scope, $timeout, $rootScope, logger) {
 
         var vm = this;
-        vm.basicsExistingModelResourcePoolId = 2; // Static
-        vm.basicsNewModelResourcePoolId = 3; // Static
+
+        /* Static Ids */
+        vm.UPOSampleResourcePoolId = 1;
+        vm.basicsExistingModelResourcePoolId = 2;
+        vm.basicsNewModelResourcePoolId = 3;
+        vm.sectorIndexSampleResourcePoolId = 4;
+
         logger = logger.forSource(controllerId);
 
         initialize();
@@ -33,7 +38,7 @@
 
                     // Then increase recursively
                     // TODO Decrease this timeout interval
-                    var increaseMultiplierTimeoutRecursive = $timeout(increaseMultiplier, 10000);
+                    var increaseMultiplierTimeoutRecursive = $timeout(increaseMultiplier, 100000);
                 }
 
                 // When the DOM element is removed from the page,

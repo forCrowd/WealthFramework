@@ -8,7 +8,7 @@
 
     public partial class ResourcePoolRepository
     {
-        const int DEFAULTNUMBEROFITEMS = 2;
+        // const int DEFAULTNUMBEROFITEMS = 2;
 
         DbSet<ResourcePool> ResourcePoolSet { get { return Context.Set<ResourcePool>(); } }
         DbSet<UserResourcePool> UserResourcePoolSet { get { return Context.Set<UserResourcePool>(); } }
@@ -86,9 +86,6 @@
             //resourcePool.EnableSubtotals = false;
             resourcePool.IsSample = true;
 
-            // User resource pool
-            var userResourcePool = resourcePool.UserResourcePoolSet.Single().ResourcePoolRate = 15;
-
             // Main element
             var mainElement = resourcePool.MainElement;
             mainElement.Name = "Organization";
@@ -111,8 +108,41 @@
         public ResourcePool CreateSectorIndexSample(User user)
         {
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user, true, true, true, true, 9);
+            var resourcePool = CreateDefaultResourcePool(user, false, false, false, true, 6);
             resourcePool.Name = "Sector Index Sample";
+            resourcePool.EnableResourcePoolAddition = false;
+            resourcePool.IsSample = true;
+
+            // Main element
+            var mainElement = resourcePool.MainElement;
+            mainElement.Name = "Sector";
+            mainElement.NameField.Name = "Sector";
+
+            // Fields
+            //mainElement.ResourcePoolField.Name = "Sales Price"; // TODO It does not fit! Update this after having Initial Amount on RP!
+            //mainElement.MultiplierField.Name = "Sales Number";
+            mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).Name = "-";
+            mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).ElementFieldIndex.Name = "Sector Index";
+
+            // Items, cell, user cells
+            // TODO How about ToList()[0]?
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Clothing";
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Cosmetics";
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Education";
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Entertainment";
+            mainElement.ElementItemSet.Skip(4).Take(1).Single().Name = "Food";
+            mainElement.ElementItemSet.Skip(5).Take(1).Single().Name = "Healthcare";
+
+            // Return
+            return resourcePool;
+        }
+
+        public ResourcePool CreateSectorIndexOldSample(User user)
+        {
+            // Resource pool
+            var resourcePool = CreateDefaultResourcePool(user, true, true, true, true, 6);
+            resourcePool.Name = "Sector Index Sample";
+            resourcePool.EnableResourcePoolAddition = false;
             resourcePool.IsSample = true;
 
             // Main element
@@ -124,15 +154,23 @@
 
             // Items, cell, user cells
             // TODO How about ToList()[0]?
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Basic Materials";
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Conglomerates";
-            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Consumer Goods";
-            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Financial";
-            mainElement.ElementItemSet.Skip(4).Take(1).Single().Name = "Healthcare";
-            mainElement.ElementItemSet.Skip(5).Take(1).Single().Name = "Industrial Goods";
-            mainElement.ElementItemSet.Skip(6).Take(1).Single().Name = "Services";
-            mainElement.ElementItemSet.Skip(7).Take(1).Single().Name = "Technology";
-            mainElement.ElementItemSet.Skip(8).Take(1).Single().Name = "Utilities";
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Clothing";
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Cosmetics";
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Education";
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Entertainment";
+            mainElement.ElementItemSet.Skip(4).Take(1).Single().Name = "Food";
+            mainElement.ElementItemSet.Skip(5).Take(1).Single().Name = "Healthcare";
+
+            // Old list
+            //mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Basic Materials";
+            //mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Conglomerates";
+            //mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Consumer Goods";
+            //mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Financial";
+            //mainElement.ElementItemSet.Skip(4).Take(1).Single().Name = "Healthcare";
+            //mainElement.ElementItemSet.Skip(5).Take(1).Single().Name = "Industrial Goods";
+            //mainElement.ElementItemSet.Skip(6).Take(1).Single().Name = "Services";
+            //mainElement.ElementItemSet.Skip(7).Take(1).Single().Name = "Technology";
+            //mainElement.ElementItemSet.Skip(8).Take(1).Single().Name = "Utilities";
 
             // Return
             return resourcePool;
@@ -141,7 +179,7 @@
         public ResourcePool CreateKnowledgeIndexSample(User user)
         {
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user, true);
+            var resourcePool = CreateDefaultResourcePool(user, true, true, true, true, 2);
             resourcePool.Name = "Knowledge Index Sample";
             resourcePool.IsSample = true;
 
@@ -163,7 +201,7 @@
         public ResourcePool CreateTotalCostIndexSample(User user)
         {
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user, false);
+            var resourcePool = CreateDefaultResourcePool(user, true, true, true, false, 2);
             resourcePool.Name = "Total Cost Index Sample";
             resourcePool.IsSample = true;
 
@@ -191,11 +229,6 @@
             return resourcePool;
         }
 
-        public ResourcePool CreateDefaultResourcePool(User user, bool addImportanceIndex)
-        {
-            return CreateDefaultResourcePool(user, true, true, true, addImportanceIndex, DEFAULTNUMBEROFITEMS);
-        }
-
         public ResourcePool CreateDefaultResourcePool(User user, bool addUserResourcePool, bool addResourcePoolField, bool addMultiplierField, bool addImportanceIndex, short numberOfItems)
         {
             // Resource pool, main element, fields
@@ -203,7 +236,7 @@
 
             // User resource pool
             if (addUserResourcePool)
-                resourcePool.AddUserResourcePool(user, 101);
+                resourcePool.AddUserResourcePool(user, 50);
 
             var element = resourcePool.AddElement("Main Element");
 

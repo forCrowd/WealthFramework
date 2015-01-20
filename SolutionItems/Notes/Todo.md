@@ -57,6 +57,10 @@ http://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-w
 * find a better approach for rowversion fix on client-side before saving?
 * ignore web - scripts folder?
 
+### Misc
+
+* Update TED link with Evoluo account's version?
+
 ## Long Term
 
 ### Functional
@@ -238,6 +242,11 @@ May -> prepare for calls
 			continue with sector index - user rating average explanation!
 			
 			
+			continue with;
+			fieldindexvalue update has an issue, increases different item's value ?!
+			current user vs. all users ratings for sector index!
+			
+			
 			* find a way to get userelementcell to breeze? update + save on elementcell level?
 			
 * elastic search?
@@ -298,7 +307,7 @@ cell is always showing the same info, not per index???
 <table class="table test" data-ng-repeat="index in elementCell.ElementField.ElementFieldIndexSet">
 	<tr>
 		<td>
-			{{ elementCell.ValueMultiplied | number:2 }}
+			{{ elementCell.ValueMultiplied | number: 2 }}
 
 ---
 anti forgery: AntiForgery.GetTokens

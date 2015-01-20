@@ -82,7 +82,7 @@ namespace BusinessObjects.Tests
             var user = new User("Email");
 
             var resourcePool = new ResourcePool("Default");
-            resourcePool.InitialValue = 100;
+            //resourcePool.InitialValue = 100;
 
             var organization = resourcePool.AddElement("Organization");
             

@@ -24,7 +24,7 @@
                                                 <colgroup>
                                                     <!--<col class="valueMultipliedField" />-->
                                                     <col class="valuePercentageField" />
-                                                    <col class="indexIncomeField" />
+                                                    <col class="indexIncomeField" data-ng-if="field.ElementFieldType === 11" />
                                                     <col class="indexFunctionsField" />
                                                 </colgroup>
                                                 <thead>
@@ -40,7 +40,7 @@
                                                         <th>
                                                             %
                                                         </th>
-                                                        <th>
+                                                        <th data-ng-if="field.ElementFieldType === 11">
                                                             Income
                                                         </th>
                                                         <th>
@@ -63,15 +63,15 @@
                                         <!-- TODO Single container for these fields? -->
                                         <th data-ng-if="resourcePool.EnableResourcePoolAddition && field.ElementFieldType === 11">
                                             CMRP Add.<br />
-                                            Rate {{ resourcePool.ResourcePoolRatePercentage | percentage:2 }}<br />
+                                            Rate {{ resourcePool.ResourcePoolRatePercentage | percentage: 2 }}<br />
                                             # of ratings {{ resourcePool.UserResourcePoolRatingCount }}
                                             <!-- ResourcePool functions -->
                                             <div data-ng-if="field.ElementFieldType === 11">
                                                 <div class="clearfix"></div>
                                                 <div class="btn-group" role="group">
-                                                    <button type="submit" data-ng-click="updateResourcePoolRate((resourcePool.ResourcePoolRatePercentage * 100) + 5)" class="btn btn-default btn-xs">+5</button>
-                                                    <button type="submit" data-ng-click="updateResourcePoolRate((resourcePool.ResourcePoolRatePercentage * 100) - 5)" class="btn btn-default btn-xs">-5</button>
-                                                    <button type="submit" data-ng-click="updateResourcePoolRate(0)" class="btn btn-default btn-xs">0</button>
+                                                    <button title="Increase CMRP Rate %5" type="submit" data-ng-click="updateResourcePoolRate((resourcePool.ResourcePoolRatePercentage * 100) + 5)" class="btn btn-default btn-xs">+</button>
+                                                    <button title="Decrease CMRP Rate %5" type="submit" data-ng-click="updateResourcePoolRate((resourcePool.ResourcePoolRatePercentage * 100) - 5)" class="btn btn-default btn-xs">-</button>
+                                                    <button title="Reset CMRP Rate" type="submit" data-ng-click="updateResourcePoolRate(0)" class="btn btn-default btn-xs">0</button>
                                                 </div>
                                             </div>
                                         </th>
@@ -89,7 +89,6 @@
                                         </th>-->
                                         <th data-ng-if="resourcePool.EnableResourcePoolAddition && field.ElementFieldType === 12 && resourcePool.MainElement.HasResourcePoolField">
                                             Tot. {{ resourcePool.MainElement.ResourcePoolFieldName }}
-                                            <br />incl. CMRP Ad
                                             <br />incl. CMRP Add.
                                         </th>
                                     </tr>
@@ -97,7 +96,7 @@
                             </table>
                         </th>
                         <!-- Totals -->
-                        <th>
+                        <th data-ng-if="resourcePool.MainElement.HasResourcePoolField">
                             Total Income
                         </th>
                     </tr>
@@ -139,24 +138,24 @@
                                                 <colgroup>
                                                     <!--<col class="valueMultipliedField" />-->
                                                     <col class="valuePercentageField" />
-                                                    <col class="indexIncomeField" />
+                                                    <col class="indexIncomeField" data-ng-if="elementCell.ElementFieldType === 11" />
                                                     <col class="indexFunctionsField" />
                                                 </colgroup>
                                                 <tbody>
                                                     <tr>
                                                         <!--<td>
-                                                            {{ elementCell.ValueMultiplied | number:2 }}
+                                                            {{ elementCell.ValueMultiplied | number: 2 }}
                                                         </td>-->
                                                         <td>
-                                                            {{ elementCell.ValuePercentage | percentage:2 }}
+                                                            {{ elementCell.ValuePercentage | percentage: 2 }}
                                                         </td>
-                                                        <td>
-                                                            {{ elementCell.ElementFieldIndexIncome | number:2 }}
+                                                        <td data-ng-if="elementCell.ElementFieldType === 11">
+                                                            {{ elementCell.ElementFieldIndexIncome | number: 2 }}
                                                         </td>
                                                         <td>
                                                             <div class="btn-group" role="group">
-                                                                <button type="submit" data-ng-click="elementCell.increaseIndexCellValue()" class="btn btn-default btn-xs">+10</button>
-                                                                <button type="submit" data-ng-click="elementCell.decreaseIndexCellValue()" class="btn btn-default btn-xs">-10</button>
+                                                                <button type="submit" data-ng-click="elementCell.increaseIndexCellValue()" title="+ 10" class="btn btn-default btn-xs">+</button>
+                                                                <button type="submit" data-ng-click="elementCell.decreaseIndexCellValue()" title="- 10" class="btn btn-default btn-xs">-</button>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -187,8 +186,8 @@
                             </table>
                         </td>
                         <!-- Totals -->
-                        <td>
-                            {{ elementItem.TotalIncome | number:2 }}
+                        <td data-ng-if="resourcePool.MainElement.HasResourcePoolField">
+                            {{ elementItem.TotalIncome | number: 2 }}
                         </td>
                     </tr>
                 </tbody>
@@ -218,19 +217,19 @@
                                                 <colgroup>
                                                     <!--<col class="valueMultipliedField" />-->
                                                     <col class="valuePercentageField" />
-                                                    <col class="indexIncomeField" />
+                                                    <col class="indexIncomeField" data-ng-if="field.ElementFieldType === 11" />
                                                     <col class="indexFunctionsField" />
                                                 </colgroup>
                                                 <tfoot>
                                                     <tr>
                                                         <!--<td>
-                                                            {{ index.ValueMultiplied | number:2 }}
+                                                            {{ index.ValueMultiplied | number: 2 }}
                                                         </td>-->
                                                         <td>
-                                                            {{ index.ValuePercentage | percentage:2 }}
+                                                            {{ index.ValuePercentage | percentage: 2 }}
                                                         </td>
-                                                        <td>
-                                                            {{ index.ElementFieldIndexIncome | number:2 }}
+                                                        <td data-ng-if="field.ElementFieldType === 11">
+                                                            {{ index.ElementFieldIndexIncome | number: 2 }}
                                                         </td>
                                                         <td>
                                                             &nbsp;
@@ -263,7 +262,7 @@
                             </table>
                         </td>
                         <!-- Totals -->
-                        <td>
+                        <td data-ng-if="resourcePool.MainElement.HasResourcePoolField">
                             {{ resourcePool.MainElement.TotalIncome | number: 2 }}
                         </td>
                     </tr>
@@ -276,9 +275,9 @@
                                         <td>
                                             <div data-ng-if="field.ElementFieldType === 12">
                                                 <div class="btn-group" role="group">
-                                                    <button type="submit" data-ng-click="increaseMultiplier()" title="Increase {{ resourcePool.MainElement.MultiplierFieldName }}" class="btn btn-default btn-xs">+</button>
-                                                    <button type="submit" data-ng-click="decreaseMultiplier()" title="Decrease {{ resourcePool.MainElement.MultiplierFieldName }}" class="btn btn-default btn-xs">-</button>
-                                                    <button type="submit" data-ng-click="resetMultiplier()" title="Reset {{ resourcePool.MainElement.MultiplierFieldName }}" class="btn btn-default btn-xs">0</button>
+                                                    <button title="Increase {{ resourcePool.MainElement.MultiplierFieldName }}" type="submit" data-ng-click="increaseMultiplier()" class="btn btn-default btn-xs">+</button>
+                                                    <button title="Decrease {{ resourcePool.MainElement.MultiplierFieldName }}" type="submit" data-ng-click="decreaseMultiplier()" class="btn btn-default btn-xs">-</button>
+                                                    <button title="Reset {{ resourcePool.MainElement.MultiplierFieldName }}" type="submit" data-ng-click="resetMultiplier()" class="btn btn-default btn-xs">0</button>
                                                 </div>
                                             </div>
                                             <div data-ng-if="field.ElementFieldType !== 12">

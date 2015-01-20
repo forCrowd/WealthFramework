@@ -5,7 +5,8 @@
                 <h3>
                     <!--<small>Prologue:</small>
                     <br />-->
-                    An Interesting Era to Witness
+                    <!--An Interesting Era to Witness-->
+                    Introduction
                 </h3>
             </div>
             <div class="col-md-4">
@@ -47,7 +48,7 @@
                 like responsibilities towards its workers, being environment friendly or even producing healthy products.
             </p>
             <div class="top-buffer">
-                <resource-pool-editor resource-pool-id="1"></resource-pool-editor>
+                <resource-pool-editor resource-pool-id="vm.UPOSampleResourcePoolId"></resource-pool-editor>
             </div>
             <p class="small">
                 <i>An unknown profiting object. It gets more resources regardless of how and what sort of product or service it is providing to the society.</i>
@@ -72,8 +73,10 @@
             <p>
                 In following the sample, there are two organizations that are equal to each other in every aspect, except they use different strategies to motivate their employees.
                 In <code>Existing Model</code>, since it ignores this difference, each organization will have the same <code>Total Income</code>.
+            </p>
+            <p>
                 <code>New Model</code> will introduce <code>Employee Satisfaction</code> index.
-                By using this index, we can enter which organization's employees satisfied with their organization's strategy
+                By using this index, we can enter which organization's employees satisfied with their organization's motivation strategy
                 and based on this new data, organizations' <code>Total Income</code> will now differ.
             </p>
             <!--<p class="bg-info">
@@ -82,7 +85,7 @@
             <div class="bs-callout bs-callout-info">
                 <h4>Difference between the models</h4>
                 <p>
-                    In <code>New Model</code>, <code>Total Income</code> is 15 percent higher than <code>Existing Model</code>.
+                    In <code>New Model</code>, <code>Total Income</code> is 50 percent higher than <code>Existing Model</code>.
                     This difference will be explained in further chapters.
                 </p>
             </div>
@@ -100,12 +103,12 @@
             <div class="row">
                 <div class="col-md-6">-->
             <!--<div>-->
-            <resource-pool-editor resource-pool-id="vm.basicsExistingModelResourcePoolId"></resource-pool-editor>
+            <resource-pool-editor resource-pool-id="vm.basicsExistingModelResourcePoolId" chart-height="225"></resource-pool-editor>
             <!--</div>-->
             <!--</div>
             <div class="col-md-6">-->
             <!--<div>-->
-            <resource-pool-editor resource-pool-id="vm.basicsNewModelResourcePoolId"></resource-pool-editor>
+            <resource-pool-editor resource-pool-id="vm.basicsNewModelResourcePoolId" chart-height="225"></resource-pool-editor>
             <!--</div>-->
             <!--</div>
             </div>
@@ -114,8 +117,10 @@
             <p class="top-buffer">
                 If we could measure <code>Employee Satisfaction</code> of the organizations in real life, we could reward the ones with a higher rating as in this sample.
                 Adding indexes to the system sets additional priorities for the organizations, instead of just focusing to profit.
+            </p>
+            <p>
                 Although only 4 different indexes will be presented in the following chapters,
-                as long as they can be measured in a correct way, more indexes can be added into the system.
+                as long as they are measurable, more indexes can be added into the system.
                 <!--Indexes can have static values or they be rated by the users.-->
             </p>
             <hr />
@@ -130,16 +135,17 @@
                 One of the issues in the current system is that the consumers most only interact with the organizations about their <!--regular /--> daily needs.
             </p>
             <p>
-                For example, the consumer could think that education sector is more important for the society than most of the other sectors.
+                <!-- Review this paragraph -->
+                For example, a consumer might think that education sector is more important for the society than most of the other sectors.
                 However, if she is not a student or a parent of a student, she has no direct relation with this sector, therefore cannot support it in a systematic way.
-                Instead, she could spend her resources on clothing, cosmetics, entertainment and so on, that might have a less priority.
+                Instead, she could use her income on clothing, cosmetics, entertainment and so on, that might actually have a less priority.
             </p>
             <!-- Citation needed -->
             <!--<p>
                 This is one of the reasons why education system is explicitly supported by the states in even if the country is using Free Market economy.
             </p>-->
             <p>
-                Sector Index gives us the opportunity to see the overall picture and distribute the resources to the sectors by comparing them.
+                <code>Sector Index</code> could gives us the opportunity to see the overall of the system and let us distribute the resources to the sectors by comparing them.
             </p>
         </div>
         <div class="col-md-1">
@@ -160,12 +166,13 @@
         <div class="col-md-12">
             <ul>
                 <li>
-                    Which sectors are more important and should have more resources?<br />
-                    Please rate the sectors below. <!--The results will appear after you save your ratings.-->
+                    Which sectors are more important and should have more resources?
+                    Please rate them below.
+                    <!--The results will appear after you save your ratings.-->
                 </li>
             </ul>
             <div class="top-buffer">
-                <resource-pool-editor resource-pool-id="4"></resource-pool-editor>
+                <resource-pool-editor resource-pool-id="vm.sectorIndexSampleResourcePoolId"></resource-pool-editor>
             </div>
         </div>
     </div>

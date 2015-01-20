@@ -39,6 +39,7 @@ namespace BusinessObjects
         public string Name { get; set; }
 
         [Display(Name = "Initial Value")]
+        [Obsolete("Doesn't work as expected, remove later")]
         public decimal InitialValue { get; set; }
 
         [Display(Name = "Enable CMRP Addition")]
@@ -103,7 +104,8 @@ namespace BusinessObjects
 
         public decimal TotalResourcePoolValue(User multiplierUser)
         {
-            return InitialValue + TotalResourcePoolAddition(multiplierUser);
+            //return InitialValue + TotalResourcePoolAddition(multiplierUser);
+            return TotalResourcePoolAddition(multiplierUser);
         }
 
         public decimal TotalResourcePoolValueIncludingAddition(User multiplierUser)
