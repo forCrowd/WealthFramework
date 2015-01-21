@@ -21,19 +21,19 @@ namespace BusinessObjects.ViewModels
 
             HasMultiplierField = element.HasMultiplierField;
             MultiplierFieldName = element.MultiplierFieldName;
-            MultiplierValue = element.MultiplierValue(user);
+            MultiplierValue = element.MultiplierValue();
 
             //ValueCount = elementItem.ValueCount();
             //Value = elementItem.Value();
 
-            TotalResourcePoolValue = element.TotalResourcePoolValue(user);
-            TotalResourcePoolAddition = element.TotalResourcePoolAddition(user);
-            TotalResourcePoolValueIncludingAddition = element.TotalResourcePoolValueIncludingAddition(user);
-            TotalIncome = element.TotalIncome(user);
+            TotalResourcePoolValue = element.TotalResourcePoolValue();
+            TotalResourcePoolAddition = element.TotalResourcePoolAddition();
+            TotalResourcePoolValueIncludingAddition = element.TotalResourcePoolValueIncludingAddition();
+            TotalIncome = element.TotalIncome();
 
             ElementFieldSet = element.ElementFieldSet
                 .OrderBy(item => item.SortOrder)
-                .Select(item => new ElementField(item, user));
+                .Select(item => new ElementField(item));
             ElementItemSet = element.ElementItemSet
                 .Select(item => new ElementItem(item, user));
         }

@@ -12,7 +12,7 @@ namespace BusinessObjects.ViewModels
         {
             Id = elementCell.Id;
             ElementItemId = elementCell.ElementItemId;
-            ElementField = new ElementField(elementCell.ElementField, user);
+            ElementField = new ElementField(elementCell.ElementField);
             ElementFieldId = elementCell.ElementFieldId;
             ElementFieldType = elementCell.ElementField.ElementFieldType;
             StringValue = elementCell.StringValue;
@@ -27,10 +27,10 @@ namespace BusinessObjects.ViewModels
             if (elementCell.ElementField.ElementFieldType != (byte)ElementFieldTypes.String
                 && elementCell.ElementField.ElementFieldType != (byte)ElementFieldTypes.Element)
             {
-                ValueMultiplied = elementCell.ValueMultiplied(user);
-                ValuePercentage = elementCell.ValuePercentage(user);
+                ValueMultiplied = elementCell.ValueMultiplied();
+                ValuePercentage = elementCell.ValuePercentage();
             }
-            ElementFieldIndexIncome = elementCell.ElementFieldIndexIncome(user);
+            ElementFieldIndexIncome = elementCell.ElementFieldIndexIncome();
 
             UserElementCellSet = elementCell.UserElementCellSet
                 .Where(item => item.User == user)

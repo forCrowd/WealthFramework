@@ -4,6 +4,7 @@ namespace BusinessObjects
     using Framework;
     using System;
     using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
     [DisplayName("User Element Cell")]
@@ -39,6 +40,7 @@ namespace BusinessObjects
         [Index("IX_UserIdElementCellId", 2, IsUnique = true)]
         public int ElementCellId { get; set; }
 
+        [Display(Name = "Boolean Value")]
         public bool? BooleanValue
         {
             get { return booleanValue; }
@@ -52,6 +54,7 @@ namespace BusinessObjects
             }
         }
 
+        [Display(Name = "Integer Value")]
         public int? IntegerValue
         {
             get { return integerValue; }
@@ -65,6 +68,7 @@ namespace BusinessObjects
             }
         }
 
+        [Display(Name = "Decimal Value")]
         public decimal? DecimalValue
         {
             get { return decimalValue; }
@@ -78,6 +82,7 @@ namespace BusinessObjects
             }
         }
 
+        [Display(Name = "Date Time Value")]
         public DateTime? DateTimeValue
         {
             get { return dateTimeValue; }

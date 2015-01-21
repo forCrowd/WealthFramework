@@ -130,9 +130,9 @@ namespace BusinessObjects
         //    }
         //}
 
-        public decimal ValueMultiplied(User multiplierUser)
+        public decimal ValueMultiplied()
         {
-            return ElementCellSet.Sum(item => item.ValueMultiplied(multiplierUser));
+            return ElementCellSet.Sum(item => item.ValueMultiplied());
         }
 
         // TODO Although technically it's possible to define multiple indexes, there will be one per Field at the moment
@@ -141,11 +141,11 @@ namespace BusinessObjects
             get { return ElementFieldIndexSet.SingleOrDefault(); }
         }
 
-        public decimal ElementFieldIndexShare(User multiplierUser)
+        public decimal ElementFieldIndexShare()
         {
             return ElementFieldIndex == null
                 ? 0
-                : ElementFieldIndex.IndexShare(multiplierUser);
+                : ElementFieldIndex.IndexShare();
         }
 
         #endregion

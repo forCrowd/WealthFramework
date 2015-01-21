@@ -7,14 +7,14 @@ namespace BusinessObjects.ViewModels
     {
         public ElementField() { }
 
-        public ElementField(BusinessObjects.ElementField elementField, User user)
+        public ElementField(BusinessObjects.ElementField elementField)
         {
             Id = elementField.Id;
             Name = elementField.Name;
             ElementFieldType = elementField.ElementFieldType;
-            ElementFieldIndexShare = elementField.ElementFieldIndexShare(user);
+            ElementFieldIndexShare = elementField.ElementFieldIndexShare();
 
-            ElementFieldIndexSet = elementField.ElementFieldIndexSet.Select(item => new ElementFieldIndex(item, user));
+            ElementFieldIndexSet = elementField.ElementFieldIndexSet.Select(item => new ElementFieldIndex(item));
         }
 
         public int Id { get; set; }

@@ -69,19 +69,19 @@ namespace BusinessObjects
             return index;
         }
 
-        public decimal ValueMultiplied(User multiplierUser)
+        public decimal ValueMultiplied()
         {
-            return ElementField.ElementCellSet.Sum(item => item.ValueMultiplied(multiplierUser));
+            return ElementField.ElementCellSet.Sum(item => item.ValueMultiplied());
         }
 
-        public decimal ValuePercentage(User multiplierUser)
+        public decimal ValuePercentage()
         {
-            return ElementField.ElementCellSet.Sum(item => item.ValuePercentage(multiplierUser));
+            return ElementField.ElementCellSet.Sum(item => item.ValuePercentage());
         }
 
-        public decimal ElementFieldIndexIncome(User multiplierUser)
+        public decimal ElementFieldIndexIncome()
         {
-            return ElementField.ElementCellSet.Sum(item => item.ElementFieldIndexIncome(multiplierUser));
+            return ElementField.ElementCellSet.Sum(item => item.ElementFieldIndexIncome());
         }
 
         /// <summary>
@@ -112,9 +112,9 @@ namespace BusinessObjects
                 : IndexRatingAverage() / resourcePoolIndexRatingAverage;
         }
 
-        public decimal IndexShare(User multiplierUser)
+        public decimal IndexShare()
         {
-            return ElementField.Element.ResourcePool.TotalResourcePoolValue(multiplierUser) * IndexRatingPercentage();
+            return ElementField.Element.ResourcePool.TotalResourcePoolValue() * IndexRatingPercentage();
         }
     }
 }

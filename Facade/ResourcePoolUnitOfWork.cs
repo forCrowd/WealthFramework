@@ -32,45 +32,37 @@
             return await repository.FindByUserResourcePoolIdAsync(userResourcePoolId);
         }
 
-        public async Task IncreaseMultiplierAsync(ResourcePool resourcePool, int userId)
+        public async Task IncreaseMultiplierAsync(ResourcePool resourcePool, User user)
         {
             Framework.Validations.ArgumentNullOrDefault(resourcePool, "resourcePool");
-            Framework.Validations.ArgumentNullOrDefault(userId, "userId");
-
-            var user = await UserStore.FindByIdAsync(userId);
+            Framework.Validations.ArgumentNullOrDefault(user, "user");
 
             resourcePool.IncreaseMultiplier(user);
             await base.UpdateAsync(resourcePool);
         }
 
-        public async Task DecreaseMultiplierAsync(ResourcePool resourcePool, int userId)
+        public async Task DecreaseMultiplierAsync(ResourcePool resourcePool, User user)
         {
             Framework.Validations.ArgumentNullOrDefault(resourcePool, "resourcePool");
-            Framework.Validations.ArgumentNullOrDefault(userId, "userId");
-
-            var user = await UserStore.FindByIdAsync(userId);
+            Framework.Validations.ArgumentNullOrDefault(user, "user");
 
             resourcePool.DecreaseMultiplier(user);
             await base.UpdateAsync(resourcePool);
         }
 
-        public async Task ResetMultiplierAsync(ResourcePool resourcePool, int userId)
+        public async Task ResetMultiplierAsync(ResourcePool resourcePool, User user)
         {
             Framework.Validations.ArgumentNullOrDefault(resourcePool, "resourcePool");
-            Framework.Validations.ArgumentNullOrDefault(userId, "userId");
-
-            var user = await UserStore.FindByIdAsync(userId);
+            Framework.Validations.ArgumentNullOrDefault(user, "user");
 
             resourcePool.ResetMultiplier(user);
             await base.UpdateAsync(resourcePool);
         }
 
-        public async Task UpdateResourcePoolRateAsync(ResourcePool resourcePool, int userId, decimal rate)
+        public async Task UpdateResourcePoolRateAsync(ResourcePool resourcePool, User user, decimal rate)
         {
             Framework.Validations.ArgumentNullOrDefault(resourcePool, "resourcePool");
-            Framework.Validations.ArgumentNullOrDefault(userId, "userId");
-
-            var user = await UserStore.FindByIdAsync(userId);
+            Framework.Validations.ArgumentNullOrDefault(user, "user");
 
             resourcePool.UpdateResourcePoolRate(user, rate);
             await base.UpdateAsync(resourcePool);

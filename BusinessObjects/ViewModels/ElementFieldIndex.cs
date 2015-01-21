@@ -6,20 +6,20 @@ namespace BusinessObjects.ViewModels
     {
         public ElementFieldIndex() { }
 
-        public ElementFieldIndex(BusinessObjects.ElementFieldIndex elementFieldIndex, User user)
+        public ElementFieldIndex(BusinessObjects.ElementFieldIndex elementFieldIndex)
         {
             Id = elementFieldIndex.Id;
             ElementFieldId = elementFieldIndex.ElementFieldId;
             Name = elementFieldIndex.Name;
 
-            ValueMultiplied = elementFieldIndex.ValueMultiplied(user);
-            ValuePercentage = elementFieldIndex.ValuePercentage(user);
-            ElementFieldIndexIncome = elementFieldIndex.ElementFieldIndexIncome(user);
+            ValueMultiplied = elementFieldIndex.ValueMultiplied();
+            ValuePercentage = elementFieldIndex.ValuePercentage();
+            ElementFieldIndexIncome = elementFieldIndex.ElementFieldIndexIncome();
 
             IndexRatingCount = elementFieldIndex.IndexRatingCount();
             IndexRatingAverage = elementFieldIndex.IndexRatingAverage();
             IndexRatingPercentage = elementFieldIndex.IndexRatingPercentage();
-            IndexShare = elementFieldIndex.IndexShare(user);
+            IndexShare = elementFieldIndex.IndexShare();
         }
 
         public int Id { get; set; }

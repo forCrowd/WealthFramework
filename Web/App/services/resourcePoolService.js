@@ -27,8 +27,12 @@
 
         /*** Implementations ***/
 
-        function getResourcePoolCustom(resourcePoolId) {
+        function getResourcePoolCustom(resourcePoolId, valueFilter) {
             var url = '/api/ResourcePoolCustom/GetResourcePool/' + resourcePoolId;
+
+            if (typeof valueFilter !== 'undefined')
+                url += '/' + valueFilter;
+
             return $http.get(url);
         }
 

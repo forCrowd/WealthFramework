@@ -68,6 +68,7 @@
     <Compile Include="Models\ElementFieldType.cs" />
     <Compile Include="Models\ElementField.cs" />
     <Compile Include="Models\ElementCell.cs" />
+    <Compile Include="Models\ResourcePoolFilterSettings.cs" />
     <Compile Include="Models\UserLogin.cs" />
     <Compile Include="Models\UserClaim.cs" />
     <Compile Include="Models\Role.cs" />

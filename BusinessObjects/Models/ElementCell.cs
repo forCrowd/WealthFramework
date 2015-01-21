@@ -30,6 +30,7 @@ namespace BusinessObjects
 
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
+        [Display(Name = "Element Cell Id")]
         public int Id { get; set; }
 
         [Index("IX_ElementCellId", 1, IsUnique = true)]
@@ -39,11 +40,22 @@ namespace BusinessObjects
         public int ElementFieldId { get; set; }
 
         // TODO These properties should only be set through SetValue()?
+        [Display(Name = "String Value")]
         public string StringValue { get; set; }
+
+        [Display(Name = "Boolean Value")]
         public bool? BooleanValue { get; set; }
+
+        [Display(Name = "Integer Value")]
         public int? IntegerValue { get; set; }
+
+        [Display(Name = "Decimal Value")]
         public decimal? DecimalValue { get; set; }
+
+        [Display(Name = "Date Time Value")]
         public DateTime? DateTimeValue { get; set; }
+
+        [Display(Name = "Selected Element Item")]
         public int? SelectedElementItemId { get; set; }
 
         public virtual ElementItem ElementItem { get; set; }
@@ -83,12 +95,12 @@ namespace BusinessObjects
             }
         }
 
-        public decimal Value()
-        {
-            return Value(null);
-        }
+        //public decimal Value()
+        //{
+        //    return Value(null);
+        //}
 
-        public decimal Value(User user)
+        public decimal Value()
         {
             var fieldType = (ElementFieldTypes)ElementField.ElementFieldType;
 
@@ -101,25 +113,36 @@ namespace BusinessObjects
                 // TODO This calculation is the same as Decimal type? Are we using the types in a wrong way?
                 case ElementFieldTypes.ResourcePool:
                     {
+                        // Value filter user
+                        User valueFilterUser = null;
+                        if (ElementItem.Element.ResourcePool.FilterSettings.ValueFilter == ResourcePoolFilterSettings.ValueFilters.OnlyCurrentUser)
+                        {
+                            valueFilterUser = ElementItem.Element.ResourcePool.FilterSettings.CurrentUser;
+
+                            if (valueFilterUser == null)
+                                throw new InvalidOperationException("ResourcePool.FilterSettings.CurrentUser property must have a value when ValueFilter is using OnlyCurrentUser option");
+                        }
+
                         return ElementField.FixedValue.Value
                             ? FixedValue
-                            : user == null
+                            : valueFilterUser == null
                             ? UserElementCellSet.Any()
                             ? UserElementCellSet.Average(item => item.Value)
                             : 0
-                            : UserElementCellSet.Any(item => item.User == user)
-                            ? UserElementCellSet.Single(item => item.User == user).Value
+                            : UserElementCellSet.Any(item => item.User == valueFilterUser)
+                            ? UserElementCellSet.Single(item => item.User == valueFilterUser).Value
                             : 0;
                     }
                 case ElementFieldTypes.Multiplier:
                     {
-                        return user == null
-                            ? UserElementCellSet.Any()
-                            ? UserElementCellSet.Average(item => item.Value)
-                            : 0
-                            : UserElementCellSet.Any(item => item.User == user)
-                            ? UserElementCellSet.Single(item => item.User == user).Value
-                            : 0;
+                        var multiplierFilterUser = ElementItem.Element.ResourcePool.FilterSettings.CurrentUser;
+
+                        if (multiplierFilterUser == null)
+                            throw new InvalidOperationException("ResourcePool.FilterSettings.CurrentUser property must have a value when retrieving Value() with Multiplier type field");
+
+                        var multiplierCell = UserElementCellSet.SingleOrDefault(item => item.User == multiplierFilterUser);
+
+                        return multiplierCell == null ? 0 : multiplierCell.Value;
                     }
                 case ElementFieldTypes.String:
                 case ElementFieldTypes.Element:
@@ -192,38 +215,43 @@ namespace BusinessObjects
             }
         }
 
-        public decimal ValueMultiplied(User multiplierUser)
+        public decimal ValueMultiplied()
         {
-            var mainElement = ElementItem.Element.ResourcePool.MainElement;
+            //var mainElement = ElementItem.Element.ResourcePool.MainElement;
 
-            if (mainElement == null || !mainElement.HasMultiplierField)
-                return Value();
+            //if (mainElement == null || !mainElement.HasMultiplierField)
+            //    return Value();
 
-            // Todo BE CAREFUL ABOUT THIS, IT ASSUMES ALL ELEMENT ITEMS HAVE THE SAME MULTIPLIER VALUE, IMPROVE IT LATER!
-            var multiplierValue = mainElement.ElementItemSet.FirstOrDefault().MultiplierValue(multiplierUser);
+            //// Todo BE CAREFUL ABOUT THIS, IT ASSUMES ALL ELEMENT ITEMS HAVE THE SAME MULTIPLIER VALUE, IMPROVE IT LATER!
+            //var multiplierValue = mainElement.ElementItemSet.FirstOrDefault().MultiplierValue(multiplierUser);
 
-            return multiplierValue * Value();
+            //return multiplierValue * Value();
+
+            //if (!ElementItem.Element.HasMultiplierField)
+            //    return Value();
+
+            return Value() * ElementItem.MultiplierValue();
         }
 
-        public decimal ValuePercentage(User multiplierUser)
+        public decimal ValuePercentage()
         {
-            var elementFieldValueMultiplied = ElementField.ValueMultiplied(multiplierUser);
+            var elementFieldValueMultiplied = ElementField.ValueMultiplied();
 
             return elementFieldValueMultiplied == 0
                 ? 0
-                : ValueMultiplied(multiplierUser) / elementFieldValueMultiplied;
+                : ValueMultiplied() / elementFieldValueMultiplied;
         }
 
-        public decimal ElementFieldIndexIncome(User multiplierUser)
+        public decimal ElementFieldIndexIncome()
         {
             if (ElementField.ElementFieldIndex == null)
             {
                 return ElementField.ElementFieldType == (byte)ElementFieldTypes.Element && SelectedElementItem != null
-                    ? SelectedElementItem.ElementFieldIndexIncome(multiplierUser)
+                    ? SelectedElementItem.ElementFieldIndexIncome()
                     : 0;
             }
 
-            var value = ValuePercentage(multiplierUser);
+            var value = ValuePercentage();
 
             switch (ElementField.ElementFieldIndex.RatingSortType)
             {
@@ -236,7 +264,7 @@ namespace BusinessObjects
                     throw new ArgumentOutOfRangeException();
             }
 
-            return ElementField.ElementFieldIndexShare(multiplierUser) * value;
+            return ElementField.ElementFieldIndexShare() * value;
         }
 
         #region - Methods -

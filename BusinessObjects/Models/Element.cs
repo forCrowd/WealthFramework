@@ -139,29 +139,29 @@ namespace BusinessObjects
             }
         }
 
-        public decimal MultiplierValue(User multiplierUser)
+        public decimal MultiplierValue()
         {
-            return ElementItemSet.Sum(item => item.MultiplierValue(multiplierUser));
+            return ElementItemSet.Sum(item => item.MultiplierValue());
         }
 
-        public decimal TotalResourcePoolValue(User multiplierUser)
+        public decimal TotalResourcePoolValue()
         {
-            return ElementItemSet.Sum(item => item.TotalResourcePoolValue(multiplierUser));
+            return ElementItemSet.Sum(item => item.TotalResourcePoolValue());
         }
 
-        public decimal TotalResourcePoolAddition(User multiplierUser)
+        public decimal TotalResourcePoolAddition()
         {
-            return ElementItemSet.Sum(item => item.TotalResourcePoolAddition(multiplierUser));
+            return ElementItemSet.Sum(item => item.TotalResourcePoolAddition());
         }
 
-        public decimal TotalResourcePoolValueIncludingAddition(User multiplierUser)
+        public decimal TotalResourcePoolValueIncludingAddition()
         {
-            return ElementItemSet.Sum(item => item.TotalResourcePoolValueIncludingAddition(multiplierUser));
+            return ElementItemSet.Sum(item => item.TotalResourcePoolValueIncludingAddition());
         }
 
-        public decimal TotalIncome(User multiplierUser)
+        public decimal TotalIncome()
         {
-            return ElementItemSet.Sum(item => item.TotalIncome(multiplierUser));
+            return ElementItemSet.Sum(item => item.TotalIncome());
         }
 
         #endregion

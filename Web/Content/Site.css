@@ -88,6 +88,14 @@ p.bg-info {
     font-size: 10px;
 }
 
+    .resourcePoolEditor .header {
+        padding-top: 1.5em;
+    }
+
+    .resourcePoolEditor .header > .title {
+        font-size: 1.5em;
+    }
+
 .resourcePoolTable {
     /*table-layout: fixed;*/
 }
@@ -103,11 +111,6 @@ p.bg-info {
     .resourcePoolTable > tfoot > tr > td {
         overflow: hidden; /* Hide text outside the cell */
         padding: 2px;
-    }
-
-    .resourcePoolTable .header {
-        padding: 10px 0;
-        background-color: red;
     }
 
     .resourcePoolTable > thead > tr > th,

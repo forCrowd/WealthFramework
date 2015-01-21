@@ -20,10 +20,21 @@
             scope.increaseMultiplier = increaseMultiplier;
             scope.resetMultiplier = resetMultiplier;
             scope.updateResourcePoolRate = updateResourcePoolRate;
+            //scope.updateValueFilter = updateValueFilter;
+            scope.toggleValueFilter = function () {
+                scope.valueFilter = scope.valueFilter === 1 ? 2 : 1;
+                getResourcePool();
+            }
+            scope.valueFilterText = function () {
+                return scope.valueFilter === 1 ? "All Ratings" : "My Ratings";
+            }
 
             initialize();
 
             function initialize() {
+                
+                // Value filter
+                scope.valueFilter = 1;
 
                 // Highchart initial config
                 scope.chartConfig = {
@@ -72,7 +83,7 @@
 
             function getResourcePool() {
 
-                resourcePoolService.getResourcePoolCustom(scope.resourcePoolId)
+                resourcePoolService.getResourcePoolCustom(scope.resourcePoolId, scope.valueFilter)
                     .success(function (resourcePool) {
 
                         // Resource pool
@@ -85,13 +96,12 @@
                                 var elementCell = elementItem.ElementCellSet[x];
 
                                 if (elementCell.ElementField.ElementFieldIndexSet.length > 0) {
-
                                     elementCell.increaseIndexCellValue = function () {
-                                        updateIndexCellValue(elementCell, 'increase');
+                                        updateIndexCellValue(this, 'increase');
                                     }
 
                                     elementCell.decreaseIndexCellValue = function () {
-                                        updateIndexCellValue(elementCell, 'decrease');
+                                        updateIndexCellValue(this, 'decrease');
                                     }
                                 }
                             }
@@ -186,6 +196,7 @@
                                 userElementCell.DecimalValue = type === 'increase'
                                     ? userElementCell.DecimalValue + 10
                                     : userElementCell.DecimalValue - 10;
+
                                 var rowVersion = userElementCell.RowVersion;
                                 userElementCell.RowVersion = '';
                                 userElementCell.RowVersion = rowVersion;
@@ -201,7 +212,6 @@
 
                             userElementCellService.saveChanges()
                                 .then(function () {
-                                    //logger.logSuccess('Your changes have been saved!');
                                     getResourcePool();
                                 });
                         });

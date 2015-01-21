@@ -114,12 +114,15 @@ namespace BusinessObjects
             //get { return MultiplierCell != null && MultiplierCell.DecimalValue.HasValue; }
         }
 
-        public decimal MultiplierValue(User multiplierUser)
+        public decimal MultiplierValue()
         {
             if (!HasMultiplierCell)
-                return 0;
+                return 1;
 
-            return MultiplierCell.Value(multiplierUser);
+            //if (Element.ResourcePool.FilterSettings.MultiplierUser == null)
+            //    throw new InvalidOperationException("MultiplierValue property cannot be retrieved without specifying MultiplierUser filter on ResourcePool object");
+
+            return MultiplierCell.Value();
         }
 
         // TODO Sum is correct? Or Average?
@@ -154,29 +157,29 @@ namespace BusinessObjects
         //    }
         //}
 
-        public decimal TotalResourcePoolValue(User multiplierUser)
+        public decimal TotalResourcePoolValue()
         {
-            return ResourcePoolValue() * MultiplierValue(multiplierUser);
+            return ResourcePoolValue() * MultiplierValue();
         }
 
-        public decimal TotalResourcePoolAddition(User multiplierUser)
+        public decimal TotalResourcePoolAddition()
         {
-            return ResourcePoolAddition() * MultiplierValue(multiplierUser);
+            return ResourcePoolAddition() * MultiplierValue();
         }
 
-        public decimal TotalResourcePoolValueIncludingAddition(User multiplierUser)
+        public decimal TotalResourcePoolValueIncludingAddition()
         {
-            return ResourcePoolValueIncludingAddition() * MultiplierValue(multiplierUser);
+            return ResourcePoolValueIncludingAddition() * MultiplierValue();
         }
 
-        public decimal ElementFieldIndexIncome(User multiplierUser)
+        public decimal ElementFieldIndexIncome()
         {
-            return ElementCellSet.Sum(item => item.ElementFieldIndexIncome(multiplierUser));
+            return ElementCellSet.Sum(item => item.ElementFieldIndexIncome());
         }
 
-        public decimal TotalIncome(User multiplierUser)
+        public decimal TotalIncome()
         {
-            return TotalResourcePoolValue(multiplierUser) + ElementFieldIndexIncome(multiplierUser);
+            return TotalResourcePoolValue() + ElementFieldIndexIncome();
         }
 
         #region - Methods -

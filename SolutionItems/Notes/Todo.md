@@ -243,8 +243,10 @@ May -> prepare for calls
 			
 			
 			continue with;
-			fieldindexvalue update has an issue, increases different item's value ?!
 			current user vs. all users ratings for sector index!
+			
+			
+			valuefilter options on UI?
 			
 			
 			* find a way to get userelementcell to breeze? update + save on elementcell level?

@@ -15,9 +15,11 @@ namespace BusinessObjects
     {
         [Obsolete("Parameterless constructors used by OData & EF. Make them private when possible.")]
         public ResourcePool()
-        { }
+        {
+            FilterSettings = new ResourcePoolFilterSettings();
+        }
 
-        public ResourcePool(string name)
+        public ResourcePool(string name) : this()
         {
             Validations.ArgumentNullOrDefault(name, "name");
 
@@ -25,7 +27,6 @@ namespace BusinessObjects
             EnableResourcePoolAddition = true;
             EnableSubtotals = true;
             ElementSet = new HashSet<Element>();
-            //ElementFieldIndexSet = new HashSet<ElementFieldIndex>();
             UserResourcePoolSet = new HashSet<UserResourcePool>();
         }
 
@@ -54,6 +55,8 @@ namespace BusinessObjects
 
         public virtual ICollection<Element> ElementSet { get; set; }
         public virtual ICollection<UserResourcePool> UserResourcePoolSet { get; set; }
+
+        public ResourcePoolFilterSettings FilterSettings { get; private set; }
 
         public Element MainElement
         {
@@ -97,25 +100,25 @@ namespace BusinessObjects
         //    return MainElement.ElementItemSet.Sum(item => item.TotalResourcePoolValue(multiplierUser));
         //}
 
-        public decimal TotalResourcePoolAddition(User multiplierUser)
+        public decimal TotalResourcePoolAddition()
         {
-            return MainElement.ElementItemSet.Sum(item => item.TotalResourcePoolAddition(multiplierUser));
+            return MainElement.ElementItemSet.Sum(item => item.TotalResourcePoolAddition());
         }
 
-        public decimal TotalResourcePoolValue(User multiplierUser)
+        public decimal TotalResourcePoolValue()
         {
             //return InitialValue + TotalResourcePoolAddition(multiplierUser);
-            return TotalResourcePoolAddition(multiplierUser);
+            return TotalResourcePoolAddition();
         }
 
-        public decimal TotalResourcePoolValueIncludingAddition(User multiplierUser)
+        public decimal TotalResourcePoolValueIncludingAddition()
         {
-            return MainElement.ElementItemSet.Sum(item => item.TotalResourcePoolValueIncludingAddition(multiplierUser));
+            return MainElement.ElementItemSet.Sum(item => item.TotalResourcePoolValueIncludingAddition());
         }
 
-        public decimal TotalIncome(User multiplierUser)
+        public decimal TotalIncome()
         {
-            return MainElement.ElementItemSet.Sum(item => item.TotalIncome(multiplierUser));
+            return MainElement.ElementItemSet.Sum(item => item.TotalIncome());
         }
 
         #region - Methods -
@@ -158,7 +161,7 @@ namespace BusinessObjects
             MultiplierMethodValidations(user);
 
             foreach (var item in MainElement.ElementItemSet)
-                item.MultiplierCell.SetValue(item.MultiplierValue(user) + 1M, user);
+                item.MultiplierCell.SetValue(item.MultiplierValue() + 1M, user);
 
             return this;
         }
@@ -168,8 +171,11 @@ namespace BusinessObjects
             MultiplierMethodValidations(user);
 
             foreach (var item in MainElement.ElementItemSet)
-                if (item.MultiplierValue(user) > 0)
-                    item.MultiplierCell.SetValue(item.MultiplierValue(user) - 1M, user);
+            {
+                var multiplierValue = item.MultiplierValue();
+                if (multiplierValue > 0)
+                    item.MultiplierCell.SetValue(multiplierValue - 1M, user);
+            }
 
             return this;
         }

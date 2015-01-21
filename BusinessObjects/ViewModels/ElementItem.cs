@@ -16,13 +16,13 @@ namespace BusinessObjects.ViewModels
             ResourcePoolAddition = elementItem.ResourcePoolAddition();
             ResourcePoolValueIncludingAddition = elementItem.ResourcePoolValueIncludingAddition();
             HasMultiplierCell = elementItem.HasMultiplierCell;
-            MultiplierValue = elementItem.MultiplierValue(user);
+            MultiplierValue = elementItem.MultiplierValue();
             ValueCount = elementItem.ValueCount();
             Value = elementItem.Value();
-            TotalResourcePoolValue = elementItem.TotalResourcePoolValue(user);
-            TotalResourcePoolAddition = elementItem.TotalResourcePoolAddition(user);
-            TotalResourcePoolValueIncludingAddition = elementItem.TotalResourcePoolValueIncludingAddition(user);
-            TotalIncome = elementItem.TotalIncome(user);
+            TotalResourcePoolValue = elementItem.TotalResourcePoolValue();
+            TotalResourcePoolAddition = elementItem.TotalResourcePoolAddition();
+            TotalResourcePoolValueIncludingAddition = elementItem.TotalResourcePoolValueIncludingAddition();
+            TotalIncome = elementItem.TotalIncome();
 
             ElementCellSet = elementItem.ElementCellSet
                 .OrderBy(item => item.ElementField.SortOrder)

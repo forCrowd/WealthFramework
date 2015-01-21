@@ -31,8 +31,8 @@ namespace Web.Controllers.Api
         //}
 
         // GET api/ResourcePoolCustom/GetResourcePool/1
-        [Route("GetResourcePool/{resourcePoolId:int:min(1)}")]
-        public async Task<ResourcePool> GetResourcePool(int resourcePoolId)
+        [Route("GetResourcePool/{resourcePoolId:int:min(1)}/{valueFilter:int=1}")]
+        public async Task<ResourcePool> GetResourcePool(int resourcePoolId, byte valueFilter)
         {
             var manager = new ResourcePoolUnitOfWork();
             var resourcePool = await manager.FindAsync(resourcePoolId); //.FindUserResourcePoolAsync(this.GetCurrentUserId().Value, resourcePoolId);
@@ -42,6 +42,9 @@ namespace Web.Controllers.Api
 
             var currentUserId = this.GetCurrentUserId().Value;
             var currentUser = await manager.FindUserById(currentUserId);
+
+            resourcePool.FilterSettings.CurrentUser = currentUser;
+            resourcePool.FilterSettings.ValueFilter = (BusinessObjects.ResourcePoolFilterSettings.ValueFilters)valueFilter;
 
             return new ResourcePool(resourcePool, currentUser);
         }
@@ -58,8 +61,11 @@ namespace Web.Controllers.Api
                 return NotFound();
 
             var currentUserId = this.GetCurrentUserId().Value;
+            var currentUser = await manager.FindUserById(currentUserId);
 
-            await manager.IncreaseMultiplierAsync(resourcePool, currentUserId);
+            resourcePool.FilterSettings.CurrentUser = currentUser;
+
+            await manager.IncreaseMultiplierAsync(resourcePool, currentUser);
 
             return Ok();
         }
@@ -76,8 +82,11 @@ namespace Web.Controllers.Api
                 return NotFound();
 
             var currentUserId = this.GetCurrentUserId().Value;
+            var currentUser = await manager.FindUserById(currentUserId);
 
-            await manager.DecreaseMultiplierAsync(resourcePool, currentUserId);
+            resourcePool.FilterSettings.CurrentUser = currentUser;
+
+            await manager.DecreaseMultiplierAsync(resourcePool, currentUser);
 
             return Ok();
         }
@@ -95,8 +104,11 @@ namespace Web.Controllers.Api
                     return NotFound();
 
                 var currentUserId = this.GetCurrentUserId().Value;
+                var currentUser = await manager.FindUserById(currentUserId);
 
-                await manager.ResetMultiplierAsync(resourcePool, currentUserId);
+                resourcePool.FilterSettings.CurrentUser = currentUser;
+
+                await manager.ResetMultiplierAsync(resourcePool, currentUser);
 
                 return Ok();
             }
@@ -119,8 +131,9 @@ namespace Web.Controllers.Api
                     return NotFound();
 
                 var currentUserId = this.GetCurrentUserId().Value;
+                var currentUser = await manager.FindUserById(currentUserId);
 
-                await manager.UpdateResourcePoolRateAsync(resourcePool, currentUserId, resourcePoolRate);
+                await manager.UpdateResourcePoolRateAsync(resourcePool, currentUser, resourcePoolRate);
 
                 return Ok();
             }
