@@ -7,28 +7,7 @@
                 </span>
                 &nbsp;
                 Filter: <a href="" data-ng-click="toggleValueFilter()">{{ valueFilterText() }}</a>
-                <!--<div class="dropdown-toggle" data-toggle="dropdown">
-                    Settings
-                    <b class="caret"></b>
-                </div>
-                <ul class="dropdown-menu"></ul>-->
             </div>
-            <!--<div class="navbar">
-                <div class="navbar-header">
-                    <a href="" class="navbar-brand">{{ resourcePool.Name }}</a>
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-
-                        <li class="dropdown">
-                            <a href="" class="dropdown-toggle" data-toggle="dropdown">Settings <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="" data-ng-click="toggleValueFilter()">Value Filter: {{ valueFilterText() }}</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>-->
         </div>
     </div>
     <div class="row">
@@ -64,13 +43,13 @@
                                                         <!--<th>
                                                             Value Mult.
                                                         </th>-->
-                                                        <th>
+                                                        <th x1>
                                                             %
                                                         </th>
-                                                        <th data-ng-if="field.ElementFieldType === 11">
+                                                        <th data-ng-if="field.ElementFieldType === 11" x2>
                                                             Income
                                                         </th>
-                                                        <th>
+                                                        <th x3>
                                                             &nbsp;
                                                         </th>
                                                     </tr>
@@ -173,14 +152,13 @@
                                                         <!--<td>
                                                             {{ elementCell.ValueMultiplied | number: 2 }}
                                                         </td>-->
-                                                        <td>
-                                                        <td>
+                                                        <td x1>
                                                             {{ elementCell.ValuePercentage | percentage: 2 }}
                                                         </td>
-                                                        <td data-ng-if="elementCell.ElementFieldType === 11">
+                                                        <td data-ng-if="elementCell.ElementFieldType === 11" x2>
                                                             {{ elementCell.ElementFieldIndexIncome | number: 2 }}
                                                         </td>
-                                                        <td>
+                                                        <td x3>
                                                             <div class="btn-group" role="group">
                                                                 <button type="submit" data-ng-click="elementCell.increaseIndexCellValue()" title="+ 10" class="btn btn-default btn-xs">+</button>
                                                                 <button type="submit" data-ng-click="elementCell.decreaseIndexCellValue()" title="- 10" class="btn btn-default btn-xs">-</button>

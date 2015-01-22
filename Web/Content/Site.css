@@ -89,7 +89,7 @@ p.bg-info {
 }
 
     .resourcePoolEditor .header {
-        padding-top: 1.5em;
+        padding: 2em 0;
     }
 
     .resourcePoolEditor .header > .title {

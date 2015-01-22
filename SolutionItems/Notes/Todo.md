@@ -248,6 +248,8 @@ May -> prepare for calls
 			
 			valuefilter options on UI?
 			
+			continue with knowledge index - texts + samples + code tags?
+			put the related variables under init() methods
 			
 			* find a way to get userelementcell to breeze? update + save on elementcell level?
 			
