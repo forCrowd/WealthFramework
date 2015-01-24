@@ -16,6 +16,7 @@ An experimental resource management system that aims to provide a sustainable ec
 * resourcePoolEditor angular directive
 * InitialValue on ResourcePool class
 * sessionStorage was replaced with localStorage to keep "access_token"
+* Azure websites is back again; http://wealth.azurewebsites.net
 
 **0.14.8**
 

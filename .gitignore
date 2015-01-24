@@ -114,4 +114,4 @@ App_Data/
 
 # Publish profiles - Doesn't work properly, still adding new files under this folder?
 *.pubxml
-PublishProfiles/
+Properties/PublishProfiles/
