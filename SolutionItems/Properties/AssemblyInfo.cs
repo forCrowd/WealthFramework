@@ -23,12 +23,13 @@ using System.Runtime.InteropServices;
 //
 //      Major Version
 //      Minor Version
-//      Revision
-//      /* Obsolete - Build Number
-//      Revision */
+//      Build
 //
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.14.9.0")]
+//
+// AssemblyFileVersion is not in use for the moment
+//
+[assembly: AssemblyVersion("0.14.9")]
 [assembly: AssemblyFileVersion("1.0.0.0")]

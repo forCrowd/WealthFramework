@@ -26,7 +26,7 @@
                 getResourcePool();
             }
             scope.valueFilterText = function () {
-                return scope.valueFilter === 1 ? "All Ratings" : "My Ratings";
+                return scope.valueFilter === 1 ? "Only My Ratings" : "All Ratings";
             }
 
             initialize();
@@ -48,7 +48,12 @@
                                 pointWidth: 15
                             },
                             pie: {
-                                allowPointSelect: true
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: false
+                                },
+                                showInLegend: true
                             }
                         },
                         xAxis: { categories: [''] },

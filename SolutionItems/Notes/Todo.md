@@ -245,6 +245,18 @@ May -> prepare for calls
 			continue with;
 			current user vs. all users ratings for sector index!
 			
+			* continue with popular licences - links + link type?
+http://opensource.org/licenses/category			
+    Apache License, 2.0 (Apache-2.0)
+    BSD 3-Clause "New" or "Revised" license (BSD-3-Clause)
+    GNU General Public License (GPL)
+    GNU Library or "Lesser" General Public License (LGPL)
+    MIT license (MIT)
+	Microsoft End User License Aggreement (EULA)
+	http://products.office.com/en-us/microsoft-software-license-agreement
+	http://www.microsoft.com/en-us/legal/intellectualproperty/useterms/default.aspx
+	http://download.microsoft.com/Documents/UseTerms/Windows_8.1_English_468d3103-64a4-44fa-8f73-23490ee17ea5.pdf
+				
 			
 			valuefilter options on UI?
 			
@@ -252,7 +264,9 @@ May -> prepare for calls
 			put the related variables under init() methods
 			
 			* find a way to get userelementcell to breeze? update + save on elementcell level?
-			
+
+* sector -> industry?			
+
 * elastic search?
 
 * using resourcePool initialValue for Basic Sample is not a good idea - it's not on user level?!

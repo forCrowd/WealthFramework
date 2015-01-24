@@ -17,8 +17,12 @@ textarea {
     max-width: 280px;
 }
 
-p.bg-info {
+.bg-info {
     padding: 15px;
+}
+
+ul.bg-info {
+    padding-left: 25px;
 }
 
 .btn-xs {

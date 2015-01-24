@@ -96,6 +96,7 @@
             return $http.post(registerUrl, registerBindingModel)
                 .error(function (data, status, headers, config) {
                     // TODO
+                    logger.logError('Error!', { data: data, status: status, headers: headers, config: config });
                 });
         }
 
@@ -103,6 +104,7 @@
             return $http.post(resetSampleDataUrl)
                 .error(function (data, status, headers, config) {
                     // TODO ?
+                    logger.logError('Error!', { data: data, status: status, headers: headers, config: config });
                 });
         }
     }

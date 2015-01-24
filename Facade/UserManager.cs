@@ -22,7 +22,9 @@
             await Store.CopySampleDataAsync(sampleUserId, user);
             
             var result = await base.CreateAsync(user, password);
-            await Store.SaveChangesAsync();
+
+            if (result.Succeeded)
+                await Store.SaveChangesAsync();
             
             return result;
         }

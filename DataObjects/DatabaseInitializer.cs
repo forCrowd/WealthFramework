@@ -60,6 +60,7 @@
             resourcePoolRepository.Insert(resourcePoolRepository.CreateBasicsNewSystemSample(sampleUser));
             resourcePoolRepository.Insert(resourcePoolRepository.CreateSectorIndexSample(sampleUser));
             resourcePoolRepository.Insert(resourcePoolRepository.CreateKnowledgeIndexSample(sampleUser));
+            resourcePoolRepository.Insert(resourcePoolRepository.CreateKnowledgeIndexPopularSoftwareLicense(sampleUser));
             resourcePoolRepository.Insert(resourcePoolRepository.CreateTotalCostIndexSample(sampleUser));
 
             // Save

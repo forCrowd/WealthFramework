@@ -14,9 +14,6 @@
         vm.basicsExistingModelResourcePoolId = 2;
         vm.basicsNewModelResourcePoolId = 3;
         vm.sectorIndexSampleResourcePoolId = 4;
-        vm.knowledgeIndexOldSystemChartConfig = null;
-        vm.knowledgeIndexNewSystemChartConfig = null;
-        vm.knowledgeIndexSampleResourcePoolId = 5;
 
         logger = logger.forSource(controllerId);
 
@@ -85,6 +82,10 @@
 
             function initializeKnowledgeIndex() {
 
+                vm.knowledgeIndex_OldSystemChartConfig = null;
+                vm.knowledgeIndex_NewSystemChartConfig = null;
+                vm.knowledgeIndex_SampleResourcePoolId = 5;
+                vm.knowledgeIndex_PopuplarSoftwareLicensesResourcePoolId = 6;
                 var timeoutInitial = $timeout(refreshPage, 5000);
                 var timeoutRecursive = null;
 
@@ -97,14 +98,14 @@
                     $timeout.cancel(timeoutRecursive);
                 });
 
-                vm.knowledgeIndexOldSystemChartConfig = {
+                vm.knowledgeIndex_OldSystemChartConfig = {
                     title: {
                         text: ''
                     },
                     options: {
                         chart: {
                             type: 'column',
-                            height: 300
+                            height: 358
                         },
                         yAxis: {
                             title: { text: 'Development process' },
@@ -119,14 +120,14 @@
                         }
                     },
                     series: [
-                        { name: "My Precious", data: [0] },
-                        { name: 'Death Star Plans', data: [0] },
-                        { name: "Vicky's Secret", data: [0] },
+                        { name: "My Precious Jewelry", data: [0] },
+                        { name: 'Death Star Architecture', data: [0] },
+                        { name: "Christina's Secret", data: [0] },
                         { name: 'Nuka Cola Formula', data: [0] }
                     ]
                 };
 
-                vm.knowledgeIndexNewSystemChartConfig = {
+                vm.knowledgeIndex_NewSystemChartConfig = {
                     title: {
                         text: ''
                     },
@@ -155,8 +156,8 @@
                 function refreshPage() {
 
                     var organizationIndex = Math.floor(Math.random() * 4);
-                    vm.knowledgeIndexOldSystemChartConfig.series[organizationIndex].data[0] += 1;
-                    vm.knowledgeIndexNewSystemChartConfig.series[0].data[0] += 1;
+                    vm.knowledgeIndex_OldSystemChartConfig.series[organizationIndex].data[0] += 1;
+                    vm.knowledgeIndex_NewSystemChartConfig.series[0].data[0] += 1;
 
                     timeoutRecursive = $timeout(refreshPage, 1000);
                 }

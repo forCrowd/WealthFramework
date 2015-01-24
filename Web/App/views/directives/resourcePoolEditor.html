@@ -43,13 +43,13 @@
                                                         <!--<th>
                                                             Value Mult.
                                                         </th>-->
-                                                        <th x1>
+                                                        <th>
                                                             %
                                                         </th>
-                                                        <th data-ng-if="field.ElementFieldType === 11" x2>
+                                                        <th data-ng-if="field.ElementFieldType === 11">
                                                             Income
                                                         </th>
-                                                        <th x3>
+                                                        <th>
                                                             &nbsp;
                                                         </th>
                                                     </tr>
@@ -152,13 +152,13 @@
                                                         <!--<td>
                                                             {{ elementCell.ValueMultiplied | number: 2 }}
                                                         </td>-->
-                                                        <td x1>
+                                                        <td>
                                                             {{ elementCell.ValuePercentage | percentage: 2 }}
                                                         </td>
-                                                        <td data-ng-if="elementCell.ElementFieldType === 11" x2>
+                                                        <td data-ng-if="elementCell.ElementFieldType === 11">
                                                             {{ elementCell.ElementFieldIndexIncome | number: 2 }}
                                                         </td>
-                                                        <td x3>
+                                                        <td>
                                                             <div class="btn-group" role="group">
                                                                 <button type="submit" data-ng-click="elementCell.increaseIndexCellValue()" title="+ 10" class="btn btn-default btn-xs">+</button>
                                                                 <button type="submit" data-ng-click="elementCell.decreaseIndexCellValue()" title="- 10" class="btn btn-default btn-xs">-</button>
@@ -231,7 +231,6 @@
                                                         <!--<td>
                                                             {{ index.ValueMultiplied | number: 2 }}
                                                         </td>-->
-                                                        <td>
                                                         <td>
                                                             {{ index.ValuePercentage | percentage: 2 }}
                                                         </td>
