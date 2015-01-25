@@ -88,23 +88,39 @@
                     $rootScope.$broadcast('userLoggedOut');
                 })
                 .error(function (data, status, headers, config) {
+
                     // TODO
+                    //logger.logError('Error!', { data: data, status: status, headers: headers, config: config });
+                    if (typeof data.ModelState !== 'undefined') {
+                        var modelErrors = Object.keys(data.ModelState);
+                        logger.logError(data.ModelState[modelErrors], data.ModelState[modelErrors]);
+                    }
                 });
         }
 
         function register(registerBindingModel) {
             return $http.post(registerUrl, registerBindingModel)
                 .error(function (data, status, headers, config) {
+
                     // TODO
-                    logger.logError('Error!', { data: data, status: status, headers: headers, config: config });
+                    //logger.logError('Error!', { data: data, status: status, headers: headers, config: config });
+                    if (typeof data.ModelState !== 'undefined') {
+                        var modelErrors = Object.keys(data.ModelState);
+                        logger.logError(data.ModelState[modelErrors], data.ModelState[modelErrors]);
+                    }
                 });
         }
 
         function resetSampleData() {
             return $http.post(resetSampleDataUrl)
                 .error(function (data, status, headers, config) {
-                    // TODO ?
-                    logger.logError('Error!', { data: data, status: status, headers: headers, config: config });
+
+                    // TODO
+                    //logger.logError('Error!', { data: data, status: status, headers: headers, config: config });
+                    if (typeof data.ModelState !== 'undefined') {
+                        var modelErrors = Object.keys(data.ModelState);
+                        logger.logError(data.ModelState[modelErrors], data.ModelState[modelErrors]);
+                    }
                 });
         }
     }

@@ -235,37 +235,17 @@ Jan, Feb, Mar -> develop
 Apr -> deploy + open to public test
 May -> prepare for calls
 
-			continue with basic sample - initialvalue didnt work! maybe again using number of sales?
-			and/or continue with index rating!
-			
-			
-			continue with sector index - user rating average explanation!
-			
-			
-			continue with;
-			current user vs. all users ratings for sector index!
-			
-			* continue with popular licences - links + link type?
-http://opensource.org/licenses/category			
-    Apache License, 2.0 (Apache-2.0)
-    BSD 3-Clause "New" or "Revised" license (BSD-3-Clause)
-    GNU General Public License (GPL)
-    GNU Library or "Lesser" General Public License (LGPL)
-    MIT license (MIT)
-	Microsoft End User License Aggreement (EULA)
-	http://products.office.com/en-us/microsoft-software-license-agreement
-	http://www.microsoft.com/en-us/legal/intellectualproperty/useterms/default.aspx
-	http://download.microsoft.com/Documents/UseTerms/Windows_8.1_English_468d3103-64a4-44fa-8f73-23490ee17ea5.pdf
-				
-			
-			valuefilter options on UI?
-			
-			continue with knowledge index - texts + samples + code tags?
-			put the related variables under init() methods
-			
-			* find a way to get userelementcell to breeze? update + save on elementcell level?
+* software licenses;
+https://www.blackducksoftware.com/resources/data/top-20-open-source-licenses			
+http://opensource.org/licenses/category
+http://products.office.com/en-us/microsoft-software-license-agreement
+http://www.microsoft.com/en-us/legal/intellectualproperty/useterms/default.aspx
+http://download.microsoft.com/Documents/UseTerms/Windows_8.1_English_468d3103-64a4-44fa-8f73-23490ee17ea5.pdf
 
-* sector -> industry?			
+* sector -> industry?	
+
+* angular interceptor for error handling?
+http://www.codeproject.com/Articles/857594/MVC-Thorough-Error-Handling		
 
 * elastic search?
 
@@ -276,8 +256,6 @@ dynamic pricing - low price is good but can't be zero because then it's not sust
 
 * resourcepoolfield -> incomefield?
 total[x] props -> [x]Multiplied?
-
-* resourcepool is a mandatory field? without it, we can't calculate the income?!
 
 * cmrp rate visibility or resourcepool has it?
 (total) resource pool field incl. CMRP Add. field visibility?
@@ -428,7 +406,7 @@ https://github.com/hazzik/DelegateDecompiler
                 return errorResult;
             }
  
-            return Ok();
+            return Ok(string.Empty);
         }
  
         protected override void Dispose(bool disposing)
@@ -480,3 +458,9 @@ https://github.com/tjoudeh/AngularJSAuthentication
 
 X-InlineCount
 X-Pagination
+
+---
+// TODO With just Ok(), it return the response with no content-type.
+// Apparetnly Firefox default for no content-type is xml and logs 'no element found' message on console.
+// return Ok();
+return Ok(string.Empty);

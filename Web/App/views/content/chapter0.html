@@ -10,14 +10,14 @@
                 </h3>
             </div>
             <div class="col-md-4">
-                <div class="btn-group btn-group-lg pull-right">
+                <!--<div class="btn-group btn-group-lg pull-right">
                     <a href="/content/chapter1" class="btn btn-default">&nbsp;»&nbsp;</a>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <p>
                 <!--The World is changing.-->
                 <!--The World is becoming an interesting place to experiment.-->
@@ -47,13 +47,7 @@
                 However, organizations have also other features that can be measured and equally important for the society;
                 like responsibilities towards its workers, being environment friendly or even producing healthy products.
             </p>
-            <div class="top-buffer">
-                <resource-pool-editor resource-pool-id="vm.UPOSampleResourcePoolId"></resource-pool-editor>
-            </div>
-            <p class="top-buffer small">
-                <i>An unknown profiting object. It gets more resources regardless of how and what sort of product or service it is providing to the society.</i>
-            </p>
-            <p class="top-buffer">
+            <p>
                 <!--Wealth Economy is an attempt to create a system that defines the benefits, measures them, then allocate resources to the organizations,
                 based on determining how much these benefits have been satisfied.-->
                 <!--Wealth Economy is an attempt to create an open source software that provides a flexible and customizable system that defines the benefits,
@@ -62,10 +56,18 @@
                 It aims to define the various features of the organizations that important and beneficial for the society,
                 measure the overall performance of the organizations on these features and allocate the resources based on the outcome.
             </p>
-            <!--</div>
+        </div>
+        <div class="col-md-6">
+            <div>
+                <resource-pool-editor resource-pool-id="vm.introduction_UPOResourcePoolId"></resource-pool-editor>
             </div>
-            <div class="row">
-                <div class="col-md-12">-->
+            <p class="top-buffer small">
+                <i>An unknown profiting object. It gets more resources regardless of how and what sort of product or service it is providing to the society.</i>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
             <hr />
             <h3>
                 Basics
@@ -95,7 +97,8 @@
                     This will increase <code>Sales Number</code> in both models to be able compare the results easily.
                 </li>
                 <li>
-                    In <code>New Model</code>, update <code>Employee Satisfaction</code> rating of the organizations by using <code>+10</code> and <code>-10</code> buttons and see the difference in <code>Total Income</code> fields in both models.
+                    In <code>New Model</code>, update <code>Employee Satisfaction</code> ratings of the organizations by using <code>+</code> and <code>-</code> buttons next to them
+                    and see the difference in <code>Total Income</code> fields in both models.
                 </li>
             </ul>
             <!--</div>
@@ -103,12 +106,12 @@
             <div class="row">
                 <div class="col-md-6">-->
             <!--<div>-->
-            <resource-pool-editor resource-pool-id="vm.basicsExistingModelResourcePoolId" chart-height="225"></resource-pool-editor>
+            <resource-pool-editor resource-pool-id="vm.basics_ExistingModelResourcePoolId" chart-height="225"></resource-pool-editor>
             <!--</div>-->
             <!--</div>
             <div class="col-md-6">-->
             <!--<div>-->
-            <resource-pool-editor resource-pool-id="vm.basicsNewModelResourcePoolId" chart-height="225"></resource-pool-editor>
+            <resource-pool-editor resource-pool-id="vm.basics_NewModelResourcePoolId" chart-height="225"></resource-pool-editor>
             <!--</div>-->
             <!--</div>
             </div>
@@ -119,7 +122,7 @@
                 Adding indexes to the system sets additional priorities for the organizations, instead of just focusing to profit.
             </p>
             <p>
-                Although only 4 different indexes will be presented in the following chapters,
+                Although only four different indexes will be presented in the following chapters,
                 as long as they are measurable, more indexes can be added into the system.
                 <!--Indexes can have static values or they be rated by the users.-->
             </p>
@@ -150,7 +153,7 @@
                 <code>Sector Index</code> could gives us the opportunity to see the overall of the system and let us distribute the resources to the sectors by comparing them.
             </p>
             <p>
-                In the next part, you will see 6 important sectors.
+                In the next part, you will see six important sectors.
                 Every organization under these sectors is trying to solve one of the issues that the society has.
                 One is developing video games to entertain, another is trying to educate, one is trying to cure cancer, another is trying to make you look good.
                 <!--What we should keep in mind, if the society is more healthier,-->
@@ -180,11 +183,11 @@
                     Please rate them below.
                 </li>
                 <li>
-                    Switch <code>Filter</code> to <code>All Ratings</code> to see the average of all users ratings.
+                    Switch <code>Display</code> to <code>All Ratings</code> to see the average of all users ratings.
                 </li>
             </ul>
             <div class="top-buffer">
-                <resource-pool-editor resource-pool-id="vm.sectorIndexSampleResourcePoolId"></resource-pool-editor>
+                <resource-pool-editor resource-pool-id="vm.sectorIndex_SampleResourcePoolId"></resource-pool-editor>
             </div>
             <div class="bs-callout bs-callout-warning">
                 <h4>In progress</h4>
@@ -257,9 +260,12 @@
             <hr />
             <p>
                 <!--Actual licenses can be more complex than these samples, they may contain technical terms etc.-->
-                In order to make it more real, we list some popular software licenses below.
+                <!--In order to make it more real, we list some popular software licenses below.
                 If you are not familiar with these licenses, you can skip this part.
-                Otherwise we encourage you to rate these actual licenses.
+                Otherwise we encourage you to rate these actual licenses.-->
+                To be able to see the actual impact of this index, we list some popular software licenses below.
+                If you are familiar with these licenses, we would like to encourage you to rate them,
+                otherwise you may skip this part.
             </p>
             <resource-pool-editor resource-pool-id="vm.knowledgeIndex_PopuplarSoftwareLicensesResourcePoolId"></resource-pool-editor>
         </div>

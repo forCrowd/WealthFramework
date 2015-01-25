@@ -4,6 +4,8 @@ using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Web.Controllers.Extensions;
@@ -50,7 +52,7 @@ namespace Web.Controllers.Api
         }
 
         // POST api/ResourcePoolCustom/IncreaseMultiplier/1
-        [HttpPost]
+        //[HttpPost]
         [Route("IncreaseMultiplier/{resourcePoolId:int:min(1)}")]
         public async Task<IHttpActionResult> IncreaseMultiplier(int resourcePoolId)
         {
@@ -67,11 +69,11 @@ namespace Web.Controllers.Api
 
             await manager.IncreaseMultiplierAsync(resourcePool, currentUser);
 
-            return Ok();
+            return Ok(string.Empty);
         }
 
         // POST api/ResourcePoolCustom/DecreaseMultiplier/1
-        [HttpPost]
+        //[HttpPost]
         [Route("DecreaseMultiplier/{resourcePoolId:int:min(1)}")]
         public async Task<IHttpActionResult> DecreaseMultiplier(int resourcePoolId)
         {
@@ -88,11 +90,11 @@ namespace Web.Controllers.Api
 
             await manager.DecreaseMultiplierAsync(resourcePool, currentUser);
 
-            return Ok();
+            return Ok(string.Empty);
         }
 
         // POST api/ResourcePoolCustom/ResetMultiplier/1
-        [HttpPost]
+        //[HttpPost]
         [Route("ResetMultiplier/{resourcePoolId:int:min(1)}")]
         public async Task<IHttpActionResult> ResetMultiplier(int resourcePoolId)
         {
@@ -110,12 +112,12 @@ namespace Web.Controllers.Api
 
                 await manager.ResetMultiplierAsync(resourcePool, currentUser);
 
-                return Ok();
+                return Ok(string.Empty);
             }
         }
 
         // POST api/ResourcePoolCustom/UpdateResourcePoolRate/1
-        [HttpPost]
+        //[HttpPost]
         [Route("UpdateResourcePoolRate/{resourcePoolId:int:min(1)}")]
         public async Task<IHttpActionResult> UpdateResourcePoolRate(int resourcePoolId, [FromBody] decimal resourcePoolRate)
         {
@@ -135,7 +137,7 @@ namespace Web.Controllers.Api
 
                 await manager.UpdateResourcePoolRateAsync(resourcePool, currentUser, resourcePoolRate);
 
-                return Ok();
+                return Ok(string.Empty);
             }
         }
     }

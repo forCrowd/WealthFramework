@@ -6,7 +6,7 @@
                     {{ resourcePool.Name }}
                 </span>
                 &nbsp;
-                Filter: <a href="" data-ng-click="toggleValueFilter()">{{ valueFilterText() }}</a>
+                Display: <a href="" data-ng-click="toggleValueFilter()">{{ valueFilterText() }}</a>
             </div>
         </div>
     </div>
@@ -115,8 +115,7 @@
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <span data-ng-if="elementCell.ElementFieldType === 1">
-                                                {{ elementCell.StringValue }}
+                                            <span data-ng-if="elementCell.ElementFieldType === 1" data-ng-bind-html="elementCell.StringValue">
                                             </span>
                                             <span data-ng-if="elementCell.ElementFieldType === 2">
                                                 {{ elementCell.BooleanValue }}

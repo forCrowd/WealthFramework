@@ -133,34 +133,6 @@
             mainElement.ElementItemSet.Skip(4).Take(1).Single().Name = "Food";
             mainElement.ElementItemSet.Skip(5).Take(1).Single().Name = "Healthcare";
 
-            // Return
-            return resourcePool;
-        }
-
-        public ResourcePool CreateSectorIndexOldSample(User user)
-        {
-            // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user, true, true, true, true, 6);
-            resourcePool.Name = "Sector Index Sample";
-            resourcePool.EnableResourcePoolAddition = false;
-            resourcePool.IsSample = true;
-
-            // Main element
-            var mainElement = resourcePool.MainElement;
-            mainElement.Name = "Sector";
-            mainElement.NameField.Name = "Sector";
-            mainElement.ResourcePoolField.Name = "Sales Price"; // TODO It does not fit! Update this after having Initial Amount on RP!
-            mainElement.MultiplierField.Name = "Sales Number";
-
-            // Items, cell, user cells
-            // TODO How about ToList()[0]?
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Clothing";
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Cosmetics";
-            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Education";
-            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Entertainment";
-            mainElement.ElementItemSet.Skip(4).Take(1).Single().Name = "Food";
-            mainElement.ElementItemSet.Skip(5).Take(1).Single().Name = "Healthcare";
-
             // Old list
             //mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Basic Materials";
             //mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Conglomerates";
@@ -248,27 +220,28 @@
 
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Apache-2.0";
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(linkField).SetValue("<a href='xxx' target='_blank'>Link</a>");
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/Apache-2.0' target='_blank'>Link</a>");
             mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(importanceField).SetValue(RatingPerLicense, user);
 
             mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "BSD-3-Clause";
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(linkField).SetValue("<a href='xxx' target='_blank'>Link</a>");
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/BSD-3-Clause' target='_blank'>Link</a>");
             mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(importanceField).SetValue(RatingPerLicense, user);
 
-            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "GPL";
-            mainElement.ElementItemSet.Skip(2).Take(1).Single().AddCell(linkField).SetValue("<a href='xxx' target='_blank'>Link</a>");
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "GPL-3.0";
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/GPL-3.0' target='_blank'>Link</a>");
             mainElement.ElementItemSet.Skip(2).Take(1).Single().AddCell(importanceField).SetValue(RatingPerLicense, user);
 
-            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "LGPL";
-            mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(linkField).SetValue("<a href='xxx' target='_blank'>Link</a>");
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "LGPL-3.0";
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/LGPL-3.0' target='_blank'>Link</a>");
             mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(importanceField).SetValue(RatingPerLicense, user);
 
             mainElement.ElementItemSet.Skip(4).Take(1).Single().Name = "MIT";
-            mainElement.ElementItemSet.Skip(4).Take(1).Single().AddCell(linkField).SetValue("<a href='xxx' target='_blank'>Link</a>");
+            mainElement.ElementItemSet.Skip(4).Take(1).Single().AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/MIT' target='_blank'>Link</a>");
             mainElement.ElementItemSet.Skip(4).Take(1).Single().AddCell(importanceField).SetValue(RatingPerLicense, user);
 
+            // TODO Check it again
             mainElement.ElementItemSet.Skip(5).Take(1).Single().Name = "Microsoft EULA";
-            mainElement.ElementItemSet.Skip(5).Take(1).Single().AddCell(linkField).SetValue("<a href='xxx' target='_blank'>Link</a>");
+            mainElement.ElementItemSet.Skip(5).Take(1).Single().AddCell(linkField).SetValue("<a href='https://msdn.microsoft.com/en-us/library/aa188798(v=office.10).aspx' target='_blank'>Link</a>");
             mainElement.ElementItemSet.Skip(5).Take(1).Single().AddCell(importanceField).SetValue(RatingPerLicense, user);
 
             // Return

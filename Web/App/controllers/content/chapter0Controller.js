@@ -7,15 +7,9 @@
 
     function chapter0Controller(resourcePoolService, $scope, $timeout, $rootScope, logger) {
 
-        var vm = this;
-
-        /* Static Ids */
-        vm.UPOSampleResourcePoolId = 1;
-        vm.basicsExistingModelResourcePoolId = 2;
-        vm.basicsNewModelResourcePoolId = 3;
-        vm.sectorIndexSampleResourcePoolId = 4;
-
         logger = logger.forSource(controllerId);
+
+        var vm = this;
 
         initialize();
 
@@ -25,9 +19,12 @@
 
             initializeIntroduction();
             initializeBasics();
+            initializeSectorIndex();
             initializeKnowledgeIndex();
 
             function initializeIntroduction() {
+
+                vm.introduction_UPOResourcePoolId = 1;
 
                 // Initial start
                 var increaseMultiplierTimeoutInitial = $timeout(increaseMultiplier, 5000);
@@ -55,6 +52,9 @@
 
             function initializeBasics() {
 
+                vm.basics_ExistingModelResourcePoolId = 2;
+                vm.basics_NewModelResourcePoolId = 3;
+
                 // Listen resource pool updated event
                 $rootScope.$on('resourcePool_MultiplierIncreased', updateOppositeResourcePool);
                 $rootScope.$on('resourcePool_MultiplierDecreased', updateOppositeResourcePool);
@@ -77,7 +77,10 @@
                         }
                     }
                 }
+            }
 
+            function initializeSectorIndex() {
+                vm.sectorIndex_SampleResourcePoolId = 4;
             }
 
             function initializeKnowledgeIndex() {

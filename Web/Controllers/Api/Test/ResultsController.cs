@@ -15,7 +15,7 @@ namespace Web.Controllers.Api.Test
         [HttpGet]
         public IHttpActionResult OkResult()
         {
-            return Ok();
+            return Ok(string.Empty);
         }
 
         [Route("UnauthorizedResult")]

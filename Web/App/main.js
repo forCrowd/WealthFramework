@@ -11,6 +11,8 @@
 
         'ngRoute', // Angular routing
 
+        'ngSanitize',
+
         'breeze.angular',
 
         'highcharts-ng'

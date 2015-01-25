@@ -37,13 +37,14 @@ namespace Web
             };
 
             // Configure validation logic for passwords
+            // TODO Review this!
             manager.PasswordValidator = new PasswordValidator
             {
                 RequiredLength = 6,
-                RequireNonLetterOrDigit = true,
+                //RequireNonLetterOrDigit = true,
                 RequireDigit = true,
                 RequireLowercase = true,
-                RequireUppercase = true,
+                //RequireUppercase = true,
             };
 
             var dataProtectionProvider = options.DataProtectionProvider;

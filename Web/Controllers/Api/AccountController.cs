@@ -72,20 +72,26 @@ namespace Web.Controllers.Api
                 return errorResult;
             }
 
-            return Ok();
+            return Ok(string.Empty);
         }
 
         // POST api/Account/Logout
         public IHttpActionResult Logout()
         {
             Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
-            return Ok();
+            return Ok(string.Empty);
         }
 
         // POST api/Account/Register
         [AllowAnonymous]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
+            // ModelState.Add(new System.Collections.Generic.KeyValuePair<string,ModelState>("key1", new ModelState() { }))
+            // .ModelStateModelState.Add()
+            //ModelState.AddModelError("error1", "error message 1");
+            //ModelState.AddModelError("error1", new System.Exception("exception message 1"));
+            //return BadRequest(ModelState);
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -105,7 +111,7 @@ namespace Web.Controllers.Api
         }
 
         // POST api/Account/Register
-        [HttpPost]
+        //[HttpPost]
         public async Task<IHttpActionResult> ResetSampleData()
         {
             var currentUserId = this.GetCurrentUserId();
@@ -116,7 +122,7 @@ namespace Web.Controllers.Api
 
             await UserManager.ResetSampleDataAsync(currentUserId.Value, ApplicationSettings.SampleUserId);
 
-            return Ok();
+            return Ok(string.Empty);
         }
 
         protected override void Dispose(bool disposing)
@@ -149,7 +155,7 @@ namespace Web.Controllers.Api
                 {
                     foreach (string error in result.Errors)
                     {
-                        ModelState.AddModelError("", error);
+                        ModelState.AddModelError("Errors", error);
                     }
                 }
 
