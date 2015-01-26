@@ -445,6 +445,11 @@
     <Content Include="App\views\content\overview.html" />
     <Content Include="App\views\content\technologies.html" />
     <Content Include="App\views\directives\resourcePoolEditor.html" />
+    <Content Include="App\views\manage\edit\editView.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>editView.tt</DependentUpon>
+    </Content>
     <Content Include="App\views\manage\edit\elementCellEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
@@ -460,10 +465,16 @@
     <Content Include="App\views\manage\edit\elementItemEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
+    <Content Include="App\views\manage\edit\resourcePoolEdit.html">
+      <DependentUpon>editView.tt</DependentUpon>
+    </Content>
     <Content Include="App\views\manage\edit\roleEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
     <Content Include="App\views\manage\edit\userClaimEdit.html">
+      <DependentUpon>editView.tt</DependentUpon>
+    </Content>
+    <Content Include="App\views\manage\edit\userEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
     <Content Include="App\views\manage\edit\userElementCellEdit.html">
@@ -473,6 +484,9 @@
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
     <Content Include="App\views\manage\edit\userLoginEdit.html">
+      <DependentUpon>editView.tt</DependentUpon>
+    </Content>
+    <Content Include="App\views\manage\edit\userResourcePoolEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
     <Content Include="App\views\manage\edit\userRoleEdit.html">
@@ -671,11 +685,6 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
-    <None Include="App\views\manage\edit\editView.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>editView.tt</DependentUpon>
-    </None>
     <Content Include="App\views\content\chapter10.html" />
     <Content Include="App\views\content\chapter9.html" />
     <Content Include="App\views\content\chapter8.html" />
@@ -685,15 +694,6 @@
     <Content Include="App\views\content\chapter4.html" />
     <Content Include="App\views\content\chapter3.html" />
     <Content Include="App\views\content\chapter2.html" />
-    <Content Include="App\views\manage\edit\resourcePoolEdit.html">
-      <DependentUpon>editView.tt</DependentUpon>
-    </Content>
-    <Content Include="App\views\manage\edit\userEdit.html">
-      <DependentUpon>editView.tt</DependentUpon>
-    </Content>
-    <Content Include="App\views\manage\edit\userResourcePoolEdit.html">
-      <DependentUpon>editView.tt</DependentUpon>
-    </Content>
     <Content Include="App\views\content\chapter1.html" />
     <Content Include="App\views\manage\list\listView.txt">
       <AutoGen>True</AutoGen>

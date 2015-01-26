@@ -36,7 +36,15 @@
             <div class="form-group">
                 <label for="BooleanValue" class="control-label col-md-2">Boolean Value</label>
                 <div class="col-md-10" data-ng-class="{'has-error': editForm.BooleanValue.$invalid && !editForm.BooleanValue.$pristine}">
-                    <input id="BooleanValue" name="BooleanValue" type="text" data-ng-model="vm.userElementCell.BooleanValue" class="form-control" />
+                    <label class="radio-inline">
+                        <input id="BooleanValue_True" name="BooleanValue" type="radio" data-ng-model="vm.userElementCell.BooleanValue" data-ng-value="true"> True
+                    </label>
+                    <label class="radio-inline">
+                        <input id="BooleanValue_False" name="BooleanValue" type="radio" data-ng-model="vm.userElementCell.BooleanValue" data-ng-value="false"> False
+                    </label>
+                    <label class="radio-inline">
+                        <input id="BooleanValue_Null" name="BooleanValue" type="radio" data-ng-model="vm.userElementCell.BooleanValue" data-ng-value=""> Default
+                    </label>
                 </div>
             </div>
             <div class="form-group">
@@ -64,10 +72,10 @@
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <button data-ng-click="vm.saveChanges()" data-ng-disabled="editForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
+                    <button type="submit" data-ng-click="vm.saveChanges()" data-ng-disabled="editForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
                         Save
                     </button>
-                    <button data-ng-click="vm.cancelChanges()" class="btn btn-danger">
+                    <button type="button" data-ng-click="vm.cancelChanges()" class="btn btn-danger">
                         Cancel
                     </button>
                 </div>

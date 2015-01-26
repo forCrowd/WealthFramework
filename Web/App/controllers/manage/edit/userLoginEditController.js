@@ -47,10 +47,10 @@
 
             $location.path('/manage/userLogin');
 
-            if (userLoginService.hasChanges()) {
-                userLoginService.rejectChanges();
-                logWarning('Discarded pending change(s)', null, true);
-            }
+            //if (userLoginService.hasChanges()) {
+            //    userLoginService.rejectChanges();
+            //    logWarning('Discarded pending change(s)', null, true);
+            //}
         }
 
         function hasChanges() {

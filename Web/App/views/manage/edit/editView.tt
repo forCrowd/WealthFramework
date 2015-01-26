@@ -90,10 +90,10 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <button data-ng-click="vm.saveChanges()" data-ng-disabled="editForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
+                    <button type="submit" data-ng-click="vm.saveChanges()" data-ng-disabled="editForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
                         Save
                     </button>
-                    <button data-ng-click="vm.cancelChanges()" class="btn btn-danger">
+                    <button type="button" data-ng-click="vm.cancelChanges()" class="btn btn-danger">
                         Cancel
                     </button>
                 </div>
@@ -131,11 +131,41 @@ string GetPropertyInput(EdmProperty property, TypeMapper typeMapper, CodeStringG
 		// Simple type (textbox)
 		if (!property.IsEnumType)
 		{
-			propertyInput = string.Format(@"<input id=""{0}"" name=""{0}"" type=""text"" data-ng-model=""vm.{1}.{2}"" class=""form-control"" {3}/>",
-				property.Name,
-				declaringTypeVariable,
-				property.Name,
-				requiredText);
+			if (property.TypeName != "Boolean")
+			{
+				propertyInput = string.Format(@"<input id=""{0}"" name=""{0}"" type=""text"" data-ng-model=""vm.{1}.{2}"" class=""form-control"" {3}/>",
+					property.Name,
+					declaringTypeVariable,
+					property.Name,
+					requiredText);
+			}
+			else // Boolean type (radio)
+			{
+				var propertyInputOptions = new System.Text.StringBuilder();
+
+				propertyInputOptions.AppendLine(@"<label class=""radio-inline"">");
+				propertyInputOptions.AppendFormat(@"                        <input id=""{0}_True"" name=""{0}"" type=""radio"" data-ng-model=""vm.{1}.{0}"" data-ng-value=""true""> True",
+					property.Name,
+					declaringTypeVariable).AppendLine();
+				propertyInputOptions.AppendLine("                    </label>");
+				propertyInputOptions.AppendLine(@"                    <label class=""radio-inline"">");
+				propertyInputOptions.AppendFormat(@"                        <input id=""{0}_False"" name=""{0}"" type=""radio"" data-ng-model=""vm.{1}.{0}"" data-ng-value=""false""> False",
+					property.Name,
+					declaringTypeVariable).AppendLine();
+				propertyInputOptions.Append("                    </label>");
+
+				// Nullable?
+				if (property.Nullable)
+				{
+					propertyInputOptions.AppendLine().AppendLine(@"                    <label class=""radio-inline"">");
+					propertyInputOptions.AppendFormat(@"                        <input id=""{0}_Null"" name=""{0}"" type=""radio"" data-ng-model=""vm.{1}.{0}"" data-ng-value=""""> Default",
+						property.Name,
+						declaringTypeVariable).AppendLine();
+					propertyInputOptions.Append("                    </label>");
+				}
+
+				propertyInput = propertyInputOptions.ToString();				
+			}
 		}
 		else // Enum type (dropdown)
 		{

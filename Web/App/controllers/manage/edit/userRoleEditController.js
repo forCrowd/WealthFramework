@@ -50,10 +50,10 @@
 
             $location.path('/manage/userRole');
 
-            if (userRoleService.hasChanges()) {
-                userRoleService.rejectChanges();
-                logWarning('Discarded pending change(s)', null, true);
-            }
+            //if (userRoleService.hasChanges()) {
+            //    userRoleService.rejectChanges();
+            //    logWarning('Discarded pending change(s)', null, true);
+            //}
         }
 
         function hasChanges() {

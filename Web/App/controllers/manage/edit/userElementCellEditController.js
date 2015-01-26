@@ -50,10 +50,10 @@
 
             $location.path('/manage/userElementCell');
 
-            if (userElementCellService.hasChanges()) {
-                userElementCellService.rejectChanges();
-                logWarning('Discarded pending change(s)', null, true);
-            }
+            //if (userElementCellService.hasChanges()) {
+            //    userElementCellService.rejectChanges();
+            //    logWarning('Discarded pending change(s)', null, true);
+            //}
         }
 
         function hasChanges() {

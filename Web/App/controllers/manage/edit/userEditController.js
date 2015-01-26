@@ -44,10 +44,10 @@
 
             $location.path('/manage/user');
 
-            if (userService.hasChanges()) {
-                userService.rejectChanges();
-                logWarning('Discarded pending change(s)', null, true);
-            }
+            //if (userService.hasChanges()) {
+            //    userService.rejectChanges();
+            //    logWarning('Discarded pending change(s)', null, true);
+            //}
         }
 
         function hasChanges() {

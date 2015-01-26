@@ -50,10 +50,10 @@
 
             $location.path('/manage/elementCell');
 
-            if (elementCellService.hasChanges()) {
-                elementCellService.rejectChanges();
-                logWarning('Discarded pending change(s)', null, true);
-            }
+            //if (elementCellService.hasChanges()) {
+            //    elementCellService.rejectChanges();
+            //    logWarning('Discarded pending change(s)', null, true);
+            //}
         }
 
         function hasChanges() {

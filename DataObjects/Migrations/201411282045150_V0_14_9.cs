@@ -32,7 +32,7 @@ namespace DataObjects.Migrations
                         ElementId = c.Int(nullable: false),
                         Name = c.String(nullable: false, maxLength: 50),
                         ElementFieldType = c.Byte(nullable: false),
-                        FixedValue = c.Boolean(),
+                        UseFixedValue = c.Boolean(),
                         SortOrder = c.Byte(nullable: false),
                         CreatedOn = c.DateTime(nullable: false),
                         ModifiedOn = c.DateTime(nullable: false),

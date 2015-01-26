@@ -74,7 +74,7 @@ namespace BusinessObjects
             Element = element;
             Name = name;
             ElementFieldType = (byte)fieldType;
-            FixedValue = fixedValue;
+            UseFixedValue = fixedValue;
             SortOrder = sortOrder;
             ElementCellSet = new HashSet<ElementCell>();
             ElementFieldIndexSet = new HashSet<ElementFieldIndex>();
@@ -98,8 +98,8 @@ namespace BusinessObjects
         /// <summary>
         /// Determines whether this field will use a fixed value from the CMRP owner or it will have user rateable values
         /// </summary>
-        [Display(Name = "Fixed Value")]
-        public bool? FixedValue { get; set; }
+        [Display(Name = "Use Fixed Value")]
+        public bool? UseFixedValue { get; set; }
 
         [Display(Name = "Sort Order")]
         public byte SortOrder { get; set; }

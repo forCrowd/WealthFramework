@@ -40,9 +40,17 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="FixedValue" class="control-label col-md-2">Fixed Value</label>
-                <div class="col-md-10" data-ng-class="{'has-error': editForm.FixedValue.$invalid && !editForm.FixedValue.$pristine}">
-                    <input id="FixedValue" name="FixedValue" type="text" data-ng-model="vm.elementField.FixedValue" class="form-control" />
+                <label for="UseFixedValue" class="control-label col-md-2">Use Fixed Value</label>
+                <div class="col-md-10" data-ng-class="{'has-error': editForm.UseFixedValue.$invalid && !editForm.UseFixedValue.$pristine}">
+                    <label class="radio-inline">
+                        <input id="UseFixedValue_True" name="UseFixedValue" type="radio" data-ng-model="vm.elementField.UseFixedValue" data-ng-value="true"> True
+                    </label>
+                    <label class="radio-inline">
+                        <input id="UseFixedValue_False" name="UseFixedValue" type="radio" data-ng-model="vm.elementField.UseFixedValue" data-ng-value="false"> False
+                    </label>
+                    <label class="radio-inline">
+                        <input id="UseFixedValue_Null" name="UseFixedValue" type="radio" data-ng-model="vm.elementField.UseFixedValue" data-ng-value=""> Default
+                    </label>
                 </div>
             </div>
             <div class="form-group">
@@ -58,10 +66,10 @@
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <button data-ng-click="vm.saveChanges()" data-ng-disabled="editForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
+                    <button type="submit" data-ng-click="vm.saveChanges()" data-ng-disabled="editForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
                         Save
                     </button>
-                    <button data-ng-click="vm.cancelChanges()" class="btn btn-danger">
+                    <button type="button" data-ng-click="vm.cancelChanges()" class="btn btn-danger">
                         Cancel
                     </button>
                 </div>

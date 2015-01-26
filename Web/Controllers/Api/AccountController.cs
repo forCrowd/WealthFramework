@@ -107,7 +107,7 @@ namespace Web.Controllers.Api
                 return errorResult;
             }
 
-            return Ok();
+            return Ok(string.Empty);
         }
 
         // POST api/Account/Register

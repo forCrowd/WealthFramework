@@ -18,6 +18,9 @@ An experimental resource management system that aims to provide a sustainable ec
 * sessionStorage was replaced with localStorage to keep "access_token"
 * Azure websites is back again; http://wealth.azurewebsites.net
 * Register for error messages fix
+* editView.tt 
+** Both nullable and non-nullable boolean type will be rendered as radio input
+** 'Cancel' type was changed to 'button' type instead of 'submit' and service.cancelChanges() method was removed
 
 **0.14.8**
 

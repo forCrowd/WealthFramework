@@ -40,13 +40,19 @@ namespace BusinessObjects
         public string Name { get; set; }
 
         [Display(Name = "Initial Value")]
+        [DisplayOnListView(false)]
+        [DisplayOnEditView(true)]
         [Obsolete("Doesn't work as expected, remove later")]
         public decimal InitialValue { get; set; }
 
         [Display(Name = "Enable CMRP Addition")]
+        [DisplayOnListView(false)]
+        [DisplayOnEditView(true)]
         public bool EnableResourcePoolAddition { get; set; }
 
         [Display(Name = "Enable Subtotals")]
+        [DisplayOnListView(false)]
+        [DisplayOnEditView(true)]
         public bool EnableSubtotals { get; set; }
 
         [DisplayOnListView(false)]

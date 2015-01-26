@@ -50,10 +50,10 @@
 
             $location.path('/manage/userElementFieldIndex');
 
-            if (userElementFieldIndexService.hasChanges()) {
-                userElementFieldIndexService.rejectChanges();
-                logWarning('Discarded pending change(s)', null, true);
-            }
+            //if (userElementFieldIndexService.hasChanges()) {
+            //    userElementFieldIndexService.rejectChanges();
+            //    logWarning('Discarded pending change(s)', null, true);
+            //}
         }
 
         function hasChanges() {

@@ -44,10 +44,10 @@
 
             $location.path('/manage/role');
 
-            if (roleService.hasChanges()) {
-                roleService.rejectChanges();
-                logWarning('Discarded pending change(s)', null, true);
-            }
+            //if (roleService.hasChanges()) {
+            //    roleService.rejectChanges();
+            //    logWarning('Discarded pending change(s)', null, true);
+            //}
         }
 
         function hasChanges() {

@@ -123,7 +123,7 @@ namespace BusinessObjects
                                 throw new InvalidOperationException("ResourcePool.FilterSettings.CurrentUser property must have a value when ValueFilter is using OnlyCurrentUser option");
                         }
 
-                        return ElementField.FixedValue.Value
+                        return ElementField.UseFixedValue.Value
                             ? FixedValue
                             : valueFilterUser == null
                             ? UserElementCellSet.Any()
@@ -203,7 +203,7 @@ namespace BusinessObjects
                 // TODO This calculation is the same as Decimal type? Are we using the types in a wrong way?
                 case ElementFieldTypes.ResourcePool:
                 case ElementFieldTypes.Multiplier:
-                    return ElementField.FixedValue.Value
+                    return ElementField.UseFixedValue.Value
                         ? 1
                         : UserElementCellSet.Count();
                 case ElementFieldTypes.String:
@@ -278,7 +278,7 @@ namespace BusinessObjects
         {
             FixedValueValidation(user);
 
-            var fixedValue = ElementField.FixedValue.GetValueOrDefault(true);
+            var fixedValue = ElementField.UseFixedValue.GetValueOrDefault(true);
             if (fixedValue)
                 ClearFixedValues();
             else
@@ -303,7 +303,7 @@ namespace BusinessObjects
         {
             SetValueHelper(ElementFieldTypes.Boolean, user);
 
-            if (ElementField.FixedValue.Value)
+            if (ElementField.UseFixedValue.Value)
                 BooleanValue = value;
             else
                 GetUserCell(user).SetValue(value);
@@ -320,7 +320,7 @@ namespace BusinessObjects
         {
             SetValueHelper(ElementFieldTypes.Integer, user);
 
-            if (ElementField.FixedValue.Value)
+            if (ElementField.UseFixedValue.Value)
                 IntegerValue = value;
             else
                 GetUserCell(user).SetValue(value);
@@ -337,7 +337,7 @@ namespace BusinessObjects
         {
             SetValueHelper(ElementFieldTypes.Decimal, user);
 
-            if (ElementField.FixedValue.Value)
+            if (ElementField.UseFixedValue.Value)
                 DecimalValue = value;
             else
                 GetUserCell(user).SetValue(value);
@@ -354,7 +354,7 @@ namespace BusinessObjects
         {
             SetValueHelper(ElementFieldTypes.DateTime, user);
 
-            if (ElementField.FixedValue.Value)
+            if (ElementField.UseFixedValue.Value)
                 DateTimeValue = value;
             else
                 GetUserCell(user).SetValue(value);
@@ -388,14 +388,14 @@ namespace BusinessObjects
             FixedValueValidation(user);
 
             // Clear, if FixedValue
-            var fixedValue = ElementField.FixedValue.GetValueOrDefault(true);
+            var fixedValue = ElementField.UseFixedValue.GetValueOrDefault(true);
             if (fixedValue)
                 ClearFixedValues();
         }
 
         void FixedValueValidation(User user)
         {
-            var fixedValue = ElementField.FixedValue.GetValueOrDefault(true);
+            var fixedValue = ElementField.UseFixedValue.GetValueOrDefault(true);
             if (!fixedValue && user == null)
                 throw new InvalidOperationException("Value can't be set without user parameter when FixedValue is false");
         }

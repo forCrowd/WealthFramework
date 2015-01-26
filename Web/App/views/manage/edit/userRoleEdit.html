@@ -40,10 +40,10 @@
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <button data-ng-click="vm.saveChanges()" data-ng-disabled="editForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
+                    <button type="submit" data-ng-click="vm.saveChanges()" data-ng-disabled="editForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
                         Save
                     </button>
-                    <button data-ng-click="vm.cancelChanges()" class="btn btn-danger">
+                    <button type="button" data-ng-click="vm.cancelChanges()" class="btn btn-danger">
                         Cancel
                     </button>
                 </div>

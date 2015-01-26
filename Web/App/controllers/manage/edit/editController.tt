@@ -103,10 +103,10 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 
             $location.path('/manage/<#= entityVariable #>');
 
-            if (<#= serviceId #>.hasChanges()) {
-                <#= serviceId #>.rejectChanges();
-                logWarning('Discarded pending change(s)', null, true);
-            }
+            //if (<#= serviceId #>.hasChanges()) {
+            //    <#= serviceId #>.rejectChanges();
+            //    logWarning('Discarded pending change(s)', null, true);
+            //}
         }
 
         function hasChanges() {

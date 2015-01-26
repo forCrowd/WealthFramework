@@ -59,9 +59,9 @@
                                             <!--<div data-ng-if="field.ElementFieldType === 12">
                                                 <div class="clearfix"></div>
                                                 <div class="btn-group" role="group">
-                                                    <button type="submit" data-ng-click="increaseMultiplier()" class="btn btn-default btn-xs">+</button>
-                                                    <button type="submit" data-ng-click="decreaseMultiplier()" class="btn btn-default btn-xs">-</button>
-                                                    <button type="submit" data-ng-click="resetMultiplier()" class="btn btn-default btn-xs">0</button>
+                                                    <button type="button" data-ng-click="increaseMultiplier()" class="btn btn-default btn-xs">+</button>
+                                                    <button type="button" data-ng-click="decreaseMultiplier()" class="btn btn-default btn-xs">-</button>
+                                                    <button type="button" data-ng-click="resetMultiplier()" class="btn btn-default btn-xs">0</button>
                                                 </div>
                                             </div>-->
                                         </th>
@@ -75,9 +75,9 @@
                                             <div data-ng-if="field.ElementFieldType === 11">
                                                 <div class="clearfix"></div>
                                                 <div class="btn-group" role="group">
-                                                    <button title="Increase CMRP Rate %5" type="submit" data-ng-click="updateResourcePoolRate((resourcePool.ResourcePoolRatePercentage * 100) + 5)" class="btn btn-default btn-xs">+</button>
-                                                    <button title="Decrease CMRP Rate %5" type="submit" data-ng-click="updateResourcePoolRate((resourcePool.ResourcePoolRatePercentage * 100) - 5)" class="btn btn-default btn-xs">-</button>
-                                                    <button title="Reset CMRP Rate" type="submit" data-ng-click="updateResourcePoolRate(0)" class="btn btn-default btn-xs">0</button>
+                                                    <button title="Increase CMRP Rate %5" type="button" data-ng-click="updateResourcePoolRate((resourcePool.ResourcePoolRatePercentage * 100) + 5)" class="btn btn-default btn-xs">+</button>
+                                                    <button title="Decrease CMRP Rate %5" type="button" data-ng-click="updateResourcePoolRate((resourcePool.ResourcePoolRatePercentage * 100) - 5)" class="btn btn-default btn-xs">-</button>
+                                                    <button title="Reset CMRP Rate" type="button" data-ng-click="updateResourcePoolRate(0)" class="btn btn-default btn-xs">0</button>
                                                 </div>
                                             </div>
                                         </th>
@@ -159,8 +159,8 @@
                                                         </td>
                                                         <td>
                                                             <div class="btn-group" role="group">
-                                                                <button type="submit" data-ng-click="elementCell.increaseIndexCellValue()" title="+ 10" class="btn btn-default btn-xs">+</button>
-                                                                <button type="submit" data-ng-click="elementCell.decreaseIndexCellValue()" title="- 10" class="btn btn-default btn-xs">-</button>
+                                                                <button type="button" data-ng-click="elementCell.increaseIndexCellValue()" title="+ 10" class="btn btn-default btn-xs">+</button>
+                                                                <button type="button" data-ng-click="elementCell.decreaseIndexCellValue()" title="- 10" class="btn btn-default btn-xs">-</button>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -212,9 +212,9 @@
                                                 {{ resourcePool.MainElement.MultiplierValue | number: 2 }}
                                                 <!--<div class="clearfix"></div>
                                                 <div class="btn-group" role="group">
-                                                    <button type="submit" data-ng-click="increaseMultiplier()" class="btn btn-default btn-xs">+</button>
-                                                    <button type="submit" data-ng-click="decreaseMultiplier()" class="btn btn-default btn-xs">-</button>
-                                                    <button type="submit" data-ng-click="resetMultiplier()" class="btn btn-default btn-xs">0</button>
+                                                    <button type="button" data-ng-click="increaseMultiplier()" class="btn btn-default btn-xs">+</button>
+                                                    <button type="button" data-ng-click="decreaseMultiplier()" class="btn btn-default btn-xs">-</button>
+                                                    <button type="button" data-ng-click="resetMultiplier()" class="btn btn-default btn-xs">0</button>
                                                 </div>-->
                                             </div>
                                             <!-- Indexes -->
@@ -280,9 +280,9 @@
                                         <td>
                                             <div data-ng-if="field.ElementFieldType === 12">
                                                 <div class="btn-group" role="group">
-                                                    <button title="Increase {{ resourcePool.MainElement.MultiplierFieldName }}" type="submit" data-ng-click="increaseMultiplier()" class="btn btn-default btn-xs">+</button>
-                                                    <button title="Decrease {{ resourcePool.MainElement.MultiplierFieldName }}" type="submit" data-ng-click="decreaseMultiplier()" class="btn btn-default btn-xs">-</button>
-                                                    <button title="Reset {{ resourcePool.MainElement.MultiplierFieldName }}" type="submit" data-ng-click="resetMultiplier()" class="btn btn-default btn-xs">0</button>
+                                                    <button title="Increase {{ resourcePool.MainElement.MultiplierFieldName }}" type="button" data-ng-click="increaseMultiplier()" class="btn btn-default btn-xs">+</button>
+                                                    <button title="Decrease {{ resourcePool.MainElement.MultiplierFieldName }}" type="button" data-ng-click="decreaseMultiplier()" class="btn btn-default btn-xs">-</button>
+                                                    <button title="Reset {{ resourcePool.MainElement.MultiplierFieldName }}" type="button" data-ng-click="resetMultiplier()" class="btn btn-default btn-xs">0</button>
                                                 </div>
                                             </div>
                                             <div data-ng-if="field.ElementFieldType !== 12">

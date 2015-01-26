@@ -47,10 +47,10 @@
 
             $location.path('/manage/elementItem');
 
-            if (elementItemService.hasChanges()) {
-                elementItemService.rejectChanges();
-                logWarning('Discarded pending change(s)', null, true);
-            }
+            //if (elementItemService.hasChanges()) {
+            //    elementItemService.rejectChanges();
+            //    logWarning('Discarded pending change(s)', null, true);
+            //}
         }
 
         function hasChanges() {

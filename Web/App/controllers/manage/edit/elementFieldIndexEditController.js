@@ -47,10 +47,10 @@
 
             $location.path('/manage/elementFieldIndex');
 
-            if (elementFieldIndexService.hasChanges()) {
-                elementFieldIndexService.rejectChanges();
-                logWarning('Discarded pending change(s)', null, true);
-            }
+            //if (elementFieldIndexService.hasChanges()) {
+            //    elementFieldIndexService.rejectChanges();
+            //    logWarning('Discarded pending change(s)', null, true);
+            //}
         }
 
         function hasChanges() {

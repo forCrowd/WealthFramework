@@ -50,10 +50,10 @@
 
             $location.path('/manage/userResourcePool');
 
-            if (userResourcePoolService.hasChanges()) {
-                userResourcePoolService.rejectChanges();
-                logWarning('Discarded pending change(s)', null, true);
-            }
+            //if (userResourcePoolService.hasChanges()) {
+            //    userResourcePoolService.rejectChanges();
+            //    logWarning('Discarded pending change(s)', null, true);
+            //}
         }
 
         function hasChanges() {

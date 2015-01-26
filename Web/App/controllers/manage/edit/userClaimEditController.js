@@ -47,10 +47,10 @@
 
             $location.path('/manage/userClaim');
 
-            if (userClaimService.hasChanges()) {
-                userClaimService.rejectChanges();
-                logWarning('Discarded pending change(s)', null, true);
-            }
+            //if (userClaimService.hasChanges()) {
+            //    userClaimService.rejectChanges();
+            //    logWarning('Discarded pending change(s)', null, true);
+            //}
         }
 
         function hasChanges() {

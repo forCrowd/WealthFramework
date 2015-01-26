@@ -44,10 +44,10 @@
 
             $location.path('/manage/resourcePool');
 
-            if (resourcePoolService.hasChanges()) {
-                resourcePoolService.rejectChanges();
-                logWarning('Discarded pending change(s)', null, true);
-            }
+            //if (resourcePoolService.hasChanges()) {
+            //    resourcePoolService.rejectChanges();
+            //    logWarning('Discarded pending change(s)', null, true);
+            //}
         }
 
         function hasChanges() {
@@ -62,7 +62,6 @@
             else {
                 resourcePoolService.getResourcePool($routeParams.Id)
                     .then(function (data) {
-                        logger.log('resourcePool', data);
                         vm.resourcePool = data;
                     })
                     .catch(function (error) {

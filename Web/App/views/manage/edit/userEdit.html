@@ -60,7 +60,12 @@
             <div class="form-group">
                 <label for="EmailConfirmed" class="control-label col-md-2">EmailConfirmed</label>
                 <div class="col-md-10" data-ng-class="{'has-error': editForm.EmailConfirmed.$invalid && !editForm.EmailConfirmed.$pristine}">
-                    <input id="EmailConfirmed" name="EmailConfirmed" type="text" data-ng-model="vm.user.EmailConfirmed" class="form-control" required />
+                    <label class="radio-inline">
+                        <input id="EmailConfirmed_True" name="EmailConfirmed" type="radio" data-ng-model="vm.user.EmailConfirmed" data-ng-value="true"> True
+                    </label>
+                    <label class="radio-inline">
+                        <input id="EmailConfirmed_False" name="EmailConfirmed" type="radio" data-ng-model="vm.user.EmailConfirmed" data-ng-value="false"> False
+                    </label>
                 </div>
             </div>
             <div class="form-group">
@@ -84,13 +89,23 @@
             <div class="form-group">
                 <label for="PhoneNumberConfirmed" class="control-label col-md-2">PhoneNumberConfirmed</label>
                 <div class="col-md-10" data-ng-class="{'has-error': editForm.PhoneNumberConfirmed.$invalid && !editForm.PhoneNumberConfirmed.$pristine}">
-                    <input id="PhoneNumberConfirmed" name="PhoneNumberConfirmed" type="text" data-ng-model="vm.user.PhoneNumberConfirmed" class="form-control" required />
+                    <label class="radio-inline">
+                        <input id="PhoneNumberConfirmed_True" name="PhoneNumberConfirmed" type="radio" data-ng-model="vm.user.PhoneNumberConfirmed" data-ng-value="true"> True
+                    </label>
+                    <label class="radio-inline">
+                        <input id="PhoneNumberConfirmed_False" name="PhoneNumberConfirmed" type="radio" data-ng-model="vm.user.PhoneNumberConfirmed" data-ng-value="false"> False
+                    </label>
                 </div>
             </div>
             <div class="form-group">
                 <label for="TwoFactorEnabled" class="control-label col-md-2">TwoFactorEnabled</label>
                 <div class="col-md-10" data-ng-class="{'has-error': editForm.TwoFactorEnabled.$invalid && !editForm.TwoFactorEnabled.$pristine}">
-                    <input id="TwoFactorEnabled" name="TwoFactorEnabled" type="text" data-ng-model="vm.user.TwoFactorEnabled" class="form-control" required />
+                    <label class="radio-inline">
+                        <input id="TwoFactorEnabled_True" name="TwoFactorEnabled" type="radio" data-ng-model="vm.user.TwoFactorEnabled" data-ng-value="true"> True
+                    </label>
+                    <label class="radio-inline">
+                        <input id="TwoFactorEnabled_False" name="TwoFactorEnabled" type="radio" data-ng-model="vm.user.TwoFactorEnabled" data-ng-value="false"> False
+                    </label>
                 </div>
             </div>
             <div class="form-group">
@@ -102,7 +117,12 @@
             <div class="form-group">
                 <label for="LockoutEnabled" class="control-label col-md-2">LockoutEnabled</label>
                 <div class="col-md-10" data-ng-class="{'has-error': editForm.LockoutEnabled.$invalid && !editForm.LockoutEnabled.$pristine}">
-                    <input id="LockoutEnabled" name="LockoutEnabled" type="text" data-ng-model="vm.user.LockoutEnabled" class="form-control" required />
+                    <label class="radio-inline">
+                        <input id="LockoutEnabled_True" name="LockoutEnabled" type="radio" data-ng-model="vm.user.LockoutEnabled" data-ng-value="true"> True
+                    </label>
+                    <label class="radio-inline">
+                        <input id="LockoutEnabled_False" name="LockoutEnabled" type="radio" data-ng-model="vm.user.LockoutEnabled" data-ng-value="false"> False
+                    </label>
                 </div>
             </div>
             <div class="form-group">
@@ -124,10 +144,10 @@
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <button data-ng-click="vm.saveChanges()" data-ng-disabled="editForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
+                    <button type="submit" data-ng-click="vm.saveChanges()" data-ng-disabled="editForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
                         Save
                     </button>
-                    <button data-ng-click="vm.cancelChanges()" class="btn btn-danger">
+                    <button type="button" data-ng-click="vm.cancelChanges()" class="btn btn-danger">
                         Cancel
                     </button>
                 </div>

@@ -36,13 +36,23 @@
             <div class="form-group">
                 <label for="EnableResourcePoolAddition" class="control-label col-md-2">Enable CMRP Addition</label>
                 <div class="col-md-10" data-ng-class="{'has-error': editForm.EnableResourcePoolAddition.$invalid && !editForm.EnableResourcePoolAddition.$pristine}">
-                    <input id="EnableResourcePoolAddition" name="EnableResourcePoolAddition" type="text" data-ng-model="vm.resourcePool.EnableResourcePoolAddition" class="form-control" required />
+                    <label class="radio-inline">
+                        <input id="EnableResourcePoolAddition_True" name="EnableResourcePoolAddition" type="radio" data-ng-model="vm.resourcePool.EnableResourcePoolAddition" data-ng-value="true"> True
+                    </label>
+                    <label class="radio-inline">
+                        <input id="EnableResourcePoolAddition_False" name="EnableResourcePoolAddition" type="radio" data-ng-model="vm.resourcePool.EnableResourcePoolAddition" data-ng-value="false"> False
+                    </label>
                 </div>
             </div>
             <div class="form-group">
                 <label for="EnableSubtotals" class="control-label col-md-2">Enable Subtotals</label>
                 <div class="col-md-10" data-ng-class="{'has-error': editForm.EnableSubtotals.$invalid && !editForm.EnableSubtotals.$pristine}">
-                    <input id="EnableSubtotals" name="EnableSubtotals" type="text" data-ng-model="vm.resourcePool.EnableSubtotals" class="form-control" required />
+                    <label class="radio-inline">
+                        <input id="EnableSubtotals_True" name="EnableSubtotals" type="radio" data-ng-model="vm.resourcePool.EnableSubtotals" data-ng-value="true"> True
+                    </label>
+                    <label class="radio-inline">
+                        <input id="EnableSubtotals_False" name="EnableSubtotals" type="radio" data-ng-model="vm.resourcePool.EnableSubtotals" data-ng-value="false"> False
+                    </label>
                 </div>
             </div>
             <div class="form-group">
@@ -52,10 +62,10 @@
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <button data-ng-click="vm.saveChanges()" data-ng-disabled="editForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
+                    <button type="submit" data-ng-click="vm.saveChanges()" data-ng-disabled="editForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
                         Save
                     </button>
-                    <button data-ng-click="vm.cancelChanges()" class="btn btn-danger">
+                    <button type="button" data-ng-click="vm.cancelChanges()" class="btn btn-danger">
                         Cancel
                     </button>
                 </div>

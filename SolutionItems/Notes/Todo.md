@@ -48,7 +48,6 @@ http://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-w
 * usermanager - owin parts?
 * user.issample field? + web.config         <add key="SampleUserId" value="2" />
 * db tables -> [x]set?
-* azure publish profile uses the old db pass?
 * public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager <ApplicationUser> manager) - ?
 * remove MultipleActiveResultSets=True from web.config
 * check validation cases - null is okay but how about Id check - Id > 0?
@@ -84,16 +83,11 @@ or always calculate the total average based on invidiuals percentage? or both?
 * breeze - check save + has + get + reject changes  
 currently they don't work on entity level? - also prepareBatch method?
 
-* sometimes cancel button doesn't allow to go back (fill required?)  
-use history.back sort of method, but first vm needs to be a new object, without createEntity
-
 * learn how and when to use disposable thingy?  
 repo + unitofwork + context + controllers?
 
 * handling concurrency can be improved  
-load the new record and let the user choose which one is correct  
-
-* try to create initial data (seed) from facade, instead of dataobjects layer  
+load the new record and let the user choose which one is correct
 
 * check whether unit of work classes need merging  
 however, in the current structure, every entity will have a unitofwork + controller by default?  
@@ -113,7 +107,6 @@ according to this, normal user may not use post action for instance? check these
 * implement soft delete
 * exists should work with find or alllive.any() or all.any()?  
 * find vs deleted records? - findlive? or don't retrieve dead records at all?
-* don't allow delete License if it's connected to an Organization (can't be deleted) - same goes for the others but License really can't be deleted
 * loading animation? both for breeze + angular  
 [nprogress](http://ricostacruz.com/nprogress/) ?
 * enum data type didnt work with odata? or api?
@@ -142,9 +135,10 @@ http://msdn.microsoft.com/en-us/library/hh925568%28v=vs.110%29.aspx
 * coded ui test or canopy or ..? web iu testers?
 * object level validation IValidatableObject
 * http://www.postsharp.net/aspects#examples
+* elastic search?
+* https://github.com/hazzik/DelegateDecompiler
 * Generalizing Validation via Custom Validation Filter Attribute -> general filter for ModelState.IsValid check! http://www.dotnetcurry.com/showarticle.aspx?ID=927
 * validateantiforgerytoken + bind attributes in odata controller?
-* [Route("users/{id:int:min(1)}")] ?
 * template pattern for elementfield + fieldtype classes!
 * calling saveChanges in dispose of unitofwork?
 * extend dbcontext validation errors - check spaanjaars sample and use them in webapp with modelstate blocks?
@@ -169,30 +163,6 @@ querayable vs enablequerysupport
 [Queryable(PageSize=10)]  
 var queryAttribute = new QueryableAttribute() { AllowedQueryOptions = AllowedQueryOptions.Top | AllowedQueryOptions.Skip, MaxTop = 100 };
 config.EnableQuerySupport(queryAttribute);  
-
-* http client for testing?  
-private async void btnGet_Click(object sender, EventArgs e)  
-{  
-CustomHandlerA chA = new CustomHandlerA();
-CustomHandlerB chB = new CustomHandlerB();
-HttpClient client = HttpClientFactory.Create(chA, chB);  
-
-client.BaseAddress = new Uri("http://localhost:15324/");  
-client.DefaultRequestHeaders.Accept.Clear();  
-client.DefaultRequestHeaders.Accept.Add(  
-new MediaTypeWithQualityHeaderValue("application/json"));  
-
-HttpResponseMessage response = await client.GetAsync("api/car");  
-if (response.IsSuccessStatusCode)  
-{  
-Car[] myCarArray = await response.Content.ReadAsAsync[Car[]]();  
-foreach (Car myCar in myCarArray)  
-{  
-txtResults.AppendText(string.Format("{0}\t {1}\t {2}\n\n", myCar.Id, myCar.Make,
-myCar.Model));  
-}  
-}  
-}
 
 * one to one relation;  
 {  
@@ -247,8 +217,6 @@ http://download.microsoft.com/Documents/UseTerms/Windows_8.1_English_468d3103-64
 * angular interceptor for error handling?
 http://www.codeproject.com/Articles/857594/MVC-Thorough-Error-Handling		
 
-* elastic search?
-
 * using resourcePool initialValue for Basic Sample is not a good idea - it's not on user level?!
 
 * Content related;
@@ -272,30 +240,22 @@ instead of dataobjects, it should be dataobjects.EF?
 ---
 http://www.asp.net/web-api/overview/testing-and-debugging/mocking-entity-framework-when-unit-testing-aspnet-web-api-2
 
-string - n/a
-
-bool - indexable (fixed / user (only current - rating average))
-int - indexable (fixed / user (only current - rating average))
-decimal - indexable (fixed / user (only current - rating average)) - resource pool (fixed) - multiplier (user - only current)
-datetime - indexable (fixed / user (only current - rating average))
-
-element - n/a
-resource - ~decimal
-multiplier - n/a
-
 ---
-. chapter 7, 8, 9, 10 ?!
-
-. displaying element + recursive!
-
-. directive link vs controller
-. directive using service inside of a directive?
-
 . addfield method should create new elementcells for this new field for the existing items!
 
 . one elementfieldindex per elementfield ?!?!?!
 
 . resourcepoolview - Resource Pool + Field Index combo - should the fields be separate? income part can be at the end?
+
+---
+refresh tokens?
+
+cors (ngclient + api separation)
+http://bitoftech.net/2014/06/09/angularjs-token-authentication-using-asp-net-web-api-2-owin-asp-net-identity/
+https://github.com/tjoudeh/AngularJSAuthentication
+
+X-InlineCount
+X-Pagination
 
 ---
 cell is always showing the same info, not per index???
@@ -309,7 +269,6 @@ cell is always showing the same info, not per index???
 anti forgery: AntiForgery.GetTokens
 
 ---
-
 public class CountryController : Controller
   {
       //initialize service object
@@ -382,82 +341,18 @@ public interface IContext
            return base.SaveChanges();
        }       
    }
-   
----
-https://github.com/hazzik/DelegateDecompiler
 
 ---
-        // POST api/Account/Register
-        [AllowAnonymous]
-        [Route("Register")]
-        public async Task<IHttpActionResult> Register(UserModel userModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
- 
-            IdentityResult result = await _repo.RegisterUser(userModel);
- 
-            IHttpActionResult errorResult = GetErrorResult(result);
- 
-            if (errorResult != null)
-            {
-                return errorResult;
-            }
- 
-            return Ok(string.Empty);
-        }
- 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _repo.Dispose();
-            }
- 
-            base.Dispose(disposing);
-        }
- 
-        private IHttpActionResult GetErrorResult(IdentityResult result)
-        {
-            if (result == null)
-            {
-                return InternalServerError();
-            }
- 
-            if (!result.Succeeded)
-            {
-                if (result.Errors != null)
-                {
-                    foreach (string error in result.Errors)
-                    {
-                        ModelState.AddModelError("", error);
-                    }
-                }
- 
-                if (ModelState.IsValid)
-                {
-                    // No ModelState errors are available to send, so just return an empty BadRequest.
-                    return BadRequest();
-                }
- 
-                return BadRequest(ModelState);
-            }
- 
-            return null;
-        }
-    }
-	
----
-refresh tokens?
+string - n/a
 
-cors (ngclient + api separation)
-http://bitoftech.net/2014/06/09/angularjs-token-authentication-using-asp-net-web-api-2-owin-asp-net-identity/
-https://github.com/tjoudeh/AngularJSAuthentication
+bool - indexable (fixed / user (only current - rating average))
+int - indexable (fixed / user (only current - rating average))
+decimal - indexable (fixed / user (only current - rating average)) - resource pool (fixed) - multiplier (user - only current)
+datetime - indexable (fixed / user (only current - rating average))
 
-X-InlineCount
-X-Pagination
+element - n/a
+resource - ~decimal
+multiplier - n/a
 
 ---
 // TODO With just Ok(), it return the response with no content-type.

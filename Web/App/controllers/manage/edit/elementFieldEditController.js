@@ -47,10 +47,10 @@
 
             $location.path('/manage/elementField');
 
-            if (elementFieldService.hasChanges()) {
-                elementFieldService.rejectChanges();
-                logWarning('Discarded pending change(s)', null, true);
-            }
+            //if (elementFieldService.hasChanges()) {
+            //    elementFieldService.rejectChanges();
+            //    logWarning('Discarded pending change(s)', null, true);
+            //}
         }
 
         function hasChanges() {
