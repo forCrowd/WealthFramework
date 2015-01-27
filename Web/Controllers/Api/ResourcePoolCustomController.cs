@@ -70,8 +70,11 @@ namespace Web.Controllers.Api
             var currentUserId = this.GetCurrentUserId().Value;
             var currentUser = await manager.FindUserById(currentUserId);
 
-            resourcePool.FilterSettings.CurrentUser = currentUser;
-            resourcePool.FilterSettings.ValueFilter = (BusinessObjects.ResourcePoolFilterSettings.ValueFilters)valueFilter;
+            foreach (var element in resourcePool.ElementSet)
+            {
+                element.FilterSettings.CurrentUser = currentUser;
+                element.FilterSettings.ValueFilter = (BusinessObjects.ResourcePoolFilterSettings.ValueFilters)valueFilter;
+            }
 
             return new ResourcePool(resourcePool, currentUser);
         }
@@ -90,7 +93,7 @@ namespace Web.Controllers.Api
             var currentUserId = this.GetCurrentUserId().Value;
             var currentUser = await manager.FindUserById(currentUserId);
 
-            resourcePool.FilterSettings.CurrentUser = currentUser;
+            //resourcePool.FilterSettings.CurrentUser = currentUser;
 
             await manager.IncreaseMultiplierAsync(resourcePool, currentUser);
 
@@ -111,7 +114,7 @@ namespace Web.Controllers.Api
             var currentUserId = this.GetCurrentUserId().Value;
             var currentUser = await manager.FindUserById(currentUserId);
 
-            resourcePool.FilterSettings.CurrentUser = currentUser;
+            //resourcePool.FilterSettings.CurrentUser = currentUser;
 
             await manager.DecreaseMultiplierAsync(resourcePool, currentUser);
 
@@ -133,7 +136,7 @@ namespace Web.Controllers.Api
                 var currentUserId = this.GetCurrentUserId().Value;
                 var currentUser = await manager.FindUserById(currentUserId);
 
-                resourcePool.FilterSettings.CurrentUser = currentUser;
+                //resourcePool.FilterSettings.CurrentUser = currentUser;
 
                 await manager.ResetMultiplierAsync(resourcePool, currentUser);
 

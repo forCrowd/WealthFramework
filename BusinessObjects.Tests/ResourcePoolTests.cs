@@ -18,8 +18,8 @@ namespace BusinessObjects.Tests
             // Arrange
             var user = new User("User");
             var resourcePool = new ResourcePool("CMRP");
-            resourcePool.FilterSettings.CurrentUser = user;
             var element = resourcePool.AddElement("Element");
+            element.FilterSettings.CurrentUser = user;
             var multiplierField = element.AddField("Multiplier", ElementFieldTypes.Multiplier);
             var element1 = element.AddItem("Element 1");
             element1.AddCell(element.MultiplierField).SetValue(1M, user);
@@ -40,8 +40,8 @@ namespace BusinessObjects.Tests
             // Arrange
             var user = new User("User");
             var resourcePool = new ResourcePool("CMRP");
-            resourcePool.FilterSettings.CurrentUser = user;
             var element = resourcePool.AddElement("Element");
+            element.FilterSettings.CurrentUser = user;
             var multiplierField = element.AddField("Multiplier", ElementFieldTypes.Multiplier);
             var element1 = element.AddItem("Element 1");
             element1.AddCell(element.MultiplierField).SetValue(5M, user);
@@ -62,8 +62,8 @@ namespace BusinessObjects.Tests
             // Arrange
             var user = new User("User");
             var resourcePool = new ResourcePool("CMRP");
-            resourcePool.FilterSettings.CurrentUser = user;
             var element = resourcePool.AddElement("Element");
+            element.FilterSettings.CurrentUser = user;
             var multiplierField = element.AddField("Multiplier", ElementFieldTypes.Multiplier);
             var element1 = element.AddItem("Element 1");
             element1.AddCell(element.MultiplierField).SetValue(5M, user);
@@ -93,19 +93,19 @@ namespace BusinessObjects.Tests
                     .SetValue(10M, user2);
             
             // Act
-            resourcePool.FilterSettings.CurrentUser = user1;
+            element.FilterSettings.CurrentUser = user1;
 
             // Assert
             Assert.IsTrue(cell.Value() == 5M);
 
             // Act - Part 2
-            resourcePool.FilterSettings.CurrentUser = user2;
+            element.FilterSettings.CurrentUser = user2;
 
             // Assert - Part 2
             Assert.IsTrue(cell.Value() == 10M);
 
             // Act - Part 2
-            resourcePool.FilterSettings.ValueFilter = ResourcePoolFilterSettings.ValueFilters.AllUsersAverage;
+            element.FilterSettings.ValueFilter = ResourcePoolFilterSettings.ValueFilters.AllUsersAverage;
 
             // Assert - Part 2
             Assert.IsTrue(cell.Value() == 7.5M);
@@ -207,10 +207,10 @@ namespace BusinessObjects.Tests
             var user = new User("User");
 
             var resourcePool = new ResourcePool("Default");
-            resourcePool.FilterSettings.CurrentUser = user;
             resourcePool.AddUserResourcePool(user, 100);
 
             var organization = resourcePool.AddElement("Organization");
+            organization.FilterSettings.CurrentUser = user;
 
             organization
                     .AddField("Sales Price", ElementFieldTypes.ResourcePool, true)
@@ -310,10 +310,10 @@ namespace BusinessObjects.Tests
             var user = new User("User");
 
             var resourcePool = new ResourcePool("Default");
-            resourcePool.FilterSettings.CurrentUser = user;
             resourcePool.AddUserResourcePool(user, 100);
 
             var organization = resourcePool.AddElement("Organization");
+            organization.FilterSettings.CurrentUser = user;
 
             organization
                     .AddField("Sales Price", ElementFieldTypes.ResourcePool, true)
@@ -383,10 +383,10 @@ namespace BusinessObjects.Tests
             var user2 = new User("User 2");
 
             var resourcePool = new ResourcePool("Default");
-            resourcePool.FilterSettings.CurrentUser = user1;
             resourcePool.AddUserResourcePool(user1, 100);
 
             var organization = resourcePool.AddElement("Organization");
+            organization.FilterSettings.CurrentUser = user1;
 
             organization
                     .AddField("Sales Price", ElementFieldTypes.ResourcePool, true)

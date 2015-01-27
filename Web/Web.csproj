@@ -256,6 +256,7 @@
     <Compile Include="Controllers\Api\AccountController.cs" />
     <Compile Include="Controllers\Api\ApplicationController.cs" />
     <Compile Include="Controllers\Api\BaseApiController.cs" />
+    <Compile Include="Controllers\Api\ElementCustomController.cs" />
     <Compile Include="Controllers\Api\Test\ResultsController.cs" />
     <Compile Include="Controllers\Api\ResourcePoolCustomController.cs" />
     <Compile Include="Controllers\Extensions\ControllerExtensions.cs" />
@@ -437,6 +438,7 @@
     <Content Include="App\services\generated\userRoleService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
+    <Content Include="App\services\elementService.js" />
     <Content Include="App\services\resourcePoolService.js" />
     <Content Include="App\services\userElementCellService.js" />
     <Content Include="App\views\content\chapter0.html" />
@@ -444,6 +446,8 @@
     <Content Include="App\views\content\home.html" />
     <Content Include="App\views\content\overview.html" />
     <Content Include="App\views\content\technologies.html" />
+    <Content Include="App\views\directives\elementEditor.html" />
+    <Content Include="App\views\directives\newResourcePoolEditor.html" />
     <Content Include="App\views\directives\resourcePoolEditor.html" />
     <Content Include="App\views\manage\edit\editView.txt">
       <AutoGen>True</AutoGen>

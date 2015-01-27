@@ -16,6 +16,8 @@ namespace BusinessObjects
         {
             ElementFieldSet = new HashSet<ElementField>();
             ElementItemSet = new HashSet<ElementItem>();
+
+            FilterSettings = new ResourcePoolFilterSettings();
         }
 
         public Element(ResourcePool resourcePool, string name) : this()
@@ -47,6 +49,8 @@ namespace BusinessObjects
         public virtual ResourcePool ResourcePool { get; set; }
         public virtual ICollection<ElementField> ElementFieldSet { get; set; }
         public virtual ICollection<ElementItem> ElementItemSet { get; set; }
+
+        public ResourcePoolFilterSettings FilterSettings { get; private set; }
 
         #region - ReadOnly Properties -
 
@@ -204,6 +208,48 @@ namespace BusinessObjects
             var item = new ElementItem(this, name);
             ElementItemSet.Add(item);
             return item;
+        }
+
+        public Element IncreaseMultiplier(User user)
+        {
+            MultiplierMethodValidations(user);
+
+            foreach (var item in ElementItemSet)
+                item.MultiplierCell.SetValue(item.MultiplierValue() + 1M, user);
+
+            return this;
+        }
+
+        public Element DecreaseMultiplier(User user)
+        {
+            MultiplierMethodValidations(user);
+
+            foreach (var item in ElementItemSet)
+            {
+                var multiplierValue = item.MultiplierValue();
+                if (multiplierValue > 0)
+                    item.MultiplierCell.SetValue(multiplierValue - 1M, user);
+            }
+
+            return this;
+        }
+
+        public Element ResetMultiplier(User user)
+        {
+            MultiplierMethodValidations(user);
+
+            foreach (var item in ElementItemSet)
+                item.MultiplierCell.SetValue(0M, user);
+
+            return this;
+        }
+
+        void MultiplierMethodValidations(User user)
+        {
+            Validations.ArgumentNullOrDefault(user, "user");
+
+            if (!HasMultiplierField)
+                throw new InvalidOperationException("MainElement has no multiplier field");
         }
 
         #endregion

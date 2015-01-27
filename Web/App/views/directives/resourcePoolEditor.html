@@ -7,14 +7,17 @@
                 </span>
                 &nbsp;
                 Display: <a href="" data-ng-click="toggleValueFilter()">{{ valueFilterText() }}</a>
+                -
+                Main Element Index: {{ currentElementIndex }} - {{ resourcePool.currentElement.Name }} - <a href="" data-ng-click="toggleMainElement()">Toggle</a>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-4">
-            <highchart config="chartConfig"></highchart>
+            <highchart data-config="chartConfig"></highchart>
         </div>
         <div class="col-md-8">
+            <element-editor data-element="resourcePool.currentElement" data-enable-resource-pool-addition="resourcePool.EnableResourcePoolAddition" data-enable-subtotals="resourcePool.EnableSubtotals"></element-editor>
             <table class="resourcePoolTable table-striped">
                 <thead>
                     <tr>

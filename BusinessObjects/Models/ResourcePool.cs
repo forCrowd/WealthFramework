@@ -16,10 +16,10 @@ namespace BusinessObjects
         [Obsolete("Parameterless constructors used by OData & EF. Make them private when possible.")]
         public ResourcePool()
         {
-            FilterSettings = new ResourcePoolFilterSettings();
-
             ElementSet = new HashSet<Element>();
             UserResourcePoolSet = new HashSet<UserResourcePool>();
+
+            //FilterSettings = new ResourcePoolFilterSettings();
         }
 
         public ResourcePool(string name) : this()
@@ -63,7 +63,7 @@ namespace BusinessObjects
         public virtual ICollection<Element> ElementSet { get; set; }
         public virtual ICollection<UserResourcePool> UserResourcePoolSet { get; set; }
 
-        public ResourcePoolFilterSettings FilterSettings { get; private set; }
+        //public ResourcePoolFilterSettings FilterSettings { get; private set; }
 
         public Element MainElement
         {
@@ -161,13 +161,6 @@ namespace BusinessObjects
             user.UserResourcePoolSet.Add(userResourcePool);
             UserResourcePoolSet.Add(userResourcePool);
             return userResourcePool;
-        }
-
-        public ResourcePool RemoveUserResourcePool(UserResourcePool userResourcePool)
-        {
-            userResourcePool.ResourcePool = null;
-            UserResourcePoolSet.Remove(userResourcePool);
-            return this;
         }
 
         public ResourcePool IncreaseMultiplier(User user)

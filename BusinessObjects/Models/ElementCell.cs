@@ -116,9 +116,9 @@ namespace BusinessObjects
                     {
                         // Value filter user
                         User valueFilterUser = null;
-                        if (ElementItem.Element.ResourcePool.FilterSettings.ValueFilter == ResourcePoolFilterSettings.ValueFilters.OnlyCurrentUser)
+                        if (ElementItem.Element.FilterSettings.ValueFilter == ResourcePoolFilterSettings.ValueFilters.OnlyCurrentUser)
                         {
-                            valueFilterUser = ElementItem.Element.ResourcePool.FilterSettings.CurrentUser;
+                            valueFilterUser = ElementItem.Element.FilterSettings.CurrentUser;
 
                             if (valueFilterUser == null)
                                 throw new InvalidOperationException("ResourcePool.FilterSettings.CurrentUser property must have a value when ValueFilter is using OnlyCurrentUser option");
@@ -136,7 +136,7 @@ namespace BusinessObjects
                     }
                 case ElementFieldTypes.Multiplier:
                     {
-                        var multiplierFilterUser = ElementItem.Element.ResourcePool.FilterSettings.CurrentUser;
+                        var multiplierFilterUser = ElementItem.Element.FilterSettings.CurrentUser;
 
                         if (multiplierFilterUser == null)
                             throw new InvalidOperationException("ResourcePool.FilterSettings.CurrentUser property must have a value when retrieving Value() with Multiplier type field");

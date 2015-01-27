@@ -242,6 +242,11 @@ http://www.asp.net/web-api/overview/testing-and-debugging/mocking-entity-framewo
 
 . resourcepoolview - Resource Pool + Field Index combo - should the fields be separate? income part can be at the end?
 
+							CONTINUE WITH RESOURCE POOL RATE STUFFJE!
+							CREATE A SAMPLE WITH TWO ELEMENTS + ORGANIZATION LICENSE + ORGANIZATION SECTOR?
+							WHAT FALLS INTO ELEMENT AND WHAT TO CMRP?
+							ALSO UI RELATED PROPERTIES? ENABLESUBTOTALS + ENABLECMRP?
+
 ---
 refresh tokens?
 

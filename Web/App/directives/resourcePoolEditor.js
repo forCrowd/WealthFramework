@@ -1,16 +1,18 @@
 ﻿(function () {
     'use strict';
 
-    var directiveId = 'resourcePoolEditor';
+    var resourcePoolEditorDirectiveId = 'resourcePoolEditor';
+
     angular.module('main')
-        .directive(directiveId, ['resourcePoolService',
+        .directive(resourcePoolEditorDirectiveId, ['resourcePoolService',
+            'elementService',
             'userElementCellService',
             '$rootScope',
             'logger',
             resourcePoolEditor]);
 
-    function resourcePoolEditor(resourcePoolService, userElementCellService, $rootScope, logger) {
-        logger = logger.forSource(directiveId);
+    function resourcePoolEditor(resourcePoolService, elementService, userElementCellService, $rootScope, logger) {
+        logger = logger.forSource(resourcePoolEditorDirectiveId);
 
         function link(scope, element, attrs) {
 
@@ -20,6 +22,19 @@
             scope.increaseMultiplier = increaseMultiplier;
             scope.resetMultiplier = resetMultiplier;
             scope.updateResourcePoolRate = updateResourcePoolRate;
+            
+            scope.currentElementIndex = 0;
+            scope.toggleMainElement = function () {
+
+                scope.currentElementIndex++;
+
+                if (typeof scope.resourcePool.ElementSet[scope.currentElementIndex] === 'undefined') {
+                    scope.currentElementIndex = 0;
+                }
+
+                scope.resourcePool.currentElement = scope.resourcePool.ElementSet[scope.currentElementIndex];
+            }
+
             //scope.updateValueFilter = updateValueFilter;
             scope.toggleValueFilter = function () {
                 scope.valueFilter = scope.valueFilter === 1 ? 2 : 1;
@@ -32,7 +47,7 @@
             initialize();
 
             function initialize() {
-                
+
                 // Value filter
                 scope.valueFilter = 1;
 
@@ -80,9 +95,23 @@
                 $rootScope.$on('resourcePool_ResourcePoolRateUpdated', resourcePoolUpdated);
                 $rootScope.$on('resourcePool_Saved', resourcePoolUpdated);
 
+                $rootScope.$on('element_MultiplierIncreased', elementUpdated);
+                $rootScope.$on('element_MultiplierDecreased', elementUpdated);
+                $rootScope.$on('element_MultiplierReset', elementUpdated);
+
                 function resourcePoolUpdated(event, resourcePoolId) {
                     if (scope.resourcePoolId === resourcePoolId)
                         getResourcePool();
+                }
+
+                function elementUpdated(event, elementId) {
+                    // TODO Can it be done through element.ResourcePool = resourcePool or somethin'?
+                    for (var i = 0; i < scope.resourcePool.ElementSet.length; i++) {
+                        if (scope.resourcePool.ElementSet[i].Id === elementId) {
+                            getResourcePool();
+                            break;
+                        }
+                    }
                 }
             }
 
@@ -93,6 +122,10 @@
 
                         // Resource pool
                         scope.resourcePool = resourcePool;
+
+                        if (typeof scope.resourcePool.currentElement === 'undefined') {
+                            scope.resourcePool.currentElement = resourcePool.MainElement;
+                        }
 
                         for (var i = 0; i < resourcePool.MainElement.ElementItemSet.length; i++) {
                             var elementItem = resourcePool.MainElement.ElementItemSet[i];
@@ -250,5 +283,55 @@
             link: link
         };
     };
+
+    /* Element Editor */
+
+    var elementEditorDirectiveId = 'elementEditor';
+
+    angular.module('main')
+        .directive(elementEditorDirectiveId, ['elementService',
+            'logger',
+            elementEditor]);
+
+    function elementEditor(elementService, logger) {
+        logger = logger.forSource(elementEditorDirectiveId);
+
+        function link(scope, element, attrs) {
+
+            // Watches
+            scope.$watch('element', function () {
+
+                if (typeof scope.element !== 'undefined') {
+                    scope.element.increaseMultiplier = increaseMultiplier;
+                    scope.element.decreaseMultiplier = decreaseMultiplier;
+                    scope.element.resetMultiplier = resetMultiplier;
+                }
+
+            }, true);
+
+            function decreaseMultiplier() {
+                elementService.decreaseMultiplier(scope.element.Id);
+            }
+
+            function increaseMultiplier() {
+                elementService.increaseMultiplier(scope.element.Id);
+            }
+
+            function resetMultiplier() {
+                elementService.resetMultiplier(scope.element.Id);
+            }
+        }
+
+        return {
+            restrict: 'E',
+            templateUrl: '/App/views/directives/elementEditor.html',
+            scope: {
+                element: '=',
+                enableResourcePoolAddition: '=',
+                enableSubtotals: '='
+            },
+            link: link
+        };
+    }
 
 })();

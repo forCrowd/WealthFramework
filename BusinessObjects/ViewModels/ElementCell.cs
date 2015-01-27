@@ -12,6 +12,7 @@ namespace BusinessObjects.ViewModels
         {
             Id = elementCell.Id;
             ElementItemId = elementCell.ElementItemId;
+            // TODO Try to handle this connection in front-end - How about breeze?
             ElementField = new ElementField(elementCell.ElementField);
             ElementFieldId = elementCell.ElementFieldId;
             ElementFieldType = elementCell.ElementField.ElementFieldType;
