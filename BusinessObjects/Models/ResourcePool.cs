@@ -17,6 +17,9 @@ namespace BusinessObjects
         public ResourcePool()
         {
             FilterSettings = new ResourcePoolFilterSettings();
+
+            ElementSet = new HashSet<Element>();
+            UserResourcePoolSet = new HashSet<UserResourcePool>();
         }
 
         public ResourcePool(string name) : this()
@@ -26,8 +29,6 @@ namespace BusinessObjects
             Name = name;
             EnableResourcePoolAddition = true;
             EnableSubtotals = true;
-            ElementSet = new HashSet<Element>();
-            UserResourcePoolSet = new HashSet<UserResourcePool>();
         }
 
         [DisplayOnListView(false)]
@@ -160,6 +161,13 @@ namespace BusinessObjects
             user.UserResourcePoolSet.Add(userResourcePool);
             UserResourcePoolSet.Add(userResourcePool);
             return userResourcePool;
+        }
+
+        public ResourcePool RemoveUserResourcePool(UserResourcePool userResourcePool)
+        {
+            userResourcePool.ResourcePool = null;
+            UserResourcePoolSet.Remove(userResourcePool);
+            return this;
         }
 
         public ResourcePool IncreaseMultiplier(User user)

@@ -15,7 +15,7 @@ namespace BusinessObjects
         { }
 
         //public UserElementCell(User user, ElementCell elementCell, decimal rating)
-        public UserElementCell(User user, ElementCell elementCell)
+        public UserElementCell(User user, ElementCell elementCell) : this()
         {
             Validations.ArgumentNullOrDefault(user, "user");
             Validations.ArgumentNullOrDefault(elementCell, "elementCell");

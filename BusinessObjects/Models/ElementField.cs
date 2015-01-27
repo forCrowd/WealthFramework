@@ -15,7 +15,10 @@ namespace BusinessObjects
     {
         [Obsolete("Parameterless constructors used by OData & EF. Make them private when possible.")]
         public ElementField()
-        { }
+        {
+            ElementCellSet = new HashSet<ElementCell>();
+            ElementFieldIndexSet = new HashSet<ElementFieldIndex>();
+        }
 
         //public ElementField(Element element, string name, ElementFieldTypes fieldType, byte sortOrder)
         //{
@@ -42,7 +45,7 @@ namespace BusinessObjects
         //    Init(element, name, fieldType, fixedValue, sortOrder);
         //}
 
-        public ElementField(Element element, string name, ElementFieldTypes fieldType, byte sortOrder, bool? fixedValue = null)
+        public ElementField(Element element, string name, ElementFieldTypes fieldType, byte sortOrder, bool? fixedValue = null) : this()
         {
             //Init(element, name, fieldType, fixedValue, sortOrder);
         //}
@@ -76,8 +79,6 @@ namespace BusinessObjects
             ElementFieldType = (byte)fieldType;
             UseFixedValue = fixedValue;
             SortOrder = sortOrder;
-            ElementCellSet = new HashSet<ElementCell>();
-            ElementFieldIndexSet = new HashSet<ElementFieldIndex>();
         }
 
         [DisplayOnListView(false)]

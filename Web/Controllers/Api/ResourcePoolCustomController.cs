@@ -37,11 +37,36 @@ namespace Web.Controllers.Api
         public async Task<ResourcePool> GetResourcePool(int resourcePoolId, byte valueFilter)
         {
             var manager = new ResourcePoolUnitOfWork();
-            var resourcePool = await manager.FindAsync(resourcePoolId); //.FindUserResourcePoolAsync(this.GetCurrentUserId().Value, resourcePoolId);
+            // var resourcePool = await manager.FindAsync(resourcePoolId); //.FindUserResourcePoolAsync(this.GetCurrentUserId().Value, resourcePoolId);
+
+            var resourcePool = await manager.AllLive
+                .SingleOrDefaultAsync(item => item.Id == resourcePoolId);
 
             if (resourcePool == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
+            // Add includes
+            manager.AllLive
+                .Include(item => item.UserResourcePoolSet)
+                .Where(item => item.Id == resourcePoolId)
+                .ToList();
+
+            manager.AllLive
+                .Include(item => item.ElementSet)
+                .Include(item => item.ElementSet.Select(element => element.ElementFieldSet))
+                .Include(item => item.ElementSet.Select(element => element.ElementFieldSet.Select(elementField => elementField.ElementFieldIndexSet)))
+                .Include(item => item.ElementSet.Select(element => element.ElementFieldSet.Select(elementField => elementField.ElementFieldIndexSet.Select(elementFieldIndex => elementFieldIndex.UserElementFieldIndexSet))))
+                .Where(item => item.Id == resourcePoolId)
+                .ToList();
+            
+            manager.AllLive
+                .Include(item => item.ElementSet)
+                .Include(item => item.ElementSet.Select(element => element.ElementItemSet))
+                .Include(item => item.ElementSet.Select(element => element.ElementItemSet.Select(elementItem => elementItem.ElementCellSet)))
+                .Include(item => item.ElementSet.Select(element => element.ElementItemSet.Select(elementItem => elementItem.ElementCellSet.Select(elementCell => elementCell.UserElementCellSet))))
+                .Where(item => item.Id == resourcePoolId)
+                .ToList();
+            
             var currentUserId = this.GetCurrentUserId().Value;
             var currentUser = await manager.FindUserById(currentUserId);
 

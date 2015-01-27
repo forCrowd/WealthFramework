@@ -12,7 +12,7 @@ namespace BusinessObjects
         public Role()
         { }
 
-        public Role(string name)
+        public Role(string name) : this()
         {
             Validations.ArgumentNullOrDefault(name, "name");
 

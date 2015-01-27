@@ -21,8 +21,7 @@ namespace DataObjects.Tests
         {
             TestContext.WriteLine("Initializing");
 
-            userStore = new UserStore(Context);
-            userStore.AutoSaveChanges = false;
+            CreateNewUserStore();
         }
 
         [TestCleanup]
@@ -31,6 +30,18 @@ namespace DataObjects.Tests
             TestContext.WriteLine("Cleaning up");
 
             userStore.Dispose();
+        }
+
+        void CreateNewUserStore()
+        {
+            userStore = new UserStore(Context);
+            userStore.AutoSaveChanges = false;
+        }
+
+        void RefreshUserStore()
+        {
+            base.RefreshContext();
+            CreateNewUserStore();
         }
 
         #endregion
@@ -142,26 +153,43 @@ namespace DataObjects.Tests
         [TestMethod]
         public async Task CopySampleDataAsync()
         {
-            // Act
+            // Arrange
             var sourceUser = await userStore.FindByIdAsync(2); // Already created in seed method
             // var targetUser = await CreateUserAsync();
             var targetUser = GenerateUser();
 
-            // Arrange
+            // Act
             await userStore.CopySampleDataAsync(sourceUser.Id, targetUser);
             await userStore.SaveChangesAsync();
 
             // Assert
             var userResourcePools = targetUser.UserResourcePoolSet.Where(item => item.ResourcePool.IsSample);
             Assert.IsTrue(userResourcePools.Any());
+        }
 
-            foreach (var userResourcePool in userResourcePools)
-            {
-                // Must have 101 (tax) rate and one Index with 100 rating
-                Assert.IsTrue(userResourcePool.ResourcePoolRate == 101);
-                //Assert.IsTrue(userResourcePool.UserElementFieldIndexSet.Count == 1);
-                //Assert.IsTrue(userResourcePool.UserElementFieldIndexSet.First().Rating == 100);
-            }
+        [TestMethod]
+        public async Task ResetSampleDataAsync()
+        {
+
+            // Arrange
+            var sourceUser = await userStore.FindByIdAsync(2); // Already created in seed method
+            var targetUser = GenerateUser();
+            // await userStore.SaveChangesAsync();
+
+            await userStore.CopySampleDataAsync(sourceUser.Id, targetUser);
+            await userStore.SaveChangesAsync();
+
+            // TODO Improve this test
+            // To be able to simulate a real situation, ResetSampleDataAsync method has to run on a brand new Context
+            RefreshUserStore();
+
+            // Act
+            await userStore.ResetSampleDataAsync(targetUser.Id, sourceUser.Id);
+            await userStore.SaveChangesAsync();
+
+            // Assert
+            var userResourcePools = targetUser.UserResourcePoolSet.Where(item => item.ResourcePool.IsSample);
+            Assert.IsTrue(userResourcePools.Any());
         }
 
         User GenerateUser()

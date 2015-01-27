@@ -49,7 +49,6 @@ http://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-w
 * user.issample field? + web.config         <add key="SampleUserId" value="2" />
 * db tables -> [x]set?
 * public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager <ApplicationUser> manager) - ?
-* remove MultipleActiveResultSets=True from web.config
 * check validation cases - null is okay but how about Id check - Id > 0?
 * use fluent approach on element + item + field + cell
 * viewmodels don't belong to business layer?!
@@ -73,8 +72,6 @@ or always calculate the total average based on invidiuals percentage? or both?
 * in'not rated organizations' case, it's collecting the tax but not giving it back? - basically how to treat an organization that doesn't have any rating?
 
 ### Technical
-
-* move resource pool samples to a better location than dbinitializer? resourcepool or its store?
 
 * pass entity or entityId - check CopySampleDataAsync() method - sourceUserId vs targetUser?
 
@@ -144,9 +141,7 @@ http://msdn.microsoft.com/en-us/library/hh925568%28v=vs.110%29.aspx
 * extend dbcontext validation errors - check spaanjaars sample and use them in webapp with modelstate blocks?
 * result of datetime (ticks) index is bit useless? need reference a start or end date as a reference?
 
-* try turning off lazy loading - then how it brings the data (resourcepool for instance?)  
-currently there seem no good case that lazy loading is beneficial?
-and how about disabling proxy classes? what will be the difference exactly?
+* how about disabling proxy classes? what will be the difference exactly?
 
 * find method  
 public IEnumerable[t] FindBy(System.Linq.Expressions.Expression[func[T, bool]] predicate)  

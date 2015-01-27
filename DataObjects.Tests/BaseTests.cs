@@ -9,12 +9,22 @@ namespace DataObjects.Tests
 
         public BaseTests()
         {
-            Context = new WealthEconomyContext();
+            SetNewContext();
+        }
+
+        public void RefreshContext()
+        {
+            SetNewContext();
         }
 
         public void Dispose()
         {
             Context.Dispose();
+        }
+
+        void SetNewContext()
+        {
+            Context = new WealthEconomyContext();
         }
     }
 }

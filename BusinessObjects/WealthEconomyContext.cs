@@ -13,13 +13,14 @@
     public class WealthEconomyContext : IdentityDbContext<User, Role, int, UserLogin, UserRole, UserClaim>
     {
         public WealthEconomyContext()
-            : base(nameOrConnectionString: "WealthEconomyContext")
+            : this("WealthEconomyContext")
         {
         }
 
         public WealthEconomyContext(string nameOrConnectionString)
             : base(nameOrConnectionString)
         {
+            Configuration.LazyLoadingEnabled = false;
         }
 
         public static WealthEconomyContext Create()

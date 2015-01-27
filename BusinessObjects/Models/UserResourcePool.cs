@@ -17,7 +17,7 @@ namespace BusinessObjects
         public UserResourcePool()
         { }
 
-        public UserResourcePool(User user, ResourcePool resourcePool, decimal resourcePoolRate)
+        public UserResourcePool(User user, ResourcePool resourcePool, decimal resourcePoolRate) : this()
         {
             Validations.ArgumentNullOrDefault(user, "user");
             Validations.ArgumentNullOrDefault(resourcePool, "resourcePool");

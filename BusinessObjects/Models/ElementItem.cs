@@ -20,22 +20,19 @@ namespace BusinessObjects
         public ElementItem()
         {
             ElementCellSet = new HashSet<ElementCell>();
+            ElementCellSelectedElementItemSet = new HashSet<ElementCell>();
         }
 
-        public ElementItem(Element element, string name)
+        public ElementItem(Element element, string name) : this()
         {
             Validations.ArgumentNullOrDefault(element, "element");
             Validations.ArgumentNullOrDefault(name, "name");
 
             Element = element;
 
-            ElementCellSet = new HashSet<ElementCell>();
-
             // Add a fixed 'Name' cell
             AddCell(Element.NameField);
             Name = name;
-
-            ElementCellSelectedElementItemSet = new HashSet<ElementCell>();
 
             Name = name;
         }

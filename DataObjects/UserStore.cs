@@ -49,7 +49,7 @@
 
             // Resource pools
             var sourceUserResourcePools = await UserResourcePoolSet
-                .Get(item => item.UserId == sourceUserId && item.ResourcePool.IsSample)
+                .Get(item => item.UserId == sourceUserId && item.ResourcePool.IsSample, item => item.ResourcePool)
                 .ToListAsync();
 
             foreach (var sourceUserResourcePool in sourceUserResourcePools)
@@ -65,7 +65,9 @@
 
             // Element cells
             var sourceUserElementCells = await UserElementCellSet
-                .Get(item => item.UserId == sourceUserId && item.ElementCell.ElementField.Element.ResourcePool.IsSample)
+                .Get(item => item.UserId == sourceUserId && item.ElementCell.ElementField.Element.ResourcePool.IsSample,
+                item => item.ElementCell,
+                item => item.ElementCell.ElementField)
                 .ToListAsync();
 
             // TODO Can this part be improved?
@@ -106,13 +108,37 @@
 
         public async Task DeleteSampleDataAsync(int userId)
         {
-            var sampleResourcePools = await ResourcePoolSet
-                .Get(item => item.IsSample)
-                .Select(item => item.Id)
+            //var sampleResourcePools = await ResourcePoolSet
+            //    .Get(item => item.IsSample, item => item.UserResourcePoolSet)
+            //    //.Select(item => item.Id)
+            //    .ToListAsync();
+
+            // Element cells
+            var sampleUserElementCells = await UserElementCellSet
+                .Get(item => item.UserId == userId && item.ElementCell.ElementField.Element.ResourcePool.IsSample,
+                    item => item.User,
+                    item => item.ElementCell)
                 .ToListAsync();
 
-            foreach (var resourcePoolId in sampleResourcePools)
-                await DeleteResourcePoolDataByIdAsync(userId, resourcePoolId);
+            UserElementCellSet.RemoveRange(sampleUserElementCells);
+
+            // Resource pools
+            var sampleUserResourcePools = await UserResourcePoolSet
+                .Get(item => item.UserId == userId && item.ResourcePool.IsSample,
+                    item => item.User,
+                    item => item.ResourcePool)
+                .ToListAsync();
+
+            UserResourcePoolSet.RemoveRange(sampleUserResourcePools);
+
+            //foreach (var userResourcePool in sampleUserResourcePools)
+            //{
+            //    //var resourcePool = userResourcePool.ResourcePool;
+            //    //resourcePool.RemoveUserResourcePool(userResourcePool);
+            //    UserResourcePoolSet.Remove(userResourcePool);
+            //}
+                //userResourcePool.ResourcePool.UserResourcePoolSet.Remove(userResourcePool);
+                //await DeleteResourcePoolDataByIdAsync(userId, resourcePoolId);
         }
 
         public async Task DeleteResourcePoolDataAsync(int userId)
@@ -124,14 +150,14 @@
             UserResourcePoolSet.RemoveRange(resourcePoolData);
         }
 
-        public async Task DeleteResourcePoolDataByIdAsync(int userId, int resourcePoolId)
-        {
-            var resourcePoolData = await UserResourcePoolSet
-                .Get(item => item.UserId == userId
-                    && item.ResourcePoolId == resourcePoolId)
-                .ToListAsync();
+        //public async Task DeleteResourcePoolDataByIdAsync(int userId, int resourcePoolId)
+        //{
+        //    var resourcePoolData = await UserResourcePoolSet
+        //        .Get(item => item.UserId == userId
+        //            && item.ResourcePoolId == resourcePoolId)
+        //        .ToListAsync();
 
-            UserResourcePoolSet.RemoveRange(resourcePoolData);
-        }
+        //    UserResourcePoolSet.RemoveRange(resourcePoolData);
+        //}
     }
 }

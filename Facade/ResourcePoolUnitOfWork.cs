@@ -2,6 +2,7 @@
 {
     using BusinessObjects;
     using DataObjects;
+    using System.Data.Entity;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -37,6 +38,8 @@
             Framework.Validations.ArgumentNullOrDefault(resourcePool, "resourcePool");
             Framework.Validations.ArgumentNullOrDefault(user, "user");
 
+            await LoadMultiplierIncludes(resourcePool.Id);
+
             resourcePool.IncreaseMultiplier(user);
             await base.UpdateAsync(resourcePool);
         }
@@ -45,6 +48,8 @@
         {
             Framework.Validations.ArgumentNullOrDefault(resourcePool, "resourcePool");
             Framework.Validations.ArgumentNullOrDefault(user, "user");
+
+            await LoadMultiplierIncludes(resourcePool.Id);
 
             resourcePool.DecreaseMultiplier(user);
             await base.UpdateAsync(resourcePool);
@@ -55,14 +60,39 @@
             Framework.Validations.ArgumentNullOrDefault(resourcePool, "resourcePool");
             Framework.Validations.ArgumentNullOrDefault(user, "user");
 
+            await LoadMultiplierIncludes(resourcePool.Id);
+
             resourcePool.ResetMultiplier(user);
             await base.UpdateAsync(resourcePool);
+        }
+
+        async Task LoadMultiplierIncludes(int resourcePoolId)
+        {
+            // Includes
+            await AllLive
+                .Include(item => item.ElementSet)
+                .Include(item => item.ElementSet.Select(element => element.ElementFieldSet))
+                .Where(item => item.Id == resourcePoolId)
+                .ToListAsync();
+
+            await AllLive
+                .Include(item => item.ElementSet)
+                .Include(item => item.ElementSet.Select(element => element.ElementItemSet))
+                .Include(item => item.ElementSet.Select(element => element.ElementItemSet.Select(elementItem => elementItem.ElementCellSet)))
+                .Include(item => item.ElementSet.Select(element => element.ElementItemSet.Select(elementItem => elementItem.ElementCellSet.Select(elementCell => elementCell.UserElementCellSet))))
+                .Where(item => item.Id == resourcePoolId)
+                .ToListAsync();
         }
 
         public async Task UpdateResourcePoolRateAsync(ResourcePool resourcePool, User user, decimal rate)
         {
             Framework.Validations.ArgumentNullOrDefault(resourcePool, "resourcePool");
             Framework.Validations.ArgumentNullOrDefault(user, "user");
+
+            // Includes
+            await AllLive
+                .Include(item => item.UserResourcePoolSet)
+                .ToListAsync();
 
             resourcePool.UpdateResourcePoolRate(user, rate);
             await base.UpdateAsync(resourcePool);

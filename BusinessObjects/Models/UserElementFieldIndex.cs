@@ -17,7 +17,7 @@ namespace BusinessObjects
         public UserElementFieldIndex()
         { }
 
-        public UserElementFieldIndex(User user, ElementFieldIndex elementFieldIndex, decimal rating)
+        public UserElementFieldIndex(User user, ElementFieldIndex elementFieldIndex, decimal rating) : this()
         {
             Validations.ArgumentNullOrDefault(user, "user");
             Validations.ArgumentNullOrDefault(elementFieldIndex, "elementFieldIndex");

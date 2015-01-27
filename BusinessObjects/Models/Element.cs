@@ -13,9 +13,12 @@ namespace BusinessObjects
     {
         [Obsolete("Parameterless constructors used by OData & EF. Make them private when possible.")]
         public Element()
-        { }
+        {
+            ElementFieldSet = new HashSet<ElementField>();
+            ElementItemSet = new HashSet<ElementItem>();
+        }
 
-        public Element(ResourcePool resourcePool, string name)
+        public Element(ResourcePool resourcePool, string name) : this()
         {
             Validations.ArgumentNullOrDefault(resourcePool, "resourcePool");
             Validations.ArgumentNullOrDefault(name, "name");
@@ -24,10 +27,7 @@ namespace BusinessObjects
             Name = name;
             IsMainElement = !ResourcePool.ElementSet.Any();
             
-            ElementFieldSet = new HashSet<ElementField>();
             AddField("Name", ElementFieldTypes.String);
-
-            ElementItemSet = new HashSet<ElementItem>();
         }
 
         [DisplayOnListView(false)]

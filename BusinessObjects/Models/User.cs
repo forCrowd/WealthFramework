@@ -14,18 +14,19 @@ namespace BusinessObjects
     {
         [Obsolete("Parameterless constructors used by OData & EF. Make them private when possible.")]
         public User()
-        { }
+        {
+            UserResourcePoolSet = new HashSet<UserResourcePool>();
+            UserElementFieldIndexSet = new HashSet<UserElementFieldIndex>();
+            UserElementCellSet = new HashSet<UserElementCell>();
+        }
 
-        public User(string email)
+        public User(string email) : this()
         {
             Validations.ArgumentNullOrDefault(email, "email");
             // TODO Email address validation?
 
             Email = email;
             UserName = email;
-            UserResourcePoolSet = new HashSet<UserResourcePool>();
-            UserElementFieldIndexSet = new HashSet<UserElementFieldIndex>();
-            UserElementCellSet = new HashSet<UserElementCell>();
         }
 
         [StringLength(50)]

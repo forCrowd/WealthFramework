@@ -16,16 +16,17 @@ namespace BusinessObjects
     {
         [Obsolete("Parameterless constructors used by OData & EF. Make them private when possible.")]
         public ElementCell()
-        { }
+        {
+            UserElementCellSet = new HashSet<UserElementCell>();
+        }
 
-        public ElementCell(ElementField field, ElementItem item)
+        public ElementCell(ElementField field, ElementItem item) : this()
         {
             Validations.ArgumentNullOrDefault(field, "field");
             Validations.ArgumentNullOrDefault(item, "item");
 
             ElementField = field;
             ElementItem = item;
-            UserElementCellSet = new HashSet<UserElementCell>();
         }
 
         [DisplayOnListView(false)]
