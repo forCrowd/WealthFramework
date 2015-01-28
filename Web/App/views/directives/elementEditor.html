@@ -7,7 +7,12 @@
                     <thead>
                         <tr>
                             <th>
-                                {{ field.Name }}
+                                <span data-ng-if="field.ElementFieldType !== 6">
+                                    {{ field.Name }}
+                                </span>
+                                <span data-ng-if="field.ElementFieldType === 6">
+                                    <a href="" data-ng-click="field.setCurrentElement()">{{ field.Name }}</a>
+                                </span>
                                 <!-- Indexes -->
                                 <table class="fieldIndexTable" data-ng-repeat="index in field.ElementFieldIndexSet">
                                     <colgroup>
@@ -41,21 +46,21 @@
                             </th>
                             <!-- ResourcePool -->
                             <!-- TODO Single container for these fields? -->
-                            <th data-ng-if="enableResourcePoolAddition && field.ElementFieldType === 11">
+                            <th data-ng-if="resourcePool.EnableResourcePoolAddition && field.ElementFieldType === 11">
                                 CMRP Add.<br />
-                                <!--Rate {{ resourcePool.ResourcePoolRatePercentage | percentage: 2 }}<br />
-                                # of ratings {{ resourcePool.UserResourcePoolRatingCount }}-->
+                                Rate {{ resourcePool.ResourcePoolRatePercentage | percentage: 2 }}<br />
+                                # of ratings {{ resourcePool.UserResourcePoolRatingCount }}
                                 <!-- ResourcePool functions -->
                                 <div data-ng-if="field.ElementFieldType === 11">
                                     <div class="clearfix"></div>
                                     <div class="btn-group" role="group">
-                                        <!--<button title="Increase CMRP Rate %5" type="button" data-ng-click="updateResourcePoolRate((resourcePool.ResourcePoolRatePercentage * 100) + 5)" class="btn btn-default btn-xs">+</button>
-                                        <button title="Decrease CMRP Rate %5" type="button" data-ng-click="updateResourcePoolRate((resourcePool.ResourcePoolRatePercentage * 100) - 5)" class="btn btn-default btn-xs">-</button>
-                                        <button title="Reset CMRP Rate" type="button" data-ng-click="updateResourcePoolRate(0)" class="btn btn-default btn-xs">0</button>-->
+                                        <button title="Increase CMRP Rate %5" type="button" data-ng-click="resourcePool.updateResourcePoolRate((resourcePool.ResourcePoolRatePercentage * 100) + 5)" class="btn btn-default btn-xs">+</button>
+                                        <button title="Decrease CMRP Rate %5" type="button" data-ng-click="resourcePool.updateResourcePoolRate((resourcePool.ResourcePoolRatePercentage * 100) - 5)" class="btn btn-default btn-xs">-</button>
+                                        <button title="Reset CMRP Rate" type="button" data-ng-click="resourcePool.updateResourcePoolRate(0)" class="btn btn-default btn-xs">0</button>
                                     </div>
                                 </div>
                             </th>
-                            <th data-ng-if="enableResourcePoolAddition && field.ElementFieldType === 11">
+                            <th data-ng-if="resourcePool.EnableResourcePoolAddition && field.ElementFieldType === 11">
                                 {{ field.Name }}<br />
                                 incl. CMRP Add.
                             </th>
@@ -67,7 +72,7 @@
                             <th data-ng-if="field.ElementFieldType === 12 && resourcePool.MainElement.HasResourcePoolField">
                                 Tot. CMRP Add.
                             </th>-->
-                            <th data-ng-if="enableResourcePoolAddition && field.ElementFieldType === 12 && element.HasResourcePoolField">
+                            <th data-ng-if="resourcePool.EnableResourcePoolAddition && field.ElementFieldType === 12 && element.HasResourcePoolField">
                                 Tot. {{ element.ResourcePoolFieldName }}
                                 <br />incl. CMRP Add.
                             </th>
@@ -104,7 +109,7 @@
                                     {{ elementCell.DateTimeValue }}
                                 </span>
                                 <span data-ng-if="elementCell.ElementFieldType === 6">
-                                    <!-- Element value ? -->
+                                    {{ elementCell.ElementItem.Name }}
                                 </span>
                                 <span data-ng-if="elementCell.ElementFieldType === 11">
                                     {{ elementItem.ResourcePoolValue | number: 2 }}
@@ -143,10 +148,10 @@
                             </td>
                             <!-- ResourcePool -->
                             <!-- TODO Single container for these fields? -->
-                            <td data-ng-if="enableResourcePoolAddition && elementCell.ElementFieldType === 11">
+                            <td data-ng-if="resourcePool.EnableResourcePoolAddition && elementCell.ElementFieldType === 11">
                                 {{ elementItem.ResourcePoolAddition | number: 2 }}
                             </td>
-                            <td data-ng-if="enableResourcePoolAddition && elementCell.ElementFieldType === 11">
+                            <td data-ng-if="resourcePool.EnableResourcePoolAddition && elementCell.ElementFieldType === 11">
                                 {{ elementItem.ResourcePoolValueIncludingAddition | number: 2 }}
                             </td>
                             <!-- Multiplier -->
@@ -157,7 +162,7 @@
                             <td data-ng-if="elementCell.ElementFieldType === 12 && elementItem.HasResourcePoolCell">
                                 {{ elementItem.TotalResourcePoolAddition | number: 2 }}
                             </td>-->
-                            <td data-ng-if="enableResourcePoolAddition && elementCell.ElementFieldType === 12 && elementItem.HasResourcePoolCell">
+                            <td data-ng-if="resourcePool.EnableResourcePoolAddition && elementCell.ElementFieldType === 12 && elementItem.HasResourcePoolCell">
                                 {{ elementItem.TotalResourcePoolValueIncludingAddition | number: 2 }}
                             </td>
                         </tr>
@@ -171,7 +176,7 @@
         </tr>
     </tbody>
     <tfoot>
-        <tr data-ng-if="enableSubtotals">
+        <tr data-ng-if="resourcePool.EnableSubtotals">
             <!-- Fields -->
             <td data-ng-repeat="field in element.ElementFieldSet">
                 <table class="resourcePoolFieldsTable">
@@ -213,10 +218,10 @@
                             </td>
                             <!-- ResourcePool -->
                             <!-- TODO Single container for these fields? -->
-                            <td data-ng-if="enableResourcePoolAddition && field.ElementFieldType === 11">
+                            <td data-ng-if="resourcePool.EnableResourcePoolAddition && field.ElementFieldType === 11">
                                 {{ element.ResourcePoolAddition | number: 2 }}
                             </td>
-                            <td data-ng-if="enableResourcePoolAddition && field.ElementFieldType === 11">
+                            <td data-ng-if="resourcePool.EnableResourcePoolAddition && field.ElementFieldType === 11">
                                 {{ element.ResourcePoolValueIncludingAddition | number: 2 }}
                             </td>
                             <!-- Multiplier -->
@@ -227,7 +232,7 @@
                             <td data-ng-if="field.ElementFieldType === 12 && resourcePool.MainElement.HasResourcePoolField">
                                 {{ resourcePool.MainElement.TotalResourcePoolAddition | number: 2 }}
                             </td>-->
-                            <td data-ng-if="enableResourcePoolAddition && field.ElementFieldType === 12 && element.HasResourcePoolField">
+                            <td data-ng-if="resourcePool.EnableResourcePoolAddition && field.ElementFieldType === 12 && element.HasResourcePoolField">
                                 {{ element.TotalResourcePoolValueIncludingAddition | number: 2 }}
                             </td>
                         </tr>

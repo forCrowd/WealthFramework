@@ -16,7 +16,7 @@ namespace BusinessObjects.ViewModels
             ResourcePoolRate = resourcePool.ResourcePoolRate();
             ResourcePoolRatePercentage = resourcePool.ResourcePoolRatePercentage();
             UserResourcePoolRatingCount = resourcePool.UserResourcePoolSet.Count;
-            MainElement = new Element(resourcePool.MainElement, user);
+            // MainElement = new Element(resourcePool.MainElement, user);
             ElementSet = resourcePool.ElementSet.Select(item => new Element(item, user));
             TotalIncome = resourcePool.TotalIncome();
         }

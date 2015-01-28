@@ -7,13 +7,15 @@ namespace BusinessObjects.ViewModels
     {
         public ElementField() { }
 
-        public ElementField(BusinessObjects.ElementField elementField)
+        public ElementField(BusinessObjects.ElementField elementField, User user)
         {
             Id = elementField.Id;
             Name = elementField.Name;
             ElementFieldType = elementField.ElementFieldType;
             ElementFieldIndexShare = elementField.ElementFieldIndexShare();
 
+            if (elementField.SelectedElement != null)
+                SelectedElement = new Element(elementField.SelectedElement, user);
             ElementFieldIndexSet = elementField.ElementFieldIndexSet.Select(item => new ElementFieldIndex(item));
         }
 
@@ -22,6 +24,7 @@ namespace BusinessObjects.ViewModels
         public byte ElementFieldType { get; set; }
         public decimal ElementFieldIndexShare { get; set; }
 
+        public Element SelectedElement { get; set; }
         public IEnumerable<ElementFieldIndex> ElementFieldIndexSet { get; set; }
     }
 }

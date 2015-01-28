@@ -15,9 +15,6 @@
 
         // Service methods
         $delegate.getResourcePoolCustom = getResourcePoolCustom;
-        $delegate.decreaseMultiplier = decreaseMultiplier;
-        $delegate.increaseMultiplier = increaseMultiplier;
-        $delegate.resetMultiplier = resetMultiplier;
         $delegate.updateResourcePoolRate = updateResourcePoolRate;
 
         // Overwrites the base resourcePoolService.saveChanges() function
@@ -34,36 +31,6 @@
                 url += '/' + valueFilter;
 
             return $http.get(url);
-        }
-
-        function decreaseMultiplier(resourcePoolId, eventSource) {
-            if (typeof eventSource === 'undefined') { eventSource = ''; }
-            var url = '/api/ResourcePoolCustom/DecreaseMultiplier/' + resourcePoolId;
-            return $http.post(url)
-                .success(function () {
-                    // Raise the event
-                    $rootScope.$broadcast('resourcePool_MultiplierDecreased', resourcePoolId, eventSource);
-                });
-        }
-
-        function increaseMultiplier(resourcePoolId, eventSource) {
-            if (typeof eventSource === 'undefined') { eventSource = ''; }
-            var url = '/api/ResourcePoolCustom/IncreaseMultiplier/' + resourcePoolId;
-            return $http.post(url)
-                .success(function () {
-                    // Raise the event
-                    $rootScope.$broadcast('resourcePool_MultiplierIncreased', resourcePoolId, eventSource);
-                });
-        }
-
-        function resetMultiplier(resourcePoolId, eventSource) {
-            if (typeof eventSource === 'undefined') { eventSource = ''; }
-            var url = '/api/ResourcePoolCustom/ResetMultiplier/' + resourcePoolId;
-            return $http.post(url)
-                .success(function () {
-                    // Raise the event
-                    $rootScope.$broadcast('resourcePool_MultiplierReset', resourcePoolId, eventSource);
-                });
         }
 
         function updateResourcePoolRate(resourcePoolId, resourcePoolRate, eventSource) {

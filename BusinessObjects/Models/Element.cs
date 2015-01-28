@@ -5,6 +5,7 @@ namespace BusinessObjects
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
     [BusinessObjects.Attributes.DefaultProperty("Name")]
@@ -28,8 +29,8 @@ namespace BusinessObjects
             ResourcePool = resourcePool;
             Name = name;
             IsMainElement = !ResourcePool.ElementSet.Any();
-            
-            AddField("Name", ElementFieldTypes.String);
+
+            AddField(name, ElementFieldTypes.String);
         }
 
         [DisplayOnListView(false)]
@@ -49,6 +50,8 @@ namespace BusinessObjects
         public virtual ResourcePool ResourcePool { get; set; }
         public virtual ICollection<ElementField> ElementFieldSet { get; set; }
         public virtual ICollection<ElementItem> ElementItemSet { get; set; }
+        [InverseProperty("SelectedElement")]
+        public virtual ICollection<ElementField> ElementFieldSelectedElementSet { get; set; }
 
         public ResourcePoolFilterSettings FilterSettings { get; private set; }
 
@@ -184,10 +187,10 @@ namespace BusinessObjects
         //    return AddField(field);
         //}
 
-        public ElementField AddField(string name, ElementFieldTypes fieldType, bool? fixedValue = null)
+        public ElementField AddField(string name, ElementFieldTypes fieldType, bool? useFixedValue = null)
         {
             var sortOrder = Convert.ToByte(ElementFieldSet.Count + 1); 
-            var field = new ElementField(this, name, fieldType, sortOrder, fixedValue);
+            var field = new ElementField(this, name, fieldType, sortOrder, useFixedValue);
             
             //return AddField(field);
         //}

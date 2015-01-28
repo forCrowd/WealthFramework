@@ -217,6 +217,10 @@ http://www.codeproject.com/Articles/857594/MVC-Thorough-Error-Handling
 * Content related;
 dynamic pricing - low price is good but can't be zero because then it's not sustainable as well?
 
+* keep dataContext.js in localStorage?
+
+* elementfield - selectedelement validations + test?
+
 * resourcepoolfield -> incomefield?
 total[x] props -> [x]Multiplied?
 
@@ -242,10 +246,17 @@ http://www.asp.net/web-api/overview/testing-and-debugging/mocking-entity-framewo
 
 . resourcepoolview - Resource Pool + Field Index combo - should the fields be separate? income part can be at the end?
 
-							CONTINUE WITH RESOURCE POOL RATE STUFFJE!
-							CREATE A SAMPLE WITH TWO ELEMENTS + ORGANIZATION LICENSE + ORGANIZATION SECTOR?
-							WHAT FALLS INTO ELEMENT AND WHAT TO CMRP?
-							ALSO UI RELATED PROPERTIES? ENABLESUBTOTALS + ENABLECMRP?
+	CONTINUE WITH RESOURCE POOL RATE STUFFJE!
+	CREATE A SAMPLE WITH TWO ELEMENTS + ORGANIZATION LICENSE + ORGANIZATION SECTOR?
+	WHAT FALLS INTO ELEMENT AND WHAT TO CMRP?
+	ALSO UI RELATED PROPERTIES? ENABLESUBTOTALS + ENABLECMRP?
+							
+enableresourcepool + enablesubtotals on element?
+also resourcepoolrate on element?
+
+						continue with two elements case!
+						chart doesn't work, fix it!
+						scope.resourcePool is changing back to initial value?!
 
 ---
 refresh tokens?

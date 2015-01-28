@@ -20,12 +20,12 @@
             get { return userElementFieldIndexRepository ?? (userElementFieldIndexRepository = new UserElementFieldIndexRepository(Context)); }
         }
 
-        public enum UpdateNumberOfSalesActions
-        {
-            Increase,
-            Decrease,
-            Reset
-        }
+        //public enum UpdateNumberOfSalesActions
+        //{
+        //    Increase,
+        //    Decrease,
+        //    Reset
+        //}
 
         //public override async Task<int> InsertAsync(UserResourcePool userResourcePool)
         //{

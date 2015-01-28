@@ -13,7 +13,7 @@ namespace BusinessObjects.ViewModels
             Id = elementCell.Id;
             ElementItemId = elementCell.ElementItemId;
             // TODO Try to handle this connection in front-end - How about breeze?
-            ElementField = new ElementField(elementCell.ElementField);
+            ElementField = new ElementField(elementCell.ElementField, user);
             ElementFieldId = elementCell.ElementFieldId;
             ElementFieldType = elementCell.ElementField.ElementFieldType;
             StringValue = elementCell.StringValue;
@@ -23,7 +23,7 @@ namespace BusinessObjects.ViewModels
             DateTimeValue = elementCell.DateTimeValue;
 
             if (elementCell.SelectedElementItem != null)
-                SelectedElementItem = new ElementItem(elementCell.SelectedElementItem, user);
+                ElementItem = new ElementItem(elementCell.SelectedElementItem, user);
 
             if (elementCell.ElementField.ElementFieldType != (byte)ElementFieldTypes.String
                 && elementCell.ElementField.ElementFieldType != (byte)ElementFieldTypes.Element)
@@ -48,7 +48,7 @@ namespace BusinessObjects.ViewModels
         public Nullable<int> IntegerValue { get; set; }
         public Nullable<decimal> DecimalValue { get; set; }
         public Nullable<DateTime> DateTimeValue { get; set; }
-        public ElementItem SelectedElementItem { get; set; }
+        public ElementItem ElementItem { get; set; }
 
         public decimal ValueMultiplied { get; set; }
         public decimal ValuePercentage { get; set; }

@@ -32,6 +32,7 @@ namespace DataObjects.Migrations
                         ElementId = c.Int(nullable: false),
                         Name = c.String(nullable: false, maxLength: 50),
                         ElementFieldType = c.Byte(nullable: false),
+                        SelectedElementId = c.Int(),
                         UseFixedValue = c.Boolean(),
                         SortOrder = c.Byte(nullable: false),
                         CreatedOn = c.DateTime(nullable: false),
@@ -41,7 +42,9 @@ namespace DataObjects.Migrations
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Element", t => t.ElementId, cascadeDelete: true)
-                .Index(t => t.ElementId);
+                .ForeignKey("dbo.Element", t => t.SelectedElementId)
+                .Index(t => t.ElementId)
+                .Index(t => t.SelectedElementId);
             
             CreateTable(
                 "dbo.ElementCell",
@@ -271,6 +274,7 @@ namespace DataObjects.Migrations
         
         public override void Down()
         {
+            DropForeignKey("dbo.ElementField", "SelectedElementId", "dbo.Element");
             DropForeignKey("dbo.UserElementCell", "UserId", "dbo.User");
             DropForeignKey("dbo.UserResourcePool", "UserId", "dbo.User");
             DropForeignKey("dbo.UserResourcePool", "ResourcePoolId", "dbo.ResourcePool");
@@ -301,6 +305,7 @@ namespace DataObjects.Migrations
             DropIndex("dbo.ElementItem", new[] { "ElementId" });
             DropIndex("dbo.ElementCell", new[] { "SelectedElementItemId" });
             DropIndex("dbo.ElementCell", "IX_ElementCellId");
+            DropIndex("dbo.ElementField", new[] { "SelectedElementId" });
             DropIndex("dbo.ElementField", new[] { "ElementId" });
             DropIndex("dbo.Element", new[] { "ResourcePoolId" });
             DropTable("dbo.ResourcePool");

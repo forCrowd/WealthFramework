@@ -14,17 +14,15 @@
     function resourcePoolEditor(resourcePoolService, elementService, userElementCellService, $rootScope, logger) {
         logger = logger.forSource(resourcePoolEditorDirectiveId);
 
-        function link(scope, element, attrs) {
+        function link(scope, elm, attrs) {
 
-            scope.resourcePool = null;
+            scope.resourcePool = new Object();
+            scope.resourcePool.currentElement = null;
             scope.chartConfig = null;
-            scope.decreaseMultiplier = decreaseMultiplier;
-            scope.increaseMultiplier = increaseMultiplier;
-            scope.resetMultiplier = resetMultiplier;
-            scope.updateResourcePoolRate = updateResourcePoolRate;
-            
+
+            // TODO Just for test            
             scope.currentElementIndex = 0;
-            scope.toggleMainElement = function () {
+            scope.toggleCurrentElement = function () {
 
                 scope.currentElementIndex++;
 
@@ -44,73 +42,65 @@
                 return scope.valueFilter === 1 ? "Only My Ratings" : "All Ratings";
             }
 
-            initialize();
+            // Value filter
+            scope.valueFilter = 1;
 
-            function initialize() {
-
-                // Value filter
-                scope.valueFilter = 1;
-
-                // Highchart initial config
-                scope.chartConfig = {
-                    options: {
-                        chart: {
-                            type: ''
+            // Highchart initial config
+            scope.chartConfig = {
+                options: {
+                    chart: {
+                        type: ''
+                    },
+                    plotOptions: {
+                        column: {
+                            allowPointSelect: true,
+                            pointWidth: 15
                         },
-                        plotOptions: {
-                            column: {
-                                allowPointSelect: true,
-                                pointWidth: 15
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: false
                             },
-                            pie: {
-                                allowPointSelect: true,
-                                cursor: 'pointer',
-                                dataLabels: {
-                                    enabled: false
-                                },
-                                showInLegend: true
-                            }
-                        },
-                        xAxis: { categories: [''] },
-                        yAxis: {
-                            allowDecimals: false,
-                            min: 0
+                            showInLegend: true
                         }
+                    },
+                    xAxis: { categories: [''] },
+                    yAxis: {
+                        allowDecimals: false,
+                        min: 0
                     }
-                };
-
-                // Watches
-                scope.$watch('resourcePoolId', function () {
-                    getResourcePool();
-                }, true);
-
-                scope.$watch('chartHeight', function () {
-                    scope.chartConfig.options.chart.height = scope.chartHeight;
-                }, true);
-
-                // Listen resource pool updated event
-                $rootScope.$on('resourcePool_MultiplierIncreased', resourcePoolUpdated);
-                $rootScope.$on('resourcePool_MultiplierDecreased', resourcePoolUpdated);
-                $rootScope.$on('resourcePool_MultiplierReset', resourcePoolUpdated);
-                $rootScope.$on('resourcePool_ResourcePoolRateUpdated', resourcePoolUpdated);
-                $rootScope.$on('resourcePool_Saved', resourcePoolUpdated);
-
-                $rootScope.$on('element_MultiplierIncreased', elementUpdated);
-                $rootScope.$on('element_MultiplierDecreased', elementUpdated);
-                $rootScope.$on('element_MultiplierReset', elementUpdated);
-
-                function resourcePoolUpdated(event, resourcePoolId) {
-                    if (scope.resourcePoolId === resourcePoolId)
-                        getResourcePool();
                 }
+            };
 
-                function elementUpdated(event, elementId) {
-                    // TODO Can it be done through element.ResourcePool = resourcePool or somethin'?
-                    for (var i = 0; i < scope.resourcePool.ElementSet.length; i++) {
-                        if (scope.resourcePool.ElementSet[i].Id === elementId) {
-                            getResourcePool();
-                            break;
-                        }
+            // Watches
+            scope.$watch('resourcePoolId', function () {
+                getResourcePool();
+            }, true);
+
+            scope.$watch('chartHeight', function () {
+                scope.chartConfig.options.chart.height = scope.chartHeight;
+            }, true);
+
+            // Listen resource pool updated event
+            $rootScope.$on('resourcePool_ResourcePoolRateUpdated', resourcePoolUpdated);
+            $rootScope.$on('resourcePool_Saved', resourcePoolUpdated);
+
+            $rootScope.$on('element_MultiplierIncreased', elementUpdated);
+            $rootScope.$on('element_MultiplierDecreased', elementUpdated);
+            $rootScope.$on('element_MultiplierReset', elementUpdated);
+
+            function resourcePoolUpdated(event, resourcePoolId) {
+                if (scope.resourcePoolId === resourcePoolId)
+                    getResourcePool();
+            }
+
+            function elementUpdated(event, elementId) {
+                // TODO Can it be done through element.ResourcePool = resourcePool or somethin'?
+                for (var i = 0; i < scope.resourcePool.ElementSet.length; i++) {
+                    if (scope.resourcePool.ElementSet[i].Id === elementId) {
+                        getResourcePool();
+                        break;
                     }
                 }
             }
@@ -123,23 +113,50 @@
                         // Resource pool
                         scope.resourcePool = resourcePool;
 
-                        if (typeof scope.resourcePool.currentElement === 'undefined') {
-                            scope.resourcePool.currentElement = resourcePool.MainElement;
-                        }
+                        // ResourcePool functions
+                        resourcePool.updateResourcePoolRate = updateResourcePoolRate;
 
-                        for (var i = 0; i < resourcePool.MainElement.ElementItemSet.length; i++) {
-                            var elementItem = resourcePool.MainElement.ElementItemSet[i];
+                        // Elements
+                        for (var elementIndex = 0; elementIndex < resourcePool.ElementSet.length; elementIndex++) {
+                            var element = resourcePool.ElementSet[elementIndex];
 
-                            for (var x = 0; x < elementItem.ElementCellSet.length; x++) {
-                                var elementCell = elementItem.ElementCellSet[x];
+                            // Set current element
+                            if (!scope.resourcePool.currentElement && element.IsMainElement) {
+                                scope.resourcePool.currentElement = element;
+                            }
 
-                                if (elementCell.ElementField.ElementFieldIndexSet.length > 0) {
-                                    elementCell.increaseIndexCellValue = function () {
-                                        updateIndexCellValue(this, 'increase');
-                                    }
+                            // Element functions
+                            element.increaseMultiplier = increaseMultiplier;
+                            element.decreaseMultiplier = decreaseMultiplier;
+                            element.resetMultiplier = resetMultiplier;
 
-                                    elementCell.decreaseIndexCellValue = function () {
-                                        updateIndexCellValue(this, 'decrease');
+                            // Fields
+                            for (var fieldIndex = 0; fieldIndex < element.ElementFieldSet.length; fieldIndex++) {
+                                var field = element.ElementFieldSet[fieldIndex];
+
+                                // Field functions
+                                if (field.ElementFieldType === 6) {
+                                    field.setCurrentElement = setCurrentElement;
+                                }
+                            }
+
+                            // Items
+                            for (var i = 0; i < element.ElementItemSet.length; i++) {
+                                var elementItem = element.ElementItemSet[i];
+
+                                // Cells
+                                for (var x = 0; x < elementItem.ElementCellSet.length; x++) {
+                                    var elementCell = elementItem.ElementCellSet[x];
+
+                                    // Cell functions
+                                    if (elementCell.ElementField.ElementFieldIndexSet.length > 0) {
+                                        elementCell.increaseIndexCellValue = function () {
+                                            updateIndexCellValue(this, 'increase');
+                                        }
+
+                                        elementCell.decreaseIndexCellValue = function () {
+                                            updateIndexCellValue(this, 'decrease');
+                                        }
                                     }
                                 }
                             }
@@ -149,21 +166,27 @@
                         scope.chartConfig.loading = true;
 
                         // New or existing?
-                        if (typeof scope.chartConfig.resourcePoolId === 'undefined'
-                            || scope.chartConfig.resourcePoolId !== resourcePool.Id) {
+                        //if (typeof scope.chartConfig.resourcePoolId === 'undefined'
+                        //    || scope.chartConfig.resourcePoolId !== resourcePool.Id) {
 
-                            scope.chartConfig.resourcePoolId = resourcePool.Id;
+                            if (typeof scope.chartConfig.elementId === 'undefined'
+                                || scope.chartConfig.elementId !== resourcePool.currentElement.Id) {
+
+                            logger.log('are we here?');
+
+                            //scope.chartConfig.resourcePoolId = resourcePool.Id;
+                            scope.chartConfig.elementId = resourcePool.currentElement.Id;
                             scope.chartConfig.title = resourcePool.Name;
                             scope.chartConfig.series = [];
 
                             // Column type
-                            if (resourcePool.MainElement.HasResourcePoolField) {
+                            if (resourcePool.currentElement.HasResourcePoolField) {
 
                                 scope.chartConfig.options.chart.type = 'column';
                                 scope.chartConfig.options.yAxis.title = { text: 'Total Income' };
 
-                                for (var i = 0; i < resourcePool.MainElement.ElementItemSet.length; i++) {
-                                    var elementItem = resourcePool.MainElement.ElementItemSet[i];
+                                for (var i = 0; i < resourcePool.currentElement.ElementItemSet.length; i++) {
+                                    var elementItem = resourcePool.currentElement.ElementItemSet[i];
                                     var chartDataItem = {
                                         name: elementItem.Name,
                                         data: [elementItem.TotalIncome]
@@ -177,8 +200,8 @@
                                 scope.chartConfig.options.yAxis.title = { text: '' };
 
                                 var chartData = [];
-                                for (var i = 0; i < resourcePool.MainElement.ElementItemSet.length; i++) {
-                                    var elementItem = resourcePool.MainElement.ElementItemSet[i];
+                                for (var i = 0; i < resourcePool.currentElement.ElementItemSet.length; i++) {
+                                    var elementItem = resourcePool.currentElement.ElementItemSet[i];
 
                                     for (var x = 0; x < elementItem.ElementCellSet.length; x++) {
                                         var elementCell = elementItem.ElementCellSet[x];
@@ -196,15 +219,15 @@
                                 scope.chartConfig.series = [{ data: chartData }];
                             }
                         } else {
-                            if (resourcePool.MainElement.HasResourcePoolField) {
-                                for (var i = 0; i < resourcePool.MainElement.ElementItemSet.length; i++) {
-                                    var elementItem = resourcePool.MainElement.ElementItemSet[i];
+                            if (resourcePool.currentElement.HasResourcePoolField) {
+                                for (var i = 0; i < resourcePool.currentElement.ElementItemSet.length; i++) {
+                                    var elementItem = resourcePool.currentElement.ElementItemSet[i];
                                     var chartDataItem = scope.chartConfig.series[i];
                                     chartDataItem.data = [elementItem.TotalIncome];
                                 }
                             } else {
-                                for (var i = 0; i < resourcePool.MainElement.ElementItemSet.length; i++) {
-                                    var elementItem = resourcePool.MainElement.ElementItemSet[i];
+                                for (var i = 0; i < resourcePool.currentElement.ElementItemSet.length; i++) {
+                                    var elementItem = resourcePool.currentElement.ElementItemSet[i];
 
                                     for (var x = 0; x < elementItem.ElementCellSet.length; x++) {
                                         var elementCell = elementItem.ElementCellSet[x];
@@ -221,6 +244,27 @@
                         scope.chartConfig.loading = false;
 
                     });
+
+                function setCurrentElement() {
+                    scope.resourcePool.currentElement = this.SelectedElement;
+                    getResourcePool();
+                }
+
+                function updateResourcePoolRate(rate) {
+                    resourcePoolService.updateResourcePoolRate(scope.resourcePoolId, rate);
+                }
+
+                function increaseMultiplier() {
+                    elementService.increaseMultiplier(this.Id);
+                }
+
+                function decreaseMultiplier() {
+                    elementService.decreaseMultiplier(this.Id);
+                }
+
+                function resetMultiplier() {
+                    elementService.resetMultiplier(this.Id);
+                }
 
                 function updateIndexCellValue(elementCell, type) {
 
@@ -255,22 +299,6 @@
                         });
                 }
             }
-
-            function decreaseMultiplier() {
-                resourcePoolService.decreaseMultiplier(scope.resourcePoolId);
-            }
-
-            function increaseMultiplier() {
-                resourcePoolService.increaseMultiplier(scope.resourcePoolId);
-            }
-
-            function resetMultiplier() {
-                resourcePoolService.resetMultiplier(scope.resourcePoolId);
-            }
-
-            function updateResourcePoolRate(rate) {
-                resourcePoolService.updateResourcePoolRate(scope.resourcePoolId, rate);
-            }
         }
 
         return {
@@ -289,46 +317,37 @@
     var elementEditorDirectiveId = 'elementEditor';
 
     angular.module('main')
-        .directive(elementEditorDirectiveId, ['elementService',
-            'logger',
+        .directive(elementEditorDirectiveId, ['logger',
             elementEditor]);
 
-    function elementEditor(elementService, logger) {
+    function elementEditor(logger) {
         logger = logger.forSource(elementEditorDirectiveId);
 
-        function link(scope, element, attrs) {
+        function link(scope, elm, attrs) {
 
             // Watches
-            scope.$watch('element', function () {
+            //scope.$watch('element', function () {
+            //    if (typeof scope.element !== 'undefined') {
+            //        logger.log('element', scope.element);
+            //    }
+            //}, true);
 
-                if (typeof scope.element !== 'undefined') {
-                    scope.element.increaseMultiplier = increaseMultiplier;
-                    scope.element.decreaseMultiplier = decreaseMultiplier;
-                    scope.element.resetMultiplier = resetMultiplier;
+            scope.$watch('resourcePool', function () {
+
+                // This is just a shortcut
+                if (scope.resourcePool && scope.resourcePool.currentElement) {
+                    scope.element = scope.resourcePool.currentElement;
                 }
 
             }, true);
-
-            function decreaseMultiplier() {
-                elementService.decreaseMultiplier(scope.element.Id);
-            }
-
-            function increaseMultiplier() {
-                elementService.increaseMultiplier(scope.element.Id);
-            }
-
-            function resetMultiplier() {
-                elementService.resetMultiplier(scope.element.Id);
-            }
         }
 
         return {
             restrict: 'E',
             templateUrl: '/App/views/directives/elementEditor.html',
             scope: {
-                element: '=',
-                enableResourcePoolAddition: '=',
-                enableSubtotals: '='
+                // TODO Try to replace this with only currentElement?
+                resourcePool: '='
             },
             link: link
         };

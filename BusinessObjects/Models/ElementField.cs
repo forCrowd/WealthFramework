@@ -45,7 +45,7 @@ namespace BusinessObjects
         //    Init(element, name, fieldType, fixedValue, sortOrder);
         //}
 
-        public ElementField(Element element, string name, ElementFieldTypes fieldType, byte sortOrder, bool? fixedValue = null) : this()
+        public ElementField(Element element, string name, ElementFieldTypes fieldType, byte sortOrder, bool? useFixedValue = null) : this()
         {
             //Init(element, name, fieldType, fixedValue, sortOrder);
         //}
@@ -58,26 +58,26 @@ namespace BusinessObjects
 
             // fixedValue fix + validations
             if (fieldType == ElementFieldTypes.Multiplier)
-                fixedValue = false;
+                useFixedValue = false;
 
             if ((fieldType == ElementFieldTypes.String
                 || fieldType == ElementFieldTypes.Element)
-                && fixedValue.HasValue)
+                && useFixedValue.HasValue)
                 throw new ArgumentException(string.Format("fixedValue cannot have a value for {0} type", fieldType), "fixedValue");
 
             if ((fieldType != ElementFieldTypes.String
                 && fieldType != ElementFieldTypes.Element)
-                && !fixedValue.HasValue)
+                && !useFixedValue.HasValue)
                 throw new ArgumentException(string.Format("fixedValue must have a value for {0} type", fieldType), "fixedValue");
 
             if (fieldType == ElementFieldTypes.Multiplier
-                && fixedValue.Value)
+                && useFixedValue.Value)
                 throw new ArgumentException("fixedValue cannot be true for Multiplier type", "fixedValue");
 
             Element = element;
             Name = name;
             ElementFieldType = (byte)fieldType;
-            UseFixedValue = fixedValue;
+            UseFixedValue = useFixedValue;
             SortOrder = sortOrder;
         }
 
@@ -96,6 +96,9 @@ namespace BusinessObjects
         [Display(Name = "Element Field Type")]
         public byte ElementFieldType { get; set; }
 
+        [Display(Name = "Selected Element")]
+        public int? SelectedElementId { get; set; }
+
         /// <summary>
         /// Determines whether this field will use a fixed value from the CMRP owner or it will have user rateable values
         /// </summary>
@@ -110,6 +113,7 @@ namespace BusinessObjects
         //public bool IsResourcePoolField { get; set; }
 
         public virtual Element Element { get; set; }
+        public virtual Element SelectedElement { get; set; }
         public virtual ICollection<ElementCell> ElementCellSet { get; set; }
         public virtual ICollection<ElementFieldIndex> ElementFieldIndexSet { get; set; }
 

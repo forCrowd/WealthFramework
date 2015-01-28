@@ -33,7 +33,7 @@ namespace BusinessObjects.ViewModels
 
             ElementFieldSet = element.ElementFieldSet
                 .OrderBy(item => item.SortOrder)
-                .Select(item => new ElementField(item));
+                .Select(item => new ElementField(item, user));
             ElementItemSet = element.ElementItemSet
                 .Select(item => new ElementItem(item, user));
         }
