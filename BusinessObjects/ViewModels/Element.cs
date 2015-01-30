@@ -12,6 +12,8 @@ namespace BusinessObjects.ViewModels
             Id = element.Id;
             Name = element.Name;
             IsMainElement = element.IsMainElement;
+            if (element.ParentField != null)
+                ParentFieldId = element.ParentField.Id;
 
             HasResourcePoolField = element.HasResourcePoolField;
             ResourcePoolFieldName = element.ResourcePoolFieldName;
@@ -41,6 +43,7 @@ namespace BusinessObjects.ViewModels
         public int Id { get; set; }
         public string Name { get; set; }
         public bool IsMainElement { get; set; }
+        public int? ParentFieldId { get; set; }
 
         public bool HasResourcePoolField { get; set; }
         public string ResourcePoolFieldName { get; set; }
@@ -59,6 +62,7 @@ namespace BusinessObjects.ViewModels
         public decimal TotalResourcePoolAddition { get; set; }
         public decimal TotalResourcePoolValueIncludingAddition { get; set; }
         public decimal TotalIncome { get; set; }
+
 
         public IEnumerable<ElementField> ElementFieldSet { get; set; }
         public IEnumerable<ElementItem> ElementItemSet { get; set; }

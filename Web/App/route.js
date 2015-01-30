@@ -23,6 +23,9 @@
             .when('/manage/custom/resourcePool', { templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomList.html' })
             .when('/manage/custom/resourcePool/:Id', { templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomView.html' })
 
+            //TODO Remove this later
+            .when('/manage/custom/resourcePoolEdit/:Id', { templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomEdit.html' })
+
             /* Default List + Edit pages */
             .when('/manage/:entity', { templateUrl: getManageTemplateUrl })
             .when('/manage/:entity/:action', { templateUrl: getManageTemplateUrl })

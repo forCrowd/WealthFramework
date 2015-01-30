@@ -9,6 +9,8 @@
         <tr data-ng-repeat="resourcePool in vm.resourcePoolSet">
             <td>
                 <a href="/manage/custom/resourcePool/{{ resourcePool.Id }}">{{ resourcePool.Name }}</a>
+                -
+                <a href="/manage/custom/resourcePoolEdit/{{ resourcePool.Id }}">{{ resourcePool.Name }}</a>
             </td>
         </tr>
     </table>

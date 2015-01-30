@@ -81,15 +81,15 @@ namespace BusinessObjects
                     case ElementFieldTypes.Decimal:
                     // TODO This calculation is the same as Decimal type? Are we using the types in a wrong way?
                     case ElementFieldTypes.ResourcePool:
-                    case ElementFieldTypes.Multiplier:
                         return DecimalValue.GetValueOrDefault();
                     case ElementFieldTypes.DateTime:
                         // TODO Check GetValueOrDefault() method for this type
                         return Convert.ToDecimal(DateTimeValue.GetValueOrDefault());
                     case ElementFieldTypes.String:
                     case ElementFieldTypes.Element:
+                    case ElementFieldTypes.Multiplier:
                         // TODO At least for now
-                        throw new InvalidOperationException("Value property is not available for this field type");
+                        throw new InvalidOperationException("FixedValue property is not available for this field type");
                     default:
                         throw new ArgumentOutOfRangeException();
                 }

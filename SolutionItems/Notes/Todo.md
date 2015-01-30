@@ -250,8 +250,19 @@ http://www.asp.net/web-api/overview/testing-and-debugging/mocking-entity-framewo
 	CREATE A SAMPLE WITH TWO ELEMENTS + ORGANIZATION LICENSE + ORGANIZATION SECTOR?
 	WHAT FALLS INTO ELEMENT AND WHAT TO CMRP?
 	ALSO UI RELATED PROPERTIES? ENABLESUBTOTALS + ENABLECMRP?
-							
-enableresourcepool + enablesubtotals on element?
+	
+	one element can't be selected by multiple fields?
+	
+	CONTINUE WITH; breeze extending the entities
+	
+	check sort order! ANGULAR HAD IT AND THAT'S USED NOW, IS IT OKAY?
+
+	
+						CONTINUE WITH INCREASE MULTIPLIER
+						CURRENTLY MULTIPLIER CELL HAS NO ACTUAL VALUE, SINCE USERELEMENTCELL IS NOT THERE?
+
+
+* enableresourcepool + enablesubtotals on element?
 also resourcepoolrate on element?
 
 						continue with two elements case!

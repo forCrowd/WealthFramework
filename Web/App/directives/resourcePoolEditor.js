@@ -18,7 +18,6 @@
 
             scope.resourcePool = new Object();
             scope.resourcePool.currentElement = null;
-            scope.chartConfig = null;
 
             // TODO Just for test            
             scope.currentElementIndex = 0;
@@ -38,6 +37,7 @@
                 scope.valueFilter = scope.valueFilter === 1 ? 2 : 1;
                 getResourcePool();
             }
+
             scope.valueFilterText = function () {
                 return scope.valueFilter === 1 ? "Only My Ratings" : "All Ratings";
             }
@@ -47,6 +47,7 @@
 
             // Highchart initial config
             scope.chartConfig = {
+                elementId: null,
                 options: {
                     chart: {
                         type: ''
@@ -122,6 +123,7 @@
 
                             // Set current element
                             if (!scope.resourcePool.currentElement && element.IsMainElement) {
+                                logger.log('getResourcePool - scope.resourcePool.currentElement', scope.resourcePool.currentElement);
                                 scope.resourcePool.currentElement = element;
                             }
 
@@ -162,92 +164,16 @@
                             }
                         }
 
-                        // Update Highchart data
-                        scope.chartConfig.loading = true;
-
-                        // New or existing?
-                        //if (typeof scope.chartConfig.resourcePoolId === 'undefined'
-                        //    || scope.chartConfig.resourcePoolId !== resourcePool.Id) {
-
-                            if (typeof scope.chartConfig.elementId === 'undefined'
-                                || scope.chartConfig.elementId !== resourcePool.currentElement.Id) {
-
-                            logger.log('are we here?');
-
-                            //scope.chartConfig.resourcePoolId = resourcePool.Id;
-                            scope.chartConfig.elementId = resourcePool.currentElement.Id;
-                            scope.chartConfig.title = resourcePool.Name;
-                            scope.chartConfig.series = [];
-
-                            // Column type
-                            if (resourcePool.currentElement.HasResourcePoolField) {
-
-                                scope.chartConfig.options.chart.type = 'column';
-                                scope.chartConfig.options.yAxis.title = { text: 'Total Income' };
-
-                                for (var i = 0; i < resourcePool.currentElement.ElementItemSet.length; i++) {
-                                    var elementItem = resourcePool.currentElement.ElementItemSet[i];
-                                    var chartDataItem = {
-                                        name: elementItem.Name,
-                                        data: [elementItem.TotalIncome]
-                                    };
-                                    scope.chartConfig.series.push(chartDataItem);
-                                }
-                            } else {
-
-                                // Pie type
-                                scope.chartConfig.options.chart.type = 'pie';
-                                scope.chartConfig.options.yAxis.title = { text: '' };
-
-                                var chartData = [];
-                                for (var i = 0; i < resourcePool.currentElement.ElementItemSet.length; i++) {
-                                    var elementItem = resourcePool.currentElement.ElementItemSet[i];
-
-                                    for (var x = 0; x < elementItem.ElementCellSet.length; x++) {
-                                        var elementCell = elementItem.ElementCellSet[x];
-
-                                        if (elementCell.ElementField.ElementFieldIndexSet.length > 0) {
-                                            var chartDataItem = {
-                                                name: elementItem.Name,
-                                                y: elementCell.ValuePercentage
-                                            };
-                                            chartData.push(chartDataItem);
-                                        }
-                                    }
-                                }
-
-                                scope.chartConfig.series = [{ data: chartData }];
-                            }
-                        } else {
-                            if (resourcePool.currentElement.HasResourcePoolField) {
-                                for (var i = 0; i < resourcePool.currentElement.ElementItemSet.length; i++) {
-                                    var elementItem = resourcePool.currentElement.ElementItemSet[i];
-                                    var chartDataItem = scope.chartConfig.series[i];
-                                    chartDataItem.data = [elementItem.TotalIncome];
-                                }
-                            } else {
-                                for (var i = 0; i < resourcePool.currentElement.ElementItemSet.length; i++) {
-                                    var elementItem = resourcePool.currentElement.ElementItemSet[i];
-
-                                    for (var x = 0; x < elementItem.ElementCellSet.length; x++) {
-                                        var elementCell = elementItem.ElementCellSet[x];
-
-                                        if (elementCell.ElementField.ElementFieldIndexSet.length > 0) {
-                                            var chartDataItem = scope.chartConfig.series[0].data[i];
-                                            chartDataItem.y = elementCell.ValuePercentage;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        scope.chartConfig.loading = false;
-
+                        loadChart();
                     });
 
                 function setCurrentElement() {
-                    scope.resourcePool.currentElement = this.SelectedElement;
-                    getResourcePool();
+                    scope.resourcePool.currentElement =  this.SelectedElement;
+                    logger.log('setCurrentElement - scope.resourcePool.currentElement', scope.resourcePool.currentElement);
+
+                    loadChart();
+
+                    // getResourcePool();
                 }
 
                 function updateResourcePoolRate(rate) {
@@ -299,6 +225,90 @@
                         });
                 }
             }
+
+            function loadChart() {
+                // Update Highchart data
+                scope.chartConfig.loading = true;
+
+                // New or existing?
+                //if (typeof scope.chartConfig.resourcePoolId === 'undefined'
+                //    || scope.chartConfig.resourcePoolId !== resourcePool.Id) {
+
+                if (!scope.chartConfig.elementId
+                    || scope.chartConfig.elementId !== scope.resourcePool.currentElement.Id) {
+
+                    logger.log('are we here?');
+
+                    //scope.chartConfig.resourcePoolId = resourcePool.Id;
+                    scope.chartConfig.elementId = scope.resourcePool.currentElement.Id;
+                    scope.chartConfig.title = scope.resourcePool.Name;
+                    scope.chartConfig.series = [];
+
+                    // Column type
+                    if (scope.resourcePool.currentElement.HasResourcePoolField) {
+
+                        scope.chartConfig.options.chart.type = 'column';
+                        scope.chartConfig.options.yAxis.title = { text: 'Total Income' };
+
+                        for (var i = 0; i < scope.resourcePool.currentElement.ElementItemSet.length; i++) {
+                            var elementItem = scope.resourcePool.currentElement.ElementItemSet[i];
+                            var chartDataItem = {
+                                name: elementItem.Name,
+                                data: [elementItem.TotalIncome]
+                            };
+                            scope.chartConfig.series.push(chartDataItem);
+                        }
+                    } else {
+
+                        // Pie type
+                        scope.chartConfig.options.chart.type = 'pie';
+                        scope.chartConfig.options.yAxis.title = { text: '' };
+
+                        var chartData = [];
+                        for (var i = 0; i < scope.resourcePool.currentElement.ElementItemSet.length; i++) {
+                            var elementItem = scope.resourcePool.currentElement.ElementItemSet[i];
+
+                            for (var x = 0; x < elementItem.ElementCellSet.length; x++) {
+                                var elementCell = elementItem.ElementCellSet[x];
+
+                                if (elementCell.ElementField.ElementFieldIndexSet.length > 0) {
+                                    var chartDataItem = {
+                                        name: elementItem.Name,
+                                        y: elementCell.ValuePercentage
+                                    };
+                                    chartData.push(chartDataItem);
+                                }
+                            }
+                        }
+
+                        scope.chartConfig.series = [{ data: chartData }];
+                    }
+                } else {
+                    if (scope.resourcePool.currentElement.HasResourcePoolField) {
+                        for (var i = 0; i < scope.resourcePool.currentElement.ElementItemSet.length; i++) {
+                            var elementItem = scope.resourcePool.currentElement.ElementItemSet[i];
+                            var chartDataItem = scope.chartConfig.series[i];
+                            chartDataItem.data = [elementItem.TotalIncome];
+                        }
+                    } else {
+                        for (var i = 0; i < scope.resourcePool.currentElement.ElementItemSet.length; i++) {
+                            var elementItem = scope.resourcePool.currentElement.ElementItemSet[i];
+
+                            for (var x = 0; x < elementItem.ElementCellSet.length; x++) {
+                                var elementCell = elementItem.ElementCellSet[x];
+
+                                if (elementCell.ElementField.ElementFieldIndexSet.length > 0) {
+                                    var chartDataItem = scope.chartConfig.series[0].data[i];
+                                    chartDataItem.y = elementCell.ValuePercentage;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                scope.chartConfig.loading = false;
+
+            }
         }
 
         return {
@@ -336,7 +346,7 @@
 
                 // This is just a shortcut
                 if (scope.resourcePool && scope.resourcePool.currentElement) {
-                    scope.element = scope.resourcePool.currentElement;
+                    //scope.element = scope.resourcePool.currentElement;
                 }
 
             }, true);

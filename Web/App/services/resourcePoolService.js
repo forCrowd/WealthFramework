@@ -15,6 +15,7 @@
 
         // Service methods
         $delegate.getResourcePoolCustom = getResourcePoolCustom;
+        $delegate.getResourcePoolCustomEdit = getResourcePoolCustomEdit;
         $delegate.updateResourcePoolRate = updateResourcePoolRate;
 
         // Overwrites the base resourcePoolService.saveChanges() function
@@ -31,6 +32,48 @@
                 url += '/' + valueFilter;
 
             return $http.get(url);
+        }
+
+        function getResourcePoolCustomEdit(resourcePoolId) {
+            //function getResourcePoolCustomEdit(resourcePoolId, valueFilter) {
+            //function getResourcePool(resourcePoolId, forceRefresh) {
+
+            var query = breeze.EntityQuery
+                .from('Element')
+                //.expand('ElementSet')
+                .expand('ResourcePool, ElementFieldSet.ElementFieldIndexSet, ElementItemSet.ElementCellSet')
+                .where('ResourcePoolId', 'eq', resourcePoolId)
+                //.orderBy('ElementFieldSet.SortOrder')
+            ;
+
+            query = query.using(breeze.FetchStrategy.FromServer);
+
+            return dataContext.executeQuery(query)
+                .then(success).catch(failed);
+
+            function success(response) {
+                var count = response.results.length;
+                logger.logSuccess('Got ' + count + ' resourcePool(s)', response, true);
+                return response.results;
+            }
+
+            function failed(error) {
+                var message = error.message || 'ResourcePool query failed';
+                logger.logError(message, error, true);
+            }
+
+            //return dataContext.fetchEntityByKey('ResourcePool', resourcePoolId, !forceRefresh)
+            //    .then(success).catch(failed);
+
+            //function success(result) {
+            //    return result.entity;
+            //}
+
+            //function failed(error) {
+            //    var message = error.message || 'getResourcePool query failed';
+            //    logger.logError(message, error, true);
+            //}
+            // }
         }
 
         function updateResourcePoolRate(resourcePoolId, resourcePoolRate, eventSource) {

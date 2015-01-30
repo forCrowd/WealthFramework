@@ -17,6 +17,7 @@ namespace BusinessObjects
         {
             ElementFieldSet = new HashSet<ElementField>();
             ElementItemSet = new HashSet<ElementItem>();
+            ParentFieldSet = new HashSet<ElementField>();
 
             FilterSettings = new ResourcePoolFilterSettings();
         }
@@ -51,11 +52,22 @@ namespace BusinessObjects
         public virtual ICollection<ElementField> ElementFieldSet { get; set; }
         public virtual ICollection<ElementItem> ElementItemSet { get; set; }
         [InverseProperty("SelectedElement")]
-        public virtual ICollection<ElementField> ElementFieldSelectedElementSet { get; set; }
+        public virtual ICollection<ElementField> ParentFieldSet { get; set; }
 
         public ResourcePoolFilterSettings FilterSettings { get; private set; }
 
         #region - ReadOnly Properties -
+
+        /// <summary>
+        /// REMARK An element can only be selected by one field, therefore can only have one parent.
+        /// </summary>
+        public ElementField ParentField
+        {
+            get
+            {
+                return ParentFieldSet.Any() ? ParentFieldSet.Single() : null;
+            }
+        }
 
         /// <summary>
         /// REMARK: In other index types, this value is calculated on ElementFieldIndex class level, under IndexValue property

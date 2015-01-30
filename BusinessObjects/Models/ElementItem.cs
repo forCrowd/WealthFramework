@@ -20,7 +20,7 @@ namespace BusinessObjects
         public ElementItem()
         {
             ElementCellSet = new HashSet<ElementCell>();
-            ElementCellSelectedElementItemSet = new HashSet<ElementCell>();
+            ParentCellSet = new HashSet<ElementCell>();
         }
 
         public ElementItem(Element element, string name) : this()
@@ -62,7 +62,7 @@ namespace BusinessObjects
         public virtual Element Element { get; set; }
         public virtual ICollection<ElementCell> ElementCellSet { get; set; }
         [InverseProperty("SelectedElementItem")]
-        public virtual ICollection<ElementCell> ElementCellSelectedElementItemSet { get; set; }
+        public virtual ICollection<ElementCell> ParentCellSet { get; set; }
 
         /* */
 
