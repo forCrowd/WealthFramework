@@ -95,7 +95,7 @@
                                 <th data-ng-if="field.ElementFieldType === 12 && resourcePool.MainElement.HasResourcePoolField">
                                     Tot. CMRP Add.
                                 </th>-->
-                                        <th data-ng-if="vm.resourcePool.EnableResourcePoolAddition && field.ElementFieldType === 12 && element.HasResourcePoolField">
+                                        <th data-ng-if="vm.resourcePool.EnableResourcePoolAddition && field.ElementFieldType === 12 && vm.resourcePool.currentElement.resourcePoolField()">
                                             Tot. {{ vm.resourcePool.currentElement.ResourcePoolFieldName }}
                                             <br />incl. CMRP Add.
                                         </th>
@@ -104,7 +104,7 @@
                             </table>
                         </th>
                         <!-- Totals -->
-                        <th data-ng-if="vm.resourcePool.currentElement.HasResourcePoolField">
+                        <th data-ng-if="vm.resourcePool.currentElement.resourcePoolField()">
                             Total Income
                         </th>
                     </tr>
@@ -193,8 +193,8 @@
                             </table>
                         </td>
                         <!-- Totals -->
-                        <td data-ng-if="vm.resourcePool.currentElement.HasResourcePoolField">
-                            {{ elementItem.TotalIncome | number: 2 }}
+                        <td data-ng-if="vm.resourcePool.currentElement.resourcePoolField()">
+                            {{ elementItem.totalIncome() | number: 2 }}
                         </td>
                     </tr>
                 </tbody>
@@ -257,7 +257,7 @@
                     <td data-ng-if="field.ElementFieldType === 12 && resourcePool.MainElement.HasResourcePoolField">
                         {{ resourcePool.MainElement.TotalResourcePoolAddition | number: 2 }}
                     </td>-->
-                                        <td data-ng-if="vm.resourcePool.EnableResourcePoolAddition && field.ElementFieldType === 12 && element.HasResourcePoolField">
+                                        <td data-ng-if="vm.resourcePool.EnableResourcePoolAddition && field.ElementFieldType === 12 && vm.resourcePool.currentElement.resourcePoolField()">
                                             {{ vm.resourcePool.currentElement.TotalResourcePoolValueIncludingAddition | number: 2 }}
                                         </td>
                                     </tr>
@@ -265,7 +265,7 @@
                             </table>
                         </td>
                         <!-- Totals -->
-                        <td data-ng-if="vm.resourcePool.currentElement.HasResourcePoolField">
+                        <td data-ng-if="vm.resourcePool.currentElement.resourcePoolField()">
                             {{ vm.resourcePool.currentElement.TotalIncome | number: 2 }}
                         </td>
                     </tr>

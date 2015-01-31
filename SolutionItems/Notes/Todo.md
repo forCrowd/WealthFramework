@@ -255,11 +255,17 @@ http://www.asp.net/web-api/overview/testing-and-debugging/mocking-entity-framewo
 	
 	CONTINUE WITH; breeze extending the entities
 	
+	main.js - highcharts
+	
 	check sort order! ANGULAR HAD IT AND THAT'S USED NOW, IS IT OKAY?
 
 	
 						CONTINUE WITH INCREASE MULTIPLIER
 						CURRENTLY MULTIPLIER CELL HAS NO ACTUAL VALUE, SINCE USERELEMENTCELL IS NOT THERE?
+						
+						original resourcepooleditor doesn't work?
+						
+						sortorder field index test ?
 
 
 * enableresourcepool + enablesubtotals on element?

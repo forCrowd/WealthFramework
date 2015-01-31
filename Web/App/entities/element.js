@@ -208,6 +208,14 @@
 
                 return value;
             }
+
+            self.totalResourcePoolValue = function () {
+                return self.resourcePoolValue() * self.multiplierValue();
+            }
+
+            self.totalIncome = function () {
+                return self.totalResourcePoolValue();
+            }
         }
 
         function elementCell() {

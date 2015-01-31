@@ -123,7 +123,7 @@
 
                             // Set current element
                             if (!scope.resourcePool.currentElement && element.IsMainElement) {
-                                logger.log('getResourcePool - scope.resourcePool.currentElement', scope.resourcePool.currentElement);
+                                // logger.log('getResourcePool - scope.resourcePool.currentElement', scope.resourcePool.currentElement);
                                 scope.resourcePool.currentElement = element;
                             }
 
@@ -237,8 +237,6 @@
                 if (!scope.chartConfig.elementId
                     || scope.chartConfig.elementId !== scope.resourcePool.currentElement.Id) {
 
-                    logger.log('are we here?');
-
                     //scope.chartConfig.resourcePoolId = resourcePool.Id;
                     scope.chartConfig.elementId = scope.resourcePool.currentElement.Id;
                     scope.chartConfig.title = scope.resourcePool.Name;
@@ -346,7 +344,7 @@
 
                 // This is just a shortcut
                 if (scope.resourcePool && scope.resourcePool.currentElement) {
-                    //scope.element = scope.resourcePool.currentElement;
+                    scope.element = scope.resourcePool.currentElement;
                 }
 
             }, true);

@@ -13,9 +13,9 @@
 
         'ngSanitize',
 
-        'breeze.angular',
+        'breeze.angular'
 
-        'highcharts-ng'
+        //, 'highcharts-ng'
 
     ]);
 })();
