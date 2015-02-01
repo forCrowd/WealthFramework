@@ -12,27 +12,21 @@ namespace BusinessObjects.ViewModels
             ElementFieldId = elementFieldIndex.ElementFieldId;
             Name = elementFieldIndex.Name;
 
-            ValueMultiplied = elementFieldIndex.ValueMultiplied();
-            ValuePercentage = elementFieldIndex.ValuePercentage();
-            ElementFieldIndexIncome = elementFieldIndex.ElementFieldIndexIncome();
-
             IndexRatingCount = elementFieldIndex.IndexRatingCount();
             IndexRatingAverage = elementFieldIndex.IndexRatingAverage();
             IndexRatingPercentage = elementFieldIndex.IndexRatingPercentage();
             IndexShare = elementFieldIndex.IndexShare();
+            IndexIncome = elementFieldIndex.IndexIncome();
         }
 
         public int Id { get; set; }
         public Nullable<int> ElementFieldId { get; set; }
         public string Name { get; set; }
 
-        public decimal ValueMultiplied { get; set; }
-        public decimal ValuePercentage { get; set; }
-        public decimal ElementFieldIndexIncome { get; set; }
-
         public decimal IndexRatingCount { get; set; }
         public decimal IndexRatingAverage { get; set; }
         public decimal IndexRatingPercentage { get; set; }
         public decimal IndexShare { get; set; }
+        public decimal IndexIncome { get; set; }
     }
 }

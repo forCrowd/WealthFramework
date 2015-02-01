@@ -140,18 +140,23 @@ namespace BusinessObjects
             return ElementCellSet.Sum(item => item.ValueMultiplied());
         }
 
+        public decimal ValuePercentage()
+        {
+            return ElementCellSet.Sum(item => item.ValuePercentage());
+        }
+
         // TODO Although technically it's possible to define multiple indexes, there will be one per Field at the moment
         public ElementFieldIndex ElementFieldIndex
         {
             get { return ElementFieldIndexSet.SingleOrDefault(); }
         }
 
-        public decimal ElementFieldIndexShare()
-        {
-            return ElementFieldIndex == null
-                ? 0
-                : ElementFieldIndex.IndexShare();
-        }
+        //public decimal ElementFieldIndexShare()
+        //{
+        //    return ElementFieldIndex == null
+        //        ? 0
+        //        : ElementFieldIndex.IndexShare();
+        //}
 
         #endregion
 

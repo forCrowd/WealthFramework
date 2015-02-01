@@ -169,14 +169,14 @@ namespace BusinessObjects
             return ResourcePoolValueIncludingAddition() * MultiplierValue();
         }
 
-        public decimal ElementFieldIndexIncome()
+        public decimal IndexIncome()
         {
-            return ElementCellSet.Sum(item => item.ElementFieldIndexIncome());
+            return ElementCellSet.Sum(item => item.IndexIncome());
         }
 
         public decimal TotalIncome()
         {
-            return TotalResourcePoolValue() + ElementFieldIndexIncome();
+            return TotalResourcePoolValue() + IndexIncome();
         }
 
         #region - Methods -

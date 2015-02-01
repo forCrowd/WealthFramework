@@ -13,7 +13,22 @@ namespace BusinessObjects.ViewModels
             ElementId = elementField.ElementId;
             Name = elementField.Name;
             ElementFieldType = elementField.ElementFieldType;
-            ElementFieldIndexShare = elementField.ElementFieldIndexShare();
+
+            switch ((ElementFieldTypes)elementField.ElementFieldType)
+            {
+                case ElementFieldTypes.Boolean:
+                case ElementFieldTypes.Integer:
+                case ElementFieldTypes.Decimal:
+                case ElementFieldTypes.DateTime:
+                case ElementFieldTypes.ResourcePool:
+                case ElementFieldTypes.Multiplier:
+                    {
+                        ValueMultiplied = elementField.ValueMultiplied();
+                        ValuePercentage = elementField.ValuePercentage();
+                        break;
+                    }
+            }
+            //ElementFieldIndexShare = elementField.ElementFieldIndexShare();
 
             //Element = new Element(elementField.Element, user);
             if (elementField.SelectedElement != null)
@@ -25,7 +40,9 @@ namespace BusinessObjects.ViewModels
         public int ElementId { get; set; }
         public string Name { get; set; }
         public byte ElementFieldType { get; set; }
-        public decimal ElementFieldIndexShare { get; set; }
+        public decimal ValueMultiplied { get; set; }
+        public decimal ValuePercentage { get; set; }
+        //public decimal ElementFieldIndexShare { get; set; }
 
         //public Element Element { get; set; }
         public Element SelectedElement { get; set; }

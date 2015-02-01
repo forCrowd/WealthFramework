@@ -134,7 +134,7 @@
                                                 {{ elementCell.ValuePercentage | percentage: 2 }}
                                             </td>
                                             <td data-ng-if="elementCell.ElementFieldType === 11">
-                                                {{ elementCell.ElementFieldIndexIncome | number: 2 }}
+                                                {{ elementCell.IndexIncome | number: 2 }}
                                             </td>
                                             <td>
                                                 <div class="btn-group" role="group">
@@ -201,13 +201,13 @@
                                     <tfoot>
                                         <tr>
                                             <!--<td>
-                                                {{ index.ValueMultiplied | number: 2 }}
+                                                {{ field.ValueMultiplied | number: 2 }}
                                             </td>-->
                                             <td>
-                                                {{ index.ValuePercentage | percentage: 2 }}
+                                                {{ field.ValuePercentage | percentage: 2 }}
                                             </td>
                                             <td data-ng-if="field.ElementFieldType === 11">
-                                                {{ index.ElementFieldIndexIncome | number: 2 }}
+                                                {{ index.IndexIncome | number: 2 }}
                                             </td>
                                             <td>
                                                 &nbsp;

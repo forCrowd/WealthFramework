@@ -1,4 +1,5 @@
 ﻿using Microsoft.Owin.Security.OAuth;
+using System.Linq;
 using System.Web.Http;
 using System.Web.Http.ExceptionHandling;
 using System.Web.Http.Filters;
@@ -32,13 +33,7 @@ namespace Web
 
             // Query support
             //config.EnableQuerySupport();
-
-            // IActionFilter odataFilter = new QueryableAttribute() { MaxExpansionDepth = 3 };
-            // var x = new System.Web.Http.Filters.ConfigurationFilterProvider();
-            //config.AddODataQueryFilter(dataFilter);
-            //var x = ; // System.Web.Http.OData.EnableQueryAttribute();\
-            //x.MaxExpansionDepth = 3;
-            var odataFilter = new EnableQueryAttribute() { MaxExpansionDepth = 3 };
+            var odataFilter = new EnableQueryAttribute() { MaxExpansionDepth = 4 };
             config.AddODataQueryFilter(odataFilter);
 
             //config.Routes.MapODataRoute(

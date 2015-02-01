@@ -70,6 +70,7 @@
             var store = manager.metadataStore;
             store.registerEntityTypeCtor('ResourcePool', elementFactory.resourcePool);
             store.registerEntityTypeCtor('Element', elementFactory.element);
+            store.registerEntityTypeCtor('ElementField', elementFactory.elementField);
             store.registerEntityTypeCtor('ElementItem', elementFactory.elementItem);
             store.registerEntityTypeCtor('ElementCell', elementFactory.elementCell);
         }

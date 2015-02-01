@@ -70,20 +70,15 @@ namespace BusinessObjects
             return index;
         }
 
-        public decimal ValueMultiplied()
-        {
-            return ElementField.ElementCellSet.Sum(item => item.ValueMultiplied());
-        }
+        //public decimal ValueMultiplied()
+        //{
+        //    return ElementField.ElementCellSet.Sum(item => item.ValueMultiplied());
+        //}
 
-        public decimal ValuePercentage()
-        {
-            return ElementField.ElementCellSet.Sum(item => item.ValuePercentage());
-        }
-
-        public decimal ElementFieldIndexIncome()
-        {
-            return ElementField.ElementCellSet.Sum(item => item.ElementFieldIndexIncome());
-        }
+        //public decimal ValuePercentage()
+        //{
+        //    return ElementField.ElementCellSet.Sum(item => item.ValuePercentage());
+        //}
 
         /// <summary>
         /// How many users rated this index?
@@ -116,6 +111,11 @@ namespace BusinessObjects
         public decimal IndexShare()
         {
             return ElementField.Element.ResourcePool.TotalResourcePoolValue() * IndexRatingPercentage();
+        }
+
+        public decimal IndexIncome()
+        {
+            return ElementField.ElementCellSet.Sum(item => item.IndexIncome());
         }
     }
 }

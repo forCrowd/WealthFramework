@@ -243,12 +243,12 @@ namespace BusinessObjects
                 : ValueMultiplied() / elementFieldValueMultiplied;
         }
 
-        public decimal ElementFieldIndexIncome()
+        public decimal IndexIncome()
         {
             if (ElementField.ElementFieldIndex == null)
             {
                 return ElementField.ElementFieldType == (byte)ElementFieldTypes.Element && SelectedElementItem != null
-                    ? SelectedElementItem.ElementFieldIndexIncome()
+                    ? SelectedElementItem.IndexIncome()
                     : 0;
             }
 
@@ -265,7 +265,7 @@ namespace BusinessObjects
                     throw new ArgumentOutOfRangeException();
             }
 
-            return ElementField.ElementFieldIndexShare() * value;
+            return ElementField.ElementFieldIndex.IndexShare() * value;
         }
 
         #region - Methods -

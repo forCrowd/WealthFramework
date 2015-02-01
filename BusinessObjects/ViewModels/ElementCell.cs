@@ -31,7 +31,7 @@ namespace BusinessObjects.ViewModels
                 ValueMultiplied = elementCell.ValueMultiplied();
                 ValuePercentage = elementCell.ValuePercentage();
             }
-            ElementFieldIndexIncome = elementCell.ElementFieldIndexIncome();
+            IndexIncome = elementCell.IndexIncome();
 
             UserElementCellSet = elementCell.UserElementCellSet
                 .Where(item => item.User == user)
@@ -52,7 +52,7 @@ namespace BusinessObjects.ViewModels
 
         public decimal ValueMultiplied { get; set; }
         public decimal ValuePercentage { get; set; }
-        public decimal ElementFieldIndexIncome { get; set; }
+        public decimal IndexIncome { get; set; }
 
         public IEnumerable<UserElementCell> UserElementCellSet { get; set; }
     }

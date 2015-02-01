@@ -151,13 +151,13 @@
                                                 <tbody>
                                                     <tr>
                                                         <!--<td>
-                                                    {{ elementCell.ValueMultiplied | number: 2 }}
+                                                    {{ elementCell.valueMultiplied() | number: 2 }}
                                                 </td>-->
                                                         <td>
-                                                            {{ elementCell.ValuePercentage | percentage: 2 }}
+                                                            {{ elementCell.valuePercentage() | percentage: 2 }}
                                                         </td>
                                                         <td data-ng-if="elementCell.ElementFieldType === 11">
-                                                            {{ elementCell.ElementFieldIndexIncome | number: 2 }}
+                                                            {{ elementCell.IndexIncome | number: 2 }}
                                                         </td>
                                                         <td>
                                                             <div class="btn-group" role="group">
@@ -208,10 +208,10 @@
                                         <td>
                                             <!-- TODO Grand Total? -->
                                             <span data-ng-if="field.ElementFieldType === 11">
-                                                {{ vm.resourcePool.currentElement.ResourcePoolValue | number: 2 }}
+                                                {{ vm.resourcePool.currentElement.resourcePoolValue() | number: 2 }}
                                             </span>
                                             <div data-ng-if="field.ElementFieldType === 12">
-                                                {{ vm.resourcePool.currentElement.MultiplierValue | number: 2 }}
+                                                {{ vm.resourcePool.currentElement.multiplierValue() | number: 2 }}
                                             </div>
                                             <!-- Indexes -->
                                             <table class="fieldIndexTable" data-ng-repeat="index in field.ElementFieldIndexSet">
@@ -227,12 +227,10 @@
                                         {{ index.ValueMultiplied | number: 2 }}
                                     </td>-->
                                                         <td>
-                                                            
-
-                                                            {{ index.ValuePercentage | percentage: 2 }}
+                                                            {{ field.valuePercentage() | percentage: 2 }}
                                                         </td>
                                                         <td data-ng-if="field.ElementFieldType === 11">
-                                                            {{ index.ElementFieldIndexIncome | number: 2 }}
+                                                            {{ index.IndexIncome | number: 2 }}
                                                         </td>
                                                         <td>
                                                             &nbsp;
@@ -266,7 +264,7 @@
                         </td>
                         <!-- Totals -->
                         <td data-ng-if="vm.resourcePool.currentElement.resourcePoolField()">
-                            {{ vm.resourcePool.currentElement.TotalIncome | number: 2 }}
+                            {{ vm.resourcePool.currentElement.totalIncome() | number: 2 }}
                         </td>
                     </tr>
                     <tr>
@@ -294,6 +292,7 @@
                     </tr>
                 </tfoot>
             </table>
+            <!--<button type="button" data-ng-click="vm.saveChanges()">Save</button>-->
 
 
         </div>

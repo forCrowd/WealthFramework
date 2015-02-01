@@ -255,9 +255,14 @@ http://www.asp.net/web-api/overview/testing-and-debugging/mocking-entity-framewo
 	
 	CONTINUE WITH; breeze extending the entities
 	
-	main.js - highcharts
-	
 	check sort order! ANGULAR HAD IT AND THAT'S USED NOW, IS IT OKAY?
+	
+	
+
+									CONTINUE WITH NEWEDITOR!
+									FIND A WAY TO SEND READONLY PROP FROM SERVER TO CLIENT ON ODATA?
+									REMOVE TESTPROP FROM ELEMENT!
+	
 
 	
 						CONTINUE WITH INCREASE MULTIPLIER

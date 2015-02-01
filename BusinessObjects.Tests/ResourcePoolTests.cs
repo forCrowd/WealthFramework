@@ -260,7 +260,7 @@ namespace BusinessObjects.Tests
             Assert.IsTrue(organization1.TotalResourcePoolValue() == 200);
             Assert.IsTrue(organization1.TotalResourcePoolAddition() == 200);
             Assert.IsTrue(organization1.TotalResourcePoolValueIncludingAddition() == 400);
-            Assert.IsTrue(organization1.ElementFieldIndexIncome() == 300);
+            Assert.IsTrue(organization1.IndexIncome() == 300);
             Assert.IsTrue(organization1.TotalIncome() == 500);
 
             Assert.IsTrue(organization2.ValueCount() == 1);
@@ -271,7 +271,7 @@ namespace BusinessObjects.Tests
             Assert.IsTrue(organization2.TotalResourcePoolValue() == 200);
             Assert.IsTrue(organization2.TotalResourcePoolAddition() == 200);
             Assert.IsTrue(organization2.TotalResourcePoolValueIncludingAddition() == 400);
-            Assert.IsTrue(organization2.ElementFieldIndexIncome() == 100);
+            Assert.IsTrue(organization2.IndexIncome() == 100);
             Assert.IsTrue(organization2.TotalIncome() == 300);
 
             // Arrange + act 2
@@ -288,7 +288,7 @@ namespace BusinessObjects.Tests
             Assert.IsTrue(organization1.TotalResourcePoolValue() == 200);
             Assert.IsTrue(organization1.TotalResourcePoolAddition() == 200);
             Assert.IsTrue(organization1.TotalResourcePoolValueIncludingAddition() == 400);
-            Assert.IsTrue(organization1.ElementFieldIndexIncome() == 100);
+            Assert.IsTrue(organization1.IndexIncome() == 100);
             Assert.IsTrue(organization1.TotalIncome() == 300);
 
             Assert.IsTrue(organization2.ValueCount() == 1);
@@ -299,7 +299,7 @@ namespace BusinessObjects.Tests
             Assert.IsTrue(organization2.TotalResourcePoolValue() == 200);
             Assert.IsTrue(organization2.TotalResourcePoolAddition() == 200);
             Assert.IsTrue(organization2.TotalResourcePoolValueIncludingAddition() == 400);
-            Assert.IsTrue(organization2.ElementFieldIndexIncome() == 300);
+            Assert.IsTrue(organization2.IndexIncome() == 300);
             Assert.IsTrue(organization2.TotalIncome() == 500);
         }
 
@@ -358,7 +358,7 @@ namespace BusinessObjects.Tests
             Assert.IsTrue(organization1.TotalResourcePoolValue() == 25);
             Assert.IsTrue(organization1.TotalResourcePoolAddition() == 25);
             Assert.IsTrue(organization1.TotalResourcePoolValueIncludingAddition() == 50);
-            Assert.IsTrue(organization1.ElementFieldIndexIncome() == 75);
+            Assert.IsTrue(organization1.IndexIncome() == 75);
             Assert.IsTrue(organization1.TotalIncome() == 100);
 
             Assert.IsTrue(organization2.ValueCount() == 1);
@@ -369,7 +369,7 @@ namespace BusinessObjects.Tests
             Assert.IsTrue(organization2.TotalResourcePoolValue() == 75);
             Assert.IsTrue(organization2.TotalResourcePoolAddition() == 75);
             Assert.IsTrue(organization2.TotalResourcePoolValueIncludingAddition() == 150);
-            Assert.IsTrue(organization2.ElementFieldIndexIncome() == 25);
+            Assert.IsTrue(organization2.IndexIncome() == 25);
             Assert.IsTrue(organization2.TotalIncome() == 100);
         }
 
@@ -440,7 +440,7 @@ namespace BusinessObjects.Tests
             Assert.IsTrue(organization1.TotalResourcePoolValue() == 200);
             Assert.IsTrue(organization1.TotalResourcePoolAddition() == 200);
             Assert.IsTrue(organization1.TotalResourcePoolValueIncludingAddition() == 400);
-            Assert.IsTrue(organization1.ElementFieldIndexIncome() == 300);
+            Assert.IsTrue(organization1.IndexIncome() == 300);
             Assert.IsTrue(organization1.TotalIncome() == 500);
 
             Assert.IsTrue(organization2.ValueCount() == 1);
@@ -451,7 +451,7 @@ namespace BusinessObjects.Tests
             Assert.IsTrue(organization2.TotalResourcePoolValue() == 200);
             Assert.IsTrue(organization2.TotalResourcePoolAddition() == 200);
             Assert.IsTrue(organization2.TotalResourcePoolValueIncludingAddition() == 400);
-            Assert.IsTrue(organization2.ElementFieldIndexIncome() == 100);
+            Assert.IsTrue(organization2.IndexIncome() == 100);
             Assert.IsTrue(organization2.TotalIncome() == 300);
 
             // Arrange + act 2
@@ -468,7 +468,7 @@ namespace BusinessObjects.Tests
             Assert.IsTrue(organization1.TotalResourcePoolValue() == 200);
             Assert.IsTrue(organization1.TotalResourcePoolAddition() == 200);
             Assert.IsTrue(organization1.TotalResourcePoolValueIncludingAddition() == 400);
-            Assert.IsTrue(organization1.ElementFieldIndexIncome() == 100);
+            Assert.IsTrue(organization1.IndexIncome() == 100);
             Assert.IsTrue(organization1.TotalIncome() == 300);
 
             Assert.IsTrue(organization2.ValueCount() == 1);
@@ -479,7 +479,7 @@ namespace BusinessObjects.Tests
             Assert.IsTrue(organization2.TotalResourcePoolValue() == 200);
             Assert.IsTrue(organization2.TotalResourcePoolAddition() == 200);
             Assert.IsTrue(organization2.TotalResourcePoolValueIncludingAddition() == 400);
-            Assert.IsTrue(organization2.ElementFieldIndexIncome() == 300);
+            Assert.IsTrue(organization2.IndexIncome() == 300);
             Assert.IsTrue(organization2.TotalIncome() == 500);
         }
     }
