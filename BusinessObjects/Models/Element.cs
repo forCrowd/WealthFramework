@@ -58,13 +58,6 @@ namespace BusinessObjects
 
         #region - ReadOnly Properties -
 
-        [NotMapped]
-        public int TestProp
-        {
-            get { return 1 + 2; }
-            set { }
-        }
-
         /// <summary>
         /// REMARK An element can only be selected by one field, therefore can only have one parent.
         /// </summary>
@@ -196,7 +189,7 @@ namespace BusinessObjects
 
         public decimal IndexRatingAverage()
         {
-            return ElementFieldIndexSet.Sum(item => item.IndexRatingAverage());
+            return ElementFieldIndexSet.Sum(item => item.IndexRatingAverageOld());
         }
 
         //public ElementField AddField(string name, ElementFieldTypes fieldType)

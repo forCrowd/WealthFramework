@@ -258,12 +258,25 @@ http://www.asp.net/web-api/overview/testing-and-debugging/mocking-entity-framewo
 	check sort order! ANGULAR HAD IT AND THAT'S USED NOW, IS IT OKAY?
 	
 	
-
+	resourcepoolfield -> incomefield
+	resourcepooladdition -> resourcepoolfield ?!
+	
+	increase decrease index value!
+	
+	
+										
+										
+										continue with SECTOR INDEX SAMPLE - CURRENT ELEMENT SELECTION - CHART! + FUNCTIONS!
+	
+	
+	
 									CONTINUE WITH NEWEDITOR!
 									FIND A WAY TO SEND READONLY PROP FROM SERVER TO CLIENT ON ODATA?
 									REMOVE TESTPROP FROM ELEMENT!
-	
 
+									
+									FIND A WAY TO FILTER USER RELATED LISTS!!!!!!!!!!
+									
 	
 						CONTINUE WITH INCREASE MULTIPLIER
 						CURRENTLY MULTIPLIER CELL HAS NO ACTUAL VALUE, SINCE USERELEMENTCELL IS NOT THERE?

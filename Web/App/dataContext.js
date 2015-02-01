@@ -71,6 +71,7 @@
             store.registerEntityTypeCtor('ResourcePool', elementFactory.resourcePool);
             store.registerEntityTypeCtor('Element', elementFactory.element);
             store.registerEntityTypeCtor('ElementField', elementFactory.elementField);
+            store.registerEntityTypeCtor('ElementFieldIndex', elementFactory.elementFieldIndex);
             store.registerEntityTypeCtor('ElementItem', elementFactory.elementItem);
             store.registerEntityTypeCtor('ElementCell', elementFactory.elementCell);
         }

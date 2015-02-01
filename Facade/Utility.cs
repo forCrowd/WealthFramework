@@ -17,19 +17,5 @@ namespace Facade
         {
             return EdmBuilder.GetEdm<WealthEconomyContext>();
         }
-
-        public class ODataContext : WealthEconomyContext
-        {
-            protected override void OnModelCreating(System.Data.Entity.DbModelBuilder modelBuilder)
-            {
-                base.OnModelCreating(modelBuilder);
-
-                //modelBuilder.Entity<Element>()
-                //    .Map(item => item.y(prop => prop.TestProp));
-
-                // modelBuilder.Entity<Element>().Property(x => x.TestProp).
-            }
-
-        }
     }
 }

@@ -15,6 +15,7 @@
             resourcePool: resourcePool,
             element: element,
             elementField: elementField,
+            elementFieldIndex: elementFieldIndex,
             elementItem: elementItem,
             elementCell: elementCell
         }
@@ -25,6 +26,15 @@
 
         function resourcePool() {
             var self = this;
+
+            // Resource pool rate percentage
+            self.resourcePoolRatePercentage = function () {
+
+                if (!self.ResourcePoolRate)
+                    return 0;
+
+                return self.ResourcePoolRate / 100;
+            }
 
             // Value filter
             self.valueFilter = 1;
@@ -144,6 +154,110 @@
                 return value;
             }
 
+            self.indexRatingAverage = function () {
+
+                // TODO Check totalIncome notes
+
+                // Validate
+                if (typeof self.ElementFieldSet === 'undefined')
+                    return 0;
+
+                var value = 0;
+                for (var i = 0; i < self.ElementFieldSet.length; i++) {
+                    var item = self.ElementFieldSet[i];
+
+                    if (item.ElementFieldIndexSet.length > 0)
+                        value += item.ElementFieldIndexSet[0].IndexRatingAverage;
+                }
+
+                return value;
+            }
+
+            self.resourcePoolValueMultiplied = function () {
+
+                // TODO Check totalIncome notes
+
+                // Validate
+                if (typeof self.ElementItemSet === 'undefined')
+                    return 0;
+
+                var value = 0;
+                for (var i = 0; i < self.ElementItemSet.length; i++) {
+                    var item = self.ElementItemSet[i];
+                    value += item.resourcePoolValueMultiplied();
+                }
+
+                return value;
+            }
+
+            self.resourcePoolAddition = function () {
+
+                // TODO Check totalIncome notes
+
+                // Validate
+                if (typeof self.ElementItemSet === 'undefined')
+                    return 0;
+
+                var value = 0;
+                for (var i = 0; i < self.ElementItemSet.length; i++) {
+                    var item = self.ElementItemSet[i];
+                    value += item.resourcePoolAddition();
+                }
+
+                return value;
+            }
+
+            self.resourcePoolAdditionMultiplied = function () {
+
+                // TODO Check totalIncome notes
+
+                // Validate
+                if (typeof self.ElementItemSet === 'undefined')
+                    return 0;
+
+                var value = 0;
+                for (var i = 0; i < self.ElementItemSet.length; i++) {
+                    var item = self.ElementItemSet[i];
+                    value += item.resourcePoolAdditionMultiplied();
+                }
+
+                return value;
+            }
+
+            self.resourcePoolValueIncludingAddition = function () {
+
+                // TODO Check totalIncome notes
+
+                // Validate
+                if (typeof self.ElementItemSet === 'undefined')
+                    return 0;
+
+                var value = 0;
+                for (var i = 0; i < self.ElementItemSet.length; i++) {
+                    var item = self.ElementItemSet[i];
+                    value += item.resourcePoolValueIncludingAddition();
+                }
+
+                return value;
+            }
+
+            self.resourcePoolValueIncludingAdditionMultiplied = function () {
+
+                // TODO Check totalIncome notes
+
+                // Validate
+                if (typeof self.ElementItemSet === 'undefined')
+                    return 0;
+
+                var value = 0;
+                for (var i = 0; i < self.ElementItemSet.length; i++) {
+                    var item = self.ElementItemSet[i];
+                    value += item.resourcePoolValueIncludingAdditionMultiplied();
+                }
+
+                return value;
+            }
+
             self.totalIncome = function () {
 
                 // TODO If elementItems could set their parent element's totalIncome when their totalIncome changes, it wouldn't be necessary to sum this result everytime?
@@ -226,15 +340,6 @@
                 $rootScope.$broadcast('elementMultiplierReset', self.Id);
             }
 
-            //Object.defineProperty(element.prototype, 'testProp2', {
-            //    enumerable: false,
-            //    configurable: false,
-            //    get: function () {
-            //        return this.testProp1 + ' 2';
-            //    }
-            //    // no setter
-            //});
-
         }
 
         function elementField() {
@@ -274,37 +379,33 @@
         function elementFieldIndex() {
             var self = this;
 
-            self.indexRatingCount = function () {
-                return 1; // TODO
-            }
+            //self.indexRatingCount = function () {
+            //    return 1; // TODO
+            //}
 
-            self.indexRatingAverage = function () {
-                return 1; // TODO Rating average from server
-            }
+            //self.indexRatingAverage = function () {
+            //    return 1; // TODO Rating average from server
+            //}
 
             self.indexRatingPercentage = function () {
-                // TODO
-                return 0;
 
-                //var resourcePoolIndexRatingAverage = ElementField.Element.IndexRatingAverage();
-                //return resourcePoolIndexRatingAverage == 0
-                //    ? 0
-                //    : IndexRatingAverage() / resourcePoolIndexRatingAverage;
-            }
-
-            self.indexShare = function () {
-                // TODO
-                return 1;
-
-                //return ElementField.Element.ResourcePool.TotalResourcePoolValue() * IndexRatingPercentage();
+                var elementIndexRatingAverage = self.ElementField.Element.indexRatingAverage();
+                return elementIndexRatingAverage == 0
+                    ? 0
+                    : self.IndexRatingAverage / elementIndexRatingAverage;
             }
 
             self.indexIncome = function () {
-                // TODO
-                return 1;
-                
-                //return ElementField.ElementCellSet.Sum(item => item.IndexIncome());
+                var value = self.ElementField.Element.resourcePoolAdditionMultiplied() * self.indexRatingPercentage();
+                return value;
             }
+
+            //self.indexIncome = function () {
+            //    // TODO
+            //    return 1;
+                
+            //    //return ElementField.ElementCellSet.Sum(item => item.IndexIncome());
+            //}
         }
 
         function elementItem() {
@@ -385,12 +486,43 @@
                 return value;
             }
 
-            self.totalResourcePoolValue = function () {
+            self.resourcePoolValueMultiplied = function () {
                 return self.resourcePoolValue() * self.multiplierValue();
             }
 
+            self.resourcePoolAddition = function () {
+                return self.resourcePoolValue() * self.Element.ResourcePool.resourcePoolRatePercentage();
+            }
+
+            self.resourcePoolAdditionMultiplied = function () {
+                return self.resourcePoolAddition() * self.multiplierValue();
+            }
+
+            self.resourcePoolValueIncludingAddition = function () {
+                return self.resourcePoolValue() + self.resourcePoolAddition();
+            }
+
+            self.resourcePoolValueIncludingAdditionMultiplied = function () {
+                return self.resourcePoolValueIncludingAddition() * self.multiplierValue();
+            }
+
+            self.indexIncome = function () {
+
+                // Validate
+                if (typeof self.ElementCellSet === 'undefined')
+                    return 0;
+
+                var value = 0;
+                for (var i = 0; i < self.ElementCellSet.length; i++) {
+                    var cell = self.ElementCellSet[i];
+                    value += cell.indexIncome();
+                }
+
+                return value;
+            }
+
             self.totalIncome = function () {
-                return self.totalResourcePoolValue();
+                return self.resourcePoolValueMultiplied() + self.indexIncome();
             }
         }
 
@@ -471,6 +603,28 @@
                 return elementFieldValueMultiplied === 0
                     ? 0
                     : self.valueMultiplied() / elementFieldValueMultiplied;
+            }
+
+            self.indexIncome = function () {
+
+                // TODO
+                //if (self.ElementField.ElementFieldIndex === null) {
+                //    return ElementField.ElementFieldType == (byte)ElementFieldTypes.Element && SelectedElementItem != null
+                //        ? SelectedElementItem.IndexIncome()
+                //        : 0;
+                //}
+
+                if (self.ElementField.ElementFieldIndexSet.length === 0)
+                    return 0;
+
+                var value = self.valuePercentage();
+
+                // If Rating sort type is 'Lowest to Highest', reverse the value
+                if (self.ElementField.ElementFieldIndexSet[0].RatingSortType == 1) {
+                    value = 1 - value;
+                }
+
+                return self.ElementField.ElementFieldIndexSet[0].indexIncome() * value;
             }
 
             // TODO

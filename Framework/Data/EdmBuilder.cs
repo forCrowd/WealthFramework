@@ -18,9 +18,11 @@ using System.Data.Entity.Core.EntityClient;
 using System.Data.Entity.Infrastructure;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace Microsoft.Data.Edm
 {
@@ -97,7 +99,8 @@ namespace Microsoft.Data.Edm
         /// ]]>
         public static IEdmModel GetEdm<T>(this T dbContext) where T : DbContext
         {
-            if (dbContext == null){
+            if (dbContext == null)
+            {
                 throw new NullReferenceException("dbContext must not be null.");
             }
 
@@ -127,7 +130,7 @@ namespace Microsoft.Data.Edm
         /// <typeparam name="T">Type of the source <see cref="DbContext"/></typeparam>
         /// <param name="dbContext">Concrete <see cref="DbContext"/> to use for EDM generation.</param>
         /// <returns>An XML <see cref="IEdmModel"/>.</returns>
-        static IEdmModel GetCodeFirstEdm<T>(this T dbContext)  where T : DbContext
+        static IEdmModel GetCodeFirstEdm<T>(this T dbContext) where T : DbContext
         {
             using (var stream = new MemoryStream())
             {
@@ -135,12 +138,49 @@ namespace Microsoft.Data.Edm
                 {
                     System.Data.Entity.Infrastructure.EdmxWriter.WriteEdmx(dbContext, writer);
                 }
+
                 stream.Position = 0;
-                using (var reader = XmlReader.Create(stream))
+
+                // Add readonly properties
+                var edmx = System.Xml.Linq.XDocument.Load(stream);
+                AddReadonlyProperty(edmx, "ResourcePool", "ResourcePoolRate", "Decimal", false);
+                AddReadonlyProperty(edmx, "ElementFieldIndex", "IndexRatingCount", "Decimal", false);
+                AddReadonlyProperty(edmx, "ElementFieldIndex", "IndexRatingAverage", "Decimal", false);
+                //AddReadonlyProperty(edmx, "ElementFieldIndex", "IndexRatingAverage", "Decimal", false);
+                //AddReadonlyProperty(edmx, "ElementFieldIndex", "IndexRatingPercentage", "Decimal", false);
+                //AddReadonlyProperty(edmx, "ElementFieldIndex", "IndexShare", "Decimal", false);
+                //AddReadonlyProperty(edmx, "ElementFieldIndex", "IndexIncome", "Decimal", false);
+
+                using (var reader = edmx.CreateReader())
                 {
                     return EdmxReader.Parse(reader);
                 }
+
+                // Old part
+                //using (var reader = XmlReader.Create(stream))
+                //{
+                //    return EdmxReader.Parse(reader);
+                //}
             }
+        }
+
+        static void AddReadonlyProperty(XDocument edmx, string entityName, string propertyName, string type, bool nullable)
+        {
+            var entities = edmx
+                .Root
+                .Elements().First()
+                .Elements().First()
+                .Elements().First()
+                .Elements();
+
+            var element = entities.Single(item => item.Attributes().Any(attr => attr.Name == "Name" && attr.Value == entityName));
+
+            var property = new XElement("{http://schemas.microsoft.com/ado/2009/11/edm}Property");
+            property.Add(new XAttribute("Name", propertyName));
+            property.Add(new XAttribute("Type", string.Format("Edm.{0}", type)));
+            if (!nullable)
+                property.Add(new XAttribute("Nullable", "false"));
+            element.Add(property);
         }
 
         /// <summary>
@@ -155,7 +195,7 @@ namespace Microsoft.Data.Edm
         /// which reates the metadata from an Edmx file:
         /// https://gist.github.com/dariusclay/8673940
         /// </remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Usage", "CA2202:Do not dispose objects multiple times" )]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
         static IEdmModel GetModelFirstEdm<T>(this T dbContext) where T : DbContext
         {
             using (var csdlStream = GetCsdlStreamFromMetadata(dbContext))

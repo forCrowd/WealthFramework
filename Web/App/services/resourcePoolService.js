@@ -40,7 +40,7 @@
 
             var query = breeze.EntityQuery
                 .from('ResourcePool')
-                .expand('ElementSet.ElementFieldSet.ElementFieldIndexSet.UserElementFieldIndexSet, ElementSet.ElementItemSet.ElementCellSet.UserElementCellSet')
+                .expand('UserResourcePoolSet, ElementSet.ElementFieldSet.ElementFieldIndexSet.UserElementFieldIndexSet, ElementSet.ElementItemSet.ElementCellSet.UserElementCellSet')
                 .where('Id', 'eq', resourcePoolId)
                 //.orderBy('ElementFieldSet.SortOrder')
             ;

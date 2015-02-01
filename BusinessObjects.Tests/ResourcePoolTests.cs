@@ -247,8 +247,8 @@ namespace BusinessObjects.Tests
 
             Assert.IsTrue(organization.IndexRatingAverage() == 100);
 
-            Assert.IsTrue(importanceFieldIndex.IndexRatingCount() == 1);
-            Assert.IsTrue(importanceFieldIndex.IndexRatingAverage() == 100);
+            Assert.IsTrue(importanceFieldIndex.IndexRatingCountOld() == 1);
+            Assert.IsTrue(importanceFieldIndex.IndexRatingAverageOld() == 100);
             Assert.IsTrue(importanceFieldIndex.IndexRatingPercentage() == 1);
             Assert.IsTrue(importanceFieldIndex.IndexShare() == 400);
 
@@ -345,8 +345,8 @@ namespace BusinessObjects.Tests
 
             Assert.IsTrue(organization.IndexRatingAverage() == 100);
 
-            Assert.IsTrue(elementFieldIndex.IndexRatingCount() == 1);
-            Assert.IsTrue(elementFieldIndex.IndexRatingAverage() == 100);
+            Assert.IsTrue(elementFieldIndex.IndexRatingCountOld() == 1);
+            Assert.IsTrue(elementFieldIndex.IndexRatingAverageOld() == 100);
             Assert.IsTrue(elementFieldIndex.IndexRatingPercentage() == 1);
             Assert.IsTrue(elementFieldIndex.IndexShare() == 100);
 
@@ -427,8 +427,8 @@ namespace BusinessObjects.Tests
 
             Assert.IsTrue(organization.IndexRatingAverage() == 100);
 
-            Assert.IsTrue(elementFieldIndex.IndexRatingCount() == 1);
-            Assert.IsTrue(elementFieldIndex.IndexRatingAverage() == 100);
+            Assert.IsTrue(elementFieldIndex.IndexRatingCountOld() == 1);
+            Assert.IsTrue(elementFieldIndex.IndexRatingAverageOld() == 100);
             Assert.IsTrue(elementFieldIndex.IndexRatingPercentage() == 1);
             Assert.IsTrue(elementFieldIndex.IndexShare() == 400);
 

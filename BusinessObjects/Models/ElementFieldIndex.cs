@@ -83,20 +83,43 @@ namespace BusinessObjects
         /// <summary>
         /// How many users rated this index?
         /// </summary>
-        public decimal IndexRatingCount()
+        public decimal IndexRatingCountOld()
         {
             return UserElementFieldIndexSet.Count();
+        }
+
+        public decimal IndexRatingCount
+        {
+            get
+            {
+                return UserElementFieldIndexSet.Count();
+                //return 10; // UserElementFieldIndexSet.Count();
+            }
         }
 
         /// <summary>
         /// What is the average rating for this index?
         /// It will be used to determine the weight of this index in its resource pool.
         /// </summary>
-        public decimal IndexRatingAverage()
+        public decimal IndexRatingAverageOld()
         {
             return UserElementFieldIndexSet.Any()
                 ? UserElementFieldIndexSet.Average(item => item.Rating)
                 : 0;
+        }
+
+        /// <summary>
+        /// What is the average rating for this index?
+        /// It will be used to determine the weight of this index in its resource pool.
+        /// </summary>
+        public decimal IndexRatingAverage
+        {
+            get
+            {
+                return UserElementFieldIndexSet.Any()
+                    ? UserElementFieldIndexSet.Average(item => item.Rating)
+                    : 0;
+            }
         }
 
         public decimal IndexRatingPercentage()
@@ -105,7 +128,7 @@ namespace BusinessObjects
 
             return resourcePoolIndexRatingAverage == 0
                 ? 0
-                : IndexRatingAverage() / resourcePoolIndexRatingAverage;
+                : IndexRatingAverageOld() / resourcePoolIndexRatingAverage;
         }
 
         public decimal IndexShare()

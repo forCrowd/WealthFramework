@@ -75,7 +75,17 @@ namespace BusinessObjects
         //    get { return ElementSet.SelectMany(item => item.ElementFieldIndexSet); }
         //}
 
-        public decimal ResourcePoolRate()
+        public decimal ResourcePoolRate
+        {
+            get
+            {
+                return UserResourcePoolSet.Any()
+                    ? UserResourcePoolSet.Average(item => item.ResourcePoolRate)
+                    : 0;
+            }
+        }
+
+        public decimal ResourcePoolRateOld()
         {
             return UserResourcePoolSet.Any()
                 ? UserResourcePoolSet.Average(item => item.ResourcePoolRate)
@@ -84,7 +94,7 @@ namespace BusinessObjects
 
         public decimal ResourcePoolRatePercentage()
         {
-            return ResourcePoolRate() / 100;
+            return ResourcePoolRateOld() / 100;
         }
 
         public decimal ResourcePoolAddition()
