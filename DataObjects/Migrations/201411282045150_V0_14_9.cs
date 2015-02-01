@@ -66,8 +66,8 @@ namespace DataObjects.Migrations
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.ElementField", t => t.ElementFieldId)
-                .ForeignKey("dbo.ElementItem", t => t.SelectedElementItemId)
                 .ForeignKey("dbo.ElementItem", t => t.ElementItemId, cascadeDelete: true)
+                .ForeignKey("dbo.ElementItem", t => t.SelectedElementItemId)
                 .Index(t => new { t.ElementItemId, t.ElementFieldId }, unique: true, name: "IX_ElementCellId")
                 .Index(t => t.SelectedElementItemId);
             
@@ -287,8 +287,8 @@ namespace DataObjects.Migrations
             DropForeignKey("dbo.UserLogin", "UserId", "dbo.User");
             DropForeignKey("dbo.UserClaim", "UserId", "dbo.User");
             DropForeignKey("dbo.UserElementCell", "ElementCellId", "dbo.ElementCell");
-            DropForeignKey("dbo.ElementCell", "ElementItemId", "dbo.ElementItem");
             DropForeignKey("dbo.ElementCell", "SelectedElementItemId", "dbo.ElementItem");
+            DropForeignKey("dbo.ElementCell", "ElementItemId", "dbo.ElementItem");
             DropForeignKey("dbo.ElementItem", "ElementId", "dbo.Element");
             DropForeignKey("dbo.ElementCell", "ElementFieldId", "dbo.ElementField");
             DropForeignKey("dbo.ElementField", "ElementId", "dbo.Element");
