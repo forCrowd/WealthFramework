@@ -8,13 +8,13 @@
                 &nbsp;
                 Display: <a href="" data-ng-click="vm.resourcePool.toggleValueFilter()">{{ vm.resourcePool.valueFilterText() }}</a>
                 -
-                Main Element Index: {{ vm.resourcePool.currentElementIndex }} - {{ vm.resourcePool.currentElement.Name }} - <a href="" data-ng-click="vm.resourcePool.toggleCurrentElement()">Toggle</a>
+                Main Element Index: {{ vm.resourcePool.currentElementIndex }} - {{ vm.resourcePool.currElement().Name }} - <a href="" data-ng-click="vm.resourcePool.toggleCurrentElement()">Toggle</a>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-4">
-            <!--<highchart data-config="chartConfig"></highchart>-->
+            <highchart config="vm.chartConfig"></highchart>
         </div>
         <div class="col-md-8">
 
@@ -25,7 +25,7 @@
                 <thead>
                     <tr>
                         <!-- Fields -->
-                        <th data-ng-repeat="field in vm.resourcePool.currentElement.ElementFieldSet | orderBy: 'SortOrder'">
+                        <th data-ng-repeat="field in vm.resourcePool.currElement().ElementFieldSet | orderBy: 'SortOrder'">
                             <table class="resourcePoolFieldsTable">
                                 <thead>
                                     <tr>
@@ -34,7 +34,7 @@
                                                 {{ field.Name }}
                                             </span>
                                             <span data-ng-if="field.ElementFieldType === 6">
-                                                <a href="" data-ng-click="field.setCurrentElement()">{{ field.Name }}</a>
+                                                <a href="" data-ng-click="field.setCurrElement()">{{ field.Name }}</a>
                                             </span>
                                             <!-- Indexes -->
                                             <table class="fieldIndexTable" data-ng-repeat="index in field.ElementFieldIndexSet">
@@ -95,8 +95,8 @@
                                 <th data-ng-if="field.ElementFieldType === 12 && resourcePool.MainElement.HasResourcePoolField">
                                     Tot. CMRP Add.
                                 </th>-->
-                                        <th data-ng-if="vm.resourcePool.EnableResourcePoolAddition && field.ElementFieldType === 12 && vm.resourcePool.currentElement.resourcePoolField()">
-                                            Tot. {{ vm.resourcePool.currentElement.resourcePoolField().Name }}
+                                        <th data-ng-if="vm.resourcePool.EnableResourcePoolAddition && field.ElementFieldType === 12 && vm.resourcePool.currElement().resourcePoolField()">
+                                            Tot. {{ vm.resourcePool.currElement().resourcePoolField().Name }}
                                             <br />incl. CMRP Add.
                                         </th>
                                     </tr>
@@ -104,13 +104,13 @@
                             </table>
                         </th>
                         <!-- Totals -->
-                        <th data-ng-if="vm.resourcePool.currentElement.resourcePoolField()">
+                        <th data-ng-if="vm.resourcePool.currElement().resourcePoolField()">
                             Total Income
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr data-ng-repeat="elementItem in vm.resourcePool.currentElement.ElementItemSet">
+                    <tr data-ng-repeat="elementItem in vm.resourcePool.currElement().ElementItemSet">
                         <!-- Cells -->
                         <td data-ng-repeat="elementCell in elementItem.ElementCellSet | orderBy: 'ElementField.SortOrder'">
                             <table class="resourcePoolFieldsTable">
@@ -161,8 +161,8 @@
                                                         </td>
                                                         <td>
                                                             <div class="btn-group" role="group">
-                                                                <button type="button" data-ng-click="elementCell.increaseIndexCellValue()" title="+ 10" class="btn btn-default btn-xs">+</button>
-                                                                <button type="button" data-ng-click="elementCell.decreaseIndexCellValue()" title="- 10" class="btn btn-default btn-xs">-</button>
+                                                                <button type="button" data-ng-click="elementCell.increaseIndexRating(vm.userId)" title="+ 10" class="btn btn-default btn-xs">+</button>
+                                                                <button type="button" data-ng-click="elementCell.decreaseIndexRating(vm.userId)" title="- 10" class="btn btn-default btn-xs">-</button>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -198,7 +198,7 @@
                             </table>
                         </td>
                         <!-- Totals -->
-                        <td data-ng-if="vm.resourcePool.currentElement.resourcePoolField()">
+                        <td data-ng-if="vm.resourcePool.currElement().resourcePoolField()">
                             {{ elementItem.totalIncome() | number: 2 }}
                         </td>
                     </tr>
@@ -206,17 +206,17 @@
                 <tfoot>
                     <tr data-ng-if="vm.resourcePool.EnableSubtotals">
                         <!-- Fields -->
-                        <td data-ng-repeat="field in vm.resourcePool.currentElement.ElementFieldSet | orderBy: 'SortOrder'">
+                        <td data-ng-repeat="field in vm.resourcePool.currElement().ElementFieldSet | orderBy: 'SortOrder'">
                             <table class="resourcePoolFieldsTable">
                                 <tfoot>
                                     <tr>
                                         <td>
                                             <!-- TODO Grand Total? -->
                                             <span data-ng-if="field.ElementFieldType === 11">
-                                                {{ vm.resourcePool.currentElement.resourcePoolValue() | number: 2 }}
+                                                {{ vm.resourcePool.currElement().resourcePoolValue() | number: 2 }}
                                             </span>
                                             <div data-ng-if="field.ElementFieldType === 12">
-                                                {{ vm.resourcePool.currentElement.multiplierValue() | number: 2 }}
+                                                {{ vm.resourcePool.currElement().multiplierValue() | number: 2 }}
                                             </div>
                                             <!-- Indexes -->
                                             <table class="fieldIndexTable" data-ng-repeat="index in field.ElementFieldIndexSet">
@@ -247,10 +247,10 @@
                                         <!-- ResourcePool -->
                                         <!-- TODO Single container for these fields? -->
                                         <td data-ng-if="vm.resourcePool.EnableResourcePoolAddition && field.ElementFieldType === 11">
-                                            {{ vm.resourcePool.currentElement.resourcePoolAddition() | number: 2 }}
+                                            {{ vm.resourcePool.currElement().resourcePoolAddition() | number: 2 }}
                                         </td>
                                         <td data-ng-if="vm.resourcePool.EnableResourcePoolAddition && field.ElementFieldType === 11">
-                                            {{ vm.resourcePool.currentElement.resourcePoolValueIncludingAddition() | number: 2 }}
+                                            {{ vm.resourcePool.currElement().resourcePoolValueIncludingAddition() | number: 2 }}
                                         </td>
                                         <!-- Multiplier -->
                                         <!-- TODO Single container for these fields? -->
@@ -260,30 +260,30 @@
                     <td data-ng-if="field.ElementFieldType === 12 && resourcePool.MainElement.HasResourcePoolField">
                         {{ vm.resourcePool.MainElement.TotalResourcePoolAddition | number: 2 }}
                     </td>-->
-                                        <td data-ng-if="vm.resourcePool.EnableResourcePoolAddition && field.ElementFieldType === 12 && vm.resourcePool.currentElement.resourcePoolField()">
-                                            {{ vm.resourcePool.currentElement.resourcePoolValueIncludingAdditionMultiplied() | number: 2 }}
+                                        <td data-ng-if="vm.resourcePool.EnableResourcePoolAddition && field.ElementFieldType === 12 && vm.resourcePool.currElement().resourcePoolField()">
+                                            {{ vm.resourcePool.currElement().resourcePoolValueIncludingAdditionMultiplied() | number: 2 }}
                                         </td>
                                     </tr>
                                 </tfoot>
                             </table>
                         </td>
                         <!-- Totals -->
-                        <td data-ng-if="vm.resourcePool.currentElement.resourcePoolField()">
-                            {{ vm.resourcePool.currentElement.totalIncome() | number: 2 }}
+                        <td data-ng-if="vm.resourcePool.currElement().resourcePoolField()">
+                            {{ vm.resourcePool.currElement().totalIncome() | number: 2 }}
                         </td>
                     </tr>
                     <tr>
                         <!-- Fields -->
-                        <td data-ng-repeat="field in vm.resourcePool.currentElement.ElementFieldSet | orderBy: 'SortOrder'">
+                        <td data-ng-repeat="field in vm.resourcePool.currElement().ElementFieldSet | orderBy: 'SortOrder'">
                             <table class="resourcePoolFieldsTable">
                                 <tfoot>
                                     <tr>
                                         <td>
                                             <div data-ng-if="field.ElementFieldType === 12">
                                                 <div class="btn-group" role="group">
-                                                    <button title="Increase {{ vm.resourcePool.currentElement.MultiplierFieldName }}" type="button" data-ng-click="vm.resourcePool.currentElement.increaseMultiplier()" class="btn btn-default btn-xs">+</button>
-                                                    <button title="Decrease {{ vm.resourcePool.currentElement.MultiplierFieldName }}" type="button" data-ng-click="vm.resourcePool.currentElement.decreaseMultiplier()" class="btn btn-default btn-xs">-</button>
-                                                    <button title="Reset {{ vm.resourcePool.currentElement.MultiplierFieldName }}" type="button" data-ng-click="vm.resourcePool.currentElement.resetMultiplier()" class="btn btn-default btn-xs">0</button>
+                                                    <button title="Increase {{ vm.resourcePool.currElement().MultiplierFieldName }}" type="button" data-ng-click="vm.resourcePool.currElement().increaseMultiplier(vm.userId)" class="btn btn-default btn-xs">+</button>
+                                                    <button title="Decrease {{ vm.resourcePool.currElement().MultiplierFieldName }}" type="button" data-ng-click="vm.resourcePool.currElement().decreaseMultiplier(vm.userId)" class="btn btn-default btn-xs">-</button>
+                                                    <button title="Reset {{ vm.resourcePool.currElement().MultiplierFieldName }}" type="button" data-ng-click="vm.resourcePool.currElement().resetMultiplier(vm.userId)" class="btn btn-default btn-xs">0</button>
                                                 </div>
                                             </div>
                                             <div data-ng-if="field.ElementFieldType !== 12">

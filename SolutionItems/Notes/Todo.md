@@ -263,10 +263,26 @@ http://www.asp.net/web-api/overview/testing-and-debugging/mocking-entity-framewo
 	
 	increase decrease index value!
 	
+	TEST CHARTDATAITEM ETC. WHETHER IT UPDATES DYNAMICALLY?
 	
+	breeze entities - initial values - to prevent !== 'undefined' checks!
 										
 										
 										continue with SECTOR INDEX SAMPLE - CURRENT ELEMENT SELECTION - CHART! + FUNCTIONS!
+	
+	
+						continue with indexrating increase decrease reset
+						
+						
+						
+						
+						
+						
+						continue with sector index cmrp!
+						setcurrentelement - chart item update!
+						
+						
+						
 	
 	
 	
@@ -276,6 +292,8 @@ http://www.asp.net/web-api/overview/testing-and-debugging/mocking-entity-framewo
 
 									
 									FIND A WAY TO FILTER USER RELATED LISTS!!!!!!!!!!
+									intercept odata controller?
+									custom action filter?
 									
 	
 						CONTINUE WITH INCREASE MULTIPLIER

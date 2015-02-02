@@ -27,6 +27,26 @@
         function resourcePool() {
             var self = this;
 
+            // Chart
+            //logger.log('1');
+            self.chartConfig2 = {};
+            //self.chartConfig.title = 'test';
+            self.chartConfig2.title = function () {
+                logger.log('hey there!');
+                return 'test';
+            }
+            //logger.log('2');
+
+            self.chartConfig = function () {
+                return {
+                    title: 'test2'
+                };
+            }
+
+            //};
+
+            //logger.log('2');
+
             // Resource pool rate percentage
             self.resourcePoolRatePercentage = function () {
 
@@ -46,6 +66,24 @@
             }
 
             // Current element
+
+            self._currElement = null;
+            self.currElement = function () {
+
+                if (self._currElement === null && typeof self.ElementSet !== 'undefined') {
+                    for (var i = 0; i < self.ElementSet.length; i++) {
+                        var element = self.ElementSet[i];
+                        if (element.IsMainElement) {
+                            self._currElement = element;
+                            break;
+                        }
+                    }
+                }
+
+                return self._currElement;
+            }
+
+            // TODO Obsolete
             self.currentElement = null;
             // TODO Just for test
             self.currentElementIndex = 0;
@@ -61,12 +99,16 @@
                 }
 
                 self.currentElement = self.ElementSet[self.currentElementIndex];
+                self._currElement = self.ElementSet[self.currentElementIndex];
             }
 
             // CMRP Rate
             self.updateResourcePoolRate = function (value) {
                 logger.log('update resource pool rate: ' + value);
             }
+
+
+
         }
 
         function element() {
@@ -275,75 +317,102 @@
                 return value;
             }
 
-            self.increaseMultiplier = function () {
+            self.increaseMultiplier = function (userId) {
 
-                var multiplierField = self.multiplierField();
-
-                if (!multiplierField || typeof self.ElementItemSet === 'undefined')
+                if (!updateMultiplier(userId, 'increase'))
                     return;
-
-                // TODO Continue with this!
-                for (var i = 0; i < self.ElementItemSet.length; i++) {
-                    var elementItem = self.ElementItemSet[i];
-                    elementItem.multiplierCell().UserElementCellSet[0].DecimalValue++;
-                    var rowVersion = elementItem.multiplierCell().UserElementCellSet[0].RowVersion;
-                    elementItem.multiplierCell().UserElementCellSet[0].RowVersion = '';
-                    elementItem.multiplierCell().UserElementCellSet[0].RowVersion = rowVersion;
-                }
 
                 // Raise the event
                 // TODO Can't it be done by scope.watch?
                 $rootScope.$broadcast('elementMultiplierIncreased', self.Id);
             }
 
-            self.decreaseMultiplier = function () {
+            self.decreaseMultiplier = function (userId) {
 
-                var multiplierField = self.multiplierField();
-
-                if (!multiplierField || typeof self.ElementItemSet === 'undefined')
+                if (!updateMultiplier(userId, 'decrease'))
                     return;
-
-                // TODO Continue with this!
-                for (var i = 0; i < self.ElementItemSet.length; i++) {
-                    var elementItem = self.ElementItemSet[i];
-                    if (elementItem.multiplierCell().UserElementCellSet[0].DecimalValue > 0) {
-                        elementItem.multiplierCell().UserElementCellSet[0].DecimalValue--;
-                        var rowVersion = elementItem.multiplierCell().UserElementCellSet[0].RowVersion;
-                        elementItem.multiplierCell().UserElementCellSet[0].RowVersion = '';
-                        elementItem.multiplierCell().UserElementCellSet[0].RowVersion = rowVersion;
-                    }
-                }
 
                 // Raise the event
                 // TODO Can't it be done by scope.watch?
                 $rootScope.$broadcast('elementMultiplierDecreased', self.Id);
             }
 
-            self.resetMultiplier = function () {
+            self.resetMultiplier = function (userId) {
 
-                var multiplierField = self.multiplierField();
-
-                if (!multiplierField || typeof self.ElementItemSet === 'undefined')
+                if (!updateMultiplier(userId, 'reset'))
                     return;
-
-                // TODO Continue with this!
-                for (var i = 0; i < self.ElementItemSet.length; i++) {
-                    var elementItem = self.ElementItemSet[i];
-                    elementItem.multiplierCell().UserElementCellSet[0].DecimalValue = 0;
-                    var rowVersion = elementItem.multiplierCell().UserElementCellSet[0].RowVersion;
-                    elementItem.multiplierCell().UserElementCellSet[0].RowVersion = '';
-                    elementItem.multiplierCell().UserElementCellSet[0].RowVersion = rowVersion;
-                }
 
                 // Raise the event
                 // TODO Can't it be done by scope.watch?
                 $rootScope.$broadcast('elementMultiplierReset', self.Id);
             }
 
+            function updateMultiplier(userId, updateType) {
+
+                // Determines whether there is an update
+                var updated = false;
+
+                // Validate
+                var multiplierField = self.multiplierField();
+                if (!multiplierField || typeof self.ElementItemSet === 'undefined')
+                    return updated;
+
+                // Find user element cell
+                for (var itemIndex = 0; itemIndex < self.ElementItemSet.length; itemIndex++) {
+                    var elementItem = self.ElementItemSet[itemIndex];
+                    var userElementCell = null;
+
+                    for (var cellIndex = 0; cellIndex < elementItem.multiplierCell().UserElementCellSet.length; cellIndex++) {
+                        if (elementItem.multiplierCell().UserElementCellSet[cellIndex].UserId === userId) {
+                            userElementCell = elementItem.multiplierCell().UserElementCellSet[cellIndex];
+                            break;
+                        }
+                    }
+
+                    // If there is not, create a new one
+                    if (userElementCell === null) {
+                        // TODO createEntity!
+                        //userElementCell = 
+                        //userId
+                        //userElementCell.DecimalValue = ?; Based on updateType
+                        // updated = true
+                    } else {
+                        if (updateType === 'increase'
+                            || ((updateType === 'decrease'
+                            || updateType === 'reset')
+                            && userElementCell.DecimalValue > 0)) {
+
+                            userElementCell.DecimalValue = updateType === 'increase'
+                            ? userElementCell.DecimalValue + 1
+                            : updateType === 'decrease'
+                            ? userElementCell.DecimalValue - 1
+                            : 0;
+
+                            var rowVersion = userElementCell.RowVersion;
+                            userElementCell.RowVersion = '';
+                            userElementCell.RowVersion = rowVersion;
+
+                            updated = true;
+                        }
+                    }
+                }
+
+                // Return
+                return updated;
+            }
         }
 
         function elementField() {
             var self = this;
+
+
+            self.setCurrElement = function () {
+
+                if (self.ElementFieldType !== 6)
+                    return;
+
+                self.Element.ResourcePool._currElement = self.SelectedElement;
+            }
 
             self.valueMultiplied = function () {
 
@@ -403,7 +472,7 @@
             //self.indexIncome = function () {
             //    // TODO
             //    return 1;
-                
+
             //    //return ElementField.ElementCellSet.Sum(item => item.IndexIncome());
             //}
         }
@@ -559,7 +628,7 @@
                         case 2: { value = self.BooleanValue; break; }
                         case 3: { value = self.IntegerValue; break; }
                         case 4:
-                        // TODO 5 (DateTime?)
+                            // TODO 5 (DateTime?)
                         case 11:
                         case 12: { value = self.DecimalValue; break; }
                         default: { throw 'Not supported'; }
@@ -628,19 +697,69 @@
             }
 
             // TODO
-            self.increaseIndexCellValue = function () {
+            self.increaseIndexRating = function (userId) {
                 if (typeof self.ElementField === 'undefined')
                     return;
 
-                logger.log('increase index cell value');
+                if (!updateIndexRating(self, userId, 'increase'))
+                    return;
+
+                $rootScope.$broadcast('indexRatingIncreased', self.Id);
             }
 
             // TODO
-            self.decreaseIndexCellValue = function () {
+            self.decreaseIndexRating = function (userId) {
                 if (typeof self.ElementField === 'undefined')
                     return;
 
-                logger.log('decrease index cell value');
+                if (!updateIndexRating(self, userId, 'decrease'))
+                    return;
+
+                $rootScope.$broadcast('indexRatingDecreased', self.Id);
+            }
+
+            function updateIndexRating(cell, userId, updateType) {
+
+                // Determines whether there is an update
+                var updated = false;
+                
+                // Validate
+                if (self.ElementField.ElementFieldIndexSet.length === 0)
+                    return updated;
+
+                // Find user cell
+                var userElementCell = null;
+                for (var i = 0; i < cell.UserElementCellSet.length; i++) {
+                    if (cell.UserElementCellSet[i].UserId == userId) {
+                        userElementCell = cell.UserElementCellSet[i];
+                        break;
+                    }
+                }
+
+                if (userElementCell === null) {
+                    // TODO createEntity!
+                    // userElementCell = 
+                    // userId
+                    // userElementCell.DecimalValue = ?; Based on updateType
+                    // updated = true
+                } else {
+                    if (updateType === 'increase') {
+                        userElementCell.DecimalValue = userElementCell.DecimalValue + 10 >= 100 ? 100 : userElementCell.DecimalValue + 10;
+                        updated = true;
+                    } else if (updateType === 'decrease') {
+                        userElementCell.DecimalValue = userElementCell.DecimalValue - 10 <= 0 ? 0 : userElementCell.DecimalValue - 10;
+                        updated = true;
+                    }
+
+                    if (updated) {
+                        var rowVersion = userElementCell.RowVersion;
+                        userElementCell.RowVersion = '';
+                        userElementCell.RowVersion = rowVersion;
+                    }
+                }
+
+                // Return
+                return updated;
             }
         }
     }
