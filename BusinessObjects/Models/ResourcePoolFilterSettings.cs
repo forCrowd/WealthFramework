@@ -7,7 +7,7 @@ namespace BusinessObjects
     {
         public ResourcePoolFilterSettings()
         {
-            ValueFilter = ValueFilters.OnlyCurrentUser;
+            ValueFilter = ValueFilters.AllUsersAverage;
         }
 
         public User CurrentUser { get; set; }

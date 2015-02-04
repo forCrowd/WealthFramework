@@ -26,26 +26,7 @@
 
         function resourcePool() {
             var self = this;
-
-            // Chart
-            //logger.log('1');
-            self.chartConfig2 = {};
-            //self.chartConfig.title = 'test';
-            self.chartConfig2.title = function () {
-                logger.log('hey there!');
-                return 'test';
-            }
-            //logger.log('2');
-
-            self.chartConfig = function () {
-                return {
-                    title: 'test2'
-                };
-            }
-
-            //};
-
-            //logger.log('2');
+            self.currentUserId = 0;
 
             // Resource pool rate percentage
             self.resourcePoolRatePercentage = function () {
@@ -57,6 +38,7 @@
             }
 
             // Value filter
+            // Obsolete !
             self.valueFilter = 1;
             self.toggleValueFilter = function () {
                 self.valueFilter = self.valueFilter === 1 ? 2 : 1;
@@ -66,7 +48,6 @@
             }
 
             // Current element
-
             self._currElement = null;
             self.currElement = function () {
 
@@ -104,7 +85,6 @@
             self.setCurrentElement = function (element) {
                 self.currentElement = element;
                 self._currElement = element;
-                logger.log('noluyo lan!');
                 $rootScope.$broadcast('resourcePoolCurrentElementChanged', self.Id);
             }
 
@@ -120,6 +100,15 @@
             self._resourcePoolField = null;
             self._multiplierField = null;
             self._totalIncome = 0;
+
+            // Value filter
+            self.valueFilter = 1;
+            self.toggleValueFilter = function () {
+                self.valueFilter = self.valueFilter === 1 ? 2 : 1;
+            }
+            self.valueFilterText = function () {
+                return self.valueFilter === 1 ? "Only My Ratings" : "All Ratings";
+            }
 
             self.resourcePoolField = function () {
 
@@ -403,156 +392,10 @@
                 // Return
                 return updated;
             }
-
-            // Chart config - TODO Try to move it outside?
-            self.chartConfig = {
-                title: self.Name,
-                options: {
-                    chart: {},
-                    plotOptions: {
-                        column: {
-                            allowPointSelect: true,
-                            pointWidth: 15
-                        },
-                        pie: {
-                            allowPointSelect: true,
-                            cursor: 'pointer',
-                            dataLabels: {
-                                enabled: false
-                            },
-                            showInLegend: true
-                        }
-                    },
-                    xAxis: { categories: [''] },
-                    yAxis: {
-                        allowDecimals: false,
-                        min: 0,
-                        title: {}
-                    }
-                },
-                series: []
-
-                // , series: { [{ name: 'x2', data: [15] }] }
-            };
-
-            Object.defineProperty(self.chartConfig.options.chart, 'type', {
-                enumerable: true,
-                configurable: true,
-                get: function () {
-                    return self.resourcePoolField() ? 'column' : 'pie';
-                }
-            });
-
-            Object.defineProperty(self.chartConfig.options.yAxis.title, 'text', {
-                enumerable: true,
-                configurable: true,
-                get: function () {
-                    return self.resourcePoolField() ? 'Total Income' : '';
-                }
-            });
-
-            // Series
-            // self.chartConfig.series
-
-            // var seriesX = [];
-
-            if (typeof self.ElementItemSet !== 'undefined') {
-
-                if (self.resourcePoolField()) {
-
-                    logger.log('rpf');
-
-                    for (var i = 0; i < self.ElementItemSet.length; i++) {
-                        var elementItem = self.ElementItemSet[i];
-                        var item = new columnChartItem(elementItem);
-                        // seriesX.push(item);
-                        self.chartConfig.series.push(item);
-                    }
-                } else {
-
-                    //logger.log('curr', element);
-
-                    //logger.log('no rpf');
-                    //logger.log('element.ElementItemSet.length', element.ElementItemSet.length);
-
-                    var seriesData = [];
-                    for (var i = 0; i < self.ElementItemSet.length; i++) {
-                        var elementItem = self.ElementItemSet[i];
-
-                        //logger.log('elementItem.ElementCellSet.length', elementItem.ElementCellSet.length);
-
-                        for (var x = 0; x < elementItem.ElementCellSet.length; x++) {
-                            var elementCell = elementItem.ElementCellSet[x];
-
-                            //logger.log('elementCell', elementCell);
-                            //logger.log('elementCell.ElementField.ElementFieldIndexSet.length', elementCell.ElementField.ElementFieldIndexSet.length);
-
-                            if (elementCell.ElementField.ElementFieldIndexSet.length > 0) {
-                                var chartItem = new pieChartItem(elementCell);
-                                seriesData.push(chartItem);
-                            }
-                        }
-                    }
-
-                    //seriesX = [{ data: seriesData }];
-                    self.chartConfig.series = [{ data: seriesData }]; //.push(item);
-
-                }
-            }
-
-            //logger.log('seriesX', seriesX);
-
-            // return seriesX;
-
-            //Object.defineProperty(self.chartConfig, 'series', {
-            //    enumerable: true,
-            //    configurable: true,
-            //    get: function () {
-            //        return [{ name: 'x3', data: [25] }];
-            //    }
-            //});
         }
-
-        function columnChartItem(elementItem) {
-            var self = this;
-
-            Object.defineProperty(self, "name", {
-                enumerable: true,
-                configurable: true,
-                get: function () { return elementItem.Name; }
-            });
-
-            // Data property
-            Object.defineProperty(self, "data", {
-                enumerable: true,
-                configurable: true,
-                get: function () { return [elementItem.totalIncome()]; }
-            });
-        }
-
-        function pieChartItem(elementCell) {
-            var self = this;
-
-            Object.defineProperty(self, "name", {
-                enumerable: true,
-                configurable: true,
-                get: function () { return elementCell.ElementItem.Name; }
-            });
-
-            // Data property
-            Object.defineProperty(self, "y", {
-                enumerable: true,
-                configurable: true,
-                get: function () { return elementCell.valuePercentage(); }
-            });
-        }
-
-
-
 
         function elementField() {
             var self = this;
-
 
             self.setCurrElement = function () {
 
@@ -607,7 +450,7 @@
             self.indexRatingPercentage = function () {
 
                 var elementIndexRatingAverage = self.ElementField.Element.indexRatingAverage();
-                return elementIndexRatingAverage == 0
+                return elementIndexRatingAverage === 0
                     ? 0
                     : self.IndexRatingAverage / elementIndexRatingAverage;
             }
@@ -697,9 +540,15 @@
                 var value = 1; // Default value
 
                 // TODO Review!
-                if (self.multiplierCell())
-                    value = self.multiplierCell().UserElementCellSet[0].DecimalValue;
-
+                if (self.multiplierCell()) {
+                    for (var i = 0; i < self.multiplierCell().UserElementCellSet.length; i++) {
+                        var userElementCell = self.multiplierCell().UserElementCellSet[i];
+                        if (userElementCell.UserId === self.Element.ResourcePool.currentUserId) {
+                            value = userElementCell.DecimalValue;
+                            break;
+                        }
+                    }
+                }
                 return value;
             }
 
@@ -762,8 +611,6 @@
 
             self.value = function () {
 
-                // valueFilter?
-
                 var value = 0;
 
                 // Validate
@@ -786,14 +633,25 @@
 
                     // TODO Users' average
 
-                    switch (self.ElementField.ElementFieldType) {
-                        case 2: { value = self.UserElementCellSet[0].BooleanValue; break; }
-                        case 3: { value = self.UserElementCellSet[0].IntegerValue; break; }
-                        case 4:
-                            // TODO 5 (DateTime?)
-                        case 11:
-                        case 12: { value = self.UserElementCellSet[0].DecimalValue; break; }
-                        default: { throw 'Not supported'; }
+                    switch (self.ElementItem.Element.valueFilter) {
+                        case 1: {
+                            switch (self.ElementField.ElementFieldType) {
+                                case 2: { value = self.UserElementCellSet[0].BooleanValue; break; }
+                                case 3: { value = self.UserElementCellSet[0].IntegerValue; break; }
+                                case 4:
+                                    // TODO 5 (DateTime?)
+                                case 11:
+                                case 12: { value = self.UserElementCellSet[0].DecimalValue; break; }
+                                default: { throw 'Not supported'; }
+                            }
+                            break;
+                        }
+                        case 2: {
+
+                        }
+                        default: {
+                            throw 'Invalid switch case';
+                        }
                     }
                 }
 
@@ -826,7 +684,7 @@
 
                 // TODO
                 //if (self.ElementField.ElementFieldIndex === null) {
-                //    return ElementField.ElementFieldType == (byte)ElementFieldTypes.Element && SelectedElementItem != null
+                //    return ElementField.ElementFieldType === (byte)ElementFieldTypes.Element && SelectedElementItem != null
                 //        ? SelectedElementItem.IndexIncome()
                 //        : 0;
                 //}
@@ -837,7 +695,7 @@
                 var value = self.valuePercentage();
 
                 // If Rating sort type is 'Lowest to Highest', reverse the value
-                if (self.ElementField.ElementFieldIndexSet[0].RatingSortType == 1) {
+                if (self.ElementField.ElementFieldIndexSet[0].RatingSortType === 1) {
                     value = 1 - value;
                 }
 
@@ -878,7 +736,7 @@
                 // Find user cell
                 var userElementCell = null;
                 for (var i = 0; i < cell.UserElementCellSet.length; i++) {
-                    if (cell.UserElementCellSet[i].UserId == userId) {
+                    if (cell.UserElementCellSet[i].UserId === userId) {
                         userElementCell = cell.UserElementCellSet[i];
                         break;
                     }

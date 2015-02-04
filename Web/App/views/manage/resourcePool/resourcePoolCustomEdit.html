@@ -6,7 +6,7 @@
                     {{ vm.resourcePool.Name }}
                 </span>
                 &nbsp;
-                Display: <a href="" data-ng-click="vm.resourcePool.toggleValueFilter()">{{ vm.resourcePool.valueFilterText() }}</a>
+                Display: <a href="" data-ng-click="vm.resourcePool.currElement().toggleValueFilter()">{{ vm.resourcePool.currElement().valueFilterText() }}</a>
                 -
                 Main Element Index: {{ vm.resourcePool.currentElementIndex }} - {{ vm.resourcePool.currElement().Name }} - <a href="" data-ng-click="vm.resourcePool.toggleCurrentElement()">Toggle</a>
             </div>
@@ -281,9 +281,9 @@
                                         <td>
                                             <div data-ng-if="field.ElementFieldType === 12">
                                                 <div class="btn-group" role="group">
-                                                    <button title="Increase {{ vm.resourcePool.currElement().MultiplierFieldName }}" type="button" data-ng-click="vm.resourcePool.currElement().increaseMultiplier(vm.userId)" class="btn btn-default btn-xs">+</button>
-                                                    <button title="Decrease {{ vm.resourcePool.currElement().MultiplierFieldName }}" type="button" data-ng-click="vm.resourcePool.currElement().decreaseMultiplier(vm.userId)" class="btn btn-default btn-xs">-</button>
-                                                    <button title="Reset {{ vm.resourcePool.currElement().MultiplierFieldName }}" type="button" data-ng-click="vm.resourcePool.currElement().resetMultiplier(vm.userId)" class="btn btn-default btn-xs">0</button>
+                                                    <button title="Increase {{ vm.resourcePool.currElement().multiplierField().Name }}" type="button" data-ng-click="vm.resourcePool.currElement().increaseMultiplier(vm.userId)" class="btn btn-default btn-xs">+</button>
+                                                    <button title="Decrease {{ vm.resourcePool.currElement().multiplierField().Name }}" type="button" data-ng-click="vm.resourcePool.currElement().decreaseMultiplier(vm.userId)" class="btn btn-default btn-xs">-</button>
+                                                    <button title="Reset {{ vm.resourcePool.currElement().multiplierField().Name }}" type="button" data-ng-click="vm.resourcePool.currElement().resetMultiplier(vm.userId)" class="btn btn-default btn-xs">0</button>
                                                 </div>
                                             </div>
                                             <div data-ng-if="field.ElementFieldType !== 12">

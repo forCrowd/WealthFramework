@@ -86,7 +86,7 @@ namespace BusinessObjects
         public decimal ResourcePoolValue()
         {
             return HasResourcePoolCell
-                ? ResourcePoolCell.Value()
+                ? ResourcePoolCell.ValueOld()
                 : 0;
         }
 
@@ -119,7 +119,7 @@ namespace BusinessObjects
             //if (Element.ResourcePool.FilterSettings.MultiplierUser == null)
             //    throw new InvalidOperationException("MultiplierValue property cannot be retrieved without specifying MultiplierUser filter on ResourcePool object");
 
-            return MultiplierCell.Value();
+            return MultiplierCell.ValueOld();
         }
 
         // TODO Sum is correct? Or Average?
@@ -127,7 +127,7 @@ namespace BusinessObjects
         {
             var indexCells = ElementCellSet.Where(item => item.ElementField.ElementFieldIndexSet.Any());
             return indexCells.Any()
-                ? indexCells.Sum(item => item.Value())
+                ? indexCells.Sum(item => item.ValueOld())
                 : 0;
         }
 
@@ -135,7 +135,7 @@ namespace BusinessObjects
         {
             var indexCells = ElementCellSet.Where(item => item.ElementField.ElementFieldIndexSet.Any());
             return indexCells.Any()
-                ? indexCells.Sum(item => item.ValueCount())
+                ? indexCells.Sum(item => item.ValueCountOld())
                 : 0;
         }
 

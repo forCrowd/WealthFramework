@@ -109,7 +109,7 @@
                     var saveBatches = prepareSaveBatches();
                     saveBatches.forEach(function (batch) {
                         // ignore empty batches (except 'null' which means "save everything else")
-                        if (batch == null || batch.length > 0) {
+                        if (batch === null || batch.length > 0) {
                             promise = promise ?
                                 promise.then(function () { return manager.saveChanges(batch); }) :
                                 manager.saveChanges(batch);

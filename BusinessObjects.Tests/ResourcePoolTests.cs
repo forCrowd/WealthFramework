@@ -96,19 +96,19 @@ namespace BusinessObjects.Tests
             element.FilterSettings.CurrentUser = user1;
 
             // Assert
-            Assert.IsTrue(cell.Value() == 5M);
+            Assert.IsTrue(cell.ValueOld() == 5M);
 
             // Act - Part 2
             element.FilterSettings.CurrentUser = user2;
 
             // Assert - Part 2
-            Assert.IsTrue(cell.Value() == 10M);
+            Assert.IsTrue(cell.ValueOld() == 10M);
 
             // Act - Part 2
             element.FilterSettings.ValueFilter = ResourcePoolFilterSettings.ValueFilters.AllUsersAverage;
 
             // Assert - Part 2
-            Assert.IsTrue(cell.Value() == 7.5M);
+            Assert.IsTrue(cell.ValueOld() == 7.5M);
         }
 
         //[TestMethod]

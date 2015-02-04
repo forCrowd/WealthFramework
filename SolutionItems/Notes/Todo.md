@@ -277,8 +277,28 @@ http://www.asp.net/web-api/overview/testing-and-debugging/mocking-entity-framewo
 						
 						highcharts loading true/false
 						
+						/* CONTINUE */
+						put userId into the businessobjects and always filter user[x] tables with this prop - like AllLive properties?!
 						
+						in front-end, use Value + ValueCount props from ElementCell, in case 'All Users' Ratings'
 						
+						user related collections should always contain one object or none - if none, it will create a new object during save
+						
+						in case 'all users' ratings';
+						Value - UserValue
+						ValueCount - 1
+						(NewValue * NewValueCount)+User new value)/(NewValueCount + 1)
+						
+						you need to add more users's value to test the cases!
+						
+						if everything's fine, remove webapi related stuff!
+						move customedit.html to resourcepooleditor
+						
+						currElement -> currentElement
+						
+						element.js - in objects, create their inner arrays userElementSet[] etc.
+						
+						---
 						continue with sector index cmrp!
 						setcurrentelement - chart item update!
 						

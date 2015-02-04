@@ -20,7 +20,8 @@ namespace BusinessObjects
             UserElementCellSet = new HashSet<UserElementCell>();
         }
 
-        public ElementCell(ElementField field, ElementItem item) : this()
+        public ElementCell(ElementField field, ElementItem item)
+            : this()
         {
             Validations.ArgumentNullOrDefault(field, "field");
             Validations.ArgumentNullOrDefault(item, "item");
@@ -101,7 +102,61 @@ namespace BusinessObjects
         //    return Value(null);
         //}
 
-        public decimal Value()
+        public decimal Value
+        {
+            get
+            {
+                var fieldType = (ElementFieldTypes)ElementField.ElementFieldType;
+
+                switch (fieldType)
+                {
+                    case ElementFieldTypes.Boolean:
+                    case ElementFieldTypes.Integer:
+                    case ElementFieldTypes.Decimal:
+                    case ElementFieldTypes.DateTime:
+                    case ElementFieldTypes.ResourcePool:
+                    case ElementFieldTypes.Multiplier:
+                        {
+                            return ValueOld();
+                        }
+                    case ElementFieldTypes.String:
+                    case ElementFieldTypes.Element:
+                    default:
+                        {
+                            return 0;
+                        }
+                }
+            }
+        }
+
+        public int ValueCount
+        {
+            get
+            {
+                var fieldType = (ElementFieldTypes)ElementField.ElementFieldType;
+
+                switch (fieldType)
+                {
+                    case ElementFieldTypes.Boolean:
+                    case ElementFieldTypes.Integer:
+                    case ElementFieldTypes.Decimal:
+                    case ElementFieldTypes.DateTime:
+                    case ElementFieldTypes.ResourcePool:
+                    case ElementFieldTypes.Multiplier:
+                        {
+                            return ValueCountOld();
+                        }
+                    case ElementFieldTypes.String:
+                    case ElementFieldTypes.Element:
+                    default:
+                        {
+                            return 0;
+                        }
+                }
+            }
+        }
+
+        public decimal ValueOld()
         {
             var fieldType = (ElementFieldTypes)ElementField.ElementFieldType;
 
@@ -138,8 +193,9 @@ namespace BusinessObjects
                     {
                         var multiplierFilterUser = ElementItem.Element.FilterSettings.CurrentUser;
 
-                        if (multiplierFilterUser == null)
-                            throw new InvalidOperationException("ResourcePool.FilterSettings.CurrentUser property must have a value when retrieving Value() with Multiplier type field");
+                        // TODO Use it or remove it?
+                        //if (multiplierFilterUser == null)
+                        //    throw new InvalidOperationException("ResourcePool.FilterSettings.CurrentUser property must have a value when retrieving Value() with Multiplier type field");
 
                         var multiplierCell = UserElementCellSet.SingleOrDefault(item => item.User == multiplierFilterUser);
 
@@ -148,7 +204,7 @@ namespace BusinessObjects
                 case ElementFieldTypes.String:
                 case ElementFieldTypes.Element:
                     // TODO At least for now
-                    throw new InvalidOperationException("Value property is not available for this field type");
+                    throw new InvalidOperationException(string.Format("Value property is not available for this field type: {0}", fieldType));
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -191,7 +247,7 @@ namespace BusinessObjects
         //    }
         //}
 
-        public int ValueCount()
+        public int ValueCountOld()
         {
             var fieldType = (ElementFieldTypes)ElementField.ElementFieldType;
 
@@ -231,7 +287,7 @@ namespace BusinessObjects
             //if (!ElementItem.Element.HasMultiplierField)
             //    return Value();
 
-            return Value() * ElementItem.MultiplierValue();
+            return ValueOld() * ElementItem.MultiplierValue();
         }
 
         public decimal ValuePercentage()

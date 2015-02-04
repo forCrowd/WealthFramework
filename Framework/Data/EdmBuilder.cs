@@ -144,8 +144,10 @@ namespace Microsoft.Data.Edm
                 // Add readonly properties
                 var edmx = System.Xml.Linq.XDocument.Load(stream);
                 AddReadonlyProperty(edmx, "ResourcePool", "ResourcePoolRate", "Decimal", false);
-                AddReadonlyProperty(edmx, "ElementFieldIndex", "IndexRatingCount", "Decimal", false);
                 AddReadonlyProperty(edmx, "ElementFieldIndex", "IndexRatingAverage", "Decimal", false);
+                AddReadonlyProperty(edmx, "ElementFieldIndex", "IndexRatingCount", "Decimal", false);
+                AddReadonlyProperty(edmx, "ElementCell", "Value", "Decimal", false);
+                AddReadonlyProperty(edmx, "ElementCell", "ValueCount", "Int32", false);
                 //AddReadonlyProperty(edmx, "ElementFieldIndex", "IndexRatingAverage", "Decimal", false);
                 //AddReadonlyProperty(edmx, "ElementFieldIndex", "IndexRatingPercentage", "Decimal", false);
                 //AddReadonlyProperty(edmx, "ElementFieldIndex", "IndexShare", "Decimal", false);
