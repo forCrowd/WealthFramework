@@ -19,6 +19,7 @@ UserResourcePool view recursive selectedElementItem part
 
 ### Technical
 
+* Copy remote (highcharts) js files to local!
 * Unit testing for controllers + unitofwork etc.?
 * autofac or ninject or windsor or unity or spring?
 check the websites  
@@ -274,7 +275,7 @@ http://www.asp.net/web-api/overview/testing-and-debugging/mocking-entity-framewo
 						continue with indexrating increase decrease reset
 						
 						
-						
+						highcharts loading true/false
 						
 						
 						

@@ -98,17 +98,20 @@
                     self.currentElementIndex = 0;
                 }
 
-                self.currentElement = self.ElementSet[self.currentElementIndex];
-                self._currElement = self.ElementSet[self.currentElementIndex];
+                self.setCurrentElement(self.ElementSet[self.currentElementIndex]);
+            }
+
+            self.setCurrentElement = function (element) {
+                self.currentElement = element;
+                self._currElement = element;
+                logger.log('noluyo lan!');
+                $rootScope.$broadcast('resourcePoolCurrentElementChanged', self.Id);
             }
 
             // CMRP Rate
             self.updateResourcePoolRate = function (value) {
                 logger.log('update resource pool rate: ' + value);
             }
-
-
-
         }
 
         function element() {
@@ -400,7 +403,152 @@
                 // Return
                 return updated;
             }
+
+            // Chart config - TODO Try to move it outside?
+            self.chartConfig = {
+                title: self.Name,
+                options: {
+                    chart: {},
+                    plotOptions: {
+                        column: {
+                            allowPointSelect: true,
+                            pointWidth: 15
+                        },
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: false
+                            },
+                            showInLegend: true
+                        }
+                    },
+                    xAxis: { categories: [''] },
+                    yAxis: {
+                        allowDecimals: false,
+                        min: 0,
+                        title: {}
+                    }
+                },
+                series: []
+
+                // , series: { [{ name: 'x2', data: [15] }] }
+            };
+
+            Object.defineProperty(self.chartConfig.options.chart, 'type', {
+                enumerable: true,
+                configurable: true,
+                get: function () {
+                    return self.resourcePoolField() ? 'column' : 'pie';
+                }
+            });
+
+            Object.defineProperty(self.chartConfig.options.yAxis.title, 'text', {
+                enumerable: true,
+                configurable: true,
+                get: function () {
+                    return self.resourcePoolField() ? 'Total Income' : '';
+                }
+            });
+
+            // Series
+            // self.chartConfig.series
+
+            // var seriesX = [];
+
+            if (typeof self.ElementItemSet !== 'undefined') {
+
+                if (self.resourcePoolField()) {
+
+                    logger.log('rpf');
+
+                    for (var i = 0; i < self.ElementItemSet.length; i++) {
+                        var elementItem = self.ElementItemSet[i];
+                        var item = new columnChartItem(elementItem);
+                        // seriesX.push(item);
+                        self.chartConfig.series.push(item);
+                    }
+                } else {
+
+                    //logger.log('curr', element);
+
+                    //logger.log('no rpf');
+                    //logger.log('element.ElementItemSet.length', element.ElementItemSet.length);
+
+                    var seriesData = [];
+                    for (var i = 0; i < self.ElementItemSet.length; i++) {
+                        var elementItem = self.ElementItemSet[i];
+
+                        //logger.log('elementItem.ElementCellSet.length', elementItem.ElementCellSet.length);
+
+                        for (var x = 0; x < elementItem.ElementCellSet.length; x++) {
+                            var elementCell = elementItem.ElementCellSet[x];
+
+                            //logger.log('elementCell', elementCell);
+                            //logger.log('elementCell.ElementField.ElementFieldIndexSet.length', elementCell.ElementField.ElementFieldIndexSet.length);
+
+                            if (elementCell.ElementField.ElementFieldIndexSet.length > 0) {
+                                var chartItem = new pieChartItem(elementCell);
+                                seriesData.push(chartItem);
+                            }
+                        }
+                    }
+
+                    //seriesX = [{ data: seriesData }];
+                    self.chartConfig.series = [{ data: seriesData }]; //.push(item);
+
+                }
+            }
+
+            //logger.log('seriesX', seriesX);
+
+            // return seriesX;
+
+            //Object.defineProperty(self.chartConfig, 'series', {
+            //    enumerable: true,
+            //    configurable: true,
+            //    get: function () {
+            //        return [{ name: 'x3', data: [25] }];
+            //    }
+            //});
         }
+
+        function columnChartItem(elementItem) {
+            var self = this;
+
+            Object.defineProperty(self, "name", {
+                enumerable: true,
+                configurable: true,
+                get: function () { return elementItem.Name; }
+            });
+
+            // Data property
+            Object.defineProperty(self, "data", {
+                enumerable: true,
+                configurable: true,
+                get: function () { return [elementItem.totalIncome()]; }
+            });
+        }
+
+        function pieChartItem(elementCell) {
+            var self = this;
+
+            Object.defineProperty(self, "name", {
+                enumerable: true,
+                configurable: true,
+                get: function () { return elementCell.ElementItem.Name; }
+            });
+
+            // Data property
+            Object.defineProperty(self, "y", {
+                enumerable: true,
+                configurable: true,
+                get: function () { return elementCell.valuePercentage(); }
+            });
+        }
+
+
+
 
         function elementField() {
             var self = this;
@@ -411,7 +559,7 @@
                 if (self.ElementFieldType !== 6)
                     return;
 
-                self.Element.ResourcePool._currElement = self.SelectedElement;
+                self.Element.ResourcePool.setCurrentElement(self.SelectedElement);
             }
 
             self.valueMultiplied = function () {
@@ -722,7 +870,7 @@
 
                 // Determines whether there is an update
                 var updated = false;
-                
+
                 // Validate
                 if (self.ElementField.ElementFieldIndexSet.length === 0)
                     return updated;
