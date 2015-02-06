@@ -86,7 +86,7 @@ namespace BusinessObjects
         public decimal ResourcePoolValue()
         {
             return HasResourcePoolCell
-                ? ResourcePoolCell.ValueOld()
+                ? ResourcePoolCell.RatingAverage
                 : 0;
         }
 
@@ -119,25 +119,16 @@ namespace BusinessObjects
             //if (Element.ResourcePool.FilterSettings.MultiplierUser == null)
             //    throw new InvalidOperationException("MultiplierValue property cannot be retrieved without specifying MultiplierUser filter on ResourcePool object");
 
-            return MultiplierCell.ValueOld();
+            return MultiplierCell.RatingAverage;
         }
 
-        // TODO Sum is correct? Or Average?
-        public decimal Value()
-        {
-            var indexCells = ElementCellSet.Where(item => item.ElementField.ElementFieldIndexSet.Any());
-            return indexCells.Any()
-                ? indexCells.Sum(item => item.ValueOld())
-                : 0;
-        }
-
-        public int ValueCount()
-        {
-            var indexCells = ElementCellSet.Where(item => item.ElementField.ElementFieldIndexSet.Any());
-            return indexCells.Any()
-                ? indexCells.Sum(item => item.ValueCountOld())
-                : 0;
-        }
+        //public decimal Value()
+        //{
+        //    var indexCells = ElementCellSet.Where(item => item.ElementField.ElementFieldIndexSet.Any());
+        //    return indexCells.Any()
+        //        ? indexCells.Sum(item => item.ValueOld())
+        //        : 0;
+        //}
 
         //// TODO Review!
         //public decimal TotalRating

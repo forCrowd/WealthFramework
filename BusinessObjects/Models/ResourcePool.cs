@@ -88,16 +88,9 @@ namespace BusinessObjects
             set { }
         }
 
-        public decimal ResourcePoolRateOld()
-        {
-            return UserResourcePoolSet.Any()
-                ? UserResourcePoolSet.Average(item => item.ResourcePoolRate)
-                : 0;
-        }
-
         public decimal ResourcePoolRatePercentage()
         {
-            return ResourcePoolRateOld() / 100;
+            return ResourcePoolRate / 100;
         }
 
         public decimal ResourcePoolAddition()

@@ -189,7 +189,7 @@ namespace BusinessObjects
 
         public decimal IndexRatingAverage()
         {
-            return ElementFieldIndexSet.Sum(item => item.IndexRatingAverageOld());
+            return ElementFieldIndexSet.Sum(item => item.IndexRatingAverage);
         }
 
         //public ElementField AddField(string name, ElementFieldTypes fieldType)

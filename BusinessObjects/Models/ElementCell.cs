@@ -97,9 +97,69 @@ namespace BusinessObjects
             }
         }
 
-        //public decimal Value()
+        //[NotMapped]
+        //public decimal RatingAverage
         //{
-        //    return Value(null);
+        //    get
+        //    {
+        //        // TODO Serialization issue?
+        //        if (ElementField == null)
+        //            return 0;
+
+        //        var fieldType = (ElementFieldTypes)ElementField.ElementFieldType;
+
+        //        switch (fieldType)
+        //        {
+        //            case ElementFieldTypes.Boolean:
+        //            case ElementFieldTypes.Integer:
+        //            case ElementFieldTypes.Decimal:
+        //            case ElementFieldTypes.DateTime:
+        //            case ElementFieldTypes.ResourcePool:
+        //            case ElementFieldTypes.Multiplier:
+        //                {
+        //                    return ValueOld();
+        //                }
+        //            case ElementFieldTypes.String:
+        //            case ElementFieldTypes.Element:
+        //            default:
+        //                {
+        //                    return 0;
+        //                }
+        //        }
+        //    }
+        //    set { }
+        //}
+
+        //[NotMapped]
+        //public int RatingCount
+        //{
+        //    get
+        //    {
+        //        if (ElementField == null)
+        //            return 0;
+
+        //        var fieldType = (ElementFieldTypes)ElementField.ElementFieldType;
+
+        //        switch (fieldType)
+        //        {
+        //            case ElementFieldTypes.Boolean:
+        //            case ElementFieldTypes.Integer:
+        //            case ElementFieldTypes.Decimal:
+        //            case ElementFieldTypes.DateTime:
+        //            case ElementFieldTypes.ResourcePool:
+        //            case ElementFieldTypes.Multiplier:
+        //                {
+        //                    return ValueCountOld();
+        //                }
+        //            case ElementFieldTypes.String:
+        //            case ElementFieldTypes.Element:
+        //            default:
+        //                {
+        //                    return 0;
+        //                }
+        //        }
+        //    }
+        //    set { }
         //}
 
         [NotMapped]
@@ -119,23 +179,56 @@ namespace BusinessObjects
                     case ElementFieldTypes.Integer:
                     case ElementFieldTypes.Decimal:
                     case ElementFieldTypes.DateTime:
+                    // TODO This calculation is the same as Decimal type? Are we using the types in a wrong way?
                     case ElementFieldTypes.ResourcePool:
+                        {
+                            // Value filter user
+                            User valueFilterUser = null;
+                            if (ElementItem.Element.FilterSettings.ValueFilter == ResourcePoolFilterSettings.ValueFilters.OnlyCurrentUser)
+                            {
+                                valueFilterUser = ElementItem.Element.FilterSettings.CurrentUser;
+
+                                if (valueFilterUser == null)
+                                    throw new InvalidOperationException("ResourcePool.FilterSettings.CurrentUser property must have a value when ValueFilter is using OnlyCurrentUser option");
+                            }
+
+                            return ElementField.UseFixedValue.Value
+                                ? FixedValue
+                                : valueFilterUser == null
+                                ? UserElementCellSet.Any()
+                                ? UserElementCellSet.Average(item => item.Value)
+                                : 0
+                                : UserElementCellSet.Any(item => item.User == valueFilterUser)
+                                ? UserElementCellSet.Single(item => item.User == valueFilterUser).Value
+                                : 0;
+                        }
                     case ElementFieldTypes.Multiplier:
                         {
-                            return ValueOld();
+                            var multiplierFilterUser = ElementItem.Element.FilterSettings.CurrentUser;
+
+                            // TODO Use it or remove it?
+                            //if (multiplierFilterUser == null)
+                            //    throw new InvalidOperationException("ResourcePool.FilterSettings.CurrentUser property must have a value when retrieving Value() with Multiplier type field");
+
+                            if (multiplierFilterUser == null)
+                                return 0;
+
+                            var multiplierCell = UserElementCellSet.SingleOrDefault(item => item.User == multiplierFilterUser);
+
+                            return multiplierCell == null ? 0 : multiplierCell.Value;
                         }
                     case ElementFieldTypes.String:
                     case ElementFieldTypes.Element:
+                        // TODO At least for now
+                        // throw new InvalidOperationException(string.Format("Value property is not available for this field type: {0}", fieldType));
+                        return 0;
                     default:
-                        {
-                            return 0;
-                        }
+                        throw new ArgumentOutOfRangeException();
                 }
             }
             set { }
         }
 
-        [NotMapped]
         public int RatingCount
         {
             get
@@ -149,140 +242,22 @@ namespace BusinessObjects
                 {
                     case ElementFieldTypes.Boolean:
                     case ElementFieldTypes.Integer:
-                    case ElementFieldTypes.Decimal:
                     case ElementFieldTypes.DateTime:
+                    case ElementFieldTypes.Decimal:
+                    // TODO This calculation is the same as Decimal type? Are we using the types in a wrong way?
                     case ElementFieldTypes.ResourcePool:
                     case ElementFieldTypes.Multiplier:
-                        {
-                            return ValueCountOld();
-                        }
+                        return ElementField.UseFixedValue.Value
+                            ? 1
+                            : UserElementCellSet.Count();
                     case ElementFieldTypes.String:
                     case ElementFieldTypes.Element:
+                        // TODO At least for now
+                        // throw new InvalidOperationException("ValueCount property is not available for this field type");
+                        return 0;
                     default:
-                        {
-                            return 0;
-                        }
+                        throw new ArgumentOutOfRangeException();
                 }
-            }
-            set { }
-        }
-
-        public decimal ValueOld()
-        {
-            var fieldType = (ElementFieldTypes)ElementField.ElementFieldType;
-
-            switch (fieldType)
-            {
-                case ElementFieldTypes.Boolean:
-                case ElementFieldTypes.Integer:
-                case ElementFieldTypes.Decimal:
-                case ElementFieldTypes.DateTime:
-                // TODO This calculation is the same as Decimal type? Are we using the types in a wrong way?
-                case ElementFieldTypes.ResourcePool:
-                    {
-                        // Value filter user
-                        User valueFilterUser = null;
-                        if (ElementItem.Element.FilterSettings.ValueFilter == ResourcePoolFilterSettings.ValueFilters.OnlyCurrentUser)
-                        {
-                            valueFilterUser = ElementItem.Element.FilterSettings.CurrentUser;
-
-                            if (valueFilterUser == null)
-                                throw new InvalidOperationException("ResourcePool.FilterSettings.CurrentUser property must have a value when ValueFilter is using OnlyCurrentUser option");
-                        }
-
-                        return ElementField.UseFixedValue.Value
-                            ? FixedValue
-                            : valueFilterUser == null
-                            ? UserElementCellSet.Any()
-                            ? UserElementCellSet.Average(item => item.Value)
-                            : 0
-                            : UserElementCellSet.Any(item => item.User == valueFilterUser)
-                            ? UserElementCellSet.Single(item => item.User == valueFilterUser).Value
-                            : 0;
-                    }
-                case ElementFieldTypes.Multiplier:
-                    {
-                        var multiplierFilterUser = ElementItem.Element.FilterSettings.CurrentUser;
-
-                        // TODO Use it or remove it?
-                        //if (multiplierFilterUser == null)
-                        //    throw new InvalidOperationException("ResourcePool.FilterSettings.CurrentUser property must have a value when retrieving Value() with Multiplier type field");
-
-                        if (multiplierFilterUser == null)
-                            return 0;
-
-                        var multiplierCell = UserElementCellSet.SingleOrDefault(item => item.User == multiplierFilterUser);
-
-                        return multiplierCell == null ? 0 : multiplierCell.Value;
-                    }
-                case ElementFieldTypes.String:
-                case ElementFieldTypes.Element:
-                    // TODO At least for now
-                    throw new InvalidOperationException(string.Format("Value property is not available for this field type: {0}", fieldType));
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-
-        //public decimal Value
-        //{
-        //    get
-        //    {
-        //        var fieldType = (ElementFieldTypes)ElementField.ElementFieldType;
-
-        //        switch (fieldType)
-        //        {
-        //            case ElementFieldTypes.Boolean:
-        //            case ElementFieldTypes.Integer:
-        //            case ElementFieldTypes.Decimal:
-        //            case ElementFieldTypes.DateTime:
-        //            // TODO This calculation is the same as Decimal type? Are we using the types in a wrong way?
-        //            case ElementFieldTypes.ResourcePool:
-        //                {
-        //                    return ElementField.FixedValue.Value
-        //                        ? FixedValue
-        //                        : UserElementCellSet.Any()
-        //                        ? UserElementCellSet.Average(item => item.Value)
-        //                        : 0;
-        //                }
-        //            case ElementFieldTypes.Multiplier:
-        //                {
-        //                    return UserElementCellSet.Any()
-        //                        ? UserElementCellSet.Average(item => item.Value)
-        //                        : 0;
-        //                }
-        //            case ElementFieldTypes.String:
-        //            case ElementFieldTypes.Element:
-        //                // TODO At least for now
-        //                throw new InvalidOperationException("Value property is not available for this field type");
-        //            default:
-        //                throw new ArgumentOutOfRangeException();
-        //        }
-        //    }
-        //}
-
-        public int ValueCountOld()
-        {
-            var fieldType = (ElementFieldTypes)ElementField.ElementFieldType;
-
-            switch (fieldType)
-            {
-                case ElementFieldTypes.Boolean:
-                case ElementFieldTypes.Integer:
-                case ElementFieldTypes.DateTime:
-                case ElementFieldTypes.Decimal:
-                // TODO This calculation is the same as Decimal type? Are we using the types in a wrong way?
-                case ElementFieldTypes.ResourcePool:
-                case ElementFieldTypes.Multiplier:
-                    return ElementField.UseFixedValue.Value
-                        ? 1
-                        : UserElementCellSet.Count();
-                case ElementFieldTypes.String:
-                case ElementFieldTypes.Element:
-                    // TODO At least for now
-                    throw new InvalidOperationException("ValueCount property is not available for this field type");
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -301,7 +276,7 @@ namespace BusinessObjects
             //if (!ElementItem.Element.HasMultiplierField)
             //    return Value();
 
-            return ValueOld() * ElementItem.MultiplierValue();
+            return RatingAverage * ElementItem.MultiplierValue();
         }
 
         public decimal ValuePercentage()

@@ -12,21 +12,19 @@ namespace BusinessObjects.ViewModels
             ElementFieldId = elementFieldIndex.ElementFieldId;
             Name = elementFieldIndex.Name;
 
-            IndexRatingCount = elementFieldIndex.IndexRatingCountOld();
-            IndexRatingAverage = elementFieldIndex.IndexRatingAverageOld();
+            IndexRatingAverage = elementFieldIndex.IndexRatingAverage;
+            IndexRatingCount = elementFieldIndex.IndexRatingCount;
             IndexRatingPercentage = elementFieldIndex.IndexRatingPercentage();
             IndexShare = elementFieldIndex.IndexShare();
-            IndexIncome = elementFieldIndex.IndexIncome();
         }
 
         public int Id { get; set; }
         public Nullable<int> ElementFieldId { get; set; }
         public string Name { get; set; }
 
-        public decimal IndexRatingCount { get; set; }
         public decimal IndexRatingAverage { get; set; }
+        public decimal IndexRatingCount { get; set; }
         public decimal IndexRatingPercentage { get; set; }
         public decimal IndexShare { get; set; }
-        public decimal IndexIncome { get; set; }
     }
 }

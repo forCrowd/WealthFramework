@@ -13,7 +13,7 @@ namespace BusinessObjects.ViewModels
             Name = resourcePool.Name;
             EnableResourcePoolAddition = resourcePool.EnableResourcePoolAddition;
             EnableSubtotals = resourcePool.EnableSubtotals;
-            ResourcePoolRate = resourcePool.ResourcePoolRateOld();
+            ResourcePoolRate = resourcePool.ResourcePoolRate;
             ResourcePoolRatePercentage = resourcePool.ResourcePoolRatePercentage();
             UserResourcePoolRatingCount = resourcePool.UserResourcePoolSet.Count;
             ElementSet = resourcePool.ElementSet.Select(item => new Element(item, user));

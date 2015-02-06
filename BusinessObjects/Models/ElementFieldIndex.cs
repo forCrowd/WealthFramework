@@ -70,46 +70,6 @@ namespace BusinessObjects
             return index;
         }
 
-        //public decimal ValueMultiplied()
-        //{
-        //    return ElementField.ElementCellSet.Sum(item => item.ValueMultiplied());
-        //}
-
-        //public decimal ValuePercentage()
-        //{
-        //    return ElementField.ElementCellSet.Sum(item => item.ValuePercentage());
-        //}
-
-        /// <summary>
-        /// How many users rated this index?
-        /// </summary>
-        public decimal IndexRatingCountOld()
-        {
-            return UserElementFieldIndexSet.Count();
-        }
-
-        [NotMapped]
-        public decimal IndexRatingCount
-        {
-            get
-            {
-                return UserElementFieldIndexSet.Count();
-                //return 10; // UserElementFieldIndexSet.Count();
-            }
-            set { }
-        }
-
-        /// <summary>
-        /// What is the average rating for this index?
-        /// It will be used to determine the weight of this index in its resource pool.
-        /// </summary>
-        public decimal IndexRatingAverageOld()
-        {
-            return UserElementFieldIndexSet.Any()
-                ? UserElementFieldIndexSet.Average(item => item.Rating)
-                : 0;
-        }
-
         /// <summary>
         /// What is the average rating for this index?
         /// It will be used to determine the weight of this index in its resource pool.
@@ -126,23 +86,28 @@ namespace BusinessObjects
             set { }
         }
 
+        /// <summary>
+        /// How many users rated this index?
+        /// </summary>
+        [NotMapped]
+        public decimal IndexRatingCount
+        {
+            get { return UserElementFieldIndexSet.Count(); }
+            set { }
+        }
+
         public decimal IndexRatingPercentage()
         {
             var resourcePoolIndexRatingAverage = ElementField.Element.IndexRatingAverage();
 
             return resourcePoolIndexRatingAverage == 0
                 ? 0
-                : IndexRatingAverageOld() / resourcePoolIndexRatingAverage;
+                : IndexRatingAverage / resourcePoolIndexRatingAverage;
         }
 
         public decimal IndexShare()
         {
             return ElementField.Element.ResourcePool.TotalResourcePoolValue() * IndexRatingPercentage();
-        }
-
-        public decimal IndexIncome()
-        {
-            return ElementField.ElementCellSet.Sum(item => item.IndexIncome());
         }
     }
 }

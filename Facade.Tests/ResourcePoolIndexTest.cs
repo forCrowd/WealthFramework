@@ -11,25 +11,25 @@
     [TestClass]
     public class ElementFieldIndexTest
     {
-        [TestMethod]
-        public void Select()
-        {
-            using (var unitOfWork = new ElementFieldIndexUnitOfWork())
-            {
-                var list = unitOfWork.AllLiveIncluding(item => item.UserElementFieldIndexSet);
+        //[TestMethod]
+        //public void Select()
+        //{
+        //    using (var unitOfWork = new ElementFieldIndexUnitOfWork())
+        //    {
+        //        var list = unitOfWork.AllLiveIncluding(item => item.UserElementFieldIndexSet);
 
-                var sbOutput = new StringBuilder();
+        //        var sbOutput = new StringBuilder();
 
-                foreach (var item in list)
-                {
-                    sbOutput.AppendFormat("Name: {0}", item.Name).AppendLine();
-                    sbOutput.AppendFormat("IndexRatingCount: {0}", item.IndexRatingCountOld()).AppendLine();
-                    sbOutput.AppendFormat("IndexRatingAverage: {0}", item.IndexRatingAverageOld()).AppendLine();
-                }
+        //        foreach (var item in list)
+        //        {
+        //            sbOutput.AppendFormat("Name: {0}", item.Name).AppendLine();
+        //            sbOutput.AppendFormat("IndexRatingCount: {0}", item.IndexRatingCountOld()).AppendLine();
+        //            sbOutput.AppendFormat("IndexRatingAverage: {0}", item.IndexRatingAverageOld()).AppendLine();
+        //        }
 
-                Console.WriteLine(sbOutput);
-            }
-        }
+        //        Console.WriteLine(sbOutput);
+        //    }
+        //}
 
         //public void Insert()
         //{
