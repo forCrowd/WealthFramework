@@ -22,6 +22,7 @@ An experimental resource management system that aims to provide a sustainable ec
 ** Both nullable and non-nullable boolean type will be rendered as radio input
 ** 'Cancel' type was changed to 'button' type instead of 'submit' and service.cancelChanges() method was removed
 * LazyLoading was disabled
+* breeze RowVersion property issue was fixed
 
 **0.14.8**
 

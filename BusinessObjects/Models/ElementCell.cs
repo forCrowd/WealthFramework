@@ -102,10 +102,15 @@ namespace BusinessObjects
         //    return Value(null);
         //}
 
-        public decimal Value
+        [NotMapped]
+        public decimal RatingAverage
         {
             get
             {
+                // TODO Serialization issue?
+                if (ElementField == null)
+                    return 0;
+
                 var fieldType = (ElementFieldTypes)ElementField.ElementFieldType;
 
                 switch (fieldType)
@@ -127,12 +132,17 @@ namespace BusinessObjects
                         }
                 }
             }
+            set { }
         }
 
-        public int ValueCount
+        [NotMapped]
+        public int RatingCount
         {
             get
             {
+                if (ElementField == null)
+                    return 0;
+
                 var fieldType = (ElementFieldTypes)ElementField.ElementFieldType;
 
                 switch (fieldType)
@@ -154,6 +164,7 @@ namespace BusinessObjects
                         }
                 }
             }
+            set { }
         }
 
         public decimal ValueOld()
@@ -196,6 +207,9 @@ namespace BusinessObjects
                         // TODO Use it or remove it?
                         //if (multiplierFilterUser == null)
                         //    throw new InvalidOperationException("ResourcePool.FilterSettings.CurrentUser property must have a value when retrieving Value() with Multiplier type field");
+
+                        if (multiplierFilterUser == null)
+                            return 0;
 
                         var multiplierCell = UserElementCellSet.SingleOrDefault(item => item.User == multiplierFilterUser);
 

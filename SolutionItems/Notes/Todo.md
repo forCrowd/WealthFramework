@@ -53,7 +53,6 @@ http://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-w
 * check validation cases - null is okay but how about Id check - Id > 0?
 * use fluent approach on element + item + field + cell
 * viewmodels don't belong to business layer?!
-* find a better approach for rowversion fix on client-side before saving?
 * ignore web - scripts folder?
 
 ### Misc
@@ -331,6 +330,11 @@ also resourcepoolrate on element?
 						continue with two elements case!
 						chart doesn't work, fix it!
 						scope.resourcePool is changing back to initial value?!
+						
+						
+						
+						REMOVE ROWVERSION LINES
+						
 
 ---
 refresh tokens?

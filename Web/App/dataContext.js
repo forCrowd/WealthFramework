@@ -132,6 +132,22 @@
                     }
 
                     function prepareSaveBatches() {
+
+                        var batches = [];
+
+                        // RowVersion fix
+                        // TODO How about Deleted state?
+                        var modifiedEntities = manager.getEntities(null, breeze.EntityState.Modified);
+                        for (var i = 0; i < modifiedEntities.length; i++) {
+                            var entity = modifiedEntities[i];
+                            if (entity.entityAspect.entityState === breeze.EntityState.Modified) {
+                                var rowVersion = entity.RowVersion;
+                                entity.RowVersion = '';
+                                entity.RowVersion = rowVersion;
+                            }
+                        }
+                        batches.push(modifiedEntities);
+
                         /* Aaargh! 
                         * Web API OData doesn't calculate the proper save order
                         * which means, if we aren't careful on the client,
@@ -146,9 +162,9 @@
                         * 3. Added TodoLists
                         * 4. Every other change
                         */
-                        var batches = [];
                         //batches.push(manager.getEntities(['License'], [breeze.EntityState.Deleted]));
                         //batches.push(manager.getEntities(['License'], [breeze.EntityState.Added]));
+
                         batches.push(null); // empty = save all remaining pending changes
                         return batches;
                         /*
