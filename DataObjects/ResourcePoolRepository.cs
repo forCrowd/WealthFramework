@@ -99,7 +99,7 @@
         public ResourcePool CreateSectorIndexSample(User user)
         {
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool("Sector Index Sample", "Organization", user, false, true, true, false, 6);
+            var resourcePool = CreateDefaultResourcePool("Sector Index Sample", "Organization", user, true, true, true, false, 6);
             resourcePool.EnableResourcePoolAddition = false;
             resourcePool.IsSample = true;
 
@@ -123,6 +123,8 @@
 
             // Main element
             var mainElement = resourcePool.MainElement;
+            mainElement.ResourcePoolField.Name = "Sales Price";
+            mainElement.MultiplierField.Name = "Sales Number";
             var sectorField = mainElement.AddField("Sector", ElementFieldTypes.Element);
             sectorField.SelectedElement = sectorElement;
 

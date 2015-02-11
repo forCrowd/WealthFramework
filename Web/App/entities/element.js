@@ -31,6 +31,8 @@
             // Resource pool rate percentage
             self.resourcePoolRatePercentage = function () {
 
+                //logger.log('self.ResourcePoolRate', self.ResourcePoolRate);
+
                 if (!self.ResourcePoolRate)
                     return 0;
 
@@ -45,6 +47,22 @@
             }
             self.valueFilterText = function () {
                 return self.valueFilter === 1 ? "Only My Ratings" : "All Ratings";
+            }
+
+            // Main element
+            self.mainElement = function () {
+
+                var mainElement = null;
+
+                for (var i = 0; i < self.ElementSet.length; i++) {
+                    var element = self.ElementSet[i];
+                    if (element.IsMainElement) {
+                        mainElement = element;
+                        break;
+                    }
+                }
+
+                return mainElement;
             }
 
             // Current element
@@ -245,15 +263,27 @@
 
                 // TODO Check totalIncome notes
 
-                // Validate
-                if (typeof self.ElementItemSet === 'undefined')
-                    return 0;
+                if (self.IsMainElement) {
 
-                var value = 0;
-                for (var i = 0; i < self.ElementItemSet.length; i++) {
-                    var item = self.ElementItemSet[i];
-                    value += item.resourcePoolAdditionMultiplied();
+                    // Validate
+                    if (typeof self.ElementItemSet === 'undefined')
+                        return 0;
+
+                    var value = 0;
+                    for (var i = 0; i < self.ElementItemSet.length; i++) {
+                        var item = self.ElementItemSet[i];
+                        value += item.resourcePoolAdditionMultiplied();
+                    }
+                } else {
+                    var mainElement = self.ResourcePool.mainElement();
+                    if (mainElement !== null) {
+                        // logger.log('huh?');
+                        //logger.log('mainElement', mainElement);
+                        value = mainElement.resourcePoolAdditionMultiplied();
+                    }
                 }
+
+                //logger.log('resourcePoolAdditionMultiplied', value);
 
                 return value;
             }
@@ -456,6 +486,11 @@
             }
 
             self.indexIncome = function () {
+
+                //if (self.Name === "Sector Index") {
+                //    //logger.log('yo!');
+                //}
+
                 var value = self.ElementField.Element.resourcePoolAdditionMultiplied() * self.indexRatingPercentage();
                 return value;
             }
@@ -557,7 +592,11 @@
             }
 
             self.resourcePoolAddition = function () {
-                return self.resourcePoolValue() * self.Element.ResourcePool.resourcePoolRatePercentage();
+                var value = self.resourcePoolValue() * self.Element.ResourcePool.resourcePoolRatePercentage();
+                //logger.log(self.Name + ' self.resourcePoolValue()', self.resourcePoolValue());
+                //logger.log(self.Name + ' self.Element.ResourcePool.resourcePoolRatePercentage()', self.Element.ResourcePool.resourcePoolRatePercentage());
+                // logger.log(self.Name + ' resourcePoolAddition', value);
+                return value;
             }
 
             self.resourcePoolAdditionMultiplied = function () {
@@ -883,17 +922,27 @@
                 //        : 0;
                 //}
 
-                if (self.ElementField.ElementFieldIndexSet.length === 0)
-                    return 0;
+                if (self.ElementField.ElementFieldType === 6 && self.SelectedElementItem !== null) {
+                    // logger.log('self.SelectedElementItem', self.SelectedElementItem);
+                    //logger.log('self.SelectedElementItem.indexIncome()', self.SelectedElementItem.indexIncome());
 
-                var value = self.valuePercentage();
+                    return self.SelectedElementItem.indexIncome();
+                } else {
 
-                // If Rating sort type is 'Lowest to Highest', reverse the value
-                if (self.ElementField.ElementFieldIndexSet[0].RatingSortType === 1) {
-                    value = 1 - value;
+                    if (self.ElementField.ElementFieldIndexSet.length > 0) {
+
+                        var value = self.valuePercentage();
+
+                        // If Rating sort type is 'Lowest to Highest', reverse the value
+                        if (self.ElementField.ElementFieldIndexSet[0].RatingSortType === 1) {
+                            value = 1 - value;
+                        }
+
+                        return self.ElementField.ElementFieldIndexSet[0].indexIncome() * value;
+                    } else {
+                        return 0;
+                    }
                 }
-
-                return self.ElementField.ElementFieldIndexSet[0].indexIncome() * value;
             }
 
             // TODO

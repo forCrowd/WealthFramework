@@ -4,6 +4,8 @@
             <div class="header">
                 <span class="title">
                     {{ vm.resourcePool.Name }}
+                    -
+                    {{ vm.resourcePool.ResourcePoolRate }}
                 </span>
                 &nbsp;
                 Display: <a href="" data-ng-click="vm.resourcePool.currElement().toggleValueFilter()">{{ vm.resourcePool.currElement().valueFilterText() }}</a>
