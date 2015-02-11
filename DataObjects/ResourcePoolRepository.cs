@@ -99,7 +99,7 @@
         public ResourcePool CreateSectorIndexSample(User user)
         {
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool("Sector Index Sample", "Organization", user, false, false, false, false, 6);
+            var resourcePool = CreateDefaultResourcePool("Sector Index Sample", "Organization", user, false, true, true, false, 6);
             resourcePool.EnableResourcePoolAddition = false;
             resourcePool.IsSample = true;
 

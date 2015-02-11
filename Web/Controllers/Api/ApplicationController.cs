@@ -10,7 +10,9 @@ namespace Web.Controllers.Api
         [Route("ApplicationInfo")]
         public ApplicationInfo GetApplicationInfo()
         {
-            var version = Assembly.GetAssembly(this.GetType()).GetName().Version;
+            var assembly = Assembly.GetAssembly(this.GetType());
+            var organization = ((AssemblyCompanyAttribute)assembly.GetCustomAttribute(typeof(AssemblyCompanyAttribute))).Company;
+            var version = assembly.GetName().Version;
 
             var versionText = string.Format("{0}.{1}.{2}",
                 version.Major,
@@ -19,6 +21,7 @@ namespace Web.Controllers.Api
                 
             return new ApplicationInfo()
             {
+                Organization = organization,
                 CurrentVersion = versionText
             };
         }
@@ -26,6 +29,7 @@ namespace Web.Controllers.Api
 
     public class ApplicationInfo
     {
+        public string Organization { get; set; }
         public string CurrentVersion { get; set; }
     }
 }

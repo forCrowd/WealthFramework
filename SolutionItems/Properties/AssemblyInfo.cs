@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Wealth Economy")]
 [assembly: AssemblyDescription("An experimental resource management system that aims to provide a sustainable economic model")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Evoluo Foundation")]
+[assembly: AssemblyCompany("CrowdFirst Foundation")]
 [assembly: AssemblyProduct("Wealth Economy")]
-[assembly: AssemblyCopyright("Evoluo Foundation")]
+[assembly: AssemblyCopyright("CrowdFirst Foundation")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
