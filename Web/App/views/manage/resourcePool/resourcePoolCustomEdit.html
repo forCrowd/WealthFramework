@@ -4,17 +4,9 @@
             <div class="header">
                 <span class="title">
                     {{ vm.resourcePool.Name }}
-                    <!---
-                    {{ vm.resourcePool.ResourcePoolRate }}-->
                 </span>
                 &nbsp;
                 Display: <a href="" data-ng-click="vm.resourcePool.currElement().toggleValueFilter()">{{ vm.resourcePool.currElement().valueFilterText() }}</a>
-                <!---
-                Main Element Index: {{ vm.resourcePool.currentElementIndex }} - {{ vm.resourcePool.currElement().Name }} - <a href="" data-ng-click="vm.resourcePool.toggleCurrentElement()">Toggle</a>
-                -
-                <div data-ng-bind-html="vm.resourcePool.currElement().breadcrumb()">
-                </div>-->
-                <!--<breadcrumb data-element="vm.resourcePool.currElement()"></breadcrumb>-->
                 <div>
                     <ol class="breadcrumb">
                         <li data-ng-repeat="item in vm.resourcePool.currElement().parents() | orderBy: 'sortOrder' :true" data-ng-class="{ active: $last }">
@@ -32,13 +24,9 @@
     </div>
     <div class="row">
         <div class="col-md-4">
-            <highchart config="vm.chartConfig"></highchart>
+            <highchart data-config="vm.chartConfig"></highchart>
         </div>
         <div class="col-md-8">
-
-
-            
-
             <table class="resourcePoolTable table-striped">
                 <thead>
                     <tr>
@@ -315,9 +303,6 @@
                     </tr>
                 </tfoot>
             </table>
-            <!--<button type="button" data-ng-click="vm.saveChanges()">Save</button>-->
-
-
         </div>
     </div>
 </div>

@@ -380,8 +380,12 @@
 
             self.increaseMultiplier = function (userId) {
 
+                // logger.log('1');
+
                 if (!updateMultiplier(userId, 'increase'))
                     return;
+
+                //logger.log('2');
 
                 // Raise the event
                 // TODO Can't it be done by scope.watch?
@@ -418,13 +422,22 @@
                 if (!multiplierField || typeof self.ElementItemSet === 'undefined')
                     return updated;
 
+                //logger.log('1a');
+
                 // Find user element cell
                 for (var itemIndex = 0; itemIndex < self.ElementItemSet.length; itemIndex++) {
                     var elementItem = self.ElementItemSet[itemIndex];
                     var userElementCell = null;
 
+                    //logger.log('1a1');
+                    //logger.log('userId', userId);
+                    //logger.log('elementItem.multiplierCell()', elementItem.multiplierCell());
+
                     for (var cellIndex = 0; cellIndex < elementItem.multiplierCell().UserElementCellSet.length; cellIndex++) {
                         if (elementItem.multiplierCell().UserElementCellSet[cellIndex].UserId === userId) {
+
+                            //logger.log('1a2');
+
                             userElementCell = elementItem.multiplierCell().UserElementCellSet[cellIndex];
                             break;
                         }
@@ -457,6 +470,8 @@
                         }
                     }
                 }
+
+                //logger.log('1b');
 
                 // Return
                 return updated;

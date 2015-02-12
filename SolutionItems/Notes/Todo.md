@@ -363,6 +363,20 @@ also resourcepoolrate on element?
 						
 						use one setcurrentelement ?! not on field level?
 						
+						
+						
+						remove customedit related!
+						
+						then continue with total cost!
+						
+						microsoft eula link!
+						
+						resourcepooleditor.js
+                //scope.$watch('chartHeight', function () {
+                //    scope.chartConfig.options.chart.height = scope.chartHeight;
+                //}, true);						
+						
+						
 
 ---
 refresh tokens?
