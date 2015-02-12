@@ -361,4 +361,27 @@
         };
     }
 
+    var breadcrumbDirectiveId = 'breadcrumb';
+
+    angular.module('main')
+        .directive(breadcrumbDirectiveId, ['logger',
+            breadcrumb]);
+
+    function breadcrumb(logger) {
+        logger = logger.forSource(breadcrumbDirectiveId);
+
+        function link(scope, elm, atts) {
+
+        }
+
+        return {
+            restrict: 'E',
+            templateUrl: '/App/views/directives/breadcrumb.html',
+            scope: {
+                element: '='
+            },
+            link: link
+        };
+    }
+
 })();

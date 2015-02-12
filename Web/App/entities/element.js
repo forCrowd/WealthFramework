@@ -115,9 +115,48 @@
         function element() {
             var self = this;
 
+            self._parent = null;
+            self._parents = [];
             self._resourcePoolField = null;
             self._multiplierField = null;
             self._totalIncome = 0;
+
+            self.parent = function () {
+                if (self._parent !== null) {
+                    return self._parent;
+                }
+
+                self._parent = self;
+                if (self._parent.ParentFieldSet.length > 0) {
+                    self._parent = self._parent.ParentFieldSet[0].Element;
+                }
+                return self._parent;
+            }
+
+            self.parents = function () {
+
+                if (self._parents.length > 0) {
+                    return self._parents;
+                }
+
+                var element = null;
+                do {
+
+                    element = element === null
+                        ? self
+                        : element.parent();
+
+                    var item = {
+                        element: element,
+                        sortOrder: self._parents.length + 1
+                    }
+
+                    self._parents.push(item);
+
+                } while (element !== element.parent());
+
+                return self._parents;
+            }
 
             // Value filter
             self.valueFilter = 1;
@@ -427,13 +466,13 @@
         function elementField() {
             var self = this;
 
-            self.setCurrElement = function () {
+            //self.setCurrElement = function () {
 
-                if (self.ElementFieldType !== 6)
-                    return;
+            //    if (self.ElementFieldType !== 6)
+            //        return;
 
-                self.Element.ResourcePool.setCurrentElement(self.SelectedElement);
-            }
+            //    self.Element.ResourcePool.setCurrentElement(self.SelectedElement);
+            //}
 
             self.valueMultiplied = function () {
 

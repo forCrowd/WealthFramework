@@ -57,7 +57,7 @@ http://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-w
 
 ### Misc
 
-* Update TED link with CrowdFirst account's version?
+* Update TED link with Uniqore account's version?
 
 ## Long Term
 
@@ -330,6 +330,17 @@ also resourcepoolrate on element?
 						continue with two elements case!
 						chart doesn't work, fix it!
 						scope.resourcePool is changing back to initial value?!
+
+
+						
+						
+						
+						breadcrumb - doesn't render ng-click!
+						create directive for it?
+						
+						
+						
+						try to use currentthread.currentuser ?!?!?!#?!@?#?!@#?!@?#
 						
 						
 						
@@ -346,6 +357,11 @@ also resourcepoolrate on element?
 						ALSO ODATA FUNCTION - FOR USER LEVEL API METHODS?
 						IMPROVE + UPDATE TEST?
 						ALSO JS TESTS?
+						
+						
+						
+						
+						use one setcurrentelement ?! not on field level?
 						
 
 ---

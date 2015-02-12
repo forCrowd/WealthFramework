@@ -449,6 +449,7 @@
     <Content Include="App\views\content\home.html" />
     <Content Include="App\views\content\overview.html" />
     <Content Include="App\views\content\technologies.html" />
+    <Content Include="App\views\directives\breadcrumb.html" />
     <Content Include="App\views\directives\elementEditor.html" />
     <Content Include="App\views\directives\newResourcePoolEditor.html" />
     <Content Include="App\views\directives\resourcePoolEditor.html" />
