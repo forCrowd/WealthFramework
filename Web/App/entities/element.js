@@ -31,8 +31,6 @@
             // Resource pool rate percentage
             self.resourcePoolRatePercentage = function () {
 
-                //logger.log('self.ResourcePoolRate', self.ResourcePoolRate);
-
                 if (!self.ResourcePoolRate)
                     return 0;
 
@@ -66,43 +64,24 @@
             }
 
             // Current element
-            self._currElement = null;
-            self.currElement = function () {
+            self._currentElement = null;
+            self.currentElement = function () {
 
-                if (self._currElement === null && typeof self.ElementSet !== 'undefined') {
+                if (self._currentElement === null && typeof self.ElementSet !== 'undefined') {
                     for (var i = 0; i < self.ElementSet.length; i++) {
                         var element = self.ElementSet[i];
                         if (element.IsMainElement) {
-                            self._currElement = element;
+                            self._currentElement = element;
                             break;
                         }
                     }
                 }
 
-                return self._currElement;
-            }
-
-            // TODO Obsolete
-            self.currentElement = null;
-            // TODO Just for test
-            self.currentElementIndex = 0;
-            self.toggleCurrentElement = function () {
-
-                if (typeof self.ElementSet === 'undefined' || self.ElementSet.length === 0)
-                    return null;
-
-                self.currentElementIndex++;
-
-                if (typeof self.ElementSet[self.currentElementIndex] === 'undefined') {
-                    self.currentElementIndex = 0;
-                }
-
-                self.setCurrentElement(self.ElementSet[self.currentElementIndex]);
+                return self._currentElement;
             }
 
             self.setCurrentElement = function (element) {
-                self.currentElement = element;
-                self._currElement = element;
+                self._currentElement = element;
                 $rootScope.$broadcast('resourcePoolCurrentElementChanged', self.Id);
             }
 
@@ -316,13 +295,9 @@
                 } else {
                     var mainElement = self.ResourcePool.mainElement();
                     if (mainElement !== null) {
-                        // logger.log('huh?');
-                        //logger.log('mainElement', mainElement);
                         value = mainElement.resourcePoolAdditionMultiplied();
                     }
                 }
-
-                //logger.log('resourcePoolAdditionMultiplied', value);
 
                 return value;
             }
@@ -380,12 +355,8 @@
 
             self.increaseMultiplier = function (userId) {
 
-                // logger.log('1');
-
                 if (!updateMultiplier(userId, 'increase'))
                     return;
-
-                //logger.log('2');
 
                 // Raise the event
                 // TODO Can't it be done by scope.watch?
@@ -422,22 +393,13 @@
                 if (!multiplierField || typeof self.ElementItemSet === 'undefined')
                     return updated;
 
-                //logger.log('1a');
-
                 // Find user element cell
                 for (var itemIndex = 0; itemIndex < self.ElementItemSet.length; itemIndex++) {
                     var elementItem = self.ElementItemSet[itemIndex];
                     var userElementCell = null;
 
-                    //logger.log('1a1');
-                    //logger.log('userId', userId);
-                    //logger.log('elementItem.multiplierCell()', elementItem.multiplierCell());
-
                     for (var cellIndex = 0; cellIndex < elementItem.multiplierCell().UserElementCellSet.length; cellIndex++) {
                         if (elementItem.multiplierCell().UserElementCellSet[cellIndex].UserId === userId) {
-
-                            //logger.log('1a2');
-
                             userElementCell = elementItem.multiplierCell().UserElementCellSet[cellIndex];
                             break;
                         }
@@ -471,8 +433,6 @@
                     }
                 }
 
-                //logger.log('1b');
-
                 // Return
                 return updated;
             }
@@ -480,14 +440,6 @@
 
         function elementField() {
             var self = this;
-
-            //self.setCurrElement = function () {
-
-            //    if (self.ElementFieldType !== 6)
-            //        return;
-
-            //    self.Element.ResourcePool.setCurrentElement(self.SelectedElement);
-            //}
 
             self.valueMultiplied = function () {
 

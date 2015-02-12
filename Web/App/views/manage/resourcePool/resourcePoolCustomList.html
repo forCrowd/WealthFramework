@@ -6,11 +6,9 @@
                 Resource Pool
             </th>
         </tr>
-        <tr data-ng-repeat="resourcePool in vm.resourcePoolSet">
+        <tr data-ng-repeat="resourcePool in vm.resourcePoolSet | orderBy: Id">
             <td>
                 <a href="/manage/custom/resourcePool/{{ resourcePool.Id }}">{{ resourcePool.Name }}</a>
-                -
-                <a href="/manage/custom/resourcePoolEdit/{{ resourcePool.Id }}">{{ resourcePool.Name }}</a>
             </td>
         </tr>
     </table>

@@ -246,137 +246,62 @@ http://www.asp.net/web-api/overview/testing-and-debugging/mocking-entity-framewo
 
 . resourcepoolview - Resource Pool + Field Index combo - should the fields be separate? income part can be at the end?
 
+. try to use currentthread.currentuser ?!?!?!#?!@?#?!@#?!@?#
+
+	
 	CONTINUE WITH RESOURCE POOL RATE STUFFJE!
 	CREATE A SAMPLE WITH TWO ELEMENTS + ORGANIZATION LICENSE + ORGANIZATION SECTOR?
 	WHAT FALLS INTO ELEMENT AND WHAT TO CMRP?
 	ALSO UI RELATED PROPERTIES? ENABLESUBTOTALS + ENABLECMRP?
 	
 	one element can't be selected by multiple fields?
-	
-	CONTINUE WITH; breeze extending the entities
-	
-	check sort order! ANGULAR HAD IT AND THAT'S USED NOW, IS IT OKAY?
-	
-	
+		
 	resourcepoolfield -> incomefield
 	resourcepooladdition -> resourcepoolfield ?!
 	
-	increase decrease index value!
-	
-	TEST CHARTDATAITEM ETC. WHETHER IT UPDATES DYNAMICALLY?
-	
 	breeze entities - initial values - to prevent !== 'undefined' checks!
 										
-										
-										continue with SECTOR INDEX SAMPLE - CURRENT ELEMENT SELECTION - CHART! + FUNCTIONS!
-	
-	
-						continue with indexrating increase decrease reset
-						
-						
-						highcharts loading true/false
+	highcharts loading true/false
 						
 						/* CONTINUE */
 						put userId into the businessobjects and always filter user[x] tables with this prop - like AllLive properties?!
-						
-						in front-end, use Value + ValueCount props from ElementCell, in case 'All Users' Ratings'
-						
-						user related collections should always contain one object or none - if none, it will create a new object during save
-						
-						in case 'all users' ratings';
-						Value - UserValue
-						ValueCount - 1
-						(NewValue * NewValueCount)+User new value)/(NewValueCount + 1)
-						
-						you need to add more users's value to test the cases!
-						
-						if everything's fine, remove webapi related stuff!
-						move customedit.html to resourcepooleditor
-						
-						currElement -> currentElement
-						
-						element.js - in objects, create their inner arrays userElementSet[] etc.
-						
-						---
-						continue with sector index cmrp!
-						setcurrentelement - chart item update!
-						
-						
-						
-	
-	
-	
-									CONTINUE WITH NEWEDITOR!
-									FIND A WAY TO SEND READONLY PROP FROM SERVER TO CLIENT ON ODATA?
-									REMOVE TESTPROP FROM ELEMENT!
 
-									
-									FIND A WAY TO FILTER USER RELATED LISTS!!!!!!!!!!
-									intercept odata controller?
-									custom action filter?
-									
-	
-						CONTINUE WITH INCREASE MULTIPLIER
-						CURRENTLY MULTIPLIER CELL HAS NO ACTUAL VALUE, SINCE USERELEMENTCELL IS NOT THERE?
-						
-						original resourcepooleditor doesn't work?
-						
-						sortorder field index test ?
+. user related collections should always contain one object or none - if none, it will create a new object during save
 
+element.js - in objects, create their inner arrays userElementSet[] etc.
 
-* enableresourcepool + enablesubtotals on element?
+FIND A WAY TO FILTER USER RELATED LISTS!!!!!!!!!!
+intercept odata controller?
+custom action filter?									
+
+. enableresourcepool + enablesubtotals on element?
 also resourcepoolrate on element?
 
-						continue with two elements case!
-						chart doesn't work, fix it!
-						scope.resourcePool is changing back to initial value?!
+. REMOVE ROWVERSION LINES
 
+. REMOVE WEBAPI + DTO STUFF?!
 
-						
-						
-						
-						breadcrumb - doesn't render ng-click!
-						create directive for it?
-						
-						
-						
-						try to use currentthread.currentuser ?!?!?!#?!@?#?!@#?!@?#
-						
-						
-						
-						REMOVE ROWVERSION LINES
-						
-						
-						CONT
-						DO A GENERAL TEST
-						IF OKAY, REPLACE EDITORS WITH THE NEW!
-						REMOVE WEBAPI + DTO STUFF?!
-						TOGGLE ELEMENT IS REDRAWING THE CHART?
-						RESOURCEPOOLEDITOR IN A BOOTSTRAP PANEL?
-						FIND A BETTER WAY FOR THESE READONLY ODATA PROPS?
-						ALSO ODATA FUNCTION - FOR USER LEVEL API METHODS?
-						IMPROVE + UPDATE TEST?
-						ALSO JS TESTS?
-						
-						
-						
-						
-						use one setcurrentelement ?! not on field level?
-						
-						
-						
-						remove customedit related!
-						
-						then continue with total cost!
-						
-						microsoft eula link!
-						
-						resourcepooleditor.js
-                //scope.$watch('chartHeight', function () {
-                //    scope.chartConfig.options.chart.height = scope.chartHeight;
-                //}, true);						
-						
-						
+. RESOURCEPOOLEDITOR IN A BOOTSTRAP PANEL?
+
+. FIND A BETTER WAY FOR THESE READONLY ODATA PROPS?
+ALSO ODATA FUNCTION - FOR USER LEVEL API METHODS?
+
+. IMPROVE + UPDATE TESTS?
+ALSO JS TESTS?
+
+						. continue with chapter0controller
+						resourcePoolService.increaseMultiplier
+						saveErrors!
+						userResourcePool rating increase/decrease!
+
+. check total cost index sample
+
+. microsoft eula link!
+
+. resourcepooleditor.js
+//scope.$watch('chartHeight', function () {
+//    scope.chartConfig.options.chart.height = scope.chartHeight;
+//}, true);
 
 ---
 refresh tokens?

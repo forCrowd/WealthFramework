@@ -28,6 +28,9 @@
             scope.resourcePool = null;
             scope.chartConfig = {
                 options: {
+                    chart: {
+                        height: 400
+                    },
                     plotOptions: {
                         column: {
                             allowPointSelect: true,
@@ -53,19 +56,6 @@
             //scope.resourcePool = new Object();
             //scope.resourcePool.currentElement = null;
 
-            //// TODO Just for test            
-            //scope.currentElementIndex = 0;
-            //scope.toggleCurrentElement = function () {
-
-            //    scope.currentElementIndex++;
-
-            //    if (typeof scope.resourcePool.ElementSet[scope.currentElementIndex] === 'undefined') {
-            //        scope.currentElementIndex = 0;
-            //    }
-
-            //    scope.resourcePool.currentElement = scope.resourcePool.ElementSet[scope.currentElementIndex];
-            //}
-
             ////scope.updateValueFilter = updateValueFilter;
             //scope.toggleValueFilter = function () {
             //    scope.valueFilter = scope.valueFilter === 1 ? 2 : 1;
@@ -78,35 +68,6 @@
 
             //// Value filter
             //scope.valueFilter = 1;
-
-            //// Highchart initial config
-            //scope.chartConfig = {
-            //    elementId: null,
-            //    options: {
-            //        chart: {
-            //            type: ''
-            //        },
-            //        plotOptions: {
-            //            column: {
-            //                allowPointSelect: true,
-            //                pointWidth: 15
-            //            },
-            //            pie: {
-            //                allowPointSelect: true,
-            //                cursor: 'pointer',
-            //                dataLabels: {
-            //                    enabled: false
-            //                },
-            //                showInLegend: true
-            //            }
-            //        },
-            //        xAxis: { categories: [''] },
-            //        yAxis: {
-            //            allowDecimals: false,
-            //            min: 0
-            //        }
-            //    }
-            //};
 
             // Get userId and initialize
             userService.getUserInfo()
@@ -122,8 +83,9 @@
 
                 // TODO 'Does the event belongs to me' check?
                 $rootScope.$on('resourcePoolCurrentElementChanged', function () {
-                    loadChartData(scope.resourcePool.currElement());
+                    loadChartData(scope.resourcePool.currentElement());
                 });
+
                 $rootScope.$on('elementMultiplierIncreased', saveChanges);
                 $rootScope.$on('elementMultiplierDecreased', saveChanges);
                 $rootScope.$on('elementMultiplierReset', saveChanges);
@@ -137,19 +99,17 @@
                         .then(function (data) {
                             scope.resourcePool = data[0];
                             scope.resourcePool.currentUserId = currentUserId;
-                            loadChartData(scope.resourcePool.currElement());
+                            loadChartData(scope.resourcePool.currentElement());
                         })
                         .catch(function (error) {
                             // TODO User-friendly message?
                         });
 
-                    // getResourcePool();
                 }, true);
 
-
-                //scope.$watch('chartHeight', function () {
-                //    scope.chartConfig.options.chart.height = scope.chartHeight;
-                //}, true);
+                scope.$watch('chartHeight', function () {
+                    scope.chartConfig.options.chart.height = scope.chartHeight;
+                }, true);
 
             }
 
@@ -184,6 +144,7 @@
                 scope.chartConfig.series = [];
 
                 if (element.resourcePoolField()) {
+
                     // Column type
                     for (var i = 0; i < element.ElementItemSet.length; i++) {
                         var elementItem = element.ElementItemSet[i];
@@ -191,6 +152,7 @@
                         scope.chartConfig.series.push(item);
                     }
                 } else {
+
                     // Pie type
                     var chartData = [];
                     for (var i = 0; i < element.ElementItemSet.length; i++) {
@@ -472,69 +434,5 @@
             link: link
         };
     };
-
-    /* Element Editor */
-
-    var elementEditorDirectiveId = 'elementEditor';
-
-    angular.module('main')
-        .directive(elementEditorDirectiveId, ['logger',
-            elementEditor]);
-
-    function elementEditor(logger) {
-        logger = logger.forSource(elementEditorDirectiveId);
-
-        function link(scope, elm, attrs) {
-
-            // Watches
-            //scope.$watch('element', function () {
-            //    if (typeof scope.element !== 'undefined') {
-            //        logger.log('element', scope.element);
-            //    }
-            //}, true);
-
-            scope.$watch('resourcePool', function () {
-
-                // This is just a shortcut
-                if (scope.resourcePool && scope.resourcePool.currentElement) {
-                    scope.element = scope.resourcePool.currentElement;
-                }
-
-            }, true);
-        }
-
-        return {
-            restrict: 'E',
-            templateUrl: '/App/views/directives/elementEditor.html',
-            scope: {
-                // TODO Try to replace this with only currentElement?
-                resourcePool: '='
-            },
-            link: link
-        };
-    }
-
-    var breadcrumbDirectiveId = 'breadcrumb';
-
-    angular.module('main')
-        .directive(breadcrumbDirectiveId, ['logger',
-            breadcrumb]);
-
-    function breadcrumb(logger) {
-        logger = logger.forSource(breadcrumbDirectiveId);
-
-        function link(scope, elm, atts) {
-
-        }
-
-        return {
-            restrict: 'E',
-            templateUrl: '/App/views/directives/breadcrumb.html',
-            scope: {
-                element: '='
-            },
-            link: link
-        };
-    }
 
 })();

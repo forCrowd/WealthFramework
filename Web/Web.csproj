@@ -392,7 +392,6 @@
     <Content Include="App\controllers\manage\list\userRoleListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
-    <Content Include="App\controllers\manage\resourcePool\resourcePoolCustomEditController.js" />
     <Content Include="App\controllers\manage\resourcePool\resourcePoolCustomViewController.js" />
     <Content Include="App\controllers\manage\resourcePool\resourcePoolCustomListController.js" />
     <Content Include="App\directives\resourcePoolEditor.js" />
@@ -449,9 +448,6 @@
     <Content Include="App\views\content\home.html" />
     <Content Include="App\views\content\overview.html" />
     <Content Include="App\views\content\technologies.html" />
-    <Content Include="App\views\directives\breadcrumb.html" />
-    <Content Include="App\views\directives\elementEditor.html" />
-    <Content Include="App\views\directives\newResourcePoolEditor.html" />
     <Content Include="App\views\directives\resourcePoolEditor.html" />
     <Content Include="App\views\manage\edit\editView.txt">
       <AutoGen>True</AutoGen>
@@ -537,7 +533,6 @@
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
     <Content Include="App\views\manage\resourcePool\resourcePoolCustomList.html" />
-    <Content Include="App\views\manage\resourcePool\resourcePoolCustomEdit.html" />
     <Content Include="App\views\manage\resourcePool\resourcePoolCustomView.html" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap-theme.css" />

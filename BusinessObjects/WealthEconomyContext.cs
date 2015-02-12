@@ -53,9 +53,6 @@
             modelBuilder.Entity<UserRole>().ToTable("UserRole");
             modelBuilder.Entity<Role>().ToTable("Role");
 
-            // Ignores
-            //modelBuilder.Entity<Element>().Ignore(item => item.TestProp);
-
             // Cascade deletes
             modelBuilder.Entity<ElementCell>()
                 .HasRequired<ElementField>(item => item.ElementField)
