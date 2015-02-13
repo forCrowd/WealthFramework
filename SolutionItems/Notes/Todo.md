@@ -275,7 +275,7 @@ ALSO JS TESTS?
 
 . total cost index sample
 
-. microsoft eula link!
+. microsoft eula link! works now?
 
 ---
 refresh tokens?
