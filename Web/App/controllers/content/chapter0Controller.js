@@ -3,9 +3,9 @@
 
     var controllerId = 'chapter0Controller';
     angular.module('main')
-        .controller(controllerId, ['resourcePoolService', '$scope', '$timeout', '$rootScope', 'logger', chapter0Controller]);
+        .controller(controllerId, ['resourcePoolService', 'userService', '$scope', '$timeout', '$rootScope', 'logger', chapter0Controller]);
 
-    function chapter0Controller(resourcePoolService, $scope, $timeout, $rootScope, logger) {
+    function chapter0Controller(resourcePoolService, userService, $scope, $timeout, $rootScope, logger) {
 
         logger = logger.forSource(controllerId);
 
@@ -33,7 +33,19 @@
                 function increaseMultiplier() {
 
                     // Call the service to increase the multiplier
-                    resourcePoolService.increaseMultiplier(1);
+                    resourcePoolService.getResourcePoolCustomEdit(vm.introduction_UPOResourcePoolId)
+                        .then(function (resourcePoolSet) {
+                            userService.getUserInfo()
+                                .then(function (userInfo) {
+                                    var resourcePool = resourcePoolSet[0];
+                                    resourcePool.currentUserId = userInfo.Id;
+
+                                    for (var i = 0; i < resourcePool.ElementSet.length; i++) {
+                                        var element = resourcePool.ElementSet[i];
+                                        element.increaseMultiplier(resourcePool.currentUserId);
+                                    }
+                                });
+                        });
 
                     // Then increase recursively
                     // TODO Decrease this timeout interval
@@ -52,28 +64,48 @@
 
             function initializeBasics() {
 
+                var basics_updatingOpposite = false; // To prevent recursive update
                 vm.basics_ExistingModelResourcePoolId = 2;
                 vm.basics_NewModelResourcePoolId = 3;
 
                 // Listen resource pool updated event
-                $rootScope.$on('resourcePool_MultiplierIncreased', updateOppositeResourcePool);
-                $rootScope.$on('resourcePool_MultiplierDecreased', updateOppositeResourcePool);
-                $rootScope.$on('resourcePool_MultiplierReset', updateOppositeResourcePool);
+                $rootScope.$on('element_multiplierIncreased', updateOppositeResourcePool);
+                $rootScope.$on('element_multiplierDecreased', updateOppositeResourcePool);
+                $rootScope.$on('element_multiplierReset', updateOppositeResourcePool);
 
-                function updateOppositeResourcePool(event, resourcePoolId, eventSource) {
-                    
-                    if ((resourcePoolId === vm.basicsExistingModelResourcePoolId
-                        || resourcePoolId === vm.basicsNewModelResourcePoolId)
-                        && eventSource !== 'chapter0Controller') {
+                function updateOppositeResourcePool(event, element) {
 
-                        var oppositeResourcePoolId = resourcePoolId === vm.basicsExistingModelResourcePoolId
-                            ? vm.basicsNewModelResourcePoolId
-                            : vm.basicsExistingModelResourcePoolId;
+                    if (element.ResourcePool.Id === vm.basics_ExistingModelResourcePoolId
+                        || element.ResourcePool.Id === vm.basics_NewModelResourcePoolId) {
 
-                        switch (event.name) {
-                            case 'resourcePool_MultiplierIncreased': { resourcePoolService.increaseMultiplier(oppositeResourcePoolId, 'chapter0Controller'); break; }
-                            case 'resourcePool_MultiplierDecreased': { resourcePoolService.decreaseMultiplier(oppositeResourcePoolId, 'chapter0Controller'); break; }
-                            case 'resourcePool_MultiplierReset': { resourcePoolService.resetMultiplier(oppositeResourcePoolId, 'chapter0Controller'); break; }
+                        if (basics_updatingOpposite) {
+                            basics_updatingOpposite = false;
+                            return;
+                        } else {
+                            basics_updatingOpposite = true;
+
+                            var oppositeResourcePoolId = element.ResourcePool.Id === vm.basics_ExistingModelResourcePoolId
+                                ? vm.basics_NewModelResourcePoolId
+                                : vm.basics_ExistingModelResourcePoolId;
+
+                            // Call the service to increase the multiplier
+                            resourcePoolService.getResourcePoolCustomEdit(oppositeResourcePoolId)
+                                .then(function (resourcePoolSet) {
+                                    userService.getUserInfo()
+                                        .then(function (userInfo) {
+                                            var resourcePool = resourcePoolSet[0];
+                                            resourcePool.currentUserId = userInfo.Id;
+
+                                            for (var i = 0; i < resourcePool.ElementSet.length; i++) {
+                                                var element = resourcePool.ElementSet[i];
+                                                switch (event.name) {
+                                                    case 'element_multiplierIncreased': { element.increaseMultiplier(resourcePool.currentUserId); break; }
+                                                    case 'element_multiplierDecreased': { element.decreaseMultiplier(resourcePool.currentUserId); break; }
+                                                    case 'element_multiplierReset': { element.resetMultiplier(resourcePool.currentUserId); break; }
+                                                }
+                                            }
+                                        });
+                                });
                         }
                     }
                 }

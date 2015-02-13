@@ -36,35 +36,35 @@
         //    return $http.get(url);
         //}
 
-        function decreaseMultiplier(elementId, eventSource) {
-            if (typeof eventSource === 'undefined') { eventSource = ''; }
-            var url = '/api/ElementCustom/DecreaseMultiplier/' + elementId;
-            return $http.post(url)
-                .success(function () {
-                    // Raise the event
-                    $rootScope.$broadcast('element_MultiplierDecreased', elementId, eventSource);
-                });
-        }
+        //function decreaseMultiplier(elementId, eventSource) {
+        //    if (typeof eventSource === 'undefined') { eventSource = ''; }
+        //    var url = '/api/ElementCustom/DecreaseMultiplier/' + elementId;
+        //    return $http.post(url)
+        //        .success(function () {
+        //            // Raise the event
+        //            $rootScope.$broadcast('element_MultiplierDecreased', elementId, eventSource);
+        //        });
+        //}
 
-        function increaseMultiplier(elementId, eventSource) {
-            if (typeof eventSource === 'undefined') { eventSource = ''; }
-            var url = '/api/ElementCustom/IncreaseMultiplier/' + elementId;
-            return $http.post(url)
-                .success(function () {
-                    // Raise the event
-                    $rootScope.$broadcast('element_MultiplierIncreased', elementId, eventSource);
-                });
-        }
+        //function increaseMultiplier(elementId, eventSource) {
+        //    if (typeof eventSource === 'undefined') { eventSource = ''; }
+        //    var url = '/api/ElementCustom/IncreaseMultiplier/' + elementId;
+        //    return $http.post(url)
+        //        .success(function () {
+        //            // Raise the event
+        //            $rootScope.$broadcast('element_MultiplierIncreased', elementId, eventSource);
+        //        });
+        //}
 
-        function resetMultiplier(elementId, eventSource) {
-            if (typeof eventSource === 'undefined') { eventSource = ''; }
-            var url = '/api/ElementCustom/ResetMultiplier/' + elementId;
-            return $http.post(url)
-                .success(function () {
-                    // Raise the event
-                    $rootScope.$broadcast('element_MultiplierReset', elementId, eventSource);
-                });
-        }
+        //function resetMultiplier(elementId, eventSource) {
+        //    if (typeof eventSource === 'undefined') { eventSource = ''; }
+        //    var url = '/api/ElementCustom/ResetMultiplier/' + elementId;
+        //    return $http.post(url)
+        //        .success(function () {
+        //            // Raise the event
+        //            $rootScope.$broadcast('element_MultiplierReset', elementId, eventSource);
+        //        });
+        //}
 
         //function saveChanges(eventSource) {
         //    if (typeof eventSource === 'undefined') { eventSource = ''; }

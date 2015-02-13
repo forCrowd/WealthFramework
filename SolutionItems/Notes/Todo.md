@@ -271,12 +271,9 @@ ALSO ODATA FUNCTION - FOR USER LEVEL API METHODS?
 . IMPROVE + UPDATE TESTS?
 ALSO JS TESTS?
 
-	. continue with chapter0controller
-	resourcePoolService.increaseMultiplier
-	saveErrors!
-	userResourcePool rating increase/decrease!
+. userResourcePool rating increase/decrease!
 
-. check total cost index sample
+. total cost index sample
 
 . microsoft eula link!
 

@@ -85,15 +85,16 @@
                 });
         }
 
-        function saveChanges(eventSource) {
-            if (typeof eventSource === 'undefined') { eventSource = ''; }
+        function saveChanges() {
+            //if (typeof eventSource === 'undefined') { eventSource = ''; }
             return dataContext.saveChanges()
                 .then(function (result) {
                     for (var i = 0; i < result.entities.length; i++) {
                         var entity = result.entities[i];
                         if (entity.entityAspect._entityKey.entityType.shortName === 'ResourcePool') {
                             // Raise the event
-                            $rootScope.$broadcast('resourcePool_Saved', entity._backingStore.Id, eventSource);
+                            $rootScope.$broadcast('resourcePool_Saved', entity._backingStore.Id);
+                            // $rootScope.$broadcast('resourcePool_Saved', entity._backingStore.Id, eventSource);
                         }
                     }
 

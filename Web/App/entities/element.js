@@ -26,6 +26,8 @@
 
         function resourcePool() {
             var self = this;
+
+            self._currentElement = null;
             self.currentUserId = 0;
 
             // Resource pool rate percentage
@@ -63,8 +65,28 @@
                 return mainElement;
             }
 
+            //self._currentElm = null;
+
+            //Object.defineProperty(self, 'currentElm', {
+            //    configurable: true,
+            //    enumerable: true,
+            //    get: function () {
+
+            //        if (self._currentElm === null && typeof self.ElementSet !== 'undefined') {
+            //            for (var i = 0; i < self.ElementSet.length; i++) {
+            //                var element = self.ElementSet[i];
+            //                if (element.IsMainElement) {
+            //                    self._currentElm = element;
+            //                    break;
+            //                }
+            //            }
+            //        }
+
+            //        return self._currentElm;
+            //    }
+            //});
+
             // Current element
-            self._currentElement = null;
             self.currentElement = function () {
 
                 if (self._currentElement === null && typeof self.ElementSet !== 'undefined') {
@@ -82,7 +104,7 @@
 
             self.setCurrentElement = function (element) {
                 self._currentElement = element;
-                $rootScope.$broadcast('resourcePoolCurrentElementChanged', self.Id);
+                $rootScope.$broadcast('resourcePool_currentElementChanged', self);
             }
 
             // CMRP Rate
@@ -360,7 +382,7 @@
 
                 // Raise the event
                 // TODO Can't it be done by scope.watch?
-                $rootScope.$broadcast('elementMultiplierIncreased', self.Id);
+                $rootScope.$broadcast('element_multiplierIncreased', self);
             }
 
             self.decreaseMultiplier = function (userId) {
@@ -370,7 +392,7 @@
 
                 // Raise the event
                 // TODO Can't it be done by scope.watch?
-                $rootScope.$broadcast('elementMultiplierDecreased', self.Id);
+                $rootScope.$broadcast('element_multiplierDecreased', self);
             }
 
             self.resetMultiplier = function (userId) {
@@ -380,7 +402,7 @@
 
                 // Raise the event
                 // TODO Can't it be done by scope.watch?
-                $rootScope.$broadcast('elementMultiplierReset', self.Id);
+                $rootScope.$broadcast('element_multiplierReset', self);
             }
 
             function updateMultiplier(userId, updateType) {
@@ -959,7 +981,7 @@
                 if (!updateIndexRating(self, userId, 'increase'))
                     return;
 
-                $rootScope.$broadcast('indexRatingIncreased', self.Id);
+                $rootScope.$broadcast('elementCell_indexRatingIncreased', self);
             }
 
             // TODO
@@ -970,7 +992,7 @@
                 if (!updateIndexRating(self, userId, 'decrease'))
                     return;
 
-                $rootScope.$broadcast('indexRatingDecreased', self.Id);
+                $rootScope.$broadcast('elementCell_indexRatingDecreased', self);
             }
 
             function updateIndexRating(cell, userId, updateType) {

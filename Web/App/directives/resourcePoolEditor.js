@@ -80,15 +80,17 @@
                 // Event handlers
 
                 // TODO 'Does the event belongs to me' check?
-                $rootScope.$on('resourcePoolCurrentElementChanged', function () {
-                    loadChartData(scope.resourcePool.currentElement());
+                $rootScope.$on('resourcePool_currentElementChanged', function (event, resourcePool) {
+                    if (resourcePool === scope.resourcePool) {
+                        loadChartData(scope.resourcePool.currentElement());
+                    }
                 });
 
-                $rootScope.$on('elementMultiplierIncreased', saveChanges);
-                $rootScope.$on('elementMultiplierDecreased', saveChanges);
-                $rootScope.$on('elementMultiplierReset', saveChanges);
-                $rootScope.$on('indexRatingIncreased', saveChanges);
-                $rootScope.$on('indexRatingDecreased', saveChanges);
+                $rootScope.$on('element_multiplierIncreased', elementUpdatedEventHandler);
+                $rootScope.$on('element_multiplierDecreased', elementUpdatedEventHandler);
+                $rootScope.$on('element_multiplierReset', elementUpdatedEventHandler);
+                $rootScope.$on('elementCell_indexRatingIncreased', elementCellUpdatedEventHandler);
+                $rootScope.$on('elementCell_indexRatingDecreased', elementCellUpdatedEventHandler);
 
                 // Get the current resource pool
                 scope.$watch('resourcePoolId', function () {
@@ -135,8 +137,20 @@
             //    }
             //}
 
+            function elementUpdatedEventHandler(event, element) {
+                if (element.resourcePool === scope.resourcePool) {
+                    saveChanges();
+                }
+            }
+
+            function elementCellUpdatedEventHandler(event, elementCell) {
+                if (elementCell.ElementItem.Element.resourcePool === scope.resourcePool) {
+                    saveChanges();
+                }
+            }
+
             function loadChartData(element) {
-                
+
                 scope.chartConfig.loading = true;
 
                 scope.chartConfig.title = { text: element.Name };
