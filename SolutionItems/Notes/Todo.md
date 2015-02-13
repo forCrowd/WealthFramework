@@ -186,20 +186,6 @@ public string LanguageID { get; set; }
 
 ### Misc - Unsorted
 
-* H2020;
-
-Calls
-28 May
-http://ec.europa.eu/research/participants/portal/desktop/en/opportunities/h2020/calls/h2020-inso-2015-cnect.html
-http://ec.europa.eu/research/participants/portal/desktop/en/opportunities/h2020/calls/h2020-inso-2015.html
-http://ec.europa.eu/research/participants/portal/desktop/en/opportunities/h2020/calls/h2020-euro-society-2015.html
-http://ec.europa.eu/research/participants/portal/desktop/en/opportunities/h2020/calls/h2020-euro-6-2015.html
-
-Schedule
-Jan, Feb, Mar -> develop
-Apr -> deploy + open to public test
-May -> prepare for calls
-
 * software licenses;
 https://www.blackducksoftware.com/resources/data/top-20-open-source-licenses			
 http://opensource.org/licenses/category
@@ -248,7 +234,6 @@ http://www.asp.net/web-api/overview/testing-and-debugging/mocking-entity-framewo
 
 . try to use currentthread.currentuser ?!?!?!#?!@?#?!@#?!@?#
 
-	
 	CONTINUE WITH RESOURCE POOL RATE STUFFJE!
 	CREATE A SAMPLE WITH TWO ELEMENTS + ORGANIZATION LICENSE + ORGANIZATION SECTOR?
 	WHAT FALLS INTO ELEMENT AND WHAT TO CMRP?
@@ -256,15 +241,12 @@ http://www.asp.net/web-api/overview/testing-and-debugging/mocking-entity-framewo
 	
 	one element can't be selected by multiple fields?
 		
-	resourcepoolfield -> incomefield
-	resourcepooladdition -> resourcepoolfield ?!
+resourcepoolfield -> incomefield
+resourcepooladdition -> resourcepoolfield ?!
 	
-	breeze entities - initial values - to prevent !== 'undefined' checks!
-										
-	highcharts loading true/false
-						
-						/* CONTINUE */
-						put userId into the businessobjects and always filter user[x] tables with this prop - like AllLive properties?!
+breeze entities - initial values - to prevent !== 'undefined' checks!
+
+. put userId into the businessobjects and always filter user[x] tables with this prop - like AllLive properties?!
 
 . user related collections should always contain one object or none - if none, it will create a new object during save
 
@@ -289,19 +271,14 @@ ALSO ODATA FUNCTION - FOR USER LEVEL API METHODS?
 . IMPROVE + UPDATE TESTS?
 ALSO JS TESTS?
 
-						. continue with chapter0controller
-						resourcePoolService.increaseMultiplier
-						saveErrors!
-						userResourcePool rating increase/decrease!
+	. continue with chapter0controller
+	resourcePoolService.increaseMultiplier
+	saveErrors!
+	userResourcePool rating increase/decrease!
 
 . check total cost index sample
 
 . microsoft eula link!
-
-. resourcepooleditor.js
-//scope.$watch('chartHeight', function () {
-//    scope.chartConfig.options.chart.height = scope.chartHeight;
-//}, true);
 
 ---
 refresh tokens?

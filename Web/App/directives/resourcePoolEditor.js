@@ -28,9 +28,6 @@
             scope.resourcePool = null;
             scope.chartConfig = {
                 options: {
-                    chart: {
-                        height: 400
-                    },
                     plotOptions: {
                         column: {
                             allowPointSelect: true,
@@ -50,7 +47,8 @@
                         allowDecimals: false,
                         min: 0
                     }
-                }
+                },
+                size: {}
             };
 
             //scope.resourcePool = new Object();
@@ -107,8 +105,9 @@
 
                 }, true);
 
+                // Chart height
                 scope.$watch('chartHeight', function () {
-                    scope.chartConfig.options.chart.height = scope.chartHeight;
+                    scope.chartConfig.size.height = scope.chartHeight;
                 }, true);
 
             }
@@ -137,6 +136,8 @@
             //}
 
             function loadChartData(element) {
+                
+                scope.chartConfig.loading = true;
 
                 scope.chartConfig.title = { text: element.Name };
                 scope.chartConfig.options.chart = { type: element.resourcePoolField() ? 'column' : 'pie' };
@@ -167,6 +168,9 @@
                     }
                     scope.chartConfig.series = [{ data: chartData }];
                 }
+
+                scope.chartConfig.loading = false;
+
             }
 
             function saveChanges() {

@@ -8,7 +8,7 @@
                 &nbsp;
                 Display: <a href="" data-ng-click="resourcePool.currentElement().toggleValueFilter()">{{ resourcePool.currentElement().valueFilterText() }}</a>
                 <div>
-                    <ol class="breadcrumb">
+                    <ol class="breadcrumb" data-ng-if="resourcePool.ElementSet.length > 1">
                         <li data-ng-repeat="item in resourcePool.currentElement().parents() | orderBy: 'sortOrder' :true" data-ng-class="{ active: $last }">
                             <a href="#" data-ng-if="!$last" data-ng-click="item.element.ResourcePool.setCurrentElement(item.element)">
                                 {{ item.element.Name }}
@@ -27,8 +27,6 @@
             <highchart data-config="chartConfig"></highchart>
         </div>
         <div class="col-md-8">
-            <!--<element-editor resource-pool="resourcePool"></element-editor>-->
-
             <table class="resourcePoolTable table-striped">
                 <thead>
                     <tr>
@@ -300,8 +298,6 @@
                     </tr>
                 </tfoot>
             </table>
-
-
         </div>
     </div>
 </div>
