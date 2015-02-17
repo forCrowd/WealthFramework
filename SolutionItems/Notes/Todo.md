@@ -251,8 +251,6 @@ custom action filter?
 . enableresourcepool + enablesubtotals on element?
 also resourcepoolrate on element?
 
-. REMOVE ROWVERSION LINES
-
 . REMOVE WEBAPI + DTO STUFF?!
 
 . RESOURCEPOOLEDITOR IN A BOOTSTRAP PANEL?
