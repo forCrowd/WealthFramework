@@ -233,26 +233,18 @@ http://www.asp.net/web-api/overview/testing-and-debugging/mocking-entity-framewo
 . resourcepoolview - Resource Pool + Field Index combo - should the fields be separate? income part can be at the end?
 
 . try to use currentthread.currentuser ?!?!?!#?!@?#?!@#?!@?#
-
-	CONTINUE WITH RESOURCE POOL RATE STUFFJE!
-	CREATE A SAMPLE WITH TWO ELEMENTS + ORGANIZATION LICENSE + ORGANIZATION SECTOR?
-	WHAT FALLS INTO ELEMENT AND WHAT TO CMRP?
-	ALSO UI RELATED PROPERTIES? ENABLESUBTOTALS + ENABLECMRP?
 	
-	one element can't be selected by multiple fields?
+. one element can't be selected by multiple fields?
 		
-resourcepoolfield -> incomefield
+. resourcepoolfield -> incomefield
 resourcepooladdition -> resourcepoolfield ?!
-	
-breeze entities - initial values - to prevent !== 'undefined' checks!
+
+. breeze entities - initial values - to prevent !== 'undefined' checks!
+. element.js - in objects, create their inner arrays userElementSet[] etc.
 
 . put userId into the businessobjects and always filter user[x] tables with this prop - like AllLive properties?!
-
 . user related collections should always contain one object or none - if none, it will create a new object during save
-
-element.js - in objects, create their inner arrays userElementSet[] etc.
-
-FIND A WAY TO FILTER USER RELATED LISTS!!!!!!!!!!
+. FIND A WAY TO FILTER USER RELATED LISTS!!!!!!!!!!
 intercept odata controller?
 custom action filter?									
 
