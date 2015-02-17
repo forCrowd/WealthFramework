@@ -152,12 +152,6 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 
             if (isNew) {
                 <#= serviceId #>.create<#= entityTypeName #>(vm.<#= entityVariable #>);
-            } else {
-                // To be able to do concurrency check, RowVersion field needs to be send to server
-				// Since breeze only sends the modified fields, a fake modification had to be applied to RowVersion field
-                var rowVersion = vm.<#= entityVariable #>.RowVersion;
-                vm.<#= entityVariable #>.RowVersion = '';
-                vm.<#= entityVariable #>.RowVersion = rowVersion;
             }
 
             isSaving = true;

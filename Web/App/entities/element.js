@@ -446,10 +446,6 @@
                             ? userElementCell.DecimalValue - 1
                             : 0;
 
-                            var rowVersion = userElementCell.RowVersion;
-                            userElementCell.RowVersion = '';
-                            userElementCell.RowVersion = rowVersion;
-
                             updated = true;
                         }
                     }

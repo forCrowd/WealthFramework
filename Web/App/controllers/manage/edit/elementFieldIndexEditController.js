@@ -87,12 +87,6 @@
 
             if (isNew) {
                 elementFieldIndexService.createElementFieldIndex(vm.elementFieldIndex);
-            } else {
-                // To be able to do concurrency check, RowVersion field needs to be send to server
-				// Since breeze only sends the modified fields, a fake modification had to be applied to RowVersion field
-                var rowVersion = vm.elementFieldIndex.RowVersion;
-                vm.elementFieldIndex.RowVersion = '';
-                vm.elementFieldIndex.RowVersion = rowVersion;
             }
 
             isSaving = true;

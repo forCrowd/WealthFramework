@@ -95,12 +95,6 @@
 
             if (isNew) {
                 userRoleService.createUserRole(vm.userRole);
-            } else {
-                // To be able to do concurrency check, RowVersion field needs to be send to server
-				// Since breeze only sends the modified fields, a fake modification had to be applied to RowVersion field
-                var rowVersion = vm.userRole.RowVersion;
-                vm.userRole.RowVersion = '';
-                vm.userRole.RowVersion = rowVersion;
             }
 
             isSaving = true;

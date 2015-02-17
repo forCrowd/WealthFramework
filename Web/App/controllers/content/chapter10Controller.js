@@ -133,10 +133,6 @@
                     userResourcePool.KnowledgeIndexRating = vm.indexChartData[1].y;
                     userResourcePool.TotalCostIndexRating = vm.indexChartData[2].y;
 
-                    var rowVersion = userResourcePool.RowVersion;
-                    userResourcePool.RowVersion = '';
-                    userResourcePool.RowVersion = rowVersion;
-
                     userResourcePoolService.saveChanges()
                         .then(function () {
                             logger.logSuccess('Your changes have been saved!', null, true);

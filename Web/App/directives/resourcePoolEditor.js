@@ -337,10 +337,6 @@
             //                    userElementCell.DecimalValue = type === 'increase'
             //                        ? userElementCell.DecimalValue + 10
             //                        : userElementCell.DecimalValue - 10;
-
-            //                    var rowVersion = userElementCell.RowVersion;
-            //                    userElementCell.RowVersion = '';
-            //                    userElementCell.RowVersion = rowVersion;
             //                }
             //                else {
             //                    // TODO UserId?

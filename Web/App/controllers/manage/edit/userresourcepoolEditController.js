@@ -95,12 +95,6 @@
 
             if (isNew) {
                 userResourcePoolService.createUserResourcePool(vm.userResourcePool);
-            } else {
-                // To be able to do concurrency check, RowVersion field needs to be send to server
-				// Since breeze only sends the modified fields, a fake modification had to be applied to RowVersion field
-                var rowVersion = vm.userResourcePool.RowVersion;
-                vm.userResourcePool.RowVersion = '';
-                vm.userResourcePool.RowVersion = rowVersion;
             }
 
             isSaving = true;

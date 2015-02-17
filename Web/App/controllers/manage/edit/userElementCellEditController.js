@@ -95,12 +95,6 @@
 
             if (isNew) {
                 userElementCellService.createUserElementCell(vm.userElementCell);
-            } else {
-                // To be able to do concurrency check, RowVersion field needs to be send to server
-				// Since breeze only sends the modified fields, a fake modification had to be applied to RowVersion field
-                var rowVersion = vm.userElementCell.RowVersion;
-                vm.userElementCell.RowVersion = '';
-                vm.userElementCell.RowVersion = rowVersion;
             }
 
             isSaving = true;

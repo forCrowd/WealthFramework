@@ -31,22 +31,22 @@
 
         function initialize() {
 
-                userService.getUserInfo()
-                    .then(function (userInfo) {
-                        // vm.userInfo = userInfo;
+            userService.getUserInfo()
+                .then(function (userInfo) {
+                    // vm.userInfo = userInfo;
 
-                        userService.getUser(userInfo.Id)
-                            .then(function (data) {
-                                vm.user = data;
-                            })
-                            .catch(function (error) {
-                                // TODO User-friendly message?
-                            });
+                    userService.getUser(userInfo.Id)
+                        .then(function (data) {
+                            vm.user = data;
+                        })
+                        .catch(function (error) {
+                            // TODO User-friendly message?
+                        });
 
-                    }, function () {
-                        // TODO Error?
-                    });
-                };
+                }, function () {
+                    // TODO Error?
+                });
+        };
 
         function isSaveDisabled() {
             return isSaving ||
@@ -54,12 +54,6 @@
         }
 
         function saveChanges() {
-
-                // To be able to do concurrency check, RowVersion field needs to be send to server
-                // Since breeze only sends the modified fields, a fake modification had to be applied to RowVersion field
-                var rowVersion = vm.user.RowVersion;
-                vm.user.RowVersion = '';
-                vm.user.RowVersion = rowVersion;
 
             isSaving = true;
             userService.saveChanges()

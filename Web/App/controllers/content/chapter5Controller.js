@@ -219,10 +219,6 @@
 
                         if (dataItem.Rating !== chartDataItem.y) {
                             dataItem.Rating = chartDataItem.y;
-
-                            var rowVersion = dataItem.RowVersion;
-                            dataItem.RowVersion = '';
-                            dataItem.RowVersion = rowVersion;
                         }
                     }
 
