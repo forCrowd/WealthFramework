@@ -268,14 +268,17 @@ also resourcepoolrate on element?
 . FIND A BETTER WAY FOR THESE READONLY ODATA PROPS?
 ALSO ODATA FUNCTION - FOR USER LEVEL API METHODS?
 
+. create a script to reset live db!
+
+. ?
+http://blogs.msdn.com/b/webdev/archive/2015/02/11/improve-performance-by-optimizing-queries-for-asp-net-identity-and-other-membership-providers.aspx
+
 . IMPROVE + UPDATE TESTS?
 ALSO JS TESTS?
 
 . userResourcePool rating increase/decrease!
 
 . total cost index sample
-
-. microsoft eula link! works now?
 
 ---
 refresh tokens?
