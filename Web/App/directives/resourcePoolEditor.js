@@ -86,6 +86,11 @@
                     }
                 });
 
+                //$rootScope.$on('element_valueFilterChanged', function (event, element) {
+                //    if (element === scope.resourcePool.currentElement())
+                //        loadChartData(element);
+                //});
+
                 $rootScope.$on('element_multiplierIncreased', elementUpdatedEventHandler);
                 $rootScope.$on('element_multiplierDecreased', elementUpdatedEventHandler);
                 $rootScope.$on('element_multiplierReset', elementUpdatedEventHandler);
@@ -144,7 +149,7 @@
             }
 
             function elementCellUpdatedEventHandler(event, elementCell) {
-                if (elementCell.ElementItem.Element.resourcePool === scope.resourcePool) {
+                if (elementCell.ElementItem.Element.ResourcePool === scope.resourcePool) {
                     saveChanges();
                 }
             }

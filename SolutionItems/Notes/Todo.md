@@ -57,7 +57,7 @@ http://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-w
 
 ### Misc
 
-* Update TED link with ForCrowd account's version?
+* Update TED link with forCrowd account's version?
 
 ## Long Term
 
@@ -235,7 +235,10 @@ http://www.asp.net/web-api/overview/testing-and-debugging/mocking-entity-framewo
 . try to use currentthread.currentuser ?!?!?!#?!@?#?!@#?!@?#
 	
 . one element can't be selected by multiple fields?
-		
+
+. otherusersrating + count properties from server (even from db)
+.. currently resourcePoolEditor - AllRatings filter doesn't update chart + items
+
 . resourcepoolfield -> incomefield
 resourcepooladdition -> resourcepoolfield ?!
 

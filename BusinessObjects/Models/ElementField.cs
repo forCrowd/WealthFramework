@@ -162,12 +162,10 @@ namespace BusinessObjects
 
         #region - Methods -
 
-        public ElementFieldIndex AddIndex(string name, RatingSortType? sortType)
+        public ElementFieldIndex AddIndex(string name, RatingSortType sortType)
         {
             var index = new ElementFieldIndex(this, name);
-
-            if (sortType.HasValue)
-                index.RatingSortType = (byte)sortType;
+            index.RatingSortType = (byte)sortType;
 
             ElementFieldIndexSet.Add(index);
             return index;
