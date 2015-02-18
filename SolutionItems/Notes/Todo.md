@@ -57,7 +57,7 @@ http://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-w
 
 ### Misc
 
-* Update TED link with Uniqore account's version?
+* Update TED link with ForCrowd account's version?
 
 ## Long Term
 
