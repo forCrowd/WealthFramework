@@ -163,6 +163,7 @@
             self.valueFilter = 1;
             self.toggleValueFilter = function () {
                 self.valueFilter = self.valueFilter === 1 ? 2 : 1;
+                //$rootScope.$broadcast('element_valueFilterChanged', self);
             }
             self.valueFilterText = function () {
                 return self.valueFilter === 1 ? "Only My Ratings" : "All Ratings";
@@ -839,7 +840,7 @@
                             //break;
 
                             //var currentUserRating = self.UserElementCellSet[0];
-
+                            //logger.log('ratingAverage', self.RatingAverage);
                             value = self.RatingAverage;
                             break;
 
@@ -854,6 +855,33 @@
 
             }
 
+            //self.otherUsersRatingCount = function () {
+
+            //    // TODO This has to be done once, probably in the constructor?
+            //    var userElementCell = self.currentUserElementCell();
+
+            //    return userElementCell === null
+            //        ? self.RatingCount
+            //        : self.RatingCount - 1;
+            //}
+
+            //self.otherUsersRatingTotal = function () {
+
+            //}
+
+            //self.otherUsersRatingAverage = function () {
+
+            //}
+
+            //self.ratingAverage = function () {
+
+            //    var oldValue = 0;
+            //    var ratingTotal = self.RatingAverage * self.RatingCount;
+
+            //    self.RatingAverage = (ratingTotal - oldValue + userElementCell.DecimalValue) / self.RatingCount;
+
+            //    return self.RatingAverage;
+            //}
 
             self.value = function () {
 
@@ -1038,6 +1066,7 @@
                     // Todo huh?
                     // RatingAverage is a read-only property on the server, so modification to it should be ignored (shouldn't be send back to server)
                     // Find a better a way to ignore these custom props?
+                    //logger.log('ratingAverage', self.RatingAverage);
                     self.RatingAverage = (ratingTotal - oldValue + userElementCell.DecimalValue) / self.RatingCount;
                     self.entityAspect.rejectChanges();
                 }
