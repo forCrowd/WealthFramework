@@ -74,7 +74,7 @@ namespace BusinessObjects
         /// What is the average rating for this index?
         /// It will be used to determine the weight of this index in its resource pool.
         /// </summary>
-        [NotMapped]
+        //[NotMapped]
         public decimal IndexRatingAverage
         {
             get
@@ -83,17 +83,17 @@ namespace BusinessObjects
                     ? UserElementFieldIndexSet.Average(item => item.Rating)
                     : 0;
             }
-            set { }
+            //set { }
         }
 
         /// <summary>
         /// How many users rated this index?
         /// </summary>
-        [NotMapped]
+        //[NotMapped]
         public decimal IndexRatingCount
         {
             get { return UserElementFieldIndexSet.Count(); }
-            set { }
+            //set { }
         }
 
         public decimal IndexRatingPercentage()

@@ -162,7 +162,7 @@ namespace BusinessObjects
         //    set { }
         //}
 
-        [NotMapped]
+        //[NotMapped]
         public decimal RatingAverage
         {
             get
@@ -226,7 +226,7 @@ namespace BusinessObjects
                         throw new ArgumentOutOfRangeException();
                 }
             }
-            set { }
+            //set { }
         }
 
         public int RatingCount
