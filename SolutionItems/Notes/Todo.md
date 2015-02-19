@@ -276,6 +276,10 @@ ALSO ODATA FUNCTION - FOR USER LEVEL API METHODS?
 
 . elementcell's ratingaverage vs. ratingcount - [notmapped] + readonly diff?
 
+. continue with useraware attribute, it's tests - user entity for instance?
+and then, how to retrieve OtherUsersRatingAverage + OtherUsersRatingCount from db?
+and also how to handle this in Business Layer?
+
 . ?
 http://blogs.msdn.com/b/webdev/archive/2015/02/11/improve-performance-by-optimizing-queries-for-asp-net-identity-and-other-membership-providers.aspx
 
