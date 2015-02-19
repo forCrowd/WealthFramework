@@ -274,6 +274,8 @@ ALSO ODATA FUNCTION - FOR USER LEVEL API METHODS?
 
 . create a script to reset live db!
 
+. elementcell's ratingaverage vs. ratingcount - [notmapped] + readonly diff?
+
 . ?
 http://blogs.msdn.com/b/webdev/archive/2015/02/11/improve-performance-by-optimizing-queries-for-asp-net-identity-and-other-membership-providers.aspx
 
