@@ -25,6 +25,7 @@ An experimental resource management system that aims to provide a sustainable ec
 * breeze RowVersion property issue was fixed
 * Extending the breeze's entities, instead of DTOs from WebApi
 * Element drill up & down for ResourcePoolEditor directive
+* Web - CustomAuthentication filter with debug user
 
 **0.14.8**
 

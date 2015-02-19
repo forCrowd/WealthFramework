@@ -73,6 +73,8 @@ or always calculate the total average based on invidiuals percentage? or both?
 
 ### Technical
 
+* check EF conventions for possible use - rowversion, datetime, id etc?
+
 * pass entity or entityId - check CopySampleDataAsync() method - sourceUserId vs targetUser?
 
 * When creating resourcepool is gives tons of errors but then does the operation and says ok in UI?!
