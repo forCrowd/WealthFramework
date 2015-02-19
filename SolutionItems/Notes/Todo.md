@@ -249,7 +249,16 @@ resourcepooladdition -> resourcepoolfield ?!
 . user related collections should always contain one object or none - if none, it will create a new object during save
 . FIND A WAY TO FILTER USER RELATED LISTS!!!!!!!!!!
 intercept odata controller?
-custom action filter?									
+custom action filter?
+classic computed column didn't work - again use interceptor to handle the case!
+so it's elementcell query, it will only retrieve that user's usercells + otherusersratingaverage + count (or total?)
+
+. average test
+average rating * count = total -> (total - oldvalue + newvalue) / count + 1
+or
+average (average rating & (new rating / count))
+or
+classic old (avg(all))
 
 . enableresourcepool + enablesubtotals on element?
 also resourcepoolrate on element?

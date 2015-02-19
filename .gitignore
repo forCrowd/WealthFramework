@@ -115,3 +115,6 @@ App_Data/
 # Publish profiles - Doesn't work properly, still adding new files under this folder?
 *.pubxml
 Properties/PublishProfiles/
+
+# Queries (Folder for T-SQL queries, no need to save)
+Queries/
