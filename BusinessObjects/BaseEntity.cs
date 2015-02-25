@@ -1,9 +1,11 @@
 ﻿using BusinessObjects.Attributes;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Permissions;
 
 namespace BusinessObjects
 {
+    [PrincipalPermission(SecurityAction.Demand, Authenticated = false)]
     public abstract class BaseEntity : IEntity
     {
         [DisplayOnListView(false)]

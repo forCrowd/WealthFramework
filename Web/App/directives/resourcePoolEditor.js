@@ -143,7 +143,7 @@
             //}
 
             function elementUpdatedEventHandler(event, element) {
-                if (element.resourcePool === scope.resourcePool) {
+                if (element.ResourcePool === scope.resourcePool) {
                     saveChanges();
                 }
             }

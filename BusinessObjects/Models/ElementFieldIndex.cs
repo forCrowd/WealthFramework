@@ -59,6 +59,12 @@ namespace BusinessObjects
         public virtual ElementField ElementField { get; set; }
         public virtual ICollection<UserElementFieldIndex> UserElementFieldIndexSet { get; set; }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public decimal? IndexRatingAverage { get; private set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public int? IndexRatingCount { get; private set; }
+
         /* */
 
         public UserElementFieldIndex AddUserRating(User user, decimal rating)
@@ -75,7 +81,7 @@ namespace BusinessObjects
         /// It will be used to determine the weight of this index in its resource pool.
         /// </summary>
         //[NotMapped]
-        public decimal IndexRatingAverage
+        public decimal IndexRatingAverageOld
         {
             get
             {
@@ -90,7 +96,7 @@ namespace BusinessObjects
         /// How many users rated this index?
         /// </summary>
         //[NotMapped]
-        public decimal IndexRatingCount
+        public decimal IndexRatingCountOld
         {
             get { return UserElementFieldIndexSet.Count(); }
             //set { }
@@ -102,7 +108,7 @@ namespace BusinessObjects
 
             return resourcePoolIndexRatingAverage == 0
                 ? 0
-                : IndexRatingAverage / resourcePoolIndexRatingAverage;
+                : IndexRatingAverageOld / resourcePoolIndexRatingAverage;
         }
 
         public decimal IndexShare()

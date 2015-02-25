@@ -18,7 +18,7 @@
             dbSet = Context.Set<TEntityType>();
         }
 
-        public DbContext Context { get; private set; }
+        internal DbContext Context { get; private set; }
 
         public IQueryable<TEntityType> All
         {

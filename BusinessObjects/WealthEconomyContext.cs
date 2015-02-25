@@ -10,6 +10,15 @@
     using System.Threading;
     using System.Threading.Tasks;
 
+    public class WealthEconomyDbConfiguration : DbConfiguration
+    {
+        public WealthEconomyDbConfiguration()
+        {
+            AddInterceptor(new UserCommandInterceptor());
+            AddInterceptor(new UserCommandTreeInterceptor());
+        }
+    }
+
     public class WealthEconomyContext : IdentityDbContext<User, Role, int, UserLogin, UserRole, UserClaim>
     {
         public WealthEconomyContext()
@@ -45,6 +54,10 @@
 
             // Conventions
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
+            var userAwareConvention = new AttributeToTableAnnotationConvention<UserAwareAttribute, string>(
+                UserAwareAttribute.UserAnnotation, (type, attributes) => attributes.Single().ColumnName);
+            modelBuilder.Conventions.Add(userAwareConvention);
 
             // Table names
             modelBuilder.Entity<User>().ToTable("User");

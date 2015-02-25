@@ -74,6 +74,10 @@
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\UserRole.cs" />
     <Compile Include="Models\UserElementCell.cs" />
+    <Compile Include="UserAwareAttribute.cs" />
+    <Compile Include="UserCommandInterceptor.cs" />
+    <Compile Include="UserCommandTreeInterceptor.cs" />
+    <Compile Include="UserQueryVisitor.cs" />
     <Compile Include="ViewModels\UserElementCell.cs" />
     <Compile Include="ViewModels\ElementCell.cs" />
     <Compile Include="ViewModels\ElementItem.cs" />

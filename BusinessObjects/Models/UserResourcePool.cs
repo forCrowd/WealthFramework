@@ -9,6 +9,7 @@ namespace BusinessObjects
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
+    [UserAware("UserId")]
     [DisplayName("User CMRP")]
     [BusinessObjects.Attributes.DefaultProperty("Id")]
     public class UserResourcePool : BaseEntity

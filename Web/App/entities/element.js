@@ -666,11 +666,13 @@
                     return null;
                 }
 
-                for (var i = 0; i < self.UserElementCellSet.length; i++) {
-                    if (self.UserElementCellSet[i].UserId === self.ElementItem.Element.ResourcePool.currentUserId) {
-                        return self.UserElementCellSet[i];
-                    }
-                }
+                return self.UserElementCellSet[0];
+
+                //for (var i = 0; i < self.UserElementCellSet.length; i++) {
+                //    if (self.UserElementCellSet[i].UserId === self.ElementItem.Element.ResourcePool.currentUserId) {
+                //        return self.UserElementCellSet[i];
+                //    }
+                //}
             }
 
             self.isResourcePoolCell = function () {
@@ -782,6 +784,30 @@
             //}
             //});
 
+            self.ratingAverage = function () {
+                var total = self.OtherUsersRatingTotal;
+
+                var userElementCell = self.currentUserElementCell();
+                if (userElementCell !== null && userElementCell.DecimalValue !== null) {
+                    total += userElementCell.DecimalValue;
+                }
+
+                return self.ratingCount() > 0
+                    ? total / self.ratingCount()
+                    : 0; // TODO Return null?
+            }
+
+            self.ratingCount = function () {
+                var count = self.OtherUsersRatingCount;
+
+                var userElementCell = self.currentUserElementCell();
+                if (userElementCell !== null && userElementCell.DecimalValue !== null) {
+                    count++;
+                }
+
+                return count;
+            }
+
             self.rating = function () {
 
                 var value = 0;
@@ -841,7 +867,10 @@
 
                             //var currentUserRating = self.UserElementCellSet[0];
                             //logger.log('ratingAverage', self.RatingAverage);
-                            value = self.RatingAverage;
+                            // value = self.RatingAverage;
+
+                            value = self.ratingAverage();
+
                             break;
 
                         }

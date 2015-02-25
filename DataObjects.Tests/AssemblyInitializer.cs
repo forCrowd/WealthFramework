@@ -9,7 +9,7 @@ namespace DataObjects.Tests
         [AssemblyInitialize]
         public static void AssemblyInitialize(TestContext context)
         {
-            DatabaseInitializer.Initialize(false);
+            DatabaseInitializer.Initialize(true);
         }
 
         [AssemblyCleanup]

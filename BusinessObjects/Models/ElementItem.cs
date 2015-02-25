@@ -86,7 +86,7 @@ namespace BusinessObjects
         public decimal ResourcePoolValue()
         {
             return HasResourcePoolCell
-                ? ResourcePoolCell.RatingAverage
+                ? ResourcePoolCell.RatingAverageOld
                 : 0;
         }
 
@@ -119,7 +119,7 @@ namespace BusinessObjects
             //if (Element.ResourcePool.FilterSettings.MultiplierUser == null)
             //    throw new InvalidOperationException("MultiplierValue property cannot be retrieved without specifying MultiplierUser filter on ResourcePool object");
 
-            return MultiplierCell.RatingAverage;
+            return MultiplierCell.RatingAverageOld;
         }
 
         //public decimal Value()

@@ -7,6 +7,7 @@ namespace BusinessObjects
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
+    using System.Security.Permissions;
     using System.Threading.Tasks;
 
     [BusinessObjects.Attributes.DefaultProperty("Email")]
@@ -20,7 +21,8 @@ namespace BusinessObjects
             UserElementCellSet = new HashSet<UserElementCell>();
         }
 
-        public User(string email) : this()
+        public User(string email)
+            : this()
         {
             Validations.ArgumentNullOrDefault(email, "email");
             // TODO Email address validation?

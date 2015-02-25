@@ -12,8 +12,8 @@ namespace BusinessObjects.ViewModels
             ElementFieldId = elementFieldIndex.ElementFieldId;
             Name = elementFieldIndex.Name;
 
-            IndexRatingAverage = elementFieldIndex.IndexRatingAverage;
-            IndexRatingCount = elementFieldIndex.IndexRatingCount;
+            IndexRatingAverage = elementFieldIndex.IndexRatingAverageOld;
+            IndexRatingCount = elementFieldIndex.IndexRatingCountOld;
             IndexRatingPercentage = elementFieldIndex.IndexRatingPercentage();
             IndexShare = elementFieldIndex.IndexShare();
         }

@@ -65,6 +65,59 @@ namespace BusinessObjects
         public virtual ElementItem SelectedElementItem { get; set; }
         public virtual ICollection<UserElementCell> UserElementCellSet { get; set; }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public decimal? RatingAverage { get; private set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public int? RatingCount { get; private set; }
+
+        public UserElementCell UserElementCell
+        {
+            get { return UserElementCellSet.SingleOrDefault(); }
+        }
+
+        public decimal? OtherUsersRatingTotal
+        {
+            get
+            {
+                if (!RatingAverage.HasValue)
+                    return null;
+
+                var average = RatingAverage.Value;
+                var count = RatingCount.GetValueOrDefault(0);
+                var total = average * count ;
+
+                if (UserElementCell != null && UserElementCell.DecimalValue.HasValue)
+                    total -= UserElementCell.DecimalValue.Value;
+
+                return total;
+            }
+        }
+
+        public decimal? OtherUsersRatingAverage
+        {
+            get
+            {
+                if (!OtherUsersRatingTotal.HasValue || OtherUsersRatingCount == 0)
+                    return null;
+
+                return OtherUsersRatingTotal.Value / OtherUsersRatingCount;
+            }
+        }
+
+        public int OtherUsersRatingCount
+        {
+            get
+            {
+                var count = RatingCount.GetValueOrDefault(0);
+
+                if (UserElementCell != null && UserElementCell.DecimalValue.HasValue)
+                    count--;
+
+                return count;
+            }
+        }
+
         /* */
 
         decimal FixedValue
@@ -163,7 +216,7 @@ namespace BusinessObjects
         //}
 
         //[NotMapped]
-        public decimal RatingAverage
+        public decimal RatingAverageOld
         {
             get
             {
@@ -229,7 +282,7 @@ namespace BusinessObjects
             //set { }
         }
 
-        public int RatingCount
+        public int RatingCountOld
         {
             get
             {
@@ -276,7 +329,7 @@ namespace BusinessObjects
             //if (!ElementItem.Element.HasMultiplierField)
             //    return Value();
 
-            return RatingAverage * ElementItem.MultiplierValue();
+            return RatingAverageOld * ElementItem.MultiplierValue();
         }
 
         public decimal ValuePercentage()

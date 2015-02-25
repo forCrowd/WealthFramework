@@ -7,6 +7,7 @@ namespace BusinessObjects
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
+    [UserAware("UserId")]
     [DisplayName("User Element Cell")]
     public class UserElementCell : BaseEntity
     {

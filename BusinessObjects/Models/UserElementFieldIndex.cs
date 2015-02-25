@@ -9,6 +9,7 @@ namespace BusinessObjects
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
+    [UserAware("UserId")]
     [DisplayName("User Element Field Index")]
     [BusinessObjects.Attributes.DefaultProperty("Id")]
     public class UserElementFieldIndex : BaseEntity

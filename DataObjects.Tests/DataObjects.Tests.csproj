@@ -72,6 +72,7 @@
     </Compile>
     <Compile Include="AssemblyInitializer.cs" />
     <Compile Include="BaseTests.cs" />
+    <Compile Include="ResourcePoolRepositoryTests.cs" />
     <Compile Include="UserStoreTests.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -8,7 +8,7 @@ namespace Web.Controllers.OData
     using System.Net;
     using System.Threading.Tasks;
     using System.Web.Http;
-using System.Web.Http.OData.Query;
+    using System.Web.Http.OData.Query;
 
     public partial class ElementFieldIndexController
     {
@@ -28,7 +28,7 @@ using System.Web.Http.OData.Query;
         //        // .Select(item => item.)
         //        //.Where(index => index.UserElementFieldIndexSet.Any(userIndex => userIndex.UserId == userId.Value));
         //        //.Where(index => index.UserElementFieldIndexSet.Any(userIndex => userIndex.UserId == userId.Value));
-            
+
         //    // query = query.Select(item => new ElementFieldIndex())
         //    query = query.Select(item => (ElementFieldIndex) new { ElementFieldIndex = item });
 
@@ -39,5 +39,5 @@ using System.Web.Http.OData.Query;
         //    return query;
         //    //return new System.Collections.Generic.HashSet<ElementFieldIndex>().AsQueryable();
         //}
-	}
+    }
 }

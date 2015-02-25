@@ -96,19 +96,19 @@ namespace BusinessObjects.Tests
             element.FilterSettings.CurrentUser = user1;
 
             // Assert
-            Assert.IsTrue(cell.RatingAverage == 5M);
+            Assert.IsTrue(cell.RatingAverageOld == 5M);
 
             // Act - Part 2
             element.FilterSettings.CurrentUser = user2;
 
             // Assert - Part 2
-            Assert.IsTrue(cell.RatingAverage == 10M);
+            Assert.IsTrue(cell.RatingAverageOld == 10M);
 
             // Act - Part 2
             element.FilterSettings.ValueFilter = ResourcePoolFilterSettings.ValueFilters.AllUsersAverage;
 
             // Assert - Part 2
-            Assert.IsTrue(cell.RatingAverage == 7.5M);
+            Assert.IsTrue(cell.RatingAverageOld == 7.5M);
         }
 
         [TestMethod]
@@ -158,8 +158,8 @@ namespace BusinessObjects.Tests
 
             Assert.IsTrue(organization.IndexRatingAverage() == 100);
 
-            Assert.IsTrue(importanceFieldIndex.IndexRatingCount == 1);
-            Assert.IsTrue(importanceFieldIndex.IndexRatingAverage == 100);
+            Assert.IsTrue(importanceFieldIndex.IndexRatingCountOld == 1);
+            Assert.IsTrue(importanceFieldIndex.IndexRatingAverageOld == 100);
             Assert.IsTrue(importanceFieldIndex.IndexRatingPercentage() == 1);
             Assert.IsTrue(importanceFieldIndex.IndexShare() == 400);
 
@@ -248,8 +248,8 @@ namespace BusinessObjects.Tests
 
             Assert.IsTrue(organization.IndexRatingAverage() == 100);
 
-            Assert.IsTrue(elementFieldIndex.IndexRatingCount == 1);
-            Assert.IsTrue(elementFieldIndex.IndexRatingAverage == 100);
+            Assert.IsTrue(elementFieldIndex.IndexRatingCountOld == 1);
+            Assert.IsTrue(elementFieldIndex.IndexRatingAverageOld == 100);
             Assert.IsTrue(elementFieldIndex.IndexRatingPercentage() == 1);
             Assert.IsTrue(elementFieldIndex.IndexShare() == 100);
 
@@ -326,8 +326,8 @@ namespace BusinessObjects.Tests
 
             Assert.IsTrue(organization.IndexRatingAverage() == 100);
 
-            Assert.IsTrue(elementFieldIndex.IndexRatingCount == 1);
-            Assert.IsTrue(elementFieldIndex.IndexRatingAverage == 100);
+            Assert.IsTrue(elementFieldIndex.IndexRatingCountOld == 1);
+            Assert.IsTrue(elementFieldIndex.IndexRatingAverageOld == 100);
             Assert.IsTrue(elementFieldIndex.IndexRatingPercentage() == 1);
             Assert.IsTrue(elementFieldIndex.IndexShare() == 400);
 

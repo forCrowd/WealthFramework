@@ -22,7 +22,8 @@ namespace BusinessObjects
             FilterSettings = new ResourcePoolFilterSettings();
         }
 
-        public Element(ResourcePool resourcePool, string name) : this()
+        public Element(ResourcePool resourcePool, string name)
+            : this()
         {
             Validations.ArgumentNullOrDefault(resourcePool, "resourcePool");
             Validations.ArgumentNullOrDefault(name, "name");
@@ -189,7 +190,7 @@ namespace BusinessObjects
 
         public decimal IndexRatingAverage()
         {
-            return ElementFieldIndexSet.Sum(item => item.IndexRatingAverage);
+            return ElementFieldIndexSet.Sum(item => item.IndexRatingAverageOld);
         }
 
         //public ElementField AddField(string name, ElementFieldTypes fieldType)
@@ -201,25 +202,25 @@ namespace BusinessObjects
 
         public ElementField AddField(string name, ElementFieldTypes fieldType, bool? useFixedValue = null)
         {
-            var sortOrder = Convert.ToByte(ElementFieldSet.Count + 1); 
+            var sortOrder = Convert.ToByte(ElementFieldSet.Count + 1);
             var field = new ElementField(this, name, fieldType, sortOrder, useFixedValue);
-            
-            //return AddField(field);
-        //}
 
-        //ElementField AddField(ElementField field)
-        //{
+            //return AddField(field);
+            //}
+
+            //ElementField AddField(ElementField field)
+            //{
             // TODO Validation - Same name?
 
             ElementFieldSet.Add(field);
-            
+
             return field;
         }
 
         public ElementItem AddItem(string name)
         {
             // TODO Validation - Same name?
-            
+
             var item = new ElementItem(this, name);
             ElementItemSet.Add(item);
             return item;

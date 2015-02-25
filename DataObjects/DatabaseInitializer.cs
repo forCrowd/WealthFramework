@@ -18,12 +18,9 @@
         //static UserResourcePoolIndexRepository userResourcePoolIndexRepository = null;
         //static UserElementCellRepository userElementCellRepository = null;
 
-        public static void Initialize(bool liveDatabase = true)
+        public static void Initialize(bool isTest = false)
         {
-            var initializer = liveDatabase
-                ? (IDatabaseInitializer<WealthEconomyContext>)new MigrateDatabaseToLatestVersion<WealthEconomyContext, Configuration>()
-                : (IDatabaseInitializer<WealthEconomyContext>)new DropCreateDatabaseAlways();
-
+            var initializer = new MigrateDatabaseToLatestVersion(isTest);
             Database.SetInitializer(initializer);
         }
 

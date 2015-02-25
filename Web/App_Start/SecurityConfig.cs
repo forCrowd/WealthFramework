@@ -21,7 +21,7 @@ namespace Web
     public class CustomAuthorizeAttribute : AuthorizeAttribute
     {
         readonly string debugUserId = ApplicationSettings.SampleUserId.ToString();
-        readonly string debugUserAuthType = "Bearer";
+        readonly string debugUserAuthType = "DebugAuth";
 
         public override void OnAuthorization(System.Web.Http.Controllers.HttpActionContext actionContext)
         {

@@ -1,6 +1,8 @@
 namespace DataObjects.Migrations
 {
     using System;
+    using System.Collections.Generic;
+    using System.Data.Entity.Infrastructure.Annotations;
     using System.Data.Entity.Migrations;
     
     public partial class V0_14_9 : DbMigration
@@ -59,6 +61,8 @@ namespace DataObjects.Migrations
                         DecimalValue = c.Decimal(precision: 18, scale: 2),
                         DateTimeValue = c.DateTime(),
                         SelectedElementItemId = c.Int(),
+                        RatingAverage = c.Decimal(precision: 18, scale: 2),
+                        RatingCount = c.Int(),
                         CreatedOn = c.DateTime(nullable: false),
                         ModifiedOn = c.DateTime(nullable: false),
                         DeletedOn = c.DateTime(),
@@ -102,7 +106,11 @@ namespace DataObjects.Migrations
                         ModifiedOn = c.DateTime(nullable: false),
                         DeletedOn = c.DateTime(),
                         RowVersion = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                    })
+                    },
+                annotations: new Dictionary<string, object>
+                {
+                    { "UserAnnotation", "UserId" },
+                })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.ElementCell", t => t.ElementCellId, cascadeDelete: true)
                 .ForeignKey("dbo.User", t => t.UserId)
@@ -212,7 +220,11 @@ namespace DataObjects.Migrations
                         ModifiedOn = c.DateTime(nullable: false),
                         DeletedOn = c.DateTime(),
                         RowVersion = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                    })
+                    },
+                annotations: new Dictionary<string, object>
+                {
+                    { "UserAnnotation", "UserId" },
+                })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.ElementFieldIndex", t => t.ElementFieldIndexId, cascadeDelete: true)
                 .ForeignKey("dbo.User", t => t.UserId)
@@ -226,6 +238,8 @@ namespace DataObjects.Migrations
                         ElementFieldId = c.Int(nullable: false),
                         Name = c.String(nullable: false, maxLength: 50),
                         RatingSortType = c.Byte(nullable: false),
+                        IndexRatingAverage = c.Decimal(precision: 18, scale: 2),
+                        IndexRatingCount = c.Int(),
                         CreatedOn = c.DateTime(nullable: false),
                         ModifiedOn = c.DateTime(nullable: false),
                         DeletedOn = c.DateTime(),
@@ -247,7 +261,11 @@ namespace DataObjects.Migrations
                         ModifiedOn = c.DateTime(nullable: false),
                         DeletedOn = c.DateTime(),
                         RowVersion = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                    })
+                    },
+                annotations: new Dictionary<string, object>
+                {
+                    { "UserAnnotation", "UserId" },
+                })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.ResourcePool", t => t.ResourcePoolId, cascadeDelete: true)
                 .ForeignKey("dbo.User", t => t.UserId)
@@ -263,6 +281,8 @@ namespace DataObjects.Migrations
                         EnableResourcePoolAddition = c.Boolean(nullable: false),
                         EnableSubtotals = c.Boolean(nullable: false),
                         IsSample = c.Boolean(nullable: false),
+                        ResourcePoolRateAverage = c.Decimal(precision: 18, scale: 2),
+                        ResourcePoolRateCount = c.Int(),
                         CreatedOn = c.DateTime(nullable: false),
                         ModifiedOn = c.DateTime(nullable: false),
                         DeletedOn = c.DateTime(),
@@ -309,15 +329,27 @@ namespace DataObjects.Migrations
             DropIndex("dbo.ElementField", new[] { "ElementId" });
             DropIndex("dbo.Element", new[] { "ResourcePoolId" });
             DropTable("dbo.ResourcePool");
-            DropTable("dbo.UserResourcePool");
+            DropTable("dbo.UserResourcePool",
+                removedAnnotations: new Dictionary<string, object>
+                {
+                    { "UserAnnotation", "UserId" },
+                });
             DropTable("dbo.ElementFieldIndex");
-            DropTable("dbo.UserElementFieldIndex");
+            DropTable("dbo.UserElementFieldIndex",
+                removedAnnotations: new Dictionary<string, object>
+                {
+                    { "UserAnnotation", "UserId" },
+                });
             DropTable("dbo.Role");
             DropTable("dbo.UserRole");
             DropTable("dbo.UserLogin");
             DropTable("dbo.UserClaim");
             DropTable("dbo.User");
-            DropTable("dbo.UserElementCell");
+            DropTable("dbo.UserElementCell",
+                removedAnnotations: new Dictionary<string, object>
+                {
+                    { "UserAnnotation", "UserId" },
+                });
             DropTable("dbo.ElementItem");
             DropTable("dbo.ElementCell");
             DropTable("dbo.ElementField");

@@ -5,11 +5,11 @@ namespace DataObjects.Migrations
     using System.Collections.Generic;
     using System.Data.Entity.Migrations;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<WealthEconomyContext>
+    internal sealed class DbMigrationsConfiguration : DbMigrationsConfiguration<WealthEconomyContext>
     {
         readonly IEnumerable<string> pendingMigrations;
 
-        public Configuration()
+        public DbMigrationsConfiguration()
         {
             ContextKey = "WealthEconomyContext";
             AutomaticMigrationsEnabled = false;

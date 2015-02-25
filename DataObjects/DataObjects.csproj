@@ -75,7 +75,7 @@
     <Compile Include="..\SolutionItems\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="DropCreateDatabaseAlways.cs" />
+    <Compile Include="MigrateDatabaseToLatestVersion.cs" />
     <Compile Include="Extensions\DbSetExtensions.cs" />
     <Compile Include="Generated\ElementFieldIndexRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
@@ -98,6 +98,10 @@
     <Compile Include="Migrations\201411282045150_V0_14_9.cs" />
     <Compile Include="Migrations\201411282045150_V0_14_9.Designer.cs">
       <DependentUpon>201411282045150_V0_14_9.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502251221259_V0_14_9_M.cs" />
+    <Compile Include="Migrations\201502251221259_V0_14_9_M.Designer.cs">
+      <DependentUpon>201502251221259_V0_14_9_M.cs</DependentUpon>
     </Compile>
     <Compile Include="ResourcePoolRepository.cs" />
     <Compile Include="RoleStore.cs" />
@@ -128,7 +132,7 @@
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
     <Compile Include="IRepository.cs" />
-    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\DbMigrationsConfiguration.cs" />
     <Compile Include="DatabaseInitializer.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -166,7 +170,11 @@
       <DependentUpon>201411282045150_V0_14_9.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502251221259_V0_14_9_M.resx">
+      <DependentUpon>201502251221259_V0_14_9_M.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

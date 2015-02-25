@@ -8,6 +8,7 @@ namespace BusinessObjects
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
+    using System.Security.Permissions;
 
     [DisplayName("CMRP")]
     [BusinessObjects.Attributes.DefaultProperty("Name")]
@@ -61,6 +62,12 @@ namespace BusinessObjects
         [DisplayOnEditView(false)]
         public bool IsSample { get; set; }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public decimal? ResourcePoolRateAverage { get; private set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public int? ResourcePoolRateCount { get; private set; }
+
         public virtual ICollection<Element> ElementSet { get; set; }
         public virtual ICollection<UserResourcePool> UserResourcePoolSet { get; set; }
 
@@ -76,8 +83,10 @@ namespace BusinessObjects
         //    get { return ElementSet.SelectMany(item => item.ElementFieldIndexSet); }
         //}
 
+
+
         [NotMapped]
-        public decimal ResourcePoolRate
+        public decimal ResourcePoolRateOld
         {
             get
             {
@@ -90,7 +99,7 @@ namespace BusinessObjects
 
         public decimal ResourcePoolRatePercentage()
         {
-            return ResourcePoolRate / 100;
+            return ResourcePoolRateOld / 100;
         }
 
         public decimal ResourcePoolAddition()

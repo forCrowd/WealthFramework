@@ -102,6 +102,7 @@ UserResourcePoolElementCell -> UserResourcePoolId ElementCellId?
 any user should be able to access them but only the owners and admins can update them?  
 according to this, normal user may not use post action for instance? check these rules later on  
 
+* glimpse webapi (trace for instance) doesn't work for the moment - check it again later
 * glimpse on remote server? http://blog.getglimpse.com/2013/12/09/protect-glimpse-axd-with-your-custom-runtime-policy/
 * implement soft delete
 * exists should work with find or alllive.any() or all.any()?  
@@ -233,34 +234,14 @@ http://www.asp.net/web-api/overview/testing-and-debugging/mocking-entity-framewo
 . one elementfieldindex per elementfield ?!?!?!
 
 . resourcepoolview - Resource Pool + Field Index combo - should the fields be separate? income part can be at the end?
-
-. try to use currentthread.currentuser ?!?!?!#?!@?#?!@#?!@?#
 	
 . one element can't be selected by multiple fields?
-
-. otherusersrating + count properties from server (even from db)
-.. currently resourcePoolEditor - AllRatings filter doesn't update chart + items
 
 . resourcepoolfield -> incomefield
 resourcepooladdition -> resourcepoolfield ?!
 
 . breeze entities - initial values - to prevent !== 'undefined' checks!
 . element.js - in objects, create their inner arrays userElementSet[] etc.
-
-. put userId into the businessobjects and always filter user[x] tables with this prop - like AllLive properties?!
-. user related collections should always contain one object or none - if none, it will create a new object during save
-. FIND A WAY TO FILTER USER RELATED LISTS!!!!!!!!!!
-intercept odata controller?
-custom action filter?
-classic computed column didn't work - again use interceptor to handle the case!
-so it's elementcell query, it will only retrieve that user's usercells + otherusersratingaverage + count (or total?)
-
-. average test
-average rating * count = total -> (total - oldvalue + newvalue) / count + 1
-or
-average (average rating & (new rating / count))
-or
-classic old (avg(all))
 
 . enableresourcepool + enablesubtotals on element?
 also resourcepoolrate on element?
@@ -276,9 +257,15 @@ ALSO ODATA FUNCTION - FOR USER LEVEL API METHODS?
 
 . elementcell's ratingaverage vs. ratingcount - [notmapped] + readonly diff?
 
-. continue with useraware attribute, it's tests - user entity for instance?
-and then, how to retrieve OtherUsersRatingAverage + OtherUsersRatingCount from db?
-and also how to handle this in Business Layer?
+. multitenancy; no need to set User props but handle validation issue
+how about user entity itself?
+test - what if the user not logged in or not auth.! then what happens to interceptors?
+test - userqueryvisitor with filter!
+
+. _manual contains static 18,2 for decimal
+
+. update packages - especially try odata4 again?
+
 
 . ?
 http://blogs.msdn.com/b/webdev/archive/2015/02/11/improve-performance-by-optimizing-queries-for-asp-net-identity-and-other-membership-providers.aspx
