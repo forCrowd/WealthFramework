@@ -85,7 +85,7 @@ namespace BusinessObjects
 
 
 
-        [NotMapped]
+        //[NotMapped]
         public decimal ResourcePoolRateOld
         {
             get
@@ -94,7 +94,7 @@ namespace BusinessObjects
                     ? UserResourcePoolSet.Average(item => item.ResourcePoolRate)
                     : 0;
             }
-            set { }
+            //set { }
         }
 
         public decimal ResourcePoolRatePercentage()

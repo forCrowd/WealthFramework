@@ -10,9 +10,22 @@
 
     var serviceId = 'entityManagerFactory';
     angular.module('main')
-        .factory(serviceId, ['breeze', entityManagerFactory]);
+        .factory(serviceId, ['breeze',
+            'element',
+            'elementCell',
+            'elementField',
+            'elementFieldIndex',
+            'elementItem',
+            'resourcePool',
+            entityManagerFactory]);
 
-    function entityManagerFactory(breeze) {
+    function entityManagerFactory(breeze,
+        element,
+        elementCell,
+        elementField,
+        elementFieldIndex,
+        elementItem,
+        resourcePool) {
 
         configureBreeze();
 
@@ -58,7 +71,15 @@
         }
 
         function newManager() {
-            return new breeze.EntityManager(serviceName);
+            var manager = new breeze.EntityManager(serviceName);
+            var store = manager.metadataStore;
+            store.registerEntityTypeCtor('Element', element.constructor);
+            store.registerEntityTypeCtor('ElementCell', elementCell.constructor);
+            store.registerEntityTypeCtor('ElementField', elementField.constructor);
+            store.registerEntityTypeCtor('ElementFieldIndex', elementFieldIndex.constructor);
+            store.registerEntityTypeCtor('ElementItem', elementItem.constructor);
+            store.registerEntityTypeCtor('ResourcePool', resourcePool.constructor);
+            return manager;
         }
     }
 })();

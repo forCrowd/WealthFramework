@@ -396,6 +396,11 @@
     <Content Include="App\controllers\manage\resourcePool\resourcePoolCustomListController.js" />
     <Content Include="App\directives\resourcePoolEditor.js" />
     <Content Include="App\entities\element.js" />
+    <Content Include="App\entities\elementItem.js" />
+    <Content Include="App\entities\elementFieldIndex.js" />
+    <Content Include="App\entities\elementField.js" />
+    <Content Include="App\entities\resourcePool.js" />
+    <Content Include="App\entities\elementCell.js" />
     <Content Include="App\includes\manageMenu.js">
       <DependentUpon>manageMenu.tt</DependentUpon>
       <AutoGen>True</AutoGen>

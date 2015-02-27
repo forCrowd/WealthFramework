@@ -10,9 +10,9 @@
 
     var serviceId = 'dataContext';
     angular.module('main')
-        .factory(serviceId, ['entityManagerFactory', 'elementFactory', '$q', 'logger', dataContext]);
+        .factory(serviceId, ['entityManagerFactory', '$q', 'logger', dataContext]);
 
-    function dataContext(entityManagerFactory, elementFactory, $q, logger) {
+    function dataContext(entityManagerFactory, $q, logger) {
 
         // Logger
         logger = logger.forSource(serviceId);
@@ -67,13 +67,6 @@
 
         function initializeStore() {
             manager = entityManagerFactory.newManager();
-            var store = manager.metadataStore;
-            store.registerEntityTypeCtor('ResourcePool', elementFactory.resourcePool);
-            store.registerEntityTypeCtor('Element', elementFactory.element);
-            store.registerEntityTypeCtor('ElementField', elementFactory.elementField);
-            store.registerEntityTypeCtor('ElementFieldIndex', elementFactory.elementFieldIndex);
-            store.registerEntityTypeCtor('ElementItem', elementFactory.elementItem);
-            store.registerEntityTypeCtor('ElementCell', elementFactory.elementCell);
         }
 
         function metadataReady() {

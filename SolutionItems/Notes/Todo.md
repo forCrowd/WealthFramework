@@ -250,30 +250,28 @@ also resourcepoolrate on element?
 
 . RESOURCEPOOLEDITOR IN A BOOTSTRAP PANEL?
 
-. FIND A BETTER WAY FOR THESE READONLY ODATA PROPS?
-ALSO ODATA FUNCTION - FOR USER LEVEL API METHODS?
+. Odata - Find a better way for readonly props (edmbuilder)?
+Also AccountController methods? So WebApi can go forever?
 
 . create a script to reset live db!
-
-. elementcell's ratingaverage vs. ratingcount - [notmapped] + readonly diff?
 
 . multitenancy; no need to set User props but handle validation issue
 how about user entity itself?
 test - what if the user not logged in or not auth.! then what happens to interceptors?
 test - userqueryvisitor with filter!
 
+. complete security.permissions on business objects
+
 . _manual contains static 18,2 for decimal
 
 . update packages - especially try odata4 again?
 
-
 . ?
 http://blogs.msdn.com/b/webdev/archive/2015/02/11/improve-performance-by-optimizing-queries-for-asp-net-identity-and-other-membership-providers.aspx
 
-. IMPROVE + UPDATE TESTS?
-ALSO JS TESTS?
+. Improve + update tests? Also javascript tests?
 
-. userResourcePool rating increase/decrease!
+. userResourcePool rate & fieldIndex rating increase/decrease!
 
 . total cost index sample
 
