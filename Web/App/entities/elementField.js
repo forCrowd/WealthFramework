@@ -17,12 +17,12 @@
 
         return (service);
 
-        // Implementations
+        /*** Implementations ***/
 
         function constructor() {
             var self = this;
 
-            self.valueMultiplied = function () {
+            self.ratingMultiplied = function () {
 
                 // Validate
                 if (typeof self.ElementCellSet === 'undefined')
@@ -31,13 +31,13 @@
                 var value = 0;
                 for (var i = 0; i < self.ElementCellSet.length; i++) {
                     var cell = self.ElementCellSet[i];
-                    value += cell.valueMultiplied();
+                    value += cell.ratingMultiplied();
                 }
 
                 return value;
             }
 
-            self.valuePercentage = function () {
+            self.ratingPercentage = function () {
 
                 // Validate
                 if (typeof self.ElementCellSet === 'undefined')
@@ -46,7 +46,7 @@
                 var value = 0;
                 for (var i = 0; i < self.ElementCellSet.length; i++) {
                     var cell = self.ElementCellSet[i];
-                    value += cell.valuePercentage();
+                    value += cell.ratingPercentage();
                 }
 
                 return value;

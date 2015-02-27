@@ -1,28 +1,83 @@
 ﻿(function () {
     'use strict';
 
-    var serviceId = 'resourcePool';
+    var serviceId = 'resourcePoolFactory';
     angular.module('main')
-        .factory(serviceId, ['$rootScope', 'logger', resourcePool]);
+        .factory(serviceId, ['$rootScope', 'logger', resourcePoolFactory]);
 
-    function resourcePool($rootScope, logger) {
+    function resourcePoolFactory($rootScope, logger) {
 
         // Logger
         logger = logger.forSource(serviceId);
 
         // Service methods
         var service = {
-            constructor: constructor
+            resourcePool: resourcePool
         }
 
         return (service);
 
-        // Implementations
+        /*** Implementations ***/
 
-        function constructor() {
+        function resourcePool() {
+
             var self = this;
 
-            self._currentElement = null;
+            // Local variables
+            var _mainElement = null;
+            //var _currentElement = null;
+            self._backingFields = {
+                currentElement: null
+            };
+
+            //self.backingFields = {
+            //    _age: 0   // default
+            //};
+
+            //// Define the ES5 property on the prototype
+            //// it stores the value inside the instance's backingFields
+            //Object.defineProperty(constructor.prototype, 'age', {
+            //    enumerable: true,
+            //    configurable: true,
+            //    get: function () { return self.backingFields._age; },
+            //    set: function (value) {
+            //        if (value !== self.backingFields._age) {
+            //            alert("Foo age changed to " + value);
+            //            self.backingFields._age = value;
+            //        }
+            //    }
+            //});
+
+            // Main element
+            self.mainElement = function () {
+
+                if (_mainElement === null) {
+                    for (var i = 0; i < self.ElementSet.length; i++) {
+                        var element = self.ElementSet[i];
+                        if (element.IsMainElement) {
+                            _mainElement = element;
+                            break;
+                        }
+                    }
+                }
+
+                return _mainElement;
+            }
+
+            // Current element
+            Object.defineProperty(self, 'currentElement', {
+                enumerable: true,
+                //configurable: true,
+                get: function () { return self._backingFields.currentElement; },
+                set: function (value) {
+                    logger.log('rpe1.1', value);
+                    if (self._backingFields.currentElement !== value) {
+                        self._backingFields.currentElement = value;
+                        logger.log('rpe1.2', value);
+                        $rootScope.$broadcast('resourcePool_currentElementChanged', self);
+                    }
+                }
+            });
 
             // Resource pool rate percentage
             self.resourcePoolRatePercentage = function () {
@@ -31,53 +86,6 @@
                     return 0;
 
                 return self.ResourcePoolRate / 100;
-            }
-
-            // Value filter
-            // Obsolete !
-            self.valueFilter = 1;
-            self.toggleValueFilter = function () {
-                self.valueFilter = self.valueFilter === 1 ? 2 : 1;
-            }
-            self.valueFilterText = function () {
-                return self.valueFilter === 1 ? "Only My Ratings" : "All Ratings";
-            }
-
-            // Main element
-            self.mainElement = function () {
-
-                var mainElement = null;
-
-                for (var i = 0; i < self.ElementSet.length; i++) {
-                    var element = self.ElementSet[i];
-                    if (element.IsMainElement) {
-                        mainElement = element;
-                        break;
-                    }
-                }
-
-                return mainElement;
-            }
-
-            // Current element
-            self.currentElement = function () {
-
-                if (self._currentElement === null && typeof self.ElementSet !== 'undefined') {
-                    for (var i = 0; i < self.ElementSet.length; i++) {
-                        var element = self.ElementSet[i];
-                        if (element.IsMainElement) {
-                            self._currentElement = element;
-                            break;
-                        }
-                    }
-                }
-
-                return self._currentElement;
-            }
-
-            self.setCurrentElement = function (element) {
-                self._currentElement = element;
-                $rootScope.$broadcast('resourcePool_currentElementChanged', self);
             }
 
             // CMRP Rate

@@ -17,52 +17,53 @@
 
         return (service);
 
-        // Implementations
+        /*** Implementations ***/
 
         function constructor() {
+
             var self = this;
 
-            self._parent = null;
-            self._parents = [];
-            self._resourcePoolField = null;
-            self._multiplierField = null;
-            self._totalIncome = 0;
+            // Local variables
+            var _parent = null;
+            var _parents = [];
+            var _resourcePoolField = null;
+            var _multiplierField = null;
 
             self.parent = function () {
-                if (self._parent !== null) {
-                    return self._parent;
+                if (_parent !== null) {
+                    return _parent;
                 }
 
-                self._parent = self;
-                if (self._parent.ParentFieldSet.length > 0) {
-                    self._parent = self._parent.ParentFieldSet[0].Element;
+                _parent = self;
+                if (_parent.ParentFieldSet.length > 0) {
+                    _parent = _parent.ParentFieldSet[0].Element;
                 }
-                return self._parent;
+
+                return _parent;
             }
 
             self.parents = function () {
 
-                if (self._parents.length > 0) {
-                    return self._parents;
+                if (_parents.length > 0) {
+                    return _parents;
                 }
 
                 var element = null;
                 do {
-
                     element = element === null
                         ? self
                         : element.parent();
 
                     var item = {
                         element: element,
-                        sortOrder: self._parents.length + 1
+                        sortOrder: _parents.length + 1
                     }
 
-                    self._parents.push(item);
+                    _parents.push(item);
 
                 } while (element !== element.parent());
 
-                return self._parents;
+                return _parents;
             }
 
             // Value filter
@@ -79,8 +80,8 @@
 
                 // Cached value
                 // TODO In case of add / remove field?
-                if (self._resourcePoolField)
-                    return self._resourcePoolField;
+                if (_resourcePoolField)
+                    return _resourcePoolField;
 
                 // Validate
                 if (typeof self.ElementFieldSet === 'undefined')
@@ -89,20 +90,20 @@
                 for (var i = 0; i < self.ElementFieldSet.length; i++) {
                     var field = self.ElementFieldSet[i];
                     if (field.ElementFieldType === 11) {
-                        self._resourcePoolField = field;
+                        _resourcePoolField = field;
                         break;
                     }
                 }
 
-                return self._resourcePoolField;
+                return _resourcePoolField;
             }
 
             self.multiplierField = function () {
 
                 // Cached value
                 // TODO In case of add / remove field?
-                if (self._multiplierField)
-                    return self._multiplierField;
+                if (_multiplierField)
+                    return _multiplierField;
 
                 // Validate
                 if (typeof self.ElementFieldSet === 'undefined')
@@ -111,12 +112,12 @@
                 for (var i = 0; i < self.ElementFieldSet.length; i++) {
                     var field = self.ElementFieldSet[i];
                     if (field.ElementFieldType === 12) {
-                        self._multiplierField = field;
+                        _multiplierField = field;
                         break;
                     }
                 }
 
-                return self._multiplierField;
+                return _multiplierField;
             }
 
             self.resourcePoolValue = function () {
@@ -222,9 +223,8 @@
                         value += item.resourcePoolAdditionMultiplied();
                     }
                 } else {
-                    var mainElement = self.ResourcePool.mainElement();
-                    if (mainElement !== null) {
-                        value = mainElement.resourcePoolAdditionMultiplied();
+                    if (self.ResourcePool.mainElement() !== null) {
+                        value = self.ResourcePool.mainElement().resourcePoolAdditionMultiplied();
                     }
                 }
 
@@ -282,9 +282,9 @@
                 return value;
             }
 
-            self.increaseMultiplier = function (userId) {
+            self.increaseMultiplier = function () {
 
-                if (!updateMultiplier(userId, 'increase'))
+                if (!updateMultiplier('increase'))
                     return;
 
                 // Raise the event
@@ -292,9 +292,9 @@
                 $rootScope.$broadcast('element_multiplierIncreased', self);
             }
 
-            self.decreaseMultiplier = function (userId) {
+            self.decreaseMultiplier = function () {
 
-                if (!updateMultiplier(userId, 'decrease'))
+                if (!updateMultiplier('decrease'))
                     return;
 
                 // Raise the event
@@ -302,9 +302,9 @@
                 $rootScope.$broadcast('element_multiplierDecreased', self);
             }
 
-            self.resetMultiplier = function (userId) {
+            self.resetMultiplier = function () {
 
-                if (!updateMultiplier(userId, 'reset'))
+                if (!updateMultiplier('reset'))
                     return;
 
                 // Raise the event
@@ -312,7 +312,7 @@
                 $rootScope.$broadcast('element_multiplierReset', self);
             }
 
-            function updateMultiplier(userId, updateType) {
+            function updateMultiplier(updateType) {
 
                 // Determines whether there is an update
                 var updated = false;
@@ -324,21 +324,12 @@
 
                 // Find user element cell
                 for (var itemIndex = 0; itemIndex < self.ElementItemSet.length; itemIndex++) {
-                    var elementItem = self.ElementItemSet[itemIndex];
-                    var userElementCell = null;
 
-                    for (var cellIndex = 0; cellIndex < elementItem.multiplierCell().UserElementCellSet.length; cellIndex++) {
-                        if (elementItem.multiplierCell().UserElementCellSet[cellIndex].UserId === userId) {
-                            userElementCell = elementItem.multiplierCell().UserElementCellSet[cellIndex];
-                            break;
-                        }
-                    }
+                    var userElementCell = self.ElementItemSet[itemIndex].multiplierCell().userElementCell();
 
                     // If there is not, create a new one
                     if (userElementCell === null) {
                         // TODO createEntity!
-                        //userElementCell = 
-                        //userId
                         //userElementCell.DecimalValue = ?; Based on updateType
                         // updated = true
                     } else {

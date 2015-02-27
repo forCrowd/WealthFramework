@@ -6,11 +6,11 @@
                     {{ resourcePool.Name }}
                 </span>
                 &nbsp;
-                Display: <a href="" data-ng-click="resourcePool.currentElement().toggleValueFilter()">{{ resourcePool.currentElement().valueFilterText() }}</a>
+                Display: <a href="" data-ng-click="resourcePool.currentElement.toggleValueFilter()">{{ resourcePool.currentElement.valueFilterText() }}</a>
                 <div>
                     <ol class="breadcrumb" data-ng-if="resourcePool.ElementSet.length > 1">
-                        <li data-ng-repeat="item in resourcePool.currentElement().parents() | orderBy: 'sortOrder' :true" data-ng-class="{ active: $last }">
-                            <a href="#" data-ng-if="!$last" data-ng-click="item.element.ResourcePool.setCurrentElement(item.element)">
+                        <li data-ng-repeat="item in resourcePool.currentElement.parents() | orderBy: 'sortOrder' :true" data-ng-class="{ active: $last }">
+                            <a href="#" data-ng-if="!$last" data-ng-click="item.element.ResourcePool.currentElement = item.element">
                                 {{ item.element.Name }}
                             </a>
                             <span data-ng-if="$last">
@@ -31,7 +31,7 @@
                 <thead>
                     <tr>
                         <!-- Fields -->
-                        <th data-ng-repeat="field in resourcePool.currentElement().ElementFieldSet">
+                        <th data-ng-repeat="field in resourcePool.currentElement.ElementFieldSet | orderBy: 'SortOrder'">
                             <table class="resourcePoolFieldsTable">
                                 <thead>
                                     <tr>
@@ -40,12 +40,11 @@
                                                 {{ field.Name }}
                                             </span>
                                             <span data-ng-if="field.ElementFieldType === 6">
-                                                <a href="" data-ng-click="field.Element.ResourcePool.setCurrentElement(field.SelectedElement)">{{ field.Name }}</a>
+                                                <a href="" data-ng-click="field.Element.ResourcePool.currentElement = field.SelectedElement">{{ field.Name }}</a>
                                             </span>
                                             <!-- Indexes -->
                                             <table class="fieldIndexTable" data-ng-repeat="index in field.ElementFieldIndexSet">
                                                 <colgroup>
-                                                    <!--<col class="valueMultipliedField" />-->
                                                     <col class="valuePercentageField" />
                                                     <col class="indexIncomeField" data-ng-if="field.ElementFieldType === 11" />
                                                     <col class="indexFunctionsField" />
@@ -57,9 +56,6 @@
                                                         </th>
                                                     </tr>
                                                     <tr>
-                                                        <!--<th>
-                                        Value Mult.
-                                    </th>-->
                                                         <th>
                                                             %
                                                         </th>
@@ -74,7 +70,6 @@
                                             </table>
                                         </th>
                                         <!-- ResourcePool -->
-                                        <!-- TODO Single container for these fields? -->
                                         <th data-ng-if="resourcePool.EnableResourcePoolAddition && field.ElementFieldType === 11">
                                             CMRP Add.<br />
                                             Rate {{ resourcePool.ResourcePoolRatePercentage | percentage: 2 }}<br />
@@ -94,15 +89,8 @@
                                             incl. CMRP Add.
                                         </th>
                                         <!-- Multiplier -->
-                                        <!-- TODO Single container for these fields? -->
-                                        <!--<th data-ng-if="field.ElementFieldType === 12 && resourcePool.MainElement.HasResourcePoolField">
-                        Tot. {{ resourcePool.MainElement.ResourcePoolFieldName }}
-                    </th>
-                    <th data-ng-if="field.ElementFieldType === 12 && resourcePool.MainElement.HasResourcePoolField">
-                        Tot. CMRP Add.
-                    </th>-->
-                                        <th data-ng-if="resourcePool.EnableResourcePoolAddition && field.ElementFieldType === 12 && resourcePool.currentElement().resourcePoolField()">
-                                            Tot. {{ resourcePool.currentElement().resourcePoolField().Name }}
+                                        <th data-ng-if="resourcePool.EnableResourcePoolAddition && field.ElementFieldType === 12 && resourcePool.currentElement.resourcePoolField()">
+                                            Tot. {{ resourcePool.currentElement.resourcePoolField().Name }}
                                             <br />incl. CMRP Add.
                                         </th>
                                     </tr>
@@ -110,13 +98,13 @@
                             </table>
                         </th>
                         <!-- Totals -->
-                        <th data-ng-if="resourcePool.currentElement().resourcePoolField()">
+                        <th data-ng-if="resourcePool.currentElement.resourcePoolField()">
                             Total Income
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr data-ng-repeat="elementItem in resourcePool.currentElement().ElementItemSet">
+                    <tr data-ng-repeat="elementItem in resourcePool.currentElement.ElementItemSet">
                         <!-- Cells -->
                         <td data-ng-repeat="elementCell in elementItem.ElementCellSet | orderBy: 'ElementField.SortOrder'">
                             <table class="resourcePoolFieldsTable">
@@ -149,26 +137,22 @@
                                             <!-- Indexes -->
                                             <table class="fieldIndexTable" data-ng-repeat="index in elementCell.ElementField.ElementFieldIndexSet">
                                                 <colgroup>
-                                                    <!--<col class="valueMultipliedField" />-->
                                                     <col class="valuePercentageField" />
                                                     <col class="indexIncomeField" data-ng-if="elementCell.ElementField.ElementFieldType === 11" />
                                                     <col class="indexFunctionsField" />
                                                 </colgroup>
                                                 <tbody>
                                                     <tr>
-                                                        <!--<td>
-                                        {{ elementCell.ValueMultiplied | number: 2 }}
-                                    </td>-->
                                                         <td>
-                                                            {{ elementCell.valuePercentage() | percentage: 2 }}
+                                                            {{ elementCell.ratingPercentage() | percentage: 2 }}
                                                         </td>
                                                         <td data-ng-if="elementCell.ElementField.ElementFieldType === 11">
                                                             {{ elementCell.indexIncome() | number: 2 }}
                                                         </td>
                                                         <td>
                                                             <div class="btn-group" role="group">
-                                                                <button type="button" data-ng-click="elementCell.increaseIndexRating(userId)" title="+ 10" class="btn btn-default btn-xs">+</button>
-                                                                <button type="button" data-ng-click="elementCell.decreaseIndexRating(userId)" title="- 10" class="btn btn-default btn-xs">-</button>
+                                                                <button type="button" data-ng-click="elementCell.increaseIndexRating()" title="+ 10" class="btn btn-default btn-xs">+</button>
+                                                                <button type="button" data-ng-click="elementCell.decreaseIndexRating()" title="- 10" class="btn btn-default btn-xs">-</button>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -176,7 +160,6 @@
                                             </table>
                                         </td>
                                         <!-- ResourcePool -->
-                                        <!-- TODO Single container for these fields? -->
                                         <td data-ng-if="resourcePool.EnableResourcePoolAddition && elementCell.ElementField.ElementFieldType === 11">
                                             {{ elementItem.resourcePoolAddition() | number: 2 }}
                                         </td>
@@ -184,13 +167,6 @@
                                             {{ elementItem.resourcePoolValueIncludingAddition() | number: 2 }}
                                         </td>
                                         <!-- Multiplier -->
-                                        <!-- TODO Single container for these fields? -->
-                                        <!--<td data-ng-if="elementCell.ElementFieldType === 12 && elementItem.HasResourcePoolCell">
-                        {{ elementItem.TotalResourcePoolValue | number: 2 }}
-                    </td>
-                    <td data-ng-if="elementCell.ElementFieldType === 12 && elementItem.HasResourcePoolCell">
-                        {{ elementItem.TotalResourcePoolAddition | number: 2 }}
-                    </td>-->
                                         <td data-ng-if="resourcePool.EnableResourcePoolAddition && elementCell.ElementField.ElementFieldType === 12 && elementItem.resourcePoolCell()">
                                             {{ elementItem.resourcePoolValueIncludingAdditionMultiplied() | number: 2 }}
                                         </td>
@@ -199,7 +175,7 @@
                             </table>
                         </td>
                         <!-- Totals -->
-                        <td data-ng-if="resourcePool.currentElement().resourcePoolField()">
+                        <td data-ng-if="resourcePool.currentElement.resourcePoolField()">
                             {{ elementItem.totalIncome() | number: 2 }}
                         </td>
                     </tr>
@@ -207,33 +183,28 @@
                 <tfoot>
                     <tr data-ng-if="resourcePool.EnableSubtotals">
                         <!-- Fields -->
-                        <td data-ng-repeat="field in resourcePool.currentElement().ElementFieldSet | orderBy: 'SortOrder'">
+                        <td data-ng-repeat="field in resourcePool.currentElement.ElementFieldSet | orderBy: 'SortOrder'">
                             <table class="resourcePoolFieldsTable">
                                 <tfoot>
                                     <tr>
                                         <td>
-                                            <!-- TODO Grand Total? -->
                                             <span data-ng-if="field.ElementFieldType === 11">
-                                                {{ resourcePool.currentElement().resourcePoolValue() | number: 2 }}
+                                                {{ resourcePool.currentElement.resourcePoolValue() | number: 2 }}
                                             </span>
                                             <div data-ng-if="field.ElementFieldType === 12">
-                                                {{ resourcePool.currentElement().multiplierValue() | number: 2 }}
+                                                {{ resourcePool.currentElement.multiplierValue() | number: 2 }}
                                             </div>
                                             <!-- Indexes -->
                                             <table class="fieldIndexTable" data-ng-repeat="index in field.ElementFieldIndexSet">
                                                 <colgroup>
-                                                    <!--<col class="valueMultipliedField" />-->
                                                     <col class="valuePercentageField" />
                                                     <col class="indexIncomeField" data-ng-if="field.ElementFieldType === 11" />
                                                     <col class="indexFunctionsField" />
                                                 </colgroup>
                                                 <tfoot>
                                                     <tr>
-                                                        <!--<td>
-                                        {{ field.ValueMultiplied | number: 2 }}
-                                    </td>-->
                                                         <td>
-                                                            {{ field.valuePercentage() | percentage: 2 }}
+                                                            {{ field.ratingPercentage() | percentage: 2 }}
                                                         </td>
                                                         <td data-ng-if="field.ElementFieldType === 11">
                                                             {{ index.indexIncome() | number: 2 }}
@@ -246,45 +217,37 @@
                                             </table>
                                         </td>
                                         <!-- ResourcePool -->
-                                        <!-- TODO Single container for these fields? -->
                                         <td data-ng-if="resourcePool.EnableResourcePoolAddition && field.ElementFieldType === 11">
-                                            {{ resourcePool.currentElement().resourcePoolAddition() | number: 2 }}
+                                            {{ resourcePool.currentElement.resourcePoolAddition() | number: 2 }}
                                         </td>
                                         <td data-ng-if="resourcePool.EnableResourcePoolAddition && field.ElementFieldType === 11">
-                                            {{ resourcePool.currentElement().resourcePoolValueIncludingAddition() | number: 2 }}
+                                            {{ resourcePool.currentElement.resourcePoolValueIncludingAddition() | number: 2 }}
                                         </td>
                                         <!-- Multiplier -->
-                                        <!-- TODO Single container for these fields? -->
-                                        <!--<td data-ng-if="field.ElementFieldType === 12 && resourcePool.MainElement.HasResourcePoolField">
-                        {{ resourcePool.MainElement.TotalResourcePoolValue | number: 2 }}
-                    </td>
-                    <td data-ng-if="field.ElementFieldType === 12 && resourcePool.MainElement.HasResourcePoolField">
-                        {{ resourcePool.MainElement.TotalResourcePoolAddition | number: 2 }}
-                    </td>-->
-                                        <td data-ng-if="resourcePool.EnableResourcePoolAddition && field.ElementFieldType === 12 && resourcePool.currentElement().resourcePoolField()">
-                                            {{ resourcePool.currentElement().resourcePoolValueIncludingAdditionMultiplied() | number: 2 }}
+                                        <td data-ng-if="resourcePool.EnableResourcePoolAddition && field.ElementFieldType === 12 && resourcePool.currentElement.resourcePoolField()">
+                                            {{ resourcePool.currentElement.resourcePoolValueIncludingAdditionMultiplied() | number: 2 }}
                                         </td>
                                     </tr>
                                 </tfoot>
                             </table>
                         </td>
                         <!-- Totals -->
-                        <td data-ng-if="resourcePool.currentElement().resourcePoolField()">
-                            {{ resourcePool.currentElement().totalIncome() | number: 2 }}
+                        <td data-ng-if="resourcePool.currentElement.resourcePoolField()">
+                            {{ resourcePool.currentElement.totalIncome() | number: 2 }}
                         </td>
                     </tr>
                     <tr>
                         <!-- Fields -->
-                        <td data-ng-repeat="field in resourcePool.currentElement().ElementFieldSet | orderBy: 'SortOrder'">
+                        <td data-ng-repeat="field in resourcePool.currentElement.ElementFieldSet | orderBy: 'SortOrder'">
                             <table class="resourcePoolFieldsTable">
                                 <tfoot>
                                     <tr>
                                         <td>
                                             <div data-ng-if="field.ElementFieldType === 12">
                                                 <div class="btn-group" role="group">
-                                                    <button title="Increase {{ resourcePool.currentElement().multiplierField().Name }}" type="button" data-ng-click="resourcePool.currentElement().increaseMultiplier(userId)" class="btn btn-default btn-xs">+</button>
-                                                    <button title="Decrease {{ resourcePool.currentElement().multiplierField().Name }}" type="button" data-ng-click="resourcePool.currentElement().decreaseMultiplier(userId)" class="btn btn-default btn-xs">-</button>
-                                                    <button title="Reset {{ resourcePool.currentElement().multiplierField().Name }}" type="button" data-ng-click="resourcePool.currentElement().resetMultiplier(userId)" class="btn btn-default btn-xs">0</button>
+                                                    <button title="Increase {{ resourcePool.currentElement.multiplierField().Name }}" type="button" data-ng-click="increaseElementMultiplier(resourcePool.currentElement)" class="btn btn-default btn-xs">+</button>
+                                                    <button title="Decrease {{ resourcePool.currentElement.multiplierField().Name }}" type="button" data-ng-click="decreaseElementMultiplier(resourcePool.currentElement)" class="btn btn-default btn-xs">-</button>
+                                                    <button title="Reset {{ resourcePool.currentElement.multiplierField().Name }}" type="button" data-ng-click="resetElementMultiplier(resourcePool.currentElement)" class="btn btn-default btn-xs">0</button>
                                                 </div>
                                             </div>
                                             <div data-ng-if="field.ElementFieldType !== 12">

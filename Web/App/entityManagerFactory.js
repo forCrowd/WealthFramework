@@ -16,7 +16,7 @@
             'elementField',
             'elementFieldIndex',
             'elementItem',
-            'resourcePool',
+            'resourcePoolFactory',
             entityManagerFactory]);
 
     function entityManagerFactory(breeze,
@@ -25,7 +25,7 @@
         elementField,
         elementFieldIndex,
         elementItem,
-        resourcePool) {
+        resourcePoolFactory) {
 
         configureBreeze();
 
@@ -78,7 +78,7 @@
             store.registerEntityTypeCtor('ElementField', elementField.constructor);
             store.registerEntityTypeCtor('ElementFieldIndex', elementFieldIndex.constructor);
             store.registerEntityTypeCtor('ElementItem', elementItem.constructor);
-            store.registerEntityTypeCtor('ResourcePool', resourcePool.constructor);
+            store.registerEntityTypeCtor('ResourcePool', resourcePoolFactory.resourcePool);
             return manager;
         }
     }

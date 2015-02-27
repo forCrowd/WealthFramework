@@ -248,6 +248,11 @@ also resourcepoolrate on element?
 
 . REMOVE WEBAPI + DTO STUFF?!
 
+						. CONTINUE WITH; SOMEHOW DEFINEPROPERTY DOESN'T WORK - FOR RESOURCEPOOL.CURRENTELEMENT USE NORMAL FIELD + SET FUNCTION!
+						also raising an event is not necessary anymore?
+
+						. CHECK null checks! + undefined + create some tests for these cases!
+
 . RESOURCEPOOLEDITOR IN A BOOTSTRAP PANEL?
 
 . Odata - Find a better way for readonly props (edmbuilder)?

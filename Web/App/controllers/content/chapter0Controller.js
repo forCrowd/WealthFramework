@@ -3,9 +3,9 @@
 
     var controllerId = 'chapter0Controller';
     angular.module('main')
-        .controller(controllerId, ['resourcePoolService', 'userService', '$scope', '$timeout', '$rootScope', 'logger', chapter0Controller]);
+        .controller(controllerId, ['resourcePoolService', '$scope', '$timeout', '$rootScope', 'logger', chapter0Controller]);
 
-    function chapter0Controller(resourcePoolService, userService, $scope, $timeout, $rootScope, logger) {
+    function chapter0Controller(resourcePoolService, $scope, $timeout, $rootScope, logger) {
 
         logger = logger.forSource(controllerId);
 
@@ -13,7 +13,7 @@
 
         initialize();
 
-        /* Implementations */
+        /*** Implementations ***/
 
         function initialize() {
 
@@ -35,16 +35,11 @@
                     // Call the service to increase the multiplier
                     resourcePoolService.getResourcePoolCustomEdit(vm.introduction_UPOResourcePoolId)
                         .then(function (resourcePoolSet) {
-                            userService.getUserInfo()
-                                .then(function (userInfo) {
-                                    var resourcePool = resourcePoolSet[0];
-                                    resourcePool.currentUserId = userInfo.Id;
-
-                                    for (var i = 0; i < resourcePool.ElementSet.length; i++) {
-                                        var element = resourcePool.ElementSet[i];
-                                        element.increaseMultiplier(resourcePool.currentUserId);
-                                    }
-                                });
+                            var resourcePool = resourcePoolSet[0];
+                            for (var i = 0; i < resourcePool.ElementSet.length; i++) {
+                                var element = resourcePool.ElementSet[i];
+                                element.increaseMultiplier();
+                            }
                         });
 
                     // Then increase recursively
@@ -91,20 +86,15 @@
                             // Call the service to increase the multiplier
                             resourcePoolService.getResourcePoolCustomEdit(oppositeResourcePoolId)
                                 .then(function (resourcePoolSet) {
-                                    userService.getUserInfo()
-                                        .then(function (userInfo) {
-                                            var resourcePool = resourcePoolSet[0];
-                                            resourcePool.currentUserId = userInfo.Id;
-
-                                            for (var i = 0; i < resourcePool.ElementSet.length; i++) {
-                                                var element = resourcePool.ElementSet[i];
-                                                switch (event.name) {
-                                                    case 'element_multiplierIncreased': { element.increaseMultiplier(resourcePool.currentUserId); break; }
-                                                    case 'element_multiplierDecreased': { element.decreaseMultiplier(resourcePool.currentUserId); break; }
-                                                    case 'element_multiplierReset': { element.resetMultiplier(resourcePool.currentUserId); break; }
-                                                }
-                                            }
-                                        });
+                                    var resourcePool = resourcePoolSet[0];
+                                    for (var i = 0; i < resourcePool.ElementSet.length; i++) {
+                                        var element = resourcePool.ElementSet[i];
+                                        switch (event.name) {
+                                            case 'element_multiplierIncreased': { element.increaseMultiplier(); break; }
+                                            case 'element_multiplierDecreased': { element.decreaseMultiplier(); break; }
+                                            case 'element_multiplierReset': { element.resetMultiplier(); break; }
+                                        }
+                                    }
                                 });
                         }
                     }

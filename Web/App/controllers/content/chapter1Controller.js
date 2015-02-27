@@ -16,7 +16,7 @@
 
         initialize();
 
-        /* Implementations */
+        /*** Implementations ***/
 
         function initialize() {
             configureChart();

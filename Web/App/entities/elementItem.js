@@ -17,22 +17,21 @@
 
         return (service);
 
-        // Implementations
+        /*** Implementations ***/
 
         function constructor() {
             var self = this;
 
-            // Locals
-            // TODO Is it possible to make them 'private'?
-            self._resourcePoolCell = null;
-            self._multiplierCell = null;
+            // Local variables
+            var _resourcePoolCell = null;
+            var _multiplierCell = null;
 
             self.resourcePoolCell = function () {
 
                 // Cached value
                 // TODO In case of add / remove field?
-                if (self._resourcePoolCell) {
-                    return self._resourcePoolCell;
+                if (_resourcePoolCell) {
+                    return _resourcePoolCell;
                 }
 
                 // Validate
@@ -41,21 +40,21 @@
 
                 for (var i = 0; i < self.ElementCellSet.length; i++) {
                     var cell = self.ElementCellSet[i];
-                    if (cell.isResourcePoolCell()) {
-                        self._resourcePoolCell = cell;
+                    if (cell.ElementField.ElementFieldType === 11) {
+                        _resourcePoolCell = cell;
                         break;
                     }
                 }
 
-                return self._resourcePoolCell;
+                return _resourcePoolCell;
             }
 
             self.multiplierCell = function () {
 
                 // Cached value
                 // TODO In case of add / remove field?
-                if (self._multiplierCell)
-                    return self._multiplierCell;
+                if (_multiplierCell)
+                    return _multiplierCell;
 
                 // Validate
                 if (typeof self.ElementCellSet === 'undefined')
@@ -63,44 +62,31 @@
 
                 for (var i = 0; i < self.ElementCellSet.length; i++) {
                     var cell = self.ElementCellSet[i];
-                    if (cell.isMultiplierCell()) {
-                        self._multiplierCell = cell;
+                    if (cell.ElementField.ElementFieldType === 12) {
+                        _multiplierCell = cell;
                         break;
                     }
                 }
 
-                return self._multiplierCell;
+                return _multiplierCell;
             }
 
             // TODO Compare this function with server-side
-            // TODO How about Object.defineProperty?
             self.resourcePoolValue = function () {
 
-                var value = 0; // Default value
+                if (self.resourcePoolCell() === null || !self.resourcePoolCell().DecimalValue === null)
+                    return 0;
 
-                if (self.resourcePoolCell())
-                    value = self.resourcePoolCell().DecimalValue;
-
-                return value;
+                return self.resourcePoolCell().DecimalValue;
             }
 
             // TODO Compare this function with server-side
-            // TODO How about Object.defineProperty?
             self.multiplierValue = function () {
 
-                var value = 1; // Default value
+                if (self.multiplierCell() === null || self.multiplierCell().userElementCell().DecimalValue === null)
+                    return 1; // Default value
 
-                // TODO Review!
-                if (self.multiplierCell()) {
-                    for (var i = 0; i < self.multiplierCell().UserElementCellSet.length; i++) {
-                        var userElementCell = self.multiplierCell().UserElementCellSet[i];
-                        if (userElementCell.UserId === self.Element.ResourcePool.currentUserId) {
-                            value = userElementCell.DecimalValue;
-                            break;
-                        }
-                    }
-                }
-                return value;
+                return self.multiplierCell().userElementCell().DecimalValue;
             }
 
             self.resourcePoolValueMultiplied = function () {
@@ -108,11 +94,7 @@
             }
 
             self.resourcePoolAddition = function () {
-                var value = self.resourcePoolValue() * self.Element.ResourcePool.resourcePoolRatePercentage();
-                //logger.log(self.Name + ' self.resourcePoolValue()', self.resourcePoolValue());
-                //logger.log(self.Name + ' self.Element.ResourcePool.resourcePoolRatePercentage()', self.Element.ResourcePool.resourcePoolRatePercentage());
-                // logger.log(self.Name + ' resourcePoolAddition', value);
-                return value;
+                return self.resourcePoolValue() * self.Element.ResourcePool.resourcePoolRatePercentage();
             }
 
             self.resourcePoolAdditionMultiplied = function () {
