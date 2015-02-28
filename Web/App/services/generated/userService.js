@@ -39,7 +39,7 @@
         /*** Implementations ***/
 
         function createUser(user) {
-            dataContext.createEntity('Users', user);
+            return dataContext.createEntity('Users', user);
         }
 
         function deleteUser(user) {

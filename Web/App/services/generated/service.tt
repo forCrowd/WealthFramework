@@ -76,7 +76,7 @@ foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
         /*** Implementations ***/
 
         function create<#= entityTypeName #>(<#= entityVariable #>) {
-            dataContext.createEntity('<#= entitySetName #>', <#= entityVariable #>);
+            return dataContext.createEntity('<#= entitySetName #>', <#= entityVariable #>);
         }
 
         function delete<#= entityTypeName #>(<#= entityVariable #>) {

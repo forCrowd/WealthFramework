@@ -39,7 +39,7 @@
         /*** Implementations ***/
 
         function createUserLogin(userLogin) {
-            dataContext.createEntity('UserLogins', userLogin);
+            return dataContext.createEntity('UserLogins', userLogin);
         }
 
         function deleteUserLogin(userLogin) {

@@ -39,7 +39,7 @@
         /*** Implementations ***/
 
         function createUserElementFieldIndex(userElementFieldIndex) {
-            dataContext.createEntity('UserElementFieldIndex', userElementFieldIndex);
+            return dataContext.createEntity('UserElementFieldIndex', userElementFieldIndex);
         }
 
         function deleteUserElementFieldIndex(userElementFieldIndex) {

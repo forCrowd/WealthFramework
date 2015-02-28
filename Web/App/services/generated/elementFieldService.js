@@ -39,7 +39,7 @@
         /*** Implementations ***/
 
         function createElementField(elementField) {
-            dataContext.createEntity('ElementField', elementField);
+            return dataContext.createEntity('ElementField', elementField);
         }
 
         function deleteElementField(elementField) {

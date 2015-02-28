@@ -39,7 +39,7 @@
         /*** Implementations ***/
 
         function createUserRole(userRole) {
-            dataContext.createEntity('UserRoles', userRole);
+            return dataContext.createEntity('UserRoles', userRole);
         }
 
         function deleteUserRole(userRole) {

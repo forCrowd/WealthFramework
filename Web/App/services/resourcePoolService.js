@@ -25,6 +25,7 @@
 
         /*** Implementations ***/
 
+        // Todo Obsolete?
         function getResourcePoolCustom(resourcePoolId, valueFilter) {
             var url = '/api/ResourcePoolCustom/GetResourcePool/' + resourcePoolId;
 

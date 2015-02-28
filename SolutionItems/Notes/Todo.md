@@ -251,6 +251,9 @@ also resourcepoolrate on element?
 						. CONTINUE WITH; SOMEHOW DEFINEPROPERTY DOESN'T WORK - FOR RESOURCEPOOL.CURRENTELEMENT USE NORMAL FIELD + SET FUNCTION!
 						also raising an event is not necessary anymore?
 
+										. enumconfprotback is the best one? try to use currentElement with that one!
+										also try currentElement(newElement) syntax (get + set in one method?)
+
 						. CHECK null checks! + undefined + create some tests for these cases!
 
 . RESOURCEPOOLEDITOR IN A BOOTSTRAP PANEL?

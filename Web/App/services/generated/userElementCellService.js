@@ -39,7 +39,7 @@
         /*** Implementations ***/
 
         function createUserElementCell(userElementCell) {
-            dataContext.createEntity('UserElementCell', userElementCell);
+            return dataContext.createEntity('UserElementCell', userElementCell);
         }
 
         function deleteUserElementCell(userElementCell) {

@@ -39,7 +39,7 @@
         /*** Implementations ***/
 
         function createElement(element) {
-            dataContext.createEntity('Element', element);
+            return dataContext.createEntity('Element', element);
         }
 
         function deleteElement(element) {

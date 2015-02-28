@@ -67,9 +67,7 @@
 
                 // Event handlers
                 $rootScope.$on('resourcePool_currentElementChanged', function (event, resourcePool) {
-                    logger.log('rpe3.1', resourcePool);
                     if (resourcePool === scope.resourcePool) {
-                        logger.log('rpe3.2', scope.resourcePool.currentElement);
                         loadChartData(scope.resourcePool.currentElement);
                     }
                 });
@@ -87,20 +85,18 @@
                         .then(function (data) {
                             scope.resourcePool = data[0];
 
-                            logger.log('rpe0.9', scope.resourcePool);
-
                             // Current element
                             if (scope.resourcePool.currentElement === null) {
+                                logger.log('1');
                                 for (var i = 0; i < scope.resourcePool.ElementSet.length; i++) {
                                     var element = scope.resourcePool.ElementSet[i];
                                     if (element.IsMainElement) {
                                         scope.resourcePool.currentElement = element;
-                                        logger.log('rpe1', scope.resourcePool.currentElement);
                                         break;
                                     }
                                 }
                             } else {
-                                logger.log('rpe2', scope.resourcePool.currentElement);
+                                logger.log('2');
                                 loadChartData(scope.resourcePool.currentElement);
                             }
                         })

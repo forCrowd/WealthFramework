@@ -15,6 +15,33 @@
             resourcePool: resourcePool
         }
 
+        // Properties
+        Object.defineProperty(resourcePool.prototype, 'testPropWithEnumConfProt', {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                logger.log(this.Id + ' with EnumConfProt - about to GET');
+                return this._testPropWithEnumConfProt;
+            },
+            set: function (value) {
+                logger.log(this.Id + ' with EnumConfProt - about to SET');
+                this._testPropWithEnumConfProt = value;
+            }
+        });
+
+        Object.defineProperty(resourcePool.prototype, 'testPropWithEnumConfProtBack', {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                logger.log(this.Id + ' with EnumConfProtBack - about to GET');
+                return this.backingFields._testPropWithEnumConfProtBack;
+            },
+            set: function (value) {
+                logger.log(this.Id + ' with EnumConfProtBack - about to SET');
+                this.backingFields._testPropWithEnumConfProtBack = value;
+            }
+        });
+
         return (service);
 
         /*** Implementations ***/
@@ -23,30 +50,65 @@
 
             var self = this;
 
-            // Local variables
-            var _mainElement = null;
-            //var _currentElement = null;
-            self._backingFields = {
-                currentElement: null
+            /* test */
+
+            self.testField = 'field - initial';
+
+            Object.defineProperty(self, 'testPropOnlyGet', {
+                get: function () { return 'only get - initial'; }
+            });
+
+            var _testPropGetSet = 'get set - initial';
+            Object.defineProperty(self, 'testPropGetSet', {
+                get: function () {
+                    //logger.log(self.Id + ' get set - about to GET');
+                    return _testPropGetSet;
+                },
+                set: function (value) {
+                    //logger.log(self.Id + ' get set - about to SET');
+                    _testPropGetSet = value;
+                }
+            });
+
+            var _testPropWithEnumConf = 'with EnumConf - initial';
+            Object.defineProperty(self, 'testPropWithEnumConf', {
+                enumerable: true,
+                configurable: true,
+                get: function () {
+                    logger.log(self.Id + ' with EnumConf - about to GET');
+                    return _testPropWithEnumConf;
+                },
+                set: function (value) {
+                    logger.log(self.Id + ' with EnumConf - about to SET');
+                    _testPropWithEnumConf = value;
+                }
+            });
+
+            Object.defineProperty(self, 'testPropWithEnumConfBack', {
+                enumerable: true,
+                configurable: true,
+                get: function () {
+                    logger.log(self.Id + ' with EnumConfBack - about to GET');
+                    return self.backingFields._testPropWithEnumConfBack;
+                },
+                set: function (value) {
+                    logger.log(self.Id + ' with EnumConfBack - about to SET');
+                    self.backingFields._testPropWithEnumConfBack = value;
+                }
+            });
+
+            var _testPropWithEnumConfProt = 'with EnumConfProt - initial';
+
+            self.backingFields = {
+                _testPropWithEnumConfBack: 'with EnumConfBack - initial',
+                _testPropWithEnumConfProtBack: 'with EnumConfProtBack - initial'
             };
 
-            //self.backingFields = {
-            //    _age: 0   // default
-            //};
+            /* test end */
 
-            //// Define the ES5 property on the prototype
-            //// it stores the value inside the instance's backingFields
-            //Object.defineProperty(constructor.prototype, 'age', {
-            //    enumerable: true,
-            //    configurable: true,
-            //    get: function () { return self.backingFields._age; },
-            //    set: function (value) {
-            //        if (value !== self.backingFields._age) {
-            //            alert("Foo age changed to " + value);
-            //            self.backingFields._age = value;
-            //        }
-            //    }
-            //});
+            // Local variables
+            var _mainElement = null;
+            var _currentElement = null;
 
             // Main element
             self.mainElement = function () {
@@ -67,13 +129,11 @@
             // Current element
             Object.defineProperty(self, 'currentElement', {
                 enumerable: true,
-                //configurable: true,
-                get: function () { return self._backingFields.currentElement; },
+                configurable: true,
+                get: function () { return _currentElement; },
                 set: function (value) {
-                    logger.log('rpe1.1', value);
-                    if (self._backingFields.currentElement !== value) {
-                        self._backingFields.currentElement = value;
-                        logger.log('rpe1.2', value);
+                    if (_currentElement !== value) {
+                        _currentElement = value;
                         $rootScope.$broadcast('resourcePool_currentElementChanged', self);
                     }
                 }

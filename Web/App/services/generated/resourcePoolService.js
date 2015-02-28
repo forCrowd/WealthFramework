@@ -39,7 +39,7 @@
         /*** Implementations ***/
 
         function createResourcePool(resourcePool) {
-            dataContext.createEntity('ResourcePool', resourcePool);
+            return dataContext.createEntity('ResourcePool', resourcePool);
         }
 
         function deleteResourcePool(resourcePool) {

@@ -39,7 +39,7 @@
         /*** Implementations ***/
 
         function createUserClaim(userClaim) {
-            dataContext.createEntity('UserClaims', userClaim);
+            return dataContext.createEntity('UserClaims', userClaim);
         }
 
         function deleteUserClaim(userClaim) {
