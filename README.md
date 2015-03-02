@@ -23,7 +23,7 @@ An experimental resource management system that aims to provide a sustainable ec
 ** 'Cancel' type was changed to 'button' type instead of 'submit' and service.cancelChanges() method was removed
 * LazyLoading was disabled
 * breeze RowVersion property issue was fixed
-* Extending the breeze's entities, instead of DTOs from WebApi
+* Extending the breeze's entities, instead of DTOs from WebApi, WebApi DTOs were removed
 * Element drill up & down for ResourcePoolEditor directive
 * Web - CustomAuthentication filter with debug user (for OData query tests)
 * DataObjects - DropCreateAlways & MigrateToLatest combo db initializer

@@ -79,39 +79,6 @@ namespace BusinessObjects.Tests
         }
 
         [TestMethod]
-        public void ValueFilterSettings_ShouldPass()
-        {
-            // Arrange
-            var user1 = new User("User");
-            var user2 = new User("User");
-            var resourcePool = new ResourcePool("CMRP");
-            var element = resourcePool.AddElement("Element");
-            var decimalField = element.AddField("Field", ElementFieldTypes.Decimal, false);
-            var cell = element.AddItem("Element")
-                .AddCell(decimalField)
-                    .SetValue(5M, user1)
-                    .SetValue(10M, user2);
-            
-            // Act
-            //element.FilterSettings.CurrentUser = user1;
-
-            // Assert
-            Assert.IsTrue(cell.RatingAverageOld == 5M);
-
-            // Act - Part 2
-            //element.FilterSettings.CurrentUser = user2;
-
-            // Assert - Part 2
-            Assert.IsTrue(cell.RatingAverageOld == 10M);
-
-            // Act - Part 2
-            //element.FilterSettings.ValueFilter = ResourcePoolFilterSettings.ValueFilters.AllUsersAverage;
-
-            // Assert - Part 2
-            Assert.IsTrue(cell.RatingAverageOld == 7.5M);
-        }
-
-        [TestMethod]
         public void TwoElementItems_ImportanceIndex_SingleUser()
         {
             // Arrange + act

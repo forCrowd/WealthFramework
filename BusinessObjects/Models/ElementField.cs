@@ -137,12 +137,12 @@ namespace BusinessObjects
 
         public decimal ValueMultiplied()
         {
-            return ElementCellSet.Sum(item => item.ValueMultiplied());
+            return ElementCellSet.Sum(item => item.RatingMultiplied());
         }
 
         public decimal ValuePercentage()
         {
-            return ElementCellSet.Sum(item => item.ValuePercentage());
+            return ElementCellSet.Sum(item => item.RatingPercentage());
         }
 
         // TODO Although technically it's possible to define multiple indexes, there will be one per Field at the moment

@@ -86,7 +86,7 @@ namespace BusinessObjects
         public decimal ResourcePoolValue()
         {
             return HasResourcePoolCell
-                ? ResourcePoolCell.RatingAverageOld
+                ? ResourcePoolCell.Rating
                 : 0;
         }
 
@@ -113,13 +113,13 @@ namespace BusinessObjects
 
         public decimal MultiplierValue()
         {
-            if (!HasMultiplierCell)
+            if (!HasMultiplierCell || MultiplierCell.UserElementCell == null || !MultiplierCell.UserElementCell.DecimalValue.HasValue)
                 return 1;
 
             //if (Element.ResourcePool.FilterSettings.MultiplierUser == null)
             //    throw new InvalidOperationException("MultiplierValue property cannot be retrieved without specifying MultiplierUser filter on ResourcePool object");
 
-            return MultiplierCell.RatingAverageOld;
+            return MultiplierCell.UserElementCell.DecimalValue.Value;
         }
 
         //public decimal Value()

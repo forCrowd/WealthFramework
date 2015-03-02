@@ -103,35 +103,35 @@ namespace BusinessObjects
 
         public virtual ElementCell ElementCell { get; set; }
 
-        public decimal Value
-        {
-            get
-            {
-                var fieldType = (ElementFieldTypes)ElementCell.ElementField.ElementFieldType;
+        //public decimal Value
+        //{
+        //    get
+        //    {
+        //        var fieldType = (ElementFieldTypes)ElementCell.ElementField.ElementFieldType;
 
-                switch (fieldType)
-                {
-                    case ElementFieldTypes.Boolean:
-                        return Convert.ToDecimal(BooleanValue.GetValueOrDefault());
-                    case ElementFieldTypes.Integer:
-                        return Convert.ToDecimal(IntegerValue.GetValueOrDefault());
-                    case ElementFieldTypes.Decimal:
-                    // TODO This calculation is the same as Decimal type? Are we using the types in a wrong way?
-                    case ElementFieldTypes.ResourcePool:
-                    case ElementFieldTypes.Multiplier:
-                        return DecimalValue.GetValueOrDefault();
-                    case ElementFieldTypes.DateTime:
-                        // TODO Check GetValueOrDefault() method for this type
-                        return Convert.ToDecimal(DateTimeValue.GetValueOrDefault());
-                    case ElementFieldTypes.String:
-                    case ElementFieldTypes.Element:
-                        // TODO At least for now
-                        throw new InvalidOperationException("Value property is not available for this field type");
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-            }
-        }
+        //        switch (fieldType)
+        //        {
+        //            case ElementFieldTypes.Boolean:
+        //                return Convert.ToDecimal(BooleanValue.GetValueOrDefault());
+        //            case ElementFieldTypes.Integer:
+        //                return Convert.ToDecimal(IntegerValue.GetValueOrDefault());
+        //            case ElementFieldTypes.Decimal:
+        //            // TODO This calculation is the same as Decimal type? Are we using the types in a wrong way?
+        //            case ElementFieldTypes.ResourcePool:
+        //            case ElementFieldTypes.Multiplier:
+        //                return DecimalValue.GetValueOrDefault();
+        //            case ElementFieldTypes.DateTime:
+        //                // TODO Check GetValueOrDefault() method for this type
+        //                return Convert.ToDecimal(DateTimeValue.GetValueOrDefault());
+        //            case ElementFieldTypes.String:
+        //            case ElementFieldTypes.Element:
+        //                // TODO At least for now
+        //                throw new InvalidOperationException("Value property is not available for this field type");
+        //            default:
+        //                throw new ArgumentOutOfRangeException();
+        //        }
+        //    }
+        //}
 
         #region - Methods -
 

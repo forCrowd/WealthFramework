@@ -69,10 +69,9 @@
                         case 2: { value = self.BooleanValue; break; }
                         case 3: { value = self.IntegerValue; break; }
                         case 4:
-                            // TODO 5 (DateTime?)
-                        case 11:
-                        case 12: { value = self.DecimalValue; break; }
-                        default: { throw 'Not supported'; }
+                        case 11: { value = self.DecimalValue; break; }
+                        // TODO 5 (DateTime?)
+                        default: { throw 'Invalid field type: ' +  self.ElementField.ElementFieldType; }
                     }
                 } else {
 

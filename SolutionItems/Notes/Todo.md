@@ -246,11 +246,9 @@ resourcepooladdition -> resourcepoolfield ?!
 . enableresourcepool + enablesubtotals on element?
 also resourcepoolrate on element?
 
-		. REMOVE WEBAPI + DTO STUFF?!
-
 . check chrome errors!
 
-. RESOURCEPOOLEDITOR IN A BOOTSTRAP PANEL?
+. ResourcePoolEditor in a bootsrap panel?
 
 . Odata - Find a better way for readonly props (edmbuilder)?
 Also AccountController methods? So WebApi can go forever?
@@ -272,6 +270,7 @@ test - userqueryvisitor with filter!
 http://blogs.msdn.com/b/webdev/archive/2015/02/11/improve-performance-by-optimizing-queries-for-asp-net-identity-and-other-membership-providers.aspx
 
 . Improve + update tests? Also javascript tests?
+Also remove unnecessary methods & props
 
 . userResourcePool rate & fieldIndex rating increase/decrease!
 
