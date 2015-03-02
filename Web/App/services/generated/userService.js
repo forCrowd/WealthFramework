@@ -85,7 +85,7 @@
 
             function success(response) {
                 count = response.results.length;
-                logger.logSuccess('Got ' + count + ' user(s)', response, true);
+                //logger.logSuccess('Got ' + count + ' user(s)', response, true);
                 return response.results;
             }
 

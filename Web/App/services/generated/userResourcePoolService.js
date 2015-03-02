@@ -86,7 +86,7 @@
 
             function success(response) {
                 count = response.results.length;
-                logger.logSuccess('Got ' + count + ' userResourcePool(s)', response, true);
+                //logger.logSuccess('Got ' + count + ' userResourcePool(s)', response, true);
                 return response.results;
             }
 

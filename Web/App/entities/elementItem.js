@@ -74,7 +74,7 @@
             // TODO Compare this function with server-side
             self.resourcePoolValue = function () {
 
-                if (self.resourcePoolCell() === null || !self.resourcePoolCell().DecimalValue === null)
+                if (self.resourcePoolCell() === null || self.resourcePoolCell().DecimalValue === null)
                     return 0;
 
                 return self.resourcePoolCell().DecimalValue;

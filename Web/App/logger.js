@@ -27,6 +27,7 @@
         function configureToastr() {
             toastr.options = {
                 "positionClass": "toast-bottom-right"
+                //,"preventDuplicates": true
             }
         }
 

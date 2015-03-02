@@ -64,39 +64,47 @@
                 vm.basics_NewModelResourcePoolId = 3;
 
                 // Listen resource pool updated event
-                $rootScope.$on('element_multiplierIncreased', updateOppositeResourcePool);
-                $rootScope.$on('element_multiplierDecreased', updateOppositeResourcePool);
-                $rootScope.$on('element_multiplierReset', updateOppositeResourcePool);
+                $rootScope.$on('resourcePoolEditor_elementMultiplierIncreased', updateOppositeResourcePool);
+                $rootScope.$on('resourcePoolEditor_elementMultiplierDecreased', updateOppositeResourcePool);
+                $rootScope.$on('resourcePoolEditor_elementMultiplierReset', updateOppositeResourcePool);
+
+                //$rootScope.$on('element_multiplierIncreased', updateOppositeResourcePool);
+                //$rootScope.$on('element_multiplierDecreased', updateOppositeResourcePool);
+                //$rootScope.$on('element_multiplierReset', updateOppositeResourcePool);
 
                 function updateOppositeResourcePool(event, element) {
 
                     if (element.ResourcePool.Id === vm.basics_ExistingModelResourcePoolId
                         || element.ResourcePool.Id === vm.basics_NewModelResourcePoolId) {
 
-                        if (basics_updatingOpposite) {
-                            basics_updatingOpposite = false;
-                            return;
-                        } else {
-                            basics_updatingOpposite = true;
+                        //if (basics_updatingOpposite) {
+                        //    basics_updatingOpposite = false;
+                        //    return;
+                        //} else {
+                        //    basics_updatingOpposite = true;
 
-                            var oppositeResourcePoolId = element.ResourcePool.Id === vm.basics_ExistingModelResourcePoolId
-                                ? vm.basics_NewModelResourcePoolId
-                                : vm.basics_ExistingModelResourcePoolId;
+                        var oppositeResourcePoolId = element.ResourcePool.Id === vm.basics_ExistingModelResourcePoolId
+                            ? vm.basics_NewModelResourcePoolId
+                            : vm.basics_ExistingModelResourcePoolId;
 
-                            // Call the service to increase the multiplier
-                            resourcePoolService.getResourcePoolCustomEdit(oppositeResourcePoolId)
-                                .then(function (resourcePoolSet) {
-                                    var resourcePool = resourcePoolSet[0];
-                                    for (var i = 0; i < resourcePool.ElementSet.length; i++) {
-                                        var element = resourcePool.ElementSet[i];
-                                        switch (event.name) {
-                                            case 'element_multiplierIncreased': { element.increaseMultiplier(); break; }
-                                            case 'element_multiplierDecreased': { element.decreaseMultiplier(); break; }
-                                            case 'element_multiplierReset': { element.resetMultiplier(); break; }
-                                        }
-                                    }
-                                });
-                        }
+                        // Call the service to increase the multiplier
+                        resourcePoolService.getResourcePoolCustomEdit(oppositeResourcePoolId)
+                            .then(function (resourcePoolSet) {
+
+                                var resourcePool = resourcePoolSet[0];
+                                var mainElement = resourcePool.mainElement();
+
+                                var result = false;
+                                switch (event.name) {
+                                    case 'resourcePoolEditor_elementMultiplierIncreased': { result = mainElement.updateMultiplier('increase'); break; }
+                                    case 'resourcePoolEditor_elementMultiplierDecreased': { result = mainElement.updateMultiplier('decrease'); break; }
+                                    case 'resourcePoolEditor_elementMultiplierReset': { result = mainElement.updateMultiplier('reset'); break; }
+                                }
+
+                                if (result)
+                                    resourcePoolService.saveChanges();
+                            });
+                        //}
                     }
                 }
             }

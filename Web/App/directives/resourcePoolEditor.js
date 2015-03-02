@@ -45,108 +45,93 @@
                 size: {}
             };
 
+            scope.changeCurrentElement = function (element) {
+                scope.resourcePool.currentElement = element;
+                loadChartData(element);
+            }
+
             scope.increaseElementMultiplier = function (element) {
-                element.increaseMultiplier();
-                saveChanges();
+
+                var result = element.updateMultiplier('increase');
+                if (result) {
+                    $rootScope.$broadcast('resourcePoolEditor_elementMultiplierIncreased', element);
+                    saveChanges();
+                }
             }
 
             scope.decreaseElementMultiplier = function (element) {
-                element.decreaseMultiplier();
-                saveChanges();
+                var result = element.updateMultiplier('decrease');
+                if (result) {
+                    $rootScope.$broadcast('resourcePoolEditor_elementMultiplierDecreased', element);
+                    saveChanges();
+                }
             }
 
             scope.resetElementMultiplier = function (element) {
-                element.resetMultiplier();
-                saveChanges();
+                var result = element.updateMultiplier('reset');
+                if (result) {
+                    $rootScope.$broadcast('resourcePoolEditor_elementMultiplierReset', element);
+                    saveChanges();
+                }
             }
 
-            // Initialize
-            initialize();
-
-            function initialize() {
-
-                // Event handlers
-                $rootScope.$on('resourcePool_currentElementChanged', function (event, resourcePool) {
-                    if (resourcePool === scope.resourcePool) {
-                        loadChartData(scope.resourcePool.currentElement);
-                    }
-                });
-
-                //$rootScope.$on('element_multiplierIncreased', elementUpdatedEventHandler);
-                //$rootScope.$on('element_multiplierDecreased', elementUpdatedEventHandler);
-                //$rootScope.$on('element_multiplierReset', elementUpdatedEventHandler);
-                $rootScope.$on('elementCell_indexRatingIncreased', elementCellUpdatedEventHandler);
-                $rootScope.$on('elementCell_indexRatingDecreased', elementCellUpdatedEventHandler);
-
-                // Get the current resource pool
-                scope.$watch('resourcePoolId', function () {
-
-                    resourcePoolService.getResourcePoolCustomEdit(scope.resourcePoolId)
-                        .then(function (data) {
-                            scope.resourcePool = data[0];
-
-                            // Current element
-                            if (scope.resourcePool.currentElement === null) {
-                                logger.log('1');
-                                for (var i = 0; i < scope.resourcePool.ElementSet.length; i++) {
-                                    var element = scope.resourcePool.ElementSet[i];
-                                    if (element.IsMainElement) {
-                                        scope.resourcePool.currentElement = element;
-                                        break;
-                                    }
-                                }
-                            } else {
-                                logger.log('2');
-                                loadChartData(scope.resourcePool.currentElement);
-                            }
-                        })
-                        .catch(function (error) {
-                            // TODO User-friendly message?
-                        });
-
-                }, true);
-
-                // Chart height
-                scope.$watch('chartHeight', function () {
-                    scope.chartConfig.size.height = scope.chartHeight;
-                }, true);
-
+            scope.increaseCellIndexRating = function (cell) {
+                var result = cell.updateIndexRating('increase');
+                if (result) {
+                    saveChanges();
+                }
             }
 
-            //// Listen resource pool updated event
-            //$rootScope.$on('resourcePool_ResourcePoolRateUpdated', resourcePoolUpdated);
-            //$rootScope.$on('resourcePool_Saved', resourcePoolUpdated);
+            scope.decreaseCellIndexRating = function (cell) {
+                var result = cell.updateIndexRating('decrease');
+                if (result) {
+                    saveChanges();
+                }
+            }
 
-            //$rootScope.$on('element_MultiplierIncreased', elementUpdated);
-            //$rootScope.$on('element_MultiplierDecreased', elementUpdated);
-            //$rootScope.$on('element_MultiplierReset', elementUpdated);
+            //// Initialize
+            //initialize();
 
-            //function resourcePoolUpdated(event, resourcePoolId) {
-            //    if (scope.resourcePoolId === resourcePoolId)
-            //        getResourcePool();
+            //function initialize() {
+
+            // Resource pool id: Get the current resource pool
+            scope.$watch('resourcePoolId', function () {
+
+                resourcePoolService.getResourcePoolCustomEdit(scope.resourcePoolId)
+                    .then(function (data) {
+                        scope.resourcePool = data[0];
+
+                        // Current element
+                        if (scope.resourcePool.currentElement === null) {
+                            scope.changeCurrentElement(scope.resourcePool.mainElement());
+                        } else {
+                            loadChartData(scope.resourcePool.currentElement);
+                        }
+                    })
+                    .catch(function (error) {
+                        // TODO User-friendly message?
+                    });
+
+            }, true);
+
+            // Chart height
+            scope.$watch('chartHeight', function () {
+                scope.chartConfig.size.height = scope.chartHeight;
+            }, true);
+
             //}
 
-            //function elementUpdated(event, elementId) {
-            //    // TODO Can it be done through element.ResourcePool = resourcePool or somethin'?
-            //    for (var i = 0; i < scope.resourcePool.ElementSet.length; i++) {
-            //        if (scope.resourcePool.ElementSet[i].Id === elementId) {
-            //            getResourcePool();
-            //            break;
-            //        }
+            //function elementUpdatedEventHandler(event, element) {
+            //    if (element.ResourcePool === scope.resourcePool) {
+            //        saveChanges();
             //    }
             //}
 
-            function elementUpdatedEventHandler(event, element) {
-                if (element.ResourcePool === scope.resourcePool) {
-                    saveChanges();
-                }
-            }
-
-            function elementCellUpdatedEventHandler(event, elementCell) {
-                if (elementCell.ElementItem.Element.ResourcePool === scope.resourcePool) {
-                    saveChanges();
-                }
-            }
+            //function elementCellUpdatedEventHandler(event, elementCell) {
+            //    if (elementCell.ElementItem.Element.ResourcePool === scope.resourcePool) {
+            //        saveChanges();
+            //    }
+            //}
 
             function loadChartData(element) {
 
@@ -206,6 +191,7 @@
             }
 
             // TODO Store these in a better place?
+            // TODO Also test these better, by comparing it with resourcePool.currentElement property!
             function columnChartItem(elementItem) {
                 var self = this;
 

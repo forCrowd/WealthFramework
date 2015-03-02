@@ -164,29 +164,29 @@
                 }
             }
 
-            // TODO
-            self.increaseIndexRating = function () {
-                if (typeof self.ElementField === 'undefined')
-                    return;
+            //// TODO
+            //self.increaseIndexRating = function () {
+            //    if (typeof self.ElementField === 'undefined')
+            //        return;
 
-                if (!updateIndexRating(self, 'increase'))
-                    return;
+            //    if (!updateIndexRating(self, 'increase'))
+            //        return;
 
-                $rootScope.$broadcast('elementCell_indexRatingIncreased', self);
-            }
+            //    $rootScope.$broadcast('elementCell_indexRatingIncreased', self);
+            //}
 
-            // TODO
-            self.decreaseIndexRating = function () {
-                if (typeof self.ElementField === 'undefined')
-                    return;
+            //// TODO
+            //self.decreaseIndexRating = function () {
+            //    if (typeof self.ElementField === 'undefined')
+            //        return;
 
-                if (!updateIndexRating(self, 'decrease'))
-                    return;
+            //    if (!updateIndexRating(self, 'decrease'))
+            //        return;
 
-                $rootScope.$broadcast('elementCell_indexRatingDecreased', self);
-            }
+            //    $rootScope.$broadcast('elementCell_indexRatingDecreased', self);
+            //}
 
-            function updateIndexRating(cell, updateType) {
+            self.updateIndexRating = function(updateType) {
 
                 // Determines whether there is an update
                 var updated = false;

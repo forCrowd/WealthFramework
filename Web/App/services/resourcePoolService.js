@@ -53,7 +53,7 @@
 
             function success(response) {
                 var count = response.results.length;
-                logger.logSuccess('Got ' + count + ' resourcePool(s)', response, true);
+                //logger.logSuccess('Got ' + count + ' resourcePool(s)', response, true);
                 return response.results;
             }
 

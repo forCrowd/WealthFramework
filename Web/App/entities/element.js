@@ -282,45 +282,14 @@
                 return value;
             }
 
-            self.increaseMultiplier = function () {
+            self.updateMultiplier = function(updateType) {
 
-                if (!updateMultiplier('increase'))
-                    return;
-
-                // Raise the event
-                // TODO Can't it be done by scope.watch?
-                $rootScope.$broadcast('element_multiplierIncreased', self);
-            }
-
-            self.decreaseMultiplier = function () {
-
-                if (!updateMultiplier('decrease'))
-                    return;
-
-                // Raise the event
-                // TODO Can't it be done by scope.watch?
-                $rootScope.$broadcast('element_multiplierDecreased', self);
-            }
-
-            self.resetMultiplier = function () {
-
-                if (!updateMultiplier('reset'))
-                    return;
-
-                // Raise the event
-                // TODO Can't it be done by scope.watch?
-                $rootScope.$broadcast('element_multiplierReset', self);
-            }
-
-            function updateMultiplier(updateType) {
+                // Validate
+                if (self.multiplierField() === null || typeof self.ElementItemSet === 'undefined')
+                    return false;
 
                 // Determines whether there is an update
                 var updated = false;
-
-                // Validate
-                var multiplierField = self.multiplierField();
-                if (!multiplierField || typeof self.ElementItemSet === 'undefined')
-                    return updated;
 
                 // Find user element cell
                 for (var itemIndex = 0; itemIndex < self.ElementItemSet.length; itemIndex++) {

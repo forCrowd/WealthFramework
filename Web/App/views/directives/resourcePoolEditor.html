@@ -5,15 +5,12 @@
                 <span class="title">
                     {{ resourcePool.Name }}
                 </span>
-                <div>
-                    test: {{ resourcePool.test }}
-                </div>
                 &nbsp;
                 Display: <a href="" data-ng-click="resourcePool.currentElement.toggleValueFilter()">{{ resourcePool.currentElement.valueFilterText() }}</a>
                 <div>
                     <ol class="breadcrumb" data-ng-if="resourcePool.ElementSet.length > 1">
                         <li data-ng-repeat="item in resourcePool.currentElement.parents() | orderBy: 'sortOrder' :true" data-ng-class="{ active: $last }">
-                            <a href="#" data-ng-if="!$last" data-ng-click="item.element.ResourcePool.currentElement = item.element">
+                            <a href="#" data-ng-if="!$last" data-ng-click="changeCurrentElement(item.element)">
                                 {{ item.element.Name }}
                             </a>
                             <span data-ng-if="$last">
@@ -43,7 +40,7 @@
                                                 {{ field.Name }}
                                             </span>
                                             <span data-ng-if="field.ElementFieldType === 6">
-                                                <a href="" data-ng-click="field.Element.ResourcePool.currentElement = field.SelectedElement">{{ field.Name }}</a>
+                                                <a href="" data-ng-click="changeCurrentElement(field.SelectedElement)">{{ field.Name }}</a>
                                             </span>
                                             <!-- Indexes -->
                                             <table class="fieldIndexTable" data-ng-repeat="index in field.ElementFieldIndexSet">
@@ -154,8 +151,8 @@
                                                         </td>
                                                         <td>
                                                             <div class="btn-group" role="group">
-                                                                <button type="button" data-ng-click="elementCell.increaseIndexRating()" title="+ 10" class="btn btn-default btn-xs">+</button>
-                                                                <button type="button" data-ng-click="elementCell.decreaseIndexRating()" title="- 10" class="btn btn-default btn-xs">-</button>
+                                                                <button type="button" data-ng-click="increaseCellIndexRating(elementCell)" title="+ 10" class="btn btn-default btn-xs">+</button>
+                                                                <button type="button" data-ng-click="decreaseCellIndexRating(elementCell)" title="- 10" class="btn btn-default btn-xs">-</button>
                                                             </div>
                                                         </td>
                                                     </tr>

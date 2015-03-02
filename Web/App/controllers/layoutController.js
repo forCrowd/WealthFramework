@@ -10,7 +10,7 @@
             '$window',
             'logger',
 
-            'resourcePoolFactory',
+            'resourcePoolFactory', // Just for test, remove
             'resourcePoolService',
 
             layoutController]);
@@ -22,7 +22,7 @@
         $window,
         logger,
 
-        resourcePoolFactory,
+        resourcePoolFactory, // Just for test, remove
         resourcePoolService
 
         ) {
@@ -32,69 +32,71 @@
 
         var vm = this;
 
-        // TODO Just for test some cases, remove it later!
+        function propertyTests() {
+            // TODO Just for test some cases, remove it later!
 
-        vm.resourcePool = new resourcePoolFactory.resourcePool();
-        vm.resourcePool.Id = 1;
-        vm.resourcePool.testPropGetSet = '1 getSet - after';
-        vm.resourcePool.testPropWithEnumConf = '1. withEnumConf - after';
-        vm.resourcePool.testPropWithEnumConfBack = '1. withEnumConfBack - after';
-        vm.resourcePool.testPropWithEnumConfProt = '1. withEnumConfProt - after';
-        vm.resourcePool.testPropWithEnumConfProtBack = '1. withEnumConfProtBack - after';
+            vm.resourcePool = new resourcePoolFactory.resourcePool();
+            vm.resourcePool.Id = 1;
+            vm.resourcePool.testPropGetSet = '1 getSet - after';
+            vm.resourcePool.testPropWithEnumConf = '1. withEnumConf - after';
+            vm.resourcePool.testPropWithEnumConfBack = '1. withEnumConfBack - after';
+            vm.resourcePool.testPropWithEnumConfProt = '1. withEnumConfProt - after';
+            vm.resourcePool.testPropWithEnumConfProtBack = '1. withEnumConfProtBack - after';
 
-        logIt(vm.resourcePool);
+            logIt(vm.resourcePool);
 
-        /* 2 */
+            /* 2 */
 
-        resourcePoolService.createResourcePool({ Id: 2 })
-            .then(function (resourcePool) {
+            resourcePoolService.createResourcePool({ Id: 2 })
+                .then(function (resourcePool) {
 
-                vm.resourcePool2 = resourcePool;
-                vm.resourcePool2.testPropGetSet = '2. getSet - after';
-                vm.resourcePool2.testPropWithEnumConf = '2. withEnumConf - after';
-                vm.resourcePool2.testPropWithEnumConfBack = '2. withEnumConfBack - after';
-                vm.resourcePool2.testPropWithEnumConfProt = '2. withEnumConfProt - after';
-                vm.resourcePool2.testPropWithEnumConfProtBack = '2. withEnumConfProtBack - after';
+                    vm.resourcePool2 = resourcePool;
+                    vm.resourcePool2.testPropGetSet = '2. getSet - after';
+                    vm.resourcePool2.testPropWithEnumConf = '2. withEnumConf - after';
+                    vm.resourcePool2.testPropWithEnumConfBack = '2. withEnumConfBack - after';
+                    vm.resourcePool2.testPropWithEnumConfProt = '2. withEnumConfProt - after';
+                    vm.resourcePool2.testPropWithEnumConfProtBack = '2. withEnumConfProtBack - after';
 
-                logIt(vm.resourcePool2);
-            });
+                    logIt(vm.resourcePool2);
+                });
 
-        /* 3 */
+            /* 3 */
 
-        resourcePoolService.getResourcePoolCustomEdit(3)
-            .then(function (resourcePool) {
+            resourcePoolService.getResourcePoolCustomEdit(3)
+                .then(function (resourcePool) {
 
-                vm.resourcePool3 = resourcePool[0];
-                vm.resourcePool3.testPropGetSet = '3. getSet - after';
-                vm.resourcePool3.testPropWithEnumConf = '3. withEnumConf - after';
-                vm.resourcePool3.testPropWithEnumConfBack = '3. withEnumConfBack - after';
-                vm.resourcePool3.testPropWithEnumConfProt = '3. withEnumConfProt - after';
-                vm.resourcePool3.testPropWithEnumConfProtBack = '3. withEnumConfProtBack - after';
+                    vm.resourcePool3 = resourcePool[0];
+                    vm.resourcePool3.testPropGetSet = '3. getSet - after';
+                    vm.resourcePool3.testPropWithEnumConf = '3. withEnumConf - after';
+                    vm.resourcePool3.testPropWithEnumConfBack = '3. withEnumConfBack - after';
+                    vm.resourcePool3.testPropWithEnumConfProt = '3. withEnumConfProt - after';
+                    vm.resourcePool3.testPropWithEnumConfProtBack = '3. withEnumConfProtBack - after';
 
-                logIt(vm.resourcePool3);
+                    logIt(vm.resourcePool3);
 
-                logIt(vm.resourcePool);
+                    logIt(vm.resourcePool);
 
-            });
+                });
 
-        function logIt(resourcePool) {
+            function logIt(resourcePool) {
 
 
-            //logger.log(resourcePool.Id + ' field', resourcePool.testField);
+                //logger.log(resourcePool.Id + ' field', resourcePool.testField);
 
-            //logger.log(resourcePool.Id + ' onlyGet', resourcePool.testPropOnlyGet);
+                //logger.log(resourcePool.Id + ' onlyGet', resourcePool.testPropOnlyGet);
 
-            //logger.log(resourcePool.Id + ' getSet', resourcePool.testPropGetSet);
+                //logger.log(resourcePool.Id + ' getSet', resourcePool.testPropGetSet);
 
-            //logger.log(resourcePool.Id + ' withEnumConf', resourcePool.testPropWithEnumConf);
+                //logger.log(resourcePool.Id + ' withEnumConf', resourcePool.testPropWithEnumConf);
 
-            //logger.log(resourcePool.Id + ' withEnumConfBack', resourcePool.testPropWithEnumConfBack);
+                //logger.log(resourcePool.Id + ' withEnumConfBack', resourcePool.testPropWithEnumConfBack);
 
-            //logger.log(resourcePool.Id + ' withEnumConfProt', resourcePool.testPropWithEnumConfProt);
+                //logger.log(resourcePool.Id + ' withEnumConfProt', resourcePool.testPropWithEnumConfProt);
 
-            logger.log(resourcePool.Id + ' withEnumConfProtBack', resourcePool.testPropWithEnumConfProtBack);
+                logger.log(resourcePool.Id + ' withEnumConfProtBack', resourcePool.testPropWithEnumConfProtBack);
 
-            logger.log(resourcePool.Id + ' resourcePool', resourcePool);
+                logger.log(resourcePool.Id + ' resourcePool', resourcePool);
+            }
         }
 
         function undefinedAndNullTests() {
