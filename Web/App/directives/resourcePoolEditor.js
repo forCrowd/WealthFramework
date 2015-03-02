@@ -89,15 +89,10 @@
                 }
             }
 
-            //// Initialize
-            //initialize();
-
-            //function initialize() {
-
             // Resource pool id: Get the current resource pool
             scope.$watch('resourcePoolId', function () {
 
-                resourcePoolService.getResourcePoolCustomEdit(scope.resourcePoolId)
+                resourcePoolService.getResourcePoolExpanded(scope.resourcePoolId)
                     .then(function (data) {
                         scope.resourcePool = data[0];
 
@@ -118,20 +113,6 @@
             scope.$watch('chartHeight', function () {
                 scope.chartConfig.size.height = scope.chartHeight;
             }, true);
-
-            //}
-
-            //function elementUpdatedEventHandler(event, element) {
-            //    if (element.ResourcePool === scope.resourcePool) {
-            //        saveChanges();
-            //    }
-            //}
-
-            //function elementCellUpdatedEventHandler(event, elementCell) {
-            //    if (elementCell.ElementItem.Element.ResourcePool === scope.resourcePool) {
-            //        saveChanges();
-            //    }
-            //}
 
             function loadChartData(element) {
 

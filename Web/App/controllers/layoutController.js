@@ -62,7 +62,7 @@
 
             /* 3 */
 
-            resourcePoolService.getResourcePoolCustomEdit(3)
+            resourcePoolService.getResourcePoolExpanded(3)
                 .then(function (resourcePool) {
 
                     vm.resourcePool3 = resourcePool[0];

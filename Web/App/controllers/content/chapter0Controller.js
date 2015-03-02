@@ -33,7 +33,7 @@
                 function increaseMultiplier() {
 
                     // Call the service to increase the multiplier
-                    resourcePoolService.getResourcePoolCustomEdit(vm.introduction_UPOResourcePoolId)
+                    resourcePoolService.getResourcePoolExpanded(vm.introduction_UPOResourcePoolId)
                         .then(function (resourcePoolSet) {
                             var resourcePool = resourcePoolSet[0];
                             for (var i = 0; i < resourcePool.ElementSet.length; i++) {
@@ -88,7 +88,7 @@
                             : vm.basics_ExistingModelResourcePoolId;
 
                         // Call the service to increase the multiplier
-                        resourcePoolService.getResourcePoolCustomEdit(oppositeResourcePoolId)
+                        resourcePoolService.getResourcePoolExpanded(oppositeResourcePoolId)
                             .then(function (resourcePoolSet) {
 
                                 var resourcePool = resourcePoolSet[0];

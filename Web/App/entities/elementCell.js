@@ -3,9 +3,9 @@
 
     var serviceId = 'elementCell';
     angular.module('main')
-        .factory(serviceId, ['$rootScope', 'logger', elementCell]);
+        .factory(serviceId, ['logger', elementCell]);
 
-    function elementCell($rootScope, logger) {
+    function elementCell(logger) {
 
         // Logger
         logger = logger.forSource(serviceId);
@@ -163,28 +163,6 @@
                     }
                 }
             }
-
-            //// TODO
-            //self.increaseIndexRating = function () {
-            //    if (typeof self.ElementField === 'undefined')
-            //        return;
-
-            //    if (!updateIndexRating(self, 'increase'))
-            //        return;
-
-            //    $rootScope.$broadcast('elementCell_indexRatingIncreased', self);
-            //}
-
-            //// TODO
-            //self.decreaseIndexRating = function () {
-            //    if (typeof self.ElementField === 'undefined')
-            //        return;
-
-            //    if (!updateIndexRating(self, 'decrease'))
-            //        return;
-
-            //    $rootScope.$broadcast('elementCell_indexRatingDecreased', self);
-            //}
 
             self.updateIndexRating = function(updateType) {
 

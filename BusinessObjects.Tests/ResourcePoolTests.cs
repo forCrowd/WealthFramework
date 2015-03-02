@@ -19,7 +19,7 @@ namespace BusinessObjects.Tests
             var user = new User("User");
             var resourcePool = new ResourcePool("CMRP");
             var element = resourcePool.AddElement("Element");
-            element.FilterSettings.CurrentUser = user;
+            //element.FilterSettings.CurrentUser = user;
             var multiplierField = element.AddField("Multiplier", ElementFieldTypes.Multiplier);
             var element1 = element.AddItem("Element 1");
             element1.AddCell(element.MultiplierField).SetValue(1M, user);
@@ -41,7 +41,7 @@ namespace BusinessObjects.Tests
             var user = new User("User");
             var resourcePool = new ResourcePool("CMRP");
             var element = resourcePool.AddElement("Element");
-            element.FilterSettings.CurrentUser = user;
+            //element.FilterSettings.CurrentUser = user;
             var multiplierField = element.AddField("Multiplier", ElementFieldTypes.Multiplier);
             var element1 = element.AddItem("Element 1");
             element1.AddCell(element.MultiplierField).SetValue(5M, user);
@@ -63,7 +63,7 @@ namespace BusinessObjects.Tests
             var user = new User("User");
             var resourcePool = new ResourcePool("CMRP");
             var element = resourcePool.AddElement("Element");
-            element.FilterSettings.CurrentUser = user;
+            //element.FilterSettings.CurrentUser = user;
             var multiplierField = element.AddField("Multiplier", ElementFieldTypes.Multiplier);
             var element1 = element.AddItem("Element 1");
             element1.AddCell(element.MultiplierField).SetValue(5M, user);
@@ -93,19 +93,19 @@ namespace BusinessObjects.Tests
                     .SetValue(10M, user2);
             
             // Act
-            element.FilterSettings.CurrentUser = user1;
+            //element.FilterSettings.CurrentUser = user1;
 
             // Assert
             Assert.IsTrue(cell.RatingAverageOld == 5M);
 
             // Act - Part 2
-            element.FilterSettings.CurrentUser = user2;
+            //element.FilterSettings.CurrentUser = user2;
 
             // Assert - Part 2
             Assert.IsTrue(cell.RatingAverageOld == 10M);
 
             // Act - Part 2
-            element.FilterSettings.ValueFilter = ResourcePoolFilterSettings.ValueFilters.AllUsersAverage;
+            //element.FilterSettings.ValueFilter = ResourcePoolFilterSettings.ValueFilters.AllUsersAverage;
 
             // Assert - Part 2
             Assert.IsTrue(cell.RatingAverageOld == 7.5M);
@@ -121,7 +121,7 @@ namespace BusinessObjects.Tests
             resourcePool.AddUserResourcePool(user, 100);
 
             var organization = resourcePool.AddElement("Organization");
-            organization.FilterSettings.CurrentUser = user;
+            //organization.FilterSettings.CurrentUser = user;
 
             organization
                     .AddField("Sales Price", ElementFieldTypes.ResourcePool, true)
@@ -216,7 +216,7 @@ namespace BusinessObjects.Tests
             resourcePool.AddUserResourcePool(user, 100);
 
             var organization = resourcePool.AddElement("Organization");
-            organization.FilterSettings.CurrentUser = user;
+            //organization.FilterSettings.CurrentUser = user;
 
             organization
                     .AddField("Sales Price", ElementFieldTypes.ResourcePool, true)
@@ -285,7 +285,7 @@ namespace BusinessObjects.Tests
             resourcePool.AddUserResourcePool(user1, 100);
 
             var organization = resourcePool.AddElement("Organization");
-            organization.FilterSettings.CurrentUser = user1;
+            // organization.FilterSettings.CurrentUser = user1;
 
             organization
                     .AddField("Sales Price", ElementFieldTypes.ResourcePool, true)

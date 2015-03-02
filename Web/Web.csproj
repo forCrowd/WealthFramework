@@ -256,9 +256,7 @@
     <Compile Include="Controllers\Api\AccountController.cs" />
     <Compile Include="Controllers\Api\ApplicationController.cs" />
     <Compile Include="Controllers\Api\BaseApiController.cs" />
-    <Compile Include="Controllers\Api\ElementCustomController.cs" />
     <Compile Include="Controllers\Api\Test\ResultsController.cs" />
-    <Compile Include="Controllers\Api\ResourcePoolCustomController.cs" />
     <Compile Include="Controllers\Extensions\ControllerExtensions.cs" />
     <Compile Include="Controllers\Mvc\ErrorController.cs" />
     <Compile Include="Controllers\Mvc\HomeController.cs" />
@@ -305,7 +303,6 @@
     <Compile Include="Controllers\OData\Generated\UsersController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\OData\ElementFieldIndexController.cs" />
     <Compile Include="Controllers\OData\ResourcePoolController.cs" />
     <Compile Include="Controllers\OData\UserController.cs" />
     <Compile Include="ExceptionHandling\ElmahExceptionLogger.cs" />
@@ -445,9 +442,7 @@
     <Content Include="App\services\generated\userRoleService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="App\services\elementService.js" />
     <Content Include="App\services\resourcePoolService.js" />
-    <Content Include="App\services\userElementCellService.js" />
     <Content Include="App\views\content\chapter0.html" />
     <Content Include="App\views\content\chapter6Backup.html" />
     <Content Include="App\views\content\home.html" />

@@ -3,9 +3,9 @@
 
     var serviceId = 'element';
     angular.module('main')
-        .factory(serviceId, ['$rootScope', 'logger', element]);
+        .factory(serviceId, ['logger', element]);
 
-    function element($rootScope, logger) {
+    function element(logger) {
 
         // Logger
         logger = logger.forSource(serviceId);
@@ -70,7 +70,6 @@
             self.valueFilter = 1;
             self.toggleValueFilter = function () {
                 self.valueFilter = self.valueFilter === 1 ? 2 : 1;
-                //$rootScope.$broadcast('element_valueFilterChanged', self);
             }
             self.valueFilterText = function () {
                 return self.valueFilter === 1 ? "Only My Ratings" : "All Ratings";

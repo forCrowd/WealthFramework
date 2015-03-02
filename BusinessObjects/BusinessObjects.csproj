@@ -68,7 +68,6 @@
     <Compile Include="Models\ElementFieldType.cs" />
     <Compile Include="Models\ElementField.cs" />
     <Compile Include="Models\ElementCell.cs" />
-    <Compile Include="Models\ResourcePoolFilterSettings.cs" />
     <Compile Include="Models\UserLogin.cs" />
     <Compile Include="Models\UserClaim.cs" />
     <Compile Include="Models\Role.cs" />
@@ -78,11 +77,6 @@
     <Compile Include="UserCommandInterceptor.cs" />
     <Compile Include="UserCommandTreeInterceptor.cs" />
     <Compile Include="UserQueryVisitor.cs" />
-    <Compile Include="ViewModels\UserElementCell.cs" />
-    <Compile Include="ViewModels\ElementCell.cs" />
-    <Compile Include="ViewModels\ElementItem.cs" />
-    <Compile Include="ViewModels\ElementField.cs" />
-    <Compile Include="ViewModels\Element.cs" />
     <Compile Include="Models\ElementItem.cs" />
     <Compile Include="Models\Element.cs" />
     <Compile Include="Attributes\ODataControllerAuthorizationAttribute.cs" />
@@ -94,9 +88,6 @@
     <Compile Include="Attributes\DefaultPropertyAttribute.cs" />
     <Compile Include="Attributes\DisplayOnEditViewAttribute.cs" />
     <Compile Include="Attributes\DisplayOnListViewAttribute.cs" />
-    <Compile Include="ViewModels\ElementFieldIndex.cs" />
-    <Compile Include="ViewModels\ResourcePool.cs" />
-    <Compile Include="ViewModels\UserResourcePool.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="WealthEconomyContext.cs" />
   </ItemGroup>

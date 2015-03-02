@@ -18,8 +18,6 @@ namespace BusinessObjects
             ElementFieldSet = new HashSet<ElementField>();
             ElementItemSet = new HashSet<ElementItem>();
             ParentFieldSet = new HashSet<ElementField>();
-
-            FilterSettings = new ResourcePoolFilterSettings();
         }
 
         public Element(ResourcePool resourcePool, string name)
@@ -54,8 +52,6 @@ namespace BusinessObjects
         public virtual ICollection<ElementItem> ElementItemSet { get; set; }
         [InverseProperty("SelectedElement")]
         public virtual ICollection<ElementField> ParentFieldSet { get; set; }
-
-        public ResourcePoolFilterSettings FilterSettings { get; private set; }
 
         #region - ReadOnly Properties -
 

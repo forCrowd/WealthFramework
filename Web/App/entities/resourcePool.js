@@ -3,9 +3,9 @@
 
     var serviceId = 'resourcePoolFactory';
     angular.module('main')
-        .factory(serviceId, ['$rootScope', 'logger', resourcePoolFactory]);
+        .factory(serviceId, ['logger', resourcePoolFactory]);
 
-    function resourcePoolFactory($rootScope, logger) {
+    function resourcePoolFactory(logger) {
 
         // Logger
         logger = logger.forSource(serviceId);
@@ -16,7 +16,6 @@
         }
 
         // Properties
-
         Object.defineProperty(resourcePool.prototype, 'currentElement', {
             enumerable: true,
             configurable: true,
@@ -24,7 +23,6 @@
             set: function (value) {
                 if (value !== this.backingFields._currentElement) {
                     this.backingFields._currentElement = value;
-                    //$rootScope.$broadcast('resourcePool_currentElementChanged', this);
                 }
             }
         });

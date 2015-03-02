@@ -3,9 +3,9 @@
 
     var serviceId = 'elementFieldIndex';
     angular.module('main')
-        .factory(serviceId, ['$rootScope', 'logger', elementFieldIndex]);
+        .factory(serviceId, ['logger', elementFieldIndex]);
 
-    function elementFieldIndex($rootScope, logger) {
+    function elementFieldIndex(logger) {
 
         // Logger
         logger = logger.forSource(serviceId);

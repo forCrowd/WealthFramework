@@ -237,13 +237,13 @@ namespace BusinessObjects
                         {
                             // Value filter user
                             User valueFilterUser = null;
-                            if (ElementItem.Element.FilterSettings.ValueFilter == ResourcePoolFilterSettings.ValueFilters.OnlyCurrentUser)
-                            {
-                                valueFilterUser = ElementItem.Element.FilterSettings.CurrentUser;
+                            //if (ElementItem.Element.FilterSettings.ValueFilter == ResourcePoolFilterSettings.ValueFilters.OnlyCurrentUser)
+                            //{
+                            //    valueFilterUser = ElementItem.Element.FilterSettings.CurrentUser;
 
-                                if (valueFilterUser == null)
-                                    throw new InvalidOperationException("ResourcePool.FilterSettings.CurrentUser property must have a value when ValueFilter is using OnlyCurrentUser option");
-                            }
+                            //    if (valueFilterUser == null)
+                            //        throw new InvalidOperationException("ResourcePool.FilterSettings.CurrentUser property must have a value when ValueFilter is using OnlyCurrentUser option");
+                            //}
 
                             return ElementField.UseFixedValue.Value
                                 ? FixedValue
@@ -257,7 +257,8 @@ namespace BusinessObjects
                         }
                     case ElementFieldTypes.Multiplier:
                         {
-                            var multiplierFilterUser = ElementItem.Element.FilterSettings.CurrentUser;
+                            // var multiplierFilterUser = ElementItem.Element.FilterSettings.CurrentUser;
+                            User multiplierFilterUser = null;
 
                             // TODO Use it or remove it?
                             //if (multiplierFilterUser == null)
