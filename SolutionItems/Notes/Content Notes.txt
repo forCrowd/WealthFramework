@@ -1,7 +1,7 @@
 ﻿Chapters
 
 #1 - Profit Oriented Economy
-Current Formula: Lower the cost, Maximize the Sales Price, Multiply it with Sales Number
+Current Formula: Lower the cost, Maximize the Sales Price, Multiply it with Number of Sales
 try to make the visual of the formula (lowering cost - maximizing sales price * number of sales) and it needs to be extended
 
 #2 - Burden of the Consumer

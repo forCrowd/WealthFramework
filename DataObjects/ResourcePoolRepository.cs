@@ -40,7 +40,7 @@
             // Main element
             var mainElement = resourcePool.MainElement;
             mainElement.ResourcePoolField.Name = "Sales Price"; // TODO It does not fit! Update this after having Initial Amount on RP!
-            mainElement.MultiplierField.Name = "Sales Number";
+            mainElement.MultiplierField.Name = "Number of Sales";
 
             // Items, cell, user cells
             // TODO How about ToList()[0]?
@@ -61,7 +61,7 @@
             // Main element
             var mainElement = resourcePool.MainElement;
             mainElement.ResourcePoolField.Name = "Sales Price";
-            mainElement.MultiplierField.Name = "Sales Number";
+            mainElement.MultiplierField.Name = "Number of Sales";
 
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Organization A";
@@ -84,7 +84,7 @@
 
             // Fields
             mainElement.ResourcePoolField.Name = "Sales Price";
-            mainElement.MultiplierField.Name = "Sales Number";
+            mainElement.MultiplierField.Name = "Number of Sales";
             mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).Name = "-";
             mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).ElementFieldIndex.Name = "Employee Satisfaction";
 
@@ -124,7 +124,7 @@
             // Main element
             var mainElement = resourcePool.MainElement;
             mainElement.ResourcePoolField.Name = "Sales Price";
-            mainElement.MultiplierField.Name = "Sales Number";
+            mainElement.MultiplierField.Name = "Number of Sales";
             var sectorField = mainElement.AddField("Sector", ElementFieldTypes.Element);
             sectorField.SelectedElement = sectorElement;
 
@@ -160,49 +160,61 @@
 
         public ResourcePool CreateKnowledgeIndexSample(User user)
         {
-            const byte NumberOfLicenses = 2;
-            const decimal RatingPerLicense = 100 / 2;
+            const byte numberOfLicenses = 2;
+            const decimal ratingPerLicense = 100 / 2;
 
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool("Knowledge Index Sample", "License", user, false, false, false, false, NumberOfLicenses);
+            var resourcePool = CreateDefaultResourcePool("Knowledge Index Sample", "Organization", user, true, true, true, false, numberOfLicenses);
             resourcePool.EnableResourcePoolAddition = false;
             resourcePool.IsSample = true;
 
-            // Main element
-            var mainElement = resourcePool.MainElement;
+            // License element
+            var licenseElement = resourcePool.AddElement("License");
 
             // Fields
-            //mainElement.ResourcePoolField.Name = "Sales Price"; // TODO It does not fit! Update this after having Initial Amount on RP!
-            //mainElement.MultiplierField.Name = "Sales Number";
-            var rightToUseField = mainElement.AddField("Right to Use", ElementFieldTypes.String);
-            var rightToCopyField = mainElement.AddField("Right to Copy", ElementFieldTypes.String);
-            var rightToModifyField = mainElement.AddField("Right to Modify", ElementFieldTypes.String);
-            var rightToSellField = mainElement.AddField("Right to Sell", ElementFieldTypes.String);
-            var importanceField = mainElement.AddField("-", ElementFieldTypes.Decimal, false);
+            var rightToUseField = licenseElement.AddField("Right to Use", ElementFieldTypes.String);
+            var rightToCopyField = licenseElement.AddField("Right to Copy", ElementFieldTypes.String);
+            var rightToModifyField = licenseElement.AddField("Right to Modify", ElementFieldTypes.String);
+            var rightToSellField = licenseElement.AddField("Right to Sell", ElementFieldTypes.String);
+            var importanceField = licenseElement.AddField("-", ElementFieldTypes.Decimal, false);
             importanceField
                 .AddIndex("Knowledge Index", RatingSortType.HighestToLowest)
                 .AddUserRating(user, 100);
 
             // Items, cell, user cells
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Open Source License";
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(rightToUseField).SetValue("Yes");
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(rightToCopyField).SetValue("Yes");
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(rightToModifyField).SetValue("Yes");
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(rightToSellField).SetValue("Yes");
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(importanceField).SetValue(RatingPerLicense, user);
+            licenseElement.AddItem("Open Source License")
+                .AddCell(rightToUseField).SetValue("Yes").ElementItem
+                .AddCell(rightToCopyField).SetValue("Yes").ElementItem
+                .AddCell(rightToModifyField).SetValue("Yes").ElementItem
+                .AddCell(rightToSellField).SetValue("Yes").ElementItem
+                .AddCell(importanceField).SetValue(ratingPerLicense, user);
 
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Restricted License";
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(rightToUseField).SetValue("Yes");
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(rightToCopyField).SetValue("No");
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(rightToModifyField).SetValue("No");
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(rightToSellField).SetValue("No");
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(importanceField).SetValue(RatingPerLicense, user);
+            licenseElement.AddItem("Restricted License")
+                .AddCell(rightToUseField).SetValue("Yes").ElementItem
+                .AddCell(rightToCopyField).SetValue("No").ElementItem
+                .AddCell(rightToModifyField).SetValue("No").ElementItem
+                .AddCell(rightToSellField).SetValue("No").ElementItem
+                .AddCell(importanceField).SetValue(ratingPerLicense, user);
+
+            // Main element
+            var mainElement = resourcePool.MainElement;
+            mainElement.ResourcePoolField.Name = "Sales Price";
+            mainElement.MultiplierField.Name = "Number of Sales";
+            var licenseField = mainElement.AddField("License", ElementFieldTypes.Element);
+            licenseField.SelectedElement = licenseElement;
+
+            // Items, cell, user cells
+            // TODO How about ToList()[0]?
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Open Source Organization";
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(licenseField).SetValue(licenseElement.ElementItemSet.Skip(0).Take(1).Single());
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Commercial Organization";
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(licenseField).SetValue(licenseElement.ElementItemSet.Skip(1).Take(1).Single());
 
             // Return
             return resourcePool;
         }
 
-        public ResourcePool CreateKnowledgeIndexPopularSoftwareLicense(User user)
+        public ResourcePool CreateKnowledgeIndexPopularSoftwareLicenseAlternative(User user)
         {
             const byte numberOfLicenses = 6;
             const decimal ratingPerLicense = 100 / 6;
@@ -257,7 +269,7 @@
             // Main element
             var mainElement = resourcePool.MainElement;
             mainElement.ResourcePoolField.Name = "Sales Price";
-            mainElement.MultiplierField.Name = "Sales Number";
+            mainElement.MultiplierField.Name = "Number of Sales";
             var licenseField = mainElement.AddField("License", ElementFieldTypes.Element);
             licenseField.SelectedElement = licenseElement;
 
@@ -279,8 +291,8 @@
             // Return
             return resourcePool;
         }
-        
-        public ResourcePool CreateKnowledgeIndexPopularSoftwareLicenseOld(User user)
+
+        public ResourcePool CreateKnowledgeIndexPopularSoftwareLicense(User user)
         {
             const byte numberOfLicenses = 6;
             const decimal ratingPerLicense = 100 / 6;
@@ -339,7 +351,7 @@
             // Main element
             var mainElement = resourcePool.MainElement;
             mainElement.ResourcePoolField.Name = "Sales Price";
-            mainElement.MultiplierField.Name = "Sales Number";
+            mainElement.MultiplierField.Name = "Number of Sales";
 
             // Resource pool index; change it to Sales Price itself, instead of User ratings
             resourcePool.MainElement.ResourcePoolField

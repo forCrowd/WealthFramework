@@ -27,7 +27,7 @@
                 vm.introduction_UPOResourcePoolId = 1;
 
                 // Initial start
-                var increaseMultiplierTimeoutInitial = $timeout(increaseMultiplier, 5000);
+                var increaseMultiplierTimeoutInitial = $timeout(increaseMultiplier, 1500);
                 var increaseMultiplierTimeoutRecursive = null;
 
                 function increaseMultiplier() {
@@ -38,13 +38,13 @@
                             var resourcePool = resourcePoolSet[0];
                             for (var i = 0; i < resourcePool.ElementSet.length; i++) {
                                 var element = resourcePool.ElementSet[i];
-                                element.increaseMultiplier();
+                                element.updateMultiplier('increase');
                             }
                         });
 
                     // Then increase recursively
                     // TODO Decrease this timeout interval
-                    var increaseMultiplierTimeoutRecursive = $timeout(increaseMultiplier, 100000);
+                    var increaseMultiplierTimeoutRecursive = $timeout(increaseMultiplier, 3000);
                 }
 
                 // When the DOM element is removed from the page,
@@ -119,7 +119,7 @@
                 vm.knowledgeIndex_NewSystemChartConfig = null;
                 vm.knowledgeIndex_SampleResourcePoolId = 5;
                 vm.knowledgeIndex_PopuplarSoftwareLicensesResourcePoolId = 6;
-                var timeoutInitial = $timeout(refreshPage, 5000);
+                var timeoutInitial = $timeout(refreshPage, 10000);
                 var timeoutRecursive = null;
 
                 // When the DOM element is removed from the page,

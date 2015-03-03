@@ -119,7 +119,7 @@
                     return promise.then(success).catch(failed);
 
                     function success(result) {
-                        logger.logSuccess('Saved ' + count + ' change(s)', result);
+                        //logger.logSuccess('Saved ' + count + ' change(s)', result);
                         return result;
                     }
 

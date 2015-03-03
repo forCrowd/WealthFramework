@@ -93,7 +93,7 @@ namespace BusinessObjects.Tests
             organization
                     .AddField("Sales Price", ElementFieldTypes.ResourcePool, true)
                 .Element
-                    .AddField("Sales Number", ElementFieldTypes.Multiplier);
+                    .AddField("Number of Sales", ElementFieldTypes.Multiplier);
             var importanceField = resourcePool.MainElement.AddField("Importance Field", ElementFieldTypes.Decimal, false);
 
             var importanceFieldIndex = importanceField.AddIndex("Importance Index", RatingSortType.HighestToLowest);
@@ -188,7 +188,7 @@ namespace BusinessObjects.Tests
             organization
                     .AddField("Sales Price", ElementFieldTypes.ResourcePool, true)
                 .Element
-                    .AddField("Sales Number", ElementFieldTypes.Multiplier);
+                    .AddField("Number of Sales", ElementFieldTypes.Multiplier);
             
             var elementFieldIndex = organization.ResourcePoolField.AddIndex("Importance Index", RatingSortType.LowestToHighest);
             elementFieldIndex.AddUserRating(user, 100);
@@ -257,7 +257,7 @@ namespace BusinessObjects.Tests
             organization
                     .AddField("Sales Price", ElementFieldTypes.ResourcePool, true)
                 .Element
-                    .AddField("Sales Number", ElementFieldTypes.Multiplier);
+                    .AddField("Number of Sales", ElementFieldTypes.Multiplier);
             var importanceField = resourcePool.MainElement.AddField("Importance Field", ElementFieldTypes.Decimal, false);
 
             var elementFieldIndex = importanceField.AddIndex("Importance Index", RatingSortType.HighestToLowest);

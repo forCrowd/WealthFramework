@@ -54,7 +54,7 @@
 
         function getContentTemplateUrl(params) {
 
-            var key = 'home';
+            var key = 'chapter0';
 
             if (typeof params.key !== 'undefined')
                 key = params.key;

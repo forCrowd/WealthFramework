@@ -29,6 +29,7 @@ An experimental resource management system that aims to provide a sustainable ec
 * DataObjects - DropCreateAlways & MigrateToLatest combo db initializer
 * DataObjects - Multitenancy;
 http://xabikos.com/multitenant/application%20design/software%20as%20a%20service/2014/11/17/create-a-multitenant-application-with-entity-framework-code-first---part-1.html
+* Old chapters were removed, chapter0 became home page for now
 
 **0.14.8**
 

@@ -7,18 +7,18 @@
                 </span>
                 &nbsp;
                 Display: <a href="" data-ng-click="resourcePool.currentElement.toggleValueFilter()">{{ resourcePool.currentElement.valueFilterText() }}</a>
-                <div>
-                    <ol class="breadcrumb" data-ng-if="resourcePool.ElementSet.length > 1">
-                        <li data-ng-repeat="item in resourcePool.currentElement.parents() | orderBy: 'sortOrder' :true" data-ng-class="{ active: $last }">
-                            <a href="#" data-ng-if="!$last" data-ng-click="changeCurrentElement(item.element)">
-                                {{ item.element.Name }}
-                            </a>
-                            <span data-ng-if="$last">
-                                {{ item.element.Name }}
-                            </span>
-                        </li>
-                    </ol>
-                </div>
+            </div>
+            <div>
+                <ol class="breadcrumb" data-ng-if="resourcePool.ElementSet.length > 1">
+                    <li data-ng-repeat="item in resourcePool.currentElement.parents() | orderBy: 'sortOrder' :true" data-ng-class="{ active: $last }">
+                        <a href="#" data-ng-if="!$last" data-ng-click="changeCurrentElement(item.element)">
+                            {{ item.element.Name }}
+                        </a>
+                        <span data-ng-if="$last">
+                            {{ item.element.Name }}
+                        </span>
+                    </li>
+                </ol>
             </div>
         </div>
     </div>

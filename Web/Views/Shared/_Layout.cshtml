@@ -10,7 +10,7 @@
 </head>
 <body data-ng-app="main" data-ng-controller="layoutController as vm">
     <!-- propertyTests -->
-    <div style="display: none;">
+    <div class="hide">
         <div>
             {{ vm.resourcePool2.testField }}
         </div>
@@ -73,14 +73,14 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="dropdown">
+                    <li class="dropdown hide">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown">Content <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="/content/overview">Overview</a></li>
                             <li><a href="/content/technologies">Technologies</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown">
+                    <li class="dropdown hide">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown">Chapters <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="/content/chapter0">Prologue</a></li>
@@ -96,7 +96,7 @@
                             <li><a href="/content/chapter10">Chapter 10</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown" data-ng-show="vm.userInfo">
+                    <li class="dropdown hide" data-ng-show="vm.userInfo">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown">Manage <b class="caret"></b></a>
                         @* Manage Menu - Generated *@
                         <script src="/App/includes/manageMenu.js"></script>
@@ -111,7 +111,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="/account/accountEdit">Edit</a></li>
                             <li><a href="/account/changePassword">Change password</a></li>
-                            <li><a href="" data-ng-click="vm.resetSampleData()">Reset sample data</a></li>
+                            <li class="hide"><a href="" data-ng-click="vm.resetSampleData()">Reset sample data</a></li>
                             <li><a href="" data-ng-click="vm.logout()">Logout</a></li>
                         </ul>
                     </li>

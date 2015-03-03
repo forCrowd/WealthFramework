@@ -319,7 +319,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\controllers\content\chapter0Controller.js" />
-    <Content Include="App\controllers\content\chapter6ControllerBackup.js" />
     <Content Include="App\controllers\manage\edit\elementCellEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
@@ -444,7 +443,6 @@
     </Content>
     <Content Include="App\services\resourcePoolService.js" />
     <Content Include="App\views\content\chapter0.html" />
-    <Content Include="App\views\content\chapter6Backup.html" />
     <Content Include="App\views\content\home.html" />
     <Content Include="App\views\content\overview.html" />
     <Content Include="App\views\content\technologies.html" />
@@ -584,11 +582,6 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="App\controllers\account\accountEditController.js" />
-    <Content Include="App\controllers\content\chapter1Controller.js" />
-    <Content Include="App\controllers\content\chapter10Controller.js" />
-    <Content Include="App\controllers\content\chapter6Controller.js" />
-    <Content Include="App\controllers\content\chapter5Controller.js" />
-    <Content Include="App\controllers\content\chapter4Controller.js" />
     <Content Include="App\controllers\manage\edit\editController.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -689,16 +682,6 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="App\views\content\chapter10.html" />
-    <Content Include="App\views\content\chapter9.html" />
-    <Content Include="App\views\content\chapter8.html" />
-    <Content Include="App\views\content\chapter7.html" />
-    <Content Include="App\views\content\chapter6.html" />
-    <Content Include="App\views\content\chapter5.html" />
-    <Content Include="App\views\content\chapter4.html" />
-    <Content Include="App\views\content\chapter3.html" />
-    <Content Include="App\views\content\chapter2.html" />
-    <Content Include="App\views\content\chapter1.html" />
     <Content Include="App\views\manage\list\listView.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

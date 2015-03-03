@@ -1,4 +1,9 @@
-﻿<div data-ng-controller="chapter0Controller as vm">
+﻿<div class="jumbotron">
+    <h1>Wealth Economy</h1>
+    <p class="lead">An experimental resource management system that aims to provide a sustainable economic model.</p>
+<!--    <p><a href="/content/overview" class="btn btn-primary">Learn more »</a></p>-->
+</div>
+<div data-ng-controller="chapter0Controller as vm">
     <div class="page-header">
         <div class="row">
             <div class="col-md-8">
@@ -19,6 +24,85 @@
     <div class="row">
         <div class="col-md-6">
             <p>
+
+<!-- Below block is the older version of the chapter texts - can be removed after completing the new version -->
+<!--
+#1 Primary Goal
+Today we are facing many major issues due to how the economic system works, more specifically how we distribute our resources.
+
+One of the main purposes of the economic system is to allocate resources, ideally to the organizations with the most benefits. First issue in the system is, that there is no systematic way to measure and reward the benefits, like productiveness, fairness towards employees or even high quality. Naturally the only parameter that is left to measure gets all the focus: the profit. Meaning that, in the current system, the primary goal of the majority of the organizations is to gain more profit, everything else can be secondary.
+                    
+#2 Burden of the Consumer 
+The second issue is that the rest of the responsibility falls to the consumers. If the consumers could make the right choices in the market and reward the correct organizations, based on their overall benefits, we could have some better results. However, to achieve this task, every individual consumer must be able gather, process and even compare every piece of knowledge of each product and organization in the market.
+
+We believe that expecting consumers to fulfill this task is an impractical one. Instead, we need to focus on measuring the benefits.
+
+#3 Wealth Economy: Crowd Managed Resource Distribution
+Wealth Economy is an attempt to create a system that defines the benefits, measures them, then allocate resources to the organizations, based on determining how much these benefits have been satisfied.
+
+#4 Sector Index: Seeing the Overall
+One of the issues in the current system is that we the consumers only interact with the organizations about our regular / daily needs.
+
+For example, the consumer could think that education or healthcare sector is more important in the sense of society’s needs. However, if the consumer has no interaction with these sectors, there is no way to allocate resources to them. Instead, the consumer could spend its resources on clothing, cosmetics, electronics, gaming etc., that might have less priority in hierarchy of needs.
+
+Sector Index aims to give the opportunity to the people to see the overall picture and allow them to manage the resources between the sectors by making comparisons.
+
+Which sectors are more important and should control more resources?
+
+Please rate the sectors below. The results will appear after you save your ratings.
+
+#5 Knowledge Index: Building the Global Knowledge Database
+While creating new products / services, organizations also produce the knowledge of how these products / services could be created.
+
+Although this is a very unique and important asset to the society, majority of the organizations tend to use restricted licenses / patents / contracts to hide their knowledge. This due to the fact that sharing the knowledge doesn't provide any benefit to them and they don't want to risk their investment.
+
+In the long term, this 'overprotection' becomes a very counter-productive approach. Collabration between the organizations becomes much more difficult. When the knowledge was not shared, every other organization has to spend a similar time and energy to get to the same level. In other words, we keep reinventing the same knowledge over and over again.
+
+Rewarding the organizations that offer more flexible rights could reduce the chance of having these issues and let us build a common knowledge.
+
+Rating the Licenses
+
+Knowledge Index allows us to compare the licenses side by side and rate them directly. The resources then could be distributed to the organizations based on their license choice.
+
+Which license offers more benefits and more resources should be allocated to it?
+Please rate the licenses below. The results will appear after you save your ratings.
+
+#6 Total Cost Index: Profit - Nonprofit Paradox
+ 
+In the current system, since that’s the only way to get more resources, majority of the organizations aim to maximize their profits. However, what is beneficial for the organization is exactly the opposite for the society. Trying to maximize the profit means that the organization becomes more expensive to society in solving the issues.
+
+In the following sample, there are two organizations that produce the same type of product with the same features. The only difference is their Sales Price.
+
+Although organization "Lowlands" solves the issue in a more cost-effective way, since being more expensive to the society means more resources, at the end of the race, "High Coast" will always have more resources than its competitor.
+
+With this logic, we will keep encouraging the organizations to maximize their profit and allocate limited resources to the organizations that have a less cost on the society. This is one of the paradoxes that we are having in the current system.
+
+New target: Profit minimization
+
+Total Cost Index aims to balance this situation by calculating the difference between the sales prices and allocates the difference to the most cost-effective organizations as a compensation. 
+
+#7 Quality Index
+ 
+Although 'Quality' subject has lot of measurable parameters under it, none of them has a direct impact on the income of the organizations. If the organization has a better quality product, this might increase their sales, therefore they can have more resources. However, the connection between high quality - more resources is not that tight.
+
+Quality Index allows us the rate quality of the products / services as a separate parameter in the system and distributes the resources based on the outcome.
+
+#8 Employee Satisfaction Index
+ 
+This index aims to put more responsibility to the organizations towards to their employees and increase employee satisfcation. The organizations could be rated about various items; complying with safety standards of that sector, having proper insurance coverage.
+
+Under the right circumstances, even the employee could rate their organization whether they're happy with the organization or working conditions are good enough.
+
+As a result, the organizations that have a higher rating will get more resources from the system.
+
+#9 Customer Satisfaction Index
+
+Does the organization please its customers enough? How good are the previous customers experience with the organization / product? Does the organization have a proper customer services? How long does it take to solve the customer's issues in case of an error?
+
+Customer Satisfaction Index aims to rate the organization based on these questions and distribute the resources between the organizations according to their performances.
+
+-->
+
                 <!--The World is changing.-->
                 <!--The World is becoming an interesting place to experiment.-->
                 Today we see a lot of progress around the World. Our technologies are advancing at an accelareted rate.
@@ -93,8 +177,8 @@
             </div>
             <ul>
                 <li>
-                    In <code>Existing Model</code>, increase organizations' <code>Sales Number</code> by clicking <code>+</code> button.<br />
-                    This will increase <code>Sales Number</code> in both models to be able compare the results easily.
+                    In <code>Existing Model</code>, increase organizations' <code>Number of Sales</code> by clicking <code>+</code> button.<br />
+                    This will increase <code>Number of Sales</code> in both models to be able compare the results easily.
                 </li>
                 <li>
                     In <code>New Model</code>, update <code>Employee Satisfaction</code> ratings of the organizations by using <code>+</code> and <code>-</code> buttons next to them
@@ -140,10 +224,10 @@
             <p>
                 <!-- Review this paragraph -->
                 For example, one might think that education sector is more important for the society than most of the other sectors.
-                However, to be able to interact and spend money within this sector, one should either be a student or a relative of a student.
-                Otherwise, even though it is still important, it would be out of the routine and cannot be supported in a regular basis.
+                However, to be able to interact and make transactions with this sector, one should either be a student or a relative of a student.
+                Otherwise, <!--even though it is still important,--> it would be out of the routine and cannot be supported in a regular basis.
                 <!--However, if she is not a student or a parent of a student, she has no direct relation with this sector, therefore cannot support it in a systematic way.-->
-                Instead, one could spend her <!--her?--> income on clothing, cosmetics, entertainment and so on, that might actually have a less priority.
+                Instead, one could spend its <!--her?--> income on clothing, cosmetics, entertainment and so on, that might <!--actually--> have a less priority.
             </p>
             <!-- Citation needed -->
             <!--<p>
@@ -177,13 +261,23 @@
     </div>
     <div class="row">
         <div class="col-md-12">
+            <p>
+                <i>
+                    Which sectors are more important and should have more resources?
+                </i>
+            </p>
             <ul>
                 <li>
-                    Which sectors are more important and should have more resources?
-                    Please rate them below.
+                    By using <code>+</code> button increase <code>Number of Sales</code>, initially all organizations will have same <code>Total Income</code>.
                 </li>
                 <li>
-                    Switch <code>Display</code> to <code>All Ratings</code> to see the average of all users ratings.
+                    Click on <code>Sector</code> link below and rate each item based on their importance.
+                </li>
+                <li>
+                    By using breadcrumb links, you can navigate back to <code>Organization</code> view to see and play with the results.
+                </li>
+                <li>
+                    Switch <code>Display</code> to <code>All Ratings</code> to see the average of all users' ratings.
                 </li>
             </ul>
             <div class="top-buffer">
@@ -205,7 +299,7 @@
     <div class="row">
         <div class="col-md-6">
             <p>
-                While creating new products and services, organizations also produce the <mark>knowledge</mark> of how these products, services could be created.
+                While creating new products and services, organizations also produce the <i>knowledge</i> of how these products, services could be created.
                 All sorts of intellectual property, like discoveries, inventions, formulas; music, literature, and other artistic works; software source codes, and designs could be counted as such knowledge.
             </p>
             <p>
@@ -214,7 +308,7 @@
                 <!--</p>
                 <p>-->
                 In the long term, this 'overprotection' turns out to be a very counter-productive approach, reduces the collabration chance between the organizations.
-                When the knowledge was not shared, every other organization has to spend a similar time and energy to get to the same level.
+                When the knowledge has not shared, every other organization has to spend a similar time and energy to get to the same level.
                 In other words, we keep reinventing the same knowledge over and over again.
             </p>
             <p>
@@ -231,7 +325,7 @@
                 restricted licenses, mostly used for proprietary products, would only allow to the product to be used by its owner.
             </p>
             <p>
-                On the contrary to this situation, in reality, from income perspective, restricted licenses dominate their market.
+                <!--On the contrary to this situation, in reality,-->In reality, from income perspective, restricted licenses dominate their market.
                 In other words, we reward the organizations that use restricted licenses.
             </p>
         </div>
@@ -251,9 +345,23 @@
     </div>
     <div class="row top-buffer">
         <div class="col-md-12">
+            <p>
+                <i>
+                    Which license offers more benefits and more resources should be allocated to it?
+                </i>
+            </p>
             <ul>
                 <li>
-                    Which license offers more benefits and more resources should be allocated to it? Please rate the licenses below.
+                    By using <code>+</code> button increase <code>Number of Sales</code>, initially all organizations will have same <code>Total Income</code>.
+                </li>
+                <li>
+                    Click on <code>License</code> link below and rate each item based on their benefits.
+                </li>
+                <li>
+                    By using breadcrumb links, you can navigate back to <code>Organization</code> view to see and play with the results.
+                </li>
+                <li>
+                    Switch <code>Display</code> to <code>All Ratings</code> to see the average of all users' ratings.
                 </li>
             </ul>
             <resource-pool-editor resource-pool-id="vm.knowledgeIndex_SampleResourcePoolId"></resource-pool-editor>
@@ -263,9 +371,9 @@
                 <!--In order to make it more real, we list some popular software licenses below.
                 If you are not familiar with these licenses, you can skip this part.
                 Otherwise we encourage you to rate these actual licenses.-->
-                To be able to see the actual impact of this index, we list some popular software licenses below.
-                If you are familiar with these licenses, we would like to encourage you to rate them,
-                otherwise you may skip this part.
+                To be able to understand the impact of this index in real life, we list some popular software licenses below.
+                As an optional step, we would like to encourage you to rate these licenses.
+                You can read each license by using <code>Link</code> field.
             </p>
             <resource-pool-editor resource-pool-id="vm.knowledgeIndex_PopuplarSoftwareLicensesResourcePoolId"></resource-pool-editor>
             <p>&nbsp;</p>

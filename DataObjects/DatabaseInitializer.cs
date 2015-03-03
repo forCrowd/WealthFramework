@@ -76,7 +76,7 @@
         //    // Fields
         //    var sectorNameField = new ElementField() { Name = "Name", ElementFieldType = (byte)ElementFieldType.String };
         //    var sectorSalesPriceField = new ElementField() { Name = "Sales Price", ElementFieldType = (byte)ElementFieldType.ResourcePool };
-        //    var sectorSalesNumberField = new ElementField() { Name = "Sales Number", ElementFieldType = (byte)ElementFieldType.Multiplier };
+        //    var sectorSalesNumberField = new ElementField() { Name = "Number of Sales", ElementFieldType = (byte)ElementFieldType.Multiplier };
 
         //    sectorElement
         //        .AddField(sectorNameField)
