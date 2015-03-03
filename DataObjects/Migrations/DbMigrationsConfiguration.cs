@@ -21,22 +21,26 @@ namespace DataObjects.Migrations
 
         protected override void Seed(WealthEconomyContext context)
         {
-            // Data per migration
-            foreach (var migration in pendingMigrations)
-            {
-                // Get the version number
-                var migrationVersion = migration.Substring(migration.IndexOf("_") + 1);
+            // Initial data
+            // TODO Why the code below didn't work on live server?
+            DatabaseInitializer.SeedInitialData(context);
 
-                switch (migrationVersion)
-                {
-                    case "V0_14_9": // Currently the initial migration
-                        {
-                            // Initial data
-                            DatabaseInitializer.SeedInitialData(context);
-                            break;
-                        }
-                }
-            }
+            //// Data per migration
+            //foreach (var migration in pendingMigrations)
+            //{
+            //    // Get the version number
+            //    var migrationVersion = migration.Substring(migration.IndexOf("_") + 1);
+
+            //    switch (migrationVersion)
+            //    {
+            //        case "V0_14_9_M": // Currently the initial migration
+            //            {
+            //                // Initial data
+            //                DatabaseInitializer.SeedInitialData(context);
+            //                break;
+            //            }
+            //    }
+            //}
         }
     }
 }
