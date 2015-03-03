@@ -20,6 +20,7 @@
         /*** Implementations ***/
 
         function constructor() {
+
             var self = this;
 
             self.userElementCell = function () {

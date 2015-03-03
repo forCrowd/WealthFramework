@@ -246,8 +246,6 @@ resourcepooladdition -> resourcepoolfield ?!
 . enableresourcepool + enablesubtotals on element?
 also resourcepoolrate on element?
 
-. check chrome errors!
-
 . ResourcePoolEditor in a bootsrap panel?
 
 . Odata - Find a better way for readonly props (edmbuilder)?
@@ -270,11 +268,14 @@ test - userqueryvisitor with filter!
 http://blogs.msdn.com/b/webdev/archive/2015/02/11/improve-performance-by-optimizing-queries-for-asp-net-identity-and-other-membership-providers.aspx
 
 . Improve + update tests? Also javascript tests?
-Also remove unnecessary methods & props
+
+. Remove unnecessary methods & props from Business Objects - totalIncome() etc should only be calculated on client-side? then what to test on BL?
 
 . userResourcePool rate & fieldIndex rating increase/decrease!
 
 . total cost index sample
+
+			. CONTINUE WITH THE STORY!
 
 ---
 refresh tokens?

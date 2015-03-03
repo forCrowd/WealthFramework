@@ -53,6 +53,7 @@
             scope.increaseElementMultiplier = function (element) {
 
                 var result = element.updateMultiplier('increase');
+
                 if (result) {
                     $rootScope.$broadcast('resourcePoolEditor_elementMultiplierIncreased', element);
                     saveChanges();

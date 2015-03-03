@@ -83,7 +83,9 @@
             // TODO Compare this function with server-side
             self.multiplierValue = function () {
 
-                if (self.multiplierCell() === null || self.multiplierCell().userElementCell().DecimalValue === null)
+                if (self.multiplierCell() === null
+                    || self.multiplierCell().userElementCell() === null
+                    || self.multiplierCell().userElementCell().DecimalValue === null)
                     return 1; // Default value
 
                 return self.multiplierCell().userElementCell().DecimalValue;
