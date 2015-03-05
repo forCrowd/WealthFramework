@@ -24,45 +24,45 @@
             Database.SetInitializer(initializer);
         }
 
-        public static void SeedInitialData(WealthEconomyContext context)
-        {
-            // Managers & stores & repositories
-            var roleStore = new RoleStore(context);
-            var roleManager = new RoleManager<Role, int>(roleStore);
+        //public static void SeedInitialData(WealthEconomyContext context)
+        //{
+        //    // Managers & stores & repositories
+        //    var roleStore = new RoleStore(context);
+        //    var roleManager = new RoleManager<Role, int>(roleStore);
 
-            var userStore = new UserStore(context);
-            userStore.AutoSaveChanges = true;
-            var userManager = new UserManager<User, int>(userStore);
+        //    var userStore = new UserStore(context);
+        //    userStore.AutoSaveChanges = true;
+        //    var userManager = new UserManager<User, int>(userStore);
 
-            var resourcePoolRepository = new ResourcePoolRepository(context);
+        //    var resourcePoolRepository = new ResourcePoolRepository(context);
 
-            // Admin role
-            var adminRole = new Role("Administrator");
-            roleManager.Create(adminRole);
+        //    // Admin role
+        //    var adminRole = new Role("Administrator");
+        //    roleManager.Create(adminRole);
 
-            // Admin user
-            var adminUser = new User("admin");
-            var adminUserPassword = DateTime.Now.ToString("yyyyMMdd");
-            userManager.Create(adminUser, adminUserPassword);
-            userManager.AddToRole(adminUser.Id, "Administrator");
+        //    // Admin user
+        //    var adminUser = new User("admin");
+        //    var adminUserPassword = DateTime.Now.ToString("yyyyMMdd");
+        //    userManager.Create(adminUser, adminUserPassword);
+        //    userManager.AddToRole(adminUser.Id, "Administrator");
 
-            // Sample user
-            var sampleUser = new User("sample");
-            var sampleUserPassword = DateTime.Now.ToString("yyyyMMdd");
-            userManager.Create(sampleUser, sampleUserPassword);
+        //    // Sample user
+        //    var sampleUser = new User("sample");
+        //    var sampleUserPassword = DateTime.Now.ToString("yyyyMMdd");
+        //    userManager.Create(sampleUser, sampleUserPassword);
 
-            // Sample resource pools
-            resourcePoolRepository.Insert(resourcePoolRepository.CreateUPOSample(sampleUser));
-            resourcePoolRepository.Insert(resourcePoolRepository.CreateBasicsExistingSystemSample(sampleUser));
-            resourcePoolRepository.Insert(resourcePoolRepository.CreateBasicsNewSystemSample(sampleUser));
-            resourcePoolRepository.Insert(resourcePoolRepository.CreateSectorIndexSample(sampleUser));
-            resourcePoolRepository.Insert(resourcePoolRepository.CreateKnowledgeIndexSample(sampleUser));
-            resourcePoolRepository.Insert(resourcePoolRepository.CreateKnowledgeIndexPopularSoftwareLicense(sampleUser));
-            resourcePoolRepository.Insert(resourcePoolRepository.CreateTotalCostIndexSample(sampleUser));
+        //    // Sample resource pools
+        //    resourcePoolRepository.Insert(resourcePoolRepository.CreateUPOSample(sampleUser));
+        //    resourcePoolRepository.Insert(resourcePoolRepository.CreateBasicsExistingSystemSample(sampleUser));
+        //    resourcePoolRepository.Insert(resourcePoolRepository.CreateBasicsNewSystemSample(sampleUser));
+        //    resourcePoolRepository.Insert(resourcePoolRepository.CreateSectorIndexSample(sampleUser));
+        //    resourcePoolRepository.Insert(resourcePoolRepository.CreateKnowledgeIndexSample(sampleUser));
+        //    resourcePoolRepository.Insert(resourcePoolRepository.CreateKnowledgeIndexPopularSoftwareLicense(sampleUser));
+        //    resourcePoolRepository.Insert(resourcePoolRepository.CreateTotalCostIndexExistingSystemSample(sampleUser));
 
-            // Save
-            context.SaveChanges();
-        }
+        //    // Save
+        //    context.SaveChanges();
+        //}
 
         //static void AddSectorIndexSample(User user)
         //{

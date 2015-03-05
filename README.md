@@ -6,6 +6,10 @@ An experimental resource management system that aims to provide a sustainable ec
 
 ### Release Notes
 
+**0.14.10**
+
+* Total Cost Index sample was updated
+
 **0.14.9**
 
 * UserElementCell table has now BooleanValue, IntegerValue, DecimalValue, DateTimeValue like ElementCell. Rating column was dropped

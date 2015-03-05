@@ -29,11 +29,6 @@ namespace BusinessObjects
             Validations.ArgumentNullOrDefault(name, "name");
 
             Element = element;
-
-            // Add a fixed 'Name' cell
-            AddCell(Element.NameField);
-            Name = name;
-
             Name = name;
         }
 
@@ -51,11 +46,18 @@ namespace BusinessObjects
             get { return _name; }
             set
             {
-                _name = value;
+                // Try to update 'Name' cell as well
+                if (Element != null && Element.NameField != null)
+                {
+                    if (NameCell == null)
+                        AddCell(Element.NameField);
 
-                // Always update 'Name' cell as well
-                if (NameCell != null)
-                    NameCell.SetValue(value);
+                    // Only if the old values are the same (means NameCell doesn't have a custom value)
+                    if (NameCell.StringValue == _name)
+                        NameCell.SetValue(value);
+                }
+
+                _name = value;
             }
         }
 

@@ -3,15 +3,29 @@
 
     var controllerId = 'chapter0Controller';
     angular.module('main')
-        .controller(controllerId, ['resourcePoolService', '$scope', '$timeout', '$rootScope', 'logger', chapter0Controller]);
+        .controller(controllerId, ['resourcePoolService', 'userService', '$scope', '$timeout', '$rootScope', 'logger', chapter0Controller]);
 
-    function chapter0Controller(resourcePoolService, $scope, $timeout, $rootScope, logger) {
+    function chapter0Controller(resourcePoolService, userService, $scope, $timeout, $rootScope, logger) {
 
         logger = logger.forSource(controllerId);
 
         var vm = this;
 
-        initialize();
+        // TODO Improve this 'authorized'?
+        vm.authorized = false;
+
+        userService.getUserInfo()
+            .then(function (userInfo) {
+
+                vm.authorized = true;
+
+                initialize();
+            });
+
+        // User logged out
+        $rootScope.$on('userLoggedOut', function () {
+            vm.authorized = false;
+        });
 
         /*** Implementations ***/
 
@@ -31,6 +45,9 @@
                 var increaseMultiplierTimeoutRecursive = null;
 
                 function increaseMultiplier() {
+
+                    if (!vm.authorized)
+                        return;
 
                     // Call the service to increase the multiplier
                     resourcePoolService.getResourcePoolExpanded(vm.introduction_UPOResourcePoolId)

@@ -99,9 +99,9 @@
     <Compile Include="Migrations\201411282045150_V0_14_9.Designer.cs">
       <DependentUpon>201411282045150_V0_14_9.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201502251221259_V0_14_9_M.cs" />
-    <Compile Include="Migrations\201502251221259_V0_14_9_M.Designer.cs">
-      <DependentUpon>201502251221259_V0_14_9_M.cs</DependentUpon>
+    <Compile Include="Migrations\201502251221259_V0_14_9_Manual.cs" />
+    <Compile Include="Migrations\201502251221259_V0_14_9_Manual.Designer.cs">
+      <DependentUpon>201502251221259_V0_14_9_Manual.cs</DependentUpon>
     </Compile>
     <Compile Include="ResourcePoolRepository.cs" />
     <Compile Include="RoleStore.cs" />
@@ -170,8 +170,8 @@
       <DependentUpon>201411282045150_V0_14_9.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502251221259_V0_14_9_M.resx">
-      <DependentUpon>201502251221259_V0_14_9_M.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201502251221259_V0_14_9_Manual.resx">
+      <DependentUpon>201502251221259_V0_14_9_Manual.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

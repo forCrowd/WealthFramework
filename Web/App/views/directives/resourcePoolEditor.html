@@ -150,7 +150,7 @@
                                                             {{ elementCell.indexIncome() | number: 2 }}
                                                         </td>
                                                         <td>
-                                                            <div class="btn-group" role="group">
+                                                            <div class="btn-group" role="group" data-ng-if="!elementCell.ElementField.UseFixedValue">
                                                                 <button type="button" data-ng-click="increaseCellIndexRating(elementCell)" title="+ 10" class="btn btn-default btn-xs">+</button>
                                                                 <button type="button" data-ng-click="decreaseCellIndexRating(elementCell)" title="- 10" class="btn btn-default btn-xs">-</button>
                                                             </div>

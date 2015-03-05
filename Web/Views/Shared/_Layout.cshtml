@@ -133,9 +133,10 @@
 
         <hr />
         <footer>
-            <p>
-                {{ vm.applicationInfo.Organization }}<br />
-                Ver.: {{ vm.applicationInfo.CurrentVersion }}<br />
+            <p class="small">
+                @*{{ vm.applicationInfo.Organization }}<br />*@
+                {{ vm.applicationInfo.CurrentVersion }}<br />
+                by crowd forCrowd<br />
             </p>
         </footer>
     </div>
@@ -181,11 +182,6 @@
 
     @* Content *@
     <script src="/App/controllers/content/chapter0Controller.js"></script>
-    <script src="/App/controllers/content/chapter1Controller.js"></script>
-    <script src="/App/controllers/content/chapter4Controller.js"></script>
-    <script src="/App/controllers/content/chapter5Controller.js"></script>
-    <script src="/App/controllers/content/chapter6Controller.js"></script>
-    <script src="/App/controllers/content/chapter10Controller.js"></script>
 
     @* Account *@
     <script src="/App/controllers/account/loginController.js"></script>
