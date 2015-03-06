@@ -23,22 +23,24 @@ namespace DataObjects.Migrations
 
         protected override void Seed(WealthEconomyContext context)
         {
-            // Data per migration
-            foreach (var migration in pendingMigrations)
-            {
-                // Get the version number
-                var migrationVersion = migration.Substring(migration.IndexOf("_") + 1);
+            SeedInitialData(context);
 
-                switch (migrationVersion)
-                {
-                    case "V0_14_9": // Currently the initial migration
-                        {
-                            // Initial data
-                            SeedInitialData(context);
-                            break;
-                        }
-                }
-            }
+            //// Data per migration
+            //foreach (var migration in pendingMigrations)
+            //{
+            //    // Get the version number
+            //    var migrationVersion = migration.Substring(migration.IndexOf("_") + 1);
+
+            //    switch (migrationVersion)
+            //    {
+            //        case "V0_14_9": // Currently the initial migration
+            //            {
+            //                // Initial data
+            //                SeedInitialData(context);
+            //                break;
+            //            }
+            //    }
+            //}
         }
 
         static void SeedInitialData(WealthEconomyContext context)

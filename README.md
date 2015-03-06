@@ -8,7 +8,8 @@ An experimental resource management system that aims to provide a sustainable ec
 
 **0.14.10**
 
-* Total Cost Index sample was updated
+* Total Cost Index was updated
+* Fair Share Index was added
 
 **0.14.9**
 
