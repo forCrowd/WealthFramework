@@ -249,8 +249,6 @@ also resourcepoolrate on element?
 . Odata - Find a better way for readonly props (edmbuilder)?
 Also AccountController methods? So WebApi can go forever?
 
-. create a script to reset live db!
-
 . multitenancy; no need to set User props but handle validation issue
 how about user entity itself?
 test - what if the user not logged in or not auth.! then what happens to interceptors?
@@ -271,30 +269,7 @@ http://blogs.msdn.com/b/webdev/archive/2015/02/11/improve-performance-by-optimiz
 
 . userResourcePool rate & fieldIndex rating increase/decrease!
 
-. total cost index sample
-
-			. CONTINUE WITH THE STORY!
-
-total cost index
-3 different prices for same product?
-lowest price is better but how to apply this to a bigger group?
-also in order to make this meaningful, it should be at least 101 cmrp rate?
-
-how to become super rich? professions
-(every would get index income from the engineer's sales, not only 2. engineer?)
-1baker
-2doctor
-3engineer
-4musician
-5tailor
-6teacher
-
-profit / nonprofit paradox
-(it's not only about being nonprofit, it should be about lowering the prices, even between profits?)
-
-fair share
-org1 - org details + employee element - boss a, emp1 a, emp2 a, contributions
-org1 - org details + employee element - boss b, emp1 b, emp2 b, contributions
+. CONTINUE WITH INDEX PIE!
 
 ---
 refresh tokens?

@@ -553,6 +553,54 @@
             return resourcePool;
         }
 
+        public ResourcePool CreateIndexPieSample(User user)
+        {
+            // CONTINUE FROM HERE!
+
+            // Resource pool
+            var resourcePool = CreateDefaultResourcePool("Index Pie", "Organization", user, userResourcePoolRate: 50, addResourcePoolField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: 2);
+            resourcePool.EnableResourcePoolAddition = false;
+            //resourcePool.EnableSubtotals = false;
+            resourcePool.IsSample = true;
+
+            // Fair share element
+            var fairShareElement = resourcePool.AddElement("Fair Share");
+
+            // Fields
+            var fairShareDesciptionField = fairShareElement.AddField("Description", ElementFieldTypes.String);
+            var fairShareImportanceField = fairShareElement.AddField("-", ElementFieldTypes.Decimal, false);
+            fairShareImportanceField
+                .AddIndex("Fair Share Index", RatingSortType.HighestToLowest)
+                .AddUserRating(user, 100);
+
+            // Items, cell, user cells
+            decimal ratingPerItem = 100 / 2;
+            var fairShareYesItem = fairShareElement.AddItem("Sharer")
+                .AddCell(fairShareDesciptionField).SetValue("Indicates the organization shares it's income with its employees based on their contributions").ElementItem
+                .AddCell(fairShareImportanceField).SetValue(ratingPerItem, user).ElementItem;
+
+            var fairShareNoItem = fairShareElement.AddItem("Keeper")
+                .AddCell(fairShareDesciptionField).SetValue("Indicates that the owner of the organization keeps all the income to himself, ignores the contributions").ElementItem
+                .AddCell(fairShareImportanceField).SetValue(ratingPerItem, user).ElementItem;
+
+            // Main element
+            var mainElement = resourcePool.MainElement;
+            mainElement.ResourcePoolField.Name = "Sales Price";
+            mainElement.MultiplierField.Name = "Number of Sales";
+            var fairShareField = mainElement.AddField("Fair Share", ElementFieldTypes.Element);
+            fairShareField.SelectedElement = fairShareElement;
+
+            // Items, cell, user cells
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Income Keeper Inc.";
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(fairShareField).SetValue(fairShareNoItem);
+
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Fair Sharer Org.";
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(fairShareField).SetValue(fairShareYesItem);
+
+            // Return
+            return resourcePool;
+        }
+
         public ResourcePool CreateDefaultResourcePool(string resourcePoolName, string mainElementName, User user, decimal? userResourcePoolRate, bool addResourcePoolField, bool addMultiplierField, bool addImportanceIndex, short numberOfItems)
         {
             // Resource pool, main element, fields

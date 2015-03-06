@@ -6,6 +6,10 @@ An experimental resource management system that aims to provide a sustainable ec
 
 ### Release Notes
 
+**0.14.11**
+
+* 
+
 **0.14.10**
 
 * Total Cost Index was updated
