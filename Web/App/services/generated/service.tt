@@ -97,7 +97,7 @@ foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
                 if (dataContext.hasChanges()) {
                     count = dataContext.getChangesCount();
                     dataContext.rejectChanges(); // undo all unsaved changes!
-                    logger.logWarning('Discarded ' + count + ' pending change(s)', null, true);
+                    logger.logWarning('Discarded ' + count + ' pending change(s)', null);
                 }
             }
 
@@ -127,13 +127,13 @@ foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
 
             function success(response) {
                 count = response.results.length;
-                //logger.logSuccess('Got ' + count + ' <#= entityVariable #>(s)', response, true);
+                //logger.logSuccess('Got ' + count + ' <#= entityVariable #>(s)', response);
                 return response.results;
             }
 
             function failed(error) {
                 var message = error.message || '<#= entityTypeName #> query failed';
-                logger.logError(message, error, true);
+                logger.logError(message, error);
             }
         }
 
@@ -147,7 +147,7 @@ foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
 
             function failed(error) {
                 var message = error.message || 'get<#= entityTypeName #> query failed';
-                logger.logError(message, error, true);
+                logger.logError(message, error);
             }
         }
 

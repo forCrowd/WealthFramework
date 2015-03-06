@@ -11,7 +11,7 @@
 
         var vm = this;
 
-        // TODO Improve this 'authorized'?
+        // TODO Improve this 'authorized' part?
         vm.authorized = false;
 
         userService.getUserInfo()

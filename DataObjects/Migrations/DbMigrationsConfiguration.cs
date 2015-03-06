@@ -74,10 +74,11 @@ namespace DataObjects.Migrations
             resourcePoolRepository.Insert(resourcePoolRepository.CreateBasicsNewSystemSample(sampleUser));
             resourcePoolRepository.Insert(resourcePoolRepository.CreateSectorIndexSample(sampleUser));
             resourcePoolRepository.Insert(resourcePoolRepository.CreateKnowledgeIndexSample(sampleUser));
-            resourcePoolRepository.Insert(resourcePoolRepository.CreateKnowledgeIndexPopularSoftwareLicense(sampleUser));
+            resourcePoolRepository.Insert(resourcePoolRepository.CreateKnowledgeIndexPopularSoftwareLicenseSample(sampleUser));
             resourcePoolRepository.Insert(resourcePoolRepository.CreateTotalCostIndexExistingSystemSample(sampleUser));
             resourcePoolRepository.Insert(resourcePoolRepository.CreateTotalCostIndexNewSystemSample(sampleUser));
             resourcePoolRepository.Insert(resourcePoolRepository.CreateTotalCostIndexNewSystemAftermathSample(sampleUser));
+            resourcePoolRepository.Insert(resourcePoolRepository.CreateFairShareSample(sampleUser));
 
             // Save
             context.SaveChanges();

@@ -60,7 +60,7 @@
                 if (dataContext.hasChanges()) {
                     count = dataContext.getChangesCount();
                     dataContext.rejectChanges(); // undo all unsaved changes!
-                    logger.logWarning('Discarded ' + count + ' pending change(s)', null, true);
+                    logger.logWarning('Discarded ' + count + ' pending change(s)', null);
                 }
             }
 
@@ -85,13 +85,13 @@
 
             function success(response) {
                 count = response.results.length;
-                //logger.logSuccess('Got ' + count + ' resourcePool(s)', response, true);
+                //logger.logSuccess('Got ' + count + ' resourcePool(s)', response);
                 return response.results;
             }
 
             function failed(error) {
                 var message = error.message || 'ResourcePool query failed';
-                logger.logError(message, error, true);
+                logger.logError(message, error);
             }
         }
 
@@ -105,7 +105,7 @@
 
             function failed(error) {
                 var message = error.message || 'getResourcePool query failed';
-                logger.logError(message, error, true);
+                logger.logError(message, error);
             }
         }
 

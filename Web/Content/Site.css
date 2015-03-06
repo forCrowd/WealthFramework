@@ -90,10 +90,11 @@ ul.bg-info {
     font-family: Tahoma;
     /*font-family: Verdana, Geneva, Tahoma, sans-serif;*/
     font-size: 10px;
+    padding: 1.5em 0;
 }
 
     .resourcePoolEditor .header {
-        padding: 1.5em 0;
+        padding-bottom: 1.5em;
     }
 
     .resourcePoolEditor .header > .title {

@@ -8,8 +8,6 @@
 
     public partial class ResourcePoolRepository
     {
-        // const int DEFAULTNUMBEROFITEMS = 2;
-
         DbSet<ResourcePool> ResourcePoolSet { get { return Context.Set<ResourcePool>(); } }
         DbSet<UserResourcePool> UserResourcePoolSet { get { return Context.Set<UserResourcePool>(); } }
 
@@ -28,6 +26,8 @@
                 ? await list.SingleOrDefaultAsync()
                 : null;
         }
+
+        #region - Samples -
 
         public ResourcePool CreateUPOSample(User user)
         {
@@ -161,7 +161,7 @@
         public ResourcePool CreateKnowledgeIndexSample(User user)
         {
             const byte numberOfLicenses = 2;
-            const decimal ratingPerLicense = 100 / 2;
+            const decimal ratingPerLicense = 100 / numberOfLicenses;
 
             // Resource pool
             var resourcePool = CreateDefaultResourcePool("Knowledge Index Sample", "Organization", user, 50, true, true, false, numberOfLicenses);
@@ -214,7 +214,7 @@
             return resourcePool;
         }
 
-        public ResourcePool CreateKnowledgeIndexPopularSoftwareLicenseAlternative(User user)
+        public ResourcePool CreateKnowledgeIndexPopularSoftwareLicenseSampleAlternative(User user)
         {
             const byte numberOfLicenses = 6;
             const decimal ratingPerLicense = 100 / 6;
@@ -292,7 +292,7 @@
             return resourcePool;
         }
 
-        public ResourcePool CreateKnowledgeIndexPopularSoftwareLicenseAlternative2(User user)
+        public ResourcePool CreateKnowledgeIndexPopularSoftwareLicenseSampleAlternative2(User user)
         {
             const byte numberOfLicenses = 6;
             const decimal ratingPerLicense = 100 / 6;
@@ -342,7 +342,7 @@
             return resourcePool;
         }
 
-        public ResourcePool CreateKnowledgeIndexPopularSoftwareLicense(User user)
+        public ResourcePool CreateKnowledgeIndexPopularSoftwareLicenseSample(User user)
         {
             const byte numberOfLicenses = 6;
             const decimal ratingPerLicense = 100 / 6;
@@ -507,6 +507,52 @@
             return resourcePool;
         }
 
+        public ResourcePool CreateFairShareSample(User user)
+        {
+            // Resource pool
+            var resourcePool = CreateDefaultResourcePool("Fair Share Index", "Organization", user, userResourcePoolRate :50, addResourcePoolField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: 2);
+            resourcePool.EnableResourcePoolAddition = false;
+            //resourcePool.EnableSubtotals = false;
+            resourcePool.IsSample = true;
+
+            // Fair share element
+            var fairShareElement = resourcePool.AddElement("Fair Share");
+
+            // Fields
+            var fairShareDesciptionField = fairShareElement.AddField("Description", ElementFieldTypes.String);
+            var fairShareImportanceField = fairShareElement.AddField("-", ElementFieldTypes.Decimal, false);
+            fairShareImportanceField
+                .AddIndex("Fair Share Index", RatingSortType.HighestToLowest)
+                .AddUserRating(user, 100);
+
+            // Items, cell, user cells
+            decimal ratingPerItem = 100 / 2;
+            var fairShareYesItem = fairShareElement.AddItem("Sharer")
+                .AddCell(fairShareDesciptionField).SetValue("Indicates the organization shares it's income with its employees based on their contributions").ElementItem
+                .AddCell(fairShareImportanceField).SetValue(ratingPerItem, user).ElementItem;
+
+            var fairShareNoItem = fairShareElement.AddItem("Keeper")
+                .AddCell(fairShareDesciptionField).SetValue("Indicates that the owner of the organization keeps all the income to himself, ignores the contributions").ElementItem
+                .AddCell(fairShareImportanceField).SetValue(ratingPerItem, user).ElementItem;
+
+            // Main element
+            var mainElement = resourcePool.MainElement;
+            mainElement.ResourcePoolField.Name = "Sales Price";
+            mainElement.MultiplierField.Name = "Number of Sales";
+            var fairShareField = mainElement.AddField("Fair Share", ElementFieldTypes.Element);
+            fairShareField.SelectedElement = fairShareElement;
+
+            // Items, cell, user cells
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Income Keeper Inc.";
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(fairShareField).SetValue(fairShareNoItem);
+
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Fair Sharer Org.";
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(fairShareField).SetValue(fairShareYesItem);
+
+            // Return
+            return resourcePool;
+        }
+
         public ResourcePool CreateDefaultResourcePool(string resourcePoolName, string mainElementName, User user, decimal? userResourcePoolRate, bool addResourcePoolField, bool addMultiplierField, bool addImportanceIndex, short numberOfItems)
         {
             // Resource pool, main element, fields
@@ -557,5 +603,7 @@
             // Return
             return resourcePool;
         }
+
+        #endregion
     }
 }
