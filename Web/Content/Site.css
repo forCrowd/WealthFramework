@@ -33,54 +33,54 @@ ul.bg-info {
 
 /* Callout Begin */
 
-.bs-callout{
-	padding:20px;
-	margin:20px 0;
-	border:1px solid #eee;
-	border-left-width:5px;
-	border-radius:3px
+.bs-callout {
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px;
 }
 
-.bs-callout h4{
-	margin-top:0;
-	margin-bottom:5px
+    .bs-callout h4 {
+        margin-top: 0;
+        margin-bottom: 5px;
+    }
+
+    .bs-callout p:last-child {
+        margin-bottom: 0;
+    }
+
+    .bs-callout code {
+        border-radius: 3px;
+    }
+
+    .bs-callout + .bs-callout {
+        margin-top: -5px;
+    }
+
+.bs-callout-danger {
+    border-left-color: #d9534f;
 }
 
-.bs-callout p:last-child{
-	margin-bottom:0
+    .bs-callout-danger h4 {
+        color: #d9534f;
+    }
+
+.bs-callout-warning {
+    border-left-color: #f0ad4e;
 }
 
-.bs-callout code{
-	border-radius:3px
+    .bs-callout-warning h4 {
+        color: #f0ad4e;
+    }
+
+.bs-callout-info {
+    border-left-color: #5bc0de;
 }
 
-.bs-callout+.bs-callout{
-	margin-top:-5px
-}
-
-.bs-callout-danger{
-	border-left-color:#d9534f
-}
-
-.bs-callout-danger h4{
-	color:#d9534f
-}
-
-.bs-callout-warning{
-	border-left-color:#f0ad4e
-}
-
-.bs-callout-warning h4{
-	color:#f0ad4e
-}
-
-.bs-callout-info{
-	border-left-color:#5bc0de
-}
-
-.bs-callout-info h4{
-	color:#5bc0de
-}
+    .bs-callout-info h4 {
+        color: #5bc0de;
+    }
 
 /* Callout End */
 
@@ -97,9 +97,9 @@ ul.bg-info {
         padding-bottom: 1.5em;
     }
 
-    .resourcePoolEditor .header > .title {
-        font-size: 1.5em;
-    }
+        .resourcePoolEditor .header > .title {
+            font-size: 1.5em;
+        }
 
 .resourcePoolTable {
     /*table-layout: fixed;*/
@@ -124,32 +124,38 @@ ul.bg-info {
     .resourcePoolTable .resourcePoolFieldsTable > thead > tr > th,
     .resourcePoolTable .resourcePoolFieldsTable > tbody > tr > td,
     .resourcePoolTable .resourcePoolFieldsTable > tfoot > tr > td {
-        min-width: 90px;
+        min-width: 60px;
     }
 
     .resourcePoolTable .resourcePoolFieldsTable {
         /*background-color: green;*/
     }
 
-    .resourcePoolTable .resourcePoolFieldsTable .fieldIndexTable {
-        /*background-color: red;*/
+        .resourcePoolTable .resourcePoolFieldsTable .fieldIndexTable {
+            /*background-color: red;*/
+        }
+
+    .resourcePoolTable .resourcePoolFieldIndexesTable {
+        min-width: 145px;
     }
 
-    /*.resourcePoolTable .resourcePoolFieldsTable .fieldIndexTable > colgroup > col.valueMultipliedField {
-        width: 75px;
-    }*/
-    
-    .resourcePoolTable .resourcePoolFieldsTable .fieldIndexTable > colgroup > col.valuePercentageField {
-        width: 50px;
-    }
-    
-    .resourcePoolTable .resourcePoolFieldsTable .fieldIndexTable > colgroup > col.indexIncomeField {
-        width: 75px;
-    }
+        .resourcePoolTable .resourcePoolFieldsTable .fieldIndexTable > colgroup > col.valuePercentageField,
+        .resourcePoolTable .resourcePoolFieldIndexesTable > colgroup > col.valuePercentageField {
+            /*background-color: green;*/
+            width: 45px;
+        }
 
-    .resourcePoolTable .resourcePoolFieldsTable .fieldIndexTable > colgroup > col.indexFunctionsField {
-        width: 45px;
-    }
+        .resourcePoolTable .resourcePoolFieldsTable .fieldIndexTable > colgroup > col.indexIncomeField,
+        .resourcePoolTable .resourcePoolFieldIndexesTable > colgroup > col.indexIncomeField {
+            /*background-color: green;*/
+            width: 60px;
+        }
+
+        .resourcePoolTable .resourcePoolFieldsTable .fieldIndexTable > colgroup > col.indexFunctionsField,
+        .resourcePoolTable .resourcePoolFieldIndexesTable > colgroup > col.indexFunctionsField {
+            /*background-color: green;*/
+            width: 40px;
+        }
 
 /* ResourcePoolEditor End */
 
