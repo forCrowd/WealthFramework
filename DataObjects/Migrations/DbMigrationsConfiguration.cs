@@ -56,20 +56,35 @@ namespace DataObjects.Migrations
             var resourcePoolRepository = new ResourcePoolRepository(context);
 
             // Admin role
-            var adminRole = new Role("Administrator");
-            roleManager.Create(adminRole);
+            var adminRoleName = "Administrator";
+            var adminRole = roleManager.FindByName(adminRoleName);
+            if (adminRole == null)
+            {
+                adminRole = new Role(adminRoleName);
+                roleManager.Create(adminRole);
+            }
 
             // Admin user
-            var adminUser = new User("admin");
-            var adminUserPassword = DateTime.Now.ToString("yyyyMMdd");
-            userManager.Create(adminUser, adminUserPassword);
-            userManager.AddToRole(adminUser.Id, "Administrator");
+            var adminUserName = "admin";
+            var adminUser = userManager.FindByName(adminUserName);
+            if (adminUser == null)
+            {
+                adminUser = new User(adminUserName);
+                var adminUserPassword = DateTime.Now.ToString("yyyyMMdd");
+                userManager.Create(adminUser, adminUserPassword);
+                userManager.AddToRole(adminUser.Id, "Administrator");
+            }
 
             // Sample user
-            var sampleUser = new User("sample");
-            var sampleUserPassword = DateTime.Now.ToString("yyyyMMdd");
-            userManager.Create(sampleUser, sampleUserPassword);
-
+            var sampleUserName = "sample";
+            var sampleUser = userManager.FindByName(sampleUserName);
+            if (sampleUser == null)
+            {
+                sampleUser = new User(sampleUserName);
+                var sampleUserPassword = DateTime.Now.ToString("yyyyMMdd");
+                userManager.Create(sampleUser, sampleUserPassword);
+            }
+            
             // Sample resource pools
             resourcePoolRepository.Insert(resourcePoolRepository.CreateUPOSample(sampleUser));
             resourcePoolRepository.Insert(resourcePoolRepository.CreateBasicsExistingSystemSample(sampleUser));
@@ -81,6 +96,7 @@ namespace DataObjects.Migrations
             resourcePoolRepository.Insert(resourcePoolRepository.CreateTotalCostIndexNewSystemSample(sampleUser));
             resourcePoolRepository.Insert(resourcePoolRepository.CreateTotalCostIndexNewSystemAftermathSample(sampleUser));
             resourcePoolRepository.Insert(resourcePoolRepository.CreateFairShareSample(sampleUser));
+            resourcePoolRepository.Insert(resourcePoolRepository.CreateIndexPieSample(sampleUser));
 
             // Save
             context.SaveChanges();

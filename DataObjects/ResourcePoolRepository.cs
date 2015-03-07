@@ -555,47 +555,65 @@
 
         public ResourcePool CreateIndexPieSample(User user)
         {
-            // CONTINUE FROM HERE!
-
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool("Index Pie", "Organization", user, userResourcePoolRate: 50, addResourcePoolField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: 2);
+            var resourcePool = CreateDefaultResourcePool("Index Pie", "Organization", user, userResourcePoolRate: 50, addResourcePoolField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: 1);
             resourcePool.EnableResourcePoolAddition = false;
             //resourcePool.EnableSubtotals = false;
             resourcePool.IsSample = true;
 
-            // Fair share element
-            var fairShareElement = resourcePool.AddElement("Fair Share");
+            //// Fair share element
+            //var fairShareElement = resourcePool.AddElement("Fair Share");
 
-            // Fields
-            var fairShareDesciptionField = fairShareElement.AddField("Description", ElementFieldTypes.String);
-            var fairShareImportanceField = fairShareElement.AddField("-", ElementFieldTypes.Decimal, false);
-            fairShareImportanceField
-                .AddIndex("Fair Share Index", RatingSortType.HighestToLowest)
-                .AddUserRating(user, 100);
+            //// Fields
+            //var fairShareDesciptionField = fairShareElement.AddField("Description", ElementFieldTypes.String);
+            //var fairShareImportanceField = fairShareElement.AddField("-", ElementFieldTypes.Decimal, false);
+            //fairShareImportanceField
+            //    .AddIndex("Fair Share Index", RatingSortType.HighestToLowest)
+            //    .AddUserRating(user, 100);
 
-            // Items, cell, user cells
-            decimal ratingPerItem = 100 / 2;
-            var fairShareYesItem = fairShareElement.AddItem("Sharer")
-                .AddCell(fairShareDesciptionField).SetValue("Indicates the organization shares it's income with its employees based on their contributions").ElementItem
-                .AddCell(fairShareImportanceField).SetValue(ratingPerItem, user).ElementItem;
+            //// Items, cell, user cells
+            //decimal ratingPerItem = 100 / 2;
+            //var fairShareYesItem = fairShareElement.AddItem("Sharer")
+            //    .AddCell(fairShareDesciptionField).SetValue("Indicates the organization shares it's income with its employees based on their contributions").ElementItem
+            //    .AddCell(fairShareImportanceField).SetValue(ratingPerItem, user).ElementItem;
 
-            var fairShareNoItem = fairShareElement.AddItem("Keeper")
-                .AddCell(fairShareDesciptionField).SetValue("Indicates that the owner of the organization keeps all the income to himself, ignores the contributions").ElementItem
-                .AddCell(fairShareImportanceField).SetValue(ratingPerItem, user).ElementItem;
+            //var fairShareNoItem = fairShareElement.AddItem("Keeper")
+            //    .AddCell(fairShareDesciptionField).SetValue("Indicates that the owner of the organization keeps all the income to himself, ignores the contributions").ElementItem
+            //    .AddCell(fairShareImportanceField).SetValue(ratingPerItem, user).ElementItem;
 
             // Main element
             var mainElement = resourcePool.MainElement;
             mainElement.ResourcePoolField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Number of Sales";
-            var fairShareField = mainElement.AddField("Fair Share", ElementFieldTypes.Element);
-            fairShareField.SelectedElement = fairShareElement;
+            //mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).Name = "-";
+            //mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).ElementFieldIndex.Name = "Employee Satisfaction";
+
+            // 2. index
+            var importanceField1 = resourcePool.MainElement.AddField("-", ElementFieldTypes.Decimal, false);
+            importanceField1
+                .AddIndex("Importance Index 1", RatingSortType.HighestToLowest)
+                .AddUserRating(user, 50);
+
+            var importanceField2 = resourcePool.MainElement.AddField("-", ElementFieldTypes.Decimal, false);
+            importanceField2
+                .AddIndex("Importance Index 2", RatingSortType.HighestToLowest)
+                .AddUserRating(user, 50);
 
             // Items, cell, user cells
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Income Keeper Inc.";
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(fairShareField).SetValue(fairShareNoItem);
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Organization";
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(importanceField1).SetValue(75M, user);
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(importanceField2).SetValue(25M, user);
+            
+            // mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Organization B";
+            // var fairShareField = mainElement.AddField("Fair Share", ElementFieldTypes.Element);
+            // fairShareField.SelectedElement = fairShareElement;
 
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Fair Sharer Org.";
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(fairShareField).SetValue(fairShareYesItem);
+            // Items, cell, user cells
+            //mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Income Keeper Inc.";
+            //mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(fairShareField).SetValue(fairShareNoItem);
+
+            //mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Fair Sharer Org.";
+            //mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(fairShareField).SetValue(fairShareYesItem);
 
             // Return
             return resourcePool;
