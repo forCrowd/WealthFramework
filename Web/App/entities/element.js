@@ -26,10 +26,14 @@
             // Local variables
             var _parent = null;
             var _parents = [];
+            var _elementFieldIndexSet = [];
             var _resourcePoolField = null;
             var _multiplierField = null;
 
             self.parent = function () {
+
+                // Cached value
+                // TODO In case of add / remove fields?
                 if (_parent !== null) {
                     return _parent;
                 }
@@ -44,22 +48,20 @@
 
             self.parents = function () {
 
+                // Cached value
+                // TODO In case of add / remove elements?
                 if (_parents.length > 0) {
                     return _parents;
                 }
 
                 var element = null;
                 do {
+
                     element = element === null
                         ? self
                         : element.parent();
 
-                    var item = {
-                        element: element,
-                        sortOrder: _parents.length + 1
-                    }
-
-                    _parents.push(item);
+                    _parents.unshift(element);
 
                 } while (element !== element.parent());
 
@@ -75,10 +77,43 @@
                 return self.valueFilter === 1 ? "Only My Ratings" : "All Ratings";
             }
 
+            self.elementFieldIndexSet = function () {
+
+                // Cached value
+                // TODO In case of add / remove fields?
+                if (_elementFieldIndexSet.length > 0) {
+                    return _elementFieldIndexSet;
+                }
+
+                _elementFieldIndexSet = getElementFieldIndexSet(self);
+
+                return _elementFieldIndexSet;
+            }
+
+            function getElementFieldIndexSet(element) {
+
+                var indexSet = [];
+
+                for (var i = 0; i < element.ElementFieldSet.length; i++) {
+                    var field = element.ElementFieldSet[i];
+
+                    if (field.ElementFieldIndexSet.length > 0) {
+                        indexSet.push(field.ElementFieldIndexSet[0]);
+                    }
+
+                    if (field.ElementFieldType === 6) {
+                        var childIndexSet = getElementFieldIndexSet(field.SelectedElement);
+                        indexSet = indexSet.concat(childIndexSet);
+                    }
+                }
+
+                return indexSet;
+            }
+
             self.resourcePoolField = function () {
 
                 // Cached value
-                // TODO In case of add / remove field?
+                // TODO In case of add / remove fields?
                 if (_resourcePoolField)
                     return _resourcePoolField;
 
@@ -153,7 +188,7 @@
                 return value;
             }
 
-            self.indexRatingAverage = function () {
+            self.indexRating = function () {
 
                 // TODO Check totalIncome notes
 
@@ -166,7 +201,7 @@
                     var item = self.ElementFieldSet[i];
 
                     if (item.ElementFieldIndexSet.length > 0)
-                        value += item.ElementFieldIndexSet[0].IndexRatingAverage;
+                        value += item.ElementFieldIndexSet[0].indexRating();
                 }
 
                 return value;
@@ -259,6 +294,23 @@
                 for (var i = 0; i < self.ElementItemSet.length; i++) {
                     var item = self.ElementItemSet[i];
                     value += item.resourcePoolValueIncludingAdditionMultiplied();
+                }
+
+                return value;
+            }
+
+            self.indexIncome = function () {
+
+                // TODO Check totalIncome notes
+
+                // Validate
+                if (typeof self.ElementItemSet === 'undefined')
+                    return 0;
+
+                var value = 0;
+                for (var i = 0; i < self.ElementItemSet.length; i++) {
+                    var item = self.ElementItemSet[i];
+                    value += item.indexIncome();
                 }
 
                 return value;

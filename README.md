@@ -8,7 +8,8 @@ An experimental resource management system that aims to provide a sustainable ec
 
 **0.14.11**
 
-* 
+* resourcePoolEditor UI updates
+* Index Pie
 
 **0.14.10**
 

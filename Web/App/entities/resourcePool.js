@@ -121,7 +121,8 @@
             // Local variables
             var _mainElement = null;
             self.backingFields = {
-                _currentElement: null
+                _currentElement: null,
+                _ElementSet: []
             }
 
             // Main element

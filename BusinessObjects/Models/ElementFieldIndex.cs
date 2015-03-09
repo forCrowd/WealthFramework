@@ -67,6 +67,53 @@ namespace BusinessObjects
 
         /* */
 
+        public UserElementFieldIndex UserElementFieldIndex
+        {
+            get { return UserElementFieldIndexSet.SingleOrDefault(); }
+        }
+
+        public decimal? OtherUsersIndexRatingTotal
+        {
+            get
+            {
+                if (!IndexRatingAverage.HasValue)
+                    return null;
+
+                var average = IndexRatingAverage.Value;
+                var count = IndexRatingCount.GetValueOrDefault(0);
+                var total = average * count;
+
+                if (UserElementFieldIndex != null)
+                    total -= UserElementFieldIndex.Rating;
+
+                return total;
+            }
+        }
+
+        public decimal? OtherUsersIndexRatingAverage
+        {
+            get
+            {
+                if (!OtherUsersIndexRatingTotal.HasValue || OtherUsersIndexRatingCount == 0)
+                    return null;
+
+                return OtherUsersIndexRatingTotal.Value / OtherUsersIndexRatingCount;
+            }
+        }
+
+        public int OtherUsersIndexRatingCount
+        {
+            get
+            {
+                var count = IndexRatingCount.GetValueOrDefault(0);
+
+                if (UserElementFieldIndex != null)
+                    count--;
+
+                return count;
+            }
+        }
+
         public UserElementFieldIndex AddUserRating(User user, decimal rating)
         {
             // TODO Validation?

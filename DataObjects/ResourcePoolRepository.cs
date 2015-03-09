@@ -595,13 +595,13 @@
             //mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).ElementFieldIndex.Name = "Employee Satisfaction";
 
             // 2. index
-            var importanceField1 = resourcePool.MainElement.AddField("-", ElementFieldTypes.Decimal, false);
+            var importanceField1 = resourcePool.MainElement.AddField("Importance Field 1", ElementFieldTypes.Decimal, false);
             importanceField1
                 .AddIndex("Importance Index 1", RatingSortType.HighestToLowest)
                 .AddUserRating(user, 100 / 3);
 
             // 3. index
-            var importanceField2 = resourcePool.MainElement.AddField("-", ElementFieldTypes.Decimal, false);
+            var importanceField2 = resourcePool.MainElement.AddField("Importance Field 2", ElementFieldTypes.Decimal, false);
             importanceField2
                 .AddIndex("Importance Index 2", RatingSortType.HighestToLowest)
                 .AddUserRating(user, 100 / 3);

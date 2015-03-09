@@ -249,6 +249,9 @@ also resourcepoolrate on element?
 . Odata - Find a better way for readonly props (edmbuilder)?
 Also AccountController methods? So WebApi can go forever?
 
+. valuePercentageField -> ratingPercentageField?
+css Field -> Column?
+
 . multitenancy; no need to set User props but handle validation issue
 how about user entity itself?
 test - what if the user not logged in or not auth.! then what happens to interceptors?
@@ -270,6 +273,12 @@ http://blogs.msdn.com/b/webdev/archive/2015/02/11/improve-performance-by-optimiz
 . userResourcePool rate & fieldIndex rating increase/decrease!
 
 . CONTINUE WITH INDEX PIE!
+
+continue with increase decrease index rating - compare the situation with cell ratings ?!
+
+when you add userId 1 rating + cell value, it gets strange!
+first it fails to filter (sequence contains multiple exp.), then UI gets stuck.. after web server reset it works fine etc.
+find out whats going on!
 
 ---
 refresh tokens?

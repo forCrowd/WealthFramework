@@ -50,6 +50,12 @@
                 loadChartData(element);
             }
 
+            // Index Details
+            scope.displayIndexDetails = true;
+            scope.toggleIndexDetails = function () {
+                scope.displayIndexDetails = !scope.displayIndexDetails;
+            }
+
             scope.increaseElementMultiplier = function (element) {
 
                 var result = element.updateMultiplier('increase');
@@ -85,6 +91,20 @@
 
             scope.decreaseCellIndexRating = function (cell) {
                 var result = cell.updateIndexRating('decrease');
+                if (result) {
+                    saveChanges();
+                }
+            }
+
+            scope.increaseIndexRating = function (index) {
+                var result = index.updateIndexRating('increase');
+                if (result) {
+                    saveChanges();
+                }
+            }
+
+            scope.decreaseIndexRating = function (index) {
+                var result = index.updateIndexRating('decrease');
                 if (result) {
                     saveChanges();
                 }

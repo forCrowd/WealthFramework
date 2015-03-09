@@ -55,9 +55,8 @@ namespace BusinessObjects
                 // Enumerate all command parameters and assign the correct value in the one we added inside query visitor
                 foreach (DbParameter param in command.Parameters)
                 {
-                    if (param.ParameterName != UserAwareAttribute.UserIdFilterParameterName)
-                        continue;
-                    param.Value = userId;
+                    if (param.ParameterName == UserAwareAttribute.UserIdFilterParameterName)
+                        param.Value = userId;
                 }
             }
         }

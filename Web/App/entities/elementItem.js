@@ -23,8 +23,42 @@
             var self = this;
 
             // Local variables
+            var _elementCellIndexSet = [];
             var _resourcePoolCell = null;
             var _multiplierCell = null;
+
+            self.elementCellIndexSet = function () {
+
+                // Cached value
+                // TODO In case of add / remove fields?
+                if (_elementCellIndexSet.length > 0) {
+                    return _elementCellIndexSet;
+                }
+
+                _elementCellIndexSet = getElementCellIndexSet(self);
+
+                return _elementCellIndexSet;
+            }
+
+            function getElementCellIndexSet(elementItem) {
+
+                var indexSet = [];
+
+                for (var i = 0; i < elementItem.ElementCellSet.length; i++) {
+                    var cell = elementItem.ElementCellSet[i];
+
+                    if (cell.ElementField.ElementFieldIndexSet.length > 0) {
+                        indexSet.push(cell);
+                    }
+
+                    if (cell.ElementField.ElementFieldType === 6) {
+                        var childIndexSet = getElementCellIndexSet(cell.SelectedElementItem);
+                        indexSet = indexSet.concat(childIndexSet);
+                    }
+                }
+
+                return indexSet;
+            }
 
             self.resourcePoolCell = function () {
 

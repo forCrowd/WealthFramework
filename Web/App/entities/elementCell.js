@@ -25,8 +25,9 @@
 
             self.userElementCell = function () {
 
-                if (typeof self.UserElementCellSet === 'undefined' || self.UserElementCellSet.length === 0)
+                if (typeof self.UserElementCellSet === 'undefined' || self.UserElementCellSet.length === 0) {
                     return null;
+                }
 
                 return self.UserElementCellSet[0];
             }
