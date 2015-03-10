@@ -9,7 +9,8 @@ An experimental resource management system that aims to provide a sustainable ec
 **0.14.11**
 
 * resourcePoolEditor UI updates
-* Index Pie
+* Indexes Pie
+* Web - SecurityConfig, debug auth was disabled due to conflict with Bearer token auth. - Will be checked later
 
 **0.14.10**
 
