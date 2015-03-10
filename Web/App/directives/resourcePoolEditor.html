@@ -29,25 +29,6 @@
         <div class="col-md-8">
             <table class="resourcePoolTable table-striped">
                 <thead>
-                    <!--
-                    <tr data-ng-if="resourcePool.currentElement.elementFieldIndexSet().length > 0">
-                        <th colspan="{{ resourcePool.currentElement.ElementFieldSet.length }}">
-                            &nbsp;
-                        </th>
-                        <th data-ng-if="displayIndexDetails" colspan="{{ resourcePool.currentElement.elementFieldIndexSet().length }}" class="text-center">
-                            <a href="">Indexes Pie</a>
-                        </th>
-                        <th data-ng-if="resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">
-                            &nbsp;
-                        </th>
-                        <th data-ng-if="resourcePool.currentElement.elementFieldIndexSet().length > 0">
-                            &nbsp;
-                        </th>
-                        <th data-ng-if="resourcePool.currentElement.resourcePoolField()">
-                            &nbsp;
-                        </th>
-                    </tr>
-                    -->
                     <tr>
                         <!-- Fields -->
                         <th data-ng-repeat="field in resourcePool.currentElement.ElementFieldSet | orderBy: 'SortOrder'">
@@ -97,34 +78,13 @@
                         </th>
                         <!-- Index Details & Index Income -->
                         <th data-ng-if="displayIndexDetails" data-ng-repeat="index in resourcePool.currentElement.elementFieldIndexSet() | orderBy: 'ElementField.SortOrder'">
-                            <table class="resourcePoolFieldIndexesTable">
-                                <colgroup>
-                                    <col class="valuePercentageField" />
-                                    <col class="indexIncomeField" />
-                                    <col class="indexFunctionsField" data-ng-if="!index.ElementField.UseFixedValue" />
-                                </colgroup>
-                                <thead>
-                                    <tr>
-                                        <th colspan="3">
-                                            {{ index.Name }}
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            %
-                                        </th>
-                                        <th>
-                                            Income
-                                        </th>
-                                        <th data-ng-if="!index.ElementField.UseFixedValue">
-                                            &nbsp;
-                                        </th>
-                                    </tr>
-                                </thead>
-                            </table>
+                            {{ index.Name }} Income
                         </th>
-                        <th data-ng-if="resourcePool.currentElement.elementFieldIndexSet().length > 0">
-                            <a href="" data-ng-click="toggleIndexDetails()">Index(es) Income</a>
+                        <th data-ng-if="resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">
+                            <!-- Display 'Indexes' view link only if there are more than one index -->
+                            <a href="" data-ng-if="resourcePool.currentElement.elementFieldIndexSet().length > 1" data-ng-click="toggleIndexDetails()">Indexes Income</a>
+                            <!-- If there is only one index, then use that index's name -->
+                            <span data-ng-if="resourcePool.currentElement.elementFieldIndexSet().length === 1">{{ resourcePool.currentElement.elementFieldIndexSet()[0].Name }} Income</span>
                         </th>
                         <!-- Total Income -->
                         <th data-ng-if="resourcePool.currentElement.resourcePoolField()">
@@ -153,11 +113,13 @@
                                                 {{ elementCell.DecimalValue | number: 2 }}
                                             </span>
                                             <div data-ng-if="elementCell.ElementField.ElementFieldType === 4 && !elementCell.ElementField.UseFixedValue">
-                                                {{ elementCell.rating() | number: 2 }}
-                                                <!--<div class="btn-group" role="group" data-ng-if="elementCell.ElementField.ElementFieldIndexSet.length > 0">
+                                                <span class="ratingValue">
+                                                    {{ elementCell.rating() | number: 2 }}
+                                                </span>
+                                                <div class="btn-group" role="group" data-ng-if="elementCell.ElementField.ElementFieldIndexSet.length > 0">
                                                     <button type="button" data-ng-click="increaseCellIndexRating(elementCell)" title="+ 10" class="btn btn-default btn-xs">+</button>
                                                     <button type="button" data-ng-click="decreaseCellIndexRating(elementCell)" title="- 10" class="btn btn-default btn-xs">-</button>
-                                                </div>-->
+                                                </div>
                                             </div>
                                             <span data-ng-if="elementCell.ElementField.ElementFieldType === 5">
                                                 {{ elementCell.DateTimeValue }}
@@ -193,31 +155,9 @@
                         </td>
                         <!-- Index Details & Index Income -->
                         <td data-ng-if="displayIndexDetails" data-ng-repeat="cellIndex in elementItem.elementCellIndexSet() | orderBy: 'ElementField.SortOrder'">
-                            <table class="resourcePoolFieldIndexesTable">
-                                <colgroup>
-                                    <col class="valuePercentageField" />
-                                    <col class="indexIncomeField" />
-                                    <col class="indexFunctionsField" data-ng-if="!cellIndex.ElementField.UseFixedValue" />
-                                </colgroup>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            {{ cellIndex.ratingPercentage() | percentage: 2 }}
-                                        </td>
-                                        <td>
-                                            {{ cellIndex.indexIncome() | number: 2 }}
-                                        </td>
-                                        <td data-ng-if="!cellIndex.ElementField.UseFixedValue">
-                                            <div class="btn-group" role="group">
-                                                <button type="button" data-ng-click="increaseCellIndexRating(cellIndex)" title="+ 10" class="btn btn-default btn-xs">+</button>
-                                                <button type="button" data-ng-click="decreaseCellIndexRating(cellIndex)" title="- 10" class="btn btn-default btn-xs">-</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            {{ cellIndex.indexIncome() | number: 2 }}
                         </td>
-                        <td data-ng-if="resourcePool.currentElement.elementFieldIndexSet().length > 0">
+                        <td data-ng-if="resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">
                             {{ elementItem.indexIncome() | number: 2 }}
                         </td>
                         <!-- Total Income -->
@@ -263,28 +203,9 @@
                         </td>
                         <!-- Index Details & Index Income -->
                         <td data-ng-if="displayIndexDetails" data-ng-repeat="index in resourcePool.currentElement.elementFieldIndexSet() | orderBy: 'ElementField.SortOrder'">
-                            <table class="resourcePoolFieldIndexesTable">
-                                <colgroup>
-                                    <col class="valuePercentageField" />
-                                    <col class="indexIncomeField" />
-                                    <col class="indexFunctionsField" data-ng-if="!index.ElementField.UseFixedValue" />
-                                </colgroup>
-                                <tfoot>
-                                    <tr>
-                                        <td>
-                                            {{ index.ElementField.ratingPercentage() | percentage: 2 }}
-                                        </td>
-                                        <td>
-                                            {{ index.indexIncome() | number: 2 }}
-                                        </td>
-                                        <td data-ng-if="!index.ElementField.UseFixedValue">
-                                            &nbsp;
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                            </table>
+                            {{ index.indexIncome() | number: 2 }}
                         </td>
-                        <td data-ng-if="resourcePool.currentElement.elementFieldIndexSet().length > 0">
+                        <td data-ng-if="resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">
                             {{ resourcePool.currentElement.indexIncome() | number: 2 }}
                         </td>
                         <!-- Total Income -->
@@ -321,25 +242,12 @@
                         </td>
                         <!-- Index Details & Index Income -->
                         <td data-ng-if="displayIndexDetails && resourcePool.currentElement.elementFieldIndexSet().length > 1" data-ng-repeat="index in resourcePool.currentElement.elementFieldIndexSet() | orderBy: 'ElementField.SortOrder'">
-                            <table class="resourcePoolFieldIndexesTable">
-                                <colgroup>
-                                    <col class="valuePercentageField" />
-                                    <col class="indexIncomeField" />
-                                    <col class="indexFunctionsField" data-ng-if="!index.ElementField.UseFixedValue" />
-                                </colgroup>
-                                <tfoot>
-                                    <tr>
-                                        <td colspan="3">
-                                            <div class="btn-group" role="group">
-                                                <button title="Increase {{ index.Name }}" type="button" data-ng-click="increaseIndexRating(index)" class="btn btn-default btn-xs">+</button>
-                                                <button title="Decrease {{ index.Name }}" type="button" data-ng-click="decreaseIndexRating(index)" class="btn btn-default btn-xs">-</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                            </table>
+                            <div class="btn-group" role="group">
+                                <button title="Increase {{ index.Name }}" type="button" data-ng-click="increaseIndexRating(index)" class="btn btn-default btn-xs">+</button>
+                                <button title="Decrease {{ index.Name }}" type="button" data-ng-click="decreaseIndexRating(index)" class="btn btn-default btn-xs">-</button>
+                            </div>
                         </td>
-                        <td data-ng-if="resourcePool.currentElement.elementFieldIndexSet().length > 0">
+                        <td data-ng-if="resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">
                             &nbsp;
                         </td>
                         <!-- Total Income -->

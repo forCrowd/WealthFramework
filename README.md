@@ -8,8 +8,9 @@ An experimental resource management system that aims to provide a sustainable ec
 
 **0.14.11**
 
-* resourcePoolEditor UI updates
 * Indexes Pie
+* resourcePoolEditor layout updates
+* resourcePoolEditor.css was created and both .css & .html files moved under 'directives' folder
 * Web - SecurityConfig, debug auth was disabled due to conflict with Bearer token auth. - Will be checked later
 
 **0.14.10**

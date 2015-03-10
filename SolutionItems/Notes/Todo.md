@@ -263,17 +263,13 @@ test - userqueryvisitor with filter!
 
 . update packages - especially try odata4 again?
 
-. ?
-http://blogs.msdn.com/b/webdev/archive/2015/02/11/improve-performance-by-optimizing-queries-for-asp-net-identity-and-other-membership-providers.aspx
+. ? http://blogs.msdn.com/b/webdev/archive/2015/02/11/improve-performance-by-optimizing-queries-for-asp-net-identity-and-other-membership-providers.aspx
 
 . Improve + update tests? Also javascript tests?
 
 . Remove unnecessary methods & props from Business Objects - totalIncome() etc should only be calculated on client-side? then what to test on BL?
 
 . userResourcePool rate & fieldIndex rating increase/decrease!
-
-. CONTINUE WITH INDEX PIE!
-continue with increase decrease index rating - compare the situation with cell ratings ?!
 
 ---
 refresh tokens?

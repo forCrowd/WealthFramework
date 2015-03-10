@@ -391,6 +391,7 @@
     <Content Include="App\controllers\manage\resourcePool\resourcePoolCustomViewController.js" />
     <Content Include="App\controllers\manage\resourcePool\resourcePoolCustomListController.js" />
     <Content Include="App\directives\resourcePoolEditor.js" />
+    <Content Include="App\directives\resourcePoolEditor.css" />
     <Content Include="App\entities\element.js" />
     <Content Include="App\entities\elementItem.js" />
     <Content Include="App\entities\elementFieldIndex.js" />
@@ -446,7 +447,7 @@
     <Content Include="App\views\content\home.html" />
     <Content Include="App\views\content\overview.html" />
     <Content Include="App\views\content\technologies.html" />
-    <Content Include="App\views\directives\resourcePoolEditor.html" />
+    <Content Include="App\directives\resourcePoolEditor.html" />
     <Content Include="App\views\manage\edit\editView.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -748,7 +749,10 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App\directives\resourcePoolEditor\" />
+    <Folder Include="App\views\directives\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

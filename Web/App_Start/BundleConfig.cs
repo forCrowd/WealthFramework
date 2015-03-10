@@ -23,7 +23,8 @@ namespace Web
                       "~/Content/bootstrap.css",
                       "~/Content/toastr.css",
                       "~/Content/breeze.directives.css", // TODO ?!
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/App/directives/resourcePoolEditor.css"));
 
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862

@@ -1,0 +1,44 @@
+﻿.resourcePoolEditor {
+    font-family: Tahoma;
+    /*font-family: Verdana, Geneva, Tahoma, sans-serif;*/
+    font-size: 10px;
+    padding: 1.5em 0;
+}
+
+    .resourcePoolEditor .header {
+        padding-bottom: 1.5em;
+    }
+
+        .resourcePoolEditor .header > .title {
+            font-size: 1.5em;
+        }
+
+.resourcePoolTable {
+    /*table-layout: fixed;*/
+}
+
+    /*.resourcePoolTable th,
+    .resourcePoolTable td {*/
+    .resourcePoolTable > thead > tr > th {
+        vertical-align: top;
+    }
+
+    .resourcePoolTable > thead > tr > th,
+    .resourcePoolTable > tbody > tr > td,
+    .resourcePoolTable > tfoot > tr > td,
+    .resourcePoolTable .resourcePoolFieldsTable > thead > tr > th,
+    .resourcePoolTable .resourcePoolFieldsTable > tbody > tr > td,
+    .resourcePoolTable .resourcePoolFieldsTable > tfoot > tr > td {
+        min-width: 80px;
+        overflow: hidden; /* Hide text outside the cell */
+        padding: 2px;
+    }
+
+    .resourcePoolTable .resourcePoolFieldsTable {
+        /*background-color: green;*/
+    }
+
+        .resourcePoolTable .resourcePoolFieldsTable .ratingValue {
+            display: inline-block;
+            width: 35px;
+        }
