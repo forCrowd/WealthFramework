@@ -333,11 +333,15 @@
                 return value;
             }
 
-            self.updateMultiplier = function(updateType) {
+            self.updateMultiplier = function (updateType) {
+
+                //logger.log('3');
 
                 // Validate
                 if (self.multiplierField() === null || typeof self.ElementItemSet === 'undefined')
                     return false;
+
+                //logger.log('4');
 
                 // Determines whether there is an update
                 var updated = false;
@@ -345,7 +349,9 @@
                 // Find user element cell
                 for (var itemIndex = 0; itemIndex < self.ElementItemSet.length; itemIndex++) {
 
-                    var userElementCell = self.ElementItemSet[itemIndex].multiplierCell().userElementCell();
+                    var userElementCell = self.ElementItemSet[itemIndex].multiplierCell().userElementCell('x'); // x is only for test
+
+                    //logger.log('5 - userElementCell', userElementCell);
 
                     // If there is not, create a new one
                     if (userElementCell === null) {
@@ -357,6 +363,8 @@
                             || ((updateType === 'decrease'
                             || updateType === 'reset')
                             && userElementCell.DecimalValue > 0)) {
+
+                            //logger.log('6');
 
                             userElementCell.DecimalValue = updateType === 'increase'
                             ? userElementCell.DecimalValue + 1

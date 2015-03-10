@@ -40,6 +40,11 @@ namespace Web
         [Conditional("DEBUG")]
         void SetDebugUser(HttpActionContext actionContext)
         {
+            // TODO Somehow this conflicts with web client's (angular and/or breeze) authentication, check it later - also similar code was used in DataObjects.Tests
+            // This was helping to query the database directly via an OData url;
+            // http://localhost:15001/odata/ResourcePool%281%29?$expand=UserResourcePoolSet,ElementSet/ElementFieldSet/ElementFieldIndexSet/UserElementFieldIndexSet,ElementSet/ElementItemSet/ElementCellSet/UserElementCellSet
+            return;
+            
             if (Thread.CurrentPrincipal.Identity.IsAuthenticated)
                 return;
 

@@ -23,7 +23,11 @@
 
             var self = this;
 
-            self.userElementCell = function () {
+            self.userElementCell = function (args) {
+
+                if (args === 'x') {
+                    //logger.log('self.UserElementCellSet', self.UserElementCellSet);
+                }
 
                 if (typeof self.UserElementCellSet === 'undefined' || self.UserElementCellSet.length === 0) {
                     return null;

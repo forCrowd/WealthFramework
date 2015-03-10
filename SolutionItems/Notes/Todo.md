@@ -273,12 +273,7 @@ http://blogs.msdn.com/b/webdev/archive/2015/02/11/improve-performance-by-optimiz
 . userResourcePool rate & fieldIndex rating increase/decrease!
 
 . CONTINUE WITH INDEX PIE!
-
 continue with increase decrease index rating - compare the situation with cell ratings ?!
-
-when you add userId 1 rating + cell value, it gets strange!
-first it fails to filter (sequence contains multiple exp.), then UI gets stuck.. after web server reset it works fine etc.
-find out whats going on!
 
 ---
 refresh tokens?
@@ -289,14 +284,6 @@ https://github.com/tjoudeh/AngularJSAuthentication
 
 X-InlineCount
 X-Pagination
-
----
-cell is always showing the same info, not per index???
-
-<table class="table test" data-ng-repeat="index in elementCell.ElementField.ElementFieldIndexSet">
-	<tr>
-		<td>
-			{{ elementCell.ValueMultiplied | number: 2 }}
 
 ---
 anti forgery: AntiForgery.GetTokens

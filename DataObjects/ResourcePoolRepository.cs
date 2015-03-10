@@ -553,10 +553,10 @@
             return resourcePool;
         }
 
-        public ResourcePool CreateIndexPieSample(User user)
+        public ResourcePool CreateIndexesPieSample(User user)
         {
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool("Index Pie", "Organization", user, userResourcePoolRate: 50, addResourcePoolField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: 2);
+            var resourcePool = CreateDefaultResourcePool("Indexes Pie", "Organization", user, userResourcePoolRate: 50, addResourcePoolField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: 2);
             resourcePool.EnableResourcePoolAddition = false;
             //resourcePool.EnableSubtotals = false;
             resourcePool.IsSample = true;

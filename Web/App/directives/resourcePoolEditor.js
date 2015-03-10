@@ -47,20 +47,25 @@
 
             scope.changeCurrentElement = function (element) {
                 scope.resourcePool.currentElement = element;
-                loadChartData(element);
+                loadChartData();
             }
 
             // Index Details
-            scope.displayIndexDetails = true;
+            scope.displayIndexDetails = false;
             scope.toggleIndexDetails = function () {
                 scope.displayIndexDetails = !scope.displayIndexDetails;
+                loadChartData();
             }
 
             scope.increaseElementMultiplier = function (element) {
 
+                //logger.log('?');
+
                 var result = element.updateMultiplier('increase');
 
                 if (result) {
+                    //logger.log('2');
+
                     $rootScope.$broadcast('resourcePoolEditor_elementMultiplierIncreased', element);
                     saveChanges();
                 }
@@ -121,7 +126,7 @@
                         if (scope.resourcePool.currentElement === null) {
                             scope.changeCurrentElement(scope.resourcePool.mainElement());
                         } else {
-                            loadChartData(scope.resourcePool.currentElement);
+                            loadChartData();
                         }
                     })
                     .catch(function (error) {
@@ -135,42 +140,67 @@
                 scope.chartConfig.size.height = scope.chartHeight;
             }, true);
 
-            function loadChartData(element) {
+            function loadChartData() {
+
+                // Current element
+                var element = scope.resourcePool.currentElement;
 
                 scope.chartConfig.loading = true;
-
                 scope.chartConfig.title = { text: element.Name };
-                scope.chartConfig.options.chart = { type: element.resourcePoolField() ? 'column' : 'pie' };
-                scope.chartConfig.options.yAxis.title = { text: element.resourcePoolField() ? 'Total Income' : '' };
                 scope.chartConfig.series = [];
 
-                if (element.resourcePoolField()) {
-
-                    // Column type
-                    for (var i = 0; i < element.ElementItemSet.length; i++) {
-                        var elementItem = element.ElementItemSet[i];
-                        var item = new columnChartItem(elementItem);
-                        scope.chartConfig.series.push(item);
-                    }
-                } else {
+                if (scope.displayIndexDetails) {
 
                     // Pie type
+                    scope.chartConfig.title = { text: 'Indexes' };
+                    scope.chartConfig.options.chart = { type: 'pie' };
+                    scope.chartConfig.options.yAxis.title = { text: '' };
+
                     var chartData = [];
-                    for (var i = 0; i < element.ElementItemSet.length; i++) {
-                        var elementItem = element.ElementItemSet[i];
-                        for (var x = 0; x < elementItem.ElementCellSet.length; x++) {
-                            var elementCell = elementItem.ElementCellSet[x];
-                            if (elementCell.ElementField.ElementFieldIndexSet.length > 0) {
-                                var chartItem = new pieChartItem(elementCell);
-                                chartData.push(chartItem);
-                            }
-                        }
+                    for (var i = 0; i < element.elementFieldIndexSet().length; i++) {
+                        var elementFieldIndex = element.elementFieldIndexSet()[i];
+                        var chartItem = new elementFieldIndexChartItem(elementFieldIndex);
+                        chartData.push(chartItem);
                     }
                     scope.chartConfig.series = [{ data: chartData }];
+
+                } else {
+
+                    scope.chartConfig.title = { text: element.Name };
+
+                    if (element.resourcePoolField()) {
+
+                        // Column type
+                        scope.chartConfig.options.chart = { type: 'column' };
+                        scope.chartConfig.options.yAxis.title = { text: 'Total Income' };
+
+                        for (var i = 0; i < element.ElementItemSet.length; i++) {
+                            var elementItem = element.ElementItemSet[i];
+                            var item = new columnChartItem(elementItem);
+                            scope.chartConfig.series.push(item);
+                        }
+                    } else {
+
+                        // Pie type
+                        scope.chartConfig.options.chart = { type: 'pie' };
+                        scope.chartConfig.options.yAxis.title = { text: '' };
+
+                        var chartData = [];
+                        for (var i = 0; i < element.ElementItemSet.length; i++) {
+                            var elementItem = element.ElementItemSet[i];
+                            for (var x = 0; x < elementItem.ElementCellSet.length; x++) {
+                                var elementCell = elementItem.ElementCellSet[x];
+                                if (elementCell.ElementField.ElementFieldIndexSet.length > 0) {
+                                    var chartItem = new pieChartItem(elementCell);
+                                    chartData.push(chartItem);
+                                }
+                            }
+                        }
+                        scope.chartConfig.series = [{ data: chartData }];
+                    }
                 }
 
                 scope.chartConfig.loading = false;
-
             }
 
             function saveChanges() {
@@ -190,6 +220,22 @@
                     .finally(function () {
 
                     });
+            }
+
+            function elementFieldIndexChartItem(elementFieldIndex) {
+                var self = this;
+
+                Object.defineProperty(self, "name", {
+                    enumerable: true,
+                    configurable: true,
+                    get: function () { return elementFieldIndex.Name; }
+                });
+
+                Object.defineProperty(self, "y", {
+                    enumerable: true,
+                    configurable: true,
+                    get: function () { return elementFieldIndex.indexRatingPercentage(); }
+                });
             }
 
             // TODO Store these in a better place?
