@@ -71,19 +71,51 @@ namespace BusinessObjects
         public virtual ICollection<Element> ElementSet { get; set; }
         public virtual ICollection<UserResourcePool> UserResourcePoolSet { get; set; }
 
-        //public ResourcePoolFilterSettings FilterSettings { get; private set; }
-
         public Element MainElement
         {
             get { return ElementSet.SingleOrDefault(element => element.IsMainElement); }
         }
 
-        //public IEnumerable<ElementFieldIndex> ElementFieldIndexSet
+        public UserResourcePool UserResourcePool
+        {
+            get { return UserResourcePoolSet.SingleOrDefault(); }
+        }
+
+        public decimal? OtherUsersResourcePoolRateTotal
+        {
+            get
+            {
+                if (!ResourcePoolRateAverage.HasValue)
+                    return null;
+
+                var average = ResourcePoolRateAverage.Value;
+                var count = ResourcePoolRateCount.GetValueOrDefault(0);
+                var total = average * count;
+
+                if (UserResourcePool != null)
+                    total -= UserResourcePool.ResourcePoolRate;
+
+                return total;
+            }
+        }
+
+        //public decimal? OtherUsersResourcePoolRateAverage
         //{
-        //    get { return ElementSet.SelectMany(item => item.ElementFieldIndexSet); }
+        //    get
         //}
 
+        public int OtherUsersResourcePoolRateCount
+        {
+            get
+            {
+                var count = ResourcePoolRateCount.GetValueOrDefault(0);
 
+                if (UserResourcePool != null)
+                    count--;
+
+                return count;
+            }
+        }
 
         //[NotMapped]
         public decimal ResourcePoolRateOld

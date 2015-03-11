@@ -115,6 +115,20 @@
                 }
             }
 
+            scope.increaseResourcePoolRate = function () {
+                var result = scope.resourcePool.updateResourcePoolRate('increase');
+                if (result) {
+                    saveChanges();
+                }
+            }
+
+            scope.decreaseResourcePoolRate = function () {
+                var result = scope.resourcePool.updateResourcePoolRate('decrease');
+                if (result) {
+                    saveChanges();
+                }
+            }
+
             // Resource pool id: Get the current resource pool
             scope.$watch('resourcePoolId', function () {
 

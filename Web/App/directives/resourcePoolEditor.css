@@ -19,7 +19,8 @@
 
     /*.resourcePoolTable th,
     .resourcePoolTable td {*/
-    .resourcePoolTable > thead > tr > th {
+    .resourcePoolTable > thead > tr > th,
+    .resourcePoolTable .resourcePoolFieldsTable > thead > tr > th {
         vertical-align: top;
     }
 

@@ -143,21 +143,15 @@ namespace Microsoft.Data.Edm
 
                 // Add readonly properties
                 var edmx = System.Xml.Linq.XDocument.Load(stream);
-                //AddReadonlyProperty(edmx, "ResourcePool", "ResourcePoolRate", "Decimal", false);
-                //AddReadonlyProperty(edmx, "ElementFieldIndex", "IndexRatingAverage", "Decimal", false);
-                //AddReadonlyProperty(edmx, "ElementFieldIndex", "IndexRatingCount", "Decimal", false);
-                //AddReadonlyProperty(edmx, "ElementCell", "RatingAverageOld", "Decimal", false);
-                //AddReadonlyProperty(edmx, "ElementCell", "RatingCountOld", "Int32", false);
-                AddReadonlyProperty(edmx, "ElementCell", "OtherUsersRatingTotal", "Decimal", true);
-                AddReadonlyProperty(edmx, "ElementCell", "OtherUsersRatingAverage", "Decimal", true);
-                AddReadonlyProperty(edmx, "ElementCell", "OtherUsersRatingCount", "Int32", false);
+                AddReadonlyProperty(edmx, "ResourcePool", "OtherUsersResourcePoolRateTotal", "Decimal", true);
+                //AddReadonlyProperty(edmx, "ResourcePool", "OtherUsersResourcePoolRateAverage", "Decimal", true);
+                AddReadonlyProperty(edmx, "ResourcePool", "OtherUsersResourcePoolRateCount", "Int32", false);
                 AddReadonlyProperty(edmx, "ElementFieldIndex", "OtherUsersIndexRatingTotal", "Decimal", true);
-                AddReadonlyProperty(edmx, "ElementFieldIndex", "OtherUsersIndexRatingAverage", "Decimal", true);
+                //AddReadonlyProperty(edmx, "ElementFieldIndex", "OtherUsersIndexRatingAverage", "Decimal", true);
                 AddReadonlyProperty(edmx, "ElementFieldIndex", "OtherUsersIndexRatingCount", "Int32", false);
-                //AddReadonlyProperty(edmx, "ElementFieldIndex", "IndexRatingAverage", "Decimal", false);
-                //AddReadonlyProperty(edmx, "ElementFieldIndex", "IndexRatingPercentage", "Decimal", false);
-                //AddReadonlyProperty(edmx, "ElementFieldIndex", "IndexShare", "Decimal", false);
-                //AddReadonlyProperty(edmx, "ElementFieldIndex", "IndexIncome", "Decimal", false);
+                AddReadonlyProperty(edmx, "ElementCell", "OtherUsersRatingTotal", "Decimal", true);
+                //AddReadonlyProperty(edmx, "ElementCell", "OtherUsersRatingAverage", "Decimal", true);
+                AddReadonlyProperty(edmx, "ElementCell", "OtherUsersRatingCount", "Int32", false);
 
                 using (var reader = edmx.CreateReader())
                 {

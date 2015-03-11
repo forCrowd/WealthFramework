@@ -90,16 +90,16 @@ namespace BusinessObjects
             }
         }
 
-        public decimal? OtherUsersIndexRatingAverage
-        {
-            get
-            {
-                if (!OtherUsersIndexRatingTotal.HasValue || OtherUsersIndexRatingCount == 0)
-                    return null;
+        //public decimal? OtherUsersIndexRatingAverage
+        //{
+        //    get
+        //    {
+        //        if (!OtherUsersIndexRatingTotal.HasValue || OtherUsersIndexRatingCount == 0)
+        //            return null;
 
-                return OtherUsersIndexRatingTotal.Value / OtherUsersIndexRatingCount;
-            }
-        }
+        //        return OtherUsersIndexRatingTotal.Value / OtherUsersIndexRatingCount;
+        //    }
+        //}
 
         public int OtherUsersIndexRatingCount
         {

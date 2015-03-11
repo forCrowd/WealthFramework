@@ -141,18 +141,111 @@
                 return _mainElement;
             }
 
+            self.userResourcePool = function () {
+
+                if (typeof self.UserResourcePoolSet === 'undefined' || self.UserResourcePoolSet.length === 0) {
+                    return null;
+                }
+
+                return self.UserResourcePoolSet[0];
+            }
+
+            self.usersResourcePoolRateAverage = function () {
+
+                if (self.usersResourcePoolRateCount() === 0)
+                    return 0; // TODO Return null?
+
+                var total = self.OtherUsersResourcePoolRateTotal;
+
+                if (self.userResourcePool() !== null) {
+                    total += self.userResourcePool().ResourcePoolRate;
+                }
+
+                return total / self.usersResourcePoolRateCount();
+            }
+
+            self.usersResourcePoolRateCount = function () {
+
+                var count = self.OtherUsersResourcePoolRateCount;
+
+                if (self.userResourcePool() !== null) {
+                    count++;
+                }
+
+                return count;
+            }
+
+            self.resourcePoolRate = function () {
+
+                var value = 0;
+
+                //logger.log('self.ElementField.Element.valueFilter', self.ElementField.Element.valueFilter);
+
+                switch (self.currentElement.valueFilter) {
+                    case 1: {
+
+                        if (self.userResourcePool() !== null) {
+                            value = self.userResourcePool().ResourcePoolRate;
+                            // logger.log('value', value);
+                        }
+
+                        break;
+                    }
+                    case 2: {
+                        value = self.usersResourcePoolRateAverage();
+                        break;
+                    }
+                    default: {
+                        throw 'Invalid switch case';
+                    }
+                }
+
+                return value;
+            }
+
             // Resource pool rate percentage
             self.resourcePoolRatePercentage = function () {
 
-                if (typeof self.ResourcePoolRateAverage === 'undefined' || self.ResourcePoolRateAverage === null)
-                    return 0;
+                if (self.resourcePoolRate() === 0)
+                    return 0; // Null?
 
-                return self.ResourcePoolRateAverage / 100;
+                return self.resourcePoolRate() / 100;
             }
 
             // CMRP Rate
-            self.updateResourcePoolRate = function (value) {
-                logger.log('update resource pool rate: ' + value);
+            self.updateResourcePoolRate = function (updateType) {
+
+                // Determines whether there is an update
+                var updated = false;
+
+                // Validate
+                if (self.userResourcePool() === null) {
+
+                    // TODO createEntity!
+                    // userResourcePool.ResourcePoolRate = ?; Based on updateType
+                    //updated = true;
+
+                } else {
+
+                    var value = self.userResourcePool().ResourcePoolRate;
+
+                    if (updateType === 'increase' && value < 500) {
+
+                        value = value + 5 >= 500 ? 500 : value + 5;
+                        updated = true;
+                    } else if (updateType === 'decrease' && value > 0) {
+
+                        value = value - 5 <= 0 ? 0 : value - 5;
+                        updated = true;
+                    }
+
+                    if (updated)
+                        self.userResourcePool().ResourcePoolRate = value;
+                }
+
+                // Return
+                return updated;
+
             }
         }
     }
