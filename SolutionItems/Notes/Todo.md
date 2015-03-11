@@ -4,8 +4,6 @@
 
 ### Functional
 
-* Employee + customer + quality index samples are not there - all in one sample is outdated  
-* Work on the chapters again  
 * Check userunitofwork + resourcepoolunitofwork + userresourcepoolunitofwork for sample records + delete cases
 * Initial (fixed) amount for resource pool
 * Currently multiplier + resource pool field types can only be added once per element (or resource pool) - check it again
@@ -17,7 +15,6 @@
 
 ### Technical
 
-* Copy remote (highcharts) js files to local!
 * Unit testing for controllers + unitofwork etc.?
 * autofac or ninject or windsor or unity or spring?
 check the websites  
@@ -31,14 +28,12 @@ check asp.net identity as a sample
 
 * separate web into webclient / webservice
 * cors;
-http://www.dotnetcurry.com/showarticle.aspx?ID=921  
-http://msdn.microsoft.com/en-us/magazine/dn532203.aspx  
-http://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-web-api  
+http://www.dotnetcurry.com/showarticle.aspx?ID=921
+http://msdn.microsoft.com/en-us/magazine/dn532203.aspx
+http://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-web-api
 * javascript logging; http://jsnlog.com/
 * automapper?
-* highcharts library loading perf?
 * asp.net identity - two factor auth. + account lockout + confirmation + pass reset + security stamp? + social logins + samples
-* what happened to appveyor?
 * add multiple fields test
 * check [required] attribute for newer classes?
 * try to convert other batch files to ps scripts as well
@@ -50,8 +45,6 @@ http://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-w
 * public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager <ApplicationUser> manager) - ?
 * check validation cases - null is okay but how about Id check - Id > 0?
 * use fluent approach on element + item + field + cell
-* viewmodels don't belong to business layer?!
-* ignore web - scripts folder?
 
 ### Misc
 
@@ -141,6 +134,7 @@ http://msdn.microsoft.com/en-us/library/hh925568%28v=vs.110%29.aspx
 * calling saveChanges in dispose of unitofwork?
 * extend dbcontext validation errors - check spaanjaars sample and use them in webapp with modelstate blocks?
 * result of datetime (ticks) index is bit useless? need reference a start or end date as a reference?
+. remove scripts folder from github? - it's not possible for today / 11 Mar. '15
 
 * how about disabling proxy classes? what will be the difference exactly?
 
@@ -244,9 +238,6 @@ also resourcepoolrate on element?
 
 . ResourcePoolEditor in a bootsrap panel?
 
-. remove scripts folder from github?
-.. hightcharts scripts!
-
 . Odata - Find a better way for readonly props (edmbuilder)?
 Also AccountController methods? So WebApi can go forever?
 
@@ -266,8 +257,6 @@ test - userqueryvisitor with filter!
 . Improve + update tests? Also javascript tests?
 
 . Remove unnecessary methods & props from Business Objects - totalIncome() etc should only be calculated on client-side? then what to test on BL?
-
-. userResourcePool rate
 
 . github licenses;
 https://developer.github.com/v3/licenses/
