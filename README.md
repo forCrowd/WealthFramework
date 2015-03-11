@@ -9,6 +9,7 @@ An experimental resource management system that aims to provide a sustainable ec
 **0.14.12**
 
 * CMRP Rate is back
+* Knowledge Index sample charts fix
 * Samples minor updates
 * chapter0 content blocks are now separate html files and called from home.html by using ng-include. chapter0 was removed.
 * highcharts scripts were copied to local
