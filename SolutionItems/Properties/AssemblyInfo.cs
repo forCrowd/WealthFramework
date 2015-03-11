@@ -31,5 +31,5 @@ using System.Runtime.InteropServices;
 //
 // AssemblyFileVersion is not in use for the moment
 //
-[assembly: AssemblyVersion("0.14.11")]
+[assembly: AssemblyVersion("0.14.12")]
 [assembly: AssemblyFileVersion("1.0.0.0")]

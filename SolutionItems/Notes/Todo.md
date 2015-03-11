@@ -230,8 +230,6 @@ http://www.asp.net/web-api/overview/testing-and-debugging/mocking-entity-framewo
 . addfield method should create new elementcells for this new field for the existing items!
 
 . one elementfieldindex per elementfield ?!?!?!
-
-. resourcepoolview - Resource Pool + Field Index combo - should the fields be separate? income part can be at the end?
 	
 . one element can't be selected by multiple fields?
 
@@ -246,11 +244,11 @@ also resourcepoolrate on element?
 
 . ResourcePoolEditor in a bootsrap panel?
 
+. remove scripts folder from github?
+.. hightcharts scripts!
+
 . Odata - Find a better way for readonly props (edmbuilder)?
 Also AccountController methods? So WebApi can go forever?
-
-. valuePercentageField -> ratingPercentageField?
-css Field -> Column?
 
 . multitenancy; no need to set User props but handle validation issue
 how about user entity itself?
@@ -269,7 +267,10 @@ test - userqueryvisitor with filter!
 
 . Remove unnecessary methods & props from Business Objects - totalIncome() etc should only be calculated on client-side? then what to test on BL?
 
-. userResourcePool rate & fieldIndex rating increase/decrease!
+. userResourcePool rate
+
+. github licenses;
+https://developer.github.com/v3/licenses/
 
 ---
 refresh tokens?

@@ -85,7 +85,7 @@
             // Fields
             mainElement.ResourcePoolField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Number of Sales";
-            mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).Name = "-";
+            mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).Name = "Employee Satisfaction Rating";
             mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).ElementFieldIndex.Name = "Employee Satisfaction";
 
             // Items, cell, user cells
@@ -98,8 +98,11 @@
 
         public ResourcePool CreateSectorIndexSample(User user)
         {
+            const byte numberOfSectors = 4;
+            const decimal ratingPerSector = 100 / numberOfSectors;
+
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool("Sector Index Sample", "Organization", user, 50, true, true, false, 6);
+            var resourcePool = CreateDefaultResourcePool("Sector Index Sample", "Organization", user, 50, true, true, false, numberOfSectors);
             resourcePool.EnableResourcePoolAddition = false;
             resourcePool.IsSample = true;
 
@@ -107,19 +110,18 @@
             var sectorElement = resourcePool.AddElement("Sector");
 
             // Importance field
-            var importanceField = sectorElement.AddField("-", ElementFieldTypes.Decimal, false);
+            var importanceField = sectorElement.AddField("Rating", ElementFieldTypes.Decimal, false);
             importanceField
                     .AddIndex("Sector Index", RatingSortType.HighestToLowest)
                     .AddUserRating(user, 100);
 
             // Items, cells, user cells
-            var itemValue = 100M / 6;
-            sectorElement.AddItem("Clothing").AddCell(importanceField).SetValue(itemValue, user);
-            sectorElement.AddItem("Cosmetics").AddCell(importanceField).SetValue(itemValue, user);
-            sectorElement.AddItem("Education").AddCell(importanceField).SetValue(itemValue, user);
-            sectorElement.AddItem("Entertainment").AddCell(importanceField).SetValue(itemValue, user);
-            sectorElement.AddItem("Food").AddCell(importanceField).SetValue(itemValue, user);
-            sectorElement.AddItem("Healthcare").AddCell(importanceField).SetValue(itemValue, user);
+            //sectorElement.AddItem("Clothing").AddCell(importanceField).SetValue(itemValue, user);
+            var cosmeticsItem = sectorElement.AddItem("Cosmetics").AddCell(importanceField).SetValue(ratingPerSector, user).ElementItem;
+            var educationItem = sectorElement.AddItem("Education").AddCell(importanceField).SetValue(ratingPerSector, user).ElementItem;
+            var entertainmentItem = sectorElement.AddItem("Entertainment").AddCell(importanceField).SetValue(ratingPerSector, user).ElementItem;
+            //sectorElement.AddItem("Food").AddCell(importanceField).SetValue(itemValue, user);
+            var healthcareItem = sectorElement.AddItem("Healthcare").AddCell(importanceField).SetValue(ratingPerSector, user).ElementItem;
 
             // Main element
             var mainElement = resourcePool.MainElement;
@@ -130,18 +132,18 @@
 
             // Items, cell, user cells
             // TODO How about ToList()[0]?
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Clothing Organization";
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(sectorField).SetValue(sectorElement.ElementItemSet.Skip(0).Take(1).Single());
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Cosmetics Organization";
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(sectorField).SetValue(sectorElement.ElementItemSet.Skip(1).Take(1).Single());
-            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Education Organization";
-            mainElement.ElementItemSet.Skip(2).Take(1).Single().AddCell(sectorField).SetValue(sectorElement.ElementItemSet.Skip(2).Take(1).Single());
-            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Entertainment Organization";
-            mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(sectorField).SetValue(sectorElement.ElementItemSet.Skip(3).Take(1).Single());
-            mainElement.ElementItemSet.Skip(4).Take(1).Single().Name = "Food Organization";
-            mainElement.ElementItemSet.Skip(4).Take(1).Single().AddCell(sectorField).SetValue(sectorElement.ElementItemSet.Skip(4).Take(1).Single());
-            mainElement.ElementItemSet.Skip(5).Take(1).Single().Name = "Healthcare Organization";
-            mainElement.ElementItemSet.Skip(5).Take(1).Single().AddCell(sectorField).SetValue(sectorElement.ElementItemSet.Skip(5).Take(1).Single());
+            //mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Clothing Organization";
+            //mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(sectorField).SetValue(sectorElement.ElementItemSet.Skip(0).Take(1).Single());
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Cosmetics Organization";
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(sectorField).SetValue(cosmeticsItem);
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Education Organization";
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(sectorField).SetValue(educationItem);
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Entertainment Organization";
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().AddCell(sectorField).SetValue(entertainmentItem);
+            //mainElement.ElementItemSet.Skip(4).Take(1).Single().Name = "Food Organization";
+            //mainElement.ElementItemSet.Skip(4).Take(1).Single().AddCell(sectorField).SetValue(sectorElement.ElementItemSet.Skip(4).Take(1).Single());
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Healthcare Organization";
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(sectorField).SetValue(healthcareItem);
 
             // Old list
             //mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Basic Materials";
@@ -176,7 +178,7 @@
             var rightToCopyField = licenseElement.AddField("Right to Copy", ElementFieldTypes.String);
             var rightToModifyField = licenseElement.AddField("Right to Modify", ElementFieldTypes.String);
             var rightToSellField = licenseElement.AddField("Right to Sell", ElementFieldTypes.String);
-            var importanceField = licenseElement.AddField("-", ElementFieldTypes.Decimal, false);
+            var importanceField = licenseElement.AddField("Rating", ElementFieldTypes.Decimal, false);
             importanceField
                 .AddIndex("Knowledge Index", RatingSortType.HighestToLowest)
                 .AddUserRating(user, 100);
@@ -216,8 +218,8 @@
 
         public ResourcePool CreateKnowledgeIndexPopularSoftwareLicenseSampleAlternative(User user)
         {
-            const byte numberOfLicenses = 6;
-            const decimal ratingPerLicense = 100 / 6;
+            const byte numberOfLicenses = 4;
+            const decimal ratingPerLicense = 100 / numberOfLicenses;
 
             // Resource pool
             var resourcePool = CreateDefaultResourcePool("Knowledge Index - Popular Software Licenses", "Organization", user, 50, true, true, false, numberOfLicenses);
@@ -229,7 +231,7 @@
 
             // Fields
             var linkField = licenseElement.AddField("Link", ElementFieldTypes.String);
-            var importanceField = licenseElement.AddField("-", ElementFieldTypes.Decimal, false);
+            var importanceField = licenseElement.AddField("Rating", ElementFieldTypes.Decimal, false);
             importanceField
                 .AddIndex("Knowledge Index", RatingSortType.HighestToLowest)
                 .AddUserRating(user, 100);
@@ -240,20 +242,20 @@
                 .ElementItem
                 .AddCell(importanceField).SetValue(ratingPerLicense, user);
 
-            licenseElement.AddItem("BSD-3-Clause")
-                .AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/BSD-3-Clause' target='_blank'>Link</a>")
-                .ElementItem
-                .AddCell(importanceField).SetValue(ratingPerLicense, user);
+            //licenseElement.AddItem("BSD-3-Clause")
+            //    .AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/BSD-3-Clause' target='_blank'>Link</a>")
+            //    .ElementItem
+            //    .AddCell(importanceField).SetValue(ratingPerLicense, user);
 
             licenseElement.AddItem("GPL-3.0")
                 .AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/GPL-3.0' target='_blank'>Link</a>")
                 .ElementItem
                 .AddCell(importanceField).SetValue(ratingPerLicense, user);
 
-            licenseElement.AddItem("LGPL-3.0")
-                .AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/LGPL-3.0' target='_blank'>Link</a>")
-                .ElementItem
-                .AddCell(importanceField).SetValue(ratingPerLicense, user);
+            //licenseElement.AddItem("LGPL-3.0")
+            //    .AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/LGPL-3.0' target='_blank'>Link</a>")
+            //    .ElementItem
+            //    .AddCell(importanceField).SetValue(ratingPerLicense, user);
 
             licenseElement.AddItem("MIT")
                 .AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/MIT' target='_blank'>Link</a>")
@@ -277,16 +279,16 @@
             // TODO How about ToList()[0]?
             mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Apache-2.0 Organization";
             mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(licenseField).SetValue(licenseElement.ElementItemSet.Skip(0).Take(1).Single());
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "BSD-3-Clause Organization";
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(licenseField).SetValue(licenseElement.ElementItemSet.Skip(1).Take(1).Single());
-            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "GPL-3.0 Organization";
-            mainElement.ElementItemSet.Skip(2).Take(1).Single().AddCell(licenseField).SetValue(licenseElement.ElementItemSet.Skip(2).Take(1).Single());
-            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "LGPL-3.0 Organization";
-            mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(licenseField).SetValue(licenseElement.ElementItemSet.Skip(3).Take(1).Single());
-            mainElement.ElementItemSet.Skip(4).Take(1).Single().Name = "MIT Organization";
-            mainElement.ElementItemSet.Skip(4).Take(1).Single().AddCell(licenseField).SetValue(licenseElement.ElementItemSet.Skip(4).Take(1).Single());
-            mainElement.ElementItemSet.Skip(5).Take(1).Single().Name = "Microsoft EULA Organization";
-            mainElement.ElementItemSet.Skip(5).Take(1).Single().AddCell(licenseField).SetValue(licenseElement.ElementItemSet.Skip(5).Take(1).Single());
+            //mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "BSD-3-Clause Organization";
+            //mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(licenseField).SetValue(licenseElement.ElementItemSet.Skip(1).Take(1).Single());
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "GPL-3.0 Organization";
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(licenseField).SetValue(licenseElement.ElementItemSet.Skip(2).Take(1).Single());
+            //mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "LGPL-3.0 Organization";
+            //mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(licenseField).SetValue(licenseElement.ElementItemSet.Skip(3).Take(1).Single());
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "MIT Organization";
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().AddCell(licenseField).SetValue(licenseElement.ElementItemSet.Skip(4).Take(1).Single());
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Microsoft EULA Organization";
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(licenseField).SetValue(licenseElement.ElementItemSet.Skip(5).Take(1).Single());
 
             // Return
             return resourcePool;
@@ -294,8 +296,8 @@
 
         public ResourcePool CreateKnowledgeIndexPopularSoftwareLicenseSampleAlternative2(User user)
         {
-            const byte numberOfLicenses = 6;
-            const decimal ratingPerLicense = 100 / 6;
+            const byte numberOfLicenses = 4;
+            const decimal ratingPerLicense = 100 / numberOfLicenses;
 
             // Resource pool
             var resourcePool = CreateDefaultResourcePool("Knowledge Index - Popular Software Licenses", "License", user, null, false, false, false, numberOfLicenses);
@@ -307,7 +309,7 @@
 
             // Fields
             var linkField = mainElement.AddField("Link", ElementFieldTypes.String);
-            var importanceField = mainElement.AddField("-", ElementFieldTypes.Decimal, false);
+            var importanceField = mainElement.AddField("Rating", ElementFieldTypes.Decimal, false);
             importanceField
                 .AddIndex("Knowledge Index", RatingSortType.HighestToLowest)
                 .AddUserRating(user, 100);
@@ -317,26 +319,26 @@
             mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/Apache-2.0' target='_blank'>Link</a>");
             mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense, user);
 
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "BSD-3-Clause";
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/BSD-3-Clause' target='_blank'>Link</a>");
+            //mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "BSD-3-Clause";
+            //mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/BSD-3-Clause' target='_blank'>Link</a>");
+            //mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense, user);
+
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "GPL-3.0";
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/GPL-3.0' target='_blank'>Link</a>");
             mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense, user);
 
-            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "GPL-3.0";
-            mainElement.ElementItemSet.Skip(2).Take(1).Single().AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/GPL-3.0' target='_blank'>Link</a>");
+            //mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "LGPL-3.0";
+            //mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/LGPL-3.0' target='_blank'>Link</a>");
+            //mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense, user);
+
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "MIT";
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/MIT' target='_blank'>Link</a>");
             mainElement.ElementItemSet.Skip(2).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense, user);
 
-            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "LGPL-3.0";
-            mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/LGPL-3.0' target='_blank'>Link</a>");
-            mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense, user);
-
-            mainElement.ElementItemSet.Skip(4).Take(1).Single().Name = "MIT";
-            mainElement.ElementItemSet.Skip(4).Take(1).Single().AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/MIT' target='_blank'>Link</a>");
-            mainElement.ElementItemSet.Skip(4).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense, user);
-
             // TODO Check it again
-            mainElement.ElementItemSet.Skip(5).Take(1).Single().Name = "Microsoft EULA";
-            mainElement.ElementItemSet.Skip(5).Take(1).Single().AddCell(linkField).SetValue("<a href='https://msdn.microsoft.com/en-us/library/aa188798(v=office.10).aspx' target='_blank'>Link</a>");
-            mainElement.ElementItemSet.Skip(5).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense, user);
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Microsoft EULA";
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(linkField).SetValue("<a href='https://msdn.microsoft.com/en-us/library/aa188798(v=office.10).aspx' target='_blank'>Link</a>");
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense, user);
 
             // Return
             return resourcePool;
@@ -344,8 +346,8 @@
 
         public ResourcePool CreateKnowledgeIndexPopularSoftwareLicenseSample(User user)
         {
-            const byte numberOfLicenses = 6;
-            const decimal ratingPerLicense = 100 / 6;
+            const byte numberOfLicenses = 4;
+            const decimal ratingPerLicense = 100 / numberOfLicenses;
 
             // Resource pool
             var resourcePool = CreateDefaultResourcePool("Knowledge Index - Popular Software Licenses", "License", user, null, false, false, false, numberOfLicenses);
@@ -356,7 +358,7 @@
             var mainElement = resourcePool.MainElement;
 
             // Fields
-            var importanceField = mainElement.AddField("-", ElementFieldTypes.Decimal, false);
+            var importanceField = mainElement.AddField("Rating", ElementFieldTypes.Decimal, false);
             importanceField
                 .AddIndex("Knowledge Index", RatingSortType.HighestToLowest)
                 .AddUserRating(user, 100);
@@ -366,26 +368,26 @@
             mainElement.ElementItemSet.Skip(0).Take(1).Single().NameCell.SetValue("<a href='http://opensource.org/licenses/Apache-2.0' target='_blank'>Apache-2.0</a>");
             mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense, user);
 
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "BSD-3-Clause";
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().NameCell.SetValue("<a href='http://opensource.org/licenses/BSD-3-Clause' target='_blank'>BSD-3-Clause</a>");
+            //mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "BSD-3-Clause";
+            //mainElement.ElementItemSet.Skip(1).Take(1).Single().NameCell.SetValue("<a href='http://opensource.org/licenses/BSD-3-Clause' target='_blank'>BSD-3-Clause</a>");
+            //mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense, user);
+
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "GPL-3.0";
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().NameCell.SetValue("<a href='http://opensource.org/licenses/GPL-3.0' target='_blank'>GPL-3.0</a>");
             mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense, user);
 
-            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "GPL-3.0";
-            mainElement.ElementItemSet.Skip(2).Take(1).Single().NameCell.SetValue("<a href='http://opensource.org/licenses/GPL-3.0' target='_blank'>GPL-3.0</a>");
+            //mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "LGPL-3.0";
+            //mainElement.ElementItemSet.Skip(3).Take(1).Single().NameCell.SetValue("<a href='http://opensource.org/licenses/LGPL-3.0' target='_blank'>LGPL-3.0</a>");
+            //mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense, user);
+
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "MIT";
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().NameCell.SetValue("<a href='http://opensource.org/licenses/MIT' target='_blank'>MIT</a>");
             mainElement.ElementItemSet.Skip(2).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense, user);
 
-            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "LGPL-3.0";
-            mainElement.ElementItemSet.Skip(3).Take(1).Single().NameCell.SetValue("<a href='http://opensource.org/licenses/LGPL-3.0' target='_blank'>LGPL-3.0</a>");
-            mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense, user);
-
-            mainElement.ElementItemSet.Skip(4).Take(1).Single().Name = "MIT";
-            mainElement.ElementItemSet.Skip(4).Take(1).Single().NameCell.SetValue("<a href='http://opensource.org/licenses/MIT' target='_blank'>MIT</a>");
-            mainElement.ElementItemSet.Skip(4).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense, user);
-
             // TODO Check it again
-            mainElement.ElementItemSet.Skip(5).Take(1).Single().Name = "Microsoft EULA";
-            mainElement.ElementItemSet.Skip(5).Take(1).Single().NameCell.SetValue("<a href='https://msdn.microsoft.com/en-us/library/aa188798(v=office.10).aspx' target='_blank'>Microsoft EULA</a>");
-            mainElement.ElementItemSet.Skip(5).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense, user);
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Microsoft EULA";
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().NameCell.SetValue("<a href='https://msdn.microsoft.com/en-us/library/aa188798(v=office.10).aspx' target='_blank'>Microsoft EULA</a>");
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense, user);
 
             // Return
             return resourcePool;
@@ -520,7 +522,7 @@
 
             // Fields
             var fairShareDesciptionField = fairShareElement.AddField("Description", ElementFieldTypes.String);
-            var fairShareImportanceField = fairShareElement.AddField("-", ElementFieldTypes.Decimal, false);
+            var fairShareImportanceField = fairShareElement.AddField("Rating", ElementFieldTypes.Decimal, false);
             fairShareImportanceField
                 .AddIndex("Fair Share Index", RatingSortType.HighestToLowest)
                 .AddUserRating(user, 100);
@@ -566,7 +568,7 @@
 
             //// Fields
             //var fairShareDesciptionField = fairShareElement.AddField("Description", ElementFieldTypes.String);
-            //var fairShareImportanceField = fairShareElement.AddField("-", ElementFieldTypes.Decimal, false);
+            //var fairShareImportanceField = fairShareElement.AddField("Rating", ElementFieldTypes.Decimal, false);
             //fairShareImportanceField
             //    .AddIndex("Fair Share Index", RatingSortType.HighestToLowest)
             //    .AddUserRating(user, 100);
@@ -591,7 +593,7 @@
                 .AddIndex("Total Cost Index", RatingSortType.LowestToHighest)
                 .AddUserRating(user, 100 / 3);
 
-            //mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).Name = "-";
+            //mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).Name = "Rating";
             //mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).ElementFieldIndex.Name = "Employee Satisfaction";
 
             // 2. index

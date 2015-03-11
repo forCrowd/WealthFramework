@@ -6,6 +6,11 @@ An experimental resource management system that aims to provide a sustainable ec
 
 ### Release Notes
 
+**0.14.12**
+
+* Samples minor updates
+* chapter0 content blocks are now separate html files and called from home.html by using ng-include. chapter0 was removed.
+
 **0.14.11**
 
 * Indexes Pie

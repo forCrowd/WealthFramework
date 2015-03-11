@@ -318,7 +318,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App\controllers\content\chapter0Controller.js" />
+    <Content Include="App\controllers\content\basicsController.js" />
+    <Content Include="App\controllers\content\knowledgeIndexSampleController.js" />
+    <Content Include="App\controllers\content\sectorIndexSampleController.js" />
+    <Content Include="App\controllers\content\introductionController.js" />
     <Content Include="App\controllers\manage\edit\elementCellEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
@@ -443,9 +446,15 @@
       <DependentUpon>service.tt</DependentUpon>
     </Content>
     <Content Include="App\services\resourcePoolService.js" />
-    <Content Include="App\views\content\chapter0.html" />
+    <Content Include="App\views\content\basics.html" />
+    <Content Include="App\views\content\indexesPieSample.html" />
+    <Content Include="App\views\content\fairShareIndexSample.html" />
+    <Content Include="App\views\content\totalCostIndexSample.html" />
+    <Content Include="App\views\content\knowledgeIndexSample.html" />
+    <Content Include="App\views\content\sectorIndexSample.html" />
     <Content Include="App\views\content\home.html" />
     <Content Include="App\views\content\overview.html" />
+    <Content Include="App\views\content\introduction.html" />
     <Content Include="App\views\content\technologies.html" />
     <Content Include="App\directives\resourcePoolEditor.html" />
     <Content Include="App\views\manage\edit\editView.txt">
@@ -750,7 +759,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App\directives\resourcePoolEditor\" />
     <Folder Include="App\views\directives\" />
   </ItemGroup>
   <PropertyGroup>
