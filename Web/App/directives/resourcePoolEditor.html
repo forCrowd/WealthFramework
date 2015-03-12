@@ -27,12 +27,66 @@
             <highchart data-config="chartConfig"></highchart>
         </div>
         <div class="col-md-8">
-            <table class="resourcePoolTable table-striped">
+            <table class="resourcePoolTable table-striped" border="0">
                 <thead>
+                    <tr data-ng-if="resourcePool.currentElement.elementFieldIndexSet().length > 0">
+                        <td>
+                            <table class="resourcePoolInnerTable" border="0">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            CMRP Rate
+                                        </th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </td>
+                        <td>
+                            <table class="resourcePoolInnerTable" border="0">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <span class="fixedWidth45Cell">
+                                                {{ resourcePool.resourcePoolRatePercentage() | percentage: 2 }}
+                                            </span>
+                                            <div data-ng-if="resourcePool.EnableResourcePoolAddition" class="btn-group" role="group">
+                                                <button title="Increase CMRP Rate" type="button" data-ng-click="increaseResourcePoolRate()" class="btn btn-default btn-xs">+</button>
+                                                <button title="Decrease CMRP Rate" type="button" data-ng-click="decreaseResourcePoolRate()" class="btn btn-default btn-xs">-</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr data-ng-if="resourcePool.currentElement.elementFieldIndexSet().length > 0">
+                        <td>
+                            <table class="resourcePoolInnerTable" border="0">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            CMRP Total
+                                        </th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </td>
+                        <td>
+                            <table class="resourcePoolInnerTable" border="0">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            {{ resourcePool.currentElement.resourcePoolAdditionMultiplied() | number: 2 }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
                     <tr>
                         <!-- Fields -->
                         <th data-ng-repeat="field in resourcePool.currentElement.ElementFieldSet | orderBy: 'SortOrder'">
-                            <table class="resourcePoolFieldsTable">
+                            <table class="resourcePoolInnerTable" border="0">
                                 <thead>
                                     <tr>
                                         <!-- Values -->
@@ -45,16 +99,18 @@
                                             </span>
                                         </th>
                                         <!-- ResourcePool -->
-                                        <th data-ng-if="resourcePool.EnableResourcePoolAddition && field.ElementFieldType === 11">
+                                        <th data-ng-if="false && resourcePool.EnableResourcePoolAddition && resourcePool.currentElement.elementFieldIndexSet().length > 0 && field.ElementFieldType === 11">
                                             CMRP Rate<br />
-                                            {{ resourcePool.resourcePoolRatePercentage() | percentage: 2}}
+                                            {{ resourcePool.resourcePoolRatePercentage() | percentage: 2 }}
                                         </th>
-                                        <th data-ng-if="resourcePool.EnableResourcePoolAddition && field.ElementFieldType === 11">
+                                        <th data-ng-if="false && resourcePool.EnableResourcePoolAddition && resourcePool.currentElement.elementFieldIndexSet().length > 0 && field.ElementFieldType === 11">
                                             {{ field.Name }}<br />
                                             incl. CMRP
                                         </th>
-                                        <!-- Multiplier -->
-                                        <th data-ng-if="resourcePool.EnableResourcePoolAddition && field.ElementFieldType === 12 && resourcePool.currentElement.resourcePoolField()">
+                                        <th data-ng-if="false && resourcePool.EnableResourcePoolAddition && resourcePool.currentElement.elementFieldIndexSet().length > 0 && field.ElementFieldType === 12 && resourcePool.currentElement.resourcePoolField()">
+                                            Tot. CMRP
+                                        </th>
+                                        <th data-ng-if="false && resourcePool.EnableResourcePoolAddition && resourcePool.currentElement.elementFieldIndexSet().length > 0 && field.ElementFieldType === 12 && resourcePool.currentElement.resourcePoolField()">
                                             Tot. {{ resourcePool.currentElement.resourcePoolField().Name }}
                                             <br />incl. CMRP
                                         </th>
@@ -86,7 +142,7 @@
                     <tr data-ng-repeat="elementItem in resourcePool.currentElement.ElementItemSet">
                         <!-- Cells -->
                         <td data-ng-repeat="elementCell in elementItem.ElementCellSet | orderBy: 'ElementField.SortOrder'">
-                            <table class="resourcePoolFieldsTable">
+                            <table class="resourcePoolInnerTable">
                                 <tbody>
                                     <tr>
                                         <!-- Values -->
@@ -103,7 +159,7 @@
                                                 {{ elementCell.DecimalValue | number: 2 }}
                                             </span>
                                             <div data-ng-if="elementCell.ElementField.ElementFieldType === 4 && !elementCell.ElementField.UseFixedValue">
-                                                <span class="ratingValue">
+                                                <span class="fixedWidth35Cell">
                                                     {{ elementCell.rating() | number: 2 }}
                                                 </span>
                                                 <div class="btn-group" role="group" data-ng-if="elementCell.ElementField.ElementFieldIndexSet.length > 0">
@@ -125,14 +181,16 @@
                                             </span>
                                         </td>
                                         <!-- ResourcePool -->
-                                        <td data-ng-if="resourcePool.EnableResourcePoolAddition && elementCell.ElementField.ElementFieldType === 11">
+                                        <td data-ng-if="false && resourcePool.EnableResourcePoolAddition && resourcePool.currentElement.elementFieldIndexSet().length > 0 && elementCell.ElementField.ElementFieldType === 11">
                                             {{ elementItem.resourcePoolAddition() | number: 2 }}
                                         </td>
-                                        <td data-ng-if="resourcePool.EnableResourcePoolAddition && elementCell.ElementField.ElementFieldType === 11">
+                                        <td data-ng-if="false && resourcePool.EnableResourcePoolAddition && resourcePool.currentElement.elementFieldIndexSet().length > 0 && elementCell.ElementField.ElementFieldType === 11">
                                             {{ elementItem.resourcePoolValueIncludingAddition() | number: 2 }}
                                         </td>
-                                        <!-- Multiplier -->
-                                        <td data-ng-if="resourcePool.EnableResourcePoolAddition && elementCell.ElementField.ElementFieldType === 12 && elementItem.resourcePoolCell()">
+                                        <td data-ng-if="false && resourcePool.EnableResourcePoolAddition && resourcePool.currentElement.elementFieldIndexSet().length > 0 && elementCell.ElementField.ElementFieldType === 12 && elementItem.resourcePoolCell()">
+                                            {{ elementItem.resourcePoolAdditionMultiplied() | number: 2 }}
+                                        </td>
+                                        <td data-ng-if="false && resourcePool.EnableResourcePoolAddition && resourcePool.currentElement.elementFieldIndexSet().length > 0 && elementCell.ElementField.ElementFieldType === 12 && elementItem.resourcePoolCell()">
                                             {{ elementItem.resourcePoolValueIncludingAdditionMultiplied() | number: 2 }}
                                         </td>
                                     </tr>
@@ -151,7 +209,7 @@
                             {{ elementItem.indexIncome() | number: 2 }}
                         </td>
                         <!-- Total Income -->
-                        <td data-ng-if="resourcePool.currentElement.resourcePoolField()">
+                        <td data-ng-if="resourcePool.currentElement.resourcePoolField()" data-ng-class="{ 'incomeStatusLow': elementItem.incomeStatus() === 'low', 'incomeStatusHigh': elementItem.incomeStatus() === 'high' }">
                             {{ elementItem.totalIncome() | number: 2 }}
                         </td>
                     </tr>
@@ -160,7 +218,7 @@
                     <tr data-ng-if="resourcePool.EnableSubtotals">
                         <!-- Fields -->
                         <td data-ng-repeat="field in resourcePool.currentElement.ElementFieldSet | orderBy: 'SortOrder'">
-                            <table class="resourcePoolFieldsTable">
+                            <table class="resourcePoolInnerTable">
                                 <tfoot>
                                     <tr>
                                         <!-- Values -->
@@ -173,14 +231,16 @@
                                             </span>
                                         </td>
                                         <!-- ResourcePool -->
-                                        <td data-ng-if="resourcePool.EnableResourcePoolAddition && field.ElementFieldType === 11">
-                                            <!--{{ resourcePool.currentElement.resourcePoolAddition() | number: 2 }}-->
+                                        <td data-ng-if="false && resourcePool.EnableResourcePoolAddition && resourcePool.currentElement.elementFieldIndexSet().length > 0 && field.ElementFieldType === 11">
+                                            {{ resourcePool.currentElement.resourcePoolAddition() | number: 2 }}
                                         </td>
-                                        <td data-ng-if="resourcePool.EnableResourcePoolAddition && field.ElementFieldType === 11">
+                                        <td data-ng-if="false && resourcePool.EnableResourcePoolAddition && resourcePool.currentElement.elementFieldIndexSet().length > 0 && field.ElementFieldType === 11">
                                             {{ resourcePool.currentElement.resourcePoolValueIncludingAddition() | number: 2 }}
                                         </td>
-                                        <!-- Multiplier -->
-                                        <td data-ng-if="resourcePool.EnableResourcePoolAddition && field.ElementFieldType === 12 && resourcePool.currentElement.resourcePoolField()">
+                                        <td data-ng-if="false && resourcePool.EnableResourcePoolAddition && resourcePool.currentElement.elementFieldIndexSet().length > 0 && field.ElementFieldType === 12 && resourcePool.currentElement.resourcePoolField()">
+                                            {{ resourcePool.currentElement.resourcePoolAdditionMultiplied() | number: 2 }}
+                                        </td>
+                                        <td data-ng-if="false && resourcePool.EnableResourcePoolAddition && resourcePool.currentElement.elementFieldIndexSet().length > 0 && field.ElementFieldType === 12 && resourcePool.currentElement.resourcePoolField()">
                                             {{ resourcePool.currentElement.resourcePoolValueIncludingAdditionMultiplied() | number: 2 }}
                                         </td>
                                     </tr>
@@ -207,7 +267,7 @@
                     <tr>
                         <!-- Fields -->
                         <td data-ng-repeat="field in resourcePool.currentElement.ElementFieldSet | orderBy: 'SortOrder'">
-                            <table class="resourcePoolFieldsTable">
+                            <table class="resourcePoolInnerTable">
                                 <tfoot>
                                     <tr>
                                         <td>
@@ -223,7 +283,7 @@
                                             </div>
                                         </td>
                                         <!-- ResourcePool -->
-                                        <td data-ng-if="resourcePool.EnableResourcePoolAddition && field.ElementFieldType === 11">
+                                        <td data-ng-if="false && resourcePool.EnableResourcePoolAddition && resourcePool.currentElement.elementFieldIndexSet().length > 0 && field.ElementFieldType === 11">
                                             <div class="btn-group" role="group">
                                                 <button title="Increase CMRP Rate" type="button" data-ng-click="increaseResourcePoolRate()" class="btn btn-default btn-xs">+</button>
                                                 <button title="Decrease CMRP Rate" type="button" data-ng-click="decreaseResourcePoolRate()" class="btn btn-default btn-xs">-</button>

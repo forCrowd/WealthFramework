@@ -261,6 +261,12 @@ test - userqueryvisitor with filter!
 . github licenses;
 https://developer.github.com/v3/licenses/
 
+. (TOTAL) SALES PRICE INCL. CMRP fields?
+
+. cmrp rate - fixed vs. users' average
+
+. total cost index - new model total cost index income numbers are wrong?
+
 ---
 refresh tokens?
 

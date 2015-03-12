@@ -163,6 +163,17 @@
             self.totalIncome = function () {
                 return self.resourcePoolValueMultiplied() + self.indexIncome();
             }
+
+            self.incomeStatus = function () {
+
+                if (self.totalIncome() < self.Element.totalIncomeAverage()) {
+                    return 'low';
+                } else if (self.totalIncome() === self.Element.totalIncomeAverage()) {
+                    return 'average';
+                } else if (self.totalIncome() > self.Element.totalIncomeAverage()) {
+                    return 'high';
+                };
+            }
         }
     }
 })();

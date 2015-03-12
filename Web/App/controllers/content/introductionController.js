@@ -52,7 +52,7 @@
 
                 // Then increase recursively
                 // TODO Decrease this timeout interval
-                var increaseMultiplierTimeoutRecursive = $timeout(increaseMultiplier, 3000);
+                var increaseMultiplierTimeoutRecursive = $timeout(increaseMultiplier, 300000); // Update this before release - 3000!
             }
 
             // When the DOM element is removed from the page,

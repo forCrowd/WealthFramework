@@ -333,6 +333,16 @@
                 return value;
             }
 
+            self.totalIncomeAverage = function () {
+                
+                // Validate
+                if (typeof self.ElementItemSet === 'undefined' || self.ElementItemSet.length === 0) {
+                    return 0;
+                }
+
+                return self.totalIncome() / self.ElementItemSet.length;
+            }
+
             self.updateMultiplier = function (updateType) {
 
                 //logger.log('3');

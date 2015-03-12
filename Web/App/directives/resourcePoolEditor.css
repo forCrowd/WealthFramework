@@ -17,29 +17,46 @@
     /*table-layout: fixed;*/
 }
 
-    /*.resourcePoolTable th,
-    .resourcePoolTable td {*/
     .resourcePoolTable > thead > tr > th,
-    .resourcePoolTable .resourcePoolFieldsTable > thead > tr > th {
+    .resourcePoolTable .resourcePoolInnerTable > thead > tr > th {
         vertical-align: top;
     }
 
     .resourcePoolTable > thead > tr > th,
+    .resourcePoolTable > thead > tr > td,
     .resourcePoolTable > tbody > tr > td,
     .resourcePoolTable > tfoot > tr > td,
-    .resourcePoolTable .resourcePoolFieldsTable > thead > tr > th,
-    .resourcePoolTable .resourcePoolFieldsTable > tbody > tr > td,
-    .resourcePoolTable .resourcePoolFieldsTable > tfoot > tr > td {
+    .resourcePoolTable .resourcePoolInnerTable > thead > tr > th,
+    .resourcePoolTable .resourcePoolInnerTable > thead > tr > td,
+    .resourcePoolTable .resourcePoolInnerTable > tbody > tr > td,
+    .resourcePoolTable .resourcePoolInnerTable > tfoot > tr > td {
         min-width: 80px;
         overflow: hidden; /* Hide text outside the cell */
         padding: 2px;
     }
 
-    .resourcePoolTable .resourcePoolFieldsTable {
+    .resourcePoolTable .resourcePoolInnerTable {
         /*background-color: green;*/
     }
 
-        .resourcePoolTable .resourcePoolFieldsTable .ratingValue {
+        .resourcePoolTable .resourcePoolInnerTable .fixedWidth35Cell {
             display: inline-block;
             width: 35px;
         }
+
+        .resourcePoolTable .resourcePoolInnerTable .fixedWidth45Cell {
+            display: inline-block;
+            width: 45px;
+        }
+
+    .resourcePoolTable .incomeStatusLow {
+        color: #F34146;
+    }
+
+    .resourcePoolTable .incomeStatusAverage {
+        /* color: ? */
+    }
+
+    .resourcePoolTable .incomeStatusHigh {
+        color: #81C14F;
+    }
