@@ -139,11 +139,11 @@
                 if (typeof self.ElementField === 'undefined')
                     return 0;
 
-                var elementFieldValueMultiplied = self.ElementField.ratingMultiplied();
+                var elementFieldRatingMultiplied = self.ElementField.ratingMultiplied();
 
-                return elementFieldValueMultiplied === 0
+                return elementFieldRatingMultiplied === 0
                     ? 0
-                    : self.ratingMultiplied() / elementFieldValueMultiplied;
+                    : self.ratingMultiplied() / elementFieldRatingMultiplied;
             }
 
             self.indexIncome = function () {
@@ -159,7 +159,7 @@
 
                         // If Rating sort type is 'Lowest to Highest', reverse the value
                         if (self.ElementField.ElementFieldIndexSet[0].RatingSortType === 1) {
-                            value = 1 - value;
+                            value = (1 - value) / 2;
                         }
 
                         return self.ElementField.ElementFieldIndexSet[0].indexIncome() * value;

@@ -17,37 +17,28 @@
     /*table-layout: fixed;*/
 }
 
-    .resourcePoolTable > thead > tr > th,
-    .resourcePoolTable .resourcePoolInnerTable > thead > tr > th {
+    .resourcePoolTable > thead > tr > th {
         vertical-align: top;
     }
 
     .resourcePoolTable > thead > tr > th,
     .resourcePoolTable > thead > tr > td,
     .resourcePoolTable > tbody > tr > td,
-    .resourcePoolTable > tfoot > tr > td,
-    .resourcePoolTable .resourcePoolInnerTable > thead > tr > th,
-    .resourcePoolTable .resourcePoolInnerTable > thead > tr > td,
-    .resourcePoolTable .resourcePoolInnerTable > tbody > tr > td,
-    .resourcePoolTable .resourcePoolInnerTable > tfoot > tr > td {
-        min-width: 80px;
+    .resourcePoolTable > tfoot > tr > td {
+        min-width: 85px;
         overflow: hidden; /* Hide text outside the cell */
-        padding: 2px;
+        padding: 4px;
     }
 
-    .resourcePoolTable .resourcePoolInnerTable {
-        /*background-color: green;*/
+    .resourcePoolTable .fixedWidth35Cell {
+        display: inline-block;
+        width: 35px;
     }
 
-        .resourcePoolTable .resourcePoolInnerTable .fixedWidth35Cell {
-            display: inline-block;
-            width: 35px;
-        }
-
-        .resourcePoolTable .resourcePoolInnerTable .fixedWidth45Cell {
-            display: inline-block;
-            width: 45px;
-        }
+    .resourcePoolTable .fixedWidth45Cell {
+        display: inline-block;
+        width: 45px;
+    }
 
     .resourcePoolTable .incomeStatusLow {
         color: #F34146;
