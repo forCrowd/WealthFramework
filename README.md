@@ -9,6 +9,8 @@ An experimental resource management system that aims to provide a sustainable ec
 **0.14.12**
 
 * CMRP Rate is back
+* Aggressive Rating method was introduced; now the organizations with the lowest rating don't get any share from the pool.
+Related issue with 'Total Cost Index - New Model' sample was fixed
 * Knowledge Index sample charts fix
 * Samples minor updates
 * chapter0 content blocks are now separate html files and called from home.html by using ng-include. chapter0 was removed.

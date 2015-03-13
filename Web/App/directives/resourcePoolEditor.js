@@ -282,7 +282,7 @@
                 Object.defineProperty(self, "y", {
                     enumerable: true,
                     configurable: true,
-                    get: function () { return elementCell.ratingPercentage(); }
+                    get: function () { return elementCell.aggressiveRatingPercentage(); }
                 });
             }
         }

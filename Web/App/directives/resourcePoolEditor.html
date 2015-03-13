@@ -29,7 +29,7 @@
         <div class="col-md-8">
             <table class="resourcePoolTable table-striped" border="0">
                 <thead>
-                    <tr data-ng-if="resourcePool.currentElement.elementFieldIndexSet().length > 0">
+                    <tr data-ng-if="resourcePool.currentElement.resourcePoolField() !== null && resourcePool.currentElement.elementFieldIndexSet().length > 0">
                         <th>
                             CMRP Rate
                         </th>
@@ -43,7 +43,7 @@
                             </div>
                         </td>
                     </tr>
-                    <tr data-ng-if="resourcePool.currentElement.elementFieldIndexSet().length > 0">
+                    <tr data-ng-if="resourcePool.currentElement.resourcePoolField() !== null && resourcePool.currentElement.elementFieldIndexSet().length > 0">
                         <th>
                             CMRP Total
                         </th>

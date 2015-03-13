@@ -25,9 +25,9 @@
     .resourcePoolTable > thead > tr > td,
     .resourcePoolTable > tbody > tr > td,
     .resourcePoolTable > tfoot > tr > td {
-        min-width: 85px;
+        min-width: 95px;
         overflow: hidden; /* Hide text outside the cell */
-        padding: 4px;
+        padding: 3px;
     }
 
     .resourcePoolTable .fixedWidth35Cell {

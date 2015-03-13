@@ -265,11 +265,6 @@ https://developer.github.com/v3/licenses/
 
 . cmrp rate - fixed vs. users' average
 
-. total cost index - new model total cost index income numbers are wrong?
-
-. check reverse percentage formula; value = (1 - value) / 2; - total cost index - new model doesn't balance anymore?
-try aggressive rating; lowest will get nothing! 100 / 200 | 150 / 200 | 200 / 200 ?
-
 ---
 refresh tokens?
 

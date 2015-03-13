@@ -23,6 +23,69 @@
 
             var self = this;
 
+            // Aggressive rating formula prevents the organizations with the worst rating to get any income.
+            // However, in case all ratings are equal, then no one can get any income from the pool.
+            // This flag is used to determine this special case and let all organizations get a same share from the pool.
+            // See the usage in aggressiveRating() in elementCell.js
+            self.referenceRatingAllEqualFlag = true;
+
+            self.referenceRatingMultiplied = function () {
+
+                // Validate
+                if (self.ElementField === 'undefined' || typeof self.ElementField.ElementCellSet === 'undefined' || self.ElementField.ElementCellSet.length === 0)
+                    return 0; // ?
+
+                var value = null;
+                for (var i = 0; i < self.ElementField.ElementCellSet.length; i++) {
+                    
+                    var cell = self.ElementField.ElementCellSet[i];
+
+                    if (value === null) {
+                        value = cell.ratingMultiplied();
+                    } else {
+
+                        if (value !== cell.ratingMultiplied()) {
+                            self.referenceRatingAllEqualFlag = false;
+                        }
+
+                        switch (self.RatingSortType) {
+                            case 1: { // LowestToHighest (Low number is better)
+                                if (cell.ratingMultiplied() > value) {
+                                    value = cell.ratingMultiplied();
+                                }
+                                break;
+                            }
+                            case 2: { // HighestToLowest (High number is better)
+                                if (cell.ratingMultiplied() < value) {
+                                    value = cell.ratingMultiplied();
+                                }
+                                break;
+                            }
+                            default: {
+                                throw 'Invalid switch';
+                            }
+                        }
+                    }
+                }
+
+                return value;
+            }
+
+            self.aggressiveRating = function () {
+
+                // Validate
+                if (self.ElementField === 'undefined' || typeof self.ElementField.ElementCellSet === 'undefined' || self.ElementField.ElementCellSet.length === 0)
+                    return 0; // ?
+
+                var value = 0;
+                for (var i = 0; i < self.ElementField.ElementCellSet.length; i++) {
+                    var cell = self.ElementField.ElementCellSet[i];
+                    value += cell.aggressiveRating();
+                }
+
+                return value;
+            }
+
             self.userElementFieldIndex = function () {
 
                 if (typeof self.UserElementFieldIndexSet === 'undefined' || self.UserElementFieldIndexSet.length === 0) {

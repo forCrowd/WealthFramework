@@ -36,21 +36,6 @@
 
                 return value;
             }
-
-            self.ratingPercentage = function () {
-
-                // Validate
-                if (typeof self.ElementCellSet === 'undefined')
-                    return 0;
-
-                var value = 0;
-                for (var i = 0; i < self.ElementCellSet.length; i++) {
-                    var cell = self.ElementCellSet[i];
-                    value += cell.ratingPercentage();
-                }
-
-                return value;
-            }
         }
     }
 })();

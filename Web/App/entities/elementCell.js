@@ -134,7 +134,42 @@
                 return self.rating() * self.ElementItem.multiplierValue();
             }
 
-            self.ratingPercentage = function () {
+            self.aggressiveRating = function () {
+
+                if (typeof self.ElementField === 'undefined' || typeof self.ElementField.ElementFieldIndexSet === 'undefined' || self.ElementField.ElementFieldIndexSet.length === 0)
+                    return 0; // ?
+
+                var index = self.ElementField.ElementFieldIndexSet[0];
+                var referenceRating = index.referenceRatingMultiplied();
+
+                if (referenceRating === 0) {
+                    return 0;
+                }
+
+                var value = self.ratingMultiplied() / referenceRating;
+
+                return index.referenceRatingAllEqualFlag
+                    ? value
+                    : 1 - value;
+            }
+
+            self.aggressiveRatingPercentage = function () {
+
+                if (typeof self.ElementField === 'undefined' || typeof self.ElementField.ElementFieldIndexSet === 'undefined' || self.ElementField.ElementFieldIndexSet.length === 0)
+                    return 0; // ?
+
+                var index = self.ElementField.ElementFieldIndexSet[0];
+                var indexAggressiveRating = index.aggressiveRating();
+
+                if (indexAggressiveRating === 0) {
+                    return 0; // ?
+                }
+
+                return self.aggressiveRating() / indexAggressiveRating;
+            }
+
+            // TODO This is obsolete for now and probably not calculating correctly. Check it later, either remove or fix it / SH - 13 Mar. '15
+            self.passiveRatingPercentage = function () {
 
                 if (typeof self.ElementField === 'undefined')
                     return 0;
@@ -154,15 +189,7 @@
                 } else {
 
                     if (self.ElementField.ElementFieldIndexSet.length > 0) {
-
-                        var value = self.ratingPercentage();
-
-                        // If Rating sort type is 'Lowest to Highest', reverse the value
-                        if (self.ElementField.ElementFieldIndexSet[0].RatingSortType === 1) {
-                            value = (1 - value) / 2;
-                        }
-
-                        return self.ElementField.ElementFieldIndexSet[0].indexIncome() * value;
+                        return self.ElementField.ElementFieldIndexSet[0].indexIncome() * self.aggressiveRatingPercentage();
                     } else {
                         return 0;
                     }
