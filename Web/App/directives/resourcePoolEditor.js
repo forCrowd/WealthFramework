@@ -248,7 +248,7 @@
                 Object.defineProperty(self, "y", {
                     enumerable: true,
                     configurable: true,
-                    get: function () { return elementFieldIndex.indexRatingPercentage(); }
+                    get: function () { return elementFieldIndex.indexRating(); }
                 });
             }
 
@@ -282,7 +282,7 @@
                 Object.defineProperty(self, "y", {
                     enumerable: true,
                     configurable: true,
-                    get: function () { return elementCell.aggressiveRatingPercentage(); }
+                    get: function () { return elementCell.rating(); }
                 });
             }
         }

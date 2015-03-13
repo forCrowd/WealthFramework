@@ -422,7 +422,7 @@
         public ResourcePool CreateTotalCostIndexNewSystemSample(User user)
         {
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool("Total Cost Index - New Model", "Product", user, 101, true, true, false, 3);
+            var resourcePool = CreateDefaultResourcePool("Total Cost Index - New Model", "Product", user, 50, true, true, false, 3);
             resourcePool.EnableResourcePoolAddition = false;
             resourcePool.IsSample = true;
 
@@ -453,7 +453,7 @@
         public ResourcePool CreateTotalCostIndexNewSystemAftermathSample(User user)
         {
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool("Total Cost Index - New Model - Aftermath", "Product", user, 101, true, true, false, 3);
+            var resourcePool = CreateDefaultResourcePool("Total Cost Index - New Model - Aftermath", "Product", user, 50, true, true, false, 3);
             resourcePool.EnableResourcePoolAddition = false;
             resourcePool.IsSample = true;
 
