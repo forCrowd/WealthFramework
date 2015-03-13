@@ -449,6 +449,7 @@
     </Content>
     <Content Include="App\services\resourcePoolService.js" />
     <Content Include="App\views\content\basics.html" />
+    <Content Include="App\views\content\resourcePoolRateSample.html" />
     <Content Include="App\views\content\indexesPieSample.html" />
     <Content Include="App\views\content\fairShareIndexSample.html" />
     <Content Include="App\views\content\totalCostIndexSample.html" />

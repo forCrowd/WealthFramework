@@ -97,6 +97,7 @@ namespace DataObjects.Migrations
             resourcePoolRepository.Insert(resourcePoolRepository.CreateTotalCostIndexNewSystemAftermathSample(sampleUser));
             resourcePoolRepository.Insert(resourcePoolRepository.CreateFairShareSample(sampleUser));
             resourcePoolRepository.Insert(resourcePoolRepository.CreateIndexesPieSample(sampleUser));
+            resourcePoolRepository.Insert(resourcePoolRepository.CreateResourcePoolRateSample(sampleUser));
 
             // Save
             context.SaveChanges();

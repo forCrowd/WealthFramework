@@ -265,6 +265,10 @@ https://developer.github.com/v3/licenses/
 
 . cmrp rate - fixed vs. users' average
 
+. no need to keep decimalvalue + integervalue etc. on cell level - keep all of them in user level
+if the owner doesn't allow, then it becomes static anyway - get always the average?
+which can be applied to resource pool rate? and index ratings?
+
 ---
 refresh tokens?
 
