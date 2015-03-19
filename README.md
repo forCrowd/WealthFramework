@@ -1,10 +1,14 @@
 # Wealth Economy
 
-An experimental resource management system that aims to provide a sustainable economic model.
+An experimental resource management system that aims to provide a more sustainable and productive economic model.
 
 ---
 
 ### Release Notes
+
+**0.14.13**
+
+* Content texts updates
 
 **0.14.12**
 

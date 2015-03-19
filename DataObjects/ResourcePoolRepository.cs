@@ -53,7 +53,7 @@
         public ResourcePool CreateBasicsExistingSystemSample(User user)
         {
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool("Basics - Existing Model", "Organization", user, null, true, true, false, 2);
+            var resourcePool = CreateDefaultResourcePool("Basics - Existing Model", "Organization", user, null, true, true, false, 4);
             resourcePool.EnableResourcePoolAddition = false;
             //resourcePool.EnableSubtotals = false;
             resourcePool.IsSample = true;
@@ -66,6 +66,8 @@
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Organization A";
             mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Organization B";
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Organization C";
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Organization D";
 
             // Return
             return resourcePool;
@@ -74,7 +76,7 @@
         public ResourcePool CreateBasicsNewSystemSample(User user)
         {
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool("Basics - New Model", "Organization", user, 50, true, true, true, 2);
+            var resourcePool = CreateDefaultResourcePool("Basics - New Model", "Organization", user, 10, true, true, true, 4);
             resourcePool.EnableResourcePoolAddition = false;
             //resourcePool.EnableSubtotals = false;
             resourcePool.IsSample = true;
@@ -91,6 +93,8 @@
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Organization A";
             mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Organization B";
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Organization C";
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Organization D";
 
             // Return
             return resourcePool;
@@ -102,7 +106,7 @@
             const decimal ratingPerSector = 100 / numberOfSectors;
 
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool("Sector Index Sample", "Organization", user, 50, true, true, false, numberOfSectors);
+            var resourcePool = CreateDefaultResourcePool("Sector Index Sample", "Organization", user, 10, true, true, false, numberOfSectors);
             resourcePool.EnableResourcePoolAddition = false;
             resourcePool.IsSample = true;
 
@@ -166,7 +170,7 @@
             const decimal ratingPerLicense = 100 / numberOfLicenses;
 
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool("Knowledge Index Sample", "Organization", user, 50, true, true, false, numberOfLicenses);
+            var resourcePool = CreateDefaultResourcePool("Knowledge Index Sample", "Organization", user, 10, true, true, false, numberOfLicenses);
             resourcePool.EnableResourcePoolAddition = false;
             resourcePool.IsSample = true;
 
@@ -222,7 +226,7 @@
             const decimal ratingPerLicense = 100 / numberOfLicenses;
 
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool("Knowledge Index - Popular Software Licenses", "Organization", user, 50, true, true, false, numberOfLicenses);
+            var resourcePool = CreateDefaultResourcePool("Knowledge Index - Popular Software Licenses", "Organization", user, 10, true, true, false, numberOfLicenses);
             resourcePool.EnableResourcePoolAddition = false;
             resourcePool.IsSample = true;
 
@@ -409,9 +413,9 @@
 
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "High Profit";
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().ResourcePoolCell.SetValue(200M);
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().ResourcePoolCell.SetValue(120M);
             mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Average Profit";
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().ResourcePoolCell.SetValue(150M);
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().ResourcePoolCell.SetValue(110M);
             mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "No Profit";
             mainElement.ElementItemSet.Skip(2).Take(1).Single().ResourcePoolCell.SetValue(100M);
 
@@ -422,7 +426,7 @@
         public ResourcePool CreateTotalCostIndexNewSystemSample(User user)
         {
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool("Total Cost Index - New Model", "Product", user, 50, true, true, false, 3);
+            var resourcePool = CreateDefaultResourcePool("Total Cost Index - New Model", "Product", user, 10, true, true, false, 3);
             resourcePool.EnableResourcePoolAddition = false;
             resourcePool.IsSample = true;
 
@@ -440,9 +444,9 @@
 
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "High Profit";
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().ResourcePoolCell.SetValue(200M);
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().ResourcePoolCell.SetValue(120M);
             mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Average Profit";
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().ResourcePoolCell.SetValue(150M);
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().ResourcePoolCell.SetValue(110M);
             mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "No Profit";
             mainElement.ElementItemSet.Skip(2).Take(1).Single().ResourcePoolCell.SetValue(100M);
 
@@ -453,7 +457,7 @@
         public ResourcePool CreateTotalCostIndexNewSystemAftermathSample(User user)
         {
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool("Total Cost Index - New Model - Aftermath", "Product", user, 50, true, true, false, 3);
+            var resourcePool = CreateDefaultResourcePool("Total Cost Index - New Model - Aftermath", "Product", user, 10, true, true, false, 3);
             resourcePool.EnableResourcePoolAddition = false;
             resourcePool.IsSample = true;
 
@@ -485,7 +489,7 @@
         public ResourcePool CreateTotalCostIndexSampleOld(User user)
         {
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool("Total Cost Index Sample", "Organization", user, 100, true, true, false, 2);
+            var resourcePool = CreateDefaultResourcePool("Total Cost Index Sample", "Organization", user, 10, true, true, false, 2);
             resourcePool.EnableResourcePoolAddition = false;
             resourcePool.IsSample = true;
 
@@ -512,7 +516,7 @@
         public ResourcePool CreateFairShareSample(User user)
         {
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool("Fair Share Index", "Organization", user, userResourcePoolRate :50, addResourcePoolField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: 2);
+            var resourcePool = CreateDefaultResourcePool("Fair Share Index", "Organization", user, userResourcePoolRate: 10, addResourcePoolField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: 2);
             resourcePool.EnableResourcePoolAddition = false;
             //resourcePool.EnableSubtotals = false;
             resourcePool.IsSample = true;
@@ -558,7 +562,7 @@
         public ResourcePool CreateIndexesPieSample(User user)
         {
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool("Indexes Pie", "Organization", user, userResourcePoolRate: 50, addResourcePoolField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: 2);
+            var resourcePool = CreateDefaultResourcePool("Indexes Pie", "Organization", user, userResourcePoolRate: 10, addResourcePoolField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: 2);
             resourcePool.EnableResourcePoolAddition = false;
             //resourcePool.EnableSubtotals = false;
             resourcePool.IsSample = true;

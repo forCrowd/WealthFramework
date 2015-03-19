@@ -269,6 +269,15 @@ https://developer.github.com/v3/licenses/
 if the owner doesn't allow, then it becomes static anyway - get always the average?
 which can be applied to resource pool rate? and index ratings?
 
+* about aggressive method, last operation may not be necessary for one of the types - check excel file!
+
+* if one of the organizations rating is 0, they all get 0
+
+* fair share - it requires some extra work, transparency of the organizations etc. think about it, mention them
+* introduction, try to remove initial text? how shouldn't be too empty
+* indexes pie + cmrp rate could use same sample? update each other? like basics?
+* summary | final..?
+
 ---
 refresh tokens?
 
