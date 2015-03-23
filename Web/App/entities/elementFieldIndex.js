@@ -183,11 +183,11 @@
 
                     if (updateType === 'increase' && value < 100) {
 
-                        value = value + 10 >= 100 ? 100 : value + 10;
+                        value = value + 5 >= 100 ? 100 : value + 5;
                         updated = true;
                     } else if (updateType === 'decrease' && value > 0) {
 
-                        value = value - 10 <= 0 ? 0 : value - 10;
+                        value = value - 5 <= 0 ? 0 : value - 5;
                         updated = true;
                     }
 

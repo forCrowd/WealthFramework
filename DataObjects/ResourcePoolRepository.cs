@@ -562,6 +562,94 @@
         public ResourcePool CreateIndexesPieSample(User user)
         {
             // Resource pool
+            var resourcePool = CreateDefaultResourcePool("Indexes Pie", "Organization", user, userResourcePoolRate: 10, addResourcePoolField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: 1);
+            resourcePool.EnableResourcePoolAddition = false;
+            //resourcePool.EnableSubtotals = false;
+            resourcePool.IsSample = true;
+
+            //// Fair share element
+            //var fairShareElement = resourcePool.AddElement("Fair Share");
+
+            //// Fields
+            //var fairShareDesciptionField = fairShareElement.AddField("Description", ElementFieldTypes.String);
+            //var fairShareImportanceField = fairShareElement.AddField("Rating", ElementFieldTypes.Decimal, false);
+            //fairShareImportanceField
+            //    .AddIndex("Fair Share Index", RatingSortType.HighestToLowest)
+            //    .AddUserRating(user, 100);
+
+            //// Items, cell, user cells
+            //decimal ratingPerItem = 100 / 2;
+            //var fairShareYesItem = fairShareElement.AddItem("Sharer")
+            //    .AddCell(fairShareDesciptionField).SetValue("Indicates the organization shares it's income with its employees based on their contributions").ElementItem
+            //    .AddCell(fairShareImportanceField).SetValue(ratingPerItem, user).ElementItem;
+
+            //var fairShareNoItem = fairShareElement.AddItem("Keeper")
+            //    .AddCell(fairShareDesciptionField).SetValue("Indicates that the owner of the organization keeps all the income to himself, ignores the contributions").ElementItem
+            //    .AddCell(fairShareImportanceField).SetValue(ratingPerItem, user).ElementItem;
+
+            // Main element
+            var mainElement = resourcePool.MainElement;
+            mainElement.ResourcePoolField.Name = "Sales Price";
+            mainElement.MultiplierField.Name = "Number of Sales";
+
+            decimal ratingPerIndex = 100 / 4;
+
+            // Sector Index
+            var sectorField = resourcePool.MainElement.AddField("Sector Rating", ElementFieldTypes.Decimal, true);
+            sectorField
+                .AddIndex("Sector Index", RatingSortType.HighestToLowest)
+                .AddUserRating(user, ratingPerIndex);
+
+            // Knowledge Index
+            var licenseField = resourcePool.MainElement.AddField("License Rating", ElementFieldTypes.Decimal, true);
+            licenseField
+                .AddIndex("Knowledge Index", RatingSortType.HighestToLowest)
+                .AddUserRating(user, ratingPerIndex);
+
+            // Total Cost Index
+            mainElement.ResourcePoolField
+                .AddIndex("Total Cost Index", RatingSortType.LowestToHighest)
+                .AddUserRating(user, ratingPerIndex);
+
+            // Fair Share Index
+            var fairShareField = resourcePool.MainElement.AddField("Fair Share Rating", ElementFieldTypes.Decimal, true);
+            fairShareField
+                .AddIndex("Fair Share Index", RatingSortType.HighestToLowest)
+                .AddUserRating(user, ratingPerIndex);
+
+            //mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).Name = "Rating";
+            //mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).ElementFieldIndex.Name = "Employee Satisfaction";
+
+            // Items, cell, user cells
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "One and Only";
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(sectorField).SetValue(100M, user);
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(licenseField).SetValue(100M, user);
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(fairShareField).SetValue(100M, user);
+
+            //mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Organization B";
+            //mainElement.ElementItemSet.Skip(1).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            //mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(sectorField).SetValue(50M, user);
+            //mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(licenseField).SetValue(25M, user);
+
+            // mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Organization B";
+            // var fairShareField = mainElement.AddField("Fair Share", ElementFieldTypes.Element);
+            // fairShareField.SelectedElement = fairShareElement;
+
+            // Items, cell, user cells
+            //mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Income Keeper Inc.";
+            //mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(fairShareField).SetValue(fairShareNoItem);
+
+            //mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Fair Sharer Org.";
+            //mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(fairShareField).SetValue(fairShareYesItem);
+
+            // Return
+            return resourcePool;
+        }
+
+        public ResourcePool CreateIndexesPieSampleOld(User user)
+        {
+            // Resource pool
             var resourcePool = CreateDefaultResourcePool("Indexes Pie", "Organization", user, userResourcePoolRate: 10, addResourcePoolField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: 2);
             resourcePool.EnableResourcePoolAddition = false;
             //resourcePool.EnableSubtotals = false;
@@ -641,7 +729,7 @@
         public ResourcePool CreateResourcePoolRateSample(User user)
         {
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool("CMRP Rate", "Organization", user, userResourcePoolRate: 0, addResourcePoolField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: 2);
+            var resourcePool = CreateDefaultResourcePool("CMRP Rate", "Organization", user, userResourcePoolRate: 0, addResourcePoolField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: 4);
             resourcePool.EnableResourcePoolAddition = true;
             //resourcePool.EnableSubtotals = false;
             resourcePool.IsSample = true;
@@ -680,10 +768,10 @@
             //mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).ElementFieldIndex.Name = "Employee Satisfaction";
 
             // 2. index
-            var importanceField1 = resourcePool.MainElement.AddField("Importance Field 1", ElementFieldTypes.Decimal, false);
-            importanceField1
-                .AddIndex("Importance Index 1", RatingSortType.HighestToLowest)
-                .AddUserRating(user, 100 / 3);
+            var veryImportantField = resourcePool.MainElement.AddField("Very Important Rating", ElementFieldTypes.Decimal, false);
+            veryImportantField
+                .AddIndex("Very Important Index", RatingSortType.HighestToLowest)
+                .AddUserRating(user, 100);
 
             // 3. index
             //var importanceField2 = resourcePool.MainElement.AddField("Importance Field 2", ElementFieldTypes.Decimal, false);
@@ -694,12 +782,20 @@
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Organization A";
             mainElement.ElementItemSet.Skip(0).Take(1).Single().ResourcePoolCell.SetValue(100M);
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(importanceField1).SetValue(50M, user);
-            //mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(importanceField2).SetValue(50M, user);
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(veryImportantField).SetValue(50M, user);
 
             mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Organization B";
             mainElement.ElementItemSet.Skip(1).Take(1).Single().ResourcePoolCell.SetValue(100M);
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(importanceField1).SetValue(50M, user);
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(veryImportantField).SetValue(50M, user);
+
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Organization C";
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().AddCell(veryImportantField).SetValue(50M, user);
+
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Organization D";
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(veryImportantField).SetValue(50M, user);
+
             //mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(importanceField2).SetValue(25M, user);
 
             // mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Organization B";

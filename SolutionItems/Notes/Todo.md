@@ -277,6 +277,12 @@ which can be applied to resource pool rate? and index ratings?
 * introduction, try to remove initial text? how shouldn't be too empty
 * indexes pie + cmrp rate could use same sample? update each other? like basics?
 * summary | final..?
+* should samples details need to be mentioned? all organizations are equal except the indexes, they all have to have same number of sales etc.
+* users should choose the ideal rate/ratings - it shouldn't be experimental? especially license ratings, index ratings, cmrp rate!
+
+
+* WORK ON HIGHEST / LOWEST RATINGS!!! AFTER THAT, CAN BE PUBLISHED? THEN CMRP RATE AND/OR SUMMARY OR ALL IN ONE?
+
 
 ---
 refresh tokens?

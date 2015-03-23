@@ -30,6 +30,13 @@
             var _resourcePoolField = null;
             var _multiplierField = null;
 
+            // UI related: Determines whether the chart & element details will use full row (col-md-4 vs col-md-12 etc.)
+            self.fullSize = function () {
+                return (typeof self.ElementFieldSet !== 'undefined'
+                    && self.ElementFieldSet.length > 4)
+                    || self.elementFieldIndexSet().length > 2;
+            }
+
             self.parent = function () {
 
                 // Cached value

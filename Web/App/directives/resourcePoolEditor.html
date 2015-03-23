@@ -23,10 +23,10 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4">
+        <div data-ng-class="{ 'col-md-4': !resourcePool.currentElement.fullSize(), 'col-md-12': resourcePool.currentElement.fullSize() }">
             <highchart data-config="chartConfig"></highchart>
         </div>
-        <div class="col-md-8">
+        <div data-ng-class="{ 'col-md-8': !resourcePool.currentElement.fullSize(), 'col-md-12': resourcePool.currentElement.fullSize() }">
             <table class="resourcePoolTable table-striped" border="0">
                 <thead>
                     <tr data-ng-if="resourcePool.currentElement.resourcePoolField() !== null && resourcePool.currentElement.elementFieldIndexSet().length > 0">

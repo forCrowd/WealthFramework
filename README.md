@@ -8,7 +8,8 @@ An experimental resource management system that aims to provide a more sustainab
 
 **0.14.13**
 
-* Content texts updates
+* Text and sample updates
+* ResourcePoolEditor currentElement fullSize property to determine the place of chart (on top or left side of the items)
 
 **0.14.12**
 

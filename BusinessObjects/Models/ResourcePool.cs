@@ -45,7 +45,7 @@ namespace BusinessObjects
         [Display(Name = "Initial Value")]
         [DisplayOnListView(false)]
         [DisplayOnEditView(true)]
-        [Obsolete("Doesn't work as expected, remove later")]
+        [Obsolete("Doesn't work as expected, remove later?")]
         public decimal InitialValue { get; set; }
 
         [Display(Name = "Enable CMRP Addition")]
