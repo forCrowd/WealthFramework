@@ -85,7 +85,9 @@
                         <th data-ng-if="displayIndexDetails" data-ng-repeat="index in resourcePool.currentElement.elementFieldIndexSet() | orderBy: 'ElementField.SortOrder'">
                             {{ index.Name }} Income
                             <!--- {{ index.ratingMultiplied() }}
+                            - {{ index.passiveRatingPercentage() }}
                             - {{ index.referenceRatingMultiplied() }}
+                            - {{ index.aggressiveRating() }}
                             - {{ index.aggressiveRating() }}-->
                         </th>
                         <th data-ng-if="resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">

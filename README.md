@@ -6,6 +6,11 @@ An experimental resource management system that aims to provide a more sustainab
 
 ### Release Notes
 
+**0.14.14**
+
+* One item in the element index income fix
+* Text updates
+
 **0.14.13**
 
 * Index income calculation fixes

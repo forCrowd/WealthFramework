@@ -38,6 +38,21 @@
                 return value;
             }
 
+            self.passiveRatingPercentage = function () {
+
+                // Validate
+                if (self.ElementField === 'undefined' || typeof self.ElementField.ElementCellSet === 'undefined' || self.ElementField.ElementCellSet.length === 0)
+                    return 0; // ?
+
+                var value = 0;
+                for (var i = 0; i < self.ElementField.ElementCellSet.length; i++) {
+                    var cell = self.ElementField.ElementCellSet[i];
+                    value += cell.passiveRatingPercentage();
+                }
+
+                return value;
+            }
+
             // Aggressive rating formula prevents the organizations with the worst rating to get any income.
             // However, in case all ratings are equal, then no one can get any income from the pool.
             // This flag is used to determine this special case and let all organizations get a same share from the pool.

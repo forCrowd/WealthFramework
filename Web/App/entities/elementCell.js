@@ -192,6 +192,11 @@
                 var index = self.ElementField.ElementFieldIndexSet[0];
                 var indexRatingMultiplied = index.ratingMultiplied();
 
+                // Means there is only one item in the element, always 100%
+                if (self.ratingMultiplied() === indexRatingMultiplied) {
+                    return 1;
+                }
+
                 if (indexRatingMultiplied === 0) {
                     return 0;
                 }

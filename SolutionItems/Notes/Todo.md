@@ -279,6 +279,8 @@ which can be applied to resource pool rate? and index ratings?
 * summary | final..?
 * should samples details need to be mentioned? all organizations are equal except the indexes, they all have to have same number of sales etc.
 * users should choose the ideal rate/ratings - it shouldn't be experimental? especially license ratings, index ratings, cmrp rate!
+* total cost index - income inequality mention? another root cause?
+* indexes bug!
 
 * CONTINUE WITH CMRP RATE AND/OR SUMMARY OR ALL IN ONE?
 
