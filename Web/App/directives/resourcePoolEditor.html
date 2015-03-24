@@ -84,6 +84,9 @@
                         <!-- Index Details & Index Income -->
                         <th data-ng-if="displayIndexDetails" data-ng-repeat="index in resourcePool.currentElement.elementFieldIndexSet() | orderBy: 'ElementField.SortOrder'">
                             {{ index.Name }} Income
+                            <!--- {{ index.ratingMultiplied() }}
+                            - {{ index.referenceRatingMultiplied() }}
+                            - {{ index.aggressiveRating() }}-->
                         </th>
                         <th data-ng-if="resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">
                             <!-- Display 'Indexes' view link only if there are more than one index -->
@@ -154,6 +157,9 @@
                         <!-- Index Details & Index Income -->
                         <td data-ng-if="displayIndexDetails" data-ng-repeat="cellIndex in elementItem.elementCellIndexSet() | orderBy: 'ElementField.SortOrder'">
                             {{ cellIndex.indexIncome() | number: 2 }}
+                            <!--- {{ cellIndex.aggressiveRating() }}
+                            - {{ cellIndex.aggressiveRatingPercentage() }}
+                            - {{ cellIndex.passiveRatingPercentage() }}-->
                         </td>
                         <td data-ng-if="resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">
                             {{ elementItem.indexIncome() | number: 2 }}

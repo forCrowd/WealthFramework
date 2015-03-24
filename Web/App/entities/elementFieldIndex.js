@@ -23,6 +23,21 @@
 
             var self = this;
 
+            self.ratingMultiplied = function () {
+
+                // Validate
+                if (self.ElementField === 'undefined' || typeof self.ElementField.ElementCellSet === 'undefined' || self.ElementField.ElementCellSet.length === 0)
+                    return 0; // ?
+
+                var value = 0;
+                for (var i = 0; i < self.ElementField.ElementCellSet.length; i++) {
+                    var cell = self.ElementField.ElementCellSet[i];
+                    value += cell.ratingMultiplied();
+                }
+
+                return value;
+            }
+
             // Aggressive rating formula prevents the organizations with the worst rating to get any income.
             // However, in case all ratings are equal, then no one can get any income from the pool.
             // This flag is used to determine this special case and let all organizations get a same share from the pool.
@@ -35,29 +50,51 @@
                 if (self.ElementField === 'undefined' || typeof self.ElementField.ElementCellSet === 'undefined' || self.ElementField.ElementCellSet.length === 0)
                     return 0; // ?
 
+                self.referenceRatingAllEqualFlag = true;
+
                 var value = null;
                 for (var i = 0; i < self.ElementField.ElementCellSet.length; i++) {
                     
                     var cell = self.ElementField.ElementCellSet[i];
 
                     if (value === null) {
-                        value = cell.ratingMultiplied();
-                    } else {
-
-                        if (value !== cell.ratingMultiplied()) {
-                            self.referenceRatingAllEqualFlag = false;
-                        }
 
                         switch (self.RatingSortType) {
                             case 1: { // LowestToHighest (Low number is better)
+                                value = cell.ratingMultiplied();
+                                break;
+                            }
+                            case 2: { // HighestToLowest (High number is better)
+                                value = cell.passiveRatingPercentage();
+                                break;
+                            }
+                            default: {
+                                throw 'Invalid switch';
+                            }
+                        }
+
+                    } else {
+
+                        switch (self.RatingSortType) {
+                            case 1: { // LowestToHighest (Low number is better)
+
+                                if (value !== cell.ratingMultiplied()) {
+                                    self.referenceRatingAllEqualFlag = false;
+                                }
+
                                 if (cell.ratingMultiplied() > value) {
                                     value = cell.ratingMultiplied();
                                 }
                                 break;
                             }
                             case 2: { // HighestToLowest (High number is better)
-                                if (cell.ratingMultiplied() < value) {
-                                    value = cell.ratingMultiplied();
+
+                                if (value !== cell.passiveRatingPercentage()) {
+                                    self.referenceRatingAllEqualFlag = false;
+                                }
+
+                                if (cell.passiveRatingPercentage() > value) {
+                                    value = cell.passiveRatingPercentage();
                                 }
                                 break;
                             }

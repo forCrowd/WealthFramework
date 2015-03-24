@@ -146,7 +146,21 @@
                     return 0;
                 }
 
-                var value = self.ratingMultiplied() / referenceRating;
+                var value = 0;
+
+                switch (index.RatingSortType) {
+                    case 1: { // LowestToHighest (Low number is better)
+                        value = self.ratingMultiplied() / referenceRating;
+                        break;
+                    }
+                    case 2: { // HighestToLowest (High number is better)
+                        value = self.passiveRatingPercentage() / referenceRating;
+                        break;
+                    }
+                    default: {
+                        throw 'Invalid switch';
+                    }
+                }
 
                 return index.referenceRatingAllEqualFlag
                     ? value
@@ -169,16 +183,30 @@
             }
 
             // TODO This is obsolete for now and probably not calculating correctly. Check it later, either remove or fix it / SH - 13 Mar. '15
+            // TODO Now it's use again but for a different purpose, rename it? / SH - 24 Mar. '15
             self.passiveRatingPercentage = function () {
 
-                if (typeof self.ElementField === 'undefined')
+                if (typeof self.ElementField === 'undefined' || typeof self.ElementField.ElementFieldIndexSet === 'undefined' || self.ElementField.ElementFieldIndexSet.length === 0)
                     return 0;
 
-                var elementFieldRatingMultiplied = self.ElementField.ratingMultiplied();
+                var index = self.ElementField.ElementFieldIndexSet[0];
+                var indexRatingMultiplied = index.ratingMultiplied();
 
-                return elementFieldRatingMultiplied === 0
-                    ? 0
-                    : self.ratingMultiplied() / elementFieldRatingMultiplied;
+                if (indexRatingMultiplied === 0) {
+                    return 0;
+                }
+
+                switch (index.RatingSortType) {
+                    case 1: { // LowestToHighest (Low number is better)
+                        return self.ratingMultiplied() / indexRatingMultiplied;
+                    }
+                    case 2: { // HighestToLowest (High number is better)
+                        return 1 - (self.ratingMultiplied() / indexRatingMultiplied);
+                    }
+                    default: {
+                        throw 'Invalid switch';
+                    }
+                }
             }
 
             self.indexIncome = function () {
