@@ -274,15 +274,81 @@ which can be applied to resource pool rate? and index ratings?
 * if one of the organizations rating is 0, they all get 0
 
 * fair share - it requires some extra work, transparency of the organizations etc. think about it, mention them
-* introduction, try to remove initial text? how shouldn't be too empty
+* "What would happen in we could distribute our monetary resources to the organizations by measuring their benefits to the society?"
 * indexes pie + cmrp rate could use same sample? update each other? like basics?
-* summary | final..?
 * should samples details need to be mentioned? all organizations are equal except the indexes, they all have to have same number of sales etc.
 * users should choose the ideal rate/ratings - it shouldn't be experimental? especially license ratings, index ratings, cmrp rate!
 * total cost index - income inequality mention? another root cause?
-* indexes bug!
 
-* CONTINUE WITH CMRP RATE AND/OR SUMMARY OR ALL IN ONE?
+* CONTINUE WITH SUMMARY AND/OR ALL IN ONE?
+
+improve all in one sample ?!
+
+* check old sample org names
+
+sector index - 4 org - 4 sector
+knowle index - 2 org - 2 license
+total  index - 3 prices
+fair s index - 2 org - 2 options
+
+32 ~ 48
+
+sector1+lic1+prof+keeper
+sector2+lic2+nonprof+sharer
+sector3+lic1+prof+keeper
+sector4+lic2+nonprof+sharer
+sector1+lic2+prof+sharer
+sector2+lic1+nonprof+keeper
+sector3+lic2+prof+sharer
+sector4+lic1+nonprof+keeper
+
+cosmetics Queen's Favorites
+education School of Arcana
+entertainment Band of Bards
+heathcare Cleric's Touch
+
+hidden knowledge / blackbox
+true source
+
+profit nonprofit
+
+keeper sharer
+
+Hidden Cosmetics (Profit + Keeper)
+Hidden Cosmetics (Non-profit + Keeper)
+Hidden Cosmetics (Profit + Sharer)
+Hidden Cosmetics (Non-profit + Sharer)
+True Cosmetics (Profit + Keeper)
+True Cosmetics (Non-profit + Keeper)
+True Cosmetics (Profit + Sharer)
+True Cosmetics (Non-profit + Sharer)
+
+Hidden Education (Profit + Keeper)
+Hidden Education (Non-profit + Keeper)
+Hidden Education (Profit + Sharer)
+Hidden Education (Non-profit + Sharer)
+True Education (Profit + Keeper)
+True Education (Non-profit + Keeper)
+True Education (Profit + Sharer)
+True Education (Non-profit + Sharer)
+
+Hidden Entertainment (Profit + Keeper)
+Hidden Entertainment (Non-profit + Keeper)
+Hidden Entertainment (Profit + Sharer)
+Hidden Entertainment (Non-profit + Sharer)
+True Entertainment (Profit + Keeper)
+True Entertainment (Non-profit + Keeper)
+True Entertainment (Profit + Sharer)
+True Entertainment (Non-profit + Sharer)
+
+Hidden Healthcare (Profit + Keeper)
+Hidden Healthcare (Non-profit + Keeper)
+Hidden Healthcare (Profit + Sharer)
+Hidden Healthcare (Non-profit + Sharer)
+True Healthcare (Profit + Keeper)
+True Healthcare (Non-profit + Keeper)
+True Healthcare (Profit + Sharer)
+True Healthcare (Non-profit + Sharer)
 
 ---
 refresh tokens?

@@ -64,10 +64,10 @@
             mainElement.MultiplierField.Name = "Number of Sales";
 
             // Items, cell, user cells
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Organization A";
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Organization B";
-            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Organization C";
-            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Organization D";
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Alpha";
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Beta";
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Charlie";
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Delta";
 
             // Return
             return resourcePool;
@@ -91,10 +91,10 @@
             mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).ElementFieldIndex.Name = "Employee Satisfaction";
 
             // Items, cell, user cells
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Organization A";
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Organization B";
-            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Organization C";
-            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Organization D";
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Alpha";
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Beta";
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Charlie";
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Delta";
 
             // Return
             return resourcePool;
@@ -103,7 +103,7 @@
         public ResourcePool CreateSectorIndexSample(User user)
         {
             const byte numberOfSectors = 4;
-            const decimal ratingPerSector = 100 / numberOfSectors;
+            const decimal sectorRating = 50;
 
             // Resource pool
             var resourcePool = CreateDefaultResourcePool("Sector Index Sample", "Organization", user, 10, true, true, false, numberOfSectors);
@@ -120,12 +120,10 @@
                     .AddUserRating(user, 100);
 
             // Items, cells, user cells
-            //sectorElement.AddItem("Clothing").AddCell(importanceField).SetValue(itemValue, user);
-            var cosmeticsItem = sectorElement.AddItem("Cosmetics").AddCell(importanceField).SetValue(ratingPerSector, user).ElementItem;
-            var educationItem = sectorElement.AddItem("Education").AddCell(importanceField).SetValue(ratingPerSector, user).ElementItem;
-            var entertainmentItem = sectorElement.AddItem("Entertainment").AddCell(importanceField).SetValue(ratingPerSector, user).ElementItem;
-            //sectorElement.AddItem("Food").AddCell(importanceField).SetValue(itemValue, user);
-            var healthcareItem = sectorElement.AddItem("Healthcare").AddCell(importanceField).SetValue(ratingPerSector, user).ElementItem;
+            var cosmeticsItem = sectorElement.AddItem("Cosmetics").AddCell(importanceField).SetValue(sectorRating, user).ElementItem;
+            var educationItem = sectorElement.AddItem("Education").AddCell(importanceField).SetValue(sectorRating, user).ElementItem;
+            var entertainmentItem = sectorElement.AddItem("Entertainment").AddCell(importanceField).SetValue(sectorRating, user).ElementItem;
+            var healthcareItem = sectorElement.AddItem("Healthcare").AddCell(importanceField).SetValue(sectorRating, user).ElementItem;
 
             // Main element
             var mainElement = resourcePool.MainElement;
@@ -135,17 +133,12 @@
             sectorField.SelectedElement = sectorElement;
 
             // Items, cell, user cells
-            // TODO How about ToList()[0]?
-            //mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Clothing Organization";
-            //mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(sectorField).SetValue(sectorElement.ElementItemSet.Skip(0).Take(1).Single());
             mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Cosmetics Organization";
             mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(sectorField).SetValue(cosmeticsItem);
             mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Education Organization";
             mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(sectorField).SetValue(educationItem);
             mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Entertainment Organization";
             mainElement.ElementItemSet.Skip(2).Take(1).Single().AddCell(sectorField).SetValue(entertainmentItem);
-            //mainElement.ElementItemSet.Skip(4).Take(1).Single().Name = "Food Organization";
-            //mainElement.ElementItemSet.Skip(4).Take(1).Single().AddCell(sectorField).SetValue(sectorElement.ElementItemSet.Skip(4).Take(1).Single());
             mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Healthcare Organization";
             mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(sectorField).SetValue(healthcareItem);
 
@@ -182,25 +175,25 @@
             var rightToCopyField = licenseElement.AddField("Right to Copy", ElementFieldTypes.String);
             var rightToModifyField = licenseElement.AddField("Right to Modify", ElementFieldTypes.String);
             var rightToSellField = licenseElement.AddField("Right to Sell", ElementFieldTypes.String);
-            var importanceField = licenseElement.AddField("Rating", ElementFieldTypes.Decimal, false);
-            importanceField
+            var licenseRatingField = licenseElement.AddField("Rating", ElementFieldTypes.Decimal, false);
+            licenseRatingField
                 .AddIndex("Knowledge Index", RatingSortType.HighestToLowest)
                 .AddUserRating(user, 100);
 
             // Items, cell, user cells
-            licenseElement.AddItem("Open Source License")
-                .AddCell(rightToUseField).SetValue("Yes").ElementItem
-                .AddCell(rightToCopyField).SetValue("Yes").ElementItem
-                .AddCell(rightToModifyField).SetValue("Yes").ElementItem
-                .AddCell(rightToSellField).SetValue("Yes").ElementItem
-                .AddCell(importanceField).SetValue(ratingPerLicense, user);
-
-            licenseElement.AddItem("Restricted License")
+            var restrictedLicense = licenseElement.AddItem("Restricted License")
                 .AddCell(rightToUseField).SetValue("Yes").ElementItem
                 .AddCell(rightToCopyField).SetValue("No").ElementItem
                 .AddCell(rightToModifyField).SetValue("No").ElementItem
                 .AddCell(rightToSellField).SetValue("No").ElementItem
-                .AddCell(importanceField).SetValue(ratingPerLicense, user);
+                .AddCell(licenseRatingField).SetValue(ratingPerLicense, user).ElementItem;
+
+            var openSourceLicense = licenseElement.AddItem("Open Source License")
+                .AddCell(rightToUseField).SetValue("Yes").ElementItem
+                .AddCell(rightToCopyField).SetValue("Yes").ElementItem
+                .AddCell(rightToModifyField).SetValue("Yes").ElementItem
+                .AddCell(rightToSellField).SetValue("Yes").ElementItem
+                .AddCell(licenseRatingField).SetValue(ratingPerLicense, user).ElementItem;
 
             // Main element
             var mainElement = resourcePool.MainElement;
@@ -211,10 +204,10 @@
 
             // Items, cell, user cells
             // TODO How about ToList()[0]?
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Open Source Organization";
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(licenseField).SetValue(licenseElement.ElementItemSet.Skip(0).Take(1).Single());
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Commercial Organization";
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(licenseField).SetValue(licenseElement.ElementItemSet.Skip(1).Take(1).Single());
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Commercial Organization";
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(licenseField).SetValue(restrictedLicense);
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Open Source Organization";
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(licenseField).SetValue(openSourceLicense);
 
             // Return
             return resourcePool;
@@ -701,12 +694,12 @@
                 .AddUserRating(user, 100 / 3);
 
             // Items, cell, user cells
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Organization A";
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Alpha";
             mainElement.ElementItemSet.Skip(0).Take(1).Single().ResourcePoolCell.SetValue(200M);
             mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(importanceField1).SetValue(100M, user);
             mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(importanceField2).SetValue(50M, user);
 
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Organization B";
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Beta";
             mainElement.ElementItemSet.Skip(1).Take(1).Single().ResourcePoolCell.SetValue(100M);
             mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(importanceField1).SetValue(50M, user);
             mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(importanceField2).SetValue(25M, user);
@@ -780,19 +773,19 @@
             //    .AddUserRating(user, 100 / 3);
 
             // Items, cell, user cells
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Organization A";
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Alpha";
             mainElement.ElementItemSet.Skip(0).Take(1).Single().ResourcePoolCell.SetValue(100M);
             mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(veryImportantField).SetValue(50M, user);
 
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Organization B";
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Beta";
             mainElement.ElementItemSet.Skip(1).Take(1).Single().ResourcePoolCell.SetValue(100M);
             mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(veryImportantField).SetValue(50M, user);
 
-            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Organization C";
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Charlie";
             mainElement.ElementItemSet.Skip(2).Take(1).Single().ResourcePoolCell.SetValue(100M);
             mainElement.ElementItemSet.Skip(2).Take(1).Single().AddCell(veryImportantField).SetValue(50M, user);
 
-            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Organization D";
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Deta";
             mainElement.ElementItemSet.Skip(3).Take(1).Single().ResourcePoolCell.SetValue(100M);
             mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(veryImportantField).SetValue(50M, user);
 
@@ -808,6 +801,327 @@
 
             //mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Fair Sharer Org.";
             //mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(fairShareField).SetValue(fairShareYesItem);
+
+            // Return
+            return resourcePool;
+        }
+
+        public ResourcePool CreateAllInOneSample(User user)
+        {
+            const byte numberOfItems = 32;
+            const decimal userRating = 50;
+
+            // Resource pool
+            var resourcePool = CreateDefaultResourcePool("All in One", "Organization", user, userResourcePoolRate: 0, addResourcePoolField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: numberOfItems);
+            resourcePool.EnableResourcePoolAddition = true;
+            //resourcePool.EnableSubtotals = false;
+            resourcePool.IsSample = true;
+
+            // Sector element
+            var sectorElement = resourcePool.AddElement("Sector");
+
+            // Fields
+            var sectorRatingField = sectorElement.AddField("Rating", ElementFieldTypes.Decimal, false);
+            sectorRatingField
+                    .AddIndex("Sector Index", RatingSortType.HighestToLowest)
+                    .AddUserRating(user, userRating);
+
+            // Items, cells, user cells
+            var cosmeticsItem = sectorElement.AddItem("Cosmetics").AddCell(sectorRatingField).SetValue(userRating, user).ElementItem;
+            var educationItem = sectorElement.AddItem("Education").AddCell(sectorRatingField).SetValue(userRating, user).ElementItem;
+            var entertainmentItem = sectorElement.AddItem("Entertainment").AddCell(sectorRatingField).SetValue(userRating, user).ElementItem;
+            var healthcareItem = sectorElement.AddItem("Healthcare").AddCell(sectorRatingField).SetValue(userRating, user).ElementItem;
+
+            // License element
+            var licenseElement = resourcePool.AddElement("License");
+
+            // Fields
+            var rightToUseField = licenseElement.AddField("Right to Use", ElementFieldTypes.String);
+            var rightToCopyField = licenseElement.AddField("Right to Copy", ElementFieldTypes.String);
+            var rightToModifyField = licenseElement.AddField("Right to Modify", ElementFieldTypes.String);
+            var rightToSellField = licenseElement.AddField("Right to Sell", ElementFieldTypes.String);
+            var licenseRatingField = licenseElement.AddField("Rating", ElementFieldTypes.Decimal, false);
+            licenseRatingField
+                .AddIndex("Knowledge Index", RatingSortType.HighestToLowest)
+                .AddUserRating(user, userRating);
+
+            // Items, cell, user cells
+            var restrictedLicense = licenseElement.AddItem("Restricted License")
+                .AddCell(rightToUseField).SetValue("Yes").ElementItem
+                .AddCell(rightToCopyField).SetValue("No").ElementItem
+                .AddCell(rightToModifyField).SetValue("No").ElementItem
+                .AddCell(rightToSellField).SetValue("No").ElementItem
+                .AddCell(licenseRatingField).SetValue(userRating, user).ElementItem;
+
+            var openSourceLicense = licenseElement.AddItem("Open Source License")
+                .AddCell(rightToUseField).SetValue("Yes").ElementItem
+                .AddCell(rightToCopyField).SetValue("Yes").ElementItem
+                .AddCell(rightToModifyField).SetValue("Yes").ElementItem
+                .AddCell(rightToSellField).SetValue("Yes").ElementItem
+                .AddCell(licenseRatingField).SetValue(userRating, user).ElementItem;
+
+            // Fair share element
+            var fairShareElement = resourcePool.AddElement("Fair Share");
+
+            // Fields
+            var fairShareDesciptionField = fairShareElement.AddField("Description", ElementFieldTypes.String);
+            var fairShareRatingField = fairShareElement.AddField("Rating", ElementFieldTypes.Decimal, false);
+            fairShareRatingField
+                .AddIndex("Fair Share Index", RatingSortType.HighestToLowest)
+                .AddUserRating(user, userRating);
+
+            // Items, cell, user cells
+            var keeperItem = fairShareElement.AddItem("Keeper")
+                .AddCell(fairShareDesciptionField).SetValue("Indicates that the owner of the organization keeps all the income to himself, ignores the contributions").ElementItem
+                .AddCell(fairShareRatingField).SetValue(userRating, user).ElementItem;
+
+            var sharerItem = fairShareElement.AddItem("Sharer")
+                .AddCell(fairShareDesciptionField).SetValue("Indicates the organization shares it's income with its employees based on their contributions").ElementItem
+                .AddCell(fairShareRatingField).SetValue(userRating, user).ElementItem;
+
+            // Main element
+            var mainElement = resourcePool.MainElement;
+            mainElement.ResourcePoolField.Name = "Sales Price";
+            mainElement.MultiplierField.Name = "Number of Sales";
+            
+            var sectorField = mainElement.AddField("Sector", ElementFieldTypes.Element);
+            sectorField.SelectedElement = sectorElement;
+            
+            var licenseField = mainElement.AddField("License", ElementFieldTypes.Element);
+            licenseField.SelectedElement = licenseElement;
+            
+            var fairShareField = mainElement.AddField("Fair Share", ElementFieldTypes.Element);
+            fairShareField.SelectedElement = fairShareElement;
+            
+            // Resource pool index; use to Sales Price itself
+            mainElement.ResourcePoolField
+                .AddIndex("Total Cost Index", RatingSortType.LowestToHighest)
+                .AddUserRating(user, userRating);
+
+            // Items, cell, user cells
+            var itemIndex = 0;
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "Hidden Cosmetics (Profit & Keeper)";
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(110M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(cosmeticsItem);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(restrictedLicense);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(keeperItem);
+
+            itemIndex = 1;
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "Hidden Cosmetics (Nonprofit & Keeper)";
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(cosmeticsItem);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(restrictedLicense);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(keeperItem);
+
+            itemIndex = 2;
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "Hidden Cosmetics (Profit & Sharer)";
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(110M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(cosmeticsItem);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(restrictedLicense);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(sharerItem);
+
+            itemIndex = 3;
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "Hidden Cosmetics (Nonprofit & Sharer)";
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(cosmeticsItem);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(restrictedLicense);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(sharerItem);
+
+            itemIndex = 4;
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "True Cosmetics (Profit & Keeper)";
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(110M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(cosmeticsItem);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(openSourceLicense);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(keeperItem);
+
+            itemIndex = 5;
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "True Cosmetics (Nonprofit & Keeper)";
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(cosmeticsItem);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(openSourceLicense);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(keeperItem);
+
+            itemIndex = 6;
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "True Cosmetics (Profit & Sharer)";
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(110M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(cosmeticsItem);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(openSourceLicense);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(sharerItem);
+
+            itemIndex = 7;
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "True Cosmetics (Nonprofit & Sharer)";
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(cosmeticsItem);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(openSourceLicense);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(sharerItem);
+
+            itemIndex = 8;
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "Hidden Education (Profit & Keeper)";
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(110M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(educationItem);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(restrictedLicense);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(keeperItem);
+
+            itemIndex = 9;
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "Hidden Education (Nonprofit & Keeper)";
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(educationItem);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(restrictedLicense);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(keeperItem);
+
+            itemIndex = 10;
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "Hidden Education (Profit & Sharer)";
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(110M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(educationItem);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(restrictedLicense);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(sharerItem);
+
+            itemIndex = 11;
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "Hidden Education (Nonprofit & Sharer)";
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(educationItem);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(restrictedLicense);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(sharerItem);
+
+            itemIndex = 12;
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "True Education (Profit & Keeper)";
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(110M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(educationItem);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(openSourceLicense);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(keeperItem);
+
+            itemIndex = 13;
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "True Education (Nonprofit & Keeper)";
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(educationItem);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(openSourceLicense);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(keeperItem);
+
+            itemIndex = 14;
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "True Education (Profit & Sharer)";
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(110M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(educationItem);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(openSourceLicense);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(sharerItem);
+
+            itemIndex = 15;
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "True Education (Nonprofit & Sharer)";
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(educationItem);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(openSourceLicense);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(sharerItem);
+
+            itemIndex = 16;
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "Hidden Entertainment (Profit & Keeper)";
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(110M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(entertainmentItem);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(restrictedLicense);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(keeperItem);
+
+            itemIndex = 17;
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "Hidden Entertainment (Nonprofit & Keeper)";
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(entertainmentItem);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(restrictedLicense);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(keeperItem);
+
+            itemIndex = 18;
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "Hidden Entertainment (Profit & Sharer)";
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(110M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(entertainmentItem);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(restrictedLicense);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(sharerItem);
+
+            itemIndex = 19;
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "Hidden Entertainment (Nonprofit & Sharer)";
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(entertainmentItem);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(restrictedLicense);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(sharerItem);
+
+            itemIndex = 20;
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "True Entertainment (Profit & Keeper)";
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(110M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(entertainmentItem);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(openSourceLicense);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(keeperItem);
+
+            itemIndex = 21;
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "True Entertainment (Nonprofit & Keeper)";
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(entertainmentItem);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(openSourceLicense);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(keeperItem);
+
+            itemIndex = 22;
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "True Entertainment (Profit & Sharer)";
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(110M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(entertainmentItem);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(openSourceLicense);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(sharerItem);
+
+            itemIndex = 23;
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "True Entertainment (Nonprofit & Sharer)";
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(entertainmentItem);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(openSourceLicense);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(sharerItem);
+
+            itemIndex = 24;
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "Hidden Healthcare (Profit & Keeper)";
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(110M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(healthcareItem);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(restrictedLicense);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(keeperItem);
+
+            itemIndex = 25;
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "Hidden Healthcare (Nonprofit & Keeper)";
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(healthcareItem);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(restrictedLicense);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(keeperItem);
+
+            itemIndex = 26;
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "Hidden Healthcare (Profit & Sharer)";
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(110M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(healthcareItem);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(restrictedLicense);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(sharerItem);
+
+            itemIndex = 27;
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "Hidden Healthcare (Nonprofit & Sharer)";
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(healthcareItem);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(restrictedLicense);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(sharerItem);
+
+            itemIndex = 28;
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "True Healthcare (Profit & Keeper)";
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(110M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(healthcareItem);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(openSourceLicense);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(keeperItem);
+
+            itemIndex = 29;
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "True Healthcare (Nonprofit & Keeper)";
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(healthcareItem);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(openSourceLicense);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(keeperItem);
+
+            itemIndex = 30;
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "True Healthcare (Profit & Sharer)";
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(110M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(healthcareItem);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(openSourceLicense);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(sharerItem);
+
+            itemIndex = 31;
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "True Healthcare (Nonprofit & Sharer)";
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(healthcareItem);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(openSourceLicense);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(sharerItem);
 
             // Return
             return resourcePool;
