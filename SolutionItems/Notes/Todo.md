@@ -280,6 +280,12 @@ which can be applied to resource pool rate? and index ratings?
 * users should choose the ideal rate/ratings - it shouldn't be experimental? especially license ratings, index ratings, cmrp rate!
 * total cost index - income inequality mention? another root cause?
 
+* check whether it's possible to send email from contact@forcrowd.org? there is no password at the moment? does it necessary to have a different plan for this?
+then continue with the other registrations?
+
+* PERFORMANCE PROBLEM;
+elementItem - ratingMultiplied function should be cached? but then how to update the cache? events & properties etc.?
+
 * CONTINUE WITH SUMMARY AND/OR ALL IN ONE?
 
 improve all in one sample ?!

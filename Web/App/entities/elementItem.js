@@ -87,8 +87,9 @@
 
                 // Cached value
                 // TODO In case of add / remove field?
-                if (_multiplierCell)
+                if (_multiplierCell !== null) {
                     return _multiplierCell;
+                }
 
                 // Validate
                 if (typeof self.ElementCellSet === 'undefined')

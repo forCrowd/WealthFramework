@@ -15,6 +15,18 @@
             constructor: constructor
         }
 
+        // Properties
+        Object.defineProperty(constructor.prototype, 'DecimalValue', {
+            enumerable: true,
+            configurable: true,
+            get: function () { return this.backingFields._DecimalValue; },
+            set: function (value) {
+                if (value !== this.backingFields._DecimalValue) {
+                    this.backingFields._DecimalValue = value;
+                }
+            }
+        });
+
         return (service);
 
         /*** Implementations ***/
@@ -22,6 +34,12 @@
         function constructor() {
 
             var self = this;
+
+            self.backingFields = {
+                _DecimalValue: null
+            };
+
+            self._ratingMultiplied = null;
 
             self.userElementCell = function (args) {
 
@@ -76,8 +94,8 @@
                         case 3: { value = self.IntegerValue; break; }
                         case 4:
                         case 11: { value = self.DecimalValue; break; }
-                        // TODO 5 (DateTime?)
-                        default: { throw 'Invalid field type: ' +  self.ElementField.ElementFieldType; }
+                            // TODO 5 (DateTime?)
+                        default: { throw 'Invalid field type: ' + self.ElementField.ElementFieldType; }
                     }
                 } else {
 
@@ -126,12 +144,17 @@
 
             self.ratingMultiplied = function () {
 
-                var multiplierValue = 1;
+                if (self._ratingMultiplied === null) {
 
-                if (typeof self.ElementItem !== 'undefined')
-                    multiplierValue = self.ElementItem.multiplierValue();
+                    var multiplierValue = 1;
 
-                return self.rating() * self.ElementItem.multiplierValue();
+                    if (typeof self.ElementItem !== 'undefined')
+                        multiplierValue = self.ElementItem.multiplierValue();
+
+                    self._ratingMultiplied = self.rating() * self.ElementItem.multiplierValue();
+                }
+
+                return self._ratingMultiplied;
             }
 
             self.aggressiveRating = function () {
@@ -229,7 +252,7 @@
                 }
             }
 
-            self.updateIndexRating = function(updateType) {
+            self.updateIndexRating = function (updateType) {
 
                 // Determines whether there is an update
                 var updated = false;
@@ -255,11 +278,11 @@
                     }
 
                     if (updateType === 'increase' && value < 100) {
-                        
+
                         value = value + 5 >= 100 ? 100 : value + 5;
                         updated = true;
                     } else if (updateType === 'decrease' && value > 0) {
-                        
+
                         value = value - 5 <= 0 ? 0 : value - 5;
                         updated = true;
                     }
