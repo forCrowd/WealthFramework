@@ -104,9 +104,9 @@
                 })
                 .catch(function (error) {
                     // Conflict (Concurrency exception)
-                    if (error.status !== 'undefined' && error.status === '409') {
+                    if (typeof error.status !== 'undefined' && error.status === '409') {
                         // TODO Try to recover!
-                    } else if (error.entityErrors !== 'undefined') {
+                    } else if (typeof error.entityErrors !== 'undefined') {
                         vm.entityErrors = error.entityErrors;
                     }
                 })
