@@ -84,10 +84,13 @@
                         <!-- Index Details & Index Income -->
                         <th data-ng-if="displayIndexDetails" data-ng-repeat="index in resourcePool.currentElement.elementFieldIndexSet() | orderBy: 'ElementField.SortOrder'">
                             {{ index.Name }} Income
-                            <!--- {{ index.ratingMultiplied() }}
+                            <!--- {{ index.indexIncome() }}
+                            - {{ index.indexRating() }}
+                            - {{ index.ElementField.Element.indexRating() }}
+                            - {{ index.indexRatingPercentage() }}
+                            - {{ index.ratingMultiplied() }}
                             - {{ index.passiveRatingPercentage() }}
                             - {{ index.referenceRatingMultiplied() }}
-                            - {{ index.aggressiveRating() }}
                             - {{ index.aggressiveRating() }}-->
                         </th>
                         <th data-ng-if="resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">
@@ -122,8 +125,8 @@
                                     {{ elementCell.rating() | number: 2 }}
                                 </span>
                                 <div class="btn-group" role="group" data-ng-if="elementCell.ElementField.ElementFieldIndexSet.length > 0">
-                                    <button type="button" data-ng-click="increaseCellIndexRating(elementCell)" title="+ 10" class="btn btn-default btn-xs">+</button>
-                                    <button type="button" data-ng-click="decreaseCellIndexRating(elementCell)" title="- 10" class="btn btn-default btn-xs">-</button>
+                                    <button type="button" data-ng-click="increaseCellIndexRating(elementCell)" title="+ 5" class="btn btn-default btn-xs">+</button>
+                                    <button type="button" data-ng-click="decreaseCellIndexRating(elementCell)" title="- 5" class="btn btn-default btn-xs">-</button>
                                 </div>
                             </div>
                             <span data-ng-if="elementCell.ElementField.ElementFieldType === 5">
@@ -159,9 +162,9 @@
                         <!-- Index Details & Index Income -->
                         <td data-ng-if="displayIndexDetails" data-ng-repeat="cellIndex in elementItem.elementCellIndexSet() | orderBy: 'ElementField.SortOrder'">
                             {{ cellIndex.indexIncome() | number: 2 }}
-                            <!--- {{ cellIndex.aggressiveRating() }}
-                            - {{ cellIndex.aggressiveRatingPercentage() }}
-                            - {{ cellIndex.passiveRatingPercentage() }}-->
+                            <!--- AR: {{ cellIndex.aggressiveRating() }}
+                            - ARP: {{ cellIndex.aggressiveRatingPercentage() }}
+                            - PRP: {{ cellIndex.passiveRatingPercentage() }}-->
                         </td>
                         <td data-ng-if="resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">
                             {{ elementItem.indexIncome() | number: 2 }}
