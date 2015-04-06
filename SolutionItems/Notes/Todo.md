@@ -286,9 +286,9 @@ then continue with the other registrations?
 
 
 			* CONTINUE WITH;
+			. indexes under different element case don't work as it should be, test it + fix it! knowledge index sample!
 			. rollback performance updates and create a 'clean' commit! - update live!
 			. performance problem; especially ratingMultiplied() method called too many times which makes it pretty slow - improve it - find a proper approach to update cached values?
-			. indexes under different element case don't work as it should be, test it + fix it!
 			. try to find a way to test javascript functions!
 			. then continue with summary / all in one again!
 
