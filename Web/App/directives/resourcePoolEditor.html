@@ -82,12 +82,12 @@
                             {{ resourcePool.currentElement.resourcePoolField().Name }} Income
                         </th>
                         <!-- Index Details & Index Income -->
-                        <th data-ng-if="displayIndexDetails" data-ng-repeat="index in resourcePool.currentElement.elementFieldIndexSet() | orderBy: 'ElementField.SortOrder'">
+                        <th data-ng-if="displayIndexDetails" data-ng-repeat="index in resourcePool.currentElement.elementFieldIndexSet()">
                             {{ index.Name }} Income
-                            <!--- {{ index.indexIncome() }}
+                            <!--- {{ index.ElementField.Element.ResourcePool.mainElement().indexRating() }}
                             - {{ index.indexRating() }}
-                            - {{ index.ElementField.Element.indexRating() }}
                             - {{ index.indexRatingPercentage() }}
+                            - {{ index.indexIncome() }}
                             - {{ index.ratingMultiplied() }}
                             - {{ index.passiveRatingPercentage() }}
                             - {{ index.referenceRatingMultiplied() }}
@@ -160,11 +160,14 @@
                             {{ elementItem.resourcePoolValueMultiplied() | number: 2 }}
                         </td>
                         <!-- Index Details & Index Income -->
-                        <td data-ng-if="displayIndexDetails" data-ng-repeat="cellIndex in elementItem.elementCellIndexSet() | orderBy: 'ElementField.SortOrder'">
+                        <td data-ng-if="displayIndexDetails" data-ng-repeat="cellIndex in elementItem.elementCellIndexSet2()">
                             {{ cellIndex.indexIncome() | number: 2 }}
-                            <!--- AR: {{ cellIndex.aggressiveRating() }}
+                            <!--- {{ cellIndex.SelectedElementItem.indexIncome() }}
+                            - {{ cellIndex.SelectedElementItem.ParentCellSet.length }} 
+                            - AR: {{ cellIndex.aggressiveRating() }}
                             - ARP: {{ cellIndex.aggressiveRatingPercentage() }}
                             - PRP: {{ cellIndex.passiveRatingPercentage() }}-->
+                            <!--{{ cellIndex.ElementItem.Name }}-->
                         </td>
                         <td data-ng-if="resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">
                             {{ elementItem.indexIncome() | number: 2 }}
@@ -204,7 +207,7 @@
                             {{ resourcePool.currentElement.resourcePoolValueMultiplied() | number: 2 }}
                         </td>
                         <!-- Index Details & Index Income -->
-                        <td data-ng-if="displayIndexDetails" data-ng-repeat="index in resourcePool.currentElement.elementFieldIndexSet() | orderBy: 'ElementField.SortOrder'">
+                        <td data-ng-if="displayIndexDetails" data-ng-repeat="index in resourcePool.currentElement.elementFieldIndexSet()">
                             {{ index.indexIncome() | number: 2 }}
                         </td>
                         <td data-ng-if="resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">
@@ -245,7 +248,7 @@
                             &nbsp;
                         </td>
                         <!-- Index Details & Index Income -->
-                        <td data-ng-if="displayIndexDetails && resourcePool.currentElement.elementFieldIndexSet().length > 1" data-ng-repeat="index in resourcePool.currentElement.elementFieldIndexSet() | orderBy: 'ElementField.SortOrder'">
+                        <td data-ng-if="displayIndexDetails && resourcePool.currentElement.elementFieldIndexSet().length > 1" data-ng-repeat="index in resourcePool.currentElement.elementFieldIndexSet()">
                             <div class="btn-group" role="group">
                                 <button title="Increase {{ index.Name }}" type="button" data-ng-click="increaseIndexRating(index)" class="btn btn-default btn-xs">+</button>
                                 <button title="Decrease {{ index.Name }}" type="button" data-ng-click="decreaseIndexRating(index)" class="btn btn-default btn-xs">-</button>

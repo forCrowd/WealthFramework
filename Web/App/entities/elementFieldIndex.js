@@ -202,16 +202,23 @@
 
             self.indexRatingPercentage = function () {
 
-                var elementIndexRating = self.ElementField.Element.indexRating();
+                var elementIndexRating = self.ElementField.Element.ResourcePool.mainElement().indexRating();
 
                 if (elementIndexRating === 0)
                     return 0;
 
-                return self.indexRating() / elementIndexRating;
+                var value = self.indexRating() / elementIndexRating;
+                
+                // logger.log(self.Name + ' - indexRatingPercentage', value, null, false);
+
+                return value;
             }
 
             self.indexIncome = function () {
                 var value = self.ElementField.Element.resourcePoolAdditionMultiplied() * self.indexRatingPercentage();
+
+                // logger.log(self.Name + ' - indexIncome', value, null, false);
+
                 return value;
             }
 

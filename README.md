@@ -8,7 +8,7 @@ An experimental resource management system that aims to provide a more sustainab
 
 **0.14.15**
 
-* All in One sample
+* Bug fixes
 
 **0.14.14**
 

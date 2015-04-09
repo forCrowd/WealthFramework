@@ -24,8 +24,52 @@
 
             // Local variables
             var _elementCellIndexSet = [];
+            var _elementCellIndexSet2 = [];
             var _resourcePoolCell = null;
             var _multiplierCell = null;
+
+            self.elementCellIndexSet2 = function () {
+
+                // Cached value
+                // TODO In case of add / remove fields?
+                if (_elementCellIndexSet2.length > 0) {
+                    return _elementCellIndexSet2;
+                }
+
+                _elementCellIndexSet2 = getElementCellIndexSet2(self);
+
+                return _elementCellIndexSet2;
+            }
+
+            function getElementCellIndexSet2(elementItem) {
+
+
+
+
+
+                var indexSet = [];
+                
+
+                for (var i = 0; i < elementItem.ElementCellSet.length; i++) {
+                    var cell = elementItem.ElementCellSet.sort(function (a, b) { return a.ElementField.SortOrder - b.ElementField.SortOrder; })[i];
+
+                    if (cell.ElementField.ElementFieldIndexSet.length > 0) {
+                        indexSet.push(cell);
+                    }
+
+                    if (cell.ElementField.ElementFieldType === 6) {
+                        var childIndexSet = getElementCellIndexSet2(cell.SelectedElementItem);
+
+                        if (childIndexSet.length > 0) {
+                            // indexSet = indexSet.concat(childIndexSet);
+                            // indexSet.push(cell);
+                            indexSet.push(cell);
+                        }
+                    }
+                }
+
+                return indexSet;
+            }
 
             self.elementCellIndexSet = function () {
 
@@ -157,6 +201,9 @@
                     var cell = self.ElementCellSet[i];
                     value += cell.indexIncome();
                 }
+
+                //logger.log(self.Name + ' - ' + value);
+                //logger.log(self);
 
                 return value;
             }

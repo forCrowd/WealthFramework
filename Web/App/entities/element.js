@@ -99,10 +99,14 @@
 
             function getElementFieldIndexSet(element) {
 
+                // Validate
+                if (typeof self.ElementFieldSet === 'undefined')
+                    return 0;
+
                 var indexSet = [];
 
                 for (var i = 0; i < element.ElementFieldSet.length; i++) {
-                    var field = element.ElementFieldSet[i];
+                    var field = element.ElementFieldSet.sort(function (a, b) { return a.SortOrder - b.SortOrder; })[i];
 
                     if (field.ElementFieldIndexSet.length > 0) {
                         indexSet.push(field.ElementFieldIndexSet[0]);
@@ -110,7 +114,12 @@
 
                     if (field.ElementFieldType === 6) {
                         var childIndexSet = getElementFieldIndexSet(field.SelectedElement);
-                        indexSet = indexSet.concat(childIndexSet);
+
+                        for (var x = 0; x < childIndexSet.length; x++) {
+                            indexSet.push(childIndexSet[x]);
+                        }
+
+                        // indexSet = indexSet.concat(childIndexSet);
                     }
                 }
 
@@ -199,16 +208,11 @@
 
                 // TODO Check totalIncome notes
 
-                // Validate
-                if (typeof self.ElementFieldSet === 'undefined')
-                    return 0;
+                var indexSet = self.elementFieldIndexSet();
 
                 var value = 0;
-                for (var i = 0; i < self.ElementFieldSet.length; i++) {
-                    var item = self.ElementFieldSet[i];
-
-                    if (item.ElementFieldIndexSet.length > 0)
-                        value += item.ElementFieldIndexSet[0].indexRating();
+                for (var i = 0; i < indexSet.length; i++) {
+                    value += indexSet[i].indexRating();
                 }
 
                 return value;

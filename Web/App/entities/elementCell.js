@@ -243,10 +243,19 @@
 
                 if (self.ElementField.ElementFieldType === 6 && self.SelectedElementItem !== null) {
 
-                    return self.SelectedElementItem.indexIncome();
+                    // item's index income / how many times this item has been selected (used) by higher items
+                    // TODO Check whether ParentCellSet gets updated when selecting / deselecting an item
+                    return self.SelectedElementItem.indexIncome() / self.SelectedElementItem.ParentCellSet.length;
                 } else {
 
                     if (self.ElementField.ElementFieldIndexSet.length > 0) {
+
+                        // ok
+                        //logger.log(self.ElementField.ElementFieldIndexSet[0].indexIncome());
+
+                        // wrong
+                        //logger.log(self.ElementItem.Name + ' - ' + self.aggressiveRatingPercentage());
+
                         return self.ElementField.ElementFieldIndexSet[0].indexIncome() * self.aggressiveRatingPercentage();
                     } else {
                         return 0;

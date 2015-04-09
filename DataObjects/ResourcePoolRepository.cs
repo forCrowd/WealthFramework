@@ -102,11 +102,11 @@
 
         public ResourcePool CreateSectorIndexSample(User user)
         {
-            const byte numberOfSectors = 4;
+            const byte numberOfItems = 4;
             const decimal sectorRating = 50;
 
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool("Sector Index Sample", "Organization", user, 10, true, true, false, numberOfSectors);
+            var resourcePool = CreateDefaultResourcePool("Sector Index Sample", "Organization", user, 10, true, true, false, numberOfItems);
             resourcePool.EnableResourcePoolAddition = false;
             resourcePool.IsSample = true;
 
@@ -159,11 +159,11 @@
 
         public ResourcePool CreateKnowledgeIndexSample(User user)
         {
-            const byte numberOfLicenses = 2;
-            const decimal ratingPerLicense = 100 / numberOfLicenses;
+            const byte numberOfItems = 2;
+            const decimal userRating = 50;
 
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool("Knowledge Index Sample", "Organization", user, 10, true, true, false, numberOfLicenses);
+            var resourcePool = CreateDefaultResourcePool("Knowledge Index Sample", "Organization", user, 10, true, true, false, numberOfItems);
             resourcePool.EnableResourcePoolAddition = false;
             resourcePool.IsSample = true;
 
@@ -178,7 +178,7 @@
             var licenseRatingField = licenseElement.AddField("Rating", ElementFieldTypes.Decimal, false);
             licenseRatingField
                 .AddIndex("Knowledge Index", RatingSortType.HighestToLowest)
-                .AddUserRating(user, 100);
+                .AddUserRating(user, userRating);
 
             // Items, cell, user cells
             var restrictedLicense = licenseElement.AddItem("Restricted License")
@@ -186,14 +186,14 @@
                 .AddCell(rightToCopyField).SetValue("No").ElementItem
                 .AddCell(rightToModifyField).SetValue("No").ElementItem
                 .AddCell(rightToSellField).SetValue("No").ElementItem
-                .AddCell(licenseRatingField).SetValue(ratingPerLicense, user).ElementItem;
+                .AddCell(licenseRatingField).SetValue(userRating, user).ElementItem;
 
             var openSourceLicense = licenseElement.AddItem("Open Source License")
                 .AddCell(rightToUseField).SetValue("Yes").ElementItem
                 .AddCell(rightToCopyField).SetValue("Yes").ElementItem
                 .AddCell(rightToModifyField).SetValue("Yes").ElementItem
                 .AddCell(rightToSellField).SetValue("Yes").ElementItem
-                .AddCell(licenseRatingField).SetValue(ratingPerLicense, user).ElementItem;
+                .AddCell(licenseRatingField).SetValue(userRating, user).ElementItem;
 
             // Main element
             var mainElement = resourcePool.MainElement;
@@ -208,6 +208,10 @@
             mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(licenseField).SetValue(restrictedLicense);
             mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Open Source Organization";
             mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(licenseField).SetValue(openSourceLicense);
+            //mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Commercial Organization B";
+            //mainElement.ElementItemSet.Skip(2).Take(1).Single().AddCell(licenseField).SetValue(restrictedLicense);
+            //mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Open Source Organization B";
+            //mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(licenseField).SetValue(openSourceLicense);
 
             // Return
             return resourcePool;
@@ -828,9 +832,9 @@
 
             // Items, cells, user cells
             var cosmeticsItem = sectorElement.AddItem("Cosmetics").AddCell(sectorRatingField).SetValue(userRating, user).ElementItem;
-            var educationItem = sectorElement.AddItem("Education").AddCell(sectorRatingField).SetValue(userRating, user).ElementItem;
-            var entertainmentItem = sectorElement.AddItem("Entertainment").AddCell(sectorRatingField).SetValue(userRating, user).ElementItem;
-            var healthcareItem = sectorElement.AddItem("Healthcare").AddCell(sectorRatingField).SetValue(userRating, user).ElementItem;
+            //var educationItem = sectorElement.AddItem("Education").AddCell(sectorRatingField).SetValue(userRating, user).ElementItem;
+            //var entertainmentItem = sectorElement.AddItem("Entertainment").AddCell(sectorRatingField).SetValue(userRating, user).ElementItem;
+            //var healthcareItem = sectorElement.AddItem("Healthcare").AddCell(sectorRatingField).SetValue(userRating, user).ElementItem;
 
             // License element
             var licenseElement = resourcePool.AddElement("License");
