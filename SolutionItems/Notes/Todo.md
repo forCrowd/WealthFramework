@@ -271,15 +271,6 @@ which can be applied to resource pool rate? and index ratings?
 
 * about aggressive method, last operation may not be necessary for one of the types - check excel file!
 
-* if one of the organizations rating is 0, they all get 0
-
-* fair share - it requires some extra work, transparency of the organizations etc. think about it, mention them
-* "What would happen in we could distribute our monetary resources to the organizations by measuring their benefits to the society?"
-* indexes pie + cmrp rate could use same sample? update each other? like basics?
-* should samples details need to be mentioned? all organizations are equal except the indexes, they all have to have same number of sales etc.
-* users should choose the ideal rate/ratings - it shouldn't be experimental? especially license ratings, index ratings, cmrp rate!
-* total cost index - income inequality mention? another root cause?
-
 * check whether it's possible to send email from contact@forcrowd.org? there is no password at the moment? does it necessary to have a different plan for this?
 then continue with the other registrations?
 
@@ -288,6 +279,14 @@ then continue with the other registrations?
 * performance problem; especially ratingMultiplied() method called too many times which makes it pretty slow - improve it - find a proper approach to update cached values?
 elementItem - ratingMultiplied function should be cached? but then how to update the cache? events & properties etc.?
 
+	* fair share - it requires some extra work, transparency of the organizations etc. think about it, mention them
+	* indexes pie + cmrp rate could use same sample? update each other? like basics?
+	* should samples details need to be mentioned? all organizations are equal except the indexes, they all have to have same number of sales etc.
+	* users should choose the ideal rate/ratings - it shouldn't be experimental? especially license ratings, index ratings, cmrp rate!
+	* eula license?
+
+	* check fair share content
+	* total cost index - income inequality mention? another root cause?
 	* summary
 
 * add & improve all in one sample ?!

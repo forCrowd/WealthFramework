@@ -5,13 +5,9 @@
     padding: 1.5em 0;
 }
 
-    .resourcePoolEditor .header {
-        padding-bottom: 1.5em;
+    .resourcePoolEditor .resourcePoolFilter {
+        margin-top: 1em;
     }
-
-        .resourcePoolEditor .header > .title {
-            font-size: 1.5em;
-        }
 
 .resourcePoolTable {
     /*table-layout: fixed;*/

@@ -6,6 +6,11 @@ An experimental resource management system that aims to provide a more sustainab
 
 ### Release Notes
 
+**0.14.16**
+
+* bootstrap panel for resourcePoolEditor
+* Content updates
+
 **0.14.15**
 
 * Bug fixes
