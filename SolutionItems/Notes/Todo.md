@@ -279,15 +279,30 @@ then continue with the other registrations?
 * performance problem; especially ratingMultiplied() method called too many times which makes it pretty slow - improve it - find a proper approach to update cached values?
 elementItem - ratingMultiplied function should be cached? but then how to update the cache? events & properties etc.?
 
+	* continue with cmrp rate content + summary?
+	* users should choose the ideal rate/ratings - it shouldn't be experimental? especially license ratings, index ratings, cmrp rate!
+	* eula license?
+	https://www.microsoft.com/en-us/legal/intellectualproperty/useterms/default.aspx
+
 	* fair share - it requires some extra work, transparency of the organizations etc. think about it, mention them
 	* indexes pie + cmrp rate could use same sample? update each other? like basics?
 	* should samples details need to be mentioned? all organizations are equal except the indexes, they all have to have same number of sales etc.
-	* users should choose the ideal rate/ratings - it shouldn't be experimental? especially license ratings, index ratings, cmrp rate!
-	* eula license?
 
-	* check fair share content
-	* total cost index - income inequality mention? another root cause?
-	* summary
+. sendgrid;
+https://sendgrid.com/blog/tips-tricks-stay-spam-folder-qa/
+https://sendgrid.com/docs/User_Guide/warming_up.html
+http://www.mail-tester.com/
+
+. triodos - sign & send;
+https://www.triodos.nl/downloads/over-triodos-bank/algemene-bankvoorwaarden-2009-triodos-bank.pdf
+https://www.triodos.nl/downloads/betalen/algemene-voorwaarden-internet-bankieren-zakelijk-gebruik-triodos-bank.pdf
+https://www.triodos.nl/downloads/betalen/zak-algemene-voorwaarden-triodos-internet-zakenrekening-2011.pdf
+
+wealth is interested in the following questions;
+. how the society allocates its resources?
+. what type of organizations get more resources?
+. room for improvement? - yes
+. what would happen if the people could control and allocate the resources directly?
 
 * add & improve all in one sample ?!
 

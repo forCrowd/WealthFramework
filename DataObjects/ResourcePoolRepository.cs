@@ -64,10 +64,10 @@
             mainElement.MultiplierField.Name = "Number of Sales";
 
             // Items, cell, user cells
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Alpha";
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Beta";
-            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Charlie";
-            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Delta";
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Tywin";
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Tyrion";
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Tommen";
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Cersei";
 
             // Return
             return resourcePool;
@@ -91,10 +91,10 @@
             mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).ElementFieldIndex.Name = "Employee Satisfaction";
 
             // Items, cell, user cells
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Alpha";
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Beta";
-            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Charlie";
-            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Delta";
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Tywin";
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Tyrion";
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Tommen";
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Cersei";
 
             // Return
             return resourcePool;
@@ -531,11 +531,11 @@
             // Items, cell, user cells
             decimal ratingPerItem = 100 / 2;
             var fairShareYesItem = fairShareElement.AddItem("Sharer")
-                .AddCell(fairShareDesciptionField).SetValue("Indicates the organization shares it's income with its employees based on their contributions").ElementItem
+                .AddCell(fairShareDesciptionField).SetValue("The organization shares it's income with its employees based on their contributions").ElementItem
                 .AddCell(fairShareImportanceField).SetValue(ratingPerItem, user).ElementItem;
 
             var fairShareNoItem = fairShareElement.AddItem("Keeper")
-                .AddCell(fairShareDesciptionField).SetValue("Indicates that the owner of the organization keeps all the income to himself, ignores the contributions").ElementItem
+                .AddCell(fairShareDesciptionField).SetValue("The owner of the organization keeps all the income to himself, ignores the contributions").ElementItem
                 .AddCell(fairShareImportanceField).SetValue(ratingPerItem, user).ElementItem;
 
             // Main element
@@ -577,11 +577,11 @@
             //// Items, cell, user cells
             //decimal ratingPerItem = 100 / 2;
             //var fairShareYesItem = fairShareElement.AddItem("Sharer")
-            //    .AddCell(fairShareDesciptionField).SetValue("Indicates the organization shares it's income with its employees based on their contributions").ElementItem
+            //    .AddCell(fairShareDesciptionField).SetValue("The organization shares it's income with its employees based on their contributions").ElementItem
             //    .AddCell(fairShareImportanceField).SetValue(ratingPerItem, user).ElementItem;
 
             //var fairShareNoItem = fairShareElement.AddItem("Keeper")
-            //    .AddCell(fairShareDesciptionField).SetValue("Indicates that the owner of the organization keeps all the income to himself, ignores the contributions").ElementItem
+            //    .AddCell(fairShareDesciptionField).SetValue("The owner of the organization keeps all the income to himself, ignores the contributions").ElementItem
             //    .AddCell(fairShareImportanceField).SetValue(ratingPerItem, user).ElementItem;
 
             // Main element
@@ -665,11 +665,11 @@
             //// Items, cell, user cells
             //decimal ratingPerItem = 100 / 2;
             //var fairShareYesItem = fairShareElement.AddItem("Sharer")
-            //    .AddCell(fairShareDesciptionField).SetValue("Indicates the organization shares it's income with its employees based on their contributions").ElementItem
+            //    .AddCell(fairShareDesciptionField).SetValue("The organization shares it's income with its employees based on their contributions").ElementItem
             //    .AddCell(fairShareImportanceField).SetValue(ratingPerItem, user).ElementItem;
 
             //var fairShareNoItem = fairShareElement.AddItem("Keeper")
-            //    .AddCell(fairShareDesciptionField).SetValue("Indicates that the owner of the organization keeps all the income to himself, ignores the contributions").ElementItem
+            //    .AddCell(fairShareDesciptionField).SetValue("The owner of the organization keeps all the income to himself, ignores the contributions").ElementItem
             //    .AddCell(fairShareImportanceField).SetValue(ratingPerItem, user).ElementItem;
 
             // Main element
@@ -744,11 +744,11 @@
             //// Items, cell, user cells
             //decimal ratingPerItem = 100 / 2;
             //var fairShareYesItem = fairShareElement.AddItem("Sharer")
-            //    .AddCell(fairShareDesciptionField).SetValue("Indicates the organization shares it's income with its employees based on their contributions").ElementItem
+            //    .AddCell(fairShareDesciptionField).SetValue("The organization shares it's income with its employees based on their contributions").ElementItem
             //    .AddCell(fairShareImportanceField).SetValue(ratingPerItem, user).ElementItem;
 
             //var fairShareNoItem = fairShareElement.AddItem("Keeper")
-            //    .AddCell(fairShareDesciptionField).SetValue("Indicates that the owner of the organization keeps all the income to himself, ignores the contributions").ElementItem
+            //    .AddCell(fairShareDesciptionField).SetValue("The owner of the organization keeps all the income to himself, ignores the contributions").ElementItem
             //    .AddCell(fairShareImportanceField).SetValue(ratingPerItem, user).ElementItem;
 
             // Main element
@@ -777,19 +777,19 @@
             //    .AddUserRating(user, 100 / 3);
 
             // Items, cell, user cells
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Alpha";
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Tywin";
             mainElement.ElementItemSet.Skip(0).Take(1).Single().ResourcePoolCell.SetValue(100M);
             mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(veryImportantField).SetValue(50M, user);
 
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Beta";
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Tyrion";
             mainElement.ElementItemSet.Skip(1).Take(1).Single().ResourcePoolCell.SetValue(100M);
             mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(veryImportantField).SetValue(50M, user);
 
-            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Charlie";
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Tommen";
             mainElement.ElementItemSet.Skip(2).Take(1).Single().ResourcePoolCell.SetValue(100M);
             mainElement.ElementItemSet.Skip(2).Take(1).Single().AddCell(veryImportantField).SetValue(50M, user);
 
-            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Delta";
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Cersei";
             mainElement.ElementItemSet.Skip(3).Take(1).Single().ResourcePoolCell.SetValue(100M);
             mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(veryImportantField).SetValue(50M, user);
 
@@ -876,11 +876,11 @@
 
             // Items, cell, user cells
             var keeperItem = fairShareElement.AddItem("Keeper")
-                .AddCell(fairShareDesciptionField).SetValue("Indicates that the owner of the organization keeps all the income to himself, ignores the contributions").ElementItem
+                .AddCell(fairShareDesciptionField).SetValue("The owner of the organization keeps all the income to himself, ignores the contributions").ElementItem
                 .AddCell(fairShareRatingField).SetValue(userRating, user).ElementItem;
 
             var sharerItem = fairShareElement.AddItem("Sharer")
-                .AddCell(fairShareDesciptionField).SetValue("Indicates the organization shares it's income with its employees based on their contributions").ElementItem
+                .AddCell(fairShareDesciptionField).SetValue("The organization shares it's income with its employees based on their contributions").ElementItem
                 .AddCell(fairShareRatingField).SetValue(userRating, user).ElementItem;
 
             // Main element
