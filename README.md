@@ -6,10 +6,15 @@ An experimental resource management system that aims to provide a more sustainab
 
 ### Release Notes
 
+**0.14.17**
+
+* Transferred to forCrowd
+
 **0.14.16**
 
 * bootstrap panel for resourcePoolEditor
 * Content updates
+* summary.html, contribute.html, feedback.html were added
 
 **0.14.15**
 
