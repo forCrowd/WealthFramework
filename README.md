@@ -6,6 +6,10 @@ An experimental resource management system that aims to provide a more sustainab
 
 ### Release Notes
 
+**0.14.18**
+
+* Content updates
+
 **0.14.17**
 
 * Transferred to forCrowd
