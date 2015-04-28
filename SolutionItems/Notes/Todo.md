@@ -383,6 +383,16 @@ X-InlineCount
 X-Pagination
 
 ---
+scroll directive (scrollToItem - requires jQuery);
+http://stackoverflow.com/questions/17284005/scrollto-function-in-angularjs
+moving menu (fixed to top of the screen)
+selecting the current item in the menu / updating url?
+navigating to the current item on initial load?
+prevent re-render
+update editor size accordingly (with menu, it doesn't fit to screen)
+check, use anchorScrollTest project?
+
+---
 anti forgery: AntiForgery.GetTokens
 
 ---
