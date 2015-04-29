@@ -585,10 +585,13 @@
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <Content Include="Content\breeze.directives.css" />
+    <Content Include="Content\images\OldSystem.png" />
+    <Content Include="Content\images\NewSystem.png" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
     <Content Include="Content\toastr.scss" />
     <Content Include="Content\toastr.less" />
+    <Content Include="Content\images\Old vs New.pptx" />
     <None Include="Controllers\OData\Generated\ODataController.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

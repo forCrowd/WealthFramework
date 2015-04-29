@@ -9,6 +9,7 @@ An experimental resource management system that aims to provide a more sustainab
 **0.14.18**
 
 * Content updates
+* Social media accounts, links etc.
 
 **0.14.17**
 

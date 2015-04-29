@@ -284,6 +284,9 @@ elementItem - ratingMultiplied function should be cached? but then how to update
 	* eula license?
 	https://www.microsoft.com/en-us/legal/intellectualproperty/useterms/default.aspx
 
+						* check contribute again - donate options? also summary to conclusion?
+						try to finish it asap!!!!!!
+
 	* fair share - it requires some extra work, transparency of the organizations etc. think about it, mention them
 	* indexes pie + cmrp rate could use same sample? update each other? like basics?
 	* should samples details need to be mentioned? all organizations are equal except the indexes, they all have to have same number of sales etc.
