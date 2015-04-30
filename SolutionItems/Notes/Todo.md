@@ -287,6 +287,42 @@ elementItem - ratingMultiplied function should be cached? but then how to update
 						* check contribute again - donate options? also summary to conclusion?
 						try to finish it asap!!!!!!
 
+						* creative commons?
+
+
+										USE DISQUS TO GET THE COMMENT INSTEAD OF EMAIL?
+
+
+						* social media
+						github - OK; https://github.com/forCrowd (existing account)
+						twitter - OK; https://twitter.com/forCrowd (new account)
+						facebook - OK; https://www.facebook.com/forCrowd (existing account)
+						linkedin - OK; https://www.linkedin.com/company/forCrowd (existing account)
+						google plus + youtube - Page + channel are okay, but is it better to create a new account with contact@forcrowd.org?
+						skype
+						ted
+						pinterest
+						instagram
+						others?
+						http://namevine.com/#/forcrowd
+
+						* for comments
+						disqus - OK (new account)
+						https://wealtheconomy.disqus.com/admin/settings/universalcode/
+						facebook?
+						twitter?
+
+						* donate
+						triodos - sign & send;
+						https://www.triodos.nl/downloads/over-triodos-bank/algemene-bankvoorwaarden-2009-triodos-bank.pdf
+						https://www.triodos.nl/downloads/betalen/algemene-voorwaarden-internet-bankieren-zakelijk-gebruik-triodos-bank.pdf
+						https://www.triodos.nl/downloads/betalen/zak-algemene-voorwaarden-triodos-internet-zakenrekening-2011.pdf
+						paypal
+						gratipay (gittip)
+						flattr - OK (new account)
+						eft to bank acc?
+						other payment options?
+
 	* fair share - it requires some extra work, transparency of the organizations etc. think about it, mention them
 	* indexes pie + cmrp rate could use same sample? update each other? like basics?
 	* should samples details need to be mentioned? all organizations are equal except the indexes, they all have to have same number of sales etc.
@@ -295,11 +331,6 @@ elementItem - ratingMultiplied function should be cached? but then how to update
 https://sendgrid.com/blog/tips-tricks-stay-spam-folder-qa/
 https://sendgrid.com/docs/User_Guide/warming_up.html
 http://www.mail-tester.com/
-
-. triodos - sign & send;
-https://www.triodos.nl/downloads/over-triodos-bank/algemene-bankvoorwaarden-2009-triodos-bank.pdf
-https://www.triodos.nl/downloads/betalen/algemene-voorwaarden-internet-bankieren-zakelijk-gebruik-triodos-bank.pdf
-https://www.triodos.nl/downloads/betalen/zak-algemene-voorwaarden-triodos-internet-zakenrekening-2011.pdf
 
 wealth is interested in the following questions;
 . how the society allocates its resources?
