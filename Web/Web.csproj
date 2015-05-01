@@ -587,6 +587,7 @@
     <Content Include="Content\breeze.directives.css" />
     <Content Include="Content\images\OldSystem.png" />
     <Content Include="Content\images\NewSystem.png" />
+    <Content Include="Content\images\paypal_donate.jpg" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
     <Content Include="Content\toastr.scss" />

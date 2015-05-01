@@ -64,10 +64,10 @@
             mainElement.MultiplierField.Name = "Number of Sales";
 
             // Items, cell, user cells
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Tywin";
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Tyrion";
-            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Tommen";
-            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Cersei";
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Alpha";
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Beta";
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Charlie";
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Delta";
 
             // Return
             return resourcePool;
@@ -91,10 +91,10 @@
             mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).ElementFieldIndex.Name = "Employee Satisfaction";
 
             // Items, cell, user cells
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Tywin";
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Tyrion";
-            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Tommen";
-            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Cersei";
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Alpha";
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Beta";
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Charlie";
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Delta";
 
             // Return
             return resourcePool;
@@ -777,19 +777,19 @@
             //    .AddUserRating(user, 100 / 3);
 
             // Items, cell, user cells
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Tywin";
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Alpha";
             mainElement.ElementItemSet.Skip(0).Take(1).Single().ResourcePoolCell.SetValue(100M);
             mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(veryImportantField).SetValue(50M, user);
 
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Tyrion";
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Beta";
             mainElement.ElementItemSet.Skip(1).Take(1).Single().ResourcePoolCell.SetValue(100M);
             mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(veryImportantField).SetValue(50M, user);
 
-            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Tommen";
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Charlie";
             mainElement.ElementItemSet.Skip(2).Take(1).Single().ResourcePoolCell.SetValue(100M);
             mainElement.ElementItemSet.Skip(2).Take(1).Single().AddCell(veryImportantField).SetValue(50M, user);
 
-            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Cersei";
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Delta";
             mainElement.ElementItemSet.Skip(3).Take(1).Single().ResourcePoolCell.SetValue(100M);
             mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(veryImportantField).SetValue(50M, user);
 

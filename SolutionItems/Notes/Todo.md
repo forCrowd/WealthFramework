@@ -289,16 +289,13 @@ elementItem - ratingMultiplied function should be cached? but then how to update
 
 						* creative commons?
 
-
-										USE DISQUS TO GET THE COMMENT INSTEAD OF EMAIL?
-
-
 						* social media
 						github - OK; https://github.com/forCrowd (existing account)
 						twitter - OK; https://twitter.com/forCrowd (new account)
 						facebook - OK; https://www.facebook.com/forCrowd (existing account)
 						linkedin - OK; https://www.linkedin.com/company/forCrowd (existing account)
-						google plus + youtube - Page + channel are okay, but is it better to create a new account with contact@forcrowd.org?
+						google plus + youtube - Page + channel are okay with existing account, but is it better to create a new account with contact@forcrowd.org?
+						youtube.com/forCrowd - plus.google.com/forCrowd
 						skype
 						ted
 						pinterest
@@ -318,10 +315,18 @@ elementItem - ratingMultiplied function should be cached? but then how to update
 						https://www.triodos.nl/downloads/betalen/algemene-voorwaarden-internet-bankieren-zakelijk-gebruik-triodos-bank.pdf
 						https://www.triodos.nl/downloads/betalen/zak-algemene-voorwaarden-triodos-internet-zakenrekening-2011.pdf
 						paypal
-						gratipay (gittip)
+						gratipay (gittip) - OK (new account)
+						https://gratipay.com/about/policies/terms-and-conditions
 						flattr - OK (new account)
 						eft to bank acc?
 						other payment options?
+
+						* tracking
+						google analytics - OK (existing account)
+
+						* ssl
+						https://www.globalsign.com/en/ssl/ssl-open-source/
+						https://www.godaddy.com/ssl/ssl-open-source.aspx?ci=37130&isc=apr2015d
 
 	* fair share - it requires some extra work, transparency of the organizations etc. think about it, mention them
 	* indexes pie + cmrp rate could use same sample? update each other? like basics?

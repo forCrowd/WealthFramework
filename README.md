@@ -6,10 +6,16 @@ An experimental resource management system that aims to provide a more sustainab
 
 ### Release Notes
 
+**0.15**
+
+* Twitter, Facebook, GitHub, LinkedIn, Google Plus, Youtube Channel, Disqus, Flattr, Gratipay accounts were created
+* MIT License was added
+* It's Open Source & Encourage Us contents were updated / added
+* Google Analytics was added
+
 **0.14.18**
 
-* Content updates
-* Social media accounts, links etc.
+* Content updates etc.
 
 **0.14.17**
 
