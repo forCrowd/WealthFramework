@@ -11,6 +11,7 @@ using Web.Controllers.Extensions;
 
 namespace Web.Controllers.OData
 {
+    [CustomAuthorize]
     public abstract class BaseODataController : ODataController
     {
         private UserManager _userManager;

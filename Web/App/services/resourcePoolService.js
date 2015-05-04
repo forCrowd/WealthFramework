@@ -31,12 +31,14 @@
 
             query = query.using(breeze.FetchStrategy.FromServer);
 
+            logger.log('query', query);
+
             return dataContext.executeQuery(query)
                 .then(success).catch(failed);
 
             function success(response) {
                 var count = response.results.length;
-                //logger.logSuccess('Got ' + count + ' resourcePool(s)', response, true);
+                logger.logSuccess('Got ' + count + ' resourcePool(s)', response, true);
                 return response.results;
             }
 

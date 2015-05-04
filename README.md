@@ -6,6 +6,12 @@ An experimental resource management system that aims to provide a more sustainab
 
 ### Release Notes
 
+**0.16**
+
+* AllowAnony..?
+* Paypal logo update
+* Logo Contest page (but can be removed)
+
 **0.15**
 
 * Twitter, Facebook, GitHub, LinkedIn, Google Plus, Youtube Channel, Disqus, Flattr, Gratipay accounts were created

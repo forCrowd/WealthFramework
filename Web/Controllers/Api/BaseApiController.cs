@@ -10,6 +10,7 @@ using Web.Controllers.Extensions;
 
 namespace Web.Controllers.Api
 {
+    [CustomAuthorize]
     public abstract class BaseApiController : ApiController
     {
         private UserManager _userManager;

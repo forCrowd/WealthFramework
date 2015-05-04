@@ -12,6 +12,7 @@
         var vm = this;
         vm.authorized = false; // TODO Improve this 'authorized' part?
 
+        // Check this part later!
         userService.getUserInfo()
             .then(function (userInfo) {
 
@@ -19,6 +20,8 @@
 
                 initialize();
             });
+
+        initialize();
 
         // User logged out
         $rootScope.$on('userLoggedOut', function () {

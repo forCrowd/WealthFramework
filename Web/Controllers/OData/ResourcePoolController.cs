@@ -10,6 +10,20 @@ namespace Web.Controllers.OData
 
     public partial class ResourcePoolController
     {
+        [AllowAnonymous]
+        public override IQueryable<ResourcePool> Get()
+        {
+            var result = base.Get();
+            return result;
+        }
+
+        [AllowAnonymous]
+        public override SingleResult<ResourcePool> Get(int key)
+        {
+            var result = base.Get(key);
+            return result;
+        }
+
         // POST odata/ResourcePool
         public override async Task<IHttpActionResult> Post(ResourcePool resourcePool)
         {

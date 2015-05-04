@@ -134,6 +134,9 @@
 
                 resourcePoolService.getResourcePoolExpanded(scope.resourcePoolId)
                     .then(function (data) {
+
+                        logger.log('data', data);
+
                         scope.resourcePool = data[0];
 
                         // Current element
