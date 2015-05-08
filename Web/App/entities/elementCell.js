@@ -146,14 +146,9 @@
 
                 //if (self._ratingMultiplied === null) {
 
-                    var multiplierValue = 0;
-
-                    if (typeof self.ElementItem !== 'undefined')
-                        multiplierValue = self.ElementItem.multiplierValue();
-
                     //self._ratingMultiplied = self.rating() * multiplierValue;
 
-                    return self.rating() * multiplierValue;
+                    return self.rating() * self.ElementItem.multiplierValue();
                 //}
 
                 //return self._ratingMultiplied;

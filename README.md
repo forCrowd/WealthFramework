@@ -6,6 +6,13 @@ An experimental resource management system that aims to provide a more sustainab
 
 ### Release Notes
 
+**0.16.1**
+
+* IsAuthenticated fix for ResourcePool - UserResourcePool property
+* Total Cost Index sample Id fix
+* elementItem multiplierValue default value 0 doesn't work for Index Income field, which is an issue but will be fixed later. For now default value is 1 again
+* Hid "Save failed" log messages
+
 **0.16**
 
 * ResourcePool samples could be retrieved without authorization now

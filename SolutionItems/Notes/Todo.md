@@ -281,15 +281,11 @@ elementItem - ratingMultiplied function should be cached? but then how to update
 
 	* continue with cmrp rate content + summary?
 	* users should choose the ideal rate/ratings - it shouldn't be experimental? especially license ratings, index ratings, cmrp rate!
-	* eula license?
-	https://www.microsoft.com/en-us/legal/intellectualproperty/useterms/default.aspx
+	
+												* eula license?
+												https://www.microsoft.com/en-us/legal/intellectualproperty/useterms/default.aspx
 
-						* check contribute again - donate options? also summary to conclusion?
-						try to finish it asap!!!!!!
-
-
-						* CONTINUE WITH SIGN IN SIGN UP PARTS! - INTRODUCTIONCONTROLLER.JS! INITIALIZE() METHOD!
-
+												* delayed save option!
 
 						* creative commons?
 

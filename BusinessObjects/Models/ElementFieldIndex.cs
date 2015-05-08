@@ -20,7 +20,8 @@ namespace BusinessObjects
             UserElementFieldIndexSet = new HashSet<UserElementFieldIndex>();
         }
 
-        public ElementFieldIndex(ElementField field, string name) : this()
+        public ElementFieldIndex(ElementField field, string name)
+            : this()
         {
             //Validations.ArgumentNullOrDefault(resourcePool, "resourcePool");
             Validations.ArgumentNullOrDefault(field, "field");
@@ -69,7 +70,13 @@ namespace BusinessObjects
 
         public UserElementFieldIndex UserElementFieldIndex
         {
-            get { return UserElementFieldIndexSet.SingleOrDefault(); }
+            get
+            {
+                    if (!System.Threading.Thread.CurrentPrincipal.Identity.IsAuthenticated)
+                        return null;
+
+                    return UserElementFieldIndexSet.SingleOrDefault();
+            }
         }
 
         public decimal? OtherUsersIndexRatingTotal

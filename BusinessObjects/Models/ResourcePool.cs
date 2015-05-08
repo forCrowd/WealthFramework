@@ -24,7 +24,8 @@ namespace BusinessObjects
             //FilterSettings = new ResourcePoolFilterSettings();
         }
 
-        public ResourcePool(string name) : this()
+        public ResourcePool(string name)
+            : this()
         {
             Validations.ArgumentNullOrDefault(name, "name");
 
@@ -78,7 +79,13 @@ namespace BusinessObjects
 
         public UserResourcePool UserResourcePool
         {
-            get { return UserResourcePoolSet.SingleOrDefault(); }
+            get
+            {
+                if (!System.Threading.Thread.CurrentPrincipal.Identity.IsAuthenticated)
+                    return null;
+
+                return UserResourcePoolSet.SingleOrDefault();
+            }
         }
 
         public decimal? OtherUsersResourcePoolRateTotal
@@ -92,7 +99,7 @@ namespace BusinessObjects
                 var count = ResourcePoolRateCount.GetValueOrDefault(0);
                 var total = average * count;
 
-                if (System.Threading.Thread.CurrentPrincipal.Identity.IsAuthenticated && UserResourcePool != null)
+                if (UserResourcePool != null)
                     total -= UserResourcePool.ResourcePoolRate;
 
                 return total;
@@ -110,8 +117,7 @@ namespace BusinessObjects
             {
                 var count = ResourcePoolRateCount.GetValueOrDefault(0);
 
-                //if (UserResourcePool != null)
-                if (System.Threading.Thread.CurrentPrincipal.Identity.IsAuthenticated)
+                if (UserResourcePool != null)
                     count--;
 
                 return count;

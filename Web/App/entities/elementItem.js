@@ -164,8 +164,13 @@
 
                 if (self.multiplierCell() === null
                     || self.multiplierCell().userElementCell() === null
-                    || self.multiplierCell().userElementCell().DecimalValue === null)
-                    return 0; // Default value
+                    || self.multiplierCell().userElementCell().DecimalValue === null) {
+
+                    // TODO Something wrong with the usage of this function, when this default value is 0, Index Income fails
+                    // Probably Index Income is calculated based on its own element, instead of Main Element's multiplier!
+                    return 1; // Default value
+
+                }
 
                 return self.multiplierCell().userElementCell().DecimalValue;
             }

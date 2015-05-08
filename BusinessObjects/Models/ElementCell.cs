@@ -73,7 +73,13 @@ namespace BusinessObjects
 
         public UserElementCell UserElementCell
         {
-            get { return UserElementCellSet.SingleOrDefault(); }
+            get
+            {
+                if (!System.Threading.Thread.CurrentPrincipal.Identity.IsAuthenticated)
+                    return null;
+
+                return UserElementCellSet.SingleOrDefault();
+            }
         }
 
         public decimal? OtherUsersRatingTotal
@@ -87,7 +93,7 @@ namespace BusinessObjects
                 var count = RatingCount.GetValueOrDefault(0);
                 var total = average * count;
 
-                if (System.Threading.Thread.CurrentPrincipal.Identity.IsAuthenticated && UserElementCell != null && UserElementCell.DecimalValue.HasValue)
+                if (UserElementCell != null && UserElementCell.DecimalValue.HasValue)
                     total -= UserElementCell.DecimalValue.Value;
 
                 return total;
@@ -111,7 +117,7 @@ namespace BusinessObjects
             {
                 var count = RatingCount.GetValueOrDefault(0);
 
-                if (System.Threading.Thread.CurrentPrincipal.Identity.IsAuthenticated && UserElementCell != null && UserElementCell.DecimalValue.HasValue)
+                if (UserElementCell != null && UserElementCell.DecimalValue.HasValue)
                     count--;
 
                 return count;
