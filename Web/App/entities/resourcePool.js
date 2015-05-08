@@ -211,42 +211,6 @@
 
                 return self.resourcePoolRate() / 100;
             }
-
-            // CMRP Rate
-            self.updateResourcePoolRate = function (updateType) {
-
-                // Determines whether there is an update
-                var updated = false;
-
-                // Validate
-                if (self.userResourcePool() === null) {
-
-                    // TODO createEntity!
-                    // userResourcePool.ResourcePoolRate = ?; Based on updateType
-                    //updated = true;
-
-                } else {
-
-                    var value = self.userResourcePool().ResourcePoolRate;
-
-                    if (updateType === 'increase' && value < 500) {
-
-                        value = value + 5 >= 500 ? 500 : value + 5;
-                        updated = true;
-                    } else if (updateType === 'decrease' && value > 0) {
-
-                        value = value - 5 <= 0 ? 0 : value - 5;
-                        updated = true;
-                    }
-
-                    if (updated)
-                        self.userResourcePool().ResourcePoolRate = value;
-                }
-
-                // Return
-                return updated;
-
-            }
         }
     }
 })();

@@ -27,8 +27,8 @@
         // TODO This doesn't hide base.Context, UserManager can still access to Store.Context?
         private new WealthEconomyContext Context { get { return (WealthEconomyContext)base.Context; } }
 
-        DbSet<ResourcePool> ResourcePoolSet { get { return Context.Set<ResourcePool>(); } }
         DbSet<UserResourcePool> UserResourcePoolSet { get { return Context.Set<UserResourcePool>(); } }
+        DbSet<UserElementFieldIndex> UserElementFieldIndexSet { get { return Context.Set<UserElementFieldIndex>(); } }
         DbSet<UserElementCell> UserElementCellSet { get { return Context.Set<UserElementCell>(); } }
 
         public async Task SaveChangesAsync()
@@ -56,11 +56,17 @@
             {
                 var targetUserResourcePool = sourceUserResourcePool.ResourcePool
                     .AddUserResourcePool(targetUser, sourceUserResourcePool.ResourcePoolRate);
+            }
 
-                // Indexes
-                //var sourceUserElementFieldIndexes = sourceUserResourcePool.UserElementFieldIndexSet;
-                //foreach (var sourceIndex in sourceUserElementFieldIndexes)
-                //    targetUserResourcePool.AddIndex(sourceIndex.ElementFieldIndex, sourceIndex.Rating);
+            // Field indexes
+            var sourceUserFieldIndexes = await UserElementFieldIndexSet
+                .Get(item => item.UserId == sourceUserId && item.ElementFieldIndex.ElementField.Element.ResourcePool.IsSample,
+                item => item.ElementFieldIndex)
+                .ToListAsync();
+
+            foreach (var sourceUserElementFieldIndex in sourceUserFieldIndexes)
+            {
+                sourceUserElementFieldIndex.ElementFieldIndex.AddUserRating(targetUser, sourceUserElementFieldIndex.Rating);
             }
 
             // Element cells
@@ -137,8 +143,8 @@
             //    //resourcePool.RemoveUserResourcePool(userResourcePool);
             //    UserResourcePoolSet.Remove(userResourcePool);
             //}
-                //userResourcePool.ResourcePool.UserResourcePoolSet.Remove(userResourcePool);
-                //await DeleteResourcePoolDataByIdAsync(userId, resourcePoolId);
+            //userResourcePool.ResourcePool.UserResourcePoolSet.Remove(userResourcePool);
+            //await DeleteResourcePoolDataByIdAsync(userId, resourcePoolId);
         }
 
         public async Task DeleteResourcePoolDataAsync(int userId)

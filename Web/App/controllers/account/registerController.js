@@ -14,8 +14,22 @@
         function register() {
             userService.register(vm)
                 .success(function () {
-                    $location.path('/');
+
                     logger.logSuccess('You have been registered!', null, true);
+
+                    userService.getAccessToken(vm.email, vm.password)
+                        .success(function () {
+                            $location.path('/');
+                        })
+                        .error(function (response) {
+                            if (typeof response.error_description !== 'undefined') {
+                                logger.logError(response.error_description, null, true);
+                            } else {
+                                logger.logError(response, null, true);
+                            }
+                        });
+
+                    //$location.path('/');
                 });
         }
     };

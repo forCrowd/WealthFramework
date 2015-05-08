@@ -1,77 +1,79 @@
-﻿<div class="row">
-    <div class="col-md-12">
-        <h3>
-            Fair Share Index - Income Inequality Part II: Sharers vs. Keepers
-        </h3>
-        <p>
-            Most of the organizations in the market uses a classic approach;
-            the business owner makes the initial investment while creating the business and sets the rules in favor of himself, most importantly this lets him to get all the profit.
-            Meaning that even after years of work and significant contributions, most of the employees will not get a share from organization's income
-            but get a fixed salary. In the long term, since the organization owners keep getting a bigger pie from the income and not sharing it accordingly,
-            this type of income distribution becomes another root cause of "Income Inequality".
-        </p>
-        <p>
-            If organizations could try to measure all types of contributions, including the owner's, then share the income based on this result,
-            it would have a significant impact on the society, the difference between the owners and the workers would be much more small.
-        </p>
-        <p>
-            Although giving shares to employees is not something new, it is used in a nonstandard way, by limited organizations
-            and the organizations are not explicitly rewarded for this approach.
-            On the contrary, it could be used in a much wider sense and be encouraged in a systematic way.
-            <!--There are already many organizations that give some share to their employees, especially startups,
-            in order to motivate them. However, it's still very limited and this approach could be used in a much wider sense and be encouraged in a systematic way.-->
-            <!--It's important to note that if an organization tries this approach, share the income with its employees in a fair way, in the current system,
-            this wouldn't have any financial benefit to that organization. At best, the organization could try to communicate with its consumer about this detail,
-            which may or may not increase their sales number.-->
-        </p>
-        <p>
-            <!--By using <code>Fair Share Index</code>, we can categorize the organizations into "Sharers" vs. "Keepers".-->
-            By using <code>Fair Share Index</code>, we can categorize the organizations by their approach of how they distribute their income,
-            whether they ignore or count the various contributions from their workers.
-        </p>
-        <p>
-            In the following sample, we will use two categories under Fair Share;
+﻿<div data-ng-controller="fairShareIndexSampleController as vm">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>
+                Fair Share Index - Income Inequality Part II: Sharers vs. Keepers
+            </h3>
+            <p>
+                Most of the organizations in the market uses a classic approach;
+                the business owner makes the initial investment while creating the business and sets the rules in favor of himself, most importantly this lets him to get all the profit.
+                Meaning that even after years of work and significant contributions, most of the employees will not get a share from organization's income
+                but get a fixed salary. In the long term, since the organization owners keep getting a bigger pie from the income and not sharing it accordingly,
+                this type of income distribution becomes another root cause of "Income Inequality".
+            </p>
+            <p>
+                If organizations could try to measure all types of contributions, including the owner's, then share the income based on this result,
+                it would have a significant impact on the society, the difference between the owners and the workers would be much more small.
+            </p>
+            <p>
+                Although giving shares to employees is not something new, it is used in a nonstandard way, by limited organizations
+                and the organizations are not explicitly rewarded for this approach.
+                On the contrary, it could be used in a much wider sense and be encouraged in a systematic way.
+                <!--There are already many organizations that give some share to their employees, especially startups,
+                in order to motivate them. However, it's still very limited and this approach could be used in a much wider sense and be encouraged in a systematic way.-->
+                <!--It's important to note that if an organization tries this approach, share the income with its employees in a fair way, in the current system,
+                this wouldn't have any financial benefit to that organization. At best, the organization could try to communicate with its consumer about this detail,
+                which may or may not increase their sales number.-->
+            </p>
+            <p>
+                <!--By using <code>Fair Share Index</code>, we can categorize the organizations into "Sharers" vs. "Keepers".-->
+                By using <code>Fair Share Index</code>, we can categorize the organizations by their approach of how they distribute their income,
+                whether they ignore or count the various contributions from their workers.
+            </p>
+            <p>
+                In the following sample, we will use two categories under Fair Share;
+                <ul>
+                    <li>Keepers: Uses the classic approach; the owner gets all the profit, workers get fixed salary, regardless of the workers' contributions.</li>
+                    <li>Sharers: Measures all positive and negative contributions and distributes the income based on the outcome.
+                </ul>
+                Again it's up to us to decide and rate which option fits to society in order to have a better income distribution.
+                Then the organizations will get an income from the pool based on their approach.
+            </p>
             <ul>
-                <li>Keepers: Uses the classic approach; the owner gets all the profit, workers get fixed salary, regardless of the workers' contributions.</li>
-                <li>Sharers: Measures all positive and negative contributions and distributes the income based on the outcome.
-            </ul>
-            Again it's up to us to decide and rate which option fits to society in order to have a better income distribution.
-            Then the organizations will get an income from the pool based on their approach.
-        </p>
-        <ul>
-            <li>
-                By using <code>+</code> button increase <code>Number of Sales</code>, initially all organizations will have same <code>Total Income</code>.
-            </li>
-            <li>
-                Click on <code>Fair Share</code> link below and rate both items based on their importance.
-            </li>
-            <li>
-                By using breadcrumb links, you can navigate back to initial <code>Organization</code> view to see the difference in <code>Total Income</code>.
-            </li>
-            <li>
-                Toggle <code>Display</code> between <code>Only My Ratings</code> and <code>All Ratings</code> to see only your ratings or the average of all users'.
-            </li>
-        </ul>
-        <resource-pool-editor resource-pool-id="10"></resource-pool-editor>
-        <p>
-            Developing a standard for measuring the contributions is not in the scope of this project.
-            Obviously it is not an easy task and would require many discussions from various parties.
-            Certain questions need to be addressed;
-            <ul>
-                <li>What will be the advantages of being the owner and taking the initialize?</li>
                 <li>
-                    Even if the organization doesn't have enough income, some workers would like to get paid for their service.
-                    What would be the benefit of taking a risk and investing in the organization in the long term?
+                    By using <code>+</code> button increase <code>Number of Sales</code>, initially all organizations will have same <code>Total Income</code>.
                 </li>
-                <li>Should the negative contributions be counted and how much they should affect the income?</li>
-                <li>What should happen if an organization is getting smaller?</li>
                 <li>
-                    When an organization declares that it shares the income based on contributions,
-                    how this could actually be ensured and by who, by official inspectors, workers or other citizens?
+                    Click on <code>Fair Share</code> link below and rate both items based on their importance.
+                </li>
+                <li>
+                    By using breadcrumb links, you can navigate back to initial <code>Organization</code> view to see the difference in <code>Total Income</code>.
+                </li>
+                <li>
+                    Toggle <code>Display</code> between <code>Only My Ratings</code> and <code>All Ratings</code> to see only your ratings or the average of all users'.
                 </li>
             </ul>
-            Without answering these questions and having a standard, <code>Fair Share Index</code> might be the least practical index in this system.
-            However we believe it can still be a good sample on how we could approach to "Income Inequality" issue.
-        </p>
+            <resource-pool-editor resource-pool-id="vm.fairShareIndex_SampleResourcePoolId"></resource-pool-editor>
+            <p>
+                Developing a standard for measuring the contributions is not in the scope of this project.
+                Obviously it is not an easy task and would require many discussions from various parties.
+                Certain questions need to be addressed;
+                <ul>
+                    <li>What will be the advantages of being the owner and taking the initialize?</li>
+                    <li>
+                        Even if the organization doesn't have enough income, some workers would like to get paid for their service.
+                        What would be the benefit of taking a risk and investing in the organization in the long term?
+                    </li>
+                    <li>Should the negative contributions be counted and how much they should affect the income?</li>
+                    <li>What should happen if an organization is getting smaller?</li>
+                    <li>
+                        When an organization declares that it shares the income based on contributions,
+                        how this could actually be ensured and by who, by official inspectors, workers or other citizens?
+                    </li>
+                </ul>
+                Without answering these questions and having a standard, <code>Fair Share Index</code> might be the least practical index in this system.
+                However we believe it can still be a good sample on how we could approach to "Income Inequality" issue.
+            </p>
+        </div>
     </div>
 </div>

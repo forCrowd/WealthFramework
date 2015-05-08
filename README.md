@@ -8,9 +8,10 @@ An experimental resource management system that aims to provide a more sustainab
 
 **0.16**
 
-* AllowAnony..?
+* ResourcePool samples could be retrieved without authorization now
+* CopySampleDataAsync in UserStore also copies sample field index values
+* createEntity cases implemented for userResourcePool, userElementCell and userElementFieldIndex entities
 * Paypal logo update
-* Logo Contest page (but can be removed)
 
 **0.15**
 

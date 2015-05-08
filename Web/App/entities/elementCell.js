@@ -146,7 +146,7 @@
 
                 //if (self._ratingMultiplied === null) {
 
-                    var multiplierValue = 1;
+                    var multiplierValue = 0;
 
                     if (typeof self.ElementItem !== 'undefined')
                         multiplierValue = self.ElementItem.multiplierValue();
@@ -261,49 +261,6 @@
                         return 0;
                     }
                 }
-            }
-
-            self.updateIndexRating = function (updateType) {
-
-                // Determines whether there is an update
-                var updated = false;
-
-                // Validate
-                if (self.ElementField.ElementFieldIndexSet.length === 0)
-                    return updated;
-
-                if (self.userElementCell() === null) {
-
-                    //self.RatingCount++;
-                    // TODO createEntity!
-                    // userElementCell.DecimalValue = ?; Based on updateType
-                    //updated = true;
-                } else {
-
-                    var value = 0;
-
-                    if (self.userElementCell().DecimalValue !== null) {
-                        value = self.userElementCell().DecimalValue;
-                    } else {
-                        // TODO?
-                    }
-
-                    if (updateType === 'increase' && value < 100) {
-
-                        value = value + 5 >= 100 ? 100 : value + 5;
-                        updated = true;
-                    } else if (updateType === 'decrease' && value > 0) {
-
-                        value = value - 5 <= 0 ? 0 : value - 5;
-                        updated = true;
-                    }
-
-                    if (updated)
-                        self.userElementCell().DecimalValue = value;
-                }
-
-                // Return
-                return updated;
             }
         }
     }

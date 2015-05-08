@@ -319,7 +319,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\controllers\content\basicsController.js" />
+    <Content Include="App\controllers\content\resourcePoolRateSampleController.js" />
+    <Content Include="App\controllers\content\indexesPieSampleController.js" />
     <Content Include="App\controllers\content\knowledgeIndexSampleController.js" />
+    <Content Include="App\controllers\content\fairShareIndexSampleController.js" />
+    <Content Include="App\controllers\content\totalCostIndexSampleController.js" />
     <Content Include="App\controllers\content\sectorIndexSampleController.js" />
     <Content Include="App\controllers\content\introductionController.js" />
     <Content Include="App\controllers\manage\edit\elementCellEditController.js">
@@ -449,9 +453,9 @@
     </Content>
     <Content Include="App\services\resourcePoolService.js" />
     <Content Include="App\views\content\logos.html" />
-    <Content Include="App\views\content\contribute.html" />
+    <Content Include="App\views\content\closingNotes.html" />
     <Content Include="App\views\content\feedback.html" />
-    <Content Include="App\views\content\summary.html" />
+    <Content Include="App\views\content\conclusion.html" />
     <Content Include="App\views\content\basics.html" />
     <Content Include="App\views\content\allInOneSample.html" />
     <Content Include="App\views\content\resourcePoolRateSample.html" />

@@ -1,44 +1,46 @@
-﻿<div class="row">
-    <div class="col-md-12">
-        <h3>
-            CMRP Rate
-        </h3>
-        <p>
-            <code>CMRP Rate</code> determines the size of the pool, if it gets bigger, the amount that we can control through the pool gets bigger as well.
-            In the previous samples, this number was fixed and it was 10% of the total spendings in the system.
-            However, like other variables in the system, this rate can also be decided collectively.
-        </p>
-        <!--<p>
-            To be able to make a difference in the system, we're allocating the money that has been in the pool.
-            In the previous samples, this amount was always fixed and it was 50% higher than <code>Total Sales Price</code>.
-            In reality, this money has to come from somewhere.
-        </p>
-        <p>
-            Ideal way of creating a <code>Resource Pool</code> would be to collect some portion of the money from every transaction,
-            like value added tax. However, as seen already, with two important exceptions;
-            <ol>
+﻿<div data-ng-controller="resourcePoolRateSampleController as vm">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>
+                CMRP Rate
+            </h3>
+            <p>
+                <code>CMRP Rate</code> determines the size of the pool, if it gets bigger, the amount that we can control through the pool gets bigger as well.
+                In the previous samples, this number was fixed and it was 10% of the total spendings in the system.
+                However, like other variables in the system, this rate can also be decided collectively.
+            </p>
+            <!--<p>
+                To be able to make a difference in the system, we're allocating the money that has been in the pool.
+                In the previous samples, this amount was always fixed and it was 50% higher than <code>Total Sales Price</code>.
+                In reality, this money has to come from somewhere.
+            </p>
+            <p>
+                Ideal way of creating a <code>Resource Pool</code> would be to collect some portion of the money from every transaction,
+                like value added tax. However, as seen already, with two important exceptions;
+                <ol>
+                    <li>
+                        We the people will control how this pool will be distributed
+                    </li>
+                    <li>
+                        Every organization in the system can get a share from this pie based on their performance
+                    </li>
+                </ol>
+            </p>
+            <p>
+                As like other parameters of the system, this rate could also be decided collectively.
+            </p>-->
+            <ul>
                 <li>
-                    We the people will control how this pool will be distributed
+                    By using <code>+</code> button increase <code>Number of Sales</code>, since <code>CMRP Rate</code> is 0%, initially <code>Index Income</code> will be 0 for all organizations.
                 </li>
                 <li>
-                    Every organization in the system can get a share from this pie based on their performance
+                    Increase <code>CMRP Rate</code> by using <code>+</code> next to it, which will increase <code>CMRP Amount</code> to be distributed.
                 </li>
-            </ol>
-        </p>
-        <p>
-            As like other parameters of the system, this rate could also be decided collectively.
-        </p>-->
-        <ul>
-            <li>
-                By using <code>+</code> button increase <code>Number of Sales</code>, since <code>CMRP Rate</code> is 0%, initially <code>Index Income</code> will be 0 for all organizations.
-            </li>
-            <li>
-                Increase <code>CMRP Rate</code> by using <code>+</code> next to it, which will increase <code>CMRP Amount</code> to be distributed.
-            </li>
-            <li>
-                Toggle <code>Display</code> between <code>Only My Ratings</code> and <code>All Ratings</code> to see only your ratings or the average of all users'.
-            </li>
-        </ul>
-        <resource-pool-editor resource-pool-id="12"></resource-pool-editor>
+                <li>
+                    Toggle <code>Display</code> between <code>Only My Ratings</code> and <code>All Ratings</code> to see only your ratings or the average of all users'.
+                </li>
+            </ul>
+            <resource-pool-editor resource-pool-id="vm.resourcePoolRate_SampleResourcePoolId"></resource-pool-editor>
+        </div>
     </div>
 </div>

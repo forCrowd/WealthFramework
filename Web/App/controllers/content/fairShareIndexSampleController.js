@@ -1,17 +1,17 @@
 ﻿(function () {
     'use strict';
 
-    var controllerId = 'sectorIndexSampleController';
+    var controllerId = 'fairShareIndexSampleController';
     angular.module('main')
-        .controller(controllerId, ['userService', '$rootScope', 'logger', sectorIndexSampleController]);
+        .controller(controllerId, ['userService', '$rootScope', 'logger', fairShareIndexSampleController]);
 
-    function sectorIndexSampleController(userService, $rootScope, logger) {
+    function fairShareIndexSampleController(userService, $rootScope, logger) {
 
         logger = logger.forSource(controllerId);
 
         var vm = this;
         vm.authorized = false;
-        vm.sectorIndex_SampleResourcePoolId = 4;
+        vm.fairShareIndex_SampleResourcePoolId = 10;
 
         // Logged in?
         userService.getUserInfo()

@@ -87,7 +87,7 @@ namespace BusinessObjects
                 var count = RatingCount.GetValueOrDefault(0);
                 var total = average * count;
 
-                if (UserElementCell != null && UserElementCell.DecimalValue.HasValue)
+                if (System.Threading.Thread.CurrentPrincipal.Identity.IsAuthenticated && UserElementCell != null && UserElementCell.DecimalValue.HasValue)
                     total -= UserElementCell.DecimalValue.Value;
 
                 return total;
@@ -111,7 +111,7 @@ namespace BusinessObjects
             {
                 var count = RatingCount.GetValueOrDefault(0);
 
-                if (UserElementCell != null && UserElementCell.DecimalValue.HasValue)
+                if (System.Threading.Thread.CurrentPrincipal.Identity.IsAuthenticated && UserElementCell != null && UserElementCell.DecimalValue.HasValue)
                     count--;
 
                 return count;

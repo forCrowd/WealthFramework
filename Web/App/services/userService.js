@@ -82,7 +82,7 @@
                     userInfo = null;
 
                     // Clear breeze's metadata store
-                    dataContext.initializeStore();
+                    dataContext.clear();
 
                     // Raise logged outevent
                     $rootScope.$broadcast('userLoggedOut');

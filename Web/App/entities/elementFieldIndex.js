@@ -221,42 +221,6 @@
 
                 return value;
             }
-
-            self.updateIndexRating = function (updateType) {
-
-                // Determines whether there is an update
-                var updated = false;
-
-                //// Validate
-                //if (self.ElementField.ElementFieldIndexSet.length === 0)
-                //    return updated;
-
-                if (self.userElementFieldIndex() === null) {
-
-                    // TODO createEntity!
-                    // UserElementFieldIndexSet.DecimalValue = ?; Based on updateType
-                    //updated = true;
-                } else {
-
-                    var value = self.userElementFieldIndex().Rating;
-
-                    if (updateType === 'increase' && value < 100) {
-
-                        value = value + 5 >= 100 ? 100 : value + 5;
-                        updated = true;
-                    } else if (updateType === 'decrease' && value > 0) {
-
-                        value = value - 5 <= 0 ? 0 : value - 5;
-                        updated = true;
-                    }
-
-                    if (updated)
-                        self.userElementFieldIndex().Rating = value;
-                }
-
-                // Return
-                return updated;
-            }
         }
     }
 })();

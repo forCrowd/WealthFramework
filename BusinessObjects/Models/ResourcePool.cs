@@ -92,7 +92,7 @@ namespace BusinessObjects
                 var count = ResourcePoolRateCount.GetValueOrDefault(0);
                 var total = average * count;
 
-                if (UserResourcePool != null)
+                if (System.Threading.Thread.CurrentPrincipal.Identity.IsAuthenticated && UserResourcePool != null)
                     total -= UserResourcePool.ResourcePoolRate;
 
                 return total;
@@ -110,7 +110,8 @@ namespace BusinessObjects
             {
                 var count = ResourcePoolRateCount.GetValueOrDefault(0);
 
-                if (UserResourcePool != null)
+                //if (UserResourcePool != null)
+                if (System.Threading.Thread.CurrentPrincipal.Identity.IsAuthenticated)
                     count--;
 
                 return count;

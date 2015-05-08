@@ -1,44 +1,46 @@
-﻿<div class="row">
-    <div class="col-md-12">
-        <h3>
-            Indexes Pie
-        </h3>
-        <p>
-            In the previous samples, there was one index per CMRP.
-            However in most cases, there will be mixture of indexes to determine which organization is more beneficial to the society.
-            Since not every index is equally important, their share within the pool also need to be set.
-        </p>
-        <p>
-            <code>Indexes</code> view allows us to compare and rate each index within the pool.
-        </p>
-        <p>
-            In the following sample, we will see one organization with previously mentioned indexes.
-            Here is a quick summary of the indexes:
+﻿<div data-ng-controller="indexesPieSampleController as vm">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>
+                Indexes Pie
+            </h3>
+            <p>
+                In the previous samples, there was one index per CMRP.
+                However in most cases, there will be mixture of indexes to determine which organization is more beneficial to the society.
+                Since not every index is equally important, their share within the pool also need to be set.
+            </p>
+            <p>
+                <code>Indexes</code> view allows us to compare and rate each index within the pool.
+            </p>
+            <p>
+                In the following sample, we will see one organization with previously mentioned indexes.
+                Here is a quick summary of the indexes:
+                <ul>
+                    <li>Sector Index: What type of issues that the organization is trying to solve, how fundamental they are?</li>
+                    <li>Knowledge Index: Is the organization sharing its knowledge with the society or keeping it to itself?</li>
+                    <li>Total Cost Index: What is the cost of the organization to the society?</li>
+                    <li>Fair Share Index: Does the organization share its income with its workers by measuring each member's contribution?</li>
+                </ul>
+                Please rate these indexes based on their importance and set how much an index should control the amount in the pool.
+            </p>
             <ul>
-                <li>Sector Index: What type of issues that the organization is trying to solve, how fundamental they are?</li>
-                <li>Knowledge Index: Is the organization sharing its knowledge with the society or keeping it to itself?</li>
-                <li>Total Cost Index: What is the cost of the organization to the society?</li>
-                <li>Fair Share Index: Does the organization share its income with its workers by measuring each member's contribution?</li>
+                <li>
+                    By using <code>+</code> button increase <code>Number of Sales</code>, initially income from each index will be the same.
+                </li>
+                <li>
+                    Click on <code>Index Income</code> link and switch to <code>Indexes</code> view to see the details.
+                </li>
+                <li>
+                    Rate indexes based on their importance by using <code>+</code> and <code>-</code> buttons at the bottom of them and see the difference between the index income fields.
+                </li>
+                <li>
+                    Click to <code>Index Income</code> link again to switch back to the previous view.
+                </li>
+                <li>
+                    Toggle <code>Display</code> between <code>Only My Ratings</code> and <code>All Ratings</code> to see only your ratings or the average of all users'.
+                </li>
             </ul>
-            Please rate these indexes based on their importance and set how much an index should control the amount in the pool.
-        </p>
-        <ul>
-            <li>
-                By using <code>+</code> button increase <code>Number of Sales</code>, initially income from each index will be the same.
-            </li>
-            <li>
-                Click on <code>Index Income</code> link and switch to <code>Indexes</code> view to see the details.
-            </li>
-            <li>
-                Rate indexes based on their importance by using <code>+</code> and <code>-</code> buttons at the bottom of them and see the difference between the index income fields.
-            </li>
-            <li>
-                Click to <code>Index Income</code> link again to switch back to the previous view.
-            </li>
-            <li>
-                Toggle <code>Display</code> between <code>Only My Ratings</code> and <code>All Ratings</code> to see only your ratings or the average of all users'.
-            </li>
-        </ul>
-        <resource-pool-editor resource-pool-id="11"></resource-pool-editor>
+            <resource-pool-editor resource-pool-id="vm.indexesPie_SampleResourcePoolId"></resource-pool-editor>
+        </div>
     </div>
 </div>

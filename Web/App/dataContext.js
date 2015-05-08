@@ -10,9 +10,9 @@
 
     var serviceId = 'dataContext';
     angular.module('main')
-        .factory(serviceId, ['entityManagerFactory', '$q', 'logger', dataContext]);
+        .factory(serviceId, ['entityManagerFactory', '$q', '$rootScope', 'logger', dataContext]);
 
-    function dataContext(entityManagerFactory, $q, logger) {
+    function dataContext(entityManagerFactory, $q, $rootScope, logger) {
 
         // Logger
         logger = logger.forSource(serviceId);
@@ -24,6 +24,7 @@
         // Service methods
         var service = {
             createEntity: createEntity,
+            clear: clear,
             executeQuery: executeQuery,
             fetchEntityByKey: fetchEntityByKey,
             getChanges: getChanges,
@@ -51,6 +52,10 @@
                 });
 
             return deferred.promise;
+        }
+
+        function clear() {
+            manager.clear();
         }
 
         function executeQuery(query) {

@@ -1,4 +1,4 @@
-﻿<div>
+﻿<div data-ng-controller="totalCostIndexSampleController as vm">
     <div class="row">
         <div class="col-md-12">
             <h3>
@@ -16,7 +16,7 @@
                 Although <code>No Profit</code> case solves the issue in most effective way, because of "more expensive means more resources" rule,
                 <code>High Profit</code> case will always have bring more resources to its organization.
             </p>
-            <resource-pool-editor resource-pool-id="7"></resource-pool-editor>
+            <resource-pool-editor resource-pool-id="vm.totalCostIndex_NewSystemSampleResourcePoolId"></resource-pool-editor>
             <p>
                 With this logic, we allocate limited resources to the organizations that have less cost on the society and keep encouraging the organizations to maximize their profit.
                 This is one of the paradoxes of the current system and becomes one of the root causes of "Income Inequality".
@@ -32,12 +32,12 @@
                 With <code>Total Cost Index</code>, <code>Sales Price</code> itself will be used as the organization's rating in terms of "Cost to the Society".
                 Different than the previous samples, with this index, high number means low performance and low income from the pool.
             </p>
-            <resource-pool-editor resource-pool-id="8"></resource-pool-editor>
+            <resource-pool-editor resource-pool-id="vm.totalCostIndex_ExistingSystemSampleResourcePoolId"></resource-pool-editor>
             <p>
                 As in this sample, if we could manage to allocate more resources to the lowest cost case, then aiming for the maximum price approach would become obsolete.
                 What should be expected afterwards is that the organizations would compete with each other to have the lowest price for their products.
             </p>
-            <resource-pool-editor resource-pool-id="9"></resource-pool-editor>
+            <resource-pool-editor resource-pool-id="vm.totalCostIndex_NewSystemAftermathSampleResourcePoolId"></resource-pool-editor>
         </div>
     </div>
 </div>

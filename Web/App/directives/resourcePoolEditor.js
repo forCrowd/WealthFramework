@@ -58,21 +58,15 @@
             }
 
             scope.increaseElementMultiplier = function (element) {
-
-                //logger.log('?');
-
-                var result = element.updateMultiplier('increase');
-
+                var result = resourcePoolService.updateElementMultiplier(element, 'increase');
                 if (result) {
-                    //logger.log('2');
-
                     $rootScope.$broadcast('resourcePoolEditor_elementMultiplierIncreased', element);
                     saveChanges();
                 }
             }
 
             scope.decreaseElementMultiplier = function (element) {
-                var result = element.updateMultiplier('decrease');
+                var result = resourcePoolService.updateElementMultiplier(element, 'decrease');
                 if (result) {
                     $rootScope.$broadcast('resourcePoolEditor_elementMultiplierDecreased', element);
                     saveChanges();
@@ -80,7 +74,7 @@
             }
 
             scope.resetElementMultiplier = function (element) {
-                var result = element.updateMultiplier('reset');
+                var result = resourcePoolService.updateElementMultiplier(element, 'reset');
                 if (result) {
                     $rootScope.$broadcast('resourcePoolEditor_elementMultiplierReset', element);
                     saveChanges();
@@ -88,42 +82,42 @@
             }
 
             scope.increaseCellIndexRating = function (cell) {
-                var result = cell.updateIndexRating('increase');
+                var result = resourcePoolService.updateElementCellIndexRating(cell, 'increase');
                 if (result) {
                     saveChanges();
                 }
             }
 
             scope.decreaseCellIndexRating = function (cell) {
-                var result = cell.updateIndexRating('decrease');
+                var result = resourcePoolService.updateElementCellIndexRating(cell, 'decrease');
                 if (result) {
                     saveChanges();
                 }
             }
 
             scope.increaseIndexRating = function (index) {
-                var result = index.updateIndexRating('increase');
+                var result = resourcePoolService.updateElementFieldIndexRating(index, 'increase');
                 if (result) {
                     saveChanges();
                 }
             }
 
             scope.decreaseIndexRating = function (index) {
-                var result = index.updateIndexRating('decrease');
+                var result = resourcePoolService.updateElementFieldIndexRating(index, 'decrease');
                 if (result) {
                     saveChanges();
                 }
             }
 
             scope.increaseResourcePoolRate = function () {
-                var result = scope.resourcePool.updateResourcePoolRate('increase');
+                var result = resourcePoolService.updateResourcePoolRate(scope.resourcePool, 'increase');
                 if (result) {
                     saveChanges();
                 }
             }
 
             scope.decreaseResourcePoolRate = function () {
-                var result = scope.resourcePool.updateResourcePoolRate('decrease');
+                var result = resourcePoolService.updateResourcePoolRate(scope.resourcePool, 'decrease');
                 if (result) {
                     saveChanges();
                 }
@@ -134,8 +128,6 @@
 
                 resourcePoolService.getResourcePoolExpanded(scope.resourcePoolId)
                     .then(function (data) {
-
-                        logger.log('data', data);
 
                         scope.resourcePool = data[0];
 

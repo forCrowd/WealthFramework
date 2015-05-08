@@ -17,6 +17,8 @@
             'elementFieldIndex',
             'elementItem',
             'resourcePoolFactory',
+            '$rootScope',
+            'logger',
             entityManagerFactory]);
 
     function entityManagerFactory(breeze,
@@ -25,7 +27,12 @@
         elementField,
         elementFieldIndex,
         elementItem,
-        resourcePoolFactory) {
+        resourcePoolFactory,
+        $rootScope,
+        logger) {
+
+        // Logger
+        logger = logger.forSource(serviceId);
 
         configureBreeze();
 
@@ -73,12 +80,14 @@
         function newManager() {
             var manager = new breeze.EntityManager(serviceName);
             var store = manager.metadataStore;
+
             store.registerEntityTypeCtor('Element', element.constructor);
             store.registerEntityTypeCtor('ElementCell', elementCell.constructor);
             store.registerEntityTypeCtor('ElementField', elementField.constructor);
             store.registerEntityTypeCtor('ElementFieldIndex', elementFieldIndex.constructor);
             store.registerEntityTypeCtor('ElementItem', elementItem.constructor);
             store.registerEntityTypeCtor('ResourcePool', resourcePoolFactory.resourcePool);
+
             return manager;
         }
     }

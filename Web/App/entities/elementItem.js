@@ -165,7 +165,7 @@
                 if (self.multiplierCell() === null
                     || self.multiplierCell().userElementCell() === null
                     || self.multiplierCell().userElementCell().DecimalValue === null)
-                    return 1; // Default value
+                    return 0; // Default value
 
                 return self.multiplierCell().userElementCell().DecimalValue;
             }

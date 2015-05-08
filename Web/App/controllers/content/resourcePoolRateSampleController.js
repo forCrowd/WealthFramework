@@ -1,17 +1,17 @@
 ﻿(function () {
     'use strict';
 
-    var controllerId = 'sectorIndexSampleController';
+    var controllerId = 'resourcePoolRateSampleController';
     angular.module('main')
-        .controller(controllerId, ['userService', '$rootScope', 'logger', sectorIndexSampleController]);
+        .controller(controllerId, ['userService', '$rootScope', 'logger', resourcePoolRateSampleController]);
 
-    function sectorIndexSampleController(userService, $rootScope, logger) {
+    function resourcePoolRateSampleController(userService, $rootScope, logger) {
 
         logger = logger.forSource(controllerId);
 
         var vm = this;
         vm.authorized = false;
-        vm.sectorIndex_SampleResourcePoolId = 4;
+        vm.resourcePoolRate_SampleResourcePoolId = 12;
 
         // Logged in?
         userService.getUserInfo()
