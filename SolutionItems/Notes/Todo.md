@@ -279,13 +279,13 @@ then continue with the other registrations?
 * performance problem; especially ratingMultiplied() method called too many times which makes it pretty slow - improve it - find a proper approach to update cached values?
 elementItem - ratingMultiplied function should be cached? but then how to update the cache? events & properties etc.?
 
-	* continue with cmrp rate content + summary?
 	* users should choose the ideal rate/ratings - it shouldn't be experimental? especially license ratings, index ratings, cmrp rate!
 	
-												* eula license?
-												https://www.microsoft.com/en-us/legal/intellectualproperty/useterms/default.aspx
+												* eula license? https://www.microsoft.com/en-us/legal/intellectualproperty/useterms/default.aspx
 
-												* delayed save option!
+												* delayed save option and retry..
+
+												* multiplier default value = 1?
 
 						* creative commons?
 
@@ -312,10 +312,7 @@ elementItem - ratingMultiplied function should be cached? but then how to update
 						twitter?
 
 						* donate
-						triodos - sign & send;
-						https://www.triodos.nl/downloads/over-triodos-bank/algemene-bankvoorwaarden-2009-triodos-bank.pdf
-						https://www.triodos.nl/downloads/betalen/algemene-voorwaarden-internet-bankieren-zakelijk-gebruik-triodos-bank.pdf
-						https://www.triodos.nl/downloads/betalen/zak-algemene-voorwaarden-triodos-internet-zakenrekening-2011.pdf
+						triodos - OK, waiting for approval
 						paypal
 						gratipay (gittip) - OK (new account)
 						flattr - OK (new account)

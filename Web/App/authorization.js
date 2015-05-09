@@ -21,7 +21,22 @@
     }
 
     function authorizationRun($window, logger) {
-        setODataInterceptor($window, logger);
+
+        // Logger
+        logger = logger.forSource('authorizationRun');
+
+        // OData interceptor
+        var oldClient = $window.OData.defaultHttpClient;
+        var newClient = {
+            request: function (request, success, error) {
+                request.headers = request.headers || {};
+                var access_token = $window.localStorage.getItem('access_token');
+                if (access_token !== null)
+                    request.headers.Authorization = 'Bearer ' + access_token;
+                return oldClient.request(request, success, error);
+            }
+        };
+        $window.OData.defaultHttpClient = newClient;
     }
 
     // angular
@@ -46,24 +61,4 @@
             }
         };
     };
-
-    // OData
-    function setODataInterceptor($window, logger) {
-
-        // Logger
-        logger = logger.forSource('setODataInterceptor');
-
-        var oldClient = $window.OData.defaultHttpClient;
-        var newClient = {
-            request: function (request, success, error) {
-                request.headers = request.headers || {};
-                var access_token = $window.localStorage.getItem('access_token');
-                if (access_token !== null)
-                    request.headers.Authorization = 'Bearer ' + access_token;
-                return oldClient.request(request, success, error);
-            }
-        };
-        $window.OData.defaultHttpClient = newClient;
-    }
-
 })();

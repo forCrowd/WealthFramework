@@ -5,11 +5,13 @@
 
     angular.module('main')
         .directive(resourcePoolEditorDirectiveId, ['resourcePoolService',
+            'userService',
             '$rootScope',
             'logger',
             resourcePoolEditor]);
 
     function resourcePoolEditor(resourcePoolService,
+        userService,
         $rootScope,
         logger) {
 
@@ -19,6 +21,19 @@
         function link(scope, elm, attrs) {
 
             scope.resourcePool = null;
+            scope.isAuthenticated = false;
+
+            // User logged in & out
+            userService.getUserInfo()
+                .then(function (userInfo) {
+                    scope.isAuthenticated = true;
+                });
+            $rootScope.$on('userLoggedIn', function () {
+                scope.isAuthenticated = true;
+            });
+            $rootScope.$on('userLoggedOut', function () {
+                scope.isAuthenticated = false;
+            });
 
             scope.chartConfig = {
                 options: {

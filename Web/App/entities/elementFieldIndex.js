@@ -26,7 +26,7 @@
             self.ratingMultiplied = function () {
 
                 // Validate
-                if (self.ElementField === 'undefined' || typeof self.ElementField.ElementCellSet === 'undefined' || self.ElementField.ElementCellSet.length === 0)
+                if (typeof self.ElementField === 'undefined' || typeof self.ElementField.ElementCellSet === 'undefined' || self.ElementField.ElementCellSet.length === 0)
                     return 0; // ?
 
                 var value = 0;
@@ -41,7 +41,7 @@
             self.passiveRatingPercentage = function () {
 
                 // Validate
-                if (self.ElementField === 'undefined' || typeof self.ElementField.ElementCellSet === 'undefined' || self.ElementField.ElementCellSet.length === 0)
+                if (typeof self.ElementField === 'undefined' || typeof self.ElementField.ElementCellSet === 'undefined' || self.ElementField.ElementCellSet.length === 0)
                     return 0; // ?
 
                 var value = 0;
@@ -62,7 +62,7 @@
             self.referenceRatingMultiplied = function () {
 
                 // Validate
-                if (self.ElementField === 'undefined' || typeof self.ElementField.ElementCellSet === 'undefined' || self.ElementField.ElementCellSet.length === 0)
+                if (typeof self.ElementField === 'undefined' || typeof self.ElementField.ElementCellSet === 'undefined' || self.ElementField.ElementCellSet.length === 0)
                     return 0; // ?
 
                 self.referenceRatingAllEqualFlag = true;
@@ -126,7 +126,7 @@
             self.aggressiveRating = function () {
 
                 // Validate
-                if (self.ElementField === 'undefined' || typeof self.ElementField.ElementCellSet === 'undefined' || self.ElementField.ElementCellSet.length === 0)
+                if (typeof self.ElementField === 'undefined' || typeof self.ElementField.ElementCellSet === 'undefined' || self.ElementField.ElementCellSet.length === 0)
                     return 0; // ?
 
                 var value = 0;

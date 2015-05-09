@@ -37,8 +37,8 @@
                                         {{ resourcePool.resourcePoolRatePercentage() | percentage: 2 }}
                                     </span>
                                     <div data-ng-if="resourcePool.EnableResourcePoolAddition" class="btn-group" role="group">
-                                        <button title="Increase CMRP Rate" type="button" data-ng-click="increaseResourcePoolRate()" class="btn btn-default btn-xs">+</button>
-                                        <button title="Decrease CMRP Rate" type="button" data-ng-click="decreaseResourcePoolRate()" class="btn btn-default btn-xs">-</button>
+                                        <button title="Increase CMRP Rate" type="button" data-ng-click="increaseResourcePoolRate()" data-ng-disabled="!isAuthenticated" class="btn btn-default btn-xs">+</button>
+                                        <button title="Decrease CMRP Rate" type="button" data-ng-click="decreaseResourcePoolRate()" data-ng-disabled="!isAuthenticated" class="btn btn-default btn-xs">-</button>
                                     </div>
                                 </td>
                             </tr>
@@ -124,8 +124,8 @@
                                             {{ elementCell.rating() | number: 2 }}
                                         </span>
                                         <div class="btn-group" role="group" data-ng-if="elementCell.ElementField.ElementFieldIndexSet.length > 0">
-                                            <button type="button" data-ng-click="increaseCellIndexRating(elementCell)" title="+ 5" class="btn btn-default btn-xs">+</button>
-                                            <button type="button" data-ng-click="decreaseCellIndexRating(elementCell)" title="- 5" class="btn btn-default btn-xs">-</button>
+                                            <button title="+ 5" type="button" data-ng-click="increaseCellIndexRating(elementCell)" data-ng-disabled="!isAuthenticated" class="btn btn-default btn-xs">+</button>
+                                            <button title="- 5" type="button" data-ng-click="decreaseCellIndexRating(elementCell)" data-ng-disabled="!isAuthenticated" class="btn btn-default btn-xs">-</button>
                                         </div>
                                     </div>
                                     <span data-ng-if="elementCell.ElementField.ElementFieldType === 5">
@@ -226,17 +226,17 @@
                                     </div>
                                     <div data-ng-if="field.ElementFieldType === 12">
                                         <div class="btn-group" role="group">
-                                            <button title="Increase {{ resourcePool.currentElement.multiplierField().Name }}" type="button" data-ng-click="increaseElementMultiplier(resourcePool.currentElement)" class="btn btn-default btn-xs">+</button>
-                                            <button title="Decrease {{ resourcePool.currentElement.multiplierField().Name }}" type="button" data-ng-click="decreaseElementMultiplier(resourcePool.currentElement)" class="btn btn-default btn-xs">-</button>
-                                            <button title="Reset {{ resourcePool.currentElement.multiplierField().Name }}" type="button" data-ng-click="resetElementMultiplier(resourcePool.currentElement)" class="btn btn-default btn-xs">0</button>
+                                            <button title="Increase {{ resourcePool.currentElement.multiplierField().Name }}" type="button" data-ng-click="increaseElementMultiplier(resourcePool.currentElement)" data-ng-disabled="!isAuthenticated" class="btn btn-default btn-xs">+</button>
+                                            <button title="Decrease {{ resourcePool.currentElement.multiplierField().Name }}" type="button" data-ng-click="decreaseElementMultiplier(resourcePool.currentElement)" data-ng-disabled="!isAuthenticated" class="btn btn-default btn-xs">-</button>
+                                            <button title="Reset {{ resourcePool.currentElement.multiplierField().Name }}" type="button" data-ng-click="resetElementMultiplier(resourcePool.currentElement)" data-ng-disabled="!isAuthenticated" class="btn btn-default btn-xs">0</button>
                                         </div>
                                     </div>
                                 </td>
                                 <!-- ResourcePool -->
                                 <td data-ng-if="false && resourcePool.EnableResourcePoolAddition && resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">
                                     <div class="btn-group" role="group">
-                                        <button title="Increase CMRP Rate" type="button" data-ng-click="increaseResourcePoolRate()" class="btn btn-default btn-xs">+</button>
-                                        <button title="Decrease CMRP Rate" type="button" data-ng-click="decreaseResourcePoolRate()" class="btn btn-default btn-xs">-</button>
+                                        <button title="Increase CMRP Rate" type="button" data-ng-click="increaseResourcePoolRate()" data-ng-disabled="!isAuthenticated" class="btn btn-default btn-xs">+</button>
+                                        <button title="Decrease CMRP Rate" type="button" data-ng-click="decreaseResourcePoolRate()" data-ng-disabled="!isAuthenticated" class="btn btn-default btn-xs">-</button>
                                     </div>
                                 </td>
                                 <td colspan="3" data-ng-if="false && resourcePool.EnableResourcePoolAddition && resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">
@@ -249,8 +249,8 @@
                                 <!-- Index Details & Index Income -->
                                 <td data-ng-if="displayIndexDetails && resourcePool.currentElement.elementFieldIndexSet().length > 1" data-ng-repeat="index in resourcePool.currentElement.elementFieldIndexSet()">
                                     <div class="btn-group" role="group">
-                                        <button title="Increase {{ index.Name }}" type="button" data-ng-click="increaseIndexRating(index)" class="btn btn-default btn-xs">+</button>
-                                        <button title="Decrease {{ index.Name }}" type="button" data-ng-click="decreaseIndexRating(index)" class="btn btn-default btn-xs">-</button>
+                                        <button title="Increase {{ index.Name }}" type="button" data-ng-click="increaseIndexRating(index)" data-ng-disabled="!isAuthenticated" class="btn btn-default btn-xs">+</button>
+                                        <button title="Decrease {{ index.Name }}" type="button" data-ng-click="decreaseIndexRating(index)" data-ng-disabled="!isAuthenticated" class="btn btn-default btn-xs">-</button>
                                     </div>
                                 </td>
                                 <td data-ng-if="resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">

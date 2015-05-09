@@ -4,6 +4,9 @@
     angular.module('main')
         .config(routeConfig);
 
+    angular.module('main')
+        .run(['$rootScope', '$location', 'logger', routeRun]);
+
     function routeConfig($routeProvider, $locationProvider) {
 
         // Routes
@@ -61,5 +64,25 @@
 
             return '/App/views/content/' + key + '.html';
         }
+    }
+
+    function routeRun($rootScope, $location, logger) {
+
+        // Logger
+        logger = logger.forSource('routeRun');
+
+        // Default location
+        $rootScope.locationHistory = ['/'];
+
+        // Add each location to the history
+        $rootScope.$on('$routeChangeSuccess', function (event, next, current) {
+            $rootScope.locationHistory.push($location.path());
+
+            // Only keep limited number of items
+            var locationHistoryLimit = 20;
+            if ($rootScope.locationHistory.length > locationHistoryLimit) {
+                $rootScope.locationHistory.splice(0, $rootScope.locationHistory.length - locationHistoryLimit);
+            }
+        });
     }
 })();

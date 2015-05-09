@@ -14,7 +14,7 @@
         function getAccessToken() {
             userService.getAccessToken(vm.email, vm.password)
                 .success(function () {
-                    $location.path('/');
+                    $location.path($rootScope.locationHistory[$rootScope.locationHistory.length - 2]);
                 })
                 .error(function (response) {
                     if (typeof response.error_description !== 'undefined') {

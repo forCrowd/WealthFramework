@@ -6,6 +6,11 @@ An experimental resource management system that aims to provide a more sustainab
 
 ### Release Notes
 
+**0.17**
+
+* ResourcePoolEditor isAuthenticated check for buttons
+* routeRun() & locationHistory array was added to remember and navigate back after register & login operations
+
 **0.16.1**
 
 * IsAuthenticated fix for ResourcePool - UserResourcePool property

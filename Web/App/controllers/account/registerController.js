@@ -3,9 +3,10 @@
 
     var controllerId = 'registerController';
     angular.module('main')
-        .controller(controllerId, ['userService', '$location', 'logger', registerController]);
+        .controller(controllerId, ['userService', '$location', '$rootScope', 'logger', registerController]);
 
-    function registerController(userService, $location, logger) {
+    function registerController(userService, $location, $rootScope, logger) {
+
         logger = logger.forSource(controllerId);
 
         var vm = this;
@@ -19,7 +20,7 @@
 
                     userService.getAccessToken(vm.email, vm.password)
                         .success(function () {
-                            $location.path('/');
+                            $location.path($rootScope.locationHistory[$rootScope.locationHistory.length - 2]);
                         })
                         .error(function (response) {
                             if (typeof response.error_description !== 'undefined') {
