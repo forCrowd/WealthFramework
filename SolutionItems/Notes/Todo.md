@@ -285,6 +285,12 @@ elementItem - ratingMultiplied function should be cached? but then how to update
 
 												* USERRESOURCEPOOL, USERELEMENTCELL, USERFIELDINDEX EXCEPTION!
 												currently it again filters the data but it shouldn't be necessary at all!
+												since it's only happening on live at the moment (?), remove the fix, puslish and then try to locate the issue!
+												find a way to log sql queries?
+												check interceptor classes?
+												if the table is user related and there is no authorized user, then cancel the operation?
+
+												Web\Logs folders!
 
 												* delayed save option and retry..
 
