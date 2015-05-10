@@ -6,6 +6,10 @@ An experimental resource management system that aims to provide a more sustainab
 
 ### Release Notes
 
+**0.17.1**
+
+* "Sequence contains more than one element" temporary fix for User level tables
+
 **0.17**
 
 * ResourcePoolEditor isAuthenticated check for buttons

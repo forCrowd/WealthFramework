@@ -75,10 +75,33 @@ namespace BusinessObjects
         {
             get
             {
-                if (!System.Threading.Thread.CurrentPrincipal.Identity.IsAuthenticated)
-                    return null;
+                //if (!System.Threading.Thread.CurrentPrincipal.Identity.IsAuthenticated)
+                //    return null;
 
-                return UserElementCellSet.SingleOrDefault();
+                var identity = System.Threading.Thread.CurrentPrincipal.Identity as System.Security.Claims.ClaimsIdentity;
+                if (identity == null)
+                {
+                    return null;
+                }
+                var userClaim = identity.Claims.SingleOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier);
+                if (userClaim == null)
+                {
+                    return null;
+                }
+
+                var userId = 0;
+                int.TryParse(userClaim.Value, out userId);
+
+                return UserElementCellSet.SingleOrDefault(item => item.UserId == userId);
+
+                //try
+                //{
+                //    return UserElementCellSet.SingleOrDefault();
+                //}
+                //catch (Exception ex)
+                //{
+                //    throw new Exception("Count: " + UserElementCellSet.Count, ex);
+                //}
             }
         }
 
@@ -86,6 +109,7 @@ namespace BusinessObjects
         {
             get
             {
+
                 if (!RatingAverage.HasValue)
                     return null;
 

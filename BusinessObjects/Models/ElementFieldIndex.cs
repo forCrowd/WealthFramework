@@ -72,10 +72,33 @@ namespace BusinessObjects
         {
             get
             {
-                    if (!System.Threading.Thread.CurrentPrincipal.Identity.IsAuthenticated)
-                        return null;
+                //if (!System.Threading.Thread.CurrentPrincipal.Identity.IsAuthenticated)
+                //    return null;
 
-                    return UserElementFieldIndexSet.SingleOrDefault();
+                var identity = System.Threading.Thread.CurrentPrincipal.Identity as System.Security.Claims.ClaimsIdentity;
+                if (identity == null)
+                {
+                    return null;
+                }
+                var userClaim = identity.Claims.SingleOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier);
+                if (userClaim == null)
+                {
+                    return null;
+                }
+
+                var userId = 0;
+                int.TryParse(userClaim.Value, out userId);
+
+                return UserElementFieldIndexSet.SingleOrDefault(item => item.UserId == userId);
+
+                //try
+                //{
+                //    return UserElementFieldIndexSet.SingleOrDefault();
+                //}
+                //catch (Exception ex)
+                //{
+                //    throw new Exception("Count: " + UserElementFieldIndexSet.Count, ex);
+                //}
             }
         }
 
