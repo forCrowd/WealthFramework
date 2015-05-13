@@ -14,8 +14,8 @@
     {
         public WealthEconomyDbConfiguration()
         {
-            AddInterceptor(new UserCommandInterceptor());
             AddInterceptor(new UserCommandTreeInterceptor());
+            AddInterceptor(new UserCommandInterceptor());
         }
     }
 

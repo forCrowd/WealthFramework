@@ -19,36 +19,22 @@ namespace BusinessObjects
         {
             if (interceptionContext.OriginalResult.DataSpace == DataSpace.SSpace)
             {
-                // Check that there is an authenticated user in this context
-                var identity = Thread.CurrentPrincipal.Identity as ClaimsIdentity;
-                if (identity == null)
-                {
-                    return;
-                }
-                var userIdclaim = identity.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
-                if (userIdclaim == null)
-                {
-                    return;
-                }
-
                 if (InterceptQueryCommand(interceptionContext))
                 {
                     return;
                 }
 
-                var userId = 0;
-                int.TryParse(userIdclaim.Value, out userId);
-                if (InterceptInsertCommand(interceptionContext, userId))
+                if (InterceptInsertCommand(interceptionContext))
                 {
                     return;
                 }
 
-                if (InterceptUpdate(interceptionContext, userId))
+                if (InterceptUpdate(interceptionContext))
                 {
                     return;
                 }
 
-                InterceptDeleteCommand(interceptionContext, userId);
+                InterceptDeleteCommand(interceptionContext);
             }
         }
 
@@ -72,10 +58,34 @@ namespace BusinessObjects
             return false;
         }
 
+        static int GetCurrentUserId()
+        {
+            // Check that there is an authenticated user in this context
+            var identity = System.Threading.Thread.CurrentPrincipal.Identity as System.Security.Claims.ClaimsIdentity;
+            if (identity == null)
+            {
+                throw new System.Security.SecurityException("Unauthenticated access");
+            }
+            var userIdclaim = identity.Claims.SingleOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier);
+            if (userIdclaim == null)
+            {
+                throw new System.Security.SecurityException("Unauthenticated access");
+            }
+
+            var userId = 0;
+            int.TryParse(userIdclaim.Value, out userId);
+            if (userId == 0)
+            {
+                throw new System.Security.SecurityException("Unauthenticated access");
+            }
+
+            return userId;
+        }
+
         /// <summary>
         /// In case of an insert command we always assign the correct value to the userId
         /// </summary>
-        static bool InterceptInsertCommand(DbCommandTreeInterceptionContext interceptionContext, int userId)
+        static bool InterceptInsertCommand(DbCommandTreeInterceptionContext interceptionContext)
         {
             var insertCommand = interceptionContext.Result as DbInsertCommandTree;
             if (insertCommand != null)
@@ -83,6 +93,9 @@ namespace BusinessObjects
                 var column = UserAwareAttribute.GetUserColumnName(insertCommand.Target.VariableType.EdmType);
                 if (!string.IsNullOrEmpty(column))
                 {
+                    // Get the userId (throw an exception if there is none)
+                    var userId = GetCurrentUserId();
+
                     // Create the variable reference in order to create the property
                     var variableReference = DbExpressionBuilder.Variable(insertCommand.Target.VariableType,
                         insertCommand.Target.VariableName);
@@ -123,7 +136,7 @@ namespace BusinessObjects
         /// <summary>
         /// In case of an update command we always filter based on the userId
         /// </summary>
-        static bool InterceptUpdate(DbCommandTreeInterceptionContext interceptionContext, int userId)
+        static bool InterceptUpdate(DbCommandTreeInterceptionContext interceptionContext)
         {
             var updateCommand = interceptionContext.Result as DbUpdateCommandTree;
             if (updateCommand != null)
@@ -131,6 +144,9 @@ namespace BusinessObjects
                 var column = UserAwareAttribute.GetUserColumnName(updateCommand.Target.VariableType.EdmType);
                 if (!string.IsNullOrEmpty(column))
                 {
+                    // Get the userId (throw an exception if there is none)
+                    var userId = GetCurrentUserId();
+
                     // Create the variable reference in order to create the property
                     var variableReference = DbExpressionBuilder.Variable(updateCommand.Target.VariableType,
                         updateCommand.Target.VariableName);
@@ -172,7 +188,7 @@ namespace BusinessObjects
         /// <summary>
         /// In case of a delete command we always filter based on the userId
         /// </summary>
-        static void InterceptDeleteCommand(DbCommandTreeInterceptionContext interceptionContext, int userId)
+        static void InterceptDeleteCommand(DbCommandTreeInterceptionContext interceptionContext)
         {
             var deleteCommand = interceptionContext.Result as DbDeleteCommandTree;
             if (deleteCommand != null)
@@ -180,6 +196,9 @@ namespace BusinessObjects
                 var column = UserAwareAttribute.GetUserColumnName(deleteCommand.Target.VariableType.EdmType);
                 if (!string.IsNullOrEmpty(column))
                 {
+                    // Get the userId (throw an exception if there is none)
+                    var userId = GetCurrentUserId();
+
                     // Create the variable reference in order to create the property
                     var variableReference = DbExpressionBuilder.Variable(deleteCommand.Target.VariableType,
                         deleteCommand.Target.VariableName);

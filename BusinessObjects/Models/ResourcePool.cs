@@ -81,6 +81,10 @@ namespace BusinessObjects
         {
             get
             {
+                return UserResourcePoolSet.SingleOrDefault();
+
+                // TODO OBSOLETE?
+
                 //if (!System.Threading.Thread.CurrentPrincipal.Identity.IsAuthenticated)
                 //    return null;
 
@@ -231,72 +235,22 @@ namespace BusinessObjects
             return element;
         }
 
-        public UserResourcePool AddUserResourcePool(User user, decimal rate)
+        public UserResourcePool AddUserResourcePool(decimal rate)
         {
-            // Todo Validation?
-            var userResourcePool = new UserResourcePool(user, this, rate);
-            user.UserResourcePoolSet.Add(userResourcePool);
+            var userResourcePool = new UserResourcePool(this, rate);
             UserResourcePoolSet.Add(userResourcePool);
             return userResourcePool;
         }
 
-        public ResourcePool IncreaseMultiplier(User user)
+        [Obsolete("Try to switch to the method without user variable")]
+        public UserResourcePool AddUserResourcePool(User user, decimal rate)
         {
-            MultiplierMethodValidations(user);
-
-            foreach (var item in MainElement.ElementItemSet)
-                item.MultiplierCell.SetValue(item.MultiplierValue() + 1M, user);
-
-            return this;
-        }
-
-        public ResourcePool DecreaseMultiplier(User user)
-        {
-            MultiplierMethodValidations(user);
-
-            foreach (var item in MainElement.ElementItemSet)
-            {
-                var multiplierValue = item.MultiplierValue();
-                if (multiplierValue > 0)
-                    item.MultiplierCell.SetValue(multiplierValue - 1M, user);
-            }
-
-            return this;
-        }
-
-        public ResourcePool ResetMultiplier(User user)
-        {
-            MultiplierMethodValidations(user);
-
-            foreach (var item in MainElement.ElementItemSet)
-                item.MultiplierCell.SetValue(0M, user);
-
-            return this;
-        }
-
-        void MultiplierMethodValidations(User user)
-        {
-            Validations.ArgumentNullOrDefault(user, "user");
-
-            if (MainElement == null)
-                throw new InvalidOperationException("ResourcePool has no MainElement");
-
-            if (!MainElement.HasMultiplierField)
-                throw new InvalidOperationException("MainElement has no multiplier field");
-        }
-
-        public ResourcePool UpdateResourcePoolRate(User user, decimal rate)
-        {
-            Validations.ArgumentNullOrDefault(user, "user");
-
-            var userResourcePool = UserResourcePoolSet.SingleOrDefault(item => item.UserId == user.Id);
-
-            if (userResourcePool == null)
-                userResourcePool = AddUserResourcePool(user, rate);
-            else
-                userResourcePool.ResourcePoolRate = rate;
-
-            return this;
+            // Todo Validation?
+            // var userResourcePool = new UserResourcePool(user, this, rate);
+            var userResourcePool = new UserResourcePool(this, rate);
+            user.UserResourcePoolSet.Add(userResourcePool);
+            UserResourcePoolSet.Add(userResourcePool);
+            return userResourcePool;
         }
 
         #endregion

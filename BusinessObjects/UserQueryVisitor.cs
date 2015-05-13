@@ -1,4 +1,5 @@
-﻿using System.Data.Entity.Core.Common.CommandTrees;
+﻿using System.Linq;
+using System.Data.Entity.Core.Common.CommandTrees;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 
 namespace BusinessObjects
@@ -15,6 +16,18 @@ namespace BusinessObjects
             var column = UserAwareAttribute.GetUserColumnName(expression.Target.ElementType);
             if (!string.IsNullOrEmpty(column))
             {
+                // Check that there is an authenticated user in this context
+                var identity = System.Threading.Thread.CurrentPrincipal.Identity as System.Security.Claims.ClaimsIdentity;
+                if (identity == null)
+                {
+                    throw new System.Security.SecurityException("Unauthenticated access");
+                }
+                var userIdclaim = identity.Claims.SingleOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier);
+                if (userIdclaim == null)
+                {
+                    throw new System.Security.SecurityException("Unauthenticated access");
+                }
+
                 // Get the current expression binding 
                 var currentExpressionBinding = DbExpressionBuilder.Bind(expression);
                 var newFilterExpression = BuildFilterExpression(currentExpressionBinding, column);

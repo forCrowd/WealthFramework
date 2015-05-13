@@ -141,23 +141,26 @@
             // Resource pool id: Get the current resource pool
             scope.$watch('resourcePoolId', function () {
 
-                resourcePoolService.getResourcePoolExpanded(scope.resourcePoolId)
-                    .then(function (data) {
+                if (scope.isAuthenticated) {
+                    resourcePoolService.getResourcePoolExpandedWithUser(scope.resourcePoolId).then(loadResourcePool);
 
-                        scope.resourcePool = data[0];
-
-                        // Current element
-                        if (scope.resourcePool.currentElement === null) {
-                            scope.changeCurrentElement(scope.resourcePool.mainElement());
-                        } else {
-                            loadChartData();
-                        }
-                    })
-                    .catch(function (error) {
-                        // TODO User-friendly message?
-                    });
+                } else {
+                    resourcePoolService.getResourcePoolExpanded(scope.resourcePoolId).then(loadResourcePool);
+                }
 
             }, true);
+
+            function loadResourcePool(resourcePool) {
+
+                scope.resourcePool = resourcePool[0];
+
+                // Current element
+                if (scope.resourcePool.currentElement === null) {
+                    scope.changeCurrentElement(scope.resourcePool.mainElement());
+                } else {
+                    loadChartData();
+                }
+            }
 
             // Chart height
             scope.$watch('chartHeight', function () {

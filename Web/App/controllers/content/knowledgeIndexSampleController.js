@@ -10,7 +10,7 @@
         logger = logger.forSource(controllerId);
 
         var vm = this;
-        vm.authorized = false;
+        vm.isAuthenticated = false;
         vm.sampleResourcePoolId = 5;
         vm.popuplarSoftwareLicensesResourcePoolId = 6;
 
@@ -80,12 +80,12 @@
         // Logged in?
         userService.getUserInfo()
             .then(function (userInfo) {
-                vm.authorized = true;
+                vm.isAuthenticated = true;
             });
 
         // User logged out
         $rootScope.$on('userLoggedOut', function () {
-            vm.authorized = false;
+            vm.isAuthenticated = false;
         });
 
         var timeoutInitial = $timeout(refreshPage, 10000);

@@ -1,6 +1,7 @@
 ﻿<div data-ng-controller="introductionController as vm">
     <div class="row">
         <div class="col-md-12">
+            <p class="lead">An experimental resource management system that aims to provide a more sustainable and productive economic model</p>
             <h3>
                 <!--<small>Prologue:</small>
                 <br />-->
@@ -28,11 +29,12 @@
             <hr />-->
             <!-- New chapter? -->
 
-            <blockquote>
+            <!--<blockquote>
                 <p>
                     What would happen if we could distribute our monetary resources to the organizations by measuring their benefits to the society?
                 </p>
-            </blockquote>
+            </blockquote>-->
+
             <!--<blockquote>
                 <p>
                     <strong>What would happen in we could distribute our monetary resources to the organizations by measuring their benefits to the society?</strong>
@@ -71,7 +73,7 @@
                     <li>Calculates organizations' overall performance on these <code>Indexes</code> and allocate <code>CMRP Amount</code> to the organizations based on the outcome.</li>
                 </ul>
             </p>
-            <div class="bs-callout bs-callout-warning" data-ng-if="!vm.authorized">
+            <div class="bs-callout bs-callout-warning" data-ng-if="!vm.isAuthenticated">
                 <h4>Want to play?</h4>
                 <p>
                     To be able to interact with the samples, please <a href="/account/register">register</a> or <a href="/account/login">login</a> first.<br />

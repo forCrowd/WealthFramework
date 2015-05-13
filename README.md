@@ -6,9 +6,15 @@ An experimental resource management system that aims to provide a more sustainab
 
 ### Release Notes
 
+**0.17.2**
+
+* Multitenancy: It raises an exception if the request is not authenticated
+* Content updates
+* Code cleanup
+
 **0.17.1**
 
-* "Sequence contains more than one element" temporary fix for User level tables
+* Multitenancy: "Sequence contains more than one element" temporary fix for User level tables
 
 **0.17**
 

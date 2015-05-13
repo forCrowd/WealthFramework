@@ -18,12 +18,12 @@ namespace BusinessObjects
         public UserResourcePool()
         { }
 
-        public UserResourcePool(User user, ResourcePool resourcePool, decimal resourcePoolRate) : this()
+        public UserResourcePool(ResourcePool resourcePool, decimal resourcePoolRate) : this()
         {
-            Validations.ArgumentNullOrDefault(user, "user");
+            // Validations.ArgumentNullOrDefault(user, "user");
             Validations.ArgumentNullOrDefault(resourcePool, "resourcePool");
 
-            User = user;
+            // User = user;
             ResourcePool = resourcePool;
             ResourcePoolRate = resourcePoolRate;
             //UserElementFieldIndexSet = new HashSet<UserElementFieldIndex>();

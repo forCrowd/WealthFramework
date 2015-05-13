@@ -18,11 +18,12 @@ namespace DataObjects.Tests
 
         public TestContext TestContext { get; set; }
         ResourcePoolRepository resourcePoolRepository;
+        UserResourcePoolRepository userResourcePoolRepository;
 
         [TestInitialize]
         public void Initialize()
         {
-            TestContext.WriteLine("Initializing");
+            TestContext.WriteLine("Test initializing");
 
             CreateNewStore();
         }
@@ -30,25 +31,26 @@ namespace DataObjects.Tests
         [TestCleanup]
         public void Cleanup()
         {
-            TestContext.WriteLine("Cleaning up");
+            TestContext.WriteLine("Test cleaning up");
             // TODO Dispose?
         }
 
         void CreateNewStore()
         {
             resourcePoolRepository = new ResourcePoolRepository(Context);
+            userResourcePoolRepository = new UserResourcePoolRepository(Context);
         }
 
         void RefreshStore()
         {
-            base.RefreshContext();
+            base.InitializeContext();
             CreateNewStore();
         }
 
         #endregion
 
         [TestMethod]
-        public async Task InsertNewRecord()
+        public async Task InsertNewResourcePool_IdShouldBeBiggerThanZero()
         {
             // Arrange
             var resourcePool = new ResourcePool("ResourcePool");
@@ -68,12 +70,17 @@ namespace DataObjects.Tests
             var userStore = new UserStore(Context);
             userStore.AutoSaveChanges = false;
 
-            var user = new User("Email");
+            var user = new User("User");
+
+            await userStore.CreateAsync(user);
+            await Context.SaveChangesAsync();
+
+            LoginAs(user);
+
             var resourcePool = new ResourcePool("ResourcePool");
-            var userResourcePool = resourcePool.AddUserResourcePool(user, 100);
+            var userResourcePool = resourcePool.AddUserResourcePool(100);
 
             // Act
-            await userStore.CreateAsync(user);
             resourcePoolRepository.Insert(resourcePool);
             await Context.SaveChangesAsync();
 
@@ -85,7 +92,7 @@ namespace DataObjects.Tests
 
         // DbCommandInterceptor tests, insert + query
         [TestMethod]
-        public async Task Filter()
+        public async Task DbInterceptor_ShouldOnlyGetAuthenticatedUserData()
         {
             // Arrange
             var userStore = new UserStore(Context);
@@ -94,23 +101,23 @@ namespace DataObjects.Tests
             var user1 = new User("User 1");
             var user2 = new User("User 2");
 
-            // Act
             await userStore.CreateAsync(user1);
             await userStore.CreateAsync(user2);
             await Context.SaveChangesAsync();
 
-            LoginAs(user1);
-
+            // Act
             var resourcePool = new ResourcePool("ResourcePool");
             resourcePoolRepository.Insert(resourcePool);
-            resourcePool.AddUserResourcePool(user1, 75);
+
+            LoginAs(user1);
+            resourcePool.AddUserResourcePool(100);
             await Context.SaveChangesAsync();
 
             LoginAs(user2);
-
-            resourcePool.AddUserResourcePool(user2, 25);
+            resourcePool.AddUserResourcePool(100);
             await Context.SaveChangesAsync();
 
+            // Assert: Clear the context and retrieve the data one more time, it should only get the authenticated user's data
             RefreshStore();
 
             var resourcePoolFromDb = resourcePoolRepository
@@ -119,10 +126,50 @@ namespace DataObjects.Tests
                 .First();
 
             Assert.IsTrue(resourcePoolFromDb.Id == resourcePool.Id);
-
-            TestContext.WriteLine("resourcePoolFromDb.UserResourcePoolSet.Count: " + resourcePoolFromDb.UserResourcePoolSet.Count);
-
             Assert.IsTrue(resourcePoolFromDb.UserResourcePoolSet.Count == 1);
+            Assert.IsTrue(resourcePoolFromDb.UserResourcePoolSet.Single().UserId == user2.Id);
+        }
+
+        [TestMethod]
+        public async Task DbInterceptor_NoLoggedInUser_ShouldNotGetAnyUserData()
+        {
+            // Arrange
+            var userStore = new UserStore(Context);
+            userStore.AutoSaveChanges = false;
+
+            var user1 = new User("User 1");
+            var user2 = new User("User 2");
+
+            await userStore.CreateAsync(user1);
+            await userStore.CreateAsync(user2);
+            await Context.SaveChangesAsync();
+
+            // Act
+            var resourcePool = new ResourcePool("ResourcePool");
+            resourcePoolRepository.Insert(resourcePool);
+
+            LoginAs(user1);
+            resourcePool.AddUserResourcePool(100);
+            await Context.SaveChangesAsync();
+
+            LoginAs(user2);
+            resourcePool.AddUserResourcePool(100);
+            await Context.SaveChangesAsync();
+
+            // Assert: Clear the context and retrieve the data one more time, since there is no logged in user, it shouldn't retrieve any user level data
+            Logout();
+            
+            RefreshStore();
+
+            var resourcePoolFromDb = resourcePoolRepository
+                .AllLiveIncluding(item => item.UserResourcePoolSet)
+                .OrderByDescending(item => item.CreatedOn)
+                .First();
+
+            Assert.IsTrue(resourcePoolFromDb.Id == resourcePool.Id);
+            TestContext.WriteLine("resourcePoolFromDb.UserResourcePoolSet.Count: " + resourcePoolFromDb.UserResourcePoolSet.Count);
+            Assert.IsTrue(resourcePoolFromDb.UserResourcePoolSet.Count == 1);
+            Assert.IsTrue(resourcePoolFromDb.UserResourcePoolSet.Single().UserId == user2.Id);
         }
 
         void LoginAs(User user)
@@ -130,11 +177,15 @@ namespace DataObjects.Tests
             var nameIdentifierClaim = new Claim(ClaimTypes.NameIdentifier, user.Id.ToString(), ClaimValueTypes.Integer32);
             var claims = new HashSet<Claim>() { nameIdentifierClaim };
             var sampleIdentity = new ClaimsIdentity(claims, "TestAuth");
-            TestContext.WriteLine("sampleIdentity.IsAuthenticated: " + sampleIdentity.IsAuthenticated);
+            // TestContext.WriteLine("sampleIdentity.IsAuthenticated: " + sampleIdentity.IsAuthenticated);
             var samplePrincipal = new ClaimsPrincipal(sampleIdentity);
             Thread.CurrentPrincipal = samplePrincipal;
         }
 
+        void Logout()
+        {
+            Thread.CurrentPrincipal = null;
+        }
 
         //[TestMethod]
         //public async Task CreateValidUserAsync()

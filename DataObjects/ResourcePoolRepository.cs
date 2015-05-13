@@ -8,25 +8,6 @@
 
     public partial class ResourcePoolRepository
     {
-        DbSet<ResourcePool> ResourcePoolSet { get { return Context.Set<ResourcePool>(); } }
-        DbSet<UserResourcePool> UserResourcePoolSet { get { return Context.Set<UserResourcePool>(); } }
-
-        public async Task<UserResourcePool> FindUserResourcePoolAsync(int userId, int resourcePoolId)
-        {
-            return await UserResourcePoolSet
-                .Get(item => item.UserId == userId && item.ResourcePoolId == resourcePoolId)
-                .SingleOrDefaultAsync();
-        }
-
-        public async Task<ResourcePool> FindByUserResourcePoolIdAsync(int userResourcePoolId)
-        {
-            var list = ResourcePoolSet.Get(item => item.UserResourcePoolSet.Any(item2 => item2.Id == userResourcePoolId));
-
-            return list.Any()
-                ? await list.SingleOrDefaultAsync()
-                : null;
-        }
-
         #region - Samples -
 
         public ResourcePool CreateUPOSample(User user)

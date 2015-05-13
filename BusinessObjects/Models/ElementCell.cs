@@ -75,6 +75,10 @@ namespace BusinessObjects
         {
             get
             {
+                return UserElementCellSet.SingleOrDefault();
+
+                // TODO Obsolete?
+
                 //if (!System.Threading.Thread.CurrentPrincipal.Identity.IsAuthenticated)
                 //    return null;
 

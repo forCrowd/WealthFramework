@@ -40,7 +40,7 @@ namespace DataObjects.Tests
 
         void RefreshUserStore()
         {
-            base.RefreshContext();
+            base.InitializeContext();
             CreateNewUserStore();
         }
 

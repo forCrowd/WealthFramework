@@ -281,20 +281,42 @@ elementItem - ratingMultiplied function should be cached? but then how to update
 
 	* users should choose the ideal rate/ratings - it shouldn't be experimental? especially license ratings, index ratings, cmrp rate!
 	
-												* eula license? https://www.microsoft.com/en-us/legal/intellectualproperty/useterms/default.aspx
+								* eula license? https://www.microsoft.com/en-us/legal/intellectualproperty/useterms/default.aspx
 
-												* USERRESOURCEPOOL, USERELEMENTCELL, USERFIELDINDEX EXCEPTION!
-												currently it again filters the data but it shouldn't be necessary at all!
-												since it's only happening on live at the moment (?), remove the fix, puslish and then try to locate the issue!
-												find a way to log sql queries?
-												check interceptor classes?
-												if the table is user related and there is no authorized user, then cancel the operation?
+								* USERRESOURCEPOOL, USERELEMENTCELL, USERFIELDINDEX EXCEPTION!
+								it filters the data after retrieving from db by using the current userId but it shouldn't be necessary at all, db shouldn't provide other users' data from the start!
+								since it's only happening on live at the moment (?), remove the fix, puslish and then try to locate the issue!
+								or is it possible to restore live db to local?
+								find a way to log sql queries & check interceptor classes?
 
-												Web\Logs folders!
+								Web\Logs folders!
 
-												* delayed save option and retry..
+								* delayed save option and retry..
 
-												* multiplier default value = 1?
+								* multiplier default value = 1?
+
+								* try to get rid of copysampledata() method
+								users should be able directly interact with any cmrp
+								the issue is that, if in sample cases, cmrp rate is fixed - it means that this value needs to be set by the owner of cmrp!
+								however, currently that's not the case. every user has to set it by itself! therefore we need to copy that fixed value from sample data!
+
+								* user level notes;
+								0. if a query contains user level table and if there is no authorized user (or if it's not admin), only remove that table include? - DOESN'T WORK THAT WAY!
+								1. try to handle all the actions by using authenticated user, shouldn't be necessary to pass user variable
+								2. in case you still need to UserId, do these actions under methods that can only be called by Admins!
+								3. when the user logs out, how to clear existing related data from context?
+
+											* continue with multitenancy - ef.filters, check the samples!
+											https://github.com/jbogard/EntityFramework.Filters/tree/master/src
+						
+. Ozgur's - 10 May '15
+Efendiiiim başlanıç güzel
+error after register?
+bu arada not olarak neden login veya register etmenin gerekliliğini karşı tarafa anlatmak gerekebilir, kişisel seçimleriniz önemli mi deriz artık ne dersek
+conclusion kısmı güzel ama biraz mıncıklamak gerekiyor,  paypalda da koydukça artıyorsa sayı, bende biraz var istocktan gelen, hemen yöneltelm siftah olsun :)
+Bir de alttaki balonu değiştirelim yahu :)
+
+
 
 						* creative commons?
 
@@ -337,13 +359,6 @@ elementItem - ratingMultiplied function should be cached? but then how to update
 
 						* logo - winner;
 						http://www.squarespace.com/logo/#N4IgzgpgLlCWB2BzMIBcpECdYBMD6iArrhCqlJoRADQha55jwCGADmgGbMA2kt9-MLABeENACYADP2yCoAT25jUIbrEQALKCAC-tMPIC2AIwD23NKArN4YDqcyHLIAB5oAjJIAs7gHQB2AGYAVnEANn8wwIBOdzDJcVp5NEDxf19w6IAOaP8veOjA_2D9AGMeZQBtSV9o0PisryzxL39oqPcvahq68MlG5tb2wM6AXT0QADceKmdcCXFo9v1JxDQQAB5EAAIcZihmAFp4U0J4Q9wAXgBycUX26939o_2KWGNCOFN4G8frW3sjhuYHKSgAFH5gu4oTDoXDYQBKa4APg2pVgmFKSm2pRcN0CkkepXkN2ChO2mHxf0wNjsDkMN3-YG4-wgYMOaWoh3c_iRAHpUejMdjcTcvOTiTd4o9KddAtTaYCGdcmSyoGyOf4uTz-YKMViIDi8ddxUSSdcyTKqdsmUrGTTbGqNZzubzrgK0fqRcbTTjzb7ZfKbQ66UCVSGneyXTr3XrhYbRRaJeb_OTAwqAfT7bTI5rtW6PUKDUbScmpWnrbas-Gc6yo1rXbrPfGS0mzaWrXKM6Hlaq63nG7Hm8XE5a_WKK13g4rq331fX802i96O-O5ZOg1Ww3PnQ2Y4WvQnjcForUlu3rlkN927TXHf3owW4yPj6eltEL6nO5uQ7edwvBwPFtRzfc812lClK1_WcIwfPcn2HFcLVAj81wDKCZ23WD5wHfdnyQk8z1QyV12_G8YNrHDHyXQ9W0I98LykMjp0zLDKN3Rch2XI8pRQz9rxYnts3vKj4Jo4DjTCPi1wJZit17bCOMA1E-UQZEQFoQhWG4UxmBwCBMGcHTyi-eB1gAOWYYRmEwABL6htgABQcKBCEQHgHMcgAVDSQBYQxlBAAARWBTEQUxti87B4D2fTfNYAzDB4BAAGt1j5HBQvCt4Yr0sQJgUBL1hOM5fIAdzQKTfCk98pKaFpxHcaJaA0DxJGkKZYAgMqACFTDcdBXDQDrklQDqytwKBWtQTwOo0CB1C0NrJAmMBVjwVhMAgSYuoqlQtieA5jlOc4rlue4wkePYjtebAPlM35BNvEEKghXxYQ--E4SRbYwAUJRhJ7VBBMjcRglYFwHLBiGEV-0E2UheEEQAbhRRCeNItcx3TJ6KJEpS8PR1tfRIiCcfkwHc2orjaMTEnzWxjDWIU9iAMJ7jibLE0BIpu9mTgzigJfVcSK_SCp15_9cIQjnRy5smmaEvmqbEmmJJFhmeegtj8bZmXaePLn0Il7WWd16XxOFtsZK1zCzf50TBfwjH6LAkirzk03KYF5SiZAoj-M9u3vcd33ZdfAPwNt5mQ4J_X1eQyOSONn9g-Vn32YN0lpJI2TxdTmP09DzOE9d4jzSY_PyJ1h248tpCqoYtcxfJr2i7rtWrcbt3zTz1u06l6mPVU9SJg4WBuG4ABhcwHHWABiLJSiyMIwnEXyzEwfTMBnnTDJUef2qPyQN4cbeAHVJumjrN-3gAlPTYEIMgVv0QhjDgKAlGceTnAGmqMg8hXl4JYCRAheC6CAUagQci-C8ASSQ_g0iNC8OIGBZQKhoEqH4HkYQsgxHyLEO4dQvAlBwZEfB0RCHuGIcEUh4xaDTG4LMFQAAxbYAB5bYABVbY5lthBW2AAQUitsAAkpwvhvklAwAMgAZVYMwdESBhq0HsPAKArDmCGAnqNEAABZZgkwIDwCcpgUwvlx6T13nPA-x92q6FoJ_b-g1f6DX_tkXw7gYhBHfGAiBSQUjuCyHAhBSD_AoLQVkDBLjsHUHcAwqYMxAqAinuYsqOBpHQHVJgBRSiEBrDGmo74mjtG6PWAARSoH9bAPBLElPPgtTQ2gVBmG4Jk4pGi5H_UCltIgLJDJqIntPWe-8QCL2XqvdeOgdBAAA
-						
-. Ozgur's - 10 May '15
-Efendiiiim başlanıç güzel
-error after register?
-bu arada not olarak neden login veya register etmenin gerekliliğini karşı tarafa anlatmak gerekebilir, kişisel seçimleriniz önemli mi deriz artık ne dersek
-conclusion kısmı güzel ama biraz mıncıklamak gerekiyor,  paypalda da koydukça artıyorsa sayı, bende biraz var istocktan gelen, hemen yöneltelm siftah olsun :)
-Bir de alttaki balonu değiştirelim yahu :)
 
 . wording;
 facebook	log in		sign up

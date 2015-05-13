@@ -83,7 +83,6 @@
     <Compile Include="Generated\UserRoleUnitOfWork.cs">
       <DependentUpon>UnitOfWork.tt</DependentUpon>
     </Compile>
-    <Compile Include="ElementUnitOfWork.cs" />
     <Compile Include="RoleManager.cs" />
     <Compile Include="UserManager.cs" />
     <Compile Include="BaseUnitOfWork.cs" />

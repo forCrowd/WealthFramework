@@ -15,6 +15,7 @@
 
         // Service methods
         $delegate.getResourcePoolExpanded = getResourcePoolExpanded;
+        $delegate.getResourcePoolExpandedWithUser = getResourcePoolExpandedWithUser;
         $delegate.updateElementMultiplier = updateElementMultiplier;
         $delegate.updateElementCellIndexRating = updateElementCellIndexRating;
         $delegate.updateElementFieldIndexRating = updateElementFieldIndexRating;
@@ -25,6 +26,31 @@
         /*** Implementations ***/
 
         function getResourcePoolExpanded(resourcePoolId) {
+
+            var query = breeze.EntityQuery
+                .from('ResourcePool')
+                .expand('ElementSet.ElementFieldSet.ElementFieldIndexSet, ElementSet.ElementItemSet.ElementCellSet')
+                .where('Id', 'eq', resourcePoolId)
+            ;
+
+            query = query.using(breeze.FetchStrategy.FromServer);
+
+            return dataContext.executeQuery(query)
+                .then(success).catch(failed);
+
+            function success(response) {
+                var count = response.results.length;
+                //logger.logSuccess('Got ' + count + ' resourcePool(s)', response, true);
+                return response.results;
+            }
+
+            function failed(error) {
+                var message = error.message || 'ResourcePool query failed';
+                logger.logError(message, error);
+            }
+        }
+
+        function getResourcePoolExpandedWithUser(resourcePoolId) {
 
             var query = breeze.EntityQuery
                 .from('ResourcePool')
