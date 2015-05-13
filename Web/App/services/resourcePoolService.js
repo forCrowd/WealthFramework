@@ -141,7 +141,7 @@
 
                 userElementCell = {
                     ElementCellId: elementCell.Id,
-                    DecimalValue: updateType === 'increase' ? 5 : 0
+                    DecimalValue: updateType === 'increase' ? 55 : 45
                 };
 
                 dataContext.createEntity('UserElementCell', userElementCell);
@@ -193,7 +193,7 @@
 
                 userElementFieldIndex = {
                     ElementFieldIndexId: elementFieldIndex.Id,
-                    Rating: updateType === 'increase' ? 60 : 50
+                    Rating: updateType === 'increase' ? 55 : 45
                 };
 
                 dataContext.createEntity('UserElementFieldIndex', userElementFieldIndex);
@@ -236,7 +236,7 @@
 
                 userResourcePool = {
                     ResourcePoolId: resourcePool.Id,
-                    ResourcePoolRate: updateType === 'increase' ? 5 : 0
+                    ResourcePoolRate: updateType === 'increase' ? 15 : 5
                 };
 
                 dataContext.createEntity('UserResourcePool', userResourcePool);

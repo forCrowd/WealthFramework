@@ -9,6 +9,8 @@ An experimental resource management system that aims to provide a more sustainab
 **0.17.2**
 
 * Multitenancy: It raises an exception if the request is not authenticated
+* Copying sample user's data as the initial values will not be used anymore, angular objects will handle it.
+* Web loginController.js $rootScope fix
 * Content updates
 * Code cleanup
 

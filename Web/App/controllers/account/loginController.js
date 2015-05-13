@@ -3,9 +3,9 @@
 
     var controllerId = 'loginController';
     angular.module('main')
-        .controller(controllerId, ['userService', '$location', 'logger', loginController]);
+        .controller(controllerId, ['userService', '$location', '$rootScope', 'logger', loginController]);
 
-    function loginController(userService, $location, logger) {
+    function loginController(userService, $location, $rootScope, logger) {
         logger = logger.forSource(controllerId);
 
         var vm = this;

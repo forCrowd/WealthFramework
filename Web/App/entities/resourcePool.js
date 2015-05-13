@@ -187,6 +187,8 @@
                         if (self.userResourcePool() !== null) {
                             value = self.userResourcePool().ResourcePoolRate;
                             // logger.log('value', value);
+                        } else {
+                            value = 10; // Default value?
                         }
 
                         break;

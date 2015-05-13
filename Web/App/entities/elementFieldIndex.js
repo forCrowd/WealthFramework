@@ -184,6 +184,8 @@
                         if (self.userElementFieldIndex() !== null) {
                             value = self.userElementFieldIndex().Rating;
                             // logger.log('value', value);
+                        } else {
+                            value = 50; // Default value?
                         }
 
                         break;

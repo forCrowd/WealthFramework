@@ -19,7 +19,7 @@
 
         public async Task<IdentityResult> CreateWithSampleDataAsync(User user, string password, int sampleUserId)
         {
-            await Store.CopySampleDataAsync(sampleUserId, user);
+            // await Store.CopySampleDataAsync(sampleUserId, user);
             
             var result = await base.CreateAsync(user, password);
 
