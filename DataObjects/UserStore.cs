@@ -42,6 +42,7 @@
         /// <param name="sourceUserId">Must be a persistent entity's Id</param>
         /// <param name="targetUser">Might a new or persistent entity</param>
         /// <returns></returns>
+        [Obsolete("Not necessary anymore, remove it later on / SH - 14 May '15")]
         public async Task CopySampleDataAsync(int sourceUserId, User targetUser)
         {
             Validations.ArgumentNullOrDefault(sourceUserId, "sourceUserId");
@@ -109,7 +110,7 @@
             await DeleteSampleDataAsync(userId);
 
             var targetUser = await FindByIdAsync(userId);
-            await CopySampleDataAsync(sampleUserId, targetUser);
+            //await CopySampleDataAsync(sampleUserId, targetUser);
         }
 
         public async Task DeleteSampleDataAsync(int userId)

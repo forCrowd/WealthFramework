@@ -70,9 +70,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Glimpse.1.8.6\lib\net45\Glimpse.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Glimpse.EF6, Version=1.6.4.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Glimpse.EF6, Version=1.6.5.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Glimpse.EF6.1.6.4\lib\net45\Glimpse.EF6.dll</HintPath>
+      <HintPath>..\packages\Glimpse.EF6.1.6.5\lib\net45\Glimpse.EF6.dll</HintPath>
     </Reference>
     <Reference Include="Glimpse.Mvc5">
       <HintPath>..\packages\Glimpse.Mvc5.1.5.3\lib\net45\Glimpse.Mvc5.dll</HintPath>
@@ -321,6 +321,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\controllers\content\basicsController.js" />
+    <Content Include="App\controllers\content\closingNotesController.js" />
     <Content Include="App\controllers\content\resourcePoolRateSampleController.js" />
     <Content Include="App\controllers\content\indexesPieSampleController.js" />
     <Content Include="App\controllers\content\knowledgeIndexSampleController.js" />
@@ -407,6 +408,10 @@
     <Content Include="App\entities\elementField.js" />
     <Content Include="App\entities\resourcePool.js" />
     <Content Include="App\entities\elementCell.js" />
+    <Content Include="App\external\disqus.js" />
+    <Content Include="App\external\flattr.js" />
+    <Content Include="App\external\twitter.js" />
+    <Content Include="App\external\googleAnalytics.js" />
     <Content Include="App\includes\manageMenu.js">
       <DependentUpon>manageMenu.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -418,8 +423,8 @@
       <DependentUpon>manageScripts.tt</DependentUpon>
     </Content>
     <Content Include="App\authorization.js" />
-    <Content Include="App\highcharts-ng.js" />
-    <Content Include="App\highcharts.js" />
+    <Content Include="App\external\highcharts-ng.js" />
+    <Content Include="App\external\highcharts.js" />
     <Content Include="App\services\generated\elementCellService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
@@ -780,7 +785,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App\libraries\" />
     <Folder Include="App\views\directives\" />
   </ItemGroup>
   <PropertyGroup>

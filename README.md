@@ -6,6 +6,10 @@ An experimental resource management system that aims to provide a more sustainab
 
 ### Release Notes
 
+**0.18**
+
+* Web - External components (gratipay, flattr, twitter etc.) was moved to js files and also disabled in case of localhost
+
 **0.17.2**
 
 * Multitenancy: It raises an exception if the request is not authenticated

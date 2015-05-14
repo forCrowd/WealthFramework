@@ -155,8 +155,8 @@
     <script src="/Scripts/breeze.directives.js"></script>
 
     @*Try to find (or create) nuget package for these two*@
-    <script src="/App/highcharts.js"></script>
-    <script src="/App/highcharts-ng.js"></script>
+    <script src="/App/external/highcharts.js"></script>
+    <script src="/App/external/highcharts-ng.js"></script>
 
     <script src="/App/main.js"></script>
     <script src="/App/logger.js"></script>
@@ -189,6 +189,7 @@
     <script src="/App/controllers/content/fairShareIndexSampleController.js"></script>
     <script src="/App/controllers/content/indexesPieSampleController.js"></script>
     <script src="/App/controllers/content/resourcePoolRateSampleController.js"></script>
+    <script src="/App/controllers/content/closingNotesController.js"></script>
 
     @* Account *@
     <script src="/App/controllers/account/loginController.js"></script>
@@ -211,18 +212,7 @@
     <script src="/App/directives/resourcePoolEditor.js"></script>
 
     @* Google Analytics *@
-    <script>
-    (function (i, s, o, g, r, a, m) {
-        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
-            (i[r].q = i[r].q || []).push(arguments)
-        }, i[r].l = 1 * new Date(); a = s.createElement(o),
-        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-
-    ga('create', 'UA-62498767-1', 'auto');
-    ga('send', 'pageview');
-
-    </script>
+    <script src="/App/external/googleAnalytics.js"></script>
 
 </body>
 </html>

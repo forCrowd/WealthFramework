@@ -279,44 +279,34 @@ then continue with the other registrations?
 * performance problem; especially ratingMultiplied() method called too many times which makes it pretty slow - improve it - find a proper approach to update cached values?
 elementItem - ratingMultiplied function should be cached? but then how to update the cache? events & properties etc.?
 
+* find a way to log sql queries! glimpse?
+
+* how has a right to enter a rating for cmrp rate + index + element item rating (cell)
+if the current user has no right to enter a rating for that area, then it must use ALL USERS' RATING - no need to show 'Your Own Ratings' option
+
+* update or remove resetsampledata + deletesampledata functions - remove copysampledata?
+
+* user level notes;
+1. try to handle all the actions by using authenticated user, shouldn't be necessary to pass user variable
+2. in case you need to set UserId explicitly, do these actions under methods that can only be called by Admins!
+3. when the user logs out, how to clear existing related data from context?
+								
 	* users should choose the ideal rate/ratings - it shouldn't be experimental? especially license ratings, index ratings, cmrp rate!
 	
-								* eula license? https://www.microsoft.com/en-us/legal/intellectualproperty/useterms/default.aspx
+	* eula license? https://www.microsoft.com/en-us/legal/intellectualproperty/useterms/default.aspx
 
-								* USERRESOURCEPOOL, USERELEMENTCELL, USERFIELDINDEX EXCEPTION!
-								it filters the data after retrieving from db by using the current userId but it shouldn't be necessary at all, db shouldn't provide other users' data from the start!
-								since it's only happening on live at the moment (?), remove the fix, puslish and then try to locate the issue!
-								or is it possible to restore live db to local?
-								find a way to log sql queries & check interceptor classes?
+	* delayed save option and retry
 
-								Web\Logs folders!
+	* html + js cache issue?
 
-								* delayed save option and retry..
+	* multiplier default value = 1?
 
-								* multiplier default value = 1?
-
-								* try to get rid of copysampledata() method
-								users should be able directly interact with any cmrp
-								the issue is that, if in sample cases, cmrp rate is fixed - it means that this value needs to be set by the owner of cmrp!
-								however, currently that's not the case. every user has to set it by itself! therefore we need to copy that fixed value from sample data!
-
-								* user level notes;
-								0. if a query contains user level table and if there is no authorized user (or if it's not admin), only remove that table include? - DOESN'T WORK THAT WAY!
-								1. try to handle all the actions by using authenticated user, shouldn't be necessary to pass user variable
-								2. in case you still need to UserId, do these actions under methods that can only be called by Admins!
-								3. when the user logs out, how to clear existing related data from context?
-
-											* continue with multitenancy - ef.filters, check the samples!
-											https://github.com/jbogard/EntityFramework.Filters/tree/master/src
-						
 . Ozgur's - 10 May '15
 Efendiiiim başlanıç güzel
 error after register?
 bu arada not olarak neden login veya register etmenin gerekliliğini karşı tarafa anlatmak gerekebilir, kişisel seçimleriniz önemli mi deriz artık ne dersek
 conclusion kısmı güzel ama biraz mıncıklamak gerekiyor,  paypalda da koydukça artıyorsa sayı, bende biraz var istocktan gelen, hemen yöneltelm siftah olsun :)
 Bir de alttaki balonu değiştirelim yahu :)
-
-
 
 						* creative commons?
 
