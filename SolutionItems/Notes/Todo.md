@@ -297,9 +297,16 @@ if the current user has no right to enter a rating for that area, then it must u
 	
 	* eula license? https://www.microsoft.com/en-us/legal/intellectualproperty/useterms/default.aspx
 
+	* when it's saving, write it to console?
+
 	* html + js cache issue?
+	html template cache breaking
+	http://stackoverflow.com/questions/18714690/is-there-a-way-to-preload-templates-when-using-angularjs-routing
+	how it stores in the cache; /App/views/content/cache.html
 
 	* multiplier default value = 1?
+
+	* introduction, don't allow to use multiplier functions?
 
 . Ozgur's - 10 May '15
 Efendiiiim başlanıç güzel
