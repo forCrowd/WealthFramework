@@ -6,6 +6,10 @@ An experimental resource management system that aims to provide a more sustainab
 
 ### Release Notes
 
+**0.19**
+
+* 
+
 **0.18**
 
 * Delayed save feature was added. resourcePoolEditor actions will be saved after a second.
