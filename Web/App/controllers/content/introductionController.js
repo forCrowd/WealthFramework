@@ -25,7 +25,7 @@
         });
 
         // Timers
-        var increaseMultiplierTimeoutInitial = $timeout(increaseMultiplier, 1500);
+        var increaseMultiplierTimeoutInitial = $timeout(increaseMultiplier, 2500);
         var increaseMultiplierTimeoutRecursive = null;
 
         function increaseMultiplier() {
@@ -34,18 +34,24 @@
                 return;
 
             // Call the service to increase the multiplier
-            resourcePoolService.getResourcePoolExpanded(vm.introduction_UPOResourcePoolId)
+            resourcePoolService.getResourcePoolExpandedWithUser(vm.introduction_UPOResourcePoolId)
                 .then(function (resourcePoolSet) {
                     var resourcePool = resourcePoolSet[0];
                     for (var i = 0; i < resourcePool.ElementSet.length; i++) {
                         var element = resourcePool.ElementSet[i];
-                        resourcePoolService.updateElementMultiplier(element, 'increase');
+                        var updated = resourcePoolService.updateElementMultiplier(element, 'increase');
+
+                        if (updated) {
+
+                            // Don't save these changes, not that important, if there will be another save operation, they can go together?
+                            // resourcePoolService.saveChanges(1000);
+
+                        }
                     }
                 });
 
             // Then increase recursively
-            // TODO Decrease this timeout interval
-            var increaseMultiplierTimeoutRecursive = $timeout(increaseMultiplier, 300000); // Update this before release - 3000!
+            var increaseMultiplierTimeoutRecursive = $timeout(increaseMultiplier, 2500);
         }
 
         // When the DOM element is removed from the page,

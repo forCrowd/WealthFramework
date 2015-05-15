@@ -232,7 +232,7 @@
 
             function saveChanges() {
 
-                resourcePoolService.saveChanges(1000)
+                resourcePoolService.saveChanges(1500)
                     .then(function (result) {
 
                     })
