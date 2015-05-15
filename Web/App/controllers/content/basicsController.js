@@ -57,8 +57,9 @@
                             case 'resourcePoolEditor_elementMultiplierReset': { result = resourcePoolService.updateElementMultiplier(mainElement, 'reset'); break; }
                         }
 
-                        if (result)
+                        if (result) {
                             resourcePoolService.saveChanges();
+                        }
                     });
             }
         }

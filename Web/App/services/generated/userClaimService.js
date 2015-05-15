@@ -118,8 +118,8 @@
             dataContext.rejectChanges();
         }
 
-        function saveChanges() {
-            return dataContext.saveChanges();
+        function saveChanges(delay) {
+            return dataContext.saveChanges(delay);
         }
     }
 })();

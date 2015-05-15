@@ -8,6 +8,7 @@ An experimental resource management system that aims to provide a more sustainab
 
 **0.18**
 
+* Delayed save feature was added. resourcePoolEditor actions will be saved after a second.
 * Web - External components (gratipay, flattr, twitter etc.) was moved to js files and also disabled in case of localhost
 
 **0.17.2**

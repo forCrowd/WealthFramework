@@ -410,8 +410,8 @@
     <Content Include="App\entities\elementCell.js" />
     <Content Include="App\external\disqus.js" />
     <Content Include="App\external\flattr.js" />
-    <Content Include="App\external\twitter.js" />
     <Content Include="App\external\googleAnalytics.js" />
+    <Content Include="App\external\twitter.js" />
     <Content Include="App\includes\manageMenu.js">
       <DependentUpon>manageMenu.tt</DependentUpon>
       <AutoGen>True</AutoGen>

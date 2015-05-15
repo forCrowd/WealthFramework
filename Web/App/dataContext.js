@@ -10,15 +10,17 @@
 
     var serviceId = 'dataContext';
     angular.module('main')
-        .factory(serviceId, ['entityManagerFactory', '$q', '$rootScope', 'logger', dataContext]);
+        .factory(serviceId, ['entityManagerFactory', '$q', '$rootScope', '$timeout', 'logger', dataContext]);
 
-    function dataContext(entityManagerFactory, $q, $rootScope, logger) {
+    function dataContext(entityManagerFactory, $q, $rootScope, $timeout, logger) {
 
         // Logger
         logger = logger.forSource(serviceId);
 
         // Manager
         var manager = null;
+        var saveTimer = null;
+        var saveLogTimer = null;
         initializeStore();
 
         // Service methods
@@ -105,7 +107,28 @@
             manager.rejectChanges();
         }
 
-        function saveChanges() {
+        function saveChanges(delay) {
+
+            // Set the default value for delay in case 'undefined'
+            if (typeof delay === 'undefined') {
+                delay = 0;
+            }
+
+            // Cancel existing timers (delay the save)
+            if (saveTimer !== null) {
+                $timeout.cancel(saveTimer);
+            }
+
+            // Save immediately or wait based on delay
+            if (delay === 0) {
+                return saveChangesInternal();
+            } else {
+                saveTimer = $timeout(saveChangesInternal, delay);
+                return saveTimer;
+            }
+        }
+
+        function saveChangesInternal() {
 
             return metadataReady()
                 .then(function () {

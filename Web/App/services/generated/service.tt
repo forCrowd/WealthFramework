@@ -159,8 +159,8 @@ foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
             dataContext.rejectChanges();
         }
 
-        function saveChanges() {
-            return dataContext.saveChanges();
+        function saveChanges(delay) {
+            return dataContext.saveChanges(delay);
         }
     }
 })();

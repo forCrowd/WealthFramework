@@ -286,6 +286,8 @@ if the current user has no right to enter a rating for that area, then it must u
 
 * update or remove resetsampledata + deletesampledata functions - remove copysampledata?
 
+* auto retry for certain save cases ?!
+
 * user level notes;
 1. try to handle all the actions by using authenticated user, shouldn't be necessary to pass user variable
 2. in case you need to set UserId explicitly, do these actions under methods that can only be called by Admins!
@@ -295,15 +297,12 @@ if the current user has no right to enter a rating for that area, then it must u
 	
 	* eula license? https://www.microsoft.com/en-us/legal/intellectualproperty/useterms/default.aspx
 
-	* delayed save option and retry
-
 	* html + js cache issue?
 
 	* multiplier default value = 1?
 
 . Ozgur's - 10 May '15
 Efendiiiim başlanıç güzel
-error after register?
 bu arada not olarak neden login veya register etmenin gerekliliğini karşı tarafa anlatmak gerekebilir, kişisel seçimleriniz önemli mi deriz artık ne dersek
 conclusion kısmı güzel ama biraz mıncıklamak gerekiyor,  paypalda da koydukça artıyorsa sayı, bende biraz var istocktan gelen, hemen yöneltelm siftah olsun :)
 Bir de alttaki balonu değiştirelim yahu :)
