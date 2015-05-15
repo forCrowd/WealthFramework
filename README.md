@@ -10,6 +10,13 @@ An experimental resource management system that aims to provide a more sustainab
 
 * 
 
+**0.18.1**
+
+* resourcePoolService expanded methods can now query local as well
+* basicsController & introductionController invalid service method call fix
+* basicsController timer fix
+* Other timer adjustments
+
 **0.18**
 
 * Delayed save feature was added. resourcePoolEditor actions will be saved after a second.

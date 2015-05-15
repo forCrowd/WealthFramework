@@ -126,6 +126,18 @@
                 saveTimer = $timeout(saveChangesInternal, delay);
                 return saveTimer;
             }
+
+            // TODO Cancel the timer at the end of the service, like this ?
+
+            //// When the DOM element is removed from the page,
+            //// AngularJS will trigger the $destroy event on
+            //// the scope. This gives us a chance to cancel any
+            //// pending timer that we may have.
+            //$scope.$on("$destroy", function (event) {
+            //    $timeout.cancel(increaseMultiplierTimeoutInitial);
+            //    $timeout.cancel(increaseMultiplierTimeoutRecursive);
+            //});
+
         }
 
         function saveChangesInternal() {
@@ -147,7 +159,7 @@
                     return promise.then(success).catch(failed);
 
                     function success(result) {
-                        //logger.logSuccess('Saved ' + count + ' change(s)', result);
+                        logger.logSuccess('Saved ' + count + ' change(s)', result, false);
                         return result;
                     }
 

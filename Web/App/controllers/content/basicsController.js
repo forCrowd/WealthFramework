@@ -44,7 +44,7 @@
                     : vm.basics_ExistingModelResourcePoolId;
 
                 // Call the service to increase the multiplier
-                resourcePoolService.getResourcePoolExpanded(oppositeResourcePoolId)
+                resourcePoolService.getResourcePoolExpandedWithUser(oppositeResourcePoolId)
                     .then(function (resourcePoolSet) {
 
                         var resourcePool = resourcePoolSet[0];
@@ -58,7 +58,7 @@
                         }
 
                         if (result) {
-                            resourcePoolService.saveChanges();
+                            resourcePoolService.saveChanges(1500);
                         }
                     });
             }

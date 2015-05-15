@@ -12,6 +12,7 @@
 
         // Logger
         logger = logger.forSource(serviceId);
+        var fetchedResourcePools = [];
 
         // Service methods
         $delegate.getResourcePoolExpanded = getResourcePoolExpanded;
@@ -30,24 +31,9 @@
             var query = breeze.EntityQuery
                 .from('ResourcePool')
                 .expand('ElementSet.ElementFieldSet.ElementFieldIndexSet, ElementSet.ElementItemSet.ElementCellSet')
-                .where('Id', 'eq', resourcePoolId)
-            ;
+                .where('Id', 'eq', resourcePoolId);
 
-            query = query.using(breeze.FetchStrategy.FromServer);
-
-            return dataContext.executeQuery(query)
-                .then(success).catch(failed);
-
-            function success(response) {
-                var count = response.results.length;
-                //logger.logSuccess('Got ' + count + ' resourcePool(s)', response, true);
-                return response.results;
-            }
-
-            function failed(error) {
-                var message = error.message || 'ResourcePool query failed';
-                logger.logError(message, error);
-            }
+            return getResourcePoolExpandedInternal(resourcePoolId, query);
         }
 
         function getResourcePoolExpandedWithUser(resourcePoolId) {
@@ -55,11 +41,32 @@
             var query = breeze.EntityQuery
                 .from('ResourcePool')
                 .expand('UserResourcePoolSet, ElementSet.ElementFieldSet.ElementFieldIndexSet.UserElementFieldIndexSet, ElementSet.ElementItemSet.ElementCellSet.UserElementCellSet')
-                .where('Id', 'eq', resourcePoolId)
-                //.orderBy('ElementFieldSet.SortOrder')
-            ;
+                .where('Id', 'eq', resourcePoolId);
 
-            query = query.using(breeze.FetchStrategy.FromServer);
+            return getResourcePoolExpandedInternal(resourcePoolId, query);
+        }
+
+        function getResourcePoolExpandedInternal(resourcePoolId, query) {
+
+            // Fetch the data from server, in case if it's not fetched earlier or forced
+            var fetchFromServer = true;
+
+            for (var i = 0; i < fetchedResourcePools.length; i++) {
+                if (resourcePoolId === fetchedResourcePools[i]) {
+                    fetchFromServer = false;
+                    break;
+                }
+            }
+
+            // Prepare the query
+            if (fetchFromServer) { // From remote
+                query = query.using(breeze.FetchStrategy.FromServer)
+                fetchedResourcePools.push(resourcePoolId);
+                logger.log('fetched', fetchedResourcePools, false);
+            }
+            else { // From local
+                query = query.using(breeze.FetchStrategy.FromLocalCache)
+            }
 
             return dataContext.executeQuery(query)
                 .then(success).catch(failed);
@@ -74,6 +81,7 @@
                 var message = error.message || 'ResourcePool query failed';
                 logger.logError(message, error);
             }
+
         }
 
         // This function was in element.js as it should be. Only because it had to use createEntity() on dataContext, it was moved to this service.
