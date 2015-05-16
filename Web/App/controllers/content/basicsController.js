@@ -11,13 +11,18 @@
 
         var vm = this;
         vm.isAuthenticated = false;
-        vm.basics_ExistingModelResourcePoolId = 2;
-        vm.basics_NewModelResourcePoolId = 3;
 
         // Logged in?
         userService.getUserInfo()
             .then(function (userInfo) {
                 vm.isAuthenticated = true;
+            })
+            .catch(function (error) {
+
+            })
+            .finally(function () {
+                vm.basics_ExistingModelResourcePoolId = 2;
+                vm.basics_NewModelResourcePoolId = 3;
             });
 
         // User logged out

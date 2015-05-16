@@ -11,12 +11,17 @@
 
         var vm = this;
         vm.isAuthenticated = false;
-        vm.sectorIndex_SampleResourcePoolId = 4;
 
         // Logged in?
         userService.getUserInfo()
             .then(function (userInfo) {
                 vm.isAuthenticated = true;
+            })
+            .catch(function (error) {
+
+            })
+            .finally(function () {
+                vm.sectorIndex_SampleResourcePoolId = 4;
             });
 
         // User logged out

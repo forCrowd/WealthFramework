@@ -141,9 +141,13 @@
             // Resource pool id: Get the current resource pool
             scope.$watch('resourcePoolId', function () {
 
+                // Validate
+                if (typeof scope.resourcePoolId === 'undefined') {
+                    return;
+                }
+
                 if (scope.isAuthenticated) {
                     resourcePoolService.getResourcePoolExpandedWithUser(scope.resourcePoolId).then(loadResourcePool);
-
                 } else {
                     resourcePoolService.getResourcePoolExpanded(scope.resourcePoolId).then(loadResourcePool);
                 }
@@ -302,7 +306,7 @@
 
         return {
             restrict: 'E',
-            templateUrl: '/App/directives/resourcePoolEditor.html?v=019',
+            templateUrl: '/App/directives/resourcePoolEditor.html?v=0191',
             scope: {
                 resourcePoolId: '=',
                 chartHeight: '='

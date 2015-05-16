@@ -11,14 +11,19 @@
 
         var vm = this;
         vm.isAuthenticated = false;
-        vm.totalCostIndex_ExistingSystemSampleResourcePoolId = 7;
-        vm.totalCostIndex_NewSystemSampleResourcePoolId = 8;
-        vm.totalCostIndex_NewSystemAftermathSampleResourcePoolId = 9;
 
         // Logged in?
         userService.getUserInfo()
             .then(function (userInfo) {
                 vm.isAuthenticated = true;
+            })
+            .catch(function (error) {
+
+            })
+            .finally(function () {
+                vm.totalCostIndex_ExistingSystemSampleResourcePoolId = 7;
+                vm.totalCostIndex_NewSystemSampleResourcePoolId = 8;
+                vm.totalCostIndex_NewSystemAftermathSampleResourcePoolId = 9;
             });
 
         // User logged out

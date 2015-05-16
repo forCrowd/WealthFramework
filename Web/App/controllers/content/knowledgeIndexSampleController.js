@@ -11,8 +11,6 @@
 
         var vm = this;
         vm.isAuthenticated = false;
-        vm.sampleResourcePoolId = 5;
-        vm.popuplarSoftwareLicensesResourcePoolId = 6;
 
         vm.oldModelChartConfig = {
             title: {
@@ -81,6 +79,13 @@
         userService.getUserInfo()
             .then(function (userInfo) {
                 vm.isAuthenticated = true;
+            })
+            .catch(function (error) {
+
+            })
+            .finally(function () {
+                vm.sampleResourcePoolId = 5;
+                vm.popuplarSoftwareLicensesResourcePoolId = 6;
             });
 
         // User logged out

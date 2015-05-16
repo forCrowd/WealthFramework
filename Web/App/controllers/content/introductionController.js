@@ -11,12 +11,17 @@
 
         var vm = this;
         vm.isAuthenticated = false;
-        vm.introduction_UPOResourcePoolId = 1;
 
         // Logged in?
         userService.getUserInfo()
             .then(function (userInfo) {
                 vm.isAuthenticated = true;
+            })
+            .catch(function (error) {
+
+            })
+            .finally(function () {
+                vm.introduction_UPOResourcePoolId = 1;
             });
 
         // User logged out
@@ -25,7 +30,7 @@
         });
 
         // Timers
-        var increaseMultiplierTimeoutInitial = $timeout(increaseMultiplier, 2500);
+        var increaseMultiplierTimeoutInitial = $timeout(increaseMultiplier, 5000);
         var increaseMultiplierTimeoutRecursive = null;
 
         function increaseMultiplier() {

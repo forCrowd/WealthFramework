@@ -321,7 +321,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\controllers\content\basicsController.js" />
-    <Content Include="App\controllers\content\cacheController.js" />
     <Content Include="App\controllers\content\closingNotesController.js" />
     <Content Include="App\controllers\content\resourcePoolRateSampleController.js" />
     <Content Include="App\controllers\content\indexesPieSampleController.js" />
@@ -460,7 +459,6 @@
       <DependentUpon>service.tt</DependentUpon>
     </Content>
     <Content Include="App\services\resourcePoolService.js" />
-    <Content Include="App\views\content\cache.html" />
     <Content Include="App\views\content\logos.html" />
     <Content Include="App\views\content\closingNotes.html" />
     <Content Include="App\views\content\feedback.html" />

@@ -299,7 +299,7 @@ if the current user has no right to enter a rating for that area, then it must u
 
 	* check whether there is no need for mvc stuff (there is no renderscripts for instance, can renderbody be removed?)
 
-	* html + js cache issue?
+	* html + js cache issue? - IS THIS OKAY?
 	html template cache breaking
 	http://stackoverflow.com/questions/18714690/is-there-a-way-to-preload-templates-when-using-angularjs-routing
 	how it stores in the cache; /App/views/content/cache.html
@@ -307,6 +307,8 @@ if the current user has no right to enter a rating for that area, then it must u
 	* multiplier default value = 1?
 
 	* introduction, don't allow to use multiplier functions?
+
+	* cleanup social media stuff!
 
 . Ozgur's - 10 May '15
 Efendiiiim başlanıç güzel

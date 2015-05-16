@@ -26,16 +26,27 @@
                 <!--Our first target is to reach to get €500 income per month, so we can dedicate our full time to this project.-->
             </p>
             <p>
-                <img src="/Content/images/PP_logo_h_100x26.png" alt="Donate" />
+                <a class="btn btn-primary" href="" role="button" target="_blank">Paypal</a>
+                <a class="btn btn-primary" href="https://flattr.com/profile/forCrowd" role="button" target="_blank">Flattr</a>
+                <a class="btn btn-primary" href="https://gratipay.com/forCrowd/" role="button" target="_blank">Gratipay</a>
             </p>
-            <div data-ng-if="!vm.isLocalhost">
-                <!-- Flattr -->
+            <!--<p>
+                <img src="/Content/images/PP_logo_h_100x26.png" alt="Donate" />
+            </p>-->
+            <!-- Flattr -->
+            <!--<p>
+                <a class="btn btn-primary" href="https://flattr.com/profile/forCrowd" role="button" target="_blank">Flattr Us</a>
+            </p>-->
+            <!--<div data-ng-if="!vm.isLocalhost">
                 <iframe style="border-width: 0px;" title="Flattr" data-ng-src="{{ vm.flattrIFrameUrl }}" height="20" width="110"></iframe>
-            </div>
-            <div data-ng-if="!vm.isLocalhost">
-                <!-- Gratipay -->
+            </div>-->
+            <!-- Gratipay -->
+            <!--<p>
+                <a class="btn btn-primary" href="https://gratipay.com/forCrowd/" role="button" target="_blank">Donate with Gratipay</a>
+            </p>-->
+            <!--<div data-ng-if="!vm.isLocalhost">
                 <div data-gratipay-username="forCrowd"></div>
-            </div>
+            </div>-->
             <!--<p>
                 DIRECT EFT?
             </p>-->
@@ -52,10 +63,11 @@
             <p>
                 Follow us to get the latest news!
             </p>
-            <div data-ng-if="!vm.isLocalhost">
+            <p>
                 <!-- Twitter -->
-                <a href="https://twitter.com/forCrowd" class="twitter-follow-button" data-show-count="true" data-show-screen-name="true">Follow @forCrowd</a>
-            </div>
+                <a class="btn btn-primary" href="https://twitter.com/forCrowd" role="button" target="_blank">Follow us on Twitter</a>
+                <!--<a href="https://twitter.com/forCrowd" class="twitter-follow-button" data-show-count="true" data-show-screen-name="true">Follow @forCrowd</a>-->
+            </p>
 
             <!-- Feedbacks & Comments -->
             <p>
@@ -71,8 +83,8 @@
                 <a href="mailto:contact@forcrowd.org">contact@forCrowd.org</a>
             </p>-->
 
+            <!-- Disqus -->
             <div data-ng-if="!vm.isLocalhost">
-                <!-- Disqus -->
                 <div id="disqus_thread"></div>
                 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
             </div>
@@ -201,8 +213,16 @@
         </div>
     </div>
 
+    <!-- TODO Try to load these scripts under layoutController, or create a directive? -->
+
     <!-- Gratipay -->
-    <!-- TODO Try to load this script under layoutController, or create a directive? -->
-    <script src="/App/external/gratipay.js"></script>
+    <!--<script src="/App/external/gratipay.js"></script>-->
+    <!--<script src="//grtp.co/v1.js"></script>-->
+
+    <!-- Twitter -->
+    <!--<script src="/App/external/twitter.js"></script>-->
+
+    <!-- Disqus -->
+    <script src="/App/external/disqus.js"></script>
 
 </div>
