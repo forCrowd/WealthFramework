@@ -62,7 +62,6 @@
             if (fetchFromServer) { // From remote
                 query = query.using(breeze.FetchStrategy.FromServer)
                 fetchedResourcePools.push(resourcePoolId);
-                logger.log('fetched', fetchedResourcePools, false);
             }
             else { // From local
                 query = query.using(breeze.FetchStrategy.FromLocalCache)

@@ -30,7 +30,7 @@
             </p>
             <div data-ng-if="!vm.isLocalhost">
                 <!-- Flattr -->
-                <div id="fb8vsmt"></div>
+                <iframe style="border-width: 0px;" title="Flattr" data-ng-src="{{ vm.flattrIFrameUrl }}" height="20" width="110"></iframe>
             </div>
             <div data-ng-if="!vm.isLocalhost">
                 <!-- Gratipay -->
@@ -201,16 +201,8 @@
         </div>
     </div>
 
-    <!-- Flattr -->
-    <script defer src="/App/external/flattr.js"></script>
-
     <!-- Gratipay -->
-    <script defer src="//grtp.co/v1.js"></script>
-
-    <!-- Twitter -->
-    <script src="/App/external/twitter.js"></script>
-
-    <!-- Disqus -->
-    <script src="/App/external/disqus.js" data-ng-></script>
+    <!-- TODO Try to load this script under layoutController, or create a directive? -->
+    <script src="/App/external/gratipay.js"></script>
 
 </div>

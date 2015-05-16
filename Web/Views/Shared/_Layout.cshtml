@@ -4,9 +4,22 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>Wealth Economy</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/jquery")
+
+    @* External CSS *@
+    <link href="/Content/bootstrap.css" rel="stylesheet" />
+    <link href="/Content/breeze.directives.css" rel="stylesheet" />
+    <link href="/Content/toastr.css" rel="stylesheet" />
+
+    @* Internal CSS *@
+    <link href="/Content/site.css?v=019" rel="stylesheet" />
+    <link href="/App/directives/resourcePoolEditor.css?v=019" rel="stylesheet" />
+
+    @* jQuery *@
+    <script src="/Scripts/jquery-2.1.1.min.js"></script>
+
+    @* Modernizr - TODO Not in use at the moment *@
+    @*<script src="/Scripts/modernizr-2.8.3.js"></script>*@
+
 </head>
 <body data-ng-app="main" data-ng-controller="layoutController as vm">
     <!-- propertyTests -->
@@ -134,88 +147,95 @@
         <hr />
         <footer>
             <p class="small">
-                @*{{ vm.applicationInfo.Organization }}<br />*@
                 {{ vm.applicationInfo.CurrentVersion }}<br />
-                forCrowd Foundation<br />
+                {{ vm.applicationInfo.Organization }}
             </p>
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    <script src="/Scripts/bootstrap.js"></script>
+    <script src="/Scripts/respond.js"></script>
 
     <script src="/Scripts/angular.js"></script>
-    <script src="/Scripts/angular-route.js"></script>
-    <script src="/Scripts/angular-sanitize.js"></script>
-    <script src="/Scripts/datajs-1.1.3.js"></script>
-    <script src="/Scripts/toastr.js"></script>
+    <script src="/Scripts/angular-route.min.js"></script>
+    <script src="/Scripts/angular-sanitize.min.js"></script>
+    <script src="/Scripts/datajs-1.1.3.min.js"></script>
+    <script src="/Scripts/toastr.min.js"></script>
 
-    <script src="/Scripts/breeze.debug.js"></script>
+    <script src="/Scripts/breeze.min.js"></script>
     <script src="/Scripts/breeze.angular.js"></script>
     <script src="/Scripts/breeze.directives.js"></script>
 
-    @*Try to find (or create) nuget package for these two*@
+    @* Highcharts - TODO Try to find (or create) nuget package for these two *@
     <script src="/App/external/highcharts.js"></script>
     <script src="/App/external/highcharts-ng.js"></script>
 
-    <script src="/App/main.js"></script>
-    <script src="/App/logger.js"></script>
-    <script src="/App/route.js"></script>
-    <script src="/App/authorization.js"></script>
+    @* Main *@
+    <script src="/App/main.js?v=019"></script>
+    <script src="/App/logger.js?v=019"></script>
+    <script src="/App/route.js?v=019"></script>
+    <script src="/App/authorization.js?v=019"></script>
 
     @* Entities *@
-    <script src="/App/entities/resourcePool.js"></script>
-    <script src="/App/entities/element.js"></script>
-    <script src="/App/entities/elementCell.js"></script>
-    <script src="/App/entities/elementField.js"></script>
-    <script src="/App/entities/elementFieldIndex.js"></script>
-    <script src="/App/entities/elementItem.js"></script>
+    <script src="/App/entities/resourcePool.js?v=019"></script>
+    <script src="/App/entities/element.js?v=019"></script>
+    <script src="/App/entities/elementCell.js?v=019"></script>
+    <script src="/App/entities/elementField.js?v=019"></script>
+    <script src="/App/entities/elementFieldIndex.js?v=019"></script>
+    <script src="/App/entities/elementItem.js?v=019"></script>
 
     @* breezeJS *@
-    <script src="/App/entityManagerFactory.js"></script>
-    <script src="/App/dataContext.js"></script>
+    <script src="/App/entityManagerFactory.js?v=019"></script>
+    <script src="/App/dataContext.js?v=019"></script>
 
-    <script src="/App/filters/angular-percentage.js"></script>
+    <script src="/App/services/mainService.js?v=019"></script>
 
-    <script src="/App/services/mainService.js"></script>
-    <script src="/App/controllers/layoutController.js"></script>
-
-    @* Content *@
-    <script src="/App/controllers/content/introductionController.js"></script>
-    <script src="/App/controllers/content/basicsController.js"></script>
-    <script src="/App/controllers/content/sectorIndexSampleController.js"></script>
-    <script src="/App/controllers/content/knowledgeIndexSampleController.js"></script>
-    <script src="/App/controllers/content/totalCostIndexSampleController.js"></script>
-    <script src="/App/controllers/content/fairShareIndexSampleController.js"></script>
-    <script src="/App/controllers/content/indexesPieSampleController.js"></script>
-    <script src="/App/controllers/content/resourcePoolRateSampleController.js"></script>
-    <script src="/App/controllers/content/closingNotesController.js"></script>
-
-    @* Account *@
-    <script src="/App/controllers/account/loginController.js"></script>
-    <script src="/App/controllers/account/registerController.js"></script>
-    <script src="/App/controllers/account/accountEditController.js"></script>
-    <script src="/App/controllers/account/changePasswordController.js"></script>
-
-    @* Manage Scripts - Custom *@
-    <script src="/App/controllers/manage/resourcePool/resourcePoolCustomListController.js"></script>
-    <script src="/App/controllers/manage/resourcePool/resourcePoolCustomViewController.js"></script>
-
-    @* Manage Scripts - Generated *@
+    @* Manage Scripts - Generated (Services, Controllers) *@
     <script src="/App/includes/manageScripts.js"></script>
 
     @* Service extensions *@
-    <script src="/App/services/userService.js"></script>
-    <script src="/App/services/resourcePoolService.js"></script>
+    <script src="/App/services/userService.js?v=019"></script>
+    <script src="/App/services/resourcePoolService.js?v=019"></script>
+
+    @* Content *@
+    <script src="/App/controllers/content/layoutController.js?v=019"></script>
+    <script src="/App/controllers/content/introductionController.js?v=019"></script>
+    <script src="/App/controllers/content/basicsController.js?v=019"></script>
+    <script src="/App/controllers/content/sectorIndexSampleController.js?v=019"></script>
+    <script src="/App/controllers/content/knowledgeIndexSampleController.js?v=019"></script>
+    <script src="/App/controllers/content/totalCostIndexSampleController.js?v=019"></script>
+    <script src="/App/controllers/content/fairShareIndexSampleController.js?v=019"></script>
+    <script src="/App/controllers/content/indexesPieSampleController.js?v=019"></script>
+    <script src="/App/controllers/content/resourcePoolRateSampleController.js?v=019"></script>
+    <script src="/App/controllers/content/closingNotesController.js?v=019"></script>
+
+    @* Account *@
+    <script src="/App/controllers/account/loginController.js?v=019"></script>
+    <script src="/App/controllers/account/registerController.js?v=019"></script>
+    <script src="/App/controllers/account/accountEditController.js?v=019"></script>
+    <script src="/App/controllers/account/changePasswordController.js?v=019"></script>
+
+    @* Manage Scripts - Custom *@
+    <script src="/App/controllers/manage/resourcePool/resourcePoolCustomListController.js?v=019"></script>
+    <script src="/App/controllers/manage/resourcePool/resourcePoolCustomViewController.js?v=019"></script>
 
     @* Directives *@
-    <script src="/App/directives/resourcePoolEditor.js"></script>
+    <script src="/App/directives/resourcePoolEditor.js?v=019"></script>
+
+    @* Filters *@
+    <script src="/App/filters/angular-percentage.js?v=019"></script>
+
+    @* TODO ? *@
+    <script src="/App/controllers/content/cacheController.js?v=019"></script>
+
+    <!-- Twitter -->
+    <script src="/App/external/twitter.js"></script>
+
+    <!-- Disqus -->
+    <script src="/App/external/disqus.js"></script>
 
     @* Google Analytics *@
     <script src="/App/external/googleAnalytics.js"></script>
-
-
-    <script src="/App/controllers/content/cacheController.js"></script>
 
 </body>
 </html>

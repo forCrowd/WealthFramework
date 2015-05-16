@@ -297,7 +297,7 @@ if the current user has no right to enter a rating for that area, then it must u
 	
 	* eula license? https://www.microsoft.com/en-us/legal/intellectualproperty/useterms/default.aspx
 
-	* when it's saving, write it to console?
+	* check whether there is no need for mvc stuff (there is no renderscripts for instance, can renderbody be removed?)
 
 	* html + js cache issue?
 	html template cache breaking

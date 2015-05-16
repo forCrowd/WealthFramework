@@ -17,14 +17,14 @@
             .when('/content/:key/', { templateUrl: getContentTemplateUrl })
 
             /* Account */
-            .when('/account/register', { templateUrl: '/App/views/account/register.html', controller: 'registerController as vm' })
-            .when('/account/login', { templateUrl: '/App/views/account/login.html', controller: 'loginController as vm' })
-            .when('/account/accountEdit', { templateUrl: '/App/views/account/accountEdit.html', controller: 'accountEditController as vm' })
-            .when('/account/changePassword', { templateUrl: '/App/views/account/changePassword.html', controller: 'changePasswordController as vm' })
+            .when('/account/register', { templateUrl: '/App/views/account/register.html?v=019', controller: 'registerController as vm' })
+            .when('/account/login', { templateUrl: '/App/views/account/login.html?v=019', controller: 'loginController as vm' })
+            .when('/account/accountEdit', { templateUrl: '/App/views/account/accountEdit.html?v=019', controller: 'accountEditController as vm' })
+            .when('/account/changePassword', { templateUrl: '/App/views/account/changePassword.html?v=019', controller: 'changePasswordController as vm' })
 
             /* Custom List + Edit pages */
-            .when('/manage/custom/resourcePool', { templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomList.html' })
-            .when('/manage/custom/resourcePool/:Id', { templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomView.html' })
+            .when('/manage/custom/resourcePool', { templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomList.html?v=019' })
+            .when('/manage/custom/resourcePool/:Id', { templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomView.html?v=019' })
 
             /* Default List + Edit pages */
             .when('/manage/:entity', { templateUrl: getManageTemplateUrl })
@@ -47,10 +47,10 @@
                 action = params.action;
 
             if (action === 'list')
-                templateUrl = '/App/views/manage/list/' + params.entity + 'List.html';
+                templateUrl = '/App/views/manage/list/' + params.entity + 'List.html?v=019';
 
             if (action === 'new' || action === 'edit')
-                templateUrl = '/App/views/manage/edit/' + params.entity + 'Edit.html';
+                templateUrl = '/App/views/manage/edit/' + params.entity + 'Edit.html?v=019';
 
             return templateUrl;
         }
@@ -62,7 +62,7 @@
             if (typeof params.key !== 'undefined')
                 key = params.key;
 
-            return '/App/views/content/' + key + '.html';
+            return '/App/views/content/' + key + '.html?v=019';
         }
     }
 

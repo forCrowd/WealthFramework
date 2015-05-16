@@ -21,61 +21,61 @@ SH - 09 May '14
 
     document.write('\
 	\
-    <script src="/App/services/generated/elementService.js"></script>\
-    <script src="/App/controllers/manage/list/elementListController.js"></script>\
-    <script src="/App/controllers/manage/edit/elementEditController.js"></script>\
+    <script src="/App/services/generated/elementService.js?v=019"></script>\
+    <script src="/App/controllers/manage/list/elementListController.js?v=019"></script>\
+    <script src="/App/controllers/manage/edit/elementEditController.js?v=019"></script>\
 	\
-    <script src="/App/services/generated/elementCellService.js"></script>\
-    <script src="/App/controllers/manage/list/elementCellListController.js"></script>\
-    <script src="/App/controllers/manage/edit/elementCellEditController.js"></script>\
+    <script src="/App/services/generated/elementCellService.js?v=019"></script>\
+    <script src="/App/controllers/manage/list/elementCellListController.js?v=019"></script>\
+    <script src="/App/controllers/manage/edit/elementCellEditController.js?v=019"></script>\
 	\
-    <script src="/App/services/generated/elementFieldService.js"></script>\
-    <script src="/App/controllers/manage/list/elementFieldListController.js"></script>\
-    <script src="/App/controllers/manage/edit/elementFieldEditController.js"></script>\
+    <script src="/App/services/generated/elementFieldService.js?v=019"></script>\
+    <script src="/App/controllers/manage/list/elementFieldListController.js?v=019"></script>\
+    <script src="/App/controllers/manage/edit/elementFieldEditController.js?v=019"></script>\
 	\
-    <script src="/App/services/generated/elementFieldIndexService.js"></script>\
-    <script src="/App/controllers/manage/list/elementFieldIndexListController.js"></script>\
-    <script src="/App/controllers/manage/edit/elementFieldIndexEditController.js"></script>\
+    <script src="/App/services/generated/elementFieldIndexService.js?v=019"></script>\
+    <script src="/App/controllers/manage/list/elementFieldIndexListController.js?v=019"></script>\
+    <script src="/App/controllers/manage/edit/elementFieldIndexEditController.js?v=019"></script>\
 	\
-    <script src="/App/services/generated/elementItemService.js"></script>\
-    <script src="/App/controllers/manage/list/elementItemListController.js"></script>\
-    <script src="/App/controllers/manage/edit/elementItemEditController.js"></script>\
+    <script src="/App/services/generated/elementItemService.js?v=019"></script>\
+    <script src="/App/controllers/manage/list/elementItemListController.js?v=019"></script>\
+    <script src="/App/controllers/manage/edit/elementItemEditController.js?v=019"></script>\
 	\
-    <script src="/App/services/generated/resourcePoolService.js"></script>\
-    <script src="/App/controllers/manage/list/resourcePoolListController.js"></script>\
-    <script src="/App/controllers/manage/edit/resourcePoolEditController.js"></script>\
+    <script src="/App/services/generated/resourcePoolService.js?v=019"></script>\
+    <script src="/App/controllers/manage/list/resourcePoolListController.js?v=019"></script>\
+    <script src="/App/controllers/manage/edit/resourcePoolEditController.js?v=019"></script>\
 	\
-    <script src="/App/services/generated/roleService.js"></script>\
-    <script src="/App/controllers/manage/list/roleListController.js"></script>\
-    <script src="/App/controllers/manage/edit/roleEditController.js"></script>\
+    <script src="/App/services/generated/roleService.js?v=019"></script>\
+    <script src="/App/controllers/manage/list/roleListController.js?v=019"></script>\
+    <script src="/App/controllers/manage/edit/roleEditController.js?v=019"></script>\
 	\
-    <script src="/App/services/generated/userService.js"></script>\
-    <script src="/App/controllers/manage/list/userListController.js"></script>\
-    <script src="/App/controllers/manage/edit/userEditController.js"></script>\
+    <script src="/App/services/generated/userService.js?v=019"></script>\
+    <script src="/App/controllers/manage/list/userListController.js?v=019"></script>\
+    <script src="/App/controllers/manage/edit/userEditController.js?v=019"></script>\
 	\
-    <script src="/App/services/generated/userClaimService.js"></script>\
-    <script src="/App/controllers/manage/list/userClaimListController.js"></script>\
-    <script src="/App/controllers/manage/edit/userClaimEditController.js"></script>\
+    <script src="/App/services/generated/userClaimService.js?v=019"></script>\
+    <script src="/App/controllers/manage/list/userClaimListController.js?v=019"></script>\
+    <script src="/App/controllers/manage/edit/userClaimEditController.js?v=019"></script>\
 	\
-    <script src="/App/services/generated/userElementCellService.js"></script>\
-    <script src="/App/controllers/manage/list/userElementCellListController.js"></script>\
-    <script src="/App/controllers/manage/edit/userElementCellEditController.js"></script>\
+    <script src="/App/services/generated/userElementCellService.js?v=019"></script>\
+    <script src="/App/controllers/manage/list/userElementCellListController.js?v=019"></script>\
+    <script src="/App/controllers/manage/edit/userElementCellEditController.js?v=019"></script>\
 	\
-    <script src="/App/services/generated/userElementFieldIndexService.js"></script>\
-    <script src="/App/controllers/manage/list/userElementFieldIndexListController.js"></script>\
-    <script src="/App/controllers/manage/edit/userElementFieldIndexEditController.js"></script>\
+    <script src="/App/services/generated/userElementFieldIndexService.js?v=019"></script>\
+    <script src="/App/controllers/manage/list/userElementFieldIndexListController.js?v=019"></script>\
+    <script src="/App/controllers/manage/edit/userElementFieldIndexEditController.js?v=019"></script>\
 	\
-    <script src="/App/services/generated/userLoginService.js"></script>\
-    <script src="/App/controllers/manage/list/userLoginListController.js"></script>\
-    <script src="/App/controllers/manage/edit/userLoginEditController.js"></script>\
+    <script src="/App/services/generated/userLoginService.js?v=019"></script>\
+    <script src="/App/controllers/manage/list/userLoginListController.js?v=019"></script>\
+    <script src="/App/controllers/manage/edit/userLoginEditController.js?v=019"></script>\
 	\
-    <script src="/App/services/generated/userResourcePoolService.js"></script>\
-    <script src="/App/controllers/manage/list/userResourcePoolListController.js"></script>\
-    <script src="/App/controllers/manage/edit/userResourcePoolEditController.js"></script>\
+    <script src="/App/services/generated/userResourcePoolService.js?v=019"></script>\
+    <script src="/App/controllers/manage/list/userResourcePoolListController.js?v=019"></script>\
+    <script src="/App/controllers/manage/edit/userResourcePoolEditController.js?v=019"></script>\
 	\
-    <script src="/App/services/generated/userRoleService.js"></script>\
-    <script src="/App/controllers/manage/list/userRoleListController.js"></script>\
-    <script src="/App/controllers/manage/edit/userRoleEditController.js"></script>\
+    <script src="/App/services/generated/userRoleService.js?v=019"></script>\
+    <script src="/App/controllers/manage/list/userRoleListController.js?v=019"></script>\
+    <script src="/App/controllers/manage/edit/userRoleEditController.js?v=019"></script>\
 	\
 \
 ');

@@ -8,14 +8,19 @@
     'use strict';
 
     angular.module('main', [
-
         'ngRoute', // Angular routing
-
         'ngSanitize',
-
         'breeze.angular',
-
         'highcharts-ng'
-
     ]);
+
+    angular.module('main')
+        .run(['$rootScope', 'logger', mainRun]);
+
+    function mainRun($rootScope, logger) {
+
+        // Logger
+        logger = logger.forSource('mainRun');
+    }
+
 })();

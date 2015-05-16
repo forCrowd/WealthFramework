@@ -410,7 +410,7 @@
     <Content Include="App\entities\resourcePool.js" />
     <Content Include="App\entities\elementCell.js" />
     <Content Include="App\external\disqus.js" />
-    <Content Include="App\external\flattr.js" />
+    <Content Include="App\external\gratipay.js" />
     <Content Include="App\external\googleAnalytics.js" />
     <Content Include="App\external\twitter.js" />
     <Content Include="App\includes\manageMenu.js">
@@ -418,14 +418,14 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Content>
+    <Content Include="App\authorization.js" />
+    <Content Include="App\external\highcharts-ng.js" />
+    <Content Include="App\external\highcharts.js" />
     <Content Include="App\includes\manageScripts.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>manageScripts.tt</DependentUpon>
     </Content>
-    <Content Include="App\authorization.js" />
-    <Content Include="App\external\highcharts-ng.js" />
-    <Content Include="App\external\highcharts.js" />
     <Content Include="App\services\generated\elementCellService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
@@ -625,7 +625,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
-    <Content Include="App\controllers\layoutController.js" />
+    <Content Include="App\controllers\content\layoutController.js" />
     <Content Include="App\controllers\manage\list\listController.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -700,7 +700,6 @@
     <Content Include="Scripts\angular-route.min.js.map" />
     <Content Include="Scripts\angular-sanitize.min.js.map" />
     <None Include="Properties\PublishProfiles\wealth.pubxml" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\breeze.angular.js" />
@@ -712,7 +711,6 @@
     <Content Include="Scripts\datajs-1.1.3.min.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
-    <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\q.js" />
     <Content Include="Scripts\q.min.js" />
