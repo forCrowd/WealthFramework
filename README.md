@@ -8,7 +8,8 @@ An experimental resource management system that aims to provide a more sustainab
 
 **0.19**
 
-* 
+* Cache breaking attempt
+* BundleConfig.cs scripts, styles were moved to layout.cshtml
 
 **0.18.1**
 
