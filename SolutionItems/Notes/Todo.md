@@ -238,8 +238,6 @@ resourcepooladdition -> resourcepoolfield ?!
 . enableresourcepool + enablesubtotals on element?
 also resourcepoolrate on element?
 
-. ResourcePoolEditor in a bootsrap panel?
-
 . Odata - Find a better way for readonly props (edmbuilder)?
 Also AccountController methods? So WebApi can go forever?
 
@@ -304,11 +302,16 @@ if the current user has no right to enter a rating for that area, then it must u
 	* multiplier default value = 1?
 
 	* introduction, don't allow to use multiplier functions?
+	some samples don't need to be saved ?! intro + basics?
+
+	* verification email?
+
+	* social media login?
 
 	* cleanup social media stuff!
 
 . Ozgur's - 10 May '15
-Efendiiiim başlanıç güzel
+Efendiiiim başlangıç güzel
 bu arada not olarak neden login veya register etmenin gerekliliğini karşı tarafa anlatmak gerekebilir, kişisel seçimleriniz önemli mi deriz artık ne dersek
 conclusion kısmı güzel ama biraz mıncıklamak gerekiyor,  paypalda da koydukça artıyorsa sayı, bende biraz var istocktan gelen, hemen yöneltelm siftah olsun :)
 Bir de alttaki balonu değiştirelim yahu :)
