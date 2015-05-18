@@ -13,10 +13,15 @@ namespace Web
             //    name: "Error",
             //    url: "Error/{action}");
 
-            routes.MapRoute(
-                name: "Default",
-                url: "{*catchall}",
-                defaults: new { controller = "Home", action = "Index" });
+            //routes.MapRoute(
+            //    name: "Default",
+            //    url: "{*catchall}",
+            //    defaults: new { controller = "Home", action = "Index" });
+
+            routes.MapPageRoute(
+                routeName: "Default",
+                routeUrl: "{*catchall}",
+                physicalFile: "~/main.aspx");
         }
     }
 }

@@ -22,5 +22,10 @@ namespace Web
             //GlobalConfiguration.Configuration.IncludeErrorDetailPolicy =
             //    IncludeErrorDetailPolicy.Always;
         }
+
+        protected void Application_BeginRequest(object sender, System.EventArgs e)
+        {
+            // TODO Try to create or use MVC like routing, then remove MVC forever?
+        }
     }
 }

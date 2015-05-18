@@ -1,7 +1,7 @@
 ﻿(function () {
     'use strict';
 
-    var controllerId = 'layoutController';
+    var controllerId = 'mainController';
     angular.module('main')
         .controller(controllerId, ['mainService',
             'userService',
@@ -13,9 +13,9 @@
             'resourcePoolFactory', // Just for test, remove
             'resourcePoolService',
 
-            layoutController]);
+            mainController]);
 
-    function layoutController(mainService,
+    function mainController(mainService,
         userService,
         $rootScope,
         $location,

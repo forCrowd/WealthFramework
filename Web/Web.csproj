@@ -260,8 +260,6 @@
     <Compile Include="Controllers\Api\BaseApiController.cs" />
     <Compile Include="Controllers\Api\Test\ResultsController.cs" />
     <Compile Include="Controllers\Extensions\ControllerExtensions.cs" />
-    <Compile Include="Controllers\Mvc\ErrorController.cs" />
-    <Compile Include="Controllers\Mvc\HomeController.cs" />
     <Compile Include="Controllers\OData\Generated\ElementCellController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
@@ -465,6 +463,7 @@
     <Content Include="App\views\content\conclusion.html" />
     <Content Include="App\views\content\basics.html" />
     <Content Include="App\views\content\allInOneSample.html" />
+    <Content Include="App\views\content\404.html" />
     <Content Include="App\views\content\resourcePoolRateSample.html" />
     <Content Include="App\views\content\indexesPieSample.html" />
     <Content Include="App\views\content\fairShareIndexSample.html" />
@@ -616,6 +615,8 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="404.aspx" />
+    <Content Include="main.aspx" />
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="App\controllers\account\accountEditController.js" />
     <Content Include="App\controllers\manage\edit\editController.txt">
@@ -623,7 +624,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
-    <Content Include="App\controllers\content\layoutController.js" />
+    <Content Include="App\controllers\content\mainController.js" />
     <Content Include="App\controllers\manage\list\listController.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -741,10 +742,8 @@
     <Content Include="App\views\account\login.html" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\toastr.min.js" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
     <Content Include="Scripts\toastr.min.js.map" />
-    <Content Include="Views\Shared\NotFound.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>
@@ -756,10 +755,6 @@
     </None>
     <Content Include="Content\site.css" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessObjects\BusinessObjects.csproj">

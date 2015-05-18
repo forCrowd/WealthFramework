@@ -6,6 +6,11 @@ An experimental resource management system that aims to provide a more sustainab
 
 ### Release Notes
 
+**0.20**
+
+* MVC clean-up
+* Improvements for Error, 404 cases
+
 **0.19.1**
 
 * finally block was used in getUserInfo() method of sample controllers to prevent loading resource pools before determining whether there is a user or not

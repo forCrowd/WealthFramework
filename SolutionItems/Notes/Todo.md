@@ -103,7 +103,8 @@ according to this, normal user may not use post action for instance? check these
 * enum data type didnt work with odata? or api?
 * html cache break - angular scripts + views etc.?
 * using texbox to update chart data didn't work, it breaks the chart?
-* use or try to remove scripts.render() + styles.render() from layout.cshtml - then mvc can be removed completely
+* about MVC, only routing is left, if that could be replaced MVC could be gone forever?
+* http://localhost:15001/content/ - 403 - Forbidden: Access is denied error?
 * automate .tt scripts with afterbuild?
 * try to have a standard for css usage + html layout formats + also js script conventions
 * check spelling of the texts!
@@ -117,7 +118,8 @@ http://msdn.microsoft.com/en-us/library/hh925568%28v=vs.110%29.aspx
 * http://www.hanselman.com/blog/crossbrowserdebuggingintegratedintovisualstudiowithbrowserstack.aspx
 * https://www.runscope.com/signup
 * html minifier: https://github.com/deanhume/html-minifier
-* Install-Package Microsoft.AspNet.WebApi.HelpPage
+* /help works, improve and use it?
+And how about Install-Package Microsoft.AspNet.WebApi.HelpPage ? same?
 * karma js tester?
 * web api throttling!
 * http://smtp4dev.codeplex.com/
@@ -309,6 +311,8 @@ if the current user has no right to enter a rating for that area, then it must u
 	* introduction, don't allow to use multiplier functions?
 
 	* cleanup social media stuff!
+
+	* /manage/resourcePool/111 - handle not found cases!
 
 . Ozgur's - 10 May '15
 Efendiiiim başlanıç güzel
