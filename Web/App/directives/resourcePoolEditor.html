@@ -1,16 +1,20 @@
 ﻿<div class="resourcePoolEditor">
     <div class="panel panel-default">
         <div class="panel-heading">
+            <p data-ng-if="errorMessage.length > 0">
+                <span class="label label-warning">{{ errorMessage }}</span>
+            </p>
             <h3 class="panel-title">{{ resourcePool.Name }}</h3>
             <div class="resourcePoolFilter">
                 <small>
-                    Display: <a href="" data-ng-click="resourcePool.currentElement.toggleValueFilter()">{{ resourcePool.currentElement.valueFilterText() }}</a>
+                    <a href="" data-ng-click="resourcePool.currentElement.toggleValueFilter()">{{ resourcePool.currentElement.valueFilterText() }}</a>
                 </small>
             </div>
         </div>
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-12">
+
                     <ol class="breadcrumb" data-ng-if="resourcePool.ElementSet.length > 1">
                         <li data-ng-repeat="parent in resourcePool.currentElement.parents()" data-ng-class="{ active: $last }">
                             <a href="#" data-ng-if="!$last" data-ng-click="changeCurrentElement(parent)">

@@ -22,12 +22,9 @@
 
             scope.resourcePool = null;
             scope.isAuthenticated = false;
+            scope.errorMessage = '';
 
             // User logged in & out
-            userService.getUserInfo()
-                .then(function (userInfo) {
-                    scope.isAuthenticated = true;
-                });
             $rootScope.$on('userLoggedIn', function () {
                 scope.isAuthenticated = true;
             });
@@ -36,6 +33,8 @@
             });
 
             scope.chartConfig = {
+                loading: true,
+                title: { text: '' },
                 options: {
                     plotOptions: {
                         column: {
@@ -141,21 +140,50 @@
             // Resource pool id: Get the current resource pool
             scope.$watch('resourcePoolId', function () {
 
+                // Clear previous error messages
+                scope.errorMessage = '';
+
                 // Validate
                 if (typeof scope.resourcePoolId === 'undefined') {
+                    scope.errorMessage = 'Invalid CMRP Id';
+                    scope.chartConfig.loading = false;
                     return;
                 }
 
-                if (scope.isAuthenticated) {
-                    resourcePoolService.getResourcePoolExpandedWithUser(scope.resourcePoolId).then(loadResourcePool);
-                } else {
-                    resourcePoolService.getResourcePoolExpanded(scope.resourcePoolId).then(loadResourcePool);
-                }
+                userService.getUserInfo()
+                    .then(function (userInfo) {
+                        if (userInfo === null) {
+                            resourcePoolService.getResourcePoolExpanded(scope.resourcePoolId)
+                                .then(loadResourcePool)
+                                .catch(function () {
+                                    // TODO scope.errorMessage ?
+                                })
+                                .finally(function () {
+                                    scope.chartConfig.loading = false;
+                                });
 
+                        } else {
+                            scope.isAuthenticated = true;
+                            resourcePoolService.getResourcePoolExpandedWithUser(scope.resourcePoolId)
+                                .then(loadResourcePool)
+                                .catch(function () {
+                                    // TODO scope.errorMessage ?
+                                })
+                                .finally(function () {
+                                    scope.chartConfig.loading = false;
+                                });
+                        }
+                    });
             }, true);
 
             function loadResourcePool(resourcePool) {
 
+                if (resourcePool.length === 0) {
+                    scope.errorMessage = 'Invalid CMRP Id';
+                    return;
+                }
+
+                // It returns an array, set the first item in the list
                 scope.resourcePool = resourcePool[0];
 
                 // Current element
@@ -176,7 +204,7 @@
                 // Current element
                 var element = scope.resourcePool.currentElement;
 
-                scope.chartConfig.loading = true;
+                //scope.chartConfig.loading = true;
                 scope.chartConfig.title = { text: element.Name };
                 scope.chartConfig.series = [];
 
@@ -306,7 +334,7 @@
 
         return {
             restrict: 'E',
-            templateUrl: '/App/directives/resourcePoolEditor.html?v=020',
+            templateUrl: '/App/directives/resourcePoolEditor.html?v=021',
             scope: {
                 resourcePoolId: '=',
                 chartHeight: '='

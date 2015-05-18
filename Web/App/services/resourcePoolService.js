@@ -68,7 +68,8 @@
             }
 
             return dataContext.executeQuery(query)
-                .then(success).catch(failed);
+                .then(success)
+                .catch(failed);
 
             function success(response) {
                 var count = response.results.length;

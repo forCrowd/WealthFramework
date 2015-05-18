@@ -16,8 +16,9 @@
         var logoutUrl = '/api/Account/Logout';
         var registerUrl = '/api/Account/Register';
         var resetSampleDataUrl = '/api/Account/ResetSampleData';
-        var userInfo = null;
         var userInfoUrl = '/api/Account/UserInfo';
+        var userInfo = null;
+        var userInfoFetched = false;
 
         // Service methods
         $delegate.changePassword = changePassword;
@@ -44,49 +45,59 @@
                     // Set access token to the session
                     $window.localStorage.setItem('access_token', data.access_token);
 
-                    // Raise logged in event
-                    $rootScope.$broadcast('userLoggedIn');
+                    // Clear userInfo
+                    userInfo = null;
+                    userInfoFetched = false;
+
+                    // Get the updated userInfo
+                    getUserInfo()
+                        .then(function () {
+
+                            // Raise logged in event
+                            $rootScope.$broadcast('userLoggedIn');
+
+                        });
                 })
         }
 
         function getUserInfo() {
             var deferred = $q.defer();
 
-            if (userInfo !== null) {
+            if (userInfoFetched) {
                 deferred.resolve(userInfo);
+
             } else {
                 $http.get(userInfoUrl)
                     .success(function (data) {
+                        // A temp fix for WebApi returns 'null' (as string), instead of null
+                        // TODO Find a permanent fix!
+                        if (data === 'null') {
+                            data = null;
+                        }
+
                         userInfo = data;
+
                         deferred.resolve(userInfo);
                     })
                     .error(function (data, status, headers, config) {
+                        userInfo = null;
+
                         // TODO
                         // If it returns Unauthorized (status === 401), then it's not logged in yet and it's okay, no need to show an error
                         // It's something else, server may not be unreachle or internal error? Just say 'Something went wrong'?
                         deferred.reject({ data: data, status: status, headers: headers, config: config });
+                    })
+                    .finally(function () {
+                        userInfoFetched = true;
+
                     });
             }
 
             return deferred.promise;
         }
 
-        function logout() {
-            return $http.post(logoutUrl)
-                .success(function () {
-
-                    // Remove access token from the session
-                    $window.localStorage.removeItem('access_token');
-
-                    // Clear userInfo
-                    userInfo = null;
-
-                    // Clear breeze's metadata store
-                    dataContext.clear();
-
-                    // Raise logged outevent
-                    $rootScope.$broadcast('userLoggedOut');
-                })
+        function register(registerBindingModel) {
+            return $http.post(registerUrl, registerBindingModel)
                 .error(function (data, status, headers, config) {
 
                     // TODO
@@ -98,8 +109,23 @@
                 });
         }
 
-        function register(registerBindingModel) {
-            return $http.post(registerUrl, registerBindingModel)
+        function logout() {
+            return $http.post(logoutUrl)
+                .success(function () {
+
+                    // Remove access token from the session
+                    $window.localStorage.removeItem('access_token');
+
+                    // Clear userInfo
+                    userInfo = null;
+                    userInfoFetched = false;
+
+                    // Clear breeze's metadata store
+                    dataContext.clear();
+
+                    // Raise logged outevent
+                    $rootScope.$broadcast('userLoggedOut');
+                })
                 .error(function (data, status, headers, config) {
 
                     // TODO

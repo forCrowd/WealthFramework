@@ -18,14 +18,14 @@
             .when('/content/:key/', { templateUrl: getContentTemplateUrl })
 
             /* Account */
-            .when('/account/register', { templateUrl: '/App/views/account/register.html?v=020', controller: 'registerController as vm' })
-            .when('/account/login', { templateUrl: '/App/views/account/login.html?v=020', controller: 'loginController as vm' })
-            .when('/account/accountEdit', { templateUrl: '/App/views/account/accountEdit.html?v=020', controller: 'accountEditController as vm' })
-            .when('/account/changePassword', { templateUrl: '/App/views/account/changePassword.html?v=020', controller: 'changePasswordController as vm' })
+            .when('/account/register', { templateUrl: '/App/views/account/register.html?v=021', controller: 'registerController as vm' })
+            .when('/account/login', { templateUrl: '/App/views/account/login.html?v=021', controller: 'loginController as vm' })
+            .when('/account/accountEdit', { templateUrl: '/App/views/account/accountEdit.html?v=021', controller: 'accountEditController as vm' })
+            .when('/account/changePassword', { templateUrl: '/App/views/account/changePassword.html?v=021', controller: 'changePasswordController as vm' })
 
             /* Custom List + Edit pages */
-            .when('/manage/custom/resourcePool', { templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomList.html?v=020' })
-            .when('/manage/custom/resourcePool/:Id', { templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomView.html?v=020' })
+            .when('/manage/custom/resourcePool', { templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomList.html?v=021' })
+            .when('/manage/custom/resourcePool/:Id', { templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomView.html?v=021' })
 
             /* Default List + Edit pages */
             .when('/manage/:entity', { templateUrl: getManageTemplateUrl })
@@ -48,10 +48,10 @@
                 action = params.action;
 
             if (action === 'list')
-                templateUrl = '/App/views/manage/list/' + params.entity + 'List.html?v=020';
+                templateUrl = '/App/views/manage/list/' + params.entity + 'List.html?v=021';
 
             if (action === 'new' || action === 'edit')
-                templateUrl = '/App/views/manage/edit/' + params.entity + 'Edit.html?v=020';
+                templateUrl = '/App/views/manage/edit/' + params.entity + 'Edit.html?v=021';
 
             return templateUrl;
         }
@@ -63,7 +63,7 @@
             if (typeof params.key !== 'undefined')
                 key = params.key;
 
-            return '/App/views/content/' + key + '.html?v=020';
+            return '/App/views/content/' + key + '.html?v=021';
         }
     }
 

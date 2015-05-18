@@ -37,16 +37,25 @@ namespace Web.Controllers.Api
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
         // GET api/Account/UserInfo
+        [AllowAnonymous]
         [Route("UserInfo")]
         public async Task<UserInfoViewModel> GetUserInfo()
         {
             var currentUser = await GetCurrentUserAsync();
-            return new UserInfoViewModel
+
+            if (currentUser == null)
+            {
+                return null;
+            }
+
+            var userInfo = new UserInfoViewModel
             {
                 Id = currentUser.Id,
                 Email = currentUser.Email,
                 IsAdmin = this.GetCurrentUserIsAdmin()
             };
+
+            return userInfo;
         }
 
         // POST api/Account/ChangePassword

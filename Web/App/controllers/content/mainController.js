@@ -206,6 +206,10 @@
         function getUserInfo() {
             userService.getUserInfo()
                 .then(function (userInfo) {
+                    if (userInfo === null) {
+                        return;
+                    }
+
                     vm.userInfo = userInfo;
                 }, function () {
                     // TODO Error?

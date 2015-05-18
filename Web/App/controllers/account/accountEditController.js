@@ -17,7 +17,6 @@
         var vm = this;
         vm.isSaveDisabled = isSaveDisabled;
         vm.user = null;
-        //vm.userInfo = null;
         vm.saveChanges = saveChanges;
         vm.hasChanges = hasChanges;
 
@@ -33,7 +32,9 @@
 
             userService.getUserInfo()
                 .then(function (userInfo) {
-                    // vm.userInfo = userInfo;
+                    if (userInfo === null) {
+                        return;
+                    }
 
                     userService.getUser(userInfo.Id)
                         .then(function (data) {

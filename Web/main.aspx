@@ -11,8 +11,8 @@
     <link href="/Content/toastr.css" rel="stylesheet" />
 
     <!-- Internal CSS -->
-    <link href="/Content/site.css?v=020" rel="stylesheet" />
-    <link href="/App/directives/resourcePoolEditor.css?v=020" rel="stylesheet" />
+    <link href="/Content/site.css?v=021" rel="stylesheet" />
+    <link href="/App/directives/resourcePoolEditor.css?v=021" rel="stylesheet" />
 
     <!-- jQuery -->
     <script src="/Scripts/jquery-2.1.1.min.js"></script>
@@ -110,17 +110,17 @@
                             <li><a href="/content/chapter10">Chapter 10</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown hide" data-ng-show="vm.userInfo">
+                    <li class="dropdown hide" data-ng-show="vm.userInfo !== null">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown">Manage <b class="caret"></b></a>
                         <!-- Manage Menu - Generated -->
                         <script src="/App/includes/manageMenu.js"></script>
                     </li>
-                    <li class="dropdown" data-ng-show="vm.userInfo">
+                    <li class="dropdown" data-ng-show="vm.userInfo !== null">
                         <a href="/manage/custom/resourcePool">CMRP</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown" data-ng-show="vm.userInfo">
+                    <li class="dropdown" data-ng-if="(vm.userInfo !== null)">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown">User: {{ vm.userInfo.Email }} <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="/account/accountEdit">Edit</a></li>
@@ -129,7 +129,7 @@
                             <li><a href="" data-ng-click="vm.logout()">Logout</a></li>
                         </ul>
                     </li>
-                    <li data-ng-show="!vm.userInfo">
+                    <li data-ng-if="vm.userInfo === null">
                         <div class="navbar-text nofloat">
                             <a href="/account/register">Register</a>
                             &nbsp;
@@ -171,59 +171,59 @@
     <script src="/App/external/highcharts-ng.js"></script>
 
     <!-- Main -->
-    <script src="/App/main.js?v=020"></script>
-    <script src="/App/logger.js?v=020"></script>
-    <script src="/App/route.js?v=020"></script>
-    <script src="/App/authorization.js?v=020"></script>
+    <script src="/App/main.js?v=021"></script>
+    <script src="/App/logger.js?v=021"></script>
+    <script src="/App/route.js?v=021"></script>
+    <script src="/App/authorization.js?v=021"></script>
 
     <!-- Entities -->
-    <script src="/App/entities/resourcePool.js?v=020"></script>
-    <script src="/App/entities/element.js?v=020"></script>
-    <script src="/App/entities/elementCell.js?v=020"></script>
-    <script src="/App/entities/elementField.js?v=020"></script>
-    <script src="/App/entities/elementFieldIndex.js?v=020"></script>
-    <script src="/App/entities/elementItem.js?v=020"></script>
+    <script src="/App/entities/resourcePool.js?v=021"></script>
+    <script src="/App/entities/element.js?v=021"></script>
+    <script src="/App/entities/elementCell.js?v=021"></script>
+    <script src="/App/entities/elementField.js?v=021"></script>
+    <script src="/App/entities/elementFieldIndex.js?v=021"></script>
+    <script src="/App/entities/elementItem.js?v=021"></script>
 
     <!-- breezeJS -->
-    <script src="/App/entityManagerFactory.js?v=020"></script>
-    <script src="/App/dataContext.js?v=020"></script>
+    <script src="/App/entityManagerFactory.js?v=021"></script>
+    <script src="/App/dataContext.js?v=021"></script>
 
-    <script src="/App/services/mainService.js?v=020"></script>
+    <script src="/App/services/mainService.js?v=021"></script>
 
     <!-- Manage Scripts - Generated (Services, Controllers) -->
     <script src="/App/includes/manageScripts.js"></script>
 
     <!-- Service extensions -->
-    <script src="/App/services/userService.js?v=020"></script>
-    <script src="/App/services/resourcePoolService.js?v=020"></script>
+    <script src="/App/services/userService.js?v=021"></script>
+    <script src="/App/services/resourcePoolService.js?v=021"></script>
 
     <!-- Content -->
-    <script src="/App/controllers/content/mainController.js?v=020"></script>
-    <script src="/App/controllers/content/introductionController.js?v=020"></script>
-    <script src="/App/controllers/content/basicsController.js?v=020"></script>
-    <script src="/App/controllers/content/sectorIndexSampleController.js?v=020"></script>
-    <script src="/App/controllers/content/knowledgeIndexSampleController.js?v=020"></script>
-    <script src="/App/controllers/content/totalCostIndexSampleController.js?v=020"></script>
-    <script src="/App/controllers/content/fairShareIndexSampleController.js?v=020"></script>
-    <script src="/App/controllers/content/indexesPieSampleController.js?v=020"></script>
-    <script src="/App/controllers/content/resourcePoolRateSampleController.js?v=020"></script>
-    <script src="/App/controllers/content/closingNotesController.js?v=020"></script>
+    <script src="/App/controllers/content/mainController.js?v=021"></script>
+    <script src="/App/controllers/content/introductionController.js?v=021"></script>
+    <script src="/App/controllers/content/basicsController.js?v=021"></script>
+    <script src="/App/controllers/content/sectorIndexSampleController.js?v=021"></script>
+    <script src="/App/controllers/content/knowledgeIndexSampleController.js?v=021"></script>
+    <script src="/App/controllers/content/totalCostIndexSampleController.js?v=021"></script>
+    <script src="/App/controllers/content/fairShareIndexSampleController.js?v=021"></script>
+    <script src="/App/controllers/content/indexesPieSampleController.js?v=021"></script>
+    <script src="/App/controllers/content/resourcePoolRateSampleController.js?v=021"></script>
+    <script src="/App/controllers/content/closingNotesController.js?v=021"></script>
 
     <!-- Account -->
-    <script src="/App/controllers/account/loginController.js?v=020"></script>
-    <script src="/App/controllers/account/registerController.js?v=020"></script>
-    <script src="/App/controllers/account/accountEditController.js?v=020"></script>
-    <script src="/App/controllers/account/changePasswordController.js?v=020"></script>
+    <script src="/App/controllers/account/loginController.js?v=021"></script>
+    <script src="/App/controllers/account/registerController.js?v=021"></script>
+    <script src="/App/controllers/account/accountEditController.js?v=021"></script>
+    <script src="/App/controllers/account/changePasswordController.js?v=021"></script>
 
     <!-- Manage Scripts - Custom -->
-    <script src="/App/controllers/manage/resourcePool/resourcePoolCustomListController.js?v=020"></script>
-    <script src="/App/controllers/manage/resourcePool/resourcePoolCustomViewController.js?v=020"></script>
+    <script src="/App/controllers/manage/resourcePool/resourcePoolCustomListController.js?v=021"></script>
+    <script src="/App/controllers/manage/resourcePool/resourcePoolCustomViewController.js?v=021"></script>
 
     <!-- Directives -->
-    <script src="/App/directives/resourcePoolEditor.js?v=020"></script>
+    <script src="/App/directives/resourcePoolEditor.js?v=021"></script>
 
     <!-- Filters -->
-    <script src="/App/filters/angular-percentage.js?v=020"></script>
+    <script src="/App/filters/angular-percentage.js?v=021"></script>
 
     <!-- Google Analytics -->
     <script src="/App/external/googleAnalytics.js"></script>

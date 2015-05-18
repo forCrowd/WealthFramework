@@ -8,7 +8,7 @@ An experimental resource management system that aims to provide a more sustainab
 
 **0.21**
 
-* pub test
+* Invalid CMRP Id case
 
 **0.20**
 
