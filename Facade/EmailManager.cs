@@ -48,7 +48,7 @@
 
             message.Subject = "Registration Alert";
 
-            var text = "A new member has been joing to our guid - Email: " + user.Email;
+            var text = "A new member has been joined to our guid - Email: " + user.Email;
             var html = @"<p>Good days sir,<br /><br />A new member has been joined to our guild.<br />Email: " + user.Email + ".<br /><br />Kind Regards,<br />forCrowd Foundation</p>";
 
             message.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(text, null, MediaTypeNames.Text.Plain));

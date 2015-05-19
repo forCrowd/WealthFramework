@@ -312,8 +312,7 @@ if the current user has no right to enter a rating for that area, then it must u
 
 	* verification email?
 	
-						* update server one more time, it was using hard coded credentials, now it's going to use the credentials from the config file
-						and sync config files!
+						* what to do next? clean up this Todo file?
 
 	* enable elmah.axd for live!
 
