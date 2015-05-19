@@ -225,8 +225,6 @@
     <Compile Include="App_Start\MvcRouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="App_Code\ApplicationSettings.cs" />
-    <Compile Include="App_Code\ServerMode.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
     <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
@@ -607,6 +605,18 @@
     <Content Include="Content\toastr.scss" />
     <Content Include="Content\toastr.less" />
     <Content Include="Content\images\Old vs New.pptx" />
+    <Content Include="Configs\system.net.mailSettings.smtp.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Configs\system.net.mailSettings.smtp_.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Configs\appSettings.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Configs\appSettings_.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Controllers\OData\Generated\ODataController.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

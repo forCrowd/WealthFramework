@@ -24,7 +24,12 @@
             var result = await base.CreateAsync(user, password);
 
             if (result.Succeeded)
+            {
                 await Store.SaveChangesAsync();
+
+                var emailManager = new EmailManager();
+                await emailManager.SendConfirmationAlert(user);
+            }
             
             return result;
         }
@@ -38,7 +43,7 @@
         public override async Task<IdentityResult> DeleteAsync(User user)
         {
             await Store.DeleteResourcePoolDataAsync(user.Id);
-            
+
             var result = await base.DeleteAsync(user);
             await Store.SaveChangesAsync();
 

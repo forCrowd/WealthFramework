@@ -84,6 +84,7 @@
       <DependentUpon>UnitOfWork.tt</DependentUpon>
     </Compile>
     <Compile Include="RoleManager.cs" />
+    <Compile Include="EmailManager.cs" />
     <Compile Include="UserManager.cs" />
     <Compile Include="BaseUnitOfWork.cs" />
     <Compile Include="Generated\ElementCellUnitOfWork.cs">

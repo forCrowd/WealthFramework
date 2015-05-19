@@ -5,7 +5,6 @@ using System.Threading;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
-using Web.App_Code;
 
 namespace Web
 {
@@ -20,7 +19,7 @@ namespace Web
 
     public class CustomAuthorizeAttribute : AuthorizeAttribute
     {
-        readonly string debugUserId = ApplicationSettings.SampleUserId.ToString();
+        readonly string debugUserId = Framework.AppSettings.SampleUserId.ToString();
         readonly string debugUserAuthType = "DebugAuth";
 
         public override void OnAuthorization(System.Web.Http.Controllers.HttpActionContext actionContext)

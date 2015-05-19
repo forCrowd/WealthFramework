@@ -11,8 +11,8 @@
     <link href="/Content/toastr.css" rel="stylesheet" />
 
     <!-- Internal CSS -->
-    <link href="/Content/site.css?v=021" rel="stylesheet" />
-    <link href="/App/directives/resourcePoolEditor.css?v=021" rel="stylesheet" />
+    <link href="/Content/site.css?v=022" rel="stylesheet" />
+    <link href="/App/directives/resourcePoolEditor.css?v=022" rel="stylesheet" />
 
     <!-- jQuery -->
     <script src="/Scripts/jquery-2.1.1.min.js"></script>
@@ -171,59 +171,59 @@
     <script src="/App/external/highcharts-ng.js"></script>
 
     <!-- Main -->
-    <script src="/App/main.js?v=021"></script>
-    <script src="/App/logger.js?v=021"></script>
-    <script src="/App/route.js?v=021"></script>
-    <script src="/App/authorization.js?v=021"></script>
+    <script src="/App/main.js?v=022"></script>
+    <script src="/App/logger.js?v=022"></script>
+    <script src="/App/route.js?v=022"></script>
+    <script src="/App/authorization.js?v=022"></script>
 
     <!-- Entities -->
-    <script src="/App/entities/resourcePool.js?v=021"></script>
-    <script src="/App/entities/element.js?v=021"></script>
-    <script src="/App/entities/elementCell.js?v=021"></script>
-    <script src="/App/entities/elementField.js?v=021"></script>
-    <script src="/App/entities/elementFieldIndex.js?v=021"></script>
-    <script src="/App/entities/elementItem.js?v=021"></script>
+    <script src="/App/entities/resourcePool.js?v=022"></script>
+    <script src="/App/entities/element.js?v=022"></script>
+    <script src="/App/entities/elementCell.js?v=022"></script>
+    <script src="/App/entities/elementField.js?v=022"></script>
+    <script src="/App/entities/elementFieldIndex.js?v=022"></script>
+    <script src="/App/entities/elementItem.js?v=022"></script>
 
     <!-- breezeJS -->
-    <script src="/App/entityManagerFactory.js?v=021"></script>
-    <script src="/App/dataContext.js?v=021"></script>
+    <script src="/App/entityManagerFactory.js?v=022"></script>
+    <script src="/App/dataContext.js?v=022"></script>
 
-    <script src="/App/services/mainService.js?v=021"></script>
+    <script src="/App/services/mainService.js?v=022"></script>
 
     <!-- Manage Scripts - Generated (Services, Controllers) -->
     <script src="/App/includes/manageScripts.js"></script>
 
     <!-- Service extensions -->
-    <script src="/App/services/userService.js?v=021"></script>
-    <script src="/App/services/resourcePoolService.js?v=021"></script>
+    <script src="/App/services/userService.js?v=022"></script>
+    <script src="/App/services/resourcePoolService.js?v=022"></script>
 
     <!-- Content -->
-    <script src="/App/controllers/content/mainController.js?v=021"></script>
-    <script src="/App/controllers/content/introductionController.js?v=021"></script>
-    <script src="/App/controllers/content/basicsController.js?v=021"></script>
-    <script src="/App/controllers/content/sectorIndexSampleController.js?v=021"></script>
-    <script src="/App/controllers/content/knowledgeIndexSampleController.js?v=021"></script>
-    <script src="/App/controllers/content/totalCostIndexSampleController.js?v=021"></script>
-    <script src="/App/controllers/content/fairShareIndexSampleController.js?v=021"></script>
-    <script src="/App/controllers/content/indexesPieSampleController.js?v=021"></script>
-    <script src="/App/controllers/content/resourcePoolRateSampleController.js?v=021"></script>
-    <script src="/App/controllers/content/closingNotesController.js?v=021"></script>
+    <script src="/App/controllers/content/mainController.js?v=022"></script>
+    <script src="/App/controllers/content/introductionController.js?v=022"></script>
+    <script src="/App/controllers/content/basicsController.js?v=022"></script>
+    <script src="/App/controllers/content/sectorIndexSampleController.js?v=022"></script>
+    <script src="/App/controllers/content/knowledgeIndexSampleController.js?v=022"></script>
+    <script src="/App/controllers/content/totalCostIndexSampleController.js?v=022"></script>
+    <script src="/App/controllers/content/fairShareIndexSampleController.js?v=022"></script>
+    <script src="/App/controllers/content/indexesPieSampleController.js?v=022"></script>
+    <script src="/App/controllers/content/resourcePoolRateSampleController.js?v=022"></script>
+    <script src="/App/controllers/content/closingNotesController.js?v=022"></script>
 
     <!-- Account -->
-    <script src="/App/controllers/account/loginController.js?v=021"></script>
-    <script src="/App/controllers/account/registerController.js?v=021"></script>
-    <script src="/App/controllers/account/accountEditController.js?v=021"></script>
-    <script src="/App/controllers/account/changePasswordController.js?v=021"></script>
+    <script src="/App/controllers/account/loginController.js?v=022"></script>
+    <script src="/App/controllers/account/registerController.js?v=022"></script>
+    <script src="/App/controllers/account/accountEditController.js?v=022"></script>
+    <script src="/App/controllers/account/changePasswordController.js?v=022"></script>
 
     <!-- Manage Scripts - Custom -->
-    <script src="/App/controllers/manage/resourcePool/resourcePoolCustomListController.js?v=021"></script>
-    <script src="/App/controllers/manage/resourcePool/resourcePoolCustomViewController.js?v=021"></script>
+    <script src="/App/controllers/manage/resourcePool/resourcePoolCustomListController.js?v=022"></script>
+    <script src="/App/controllers/manage/resourcePool/resourcePoolCustomViewController.js?v=022"></script>
 
     <!-- Directives -->
-    <script src="/App/directives/resourcePoolEditor.js?v=021"></script>
+    <script src="/App/directives/resourcePoolEditor.js?v=022"></script>
 
     <!-- Filters -->
-    <script src="/App/filters/angular-percentage.js?v=021"></script>
+    <script src="/App/filters/angular-percentage.js?v=022"></script>
 
     <!-- Google Analytics -->
     <script src="/App/external/googleAnalytics.js"></script>

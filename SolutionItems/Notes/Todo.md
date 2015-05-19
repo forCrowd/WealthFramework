@@ -286,7 +286,9 @@ if the current user has no right to enter a rating for that area, then it must u
 
 * update or remove resetsampledata + deletesampledata functions - remove copysampledata?
 
-* auto retry for certain save cases ?!
+* auto retry for certain save cases ?! concurrency for instance?
+
+* currently without preparing appSettings.config file, initial run of the application is not going to work, try to improve!
 
 * user level notes;
 1. try to handle all the actions by using authenticated user, shouldn't be necessary to pass user variable
@@ -304,11 +306,16 @@ if the current user has no right to enter a rating for that area, then it must u
 	* introduction, don't allow to use multiplier functions?
 	some samples don't need to be saved ?! intro + basics?
 
-	* verification email?
-
 	* social media login?
 
 	* cleanup social media stuff!
+
+	* verification email?
+	
+						* update server one more time, it was using hard coded credentials, now it's going to use the credentials from the config file
+						and sync config files!
+
+	* enable elmah.axd for live!
 
 . Ozgur's - 10 May '15
 Efendiiiim başlangıç güzel
@@ -370,6 +377,9 @@ microsoft	sign in		sign up
 	* should samples details need to be mentioned? all organizations are equal except the indexes, they all have to have same number of sales etc.
 
 . sendgrid;
+https://sendgrid.com/windowsazure.html - 25K free emails for Azure account
+http://azure.microsoft.com/en-in/documentation/articles/sendgrid-dotnet-how-to-send-email/ - uses SendGrid library to send the emails
+
 https://sendgrid.com/blog/tips-tricks-stay-spam-folder-qa/
 https://sendgrid.com/docs/User_Guide/warming_up.html
 http://www.mail-tester.com/

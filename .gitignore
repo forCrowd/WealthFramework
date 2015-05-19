@@ -110,11 +110,15 @@ UpgradeLog*.XML
 WarmUpResult.txt
 
 # Elmah log folder
-App_Data/
+Web/App_Data/
 
 # Publish profiles - Doesn't work properly, still adding new files under this folder?
 *.pubxml
-Properties/PublishProfiles/
+Web/Properties/PublishProfiles/
 
 # Queries (Folder for T-SQL queries, no need to save)
 Queries/
+
+# Configs
+Web/Configs/appSettings.config
+Web/Configs/system.net.mailSettings.smtp.config

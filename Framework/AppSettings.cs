@@ -1,13 +1,15 @@
-﻿using Framework;
-using System.Configuration;
+﻿using System.Configuration;
 
-namespace Web.App_Code
+namespace Framework
 {
-    public static class ApplicationSettings
+    public static class AppSettings
     {
-        public static ServerMode ServerMode
+        /// <summary>
+        /// Alert emails will be send to this address
+        /// </summary>
+        public static string AlertEmailAddress
         {
-            get { return ConfigurationManager.AppSettings["ServerMode"].ToEnum<ServerMode>(); }
+            get { return ConfigurationManager.AppSettings["AlertEmailAddress"]; }
         }
 
         /// <summary>

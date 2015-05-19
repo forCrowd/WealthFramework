@@ -1,22 +1,13 @@
 ﻿using BusinessObjects;
-using Facade;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
-using System.Linq;
 using System.Net.Http;
-using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web;
-//using System.Web.Mvc;
-// using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
-using Web.App_Code;
-using Web.Models;
 using Web.Controllers.Extensions;
+using Web.Models;
 
 namespace Web.Controllers.Api
 {
@@ -108,7 +99,7 @@ namespace Web.Controllers.Api
 
             var user = new User(model.Email);
 
-            var result = await UserManager.CreateWithSampleDataAsync(user, model.Password, ApplicationSettings.SampleUserId);
+            var result = await UserManager.CreateWithSampleDataAsync(user, model.Password, Framework.AppSettings.SampleUserId);
             var errorResult = GetErrorResult(result);
 
             if (errorResult != null)
@@ -129,7 +120,7 @@ namespace Web.Controllers.Api
             if (!currentUserId.HasValue)
                 return InternalServerError();
 
-            await UserManager.ResetSampleDataAsync(currentUserId.Value, ApplicationSettings.SampleUserId);
+            await UserManager.ResetSampleDataAsync(currentUserId.Value, Framework.AppSettings.SampleUserId);
 
             return Ok(string.Empty);
         }

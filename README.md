@@ -6,6 +6,11 @@ An experimental resource management system that aims to provide a more sustainab
 
 ### Release Notes
 
+**0.22**
+
+* Registration alert email
+* AppSettings.cs to Framework
+
 **0.21**
 
 * Invalid CMRP Id case
