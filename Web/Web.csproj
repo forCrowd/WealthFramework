@@ -439,6 +439,11 @@
     <Content Include="App\services\generated\roleService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
+    <Content Include="App\services\generated\service.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>service.tt</DependentUpon>
+    </Content>
     <Content Include="App\services\generated\userClaimService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
@@ -667,11 +672,6 @@
     <Content Include="App\services\generated\resourcePoolService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <None Include="App\services\generated\service.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>service.tt</DependentUpon>
-    </None>
     <Content Include="App\services\generated\userResourcePoolService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
