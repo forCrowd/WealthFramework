@@ -7,6 +7,7 @@
 
     function introductionController(resourcePoolService, userService, $scope, $timeout, $rootScope, logger) {
 
+        // Logger
         logger = logger.forSource(controllerId);
 
         // Timers
@@ -45,8 +46,13 @@
                 return;
 
             // Call the service to increase the multiplier
-            resourcePoolService.getResourcePoolExpandedWithUser(vm.introduction_UPOResourcePoolId)
+            resourcePoolService.getResourcePoolExpanded(vm.introduction_UPOResourcePoolId)
                 .then(function (resourcePoolSet) {
+
+                    if (resourcePoolSet.length === 0) {
+                        return;
+                    }
+
                     var resourcePool = resourcePoolSet[0];
                     for (var i = 0; i < resourcePool.ElementSet.length; i++) {
                         var element = resourcePool.ElementSet[i];

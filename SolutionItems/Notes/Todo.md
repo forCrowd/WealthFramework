@@ -316,6 +316,8 @@ if the current user has no right to enter a rating for that area, then it must u
 
 	* accountController.js doesn't handle the error the server well, it only says "Invalid request" or something. Check modelState error?
 
+	* how breeze react in case of querying expanded + expandedwithuser from local..? does it say it's there or not?
+
 . Ozgur's - 10 May '15
 Efendiiiim başlangıç güzel
 bu arada not olarak neden login veya register etmenin gerekliliğini karşı tarafa anlatmak gerekebilir, kişisel seçimleriniz önemli mi deriz artık ne dersek

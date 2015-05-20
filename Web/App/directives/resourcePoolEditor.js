@@ -145,26 +145,19 @@
 
                 // Validate
                 if (typeof scope.resourcePoolId === 'undefined') {
-                    scope.errorMessage = 'Invalid CMRP Id';
+                    scope.errorMessage = 'Undefined CMRP Id';
                     scope.chartConfig.loading = false;
                     return;
                 }
 
                 userService.getUserInfo()
                     .then(function (userInfo) {
-                        if (userInfo === null) {
-                            resourcePoolService.getResourcePoolExpanded(scope.resourcePoolId)
-                                .then(loadResourcePool)
-                                .catch(function () {
-                                    // TODO scope.errorMessage ?
-                                })
-                                .finally(function () {
-                                    scope.chartConfig.loading = false;
-                                });
 
-                        } else {
+                        if (userInfo !== null) {
                             scope.isAuthenticated = true;
-                            resourcePoolService.getResourcePoolExpandedWithUser(scope.resourcePoolId)
+                        }
+
+                        resourcePoolService.getResourcePoolExpanded(scope.resourcePoolId)
                                 .then(loadResourcePool)
                                 .catch(function () {
                                     // TODO scope.errorMessage ?
@@ -172,7 +165,6 @@
                                 .finally(function () {
                                     scope.chartConfig.loading = false;
                                 });
-                        }
                     });
             }, true);
 

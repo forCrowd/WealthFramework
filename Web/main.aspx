@@ -110,7 +110,7 @@
                             <li><a href="/content/chapter10">Chapter 10</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown hide" data-ng-show="vm.userInfo !== null">
+                    <li class="dropdown" data-ng-show="vm.userInfo !== null">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown">Manage <b class="caret"></b></a>
                         <!-- Manage Menu - Generated -->
                         <script src="/App/includes/manageMenu.js"></script>
@@ -173,7 +173,7 @@
     <!-- Main -->
     <script src="/App/main.js?v=022"></script>
     <script src="/App/logger.js?v=022"></script>
-    <script src="/App/route.js?v=022"></script>
+    <script src="/App/route.js?v=0223"></script>
     <script src="/App/authorization.js?v=022"></script>
 
     <!-- Entities -->
@@ -191,16 +191,16 @@
     <script src="/App/services/mainService.js?v=022"></script>
 
     <!-- Manage Scripts - Generated (Services, Controllers) -->
-    <script src="/App/includes/manageScripts.js"></script>
+    <script src="/App/includes/manageScripts.js?v=0223"></script>
 
     <!-- Service extensions -->
     <script src="/App/services/userService.js?v=022"></script>
-    <script src="/App/services/resourcePoolService.js?v=022"></script>
+    <script src="/App/services/resourcePoolService.js?v=0223"></script>
 
     <!-- Content -->
     <script src="/App/controllers/content/mainController.js?v=022"></script>
-    <script src="/App/controllers/content/introductionController.js?v=0221"></script>
-    <script src="/App/controllers/content/basicsController.js?v=022"></script>
+    <script src="/App/controllers/content/introductionController.js?v=0223"></script>
+    <script src="/App/controllers/content/basicsController.js?v=0223"></script>
     <script src="/App/controllers/content/sectorIndexSampleController.js?v=022"></script>
     <script src="/App/controllers/content/knowledgeIndexSampleController.js?v=022"></script>
     <script src="/App/controllers/content/totalCostIndexSampleController.js?v=022"></script>
@@ -220,7 +220,7 @@
     <script src="/App/controllers/manage/resourcePool/resourcePoolCustomViewController.js?v=022"></script>
 
     <!-- Directives -->
-    <script src="/App/directives/resourcePoolEditor.js?v=022"></script>
+    <script src="/App/directives/resourcePoolEditor.js?v=0223"></script>
 
     <!-- Filters -->
     <script src="/App/filters/angular-percentage.js?v=022"></script>

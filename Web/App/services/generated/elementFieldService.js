@@ -12,10 +12,12 @@
 
     var serviceId = 'elementFieldService';
     angular.module('main')
-        .factory(serviceId, ['dataContext', 'logger', elementFieldService]);
+        .factory(serviceId, ['dataContext', '$rootScope', 'logger', elementFieldService]);
 
-    function elementFieldService(dataContext, logger) {
-        logger = logger.forSource(serviceId);
+    function elementFieldService(dataContext, $rootScope, logger) {
+        
+		// Logger
+		logger = logger.forSource(serviceId);
 
         // To determine whether the data will be fecthed from server or local
         var minimumDate = new Date(0);
@@ -33,6 +35,11 @@
             rejectChanges: rejectChanges,
             saveChanges: saveChanges
         };
+
+        // User logged out
+        $rootScope.$on('userLoggedOut', function () {
+            fetchedOn = minimumDate;
+        });
 
         return service;
 

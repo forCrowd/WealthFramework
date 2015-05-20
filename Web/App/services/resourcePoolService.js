@@ -5,22 +5,35 @@
     var serviceId = 'resourcePoolService';
     angular.module('main')
         .config(function ($provide) {
-            $provide.decorator(serviceId, ['$delegate', 'dataContext', 'logger', resourcePoolService]);
+            $provide.decorator(serviceId, ['$delegate', 'userService', 'dataContext', '$rootScope', 'logger', resourcePoolService]);
         });
 
-    function resourcePoolService($delegate, dataContext, logger) {
+    function resourcePoolService($delegate, userService, dataContext, $rootScope, logger) {
 
         // Logger
         logger = logger.forSource(serviceId);
-        var fetchedResourcePools = [];
+
+        var userLoggedIn = false;
+        var fetchedList = [];
+        var fetchedWithUserList = [];
+        var fetched = [];
 
         // Service methods
         $delegate.getResourcePoolExpanded = getResourcePoolExpanded;
-        $delegate.getResourcePoolExpandedWithUser = getResourcePoolExpandedWithUser;
         $delegate.updateElementMultiplier = updateElementMultiplier;
         $delegate.updateElementCellIndexRating = updateElementCellIndexRating;
         $delegate.updateElementFieldIndexRating = updateElementFieldIndexRating;
         $delegate.updateResourcePoolRate = updateResourcePoolRate;
+
+        // User logged out
+        $rootScope.$on('userLoggedIn', function () {
+            fetched = [];
+        });
+        $rootScope.$on('userLoggedOut', function () {
+            fetchedList = [];
+            fetchedWithUserList = [];
+            fetched = [];
+        });
 
         return $delegate;
 
@@ -28,60 +41,62 @@
 
         function getResourcePoolExpanded(resourcePoolId) {
 
-            var query = breeze.EntityQuery
-                .from('ResourcePool')
-                .expand('ElementSet.ElementFieldSet.ElementFieldIndexSet, ElementSet.ElementItemSet.ElementCellSet')
-                .where('Id', 'eq', resourcePoolId);
+            return userService.getUserInfo()
+                .then(function (userInfo) {
 
-            return getResourcePoolExpandedInternal(resourcePoolId, query);
-        }
+                    // Prepare the query
+                    var query = null;
 
-        function getResourcePoolExpandedWithUser(resourcePoolId) {
+                    // Is authorized, no, then get only the public data, yes, then get include user's own records
+                    if (userInfo === null) {
+                        query = breeze.EntityQuery
+                            .from('ResourcePool')
+                            .expand('ElementSet.ElementFieldSet.ElementFieldIndexSet, ElementSet.ElementItemSet.ElementCellSet')
+                            .where('Id', 'eq', resourcePoolId);
+                    } else {
+                        query = breeze.EntityQuery
+                            .from('ResourcePool')
+                            .expand('UserResourcePoolSet, ElementSet.ElementFieldSet.ElementFieldIndexSet.UserElementFieldIndexSet, ElementSet.ElementItemSet.ElementCellSet.UserElementCellSet')
+                            .where('Id', 'eq', resourcePoolId);
+                    }
 
-            var query = breeze.EntityQuery
-                .from('ResourcePool')
-                .expand('UserResourcePoolSet, ElementSet.ElementFieldSet.ElementFieldIndexSet.UserElementFieldIndexSet, ElementSet.ElementItemSet.ElementCellSet.UserElementCellSet')
-                .where('Id', 'eq', resourcePoolId);
+                    // Fetch the data from server, in case if it's not fetched earlier or forced
+                    var fetchFromServer = true;
+                    for (var i = 0; i < fetched.length; i++) {
+                        if (resourcePoolId === fetched[i]) {
+                            fetchFromServer = false;
+                            break;
+                        }
+                    }
 
-            return getResourcePoolExpandedInternal(resourcePoolId, query);
-        }
+                    // Prepare the query
+                    if (fetchFromServer) { // From remote
+                        query = query.using(breeze.FetchStrategy.FromServer)
+                    }
+                    else { // From local
+                        query = query.using(breeze.FetchStrategy.FromLocalCache)
+                    }
 
-        function getResourcePoolExpandedInternal(resourcePoolId, query) {
+                    return dataContext.executeQuery(query)
+                        .then(success)
+                        .catch(failed);
 
-            // Fetch the data from server, in case if it's not fetched earlier or forced
-            var fetchFromServer = true;
+                    function success(response) {
 
-            for (var i = 0; i < fetchedResourcePools.length; i++) {
-                if (resourcePoolId === fetchedResourcePools[i]) {
-                    fetchFromServer = false;
-                    break;
-                }
-            }
+                        // Add the record into fetched list
+                        fetched.push(resourcePoolId);
 
-            // Prepare the query
-            if (fetchFromServer) { // From remote
-                query = query.using(breeze.FetchStrategy.FromServer)
-                fetchedResourcePools.push(resourcePoolId);
-            }
-            else { // From local
-                query = query.using(breeze.FetchStrategy.FromLocalCache)
-            }
+                        var count = response.results.length;
+                        //logger.logSuccess('Got ' + count + ' resourcePool(s)', response, true);
 
-            return dataContext.executeQuery(query)
-                .then(success)
-                .catch(failed);
+                        return response.results;
+                    }
 
-            function success(response) {
-                var count = response.results.length;
-                //logger.logSuccess('Got ' + count + ' resourcePool(s)', response, true);
-                return response.results;
-            }
-
-            function failed(error) {
-                var message = error.message || 'ResourcePool query failed';
-                logger.logError(message, error);
-            }
-
+                    function failed(error) {
+                        var message = error.message || 'ResourcePool query failed';
+                        logger.logError(message, error);
+                    }
+                });
         }
 
         // This function was in element.js as it should be. Only because it had to use createEntity() on dataContext, it was moved to this service.

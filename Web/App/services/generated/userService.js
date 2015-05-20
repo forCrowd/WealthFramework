@@ -12,10 +12,12 @@
 
     var serviceId = 'userService';
     angular.module('main')
-        .factory(serviceId, ['dataContext', 'logger', userService]);
+        .factory(serviceId, ['dataContext', '$rootScope', 'logger', userService]);
 
-    function userService(dataContext, logger) {
-        logger = logger.forSource(serviceId);
+    function userService(dataContext, $rootScope, logger) {
+        
+		// Logger
+		logger = logger.forSource(serviceId);
 
         // To determine whether the data will be fecthed from server or local
         var minimumDate = new Date(0);
@@ -33,6 +35,11 @@
             rejectChanges: rejectChanges,
             saveChanges: saveChanges
         };
+
+        // User logged out
+        $rootScope.$on('userLoggedOut', function () {
+            fetchedOn = minimumDate;
+        });
 
         return service;
 

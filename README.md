@@ -6,6 +6,10 @@ An experimental resource management system that aims to provide a more sustainab
 
 ### Release Notes
 
+**0.22.3**
+
+* fetched fix for user logged out case
+
 **0.22.2**
 
 * Change password fix

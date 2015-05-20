@@ -49,10 +49,12 @@ foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
 
     var serviceId = '<#= serviceId #>';
     angular.module('main')
-        .factory(serviceId, ['dataContext', 'logger', <#= serviceId #>]);
+        .factory(serviceId, ['dataContext', '$rootScope', 'logger', <#= serviceId #>]);
 
-    function <#= serviceId #>(dataContext, logger) {
-        logger = logger.forSource(serviceId);
+    function <#= serviceId #>(dataContext, $rootScope, logger) {
+        
+		// Logger
+		logger = logger.forSource(serviceId);
 
         // To determine whether the data will be fecthed from server or local
         var minimumDate = new Date(0);
@@ -70,6 +72,11 @@ foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
             rejectChanges: rejectChanges,
             saveChanges: saveChanges
         };
+
+        // User logged out
+        $rootScope.$on('userLoggedOut', function () {
+            fetchedOn = minimumDate;
+        });
 
         return service;
 
