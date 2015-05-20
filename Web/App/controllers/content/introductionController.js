@@ -9,6 +9,10 @@
 
         logger = logger.forSource(controllerId);
 
+        // Timers
+        var increaseMultiplierTimeoutInitial = null;
+        var increaseMultiplierTimeoutRecursive = null;
+
         var vm = this;
         vm.isAuthenticated = false;
 
@@ -20,6 +24,8 @@
                 }
 
                 vm.isAuthenticated = true;
+
+                increaseMultiplierTimeoutInitial = $timeout(increaseMultiplier, 5000);
             })
             .catch(function (error) {
 
@@ -32,10 +38,6 @@
         $rootScope.$on('userLoggedOut', function () {
             vm.isAuthenticated = false;
         });
-
-        // Timers
-        var increaseMultiplierTimeoutInitial = $timeout(increaseMultiplier, 5000);
-        var increaseMultiplierTimeoutRecursive = null;
 
         function increaseMultiplier() {
 

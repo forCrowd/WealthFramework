@@ -199,7 +199,7 @@
 
     <!-- Content -->
     <script src="/App/controllers/content/mainController.js?v=022"></script>
-    <script src="/App/controllers/content/introductionController.js?v=022"></script>
+    <script src="/App/controllers/content/introductionController.js?v=0221"></script>
     <script src="/App/controllers/content/basicsController.js?v=022"></script>
     <script src="/App/controllers/content/sectorIndexSampleController.js?v=022"></script>
     <script src="/App/controllers/content/knowledgeIndexSampleController.js?v=022"></script>

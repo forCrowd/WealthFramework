@@ -6,6 +6,10 @@ An experimental resource management system that aims to provide a more sustainab
 
 ### Release Notes
 
+**0.22.1**
+
+* introductionController increaseMultiplier timer definition before resourcePool fix
+
 **0.22**
 
 * Registration alert email
