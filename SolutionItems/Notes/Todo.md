@@ -311,10 +311,10 @@ if the current user has no right to enter a rating for that area, then it must u
 	* cleanup social media stuff!
 
 	* verification email?
+
+	* change password?
 	
 						* what to do next? clean up this Todo file?
-
-	* enable elmah.axd for live!
 
 . Ozgur's - 10 May '15
 Efendiiiim başlangıç güzel
