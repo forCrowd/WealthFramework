@@ -45,6 +45,15 @@ namespace DataObjects.Migrations
 
         static void SeedInitialData(WealthEconomyContext context)
         {
+            // Create admin user
+            CreateAdminUser(context);
+
+            // Create sample user
+            CreateSampleUser(context);
+        }
+
+        static void CreateAdminUser(WealthEconomyContext context)
+        {
             // Managers & stores & repositories
             var roleStore = new RoleStore(context);
             var roleManager = new RoleManager<Role, int>(roleStore);
@@ -52,8 +61,6 @@ namespace DataObjects.Migrations
             var userStore = new UserStore(context);
             userStore.AutoSaveChanges = true;
             var userManager = new UserManager<User, int>(userStore);
-
-            var resourcePoolRepository = new ResourcePoolRepository(context);
 
             // Admin role
             var adminRoleName = "Administrator";
@@ -65,7 +72,7 @@ namespace DataObjects.Migrations
             }
 
             // Admin user
-            var adminUserName = "admin";
+            var adminUserName = "admin@forcrowd.org";
             var adminUser = userManager.FindByName(adminUserName);
             if (adminUser == null)
             {
@@ -75,8 +82,20 @@ namespace DataObjects.Migrations
                 userManager.AddToRole(adminUser.Id, "Administrator");
             }
 
+            // Save
+            context.SaveChanges();
+        }
+
+        static void CreateSampleUser(WealthEconomyContext context)
+        {
+            // Managers & stores & repositories
+            var userStore = new UserStore(context);
+            userStore.AutoSaveChanges = true;
+            var userManager = new UserManager<User, int>(userStore);
+            var resourcePoolRepository = new ResourcePoolRepository(context);
+
             // Sample user
-            var sampleUserName = "sample";
+            var sampleUserName = "sample@forcrowd.org";
             var sampleUser = userManager.FindByName(sampleUserName);
             if (sampleUser == null)
             {
@@ -84,7 +103,13 @@ namespace DataObjects.Migrations
                 var sampleUserPassword = DateTime.Now.ToString("yyyyMMdd");
                 userManager.Create(sampleUser, sampleUserPassword);
             }
-            
+
+            // Save
+            context.SaveChanges();
+
+            // Login as (required in order to save the rest of the items)
+            Framework.Security.LoginAs(sampleUser.Id);
+
             // Sample resource pools
             resourcePoolRepository.Insert(resourcePoolRepository.CreateUPOSample(sampleUser));
             resourcePoolRepository.Insert(resourcePoolRepository.CreateBasicsExistingSystemSample(sampleUser));

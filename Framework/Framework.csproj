@@ -61,6 +61,7 @@
     <Compile Include="Data\EdmBuilder.cs" />
     <Compile Include="AppSettings.cs" />
     <Compile Include="Exceptions.cs" />
+    <Compile Include="Security.cs" />
     <Compile Include="Validations.cs" />
     <Compile Include="TypeExtensions.cs" />
   </ItemGroup>

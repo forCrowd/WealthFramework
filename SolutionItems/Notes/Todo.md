@@ -312,9 +312,9 @@ if the current user has no right to enter a rating for that area, then it must u
 
 	* verification email?
 
-	* change password?
-	
 						* what to do next? clean up this Todo file?
+
+	* accountController.js doesn't handle the error the server well, it only says "Invalid request" or something. Check modelState error?
 
 . Ozgur's - 10 May '15
 Efendiiiim başlangıç güzel

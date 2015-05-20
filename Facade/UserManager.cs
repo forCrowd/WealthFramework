@@ -17,6 +17,18 @@
 
         internal new UserStore Store { get { return (UserStore)base.Store; } }
 
+        public override async Task<IdentityResult> ChangePasswordAsync(int userId, string currentPassword, string newPassword)
+        {
+            var result = await base.ChangePasswordAsync(userId, currentPassword, newPassword);
+
+            if (result.Succeeded)
+            {
+                await Store.SaveChangesAsync();
+            }
+
+            return result;
+        }
+
         public async Task<IdentityResult> CreateWithSampleDataAsync(User user, string password, int sampleUserId)
         {
             // await Store.CopySampleDataAsync(sampleUserId, user);

@@ -63,8 +63,7 @@ namespace Web.Controllers.Api
             if (!currentUserId.HasValue)
                 return InternalServerError();
 
-            var result = await UserManager.ChangePasswordAsync(currentUserId.Value, model.CurrentPassword,
-                model.NewPassword);
+            var result = await UserManager.ChangePasswordAsync(currentUserId.Value, model.CurrentPassword, model.NewPassword);
             var errorResult = GetErrorResult(result);
 
             if (errorResult != null)

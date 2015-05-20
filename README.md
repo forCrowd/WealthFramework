@@ -6,6 +6,11 @@ An experimental resource management system that aims to provide a more sustainab
 
 ### Release Notes
 
+**0.22.2**
+
+* Change password fix
+* SeedInitialData method updates & fixes
+
 **0.22.1**
 
 * introductionController increaseMultiplier timer definition before resourcePool fix
