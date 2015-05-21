@@ -84,6 +84,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a href="/" class="navbar-brand">Wealth Economy</a>
+                <%--<span class="navbar-brand"><span class="small">BETA</span></span>--%>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -147,8 +148,9 @@
         <hr />
         <footer>
             <p class="small">
-                {{ vm.applicationInfo.CurrentVersion }}<br />
-                {{ vm.applicationInfo.Organization }}
+                {{ vm.applicationInfo.CurrentVersion }} - Beta<br />
+                {{ vm.applicationInfo.Organization }}<br />
+                
             </p>
         </footer>
     </div>

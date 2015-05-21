@@ -4,12 +4,8 @@
 
 ### Functional
 
-* Check userunitofwork + resourcepoolunitofwork + userresourcepoolunitofwork for sample records + delete cases
-* Initial (fixed) amount for resource pool
-* Currently multiplier + resource pool field types can only be added once per element (or resource pool) - check it again
 * ismainelement -> DefaultElement
 * instead of MainElement boolean on Element level, can it be done with MainElement field on ResourcePool level? yes, with InverseProperty
-* subtotals; sales price, sales price incl. tax, number of sales, total tax, total sales price incl. tax, total income
 * userelementcell ratings + counts?
 * display index's own ratings + counts?
 
@@ -54,6 +50,7 @@ http://www.asp.net/web-api/overview/security/enabling-cross-origin-requests-in-w
 
 ### Functional
 
+* Currently multiplier + resource pool field types can only be added once per element (or resource pool) - check it again
 * default license ratings should be 50/50 and ratings total should always be 100%?
 * create sample data with average ratingvalue? or make the rating nullable  
 * exclude sample user from rating averages - or make them always 50 / 50?  
@@ -195,8 +192,6 @@ http://download.microsoft.com/Documents/UseTerms/Windows_8.1_English_468d3103-64
 * angular interceptor for error handling?
 http://www.codeproject.com/Articles/857594/MVC-Thorough-Error-Handling		
 
-* using resourcePool initialValue for Basic Sample is not a good idea - it's not on user level?!
-
 * Content related;
 dynamic pricing - low price is good but can't be zero because then it's not sustainable as well?
 
@@ -270,9 +265,6 @@ if the owner doesn't allow, then it becomes static anyway - get always the avera
 which can be applied to resource pool rate? and index ratings?
 
 * about aggressive method, last operation may not be necessary for one of the types - check excel file!
-
-* check whether it's possible to send email from contact@forcrowd.org? there is no password at the moment? does it necessary to have a different plan for this?
-then continue with the other registrations?
 
 * possible error; if one child element will have 2 indexes, UI is not going to work correctly?
 

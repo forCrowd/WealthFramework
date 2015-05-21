@@ -112,7 +112,6 @@
       <DependentUpon>UnitOfWork.tt</DependentUpon>
     </Compile>
     <Compile Include="Utility.cs" />
-    <Compile Include="UserResourcePoolUnitOfWork.cs" />
     <Compile Include="ResourcePoolUnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>

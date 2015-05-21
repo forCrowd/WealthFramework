@@ -195,7 +195,6 @@ namespace BusinessObjects
 
         public decimal TotalResourcePoolValue()
         {
-            //return InitialValue + TotalResourcePoolAddition(multiplierUser);
             return TotalResourcePoolAddition();
         }
 

@@ -13,9 +13,7 @@
             // Sample resource pool could only be created during DatabaseInitialization at the moment
             entity.IsSample = false;
 
-            // TODO Samples ...
-
-            CreateUserResourcePool(entity, userId);
+            // TODO Default actions, like creating UserResourcePool?
 
             return await base.InsertAsync(entity);
         }
@@ -35,38 +33,5 @@
 
             return await base.DeleteAsync(resourcePoolId);
         }
-
-        #region - Private Methods -
-
-        void CreateUserResourcePool(ResourcePool resourcePool, int userId)
-        {
-            // TODO
-
-            //var userResourcePool = new UserResourcePool()
-            //{
-            //    UserId = userId,
-            //    ResourcePool = resourcePool,
-            //    ResourcePoolRate = 101
-            //};
-            //UserResourcePoolRepository.Insert(userResourcePool);
-
-            //// Sample ratings
-            //// TODO This is not going to work for now, because there are no ElementFieldIndex records (it doesn't add a sample index)
-            //var resourcePoolIndexes = resourcePool.ResourcePoolIndexSet;
-            //foreach (var resourcePoolIndex in resourcePoolIndexes)
-            //{
-            //    var sampleUserResourcePoolIndex = new UserResourcePoolIndex()
-            //    {
-            //        UserResourcePool = userResourcePool,
-            //        ResourcePoolIndex = resourcePoolIndex,
-            //        Rating = 50 // TODO Is it correct? Or should be null?
-            //    };
-            //    UserResourcePoolIndexRepository.Insert(sampleUserResourcePoolIndex);
-            //}
-
-            // TODO Samples ...
-        }
-
-        #endregion
     }
 }
