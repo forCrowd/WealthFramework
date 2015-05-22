@@ -25,6 +25,7 @@ namespace Web
         public void ConfigureAuth(IAppBuilder app)
         {
             // Configure the db context and user manager to use a single instance per request
+            // TODO Is this correct to make DbContext accessible from Web application?
             app.CreatePerOwinContext(WealthEconomyContext.Create);
             app.CreatePerOwinContext<UserManager>(UserManager.Create);
 

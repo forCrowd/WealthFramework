@@ -32,6 +32,7 @@
             Configuration.LazyLoadingEnabled = false;
         }
 
+        // TODO Is this correct to make DbContext accessible from Web application?
         public static WealthEconomyContext Create()
         {
             return new WealthEconomyContext();

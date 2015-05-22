@@ -1,6 +1,6 @@
 # Web application warm-up script
 #
-# Makes the first request to the application to prevent waiting after the build operations (check Web project properties - Build Events tab)
+# Makes a request to web application to prevent waiting after the build operations (check Web project properties - Build Events tab)
 #
 # coni2k - 05 Oct. '14
 
