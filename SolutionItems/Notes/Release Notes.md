@@ -1,5 +1,9 @@
 ﻿### Release Notes
 
+**0.24**
+
+* Initial_Manual migration drop function fix
+
 **0.23**
 
 * ResourcePool MainElement instead of Element.IsMainElement

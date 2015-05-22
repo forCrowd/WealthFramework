@@ -1,6 +1,5 @@
 namespace DataObjects.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
     using System.Text;
     
@@ -9,36 +8,42 @@ namespace DataObjects.Migrations
         public override void Up()
         {
             // ResourcePool ResourcePoolRateAverage
-            Sql(PrepareGetResourcePoolRateAverageFunction());
+            Sql(PrepareDropFunctionBlock("ResourcePool", "ResourcePoolRateAverage", "getResourcePoolRateAverage"));
+            Sql(PrepareGetResourcePoolRateAverageFunctionBlock());
             Sql("ALTER TABLE dbo.ResourcePool DROP COLUMN ResourcePoolRateAverage;");
             Sql("ALTER TABLE dbo.ResourcePool ADD ResourcePoolRateAverage AS dbo.getResourcePoolRateAverage(Id);");
 
             // ResourcePool ResourcePoolRateCount
-            Sql(PrepareGetResourcePoolRateCountFunction());
+            Sql(PrepareDropFunctionBlock("ResourcePool", "ResourcePoolRateCount", "getResourcePoolRateCount"));
+            Sql(PrepareGetResourcePoolRateCountFunctionBlock());
             Sql("ALTER TABLE dbo.ResourcePool DROP COLUMN ResourcePoolRateCount;");
             Sql("ALTER TABLE dbo.ResourcePool ADD ResourcePoolRateCount AS dbo.getResourcePoolRateCount(Id);");
 
             // ElementFieldIndex IndexRatingAverage
-            Sql(PrepareGetElementFieldIndexRatingAverageFunction());
+            Sql(PrepareDropFunctionBlock("ElementFieldIndex", "IndexRatingAverage", "getElementFieldIndexRatingAverage"));
+            Sql(PrepareGetElementFieldIndexRatingAverageFunctionBlock());
             Sql("ALTER TABLE dbo.ElementFieldIndex DROP COLUMN IndexRatingAverage;");
             Sql("ALTER TABLE dbo.ElementFieldIndex ADD IndexRatingAverage AS dbo.getElementFieldIndexRatingAverage(Id);");
 
             // ElementFieldIndex IndexRatingCount
-            Sql(PrepareGetElementFieldIndexRatingCountFunction());
+            Sql(PrepareDropFunctionBlock("ElementFieldIndex", "IndexRatingCount", "getElementFieldIndexRatingCount"));
+            Sql(PrepareGetElementFieldIndexRatingCountFunctionBlock());
             Sql("ALTER TABLE dbo.ElementFieldIndex DROP COLUMN IndexRatingCount;");
             Sql("ALTER TABLE dbo.ElementFieldIndex ADD IndexRatingCount AS dbo.getElementFieldIndexRatingCount(Id);");
 
             // ElementCell RatingAverage
-            Sql(PrepareGetElementCellRatingAverageFunction());
+            Sql(PrepareDropFunctionBlock("ElementCell", "RatingAverage", "getElementCellRatingAverage"));
+            Sql(PrepareGetElementCellRatingAverageFunctionBlock());
             Sql("ALTER TABLE dbo.ElementCell DROP COLUMN RatingAverage;");
             Sql("ALTER TABLE dbo.ElementCell ADD RatingAverage AS dbo.getElementCellRatingAverage(Id);");
 
             // ElementCell RatingCount
-            Sql(PrepareGetElementCellRatingCountFunction());
+            Sql(PrepareDropFunctionBlock("ElementCell", "RatingCount", "getElementCellRatingCount"));
+            Sql(PrepareGetElementCellRatingCountFunctionBlock());
             Sql("ALTER TABLE dbo.ElementCell DROP COLUMN RatingCount;");
             Sql("ALTER TABLE dbo.ElementCell ADD RatingCount AS dbo.getElementCellRatingCount(Id);");
         }
-
+        
         public override void Down()
         {
             // ResourcePool ResourcePoolRateAverage
@@ -49,7 +54,6 @@ namespace DataObjects.Migrations
             // ResourcePool ResourcePoolRateCount
             Sql("ALTER TABLE dbo.ResourcePool DROP COLUMN ResourcePoolRateCount;");
             Sql("ALTER TABLE dbo.ResourcePool ADD ResourcePoolRateCount int;");
-            //Sql("ALTER TABLE dbo.ResourcePool ADD ResourcePoolRateCount int CONSTRAINT [DF_ResourcePool_ResourcePoolRateCount] DEFAULT ((0));");
             Sql("DROP FUNCTION dbo.getResourcePoolRateCount;");
 
             // ElementFieldIndex IndexRatingAverage
@@ -60,7 +64,6 @@ namespace DataObjects.Migrations
             // ElementFieldIndex IndexRatingCount
             Sql("ALTER TABLE dbo.ElementFieldIndex DROP COLUMN IndexRatingCount;");
             Sql("ALTER TABLE dbo.ElementFieldIndex ADD IndexRatingCount int;");
-            //Sql("ALTER TABLE dbo.ElementFieldIndex ADD IndexRatingCount int CONSTRAINT [DF_ElementFieldIndex_IndexRatingCount] DEFAULT ((0));");
             Sql("DROP FUNCTION dbo.getElementFieldIndexRatingCount;");
 
             // ElementCell RatingAverage
@@ -71,11 +74,10 @@ namespace DataObjects.Migrations
             // ElementCell RatingCount
             Sql("ALTER TABLE dbo.ElementCell DROP COLUMN RatingCount;");
             Sql("ALTER TABLE dbo.ElementCell ADD RatingCount int;");
-            //Sql("ALTER TABLE dbo.ElementCell ADD RatingCount int CONSTRAINT [DF_ElementCell_RatingCount] DEFAULT ((0));");
             Sql("DROP FUNCTION dbo.getElementCellRatingCount;");
         }
 
-        string PrepareGetResourcePoolRateAverageFunction()
+        string PrepareGetResourcePoolRateAverageFunctionBlock()
         {
             var sbOutput = new StringBuilder();
             sbOutput.AppendLine("CREATE FUNCTION dbo.getResourcePoolRateAverage(@resourcePoolId int)");
@@ -89,7 +91,7 @@ namespace DataObjects.Migrations
             return sbOutput.ToString();
         }
 
-        string PrepareGetResourcePoolRateCountFunction()
+        string PrepareGetResourcePoolRateCountFunctionBlock()
         {
             var sbOutput = new StringBuilder();
             sbOutput.AppendLine("CREATE FUNCTION dbo.getResourcePoolRateCount(@resourcePoolId int)");
@@ -103,7 +105,7 @@ namespace DataObjects.Migrations
             return sbOutput.ToString();
         }
 
-        string PrepareGetElementFieldIndexRatingAverageFunction()
+        string PrepareGetElementFieldIndexRatingAverageFunctionBlock()
         {
             var sbOutput = new StringBuilder();
             sbOutput.AppendLine("CREATE FUNCTION dbo.getElementFieldIndexRatingAverage(@elementFieldIndexId int)");
@@ -117,7 +119,7 @@ namespace DataObjects.Migrations
             return sbOutput.ToString();
         }
 
-        string PrepareGetElementFieldIndexRatingCountFunction()
+        string PrepareGetElementFieldIndexRatingCountFunctionBlock()
         {
             var sbOutput = new StringBuilder();
             sbOutput.AppendLine("CREATE FUNCTION dbo.getElementFieldIndexRatingCount(@elementFieldIndexId int)");
@@ -131,7 +133,7 @@ namespace DataObjects.Migrations
             return sbOutput.ToString();
         }
 
-        string PrepareGetElementCellRatingAverageFunction()
+        string PrepareGetElementCellRatingAverageFunctionBlock()
         {
             var sbOutput = new StringBuilder();
             sbOutput.AppendLine("CREATE FUNCTION dbo.getElementCellRatingAverage(@elementCellId int)");
@@ -145,7 +147,7 @@ namespace DataObjects.Migrations
             return sbOutput.ToString();
         }
 
-        string PrepareGetElementCellRatingCountFunction()
+        string PrepareGetElementCellRatingCountFunctionBlock()
         {
             var sbOutput = new StringBuilder();
             sbOutput.AppendLine("CREATE FUNCTION dbo.getElementCellRatingCount(@elementCellId int)");
@@ -155,6 +157,21 @@ namespace DataObjects.Migrations
             sbOutput.AppendLine("    DECLARE @result int");
             sbOutput.AppendLine("    SELECT @result = COUNT(DecimalValue) FROM UserElementCell WHERE ElementCellId = @elementCellId AND NOT DecimalValue IS NULL AND DeletedOn IS NULL");
             sbOutput.AppendLine("    RETURN @result");
+            sbOutput.AppendLine("END");
+            return sbOutput.ToString();
+        }
+
+        string PrepareDropFunctionBlock(string tableName, string columnName, string functionName)
+        {
+            var sbOutput = new StringBuilder();
+            sbOutput.AppendFormat("IF object_id(N'{0}', N'FN') IS NOT NULL", functionName).AppendLine();
+            sbOutput.AppendLine("BEGIN");
+            sbOutput.AppendFormat("    IF COLUMNPROPERTY(object_id('{0}'), '{1}', 'IsComputed') = 1", tableName, columnName).AppendLine();
+            sbOutput.AppendLine("    BEGIN");
+            sbOutput.AppendFormat("        ALTER TABLE dbo.{0} DROP COLUMN {1};", tableName, columnName).AppendLine();
+            sbOutput.AppendFormat("        ALTER TABLE dbo.{0} ADD {1} [decimal](18,2);", tableName, columnName).AppendLine();
+            sbOutput.AppendLine("    END");
+            sbOutput.AppendFormat("    DROP FUNCTION {0}", functionName).AppendLine();
             sbOutput.AppendLine("END");
             return sbOutput.ToString();
         }
