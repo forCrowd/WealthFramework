@@ -19,7 +19,7 @@
             resourcePool.IsSample = true;
 
             // Main element
-            var mainElement = resourcePool.MainElement;
+            var mainElement = resourcePool.ElementSet.First();
             mainElement.ResourcePoolField.Name = "Sales Price"; // TODO It does not fit! Update this after having Initial Amount on RP!
             mainElement.MultiplierField.Name = "Number of Sales";
 
@@ -40,7 +40,7 @@
             resourcePool.IsSample = true;
 
             // Main element
-            var mainElement = resourcePool.MainElement;
+            var mainElement = resourcePool.ElementSet.First();
             mainElement.ResourcePoolField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Number of Sales";
 
@@ -63,7 +63,7 @@
             resourcePool.IsSample = true;
 
             // Main element
-            var mainElement = resourcePool.MainElement;
+            var mainElement = resourcePool.ElementSet.First();
 
             // Fields
             mainElement.ResourcePoolField.Name = "Sales Price";
@@ -107,7 +107,7 @@
             var healthcareItem = sectorElement.AddItem("Healthcare").AddCell(importanceField).SetValue(sectorRating, user).ElementItem;
 
             // Main element
-            var mainElement = resourcePool.MainElement;
+            var mainElement = resourcePool.ElementSet.First();
             mainElement.ResourcePoolField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Number of Sales";
             var sectorField = mainElement.AddField("Sector", ElementFieldTypes.Element);
@@ -177,7 +177,7 @@
                 .AddCell(licenseRatingField).SetValue(userRating, user).ElementItem;
 
             // Main element
-            var mainElement = resourcePool.MainElement;
+            var mainElement = resourcePool.ElementSet.First();
             mainElement.ResourcePoolField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Number of Sales";
             var licenseField = mainElement.AddField("License", ElementFieldTypes.Element);
@@ -251,7 +251,7 @@
                 .AddCell(importanceField).SetValue(ratingPerLicense, user);
 
             // Main element
-            var mainElement = resourcePool.MainElement;
+            var mainElement = resourcePool.ElementSet.First();
             mainElement.ResourcePoolField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Number of Sales";
             var licenseField = mainElement.AddField("License", ElementFieldTypes.Element);
@@ -287,7 +287,7 @@
             resourcePool.IsSample = true;
 
             // Main element
-            var mainElement = resourcePool.MainElement;
+            var mainElement = resourcePool.ElementSet.First();
 
             // Fields
             var linkField = mainElement.AddField("Link", ElementFieldTypes.String);
@@ -337,7 +337,7 @@
             resourcePool.IsSample = true;
 
             // Main element
-            var mainElement = resourcePool.MainElement;
+            var mainElement = resourcePool.ElementSet.First();
 
             // Fields
             var importanceField = mainElement.AddField("Rating", ElementFieldTypes.Decimal, false);
@@ -383,7 +383,7 @@
             resourcePool.IsSample = true;
 
             // Main element
-            var mainElement = resourcePool.MainElement;
+            var mainElement = resourcePool.ElementSet.First();
 
             // Fields
             mainElement.ResourcePoolField.Name = "Sales Price";
@@ -409,7 +409,7 @@
             resourcePool.IsSample = true;
 
             // Main element
-            var mainElement = resourcePool.MainElement;
+            var mainElement = resourcePool.ElementSet.First();
 
             // Fields
             mainElement.ResourcePoolField.Name = "Sales Price";
@@ -440,7 +440,7 @@
             resourcePool.IsSample = true;
 
             // Main element
-            var mainElement = resourcePool.MainElement;
+            var mainElement = resourcePool.ElementSet.First();
 
             // Fields
             mainElement.ResourcePoolField.Name = "Sales Price";
@@ -472,12 +472,12 @@
             resourcePool.IsSample = true;
 
             // Main element
-            var mainElement = resourcePool.MainElement;
+            var mainElement = resourcePool.ElementSet.First();
             mainElement.ResourcePoolField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Number of Sales";
 
             // Resource pool index; use to Sales Price itself
-            resourcePool.MainElement.ResourcePoolField
+            resourcePool.ElementSet.First().ResourcePoolField
                 .AddIndex("Total Cost Index", RatingSortType.LowestToHighest)
                 .AddUserRating(user, 100);
 
@@ -520,7 +520,7 @@
                 .AddCell(fairShareImportanceField).SetValue(ratingPerItem, user).ElementItem;
 
             // Main element
-            var mainElement = resourcePool.MainElement;
+            var mainElement = resourcePool.ElementSet.First();
             mainElement.ResourcePoolField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Number of Sales";
             var fairShareField = mainElement.AddField("Fair Share", ElementFieldTypes.Element);
@@ -566,20 +566,20 @@
             //    .AddCell(fairShareImportanceField).SetValue(ratingPerItem, user).ElementItem;
 
             // Main element
-            var mainElement = resourcePool.MainElement;
+            var mainElement = resourcePool.ElementSet.First();
             mainElement.ResourcePoolField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Number of Sales";
 
             decimal ratingPerIndex = 100 / 4;
 
             // Sector Index
-            var sectorField = resourcePool.MainElement.AddField("Sector Rating", ElementFieldTypes.Decimal, true);
+            var sectorField = resourcePool.ElementSet.First().AddField("Sector Rating", ElementFieldTypes.Decimal, true);
             sectorField
                 .AddIndex("Sector Index", RatingSortType.HighestToLowest)
                 .AddUserRating(user, ratingPerIndex);
 
             // Knowledge Index
-            var licenseField = resourcePool.MainElement.AddField("License Rating", ElementFieldTypes.Decimal, true);
+            var licenseField = resourcePool.ElementSet.First().AddField("License Rating", ElementFieldTypes.Decimal, true);
             licenseField
                 .AddIndex("Knowledge Index", RatingSortType.HighestToLowest)
                 .AddUserRating(user, ratingPerIndex);
@@ -590,7 +590,7 @@
                 .AddUserRating(user, ratingPerIndex);
 
             // Fair Share Index
-            var fairShareField = resourcePool.MainElement.AddField("Fair Share Rating", ElementFieldTypes.Decimal, true);
+            var fairShareField = resourcePool.ElementSet.First().AddField("Fair Share Rating", ElementFieldTypes.Decimal, true);
             fairShareField
                 .AddIndex("Fair Share Index", RatingSortType.HighestToLowest)
                 .AddUserRating(user, ratingPerIndex);
@@ -654,7 +654,7 @@
             //    .AddCell(fairShareImportanceField).SetValue(ratingPerItem, user).ElementItem;
 
             // Main element
-            var mainElement = resourcePool.MainElement;
+            var mainElement = resourcePool.ElementSet.First();
             mainElement.ResourcePoolField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Number of Sales";
 
@@ -667,13 +667,13 @@
             //mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).ElementFieldIndex.Name = "Employee Satisfaction";
 
             // 2. index
-            var importanceField1 = resourcePool.MainElement.AddField("Importance Field 1", ElementFieldTypes.Decimal, false);
+            var importanceField1 = resourcePool.ElementSet.First().AddField("Importance Field 1", ElementFieldTypes.Decimal, false);
             importanceField1
                 .AddIndex("Importance Index 1", RatingSortType.HighestToLowest)
                 .AddUserRating(user, 100 / 3);
 
             // 3. index
-            var importanceField2 = resourcePool.MainElement.AddField("Importance Field 2", ElementFieldTypes.Decimal, false);
+            var importanceField2 = resourcePool.ElementSet.First().AddField("Importance Field 2", ElementFieldTypes.Decimal, false);
             importanceField2
                 .AddIndex("Importance Index 2", RatingSortType.HighestToLowest)
                 .AddUserRating(user, 100 / 3);
@@ -733,7 +733,7 @@
             //    .AddCell(fairShareImportanceField).SetValue(ratingPerItem, user).ElementItem;
 
             // Main element
-            var mainElement = resourcePool.MainElement;
+            var mainElement = resourcePool.ElementSet.First();
             mainElement.ResourcePoolField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Number of Sales";
 
@@ -746,13 +746,13 @@
             //mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).ElementFieldIndex.Name = "Employee Satisfaction";
 
             // 2. index
-            var veryImportantField = resourcePool.MainElement.AddField("Very Important Rating", ElementFieldTypes.Decimal, false);
+            var veryImportantField = resourcePool.ElementSet.First().AddField("Very Important Rating", ElementFieldTypes.Decimal, false);
             veryImportantField
                 .AddIndex("Very Important Index", RatingSortType.HighestToLowest)
                 .AddUserRating(user, 100);
 
             // 3. index
-            //var importanceField2 = resourcePool.MainElement.AddField("Importance Field 2", ElementFieldTypes.Decimal, false);
+            //var importanceField2 = resourcePool.ElementSet.First().AddField("Importance Field 2", ElementFieldTypes.Decimal, false);
             //importanceField2
             //    .AddIndex("Importance Index 2", RatingSortType.HighestToLowest)
             //    .AddUserRating(user, 100 / 3);
@@ -865,7 +865,7 @@
                 .AddCell(fairShareRatingField).SetValue(userRating, user).ElementItem;
 
             // Main element
-            var mainElement = resourcePool.MainElement;
+            var mainElement = resourcePool.ElementSet.First();
             mainElement.ResourcePoolField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Number of Sales";
             
@@ -1135,7 +1135,7 @@
             ElementField importanceField = null;
             if (addImportanceIndex)
             {
-                importanceField = resourcePool.MainElement.AddField("Importance Field", ElementFieldTypes.Decimal, false);
+                importanceField = element.AddField("Importance Field", ElementFieldTypes.Decimal, false);
                 importanceField
                     .AddIndex("Importance Index", RatingSortType.HighestToLowest)
                     .AddUserRating(user, 100);
@@ -1147,13 +1147,13 @@
             {
                 var itemName = string.Format("Item {0}", i);
 
-                var item = resourcePool.MainElement.AddItem(itemName);
+                var item = element.AddItem(itemName);
 
                 if (addResourcePoolField)
-                    item.AddCell(resourcePool.MainElement.ResourcePoolField).SetValue(100M);
+                    item.AddCell(element.ResourcePoolField).SetValue(100M);
 
                 if (addMultiplierField)
-                    item.AddCell(resourcePool.MainElement.MultiplierField).SetValue(0M, user);
+                    item.AddCell(element.MultiplierField).SetValue(0M, user);
 
                 if (addImportanceIndex)
                     item.AddCell(importanceField).SetValue(itemValue, user);

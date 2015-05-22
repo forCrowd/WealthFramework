@@ -6,6 +6,7 @@ namespace DataObjects.Migrations
     using System;
     using System.Collections.Generic;
     using System.Data.Entity.Migrations;
+    using System.Linq;
 
     internal sealed class DbMigrationsConfiguration : DbMigrationsConfiguration<WealthEconomyContext>
     {
@@ -111,21 +112,52 @@ namespace DataObjects.Migrations
             Framework.Security.LoginAs(sampleUser.Id);
 
             // Sample resource pools
-            resourcePoolRepository.Insert(resourcePoolRepository.CreateUPOSample(sampleUser));
-            resourcePoolRepository.Insert(resourcePoolRepository.CreateBasicsExistingSystemSample(sampleUser));
-            resourcePoolRepository.Insert(resourcePoolRepository.CreateBasicsNewSystemSample(sampleUser));
-            resourcePoolRepository.Insert(resourcePoolRepository.CreateSectorIndexSample(sampleUser));
-            resourcePoolRepository.Insert(resourcePoolRepository.CreateKnowledgeIndexSample(sampleUser));
-            resourcePoolRepository.Insert(resourcePoolRepository.CreateKnowledgeIndexPopularSoftwareLicenseSample(sampleUser));
-            resourcePoolRepository.Insert(resourcePoolRepository.CreateTotalCostIndexExistingSystemSample(sampleUser));
-            resourcePoolRepository.Insert(resourcePoolRepository.CreateTotalCostIndexNewSystemSample(sampleUser));
-            resourcePoolRepository.Insert(resourcePoolRepository.CreateTotalCostIndexNewSystemAftermathSample(sampleUser));
-            resourcePoolRepository.Insert(resourcePoolRepository.CreateFairShareSample(sampleUser));
-            resourcePoolRepository.Insert(resourcePoolRepository.CreateIndexesPieSample(sampleUser));
-            resourcePoolRepository.Insert(resourcePoolRepository.CreateResourcePoolRateSample(sampleUser));
-            //resourcePoolRepository.Insert(resourcePoolRepository.CreateAllInOneSample(sampleUser));
+            var upoSample = resourcePoolRepository.CreateUPOSample(sampleUser);
+            var basicsExistingSystemSample = resourcePoolRepository.CreateBasicsExistingSystemSample(sampleUser);
+            var basicsNewSystemSample = resourcePoolRepository.CreateBasicsNewSystemSample(sampleUser);
+            var sectorIndexSample = resourcePoolRepository.CreateSectorIndexSample(sampleUser);
+            var knowledgeIndexSample = resourcePoolRepository.CreateKnowledgeIndexSample(sampleUser);
+            var knowledgeIndexPopularSoftwareLicenseSample = resourcePoolRepository.CreateKnowledgeIndexPopularSoftwareLicenseSample(sampleUser);
+            var totalCostIndexExistingSystemSample = resourcePoolRepository.CreateTotalCostIndexExistingSystemSample(sampleUser);
+            var totalCostIndexNewSystemSample = resourcePoolRepository.CreateTotalCostIndexNewSystemSample(sampleUser);
+            var totalCostIndexNewSystemAftermathSample = resourcePoolRepository.CreateTotalCostIndexNewSystemAftermathSample(sampleUser);
+            var fairShareSample = resourcePoolRepository.CreateFairShareSample(sampleUser);
+            var indexesPieSample = resourcePoolRepository.CreateIndexesPieSample(sampleUser);
+            var resourcePoolRateSample = resourcePoolRepository.CreateResourcePoolRateSample(sampleUser);
+            //var allInOneSample = resourcePoolRepository.CreateAllInOneSample(sampleUser);
+            
+            resourcePoolRepository.Insert(upoSample);
+            resourcePoolRepository.Insert(basicsExistingSystemSample);
+            resourcePoolRepository.Insert(basicsNewSystemSample);
+            resourcePoolRepository.Insert(sectorIndexSample);
+            resourcePoolRepository.Insert(knowledgeIndexSample);
+            resourcePoolRepository.Insert(knowledgeIndexPopularSoftwareLicenseSample);
+            resourcePoolRepository.Insert(totalCostIndexExistingSystemSample);
+            resourcePoolRepository.Insert(totalCostIndexNewSystemSample);
+            resourcePoolRepository.Insert(totalCostIndexNewSystemAftermathSample);
+            resourcePoolRepository.Insert(fairShareSample);
+            resourcePoolRepository.Insert(indexesPieSample);
+            resourcePoolRepository.Insert(resourcePoolRateSample);
+            //resourcePoolRepository.Insert(allInOneSample);
 
-            // Save
+            // First save
+            context.SaveChanges();
+
+            // Set main elements
+            upoSample.SetMainElement();
+            basicsExistingSystemSample.SetMainElement();
+            basicsNewSystemSample.SetMainElement();
+            sectorIndexSample.SetMainElement();
+            knowledgeIndexSample.SetMainElement();
+            knowledgeIndexPopularSoftwareLicenseSample.SetMainElement();
+            totalCostIndexExistingSystemSample.SetMainElement();
+            totalCostIndexNewSystemSample.SetMainElement();
+            totalCostIndexNewSystemAftermathSample.SetMainElement();
+            fairShareSample.SetMainElement();
+            indexesPieSample.SetMainElement();
+            resourcePoolRateSample.SetMainElement();
+
+            // Second save for main elements
             context.SaveChanges();
         }
     }

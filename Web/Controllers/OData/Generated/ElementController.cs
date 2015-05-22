@@ -31,6 +31,7 @@ namespace Web.Controllers.OData
 		protected ElementUnitOfWork MainUnitOfWork { get; private set; }
 
         // GET odata/Element
+        //[Queryable]
         public virtual IQueryable<Element> Get()
         {
 			var list = MainUnitOfWork.AllLive;

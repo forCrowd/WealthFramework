@@ -57,13 +57,12 @@
                     .then(function (resourcePoolSet) {
 
                         var resourcePool = resourcePoolSet[0];
-                        var mainElement = resourcePool.mainElement();
 
                         var result = false;
                         switch (event.name) {
-                            case 'resourcePoolEditor_elementMultiplierIncreased': { result = resourcePoolService.updateElementMultiplier(mainElement, 'increase'); break; }
-                            case 'resourcePoolEditor_elementMultiplierDecreased': { result = resourcePoolService.updateElementMultiplier(mainElement, 'decrease'); break; }
-                            case 'resourcePoolEditor_elementMultiplierReset': { result = resourcePoolService.updateElementMultiplier(mainElement, 'reset'); break; }
+                            case 'resourcePoolEditor_elementMultiplierIncreased': { result = resourcePoolService.updateElementMultiplier(resourcePool.MainElement, 'increase'); break; }
+                            case 'resourcePoolEditor_elementMultiplierDecreased': { result = resourcePoolService.updateElementMultiplier(resourcePool.MainElement, 'decrease'); break; }
+                            case 'resourcePoolEditor_elementMultiplierReset': { result = resourcePoolService.updateElementMultiplier(resourcePool.MainElement, 'reset'); break; }
                         }
 
                         if (result) {

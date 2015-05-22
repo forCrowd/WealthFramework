@@ -204,7 +204,7 @@
 
             self.indexRatingPercentage = function () {
 
-                var elementIndexRating = self.ElementField.Element.ResourcePool.mainElement().indexRating();
+                var elementIndexRating = self.ElementField.Element.ResourcePool.MainElement.indexRating();
 
                 if (elementIndexRating === 0)
                     return 0;

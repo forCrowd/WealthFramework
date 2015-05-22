@@ -8,6 +8,7 @@ An experimental resource management system that aims to provide a more sustainab
 
 **0.22.4**
 
+* ResourcePool MainElement instead of Element.IsMainElement
 * Todo cleanup
 
 **0.22.3**

@@ -49,6 +49,9 @@ namespace BusinessObjects
         [Obsolete("Doesn't work as expected, remove later?")]
         public decimal InitialValue { get; set; }
 
+        [Display(Name = "Main Element")]
+        public int? MainElementId { get; set; }
+
         [Display(Name = "Enable CMRP Addition")]
         [DisplayOnListView(false)]
         [DisplayOnEditView(true)]
@@ -63,19 +66,19 @@ namespace BusinessObjects
         [DisplayOnEditView(false)]
         public bool IsSample { get; set; }
 
+        [DisplayOnListView(false)]
+        [DisplayOnEditView(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public decimal? ResourcePoolRateAverage { get; private set; }
 
+        [DisplayOnListView(false)]
+        [DisplayOnEditView(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public int? ResourcePoolRateCount { get; private set; }
 
+        public virtual Element MainElement { get; set; }
         public virtual ICollection<Element> ElementSet { get; set; }
         public virtual ICollection<UserResourcePool> UserResourcePoolSet { get; set; }
-
-        public Element MainElement
-        {
-            get { return ElementSet.SingleOrDefault(element => element.IsMainElement); }
-        }
 
         public UserResourcePool UserResourcePool
         {
@@ -250,6 +253,27 @@ namespace BusinessObjects
             user.UserResourcePoolSet.Add(userResourcePool);
             UserResourcePoolSet.Add(userResourcePool);
             return userResourcePool;
+        }
+
+        /// <summary>
+        /// Sets the first element in its list as the main element
+        /// </summary>
+        /// <returns></returns>
+        public ResourcePool SetMainElement()
+        {
+            if (MainElement != null)
+            {
+                // TODO What if there is an existing MainElement?
+            }
+
+            var mainElement = ElementSet.FirstOrDefault();
+            if (mainElement != null)
+            {
+                MainElement = mainElement;
+                mainElement.ResourcePoolMainElementSubSet.Add(this);
+            }
+
+            return this;
         }
 
         #endregion

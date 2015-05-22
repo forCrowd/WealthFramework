@@ -250,6 +250,7 @@ test - userqueryvisitor with filter!
 . ? http://blogs.msdn.com/b/webdev/archive/2015/02/11/improve-performance-by-optimizing-queries-for-asp-net-identity-and-other-membership-providers.aspx
 
 . Improve + update tests? Also javascript tests?
+http://dm.gl/2015/05/18/wallaby-for-visual-studio/
 
 . Remove unnecessary methods & props from Business Objects - totalIncome() etc should only be calculated on client-side? then what to test on BL?
 
@@ -305,6 +306,16 @@ if the current user has no right to enter a rating for that area, then it must u
 	* verification email?
 
 						* what to do next? clean up this Todo file?
+
+
+continue with mainElement
+ismainelement + DefaultElement from cmrp were removed - update the rest accordingly..
+
+resourcePool.js - mainElement() will be replaced with .MainElement
+
+CONTINUE WITH CLEANIN THIS - MOVING THE ITEMS TO GITHUB ?!
+
+
 
 	* accountController.js doesn't handle the error the server well, it only says "Invalid request" or something. Check modelState error?
 

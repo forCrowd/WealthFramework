@@ -35,12 +35,12 @@ namespace Web.Controllers.OData
         //[Queryable]
         public virtual IQueryable<UserElementCell> Get()
         {
-            var userId = this.GetCurrentUserId();
-            if (!userId.HasValue)
-                throw new HttpResponseException(HttpStatusCode.Unauthorized);
+			var userId = this.GetCurrentUserId();
+			if (!userId.HasValue)
+                throw new HttpResponseException(HttpStatusCode.Unauthorized);	
 
-            var list = MainUnitOfWork.AllLive;
-            list = list.Where(item => item.UserId == userId.Value);
+			var list = MainUnitOfWork.AllLive;
+			list = list.Where(item => item.UserId == userId.Value);
             return list;
         }
 

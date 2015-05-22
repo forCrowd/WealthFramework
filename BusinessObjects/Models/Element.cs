@@ -15,6 +15,7 @@ namespace BusinessObjects
         [Obsolete("Parameterless constructors used by OData & EF. Make them private when possible.")]
         public Element()
         {
+            ResourcePoolMainElementSubSet = new HashSet<ResourcePool>();
             ElementFieldSet = new HashSet<ElementField>();
             ElementItemSet = new HashSet<ElementItem>();
             ParentFieldSet = new HashSet<ElementField>();
@@ -28,7 +29,6 @@ namespace BusinessObjects
 
             ResourcePool = resourcePool;
             Name = name;
-            IsMainElement = !ResourcePool.ElementSet.Any();
 
             AddField(name, ElementFieldTypes.String);
         }
@@ -44,10 +44,9 @@ namespace BusinessObjects
         [StringLength(50)]
         public string Name { get; set; }
 
-        [Display(Name = "Main Element")]
-        public bool IsMainElement { get; set; }
-
         public virtual ResourcePool ResourcePool { get; set; }
+        [InverseProperty("MainElement")]
+        public virtual ICollection<ResourcePool> ResourcePoolMainElementSubSet { get; set; }
         public virtual ICollection<ElementField> ElementFieldSet { get; set; }
         public virtual ICollection<ElementItem> ElementItemSet { get; set; }
         [InverseProperty("SelectedElement")]
@@ -220,48 +219,6 @@ namespace BusinessObjects
             var item = new ElementItem(this, name);
             ElementItemSet.Add(item);
             return item;
-        }
-
-        public Element IncreaseMultiplier(User user)
-        {
-            MultiplierMethodValidations(user);
-
-            foreach (var item in ElementItemSet)
-                item.MultiplierCell.SetValue(item.MultiplierValue() + 1M, user);
-
-            return this;
-        }
-
-        public Element DecreaseMultiplier(User user)
-        {
-            MultiplierMethodValidations(user);
-
-            foreach (var item in ElementItemSet)
-            {
-                var multiplierValue = item.MultiplierValue();
-                if (multiplierValue > 0)
-                    item.MultiplierCell.SetValue(multiplierValue - 1M, user);
-            }
-
-            return this;
-        }
-
-        public Element ResetMultiplier(User user)
-        {
-            MultiplierMethodValidations(user);
-
-            foreach (var item in ElementItemSet)
-                item.MultiplierCell.SetValue(0M, user);
-
-            return this;
-        }
-
-        void MultiplierMethodValidations(User user)
-        {
-            Validations.ArgumentNullOrDefault(user, "user");
-
-            if (!HasMultiplierField)
-                throw new InvalidOperationException("MainElement has no multiplier field");
         }
 
         #endregion

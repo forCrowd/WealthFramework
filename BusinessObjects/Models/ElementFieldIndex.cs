@@ -60,9 +60,13 @@ namespace BusinessObjects
         public virtual ElementField ElementField { get; set; }
         public virtual ICollection<UserElementFieldIndex> UserElementFieldIndexSet { get; set; }
 
+        [DisplayOnListView(false)]
+        [DisplayOnEditView(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public decimal? IndexRatingAverage { get; private set; }
 
+        [DisplayOnListView(false)]
+        [DisplayOnEditView(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public int? IndexRatingCount { get; private set; }
 

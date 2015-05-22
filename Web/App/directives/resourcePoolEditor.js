@@ -180,7 +180,7 @@
 
                 // Current element
                 if (scope.resourcePool.currentElement === null) {
-                    scope.changeCurrentElement(scope.resourcePool.mainElement());
+                    scope.changeCurrentElement(scope.resourcePool.MainElement);
                 } else {
                     loadChartData();
                 }
@@ -326,7 +326,7 @@
 
         return {
             restrict: 'E',
-            templateUrl: '/App/directives/resourcePoolEditor.html?v=022',
+            templateUrl: '/App/directives/resourcePoolEditor.html?v=0224',
             scope: {
                 resourcePoolId: '=',
                 chartHeight: '='

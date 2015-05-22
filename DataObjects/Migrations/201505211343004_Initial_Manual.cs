@@ -2,8 +2,9 @@ namespace DataObjects.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
+    using System.Text;
     
-    public partial class V0_14_9_Manual : DbMigration
+    public partial class Initial_Manual : DbMigration
     {
         public override void Up()
         {
@@ -76,7 +77,7 @@ namespace DataObjects.Migrations
 
         string PrepareGetResourcePoolRateAverageFunction()
         {
-            var sbOutput = new System.Text.StringBuilder();
+            var sbOutput = new StringBuilder();
             sbOutput.AppendLine("CREATE FUNCTION dbo.getResourcePoolRateAverage(@resourcePoolId int)");
             sbOutput.AppendLine("RETURNS decimal");
             sbOutput.AppendLine("AS");
@@ -90,7 +91,7 @@ namespace DataObjects.Migrations
 
         string PrepareGetResourcePoolRateCountFunction()
         {
-            var sbOutput = new System.Text.StringBuilder();
+            var sbOutput = new StringBuilder();
             sbOutput.AppendLine("CREATE FUNCTION dbo.getResourcePoolRateCount(@resourcePoolId int)");
             sbOutput.AppendLine("RETURNS int");
             sbOutput.AppendLine("AS");
@@ -104,7 +105,7 @@ namespace DataObjects.Migrations
 
         string PrepareGetElementFieldIndexRatingAverageFunction()
         {
-            var sbOutput = new System.Text.StringBuilder();
+            var sbOutput = new StringBuilder();
             sbOutput.AppendLine("CREATE FUNCTION dbo.getElementFieldIndexRatingAverage(@elementFieldIndexId int)");
             sbOutput.AppendLine("RETURNS decimal");
             sbOutput.AppendLine("AS");
@@ -118,7 +119,7 @@ namespace DataObjects.Migrations
 
         string PrepareGetElementFieldIndexRatingCountFunction()
         {
-            var sbOutput = new System.Text.StringBuilder();
+            var sbOutput = new StringBuilder();
             sbOutput.AppendLine("CREATE FUNCTION dbo.getElementFieldIndexRatingCount(@elementFieldIndexId int)");
             sbOutput.AppendLine("RETURNS int");
             sbOutput.AppendLine("AS");
@@ -132,7 +133,7 @@ namespace DataObjects.Migrations
 
         string PrepareGetElementCellRatingAverageFunction()
         {
-            var sbOutput = new System.Text.StringBuilder();
+            var sbOutput = new StringBuilder();
             sbOutput.AppendLine("CREATE FUNCTION dbo.getElementCellRatingAverage(@elementCellId int)");
             sbOutput.AppendLine("RETURNS decimal");
             sbOutput.AppendLine("AS");
@@ -146,7 +147,7 @@ namespace DataObjects.Migrations
 
         string PrepareGetElementCellRatingCountFunction()
         {
-            var sbOutput = new System.Text.StringBuilder();
+            var sbOutput = new StringBuilder();
             sbOutput.AppendLine("CREATE FUNCTION dbo.getElementCellRatingCount(@elementCellId int)");
             sbOutput.AppendLine("RETURNS int");
             sbOutput.AppendLine("AS");

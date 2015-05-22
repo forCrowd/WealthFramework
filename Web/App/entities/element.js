@@ -256,7 +256,7 @@
 
                 // TODO Check totalIncome notes
 
-                if (self.IsMainElement) {
+                if (self == self.ResourcePool.MainElement) {
 
                     // Validate
                     if (typeof self.ElementItemSet === 'undefined')
@@ -268,8 +268,8 @@
                         value += item.resourcePoolAdditionMultiplied();
                     }
                 } else {
-                    if (self.ResourcePool.mainElement() !== null) {
-                        value = self.ResourcePool.mainElement().resourcePoolAdditionMultiplied();
+                    if (self.ResourcePool.MainElement !== null) {
+                        value = self.ResourcePool.MainElement.resourcePoolAdditionMultiplied();
                     }
                 }
 

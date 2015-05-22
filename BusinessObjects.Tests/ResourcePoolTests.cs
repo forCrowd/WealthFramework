@@ -22,6 +22,7 @@ namespace BusinessObjects.Tests
             resourcePool.AddUserResourcePool(user, 100);
 
             var organization = resourcePool.AddElement("Organization");
+            resourcePool.SetMainElement();
             //organization.FilterSettings.CurrentUser = user;
 
             organization
@@ -186,6 +187,7 @@ namespace BusinessObjects.Tests
             resourcePool.AddUserResourcePool(user1, 100);
 
             var organization = resourcePool.AddElement("Organization");
+            resourcePool.SetMainElement();
             // organization.FilterSettings.CurrentUser = user1;
 
             organization

@@ -175,15 +175,15 @@
     <!-- Main -->
     <script src="/App/main.js?v=022"></script>
     <script src="/App/logger.js?v=022"></script>
-    <script src="/App/route.js?v=0223"></script>
+    <script src="/App/route.js?v=0224"></script>
     <script src="/App/authorization.js?v=022"></script>
 
     <!-- Entities -->
-    <script src="/App/entities/resourcePool.js?v=022"></script>
-    <script src="/App/entities/element.js?v=022"></script>
+    <script src="/App/entities/resourcePool.js?v=0224"></script>
+    <script src="/App/entities/element.js?v=0224"></script>
     <script src="/App/entities/elementCell.js?v=022"></script>
     <script src="/App/entities/elementField.js?v=022"></script>
-    <script src="/App/entities/elementFieldIndex.js?v=022"></script>
+    <script src="/App/entities/elementFieldIndex.js?v=0224"></script>
     <script src="/App/entities/elementItem.js?v=022"></script>
 
     <!-- breezeJS -->
@@ -193,7 +193,7 @@
     <script src="/App/services/mainService.js?v=022"></script>
 
     <!-- Manage Scripts - Generated (Services, Controllers) -->
-    <script src="/App/includes/manageScripts.js?v=0223"></script>
+    <script src="/App/includes/manageScripts.js?v=0224"></script>
 
     <!-- Service extensions -->
     <script src="/App/services/userService.js?v=022"></script>
@@ -202,7 +202,7 @@
     <!-- Content -->
     <script src="/App/controllers/content/mainController.js?v=022"></script>
     <script src="/App/controllers/content/introductionController.js?v=0223"></script>
-    <script src="/App/controllers/content/basicsController.js?v=0223"></script>
+    <script src="/App/controllers/content/basicsController.js?v=0224"></script>
     <script src="/App/controllers/content/sectorIndexSampleController.js?v=022"></script>
     <script src="/App/controllers/content/knowledgeIndexSampleController.js?v=022"></script>
     <script src="/App/controllers/content/totalCostIndexSampleController.js?v=022"></script>
@@ -222,7 +222,7 @@
     <script src="/App/controllers/manage/resourcePool/resourcePoolCustomViewController.js?v=022"></script>
 
     <!-- Directives -->
-    <script src="/App/directives/resourcePoolEditor.js?v=0223"></script>
+    <script src="/App/directives/resourcePoolEditor.js?v=0224"></script>
 
     <!-- Filters -->
     <script src="/App/filters/angular-percentage.js?v=022"></script>

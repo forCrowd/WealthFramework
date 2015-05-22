@@ -65,9 +65,13 @@ namespace BusinessObjects
         public virtual ElementItem SelectedElementItem { get; set; }
         public virtual ICollection<UserElementCell> UserElementCellSet { get; set; }
 
+        [DisplayOnListView(false)]
+        [DisplayOnEditView(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public decimal? RatingAverage { get; private set; }
 
+        [DisplayOnListView(false)]
+        [DisplayOnEditView(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public int? RatingCount { get; private set; }
 

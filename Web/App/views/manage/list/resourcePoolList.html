@@ -18,11 +18,17 @@
             <th>
                 Resource Pool
             </th>
+            <th>
+                Main Element
+            </th>
             <th></th>
         </tr>
         <tr data-ng-repeat="resourcePool in vm.resourcePoolSet">
             <td>
                 {{ resourcePool.Name }}
+            </td>
+            <td>
+                {{ resourcePool.MainElementId }}
             </td>
             <td>
                 <a href="/manage/resourcePool/edit/{{ resourcePool.Id }}">Edit</a> |

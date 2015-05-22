@@ -119,27 +119,27 @@
             }
 
             // Local variables
-            var _mainElement = null;
+            //var _mainElement = null;
             self.backingFields = {
                 _currentElement: null,
                 _ElementSet: []
             }
 
-            // Main element
-            self.mainElement = function () {
+            //// Main element
+            //self.mainElement = function () {
 
-                if (_mainElement === null) {
-                    for (var i = 0; i < self.ElementSet.length; i++) {
-                        var element = self.ElementSet[i];
-                        if (element.IsMainElement) {
-                            _mainElement = element;
-                            break;
-                        }
-                    }
-                }
+            //    if (_mainElement === null) {
+            //        for (var i = 0; i < self.ElementSet.length; i++) {
+            //            var element = self.ElementSet[i];
+            //            if (element.IsMainElement) {
+            //                _mainElement = element;
+            //                break;
+            //            }
+            //        }
+            //    }
 
-                return _mainElement;
-            }
+            //    return _mainElement;
+            //}
 
             self.userResourcePool = function () {
 
