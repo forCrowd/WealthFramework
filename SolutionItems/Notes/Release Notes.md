@@ -1,9 +1,5 @@
 ﻿### Release Notes
 
-**0.24**
-
-* 
-
 **0.23**
 
 * ResourcePool MainElement instead of Element.IsMainElement
