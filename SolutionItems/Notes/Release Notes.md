@@ -3,6 +3,7 @@
 **0.23**
 
 * ResourcePool MainElement instead of Element.IsMainElement
+* All projects were upgraded to .NET 4.5.1
 * Todo cleanup & moving items to GitHub "Issues"
 
 **0.22.3**

@@ -4,4 +4,4 @@ An experimental resource management system that aims to provide a more sustainab
 
 ---
 
-### [Release Notes](https://github.com/forCrowd/WealthEconomy/blob/master/SolutionItems/Notes/Release Notes.md)
+#### [Release Notes](https://github.com/forCrowd/WealthEconomy/blob/master/SolutionItems/Notes/Release Notes.md)
