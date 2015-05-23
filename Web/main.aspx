@@ -15,7 +15,7 @@
     <link href="/App/directives/resourcePoolEditor.css?v=022" rel="stylesheet" />
 
     <!-- jQuery -->
-    <script src="/Scripts/jquery-2.1.1.min.js"></script>
+    <script src="/Scripts/jquery-2.1.4.min.js"></script>
 
     <!-- Modernizr - TODO Not in use at the moment -->
     <!--

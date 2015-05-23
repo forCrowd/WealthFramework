@@ -4,6 +4,7 @@
 
 * Reset cases of user level data was improved
 * Initial_Manual migration drop function fix
+* Package updates
 
 **0.23**
 
