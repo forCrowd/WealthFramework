@@ -6,9 +6,9 @@
     <title>Wealth Economy - 404</title>
 
     <!-- External CSS -->
-    <link href="/Content/bootstrap.css" rel="stylesheet" />
-    <link href="/Content/breeze.directives.css" rel="stylesheet" />
-    <link href="/Content/toastr.css" rel="stylesheet" />
+    <link href="/Content/bootstrap.min.css?v=024" rel="stylesheet" />
+    <link href="/Content/breeze.directives.css?v=024" rel="stylesheet" />
+    <link href="/Content/toastr.css?v=024" rel="stylesheet" />
 
     <!-- Internal CSS -->
     <link href="/Content/site.css?v=022" rel="stylesheet" />
@@ -58,8 +58,8 @@
         </footer>
     </div>
 
-    <script src="/Scripts/bootstrap.js"></script>
-    <script src="/Scripts/respond.js"></script>
+    <script src="/Scripts/bootstrap.min.js?v=024"></script>
+    <script src="/Scripts/respond.min.js?v=024"></script>
 
 </body>
 </html>

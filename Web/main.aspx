@@ -6,9 +6,9 @@
     <title>Wealth Economy</title>
 
     <!-- External CSS -->
-    <link href="/Content/bootstrap.css" rel="stylesheet" />
-    <link href="/Content/breeze.directives.css" rel="stylesheet" />
-    <link href="/Content/toastr.css" rel="stylesheet" />
+    <link href="/Content/bootstrap.min.css?v=024" rel="stylesheet" />
+    <link href="/Content/breeze.directives.css?v=024" rel="stylesheet" />
+    <link href="/Content/toastr.css?v=024" rel="stylesheet" />
 
     <!-- Internal CSS -->
     <link href="/Content/site.css?v=022" rel="stylesheet" />
@@ -149,27 +149,26 @@
             <p class="small">
                 {{ vm.applicationInfo.CurrentVersion }} - Beta<br />
                 {{ vm.applicationInfo.Organization }}<br />
-                
             </p>
         </footer>
     </div>
 
-    <script src="/Scripts/bootstrap.js"></script>
-    <script src="/Scripts/respond.js"></script>
+    <script src="/Scripts/bootstrap.min.js?v=024"></script>
+    <script src="/Scripts/respond.min.js?v=024"></script>
 
-    <script src="/Scripts/angular.js"></script>
-    <script src="/Scripts/angular-route.min.js"></script>
-    <script src="/Scripts/angular-sanitize.min.js"></script>
-    <script src="/Scripts/datajs-1.1.3.min.js"></script>
-    <script src="/Scripts/toastr.min.js"></script>
+    <script src="/Scripts/angular.min.js?v=024"></script>
+    <script src="/Scripts/angular-route.min.js?v=024"></script>
+    <script src="/Scripts/angular-sanitize.min.js?v=024"></script>
+    <script src="/Scripts/datajs-1.1.3.min.js?v=024"></script>
+    <script src="/Scripts/toastr.min.js?v=024"></script>
 
-    <script src="/Scripts/breeze.min.js"></script>
-    <script src="/Scripts/breeze.angular.js"></script>
-    <script src="/Scripts/breeze.directives.js"></script>
+    <script src="/Scripts/breeze.min.js?v=024"></script>
+    <script src="/Scripts/breeze.bridge.angular.js?v=024"></script>
+    <script src="/Scripts/breeze.directives.js?v=024"></script>
 
     <!-- Highcharts - TODO Try to find (or create) nuget package for these two -->
-    <script src="/App/external/highcharts.js"></script>
-    <script src="/App/external/highcharts-ng.js"></script>
+    <script src="/App/external/highcharts.js?v=024"></script>
+    <script src="/App/external/highcharts-ng.js?v=024"></script>
 
     <!-- Main -->
     <script src="/App/main.js?v=022"></script>
