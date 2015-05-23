@@ -30,7 +30,7 @@
             return hasValidConfig;
         }
 
-        public async Task SendConfirmationAlert(User user)
+        public async Task SendRegistrationAlert(User user)
         {
             // Validate
             // 1. Smtp configuration

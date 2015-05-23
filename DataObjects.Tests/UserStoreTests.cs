@@ -151,32 +151,14 @@ namespace DataObjects.Tests
         }
 
         [TestMethod]
-        public async Task CopySampleDataAsync()
-        {
-            // Arrange
-            var sourceUser = await userStore.FindByIdAsync(2); // Already created in seed method
-            // var targetUser = await CreateUserAsync();
-            var targetUser = GenerateUser();
-
-            // Act
-            await userStore.CopySampleDataAsync(sourceUser.Id, targetUser);
-            await userStore.SaveChangesAsync();
-
-            // Assert
-            var userResourcePools = targetUser.UserResourcePoolSet.Where(item => item.ResourcePool.IsSample);
-            Assert.IsTrue(userResourcePools.Any());
-        }
-
-        [TestMethod]
         public async Task ResetSampleDataAsync()
         {
-
             // Arrange
             var sourceUser = await userStore.FindByIdAsync(2); // Already created in seed method
             var targetUser = GenerateUser();
             // await userStore.SaveChangesAsync();
 
-            await userStore.CopySampleDataAsync(sourceUser.Id, targetUser);
+            //await userStore.CopySampleDataAsync(sourceUser.Id, targetUser);
             await userStore.SaveChangesAsync();
 
             // TODO Improve this test
@@ -184,7 +166,7 @@ namespace DataObjects.Tests
             RefreshUserStore();
 
             // Act
-            await userStore.ResetSampleDataAsync(targetUser.Id, sourceUser.Id);
+            //await userStore.ResetSampleDataAsync(targetUser.Id, sourceUser.Id);
             await userStore.SaveChangesAsync();
 
             // Assert

@@ -14,8 +14,6 @@
         logger = logger.forSource(serviceId);
 
         var userLoggedIn = false;
-        var fetchedList = [];
-        var fetchedWithUserList = [];
         var fetched = [];
 
         // Service methods
@@ -30,8 +28,6 @@
             fetched = [];
         });
         $rootScope.$on('userLoggedOut', function () {
-            fetchedList = [];
-            fetchedWithUserList = [];
             fetched = [];
         });
 
@@ -115,30 +111,43 @@
 
                 var userElementCell = element.ElementItemSet[itemIndex].multiplierCell().userElementCell('x'); // x is only for test
 
-                // If there is not, create a new one
-                if (userElementCell === null) {
+                switch (updateType) {
+                    case 'increase': {
 
-                    userElementCell = {
-                        ElementCellId: element.ElementItemSet[itemIndex].multiplierCell().Id,
-                        DecimalValue: updateType === 'increase' ? 1 : 0
-                    };
+                        // If there is no item, create it
+                        if (userElementCell === null) {
+                            userElementCell = {
+                                ElementCellId: element.ElementItemSet[itemIndex].multiplierCell().Id,
+                                DecimalValue: 1
+                            };
 
-                    dataContext.createEntity('UserElementCell', userElementCell);
-
-                    updated = true;
-                } else {
-                    if (updateType === 'increase'
-                        || ((updateType === 'decrease'
-                        || updateType === 'reset')
-                        && userElementCell.DecimalValue > 0)) {
-
-                        userElementCell.DecimalValue = updateType === 'increase'
-                        ? userElementCell.DecimalValue + 1
-                        : updateType === 'decrease'
-                        ? userElementCell.DecimalValue - 1
-                        : 0;
+                            dataContext.createEntity('UserElementCell', userElementCell);
+                        } else { // Else, increase
+                            userElementCell.DecimalValue++;
+                        }
 
                         updated = true;
+                        break;
+                    }
+                    case 'decrease': {
+
+                        // If there is an item and bigger than 0, decrease
+                        if (userElementCell !== null && userElementCell.DecimalValue > 0) {
+                            userElementCell.DecimalValue--;
+                            updated = true;
+                        }
+
+                        break;
+                    }
+                    case 'reset': {
+
+                        // If there is an item, delete it
+                        if (userElementCell !== null) {
+                            userElementCell.entityAspect.setDeleted();
+                            updated = true;
+                        }
+
+                        break;
                     }
                 }
             }
@@ -160,38 +169,60 @@
 
             var userElementCell = elementCell.userElementCell();
 
-            if (userElementCell === null) {
+            switch (updateType) {
+                case 'increase': {
 
-                userElementCell = {
-                    ElementCellId: elementCell.Id,
-                    DecimalValue: updateType === 'increase' ? 55 : 45
-                };
+                    // If there is no item, create it
+                    if (userElementCell === null) {
+                        userElementCell = {
+                            ElementCellId: elementCell.Id,
+                            DecimalValue: 55
+                        };
 
-                dataContext.createEntity('UserElementCell', userElementCell);
+                        dataContext.createEntity('UserElementCell', userElementCell);
+                        updated = true;
 
-                updated = true;
-            } else {
+                    } else { // Else, increase
 
-                var value = 0;
+                        if (userElementCell.DecimalValue < 100) {
+                            userElementCell.DecimalValue = userElementCell.DecimalValue + 5 > 100 ? 100 : userElementCell.DecimalValue + 5;
+                            updated = true;
+                        }
+                    }
 
-                if (userElementCell.DecimalValue !== null) {
-                    value = userElementCell.DecimalValue;
-                } else {
-                    // TODO?
+                    break;
                 }
+                case 'decrease': {
 
-                if (updateType === 'increase' && value < 100) {
+                    // If there is no item, create it
+                    if (userElementCell === null) {
+                        userElementCell = {
+                            ElementCellId: elementCell.Id,
+                            DecimalValue: 45
+                        };
 
-                    value = value + 5 >= 100 ? 100 : value + 5;
-                    updated = true;
-                } else if (updateType === 'decrease' && value > 0) {
+                        dataContext.createEntity('UserElementCell', userElementCell);
+                        updated = true;
 
-                    value = value - 5 <= 0 ? 0 : value - 5;
-                    updated = true;
+                    } else { // Else, decrease
+
+                        if (userElementCell.DecimalValue > 0) {
+                            userElementCell.DecimalValue = userElementCell.DecimalValue - 5 < 0 ? 0 : userElementCell.DecimalValue - 5;
+                            updated = true;
+                        }
+                    }
+
+                    break;
                 }
+                case 'reset': {
 
-                if (updated) {
-                    userElementCell.DecimalValue = value;
+                    // If there is an item, delete it
+                    if (userElementCell !== null) {
+                        userElementCell.entityAspect.setDeleted();
+                        updated = true;
+                    }
+
+                    break;
                 }
             }
 
@@ -206,38 +237,61 @@
             // Determines whether there is an update
             var updated = false;
 
-            //// Validate
-            //if (elementFieldIndex.ElementField.ElementFieldIndexSet.length === 0)
-            //    return updated;
-
             var userElementFieldIndex = elementFieldIndex.userElementFieldIndex();
 
-            if (userElementFieldIndex === null) {
+            switch (updateType) {
+                case 'increase': {
 
-                userElementFieldIndex = {
-                    ElementFieldIndexId: elementFieldIndex.Id,
-                    Rating: updateType === 'increase' ? 55 : 45
-                };
+                    // If there is no item, create it
+                    if (userElementFieldIndex === null) {
+                        userElementFieldIndex = {
+                            ElementFieldIndexId: elementFieldIndex.Id,
+                            Rating: 55
+                        };
 
-                dataContext.createEntity('UserElementFieldIndex', userElementFieldIndex);
+                        dataContext.createEntity('UserElementFieldIndex', userElementFieldIndex);
+                        updated = true;
 
-                updated = true;
-            } else {
+                    } else { // Else, increase
 
-                var value = userElementFieldIndex.Rating;
+                        if (userElementFieldIndex.Rating < 100) {
+                            userElementFieldIndex.Rating = userElementFieldIndex.Rating + 5 > 100 ? 100 : userElementFieldIndex.Rating + 5;
+                            updated = true;
+                        }
+                    }
 
-                if (updateType === 'increase' && value < 100) {
-
-                    value = value + 5 >= 100 ? 100 : value + 5;
-                    updated = true;
-                } else if (updateType === 'decrease' && value > 0) {
-
-                    value = value - 5 <= 0 ? 0 : value - 5;
-                    updated = true;
+                    break;
                 }
+                case 'decrease': {
 
-                if (updated) {
-                    userElementFieldIndex.Rating = value;
+                    if (userElementFieldIndex === null) {
+                        userElementFieldIndex = {
+                            ElementFieldIndexId: elementFieldIndex.Id,
+                            Rating: 45
+                        };
+
+                        dataContext.createEntity('UserElementFieldIndex', userElementFieldIndex);
+                        updated = true;
+
+                    } else { // Else, increase
+
+                        if (userElementFieldIndex.Rating > 0) {
+                            userElementFieldIndex.Rating = userElementFieldIndex.Rating - 5 < 0 ? 0 : userElementFieldIndex.Rating - 5;
+                            updated = true;
+                        }
+                    }
+
+                    break;
+                }
+                case 'reset': {
+
+                    // If there is an item, delete it
+                    if (userElementFieldIndex !== null) {
+                        userElementFieldIndex.entityAspect.setDeleted();
+                        updated = true;
+                    }
+
+                    break;
                 }
             }
 
@@ -254,33 +308,58 @@
 
             var userResourcePool = resourcePool.userResourcePool();
 
-            // Validate
-            if (userResourcePool === null) {
+            switch (updateType) {
+                case 'increase': {
 
-                userResourcePool = {
-                    ResourcePoolId: resourcePool.Id,
-                    ResourcePoolRate: updateType === 'increase' ? 15 : 5
-                };
+                    // If there is no item, create it
+                    if (userResourcePool === null) {
+                        userResourcePool = {
+                            ResourcePoolId: resourcePool.Id,
+                            ResourcePoolRate: 15
+                        };
 
-                dataContext.createEntity('UserResourcePool', userResourcePool);
+                        dataContext.createEntity('UserResourcePool', userResourcePool);
+                        updated = true;
 
-                updated = true;
-            } else {
+                    } else { // Else, increase
+                        if (userResourcePool.ResourcePoolRate < 1000) {
+                            userResourcePool.ResourcePoolRate = userResourcePool.ResourcePoolRate + 5 > 1000 ? 1000 : userResourcePool.ResourcePoolRate + 5;
+                            updated = true;
+                        }
+                    }
 
-                var value = userResourcePool.ResourcePoolRate;
-
-                if (updateType === 'increase' && value < 500) {
-
-                    value = value + 5 >= 500 ? 500 : value + 5;
-                    updated = true;
-                } else if (updateType === 'decrease' && value > 0) {
-
-                    value = value - 5 <= 0 ? 0 : value - 5;
-                    updated = true;
+                    break;
                 }
+                case 'decrease': {
 
-                if (updated) {
-                    userResourcePool.ResourcePoolRate = value;
+                    // If there is no item, create
+                    if (userResourcePool === null) {
+                        userResourcePool = {
+                            ResourcePoolId: resourcePool.Id,
+                            ResourcePoolRate: 5
+                        };
+
+                        dataContext.createEntity('UserResourcePool', userResourcePool);
+                        updated = true;
+
+                    } else { // Else, decrease
+                        if (userResourcePool.ResourcePoolRate > 0) {
+                            userResourcePool.ResourcePoolRate = userResourcePool.ResourcePoolRate - 5 < 0 ? 0 : userResourcePool.ResourcePoolRate - 5;
+                            updated = true;
+                        }
+                    }
+
+                    break;
+                }
+                case 'reset': {
+
+                    // If there is an item, delete it
+                    if (userResourcePool !== null) {
+                        userResourcePool.entityAspect.setDeleted();
+                        updated = true;
+                    }
+
+                    break;
                 }
             }
 

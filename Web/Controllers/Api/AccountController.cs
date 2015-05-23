@@ -58,11 +58,6 @@ namespace Web.Controllers.Api
             }
 
             var currentUserId = this.GetCurrentUserId();
-
-            // TODO Is this correct result?
-            if (!currentUserId.HasValue)
-                return InternalServerError();
-
             var result = await UserManager.ChangePasswordAsync(currentUserId.Value, model.CurrentPassword, model.NewPassword);
             var errorResult = GetErrorResult(result);
 
@@ -85,12 +80,6 @@ namespace Web.Controllers.Api
         [AllowAnonymous]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
-            // ModelState.Add(new System.Collections.Generic.KeyValuePair<string,ModelState>("key1", new ModelState() { }))
-            // .ModelStateModelState.Add()
-            //ModelState.AddModelError("error1", "error message 1");
-            //ModelState.AddModelError("error1", new System.Exception("exception message 1"));
-            //return BadRequest(ModelState);
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -98,28 +87,13 @@ namespace Web.Controllers.Api
 
             var user = new User(model.Email);
 
-            var result = await UserManager.CreateWithSampleDataAsync(user, model.Password, Framework.AppSettings.SampleUserId);
+            var result = await UserManager.CreateAsync(user, model.Password);
             var errorResult = GetErrorResult(result);
 
             if (errorResult != null)
             {
                 return errorResult;
             }
-
-            return Ok(string.Empty);
-        }
-
-        // POST api/Account/Register
-        //[HttpPost]
-        public async Task<IHttpActionResult> ResetSampleData()
-        {
-            var currentUserId = this.GetCurrentUserId();
-
-            // TODO Is this correct result?
-            if (!currentUserId.HasValue)
-                return InternalServerError();
-
-            await UserManager.ResetSampleDataAsync(currentUserId.Value, Framework.AppSettings.SampleUserId);
 
             return Ok(string.Empty);
         }

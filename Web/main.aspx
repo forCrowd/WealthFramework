@@ -111,7 +111,7 @@
                             <li><a href="/content/chapter10">Chapter 10</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown" data-ng-show="vm.userInfo !== null">
+                    <li class="dropdown hide" data-ng-show="vm.userInfo !== null">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown">Manage <b class="caret"></b></a>
                         <!-- Manage Menu - Generated -->
                         <script src="/App/includes/manageMenu.js"></script>
@@ -126,7 +126,6 @@
                         <ul class="dropdown-menu">
                             <li><a href="/account/accountEdit">Edit</a></li>
                             <li><a href="/account/changePassword">Change password</a></li>
-                            <li class="hide"><a href="" data-ng-click="vm.resetSampleData()">Reset sample data</a></li>
                             <li><a href="" data-ng-click="vm.logout()">Logout</a></li>
                         </ul>
                     </li>
@@ -196,11 +195,11 @@
     <script src="/App/includes/manageScripts.js?v=0224"></script>
 
     <!-- Service extensions -->
-    <script src="/App/services/userService.js?v=022"></script>
-    <script src="/App/services/resourcePoolService.js?v=0223"></script>
+    <script src="/App/services/userService.js?v=024"></script>
+    <script src="/App/services/resourcePoolService.js?v=024"></script>
 
     <!-- Content -->
-    <script src="/App/controllers/content/mainController.js?v=022"></script>
+    <script src="/App/controllers/content/mainController.js?v=024"></script>
     <script src="/App/controllers/content/introductionController.js?v=0223"></script>
     <script src="/App/controllers/content/basicsController.js?v=0224"></script>
     <script src="/App/controllers/content/sectorIndexSampleController.js?v=022"></script>
@@ -222,7 +221,7 @@
     <script src="/App/controllers/manage/resourcePool/resourcePoolCustomViewController.js?v=022"></script>
 
     <!-- Directives -->
-    <script src="/App/directives/resourcePoolEditor.js?v=0224"></script>
+    <script src="/App/directives/resourcePoolEditor.js?v=024"></script>
 
     <!-- Filters -->
     <script src="/App/filters/angular-percentage.js?v=022"></script>

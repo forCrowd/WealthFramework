@@ -109,6 +109,13 @@
                 }
             }
 
+            scope.resetCellIndexRating = function (cell) {
+                var result = resourcePoolService.updateElementCellIndexRating(cell, 'reset');
+                if (result) {
+                    saveChanges();
+                }
+            }
+
             scope.increaseIndexRating = function (index) {
                 var result = resourcePoolService.updateElementFieldIndexRating(index, 'increase');
                 if (result) {
@@ -118,6 +125,13 @@
 
             scope.decreaseIndexRating = function (index) {
                 var result = resourcePoolService.updateElementFieldIndexRating(index, 'decrease');
+                if (result) {
+                    saveChanges();
+                }
+            }
+
+            scope.resetIndexRating = function (index) {
+                var result = resourcePoolService.updateElementFieldIndexRating(index, 'reset');
                 if (result) {
                     saveChanges();
                 }
@@ -137,8 +151,21 @@
                 }
             }
 
+            scope.resetResourcePoolRate = function () {
+                var result = resourcePoolService.updateResourcePoolRate(scope.resourcePool, 'reset');
+                if (result) {
+                    saveChanges();
+                }
+            }
+
             // Resource pool id: Get the current resource pool
             scope.$watch('resourcePoolId', function () {
+
+                getResourcePool();
+
+            }, true);
+
+            function getResourcePool() {
 
                 // Clear previous error messages
                 scope.errorMessage = '';
@@ -166,7 +193,7 @@
                                     scope.chartConfig.loading = false;
                                 });
                     });
-            }, true);
+            }
 
             function loadResourcePool(resourcePool) {
 
@@ -326,7 +353,7 @@
 
         return {
             restrict: 'E',
-            templateUrl: '/App/directives/resourcePoolEditor.html?v=023',
+            templateUrl: '/App/directives/resourcePoolEditor.html?v=024',
             scope: {
                 resourcePoolId: '=',
                 chartHeight: '='

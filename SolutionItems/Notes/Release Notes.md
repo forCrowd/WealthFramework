@@ -2,6 +2,7 @@
 
 **0.24**
 
+* Reset cases of user level data was improved
 * Initial_Manual migration drop function fix
 
 **0.23**

@@ -15,7 +15,6 @@
         var changePasswordUrl = '/api/Account/ChangePassword';
         var logoutUrl = '/api/Account/Logout';
         var registerUrl = '/api/Account/Register';
-        var resetSampleDataUrl = '/api/Account/ResetSampleData';
         var userInfoUrl = '/api/Account/UserInfo';
         var userInfo = null;
         var userInfoFetched = false;
@@ -26,7 +25,6 @@
         $delegate.getUserInfo = getUserInfo;
         $delegate.logout = logout;
         $delegate.register = register;
-        $delegate.resetSampleData = resetSampleData;
 
         return $delegate;
 
@@ -126,19 +124,6 @@
                     // Raise logged outevent
                     $rootScope.$broadcast('userLoggedOut');
                 })
-                .error(function (data, status, headers, config) {
-
-                    // TODO
-                    //logger.logError('Error!', { data: data, status: status, headers: headers, config: config });
-                    if (typeof data.ModelState !== 'undefined') {
-                        var modelErrors = Object.keys(data.ModelState);
-                        logger.logError(data.ModelState[modelErrors], data.ModelState[modelErrors]);
-                    }
-                });
-        }
-
-        function resetSampleData() {
-            return $http.post(resetSampleDataUrl)
                 .error(function (data, status, headers, config) {
 
                     // TODO

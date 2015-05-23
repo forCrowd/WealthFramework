@@ -43,6 +43,7 @@
                                     <div data-ng-if="resourcePool.EnableResourcePoolAddition" class="btn-group" role="group">
                                         <button title="Increase CMRP Rate" type="button" data-ng-click="increaseResourcePoolRate()" data-ng-disabled="!isAuthenticated" class="btn btn-default btn-xs">+</button>
                                         <button title="Decrease CMRP Rate" type="button" data-ng-click="decreaseResourcePoolRate()" data-ng-disabled="!isAuthenticated" class="btn btn-default btn-xs">-</button>
+                                        <button title="Reset CMRP Rate" type="button" data-ng-click="resetResourcePoolRate()" data-ng-disabled="!isAuthenticated" class="btn btn-default btn-xs">0</button>
                                     </div>
                                 </td>
                             </tr>
@@ -128,8 +129,9 @@
                                             {{ elementCell.rating() | number: 2 }}
                                         </span>
                                         <div class="btn-group" role="group" data-ng-if="elementCell.ElementField.ElementFieldIndexSet.length > 0">
-                                            <button title="+ 5" type="button" data-ng-click="increaseCellIndexRating(elementCell)" data-ng-disabled="!isAuthenticated" class="btn btn-default btn-xs">+</button>
-                                            <button title="- 5" type="button" data-ng-click="decreaseCellIndexRating(elementCell)" data-ng-disabled="!isAuthenticated" class="btn btn-default btn-xs">-</button>
+                                            <button title="Increase" type="button" data-ng-click="increaseCellIndexRating(elementCell)" data-ng-disabled="!isAuthenticated" class="btn btn-default btn-xs">+</button>
+                                            <button title="Decrease" type="button" data-ng-click="decreaseCellIndexRating(elementCell)" data-ng-disabled="!isAuthenticated" class="btn btn-default btn-xs">-</button>
+                                            <button title="Reset" type="button" data-ng-click="resetCellIndexRating(elementCell)" data-ng-disabled="!isAuthenticated" class="btn btn-default btn-xs hide">0</button>
                                         </div>
                                     </div>
                                     <span data-ng-if="elementCell.ElementField.ElementFieldType === 5">
@@ -236,7 +238,7 @@
                                         </div>
                                     </div>
                                 </td>
-                                <!-- ResourcePool -->
+                                <!-- ResourcePool (Obsolete?) -->
                                 <td data-ng-if="false && resourcePool.EnableResourcePoolAddition && resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">
                                     <div class="btn-group" role="group">
                                         <button title="Increase CMRP Rate" type="button" data-ng-click="increaseResourcePoolRate()" data-ng-disabled="!isAuthenticated" class="btn btn-default btn-xs">+</button>
@@ -255,6 +257,7 @@
                                     <div class="btn-group" role="group">
                                         <button title="Increase {{ index.Name }}" type="button" data-ng-click="increaseIndexRating(index)" data-ng-disabled="!isAuthenticated" class="btn btn-default btn-xs">+</button>
                                         <button title="Decrease {{ index.Name }}" type="button" data-ng-click="decreaseIndexRating(index)" data-ng-disabled="!isAuthenticated" class="btn btn-default btn-xs">-</button>
+                                        <button title="Reset {{ index.Name }}" type="button" data-ng-click="resetIndexRating(index)" data-ng-disabled="!isAuthenticated" class="btn btn-default btn-xs">0</button>
                                     </div>
                                 </td>
                                 <td data-ng-if="resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">
