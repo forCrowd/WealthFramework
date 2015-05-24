@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>Wealth Economy</title>
+    <base href="/" />
 
     <!-- External CSS -->
     <link href="/Content/bootstrap.min.css?v=024" rel="stylesheet" />

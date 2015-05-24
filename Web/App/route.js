@@ -36,7 +36,7 @@
 
         // Html5Mode is on, if supported (# will not be used)
         if (window.history && window.history.pushState) {
-            $locationProvider.html5Mode({ enabled: true, requireBase: false });
+            $locationProvider.html5Mode({ enabled: true });
         }
 
         function getManageTemplateUrl(params) {
