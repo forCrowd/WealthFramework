@@ -29,14 +29,18 @@ namespace BusinessObjects
             //UserElementFieldIndexSet = new HashSet<UserElementFieldIndex>();
         }
 
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
-        public int Id { get; set; }
+        //[DisplayOnListView(false)]
+        //[DisplayOnEditView(false)]
+        //public int Id { get; set; }
 
-        [Index("IX_UserIdResourcePoolId", 1, IsUnique = true)]
+        //[Index("IX_UserIdResourcePoolId", 1, IsUnique = true)]
+        [Key]
+        [Column(Order = 1)]
         public int UserId { get; set; }
 
-        [Index("IX_UserIdResourcePoolId", 2, IsUnique = true)]
+        //[Index("IX_UserIdResourcePoolId", 2, IsUnique = true)]
+        [Key]
+        [Column(Order = 2)]
         public int ResourcePoolId { get; set; }
 
         [Display(Name = "CMRP Rate")]

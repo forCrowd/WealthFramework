@@ -42,12 +42,18 @@ namespace Web
             //    model: edm,
             //    batchHandler: new BatchHandler(GlobalConfiguration.DefaultServer));
 
+            // Add the CompositeKeyRoutingConvention
+            var conventions = System.Web.Http.OData.Routing.Conventions.ODataRoutingConventions.CreateDefault();
+            conventions.Insert(0, new Web.RoutingConventions.CompositeKeyRoutingConvention());
+
             // Routes
             var edm = Facade.DbUtility.GetWealthEconomyContextEdm();
             config.Routes.MapODataServiceRoute(
                 routeName: "ODataRoute",
                 routePrefix: "odata",
                 model: edm,
+                pathHandler: new System.Web.Http.OData.Routing.DefaultODataPathHandler(),
+                routingConventions: conventions,
                 batchHandler: new BatchHandler(GlobalConfiguration.DefaultServer));
 
             // Exception logger

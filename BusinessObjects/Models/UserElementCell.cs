@@ -31,14 +31,18 @@ namespace BusinessObjects
         decimal? decimalValue = null;
         DateTime? dateTimeValue = null;
 
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
-        public int Id { get; set; }
+        //[DisplayOnListView(false)]
+        //[DisplayOnEditView(false)]
+        //public int Id { get; set; }
 
-        [Index("IX_UserIdElementCellId", 1, IsUnique = true)]
+        //[Index("IX_UserIdElementCellId", 1, IsUnique = true)]
+        [Key]
+        [Column(Order = 1)]
         public int UserId { get; set; }
 
-        [Index("IX_UserIdElementCellId", 2, IsUnique = true)]
+        //[Index("IX_UserIdElementCellId", 2, IsUnique = true)]
+        [Key]
+        [Column(Order = 2)]
         public int ElementCellId { get; set; }
 
         [Display(Name = "Boolean Value")]

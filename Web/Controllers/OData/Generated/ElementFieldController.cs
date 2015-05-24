@@ -13,6 +13,7 @@ namespace Web.Controllers.OData
     using Facade;
     using Microsoft.AspNet.Identity;
     using System;
+    using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     using System.Linq;
     using System.Net;
@@ -113,7 +114,7 @@ namespace Web.Controllers.OData
                 return BadRequest(ModelState);
             }
 
-            var elementField = await MainUnitOfWork.FindAsync(key);
+            var elementField = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == key);
             if (elementField == null)
             {
                 return NotFound();
@@ -139,7 +140,7 @@ namespace Web.Controllers.OData
         // DELETE odata/ElementField(5)
         public virtual async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            var elementField = await MainUnitOfWork.FindAsync(key);
+            var elementField = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == key);
             if (elementField == null)
             {
                 return NotFound();

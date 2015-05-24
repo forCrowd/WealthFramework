@@ -13,6 +13,7 @@ namespace Web.Controllers.OData
     using Facade;
     using Microsoft.AspNet.Identity;
     using System;
+    using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     using System.Linq;
     using System.Net;
@@ -46,20 +47,20 @@ namespace Web.Controllers.OData
 
         // GET odata/UserElementFieldIndex(5)
         //[Queryable]
-        public virtual SingleResult<UserElementFieldIndex> Get([FromODataUri] int key)
+        public virtual SingleResult<UserElementFieldIndex> Get([FromODataUri] int elementFieldIndexId)
         {
-            return SingleResult.Create(MainUnitOfWork.AllLive.Where(userElementFieldIndex => userElementFieldIndex.Id == key));
+            return SingleResult.Create(MainUnitOfWork.AllLive.Where(userElementFieldIndex => userElementFieldIndex.ElementFieldIndexId == elementFieldIndexId));
         }
 
         // PUT odata/UserElementFieldIndex(5)
-        public virtual async Task<IHttpActionResult> Put([FromODataUri] int key, UserElementFieldIndex userElementFieldIndex)
+        public virtual async Task<IHttpActionResult> Put([FromODataUri] int elementFieldIndexId, UserElementFieldIndex userElementFieldIndex)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (key != userElementFieldIndex.Id)
+            if (elementFieldIndexId != userElementFieldIndex.ElementFieldIndexId)
             {
                 return BadRequest();
             }
@@ -70,7 +71,7 @@ namespace Web.Controllers.OData
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MainUnitOfWork.Exists(key))
+                if (!MainUnitOfWork.Exists(elementFieldIndexId))
                 {
                     return NotFound();
                 }
@@ -97,7 +98,7 @@ namespace Web.Controllers.OData
             }
             catch (DbUpdateException)
             {
-                if (MainUnitOfWork.Exists(userElementFieldIndex.Id))
+                if (MainUnitOfWork.Exists(userElementFieldIndex.ElementFieldIndexId))
                 {
                     return Conflict();
                 }
@@ -112,14 +113,14 @@ namespace Web.Controllers.OData
 
         // PATCH odata/UserElementFieldIndex(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<UserElementFieldIndex> patch)
+        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int elementFieldIndexId, Delta<UserElementFieldIndex> patch)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var userElementFieldIndex = await MainUnitOfWork.FindAsync(key);
+            var userElementFieldIndex = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.ElementFieldIndexId == elementFieldIndexId);
             if (userElementFieldIndex == null)
             {
                 return NotFound();
@@ -143,15 +144,15 @@ namespace Web.Controllers.OData
         }
 
         // DELETE odata/UserElementFieldIndex(5)
-        public virtual async Task<IHttpActionResult> Delete([FromODataUri] int key)
+        public virtual async Task<IHttpActionResult> Delete([FromODataUri] int elementFieldIndexId)
         {
-            var userElementFieldIndex = await MainUnitOfWork.FindAsync(key);
+            var userElementFieldIndex = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.ElementFieldIndexId == elementFieldIndexId);
             if (userElementFieldIndex == null)
             {
                 return NotFound();
             }
 
-            await MainUnitOfWork.DeleteAsync(userElementFieldIndex.Id);
+            await MainUnitOfWork.DeleteAsync(userElementFieldIndex.ElementFieldIndexId);
 
             return StatusCode(HttpStatusCode.NoContent);
         }

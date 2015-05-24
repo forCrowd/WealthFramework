@@ -72,7 +72,7 @@
             {
                 var userResourcePool = unitOfWork.AllLive.OrderByDescending(item => item.CreatedOn).First();
 
-                unitOfWork.DeleteAsync(userResourcePool.Id);
+                //unitOfWork.DeleteAsync(userResourcePool.Id);
                 //unitOfWork.Save();
             }
         }

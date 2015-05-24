@@ -13,6 +13,7 @@ namespace Web.Controllers.OData
     using Facade;
     using Microsoft.AspNet.Identity;
     using System;
+    using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     using System.Linq;
     using System.Net;
@@ -113,7 +114,7 @@ namespace Web.Controllers.OData
                 return BadRequest(ModelState);
             }
 
-            var resourcePool = await MainUnitOfWork.FindAsync(key);
+            var resourcePool = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == key);
             if (resourcePool == null)
             {
                 return NotFound();
@@ -139,7 +140,7 @@ namespace Web.Controllers.OData
         // DELETE odata/ResourcePool(5)
         public virtual async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            var resourcePool = await MainUnitOfWork.FindAsync(key);
+            var resourcePool = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == key);
             if (resourcePool == null)
             {
                 return NotFound();

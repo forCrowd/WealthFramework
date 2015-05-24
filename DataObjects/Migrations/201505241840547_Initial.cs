@@ -94,7 +94,6 @@ namespace DataObjects.Migrations
                 "dbo.UserElementCell",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
                         UserId = c.Int(nullable: false),
                         ElementCellId = c.Int(nullable: false),
                         BooleanValue = c.Boolean(),
@@ -110,10 +109,11 @@ namespace DataObjects.Migrations
                 {
                     { "UserAnnotation", "UserId" },
                 })
-                .PrimaryKey(t => t.Id)
+                .PrimaryKey(t => new { t.UserId, t.ElementCellId })
                 .ForeignKey("dbo.ElementCell", t => t.ElementCellId, cascadeDelete: true)
                 .ForeignKey("dbo.User", t => t.UserId)
-                .Index(t => new { t.UserId, t.ElementCellId }, unique: true, name: "IX_UserIdElementCellId");
+                .Index(t => t.UserId)
+                .Index(t => t.ElementCellId);
             
             CreateTable(
                 "dbo.User",
@@ -211,7 +211,6 @@ namespace DataObjects.Migrations
                 "dbo.UserElementFieldIndex",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
                         UserId = c.Int(nullable: false),
                         ElementFieldIndexId = c.Int(nullable: false),
                         Rating = c.Decimal(nullable: false, precision: 18, scale: 2),
@@ -224,10 +223,11 @@ namespace DataObjects.Migrations
                 {
                     { "UserAnnotation", "UserId" },
                 })
-                .PrimaryKey(t => t.Id)
+                .PrimaryKey(t => new { t.UserId, t.ElementFieldIndexId })
                 .ForeignKey("dbo.ElementFieldIndex", t => t.ElementFieldIndexId, cascadeDelete: true)
                 .ForeignKey("dbo.User", t => t.UserId)
-                .Index(t => new { t.UserId, t.ElementFieldIndexId }, unique: true, name: "IX_UserIdElementFieldIndexId");
+                .Index(t => t.UserId)
+                .Index(t => t.ElementFieldIndexId);
             
             CreateTable(
                 "dbo.ElementFieldIndex",
@@ -252,7 +252,6 @@ namespace DataObjects.Migrations
                 "dbo.UserResourcePool",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
                         UserId = c.Int(nullable: false),
                         ResourcePoolId = c.Int(nullable: false),
                         ResourcePoolRate = c.Decimal(nullable: false, precision: 18, scale: 2),
@@ -265,10 +264,11 @@ namespace DataObjects.Migrations
                 {
                     { "UserAnnotation", "UserId" },
                 })
-                .PrimaryKey(t => t.Id)
+                .PrimaryKey(t => new { t.UserId, t.ResourcePoolId })
                 .ForeignKey("dbo.ResourcePool", t => t.ResourcePoolId, cascadeDelete: true)
                 .ForeignKey("dbo.User", t => t.UserId)
-                .Index(t => new { t.UserId, t.ResourcePoolId }, unique: true, name: "IX_UserIdResourcePoolId");
+                .Index(t => t.UserId)
+                .Index(t => t.ResourcePoolId);
             
             CreateTable(
                 "dbo.ResourcePool",
@@ -316,16 +316,19 @@ namespace DataObjects.Migrations
             DropForeignKey("dbo.ElementCell", "ElementFieldId", "dbo.ElementField");
             DropForeignKey("dbo.ElementField", "ElementId", "dbo.Element");
             DropIndex("dbo.ResourcePool", new[] { "MainElementId" });
-            DropIndex("dbo.UserResourcePool", "IX_UserIdResourcePoolId");
+            DropIndex("dbo.UserResourcePool", new[] { "ResourcePoolId" });
+            DropIndex("dbo.UserResourcePool", new[] { "UserId" });
             DropIndex("dbo.ElementFieldIndex", new[] { "ElementFieldId" });
-            DropIndex("dbo.UserElementFieldIndex", "IX_UserIdElementFieldIndexId");
+            DropIndex("dbo.UserElementFieldIndex", new[] { "ElementFieldIndexId" });
+            DropIndex("dbo.UserElementFieldIndex", new[] { "UserId" });
             DropIndex("dbo.Role", "RoleNameIndex");
             DropIndex("dbo.UserRole", new[] { "RoleId" });
             DropIndex("dbo.UserRole", new[] { "UserId" });
             DropIndex("dbo.UserLogin", new[] { "UserId" });
             DropIndex("dbo.UserClaim", new[] { "UserId" });
             DropIndex("dbo.User", "UserNameIndex");
-            DropIndex("dbo.UserElementCell", "IX_UserIdElementCellId");
+            DropIndex("dbo.UserElementCell", new[] { "ElementCellId" });
+            DropIndex("dbo.UserElementCell", new[] { "UserId" });
             DropIndex("dbo.ElementItem", new[] { "ElementId" });
             DropIndex("dbo.ElementCell", new[] { "SelectedElementItemId" });
             DropIndex("dbo.ElementCell", "IX_ElementCellId");

@@ -2,7 +2,7 @@ namespace DataObjects.Migrations
 {
     using System.Data.Entity.Migrations;
     using System.Text;
-    
+
     public partial class Initial_Manual : DbMigration
     {
         public override void Up()
@@ -43,7 +43,7 @@ namespace DataObjects.Migrations
             Sql("ALTER TABLE dbo.ElementCell DROP COLUMN RatingCount;");
             Sql("ALTER TABLE dbo.ElementCell ADD RatingCount AS dbo.getElementCellRatingCount(Id);");
         }
-        
+
         public override void Down()
         {
             // ResourcePool ResourcePoolRateAverage

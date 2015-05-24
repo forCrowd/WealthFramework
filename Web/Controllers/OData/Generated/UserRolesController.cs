@@ -13,6 +13,7 @@ namespace Web.Controllers.OData
     using Facade;
     using Microsoft.AspNet.Identity;
     using System;
+    using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     using System.Linq;
     using System.Net;
@@ -46,20 +47,20 @@ namespace Web.Controllers.OData
 
         // GET odata/UserRole(5)
         //[Queryable]
-        public virtual SingleResult<UserRole> Get([FromODataUri] int key)
+        public virtual SingleResult<UserRole> Get([FromODataUri] int roleId)
         {
-            return SingleResult.Create(MainUnitOfWork.AllLive.Where(userRole => userRole.UserId == key));
+            return SingleResult.Create(MainUnitOfWork.AllLive.Where(userRole => userRole.RoleId == roleId));
         }
 
         // PUT odata/UserRole(5)
-        public virtual async Task<IHttpActionResult> Put([FromODataUri] int key, UserRole userRole)
+        public virtual async Task<IHttpActionResult> Put([FromODataUri] int roleId, UserRole userRole)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (key != userRole.UserId)
+            if (roleId != userRole.RoleId)
             {
                 return BadRequest();
             }
@@ -70,7 +71,7 @@ namespace Web.Controllers.OData
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MainUnitOfWork.Exists(key))
+                if (!MainUnitOfWork.Exists(roleId))
                 {
                     return NotFound();
                 }
@@ -97,7 +98,7 @@ namespace Web.Controllers.OData
             }
             catch (DbUpdateException)
             {
-                if (MainUnitOfWork.Exists(userRole.UserId))
+                if (MainUnitOfWork.Exists(userRole.RoleId))
                 {
                     return Conflict();
                 }
@@ -112,14 +113,14 @@ namespace Web.Controllers.OData
 
         // PATCH odata/UserRole(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<UserRole> patch)
+        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int roleId, Delta<UserRole> patch)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var userRole = await MainUnitOfWork.FindAsync(key);
+            var userRole = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.RoleId == roleId);
             if (userRole == null)
             {
                 return NotFound();
@@ -143,15 +144,15 @@ namespace Web.Controllers.OData
         }
 
         // DELETE odata/UserRole(5)
-        public virtual async Task<IHttpActionResult> Delete([FromODataUri] int key)
+        public virtual async Task<IHttpActionResult> Delete([FromODataUri] int roleId)
         {
-            var userRole = await MainUnitOfWork.FindAsync(key);
+            var userRole = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.RoleId == roleId);
             if (userRole == null)
             {
                 return NotFound();
             }
 
-            await MainUnitOfWork.DeleteAsync(userRole.UserId);
+            await MainUnitOfWork.DeleteAsync(userRole.RoleId);
 
             return StatusCode(HttpStatusCode.NoContent);
         }

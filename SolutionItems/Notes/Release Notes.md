@@ -3,6 +3,7 @@
 **0.24**
 
 * Reset cases of user level data was improved
+* Composite keys were used in User level tables, Id fields were removed
 * Initial_Manual migration drop function fix
 * Package updates
 

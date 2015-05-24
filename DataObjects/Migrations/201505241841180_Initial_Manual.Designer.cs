@@ -6,14 +6,14 @@ namespace DataObjects.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    [GeneratedCode("EntityFramework.Migrations", "6.1.1-30610")]
+    [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
     public sealed partial class Initial_Manual : IMigrationMetadata
     {
         private readonly ResourceManager Resources = new ResourceManager(typeof(Initial_Manual));
         
         string IMigrationMetadata.Id
         {
-            get { return "201505222002562_Initial_Manual"; }
+            get { return "201505241841180_Initial_Manual"; }
         }
         
         string IMigrationMetadata.Source

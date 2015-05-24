@@ -32,5 +32,35 @@
         {
             await Context.SaveChangesAsync();
         }
+
+        public async Task DeleteUserResourcePool(int resourcePoolId)
+        {
+            var entity = await UserResourcePoolSet.SingleOrDefaultAsync(item => item.ResourcePoolId == resourcePoolId);
+
+            if (entity == null)
+                return;
+
+            UserResourcePoolSet.Remove(entity);
+        }
+
+        public async Task DeleteUserElementFieldIndex(int elementFieldIndexId)
+        {
+            var entity = await UserElementFieldIndexSet.SingleOrDefaultAsync(item => item.ElementFieldIndexId == elementFieldIndexId);
+
+            if (entity == null)
+                return;
+
+            UserElementFieldIndexSet.Remove(entity);
+        }
+
+        public async Task DeleteUserElementCell(int elementCellId)
+        {
+            var entity = await UserElementCellSet.SingleOrDefaultAsync(item => item.ElementCellId == elementCellId);
+
+            if (entity == null)
+                return;
+
+            UserElementCellSet.Remove(entity);
+        }
     }
 }

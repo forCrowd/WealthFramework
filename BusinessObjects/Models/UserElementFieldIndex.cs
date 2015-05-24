@@ -28,14 +28,18 @@ namespace BusinessObjects
             Rating = rating;
         }
 
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
-        public int Id { get; set; }
+        //[DisplayOnListView(false)]
+        //[DisplayOnEditView(false)]
+        //public int Id { get; set; }
 
-        [Index("IX_UserIdElementFieldIndexId", 1, IsUnique = true)]
+        //[Index("IX_UserIdElementFieldIndexId", 1, IsUnique = true)]
+        [Key]
+        [Column(Order = 1)]
         public int UserId { get; set; }
 
-        [Index("IX_UserIdElementFieldIndexId", 2, IsUnique = true)]
+        //[Index("IX_UserIdElementFieldIndexId", 2, IsUnique = true)]
+        [Key]
+        [Column(Order = 2)]
         public int ElementFieldIndexId { get; set; }
 
         public decimal Rating { get; set; }

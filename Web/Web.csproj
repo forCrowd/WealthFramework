@@ -305,8 +305,12 @@
     </Compile>
     <Compile Include="Controllers\OData\ResourcePoolController.cs" />
     <Compile Include="Controllers\OData\UserController.cs" />
+    <Compile Include="Controllers\OData\UserElementCellController.cs" />
+    <Compile Include="Controllers\OData\UserElementFieldIndexController.cs" />
+    <Compile Include="Controllers\OData\UserResourcePoolController.cs" />
     <Compile Include="ExceptionHandling\ElmahExceptionLogger.cs" />
     <Compile Include="ExceptionHandling\GenericExceptionHandler.cs" />
+    <Compile Include="RoutingConventions\CompositeKeyRoutingConvention.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

@@ -44,5 +44,23 @@
             
             return result;
         }
+
+        public async Task DeleteUserResourcePool(int resourcePoolId)
+        {
+            await Store.DeleteUserResourcePool(resourcePoolId);
+            await Store.SaveChangesAsync();
+        }
+
+        public async Task DeleteUserElementFieldIndex(int elementFieldIndexId)
+        {
+            await Store.DeleteUserElementFieldIndex(elementFieldIndexId);
+            await Store.SaveChangesAsync();
+        }
+
+        public async Task DeleteUserElementCell(int elementCellId)
+        {
+            await Store.DeleteUserElementCell(elementCellId);
+            await Store.SaveChangesAsync();
+        }
     }
 }

@@ -13,6 +13,7 @@ namespace Web.Controllers.OData
     using Facade;
     using Microsoft.AspNet.Identity;
     using System;
+    using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     using System.Linq;
     using System.Net;
@@ -46,20 +47,20 @@ namespace Web.Controllers.OData
 
         // GET odata/UserLogin(5)
         //[Queryable]
-        public virtual SingleResult<UserLogin> Get([FromODataUri] string key)
+        public virtual SingleResult<UserLogin> Get([FromODataUri] string providerKey)
         {
-            return SingleResult.Create(MainUnitOfWork.AllLive.Where(userLogin => userLogin.LoginProvider == key));
+            return SingleResult.Create(MainUnitOfWork.AllLive.Where(userLogin => userLogin.ProviderKey == providerKey));
         }
 
         // PUT odata/UserLogin(5)
-        public virtual async Task<IHttpActionResult> Put([FromODataUri] string key, UserLogin userLogin)
+        public virtual async Task<IHttpActionResult> Put([FromODataUri] string providerKey, UserLogin userLogin)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (key != userLogin.LoginProvider)
+            if (providerKey != userLogin.ProviderKey)
             {
                 return BadRequest();
             }
@@ -70,7 +71,7 @@ namespace Web.Controllers.OData
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MainUnitOfWork.Exists(key))
+                if (!MainUnitOfWork.Exists(providerKey))
                 {
                     return NotFound();
                 }
@@ -97,7 +98,7 @@ namespace Web.Controllers.OData
             }
             catch (DbUpdateException)
             {
-                if (MainUnitOfWork.Exists(userLogin.LoginProvider))
+                if (MainUnitOfWork.Exists(userLogin.ProviderKey))
                 {
                     return Conflict();
                 }
@@ -112,14 +113,14 @@ namespace Web.Controllers.OData
 
         // PATCH odata/UserLogin(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public virtual async Task<IHttpActionResult> Patch([FromODataUri] string key, Delta<UserLogin> patch)
+        public virtual async Task<IHttpActionResult> Patch([FromODataUri] string providerKey, Delta<UserLogin> patch)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var userLogin = await MainUnitOfWork.FindAsync(key);
+            var userLogin = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.ProviderKey == providerKey);
             if (userLogin == null)
             {
                 return NotFound();
@@ -143,15 +144,15 @@ namespace Web.Controllers.OData
         }
 
         // DELETE odata/UserLogin(5)
-        public virtual async Task<IHttpActionResult> Delete([FromODataUri] string key)
+        public virtual async Task<IHttpActionResult> Delete([FromODataUri] string providerKey)
         {
-            var userLogin = await MainUnitOfWork.FindAsync(key);
+            var userLogin = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.ProviderKey == providerKey);
             if (userLogin == null)
             {
                 return NotFound();
             }
 
-            await MainUnitOfWork.DeleteAsync(userLogin.LoginProvider);
+            await MainUnitOfWork.DeleteAsync(userLogin.ProviderKey);
 
             return StatusCode(HttpStatusCode.NoContent);
         }

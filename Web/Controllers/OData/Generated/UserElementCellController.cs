@@ -13,6 +13,7 @@ namespace Web.Controllers.OData
     using Facade;
     using Microsoft.AspNet.Identity;
     using System;
+    using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     using System.Linq;
     using System.Net;
@@ -46,20 +47,20 @@ namespace Web.Controllers.OData
 
         // GET odata/UserElementCell(5)
         //[Queryable]
-        public virtual SingleResult<UserElementCell> Get([FromODataUri] int key)
+        public virtual SingleResult<UserElementCell> Get([FromODataUri] int elementCellId)
         {
-            return SingleResult.Create(MainUnitOfWork.AllLive.Where(userElementCell => userElementCell.Id == key));
+            return SingleResult.Create(MainUnitOfWork.AllLive.Where(userElementCell => userElementCell.ElementCellId == elementCellId));
         }
 
         // PUT odata/UserElementCell(5)
-        public virtual async Task<IHttpActionResult> Put([FromODataUri] int key, UserElementCell userElementCell)
+        public virtual async Task<IHttpActionResult> Put([FromODataUri] int elementCellId, UserElementCell userElementCell)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (key != userElementCell.Id)
+            if (elementCellId != userElementCell.ElementCellId)
             {
                 return BadRequest();
             }
@@ -70,7 +71,7 @@ namespace Web.Controllers.OData
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MainUnitOfWork.Exists(key))
+                if (!MainUnitOfWork.Exists(elementCellId))
                 {
                     return NotFound();
                 }
@@ -97,7 +98,7 @@ namespace Web.Controllers.OData
             }
             catch (DbUpdateException)
             {
-                if (MainUnitOfWork.Exists(userElementCell.Id))
+                if (MainUnitOfWork.Exists(userElementCell.ElementCellId))
                 {
                     return Conflict();
                 }
@@ -112,14 +113,14 @@ namespace Web.Controllers.OData
 
         // PATCH odata/UserElementCell(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<UserElementCell> patch)
+        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int elementCellId, Delta<UserElementCell> patch)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var userElementCell = await MainUnitOfWork.FindAsync(key);
+            var userElementCell = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.ElementCellId == elementCellId);
             if (userElementCell == null)
             {
                 return NotFound();
@@ -143,15 +144,15 @@ namespace Web.Controllers.OData
         }
 
         // DELETE odata/UserElementCell(5)
-        public virtual async Task<IHttpActionResult> Delete([FromODataUri] int key)
+        public virtual async Task<IHttpActionResult> Delete([FromODataUri] int elementCellId)
         {
-            var userElementCell = await MainUnitOfWork.FindAsync(key);
+            var userElementCell = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.ElementCellId == elementCellId);
             if (userElementCell == null)
             {
                 return NotFound();
             }
 
-            await MainUnitOfWork.DeleteAsync(userElementCell.Id);
+            await MainUnitOfWork.DeleteAsync(userElementCell.ElementCellId);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
