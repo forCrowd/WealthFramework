@@ -153,6 +153,12 @@ namespace Microsoft.Data.Edm
                 //AddReadonlyProperty(edmx, "ElementCell", "OtherUsersRatingAverage", "Decimal", true);
                 AddReadonlyProperty(edmx, "ElementCell", "OtherUsersRatingCount", "Int32", false);
 
+                /* UNCOMMENT THIS IN CASE YOU WANT TO SAVE AND INSPECT THE EDMX FILE */
+                //stream.Position = 0;
+                //var edmxDocument = new System.Xml.XmlDocument();
+                //edmxDocument.Load(stream);
+                //edmxDocument.Save(@"D:\test.xml");
+
                 using (var reader = edmx.CreateReader())
                 {
                     return EdmxReader.Parse(reader);

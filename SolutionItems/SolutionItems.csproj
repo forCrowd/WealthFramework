@@ -35,6 +35,10 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="Issues\31\V3_EF.xml" />
+    <Content Include="Issues\31\V3_OData.xml" />
+    <Content Include="Issues\31\v4_EF.xml" />
+    <Content Include="Issues\31\v4_OData.xml" />
     <Content Include="Notes\Content Notes.txt" />
     <Content Include="Notes\Possible Indexes.txt" />
     <Content Include="Scripts\Database\Sql\Local - Restore Database.sql" />

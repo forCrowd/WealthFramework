@@ -1,0 +1,677 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
+  <edmx:DataServices m:DataServiceVersion="3.0" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
+    <Schema Namespace="BusinessObjects" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <EntityType Name="Element" p5:ClrType="BusinessObjects.Element, BusinessObjects, Version=0.24.0.0, Culture=neutral, PublicKeyToken=null" xmlns:p5="http://schemas.microsoft.com/ado/2013/11/edm/customannotation">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" p7:StoreGeneratedPattern="Identity" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="ResourcePoolId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Name" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        <Property Name="CreatedOn" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ModifiedOn" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="DeletedOn" Type="Edm.DateTime" />
+        <Property Name="RowVersion" Type="Edm.Binary" ConcurrencyMode="Fixed" Nullable="false" MaxLength="8" FixedLength="false" p7:StoreGeneratedPattern="Computed" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <NavigationProperty Name="ElementFieldSet" Relationship="BusinessObjects.ElementField_Element" ToRole="ElementField_Element_Source" FromRole="ElementField_Element_Target" />
+        <NavigationProperty Name="ElementItemSet" Relationship="BusinessObjects.ElementItem_Element" ToRole="ElementItem_Element_Source" FromRole="ElementItem_Element_Target" />
+        <NavigationProperty Name="ParentFieldSet" Relationship="BusinessObjects.Element_ParentFieldSet" ToRole="Element_ParentFieldSet_Target" FromRole="Element_ParentFieldSet_Source" />
+        <NavigationProperty Name="ResourcePool" Relationship="BusinessObjects.ResourcePool_ElementSet" ToRole="ResourcePool_ElementSet_Source" FromRole="ResourcePool_ElementSet_Target" />
+        <NavigationProperty Name="ResourcePoolMainElementSubSet" Relationship="BusinessObjects.Element_ResourcePoolMainElementSubSet" ToRole="Element_ResourcePoolMainElementSubSet_Target" FromRole="Element_ResourcePoolMainElementSubSet_Source" />
+      </EntityType>
+      <EntityType Name="ElementField" p5:ClrType="BusinessObjects.ElementField, BusinessObjects, Version=0.24.0.0, Culture=neutral, PublicKeyToken=null" xmlns:p5="http://schemas.microsoft.com/ado/2013/11/edm/customannotation">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" p7:StoreGeneratedPattern="Identity" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="ElementId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Name" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        <Property Name="ElementFieldType" Type="Edm.Byte" Nullable="false" />
+        <Property Name="SelectedElementId" Type="Edm.Int32" />
+        <Property Name="UseFixedValue" Type="Edm.Boolean" />
+        <Property Name="SortOrder" Type="Edm.Byte" Nullable="false" />
+        <Property Name="CreatedOn" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ModifiedOn" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="DeletedOn" Type="Edm.DateTime" />
+        <Property Name="RowVersion" Type="Edm.Binary" ConcurrencyMode="Fixed" Nullable="false" MaxLength="8" FixedLength="false" p7:StoreGeneratedPattern="Computed" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <NavigationProperty Name="Element" Relationship="BusinessObjects.ElementField_Element" ToRole="ElementField_Element_Target" FromRole="ElementField_Element_Source" />
+        <NavigationProperty Name="ElementCellSet" Relationship="BusinessObjects.ElementCell_ElementField" ToRole="ElementCell_ElementField_Source" FromRole="ElementCell_ElementField_Target" />
+        <NavigationProperty Name="ElementFieldIndexSet" Relationship="BusinessObjects.ElementFieldIndex_ElementField" ToRole="ElementFieldIndex_ElementField_Source" FromRole="ElementFieldIndex_ElementField_Target" />
+        <NavigationProperty Name="SelectedElement" Relationship="BusinessObjects.Element_ParentFieldSet" ToRole="Element_ParentFieldSet_Source" FromRole="Element_ParentFieldSet_Target" />
+      </EntityType>
+      <EntityType Name="ElementCell" p5:ClrType="BusinessObjects.ElementCell, BusinessObjects, Version=0.24.0.0, Culture=neutral, PublicKeyToken=null" xmlns:p5="http://schemas.microsoft.com/ado/2013/11/edm/customannotation">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" p7:StoreGeneratedPattern="Identity" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="ElementItemId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ElementFieldId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="StringValue" Type="Edm.String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        <Property Name="BooleanValue" Type="Edm.Boolean" />
+        <Property Name="IntegerValue" Type="Edm.Int32" />
+        <Property Name="DecimalValue" Type="Edm.Decimal" Precision="18" Scale="2" />
+        <Property Name="DateTimeValue" Type="Edm.DateTime" />
+        <Property Name="SelectedElementItemId" Type="Edm.Int32" />
+        <Property Name="RatingAverage" Type="Edm.Decimal" Precision="18" Scale="2" p7:StoreGeneratedPattern="Computed" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="RatingCount" Type="Edm.Int32" p7:StoreGeneratedPattern="Computed" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="CreatedOn" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ModifiedOn" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="DeletedOn" Type="Edm.DateTime" />
+        <Property Name="RowVersion" Type="Edm.Binary" ConcurrencyMode="Fixed" Nullable="false" MaxLength="8" FixedLength="false" p7:StoreGeneratedPattern="Computed" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="OtherUsersRatingTotal" Type="Edm.Decimal" />
+        <Property Name="OtherUsersRatingCount" Type="Edm.Int32" Nullable="false" />
+        <NavigationProperty Name="ElementField" Relationship="BusinessObjects.ElementCell_ElementField" ToRole="ElementCell_ElementField_Target" FromRole="ElementCell_ElementField_Source" />
+        <NavigationProperty Name="ElementItem" Relationship="BusinessObjects.ElementItem_ElementCellSet" ToRole="ElementItem_ElementCellSet_Source" FromRole="ElementItem_ElementCellSet_Target" />
+        <NavigationProperty Name="SelectedElementItem" Relationship="BusinessObjects.ElementItem_ParentCellSet" ToRole="ElementItem_ParentCellSet_Source" FromRole="ElementItem_ParentCellSet_Target" />
+        <NavigationProperty Name="UserElementCellSet" Relationship="BusinessObjects.UserElementCell_ElementCell" ToRole="UserElementCell_ElementCell_Source" FromRole="UserElementCell_ElementCell_Target" />
+      </EntityType>
+      <EntityType Name="ElementItem" p5:ClrType="BusinessObjects.ElementItem, BusinessObjects, Version=0.24.0.0, Culture=neutral, PublicKeyToken=null" xmlns:p5="http://schemas.microsoft.com/ado/2013/11/edm/customannotation">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" p7:StoreGeneratedPattern="Identity" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="ElementId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Name" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        <Property Name="CreatedOn" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ModifiedOn" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="DeletedOn" Type="Edm.DateTime" />
+        <Property Name="RowVersion" Type="Edm.Binary" ConcurrencyMode="Fixed" Nullable="false" MaxLength="8" FixedLength="false" p7:StoreGeneratedPattern="Computed" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <NavigationProperty Name="Element" Relationship="BusinessObjects.ElementItem_Element" ToRole="ElementItem_Element_Target" FromRole="ElementItem_Element_Source" />
+        <NavigationProperty Name="ElementCellSet" Relationship="BusinessObjects.ElementItem_ElementCellSet" ToRole="ElementItem_ElementCellSet_Target" FromRole="ElementItem_ElementCellSet_Source" />
+        <NavigationProperty Name="ParentCellSet" Relationship="BusinessObjects.ElementItem_ParentCellSet" ToRole="ElementItem_ParentCellSet_Target" FromRole="ElementItem_ParentCellSet_Source" />
+      </EntityType>
+      <EntityType Name="UserElementCell" p5:ClrType="BusinessObjects.UserElementCell, BusinessObjects, Version=0.24.0.0, Culture=neutral, PublicKeyToken=null" xmlns:p5="http://schemas.microsoft.com/ado/2013/11/edm/customannotation">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" p7:StoreGeneratedPattern="Identity" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="UserId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ElementCellId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="BooleanValue" Type="Edm.Boolean" />
+        <Property Name="IntegerValue" Type="Edm.Int32" />
+        <Property Name="DecimalValue" Type="Edm.Decimal" Precision="18" Scale="2" />
+        <Property Name="DateTimeValue" Type="Edm.DateTime" />
+        <Property Name="CreatedOn" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ModifiedOn" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="DeletedOn" Type="Edm.DateTime" />
+        <Property Name="RowVersion" Type="Edm.Binary" ConcurrencyMode="Fixed" Nullable="false" MaxLength="8" FixedLength="false" p7:StoreGeneratedPattern="Computed" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <NavigationProperty Name="ElementCell" Relationship="BusinessObjects.UserElementCell_ElementCell" ToRole="UserElementCell_ElementCell_Target" FromRole="UserElementCell_ElementCell_Source" />
+        <NavigationProperty Name="User" Relationship="BusinessObjects.UserElementCell_User" ToRole="UserElementCell_User_Target" FromRole="UserElementCell_User_Source" />
+      </EntityType>
+      <EntityType Name="User" p5:ClrType="BusinessObjects.User, BusinessObjects, Version=0.24.0.0, Culture=neutral, PublicKeyToken=null" xmlns:p5="http://schemas.microsoft.com/ado/2013/11/edm/customannotation">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" p7:StoreGeneratedPattern="Identity" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="FirstName" Type="Edm.String" MaxLength="50" FixedLength="false" Unicode="true" />
+        <Property Name="MiddleName" Type="Edm.String" MaxLength="50" FixedLength="false" Unicode="true" />
+        <Property Name="LastName" Type="Edm.String" MaxLength="50" FixedLength="false" Unicode="true" />
+        <Property Name="Notes" Type="Edm.String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        <Property Name="CreatedOn" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ModifiedOn" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="DeletedOn" Type="Edm.DateTime" />
+        <Property Name="RowVersion" Type="Edm.Binary" ConcurrencyMode="Fixed" Nullable="false" MaxLength="8" FixedLength="false" p7:StoreGeneratedPattern="Computed" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="Email" Type="Edm.String" MaxLength="256" FixedLength="false" Unicode="true" />
+        <Property Name="EmailConfirmed" Type="Edm.Boolean" Nullable="false" />
+        <Property Name="PasswordHash" Type="Edm.String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        <Property Name="SecurityStamp" Type="Edm.String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        <Property Name="PhoneNumber" Type="Edm.String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        <Property Name="PhoneNumberConfirmed" Type="Edm.Boolean" Nullable="false" />
+        <Property Name="TwoFactorEnabled" Type="Edm.Boolean" Nullable="false" />
+        <Property Name="LockoutEndDateUtc" Type="Edm.DateTime" />
+        <Property Name="LockoutEnabled" Type="Edm.Boolean" Nullable="false" />
+        <Property Name="AccessFailedCount" Type="Edm.Int32" Nullable="false" />
+        <Property Name="UserName" Type="Edm.String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+        <NavigationProperty Name="Claims" Relationship="BusinessObjects.User_Claims" ToRole="User_Claims_Target" FromRole="User_Claims_Source" />
+        <NavigationProperty Name="Logins" Relationship="BusinessObjects.User_Logins" ToRole="User_Logins_Target" FromRole="User_Logins_Source" />
+        <NavigationProperty Name="Roles" Relationship="BusinessObjects.User_Roles" ToRole="User_Roles_Target" FromRole="User_Roles_Source" />
+        <NavigationProperty Name="UserElementCellSet" Relationship="BusinessObjects.UserElementCell_User" ToRole="UserElementCell_User_Source" FromRole="UserElementCell_User_Target" />
+        <NavigationProperty Name="UserElementFieldIndexSet" Relationship="BusinessObjects.UserElementFieldIndex_User" ToRole="UserElementFieldIndex_User_Source" FromRole="UserElementFieldIndex_User_Target" />
+        <NavigationProperty Name="UserResourcePoolSet" Relationship="BusinessObjects.UserResourcePool_User" ToRole="UserResourcePool_User_Source" FromRole="UserResourcePool_User_Target" />
+      </EntityType>
+      <EntityType Name="UserClaim" p5:ClrType="BusinessObjects.UserClaim, BusinessObjects, Version=0.24.0.0, Culture=neutral, PublicKeyToken=null" xmlns:p5="http://schemas.microsoft.com/ado/2013/11/edm/customannotation">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" p7:StoreGeneratedPattern="Identity" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="CreatedOn" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ModifiedOn" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="DeletedOn" Type="Edm.DateTime" />
+        <Property Name="RowVersion" Type="Edm.Binary" ConcurrencyMode="Fixed" Nullable="false" MaxLength="8" FixedLength="false" p7:StoreGeneratedPattern="Computed" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="UserId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ClaimType" Type="Edm.String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        <Property Name="ClaimValue" Type="Edm.String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        <NavigationProperty Name="User" Relationship="BusinessObjects.UserClaim_User" ToRole="UserClaim_User_Target" FromRole="UserClaim_User_Source" />
+      </EntityType>
+      <EntityType Name="UserLogin" p5:ClrType="BusinessObjects.UserLogin, BusinessObjects, Version=0.24.0.0, Culture=neutral, PublicKeyToken=null" xmlns:p5="http://schemas.microsoft.com/ado/2013/11/edm/customannotation">
+        <Key>
+          <PropertyRef Name="LoginProvider" />
+          <PropertyRef Name="ProviderKey" />
+          <PropertyRef Name="UserId" />
+        </Key>
+        <Property Name="LoginProvider" Type="Edm.String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+        <Property Name="ProviderKey" Type="Edm.String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+        <Property Name="UserId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="CreatedOn" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ModifiedOn" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="DeletedOn" Type="Edm.DateTime" />
+        <Property Name="RowVersion" Type="Edm.Binary" ConcurrencyMode="Fixed" Nullable="false" MaxLength="8" FixedLength="false" p7:StoreGeneratedPattern="Computed" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <NavigationProperty Name="User" Relationship="BusinessObjects.UserLogin_User" ToRole="UserLogin_User_Target" FromRole="UserLogin_User_Source" />
+      </EntityType>
+      <EntityType Name="UserRole" p5:ClrType="BusinessObjects.UserRole, BusinessObjects, Version=0.24.0.0, Culture=neutral, PublicKeyToken=null" xmlns:p5="http://schemas.microsoft.com/ado/2013/11/edm/customannotation">
+        <Key>
+          <PropertyRef Name="UserId" />
+          <PropertyRef Name="RoleId" />
+        </Key>
+        <Property Name="UserId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="RoleId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="CreatedOn" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ModifiedOn" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="DeletedOn" Type="Edm.DateTime" />
+        <Property Name="RowVersion" Type="Edm.Binary" ConcurrencyMode="Fixed" Nullable="false" MaxLength="8" FixedLength="false" p7:StoreGeneratedPattern="Computed" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <NavigationProperty Name="Role" Relationship="BusinessObjects.UserRole_Role" ToRole="UserRole_Role_Target" FromRole="UserRole_Role_Source" />
+        <NavigationProperty Name="User" Relationship="BusinessObjects.UserRole_User" ToRole="UserRole_User_Target" FromRole="UserRole_User_Source" />
+      </EntityType>
+      <EntityType Name="Role" p5:ClrType="BusinessObjects.Role, BusinessObjects, Version=0.24.0.0, Culture=neutral, PublicKeyToken=null" xmlns:p5="http://schemas.microsoft.com/ado/2013/11/edm/customannotation">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" p7:StoreGeneratedPattern="Identity" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="CreatedOn" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ModifiedOn" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="DeletedOn" Type="Edm.DateTime" />
+        <Property Name="RowVersion" Type="Edm.Binary" ConcurrencyMode="Fixed" Nullable="false" MaxLength="8" FixedLength="false" p7:StoreGeneratedPattern="Computed" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="Name" Type="Edm.String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+        <NavigationProperty Name="Users" Relationship="BusinessObjects.Role_Users" ToRole="Role_Users_Target" FromRole="Role_Users_Source" />
+      </EntityType>
+      <EntityType Name="UserElementFieldIndex" p5:ClrType="BusinessObjects.UserElementFieldIndex, BusinessObjects, Version=0.24.0.0, Culture=neutral, PublicKeyToken=null" xmlns:p5="http://schemas.microsoft.com/ado/2013/11/edm/customannotation">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" p7:StoreGeneratedPattern="Identity" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="UserId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ElementFieldIndexId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Rating" Type="Edm.Decimal" Nullable="false" Precision="18" Scale="2" />
+        <Property Name="CreatedOn" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ModifiedOn" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="DeletedOn" Type="Edm.DateTime" />
+        <Property Name="RowVersion" Type="Edm.Binary" ConcurrencyMode="Fixed" Nullable="false" MaxLength="8" FixedLength="false" p7:StoreGeneratedPattern="Computed" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <NavigationProperty Name="ElementFieldIndex" Relationship="BusinessObjects.ElementFieldIndex_UserElementFieldIndexSet" ToRole="ElementFieldIndex_UserElementFieldIndexSet_Source" FromRole="ElementFieldIndex_UserElementFieldIndexSet_Target" />
+        <NavigationProperty Name="User" Relationship="BusinessObjects.UserElementFieldIndex_User" ToRole="UserElementFieldIndex_User_Target" FromRole="UserElementFieldIndex_User_Source" />
+      </EntityType>
+      <EntityType Name="ElementFieldIndex" p5:ClrType="BusinessObjects.ElementFieldIndex, BusinessObjects, Version=0.24.0.0, Culture=neutral, PublicKeyToken=null" xmlns:p5="http://schemas.microsoft.com/ado/2013/11/edm/customannotation">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" p7:StoreGeneratedPattern="Identity" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="ElementFieldId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Name" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        <Property Name="RatingSortType" Type="Edm.Byte" Nullable="false" />
+        <Property Name="IndexRatingAverage" Type="Edm.Decimal" Precision="18" Scale="2" p7:StoreGeneratedPattern="Computed" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="IndexRatingCount" Type="Edm.Int32" p7:StoreGeneratedPattern="Computed" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="CreatedOn" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ModifiedOn" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="DeletedOn" Type="Edm.DateTime" />
+        <Property Name="RowVersion" Type="Edm.Binary" ConcurrencyMode="Fixed" Nullable="false" MaxLength="8" FixedLength="false" p7:StoreGeneratedPattern="Computed" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="OtherUsersIndexRatingTotal" Type="Edm.Decimal" />
+        <Property Name="OtherUsersIndexRatingCount" Type="Edm.Int32" Nullable="false" />
+        <NavigationProperty Name="ElementField" Relationship="BusinessObjects.ElementFieldIndex_ElementField" ToRole="ElementFieldIndex_ElementField_Target" FromRole="ElementFieldIndex_ElementField_Source" />
+        <NavigationProperty Name="UserElementFieldIndexSet" Relationship="BusinessObjects.ElementFieldIndex_UserElementFieldIndexSet" ToRole="ElementFieldIndex_UserElementFieldIndexSet_Target" FromRole="ElementFieldIndex_UserElementFieldIndexSet_Source" />
+      </EntityType>
+      <EntityType Name="UserResourcePool" p5:ClrType="BusinessObjects.UserResourcePool, BusinessObjects, Version=0.24.0.0, Culture=neutral, PublicKeyToken=null" xmlns:p5="http://schemas.microsoft.com/ado/2013/11/edm/customannotation">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" p7:StoreGeneratedPattern="Identity" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="UserId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ResourcePoolId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ResourcePoolRate" Type="Edm.Decimal" Nullable="false" Precision="18" Scale="2" />
+        <Property Name="CreatedOn" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ModifiedOn" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="DeletedOn" Type="Edm.DateTime" />
+        <Property Name="RowVersion" Type="Edm.Binary" ConcurrencyMode="Fixed" Nullable="false" MaxLength="8" FixedLength="false" p7:StoreGeneratedPattern="Computed" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <NavigationProperty Name="ResourcePool" Relationship="BusinessObjects.ResourcePool_UserResourcePoolSet" ToRole="ResourcePool_UserResourcePoolSet_Source" FromRole="ResourcePool_UserResourcePoolSet_Target" />
+        <NavigationProperty Name="User" Relationship="BusinessObjects.UserResourcePool_User" ToRole="UserResourcePool_User_Target" FromRole="UserResourcePool_User_Source" />
+      </EntityType>
+      <EntityType Name="ResourcePool" p5:ClrType="BusinessObjects.ResourcePool, BusinessObjects, Version=0.24.0.0, Culture=neutral, PublicKeyToken=null" xmlns:p5="http://schemas.microsoft.com/ado/2013/11/edm/customannotation">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" p7:StoreGeneratedPattern="Identity" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="Name" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        <Property Name="InitialValue" Type="Edm.Decimal" Nullable="false" Precision="18" Scale="2" />
+        <Property Name="MainElementId" Type="Edm.Int32" />
+        <Property Name="EnableResourcePoolAddition" Type="Edm.Boolean" Nullable="false" />
+        <Property Name="EnableSubtotals" Type="Edm.Boolean" Nullable="false" />
+        <Property Name="IsSample" Type="Edm.Boolean" Nullable="false" />
+        <Property Name="ResourcePoolRateAverage" Type="Edm.Decimal" Precision="18" Scale="2" p7:StoreGeneratedPattern="Computed" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="ResourcePoolRateCount" Type="Edm.Int32" p7:StoreGeneratedPattern="Computed" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="CreatedOn" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ModifiedOn" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="DeletedOn" Type="Edm.DateTime" />
+        <Property Name="RowVersion" Type="Edm.Binary" ConcurrencyMode="Fixed" Nullable="false" MaxLength="8" FixedLength="false" p7:StoreGeneratedPattern="Computed" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="OtherUsersResourcePoolRateTotal" Type="Edm.Decimal" />
+        <Property Name="OtherUsersResourcePoolRateCount" Type="Edm.Int32" Nullable="false" />
+        <NavigationProperty Name="ElementSet" Relationship="BusinessObjects.ResourcePool_ElementSet" ToRole="ResourcePool_ElementSet_Target" FromRole="ResourcePool_ElementSet_Source" />
+        <NavigationProperty Name="MainElement" Relationship="BusinessObjects.Element_ResourcePoolMainElementSubSet" ToRole="Element_ResourcePoolMainElementSubSet_Source" FromRole="Element_ResourcePoolMainElementSubSet_Target" />
+        <NavigationProperty Name="UserResourcePoolSet" Relationship="BusinessObjects.ResourcePool_UserResourcePoolSet" ToRole="ResourcePool_UserResourcePoolSet_Target" FromRole="ResourcePool_UserResourcePoolSet_Source" />
+      </EntityType>
+      <Association Name="ElementField_Element">
+        <End Type="BusinessObjects.Element" Role="ElementField_Element_Target" Multiplicity="1">
+          <OnDelete Action="Cascade" />
+        </End>
+        <End Type="BusinessObjects.ElementField" Role="ElementField_Element_Source" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="ElementField_Element_Target">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="ElementField_Element_Source">
+            <PropertyRef Name="ElementId" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="ElementItem_Element">
+        <End Type="BusinessObjects.Element" Role="ElementItem_Element_Target" Multiplicity="1">
+          <OnDelete Action="Cascade" />
+        </End>
+        <End Type="BusinessObjects.ElementItem" Role="ElementItem_Element_Source" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="ElementItem_Element_Target">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="ElementItem_Element_Source">
+            <PropertyRef Name="ElementId" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="Element_ParentFieldSet">
+        <End Type="BusinessObjects.Element" Role="Element_ParentFieldSet_Source" Multiplicity="0..1" />
+        <End Type="BusinessObjects.ElementField" Role="Element_ParentFieldSet_Target" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Element_ParentFieldSet_Source">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="Element_ParentFieldSet_Target">
+            <PropertyRef Name="SelectedElementId" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="ResourcePool_ElementSet">
+        <End Type="BusinessObjects.ResourcePool" Role="ResourcePool_ElementSet_Source" Multiplicity="1">
+          <OnDelete Action="Cascade" />
+        </End>
+        <End Type="BusinessObjects.Element" Role="ResourcePool_ElementSet_Target" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="ResourcePool_ElementSet_Source">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="ResourcePool_ElementSet_Target">
+            <PropertyRef Name="ResourcePoolId" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="Element_ResourcePoolMainElementSubSet">
+        <End Type="BusinessObjects.Element" Role="Element_ResourcePoolMainElementSubSet_Source" Multiplicity="0..1" />
+        <End Type="BusinessObjects.ResourcePool" Role="Element_ResourcePoolMainElementSubSet_Target" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Element_ResourcePoolMainElementSubSet_Source">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="Element_ResourcePoolMainElementSubSet_Target">
+            <PropertyRef Name="MainElementId" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="ElementCell_ElementField">
+        <End Type="BusinessObjects.ElementField" Role="ElementCell_ElementField_Target" Multiplicity="1" />
+        <End Type="BusinessObjects.ElementCell" Role="ElementCell_ElementField_Source" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="ElementCell_ElementField_Target">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="ElementCell_ElementField_Source">
+            <PropertyRef Name="ElementFieldId" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="ElementFieldIndex_ElementField">
+        <End Type="BusinessObjects.ElementField" Role="ElementFieldIndex_ElementField_Target" Multiplicity="1">
+          <OnDelete Action="Cascade" />
+        </End>
+        <End Type="BusinessObjects.ElementFieldIndex" Role="ElementFieldIndex_ElementField_Source" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="ElementFieldIndex_ElementField_Target">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="ElementFieldIndex_ElementField_Source">
+            <PropertyRef Name="ElementFieldId" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="ElementItem_ElementCellSet">
+        <End Type="BusinessObjects.ElementItem" Role="ElementItem_ElementCellSet_Source" Multiplicity="1">
+          <OnDelete Action="Cascade" />
+        </End>
+        <End Type="BusinessObjects.ElementCell" Role="ElementItem_ElementCellSet_Target" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="ElementItem_ElementCellSet_Source">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="ElementItem_ElementCellSet_Target">
+            <PropertyRef Name="ElementItemId" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="ElementItem_ParentCellSet">
+        <End Type="BusinessObjects.ElementItem" Role="ElementItem_ParentCellSet_Source" Multiplicity="0..1" />
+        <End Type="BusinessObjects.ElementCell" Role="ElementItem_ParentCellSet_Target" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="ElementItem_ParentCellSet_Source">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="ElementItem_ParentCellSet_Target">
+            <PropertyRef Name="SelectedElementItemId" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="UserElementCell_ElementCell">
+        <End Type="BusinessObjects.ElementCell" Role="UserElementCell_ElementCell_Target" Multiplicity="1">
+          <OnDelete Action="Cascade" />
+        </End>
+        <End Type="BusinessObjects.UserElementCell" Role="UserElementCell_ElementCell_Source" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="UserElementCell_ElementCell_Target">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="UserElementCell_ElementCell_Source">
+            <PropertyRef Name="ElementCellId" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="UserElementCell_User">
+        <End Type="BusinessObjects.User" Role="UserElementCell_User_Target" Multiplicity="1" />
+        <End Type="BusinessObjects.UserElementCell" Role="UserElementCell_User_Source" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="UserElementCell_User_Target">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="UserElementCell_User_Source">
+            <PropertyRef Name="UserId" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="User_Claims">
+        <End Type="BusinessObjects.User" Role="User_Claims_Source" Multiplicity="1">
+          <OnDelete Action="Cascade" />
+        </End>
+        <End Type="BusinessObjects.UserClaim" Role="User_Claims_Target" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="User_Claims_Source">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="User_Claims_Target">
+            <PropertyRef Name="UserId" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="User_Logins">
+        <End Type="BusinessObjects.User" Role="User_Logins_Source" Multiplicity="1">
+          <OnDelete Action="Cascade" />
+        </End>
+        <End Type="BusinessObjects.UserLogin" Role="User_Logins_Target" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="User_Logins_Source">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="User_Logins_Target">
+            <PropertyRef Name="UserId" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="User_Roles">
+        <End Type="BusinessObjects.User" Role="User_Roles_Source" Multiplicity="1">
+          <OnDelete Action="Cascade" />
+        </End>
+        <End Type="BusinessObjects.UserRole" Role="User_Roles_Target" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="User_Roles_Source">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="User_Roles_Target">
+            <PropertyRef Name="UserId" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="UserElementFieldIndex_User">
+        <End Type="BusinessObjects.User" Role="UserElementFieldIndex_User_Target" Multiplicity="1" />
+        <End Type="BusinessObjects.UserElementFieldIndex" Role="UserElementFieldIndex_User_Source" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="UserElementFieldIndex_User_Target">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="UserElementFieldIndex_User_Source">
+            <PropertyRef Name="UserId" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="UserResourcePool_User">
+        <End Type="BusinessObjects.User" Role="UserResourcePool_User_Target" Multiplicity="1" />
+        <End Type="BusinessObjects.UserResourcePool" Role="UserResourcePool_User_Source" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="UserResourcePool_User_Target">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="UserResourcePool_User_Source">
+            <PropertyRef Name="UserId" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="UserClaim_User">
+        <End Type="BusinessObjects.User" Role="UserClaim_User_Target" Multiplicity="1">
+          <OnDelete Action="Cascade" />
+        </End>
+        <End Type="BusinessObjects.UserClaim" Role="UserClaim_User_Source" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="UserClaim_User_Target">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="UserClaim_User_Source">
+            <PropertyRef Name="UserId" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="UserLogin_User">
+        <End Type="BusinessObjects.User" Role="UserLogin_User_Target" Multiplicity="1">
+          <OnDelete Action="Cascade" />
+        </End>
+        <End Type="BusinessObjects.UserLogin" Role="UserLogin_User_Source" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="UserLogin_User_Target">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="UserLogin_User_Source">
+            <PropertyRef Name="UserId" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="UserRole_Role">
+        <End Type="BusinessObjects.Role" Role="UserRole_Role_Target" Multiplicity="1">
+          <OnDelete Action="Cascade" />
+        </End>
+        <End Type="BusinessObjects.UserRole" Role="UserRole_Role_Source" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="UserRole_Role_Target">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="UserRole_Role_Source">
+            <PropertyRef Name="RoleId" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="UserRole_User">
+        <End Type="BusinessObjects.User" Role="UserRole_User_Target" Multiplicity="1">
+          <OnDelete Action="Cascade" />
+        </End>
+        <End Type="BusinessObjects.UserRole" Role="UserRole_User_Source" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="UserRole_User_Target">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="UserRole_User_Source">
+            <PropertyRef Name="UserId" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="Role_Users">
+        <End Type="BusinessObjects.Role" Role="Role_Users_Source" Multiplicity="1">
+          <OnDelete Action="Cascade" />
+        </End>
+        <End Type="BusinessObjects.UserRole" Role="Role_Users_Target" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Role_Users_Source">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="Role_Users_Target">
+            <PropertyRef Name="RoleId" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="ElementFieldIndex_UserElementFieldIndexSet">
+        <End Type="BusinessObjects.ElementFieldIndex" Role="ElementFieldIndex_UserElementFieldIndexSet_Source" Multiplicity="1">
+          <OnDelete Action="Cascade" />
+        </End>
+        <End Type="BusinessObjects.UserElementFieldIndex" Role="ElementFieldIndex_UserElementFieldIndexSet_Target" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="ElementFieldIndex_UserElementFieldIndexSet_Source">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="ElementFieldIndex_UserElementFieldIndexSet_Target">
+            <PropertyRef Name="ElementFieldIndexId" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="ResourcePool_UserResourcePoolSet">
+        <End Type="BusinessObjects.ResourcePool" Role="ResourcePool_UserResourcePoolSet_Source" Multiplicity="1">
+          <OnDelete Action="Cascade" />
+        </End>
+        <End Type="BusinessObjects.UserResourcePool" Role="ResourcePool_UserResourcePoolSet_Target" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="ResourcePool_UserResourcePoolSet_Source">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="ResourcePool_UserResourcePoolSet_Target">
+            <PropertyRef Name="ResourcePoolId" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <EntityContainer Name="WealthEconomyContext" p5:UseClrTypes="true" xmlns:p5="http://schemas.microsoft.com/ado/2013/11/edm/customannotation">
+        <EntitySet Name="Element" EntityType="BusinessObjects.Element" />
+        <EntitySet Name="ElementField" EntityType="BusinessObjects.ElementField" />
+        <EntitySet Name="ElementCell" EntityType="BusinessObjects.ElementCell" />
+        <EntitySet Name="ElementItem" EntityType="BusinessObjects.ElementItem" />
+        <EntitySet Name="UserElementCell" EntityType="BusinessObjects.UserElementCell" />
+        <EntitySet Name="Users" EntityType="BusinessObjects.User" />
+        <EntitySet Name="UserClaims" EntityType="BusinessObjects.UserClaim" />
+        <EntitySet Name="UserLogins" EntityType="BusinessObjects.UserLogin" />
+        <EntitySet Name="UserRoles" EntityType="BusinessObjects.UserRole" />
+        <EntitySet Name="Roles" EntityType="BusinessObjects.Role" />
+        <EntitySet Name="UserElementFieldIndex" EntityType="BusinessObjects.UserElementFieldIndex" />
+        <EntitySet Name="ElementFieldIndex" EntityType="BusinessObjects.ElementFieldIndex" />
+        <EntitySet Name="UserResourcePool" EntityType="BusinessObjects.UserResourcePool" />
+        <EntitySet Name="ResourcePool" EntityType="BusinessObjects.ResourcePool" />
+        <AssociationSet Name="ElementField_Element" Association="BusinessObjects.ElementField_Element">
+          <End Role="ElementField_Element_Target" EntitySet="Element" />
+          <End Role="ElementField_Element_Source" EntitySet="ElementField" />
+        </AssociationSet>
+        <AssociationSet Name="ElementItem_Element" Association="BusinessObjects.ElementItem_Element">
+          <End Role="ElementItem_Element_Target" EntitySet="Element" />
+          <End Role="ElementItem_Element_Source" EntitySet="ElementItem" />
+        </AssociationSet>
+        <AssociationSet Name="Element_ParentFieldSet" Association="BusinessObjects.Element_ParentFieldSet">
+          <End Role="Element_ParentFieldSet_Source" EntitySet="Element" />
+          <End Role="Element_ParentFieldSet_Target" EntitySet="ElementField" />
+        </AssociationSet>
+        <AssociationSet Name="ResourcePool_ElementSet" Association="BusinessObjects.ResourcePool_ElementSet">
+          <End Role="ResourcePool_ElementSet_Target" EntitySet="Element" />
+          <End Role="ResourcePool_ElementSet_Source" EntitySet="ResourcePool" />
+        </AssociationSet>
+        <AssociationSet Name="Element_ResourcePoolMainElementSubSet" Association="BusinessObjects.Element_ResourcePoolMainElementSubSet">
+          <End Role="Element_ResourcePoolMainElementSubSet_Source" EntitySet="Element" />
+          <End Role="Element_ResourcePoolMainElementSubSet_Target" EntitySet="ResourcePool" />
+        </AssociationSet>
+        <AssociationSet Name="ElementCell_ElementField" Association="BusinessObjects.ElementCell_ElementField">
+          <End Role="ElementCell_ElementField_Target" EntitySet="ElementField" />
+          <End Role="ElementCell_ElementField_Source" EntitySet="ElementCell" />
+        </AssociationSet>
+        <AssociationSet Name="ElementFieldIndex_ElementField" Association="BusinessObjects.ElementFieldIndex_ElementField">
+          <End Role="ElementFieldIndex_ElementField_Target" EntitySet="ElementField" />
+          <End Role="ElementFieldIndex_ElementField_Source" EntitySet="ElementFieldIndex" />
+        </AssociationSet>
+        <AssociationSet Name="ElementItem_ElementCellSet" Association="BusinessObjects.ElementItem_ElementCellSet">
+          <End Role="ElementItem_ElementCellSet_Target" EntitySet="ElementCell" />
+          <End Role="ElementItem_ElementCellSet_Source" EntitySet="ElementItem" />
+        </AssociationSet>
+        <AssociationSet Name="ElementItem_ParentCellSet" Association="BusinessObjects.ElementItem_ParentCellSet">
+          <End Role="ElementItem_ParentCellSet_Target" EntitySet="ElementCell" />
+          <End Role="ElementItem_ParentCellSet_Source" EntitySet="ElementItem" />
+        </AssociationSet>
+        <AssociationSet Name="UserElementCell_ElementCell" Association="BusinessObjects.UserElementCell_ElementCell">
+          <End Role="UserElementCell_ElementCell_Target" EntitySet="ElementCell" />
+          <End Role="UserElementCell_ElementCell_Source" EntitySet="UserElementCell" />
+        </AssociationSet>
+        <AssociationSet Name="UserElementCell_User" Association="BusinessObjects.UserElementCell_User">
+          <End Role="UserElementCell_User_Source" EntitySet="UserElementCell" />
+          <End Role="UserElementCell_User_Target" EntitySet="Users" />
+        </AssociationSet>
+        <AssociationSet Name="User_Claims" Association="BusinessObjects.User_Claims">
+          <End Role="User_Claims_Source" EntitySet="Users" />
+          <End Role="User_Claims_Target" EntitySet="UserClaims" />
+        </AssociationSet>
+        <AssociationSet Name="User_Logins" Association="BusinessObjects.User_Logins">
+          <End Role="User_Logins_Source" EntitySet="Users" />
+          <End Role="User_Logins_Target" EntitySet="UserLogins" />
+        </AssociationSet>
+        <AssociationSet Name="User_Roles" Association="BusinessObjects.User_Roles">
+          <End Role="User_Roles_Source" EntitySet="Users" />
+          <End Role="User_Roles_Target" EntitySet="UserRoles" />
+        </AssociationSet>
+        <AssociationSet Name="UserElementFieldIndex_User" Association="BusinessObjects.UserElementFieldIndex_User">
+          <End Role="UserElementFieldIndex_User_Target" EntitySet="Users" />
+          <End Role="UserElementFieldIndex_User_Source" EntitySet="UserElementFieldIndex" />
+        </AssociationSet>
+        <AssociationSet Name="UserResourcePool_User" Association="BusinessObjects.UserResourcePool_User">
+          <End Role="UserResourcePool_User_Target" EntitySet="Users" />
+          <End Role="UserResourcePool_User_Source" EntitySet="UserResourcePool" />
+        </AssociationSet>
+        <AssociationSet Name="UserClaim_User" Association="BusinessObjects.UserClaim_User">
+          <End Role="UserClaim_User_Source" EntitySet="UserClaims" />
+          <End Role="UserClaim_User_Target" EntitySet="Users" />
+        </AssociationSet>
+        <AssociationSet Name="UserLogin_User" Association="BusinessObjects.UserLogin_User">
+          <End Role="UserLogin_User_Source" EntitySet="UserLogins" />
+          <End Role="UserLogin_User_Target" EntitySet="Users" />
+        </AssociationSet>
+        <AssociationSet Name="UserRole_Role" Association="BusinessObjects.UserRole_Role">
+          <End Role="UserRole_Role_Source" EntitySet="UserRoles" />
+          <End Role="UserRole_Role_Target" EntitySet="Roles" />
+        </AssociationSet>
+        <AssociationSet Name="UserRole_User" Association="BusinessObjects.UserRole_User">
+          <End Role="UserRole_User_Source" EntitySet="UserRoles" />
+          <End Role="UserRole_User_Target" EntitySet="Users" />
+        </AssociationSet>
+        <AssociationSet Name="Role_Users" Association="BusinessObjects.Role_Users">
+          <End Role="Role_Users_Source" EntitySet="Roles" />
+          <End Role="Role_Users_Target" EntitySet="UserRoles" />
+        </AssociationSet>
+        <AssociationSet Name="ElementFieldIndex_UserElementFieldIndexSet" Association="BusinessObjects.ElementFieldIndex_UserElementFieldIndexSet">
+          <End Role="ElementFieldIndex_UserElementFieldIndexSet_Target" EntitySet="UserElementFieldIndex" />
+          <End Role="ElementFieldIndex_UserElementFieldIndexSet_Source" EntitySet="ElementFieldIndex" />
+        </AssociationSet>
+        <AssociationSet Name="ResourcePool_UserResourcePoolSet" Association="BusinessObjects.ResourcePool_UserResourcePoolSet">
+          <End Role="ResourcePool_UserResourcePoolSet_Target" EntitySet="UserResourcePool" />
+          <End Role="ResourcePool_UserResourcePoolSet_Source" EntitySet="ResourcePool" />
+        </AssociationSet>
+      </EntityContainer>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>
