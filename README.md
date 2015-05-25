@@ -16,4 +16,4 @@ Important: There are still projects & files that have some static configuration,
 Making them user / environment ignorant is in our wish list, however it's not high priority at the moment.
 Let us know in case it becomes an important issue for you.
 
-#### [Release Notes](https://github.com/forCrowd/WealthEconomy/blob/master/SolutionItems/Notes/Release Notes.md)
+#### [Release Notes](/SolutionItems/Notes/Release Notes.md)
