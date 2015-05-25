@@ -613,7 +613,6 @@
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <None Include="Configs\Setup\connectionStrings.config" />
     <None Include="Configs\appSettings.config" />
-    <None Include="Configs\connectionStrings.config" />
     <None Include="Configs\Setup\system.net.mailSettings.smtp.config">
       <SubType>Designer</SubType>
     </None>
