@@ -196,7 +196,7 @@
 
     <!-- Service extensions -->
     <script src="/App/services/userService.js?v=024"></script>
-    <script src="/App/services/resourcePoolService.js?v=024"></script>
+    <script src="/App/services/resourcePoolService.js?v=025"></script>
 
     <!-- Content -->
     <script src="/App/controllers/content/mainController.js?v=024"></script>
