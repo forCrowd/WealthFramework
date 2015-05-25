@@ -120,5 +120,4 @@ Web/Properties/PublishProfiles/
 Queries/
 
 # Configs
-Web/Configs/appSettings.config
-Web/Configs/system.net.mailSettings.smtp.config
+Web/Configs/*.config
