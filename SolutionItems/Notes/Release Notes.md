@@ -1,5 +1,9 @@
 ﻿### Release Notes
 
+**0.25**
+
+* https://github.com/forCrowd/WealthEconomy/issues/34
+
 **0.24**
 
 * Reset cases of user level data was improved

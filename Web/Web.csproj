@@ -580,6 +580,7 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
     <Content Include="Areas\HelpPage\Views\Shared\_Layout.cshtml" />
+    <None Include="Configs\Setup\0 Readme.txt" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -610,16 +611,13 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
-    <None Include="Configs\system.net.mailSettings.smtp.config">
+    <None Include="Configs\Setup\connectionStrings.config" />
+    <None Include="Configs\appSettings.config" />
+    <None Include="Configs\connectionStrings.config" />
+    <None Include="Configs\Setup\system.net.mailSettings.smtp.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Configs\system.net.mailSettings.smtp_.config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Configs\appSettings.config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Configs\appSettings_.config">
+    <None Include="Configs\Setup\appSettings.config">
       <SubType>Designer</SubType>
     </None>
     <Content Include="Content\bootstrap-theme.css.map" />
@@ -628,6 +626,7 @@
     <Content Include="Content\toastr.min.css" />
     <Content Include="Content\toastr.scss" />
     <Content Include="Content\toastr.less" />
+    <None Include="Configs\system.net.mailSettings.smtp.config" />
     <None Include="Controllers\OData\Generated\ODataController.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -832,8 +831,15 @@
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
   <Target Name="AfterBuild">
   </Target> -->
+  <Target Name="BeforeBuild">
+    <CreateItem Include="$(ProjectDir)Configs\*.config">
+      <Output TaskParameter="Include" ItemName="ExistingConfigFiles" />
+    </CreateItem>
+    <CreateItem Include="$(ProjectDir)Configs\Setup\*.config" Exclude="@(ExistingConfigFiles -> '$(ProjectDir)Configs\Setup\%(FileName)%(Extension)')">
+      <Output TaskParameter="Include" ItemName="ConfigFiles" />
+    </CreateItem>
+    <Copy SourceFiles="@(ConfigFiles)" DestinationFolder="$(ProjectDir)\Configs" />
+  </Target>
 </Project>
