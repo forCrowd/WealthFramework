@@ -39,15 +39,16 @@ namespace BusinessObjects
         Element = 6,
         
         /// <summary>
-        /// The field that the value (tax) will be collected from.
-        /// Defined once per Element.
+        /// The field that presents each item's main income (e.g. Sales Price).
+        /// Also resource pool amount will be calculated based on this field.
+        /// Defined once per Element (at the moment, can be changed to per Resource Pool).
         /// Use DecimalValue property to set its value on ElementItem level.
         /// </summary>
-        ResourcePool = 11,
+        DirectIncome = 11,
 
         /// <summary>
         /// The multiplier of the resource pool (e.g. Number of sales, number of users).
-        /// Defined once per Element (at the moment).
+        /// Defined once per Element (at the moment, can be changed to per Resource Pool).
         /// Use DecimalValue property to set its value on ElementItem level.
         /// </summary>
         Multiplier = 12

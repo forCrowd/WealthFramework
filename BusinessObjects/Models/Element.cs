@@ -94,14 +94,14 @@ namespace BusinessObjects
             get { return NameField != null; }
         }
 
-        public ElementField ResourcePoolField
+        public ElementField DirectIncomeField
         {
-            get { return ElementFieldSet.SingleOrDefault(item => item.ElementFieldType == (byte)ElementFieldTypes.ResourcePool); }
+            get { return ElementFieldSet.SingleOrDefault(item => item.ElementFieldType == (byte)ElementFieldTypes.DirectIncome); }
         }
 
         public bool HasResourcePoolField
         {
-            get { return ResourcePoolField != null; }
+            get { return DirectIncomeField != null; }
         }
 
         public string ResourcePoolFieldName
@@ -111,13 +111,13 @@ namespace BusinessObjects
                 if (!HasResourcePoolField)
                     return string.Empty;
 
-                return ResourcePoolField.Name;
+                return DirectIncomeField.Name;
             }
         }
 
         public decimal ResourcePoolValue()
         {
-            return ElementItemSet.Sum(item => item.ResourcePoolValue());
+            return ElementItemSet.Sum(item => item.DirectIncomeValue());
         }
 
         public decimal ResourcePoolAddition()

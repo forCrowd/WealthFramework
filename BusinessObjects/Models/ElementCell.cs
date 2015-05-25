@@ -177,7 +177,7 @@ namespace BusinessObjects
                         case ElementFieldTypes.Integer:
                             return Convert.ToDecimal(IntegerValue.GetValueOrDefault());
                         case ElementFieldTypes.Decimal:
-                        case ElementFieldTypes.ResourcePool: // TODO Same as Decimal type? How about base & child types?
+                        case ElementFieldTypes.DirectIncome: // TODO Same as Decimal type? How about base & child types?
                             return DecimalValue.GetValueOrDefault();
                         default:
                             throw new InvalidOperationException("Invalid field type: " + fieldType);
@@ -190,7 +190,7 @@ namespace BusinessObjects
                         case ElementFieldTypes.Boolean:
                         case ElementFieldTypes.Integer:
                         case ElementFieldTypes.Decimal:
-                        case ElementFieldTypes.ResourcePool: // TODO Same as Decimal type? How about base & child types?
+                        case ElementFieldTypes.DirectIncome: // TODO Same as Decimal type? How about base & child types?
                             {
                                 return RatingAverage.HasValue
                                     ? RatingAverage.Value
@@ -352,7 +352,7 @@ namespace BusinessObjects
             var fieldType = (ElementFieldTypes)ElementField.ElementFieldType;
 
             if (fieldType != valueType
-                && !(fieldType == ElementFieldTypes.ResourcePool
+                && !(fieldType == ElementFieldTypes.DirectIncome
                     || fieldType == ElementFieldTypes.Multiplier
                     && valueType == ElementFieldTypes.Decimal))
                 throw new InvalidOperationException(string.Format("Invalid value, field and value types don't match - Field type: {0}, Value type: {1}",

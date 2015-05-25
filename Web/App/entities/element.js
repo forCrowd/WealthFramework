@@ -170,7 +170,7 @@
                 return _multiplierField;
             }
 
-            self.resourcePoolValue = function () {
+            self.directIncome = function () {
 
                 // TODO Check totalIncome notes
 
@@ -181,13 +181,13 @@
                 var value = 0;
                 for (var i = 0; i < self.ElementItemSet.length; i++) {
                     var item = self.ElementItemSet[i];
-                    value += item.resourcePoolValue();
+                    value += item.directIncome();
                 }
 
                 return value;
             }
 
-            self.multiplierValue = function () {
+            self.multiplier = function () {
 
                 // TODO Check totalIncome notes
 
@@ -198,7 +198,7 @@
                 var value = 0;
                 for (var i = 0; i < self.ElementItemSet.length; i++) {
                     var item = self.ElementItemSet[i];
-                    value += item.multiplierValue();
+                    value += item.multiplier();
                 }
 
                 return value;
@@ -218,7 +218,7 @@
                 return value;
             }
 
-            self.resourcePoolValueMultiplied = function () {
+            self.totalDirectIncome = function () {
 
                 // TODO Check totalIncome notes
 
@@ -229,13 +229,13 @@
                 var value = 0;
                 for (var i = 0; i < self.ElementItemSet.length; i++) {
                     var item = self.ElementItemSet[i];
-                    value += item.resourcePoolValueMultiplied();
+                    value += item.totalDirectIncome();
                 }
 
                 return value;
             }
 
-            self.resourcePoolAddition = function () {
+            self.resourcePoolAmount = function () {
 
                 // TODO Check totalIncome notes
 
@@ -246,13 +246,13 @@
                 var value = 0;
                 for (var i = 0; i < self.ElementItemSet.length; i++) {
                     var item = self.ElementItemSet[i];
-                    value += item.resourcePoolAddition();
+                    value += item.resourcePoolAmount();
                 }
 
                 return value;
             }
 
-            self.resourcePoolAdditionMultiplied = function () {
+            self.totalResourcePoolAmount = function () {
 
                 // TODO Check totalIncome notes
 
@@ -265,18 +265,18 @@
                     var value = 0;
                     for (var i = 0; i < self.ElementItemSet.length; i++) {
                         var item = self.ElementItemSet[i];
-                        value += item.resourcePoolAdditionMultiplied();
+                        value += item.totalResourcePoolAmount();
                     }
                 } else {
                     if (self.ResourcePool.MainElement !== null) {
-                        value = self.ResourcePool.MainElement.resourcePoolAdditionMultiplied();
+                        value = self.ResourcePool.MainElement.totalResourcePoolAmount();
                     }
                 }
 
                 return value;
             }
 
-            self.resourcePoolValueIncludingAddition = function () {
+            self.directIncomeIncludingResourcePoolAmount = function () {
 
                 // TODO Check totalIncome notes
 
@@ -287,13 +287,13 @@
                 var value = 0;
                 for (var i = 0; i < self.ElementItemSet.length; i++) {
                     var item = self.ElementItemSet[i];
-                    value += item.resourcePoolValueIncludingAddition();
+                    value += item.directIncomeIncludingResourcePoolAmount();
                 }
 
                 return value;
             }
 
-            self.resourcePoolValueIncludingAdditionMultiplied = function () {
+            self.totalDirectIncomeIncludingResourcePoolAmount = function () {
 
                 // TODO Check totalIncome notes
 
@@ -304,13 +304,13 @@
                 var value = 0;
                 for (var i = 0; i < self.ElementItemSet.length; i++) {
                     var item = self.ElementItemSet[i];
-                    value += item.resourcePoolValueIncludingAdditionMultiplied();
+                    value += item.totalDirectIncomeIncludingResourcePoolAmount();
                 }
 
                 return value;
             }
 
-            self.indexIncome = function () {
+            self.totalResourcePoolIncome = function () {
 
                 // TODO Check totalIncome notes
 
@@ -321,7 +321,7 @@
                 var value = 0;
                 for (var i = 0; i < self.ElementItemSet.length; i++) {
                     var item = self.ElementItemSet[i];
-                    value += item.indexIncome();
+                    value += item.totalResourcePoolIncome();
                 }
 
                 return value;

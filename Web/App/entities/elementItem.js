@@ -25,7 +25,7 @@
             // Local variables
             var _elementCellIndexSet = [];
             var _elementCellIndexSet2 = [];
-            var _resourcePoolCell = null;
+            var _directIncomeCell = null;
             var _multiplierCell = null;
 
             self.elementCellIndexSet2 = function () {
@@ -104,12 +104,12 @@
                 return indexSet;
             }
 
-            self.resourcePoolCell = function () {
+            self.directIncomeCell = function () {
 
                 // Cached value
                 // TODO In case of add / remove field?
-                if (_resourcePoolCell) {
-                    return _resourcePoolCell;
+                if (_directIncomeCell) {
+                    return _directIncomeCell;
                 }
 
                 // Validate
@@ -119,12 +119,12 @@
                 for (var i = 0; i < self.ElementCellSet.length; i++) {
                     var cell = self.ElementCellSet[i];
                     if (cell.ElementField.ElementFieldType === 11) {
-                        _resourcePoolCell = cell;
+                        _directIncomeCell = cell;
                         break;
                     }
                 }
 
-                return _resourcePoolCell;
+                return _directIncomeCell;
             }
 
             self.multiplierCell = function () {
@@ -151,16 +151,16 @@
             }
 
             // TODO Compare this function with server-side
-            self.resourcePoolValue = function () {
+            self.directIncome = function () {
 
-                if (self.resourcePoolCell() === null || self.resourcePoolCell().DecimalValue === null)
+                if (self.directIncomeCell() === null || self.directIncomeCell().DecimalValue === null)
                     return 0;
 
-                return self.resourcePoolCell().DecimalValue;
+                return self.directIncomeCell().DecimalValue;
             }
 
             // TODO Compare this function with server-side
-            self.multiplierValue = function () {
+            self.multiplier = function () {
 
                 if (self.multiplierCell() === null
                     || self.multiplierCell().userElementCell() === null
@@ -175,27 +175,27 @@
                 return self.multiplierCell().userElementCell().DecimalValue;
             }
 
-            self.resourcePoolValueMultiplied = function () {
-                return self.resourcePoolValue() * self.multiplierValue();
+            self.totalDirectIncome = function () {
+                return self.directIncome() * self.multiplier();
             }
 
-            self.resourcePoolAddition = function () {
-                return self.resourcePoolValue() * self.Element.ResourcePool.resourcePoolRatePercentage();
+            self.resourcePoolAmount = function () {
+                return self.directIncome() * self.Element.ResourcePool.resourcePoolRatePercentage();
             }
 
-            self.resourcePoolAdditionMultiplied = function () {
-                return self.resourcePoolAddition() * self.multiplierValue();
+            self.totalResourcePoolAmount = function () {
+                return self.resourcePoolAmount() * self.multiplier();
             }
 
-            self.resourcePoolValueIncludingAddition = function () {
-                return self.resourcePoolValue() + self.resourcePoolAddition();
+            self.directIncomeIncludingResourcePoolAmount = function () { // A.k.a Sales Price incl. VAT
+                return self.directIncome() + self.resourcePoolAmount();
             }
 
-            self.resourcePoolValueIncludingAdditionMultiplied = function () {
-                return self.resourcePoolValueIncludingAddition() * self.multiplierValue();
+            self.totalDirectIncomeIncludingResourcePoolAmount = function () { // A.k.a Total Sales Price incl. VAT
+                return self.directIncomeIncludingResourcePoolAmount() * self.multiplier();
             }
 
-            self.indexIncome = function () {
+            self.totalResourcePoolIncome = function () {
 
                 // Validate
                 if (typeof self.ElementCellSet === 'undefined')
@@ -207,14 +207,11 @@
                     value += cell.indexIncome();
                 }
 
-                //logger.log(self.Name + ' - ' + value);
-                //logger.log(self);
-
                 return value;
             }
 
             self.totalIncome = function () {
-                return self.resourcePoolValueMultiplied() + self.indexIncome();
+                return self.totalDirectIncome() + self.totalResourcePoolIncome();
             }
 
             self.incomeStatus = function () {

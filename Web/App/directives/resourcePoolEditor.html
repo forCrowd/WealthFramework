@@ -52,7 +52,7 @@
                                     CMRP Amount
                                 </th>
                                 <td>
-                                    {{ resourcePool.currentElement.resourcePoolAdditionMultiplied() | number: 2 }}
+                                    {{ resourcePool.currentElement.totalResourcePoolAmount() | number: 2 }}
                                 </td>
                             </tr>
                             <tr>
@@ -81,11 +81,11 @@
                                     Tot. {{ resourcePool.currentElement.resourcePoolField().Name }}
                                     <br />incl. CMRP
                                 </th>
-                                <!-- ResourcePoolValue Income -->
+                                <!-- DirectIncome -->
                                 <th data-ng-if="resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">
                                     {{ resourcePool.currentElement.resourcePoolField().Name }} Income
                                 </th>
-                                <!-- Index Details & Index Income -->
+                                <!-- CMRP Income & Details -->
                                 <th data-ng-if="displayIndexDetails" data-ng-repeat="index in resourcePool.currentElement.elementFieldIndexSet()">
                                     {{ index.Name }} Income
                                     <!--- {{ index.ElementField.Element.ResourcePool.MainElement.indexRating() }}
@@ -99,7 +99,7 @@
                                 </th>
                                 <th data-ng-if="resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">
                                     <!-- Display 'Indexes' view link only if there are more than one index -->
-                                    <a href="" data-ng-if="resourcePool.currentElement.elementFieldIndexSet().length > 1" data-ng-click="toggleIndexDetails()">Indexes Income</a>
+                                    <a href="" data-ng-if="resourcePool.currentElement.elementFieldIndexSet().length > 1" data-ng-click="toggleIndexDetails()">CMRP Income</a>
                                     <!-- If there is only one index, then use that index's name -->
                                     <span data-ng-if="resourcePool.currentElement.elementFieldIndexSet().length === 1">{{ resourcePool.currentElement.elementFieldIndexSet()[0].Name }} Income</span>
                                 </th>
@@ -141,30 +141,30 @@
                                         {{ elementCell.SelectedElementItem.Name }}
                                     </span>
                                     <span data-ng-if="elementCell.ElementField.ElementFieldType === 11">
-                                        {{ elementItem.resourcePoolValue() | number: 2 }}
+                                        {{ elementItem.directIncome() | number: 2 }}
                                     </span>
                                     <span data-ng-if="elementCell.ElementField.ElementFieldType === 12">
-                                        {{ elementItem.multiplierValue() | number: 2 }}
+                                        {{ elementItem.multiplier() | number: 2 }}
                                     </span>
                                 </td>
                                 <!-- ResourcePool -->
                                 <td data-ng-if="false && resourcePool.EnableResourcePoolAddition && resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">
-                                    {{ elementItem.resourcePoolAddition() | number: 2 }}
+                                    {{ elementItem.resourcePoolAmount() | number: 2 }}
                                 </td>
                                 <td data-ng-if="false && resourcePool.EnableResourcePoolAddition && resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">
-                                    {{ elementItem.resourcePoolValueIncludingAddition() | number: 2 }}
+                                    {{ elementItem.directIncomeIncludingResourcePoolAmount() | number: 2 }}
                                 </td>
                                 <td data-ng-if="false && resourcePool.EnableResourcePoolAddition && resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">
-                                    {{ elementItem.resourcePoolAdditionMultiplied() | number: 2 }}
+                                    {{ elementItem.totalResourcePoolAmount() | number: 2 }}
                                 </td>
                                 <td data-ng-if="false && resourcePool.EnableResourcePoolAddition && resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">
-                                    {{ elementItem.resourcePoolValueIncludingAdditionMultiplied() | number: 2 }}
+                                    {{ elementItem.totalDirectIncomeIncludingResourcePoolAmount() | number: 2 }}
                                 </td>
-                                <!-- ResourcePoolValue Income -->
+                                <!-- DirectIncome -->
                                 <td data-ng-if="resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">
-                                    {{ elementItem.resourcePoolValueMultiplied() | number: 2 }}
+                                    {{ elementItem.totalDirectIncome() | number: 2 }}
                                 </td>
-                                <!-- Index Details & Index Income -->
+                                <!-- CMRP Income & Details -->
                                 <td data-ng-if="displayIndexDetails" data-ng-repeat="cellIndex in elementItem.elementCellIndexSet2()">
                                     {{ cellIndex.indexIncome() | number: 2 }}
                                     <!--- {{ cellIndex.SelectedElementItem.indexIncome() }}
@@ -175,7 +175,7 @@
                                     <!--{{ cellIndex.ElementItem.Name }}-->
                                 </td>
                                 <td data-ng-if="resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">
-                                    {{ elementItem.indexIncome() | number: 2 }}
+                                    {{ elementItem.totalResourcePoolIncome() | number: 2 }}
                                 </td>
                                 <!-- Total Income -->
                                 <td data-ng-if="resourcePool.currentElement.resourcePoolField()" data-ng-class="{ 'incomeStatusLow': elementItem.incomeStatus() === 'low', 'incomeStatusHigh': elementItem.incomeStatus() === 'high' }">
@@ -188,35 +188,35 @@
                                 <!-- Fields -->
                                 <td data-ng-repeat="field in resourcePool.currentElement.ElementFieldSet | orderBy: 'SortOrder'">
                                     <span data-ng-if="field.ElementFieldType === 11">
-                                        {{ resourcePool.currentElement.resourcePoolValue() | number: 2 }}
+                                        {{ resourcePool.currentElement.directIncome() | number: 2 }}
                                     </span>
                                     <span data-ng-if="field.ElementFieldType === 12">
-                                        {{ resourcePool.currentElement.multiplierValue() | number: 2 }}
+                                        {{ resourcePool.currentElement.multiplier() | number: 2 }}
                                     </span>
                                 </td>
                                 <!-- ResourcePool -->
                                 <td data-ng-if="false && resourcePool.EnableResourcePoolAddition && resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">
-                                    {{ resourcePool.currentElement.resourcePoolAddition() | number: 2 }}
+                                    {{ resourcePool.currentElement.resourcePoolAmount() | number: 2 }}
                                 </td>
                                 <td data-ng-if="false && resourcePool.EnableResourcePoolAddition && resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">
-                                    {{ resourcePool.currentElement.resourcePoolValueIncludingAddition() | number: 2 }}
+                                    {{ resourcePool.currentElement.directIncomeIncludingResourcePoolAmount() | number: 2 }}
                                 </td>
                                 <td data-ng-if="false && resourcePool.EnableResourcePoolAddition && resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">
-                                    {{ resourcePool.currentElement.resourcePoolAdditionMultiplied() | number: 2 }}
+                                    {{ resourcePool.currentElement.totalResourcePoolAmount() | number: 2 }}
                                 </td>
                                 <td data-ng-if="false && resourcePool.EnableResourcePoolAddition && resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">
-                                    {{ resourcePool.currentElement.resourcePoolValueIncludingAdditionMultiplied() | number: 2 }}
+                                    {{ resourcePool.currentElement.totalDirectIncomeIncludingResourcePoolAmount() | number: 2 }}
                                 </td>
-                                <!-- ResourcePoolValue Income -->
+                                <!-- DirectIncome -->
                                 <td data-ng-if="resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">
-                                    {{ resourcePool.currentElement.resourcePoolValueMultiplied() | number: 2 }}
+                                    {{ resourcePool.currentElement.totalDirectIncome() | number: 2 }}
                                 </td>
-                                <!-- Index Details & Index Income -->
+                                <!-- CMRP Income & Details -->
                                 <td data-ng-if="displayIndexDetails" data-ng-repeat="index in resourcePool.currentElement.elementFieldIndexSet()">
                                     {{ index.indexIncome() | number: 2 }}
                                 </td>
                                 <td data-ng-if="resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">
-                                    {{ resourcePool.currentElement.indexIncome() | number: 2 }}
+                                    {{ resourcePool.currentElement.totalResourcePoolIncome() | number: 2 }}
                                 </td>
                                 <!-- Total Income -->
                                 <td data-ng-if="resourcePool.currentElement.resourcePoolField()">
@@ -248,11 +248,11 @@
                                 <td colspan="3" data-ng-if="false && resourcePool.EnableResourcePoolAddition && resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">
                                     &nbsp;
                                 </td>
-                                <!-- ResourcePoolValue Income -->
+                                <!-- DirectIncome -->
                                 <td data-ng-if="resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">
                                     &nbsp;
                                 </td>
-                                <!-- Index Details & Index Income -->
+                                <!-- CMRP Income & Details -->
                                 <td data-ng-if="displayIndexDetails && resourcePool.currentElement.elementFieldIndexSet().length > 1" data-ng-repeat="index in resourcePool.currentElement.elementFieldIndexSet()">
                                     <div class="btn-group" role="group">
                                         <button title="Increase {{ index.Name }}" type="button" data-ng-click="increaseIndexRating(index)" data-ng-disabled="!isAuthenticated" class="btn btn-default btn-xs">+</button>

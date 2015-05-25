@@ -20,7 +20,7 @@
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
-            mainElement.ResourcePoolField.Name = "Sales Price"; // TODO It does not fit! Update this after having Initial Amount on RP!
+            mainElement.DirectIncomeField.Name = "Sales Price"; // TODO It does not fit! Update this after having Initial Amount on RP!
             mainElement.MultiplierField.Name = "Number of Sales";
 
             // Items, cell, user cells
@@ -41,7 +41,7 @@
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
-            mainElement.ResourcePoolField.Name = "Sales Price";
+            mainElement.DirectIncomeField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Number of Sales";
 
             // Items, cell, user cells
@@ -66,7 +66,7 @@
             var mainElement = resourcePool.ElementSet.First();
 
             // Fields
-            mainElement.ResourcePoolField.Name = "Sales Price";
+            mainElement.DirectIncomeField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Number of Sales";
             mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).Name = "Employee Satisfaction Rating";
             mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).ElementFieldIndex.Name = "Employee Satisfaction";
@@ -108,7 +108,7 @@
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
-            mainElement.ResourcePoolField.Name = "Sales Price";
+            mainElement.DirectIncomeField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Number of Sales";
             var sectorField = mainElement.AddField("Sector", ElementFieldTypes.Element);
             sectorField.SelectedElement = sectorElement;
@@ -178,7 +178,7 @@
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
-            mainElement.ResourcePoolField.Name = "Sales Price";
+            mainElement.DirectIncomeField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Number of Sales";
             var licenseField = mainElement.AddField("License", ElementFieldTypes.Element);
             licenseField.SelectedElement = licenseElement;
@@ -252,7 +252,7 @@
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
-            mainElement.ResourcePoolField.Name = "Sales Price";
+            mainElement.DirectIncomeField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Number of Sales";
             var licenseField = mainElement.AddField("License", ElementFieldTypes.Element);
             licenseField.SelectedElement = licenseElement;
@@ -386,16 +386,16 @@
             var mainElement = resourcePool.ElementSet.First();
 
             // Fields
-            mainElement.ResourcePoolField.Name = "Sales Price";
+            mainElement.DirectIncomeField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Number of Sales";
 
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "High Profit";
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().ResourcePoolCell.SetValue(120M);
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().DirectIncomeCell.SetValue(120M);
             mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Average Profit";
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().ResourcePoolCell.SetValue(110M);
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().DirectIncomeCell.SetValue(110M);
             mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "No Profit";
-            mainElement.ElementItemSet.Skip(2).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().DirectIncomeCell.SetValue(100M);
 
             // Return
             return resourcePool;
@@ -412,21 +412,21 @@
             var mainElement = resourcePool.ElementSet.First();
 
             // Fields
-            mainElement.ResourcePoolField.Name = "Sales Price";
+            mainElement.DirectIncomeField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Number of Sales";
 
             // Resource pool index; use to Sales Price itself
-            mainElement.ResourcePoolField
+            mainElement.DirectIncomeField
                 .AddIndex("Total Cost Index", RatingSortType.LowestToHighest)
                 .AddUserRating(user, 100);
 
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "High Profit";
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().ResourcePoolCell.SetValue(120M);
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().DirectIncomeCell.SetValue(120M);
             mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Average Profit";
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().ResourcePoolCell.SetValue(110M);
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().DirectIncomeCell.SetValue(110M);
             mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "No Profit";
-            mainElement.ElementItemSet.Skip(2).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().DirectIncomeCell.SetValue(100M);
 
             // Return
             return resourcePool;
@@ -443,22 +443,22 @@
             var mainElement = resourcePool.ElementSet.First();
 
             // Fields
-            mainElement.ResourcePoolField.Name = "Sales Price";
+            mainElement.DirectIncomeField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Number of Sales";
             mainElement.MultiplierField.SortOrder = 3;
 
             // Resource pool index; use to Sales Price itself
-            mainElement.ResourcePoolField
+            mainElement.DirectIncomeField
                 .AddIndex("Total Cost Index", RatingSortType.LowestToHighest)
                 .AddUserRating(user, 100);
 
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "<s>High Profit</s>";
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().DirectIncomeCell.SetValue(100M);
             mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "<s>Average Profit</s>";
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().DirectIncomeCell.SetValue(100M);
             mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "No Profit";
-            mainElement.ElementItemSet.Skip(2).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().DirectIncomeCell.SetValue(100M);
 
             // Return
             return resourcePool;
@@ -473,19 +473,19 @@
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
-            mainElement.ResourcePoolField.Name = "Sales Price";
+            mainElement.DirectIncomeField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Number of Sales";
 
             // Resource pool index; use to Sales Price itself
-            resourcePool.ElementSet.First().ResourcePoolField
+            resourcePool.ElementSet.First().DirectIncomeField
                 .AddIndex("Total Cost Index", RatingSortType.LowestToHighest)
                 .AddUserRating(user, 100);
 
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Lowlands";
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().ResourcePoolCell.SetValue(125M);
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().DirectIncomeCell.SetValue(125M);
             mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "High Coast";
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().ResourcePoolCell.SetValue(175M);
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().DirectIncomeCell.SetValue(175M);
 
             // Return
             return resourcePool;
@@ -521,7 +521,7 @@
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
-            mainElement.ResourcePoolField.Name = "Sales Price";
+            mainElement.DirectIncomeField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Number of Sales";
             var fairShareField = mainElement.AddField("Fair Share", ElementFieldTypes.Element);
             fairShareField.SelectedElement = fairShareElement;
@@ -567,7 +567,7 @@
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
-            mainElement.ResourcePoolField.Name = "Sales Price";
+            mainElement.DirectIncomeField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Number of Sales";
 
             decimal ratingPerIndex = 100 / 4;
@@ -585,7 +585,7 @@
                 .AddUserRating(user, ratingPerIndex);
 
             // Total Cost Index
-            mainElement.ResourcePoolField
+            mainElement.DirectIncomeField
                 .AddIndex("Total Cost Index", RatingSortType.LowestToHighest)
                 .AddUserRating(user, ratingPerIndex);
 
@@ -602,7 +602,7 @@
             mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "One and Only";
             mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(sectorField).SetValue(100M, user);
             mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(licenseField).SetValue(100M, user);
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().DirectIncomeCell.SetValue(100M);
             mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(fairShareField).SetValue(100M, user);
 
             //mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Organization B";
@@ -655,11 +655,11 @@
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
-            mainElement.ResourcePoolField.Name = "Sales Price";
+            mainElement.DirectIncomeField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Number of Sales";
 
             // 1. index
-            mainElement.ResourcePoolField
+            mainElement.DirectIncomeField
                 .AddIndex("Total Cost Index", RatingSortType.LowestToHighest)
                 .AddUserRating(user, 100 / 3);
 
@@ -680,12 +680,12 @@
 
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Alpha";
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().ResourcePoolCell.SetValue(200M);
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().DirectIncomeCell.SetValue(200M);
             mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(importanceField1).SetValue(100M, user);
             mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(importanceField2).SetValue(50M, user);
 
             mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Beta";
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().DirectIncomeCell.SetValue(100M);
             mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(importanceField1).SetValue(50M, user);
             mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(importanceField2).SetValue(25M, user);
             
@@ -734,7 +734,7 @@
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
-            mainElement.ResourcePoolField.Name = "Sales Price";
+            mainElement.DirectIncomeField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Number of Sales";
 
             // 1. index
@@ -759,19 +759,19 @@
 
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Alpha";
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().DirectIncomeCell.SetValue(100M);
             mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(veryImportantField).SetValue(50M, user);
 
             mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Beta";
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().DirectIncomeCell.SetValue(100M);
             mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(veryImportantField).SetValue(50M, user);
 
             mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Charlie";
-            mainElement.ElementItemSet.Skip(2).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().DirectIncomeCell.SetValue(100M);
             mainElement.ElementItemSet.Skip(2).Take(1).Single().AddCell(veryImportantField).SetValue(50M, user);
 
             mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Delta";
-            mainElement.ElementItemSet.Skip(3).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().DirectIncomeCell.SetValue(100M);
             mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(veryImportantField).SetValue(50M, user);
 
             //mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(importanceField2).SetValue(25M, user);
@@ -866,7 +866,7 @@
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
-            mainElement.ResourcePoolField.Name = "Sales Price";
+            mainElement.DirectIncomeField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Number of Sales";
             
             var sectorField = mainElement.AddField("Sector", ElementFieldTypes.Element);
@@ -879,63 +879,63 @@
             fairShareField.SelectedElement = fairShareElement;
             
             // Resource pool index; use to Sales Price itself
-            mainElement.ResourcePoolField
+            mainElement.DirectIncomeField
                 .AddIndex("Total Cost Index", RatingSortType.LowestToHighest)
                 .AddUserRating(user, userRating);
 
             // Items, cell, user cells
             var itemIndex = 0;
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "Hidden Cosmetics (Profit & Keeper)";
-            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(110M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().DirectIncomeCell.SetValue(110M);
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(cosmeticsItem);
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(restrictedLicense);
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(keeperItem);
 
             itemIndex = 1;
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "Hidden Cosmetics (Nonprofit & Keeper)";
-            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().DirectIncomeCell.SetValue(100M);
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(cosmeticsItem);
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(restrictedLicense);
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(keeperItem);
 
             itemIndex = 2;
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "Hidden Cosmetics (Profit & Sharer)";
-            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(110M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().DirectIncomeCell.SetValue(110M);
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(cosmeticsItem);
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(restrictedLicense);
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(sharerItem);
 
             itemIndex = 3;
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "Hidden Cosmetics (Nonprofit & Sharer)";
-            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().DirectIncomeCell.SetValue(100M);
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(cosmeticsItem);
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(restrictedLicense);
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(sharerItem);
 
             itemIndex = 4;
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "True Cosmetics (Profit & Keeper)";
-            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(110M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().DirectIncomeCell.SetValue(110M);
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(cosmeticsItem);
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(openSourceLicense);
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(keeperItem);
 
             itemIndex = 5;
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "True Cosmetics (Nonprofit & Keeper)";
-            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().DirectIncomeCell.SetValue(100M);
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(cosmeticsItem);
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(openSourceLicense);
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(keeperItem);
 
             itemIndex = 6;
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "True Cosmetics (Profit & Sharer)";
-            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(110M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().DirectIncomeCell.SetValue(110M);
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(cosmeticsItem);
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(openSourceLicense);
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(sharerItem);
 
             itemIndex = 7;
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().Name = "True Cosmetics (Nonprofit & Sharer)";
-            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().ResourcePoolCell.SetValue(100M);
+            mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().DirectIncomeCell.SetValue(100M);
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(cosmeticsItem);
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(openSourceLicense);
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(sharerItem);
@@ -1125,7 +1125,7 @@
 
             // Resource pool field
             if (addResourcePoolField)
-                element.AddField("Resource Pool Field", ElementFieldTypes.ResourcePool, true);
+                element.AddField("Resource Pool Field", ElementFieldTypes.DirectIncome, true);
 
             // Multiplier field
             if (addMultiplierField)
@@ -1150,7 +1150,7 @@
                 var item = element.AddItem(itemName);
 
                 if (addResourcePoolField)
-                    item.AddCell(element.ResourcePoolField).SetValue(100M);
+                    item.AddCell(element.DirectIncomeField).SetValue(100M);
 
                 if (addMultiplierField)
                     item.AddCell(element.MultiplierField).SetValue(0M, user);

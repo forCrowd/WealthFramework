@@ -74,32 +74,32 @@ namespace BusinessObjects
             get { return ElementCellSet.SingleOrDefault(item => item.ElementField.SortOrder == 1); }
         }
 
-        public ElementCell ResourcePoolCell
+        public ElementCell DirectIncomeCell
         {
-            get { return ElementCellSet.SingleOrDefault(item => item.ElementField.ElementFieldType == (byte)ElementFieldTypes.ResourcePool); }
+            get { return ElementCellSet.SingleOrDefault(item => item.ElementField.ElementFieldType == (byte)ElementFieldTypes.DirectIncome); }
         }
 
-        public bool HasResourcePoolCell
+        public bool HasDirectIncomeCell
         {
             // get { return ResourcePoolCell != null && ResourcePoolCell.DecimalValue.HasValue; }
-            get { return ResourcePoolCell != null; }
+            get { return DirectIncomeCell != null; }
         }
 
-        public decimal ResourcePoolValue()
+        public decimal DirectIncomeValue()
         {
-            return HasResourcePoolCell
-                ? ResourcePoolCell.Rating
+            return HasDirectIncomeCell
+                ? DirectIncomeCell.Rating
                 : 0;
         }
 
         public decimal ResourcePoolAddition()
         {
-            return ResourcePoolValue() * Element.ResourcePool.ResourcePoolRatePercentage();
+            return DirectIncomeValue() * Element.ResourcePool.ResourcePoolRatePercentage();
         }
 
         public decimal ResourcePoolValueIncludingAddition()
         {
-            return ResourcePoolValue() + ResourcePoolAddition();
+            return DirectIncomeValue() + ResourcePoolAddition();
         }
 
         public ElementCell MultiplierCell
@@ -149,7 +149,7 @@ namespace BusinessObjects
 
         public decimal TotalResourcePoolValue()
         {
-            return ResourcePoolValue() * MultiplierValue();
+            return DirectIncomeValue() * MultiplierValue();
         }
 
         public decimal TotalResourcePoolAddition()

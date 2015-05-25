@@ -210,17 +210,11 @@
                     return 0;
 
                 var value = self.indexRating() / elementIndexRating;
-                
-                // logger.log(self.Name + ' - indexRatingPercentage', value, null, false);
-
                 return value;
             }
 
             self.indexIncome = function () {
-                var value = self.ElementField.Element.resourcePoolAdditionMultiplied() * self.indexRatingPercentage();
-
-                // logger.log(self.Name + ' - indexIncome', value, null, false);
-
+                var value = self.ElementField.Element.totalResourcePoolAmount() * self.indexRatingPercentage();
                 return value;
             }
         }

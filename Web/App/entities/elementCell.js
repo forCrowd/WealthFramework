@@ -168,9 +168,9 @@
 
                 //if (self._ratingMultiplied === null) {
 
-                //self._ratingMultiplied = self.rating() * multiplierValue;
+                //self._ratingMultiplied = self.rating() * multiplier;
 
-                return self.rating() * self.ElementItem.multiplierValue();
+                return self.rating() * self.ElementItem.multiplier();
                 //}
 
                 //return self._ratingMultiplied;
@@ -262,17 +262,10 @@
 
                     // item's index income / how many times this item has been selected (used) by higher items
                     // TODO Check whether ParentCellSet gets updated when selecting / deselecting an item
-                    return self.SelectedElementItem.indexIncome() / self.SelectedElementItem.ParentCellSet.length;
+                    return self.SelectedElementItem.totalResourcePoolIncome() / self.SelectedElementItem.ParentCellSet.length;
                 } else {
 
                     if (self.ElementField.ElementFieldIndexSet.length > 0) {
-
-                        // ok
-                        //logger.log(self.ElementField.ElementFieldIndexSet[0].indexIncome());
-
-                        // wrong
-                        //logger.log(self.ElementItem.Name + ' - ' + self.aggressiveRatingPercentage());
-
                         return self.ElementField.ElementFieldIndexSet[0].indexIncome() * self.aggressiveRatingPercentage();
                     } else {
                         return 0;

@@ -178,7 +178,7 @@ namespace BusinessObjects
 
         public decimal ResourcePoolCellValue()
         {
-            return MainElement.ElementItemSet.Sum(item => item.ResourcePoolValue());
+            return MainElement.ElementItemSet.Sum(item => item.DirectIncomeValue());
         }
 
         public decimal ResourcePoolValueIncludingAddition()
