@@ -46,10 +46,5 @@ namespace BusinessObjects
 
         public virtual User User { get; set; }
         public virtual ElementFieldIndex ElementFieldIndex { get; set; }
-
-        public string Name
-        {
-            get { return string.Format("{0} - {1}", User.Email, ElementFieldIndex.Name); }
-        }
     }
 }
