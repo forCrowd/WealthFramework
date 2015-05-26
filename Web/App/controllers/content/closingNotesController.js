@@ -13,6 +13,10 @@
         // View model
         var vm = this;
         vm.isLocalhost = $location.$$host === 'localhost';
+        vm.displayBankTransfer = false;
+        vm.toggleBankTransfer = function () {
+            vm.displayBankTransfer = !vm.displayBankTransfer;
+        }
         //vm.isLocalhost = false;
         //logger.log('vm.isLocalhost', vm.isLocalhost);
         //vm.flattrIFrameUrl = $sce.trustAsResourceUrl('//api.flattr.com/button/view/?uid=forCrowd&button=compact&url=' + encodeURIComponent($location.$$absUrl));

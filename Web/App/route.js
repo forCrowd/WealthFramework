@@ -63,7 +63,7 @@
             if (typeof params.key !== 'undefined')
                 key = params.key;
 
-            return '/App/views/content/' + key + '.html?v=025';
+            return '/App/views/content/' + key + '.html?v=026';
         }
     }
 

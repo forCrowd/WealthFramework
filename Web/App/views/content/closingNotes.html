@@ -26,9 +26,20 @@
                 <!--Our first target is to reach to get €500 income per month, so we can dedicate our full time to this project.-->
             </p>
             <p>
-                <a class="btn btn-primary" href="" role="button" target="_blank">Paypal</a>
+                <a class="btn btn-primary" href="" data-ng-click="vm.toggleBankTransfer()">Bank Transfer</a>
+                <!--<a class="btn btn-primary" href="" role="button" target="_blank">Paypal</a>-->
                 <a class="btn btn-primary" href="https://flattr.com/profile/forCrowd" role="button" target="_blank">Flattr</a>
                 <a class="btn btn-primary" href="https://gratipay.com/forCrowd/" role="button" target="_blank">Gratipay</a>
+            </p>
+            <div class="bs-callout bs-callout-info" data-ng-show="vm.displayBankTransfer">
+                <h4>Bank Transfer - Euro</h4>
+                <p>
+                    Bank: Triodos Bank NV, Netherlands<br />
+                    IBAN: NL20 TRIO 0254 4012 87
+                </p>
+            </div>
+            <p id="directTransferDetails" data-ng-show="">
+
             </p>
             <!--<p>
                 <img src="/Content/images/PP_logo_h_100x26.png" alt="Donate" />

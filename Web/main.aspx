@@ -174,7 +174,7 @@
     <!-- Main -->
     <script src="/App/main.js?v=022"></script>
     <script src="/App/logger.js?v=022"></script>
-    <script src="/App/route.js?v=025"></script>
+    <script src="/App/route.js?v=026"></script>
     <script src="/App/authorization.js?v=022"></script>
 
     <!-- Entities -->
@@ -208,7 +208,7 @@
     <script src="/App/controllers/content/fairShareIndexSampleController.js?v=022"></script>
     <script src="/App/controllers/content/indexesPieSampleController.js?v=022"></script>
     <script src="/App/controllers/content/resourcePoolRateSampleController.js?v=022"></script>
-    <script src="/App/controllers/content/closingNotesController.js?v=022"></script>
+    <script src="/App/controllers/content/closingNotesController.js?v=026"></script>
 
     <!-- Account -->
     <script src="/App/controllers/account/loginController.js?v=022"></script>

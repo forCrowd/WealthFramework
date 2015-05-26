@@ -1,5 +1,9 @@
 ﻿### Release Notes
 
+**0.26**
+
+* Closing notes - Payment details updates
+
 **0.25**
 
 * https://github.com/forCrowd/WealthEconomy/issues/34
