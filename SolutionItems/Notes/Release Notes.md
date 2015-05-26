@@ -2,7 +2,7 @@
 
 **0.26**
 
-* Closing notes - Payment details updates
+* https://github.com/forCrowd/WealthEconomy/issues/37
 
 **0.25**
 
