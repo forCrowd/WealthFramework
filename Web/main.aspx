@@ -187,7 +187,7 @@
 
     <!-- breezeJS -->
     <script src="/App/entityManagerFactory.js?v=022"></script>
-    <script src="/App/dataContext.js?v=022"></script>
+    <script src="/App/dataContext.js?v=026"></script>
 
     <script src="/App/services/mainService.js?v=022"></script>
 
@@ -195,8 +195,8 @@
     <script src="/App/includes/manageScripts.js?v=0224"></script>
 
     <!-- Service extensions -->
-    <script src="/App/services/userService.js?v=024"></script>
-    <script src="/App/services/resourcePoolService.js?v=025"></script>
+    <script src="/App/services/userService.js?v=026"></script>
+    <script src="/App/services/resourcePoolService.js?v=026"></script>
 
     <!-- Content -->
     <script src="/App/controllers/content/mainController.js?v=024"></script>
@@ -221,7 +221,7 @@
     <script src="/App/controllers/manage/resourcePool/resourcePoolCustomViewController.js?v=022"></script>
 
     <!-- Directives -->
-    <script src="/App/directives/resourcePoolEditor.js?v=025"></script>
+    <script src="/App/directives/resourcePoolEditor.js?v=026"></script>
 
     <!-- Filters -->
     <script src="/App/filters/angular-percentage.js?v=022"></script>

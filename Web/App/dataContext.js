@@ -159,7 +159,7 @@
                     return promise.then(success).catch(failed);
 
                     function success(result) {
-                        logger.logSuccess('Saved ' + count + ' change(s)', result, false);
+                        //logger.logSuccess('Saved ' + count + ' change(s)', result, false);
                         return result;
                     }
 
@@ -181,11 +181,9 @@
                         var modifiedEntities = manager.getEntities(null, breeze.EntityState.Modified);
                         for (var i = 0; i < modifiedEntities.length; i++) {
                             var entity = modifiedEntities[i];
-                            if (entity.entityAspect.entityState === breeze.EntityState.Modified) {
-                                var rowVersion = entity.RowVersion;
-                                entity.RowVersion = '';
-                                entity.RowVersion = rowVersion;
-                            }
+                            var rowVersion = entity.RowVersion;
+                            entity.RowVersion = '';
+                            entity.RowVersion = rowVersion;
                         }
                         batches.push(modifiedEntities);
 

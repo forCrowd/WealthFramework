@@ -72,7 +72,7 @@
             }
 
             scope.increaseElementMultiplier = function (element) {
-                var result = resourcePoolService.updateElementMultiplier(element, 'increase');
+                var result = userService.updateElementMultiplier(element, 'increase');
                 if (result) {
                     $rootScope.$broadcast('resourcePoolEditor_elementMultiplierIncreased', element);
                     saveChanges();
@@ -80,7 +80,7 @@
             }
 
             scope.decreaseElementMultiplier = function (element) {
-                var result = resourcePoolService.updateElementMultiplier(element, 'decrease');
+                var result = userService.updateElementMultiplier(element, 'decrease');
                 if (result) {
                     $rootScope.$broadcast('resourcePoolEditor_elementMultiplierDecreased', element);
                     saveChanges();
@@ -88,7 +88,7 @@
             }
 
             scope.resetElementMultiplier = function (element) {
-                var result = resourcePoolService.updateElementMultiplier(element, 'reset');
+                var result = userService.updateElementMultiplier(element, 'reset');
                 if (result) {
                     $rootScope.$broadcast('resourcePoolEditor_elementMultiplierReset', element);
                     saveChanges();
@@ -96,63 +96,63 @@
             }
 
             scope.increaseCellIndexRating = function (cell) {
-                var result = resourcePoolService.updateElementCellIndexRating(cell, 'increase');
+                var result = userService.updateElementCellIndexRating(cell, 'increase');
                 if (result) {
                     saveChanges();
                 }
             }
 
             scope.decreaseCellIndexRating = function (cell) {
-                var result = resourcePoolService.updateElementCellIndexRating(cell, 'decrease');
+                var result = userService.updateElementCellIndexRating(cell, 'decrease');
                 if (result) {
                     saveChanges();
                 }
             }
 
             scope.resetCellIndexRating = function (cell) {
-                var result = resourcePoolService.updateElementCellIndexRating(cell, 'reset');
+                var result = userService.updateElementCellIndexRating(cell, 'reset');
                 if (result) {
                     saveChanges();
                 }
             }
 
             scope.increaseIndexRating = function (index) {
-                var result = resourcePoolService.updateElementFieldIndexRating(index, 'increase');
+                var result = userService.updateElementFieldIndexRating(index, 'increase');
                 if (result) {
                     saveChanges();
                 }
             }
 
             scope.decreaseIndexRating = function (index) {
-                var result = resourcePoolService.updateElementFieldIndexRating(index, 'decrease');
+                var result = userService.updateElementFieldIndexRating(index, 'decrease');
                 if (result) {
                     saveChanges();
                 }
             }
 
             scope.resetIndexRating = function (index) {
-                var result = resourcePoolService.updateElementFieldIndexRating(index, 'reset');
+                var result = userService.updateElementFieldIndexRating(index, 'reset');
                 if (result) {
                     saveChanges();
                 }
             }
 
             scope.increaseResourcePoolRate = function () {
-                var result = resourcePoolService.updateResourcePoolRate(scope.resourcePool, 'increase');
+                var result = userService.updateResourcePoolRate(scope.resourcePool, 'increase');
                 if (result) {
                     saveChanges();
                 }
             }
 
             scope.decreaseResourcePoolRate = function () {
-                var result = resourcePoolService.updateResourcePoolRate(scope.resourcePool, 'decrease');
+                var result = userService.updateResourcePoolRate(scope.resourcePool, 'decrease');
                 if (result) {
                     saveChanges();
                 }
             }
 
             scope.resetResourcePoolRate = function () {
-                var result = resourcePoolService.updateResourcePoolRate(scope.resourcePool, 'reset');
+                var result = userService.updateResourcePoolRate(scope.resourcePool, 'reset');
                 if (result) {
                     saveChanges();
                 }
