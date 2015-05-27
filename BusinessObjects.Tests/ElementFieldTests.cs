@@ -9,7 +9,8 @@ namespace BusinessObjects.Tests
         [TestMethod]
         public void NewElementField_ShouldCreate()
         {
-            new ResourcePool("CMRP")
+            var user = new User("User");
+            new ResourcePool(user, "CMRP")
                 .AddElement("Element")
                 .AddField("Field", ElementFieldTypes.String);
         }
@@ -18,7 +19,8 @@ namespace BusinessObjects.Tests
         [ExpectedException(typeof(ArgumentException))]
         public void NewElementWithInvalidConstructor_Exception()
         {
-            new ResourcePool("CMRP")
+            var user = new User("User");
+            new ResourcePool(user, "CMRP")
             .AddElement("Element")
             .AddField("Field", ElementFieldTypes.Boolean);
         }

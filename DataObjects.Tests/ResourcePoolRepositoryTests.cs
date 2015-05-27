@@ -53,7 +53,8 @@ namespace DataObjects.Tests
         public async Task InsertNewResourcePool_IdShouldBeBiggerThanZero()
         {
             // Arrange
-            var resourcePool = new ResourcePool("ResourcePool");
+            var user = new User("User");
+            var resourcePool = new ResourcePool(user, "ResourcePool");
             
             // Act
             resourcePoolRepository.Insert(resourcePool);
@@ -77,7 +78,7 @@ namespace DataObjects.Tests
 
             LoginAs(user);
 
-            var resourcePool = new ResourcePool("ResourcePool");
+            var resourcePool = new ResourcePool(user, "ResourcePool");
             var userResourcePool = resourcePool.AddUserResourcePool(100);
 
             // Act
@@ -106,7 +107,7 @@ namespace DataObjects.Tests
             await Context.SaveChangesAsync();
 
             // Act
-            var resourcePool = new ResourcePool("ResourcePool");
+            var resourcePool = new ResourcePool(user1, "ResourcePool");
             resourcePoolRepository.Insert(resourcePool);
 
             LoginAs(user1);
@@ -145,7 +146,7 @@ namespace DataObjects.Tests
             await Context.SaveChangesAsync();
 
             // Act
-            var resourcePool = new ResourcePool("ResourcePool");
+            var resourcePool = new ResourcePool(user1, "ResourcePool");
             resourcePoolRepository.Insert(resourcePool);
 
             LoginAs(user1);

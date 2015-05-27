@@ -9,15 +9,15 @@ namespace BusinessObjects.Tests
         [TestMethod]
         public void NewUserElementFieldIndex_ShouldCreate()
         {
-            var newUser = new User("Email");
-
-            var newResourcePool = new ResourcePool("CMRP");
-
-            var newIndex = newResourcePool
+            var user = new User("Email");
+            
+            var resourcePool = new ResourcePool(user, "CMRP");
+            
+            var newIndex = resourcePool
                 .AddElement("Element")
                 .AddField("Field", ElementFieldTypes.Boolean, true)
                 .AddIndex("Index", RatingSortType.HighestToLowest)
-                .AddUserRating(newUser, 0);
+                .AddUserRating(user, 0);
         }
     }
 }

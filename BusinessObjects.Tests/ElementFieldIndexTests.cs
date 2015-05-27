@@ -10,7 +10,8 @@ namespace BusinessObjects.Tests
         [TestMethod]
         public void NewElementFieldIndex_ShouldCreate()
         {
-            new ResourcePool("CMRP")
+            var user = new User("User");
+            new ResourcePool(user, "CMRP")
                 .AddElement("Element")
                 .AddField("Field", ElementFieldTypes.Boolean, true)
                 .AddIndex("Index", RatingSortType.HighestToLowest);
@@ -20,7 +21,8 @@ namespace BusinessObjects.Tests
         [ExpectedException(typeof(ArgumentNullOrDefaultException))]
         public void NewElementFieldIndexWithInvalidConstructor_Exception()
         {
-            new ResourcePool("CMRP")
+            var user = new User("User");
+            new ResourcePool(user, "CMRP")
                 .AddElement("Element")
                 .AddField("Field", ElementFieldTypes.String)
                 .AddIndex(string.Empty, RatingSortType.HighestToLowest);
@@ -30,7 +32,8 @@ namespace BusinessObjects.Tests
         [ExpectedException(typeof(ArgumentException))]
         public void NewElementFieldIndexOnStringType_Exception()
         {
-            new ResourcePool("CMRP")
+            var user = new User("User");
+            new ResourcePool(user, "CMRP")
                 .AddElement("Element")
                 .AddField("Field", ElementFieldTypes.String)
                 .AddIndex("Index", RatingSortType.HighestToLowest);

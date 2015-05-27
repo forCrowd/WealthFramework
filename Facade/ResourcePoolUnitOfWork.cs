@@ -8,16 +8,6 @@
 
     public partial class ResourcePoolUnitOfWork
     {
-        public async Task<int> InsertAsync(ResourcePool entity, int userId)
-        {
-            // Sample resource pool could only be created during DatabaseInitialization at the moment
-            entity.IsSample = false;
-
-            // TODO Default actions, like creating UserResourcePool?
-
-            return await base.InsertAsync(entity);
-        }
-
         public override async Task<int> DeleteAsync(params object[] id)
         {
             var resourcePoolId = (int)id[0];

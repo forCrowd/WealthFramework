@@ -24,11 +24,13 @@ namespace BusinessObjects
             //FilterSettings = new ResourcePoolFilterSettings();
         }
 
-        public ResourcePool(string name)
+        public ResourcePool(User user, string name)
             : this()
         {
+            Validations.ArgumentNullOrDefault(user, "user");
             Validations.ArgumentNullOrDefault(name, "name");
 
+            User = user;
             Name = name;
             EnableResourcePoolAddition = true;
             EnableSubtotals = true;
@@ -38,6 +40,8 @@ namespace BusinessObjects
         [DisplayOnEditView(false)]
         public int Id { get; set; }
 
+        public int UserId { get; set; }
+
         [Required]
         [StringLength(50)]
         [Display(Name = "Resource Pool")]
@@ -46,7 +50,6 @@ namespace BusinessObjects
         [Display(Name = "Initial Value")]
         [DisplayOnListView(false)]
         [DisplayOnEditView(true)]
-        [Obsolete("Doesn't work as expected, remove later?")]
         public decimal InitialValue { get; set; }
 
         [Display(Name = "Main Element")]
@@ -64,10 +67,6 @@ namespace BusinessObjects
 
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
-        public bool IsSample { get; set; }
-
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public decimal? ResourcePoolRateAverage { get; private set; }
 
@@ -76,6 +75,7 @@ namespace BusinessObjects
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public int? ResourcePoolRateCount { get; private set; }
 
+        public virtual User User { get; set; }
         public virtual Element MainElement { get; set; }
         public virtual ICollection<Element> ElementSet { get; set; }
         public virtual ICollection<UserResourcePool> UserResourcePoolSet { get; set; }

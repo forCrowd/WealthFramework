@@ -9,7 +9,8 @@ namespace BusinessObjects.Tests
         [TestMethod]
         public void NewElementItem_ShouldCreate()
         {
-            new ResourcePool("CMRP")
+            var user = new User("User");
+            new ResourcePool(user, "CMRP")
                 .AddElement("Element")
                 .AddItem("Item");
         }

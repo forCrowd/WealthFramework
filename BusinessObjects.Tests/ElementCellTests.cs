@@ -9,7 +9,8 @@ namespace BusinessObjects.Tests
         [TestMethod]
         public void NewElementCell_ShouldCreate()
         {
-            var newElement = new ResourcePool("CMRP")
+            var user = new User("User");
+            var newElement = new ResourcePool(user, "CMRP")
                 .AddElement("Element");
 
             var newField = newElement.AddField("Field", ElementFieldTypes.String);

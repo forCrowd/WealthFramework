@@ -9,7 +9,8 @@ namespace BusinessObjects.Tests
         [TestMethod]
         public void NewElement_ShouldCreate()
         {
-            new ResourcePool("CMRP")
+            var user = new User("User");
+            new ResourcePool(user, "CMRP")
                 .AddElement("Element");
         }
 
@@ -17,7 +18,8 @@ namespace BusinessObjects.Tests
         public void AddField_SortOrder_ShouldCalculate()
         {
             // Arrange
-            var element = new ResourcePool("CMRP")
+            var user = new User("User");
+            var element = new ResourcePool(user, "CMRP")
                  .AddElement("Element");
 
             // Act

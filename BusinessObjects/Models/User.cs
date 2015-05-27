@@ -16,6 +16,7 @@ namespace BusinessObjects
         [Obsolete("Parameterless constructors used by OData & EF. Make them private when possible.")]
         public User()
         {
+            ResourcePoolSet = new HashSet<ResourcePool>();
             UserResourcePoolSet = new HashSet<UserResourcePool>();
             UserElementFieldIndexSet = new HashSet<UserElementFieldIndex>();
             UserElementCellSet = new HashSet<UserElementCell>();
@@ -63,6 +64,7 @@ namespace BusinessObjects
         [DisplayOnEditView(false)]
         public byte[] RowVersion { get; set; }
 
+        public virtual ICollection<ResourcePool> ResourcePoolSet { get; set; }
         public virtual ICollection<UserResourcePool> UserResourcePoolSet { get; set; }
         public virtual ICollection<UserElementFieldIndex> UserElementFieldIndexSet { get; set; }
         public virtual ICollection<UserElementCell> UserElementCellSet { get; set; }

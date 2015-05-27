@@ -150,30 +150,6 @@ namespace DataObjects.Tests
             Assert.IsTrue(isInRole);
         }
 
-        [TestMethod]
-        public async Task ResetSampleDataAsync()
-        {
-            // Arrange
-            var sourceUser = await userStore.FindByIdAsync(2); // Already created in seed method
-            var targetUser = GenerateUser();
-            // await userStore.SaveChangesAsync();
-
-            //await userStore.CopySampleDataAsync(sourceUser.Id, targetUser);
-            await userStore.SaveChangesAsync();
-
-            // TODO Improve this test
-            // To be able to simulate a real situation, ResetSampleDataAsync method has to run on a brand new Context
-            RefreshUserStore();
-
-            // Act
-            //await userStore.ResetSampleDataAsync(targetUser.Id, sourceUser.Id);
-            await userStore.SaveChangesAsync();
-
-            // Assert
-            var userResourcePools = targetUser.UserResourcePoolSet.Where(item => item.ResourcePool.IsSample);
-            Assert.IsTrue(userResourcePools.Any());
-        }
-
         User GenerateUser()
         {
             var email = string.Format("user_{0:yyyyMMdd_HHmmssfff}@wealth.azurewebsites.com", DateTime.Now);

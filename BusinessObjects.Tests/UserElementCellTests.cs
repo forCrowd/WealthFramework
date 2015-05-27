@@ -10,8 +10,8 @@ namespace BusinessObjects.Tests
         public void NewUserElementCell_ShouldCreate()
         {
             var newUser = new User("Email");
-            
-            var newElement = new ResourcePool("CMRP")
+
+            var newElement = new ResourcePool(newUser, "CMRP")
                 .AddElement("Element");
 
             var newField = newElement.AddField("Field", ElementFieldTypes.Integer, false);

@@ -9,10 +9,9 @@ namespace BusinessObjects.Tests
         [TestMethod]
         public void NewUserResourcePool_ShouldCreate()
         {
-            var newUser = new User("Email");
-
-            var newResourcePool = new ResourcePool("CMRP")
-                .AddUserResourcePool(newUser, 0);
+            var user = new User("Email");
+            var resourcePool = new ResourcePool(user, "CMRP")
+                .AddUserResourcePool(user, 0);
         }
     }
 }

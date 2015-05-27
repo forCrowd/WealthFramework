@@ -9,7 +9,9 @@ namespace BusinessObjects.Tests
         [TestMethod]
         public void NewResourcePool_ShouldCreate()
         {
-            new ResourcePool("Default");
+            // Arrange + act
+            var user = new User("User");
+            new ResourcePool(user, "Default");
         }
 
         [TestMethod]
@@ -18,7 +20,7 @@ namespace BusinessObjects.Tests
             // Arrange + act
             var user = new User("User");
 
-            var resourcePool = new ResourcePool("Default");
+            var resourcePool = new ResourcePool(user, "Default");
             resourcePool.AddUserResourcePool(user, 100);
 
             var organization = resourcePool.AddElement("Organization");
@@ -114,7 +116,7 @@ namespace BusinessObjects.Tests
             // Arrange + act
             var user = new User("User");
 
-            var resourcePool = new ResourcePool("Default");
+            var resourcePool = new ResourcePool(user, "Default");
             resourcePool.AddUserResourcePool(user, 100);
 
             var organization = resourcePool.AddElement("Organization");
@@ -183,7 +185,7 @@ namespace BusinessObjects.Tests
             var user1 = new User("User 1");
             var user2 = new User("User 2");
 
-            var resourcePool = new ResourcePool("Default");
+            var resourcePool = new ResourcePool(user1, "Default");
             resourcePool.AddUserResourcePool(user1, 100);
 
             var organization = resourcePool.AddElement("Organization");
