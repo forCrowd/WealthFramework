@@ -73,11 +73,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public decimal? ResourcePoolRateAverage { get; private set; }
-
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public int? ResourcePoolRateCount { get; private set; }
 
         public virtual User User { get; set; }
