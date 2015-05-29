@@ -1,12 +1,12 @@
-namespace Web.Controllers.OData
+namespace forCrowd.WealthEconomy.Web.Controllers.OData
 {
-    using BusinessObjects;
+    using forCrowd.WealthEconomy.BusinessObjects;
     using System.Linq;
     using System.Net;
     using System.Threading.Tasks;
     using System.Web.Http;
     using System.Web.Http.OData;
-    using Web.Controllers.Extensions;
+    using forCrowd.WealthEconomy.Web.Controllers.Extensions;
 
     public partial class UsersController
     {

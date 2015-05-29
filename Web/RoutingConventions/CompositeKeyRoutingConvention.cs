@@ -9,7 +9,7 @@ using System.Web.Http.Controllers;
 using System.Web.Http.OData.Routing;
 using System.Web.Http.OData.Routing.Conventions;
 
-namespace Web.RoutingConventions
+namespace forCrowd.WealthEconomy.Web.RoutingConventions
 {
     // This is a sample implementation of routing convention to support composit keys.
     // The implementation will fail if key value has ',' in it. Please implement your own 

@@ -7,8 +7,8 @@
     <ProjectGuid>{72ECCF0F-6E65-4C20-9B48-ABD93B4C3142}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Facade</RootNamespace>
-    <AssemblyName>Facade</AssemblyName>
+    <RootNamespace>forCrowd.WealthEconomy.Facade</RootNamespace>
+    <AssemblyName>forCrowd.WealthEconomy.Facade</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>

@@ -1,6 +1,6 @@
-﻿namespace Facade
+﻿namespace forCrowd.WealthEconomy.Facade
 {
-    using BusinessObjects;
+    using forCrowd.WealthEconomy.BusinessObjects;
     using System.Net.Mail;
     using System.Net.Mime;
     using System.Threading.Tasks;
@@ -38,13 +38,13 @@
                 return;
 
             // 2. Alert email address
-            var alertEmailAddress = Framework.AppSettings.AlertEmailAddress;
+            var alertEmailAddress = forCrowd.WealthEconomy.Framework.AppSettings.AlertEmailAddress;
             if (string.IsNullOrWhiteSpace(alertEmailAddress))
                 return;
 
             var message = new MailMessage();
             message.From = new MailAddress("contact@forcrowd.org", "forCrowd Foundation");
-            message.To.Add(new MailAddress(Framework.AppSettings.AlertEmailAddress));
+            message.To.Add(new MailAddress(forCrowd.WealthEconomy.Framework.AppSettings.AlertEmailAddress));
 
             message.Subject = "Registration Alert";
 

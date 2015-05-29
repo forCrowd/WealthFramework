@@ -1,4 +1,4 @@
-﻿using BusinessObjects;
+﻿using forCrowd.WealthEconomy.BusinessObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Data.Entity.Validation;
@@ -9,7 +9,7 @@ using System.Security.Claims;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace DataObjects.Tests
+namespace forCrowd.WealthEconomy.DataObjects.Tests
 {
     [TestClass]
     public class ResourcePoolRepositoryTests : BaseTests

@@ -1,6 +1,6 @@
-﻿namespace DataObjects
+﻿namespace forCrowd.WealthEconomy.DataObjects
 {
-    using BusinessObjects;
+    using forCrowd.WealthEconomy.BusinessObjects;
     using System;
     using System.Collections.Generic;
     using System.Linq;

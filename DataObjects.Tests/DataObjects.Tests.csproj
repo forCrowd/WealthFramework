@@ -6,8 +6,8 @@
     <ProjectGuid>{1FD6170A-F2FC-4B96-A8B1-BC48E60246F0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DataObjects.Tests</RootNamespace>
-    <AssemblyName>DataObjects.Tests</AssemblyName>
+    <RootNamespace>forCrowd.WealthEconomy.DataObjects.Tests</RootNamespace>
+    <AssemblyName>forCrowd.WealthEconomy.DataObjects.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>

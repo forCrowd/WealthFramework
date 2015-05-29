@@ -1,14 +1,14 @@
-﻿using BusinessObjects;
-using Facade;
+﻿using forCrowd.WealthEconomy.BusinessObjects;
+using forCrowd.WealthEconomy.Facade;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using Web.Controllers.Extensions;
+using forCrowd.WealthEconomy.Web.Controllers.Extensions;
 
-namespace Web.Controllers.Api
+namespace forCrowd.WealthEconomy.Web.Controllers.Api
 {
     [CustomAuthorize]
     public abstract class BaseApiController : ApiController

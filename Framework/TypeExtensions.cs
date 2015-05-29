@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Framework
+namespace forCrowd.WealthEconomy.Framework
 {
     public static class TypeExtensions
     {

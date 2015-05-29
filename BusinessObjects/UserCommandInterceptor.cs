@@ -5,7 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading;
 
-namespace BusinessObjects
+namespace forCrowd.WealthEconomy.BusinessObjects
 {
     /// <summary>
     /// Custom implementation of <see cref="IDbCommandInterceptor"/>.

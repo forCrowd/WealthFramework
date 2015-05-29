@@ -3,7 +3,7 @@ using System.Text;
 using System.Web;
 using System.Web.Http.Description;
 
-namespace Web.Areas.HelpPage
+namespace forCrowd.WealthEconomy.Web.Areas.HelpPage
 {
     public static class ApiDescriptionExtensions
     {

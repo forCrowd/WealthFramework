@@ -1,6 +1,6 @@
-namespace Web.Controllers.OData
+namespace forCrowd.WealthEconomy.Web.Controllers.OData
 {
-    using Facade;
+    using forCrowd.WealthEconomy.Facade;
     using System.Data.Entity;
     using System.Net;
     using System.Threading.Tasks;

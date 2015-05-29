@@ -1,4 +1,4 @@
-﻿namespace BusinessObjects
+﻿namespace forCrowd.WealthEconomy.BusinessObjects
 {
     using Microsoft.AspNet.Identity.EntityFramework;
     using System;

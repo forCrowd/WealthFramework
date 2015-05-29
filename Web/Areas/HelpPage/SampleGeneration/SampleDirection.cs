@@ -1,4 +1,4 @@
-namespace Web.Areas.HelpPage
+namespace forCrowd.WealthEconomy.Web.Areas.HelpPage
 {
     /// <summary>
     /// Indicates whether the sample is used for request or response

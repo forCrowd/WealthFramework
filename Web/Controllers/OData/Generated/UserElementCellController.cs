@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Web.Controllers.OData
+namespace forCrowd.WealthEconomy.Web.Controllers.OData
 {
-    using BusinessObjects;
-    using Facade;
+    using forCrowd.WealthEconomy.BusinessObjects;
+    using forCrowd.WealthEconomy.Facade;
     using Microsoft.AspNet.Identity;
     using System;
     using System.Data.Entity;

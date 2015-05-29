@@ -1,6 +1,6 @@
-﻿namespace DataObjects
+﻿namespace forCrowd.WealthEconomy.DataObjects
 {
-    using BusinessObjects;
+    using forCrowd.WealthEconomy.BusinessObjects;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using System.Threading.Tasks;

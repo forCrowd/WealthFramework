@@ -1,7 +1,7 @@
-namespace BusinessObjects
+namespace forCrowd.WealthEconomy.BusinessObjects
 {
-    using BusinessObjects.Attributes;
-    using Framework;
+    using forCrowd.WealthEconomy.BusinessObjects.Attributes;
+    using forCrowd.WealthEconomy.Framework;
     using System;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;

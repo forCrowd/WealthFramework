@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 
-namespace Web.Tests
+namespace forCrowd.WealthEconomy.Web.Tests
 {
     [TestClass]
     public class AccountTests

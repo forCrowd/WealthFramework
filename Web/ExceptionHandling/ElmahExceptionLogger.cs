@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http.ExceptionHandling;
 
-namespace Web.ExceptionHandling
+namespace forCrowd.WealthEconomy.Web.ExceptionHandling
 {
     public class ElmahExceptionLogger : ExceptionLogger
     {

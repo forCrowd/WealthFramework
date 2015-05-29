@@ -1,10 +1,10 @@
 ﻿<#@ assembly name="System.ComponentModel.DataAnnotations"#>
-<#@ assembly name="$(SolutionDir)BusinessObjects\bin\Debug\BusinessObjects.dll"#>
-<#@ assembly name="$(SolutionDir)DataObjects\bin\Debug\DataObjects.dll"#>
+<#@ assembly name="$(SolutionDir)BusinessObjects\bin\Debug\forCrowd.WealthEconomy.BusinessObjects.dll"#>
+<#@ assembly name="$(SolutionDir)DataObjects\bin\Debug\forCrowd.WealthEconomy.DataObjects.dll"#>
 <#@ import namespace="System.ComponentModel.DataAnnotations"#>
-<#@ import namespace="BusinessObjects"#>
-<#@ import namespace="BusinessObjects.Attributes"#>
-<#@ import namespace="DataObjects"#>
+<#@ import namespace="forCrowd.WealthEconomy.BusinessObjects"#>
+<#@ import namespace="forCrowd.WealthEconomy.BusinessObjects.Attributes"#>
+<#@ import namespace="forCrowd.WealthEconomy.DataObjects"#>
 <#@ include file="EF6.Utility.ttinclude"#>
 <#+
 
@@ -211,7 +211,7 @@ public class CodeStringGenerator
                 inHeader ? Environment.NewLine : "",
                 includeCollections ? (Environment.NewLine + "using System.Collections.Generic;") : "",
                 includeDataAnnotations ? (Environment.NewLine + "using System.ComponentModel.DataAnnotations;") : "",
-                includeBusinessObjectsMetadata ? (Environment.NewLine + "using BusinessObjects.Metadata;") : "",
+                includeBusinessObjectsMetadata ? (Environment.NewLine + "using forCrowd.WealthEconomy.BusinessObjects.Metadata;") : "",
                 inHeader ? "" : Environment.NewLine)
             : "";
     }
@@ -594,9 +594,9 @@ public class TypeMapper
 		// DbContext namespace shows "DataObjects.[Entity]", intead of "Business."
 		// Because of this issue, entityTypeName doesn't help and BusinessObjects assembly needs to be called in a bit weird way.
 		// TODO Make it better!
-		var assembly = typeof(BusinessObjects.IEntity).Assembly;
+		var assembly = typeof(forCrowd.WealthEconomy.BusinessObjects.IEntity).Assembly;
 		var types = assembly.GetTypes();
-		return types.Single(type => type.Name == entityTypeName && type.Namespace == "BusinessObjects");
+		return types.Single(type => type.Name == entityTypeName && type.Namespace == "forCrowd.WealthEconomy.BusinessObjects");
 	}
 
 	public IEnumerable<PropertyInfo> GetBusinessObjectProperties(string entityTypeName)

@@ -1,7 +1,7 @@
-﻿namespace Facade
+﻿namespace forCrowd.WealthEconomy.Facade
 {
-    using BusinessObjects;
-    using DataObjects;
+    using forCrowd.WealthEconomy.BusinessObjects;
+    using forCrowd.WealthEconomy.DataObjects;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using System.Threading.Tasks;

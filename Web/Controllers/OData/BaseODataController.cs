@@ -1,5 +1,5 @@
-﻿using BusinessObjects;
-using Facade;
+﻿using forCrowd.WealthEconomy.BusinessObjects;
+using forCrowd.WealthEconomy.Facade;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System.Linq;
@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.OData;
-using Web.Controllers.Extensions;
+using forCrowd.WealthEconomy.Web.Controllers.Extensions;
 
-namespace Web.Controllers.OData
+namespace forCrowd.WealthEconomy.Web.Controllers.OData
 {
     [CustomAuthorize]
     public abstract class BaseODataController : ODataController

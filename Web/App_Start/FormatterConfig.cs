@@ -1,6 +1,6 @@
 ﻿using System.Net.Http.Formatting;
 
-namespace Web
+namespace forCrowd.WealthEconomy.Web
 {
     public class FormatterConfig
     {

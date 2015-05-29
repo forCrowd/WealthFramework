@@ -1,9 +1,9 @@
-﻿using BusinessObjects.Attributes;
+﻿using forCrowd.WealthEconomy.BusinessObjects.Attributes;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Permissions;
 
-namespace BusinessObjects
+namespace forCrowd.WealthEconomy.BusinessObjects
 {
     [PrincipalPermission(SecurityAction.Demand, Authenticated = false)]
     public abstract class BaseEntity : IEntity

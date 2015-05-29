@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace Web
+namespace forCrowd.WealthEconomy.Web
 {
     public class FilterConfig
     {

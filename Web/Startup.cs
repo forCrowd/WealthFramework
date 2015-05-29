@@ -1,9 +1,9 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartup(typeof(Web.Startup))]
+[assembly: OwinStartup(typeof(forCrowd.WealthEconomy.Web.Startup))]
 
-namespace Web
+namespace forCrowd.WealthEconomy.Web
 {
     public partial class Startup
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace Web.Areas.HelpPage.ModelDescriptions
+namespace forCrowd.WealthEconomy.Web.Areas.HelpPage.ModelDescriptions
 {
     /// <summary>
     /// Describes a type model.

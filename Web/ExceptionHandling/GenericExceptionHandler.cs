@@ -1,8 +1,8 @@
 ﻿using System.Net.Http;
 using System.Web.Http.ExceptionHandling;
-using Web.Results;
+using forCrowd.WealthEconomy.Web.Results;
 
-namespace Web.ExceptionHandling
+namespace forCrowd.WealthEconomy.Web.ExceptionHandling
 {
     public class GenericExceptionHandler : ExceptionHandler
     {

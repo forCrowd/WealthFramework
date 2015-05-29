@@ -7,8 +7,8 @@
     <ProjectGuid>{2EF17CE6-4A04-42AB-8DD9-EA72DA57F8D2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DataObjects</RootNamespace>
-    <AssemblyName>DataObjects</AssemblyName>
+    <RootNamespace>forCrowd.WealthEconomy.DataObjects</RootNamespace>
+    <AssemblyName>forCrowd.WealthEconomy.DataObjects</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>

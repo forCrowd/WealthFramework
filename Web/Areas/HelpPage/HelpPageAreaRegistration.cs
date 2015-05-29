@@ -1,7 +1,7 @@
 using System.Web.Http;
 using System.Web.Mvc;
 
-namespace Web.Areas.HelpPage
+namespace forCrowd.WealthEconomy.Web.Areas.HelpPage
 {
     public class HelpPageAreaRegistration : AreaRegistration
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace Web.Areas.HelpPage.ModelDescriptions
+namespace forCrowd.WealthEconomy.Web.Areas.HelpPage.ModelDescriptions
 {
     public interface IModelDocumentationProvider
     {

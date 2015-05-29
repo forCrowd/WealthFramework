@@ -1,7 +1,7 @@
-﻿using BusinessObjects;
+﻿using forCrowd.WealthEconomy.BusinessObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace DataObjects.Tests
+namespace forCrowd.WealthEconomy.DataObjects.Tests
 {
     [TestClass]
     public static class AssemblyInitializer

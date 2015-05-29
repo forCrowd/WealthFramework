@@ -1,4 +1,4 @@
-﻿using BusinessObjects;
+﻿using forCrowd.WealthEconomy.BusinessObjects;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
@@ -6,10 +6,10 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
-using Web.Controllers.Extensions;
-using Web.Models;
+using forCrowd.WealthEconomy.Web.Controllers.Extensions;
+using forCrowd.WealthEconomy.Web.Models;
 
-namespace Web.Controllers.Api
+namespace forCrowd.WealthEconomy.Web.Controllers.Api
 {
     [RoutePrefix("api/Account")]
     public class AccountController : BaseApiController

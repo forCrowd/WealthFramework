@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using System.Threading;
 
-namespace Framework
+namespace forCrowd.WealthEconomy.Framework
 {
     public static class Security
     {

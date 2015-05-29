@@ -7,9 +7,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DataObjects
+namespace forCrowd.WealthEconomy.DataObjects
 {
-    using BusinessObjects;
+    using forCrowd.WealthEconomy.BusinessObjects;
 
     public partial class UserElementFieldRepository : BaseRepository<UserElementField>
     {

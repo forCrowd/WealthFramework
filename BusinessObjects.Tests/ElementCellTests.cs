@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace BusinessObjects.Tests
+namespace forCrowd.WealthEconomy.BusinessObjects.Tests
 {
     [TestClass]
     public class ElementCellTests

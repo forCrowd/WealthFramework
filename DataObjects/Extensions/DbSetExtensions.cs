@@ -1,6 +1,6 @@
-﻿namespace DataObjects.Extensions
+﻿namespace forCrowd.WealthEconomy.DataObjects.Extensions
 {
-    using BusinessObjects;
+    using forCrowd.WealthEconomy.BusinessObjects;
     using System;
     using System.Data.Entity;
     using System.Linq;

@@ -7,13 +7,13 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
-using Web.Providers;
-using Web.Models;
-using Facade;
+using forCrowd.WealthEconomy.Web.Providers;
+using forCrowd.WealthEconomy.Web.Models;
+using forCrowd.WealthEconomy.Facade;
 using Microsoft.AspNet.Identity.Owin;
-using BusinessObjects;
+using forCrowd.WealthEconomy.BusinessObjects;
 
-namespace Web
+namespace forCrowd.WealthEconomy.Web
 {
     public partial class Startup
     {

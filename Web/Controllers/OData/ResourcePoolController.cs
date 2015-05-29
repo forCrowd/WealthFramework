@@ -1,7 +1,7 @@
-namespace Web.Controllers.OData
+namespace forCrowd.WealthEconomy.Web.Controllers.OData
 {
-    using BusinessObjects;
-    using Web.Controllers.Extensions;
+    using forCrowd.WealthEconomy.BusinessObjects;
+    using forCrowd.WealthEconomy.Web.Controllers.Extensions;
     using System.Data.Entity.Infrastructure;
     using System.Linq;
     using System.Threading.Tasks;

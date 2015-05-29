@@ -1,6 +1,6 @@
 ﻿using System.Web.Optimization;
 
-namespace Web
+namespace forCrowd.WealthEconomy.Web
 {
     [System.Obsolete("CURRENTLY NOT IN USE")]
     public class BundleConfig

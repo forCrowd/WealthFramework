@@ -1,7 +1,7 @@
-﻿namespace DataObjects
+﻿namespace forCrowd.WealthEconomy.DataObjects
 {
-    using BusinessObjects;
-    using DataObjects.Migrations;
+    using forCrowd.WealthEconomy.BusinessObjects;
+    using forCrowd.WealthEconomy.DataObjects.Migrations;
     using Microsoft.AspNet.Identity;
     using System;
     using System.Data.Entity;

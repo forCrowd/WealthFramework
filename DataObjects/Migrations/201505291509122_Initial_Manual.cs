@@ -1,4 +1,4 @@
-namespace DataObjects.Migrations
+namespace forCrowd.WealthEconomy.DataObjects.Migrations
 {
     using System.Data.Entity.Migrations;
     using System.Text;

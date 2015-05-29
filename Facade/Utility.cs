@@ -1,8 +1,8 @@
-﻿using BusinessObjects;
-using DataObjects;
+﻿using forCrowd.WealthEconomy.BusinessObjects;
+using forCrowd.WealthEconomy.DataObjects;
 using Microsoft.Data.Edm;
 
-namespace Facade
+namespace forCrowd.WealthEconomy.Facade
 {
     // Misc. method for the application
     // TODO Categorize them better ?!

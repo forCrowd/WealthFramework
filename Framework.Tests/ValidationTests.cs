@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Framework.Exceptions;
+using forCrowd.WealthEconomy.Framework.Exceptions;
 
-namespace Framework.Tests
+namespace forCrowd.WealthEconomy.Framework.Tests
 {
     [TestClass]
     public class ValidationTests
@@ -110,7 +110,7 @@ namespace Framework.Tests
         {
             try
             {
-                Framework.Validations.ArgumentNullOrDefault(test, "test");
+                forCrowd.WealthEconomy.Framework.Validations.ArgumentNullOrDefault(test, "test");
 
                 if (isNullOrDefault)
                     Assert.Fail();
@@ -129,7 +129,7 @@ namespace Framework.Tests
         {
             try
             {
-                Framework.Validations.ArgumentNullOrDefault(test, "test");
+                forCrowd.WealthEconomy.Framework.Validations.ArgumentNullOrDefault(test, "test");
 
                 if (isNullOrDefault)
                     Assert.Fail();

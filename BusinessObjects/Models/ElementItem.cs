@@ -1,7 +1,7 @@
-namespace BusinessObjects
+namespace forCrowd.WealthEconomy.BusinessObjects
 {
-    using BusinessObjects.Attributes;
-    using Framework;
+    using forCrowd.WealthEconomy.BusinessObjects.Attributes;
+    using forCrowd.WealthEconomy.Framework;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -10,7 +10,7 @@ namespace BusinessObjects
     using System.Linq;
 
     [DisplayName("Element Item")]
-    [BusinessObjects.Attributes.DefaultProperty("Name")]
+    [forCrowd.WealthEconomy.BusinessObjects.Attributes.DefaultProperty("Name")]
     // [ODataControllerAuthorization("Administrator")]
     public class ElementItem : BaseEntity
     {

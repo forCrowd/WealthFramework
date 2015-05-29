@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BusinessObjects.Attributes
+namespace forCrowd.WealthEconomy.BusinessObjects.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class DefaultPropertyAttribute : Attribute

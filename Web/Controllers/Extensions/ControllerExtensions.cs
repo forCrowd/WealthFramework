@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using System.Web.Http;
 
-namespace Web.Controllers.Extensions
+namespace forCrowd.WealthEconomy.Web.Controllers.Extensions
 {
     public static class ControllerExtensions
     {

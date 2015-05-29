@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Web.Http;
-using Web.Results;
+using forCrowd.WealthEconomy.Web.Results;
 
-namespace Web.Controllers.Api.Test
+namespace forCrowd.WealthEconomy.Web.Controllers.Api.Test
 {
     /// <summary>
     /// A dummy controller to test IHttpAction results 

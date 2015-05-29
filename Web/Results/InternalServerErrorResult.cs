@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-namespace Web.Results
+namespace forCrowd.WealthEconomy.Web.Results
 {
     public class InternalServerErrorResult : IHttpActionResult
     {

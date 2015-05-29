@@ -6,8 +6,8 @@
     <ProjectGuid>{A19A6B9B-99C0-4EEF-8312-2272CCC428FE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BusinessObjects.Tests</RootNamespace>
-    <AssemblyName>BusinessObjects.Tests</AssemblyName>
+    <RootNamespace>forCrowd.WealthEconomy.BusinessObjects.Tests</RootNamespace>
+    <AssemblyName>forCrowd.WealthEconomy.BusinessObjects.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>

@@ -1,6 +1,6 @@
 ﻿using System.Configuration;
 
-namespace Framework
+namespace forCrowd.WealthEconomy.Framework
 {
     public static class AppSettings
     {

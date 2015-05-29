@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Web.Models
+namespace forCrowd.WealthEconomy.Web.Models
 {
     // Models used as parameters to AccountController actions.
 

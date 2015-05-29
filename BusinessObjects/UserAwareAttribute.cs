@@ -2,7 +2,7 @@
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 
-namespace BusinessObjects
+namespace forCrowd.WealthEconomy.BusinessObjects
 {
     /// <summary>
     /// Attribute used to mark all entities which should be filtered based on userId

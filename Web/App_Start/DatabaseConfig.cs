@@ -1,6 +1,6 @@
-﻿using Facade;
+﻿using forCrowd.WealthEconomy.Facade;
 
-namespace Web
+namespace forCrowd.WealthEconomy.Web
 {
     public static class DatabaseConfig
     {

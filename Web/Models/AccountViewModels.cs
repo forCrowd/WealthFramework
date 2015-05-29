@@ -1,4 +1,4 @@
-﻿namespace Web.Models
+﻿namespace forCrowd.WealthEconomy.Web.Models
 {
     // Models returned by AccountController actions.
 

@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Framework.Exceptions;
+using forCrowd.WealthEconomy.Framework.Exceptions;
 
-namespace BusinessObjects.Tests
+namespace forCrowd.WealthEconomy.BusinessObjects.Tests
 {
     [TestClass]
     public class ElementFieldIndexTests

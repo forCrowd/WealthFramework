@@ -1,4 +1,4 @@
-﻿using Facade;
+﻿using forCrowd.WealthEconomy.Facade;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Web.Providers
+namespace forCrowd.WealthEconomy.Web.Providers
 {
     public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
     {

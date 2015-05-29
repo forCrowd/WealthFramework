@@ -1,4 +1,4 @@
-namespace BusinessObjects
+namespace forCrowd.WealthEconomy.BusinessObjects
 {
     public enum RatingSortType : byte
     {

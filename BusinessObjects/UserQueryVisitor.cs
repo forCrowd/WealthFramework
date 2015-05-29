@@ -2,7 +2,7 @@
 using System.Data.Entity.Core.Common.CommandTrees;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 
-namespace BusinessObjects
+namespace forCrowd.WealthEconomy.BusinessObjects
 {
     /// <summary>
     /// Visitor pattern implementation class that adds filtering for userId column if applicable

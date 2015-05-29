@@ -10,15 +10,15 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using BusinessObjects;
-using Facade;
-using DataObjects;
+using forCrowd.WealthEconomy.BusinessObjects;
+using forCrowd.WealthEconomy.Facade;
+using forCrowd.WealthEconomy.DataObjects;
 
-namespace Web
+namespace forCrowd.WealthEconomy.Web
 {
     // Configure the application user manager which is used in this application.
     
-    public class UserManager : Facade.UserManager
+    public class UserManager : forCrowd.WealthEconomy.Facade.UserManager
     {
         public UserManager(UserStore store)
             : base(store)

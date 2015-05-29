@@ -6,9 +6,9 @@ using System.Web.Http.Filters;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Batch;
 using System.Web.Http.OData.Extensions;
-using Web.ExceptionHandling;
+using forCrowd.WealthEconomy.Web.ExceptionHandling;
 
-namespace Web
+namespace forCrowd.WealthEconomy.Web
 {
     public static class WebApiConfig
     {
@@ -44,10 +44,10 @@ namespace Web
 
             // Add the CompositeKeyRoutingConvention
             var conventions = System.Web.Http.OData.Routing.Conventions.ODataRoutingConventions.CreateDefault();
-            conventions.Insert(0, new Web.RoutingConventions.CompositeKeyRoutingConvention());
+            conventions.Insert(0, new forCrowd.WealthEconomy.Web.RoutingConventions.CompositeKeyRoutingConvention());
 
             // Routes
-            var edm = Facade.DbUtility.GetWealthEconomyContextEdm();
+            var edm = forCrowd.WealthEconomy.Facade.DbUtility.GetWealthEconomyContextEdm();
             config.Routes.MapODataServiceRoute(
                 routeName: "ODataRoute",
                 routePrefix: "odata",

@@ -24,58 +24,6 @@
 
 </head>
 <body data-ng-app="main" data-ng-controller="mainController as vm">
-    <!-- propertyTests -->
-    <div class="hide">
-        <div>
-            {{ vm.resourcePool2.testField }}
-        </div>
-        <div>
-            {{ vm.resourcePool2.testPropOnlyGet }}
-        </div>
-        <div>
-            {{ vm.resourcePool2.testProp }}
-        </div>
-        <div>
-            {{ vm.resourcePool2.testPropGetSet }}
-        </div>
-        <div>
-            {{ vm.resourcePool2.testPropWithEnumConf }}
-        </div>
-        <div>
-            {{ vm.resourcePool2.testPropWithEnumConfBack }}
-        </div>
-        <div>
-            {{ vm.resourcePool2.testPropWithEnumConfProt }}
-        </div>
-        <div>
-            {{ vm.resourcePool2.testPropWithEnumConfProtBack }}
-        </div>
-        <hr />
-        <div>
-            {{ vm.resourcePool3.testField }}
-        </div>
-        <div>
-            {{ vm.resourcePool3.testPropOnlyGet }}
-        </div>
-        <div>
-            {{ vm.resourcePool3.testProp }}
-        </div>
-        <div>
-            {{ vm.resourcePool3.testPropGetSet }}
-        </div>
-        <div>
-            {{ vm.resourcePool3.testPropWithEnumConf }}
-        </div>
-        <div>
-            {{ vm.resourcePool3.testPropWithEnumConfBack }}
-        </div>
-        <div>
-            {{ vm.resourcePool3.testPropWithEnumConfProt }}
-        </div>
-        <div>
-            {{ vm.resourcePool3.testPropWithEnumConfProtBack }}
-        </div>
-    </div>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -85,7 +33,6 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a href="/" class="navbar-brand">Wealth Economy</a>
-                <%--<span class="navbar-brand"><span class="small">BETA</span></span>--%>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -94,22 +41,6 @@
                         <ul class="dropdown-menu">
                             <li><a href="/content/overview">Overview</a></li>
                             <li><a href="/content/technologies">Technologies</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown hide">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Chapters <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/content/chapter0">Prologue</a></li>
-                            <li><a href="/content/chapter1">Chapter 1</a></li>
-                            <li><a href="/content/chapter2">Chapter 2</a></li>
-                            <li><a href="/content/chapter3">Chapter 3</a></li>
-                            <li><a href="/content/chapter4">Chapter 4</a></li>
-                            <li><a href="/content/chapter5">Chapter 5</a></li>
-                            <li><a href="/content/chapter6">Chapter 6</a></li>
-                            <li><a href="/content/chapter7">Chapter 7</a></li>
-                            <li><a href="/content/chapter8">Chapter 8</a></li>
-                            <li><a href="/content/chapter9">Chapter 9</a></li>
-                            <li><a href="/content/chapter10">Chapter 10</a></li>
                         </ul>
                     </li>
                     <li class="dropdown hide" data-ng-show="vm.userInfo !== null">
@@ -199,7 +130,7 @@
     <script src="/App/services/resourcePoolService.js?v=027"></script>
 
     <!-- Content -->
-    <script src="/App/controllers/content/mainController.js?v=024"></script>
+    <script src="/App/controllers/content/mainController.js?v=027"></script>
     <script src="/App/controllers/content/introductionController.js?v=027"></script>
     <script src="/App/controllers/content/basicsController.js?v=027"></script>
     <script src="/App/controllers/content/sectorIndexSampleController.js?v=022"></script>

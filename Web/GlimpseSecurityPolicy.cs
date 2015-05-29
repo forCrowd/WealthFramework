@@ -4,7 +4,7 @@
 using Glimpse.AspNet.Extensions;
 using Glimpse.Core.Extensibility;
 
-namespace Web
+namespace forCrowd.WealthEconomy.Web
 {
     public class GlimpseSecurityPolicy:IRuntimePolicy
     {

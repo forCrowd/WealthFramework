@@ -1,6 +1,6 @@
-//namespace BusinessObjects
+//namespace forCrowd.WealthEconomy.BusinessObjects
 //{
-//    using Framework;
+//    using forCrowd.WealthEconomy.Framework;
 
 //    public abstract class BaseCellType
 //    {

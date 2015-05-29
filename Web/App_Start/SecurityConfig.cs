@@ -6,7 +6,7 @@ using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 
-namespace Web
+namespace forCrowd.WealthEconomy.Web
 {
     public class SecurityConfig
     {
@@ -36,7 +36,7 @@ namespace Web
         [Conditional("DEBUG")]
         void SetDebugUser(HttpActionContext actionContext)
         {
-            // TODO Somehow this code conflicts with web client's (angular and/or breeze) authentication, check it later - also similar code was used in DataObjects.Tests
+            // TODO Somehow this code conflicts with web client's (angular and/or breeze) authentication, check it later - also similar code was used in forCrowd.WealthEconomy.DataObjects.Tests
             // This was helping to query the database directly via an OData url;
             // http://localhost:15001/odata/ResourcePool%281%29?$expand=UserResourcePoolSet,ElementSet/ElementFieldSet/ElementFieldIndexSet/UserElementFieldIndexSet,ElementSet/ElementItemSet/ElementCellSet/UserElementCellSet
             return;
@@ -44,7 +44,7 @@ namespace Web
             if (Thread.CurrentPrincipal.Identity.IsAuthenticated)
                 return;
 
-            string debugUserId = Framework.AppSettings.SampleUserId.ToString();
+            string debugUserId = forCrowd.WealthEconomy.Framework.AppSettings.SampleUserId.ToString();
             string debugUserAuthType = "DebugAuth";
 
             var nameIdentifierClaim = new Claim(ClaimTypes.NameIdentifier, debugUserId, ClaimValueTypes.Integer32);

@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net.Http.Headers;
 using System.Web.Http.Description;
-using Web.Areas.HelpPage.ModelDescriptions;
+using forCrowd.WealthEconomy.Web.Areas.HelpPage.ModelDescriptions;
 
-namespace Web.Areas.HelpPage.Models
+namespace forCrowd.WealthEconomy.Web.Areas.HelpPage.Models
 {
     /// <summary>
     /// The model that represents an API displayed on the help page.

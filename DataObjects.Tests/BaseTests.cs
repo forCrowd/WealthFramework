@@ -1,7 +1,7 @@
-﻿using BusinessObjects;
+﻿using forCrowd.WealthEconomy.BusinessObjects;
 using System;
 
-namespace DataObjects.Tests
+namespace forCrowd.WealthEconomy.DataObjects.Tests
 {
     public abstract class BaseTests : IDisposable
     {

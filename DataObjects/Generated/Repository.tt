@@ -41,9 +41,9 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
     fileManager.StartNewFile(outputFileName);
 #>
 <#= codeStringGenerator.WriteHeader() #>
-namespace DataObjects
+namespace forCrowd.WealthEconomy.DataObjects
 {
-    using BusinessObjects;
+    using forCrowd.WealthEconomy.BusinessObjects;
 
     public partial class <#= entityRepositoryName #> : BaseRepository<<#= entityTypeName #>>
     {

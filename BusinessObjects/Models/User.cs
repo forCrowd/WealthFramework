@@ -1,7 +1,7 @@
-namespace BusinessObjects
+namespace forCrowd.WealthEconomy.BusinessObjects
 {
-    using BusinessObjects.Attributes;
-    using Framework;
+    using forCrowd.WealthEconomy.BusinessObjects.Attributes;
+    using forCrowd.WealthEconomy.Framework;
     using Microsoft.AspNet.Identity.EntityFramework;
     using System;
     using System.Collections.Generic;
@@ -10,7 +10,7 @@ namespace BusinessObjects
     using System.Security.Permissions;
     using System.Threading.Tasks;
 
-    [BusinessObjects.Attributes.DefaultProperty("Email")]
+    [forCrowd.WealthEconomy.BusinessObjects.Attributes.DefaultProperty("Email")]
     public class User : IdentityUser<int, UserLogin, UserRole, UserClaim>, IEntity
     {
         [Obsolete("Parameterless constructors used by OData & EF. Make them private when possible.")]

@@ -7,9 +7,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Facade
+namespace forCrowd.WealthEconomy.Facade
 {
-    using BusinessObjects;
+    using forCrowd.WealthEconomy.BusinessObjects;
 
     public partial class RoleUnitOfWork : BaseUnitOfWork<Role>
     {

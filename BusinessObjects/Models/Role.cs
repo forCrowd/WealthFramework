@@ -1,7 +1,7 @@
-namespace BusinessObjects
+namespace forCrowd.WealthEconomy.BusinessObjects
 {
-    using BusinessObjects.Attributes;
-    using Framework;
+    using forCrowd.WealthEconomy.BusinessObjects.Attributes;
+    using forCrowd.WealthEconomy.Framework;
     using Microsoft.AspNet.Identity.EntityFramework;
     using System;
     using System.ComponentModel.DataAnnotations;

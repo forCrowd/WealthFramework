@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Framework.Tests
+namespace forCrowd.WealthEconomy.Framework.Tests
 {
     [TestClass]
     public class TypeExtensionsTests
