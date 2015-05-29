@@ -68,9 +68,6 @@
             
             mainElement.ElementFieldSet.Single(item => item.IndexEnabled).Name = "Employee Satisfaction";
 
-            mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).Name = "Employee Satisfaction";
-            mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).ElementFieldIndex.Name = "Employee Satisfaction";
-
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Alpha";
             mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Beta";
@@ -96,7 +93,7 @@
             // Importance field
             var importanceField = sectorElement.AddField("Rating", ElementFieldTypes.Decimal, false);
             importanceField
-                    .AddIndex("Sector Index", RatingSortType.HighestToLowest)
+                    .AddIndex(RatingSortType.HighestToLowest)
                     .AddUserRating(user, 100);
 
             // Items, cells, user cells
@@ -156,7 +153,7 @@
             var rightToSellField = licenseElement.AddField("Right to Sell", ElementFieldTypes.String);
             var licenseRatingField = licenseElement.AddField("Rating", ElementFieldTypes.Decimal, false);
             licenseRatingField
-                .AddIndex("Knowledge Index", RatingSortType.HighestToLowest)
+                .AddIndex(RatingSortType.HighestToLowest)
                 .AddUserRating(user, userRating);
 
             // Items, cell, user cells
@@ -212,7 +209,7 @@
             var linkField = licenseElement.AddField("Link", ElementFieldTypes.String);
             var importanceField = licenseElement.AddField("Rating", ElementFieldTypes.Decimal, false);
             importanceField
-                .AddIndex("Knowledge Index", RatingSortType.HighestToLowest)
+                .AddIndex(RatingSortType.HighestToLowest)
                 .AddUserRating(user, 100);
 
             // Items, cell, user cells
@@ -289,7 +286,7 @@
             var linkField = mainElement.AddField("Link", ElementFieldTypes.String);
             var importanceField = mainElement.AddField("Rating", ElementFieldTypes.Decimal, false);
             importanceField
-                .AddIndex("Knowledge Index", RatingSortType.HighestToLowest)
+                .AddIndex(RatingSortType.HighestToLowest)
                 .AddUserRating(user, 100);
 
             // Items, cell, user cells
@@ -337,7 +334,7 @@
             // Fields
             var importanceField = mainElement.AddField("Rating", ElementFieldTypes.Decimal, false);
             importanceField
-                .AddIndex("Knowledge Index", RatingSortType.HighestToLowest)
+                .AddIndex(RatingSortType.HighestToLowest)
                 .AddUserRating(user, 100);
 
             // Items, cell, user cells
@@ -410,7 +407,7 @@
 
             // Resource pool index; use to Sales Price itself
             mainElement.DirectIncomeField
-                .AddIndex("Total Cost Index", RatingSortType.LowestToHighest)
+                .AddIndex(RatingSortType.LowestToHighest)
                 .AddUserRating(user, 100);
 
             // Items, cell, user cells
@@ -441,7 +438,7 @@
 
             // Resource pool index; use to Sales Price itself
             mainElement.DirectIncomeField
-                .AddIndex("Total Cost Index", RatingSortType.LowestToHighest)
+                .AddIndex(RatingSortType.LowestToHighest)
                 .AddUserRating(user, 100);
 
             // Items, cell, user cells
@@ -469,7 +466,7 @@
 
             // Resource pool index; use to Sales Price itself
             resourcePool.ElementSet.First().DirectIncomeField
-                .AddIndex("Total Cost Index", RatingSortType.LowestToHighest)
+                .AddIndex(RatingSortType.LowestToHighest)
                 .AddUserRating(user, 100);
 
             // Items, cell, user cells
@@ -496,7 +493,7 @@
             var fairShareDesciptionField = fairShareElement.AddField("Description", ElementFieldTypes.String);
             var fairShareImportanceField = fairShareElement.AddField("Rating", ElementFieldTypes.Decimal, false);
             fairShareImportanceField
-                .AddIndex("Fair Share Index", RatingSortType.HighestToLowest)
+                .AddIndex(RatingSortType.HighestToLowest)
                 .AddUserRating(user, 100);
 
             // Items, cell, user cells
@@ -564,24 +561,24 @@
             // Sector Index
             var sectorField = resourcePool.ElementSet.First().AddField("Sector", ElementFieldTypes.Decimal, true);
             sectorField
-                .AddIndex("Sector Index", RatingSortType.HighestToLowest)
+                .AddIndex(RatingSortType.HighestToLowest)
                 .AddUserRating(user, ratingPerIndex);
 
             // Knowledge Index
             var licenseField = resourcePool.ElementSet.First().AddField("License", ElementFieldTypes.Decimal, true);
             licenseField
-                .AddIndex("Knowledge Index", RatingSortType.HighestToLowest)
+                .AddIndex(RatingSortType.HighestToLowest)
                 .AddUserRating(user, ratingPerIndex);
 
             // Total Cost Index
             mainElement.DirectIncomeField
-                .AddIndex("Total Cost Index", RatingSortType.LowestToHighest)
+                .AddIndex(RatingSortType.LowestToHighest)
                 .AddUserRating(user, ratingPerIndex);
 
             // Fair Share Index
             var fairShareField = resourcePool.ElementSet.First().AddField("Fair Share", ElementFieldTypes.Decimal, true);
             fairShareField
-                .AddIndex("Fair Share Index", RatingSortType.HighestToLowest)
+                .AddIndex(RatingSortType.HighestToLowest)
                 .AddUserRating(user, ratingPerIndex);
 
             //mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).Name = "Rating";
@@ -648,7 +645,7 @@
 
             // 1. index
             mainElement.DirectIncomeField
-                .AddIndex("Total Cost Index", RatingSortType.LowestToHighest)
+                .AddIndex(RatingSortType.LowestToHighest)
                 .AddUserRating(user, 100 / 3);
 
             //mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).Name = "Rating";
@@ -657,13 +654,13 @@
             // 2. index
             var importanceField1 = resourcePool.ElementSet.First().AddField("Importance Field 1", ElementFieldTypes.Decimal, false);
             importanceField1
-                .AddIndex("Importance Index 1", RatingSortType.HighestToLowest)
+                .AddIndex(RatingSortType.HighestToLowest)
                 .AddUserRating(user, 100 / 3);
 
             // 3. index
             var importanceField2 = resourcePool.ElementSet.First().AddField("Importance Field 2", ElementFieldTypes.Decimal, false);
             importanceField2
-                .AddIndex("Importance Index 2", RatingSortType.HighestToLowest)
+                .AddIndex(RatingSortType.HighestToLowest)
                 .AddUserRating(user, 100 / 3);
 
             // Items, cell, user cells
@@ -735,7 +732,7 @@
             // 2. index
             var veryImportantField = resourcePool.ElementSet.First().AddField("Very Important Index", ElementFieldTypes.Decimal, false);
             veryImportantField
-                .AddIndex("Very Important Index", RatingSortType.HighestToLowest)
+                .AddIndex(RatingSortType.HighestToLowest)
                 .AddUserRating(user, 100);
 
             // 3. index
@@ -794,7 +791,7 @@
             // Fields
             var sectorRatingField = sectorElement.AddField("Rating", ElementFieldTypes.Decimal, false);
             sectorRatingField
-                    .AddIndex("Sector Index", RatingSortType.HighestToLowest)
+                    .AddIndex(RatingSortType.HighestToLowest)
                     .AddUserRating(user, userRating);
 
             // Items, cells, user cells
@@ -813,7 +810,7 @@
             var rightToSellField = licenseElement.AddField("Right to Sell", ElementFieldTypes.String);
             var licenseRatingField = licenseElement.AddField("Rating", ElementFieldTypes.Decimal, false);
             licenseRatingField
-                .AddIndex("Knowledge Index", RatingSortType.HighestToLowest)
+                .AddIndex(RatingSortType.HighestToLowest)
                 .AddUserRating(user, userRating);
 
             // Items, cell, user cells
@@ -838,7 +835,7 @@
             var fairShareDesciptionField = fairShareElement.AddField("Description", ElementFieldTypes.String);
             var fairShareRatingField = fairShareElement.AddField("Rating", ElementFieldTypes.Decimal, false);
             fairShareRatingField
-                .AddIndex("Fair Share Index", RatingSortType.HighestToLowest)
+                .AddIndex(RatingSortType.HighestToLowest)
                 .AddUserRating(user, userRating);
 
             // Items, cell, user cells
@@ -866,7 +863,7 @@
             
             // Resource pool index; use to Sales Price itself
             mainElement.DirectIncomeField
-                .AddIndex("Total Cost Index", RatingSortType.LowestToHighest)
+                .AddIndex(RatingSortType.LowestToHighest)
                 .AddUserRating(user, userRating);
 
             // Items, cell, user cells
@@ -1127,7 +1124,7 @@
                 importanceField.IndexRatingSortType = (byte)RatingSortType.HighestToLowest;
                 
                 importanceField
-                    .AddIndex("Importance Index", RatingSortType.HighestToLowest)
+                    .AddIndex(RatingSortType.HighestToLowest)
                     .AddUserRating(user, 100);
             }
 

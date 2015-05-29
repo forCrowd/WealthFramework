@@ -182,7 +182,6 @@
     <script src="/App/entities/element.js?v=027"></script>
     <script src="/App/entities/elementCell.js?v=027"></script>
     <script src="/App/entities/elementField.js?v=027"></script>
-    <script src="/App/entities/elementFieldIndex.js?v=027"></script>
     <script src="/App/entities/elementItem.js?v=027"></script>
     <script src="/App/entities/userElementCell.js?v=027"></script>
 

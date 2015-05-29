@@ -14,7 +14,6 @@
             'element',
             'elementCell',
             'elementField',
-            'elementFieldIndex',
             'elementItem',
             'resourcePoolFactory',
             'userElementCell',
@@ -26,7 +25,6 @@
         element,
         elementCell,
         elementField,
-        elementFieldIndex,
         elementItem,
         resourcePoolFactory,
         userElementCell,
@@ -86,7 +84,6 @@
             store.registerEntityTypeCtor('Element', element.constructor);
             store.registerEntityTypeCtor('ElementCell', elementCell.constructor);
             store.registerEntityTypeCtor('ElementField', elementField.constructor);
-            store.registerEntityTypeCtor('ElementFieldIndex', elementFieldIndex.constructor);
             store.registerEntityTypeCtor('ElementItem', elementItem.constructor);
             store.registerEntityTypeCtor('ResourcePool', resourcePoolFactory.resourcePool);
             store.registerEntityTypeCtor('UserElementCell', userElementCell.constructor);

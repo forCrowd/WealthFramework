@@ -42,12 +42,10 @@
         public virtual DbSet<ResourcePool> ResourcePool { get; set; }
         public virtual DbSet<Element> Element { get; set; }
         public virtual DbSet<ElementField> ElementField { get; set; }
-        public virtual DbSet<ElementFieldIndex> ElementFieldIndex { get; set; }
         public virtual DbSet<ElementItem> ElementItem { get; set; }
         public virtual DbSet<ElementCell> ElementCell { get; set; }
         public virtual DbSet<UserResourcePool> UserResourcePool { get; set; }
         public virtual DbSet<UserElementField> UserElementField { get; set; }
-        public virtual DbSet<UserElementFieldIndex> UserElementFieldIndex { get; set; }
         public virtual DbSet<UserElementCell> UserElementCell { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -82,11 +80,6 @@
             modelBuilder.Entity<UserElementField>()
                 .HasRequired<User>(item => item.User)
                 .WithMany(item => item.UserElementFieldSet)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<UserElementFieldIndex>()
-                .HasRequired<User>(item => item.User)
-                .WithMany(item => item.UserElementFieldIndexSet)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<UserElementCell>()

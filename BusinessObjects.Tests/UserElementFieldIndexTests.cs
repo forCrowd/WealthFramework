@@ -16,7 +16,7 @@ namespace BusinessObjects.Tests
             var newIndex = resourcePool
                 .AddElement("Element")
                 .AddField("Field", ElementFieldTypes.Boolean, true)
-                .AddIndex("Index", RatingSortType.HighestToLowest)
+                .AddIndex(RatingSortType.HighestToLowest)
                 .AddUserRating(user, 0);
         }
     }

@@ -14,7 +14,7 @@ namespace BusinessObjects.Tests
             new ResourcePool(user, "CMRP")
                 .AddElement("Element")
                 .AddField("Field", ElementFieldTypes.Boolean, true)
-                .AddIndex("Index", RatingSortType.HighestToLowest);
+                .AddIndex(RatingSortType.HighestToLowest);
         }
 
         [TestMethod]
@@ -25,7 +25,7 @@ namespace BusinessObjects.Tests
             new ResourcePool(user, "CMRP")
                 .AddElement("Element")
                 .AddField("Field", ElementFieldTypes.String)
-                .AddIndex(string.Empty, RatingSortType.HighestToLowest);
+                .AddIndex(RatingSortType.HighestToLowest);
         }
 
         [TestMethod]
@@ -36,7 +36,7 @@ namespace BusinessObjects.Tests
             new ResourcePool(user, "CMRP")
                 .AddElement("Element")
                 .AddField("Field", ElementFieldTypes.String)
-                .AddIndex("Index", RatingSortType.HighestToLowest);
+                .AddIndex(RatingSortType.HighestToLowest);
         }
     }
 }

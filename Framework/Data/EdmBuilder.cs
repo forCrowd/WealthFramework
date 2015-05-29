@@ -147,8 +147,6 @@ namespace Microsoft.Data.Edm
                 AddReadonlyProperty(edmx, "ResourcePool", "OtherUsersResourcePoolRateCount", "Int32", false);
                 AddReadonlyProperty(edmx, "ElementField", "OtherUsersIndexRatingTotal", "Decimal", true);
                 AddReadonlyProperty(edmx, "ElementField", "OtherUsersIndexRatingCount", "Int32", false);
-                AddReadonlyProperty(edmx, "ElementFieldIndex", "OtherUsersIndexRatingTotal", "Decimal", true);
-                AddReadonlyProperty(edmx, "ElementFieldIndex", "OtherUsersIndexRatingCount", "Int32", false);
                 AddReadonlyProperty(edmx, "ElementCell", "OtherUsersNumericValueTotal", "Decimal", true);
                 AddReadonlyProperty(edmx, "ElementCell", "OtherUsersNumericValueCount", "Int32", false);
 

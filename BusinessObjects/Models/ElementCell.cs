@@ -199,27 +199,28 @@ namespace BusinessObjects
 
         public decimal IndexIncome()
         {
-            if (ElementField.ElementFieldIndex == null)
-            {
-                return ElementField.ElementFieldType == (byte)ElementFieldTypes.Element && SelectedElementItem != null
-                    ? SelectedElementItem.IndexIncome()
-                    : 0;
-            }
+            return 0;
+            //if (ElementField.ElementFieldIndex == null)
+            //{
+            //    return ElementField.ElementFieldType == (byte)ElementFieldTypes.Element && SelectedElementItem != null
+            //        ? SelectedElementItem.IndexIncome()
+            //        : 0;
+            //}
 
-            var value = RatingPercentage();
+            //var value = RatingPercentage();
 
-            switch (ElementField.ElementFieldIndex.RatingSortType)
-            {
-                case (byte)RatingSortType.HighestToLowest:
-                    /* Do nothing */
-                    break;
-                case (byte)RatingSortType.LowestToHighest:
-                    value = 1 - value; break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            //switch (ElementField.ElementFieldIndex.RatingSortType)
+            //{
+            //    case (byte)RatingSortType.HighestToLowest:
+            //        /* Do nothing */
+            //        break;
+            //    case (byte)RatingSortType.LowestToHighest:
+            //        value = 1 - value; break;
+            //    default:
+            //        throw new ArgumentOutOfRangeException();
+            //}
 
-            return ElementField.ElementFieldIndex.IndexShare() * value;
+            //return ElementField.ElementFieldIndex.IndexShare() * value;
         }
 
         #region - Methods -

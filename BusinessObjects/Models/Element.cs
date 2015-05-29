@@ -73,15 +73,15 @@ namespace BusinessObjects
         //    get { return ElementItemSet.Sum(item => item.RatingAverage); }
         //}
 
-        public IEnumerable<ElementFieldIndex> ElementFieldIndexSet
-        {
-            get
-            {
-                return ElementFieldSet
-                    .Where(item => item.ElementFieldIndex != null)
-                    .Select(field => field.ElementFieldIndex);
-            }
-        }
+        //public IEnumerable<ElementFieldIndex> ElementFieldIndexSet
+        //{
+        //    get
+        //    {
+        //        return ElementFieldSet
+        //            .Where(item => item.ElementFieldIndex != null)
+        //            .Select(field => field.ElementFieldIndex);
+        //    }
+        //}
 
         public ElementField NameField
         {
@@ -185,7 +185,7 @@ namespace BusinessObjects
 
         public decimal IndexRatingAverage()
         {
-            return ElementFieldIndexSet.Sum(item => item.IndexRatingAverageOld);
+            return 0; // ElementFieldIndexSet.Sum(item => item.IndexRatingAverageOld);
         }
 
         //public ElementField AddField(string name, ElementFieldTypes fieldType)

@@ -51,9 +51,9 @@
             await Store.SaveChangesAsync();
         }
 
-        public async Task DeleteUserElementFieldIndex(int elementFieldIndexId)
+        public async Task DeleteUserElementField(int elementFieldId)
         {
-            await Store.DeleteUserElementFieldIndex(elementFieldIndexId);
+            await Store.DeleteUserElementField(elementFieldId);
             await Store.SaveChangesAsync();
         }
 

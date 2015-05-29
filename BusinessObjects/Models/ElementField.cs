@@ -18,7 +18,6 @@ namespace BusinessObjects
         public ElementField()
         {
             ElementCellSet = new HashSet<ElementCell>();
-            ElementFieldIndexSet = new HashSet<ElementFieldIndex>();
             UserElementFieldSet = new HashSet<UserElementField>();
         }
 
@@ -99,7 +98,6 @@ namespace BusinessObjects
         public virtual Element Element { get; set; }
         public virtual Element SelectedElement { get; set; }
         public virtual ICollection<ElementCell> ElementCellSet { get; set; }
-        public virtual ICollection<ElementFieldIndex> ElementFieldIndexSet { get; set; }
         public virtual ICollection<UserElementField> UserElementFieldSet { get; set; }
 
         #region - ReadOnly Properties -
@@ -120,12 +118,6 @@ namespace BusinessObjects
             {
                 return UserElementFieldSet.SingleOrDefault();
             }
-        }
-
-        // TODO Although technically it's possible to define multiple indexes, there will be one per Field at the moment
-        public ElementFieldIndex ElementFieldIndex
-        {
-            get { return ElementFieldIndexSet.SingleOrDefault(); }
         }
 
         public decimal? OtherUsersIndexRatingTotal
@@ -172,16 +164,11 @@ namespace BusinessObjects
             return userRating;
         }
 
-        public ElementFieldIndex AddIndex(string name, RatingSortType sortType)
+        public ElementField AddIndex(RatingSortType sortType)
         {
             this.IndexEnabled = true;
             this.IndexRatingSortType = (byte)sortType;
-
-            var index = new ElementFieldIndex(this, name);
-            index.RatingSortType = (byte)sortType;
-
-            ElementFieldIndexSet.Add(index);
-            return index;
+            return this;
         }
 
         public override string ToString()

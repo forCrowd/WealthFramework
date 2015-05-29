@@ -33,10 +33,6 @@ SH - 09 May '14
     <script src="/App/controllers/manage/list/elementFieldListController.js?v=027"></script>\
     <script src="/App/controllers/manage/edit/elementFieldEditController.js?v=027"></script>\
 	\
-    <script src="/App/services/generated/elementFieldIndexService.js?v=027"></script>\
-    <script src="/App/controllers/manage/list/elementFieldIndexListController.js?v=027"></script>\
-    <script src="/App/controllers/manage/edit/elementFieldIndexEditController.js?v=027"></script>\
-	\
     <script src="/App/services/generated/elementItemService.js?v=027"></script>\
     <script src="/App/controllers/manage/list/elementItemListController.js?v=027"></script>\
     <script src="/App/controllers/manage/edit/elementItemEditController.js?v=027"></script>\
@@ -64,10 +60,6 @@ SH - 09 May '14
     <script src="/App/services/generated/userElementFieldService.js?v=027"></script>\
     <script src="/App/controllers/manage/list/userElementFieldListController.js?v=027"></script>\
     <script src="/App/controllers/manage/edit/userElementFieldEditController.js?v=027"></script>\
-	\
-    <script src="/App/services/generated/userElementFieldIndexService.js?v=027"></script>\
-    <script src="/App/controllers/manage/list/userElementFieldIndexListController.js?v=027"></script>\
-    <script src="/App/controllers/manage/edit/userElementFieldIndexEditController.js?v=027"></script>\
 	\
     <script src="/App/services/generated/userLoginService.js?v=027"></script>\
     <script src="/App/controllers/manage/list/userLoginListController.js?v=027"></script>\

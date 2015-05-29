@@ -269,9 +269,6 @@
     <Compile Include="Controllers\OData\Generated\ElementFieldController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\OData\Generated\ElementFieldIndexController.cs">
-      <DependentUpon>ODataController.tt</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\OData\Generated\ElementItemController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
@@ -290,9 +287,6 @@
     <Compile Include="Controllers\OData\Generated\UserElementFieldController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\OData\Generated\UserElementFieldIndexController.cs">
-      <DependentUpon>ODataController.tt</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\OData\Generated\UserLoginsController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
@@ -309,7 +303,7 @@
     <Compile Include="Controllers\OData\ResourcePoolController.cs" />
     <Compile Include="Controllers\OData\UserController.cs" />
     <Compile Include="Controllers\OData\UserElementCellController.cs" />
-    <Compile Include="Controllers\OData\UserElementFieldIndexController.cs" />
+    <Compile Include="Controllers\OData\UserElementFieldController.cs" />
     <Compile Include="Controllers\OData\UserResourcePoolController.cs" />
     <Compile Include="ExceptionHandling\ElmahExceptionLogger.cs" />
     <Compile Include="ExceptionHandling\GenericExceptionHandler.cs" />
@@ -343,9 +337,6 @@
     <Content Include="App\controllers\manage\edit\elementFieldEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
-    <Content Include="App\controllers\manage\edit\elementFieldIndexEditController.js">
-      <DependentUpon>editController.tt</DependentUpon>
-    </Content>
     <Content Include="App\controllers\manage\edit\elementItemEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
@@ -361,9 +352,6 @@
     <Content Include="App\controllers\manage\edit\userElementFieldEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
-    <Content Include="App\controllers\manage\edit\userElementFieldIndexEditController.js">
-      <DependentUpon>editController.tt</DependentUpon>
-    </Content>
     <Content Include="App\controllers\manage\edit\userLoginEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
@@ -371,9 +359,6 @@
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
     <Content Include="App\controllers\manage\list\elementCellListController.js">
-      <DependentUpon>listController.tt</DependentUpon>
-    </Content>
-    <Content Include="App\controllers\manage\list\elementFieldIndexListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
     <Content Include="App\controllers\manage\list\elementFieldListController.js">
@@ -392,9 +377,6 @@
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
     <Content Include="App\controllers\manage\list\userElementCellListController.js">
-      <DependentUpon>listController.tt</DependentUpon>
-    </Content>
-    <Content Include="App\controllers\manage\list\userElementFieldIndexListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
     <Content Include="App\controllers\manage\list\userElementFieldListController.js">
@@ -416,7 +398,6 @@
     <Content Include="App\entities\element.js" />
     <Content Include="App\entities\userElementCell.js" />
     <Content Include="App\entities\elementItem.js" />
-    <Content Include="App\entities\elementFieldIndex.js" />
     <Content Include="App\entities\elementField.js" />
     <Content Include="App\entities\resourcePool.js" />
     <Content Include="App\entities\elementCell.js" />
@@ -440,9 +421,6 @@
     <Content Include="App\services\generated\elementCellService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="App\services\generated\elementFieldIndexService.js">
-      <DependentUpon>service.tt</DependentUpon>
-    </Content>
     <Content Include="App\services\generated\elementFieldService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
@@ -464,9 +442,6 @@
       <DependentUpon>service.tt</DependentUpon>
     </Content>
     <Content Include="App\services\generated\userElementCellService.js">
-      <DependentUpon>service.tt</DependentUpon>
-    </Content>
-    <Content Include="App\services\generated\userElementFieldIndexService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
     <Content Include="App\services\generated\userElementFieldService.js">
@@ -511,9 +486,6 @@
     <Content Include="App\views\manage\edit\elementFieldEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
-    <Content Include="App\views\manage\edit\elementFieldIndexEdit.html">
-      <DependentUpon>editView.tt</DependentUpon>
-    </Content>
     <Content Include="App\views\manage\edit\elementItemEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
@@ -535,9 +507,6 @@
     <Content Include="App\views\manage\edit\userElementFieldEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
-    <Content Include="App\views\manage\edit\userElementFieldIndexEdit.html">
-      <DependentUpon>editView.tt</DependentUpon>
-    </Content>
     <Content Include="App\views\manage\edit\userLoginEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
@@ -548,9 +517,6 @@
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
     <Content Include="App\views\manage\list\elementCellList.html">
-      <DependentUpon>listView.tt</DependentUpon>
-    </Content>
-    <Content Include="App\views\manage\list\elementFieldIndexList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
     <Content Include="App\views\manage\list\elementFieldList.html">
@@ -569,9 +535,6 @@
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
     <Content Include="App\views\manage\list\userElementCellList.html">
-      <DependentUpon>listView.tt</DependentUpon>
-    </Content>
-    <Content Include="App\views\manage\list\userElementFieldIndexList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
     <Content Include="App\views\manage\list\userElementFieldList.html">

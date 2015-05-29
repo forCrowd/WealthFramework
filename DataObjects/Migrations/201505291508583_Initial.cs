@@ -255,47 +255,6 @@ namespace DataObjects.Migrations
                 .Index(t => t.Name, unique: true, name: "RoleNameIndex");
             
             CreateTable(
-                "dbo.UserElementFieldIndex",
-                c => new
-                    {
-                        UserId = c.Int(nullable: false),
-                        ElementFieldIndexId = c.Int(nullable: false),
-                        Rating = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        CreatedOn = c.DateTime(nullable: false),
-                        ModifiedOn = c.DateTime(nullable: false),
-                        DeletedOn = c.DateTime(),
-                        RowVersion = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                    },
-                annotations: new Dictionary<string, object>
-                {
-                    { "UserAnnotation", "UserId" },
-                })
-                .PrimaryKey(t => new { t.UserId, t.ElementFieldIndexId })
-                .ForeignKey("dbo.ElementFieldIndex", t => t.ElementFieldIndexId, cascadeDelete: true)
-                .ForeignKey("dbo.User", t => t.UserId)
-                .Index(t => t.UserId)
-                .Index(t => t.ElementFieldIndexId);
-            
-            CreateTable(
-                "dbo.ElementFieldIndex",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        ElementFieldId = c.Int(nullable: false),
-                        Name = c.String(nullable: false, maxLength: 50),
-                        RatingSortType = c.Byte(nullable: false),
-                        IndexRatingAverage = c.Decimal(precision: 18, scale: 2),
-                        IndexRatingCount = c.Int(),
-                        CreatedOn = c.DateTime(nullable: false),
-                        ModifiedOn = c.DateTime(nullable: false),
-                        DeletedOn = c.DateTime(),
-                        RowVersion = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.ElementField", t => t.ElementFieldId, cascadeDelete: true)
-                .Index(t => t.ElementFieldId);
-            
-            CreateTable(
                 "dbo.UserElementField",
                 c => new
                     {
@@ -326,9 +285,6 @@ namespace DataObjects.Migrations
             DropForeignKey("dbo.UserElementCell", "UserId", "dbo.User");
             DropForeignKey("dbo.UserElementField", "UserId", "dbo.User");
             DropForeignKey("dbo.UserElementField", "ElementFieldId", "dbo.ElementField");
-            DropForeignKey("dbo.UserElementFieldIndex", "UserId", "dbo.User");
-            DropForeignKey("dbo.UserElementFieldIndex", "ElementFieldIndexId", "dbo.ElementFieldIndex");
-            DropForeignKey("dbo.ElementFieldIndex", "ElementFieldId", "dbo.ElementField");
             DropForeignKey("dbo.UserRole", "UserId", "dbo.User");
             DropForeignKey("dbo.UserRole", "RoleId", "dbo.Role");
             DropForeignKey("dbo.UserResourcePool", "UserId", "dbo.User");
@@ -345,9 +301,6 @@ namespace DataObjects.Migrations
             DropForeignKey("dbo.ElementField", "ElementId", "dbo.Element");
             DropIndex("dbo.UserElementField", new[] { "ElementFieldId" });
             DropIndex("dbo.UserElementField", new[] { "UserId" });
-            DropIndex("dbo.ElementFieldIndex", new[] { "ElementFieldId" });
-            DropIndex("dbo.UserElementFieldIndex", new[] { "ElementFieldIndexId" });
-            DropIndex("dbo.UserElementFieldIndex", new[] { "UserId" });
             DropIndex("dbo.Role", "RoleNameIndex");
             DropIndex("dbo.UserRole", new[] { "RoleId" });
             DropIndex("dbo.UserRole", new[] { "UserId" });
@@ -367,12 +320,6 @@ namespace DataObjects.Migrations
             DropIndex("dbo.ElementField", new[] { "ElementId" });
             DropIndex("dbo.Element", new[] { "ResourcePoolId" });
             DropTable("dbo.UserElementField",
-                removedAnnotations: new Dictionary<string, object>
-                {
-                    { "UserAnnotation", "UserId" },
-                });
-            DropTable("dbo.ElementFieldIndex");
-            DropTable("dbo.UserElementFieldIndex",
                 removedAnnotations: new Dictionary<string, object>
                 {
                     { "UserAnnotation", "UserId" },
