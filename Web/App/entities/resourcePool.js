@@ -150,23 +150,46 @@
                 return self.UserResourcePoolSet[0];
             }
 
-            self.usersResourcePoolRateAverage = function () {
+            // Other users' value: Keeps the value without current user's rating
+            self.otherUsersResourcePoolRate = null;
+            self.resourcePoolRateAverage = function () {
 
-                if (self.usersResourcePoolRateCount() === 0)
+                if (self.resourcePoolRateCount() === 0) {
                     return 0; // TODO Return null?
-
-                var total = self.OtherUsersResourcePoolRateTotal;
-
-                if (self.userResourcePool() !== null) {
-                    total += self.userResourcePool().ResourcePoolRate;
                 }
 
-                return total / self.usersResourcePoolRateCount();
+                // Set other users' value on the initial call
+                if (self.otherUsersResourcePoolRate === null) {
+                    self.otherUsersResourcePoolRate = self.ResourcePoolRate;
+
+                    if (self.userResourcePool() !== null) {
+                        self.otherUsersResourcePoolRate = self.otherUsersResourcePoolRate - self.userResourcePool().ResourcePoolRate;
+                    }
+                }
+
+                var resourcePoolRate = self.otherUsersResourcePoolRate;
+
+                if (self.userResourcePool() !== null) {
+                    resourcePoolRate += self.userResourcePool().ResourcePoolRate;
+                }
+
+                return resourcePoolRate / self.resourcePoolRateCount();
             }
 
-            self.usersResourcePoolRateCount = function () {
+            // Other users' value: Keeps the value without current user's rating
+            self.otherUsersResourcePoolRateCount = null;
+            self.resourcePoolRateCount = function () {
 
-                var count = self.OtherUsersResourcePoolRateCount;
+                // Set other users' value on the initial call
+                if (self.otherUsersResourcePoolRateCount === null) {
+                    self.otherUsersResourcePoolRateCount = self.ResourcePoolRateCount;
+
+                    if (self.userResourcePool() !== null) {
+                        self.otherUsersResourcePoolRateCount--;
+                    }
+                }
+
+                var count = self.otherUsersResourcePoolRateCount;
 
                 if (self.userResourcePool() !== null) {
                     count++;
@@ -179,22 +202,19 @@
 
                 var value = 0;
 
-                //logger.log('self.ElementField.Element.valueFilter', self.ElementField.Element.valueFilter);
-
                 switch (self.currentElement.valueFilter) {
-                    case 1: {
+                    case 1: { // My ratings
 
                         if (self.userResourcePool() !== null) {
                             value = self.userResourcePool().ResourcePoolRate;
-                            // logger.log('value', value);
                         } else {
                             value = 10; // Default value?
                         }
 
                         break;
                     }
-                    case 2: {
-                        value = self.usersResourcePoolRateAverage();
+                    case 2: { // All ratings
+                        value = self.resourcePoolRateAverage();
                         break;
                     }
                     default: {

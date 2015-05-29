@@ -68,6 +68,11 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public decimal? ResourcePoolRate { get; private set; }
+
+        [DisplayOnListView(false)]
+        [DisplayOnEditView(false)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public decimal? ResourcePoolRateAverage { get; private set; }
 
         [DisplayOnListView(false)]
@@ -82,76 +87,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects
 
         public UserResourcePool UserResourcePool
         {
-            get
-            {
-                return UserResourcePoolSet.SingleOrDefault();
-
-                // TODO OBSOLETE?
-
-                //if (!System.Threading.Thread.CurrentPrincipal.Identity.IsAuthenticated)
-                //    return null;
-
-                var identity = System.Threading.Thread.CurrentPrincipal.Identity as System.Security.Claims.ClaimsIdentity;
-                if (identity == null)
-                {
-                    return null;
-                }
-                var userClaim = identity.Claims.SingleOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier);
-                if (userClaim == null)
-                {
-                    return null;
-                }
-
-                var userId = 0;
-                int.TryParse(userClaim.Value, out userId);
-
-                return UserResourcePoolSet.SingleOrDefault(item => item.UserId == userId);
-
-                //try
-                //{
-                //    return UserResourcePoolSet.SingleOrDefault();
-                //}
-                //catch (Exception ex)
-                //{
-                //    throw new Exception("Count: " + UserResourcePoolSet.Count, ex);
-                //}
-            }
-        }
-
-        public decimal? OtherUsersResourcePoolRateTotal
-        {
-            get
-            {
-                if (!ResourcePoolRateAverage.HasValue)
-                    return null;
-
-                var average = ResourcePoolRateAverage.Value;
-                var count = ResourcePoolRateCount.GetValueOrDefault(0);
-                var total = average * count;
-
-                if (UserResourcePool != null)
-                    total -= UserResourcePool.ResourcePoolRate;
-
-                return total;
-            }
-        }
-
-        //public decimal? OtherUsersResourcePoolRateAverage
-        //{
-        //    get
-        //}
-
-        public int OtherUsersResourcePoolRateCount
-        {
-            get
-            {
-                var count = ResourcePoolRateCount.GetValueOrDefault(0);
-
-                if (UserResourcePool != null)
-                    count--;
-
-                return count;
-            }
+            get { return UserResourcePoolSet.SingleOrDefault(); }
         }
 
         //[NotMapped]

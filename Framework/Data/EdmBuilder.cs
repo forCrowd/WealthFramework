@@ -143,8 +143,8 @@ namespace Microsoft.Data.Edm
 
                 // Add readonly properties
                 var edmx = System.Xml.Linq.XDocument.Load(stream);
-                AddReadonlyProperty(edmx, "ResourcePool", "OtherUsersResourcePoolRateTotal", "Decimal", true);
-                AddReadonlyProperty(edmx, "ResourcePool", "OtherUsersResourcePoolRateCount", "Int32", false);
+                //AddReadonlyProperty(edmx, "ResourcePool", "OtherUsersResourcePoolRateTotal", "Decimal", true);
+                //AddReadonlyProperty(edmx, "ResourcePool", "OtherUsersResourcePoolRateCount", "Int32", false);
                 AddReadonlyProperty(edmx, "ElementField", "OtherUsersIndexRatingTotal", "Decimal", true);
                 AddReadonlyProperty(edmx, "ElementField", "OtherUsersIndexRatingCount", "Int32", false);
                 AddReadonlyProperty(edmx, "ElementCell", "OtherUsersNumericValueTotal", "Decimal", true);

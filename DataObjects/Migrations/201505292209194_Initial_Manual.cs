@@ -7,11 +7,11 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
     {
         public override void Up()
         {
-            // ResourcePool ResourcePoolRateAverage
-            Sql(PrepareDropFunctionBlock("ResourcePool", "ResourcePoolRateAverage", "getResourcePoolRateAverage"));
-            Sql(PrepareGetResourcePoolRateAverageFunctionBlock());
-            Sql("ALTER TABLE dbo.ResourcePool DROP COLUMN ResourcePoolRateAverage;");
-            Sql("ALTER TABLE dbo.ResourcePool ADD ResourcePoolRateAverage AS dbo.getResourcePoolRateAverage(Id);");
+            // ResourcePool ResourcePoolRate
+            Sql(PrepareDropFunctionBlock("ResourcePool", "ResourcePoolRate", "getResourcePoolRate"));
+            Sql(PrepareGetResourcePoolRateFunctionBlock());
+            Sql("ALTER TABLE dbo.ResourcePool DROP COLUMN ResourcePoolRate;");
+            Sql("ALTER TABLE dbo.ResourcePool ADD ResourcePoolRate AS dbo.getResourcePoolRate(Id);");
 
             // ResourcePool ResourcePoolRateCount
             Sql(PrepareDropFunctionBlock("ResourcePool", "ResourcePoolRateCount", "getResourcePoolRateCount"));
@@ -52,10 +52,10 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
 
         public override void Down()
         {
-            // ResourcePool ResourcePoolRateAverage
-            Sql("ALTER TABLE dbo.ResourcePool DROP COLUMN ResourcePoolRateAverage;");
-            Sql("ALTER TABLE dbo.ResourcePool ADD ResourcePoolRateAverage [decimal](18,2);");
-            Sql("DROP FUNCTION dbo.getResourcePoolRateAverage;");
+            // ResourcePool ResourcePoolRate
+            Sql("ALTER TABLE dbo.ResourcePool DROP COLUMN ResourcePoolRate;");
+            Sql("ALTER TABLE dbo.ResourcePool ADD ResourcePoolRate [decimal](18,2);");
+            Sql("DROP FUNCTION dbo.getResourcePoolRate;");
 
             // ResourcePool ResourcePoolRateCount
             Sql("ALTER TABLE dbo.ResourcePool DROP COLUMN ResourcePoolRateCount;");
@@ -88,15 +88,15 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             Sql("DROP FUNCTION dbo.getElementCellNumericValueCount;");
         }
 
-        string PrepareGetResourcePoolRateAverageFunctionBlock()
+        string PrepareGetResourcePoolRateFunctionBlock()
         {
             var sbOutput = new StringBuilder();
-            sbOutput.AppendLine("CREATE FUNCTION dbo.getResourcePoolRateAverage(@resourcePoolId int)");
+            sbOutput.AppendLine("CREATE FUNCTION dbo.getResourcePoolRate(@resourcePoolId int)");
             sbOutput.AppendLine("RETURNS decimal");
             sbOutput.AppendLine("AS");
             sbOutput.AppendLine("BEGIN");
             sbOutput.AppendLine("    DECLARE @result decimal");
-            sbOutput.AppendLine("    SELECT @result = AVG(ResourcePoolRate) FROM UserResourcePool WHERE ResourcePoolId = @resourcePoolId AND DeletedOn IS NULL");
+            sbOutput.AppendLine("    SELECT @result = SUM(ResourcePoolRate) FROM UserResourcePool WHERE ResourcePoolId = @resourcePoolId AND DeletedOn IS NULL");
             sbOutput.AppendLine("    RETURN @result");
             sbOutput.AppendLine("END");
             return sbOutput.ToString();

@@ -188,6 +188,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
                         MainElementId = c.Int(),
                         EnableResourcePoolAddition = c.Boolean(nullable: false),
                         EnableSubtotals = c.Boolean(nullable: false),
+                        ResourcePoolRate = c.Decimal(precision: 18, scale: 2),
                         ResourcePoolRateAverage = c.Decimal(precision: 18, scale: 2),
                         ResourcePoolRateCount = c.Int(),
                         CreatedOn = c.DateTime(nullable: false),

@@ -109,7 +109,7 @@
     <script src="/App/authorization.js?v=022"></script>
 
     <!-- Entities -->
-    <script src="/App/entities/resourcePool.js?v=0224"></script>
+    <script src="/App/entities/resourcePool.js?v=027"></script>
     <script src="/App/entities/element.js?v=027"></script>
     <script src="/App/entities/elementCell.js?v=027"></script>
     <script src="/App/entities/elementField.js?v=027"></script>
