@@ -15,18 +15,6 @@
             constructor: constructor
         }
 
-        // Properties
-        Object.defineProperty(constructor.prototype, 'DecimalValue', {
-            enumerable: true,
-            configurable: true,
-            get: function () { return this.backingFields._DecimalValue; },
-            set: function (value) {
-                if (value !== this.backingFields._DecimalValue) {
-                    this.backingFields._DecimalValue = value;
-                }
-            }
-        });
-
         return (service);
 
         /*** Implementations ***/
@@ -35,17 +23,7 @@
 
             var self = this;
 
-            self.backingFields = {
-                _DecimalValue: null
-            };
-
-            //self._ratingMultiplied = null;
-
             self.userElementCell = function (args) {
-
-                if (args === 'x') {
-                    //logger.log('self.UserElementCellSet', self.UserElementCellSet);
-                }
 
                 if (typeof self.UserElementCellSet === 'undefined' || self.UserElementCellSet.length === 0) {
                     return null;
@@ -54,23 +32,23 @@
                 return self.UserElementCellSet[0];
             }
 
-            self.usersRatingAverage = function () {
+            self.allUsersNumericValueAverage = function () {
 
-                if (self.usersRatingCount() === 0)
+                if (self.allUsersNumericValueCount() === 0)
                     return 0; // TODO Return null?
 
-                var total = self.OtherUsersRatingTotal;
+                var total = self.OtherUsersNumericValueTotal;
 
                 if (self.userElementCell() !== null && self.userElementCell().DecimalValue !== null) {
                     total += self.userElementCell().DecimalValue;
                 }
 
-                return total / self.usersRatingCount();
+                return total / self.allUsersNumericValueCount();
             }
 
-            self.usersRatingCount = function () {
+            self.allUsersNumericValueCount = function () {
 
-                var count = self.OtherUsersRatingCount;
+                var count = self.OtherUsersNumericValueCount;
 
                 if (self.userElementCell() !== null && self.userElementCell().DecimalValue !== null) {
                     count++;
@@ -79,7 +57,7 @@
                 return count;
             }
 
-            self.rating = function () {
+            self.numericValue = function () {
 
                 var value = 0;
 
@@ -87,93 +65,85 @@
                 if (typeof self.ElementField === 'undefined')
                     throw 'No element field, no cry!';
 
-                if (self.ElementField.UseFixedValue) {
+                switch (self.ElementItem.Element.valueFilter) {
+                    case 1: { // Only my ratings
 
-                    switch (self.ElementField.ElementFieldType) {
-                        case 2: { value = self.BooleanValue; break; }
-                        case 3: { value = self.IntegerValue; break; }
-                        case 4:
-                        case 11: { value = self.DecimalValue; break; }
-                            // TODO 5 (DateTime?)
-                        default: { throw 'Invalid field type: ' + self.ElementField.ElementFieldType; }
+                        var userCell = self.userElementCell();
+
+                        switch (self.ElementField.ElementFieldType) {
+                            case 2: { value = userCell !== null ? userCell.BooleanValue : 0; break; }
+                            case 3: { value = userCell !== null ? userCell.IntegerValue : 0; break; }
+                            case 4: { value = userCell !== null ? userCell.DecimalValue : 50; /* Default value? */ break; }
+                                // TODO 5 (DateTime?)
+                            case 11: { value = self.allUsersNumericValueAverage(); break; } // DirectIncome: No need to try user's cell, always return all users', which will be CMRP owner's value
+                            case 12: { value = userCell !== null ? userCell.DecimalValue : 0; break; }
+                            default: { throw 'Not supported'; }
+                        }
+
+                        //if (self.userElementCell() !== null) {
+
+                        //    switch (self.ElementField.ElementFieldType) {
+                        //        case 2: {
+                        //            value = self.userElementCell().BooleanValue;
+                        //            break;
+                        //        }
+                        //        case 3: {
+                        //            value = self.userElementCell().IntegerValue;
+                        //            break;
+                        //        }
+                        //        case 4:
+                        //            // TODO 5 (DateTime?)
+                        //        case 11:
+                        //        case 12: {
+                        //            value = self.userElementCell().DecimalValue;
+                        //            break;
+                        //        }
+                        //        default: { throw 'Not supported'; }
+                        //    }
+
+                        //} else {
+
+                        //    switch (self.ElementField.ElementFieldType) {
+                        //        case 2: {
+                        //            value = 0;
+                        //            break;
+                        //        }
+                        //        case 3: {
+                        //            value = 50; // Default value?
+                        //            break;
+                        //        }
+                        //        case 4: {
+                        //            value = 50; // Default value?
+                        //            break;
+                        //        }
+                        //            // TODO 5 (DateTime?)
+                        //        case 11:
+                        //        case 12: {
+                        //            value = 0;
+                        //            break;
+                        //        }
+                        //        default: { throw 'Not supported'; }
+                        //    }
+                        //    break;
+                        //}
+                        break;
                     }
-                } else {
+                    case 2: { // All users' ratings
 
-                    switch (self.ElementItem.Element.valueFilter) {
-                        case 1: {
-
-                            if (self.userElementCell() !== null) {
-
-                                switch (self.ElementField.ElementFieldType) {
-                                    case 2: {
-                                        value = self.userElementCell().BooleanValue;
-                                        break;
-                                    }
-                                    case 3: {
-                                        value = self.userElementCell().IntegerValue;
-                                        break;
-                                    }
-                                    case 4:
-                                        // TODO 5 (DateTime?)
-                                    case 11:
-                                    case 12: {
-                                        value = self.userElementCell().DecimalValue;
-                                        break;
-                                    }
-                                    default: { throw 'Not supported'; }
-                                }
-
-                            } else {
-
-                                switch (self.ElementField.ElementFieldType) {
-                                    case 2: {
-                                        value = 0;
-                                        break;
-                                    }
-                                    case 3: {
-                                        value = 50; // Default value?
-                                        break;
-                                    }
-                                    case 4: {
-                                        value = 50; // Default value?
-                                        break;
-                                    }
-                                        // TODO 5 (DateTime?)
-                                    case 11:
-                                    case 12: {
-                                        value = 0;
-                                        break;
-                                    }
-                                    default: { throw 'Not supported'; }
-                                }
-                                break;
-                            }
-                            break;
-                        }
-                        case 2: {
-
-                            value = self.usersRatingAverage();
-                            break;
-                        }
-                        default: {
-                            throw 'Invalid switch case';
-                        }
+                        value = self.allUsersNumericValueAverage();
+                        break;
+                    }
+                    default: {
+                        throw 'Invalid switch case';
                     }
                 }
+                //}
 
                 return value;
             }
 
-            self.ratingMultiplied = function () {
-
-                //if (self._ratingMultiplied === null) {
-
-                //self._ratingMultiplied = self.rating() * multiplier;
-
-                return self.rating() * self.ElementItem.multiplier();
-                //}
-
-                //return self._ratingMultiplied;
+            self.numericValueMultiplied = function () {
+                return self.numericValue() * self.ElementItem.multiplier();
             }
 
             self.aggressiveRating = function () {
@@ -192,7 +162,7 @@
 
                 switch (index.RatingSortType) {
                     case 1: { // LowestToHighest (Low number is better)
-                        value = self.ratingMultiplied() / referenceRating;
+                        value = self.numericValueMultiplied() / referenceRating;
                         break;
                     }
                     case 2: { // HighestToLowest (High number is better)
@@ -225,30 +195,30 @@
             }
 
             // TODO This is obsolete for now and probably not calculating correctly. Check it later, either remove or fix it / SH - 13 Mar. '15
-            // TODO Now it's use again but for a different purpose, rename it? / SH - 24 Mar. '15
+            // TODO Now it's in use again but for a different purpose, rename it? / SH - 24 Mar. '15
             self.passiveRatingPercentage = function () {
 
                 if (typeof self.ElementField === 'undefined' || typeof self.ElementField.ElementFieldIndexSet === 'undefined' || self.ElementField.ElementFieldIndexSet.length === 0)
                     return 0;
 
                 var index = self.ElementField.ElementFieldIndexSet[0];
-                var indexRatingMultiplied = index.ratingMultiplied();
+                var indexNumericValueMultiplied = index.numericValueMultiplied();
 
                 // Means there is only one item in the element, always 100%
-                if (self.ratingMultiplied() === indexRatingMultiplied) {
+                if (self.numericValueMultiplied() === indexNumericValueMultiplied) {
                     return 1;
                 }
 
-                if (indexRatingMultiplied === 0) {
+                if (indexNumericValueMultiplied === 0) {
                     return 0;
                 }
 
                 switch (index.RatingSortType) {
                     case 1: { // LowestToHighest (Low number is better)
-                        return self.ratingMultiplied() / indexRatingMultiplied;
+                        return self.numericValueMultiplied() / indexNumericValueMultiplied;
                     }
                     case 2: { // HighestToLowest (High number is better)
-                        return 1 - (self.ratingMultiplied() / indexRatingMultiplied);
+                        return 1 - (self.numericValueMultiplied() / indexNumericValueMultiplied);
                     }
                     default: {
                         throw 'Invalid switch';

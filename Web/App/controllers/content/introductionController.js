@@ -56,7 +56,7 @@
                     var resourcePool = resourcePoolSet[0];
                     for (var i = 0; i < resourcePool.ElementSet.length; i++) {
                         var element = resourcePool.ElementSet[i];
-                        var updated = resourcePoolService.updateElementMultiplier(element, 'increase');
+                        var updated = userService.updateElementMultiplier(element, 'increase');
 
                         if (updated) {
 

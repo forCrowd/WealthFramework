@@ -19,7 +19,7 @@ namespace BusinessObjects.Tests
             newElement
                 .AddItem("Item")
                 .AddCell(newField)
-                .SetValue(0, newUser);
+                .SetValue(0);
         }
     }
 }

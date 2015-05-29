@@ -95,22 +95,22 @@
                 }
             }
 
-            scope.increaseCellIndexRating = function (cell) {
-                var result = userService.updateElementCellIndexRating(cell, 'increase');
+            scope.increaseElementCellNumericValue = function (cell) {
+                var result = userService.updateElementCellNumericValue(cell, 'increase');
                 if (result) {
                     saveChanges();
                 }
             }
 
-            scope.decreaseCellIndexRating = function (cell) {
-                var result = userService.updateElementCellIndexRating(cell, 'decrease');
+            scope.decreaseElementCellNumericValue = function (cell) {
+                var result = userService.updateElementCellNumericValue(cell, 'decrease');
                 if (result) {
                     saveChanges();
                 }
             }
 
-            scope.resetCellIndexRating = function (cell) {
-                var result = userService.updateElementCellIndexRating(cell, 'reset');
+            scope.resetElementCellNumericValue = function (cell) {
+                var result = userService.updateElementCellNumericValue(cell, 'reset');
                 if (result) {
                     saveChanges();
                 }
@@ -346,14 +346,14 @@
                 Object.defineProperty(self, "y", {
                     enumerable: true,
                     configurable: true,
-                    get: function () { return elementCell.rating(); }
+                    get: function () { return elementCell.numericValue(); }
                 });
             }
         }
 
         return {
             restrict: 'E',
-            templateUrl: '/App/directives/resourcePoolEditor.html?v=025',
+            templateUrl: '/App/directives/resourcePoolEditor.html?v=027',
             scope: {
                 resourcePoolId: '=',
                 chartHeight: '='

@@ -40,17 +40,17 @@ namespace BusinessObjects.Tests
             organization1
                     .AddCell(organization.DirectIncomeField).SetValue(200M)
                 .ElementItem
-                    .AddCell(organization.MultiplierField).SetValue(1M, user)
+                    .AddCell(organization.MultiplierField).SetValue(1M)
                 .ElementItem
-                    .AddCell(importanceField).SetValue(75M, user);
+                    .AddCell(importanceField).SetValue(75M);
 
             var organization2 = organization.AddItem("Organization 2");
             organization2
                     .AddCell(organization.DirectIncomeField).SetValue(200M)
                 .ElementItem
-                    .AddCell(organization.MultiplierField).SetValue(1M, user)
+                    .AddCell(organization.MultiplierField).SetValue(1M)
                 .ElementItem
-                    .AddCell(importanceField).SetValue(25M, user);
+                    .AddCell(importanceField).SetValue(25M);
 
             // Assert
             Assert.IsTrue(resourcePool.ResourcePoolAddition() == 400);
@@ -134,13 +134,13 @@ namespace BusinessObjects.Tests
             organization1
                     .AddCell(organization.DirectIncomeField).SetValue(25M)
                 .ElementItem
-                    .AddCell(organization.MultiplierField).SetValue(1M, user);
+                    .AddCell(organization.MultiplierField).SetValue(1M);
 
             var organization2 = organization.AddItem("Organization 2");
             organization2
                     .AddCell(organization.DirectIncomeField).SetValue(75M)
                 .ElementItem
-                    .AddCell(organization.MultiplierField).SetValue(1M, user);
+                    .AddCell(organization.MultiplierField).SetValue(1M);
 
             // Assert
             Assert.IsTrue(resourcePool.ResourcePoolAddition() == 100);
@@ -206,20 +206,20 @@ namespace BusinessObjects.Tests
                     .AddCell(organization.DirectIncomeField).SetValue(200M)
                 .ElementItem
                     .AddCell(organization.MultiplierField)
-                        .SetValue(1M, user1)
-                        .SetValue(10M, user2)
+                        .SetValue(1M)
+                        .SetValue(10M)
                 .ElementItem
-                    .AddCell(importanceField).SetValue(75M, user1);
+                    .AddCell(importanceField).SetValue(75M);
 
             var organization2 = organization.AddItem("Organization 2");
             organization2
                     .AddCell(organization.DirectIncomeField).SetValue(200M)
                 .ElementItem
                     .AddCell(organization.MultiplierField)
-                        .SetValue(1M, user1)
-                        .SetValue(10M, user2)
+                        .SetValue(1M)
+                        .SetValue(10M)
                 .ElementItem
-                    .AddCell(importanceField).SetValue(25M, user1);
+                    .AddCell(importanceField).SetValue(25M);
 
             // Assert
             Assert.IsTrue(resourcePool.ResourcePoolAddition() == 400);

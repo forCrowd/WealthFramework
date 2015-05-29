@@ -27,7 +27,7 @@
         $delegate.register = register;
 
         $delegate.updateElementMultiplier = updateElementMultiplier;
-        $delegate.updateElementCellIndexRating = updateElementCellIndexRating;
+        $delegate.updateElementCellNumericValue = updateElementCellNumericValue;
         $delegate.updateElementFieldIndexRating = updateElementFieldIndexRating;
         $delegate.updateResourcePoolRate = updateResourcePoolRate;
 
@@ -156,7 +156,7 @@
             // Find user element cell
             for (var itemIndex = 0; itemIndex < element.ElementItemSet.length; itemIndex++) {
 
-                var userElementCell = element.ElementItemSet[itemIndex].multiplierCell().userElementCell('x'); // x is only for test
+                var userElementCell = element.ElementItemSet[itemIndex].multiplierCell().userElementCell();
 
                 switch (updateType) {
                     case 'increase': {
@@ -215,7 +215,7 @@
             return updated;
         }
 
-        function updateElementCellIndexRating(elementCell, updateType) {
+        function updateElementCellNumericValue(elementCell, updateType) {
 
             // Determines whether there is an update
             var updated = false;

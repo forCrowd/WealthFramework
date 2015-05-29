@@ -26,10 +26,10 @@
                         </li>
                     </ol>
                 </div>
-                <div data-ng-class="{ 'col-md-4': !resourcePool.currentElement.fullSize(), 'col-md-12': resourcePool.currentElement.fullSize() }">
-                    <highchart data-config="chartConfig"></highchart>
-                </div>
-                <div data-ng-class="{ 'col-md-8': !resourcePool.currentElement.fullSize(), 'col-md-12': resourcePool.currentElement.fullSize() }">
+                <div class="col-md-12">
+                        <highchart data-config="chartConfig" class=""></highchart>
+                    </div>
+                <div class="col-md-12">
                     <table class="resourcePoolTable table-striped" border="0">
                         <thead>
                             <tr data-ng-if="resourcePool.currentElement.resourcePoolField() !== null && resourcePool.currentElement.elementFieldIndexSet().length > 0">
@@ -92,7 +92,7 @@
                                     - {{ index.indexRating() }}
                                     - {{ index.indexRatingPercentage() }}
                                     - {{ index.indexIncome() }}
-                                    - {{ index.ratingMultiplied() }}
+                                    - {{ index.numericValueMultiplied() }}
                                     - {{ index.passiveRatingPercentage() }}
                                     - {{ index.referenceRatingMultiplied() }}
                                     - {{ index.aggressiveRating() }}-->
@@ -115,28 +115,27 @@
                                 <td data-ng-repeat="elementCell in elementItem.ElementCellSet | orderBy: 'ElementField.SortOrder'">
                                     <span data-ng-if="elementCell.ElementField.ElementFieldType === 1" data-ng-bind-html="elementCell.StringValue">
                                     </span>
-                                    <span data-ng-if="elementCell.ElementField.ElementFieldType === 2">
-                                        {{ elementCell.BooleanValue }}
+                                    <span data-ng-if="(elementCell.ElementField.ElementFieldType === 2
+                                          || elementCell.ElementField.ElementFieldType === 3
+                                          || elementCell.ElementField.ElementFieldType === 4
+                                          || elementCell.ElementField.ElementFieldType === 5)
+                                          && elementCell.ElementField.UseFixedValue">
+                                        {{ elementCell.numericValue() | number: 2 }}
                                     </span>
-                                    <span data-ng-if="elementCell.ElementField.ElementFieldType === 3">
-                                        {{ elementCell.IntegerValue }}
-                                    </span>
-                                    <span data-ng-if="elementCell.ElementField.ElementFieldType === 4 && elementCell.ElementField.UseFixedValue">
-                                        {{ elementCell.DecimalValue | number: 2 }}
-                                    </span>
-                                    <div data-ng-if="elementCell.ElementField.ElementFieldType === 4 && !elementCell.ElementField.UseFixedValue">
+                                    <div data-ng-if="(elementCell.ElementField.ElementFieldType === 2
+                                        || elementCell.ElementField.ElementFieldType === 3
+                                        || elementCell.ElementField.ElementFieldType === 4
+                                        || elementCell.ElementField.ElementFieldType === 5)
+                                        && !elementCell.ElementField.UseFixedValue">
                                         <span class="fixedWidth35Cell">
-                                            {{ elementCell.rating() | number: 2 }}
+                                            {{ elementCell.numericValue() | number: 2 }}
                                         </span>
-                                        <div class="btn-group" role="group" data-ng-if="elementCell.ElementField.ElementFieldIndexSet.length > 0">
-                                            <button title="Increase" type="button" data-ng-click="increaseCellIndexRating(elementCell)" data-ng-disabled="!isAuthenticated" class="btn btn-default btn-xs">+</button>
-                                            <button title="Decrease" type="button" data-ng-click="decreaseCellIndexRating(elementCell)" data-ng-disabled="!isAuthenticated" class="btn btn-default btn-xs">-</button>
-                                            <button title="Reset" type="button" data-ng-click="resetCellIndexRating(elementCell)" data-ng-disabled="!isAuthenticated" class="btn btn-default btn-xs hide">0</button>
+                                        <div class="btn-group" role="group" data-ng-if="elementCell.ElementField.ElementFieldType === 4 && elementCell.ElementField.ElementFieldIndexSet.length > 0">
+                                            <button title="Increase" type="button" data-ng-click="increaseElementCellNumericValue(elementCell)" data-ng-disabled="!isAuthenticated" class="btn btn-default btn-xs">+</button>
+                                            <button title="Decrease" type="button" data-ng-click="decreaseElementCellNumericValue(elementCell)" data-ng-disabled="!isAuthenticated" class="btn btn-default btn-xs">-</button>
+                                            <button title="Reset" type="button" data-ng-click="resetElementCellNumericValue(elementCell)" data-ng-disabled="!isAuthenticated" class="btn btn-default btn-xs hide">0</button>
                                         </div>
                                     </div>
-                                    <span data-ng-if="elementCell.ElementField.ElementFieldType === 5">
-                                        {{ elementCell.DateTimeValue }}
-                                    </span>
                                     <span data-ng-if="elementCell.ElementField.ElementFieldType === 6">
                                         {{ elementCell.SelectedElementItem.Name }}
                                     </span>
@@ -168,10 +167,10 @@
                                 <td data-ng-if="displayIndexDetails" data-ng-repeat="cellIndex in elementItem.elementCellIndexSet2()">
                                     {{ cellIndex.indexIncome() | number: 2 }}
                                     <!--- {{ cellIndex.SelectedElementItem.indexIncome() }}
-                                    - {{ cellIndex.SelectedElementItem.ParentCellSet.length }}
-                                    - AR: {{ cellIndex.aggressiveRating() }}
-                                    - ARP: {{ cellIndex.aggressiveRatingPercentage() }}
-                                    - PRP: {{ cellIndex.passiveRatingPercentage() }}-->
+                        - {{ cellIndex.SelectedElementItem.ParentCellSet.length }}
+                        - AR: {{ cellIndex.aggressiveRating() }}
+                        - ARP: {{ cellIndex.aggressiveRatingPercentage() }}
+                        - PRP: {{ cellIndex.passiveRatingPercentage() }}-->
                                     <!--{{ cellIndex.ElementItem.Name }}-->
                                 </td>
                                 <td data-ng-if="resourcePool.currentElement.resourcePoolField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">

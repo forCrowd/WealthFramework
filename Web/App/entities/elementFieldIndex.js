@@ -23,7 +23,7 @@
 
             var self = this;
 
-            self.ratingMultiplied = function () {
+            self.numericValueMultiplied = function () {
 
                 // Validate
                 if (typeof self.ElementField === 'undefined' || typeof self.ElementField.ElementCellSet === 'undefined' || self.ElementField.ElementCellSet.length === 0)
@@ -32,7 +32,7 @@
                 var value = 0;
                 for (var i = 0; i < self.ElementField.ElementCellSet.length; i++) {
                     var cell = self.ElementField.ElementCellSet[i];
-                    value += cell.ratingMultiplied();
+                    value += cell.numericValueMultiplied();
                 }
 
                 return value;
@@ -75,8 +75,8 @@
                     if (value === null) {
 
                         switch (self.RatingSortType) {
-                            case 1: { // LowestToHighest (Low number is better)
-                                value = cell.ratingMultiplied();
+                            case 1: { // LowestToHighe/st (Low number is better)
+                                value = cell.numericValueMultiplied();
                                 break;
                             }
                             case 2: { // HighestToLowest (High number is better)
@@ -93,13 +93,14 @@
                         switch (self.RatingSortType) {
                             case 1: { // LowestToHighest (Low number is better)
 
-                                if (value !== cell.ratingMultiplied()) {
+                                if (value !== cell.numericValueMultiplied()) {
                                     self.referenceRatingAllEqualFlag = false;
                                 }
 
-                                if (cell.ratingMultiplied() > value) {
-                                    value = cell.ratingMultiplied();
+                                if (cell.numericValueMultiplied() > value) {
+                                    value = cell.numericValueMultiplied();
                                 }
+
                                 break;
                             }
                             case 2: { // HighestToLowest (High number is better)
@@ -176,14 +177,11 @@
 
                 var value = 0;
 
-                //logger.log('self.ElementField.Element.valueFilter', self.ElementField.Element.valueFilter);
-
                 switch (self.ElementField.Element.valueFilter) {
                     case 1: {
 
                         if (self.userElementFieldIndex() !== null) {
                             value = self.userElementFieldIndex().Rating;
-                            // logger.log('value', value);
                         } else {
                             value = 50; // Default value?
                         }

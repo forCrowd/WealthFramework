@@ -16,16 +16,18 @@ namespace BusinessObjects
         { }
 
         //public UserElementCell(User user, ElementCell elementCell, decimal rating)
-        public UserElementCell(User user, ElementCell elementCell) : this()
+        //public UserElementCell(User user, ElementCell elementCell) : this()
+        public UserElementCell(ElementCell elementCell) : this()
         {
-            Validations.ArgumentNullOrDefault(user, "user");
+            //Validations.ArgumentNullOrDefault(user, "user");
             Validations.ArgumentNullOrDefault(elementCell, "elementCell");
 
-            User = user;
+            //User = user;
             ElementCell = elementCell;
             //Rating = rating;
         }
 
+        string stringValue = null;
         bool? booleanValue = null;
         int? integerValue = null;
         decimal? decimalValue = null;
@@ -44,6 +46,20 @@ namespace BusinessObjects
         [Key]
         [Column(Order = 2)]
         public int ElementCellId { get; set; }
+
+        [Display(Name = "String Value")]
+        public string StringValue
+        {
+            get { return stringValue; }
+            set
+            {
+                if (stringValue != value)
+                {
+                    ClearValues();
+                    stringValue = value;
+                }
+            }
+        }
 
         [Display(Name = "Boolean Value")]
         public bool? BooleanValue
@@ -142,6 +158,12 @@ namespace BusinessObjects
         // TODO Validations for SetValue() methods?
         // FieldType check for instance?
 
+        internal UserElementCell SetValue(string value)
+        {
+            StringValue = value;
+            return this;
+        }
+
         internal UserElementCell SetValue(bool value)
         {
             BooleanValue = value;
@@ -171,6 +193,7 @@ namespace BusinessObjects
         /// </summary>
         void ClearValues()
         {
+            stringValue = null;
             booleanValue = null;
             integerValue = null;
             decimalValue = null;

@@ -24,24 +24,22 @@ namespace DataObjects.Migrations
 
         protected override void Seed(WealthEconomyContext context)
         {
-            SeedInitialData(context);
+            // Data per migration
+            foreach (var migration in pendingMigrations)
+            {
+                // Get the version number
+                var migrationVersion = migration.Substring(migration.IndexOf("_") + 1);
 
-            //// Data per migration
-            //foreach (var migration in pendingMigrations)
-            //{
-            //    // Get the version number
-            //    var migrationVersion = migration.Substring(migration.IndexOf("_") + 1);
-
-            //    switch (migrationVersion)
-            //    {
-            //        case "V0_14_9": // Currently the initial migration
-            //            {
-            //                // Initial data
-            //                SeedInitialData(context);
-            //                break;
-            //            }
-            //    }
-            //}
+                switch (migrationVersion)
+                {
+                    case "Initial":
+                        {
+                            // Initial data
+                            SeedInitialData(context);
+                            break;
+                        }
+                }
+            }
         }
 
         static void SeedInitialData(WealthEconomyContext context)
@@ -125,7 +123,22 @@ namespace DataObjects.Migrations
             var indexesPieSample = resourcePoolRepository.CreateIndexesPieSample(sampleUser);
             var resourcePoolRateSample = resourcePoolRepository.CreateResourcePoolRateSample(sampleUser);
             //var allInOneSample = resourcePoolRepository.CreateAllInOneSample(sampleUser);
+
+            // Set Id fields explicitly, since they're used in front-end samples
+            upoSample.Id = 1;
+            basicsExistingSystemSample.Id = 2;
+            basicsNewSystemSample.Id = 3;
+            sectorIndexSample.Id = 4;
+            knowledgeIndexSample.Id = 5;
+            knowledgeIndexPopularSoftwareLicenseSample.Id = 6;
+            totalCostIndexExistingSystemSample.Id = 7;
+            totalCostIndexNewSystemSample.Id = 8;
+            totalCostIndexNewSystemAftermathSample.Id = 9;
+            fairShareSample.Id = 10;
+            indexesPieSample.Id = 11;
+            resourcePoolRateSample.Id = 12;
             
+            // Insert
             resourcePoolRepository.Insert(upoSample);
             resourcePoolRepository.Insert(basicsExistingSystemSample);
             resourcePoolRepository.Insert(basicsNewSystemSample);

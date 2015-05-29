@@ -31,17 +31,23 @@ namespace DataObjects.Migrations
             Sql("ALTER TABLE dbo.ElementFieldIndex DROP COLUMN IndexRatingCount;");
             Sql("ALTER TABLE dbo.ElementFieldIndex ADD IndexRatingCount AS dbo.getElementFieldIndexRatingCount(Id);");
 
-            // ElementCell RatingAverage
-            Sql(PrepareDropFunctionBlock("ElementCell", "RatingAverage", "getElementCellRatingAverage"));
-            Sql(PrepareGetElementCellRatingAverageFunctionBlock());
-            Sql("ALTER TABLE dbo.ElementCell DROP COLUMN RatingAverage;");
-            Sql("ALTER TABLE dbo.ElementCell ADD RatingAverage AS dbo.getElementCellRatingAverage(Id);");
+            // ElementCell StringValue
+            Sql(PrepareDropFunctionBlock("ElementCell", "StringValue", "getElementCellStringValue"));
+            Sql(PrepareGetElementCellStringValueFunctionBlock());
+            Sql("ALTER TABLE dbo.ElementCell DROP COLUMN StringValue;");
+            Sql("ALTER TABLE dbo.ElementCell ADD StringValue AS dbo.getElementCellStringValue(Id);");
 
-            // ElementCell RatingCount
-            Sql(PrepareDropFunctionBlock("ElementCell", "RatingCount", "getElementCellRatingCount"));
-            Sql(PrepareGetElementCellRatingCountFunctionBlock());
-            Sql("ALTER TABLE dbo.ElementCell DROP COLUMN RatingCount;");
-            Sql("ALTER TABLE dbo.ElementCell ADD RatingCount AS dbo.getElementCellRatingCount(Id);");
+            // ElementCell NumericValue
+            Sql(PrepareDropFunctionBlock("ElementCell", "NumericValue", "getElementCellNumericValue"));
+            Sql(PrepareGetElementCellNumericValueFunctionBlock());
+            Sql("ALTER TABLE dbo.ElementCell DROP COLUMN NumericValue;");
+            Sql("ALTER TABLE dbo.ElementCell ADD NumericValue AS dbo.getElementCellNumericValue(Id);");
+
+            // ElementCell NumericValueCount
+            Sql(PrepareDropFunctionBlock("ElementCell", "NumericValueCount", "getElementCellNumericValueCount"));
+            Sql(PrepareGetElementCellNumericValueCountFunctionBlock());
+            Sql("ALTER TABLE dbo.ElementCell DROP COLUMN NumericValueCount;");
+            Sql("ALTER TABLE dbo.ElementCell ADD NumericValueCount AS dbo.getElementCellNumericValueCount(Id);");
         }
 
         public override void Down()
@@ -66,15 +72,20 @@ namespace DataObjects.Migrations
             Sql("ALTER TABLE dbo.ElementFieldIndex ADD IndexRatingCount int;");
             Sql("DROP FUNCTION dbo.getElementFieldIndexRatingCount;");
 
-            // ElementCell RatingAverage
-            Sql("ALTER TABLE dbo.ElementCell DROP COLUMN RatingAverage;");
-            Sql("ALTER TABLE dbo.ElementCell ADD RatingAverage [decimal](18,2);");
-            Sql("DROP FUNCTION dbo.getElementCellRatingAverage;");
+            // ElementCell StringValue
+            Sql("ALTER TABLE dbo.ElementCell DROP COLUMN StringValue;");
+            Sql("ALTER TABLE dbo.ElementCell ADD StringValue [nvarchar](MAX);");
+            Sql("DROP FUNCTION dbo.getElementCellStringValue;");
 
-            // ElementCell RatingCount
-            Sql("ALTER TABLE dbo.ElementCell DROP COLUMN RatingCount;");
-            Sql("ALTER TABLE dbo.ElementCell ADD RatingCount int;");
-            Sql("DROP FUNCTION dbo.getElementCellRatingCount;");
+            // ElementCell NumericValue
+            Sql("ALTER TABLE dbo.ElementCell DROP COLUMN NumericValue;");
+            Sql("ALTER TABLE dbo.ElementCell ADD NumericValue [decimal](18,2);");
+            Sql("DROP FUNCTION dbo.getElementCellNumericValue;");
+
+            // ElementCell NumericValueCount
+            Sql("ALTER TABLE dbo.ElementCell DROP COLUMN NumericValueCount;");
+            Sql("ALTER TABLE dbo.ElementCell ADD NumericValueCount int;");
+            Sql("DROP FUNCTION dbo.getElementCellNumericValueCount;");
         }
 
         string PrepareGetResourcePoolRateAverageFunctionBlock()
@@ -133,24 +144,53 @@ namespace DataObjects.Migrations
             return sbOutput.ToString();
         }
 
-        string PrepareGetElementCellRatingAverageFunctionBlock()
+        string PrepareGetElementCellStringValueFunctionBlock()
         {
             var sbOutput = new StringBuilder();
-            sbOutput.AppendLine("CREATE FUNCTION dbo.getElementCellRatingAverage(@elementCellId int)");
-            sbOutput.AppendLine("RETURNS decimal");
+            sbOutput.AppendLine("CREATE FUNCTION dbo.getElementCellStringValue(@elementCellId int)");
+            sbOutput.AppendLine("RETURNS nvarchar(MAX)");
             sbOutput.AppendLine("AS");
             sbOutput.AppendLine("BEGIN");
-            sbOutput.AppendLine("    DECLARE @result decimal");
-            sbOutput.AppendLine("    SELECT @result = AVG(DecimalValue) FROM UserElementCell WHERE ElementCellId = @elementCellId AND NOT DecimalValue IS NULL AND DeletedOn IS NULL");
+            sbOutput.AppendLine("    DECLARE @result nvarchar(MAX)");
+            sbOutput.AppendLine("    SELECT @result = StringValue FROM UserElementCell WHERE ElementCellId = @elementCellId AND NOT StringValue IS NULL AND DeletedOn IS NULL");
             sbOutput.AppendLine("    RETURN @result");
             sbOutput.AppendLine("END");
             return sbOutput.ToString();
         }
 
-        string PrepareGetElementCellRatingCountFunctionBlock()
+        string PrepareGetElementCellNumericValueFunctionBlock()
         {
             var sbOutput = new StringBuilder();
-            sbOutput.AppendLine("CREATE FUNCTION dbo.getElementCellRatingCount(@elementCellId int)");
+            sbOutput.AppendLine("CREATE FUNCTION dbo.getElementCellNumericValue(@elementCellId int)");
+            sbOutput.AppendLine("RETURNS decimal");
+            sbOutput.AppendLine("AS");
+            sbOutput.AppendLine("BEGIN");
+            sbOutput.AppendLine("    DECLARE @result decimal");
+            sbOutput.AppendLine("    SELECT @result = ");
+            sbOutput.AppendLine("        CASE T3.ElementFieldType");
+            sbOutput.AppendLine("            WHEN 1 THEN NULL -- String");
+            sbOutput.AppendLine("            WHEN 2 THEN AVG(CAST(T1.BooleanValue AS decimal)) -- Boolean");
+            sbOutput.AppendLine("            WHEN 3 THEN AVG(CAST(T1.IntegerValue AS decimal)) -- Integer");
+            sbOutput.AppendLine("            WHEN 4 THEN AVG(T1.DecimalValue) -- Decimal");
+            sbOutput.AppendLine("            WHEN 5 THEN AVG(CAST(T1.DateTimeValue AS decimal)) -- DateTime");
+            sbOutput.AppendLine("            WHEN 6 THEN NULL -- Element");
+            sbOutput.AppendLine("            WHEN 11 THEN AVG(T1.DecimalValue) -- DirectIncome");
+            sbOutput.AppendLine("            WHEN 12 THEN NULL -- Multiplier");
+            sbOutput.AppendLine("        END");
+            sbOutput.AppendLine("        FROM UserElementCell T1");
+            sbOutput.AppendLine("        JOIN ElementCell T2 ON T1.ElementCellId = T2.Id");
+            sbOutput.AppendLine("        JOIN ElementField T3 ON T2.ElementFieldId = T3.Id");
+            sbOutput.AppendLine("        WHERE T1.ElementCellId = @elementCellId AND T1.DeletedOn IS NULL");
+            sbOutput.AppendLine("        GROUP By T3.ElementFieldType");
+            sbOutput.AppendLine("    RETURN @result");
+            sbOutput.AppendLine("END");
+            return sbOutput.ToString();
+        }
+
+        string PrepareGetElementCellNumericValueCountFunctionBlock()
+        {
+            var sbOutput = new StringBuilder();
+            sbOutput.AppendLine("CREATE FUNCTION dbo.getElementCellNumericValueCount(@elementCellId int)");
             sbOutput.AppendLine("RETURNS int");
             sbOutput.AppendLine("AS");
             sbOutput.AppendLine("BEGIN");

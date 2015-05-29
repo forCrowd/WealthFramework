@@ -60,9 +60,9 @@
 
                         var result = false;
                         switch (event.name) {
-                            case 'resourcePoolEditor_elementMultiplierIncreased': { result = resourcePoolService.updateElementMultiplier(resourcePool.MainElement, 'increase'); break; }
-                            case 'resourcePoolEditor_elementMultiplierDecreased': { result = resourcePoolService.updateElementMultiplier(resourcePool.MainElement, 'decrease'); break; }
-                            case 'resourcePoolEditor_elementMultiplierReset': { result = resourcePoolService.updateElementMultiplier(resourcePool.MainElement, 'reset'); break; }
+                            case 'resourcePoolEditor_elementMultiplierIncreased': { result = userService.updateElementMultiplier(resourcePool.MainElement, 'increase'); break; }
+                            case 'resourcePoolEditor_elementMultiplierDecreased': { result = userService.updateElementMultiplier(resourcePool.MainElement, 'decrease'); break; }
+                            case 'resourcePoolEditor_elementMultiplierReset': { result = userService.updateElementMultiplier(resourcePool.MainElement, 'reset'); break; }
                         }
 
                         if (result) {

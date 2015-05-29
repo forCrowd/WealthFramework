@@ -97,10 +97,10 @@
                     .AddUserRating(user, 100);
 
             // Items, cells, user cells
-            var cosmeticsItem = sectorElement.AddItem("Cosmetics").AddCell(importanceField).SetValue(sectorRating, user).ElementItem;
-            var educationItem = sectorElement.AddItem("Education").AddCell(importanceField).SetValue(sectorRating, user).ElementItem;
-            var entertainmentItem = sectorElement.AddItem("Entertainment").AddCell(importanceField).SetValue(sectorRating, user).ElementItem;
-            var healthcareItem = sectorElement.AddItem("Healthcare").AddCell(importanceField).SetValue(sectorRating, user).ElementItem;
+            var cosmeticsItem = sectorElement.AddItem("Cosmetics").AddCell(importanceField).SetValue(sectorRating).ElementItem;
+            var educationItem = sectorElement.AddItem("Education").AddCell(importanceField).SetValue(sectorRating).ElementItem;
+            var entertainmentItem = sectorElement.AddItem("Entertainment").AddCell(importanceField).SetValue(sectorRating).ElementItem;
+            var healthcareItem = sectorElement.AddItem("Healthcare").AddCell(importanceField).SetValue(sectorRating).ElementItem;
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
@@ -162,14 +162,14 @@
                 .AddCell(rightToCopyField).SetValue("No").ElementItem
                 .AddCell(rightToModifyField).SetValue("No").ElementItem
                 .AddCell(rightToSellField).SetValue("No").ElementItem
-                .AddCell(licenseRatingField).SetValue(userRating, user).ElementItem;
+                .AddCell(licenseRatingField).SetValue(userRating).ElementItem;
 
             var openSourceLicense = licenseElement.AddItem("Open Source License")
                 .AddCell(rightToUseField).SetValue("Yes").ElementItem
                 .AddCell(rightToCopyField).SetValue("Yes").ElementItem
                 .AddCell(rightToModifyField).SetValue("Yes").ElementItem
                 .AddCell(rightToSellField).SetValue("Yes").ElementItem
-                .AddCell(licenseRatingField).SetValue(userRating, user).ElementItem;
+                .AddCell(licenseRatingField).SetValue(userRating).ElementItem;
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
@@ -216,33 +216,33 @@
             licenseElement.AddItem("Apache-2.0").AddCell(linkField)
                 .SetValue("<a href='http://opensource.org/licenses/Apache-2.0' target='_blank'>Link</a>")
                 .ElementItem
-                .AddCell(importanceField).SetValue(ratingPerLicense, user);
+                .AddCell(importanceField).SetValue(ratingPerLicense);
 
             //licenseElement.AddItem("BSD-3-Clause")
             //    .AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/BSD-3-Clause' target='_blank'>Link</a>")
             //    .ElementItem
-            //    .AddCell(importanceField).SetValue(ratingPerLicense, user);
+            //    .AddCell(importanceField).SetValue(ratingPerLicense);
 
             licenseElement.AddItem("GPL-3.0")
                 .AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/GPL-3.0' target='_blank'>Link</a>")
                 .ElementItem
-                .AddCell(importanceField).SetValue(ratingPerLicense, user);
+                .AddCell(importanceField).SetValue(ratingPerLicense);
 
             //licenseElement.AddItem("LGPL-3.0")
             //    .AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/LGPL-3.0' target='_blank'>Link</a>")
             //    .ElementItem
-            //    .AddCell(importanceField).SetValue(ratingPerLicense, user);
+            //    .AddCell(importanceField).SetValue(ratingPerLicense);
 
             licenseElement.AddItem("MIT")
                 .AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/MIT' target='_blank'>Link</a>")
                 .ElementItem
-                .AddCell(importanceField).SetValue(ratingPerLicense, user);
+                .AddCell(importanceField).SetValue(ratingPerLicense);
 
             // TODO Check it again
             licenseElement.AddItem("Microsoft EULA")
                 .AddCell(linkField).SetValue("<a href='https://msdn.microsoft.com/en-us/library/aa188798(v=office.10).aspx' target='_blank'>Link</a>")
                 .ElementItem
-                .AddCell(importanceField).SetValue(ratingPerLicense, user);
+                .AddCell(importanceField).SetValue(ratingPerLicense);
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
@@ -292,28 +292,28 @@
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Apache-2.0";
             mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/Apache-2.0' target='_blank'>Link</a>");
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense, user);
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense);
 
             //mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "BSD-3-Clause";
             //mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/BSD-3-Clause' target='_blank'>Link</a>");
-            //mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense, user);
+            //mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense);
 
             mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "GPL-3.0";
             mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/GPL-3.0' target='_blank'>Link</a>");
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense, user);
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense);
 
             //mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "LGPL-3.0";
             //mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/LGPL-3.0' target='_blank'>Link</a>");
-            //mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense, user);
+            //mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense);
 
             mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "MIT";
             mainElement.ElementItemSet.Skip(2).Take(1).Single().AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/MIT' target='_blank'>Link</a>");
-            mainElement.ElementItemSet.Skip(2).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense, user);
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense);
 
             // TODO Check it again
             mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Microsoft EULA";
             mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(linkField).SetValue("<a href='https://msdn.microsoft.com/en-us/library/aa188798(v=office.10).aspx' target='_blank'>Link</a>");
-            mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense, user);
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense);
 
             // Return
             return resourcePool;
@@ -340,28 +340,28 @@
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Apache-2.0";
             mainElement.ElementItemSet.Skip(0).Take(1).Single().NameCell.SetValue("<a href='http://opensource.org/licenses/Apache-2.0' target='_blank'>Apache-2.0</a>");
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense, user);
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense);
 
             //mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "BSD-3-Clause";
             //mainElement.ElementItemSet.Skip(1).Take(1).Single().NameCell.SetValue("<a href='http://opensource.org/licenses/BSD-3-Clause' target='_blank'>BSD-3-Clause</a>");
-            //mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense, user);
+            //mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense);
 
             mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "GPL-3.0";
             mainElement.ElementItemSet.Skip(1).Take(1).Single().NameCell.SetValue("<a href='http://opensource.org/licenses/GPL-3.0' target='_blank'>GPL-3.0</a>");
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense, user);
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense);
 
             //mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "LGPL-3.0";
             //mainElement.ElementItemSet.Skip(3).Take(1).Single().NameCell.SetValue("<a href='http://opensource.org/licenses/LGPL-3.0' target='_blank'>LGPL-3.0</a>");
-            //mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense, user);
+            //mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense);
 
             mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "MIT";
             mainElement.ElementItemSet.Skip(2).Take(1).Single().NameCell.SetValue("<a href='http://opensource.org/licenses/MIT' target='_blank'>MIT</a>");
-            mainElement.ElementItemSet.Skip(2).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense, user);
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense);
 
             // TODO Check it again
             mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Microsoft EULA";
             mainElement.ElementItemSet.Skip(3).Take(1).Single().NameCell.SetValue("<a href='https://msdn.microsoft.com/en-us/library/aa188798(v=office.10).aspx' target='_blank'>Microsoft EULA</a>");
-            mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense, user);
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(importanceField).SetValue(ratingPerLicense);
 
             // Return
             return resourcePool;
@@ -500,11 +500,11 @@
             decimal ratingPerItem = 100 / 2;
             var fairShareYesItem = fairShareElement.AddItem("Sharer")
                 .AddCell(fairShareDesciptionField).SetValue("The organization shares it's income with its employees based on their contributions").ElementItem
-                .AddCell(fairShareImportanceField).SetValue(ratingPerItem, user).ElementItem;
+                .AddCell(fairShareImportanceField).SetValue(ratingPerItem).ElementItem;
 
             var fairShareNoItem = fairShareElement.AddItem("Keeper")
                 .AddCell(fairShareDesciptionField).SetValue("The owner of the organization keeps all the income to himself, ignores the contributions").ElementItem
-                .AddCell(fairShareImportanceField).SetValue(ratingPerItem, user).ElementItem;
+                .AddCell(fairShareImportanceField).SetValue(ratingPerItem).ElementItem;
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
@@ -586,15 +586,15 @@
 
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "One and Only";
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(sectorField).SetValue(100M, user);
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(licenseField).SetValue(100M, user);
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(sectorField).SetValue(100M);
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(licenseField).SetValue(100M);
             mainElement.ElementItemSet.Skip(0).Take(1).Single().DirectIncomeCell.SetValue(100M);
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(fairShareField).SetValue(100M, user);
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(fairShareField).SetValue(100M);
 
             //mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Organization B";
             //mainElement.ElementItemSet.Skip(1).Take(1).Single().ResourcePoolCell.SetValue(100M);
-            //mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(sectorField).SetValue(50M, user);
-            //mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(licenseField).SetValue(25M, user);
+            //mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(sectorField).SetValue(50M);
+            //mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(licenseField).SetValue(25M);
 
             // mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Organization B";
             // var fairShareField = mainElement.AddField("Fair Share", ElementFieldTypes.Element);
@@ -666,13 +666,13 @@
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Alpha";
             mainElement.ElementItemSet.Skip(0).Take(1).Single().DirectIncomeCell.SetValue(200M);
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(importanceField1).SetValue(100M, user);
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(importanceField2).SetValue(50M, user);
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(importanceField1).SetValue(100M);
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(importanceField2).SetValue(50M);
 
             mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Beta";
             mainElement.ElementItemSet.Skip(1).Take(1).Single().DirectIncomeCell.SetValue(100M);
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(importanceField1).SetValue(50M, user);
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(importanceField2).SetValue(25M, user);
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(importanceField1).SetValue(50M);
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(importanceField2).SetValue(25M);
             
             // mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Organization B";
             // var fairShareField = mainElement.AddField("Fair Share", ElementFieldTypes.Element);
@@ -744,21 +744,21 @@
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Alpha";
             mainElement.ElementItemSet.Skip(0).Take(1).Single().DirectIncomeCell.SetValue(100M);
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(veryImportantField).SetValue(50M, user);
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(veryImportantField).SetValue(50M);
 
             mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Beta";
             mainElement.ElementItemSet.Skip(1).Take(1).Single().DirectIncomeCell.SetValue(100M);
-            mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(veryImportantField).SetValue(50M, user);
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(veryImportantField).SetValue(50M);
 
             mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Charlie";
             mainElement.ElementItemSet.Skip(2).Take(1).Single().DirectIncomeCell.SetValue(100M);
-            mainElement.ElementItemSet.Skip(2).Take(1).Single().AddCell(veryImportantField).SetValue(50M, user);
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().AddCell(veryImportantField).SetValue(50M);
 
             mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Delta";
             mainElement.ElementItemSet.Skip(3).Take(1).Single().DirectIncomeCell.SetValue(100M);
-            mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(veryImportantField).SetValue(50M, user);
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(veryImportantField).SetValue(50M);
 
-            //mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(importanceField2).SetValue(25M, user);
+            //mainElement.ElementItemSet.Skip(1).Take(1).Single().AddCell(importanceField2).SetValue(25M);
 
             // mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Organization B";
             // var fairShareField = mainElement.AddField("Fair Share", ElementFieldTypes.Element);
@@ -795,7 +795,7 @@
                     .AddUserRating(user, userRating);
 
             // Items, cells, user cells
-            var cosmeticsItem = sectorElement.AddItem("Cosmetics").AddCell(sectorRatingField).SetValue(userRating, user).ElementItem;
+            var cosmeticsItem = sectorElement.AddItem("Cosmetics").AddCell(sectorRatingField).SetValue(userRating).ElementItem;
             //var educationItem = sectorElement.AddItem("Education").AddCell(sectorRatingField).SetValue(userRating, user).ElementItem;
             //var entertainmentItem = sectorElement.AddItem("Entertainment").AddCell(sectorRatingField).SetValue(userRating, user).ElementItem;
             //var healthcareItem = sectorElement.AddItem("Healthcare").AddCell(sectorRatingField).SetValue(userRating, user).ElementItem;
@@ -819,14 +819,14 @@
                 .AddCell(rightToCopyField).SetValue("No").ElementItem
                 .AddCell(rightToModifyField).SetValue("No").ElementItem
                 .AddCell(rightToSellField).SetValue("No").ElementItem
-                .AddCell(licenseRatingField).SetValue(userRating, user).ElementItem;
+                .AddCell(licenseRatingField).SetValue(userRating).ElementItem;
 
             var openSourceLicense = licenseElement.AddItem("Open Source License")
                 .AddCell(rightToUseField).SetValue("Yes").ElementItem
                 .AddCell(rightToCopyField).SetValue("Yes").ElementItem
                 .AddCell(rightToModifyField).SetValue("Yes").ElementItem
                 .AddCell(rightToSellField).SetValue("Yes").ElementItem
-                .AddCell(licenseRatingField).SetValue(userRating, user).ElementItem;
+                .AddCell(licenseRatingField).SetValue(userRating).ElementItem;
 
             // Fair share element
             var fairShareElement = resourcePool.AddElement("Fair Share");
@@ -841,11 +841,11 @@
             // Items, cell, user cells
             var keeperItem = fairShareElement.AddItem("Keeper")
                 .AddCell(fairShareDesciptionField).SetValue("The owner of the organization keeps all the income to himself, ignores the contributions").ElementItem
-                .AddCell(fairShareRatingField).SetValue(userRating, user).ElementItem;
+                .AddCell(fairShareRatingField).SetValue(userRating).ElementItem;
 
             var sharerItem = fairShareElement.AddItem("Sharer")
                 .AddCell(fairShareDesciptionField).SetValue("The organization shares it's income with its employees based on their contributions").ElementItem
-                .AddCell(fairShareRatingField).SetValue(userRating, user).ElementItem;
+                .AddCell(fairShareRatingField).SetValue(userRating).ElementItem;
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
@@ -1136,10 +1136,10 @@
                     item.AddCell(element.DirectIncomeField).SetValue(100M);
 
                 if (addMultiplierField)
-                    item.AddCell(element.MultiplierField).SetValue(0M, user);
+                    item.AddCell(element.MultiplierField).SetValue(0M);
 
                 if (addImportanceIndex)
-                    item.AddCell(importanceField).SetValue(itemValue, user);
+                    item.AddCell(importanceField).SetValue(itemValue);
             }
 
             // Return

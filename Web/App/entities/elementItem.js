@@ -153,10 +153,10 @@
             // TODO Compare this function with server-side
             self.directIncome = function () {
 
-                if (self.directIncomeCell() === null || self.directIncomeCell().DecimalValue === null)
+                if (self.directIncomeCell() === null || self.directIncomeCell().NumericValue === null)
                     return 0;
 
-                return self.directIncomeCell().DecimalValue;
+                return self.directIncomeCell().NumericValue;
             }
 
             // TODO Compare this function with server-side

@@ -53,7 +53,7 @@ namespace BusinessObjects
                         AddCell(Element.NameField);
 
                     // Only if the old values are the same (means NameCell doesn't have a custom value)
-                    if (NameCell.StringValue == _name)
+                    if (NameCell.UserElementCell == null || NameCell.UserElementCell.StringValue == _name)
                         NameCell.SetValue(value);
                 }
 

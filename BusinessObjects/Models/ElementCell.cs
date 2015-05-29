@@ -41,22 +41,23 @@ namespace BusinessObjects
         [Index("IX_ElementCellId", 2, IsUnique = true)]
         public int ElementFieldId { get; set; }
 
-        // TODO These properties should only be set through SetValue()?
-        [Display(Name = "String Value")]
-        public string StringValue { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public string StringValue { get; private set; }
 
-        [Display(Name = "Boolean Value")]
-        public bool? BooleanValue { get; set; }
+        [DisplayOnListView(false)]
+        [DisplayOnEditView(false)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public decimal? NumericValue { get; private set; }
 
-        [Display(Name = "Integer Value")]
-        public int? IntegerValue { get; set; }
+        [DisplayOnListView(false)]
+        [DisplayOnEditView(false)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public int? NumericValueCount { get; private set; }
 
-        [Display(Name = "Decimal Value")]
-        public decimal? DecimalValue { get; set; }
-
-        [Display(Name = "Date Time Value")]
-        public DateTime? DateTimeValue { get; set; }
-
+        /// <summary>
+        /// In case this cell's field type is Element, this is the selected item for this cell.
+        /// Other values are stored on UserElementCell, but since this one has FK, it's directly set on ElementCell.
+        /// </summary>
         [Display(Name = "Selected Element Item")]
         public int? SelectedElementItemId { get; set; }
 
@@ -65,98 +66,73 @@ namespace BusinessObjects
         public virtual ElementItem SelectedElementItem { get; set; }
         public virtual ICollection<UserElementCell> UserElementCellSet { get; set; }
 
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public decimal? RatingAverage { get; private set; }
-
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public int? RatingCount { get; private set; }
-
         public UserElementCell UserElementCell
         {
-            get
-            {
-                return UserElementCellSet.SingleOrDefault();
-
-                // TODO Obsolete?
-
-                //if (!System.Threading.Thread.CurrentPrincipal.Identity.IsAuthenticated)
-                //    return null;
-
-                var identity = System.Threading.Thread.CurrentPrincipal.Identity as System.Security.Claims.ClaimsIdentity;
-                if (identity == null)
-                {
-                    return null;
-                }
-                var userClaim = identity.Claims.SingleOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier);
-                if (userClaim == null)
-                {
-                    return null;
-                }
-
-                var userId = 0;
-                int.TryParse(userClaim.Value, out userId);
-
-                return UserElementCellSet.SingleOrDefault(item => item.UserId == userId);
-
-                //try
-                //{
-                //    return UserElementCellSet.SingleOrDefault();
-                //}
-                //catch (Exception ex)
-                //{
-                //    throw new Exception("Count: " + UserElementCellSet.Count, ex);
-                //}
-            }
+            get { return UserElementCellSet.SingleOrDefault(); }
         }
 
-        public decimal? OtherUsersRatingTotal
+        public decimal? OtherUsersNumericValueTotal
         {
             get
             {
-
-                if (!RatingAverage.HasValue)
+                if (!NumericValue.HasValue)
                     return null;
 
-                var average = RatingAverage.Value;
-                var count = RatingCount.GetValueOrDefault(0);
+                var average = NumericValue.Value;
+                var count = NumericValueCount.GetValueOrDefault(0);
                 var total = average * count;
 
-                if (UserElementCell != null && UserElementCell.DecimalValue.HasValue)
-                    total -= UserElementCell.DecimalValue.Value;
+                if (UserElementCell != null)
+                {
+                    var fieldType = (ElementFieldTypes)ElementField.ElementFieldType;
+
+                    switch (fieldType)
+                    {
+                        case ElementFieldTypes.Boolean:
+                            total -= Convert.ToDecimal(UserElementCell.BooleanValue.GetValueOrDefault());
+                            break;
+                        case ElementFieldTypes.Integer:
+                            total -= Convert.ToDecimal(UserElementCell.BooleanValue.GetValueOrDefault());
+                            break;
+                        case ElementFieldTypes.Decimal:
+                            total -= UserElementCell.DecimalValue.GetValueOrDefault();
+                            break;
+                        case ElementFieldTypes.DateTime:
+                            total -= Convert.ToDecimal(UserElementCell.DateTimeValue.GetValueOrDefault());
+                            break;
+                        default:
+                            throw new InvalidOperationException("Invalid field type: " + fieldType);
+                    }
+                }
 
                 return total;
             }
         }
 
-        public decimal? OtherUsersRatingAverage
+        public int OtherUsersNumericValueCount
         {
             get
             {
-                if (!OtherUsersRatingTotal.HasValue || OtherUsersRatingCount == 0)
-                    return null;
+                var count = NumericValueCount.GetValueOrDefault(0);
 
-                return OtherUsersRatingTotal.Value / OtherUsersRatingCount;
-            }
-        }
+                if (UserElementCell != null)
+                {
+                    var fieldType = (ElementFieldTypes)ElementField.ElementFieldType;
 
-        public int OtherUsersRatingCount
-        {
-            get
-            {
-                var count = RatingCount.GetValueOrDefault(0);
-
-                if (UserElementCell != null && UserElementCell.DecimalValue.HasValue)
-                    count--;
+                    if ((fieldType == ElementFieldTypes.Boolean && UserElementCell.BooleanValue.HasValue)
+                        || (fieldType == ElementFieldTypes.Integer && UserElementCell.IntegerValue.HasValue)
+                        || (fieldType == ElementFieldTypes.Decimal && UserElementCell.DecimalValue.HasValue)
+                        || (fieldType == ElementFieldTypes.DateTime && UserElementCell.DateTimeValue.HasValue))
+                    {
+                        count--;
+                    }
+                }
 
                 return count;
             }
         }
 
-        /* */
+        /* Obsolete starting from here? */
 
         public decimal Rating
         {
@@ -173,12 +149,15 @@ namespace BusinessObjects
                     switch (fieldType)
                     {
                         case ElementFieldTypes.Boolean:
-                            return Convert.ToDecimal(BooleanValue.GetValueOrDefault());
+                            // return Convert.ToDecimal(BooleanValue.GetValueOrDefault());
+                            return 0;
                         case ElementFieldTypes.Integer:
-                            return Convert.ToDecimal(IntegerValue.GetValueOrDefault());
+                            return 0;
+                        //return Convert.ToDecimal(IntegerValue.GetValueOrDefault());
                         case ElementFieldTypes.Decimal:
                         case ElementFieldTypes.DirectIncome: // TODO Same as Decimal type? How about base & child types?
-                            return DecimalValue.GetValueOrDefault();
+                            return 0;
+                        //return DecimalValue.GetValueOrDefault();
                         default:
                             throw new InvalidOperationException("Invalid field type: " + fieldType);
                     }
@@ -192,8 +171,8 @@ namespace BusinessObjects
                         case ElementFieldTypes.Decimal:
                         case ElementFieldTypes.DirectIncome: // TODO Same as Decimal type? How about base & child types?
                             {
-                                return RatingAverage.HasValue
-                                    ? RatingAverage.Value
+                                return NumericValue.HasValue
+                                    ? NumericValue.Value
                                     : 0;
                             }
                         default:
@@ -262,78 +241,45 @@ namespace BusinessObjects
             return this;
         }
 
+        //public ElementCell SetValue(string value)
+        //{
+        //    SetValueHelper(ElementFieldTypes.String, null);
+        //    StringValue = value;
+        //    return this;
+        //}
+
         public ElementCell SetValue(string value)
         {
             SetValueHelper(ElementFieldTypes.String, null);
-            StringValue = value;
+            GetUserCell().SetValue(value);
             return this;
         }
 
         public ElementCell SetValue(bool value)
         {
-            return SetValue(value, null);
-        }
-
-        public ElementCell SetValue(bool value, User user)
-        {
-            SetValueHelper(ElementFieldTypes.Boolean, user);
-
-            if (ElementField.UseFixedValue.Value)
-                BooleanValue = value;
-            else
-                GetUserCell(user).SetValue(value);
-
+            SetValueHelper(ElementFieldTypes.Boolean, null);
+            GetUserCell().SetValue(value);
             return this;
         }
 
         public ElementCell SetValue(int value)
         {
-            return SetValue(value, null);
-        }
-
-        public ElementCell SetValue(int value, User user)
-        {
-            SetValueHelper(ElementFieldTypes.Integer, user);
-
-            if (ElementField.UseFixedValue.Value)
-                IntegerValue = value;
-            else
-                GetUserCell(user).SetValue(value);
-
+            SetValueHelper(ElementFieldTypes.Integer, null);
+            GetUserCell().SetValue(value);
             return this;
         }
 
         public ElementCell SetValue(decimal value)
         {
-            return SetValue(value, null);
-        }
-
-        public ElementCell SetValue(decimal value, User user)
-        {
-            SetValueHelper(ElementFieldTypes.Decimal, user);
-
-            if (ElementField.UseFixedValue.Value)
-                DecimalValue = value;
-            else
-                GetUserCell(user).SetValue(value);
-
+            SetValueHelper(ElementFieldTypes.Decimal, null);
+            GetUserCell().SetValue(value);
             return this;
         }
 
         public ElementCell SetValue(DateTime value)
         {
-            return SetValue(value, null);
-        }
-
-        public ElementCell SetValue(DateTime value, User user)
-        {
-            SetValueHelper(ElementFieldTypes.DateTime, user);
-
-            if (ElementField.UseFixedValue.Value)
-                DateTimeValue = value;
-            else
-                GetUserCell(user).SetValue(value);
-
+            SetValueHelper(ElementFieldTypes.DateTime, null);
+            GetUserCell().SetValue(value);
             return this;
         }
 
@@ -351,16 +297,18 @@ namespace BusinessObjects
             // a. Field and value type
             var fieldType = (ElementFieldTypes)ElementField.ElementFieldType;
 
+            // 1. Field's type & this operation's type has to match
+            // 2. And if field type is DirectIncome or Multiplier, value type has to be Decimal
             if (fieldType != valueType
                 && !(fieldType == ElementFieldTypes.DirectIncome
-                    || fieldType == ElementFieldTypes.Multiplier
+                || fieldType == ElementFieldTypes.Multiplier
                     && valueType == ElementFieldTypes.Decimal))
                 throw new InvalidOperationException(string.Format("Invalid value, field and value types don't match - Field type: {0}, Value type: {1}",
                     fieldType,
                     valueType));
 
             // b. FixedValue
-            FixedValueValidation(user);
+            //FixedValueValidation(user);
 
             // Clear, if FixedValue
             var fixedValue = ElementField.UseFixedValue.GetValueOrDefault(true);
@@ -377,25 +325,29 @@ namespace BusinessObjects
 
         void ClearFixedValues()
         {
-            StringValue = null;
-            BooleanValue = null;
-            IntegerValue = null;
-            DecimalValue = null;
-            DateTimeValue = null;
+            //StringValue = null;
+            //BooleanValue = null;
+            //IntegerValue = null;
+            //DecimalValue = null;
+            //DateTimeValue = null;
             // TODO Do we need to set both?
             SelectedElementItemId = null;
             SelectedElementItem = null;
         }
 
-        UserElementCell AddUserCell(User user)
+        UserElementCell AddUserCell()
         {
-            Validations.ArgumentNullOrDefault(user, "user");
+            // Validations.ArgumentNullOrDefault(user, "user");
 
-            if (UserElementCellSet.Any(item => item.User == user))
+            //if (UserElementCellSet.Any(item => item.User == user))
+            if (UserElementCell != null)
                 throw new Exception("An element cell can't have more than one user element cell for the same user.");
 
-            var userCell = new UserElementCell(user, this);
-            user.UserElementCellSet.Add(userCell);
+            var userCell = new UserElementCell(this);
+
+            if (userCell.User != null)
+                userCell.User.UserElementCellSet.Add(userCell);
+            //user.UserElementCellSet.Add(userCell);
             UserElementCellSet.Add(userCell);
             return userCell;
         }
@@ -413,13 +365,26 @@ namespace BusinessObjects
             return this;
         }
 
+        UserElementCell GetUserCell()
+        {
+            // Validations.ArgumentNullOrDefault(user, "user");
+
+            // var userCell = UserElementCellSet.SingleOrDefault(item => item.User == user);
+            var userCell = UserElementCell;
+            if (userCell == null)
+                userCell = AddUserCell();
+
+            return userCell;
+        }
+
         UserElementCell GetUserCell(User user)
         {
             Validations.ArgumentNullOrDefault(user, "user");
 
-            var userCell = UserElementCellSet.SingleOrDefault(item => item.User == user);
+            // var userCell = UserElementCellSet.SingleOrDefault(item => item.User == user);
+            var userCell = UserElementCell;
             if (userCell == null)
-                userCell = AddUserCell(user);
+                userCell = AddUserCell();
 
             return userCell;
         }

@@ -17,6 +17,7 @@
             'elementFieldIndex',
             'elementItem',
             'resourcePoolFactory',
+            'userElementCell',
             '$rootScope',
             'logger',
             entityManagerFactory]);
@@ -28,6 +29,7 @@
         elementFieldIndex,
         elementItem,
         resourcePoolFactory,
+        userElementCell,
         $rootScope,
         logger) {
 
@@ -87,6 +89,7 @@
             store.registerEntityTypeCtor('ElementFieldIndex', elementFieldIndex.constructor);
             store.registerEntityTypeCtor('ElementItem', elementItem.constructor);
             store.registerEntityTypeCtor('ResourcePool', resourcePoolFactory.resourcePool);
+            store.registerEntityTypeCtor('UserElementCell', userElementCell.constructor);
 
             return manager;
         }
