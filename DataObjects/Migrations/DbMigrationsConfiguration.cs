@@ -124,7 +124,8 @@ namespace DataObjects.Migrations
             var resourcePoolRateSample = resourcePoolRepository.CreateResourcePoolRateSample(sampleUser);
             //var allInOneSample = resourcePoolRepository.CreateAllInOneSample(sampleUser);
 
-            // Set Id fields explicitly, since they're used in front-end samples
+            // Set Id fields explicitly, since strangely EF doesn't save them in the order that they've been added to ResourcePoolSet.
+            // And they're referred with these Ids on front-end samples
             upoSample.Id = 1;
             basicsExistingSystemSample.Id = 2;
             basicsNewSystemSample.Id = 3;
