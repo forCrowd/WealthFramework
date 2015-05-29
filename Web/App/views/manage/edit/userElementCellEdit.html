@@ -34,6 +34,12 @@
                 </div>
             </div>
             <div class="form-group">
+                <label for="StringValue" class="control-label col-md-2">String Value</label>
+                <div class="col-md-10" data-ng-class="{'has-error': editForm.StringValue.$invalid && !editForm.StringValue.$pristine}">
+                    <input id="StringValue" name="StringValue" type="text" data-ng-model="vm.userElementCell.StringValue" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
                 <label for="BooleanValue" class="control-label col-md-2">Boolean Value</label>
                 <div class="col-md-10" data-ng-class="{'has-error': editForm.BooleanValue.$invalid && !editForm.BooleanValue.$pristine}">
                     <label class="radio-inline">

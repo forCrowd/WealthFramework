@@ -154,9 +154,9 @@
             var updated = false;
 
             // Find user element cell
-            for (var itemIndex = 0; itemIndex < element.ElementItemSet.length; itemIndex++) {
+            for (var i = 0; i < element.ElementItemSet.length; i++) {
 
-                var userElementCell = element.ElementItemSet[itemIndex].multiplierCell().userElementCell();
+                var userElementCell = element.ElementItemSet[i].multiplierCell().userElementCell();
 
                 switch (updateType) {
                     case 'increase': {
@@ -165,7 +165,7 @@
                         if (userElementCell === null) {
                             userElementCell = {
                                 UserId: userInfo.Id,
-                                ElementCellId: element.ElementItemSet[itemIndex].multiplierCell().Id,
+                                ElementCellId: element.ElementItemSet[i].multiplierCell().Id,
                                 DecimalValue: 2
                             };
 
@@ -183,7 +183,7 @@
                         if (userElementCell === null) {
                             userElementCell = {
                                 UserId: userInfo.Id,
-                                ElementCellId: element.ElementItemSet[itemIndex].multiplierCell().Id,
+                                ElementCellId: element.ElementItemSet[i].multiplierCell().Id,
                                 DecimalValue: 0
                             };
 
@@ -219,10 +219,6 @@
 
             // Determines whether there is an update
             var updated = false;
-
-            // Validate
-            if (elementCell.ElementField.ElementFieldIndexSet.length === 0)
-                return updated;
 
             var userElementCell = elementCell.userElementCell();
 
@@ -289,31 +285,31 @@
             return updated;
         }
 
-        function updateElementFieldIndexRating(elementFieldIndex, updateType) {
+        function updateElementFieldIndexRating(elementField, updateType) {
 
             // Determines whether there is an update
             var updated = false;
 
-            var userElementFieldIndex = elementFieldIndex.userElementFieldIndex();
+            var userElementField = elementField.userElementField();
 
             switch (updateType) {
                 case 'increase': {
 
                     // If there is no item, create it
-                    if (userElementFieldIndex === null) {
-                        userElementFieldIndex = {
+                    if (userElementField === null) {
+                        userElementField = {
                             UserId: userInfo.Id,
-                            ElementFieldIndexId: elementFieldIndex.Id,
+                            ElementFieldId: elementField.Id,
                             Rating: 55
                         };
 
-                        dataContext.createEntity('UserElementFieldIndex', userElementFieldIndex);
+                        dataContext.createEntity('UserElementField', userElementField);
                         updated = true;
 
                     } else { // Else, increase
 
-                        if (userElementFieldIndex.Rating < 100) {
-                            userElementFieldIndex.Rating = userElementFieldIndex.Rating + 5 > 100 ? 100 : userElementFieldIndex.Rating + 5;
+                        if (userElementField.Rating < 100) {
+                            userElementField.Rating = userElementField.Rating + 5 > 100 ? 100 : userElementField.Rating + 5;
                             updated = true;
                         }
                     }
@@ -322,20 +318,20 @@
                 }
                 case 'decrease': {
 
-                    if (userElementFieldIndex === null) {
-                        userElementFieldIndex = {
+                    if (userElementField === null) {
+                        userElementField = {
                             UserId: userInfo.Id,
-                            ElementFieldIndexId: elementFieldIndex.Id,
+                            ElementFieldId: elementField.Id,
                             Rating: 45
                         };
 
-                        dataContext.createEntity('UserElementFieldIndex', userElementFieldIndex);
+                        dataContext.createEntity('UserElementField', userElementField);
                         updated = true;
 
                     } else { // Else, increase
 
-                        if (userElementFieldIndex.Rating > 0) {
-                            userElementFieldIndex.Rating = userElementFieldIndex.Rating - 5 < 0 ? 0 : userElementFieldIndex.Rating - 5;
+                        if (userElementField.Rating > 0) {
+                            userElementField.Rating = userElementField.Rating - 5 < 0 ? 0 : userElementField.Rating - 5;
                             updated = true;
                         }
                     }
@@ -345,8 +341,8 @@
                 case 'reset': {
 
                     // If there is an item, delete it
-                    if (userElementFieldIndex !== null) {
-                        userElementFieldIndex.entityAspect.setDeleted();
+                    if (userElementField !== null) {
+                        userElementField.entityAspect.setDeleted();
                         updated = true;
                     }
 

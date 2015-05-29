@@ -31,6 +31,7 @@
             var _multiplierField = null;
 
             // UI related: Determines whether the chart & element details will use full row (col-md-4 vs col-md-12 etc.)
+            // TODO Obsolete for the moment!
             self.fullSize = function () {
                 return (typeof self.ElementFieldSet !== 'undefined'
                     && self.ElementFieldSet.length > 4)
@@ -99,18 +100,23 @@
 
             function getElementFieldIndexSet(element) {
 
-                // Validate
-                if (typeof self.ElementFieldSet === 'undefined')
-                    return 0;
-
                 var indexSet = [];
+
+                // Validate
+                if (typeof self.ElementFieldSet === 'undefined') {
+                    return indexSet;
+                }
 
                 for (var i = 0; i < element.ElementFieldSet.length; i++) {
                     var field = element.ElementFieldSet.sort(function (a, b) { return a.SortOrder - b.SortOrder; })[i];
 
-                    if (field.ElementFieldIndexSet.length > 0) {
-                        indexSet.push(field.ElementFieldIndexSet[0]);
+                    if (field.IndexEnabled) {
+                        indexSet.push(field);
                     }
+
+                    //if (field.ElementFieldIndexSet.length > 0) {
+                    //    indexSet.push(field.ElementFieldIndexSet[0]);
+                    //}
 
                     if (field.ElementFieldType === 6) {
                         var childIndexSet = getElementFieldIndexSet(field.SelectedElement);

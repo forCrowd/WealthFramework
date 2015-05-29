@@ -76,6 +76,9 @@
     <Compile Include="..\SolutionItems\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Generated\UserElementFieldRepository.cs">
+      <DependentUpon>Repository.tt</DependentUpon>
+    </Compile>
     <Compile Include="MigrateDatabaseToLatestVersion.cs" />
     <Compile Include="Extensions\DbSetExtensions.cs" />
     <Compile Include="Generated\ElementFieldIndexRepository.cs">
@@ -96,13 +99,13 @@
     <Compile Include="Generated\UserRoleRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201505281349227_Initial.cs" />
-    <Compile Include="Migrations\201505281349227_Initial.Designer.cs">
-      <DependentUpon>201505281349227_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201505291308105_Initial.cs" />
+    <Compile Include="Migrations\201505291308105_Initial.Designer.cs">
+      <DependentUpon>201505291308105_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201505281355188_Initial_Manual.cs" />
-    <Compile Include="Migrations\201505281355188_Initial_Manual.Designer.cs">
-      <DependentUpon>201505281355188_Initial_Manual.cs</DependentUpon>
+    <Compile Include="Migrations\201505291308304_Initial_Manual.cs" />
+    <Compile Include="Migrations\201505291308304_Initial_Manual.Designer.cs">
+      <DependentUpon>201505291308304_Initial_Manual.cs</DependentUpon>
     </Compile>
     <Compile Include="ResourcePoolRepository.cs" />
     <Compile Include="RoleStore.cs" />
@@ -167,11 +170,11 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201505281349227_Initial.resx">
-      <DependentUpon>201505281349227_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201505291308105_Initial.resx">
+      <DependentUpon>201505291308105_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505281355188_Initial_Manual.resx">
-      <DependentUpon>201505281355188_Initial_Manual.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201505291308304_Initial_Manual.resx">
+      <DependentUpon>201505291308304_Initial_Manual.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

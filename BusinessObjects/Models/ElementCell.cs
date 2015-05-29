@@ -95,6 +95,7 @@ namespace BusinessObjects
                             total -= Convert.ToDecimal(UserElementCell.BooleanValue.GetValueOrDefault());
                             break;
                         case ElementFieldTypes.Decimal:
+                        case ElementFieldTypes.DirectIncome:
                             total -= UserElementCell.DecimalValue.GetValueOrDefault();
                             break;
                         case ElementFieldTypes.DateTime:

@@ -8,11 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 -->
-<div data-ng-controller="elementCellEditController as vm">
+<div data-ng-controller="userElementFieldEditController as vm">
     <h2>Edit</h2>
     <form name="editForm">
         <div class="form-horizontal">
-            <h4>Element Cell</h4>
+            <h4>User Element Field Index</h4>
             <hr />
             <div class="form-group has-error" data-ng-show="vm.entityErrors">
                 <ul>
@@ -22,32 +22,26 @@
                 </ul>
             </div>
             <div class="form-group">
-                <label for="ElementItemId" class="control-label col-md-2">Element Item</label>
-                <div class="col-md-10" data-ng-class="{'has-error': editForm.ElementItemId.$invalid && !editForm.ElementItemId.$pristine}">
-                    <select id="ElementItemId" name="ElementItemId" data-ng-model="vm.elementCell.ElementItem" data-ng-options="elementItem.Name for elementItem in vm.elementItemSet" class="form-control" required ></select>
+                <label for="UserId" class="control-label col-md-2">Email</label>
+                <div class="col-md-10" data-ng-class="{'has-error': editForm.UserId.$invalid && !editForm.UserId.$pristine}">
+                    <select id="UserId" name="UserId" data-ng-model="vm.userElementField.User" data-ng-options="user.Email for user in vm.userSet" class="form-control" required ></select>
                 </div>
             </div>
             <div class="form-group">
                 <label for="ElementFieldId" class="control-label col-md-2">Element Field</label>
                 <div class="col-md-10" data-ng-class="{'has-error': editForm.ElementFieldId.$invalid && !editForm.ElementFieldId.$pristine}">
-                    <select id="ElementFieldId" name="ElementFieldId" data-ng-model="vm.elementCell.ElementField" data-ng-options="elementField.Name for elementField in vm.elementFieldSet" class="form-control" required ></select>
+                    <select id="ElementFieldId" name="ElementFieldId" data-ng-model="vm.userElementField.ElementField" data-ng-options="elementField.Name for elementField in vm.elementFieldSet" class="form-control" required ></select>
                 </div>
             </div>
             <div class="form-group">
-                <label for="StringValue" class="control-label col-md-2">StringValue</label>
-                <div class="col-md-10" data-ng-class="{'has-error': editForm.StringValue.$invalid && !editForm.StringValue.$pristine}">
-                    <input id="StringValue" name="StringValue" type="text" data-ng-model="vm.elementCell.StringValue" class="form-control" />
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="SelectedElementItemId" class="control-label col-md-2">Selected Element Item</label>
-                <div class="col-md-10" data-ng-class="{'has-error': editForm.SelectedElementItemId.$invalid && !editForm.SelectedElementItemId.$pristine}">
-                    <input id="SelectedElementItemId" name="SelectedElementItemId" type="text" data-ng-model="vm.elementCell.SelectedElementItemId" class="form-control" />
+                <label for="Rating" class="control-label col-md-2">Rating</label>
+                <div class="col-md-10" data-ng-class="{'has-error': editForm.Rating.$invalid && !editForm.Rating.$pristine}">
+                    <input id="Rating" name="Rating" type="text" data-ng-model="vm.userElementField.Rating" class="form-control" required />
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-md-10">
-                    <input id="RowVersion" name="RowVersion" data-ng-model="vm.elementCell.RowVersion" type="hidden">
+                    <input id="RowVersion" name="RowVersion" data-ng-model="vm.userElementField.RowVersion" type="hidden">
                 </div>
             </div>
             <div class="form-group">

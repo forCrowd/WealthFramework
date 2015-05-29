@@ -25,6 +25,7 @@
 
         DbSet<ResourcePool> ResourcePoolSet { get { return Context.Set<ResourcePool>(); } }
         DbSet<UserResourcePool> UserResourcePoolSet { get { return Context.Set<UserResourcePool>(); } }
+        DbSet<UserElementField> UserElementFieldSet { get { return Context.Set<UserElementField>(); } }
         DbSet<UserElementFieldIndex> UserElementFieldIndexSet { get { return Context.Set<UserElementFieldIndex>(); } }
         DbSet<UserElementCell> UserElementCellSet { get { return Context.Set<UserElementCell>(); } }
 
@@ -41,6 +42,16 @@
                 return;
 
             UserResourcePoolSet.Remove(entity);
+        }
+
+        public async Task DeleteUserElementField(int elementFieldId)
+        {
+            var entity = await UserElementFieldSet.SingleOrDefaultAsync(item => item.ElementFieldId == elementFieldId);
+
+            if (entity == null)
+                return;
+
+            UserElementFieldSet.Remove(entity);
         }
 
         public async Task DeleteUserElementFieldIndex(int elementFieldIndexId)

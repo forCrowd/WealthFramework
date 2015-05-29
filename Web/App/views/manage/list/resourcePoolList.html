@@ -16,6 +16,9 @@
     <table class="table">
         <tr>
             <th>
+                Email
+            </th>
+            <th>
                 Resource Pool
             </th>
             <th>
@@ -24,6 +27,9 @@
             <th></th>
         </tr>
         <tr data-ng-repeat="resourcePool in vm.resourcePoolSet">
+            <td>
+                {{ resourcePool.User.Email }}
+            </td>
             <td>
                 {{ resourcePool.Name }}
             </td>

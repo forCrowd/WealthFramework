@@ -10,32 +10,35 @@
 (function () {
     'use strict';
 
-    var controllerId = 'resourcePoolEditController';
+    var controllerId = 'userElementFieldEditController';
     angular.module('main')
-        .controller(controllerId, ['resourcePoolService',
+        .controller(controllerId, ['userElementFieldService',
+            'elementFieldService',
             'userService',
             'logger',
             '$location',
             '$routeParams',
-            resourcePoolEditController]);
+            userElementFieldEditController]);
 
-    function resourcePoolEditController(resourcePoolService,
+    function userElementFieldEditController(userElementFieldService,
+		elementFieldService,
 		userService,
 		logger,
 		$location,
 		$routeParams) {
         logger = logger.forSource(controllerId);
 
-        var isNew = $location.path() === '/manage/resourcePool/new';
+        var isNew = $location.path() === '/manage/userElementField/new';
         var isSaving = false;
 
         // Controller methods (alphabetically)
         var vm = this;
+        vm.elementFieldSet = [];
         vm.userSet = [];
         vm.cancelChanges = cancelChanges;
         vm.isSaveDisabled = isSaveDisabled;
         vm.entityErrors = [];
-        vm.resourcePool = null;
+        vm.userElementField = null;
         vm.saveChanges = saveChanges;
         vm.hasChanges = hasChanges;
 
@@ -45,19 +48,24 @@
 
         function cancelChanges() {
 
-            $location.path('/manage/resourcePool');
+            $location.path('/manage/userElementField');
 
-            //if (resourcePoolService.hasChanges()) {
-            //    resourcePoolService.rejectChanges();
+            //if (userElementFieldService.hasChanges()) {
+            //    userElementFieldService.rejectChanges();
             //    logWarning('Discarded pending change(s)', null, true);
             //}
         }
 
         function hasChanges() {
-            return resourcePoolService.hasChanges();
+            return userElementFieldService.hasChanges();
         }
 
         function initialize() {
+
+            elementFieldService.getElementFieldSet(false)
+                .then(function (data) {
+                    vm.elementFieldSet = data;
+                });
 
             userService.getUserSet(false)
                 .then(function (data) {
@@ -68,9 +76,9 @@
                 // TODO For development enviroment, create test entity?
             }
             else {
-                resourcePoolService.getResourcePool($routeParams.Id)
+                userElementFieldService.getUserElementField($routeParams.Id)
                     .then(function (data) {
-                        vm.resourcePool = data;
+                        vm.userElementField = data;
                     })
                     .catch(function (error) {
                         // TODO User-friendly message?
@@ -80,19 +88,19 @@
 
         function isSaveDisabled() {
             return isSaving ||
-                (!isNew && !resourcePoolService.hasChanges());
+                (!isNew && !userElementFieldService.hasChanges());
         }
 
         function saveChanges() {
 
             if (isNew) {
-                resourcePoolService.createResourcePool(vm.resourcePool);
+                userElementFieldService.createUserElementField(vm.userElementField);
             }
 
             isSaving = true;
-            resourcePoolService.saveChanges()
+            userElementFieldService.saveChanges()
                 .then(function (result) {
-                    $location.path('/manage/resourcePool');
+                    $location.path('/manage/userElementField');
                 })
                 .catch(function (error) {
                     // Conflict (Concurrency exception)

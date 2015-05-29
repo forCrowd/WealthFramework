@@ -13,8 +13,8 @@ namespace Web.Controllers.OData
         [AllowAnonymous]
         public override IQueryable<ResourcePool> Get()
         {
-            var result = base.Get();
-            return result;
+            // var result = base.Get();
+            return MainUnitOfWork.AllLive;
         }
 
         [AllowAnonymous]

@@ -116,22 +116,22 @@
                 }
             }
 
-            scope.increaseIndexRating = function (index) {
-                var result = userService.updateElementFieldIndexRating(index, 'increase');
+            scope.increaseIndexRating = function (field) {
+                var result = userService.updateElementFieldIndexRating(field, 'increase');
                 if (result) {
                     saveChanges();
                 }
             }
 
-            scope.decreaseIndexRating = function (index) {
-                var result = userService.updateElementFieldIndexRating(index, 'decrease');
+            scope.decreaseIndexRating = function (field) {
+                var result = userService.updateElementFieldIndexRating(field, 'decrease');
                 if (result) {
                     saveChanges();
                 }
             }
 
-            scope.resetIndexRating = function (index) {
-                var result = userService.updateElementFieldIndexRating(index, 'reset');
+            scope.resetIndexRating = function (field) {
+                var result = userService.updateElementFieldIndexRating(field, 'reset');
                 if (result) {
                     saveChanges();
                 }
@@ -268,7 +268,7 @@
                             var elementItem = element.ElementItemSet[i];
                             for (var x = 0; x < elementItem.ElementCellSet.length; x++) {
                                 var elementCell = elementItem.ElementCellSet[x];
-                                if (elementCell.ElementField.ElementFieldIndexSet.length > 0) {
+                                if (elementCell.ElementField.IndexEnabled) {
                                     var chartItem = new pieChartItem(elementCell);
                                     chartData.push(chartItem);
                                 }

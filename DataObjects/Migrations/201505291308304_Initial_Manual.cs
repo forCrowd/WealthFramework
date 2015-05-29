@@ -116,6 +116,20 @@ namespace DataObjects.Migrations
             return sbOutput.ToString();
         }
 
+        string PrepareGetElementFieldRatingAverageFunctionBlock()
+        {
+            var sbOutput = new StringBuilder();
+            sbOutput.AppendLine("CREATE FUNCTION dbo.getElementFieldRatingAverage(@elementFieldId int)");
+            sbOutput.AppendLine("RETURNS decimal");
+            sbOutput.AppendLine("AS");
+            sbOutput.AppendLine("BEGIN");
+            sbOutput.AppendLine("    DECLARE @result decimal");
+            sbOutput.AppendLine("    SELECT @result = AVG(Rating) FROM UserElementField WHERE ElementFieldId = @elementFieldId AND DeletedOn IS NULL");
+            sbOutput.AppendLine("    RETURN @result");
+            sbOutput.AppendLine("END");
+            return sbOutput.ToString();
+        }
+
         string PrepareGetElementFieldIndexRatingAverageFunctionBlock()
         {
             var sbOutput = new StringBuilder();
@@ -125,6 +139,20 @@ namespace DataObjects.Migrations
             sbOutput.AppendLine("BEGIN");
             sbOutput.AppendLine("    DECLARE @result decimal");
             sbOutput.AppendLine("    SELECT @result = AVG(Rating) FROM UserElementFieldIndex WHERE ElementFieldIndexId = @elementFieldIndexId AND DeletedOn IS NULL");
+            sbOutput.AppendLine("    RETURN @result");
+            sbOutput.AppendLine("END");
+            return sbOutput.ToString();
+        }
+
+        string PrepareGetElementFieldRatingCountFunctionBlock()
+        {
+            var sbOutput = new StringBuilder();
+            sbOutput.AppendLine("CREATE FUNCTION dbo.getElementFieldRatingCount(@elementFieldId int)");
+            sbOutput.AppendLine("RETURNS int");
+            sbOutput.AppendLine("AS");
+            sbOutput.AppendLine("BEGIN");
+            sbOutput.AppendLine("    DECLARE @result int");
+            sbOutput.AppendLine("    SELECT @result = COUNT(Rating) FROM UserElementField WHERE ElementFieldId = @elementFieldId AND DeletedOn IS NULL");
             sbOutput.AppendLine("    RETURN @result");
             sbOutput.AppendLine("END");
             return sbOutput.ToString();

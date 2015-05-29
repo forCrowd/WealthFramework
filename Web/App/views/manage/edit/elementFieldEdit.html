@@ -60,6 +60,23 @@
                 </div>
             </div>
             <div class="form-group">
+                <label for="IndexEnabled" class="control-label col-md-2">Index Enabled</label>
+                <div class="col-md-10" data-ng-class="{'has-error': editForm.IndexEnabled.$invalid && !editForm.IndexEnabled.$pristine}">
+                    <label class="radio-inline">
+                        <input id="IndexEnabled_True" name="IndexEnabled" type="radio" data-ng-model="vm.elementField.IndexEnabled" data-ng-value="true"> True
+                    </label>
+                    <label class="radio-inline">
+                        <input id="IndexEnabled_False" name="IndexEnabled" type="radio" data-ng-model="vm.elementField.IndexEnabled" data-ng-value="false"> False
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="IndexRatingSortType" class="control-label col-md-2">Index Rating Sort Type</label>
+                <div class="col-md-10" data-ng-class="{'has-error': editForm.IndexRatingSortType.$invalid && !editForm.IndexRatingSortType.$pristine}">
+                    <input id="IndexRatingSortType" name="IndexRatingSortType" type="text" data-ng-model="vm.elementField.IndexRatingSortType" class="form-control" required />
+                </div>
+            </div>
+            <div class="form-group">
                 <label for="SortOrder" class="control-label col-md-2">Sort Order</label>
                 <div class="col-md-10" data-ng-class="{'has-error': editForm.SortOrder.$invalid && !editForm.SortOrder.$pristine}">
                     <input id="SortOrder" name="SortOrder" type="text" data-ng-model="vm.elementField.SortOrder" class="form-control" required />

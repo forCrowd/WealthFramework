@@ -10,11 +10,11 @@
 (function () {
     'use strict';
 
-    var serviceId = 'resourcePoolService';
+    var serviceId = 'userElementFieldService';
     angular.module('main')
-        .factory(serviceId, ['dataContext', '$rootScope', 'logger', resourcePoolService]);
+        .factory(serviceId, ['dataContext', '$rootScope', 'logger', userElementFieldService]);
 
-    function resourcePoolService(dataContext, $rootScope, logger) {
+    function userElementFieldService(dataContext, $rootScope, logger) {
         
 		// Logger
 		logger = logger.forSource(serviceId);
@@ -25,12 +25,12 @@
 
         // Service methods (alphabetically)
         var service = {
-            createResourcePool: createResourcePool,
-            deleteResourcePool: deleteResourcePool,
+            createUserElementField: createUserElementField,
+            deleteUserElementField: deleteUserElementField,
             getChanges: getChanges,
             getChangesCount: getChangesCount,
-            getResourcePoolSet: getResourcePoolSet,
-            getResourcePool: getResourcePool,
+            getUserElementFieldSet: getUserElementFieldSet,
+            getUserElementField: getUserElementField,
             hasChanges: hasChanges,
             rejectChanges: rejectChanges,
             saveChanges: saveChanges
@@ -45,12 +45,12 @@
 
         /*** Implementations ***/
 
-        function createResourcePool(resourcePool) {
-            return dataContext.createEntity('ResourcePool', resourcePool);
+        function createUserElementField(userElementField) {
+            return dataContext.createEntity('UserElementField', userElementField);
         }
 
-        function deleteResourcePool(resourcePool) {
-            resourcePool.entityAspect.setDeleted();
+        function deleteUserElementField(userElementField) {
+            userElementField.entityAspect.setDeleted();
         }
 
         function getChanges() {
@@ -61,7 +61,7 @@
             return dataContext.getChangesCount();
         }
 
-        function getResourcePoolSet(forceRefresh) {
+        function getUserElementFieldSet(forceRefresh) {
             var count;
             if (forceRefresh) {
                 if (dataContext.hasChanges()) {
@@ -72,8 +72,8 @@
             }
 
             var query = breeze.EntityQuery
-				.from('ResourcePool')
-				.expand(['User'])
+				.from('UserElementField')
+				.expand(['ElementField', 'User'])
             ;
 
             // Fetch the data from server, in case if it's not fetched earlier or forced
@@ -93,18 +93,18 @@
 
             function success(response) {
                 count = response.results.length;
-                //logger.logSuccess('Got ' + count + ' resourcePool(s)', response);
+                //logger.logSuccess('Got ' + count + ' userElementField(s)', response);
                 return response.results;
             }
 
             function failed(error) {
-                var message = error.message || 'ResourcePool query failed';
+                var message = error.message || 'UserElementField query failed';
                 logger.logError(message, error);
             }
         }
 
-        function getResourcePool(resourcePoolId, forceRefresh) {
-            return dataContext.fetchEntityByKey('ResourcePool', resourcePoolId, !forceRefresh)
+        function getUserElementField(userElementFieldId, forceRefresh) {
+            return dataContext.fetchEntityByKey('UserElementField', userElementFieldId, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {
@@ -112,7 +112,7 @@
             }
 
             function failed(error) {
-                var message = error.message || 'getResourcePool query failed';
+                var message = error.message || 'getUserElementField query failed';
                 logger.logError(message, error);
             }
         }

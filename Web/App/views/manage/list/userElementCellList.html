@@ -22,6 +22,9 @@
                 Element Cell Id
             </th>
             <th>
+                String Value
+            </th>
+            <th>
                 Boolean Value
             </th>
             <th>
@@ -43,6 +46,9 @@
                 {{ userElementCell.ElementCell.Id }}
             </td>
             <td>
+                {{ userElementCell.StringValue }}
+            </td>
+            <td>
                 {{ userElementCell.BooleanValue }}
             </td>
             <td>
@@ -55,7 +61,7 @@
                 {{ userElementCell.DateTimeValue }}
             </td>
             <td>
-                <a href="/manage/userElementCell/edit/{{ userElementCell.Id }}">Edit</a> |
+                <a href="/manage/userElementCell/edit/{{ userElementCell.UserId }}">Edit</a> |
                 <a href="" data-ng-click="vm.deleteUserElementCell(userElementCell)">
                     Delete
                 </a>

@@ -48,10 +48,10 @@
                 action = params.action;
 
             if (action === 'list')
-                templateUrl = '/App/views/manage/list/' + params.entity + 'List.html?v=0224';
+                templateUrl = '/App/views/manage/list/' + params.entity + 'List.html?v=027';
 
             if (action === 'new' || action === 'edit')
-                templateUrl = '/App/views/manage/edit/' + params.entity + 'Edit.html?v=0224';
+                templateUrl = '/App/views/manage/edit/' + params.entity + 'Edit.html?v=027';
 
             return templateUrl;
         }

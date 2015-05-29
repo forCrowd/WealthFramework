@@ -6,6 +6,7 @@ namespace BusinessObjects
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
     [DisplayName("Element Field")]
@@ -18,40 +19,11 @@ namespace BusinessObjects
         {
             ElementCellSet = new HashSet<ElementCell>();
             ElementFieldIndexSet = new HashSet<ElementFieldIndex>();
+            UserElementFieldSet = new HashSet<UserElementField>();
         }
-
-        //public ElementField(Element element, string name, ElementFieldTypes fieldType, byte sortOrder)
-        //{
-        //    bool? fixedValue = null;
-
-        //    if (fieldType == ElementFieldTypes.Multiplier)
-        //        fixedValue = false;
-
-        //    Init(element, name, fieldType, fixedValue, sortOrder);
-        //}
-
-        //public ElementField(Element element, string name, ElementFieldTypes fieldType, bool fixedValue, byte sortOrder)
-        //{
-        //    Init(element, name, fieldType, fixedValue, sortOrder);
-        //}
-
-        //public ElementField(Element element, string name, ElementFieldTypes fieldType, byte sortOrder)
-        //{
-        //    bool? fixedValue = null;
-
-        //    if (fieldType == ElementFieldTypes.Multiplier)
-        //        fixedValue = false;
-
-        //    Init(element, name, fieldType, fixedValue, sortOrder);
-        //}
 
         public ElementField(Element element, string name, ElementFieldTypes fieldType, byte sortOrder, bool? useFixedValue = null) : this()
         {
-            //Init(element, name, fieldType, fixedValue, sortOrder);
-        //}
-
-        //void Init(Element element, string name, ElementFieldTypes fieldType, bool? fixedValue, byte sortOrder)
-        //{
             Validations.ArgumentNullOrDefault(element, "element");
             Validations.ArgumentNullOrDefault(name, "name");
             Validations.ArgumentNullOrDefault(sortOrder, "sortOrder");
@@ -105,35 +77,32 @@ namespace BusinessObjects
         [Display(Name = "Use Fixed Value")]
         public bool? UseFixedValue { get; set; }
 
+        [Display(Name = "Index Enabled")]
+        public bool IndexEnabled { get; set; }
+
+        [Display(Name = "Index Rating Sort Type")]
+        public byte IndexRatingSortType { get; set; }
+
         [Display(Name = "Sort Order")]
         public byte SortOrder { get; set; }
 
-        //[Required]
-        //[Display(Name = "Is CMRP Field")]
-        //public bool IsResourcePoolField { get; set; }
+        [DisplayOnListView(false)]
+        [DisplayOnEditView(false)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public decimal? IndexRatingAverage { get; private set; }
+
+        [DisplayOnListView(false)]
+        [DisplayOnEditView(false)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public int? IndexRatingCount { get; private set; }
 
         public virtual Element Element { get; set; }
         public virtual Element SelectedElement { get; set; }
         public virtual ICollection<ElementCell> ElementCellSet { get; set; }
         public virtual ICollection<ElementFieldIndex> ElementFieldIndexSet { get; set; }
+        public virtual ICollection<UserElementField> UserElementFieldSet { get; set; }
 
         #region - ReadOnly Properties -
-
-        ///// <summary>
-        ///// REMARK: In other index types, this value is calculated on ElementFieldIndex class level, under IndexValue property
-        ///// </summary>
-        //public decimal Value()
-        //{
-        //    return ElementCellSet.Sum(item => item.Value());
-        //}
-
-        //public decimal RatingPercentageMultiplied
-        //{
-        //    get
-        //    {
-        //        return ElementCellSet.Sum(item => item.RatingPercentageMultiplied);
-        //    }
-        //}
 
         public decimal ValueMultiplied()
         {
@@ -145,25 +114,69 @@ namespace BusinessObjects
             return ElementCellSet.Sum(item => item.RatingPercentage());
         }
 
+        public UserElementField UserElementField
+        {
+            get
+            {
+                return UserElementFieldSet.SingleOrDefault();
+            }
+        }
+
         // TODO Although technically it's possible to define multiple indexes, there will be one per Field at the moment
         public ElementFieldIndex ElementFieldIndex
         {
             get { return ElementFieldIndexSet.SingleOrDefault(); }
         }
 
-        //public decimal ElementFieldIndexShare()
-        //{
-        //    return ElementFieldIndex == null
-        //        ? 0
-        //        : ElementFieldIndex.IndexShare();
-        //}
+        public decimal? OtherUsersIndexRatingTotal
+        {
+            get
+            {
+                if (!IndexRatingAverage.HasValue)
+                    return null;
+
+                var average = IndexRatingAverage.Value;
+                var count = IndexRatingCount.GetValueOrDefault(0);
+                var total = average * count;
+
+                if (UserElementField != null)
+                    total -= UserElementField.Rating;
+
+                return total;
+            }
+        }
+
+        public int OtherUsersIndexRatingCount
+        {
+            get
+            {
+                var count = IndexRatingCount.GetValueOrDefault(0);
+
+                if (UserElementField != null)
+                    count--;
+
+                return count;
+            }
+        }
 
         #endregion
 
         #region - Methods -
 
+        public UserElementField AddUserRating(User user, decimal rating)
+        {
+            // TODO Validation?
+            var userRating = new UserElementField(user, this, rating);
+            user.UserElementFieldSet.Add(userRating);
+            UserElementFieldSet.Add(userRating);
+            return userRating;
+        }
+
         public ElementFieldIndex AddIndex(string name, RatingSortType sortType)
         {
+            this.IndexEnabled = true;
+            this.IndexRatingSortType = (byte)sortType;
+
             var index = new ElementFieldIndex(this, name);
             index.RatingSortType = (byte)sortType;
 

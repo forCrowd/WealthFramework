@@ -43,12 +43,12 @@
                     if (userInfo === null) {
                         query = breeze.EntityQuery
                             .from('ResourcePool')
-                            .expand('ElementSet.ElementFieldSet.ElementFieldIndexSet, ElementSet.ElementItemSet.ElementCellSet')
+                            .expand('ElementSet.ElementFieldSet, ElementSet.ElementItemSet.ElementCellSet')
                             .where('Id', 'eq', resourcePoolId);
                     } else {
                         query = breeze.EntityQuery
                             .from('ResourcePool')
-                            .expand('UserResourcePoolSet, ElementSet.ElementFieldSet.ElementFieldIndexSet.UserElementFieldIndexSet, ElementSet.ElementItemSet.ElementCellSet.UserElementCellSet')
+                            .expand('UserResourcePoolSet, ElementSet.ElementFieldSet.UserElementFieldSet, ElementSet.ElementItemSet.ElementCellSet.UserElementCellSet')
                             .where('Id', 'eq', resourcePoolId);
                     }
 

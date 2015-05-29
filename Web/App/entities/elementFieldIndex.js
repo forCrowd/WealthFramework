@@ -74,7 +74,7 @@
 
                     if (value === null) {
 
-                        switch (self.RatingSortType) {
+                        switch (self.IndexRatingSortType) {
                             case 1: { // LowestToHighe/st (Low number is better)
                                 value = cell.numericValueMultiplied();
                                 break;
@@ -84,13 +84,13 @@
                                 break;
                             }
                             default: {
-                                throw 'Invalid switch';
+                                throw 'Invalid switch 6';
                             }
                         }
 
                     } else {
 
-                        switch (self.RatingSortType) {
+                        switch (self.IndexRatingSortType) {
                             case 1: { // LowestToHighest (Low number is better)
 
                                 if (value !== cell.numericValueMultiplied()) {
@@ -115,7 +115,7 @@
                                 break;
                             }
                             default: {
-                                throw 'Invalid switch';
+                                throw 'Invalid switch 7';
                             }
                         }
                     }

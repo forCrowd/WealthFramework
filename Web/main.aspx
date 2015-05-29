@@ -115,7 +115,7 @@
                     <li class="dropdown hide" data-ng-show="vm.userInfo !== null">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown">Manage <b class="caret"></b></a>
                         <!-- Manage Menu - Generated -->
-                        <script src="/App/includes/manageMenu.js"></script>
+                        <script src="/App/includes/manageMenu.js?v=027"></script>
                     </li>
                     <li class="dropdown" data-ng-show="vm.userInfo !== null">
                         <a href="/manage/custom/resourcePool">CMRP</a>
@@ -180,8 +180,8 @@
     <!-- Entities -->
     <script src="/App/entities/resourcePool.js?v=0224"></script>
     <script src="/App/entities/element.js?v=027"></script>
-    <script src="/App/entities/elementCell.js?v=025"></script>
-    <script src="/App/entities/elementField.js?v=022"></script>
+    <script src="/App/entities/elementCell.js?v=027"></script>
+    <script src="/App/entities/elementField.js?v=027"></script>
     <script src="/App/entities/elementFieldIndex.js?v=027"></script>
     <script src="/App/entities/elementItem.js?v=027"></script>
     <script src="/App/entities/userElementCell.js?v=027"></script>
@@ -193,11 +193,11 @@
     <script src="/App/services/mainService.js?v=022"></script>
 
     <!-- Manage Scripts - Generated (Services, Controllers) -->
-    <script src="/App/includes/manageScripts.js?v=0224"></script>
+    <script src="/App/includes/manageScripts.js?v=027"></script>
 
     <!-- Service extensions -->
     <script src="/App/services/userService.js?v=027"></script>
-    <script src="/App/services/resourcePoolService.js?v=026"></script>
+    <script src="/App/services/resourcePoolService.js?v=027"></script>
 
     <!-- Content -->
     <script src="/App/controllers/content/mainController.js?v=024"></script>

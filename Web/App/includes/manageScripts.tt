@@ -38,9 +38,9 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 	// Variables
 	var entityTypeName = code.Escape(entityType);
 	var entityVariable = codeStringGenerator.GetCamelCase(entityTypeName);
-	var entityServiceScriptFileName = string.Format("{0}Service.js?v=0223", entityVariable);
-	var entityListControllerScriptFileName = string.Format("{0}ListController.js?v=023", entityVariable);
-	var entityEditControllerScriptFileName = string.Format("{0}EditController.js?v=023", entityVariable);
+	var entityServiceScriptFileName = string.Format("{0}Service.js?v=027", entityVariable);
+	var entityListControllerScriptFileName = string.Format("{0}ListController.js?v=027", entityVariable);
+	var entityEditControllerScriptFileName = string.Format("{0}EditController.js?v=027", entityVariable);
 #>
     <script src="/App/services/generated/<#= entityServiceScriptFileName #>"></script>\
     <script src="/App/controllers/manage/list/<#= entityListControllerScriptFileName #>"></script>\

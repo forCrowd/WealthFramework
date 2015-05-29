@@ -23,18 +23,18 @@ namespace Web.Controllers.OData
     using System.Web.Http.OData;
     using Web.Controllers.Extensions;
 
-    public abstract class BaseResourcePoolController : BaseODataController
+    public abstract class BaseUserElementFieldController : BaseODataController
     {
-        public BaseResourcePoolController()
+        public BaseUserElementFieldController()
 		{
-			MainUnitOfWork = new ResourcePoolUnitOfWork();		
+			MainUnitOfWork = new UserElementFieldUnitOfWork();		
 		}
 
-		protected ResourcePoolUnitOfWork MainUnitOfWork { get; private set; }
+		protected UserElementFieldUnitOfWork MainUnitOfWork { get; private set; }
 
-        // GET odata/ResourcePool
+        // GET odata/UserElementField
         //[Queryable]
-        public virtual IQueryable<ResourcePool> Get()
+        public virtual IQueryable<UserElementField> Get()
         {
 			var userId = this.GetCurrentUserId();
 			if (!userId.HasValue)
@@ -45,33 +45,33 @@ namespace Web.Controllers.OData
             return list;
         }
 
-        // GET odata/ResourcePool(5)
+        // GET odata/UserElementField(5)
         //[Queryable]
-        public virtual SingleResult<ResourcePool> Get([FromODataUri] int key)
+        public virtual SingleResult<UserElementField> Get([FromODataUri] int elementFieldId)
         {
-            return SingleResult.Create(MainUnitOfWork.AllLive.Where(resourcePool => resourcePool.Id == key));
+            return SingleResult.Create(MainUnitOfWork.AllLive.Where(userElementField => userElementField.ElementFieldId == elementFieldId));
         }
 
-        // PUT odata/ResourcePool(5)
-        public virtual async Task<IHttpActionResult> Put([FromODataUri] int key, ResourcePool resourcePool)
+        // PUT odata/UserElementField(5)
+        public virtual async Task<IHttpActionResult> Put([FromODataUri] int elementFieldId, UserElementField userElementField)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (key != resourcePool.Id)
+            if (elementFieldId != userElementField.ElementFieldId)
             {
                 return BadRequest();
             }
 
             try
             {
-                await MainUnitOfWork.UpdateAsync(resourcePool);
+                await MainUnitOfWork.UpdateAsync(userElementField);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MainUnitOfWork.Exists(key))
+                if (!MainUnitOfWork.Exists(elementFieldId))
                 {
                     return NotFound();
                 }
@@ -81,11 +81,11 @@ namespace Web.Controllers.OData
                 }
             }
 
-            return Ok(resourcePool);
+            return Ok(userElementField);
         }
 
-        // POST odata/ResourcePool
-        public virtual async Task<IHttpActionResult> Post(ResourcePool resourcePool)
+        // POST odata/UserElementField
+        public virtual async Task<IHttpActionResult> Post(UserElementField userElementField)
         {
             if (!ModelState.IsValid)
             {
@@ -94,11 +94,11 @@ namespace Web.Controllers.OData
 
             try
             {
-                await MainUnitOfWork.InsertAsync(resourcePool);
+                await MainUnitOfWork.InsertAsync(userElementField);
             }
             catch (DbUpdateException)
             {
-                if (MainUnitOfWork.Exists(resourcePool.Id))
+                if (MainUnitOfWork.Exists(userElementField.ElementFieldId))
                 {
                     return Conflict();
                 }
@@ -108,20 +108,20 @@ namespace Web.Controllers.OData
                 }
             }
 
-            return Created(resourcePool);
+            return Created(userElementField);
         }
 
-        // PATCH odata/ResourcePool(5)
+        // PATCH odata/UserElementField(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<ResourcePool> patch)
+        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int elementFieldId, Delta<UserElementField> patch)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var resourcePool = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == key);
-            if (resourcePool == null)
+            var userElementField = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.ElementFieldId == elementFieldId);
+            if (userElementField == null)
             {
                 return NotFound();
             }
@@ -132,33 +132,33 @@ namespace Web.Controllers.OData
             if (patchEntity.RowVersion == null)
                 throw new InvalidOperationException("RowVersion property of the entity cannot be null");
 
-            if (!resourcePool.RowVersion.SequenceEqual(patchEntity.RowVersion))
+            if (!userElementField.RowVersion.SequenceEqual(patchEntity.RowVersion))
             {
                 return Conflict();
             }
 
-            patch.Patch(resourcePool);
-            await MainUnitOfWork.UpdateAsync(resourcePool);
+            patch.Patch(userElementField);
+            await MainUnitOfWork.UpdateAsync(userElementField);
 
-            return Ok(resourcePool);
+            return Ok(userElementField);
         }
 
-        // DELETE odata/ResourcePool(5)
-        public virtual async Task<IHttpActionResult> Delete([FromODataUri] int key)
+        // DELETE odata/UserElementField(5)
+        public virtual async Task<IHttpActionResult> Delete([FromODataUri] int elementFieldId)
         {
-            var resourcePool = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == key);
-            if (resourcePool == null)
+            var userElementField = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.ElementFieldId == elementFieldId);
+            if (userElementField == null)
             {
                 return NotFound();
             }
 
-            await MainUnitOfWork.DeleteAsync(resourcePool.Id);
+            await MainUnitOfWork.DeleteAsync(userElementField.ElementFieldId);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
     }
 
-    public partial class ResourcePoolController : BaseResourcePoolController
+    public partial class UserElementFieldController : BaseUserElementFieldController
     {
 	}
 }

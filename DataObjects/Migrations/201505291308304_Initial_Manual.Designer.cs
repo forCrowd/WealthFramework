@@ -13,7 +13,7 @@ namespace DataObjects.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201505281355188_Initial_Manual"; }
+            get { return "201505291308304_Initial_Manual"; }
         }
         
         string IMigrationMetadata.Source

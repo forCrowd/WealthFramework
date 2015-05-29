@@ -6,6 +6,7 @@
 * https://github.com/forCrowd/WealthEconomy/issues/26
 * https://github.com/forCrowd/WealthEconomy/issues/39
 * https://github.com/forCrowd/WealthEconomy/issues/41
+* https://github.com/forCrowd/WealthEconomy/issues/16
 
 **0.26**
 

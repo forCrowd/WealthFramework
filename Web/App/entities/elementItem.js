@@ -53,7 +53,7 @@
                 for (var i = 0; i < elementItem.ElementCellSet.length; i++) {
                     var cell = elementItem.ElementCellSet.sort(function (a, b) { return a.ElementField.SortOrder - b.ElementField.SortOrder; })[i];
 
-                    if (cell.ElementField.ElementFieldIndexSet.length > 0) {
+                    if (cell.ElementField.IndexEnabled) {
                         indexSet.push(cell);
                     }
 
@@ -91,7 +91,7 @@
                 for (var i = 0; i < elementItem.ElementCellSet.length; i++) {
                     var cell = elementItem.ElementCellSet[i];
 
-                    if (cell.ElementField.ElementFieldIndexSet.length > 0) {
+                    if (cell.ElementField.IndexEnabled) {
                         indexSet.push(cell);
                     }
 

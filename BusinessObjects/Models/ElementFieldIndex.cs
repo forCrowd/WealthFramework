@@ -77,36 +77,6 @@ namespace BusinessObjects
             get
             {
                 return UserElementFieldIndexSet.SingleOrDefault();
-
-                // TODO Obsolete?
-
-                //if (!System.Threading.Thread.CurrentPrincipal.Identity.IsAuthenticated)
-                //    return null;
-
-                var identity = System.Threading.Thread.CurrentPrincipal.Identity as System.Security.Claims.ClaimsIdentity;
-                if (identity == null)
-                {
-                    return null;
-                }
-                var userClaim = identity.Claims.SingleOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier);
-                if (userClaim == null)
-                {
-                    return null;
-                }
-
-                var userId = 0;
-                int.TryParse(userClaim.Value, out userId);
-
-                return UserElementFieldIndexSet.SingleOrDefault(item => item.UserId == userId);
-
-                //try
-                //{
-                //    return UserElementFieldIndexSet.SingleOrDefault();
-                //}
-                //catch (Exception ex)
-                //{
-                //    throw new Exception("Count: " + UserElementFieldIndexSet.Count, ex);
-                //}
             }
         }
 
@@ -127,17 +97,6 @@ namespace BusinessObjects
                 return total;
             }
         }
-
-        //public decimal? OtherUsersIndexRatingAverage
-        //{
-        //    get
-        //    {
-        //        if (!OtherUsersIndexRatingTotal.HasValue || OtherUsersIndexRatingCount == 0)
-        //            return null;
-
-        //        return OtherUsersIndexRatingTotal.Value / OtherUsersIndexRatingCount;
-        //    }
-        //}
 
         public int OtherUsersIndexRatingCount
         {

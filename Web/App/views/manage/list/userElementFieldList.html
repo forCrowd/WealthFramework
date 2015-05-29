@@ -8,43 +8,37 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 -->
-<div data-ng-controller="elementCellListController as vm">
+<div data-ng-controller="userElementFieldListController as vm">
     <h2>List</h2>
     <p>
-        <a href="/manage/elementCell/new">Create New</a>
+        <a href="/manage/userElementField/new">Create New</a>
     </p>
     <table class="table">
         <tr>
             <th>
-                Element Item
+                Email
             </th>
             <th>
                 Element Field
             </th>
             <th>
-                StringValue
-            </th>
-            <th>
-                Selected Element Item
+                Rating
             </th>
             <th></th>
         </tr>
-        <tr data-ng-repeat="elementCell in vm.elementCellSet">
+        <tr data-ng-repeat="userElementField in vm.userElementFieldSet">
             <td>
-                {{ elementCell.ElementItem.Name }}
+                {{ userElementField.User.Email }}
             </td>
             <td>
-                {{ elementCell.ElementField.Name }}
+                {{ userElementField.ElementField.Name }}
             </td>
             <td>
-                {{ elementCell.StringValue }}
+                {{ userElementField.Rating }}
             </td>
             <td>
-                {{ elementCell.SelectedElementItemId }}
-            </td>
-            <td>
-                <a href="/manage/elementCell/edit/{{ elementCell.Id }}">Edit</a> |
-                <a href="" data-ng-click="vm.deleteElementCell(elementCell)">
+                <a href="/manage/userElementField/edit/{{ userElementField.UserId }}">Edit</a> |
+                <a href="" data-ng-click="vm.deleteUserElementField(userElementField)">
                     Delete
                 </a>
             </td>

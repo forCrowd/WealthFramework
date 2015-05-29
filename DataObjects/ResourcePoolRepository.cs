@@ -65,7 +65,10 @@
             // Fields
             mainElement.DirectIncomeField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Number of Sales";
-            mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).Name = "Employee Satisfaction Rating";
+            
+            mainElement.ElementFieldSet.Single(item => item.IndexEnabled).Name = "Employee Satisfaction";
+
+            mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).Name = "Employee Satisfaction";
             mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).ElementFieldIndex.Name = "Employee Satisfaction";
 
             // Items, cell, user cells
@@ -559,13 +562,13 @@
             decimal ratingPerIndex = 100 / 4;
 
             // Sector Index
-            var sectorField = resourcePool.ElementSet.First().AddField("Sector Rating", ElementFieldTypes.Decimal, true);
+            var sectorField = resourcePool.ElementSet.First().AddField("Sector", ElementFieldTypes.Decimal, true);
             sectorField
                 .AddIndex("Sector Index", RatingSortType.HighestToLowest)
                 .AddUserRating(user, ratingPerIndex);
 
             // Knowledge Index
-            var licenseField = resourcePool.ElementSet.First().AddField("License Rating", ElementFieldTypes.Decimal, true);
+            var licenseField = resourcePool.ElementSet.First().AddField("License", ElementFieldTypes.Decimal, true);
             licenseField
                 .AddIndex("Knowledge Index", RatingSortType.HighestToLowest)
                 .AddUserRating(user, ratingPerIndex);
@@ -576,7 +579,7 @@
                 .AddUserRating(user, ratingPerIndex);
 
             // Fair Share Index
-            var fairShareField = resourcePool.ElementSet.First().AddField("Fair Share Rating", ElementFieldTypes.Decimal, true);
+            var fairShareField = resourcePool.ElementSet.First().AddField("Fair Share", ElementFieldTypes.Decimal, true);
             fairShareField
                 .AddIndex("Fair Share Index", RatingSortType.HighestToLowest)
                 .AddUserRating(user, ratingPerIndex);
@@ -730,7 +733,7 @@
             //mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).ElementFieldIndex.Name = "Employee Satisfaction";
 
             // 2. index
-            var veryImportantField = resourcePool.ElementSet.First().AddField("Very Important Rating", ElementFieldTypes.Decimal, false);
+            var veryImportantField = resourcePool.ElementSet.First().AddField("Very Important Index", ElementFieldTypes.Decimal, false);
             veryImportantField
                 .AddIndex("Very Important Index", RatingSortType.HighestToLowest)
                 .AddUserRating(user, 100);
@@ -1119,6 +1122,10 @@
             if (addImportanceIndex)
             {
                 importanceField = element.AddField("Importance Field", ElementFieldTypes.Decimal, false);
+                
+                importanceField.IndexEnabled = true;
+                importanceField.IndexRatingSortType = (byte)RatingSortType.HighestToLowest;
+                
                 importanceField
                     .AddIndex("Importance Index", RatingSortType.HighestToLowest)
                     .AddUserRating(user, 100);

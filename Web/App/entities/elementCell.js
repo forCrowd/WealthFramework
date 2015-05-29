@@ -148,11 +148,10 @@
 
             self.aggressiveRating = function () {
 
-                if (typeof self.ElementField === 'undefined' || typeof self.ElementField.ElementFieldIndexSet === 'undefined' || self.ElementField.ElementFieldIndexSet.length === 0)
+                if (typeof self.ElementField === 'undefined' || !self.ElementField.IndexEnabled)
                     return 0; // ?
 
-                var index = self.ElementField.ElementFieldIndexSet[0];
-                var referenceRating = index.referenceRatingMultiplied();
+                var referenceRating = self.ElementField.referenceRatingMultiplied();
 
                 if (referenceRating === 0) {
                     return 0;
@@ -160,7 +159,7 @@
 
                 var value = 0;
 
-                switch (index.RatingSortType) {
+                switch (self.ElementField.IndexRatingSortType) {
                     case 1: { // LowestToHighest (Low number is better)
                         value = self.numericValueMultiplied() / referenceRating;
                         break;
@@ -170,22 +169,21 @@
                         break;
                     }
                     default: {
-                        throw 'Invalid switch';
+                        throw 'Invalid switch 1';
                     }
                 }
 
-                return index.referenceRatingAllEqualFlag
+                return self.ElementField.referenceRatingAllEqualFlag
                     ? value
                     : 1 - value;
             }
 
             self.aggressiveRatingPercentage = function () {
 
-                if (typeof self.ElementField === 'undefined' || typeof self.ElementField.ElementFieldIndexSet === 'undefined' || self.ElementField.ElementFieldIndexSet.length === 0)
+                if (typeof self.ElementField === 'undefined' || !self.ElementField.IndexEnabled)
                     return 0; // ?
 
-                var index = self.ElementField.ElementFieldIndexSet[0];
-                var indexAggressiveRating = index.aggressiveRating();
+                var indexAggressiveRating = self.ElementField.aggressiveRating();
 
                 if (indexAggressiveRating === 0) {
                     return 0; // ?
@@ -198,11 +196,10 @@
             // TODO Now it's in use again but for a different purpose, rename it? / SH - 24 Mar. '15
             self.passiveRatingPercentage = function () {
 
-                if (typeof self.ElementField === 'undefined' || typeof self.ElementField.ElementFieldIndexSet === 'undefined' || self.ElementField.ElementFieldIndexSet.length === 0)
+                if (typeof self.ElementField === 'undefined' || !self.ElementField.IndexEnabled)
                     return 0;
 
-                var index = self.ElementField.ElementFieldIndexSet[0];
-                var indexNumericValueMultiplied = index.numericValueMultiplied();
+                var indexNumericValueMultiplied = self.ElementField.numericValueMultiplied();
 
                 // Means there is only one item in the element, always 100%
                 if (self.numericValueMultiplied() === indexNumericValueMultiplied) {
@@ -213,7 +210,7 @@
                     return 0;
                 }
 
-                switch (index.RatingSortType) {
+                switch (self.ElementField.IndexRatingSortType) {
                     case 1: { // LowestToHighest (Low number is better)
                         return self.numericValueMultiplied() / indexNumericValueMultiplied;
                     }
@@ -221,7 +218,7 @@
                         return 1 - (self.numericValueMultiplied() / indexNumericValueMultiplied);
                     }
                     default: {
-                        throw 'Invalid switch';
+                        throw 'Invalid switch 2';
                     }
                 }
             }
@@ -235,8 +232,8 @@
                     return self.SelectedElementItem.totalResourcePoolIncome() / self.SelectedElementItem.ParentCellSet.length;
                 } else {
 
-                    if (self.ElementField.ElementFieldIndexSet.length > 0) {
-                        return self.ElementField.ElementFieldIndexSet[0].indexIncome() * self.aggressiveRatingPercentage();
+                    if (self.ElementField.IndexEnabled) {
+                        return self.ElementField.indexIncome() * self.aggressiveRatingPercentage();
                     } else {
                         return 0;
                     }
