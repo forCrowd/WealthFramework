@@ -119,27 +119,14 @@
             }
 
             // Local variables
-            //var _mainElement = null;
             self.backingFields = {
                 _currentElement: null,
                 _ElementSet: []
             }
 
-            //// Main element
-            //self.mainElement = function () {
-
-            //    if (_mainElement === null) {
-            //        for (var i = 0; i < self.ElementSet.length; i++) {
-            //            var element = self.ElementSet[i];
-            //            if (element.IsMainElement) {
-            //                _mainElement = element;
-            //                break;
-            //            }
-            //        }
-            //    }
-
-            //    return _mainElement;
-            //}
+            // Other users' values: Keeps the values excluding current user's
+            self.otherUsersResourcePoolRate = null;
+            self.otherUsersResourcePoolRateCount = null;
 
             self.userResourcePool = function () {
 
@@ -150,8 +137,6 @@
                 return self.UserResourcePoolSet[0];
             }
 
-            // Other users' value: Keeps the value without current user's rating
-            self.otherUsersResourcePoolRate = null;
             self.resourcePoolRateAverage = function () {
 
                 if (self.resourcePoolRateCount() === 0) {
@@ -163,7 +148,7 @@
                     self.otherUsersResourcePoolRate = self.ResourcePoolRate;
 
                     if (self.userResourcePool() !== null) {
-                        self.otherUsersResourcePoolRate = self.otherUsersResourcePoolRate - self.userResourcePool().ResourcePoolRate;
+                        self.otherUsersResourcePoolRate -= self.userResourcePool().ResourcePoolRate;
                     }
                 }
 
@@ -176,8 +161,6 @@
                 return resourcePoolRate / self.resourcePoolRateCount();
             }
 
-            // Other users' value: Keeps the value without current user's rating
-            self.otherUsersResourcePoolRateCount = null;
             self.resourcePoolRateCount = function () {
 
                 // Set other users' value on the initial call

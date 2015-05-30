@@ -88,8 +88,8 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public decimal? IndexRatingAverage { get; private set; }
-
+        public decimal? IndexRating { get; private set; }
+        
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
@@ -107,47 +107,11 @@ namespace forCrowd.WealthEconomy.BusinessObjects
             return ElementCellSet.Sum(item => item.RatingMultiplied());
         }
 
-        public decimal ValuePercentage()
-        {
-            return ElementCellSet.Sum(item => item.RatingPercentage());
-        }
-
         public UserElementField UserElementField
         {
             get
             {
                 return UserElementFieldSet.SingleOrDefault();
-            }
-        }
-
-        public decimal? OtherUsersIndexRatingTotal
-        {
-            get
-            {
-                if (!IndexRatingAverage.HasValue)
-                    return null;
-
-                var average = IndexRatingAverage.Value;
-                var count = IndexRatingCount.GetValueOrDefault(0);
-                var total = average * count;
-
-                if (UserElementField != null)
-                    total -= UserElementField.Rating;
-
-                return total;
-            }
-        }
-
-        public int OtherUsersIndexRatingCount
-        {
-            get
-            {
-                var count = IndexRatingCount.GetValueOrDefault(0);
-
-                if (UserElementField != null)
-                    count--;
-
-                return count;
             }
         }
 

@@ -22,6 +22,10 @@
         function constructor() {
             var self = this;
 
+            // Other users' values: Keeps the values excluding current user's
+            self.otherUsersIndexRating = null;
+            self.otherUsersIndexRatingCount = null;
+
             self.numericValueMultiplied = function () {
 
                 // Validate
@@ -147,6 +151,53 @@
                 return self.UserElementFieldSet[0];
             }
 
+            self.indexRatingAverage = function () {
+
+                if (self.indexRatingCount() === 0) {
+                    return 0; // TODO Return null?
+                }
+
+                // Set other users' value on the initial call
+                if (self.otherUsersIndexRating === null) {
+                    self.otherUsersIndexRating = self.IndexRating;
+
+                    if (self.userElementField() !== null) {
+                        self.otherUsersIndexRating -= self.userElementField().Rating;
+                    }
+                }
+
+                var indexRating = self.otherUsersIndexRating;
+
+                if (self.userElementField() !== null) {
+                    indexRating += self.userElementField().Rating;
+                }
+
+                //logger.log('indexRating', indexRating, false);
+                //logger.log('self.indexRatingCount()', self.indexRatingCount(), false);
+
+                return indexRating / self.indexRatingCount();
+            }
+
+            self.indexRatingCount = function () {
+
+                // Set other users' value on the initial call
+                if (self.otherUsersIndexRatingCount === null) {
+                    self.otherUsersIndexRatingCount = self.IndexRatingCount;
+
+                    if (self.userElementField() !== null) {
+                        self.otherUsersIndexRatingCount--;
+                    }
+                }
+
+                var count = self.otherUsersIndexRatingCount;
+
+                if (self.userElementField() !== null) {
+                    count++;
+                }
+
+                return count;
+            }
+
             self.usersIndexRatingAverage = function () {
 
                 if (self.usersIndexRatingCount() === 0)
@@ -188,7 +239,7 @@
                         break;
                     }
                     case 2: {
-                        value = self.usersIndexRatingAverage();
+                        value = self.indexRatingAverage();
                         break;
                     }
                     default: {

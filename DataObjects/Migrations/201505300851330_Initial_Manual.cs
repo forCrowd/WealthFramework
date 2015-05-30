@@ -19,11 +19,11 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             Sql("ALTER TABLE dbo.ResourcePool DROP COLUMN ResourcePoolRateCount;");
             Sql("ALTER TABLE dbo.ResourcePool ADD ResourcePoolRateCount AS dbo.getResourcePoolRateCount(Id);");
 
-            // ElementField IndexRatingAverage
-            Sql(PrepareDropFunctionBlock("ElementField", "IndexRatingAverage", "getElementFieldIndexRatingAverage"));
-            Sql(PrepareGetElementFieldIndexRatingAverageFunctionBlock());
-            Sql("ALTER TABLE dbo.ElementField DROP COLUMN IndexRatingAverage;");
-            Sql("ALTER TABLE dbo.ElementField ADD IndexRatingAverage AS dbo.getElementFieldIndexRatingAverage(Id);");
+            // ElementField IndexRating
+            Sql(PrepareDropFunctionBlock("ElementField", "IndexRating", "getElementFieldIndexRating"));
+            Sql(PrepareGetElementFieldIndexRatingFunctionBlock());
+            Sql("ALTER TABLE dbo.ElementField DROP COLUMN IndexRating;");
+            Sql("ALTER TABLE dbo.ElementField ADD IndexRating AS dbo.getElementFieldIndexRating(Id);");
 
             // ElementField IndexRatingCount
             Sql(PrepareDropFunctionBlock("ElementField", "IndexRatingCount", "getElementFieldIndexRatingCount"));
@@ -62,10 +62,10 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             Sql("ALTER TABLE dbo.ResourcePool ADD ResourcePoolRateCount int;");
             Sql("DROP FUNCTION dbo.getResourcePoolRateCount;");
 
-            // ElementField IndexRatingAverage
-            Sql("ALTER TABLE dbo.ElementField DROP COLUMN IndexRatingAverage;");
-            Sql("ALTER TABLE dbo.ElementField ADD IndexRatingAverage [decimal](18,2);");
-            Sql("DROP FUNCTION dbo.getElementFieldIndexRatingAverage;");
+            // ElementField IndexRating
+            Sql("ALTER TABLE dbo.ElementField DROP COLUMN IndexRating;");
+            Sql("ALTER TABLE dbo.ElementField ADD IndexRating [decimal](18,2);");
+            Sql("DROP FUNCTION dbo.getElementFieldIndexRating;");
 
             // ElementField IndexRatingCount
             Sql("ALTER TABLE dbo.ElementField DROP COLUMN IndexRatingCount;");
@@ -125,6 +125,20 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             sbOutput.AppendLine("BEGIN");
             sbOutput.AppendLine("    DECLARE @result decimal");
             sbOutput.AppendLine("    SELECT @result = AVG(Rating) FROM UserElementField WHERE ElementFieldId = @elementFieldId AND DeletedOn IS NULL");
+            sbOutput.AppendLine("    RETURN @result");
+            sbOutput.AppendLine("END");
+            return sbOutput.ToString();
+        }
+
+        string PrepareGetElementFieldIndexRatingFunctionBlock()
+        {
+            var sbOutput = new StringBuilder();
+            sbOutput.AppendLine("CREATE FUNCTION dbo.getElementFieldIndexRating(@elementFieldId int)");
+            sbOutput.AppendLine("RETURNS decimal");
+            sbOutput.AppendLine("AS");
+            sbOutput.AppendLine("BEGIN");
+            sbOutput.AppendLine("    DECLARE @result decimal");
+            sbOutput.AppendLine("    SELECT @result = SUM(Rating) FROM UserElementField WHERE ElementFieldId = @elementFieldId AND DeletedOn IS NULL");
             sbOutput.AppendLine("    RETURN @result");
             sbOutput.AppendLine("END");
             return sbOutput.ToString();

@@ -93,13 +93,13 @@
     <Compile Include="Generated\UserRoleRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201505292208590_Initial.cs" />
-    <Compile Include="Migrations\201505292208590_Initial.Designer.cs">
-      <DependentUpon>201505292208590_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201505300851096_Initial.cs" />
+    <Compile Include="Migrations\201505300851096_Initial.Designer.cs">
+      <DependentUpon>201505300851096_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201505292209194_Initial_Manual.cs" />
-    <Compile Include="Migrations\201505292209194_Initial_Manual.Designer.cs">
-      <DependentUpon>201505292209194_Initial_Manual.cs</DependentUpon>
+    <Compile Include="Migrations\201505300851330_Initial_Manual.cs" />
+    <Compile Include="Migrations\201505300851330_Initial_Manual.Designer.cs">
+      <DependentUpon>201505300851330_Initial_Manual.cs</DependentUpon>
     </Compile>
     <Compile Include="ResourcePoolRepository.cs" />
     <Compile Include="RoleStore.cs" />
@@ -164,11 +164,11 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201505292208590_Initial.resx">
-      <DependentUpon>201505292208590_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201505300851096_Initial.resx">
+      <DependentUpon>201505300851096_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505292209194_Initial_Manual.resx">
-      <DependentUpon>201505292209194_Initial_Manual.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201505300851330_Initial_Manual.resx">
+      <DependentUpon>201505300851330_Initial_Manual.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
