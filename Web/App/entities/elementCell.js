@@ -23,6 +23,10 @@
 
             var self = this;
 
+            // Other users' values: Keeps the values excluding current user's
+            self.otherUsersNumericValue = null;
+            self.otherUsersNumericValueCount = null;
+
             self.userElementCell = function (args) {
 
                 if (typeof self.UserElementCellSet === 'undefined' || self.UserElementCellSet.length === 0) {
@@ -32,25 +36,62 @@
                 return self.UserElementCellSet[0];
             }
 
-            self.allUsersNumericValueAverage = function () {
+            self.numericValueAverage = function () {
 
-                if (self.allUsersNumericValueCount() === 0)
+                if (self.numericValueCount() === 0) {
                     return 0; // TODO Return null?
-
-                var total = self.OtherUsersNumericValueTotal;
-
-                if (self.userElementCell() !== null && self.userElementCell().DecimalValue !== null) {
-                    total += self.userElementCell().DecimalValue;
                 }
 
-                return total / self.allUsersNumericValueCount();
+                // Set other users' value on the initial call
+                if (self.otherUsersNumericValue === null) {
+                    self.otherUsersNumericValue = self.NumericValue;
+
+                    if (self.userElementCell() !== null) {
+                        switch (self.ElementField.ElementFieldType) {
+                            // TODO Check bool to decimal conversion?
+                            case 2: { self.otherUsersNumericValue -= self.userElementCell().BooleanValue; break; }
+                            case 3: { self.otherUsersNumericValue -= self.userElementCell().IntegerValue; break; }
+                            case 4: { self.otherUsersNumericValue -= self.userElementCell().DecimalValue; break; }
+                                // TODO 5 (DateTime?)
+                            case 11: { self.otherUsersNumericValue -= self.userElementCell().DecimalValue; break; }
+                                //case 12: { value = userCell !== null ? userCell.DecimalValue : 0; break; }
+                            default: { throw 'Not supported'; }
+                        }
+                    }
+                }
+
+                var numericValue = self.otherUsersNumericValue;
+
+                if (self.userElementCell() !== null) {
+                    switch (self.ElementField.ElementFieldType) {
+                        // TODO Check bool to decimal conversion?
+                        case 2: { numericValue += self.userElementCell().BooleanValue; break; }
+                        case 3: { numericValue += self.userElementCell().IntegerValue; break; }
+                        case 4: { numericValue += self.userElementCell().DecimalValue; break; }
+                            // TODO 5 (DateTime?)
+                        case 11: { numericValue += self.userElementCell().DecimalValue; break; }
+                            //case 12: { value = userCell !== null ? userCell.DecimalValue : 0; break; }
+                        default: { throw 'Not supported'; }
+                    }
+                }
+
+                return numericValue / self.numericValueCount();
             }
 
-            self.allUsersNumericValueCount = function () {
+            self.numericValueCount = function () {
 
-                var count = self.OtherUsersNumericValueCount;
+                // Set other users' value on the initial call
+                if (self.otherUsersNumericValueCount === null) {
+                    self.otherUsersNumericValueCount = self.NumericValueCount;
 
-                if (self.userElementCell() !== null && self.userElementCell().DecimalValue !== null) {
+                    if (self.userElementCell() !== null) {
+                        self.otherUsersNumericValueCount--;
+                    }
+                }
+
+                var count = self.otherUsersNumericValueCount;
+
+                if (self.userElementCell() !== null) {
                     count++;
                 }
 
@@ -75,8 +116,8 @@
                             case 3: { value = userCell !== null ? userCell.IntegerValue : 0; break; }
                             case 4: { value = userCell !== null ? userCell.DecimalValue : 50; /* Default value? */ break; }
                                 // TODO 5 (DateTime?)
-                            case 11: { value = self.allUsersNumericValueAverage(); break; } // DirectIncome: No need to try user's cell, always return all users', which will be CMRP owner's value
-                            case 12: { value = userCell !== null ? userCell.DecimalValue : 0; break; }
+                            case 11: { value = self.numericValueAverage(); break; } // DirectIncome: No need to try user's cell, always return all users', which will be CMRP owner's value
+                                // case 12: { value = userCell !== null ? userCell.DecimalValue : 0; break; }
                             default: { throw 'Not supported'; }
                         }
 
@@ -130,7 +171,7 @@
                     }
                     case 2: { // All users' ratings
 
-                        value = self.allUsersNumericValueAverage();
+                        value = self.numericValueAverage();
                         break;
                     }
                     default: {

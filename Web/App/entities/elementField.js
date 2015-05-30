@@ -172,9 +172,6 @@
                     indexRating += self.userElementField().Rating;
                 }
 
-                //logger.log('indexRating', indexRating, false);
-                //logger.log('self.indexRatingCount()', self.indexRatingCount(), false);
-
                 return indexRating / self.indexRatingCount();
             }
 
@@ -190,31 +187,6 @@
                 }
 
                 var count = self.otherUsersIndexRatingCount;
-
-                if (self.userElementField() !== null) {
-                    count++;
-                }
-
-                return count;
-            }
-
-            self.usersIndexRatingAverage = function () {
-
-                if (self.usersIndexRatingCount() === 0)
-                    return 0; // TODO Return null?
-
-                var total = self.OtherUsersIndexRatingTotal;
-
-                if (self.userElementField() !== null) {
-                    total += self.userElementField().Rating;
-                }
-
-                return total / self.usersIndexRatingCount();
-            }
-
-            self.usersIndexRatingCount = function () {
-
-                var count = self.OtherUsersIndexRatingCount;
 
                 if (self.userElementField() !== null) {
                     count++;

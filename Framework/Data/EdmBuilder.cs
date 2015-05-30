@@ -142,13 +142,15 @@ namespace Microsoft.Data.Edm
                 stream.Position = 0;
 
                 // Add readonly properties
+                // This way of adding new properties actually work, but these properties are not necessary anymore
+                // So keep them as a sample
                 var edmx = System.Xml.Linq.XDocument.Load(stream);
                 //AddReadonlyProperty(edmx, "ResourcePool", "OtherUsersResourcePoolRateTotal", "Decimal", true);
                 //AddReadonlyProperty(edmx, "ResourcePool", "OtherUsersResourcePoolRateCount", "Int32", false);
                 //AddReadonlyProperty(edmx, "ElementField", "OtherUsersIndexRatingTotal", "Decimal", true);
                 //AddReadonlyProperty(edmx, "ElementField", "OtherUsersIndexRatingCount", "Int32", false);
-                AddReadonlyProperty(edmx, "ElementCell", "OtherUsersNumericValueTotal", "Decimal", true);
-                AddReadonlyProperty(edmx, "ElementCell", "OtherUsersNumericValueCount", "Int32", false);
+                //AddReadonlyProperty(edmx, "ElementCell", "OtherUsersNumericValueTotal", "Decimal", true);
+                //AddReadonlyProperty(edmx, "ElementCell", "OtherUsersNumericValueCount", "Int32", false);
 
                 /* UNCOMMENT THIS IN CASE YOU WANT TO SAVE AND INSPECT THE EDMX FILE */
                 //stream.Position = 0;

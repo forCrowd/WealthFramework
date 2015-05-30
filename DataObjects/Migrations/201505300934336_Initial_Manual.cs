@@ -116,20 +116,6 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             return sbOutput.ToString();
         }
 
-        string PrepareGetElementFieldIndexRatingAverageFunctionBlock()
-        {
-            var sbOutput = new StringBuilder();
-            sbOutput.AppendLine("CREATE FUNCTION dbo.getElementFieldIndexRatingAverage(@elementFieldId int)");
-            sbOutput.AppendLine("RETURNS decimal");
-            sbOutput.AppendLine("AS");
-            sbOutput.AppendLine("BEGIN");
-            sbOutput.AppendLine("    DECLARE @result decimal");
-            sbOutput.AppendLine("    SELECT @result = AVG(Rating) FROM UserElementField WHERE ElementFieldId = @elementFieldId AND DeletedOn IS NULL");
-            sbOutput.AppendLine("    RETURN @result");
-            sbOutput.AppendLine("END");
-            return sbOutput.ToString();
-        }
-
         string PrepareGetElementFieldIndexRatingFunctionBlock()
         {
             var sbOutput = new StringBuilder();
@@ -183,12 +169,12 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             sbOutput.AppendLine("    SELECT @result = ");
             sbOutput.AppendLine("        CASE T3.ElementFieldType");
             sbOutput.AppendLine("            WHEN 1 THEN NULL -- String");
-            sbOutput.AppendLine("            WHEN 2 THEN AVG(CAST(T1.BooleanValue AS decimal)) -- Boolean");
-            sbOutput.AppendLine("            WHEN 3 THEN AVG(CAST(T1.IntegerValue AS decimal)) -- Integer");
-            sbOutput.AppendLine("            WHEN 4 THEN AVG(T1.DecimalValue) -- Decimal");
-            sbOutput.AppendLine("            WHEN 5 THEN AVG(CAST(T1.DateTimeValue AS decimal)) -- DateTime");
+            sbOutput.AppendLine("            WHEN 2 THEN SUM(CAST(T1.BooleanValue AS decimal)) -- Boolean");
+            sbOutput.AppendLine("            WHEN 3 THEN SUM(CAST(T1.IntegerValue AS decimal)) -- Integer");
+            sbOutput.AppendLine("            WHEN 4 THEN SUM(T1.DecimalValue) -- Decimal");
+            sbOutput.AppendLine("            WHEN 5 THEN SUM(CAST(T1.DateTimeValue AS decimal)) -- DateTime");
             sbOutput.AppendLine("            WHEN 6 THEN NULL -- Element");
-            sbOutput.AppendLine("            WHEN 11 THEN AVG(T1.DecimalValue) -- DirectIncome");
+            sbOutput.AppendLine("            WHEN 11 THEN SUM(T1.DecimalValue) -- DirectIncome");
             sbOutput.AppendLine("            WHEN 12 THEN NULL -- Multiplier");
             sbOutput.AppendLine("        END");
             sbOutput.AppendLine("        FROM UserElementCell T1");

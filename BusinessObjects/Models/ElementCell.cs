@@ -71,68 +71,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects
             get { return UserElementCellSet.SingleOrDefault(); }
         }
 
-        public decimal? OtherUsersNumericValueTotal
-        {
-            get
-            {
-                if (!NumericValue.HasValue)
-                    return null;
-
-                var average = NumericValue.Value;
-                var count = NumericValueCount.GetValueOrDefault(0);
-                var total = average * count;
-
-                if (UserElementCell != null)
-                {
-                    var fieldType = (ElementFieldTypes)ElementField.ElementFieldType;
-
-                    switch (fieldType)
-                    {
-                        case ElementFieldTypes.Boolean:
-                            total -= Convert.ToDecimal(UserElementCell.BooleanValue.GetValueOrDefault());
-                            break;
-                        case ElementFieldTypes.Integer:
-                            total -= Convert.ToDecimal(UserElementCell.BooleanValue.GetValueOrDefault());
-                            break;
-                        case ElementFieldTypes.Decimal:
-                        case ElementFieldTypes.DirectIncome:
-                            total -= UserElementCell.DecimalValue.GetValueOrDefault();
-                            break;
-                        case ElementFieldTypes.DateTime:
-                            total -= Convert.ToDecimal(UserElementCell.DateTimeValue.GetValueOrDefault());
-                            break;
-                        default:
-                            throw new InvalidOperationException("Invalid field type: " + fieldType);
-                    }
-                }
-
-                return total;
-            }
-        }
-
-        public int OtherUsersNumericValueCount
-        {
-            get
-            {
-                var count = NumericValueCount.GetValueOrDefault(0);
-
-                if (UserElementCell != null)
-                {
-                    var fieldType = (ElementFieldTypes)ElementField.ElementFieldType;
-
-                    if ((fieldType == ElementFieldTypes.Boolean && UserElementCell.BooleanValue.HasValue)
-                        || (fieldType == ElementFieldTypes.Integer && UserElementCell.IntegerValue.HasValue)
-                        || (fieldType == ElementFieldTypes.Decimal && UserElementCell.DecimalValue.HasValue)
-                        || (fieldType == ElementFieldTypes.DateTime && UserElementCell.DateTimeValue.HasValue))
-                    {
-                        count--;
-                    }
-                }
-
-                return count;
-            }
-        }
-
         /* Obsolete starting from here? */
 
         public decimal Rating
