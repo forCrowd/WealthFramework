@@ -87,7 +87,7 @@
                                 break;
                             }
                             default: {
-                                throw 'Invalid switch 3';
+                                throw 'Invalid switch case';
                             }
                         }
 
@@ -118,7 +118,7 @@
                                 break;
                             }
                             default: {
-                                throw 'Invalid switch 4';
+                                throw 'Invalid switch case';
                             }
                         }
                     }
@@ -215,7 +215,7 @@
                         break;
                     }
                     default: {
-                        throw 'Invalid switch case 5';
+                        throw 'Invalid switch case';
                     }
                 }
 

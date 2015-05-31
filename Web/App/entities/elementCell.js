@@ -259,7 +259,7 @@
                         return 1 - (self.numericValueMultiplied() / indexNumericValueMultiplied);
                     }
                     default: {
-                        throw 'Invalid switch 2';
+                        throw 'Invalid switch case';
                     }
                 }
             }
