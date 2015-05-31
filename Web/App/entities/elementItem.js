@@ -163,8 +163,8 @@
             self.multiplier = function () {
 
                 if (self.multiplierCell() === null
-                    || self.multiplierCell().userElementCell() === null
-                    || self.multiplierCell().userElementCell().DecimalValue === null) {
+                    || self.multiplierCell().userCell() === null
+                    || self.multiplierCell().userCell().DecimalValue === null) {
 
                     // TODO Something wrong with the usage of this function, when this default value is 0, Index Income fails
                     // Probably Index Income is calculated based on its own element, instead of Main Element's multiplier!
@@ -172,7 +172,7 @@
 
                 }
 
-                return self.multiplierCell().userElementCell().DecimalValue;
+                return self.multiplierCell().userCell().DecimalValue;
             }
 
             self.totalDirectIncome = function () {

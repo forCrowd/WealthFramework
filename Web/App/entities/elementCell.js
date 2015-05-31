@@ -27,7 +27,7 @@
             self.otherUsersNumericValue = null;
             self.otherUsersNumericValueCount = null;
 
-            self.userElementCell = function (args) {
+            self.userCell = function (args) {
 
                 if (typeof self.UserElementCellSet === 'undefined' || self.UserElementCellSet.length === 0) {
                     return null;
@@ -38,22 +38,22 @@
 
             self.numericValueAverage = function () {
 
-                if (self.numericValueCount() === 0) {
-                    return 0; // TODO Return null?
-                }
-
                 // Set other users' value on the initial call
                 if (self.otherUsersNumericValue === null) {
-                    self.otherUsersNumericValue = self.NumericValue;
 
-                    if (self.userElementCell() !== null) {
+                    // TODO This could directly return 0?
+                    self.otherUsersNumericValue = self.NumericValue !== null
+                        ? self.NumericValue
+                        : 0;
+
+                    if (self.userCell() !== null) {
                         switch (self.ElementField.ElementFieldType) {
                             // TODO Check bool to decimal conversion?
-                            case 2: { self.otherUsersNumericValue -= self.userElementCell().BooleanValue; break; }
-                            case 3: { self.otherUsersNumericValue -= self.userElementCell().IntegerValue; break; }
-                            case 4: { self.otherUsersNumericValue -= self.userElementCell().DecimalValue; break; }
+                            case 2: { self.otherUsersNumericValue -= self.userCell().BooleanValue; break; }
+                            case 3: { self.otherUsersNumericValue -= self.userCell().IntegerValue; break; }
+                            case 4: { self.otherUsersNumericValue -= self.userCell().DecimalValue; break; }
                                 // TODO 5 (DateTime?)
-                            case 11: { self.otherUsersNumericValue -= self.userElementCell().DecimalValue; break; }
+                            case 11: { self.otherUsersNumericValue -= self.userCell().DecimalValue; break; }
                                 //case 12: { value = userCell !== null ? userCell.DecimalValue : 0; break; }
                             default: { throw 'Not supported'; }
                         }
@@ -62,17 +62,15 @@
 
                 var numericValue = self.otherUsersNumericValue;
 
-                if (self.userElementCell() !== null) {
-                    switch (self.ElementField.ElementFieldType) {
-                        // TODO Check bool to decimal conversion?
-                        case 2: { numericValue += self.userElementCell().BooleanValue; break; }
-                        case 3: { numericValue += self.userElementCell().IntegerValue; break; }
-                        case 4: { numericValue += self.userElementCell().DecimalValue; break; }
-                            // TODO 5 (DateTime?)
-                        case 11: { numericValue += self.userElementCell().DecimalValue; break; }
-                            //case 12: { value = userCell !== null ? userCell.DecimalValue : 0; break; }
-                        default: { throw 'Not supported'; }
-                    }
+                switch (self.ElementField.ElementFieldType) {
+                    // TODO Check bool to decimal conversion?
+                    case 2: { numericValue += self.userCell() !== null ? self.userCell().BooleanValue : 0; break; }
+                    case 3: { numericValue += self.userCell() !== null ? self.userCell().IntegerValue : 0; break; }
+                    case 4: { numericValue += self.userCell() !== null ? self.userCell().DecimalValue : 50; break; }
+                        // TODO 5 (DateTime?)
+                    case 11: { numericValue += self.userCell() !== null ? self.userCell().DecimalValue : 0; break; } // This is not necessary but since 'default' case throws an exception..
+                        //case 12: { value = userCell !== null ? userCell.DecimalValue : 0; break; }
+                    default: { throw 'Not supported'; }
                 }
 
                 return numericValue / self.numericValueCount();
@@ -84,16 +82,15 @@
                 if (self.otherUsersNumericValueCount === null) {
                     self.otherUsersNumericValueCount = self.NumericValueCount;
 
-                    if (self.userElementCell() !== null) {
+                    if (self.userCell() !== null) {
                         self.otherUsersNumericValueCount--;
                     }
                 }
 
                 var count = self.otherUsersNumericValueCount;
 
-                if (self.userElementCell() !== null) {
-                    count++;
-                }
+                // Increase count in any case, even if the user didn't set any value yet, there is a default value
+                count++;
 
                 return count;
             }
@@ -109,12 +106,10 @@
                 switch (self.ElementItem.Element.valueFilter) {
                     case 1: { // Only my ratings
 
-                        var userCell = self.userElementCell();
-
                         switch (self.ElementField.ElementFieldType) {
-                            case 2: { value = userCell !== null ? userCell.BooleanValue : 0; break; }
-                            case 3: { value = userCell !== null ? userCell.IntegerValue : 0; break; }
-                            case 4: { value = userCell !== null ? userCell.DecimalValue : 50; /* Default value? */ break; }
+                            case 2: { value = self.userCell() !== null ? self.userCell().BooleanValue : 0; break; }
+                            case 3: { value = self.userCell() !== null ? self.userCell().IntegerValue : 0; break; }
+                            case 4: { value = self.userCell() !== null ? self.userCell().DecimalValue : 50; /* Default value? */ break; }
                                 // TODO 5 (DateTime?)
                             case 11: { value = self.numericValueAverage(); break; } // DirectIncome: No need to try user's cell, always return all users', which will be CMRP owner's value
                                 // case 12: { value = userCell !== null ? userCell.DecimalValue : 0; break; }

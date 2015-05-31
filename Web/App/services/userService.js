@@ -156,22 +156,22 @@
             // Find user element cell
             for (var i = 0; i < element.ElementItemSet.length; i++) {
 
-                var userElementCell = element.ElementItemSet[i].multiplierCell().userElementCell();
+                var userCell = element.ElementItemSet[i].multiplierCell().userCell();
 
                 switch (updateType) {
                     case 'increase': {
 
                         // If there is no item, create it
-                        if (userElementCell === null) {
-                            userElementCell = {
+                        if (userCell === null) {
+                            userCell = {
                                 UserId: userInfo.Id,
                                 ElementCellId: element.ElementItemSet[i].multiplierCell().Id,
                                 DecimalValue: 2
                             };
 
-                            dataContext.createEntity('UserElementCell', userElementCell);
+                            dataContext.createEntity('UserElementCell', userCell);
                         } else { // Else, increase
-                            userElementCell.DecimalValue++;
+                            userCell.DecimalValue++;
                         }
 
                         updated = true;
@@ -180,18 +180,18 @@
                     case 'decrease': {
 
                         // If there is no item, create it
-                        if (userElementCell === null) {
-                            userElementCell = {
+                        if (userCell === null) {
+                            userCell = {
                                 UserId: userInfo.Id,
                                 ElementCellId: element.ElementItemSet[i].multiplierCell().Id,
                                 DecimalValue: 0
                             };
 
-                            dataContext.createEntity('UserElementCell', userElementCell);
+                            dataContext.createEntity('UserElementCell', userCell);
                             updated = true;
                         } else { // Else, decrease only if it's bigger than 0
-                            if (userElementCell.DecimalValue > 0) {
-                                userElementCell.DecimalValue--;
+                            if (userCell.DecimalValue > 0) {
+                                userCell.DecimalValue--;
                                 updated = true;
                             }
                         }
@@ -201,8 +201,8 @@
                     case 'reset': {
 
                         // If there is an item, delete it
-                        if (userElementCell !== null) {
-                            userElementCell.entityAspect.setDeleted();
+                        if (userCell !== null) {
+                            userCell.entityAspect.setDeleted();
                             updated = true;
                         }
 
@@ -220,26 +220,26 @@
             // Determines whether there is an update
             var updated = false;
 
-            var userElementCell = elementCell.userElementCell();
+            var userCell = elementCell.userCell();
 
             switch (updateType) {
                 case 'increase': {
 
                     // If there is no item, create it
-                    if (userElementCell === null) {
-                        userElementCell = {
+                    if (userCell === null) {
+                        userCell = {
                             UserId: userInfo.Id,
                             ElementCellId: elementCell.Id,
                             DecimalValue: 55
                         };
 
-                        dataContext.createEntity('UserElementCell', userElementCell);
+                        dataContext.createEntity('UserElementCell', userCell);
                         updated = true;
 
                     } else { // Else, increase
 
-                        if (userElementCell.DecimalValue < 100) {
-                            userElementCell.DecimalValue = userElementCell.DecimalValue + 5 > 100 ? 100 : userElementCell.DecimalValue + 5;
+                        if (userCell.DecimalValue < 100) {
+                            userCell.DecimalValue = userElementCell.DecimalValue + 5 > 100 ? 100 : userElementCell.DecimalValue + 5;
                             updated = true;
                         }
                     }
@@ -249,20 +249,20 @@
                 case 'decrease': {
 
                     // If there is no item, create it
-                    if (userElementCell === null) {
-                        userElementCell = {
+                    if (userCell === null) {
+                        userCell = {
                             UserId: userInfo.Id,
                             ElementCellId: elementCell.Id,
                             DecimalValue: 45
                         };
 
-                        dataContext.createEntity('UserElementCell', userElementCell);
+                        dataContext.createEntity('UserElementCell', userCell);
                         updated = true;
 
                     } else { // Else, decrease
 
-                        if (userElementCell.DecimalValue > 0) {
-                            userElementCell.DecimalValue = userElementCell.DecimalValue - 5 < 0 ? 0 : userElementCell.DecimalValue - 5;
+                        if (userCell.DecimalValue > 0) {
+                            userCell.DecimalValue = userElementCell.DecimalValue - 5 < 0 ? 0 : userElementCell.DecimalValue - 5;
                             updated = true;
                         }
                     }
@@ -272,8 +272,8 @@
                 case 'reset': {
 
                     // If there is an item, delete it
-                    if (userElementCell !== null) {
-                        userElementCell.entityAspect.setDeleted();
+                    if (userCell !== null) {
+                        userCell.entityAspect.setDeleted();
                         updated = true;
                     }
 

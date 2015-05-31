@@ -72,7 +72,7 @@
 
                 var value = null;
                 for (var i = 0; i < self.ElementCellSet.length; i++) {
-                    
+
                     var cell = self.ElementCellSet[i];
 
                     if (value === null) {
@@ -153,13 +153,13 @@
 
             self.indexRatingAverage = function () {
 
-                if (self.indexRatingCount() === 0) {
-                    return 0; // TODO Return null?
-                }
-
                 // Set other users' value on the initial call
                 if (self.otherUsersIndexRating === null) {
-                    self.otherUsersIndexRating = self.IndexRating;
+
+                    // TODO This could directly return 0?
+                    self.otherUsersIndexRating = self.IndexRating !== null
+                        ? self.IndexRating
+                        : 0;
 
                     if (self.userElementField() !== null) {
                         self.otherUsersIndexRating -= self.userElementField().Rating;
@@ -168,9 +168,9 @@
 
                 var indexRating = self.otherUsersIndexRating;
 
-                if (self.userElementField() !== null) {
-                    indexRating += self.userElementField().Rating;
-                }
+                indexRating += self.userElementField() !== null
+                    ? self.userElementField().Rating
+                    : 50; // Default value?
 
                 return indexRating / self.indexRatingCount();
             }
@@ -188,9 +188,8 @@
 
                 var count = self.otherUsersIndexRatingCount;
 
-                if (self.userElementField() !== null) {
-                    count++;
-                }
+                // Increase count in any case, even if the user didn't set any value yet, there is a default value
+                count++;
 
                 return count;
             }

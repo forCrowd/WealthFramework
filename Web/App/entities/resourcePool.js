@@ -139,13 +139,13 @@
 
             self.resourcePoolRateAverage = function () {
 
-                if (self.resourcePoolRateCount() === 0) {
-                    return 0; // TODO Return null?
-                }
-
                 // Set other users' value on the initial call
                 if (self.otherUsersResourcePoolRate === null) {
-                    self.otherUsersResourcePoolRate = self.ResourcePoolRate;
+
+                    // TODO This could directly return 0?
+                    self.otherUsersResourcePoolRate = self.ResourcePoolRate !== null
+                        ? self.ResourcePoolRate
+                        : 0;
 
                     if (self.userResourcePool() !== null) {
                         self.otherUsersResourcePoolRate -= self.userResourcePool().ResourcePoolRate;
@@ -154,9 +154,9 @@
 
                 var resourcePoolRate = self.otherUsersResourcePoolRate;
 
-                if (self.userResourcePool() !== null) {
-                    resourcePoolRate += self.userResourcePool().ResourcePoolRate;
-                }
+                resourcePoolRate += self.userResourcePool() !== null
+                    ? self.userResourcePool().ResourcePoolRate
+                    : 10; // Default value?
 
                 return resourcePoolRate / self.resourcePoolRateCount();
             }
@@ -174,9 +174,8 @@
 
                 var count = self.otherUsersResourcePoolRateCount;
 
-                if (self.userResourcePool() !== null) {
-                    count++;
-                }
+                // Increase count in any case, even if the user didn't set any value yet, there is a default value
+                count++;
 
                 return count;
             }
