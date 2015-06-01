@@ -165,7 +165,7 @@
                                     {{ elementItem.totalDirectIncome() | number: 2 }}
                                 </td>
                                 <!-- CMRP Income & Details -->
-                                <td data-ng-if="displayIndexDetails" data-ng-repeat="cellIndex in elementItem.elementCellIndexSet2()">
+                                <td data-ng-if="displayIndexDetails" data-ng-repeat="cellIndex in elementItem.elementCellIndexSet()">
                                     {{ cellIndex.indexIncome() | number: 2 }}
                                     <!--- {{ cellIndex.SelectedElementItem.indexIncome() }}
                         - {{ cellIndex.SelectedElementItem.ParentCellSet.length }}
