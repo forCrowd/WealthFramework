@@ -235,23 +235,23 @@
                 if (typeof self.ElementField === 'undefined' || !self.ElementField.IndexEnabled)
                     return 0;
 
-                var indexNumericValueMultiplied = self.ElementField.numericValueMultiplied();
+                var fieldNumericValueMultiplied = self.ElementField.numericValueMultiplied();
 
                 // Means there is only one item in the element, always 100%
-                if (self.numericValueMultiplied() === indexNumericValueMultiplied) {
+                if (self.numericValueMultiplied() === fieldNumericValueMultiplied) {
                     return 1;
                 }
 
-                if (indexNumericValueMultiplied === 0) {
+                if (fieldNumericValueMultiplied === 0) {
                     return 0;
                 }
 
                 switch (self.ElementField.IndexRatingSortType) {
                     case 1: { // LowestToHighest (Low number is better)
-                        return self.numericValueMultiplied() / indexNumericValueMultiplied;
+                        return self.numericValueMultiplied() / fieldNumericValueMultiplied;
                     }
                     case 2: { // HighestToLowest (High number is better)
-                        return 1 - (self.numericValueMultiplied() / indexNumericValueMultiplied);
+                        return 1 - (self.numericValueMultiplied() / fieldNumericValueMultiplied);
                     }
                     default: {
                         throw 'Invalid switch case';

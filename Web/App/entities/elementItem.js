@@ -159,19 +159,20 @@
                 return self.directIncomeCell().NumericValue;
             }
 
-            // TODO Compare this function with server-side
             self.multiplier = function () {
 
-                if (self.multiplierCell() === null
-                    || self.multiplierCell().userCell() === null
-                    || self.multiplierCell().userCell().DecimalValue === null) {
-
-                    // TODO Something wrong with the usage of this function, when this default value is 0, Index Income fails
-                    // Probably Index Income is calculated based on its own element, instead of Main Element's multiplier!
-                    return 1; // Default value
-
+                // If there is multiplier field defined on this element, return 1, so it can return calculate the income correctly
+                if (self.multiplierCell() === null) {
+                    return 1;
                 }
 
+                // If there is a multiplier field on the element but user is not set any value, return 0 as the default value
+                if (self.multiplierCell().userCell() === null
+                    || self.multiplierCell().userCell().DecimalValue === null) {
+                    return 0;
+                }
+
+                // Return user's
                 return self.multiplierCell().userCell().DecimalValue;
             }
 

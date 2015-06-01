@@ -166,7 +166,7 @@
                             userCell = {
                                 UserId: userInfo.Id,
                                 ElementCellId: element.ElementItemSet[i].multiplierCell().Id,
-                                DecimalValue: 2
+                                DecimalValue: 1
                             };
 
                             dataContext.createEntity('UserElementCell', userCell);
@@ -179,21 +179,10 @@
                     }
                     case 'decrease': {
 
-                        // If there is no item, create it
-                        if (userCell === null) {
-                            userCell = {
-                                UserId: userInfo.Id,
-                                ElementCellId: element.ElementItemSet[i].multiplierCell().Id,
-                                DecimalValue: 0
-                            };
-
-                            dataContext.createEntity('UserElementCell', userCell);
+                        // If there is an item and it's bigger than 0, decrease
+                        if (userCell !== null && userCell.DecimalValue > 0) {
+                            userCell.DecimalValue--;
                             updated = true;
-                        } else { // Else, decrease only if it's bigger than 0
-                            if (userCell.DecimalValue > 0) {
-                                userCell.DecimalValue--;
-                                updated = true;
-                            }
                         }
 
                         break;
@@ -318,6 +307,7 @@
                 }
                 case 'decrease': {
 
+                    // If there is no item, create it
                     if (userElementField === null) {
                         userElementField = {
                             UserId: userInfo.Id,
