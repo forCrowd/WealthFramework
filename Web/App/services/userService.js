@@ -239,7 +239,7 @@
                     } else { // Else, increase
 
                         if (userCell.DecimalValue < 100) {
-                            userCell.DecimalValue = userElementCell.DecimalValue + 5 > 100 ? 100 : userElementCell.DecimalValue + 5;
+                            userCell.DecimalValue = userCell.DecimalValue + 5 > 100 ? 100 : userCell.DecimalValue + 5;
                             updated = true;
                         }
                     }
@@ -262,7 +262,7 @@
                     } else { // Else, decrease
 
                         if (userCell.DecimalValue > 0) {
-                            userCell.DecimalValue = userElementCell.DecimalValue - 5 < 0 ? 0 : userElementCell.DecimalValue - 5;
+                            userCell.DecimalValue = userCell.DecimalValue - 5 < 0 ? 0 : userCell.DecimalValue - 5;
                             updated = true;
                         }
                     }
