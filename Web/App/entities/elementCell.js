@@ -205,7 +205,7 @@
                         break;
                     }
                     default: {
-                        throw 'Invalid switch 1';
+                        throw 'Invalid switch case';
                     }
                 }
 
