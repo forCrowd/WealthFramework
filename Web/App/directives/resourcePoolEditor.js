@@ -195,15 +195,15 @@
                     });
             }
 
-            function loadResourcePool(resourcePool) {
+            function loadResourcePool(resourcePoolSet) {
 
-                if (resourcePool.length === 0) {
+                if (resourcePoolSet.length === 0) {
                     scope.errorMessage = 'Invalid CMRP Id';
                     return;
                 }
 
                 // It returns an array, set the first item in the list
-                scope.resourcePool = resourcePool[0];
+                scope.resourcePool = resourcePoolSet[0];
 
                 // Current element
                 if (scope.resourcePool.currentElement === null) {

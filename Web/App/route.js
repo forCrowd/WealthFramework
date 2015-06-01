@@ -13,24 +13,24 @@
         $routeProvider
 
             /* Content */
-            .when('/', { templateUrl: getContentTemplateUrl })
-            .when('/main.aspx', { templateUrl: getContentTemplateUrl }) // TODO Is it possible to remove 'main.aspx'
-            .when('/content/:key/', { templateUrl: getContentTemplateUrl })
+            .when('/', { title: getContentRouteTitle, templateUrl: getContentTemplateUrl })
+            .when('/main.aspx', { title: getContentRouteTitle, templateUrl: getContentTemplateUrl }) // TODO Is it possible to remove 'main.aspx'
+            .when('/content/:key/', { title: getContentRouteTitle, templateUrl: getContentTemplateUrl })
 
             /* Account */
-            .when('/account/register', { templateUrl: '/App/views/account/register.html?v=022', controller: 'registerController as vm' })
-            .when('/account/login', { templateUrl: '/App/views/account/login.html?v=022', controller: 'loginController as vm' })
-            .when('/account/accountEdit', { templateUrl: '/App/views/account/accountEdit.html?v=022', controller: 'accountEditController as vm' })
-            .when('/account/changePassword', { templateUrl: '/App/views/account/changePassword.html?v=022', controller: 'changePasswordController as vm' })
+            .when('/account/register', { title: function () { return 'Register'; }, templateUrl: '/App/views/account/register.html?v=022', controller: 'registerController as vm' })
+            .when('/account/login', { title: function () { return 'Login'; }, templateUrl: '/App/views/account/login.html?v=022', controller: 'loginController as vm' })
+            .when('/account/accountEdit', { title: function () { return 'Account Edit'; }, templateUrl: '/App/views/account/accountEdit.html?v=022', controller: 'accountEditController as vm' })
+            .when('/account/changePassword', { title: function () { return 'Change Password'; }, templateUrl: '/App/views/account/changePassword.html?v=022', controller: 'changePasswordController as vm' })
 
             /* Custom List + Edit pages */
-            .when('/manage/custom/resourcePool', { templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomList.html?v=022' })
-            .when('/manage/custom/resourcePool/:Id', { templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomView.html?v=022' })
+            .when('/manage/custom/resourcePool', { title: function () { return 'CMRP List'; }, templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomList.html?v=022' })
+            .when('/manage/custom/resourcePool/:Id', { title: function () { return ''; }, templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomView.html?v=022' })
 
             /* Default List + Edit pages */
-            .when('/manage/:entity', { templateUrl: getManageTemplateUrl })
-            .when('/manage/:entity/:action', { templateUrl: getManageTemplateUrl })
-            .when('/manage/:entity/:action/:Id', { templateUrl: getManageTemplateUrl })
+            .when('/manage/:entity', { title: getManageRouteTitle, templateUrl: getManageRouteTemplateUrl })
+            .when('/manage/:entity/:action', { title: getManageRouteTitle, templateUrl: getManageRouteTemplateUrl })
+            .when('/manage/:entity/:action/:Id', { title: getManageRouteTitle, templateUrl: getManageRouteTemplateUrl })
 
             .otherwise({ redirectTo: '/content/404' }); // TODO Is it possible to return Response.StatusCode = 404; ?
 
@@ -39,13 +39,24 @@
             $locationProvider.html5Mode({ enabled: true });
         }
 
-        function getManageTemplateUrl(params) {
+        function getManageRouteTitle(params) {
+
+            var entity = params.entity[0].toUpperCase() + params.entity.substring(1);
+
+            var action = typeof params.action !== 'undefined'
+                ? action[0].toUpperCase() + action.substring(1)
+                : 'List';
+
+            return entity + ' ' + action;
+        }
+
+        function getManageRouteTemplateUrl(params) {
 
             var templateUrl = '';
-            var action = 'list';
 
-            if (typeof params.action !== 'undefined')
-                action = params.action;
+            var action = typeof params.action !== 'undefined'
+                ? params.actions
+                : 'list'; // Default action
 
             if (action === 'list')
                 templateUrl = '/App/views/manage/list/' + params.entity + 'List.html?v=027';
@@ -56,12 +67,20 @@
             return templateUrl;
         }
 
+        function getContentRouteTitle(params) {
+
+            var title = typeof params.key !== 'undefined'
+                ? params.key[0] + params.key.substring(1)
+                : 'Home'; // Default view
+
+            return title;
+        }
+
         function getContentTemplateUrl(params) {
 
-            var key = 'home'; // Default view
-
-            if (typeof params.key !== 'undefined')
-                key = params.key;
+            var key = typeof params.key !== 'undefined'
+                ? params.key
+                : 'home'; // Default view
 
             return '/App/views/content/' + key + '.html?v=027';
         }
@@ -75,8 +94,16 @@
         // Default location
         $rootScope.locationHistory = ['/'];
 
-        // Add each location to the history
         $rootScope.$on('$routeChangeSuccess', function (event, next, current) {
+
+            // View title
+            var viewTitle = '';
+            if (typeof next.$$route !== 'undefined' && typeof next.$$route.title !== 'undefined') {
+                viewTitle = next.$$route.title(next.params);
+            }
+            $rootScope.viewTitle = viewTitle;
+
+            // Add each location to the history
             $rootScope.locationHistory.push($location.path());
 
             // Only keep limited number of items

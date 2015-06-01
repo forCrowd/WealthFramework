@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html>
+<html data-ng-app="main">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>Wealth Economy</title>
+    <title data-ng-bind="'Wealth Economy' + (viewTitle !== '' ? ' - ' + viewTitle : '')"></title>
     <base href="/" />
 
     <!-- External CSS -->
@@ -149,7 +149,7 @@
 
     <!-- Manage Scripts - Custom -->
     <script src="/App/controllers/manage/resourcePool/resourcePoolCustomListController.js?v=022"></script>
-    <script src="/App/controllers/manage/resourcePool/resourcePoolCustomViewController.js?v=022"></script>
+    <script src="/App/controllers/manage/resourcePool/resourcePoolCustomViewController.js?v=027"></script>
 
     <!-- Directives -->
     <script src="/App/directives/resourcePoolEditor.js?v=027"></script>
