@@ -150,9 +150,6 @@
             if (element.multiplierField() === null)
                 return false;
 
-            // Determines whether there is an update
-            var updated = false;
-
             // Find user element cell
             for (var i = 0; i < element.ElementItemSet.length; i++) {
 
@@ -181,15 +178,13 @@
                             }
                         }
 
-                        updated = true;
                         break;
                     }
                     case 'decrease': {
 
-                        // If there is an item and it's bigger than 0, decrease
-                        if (userCell !== null && userCell.DecimalValue > 0) {
-                            userCell.DecimalValue--;
-                            updated = true;
+                        // If there is an item, decrease
+                        if (userCell !== null) {
+                            userCell.DecimalValue = userCell.DecimalValue - 1 < 0 ? 0 : userCell.DecimalValue - 1;
                         }
 
                         break;
@@ -200,22 +195,15 @@
                         if (userCell !== null && !userCell.entityAspect.entityState.isDeleted()) {
                             userCell.DecimalValue = 0;
                             userCell.entityAspect.setDeleted();
-                            updated = true;
                         }
 
                         break;
                     }
                 }
             }
-
-            // Return
-            return updated;
         }
 
         function updateElementCellNumericValue(elementCell, updateType) {
-
-            // Determines whether there is an update
-            var updated = false;
 
             var userCell = elementCell.userCell();
 
@@ -231,7 +219,6 @@
                         };
 
                         dataContext.createEntity('UserElementCell', userCell);
-                        updated = true;
 
                     } else {
 
@@ -239,12 +226,8 @@
                         if (userCell.entityAspect.entityState.isDeleted()) {
                             userCell.entityAspect.rejectChanges();
                             userCell.DecimalValue = 55;
-                            updated = true;
                         } else { // Otherwise, go ahead!
-                            if (userCell.DecimalValue < 100) {
-                                userCell.DecimalValue = userCell.DecimalValue + 5 > 100 ? 100 : userCell.DecimalValue + 5;
-                                updated = true;
-                            }
+                            userCell.DecimalValue = userCell.DecimalValue + 5 > 100 ? 100 : userCell.DecimalValue + 5;
                         }
                     }
 
@@ -261,7 +244,6 @@
                         };
 
                         dataContext.createEntity('UserElementCell', userCell);
-                        updated = true;
 
                     } else {
 
@@ -269,12 +251,8 @@
                         if (userCell.entityAspect.entityState.isDeleted()) {
                             userCell.entityAspect.rejectChanges();
                             userCell.DecimalValue = 45;
-                            updated = true;
                         } else { // Otherwise, go ahead!
-                            if (userCell.DecimalValue > 0) {
-                                userCell.DecimalValue = userCell.DecimalValue - 5 < 0 ? 0 : userCell.DecimalValue - 5;
-                                updated = true;
-                            }
+                            userCell.DecimalValue = userCell.DecimalValue - 5 < 0 ? 0 : userCell.DecimalValue - 5;
                         }
                     }
 
@@ -286,21 +264,14 @@
                     if (userCell !== null && !userCell.entityAspect.entityState.isDeleted()) {
                         userCell.DecimalValue = 50;
                         userCell.entityAspect.setDeleted();
-                        updated = true;
                     }
 
                     break;
                 }
             }
-
-            // Return
-            return updated;
         }
 
         function updateElementFieldIndexRating(elementField, updateType) {
-
-            // Determines whether there is an update
-            var updated = false;
 
             var userElementField = elementField.userElementField();
 
@@ -316,7 +287,6 @@
                         };
 
                         dataContext.createEntity('UserElementField', userElementField);
-                        updated = true;
 
                     } else {
 
@@ -324,12 +294,8 @@
                         if (userElementField.entityAspect.entityState.isDeleted()) {
                             userElementField.entityAspect.rejectChanges();
                             userElementField.Rating = 55;
-                            updated = true;
                         } else { // Otherwise, go ahead!
-                            if (userElementField.Rating < 100) {
-                                userElementField.Rating = userElementField.Rating + 5 > 100 ? 100 : userElementField.Rating + 5;
-                                updated = true;
-                            }
+                            userElementField.Rating = userElementField.Rating + 5 > 100 ? 100 : userElementField.Rating + 5;
                         }
                     }
 
@@ -346,7 +312,6 @@
                         };
 
                         dataContext.createEntity('UserElementField', userElementField);
-                        updated = true;
 
                     } else {
 
@@ -354,13 +319,8 @@
                         if (userElementField.entityAspect.entityState.isDeleted()) {
                             userElementField.entityAspect.rejectChanges();
                             userElementField.Rating = 45;
-                            updated = true;
                         } else { // Otherwise, go ahead!
-                            if (userElementField.Rating > 0) {
-                                userElementField.Rating = userElementField.Rating - 5 < 0 ? 0 : userElementField.Rating - 5;
-                                updated = true;
-                            }
-
+                            userElementField.Rating = userElementField.Rating - 5 < 0 ? 0 : userElementField.Rating - 5;
                         }
                     }
 
@@ -372,21 +332,14 @@
                     if (userElementField !== null && !userElementField.entityAspect.entityState.isDeleted()) {
                         userElementField.Rating = 50;
                         userElementField.entityAspect.setDeleted();
-                        updated = true;
                     }
 
                     break;
                 }
             }
-
-            // Return
-            return updated;
         }
 
         function updateResourcePoolRate(resourcePool, updateType) {
-
-            // Determines whether there is an update
-            var updated = false;
 
             var userResourcePool = resourcePool.userResourcePool();
 
@@ -402,7 +355,6 @@
                         };
 
                         dataContext.createEntity('UserResourcePool', userResourcePool);
-                        updated = true;
 
                     } else {
 
@@ -410,12 +362,8 @@
                         if (userResourcePool.entityAspect.entityState.isDeleted()) {
                             userResourcePool.entityAspect.rejectChanges();
                             userResourcePool.ResourcePoolRate = 15;
-                            updated = true;
                         } else { // Otherwise, go ahead!
-                            if (userResourcePool.ResourcePoolRate < 1000) {
-                                userResourcePool.ResourcePoolRate = userResourcePool.ResourcePoolRate + 5 > 1000 ? 1000 : userResourcePool.ResourcePoolRate + 5;
-                                updated = true;
-                            }
+                            userResourcePool.ResourcePoolRate = userResourcePool.ResourcePoolRate + 5 > 1000 ? 1000 : userResourcePool.ResourcePoolRate + 5;
                         }
                     }
 
@@ -432,7 +380,6 @@
                         };
 
                         dataContext.createEntity('UserResourcePool', userResourcePool);
-                        updated = true;
 
                     } else {
 
@@ -440,12 +387,8 @@
                         if (userResourcePool.entityAspect.entityState.isDeleted()) {
                             userResourcePool.entityAspect.rejectChanges();
                             userResourcePool.ResourcePoolRate = 5;
-                            updated = true;
                         } else { // Otherwise, go ahead!
-                            if (userResourcePool.ResourcePoolRate > 0) {
-                                userResourcePool.ResourcePoolRate = userResourcePool.ResourcePoolRate - 5 < 0 ? 0 : userResourcePool.ResourcePoolRate - 5;
-                                updated = true;
-                            }
+                            userResourcePool.ResourcePoolRate = userResourcePool.ResourcePoolRate - 5 < 0 ? 0 : userResourcePool.ResourcePoolRate - 5;
                         }
                     }
 
@@ -457,16 +400,11 @@
                     if (userResourcePool !== null && !userResourcePool.entityAspect.entityState.isDeleted()) {
                         userResourcePool.ResourcePoolRate = 10;
                         userResourcePool.entityAspect.setDeleted();
-                        updated = true;
                     }
 
                     break;
                 }
             }
-
-            // Return
-            return updated;
-
         }
     }
 
