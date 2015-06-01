@@ -27,7 +27,7 @@
             self.otherUsersNumericValue = null;
             self.otherUsersNumericValueCount = null;
 
-            self.userCell = function (args) {
+            self.userCell = function () {
 
                 if (typeof self.UserElementCellSet === 'undefined' || self.UserElementCellSet.length === 0) {
                     return null;

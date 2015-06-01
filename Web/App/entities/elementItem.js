@@ -161,7 +161,7 @@
 
             self.multiplier = function () {
 
-                // If there is multiplier field defined on this element, return 1, so it can return calculate the income correctly
+                // If there is no multiplier field defined on this element, return 1, so it can return calculate the income correctly
                 if (self.multiplierCell() === null) {
                     return 1;
                 }
