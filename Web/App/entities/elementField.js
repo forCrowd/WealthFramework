@@ -29,7 +29,7 @@
             self.numericValueMultiplied = function () {
 
                 // Validate
-                if (typeof self.ElementCellSet === 'undefined' || self.ElementCellSet.length === 0)
+                if (self.ElementCellSet.length === 0)
                     return 0; // ?
 
                 var value = 0;
@@ -44,7 +44,7 @@
             self.passiveRatingPercentage = function () {
 
                 // Validate
-                if (typeof self.ElementCellSet === 'undefined' || self.ElementCellSet.length === 0)
+                if (self.ElementCellSet.length === 0)
                     return 0; // ?
 
                 var value = 0;
@@ -65,7 +65,7 @@
             self.referenceRatingMultiplied = function () {
 
                 // Validate
-                if (typeof self.ElementCellSet === 'undefined' || self.ElementCellSet.length === 0)
+                if (self.ElementCellSet.length === 0)
                     return 0; // ?
 
                 self.referenceRatingAllEqualFlag = true;
@@ -130,7 +130,7 @@
             self.aggressiveRating = function () {
 
                 // Validate
-                if (typeof self.ElementCellSet === 'undefined' || self.ElementCellSet.length === 0)
+                if (self.ElementCellSet.length === 0)
                     return 0; // ?
 
                 var value = 0;
@@ -144,7 +144,7 @@
 
             self.userElementField = function () {
 
-                if (typeof self.UserElementFieldSet === 'undefined' || self.UserElementFieldSet.length === 0) {
+                if (self.UserElementFieldSet.length === 0) {
                     return null;
                 }
 

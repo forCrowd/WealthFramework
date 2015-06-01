@@ -130,7 +130,7 @@
 
             self.userResourcePool = function () {
 
-                if (typeof self.UserResourcePoolSet === 'undefined' || self.UserResourcePoolSet.length === 0) {
+                if (self.UserResourcePoolSet.length === 0) {
                     return null;
                 }
 

@@ -147,7 +147,7 @@
         function updateElementMultiplier(element, updateType) {
 
             // Validate
-            if (element.multiplierField() === null || typeof element.ElementItemSet === 'undefined')
+            if (element.multiplierField() === null)
                 return false;
 
             // Determines whether there is an update

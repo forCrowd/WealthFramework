@@ -33,8 +33,7 @@
             // UI related: Determines whether the chart & element details will use full row (col-md-4 vs col-md-12 etc.)
             // TODO Obsolete for the moment!
             self.fullSize = function () {
-                return (typeof self.ElementFieldSet !== 'undefined'
-                    && self.ElementFieldSet.length > 4)
+                return (self.ElementFieldSet.length > 4)
                     || self.elementFieldIndexSet().length > 2;
             }
 
@@ -103,10 +102,6 @@
                 var indexSet = [];
 
                 // Validate
-                if (typeof self.ElementFieldSet === 'undefined') {
-                    return indexSet;
-                }
-
                 for (var i = 0; i < element.ElementFieldSet.length; i++) {
                     var field = element.ElementFieldSet.sort(function (a, b) { return a.SortOrder - b.SortOrder; })[i];
 
@@ -139,10 +134,6 @@
                 if (_resourcePoolField)
                     return _resourcePoolField;
 
-                // Validate
-                if (typeof self.ElementFieldSet === 'undefined')
-                    return null;
-
                 for (var i = 0; i < self.ElementFieldSet.length; i++) {
                     var field = self.ElementFieldSet[i];
                     if (field.ElementFieldType === 11) {
@@ -161,10 +152,6 @@
                 if (_multiplierField)
                     return _multiplierField;
 
-                // Validate
-                if (typeof self.ElementFieldSet === 'undefined')
-                    return null;
-
                 for (var i = 0; i < self.ElementFieldSet.length; i++) {
                     var field = self.ElementFieldSet[i];
                     if (field.ElementFieldType === 12) {
@@ -180,10 +167,6 @@
 
                 // TODO Check totalIncome notes
 
-                // Validate
-                if (typeof self.ElementItemSet === 'undefined')
-                    return 0;
-
                 var value = 0;
                 for (var i = 0; i < self.ElementItemSet.length; i++) {
                     var item = self.ElementItemSet[i];
@@ -196,10 +179,6 @@
             self.multiplier = function () {
 
                 // TODO Check totalIncome notes
-
-                // Validate
-                if (typeof self.ElementItemSet === 'undefined')
-                    return 0;
 
                 var value = 0;
                 for (var i = 0; i < self.ElementItemSet.length; i++) {
@@ -228,10 +207,6 @@
 
                 // TODO Check totalIncome notes
 
-                // Validate
-                if (typeof self.ElementItemSet === 'undefined')
-                    return 0;
-
                 var value = 0;
                 for (var i = 0; i < self.ElementItemSet.length; i++) {
                     var item = self.ElementItemSet[i];
@@ -244,10 +219,6 @@
             self.resourcePoolAmount = function () {
 
                 // TODO Check totalIncome notes
-
-                // Validate
-                if (typeof self.ElementItemSet === 'undefined')
-                    return 0;
 
                 var value = 0;
                 for (var i = 0; i < self.ElementItemSet.length; i++) {
@@ -263,10 +234,6 @@
                 // TODO Check totalIncome notes
 
                 if (self == self.ResourcePool.MainElement) {
-
-                    // Validate
-                    if (typeof self.ElementItemSet === 'undefined')
-                        return 0;
 
                     var value = 0;
                     for (var i = 0; i < self.ElementItemSet.length; i++) {
@@ -286,10 +253,6 @@
 
                 // TODO Check totalIncome notes
 
-                // Validate
-                if (typeof self.ElementItemSet === 'undefined')
-                    return 0;
-
                 var value = 0;
                 for (var i = 0; i < self.ElementItemSet.length; i++) {
                     var item = self.ElementItemSet[i];
@@ -302,10 +265,6 @@
             self.totalDirectIncomeIncludingResourcePoolAmount = function () {
 
                 // TODO Check totalIncome notes
-
-                // Validate
-                if (typeof self.ElementItemSet === 'undefined')
-                    return 0;
 
                 var value = 0;
                 for (var i = 0; i < self.ElementItemSet.length; i++) {
@@ -320,10 +279,6 @@
 
                 // TODO Check totalIncome notes
 
-                // Validate
-                if (typeof self.ElementItemSet === 'undefined')
-                    return 0;
-
                 var value = 0;
                 for (var i = 0; i < self.ElementItemSet.length; i++) {
                     var item = self.ElementItemSet[i];
@@ -337,10 +292,6 @@
 
                 // TODO If elementItems could set their parent element's totalIncome when their totalIncome changes, it wouldn't be necessary to sum this result everytime?
 
-                // Validate
-                if (typeof self.ElementItemSet === 'undefined')
-                    return 0;
-
                 var value = 0;
                 for (var i = 0; i < self.ElementItemSet.length; i++) {
                     var item = self.ElementItemSet[i];
@@ -353,7 +304,7 @@
             self.totalIncomeAverage = function () {
                 
                 // Validate
-                if (typeof self.ElementItemSet === 'undefined' || self.ElementItemSet.length === 0) {
+                if (self.ElementItemSet.length === 0) {
                     return 0;
                 }
 

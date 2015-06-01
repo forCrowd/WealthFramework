@@ -71,10 +71,6 @@
                     return _directIncomeCell;
                 }
 
-                // Validate
-                if (typeof self.ElementCellSet === 'undefined')
-                    return null;
-
                 for (var i = 0; i < self.ElementCellSet.length; i++) {
                     var cell = self.ElementCellSet[i];
                     if (cell.ElementField.ElementFieldType === 11) {
@@ -93,10 +89,6 @@
                 if (_multiplierCell !== null) {
                     return _multiplierCell;
                 }
-
-                // Validate
-                if (typeof self.ElementCellSet === 'undefined')
-                    return null;
 
                 for (var i = 0; i < self.ElementCellSet.length; i++) {
                     var cell = self.ElementCellSet[i];
@@ -156,10 +148,6 @@
             }
 
             self.totalResourcePoolIncome = function () {
-
-                // Validate
-                if (typeof self.ElementCellSet === 'undefined')
-                    return 0;
 
                 var value = 0;
                 for (var i = 0; i < self.ElementCellSet.length; i++) {
