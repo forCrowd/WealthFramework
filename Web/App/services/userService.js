@@ -170,8 +170,15 @@
                             };
 
                             dataContext.createEntity('UserElementCell', userCell);
-                        } else { // Else, increase
-                            userCell.DecimalValue++;
+                        } else {
+
+                            // If it's marked as deleted, cancel that deletion and set it to default + 1
+                            if (userCell.entityAspect.entityState.isDeleted()) {
+                                userCell.entityAspect.rejectChanges();
+                                userCell.DecimalValue = 1;
+                            } else { // Otherwise, go ahead!
+                                userCell.DecimalValue++;
+                            }
                         }
 
                         updated = true;
@@ -189,8 +196,9 @@
                     }
                     case 'reset': {
 
-                        // If there is an item, delete it
-                        if (userCell !== null) {
+                        // If there is an item and not marked as deleted, delete it
+                        if (userCell !== null && !userCell.entityAspect.entityState.isDeleted()) {
+                            userCell.DecimalValue = 0;
                             userCell.entityAspect.setDeleted();
                             updated = true;
                         }
@@ -225,11 +233,18 @@
                         dataContext.createEntity('UserElementCell', userCell);
                         updated = true;
 
-                    } else { // Else, increase
+                    } else {
 
-                        if (userCell.DecimalValue < 100) {
-                            userCell.DecimalValue = userCell.DecimalValue + 5 > 100 ? 100 : userCell.DecimalValue + 5;
+                        // If it's marked as deleted, cancel that deletion and set it to default + 5
+                        if (userCell.entityAspect.entityState.isDeleted()) {
+                            userCell.entityAspect.rejectChanges();
+                            userCell.DecimalValue = 55;
                             updated = true;
+                        } else { // Otherwise, go ahead!
+                            if (userCell.DecimalValue < 100) {
+                                userCell.DecimalValue = userCell.DecimalValue + 5 > 100 ? 100 : userCell.DecimalValue + 5;
+                                updated = true;
+                            }
                         }
                     }
 
@@ -248,11 +263,18 @@
                         dataContext.createEntity('UserElementCell', userCell);
                         updated = true;
 
-                    } else { // Else, decrease
+                    } else {
 
-                        if (userCell.DecimalValue > 0) {
-                            userCell.DecimalValue = userCell.DecimalValue - 5 < 0 ? 0 : userCell.DecimalValue - 5;
+                        // If it's marked as deleted, cancel that deletion and set it to default - 5
+                        if (userCell.entityAspect.entityState.isDeleted()) {
+                            userCell.entityAspect.rejectChanges();
+                            userCell.DecimalValue = 45;
                             updated = true;
+                        } else { // Otherwise, go ahead!
+                            if (userCell.DecimalValue > 0) {
+                                userCell.DecimalValue = userCell.DecimalValue - 5 < 0 ? 0 : userCell.DecimalValue - 5;
+                                updated = true;
+                            }
                         }
                     }
 
@@ -260,8 +282,9 @@
                 }
                 case 'reset': {
 
-                    // If there is an item, delete it
-                    if (userCell !== null) {
+                    // If there is an item and not marked as deleted, delete it
+                    if (userCell !== null && !userCell.entityAspect.entityState.isDeleted()) {
+                        userCell.DecimalValue = 50;
                         userCell.entityAspect.setDeleted();
                         updated = true;
                     }
@@ -295,11 +318,18 @@
                         dataContext.createEntity('UserElementField', userElementField);
                         updated = true;
 
-                    } else { // Else, increase
+                    } else {
 
-                        if (userElementField.Rating < 100) {
-                            userElementField.Rating = userElementField.Rating + 5 > 100 ? 100 : userElementField.Rating + 5;
+                        // If it's marked as deleted, cancel that deletion and set it to default + 5
+                        if (userElementField.entityAspect.entityState.isDeleted()) {
+                            userElementField.entityAspect.rejectChanges();
+                            userElementField.Rating = 55;
                             updated = true;
+                        } else { // Otherwise, go ahead!
+                            if (userElementField.Rating < 100) {
+                                userElementField.Rating = userElementField.Rating + 5 > 100 ? 100 : userElementField.Rating + 5;
+                                updated = true;
+                            }
                         }
                     }
 
@@ -318,11 +348,19 @@
                         dataContext.createEntity('UserElementField', userElementField);
                         updated = true;
 
-                    } else { // Else, increase
+                    } else {
 
-                        if (userElementField.Rating > 0) {
-                            userElementField.Rating = userElementField.Rating - 5 < 0 ? 0 : userElementField.Rating - 5;
+                        // If it's marked as deleted, cancel that deletion and set it to default - 5
+                        if (userElementField.entityAspect.entityState.isDeleted()) {
+                            userElementField.entityAspect.rejectChanges();
+                            userElementField.Rating = 45;
                             updated = true;
+                        } else { // Otherwise, go ahead!
+                            if (userElementField.Rating > 0) {
+                                userElementField.Rating = userElementField.Rating - 5 < 0 ? 0 : userElementField.Rating - 5;
+                                updated = true;
+                            }
+
                         }
                     }
 
@@ -330,8 +368,9 @@
                 }
                 case 'reset': {
 
-                    // If there is an item, delete it
-                    if (userElementField !== null) {
+                    // If there is an item and not marked as deleted, delete it
+                    if (userElementField !== null && !userElementField.entityAspect.entityState.isDeleted()) {
+                        userElementField.Rating = 50;
                         userElementField.entityAspect.setDeleted();
                         updated = true;
                     }
@@ -365,10 +404,18 @@
                         dataContext.createEntity('UserResourcePool', userResourcePool);
                         updated = true;
 
-                    } else { // Else, increase
-                        if (userResourcePool.ResourcePoolRate < 1000) {
-                            userResourcePool.ResourcePoolRate = userResourcePool.ResourcePoolRate + 5 > 1000 ? 1000 : userResourcePool.ResourcePoolRate + 5;
+                    } else {
+
+                        // If it's marked as deleted, cancel that deletion and set it to 15
+                        if (userResourcePool.entityAspect.entityState.isDeleted()) {
+                            userResourcePool.entityAspect.rejectChanges();
+                            userResourcePool.ResourcePoolRate = 15;
                             updated = true;
+                        } else { // Otherwise, go ahead!
+                            if (userResourcePool.ResourcePoolRate < 1000) {
+                                userResourcePool.ResourcePoolRate = userResourcePool.ResourcePoolRate + 5 > 1000 ? 1000 : userResourcePool.ResourcePoolRate + 5;
+                                updated = true;
+                            }
                         }
                     }
 
@@ -387,10 +434,18 @@
                         dataContext.createEntity('UserResourcePool', userResourcePool);
                         updated = true;
 
-                    } else { // Else, decrease
-                        if (userResourcePool.ResourcePoolRate > 0) {
-                            userResourcePool.ResourcePoolRate = userResourcePool.ResourcePoolRate - 5 < 0 ? 0 : userResourcePool.ResourcePoolRate - 5;
+                    } else {
+
+                        // If it's marked as deleted, cancel that deletion and set it to 5
+                        if (userResourcePool.entityAspect.entityState.isDeleted()) {
+                            userResourcePool.entityAspect.rejectChanges();
+                            userResourcePool.ResourcePoolRate = 5;
                             updated = true;
+                        } else { // Otherwise, go ahead!
+                            if (userResourcePool.ResourcePoolRate > 0) {
+                                userResourcePool.ResourcePoolRate = userResourcePool.ResourcePoolRate - 5 < 0 ? 0 : userResourcePool.ResourcePoolRate - 5;
+                                updated = true;
+                            }
                         }
                     }
 
@@ -398,8 +453,9 @@
                 }
                 case 'reset': {
 
-                    // If there is an item, delete it
-                    if (userResourcePool !== null) {
+                    // If there is an item and not marked as deleted, delete it
+                    if (userResourcePool !== null && !userResourcePool.entityAspect.entityState.isDeleted()) {
+                        userResourcePool.ResourcePoolRate = 10;
                         userResourcePool.entityAspect.setDeleted();
                         updated = true;
                     }

@@ -124,17 +124,23 @@
                 _ElementSet: []
             }
 
+            self._userResourcePool = null;
+
             // Other users' values: Keeps the values excluding current user's
             self.otherUsersResourcePoolRate = null;
             self.otherUsersResourcePoolRateCount = null;
 
             self.userResourcePool = function () {
 
-                if (self.UserResourcePoolSet.length === 0) {
-                    return null;
+                if (self._userResourcePool !== null && self._userResourcePool.entityAspect.entityState.isDetached()) {
+                    self._userResourcePool = null;
                 }
 
-                return self.UserResourcePoolSet[0];
+                if (self._userResourcePool === null && self.UserResourcePoolSet.length !== 0) {
+                    self._userResourcePool = self.UserResourcePoolSet[0];
+                }
+
+                return self._userResourcePool;
             }
 
             self.resourcePoolRateAverage = function () {
@@ -142,7 +148,7 @@
                 // Set other users' value on the initial call
                 if (self.otherUsersResourcePoolRate === null) {
 
-                    // TODO This could directly return 0?
+                    // TODO ResourcePoolRate property could directly return 0?
                     self.otherUsersResourcePoolRate = self.ResourcePoolRate !== null
                         ? self.ResourcePoolRate
                         : 0;

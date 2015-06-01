@@ -22,6 +22,8 @@
         function constructor() {
             var self = this;
 
+            self._userElementField = null;
+
             // Other users' values: Keeps the values excluding current user's
             self.otherUsersIndexRating = null;
             self.otherUsersIndexRatingCount = null;
@@ -144,11 +146,15 @@
 
             self.userElementField = function () {
 
-                if (self.UserElementFieldSet.length === 0) {
-                    return null;
+                if (self._userElementField !== null && self._userElementField.entityAspect.entityState.isDetached()) {
+                    self._userElementField = null;
                 }
 
-                return self.UserElementFieldSet[0];
+                if (self._userElementField === null && self.UserElementFieldSet.length !== 0) {
+                    self._userElementField = self.UserElementFieldSet[0];
+                }
+
+                return self._userElementField;
             }
 
             self.indexRatingAverage = function () {
@@ -156,7 +162,7 @@
                 // Set other users' value on the initial call
                 if (self.otherUsersIndexRating === null) {
 
-                    // TODO This could directly return 0?
+                    // TODO IndexRating property could directly return 0?
                     self.otherUsersIndexRating = self.IndexRating !== null
                         ? self.IndexRating
                         : 0;

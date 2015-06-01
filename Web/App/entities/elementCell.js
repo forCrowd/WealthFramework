@@ -23,17 +23,23 @@
 
             var self = this;
 
+            self._userCell = null;
+
             // Other users' values: Keeps the values excluding current user's
             self.otherUsersNumericValue = null;
             self.otherUsersNumericValueCount = null;
 
             self.userCell = function () {
 
-                if (self.UserElementCellSet.length === 0) {
-                    return null;
+                if (self._userCell !== null && self._userCell.entityAspect.entityState.isDetached()) {
+                    self._userCell = null;
                 }
 
-                return self.UserElementCellSet[0];
+                if (self._userCell === null && self.UserElementCellSet.length !== 0) {
+                    self._userCell = self.UserElementCellSet[0];
+                }
+
+                return self._userCell;
             }
 
             self.numericValueAverage = function () {
@@ -41,7 +47,7 @@
                 // Set other users' value on the initial call
                 if (self.otherUsersNumericValue === null) {
 
-                    // TODO This could directly return 0?
+                    // TODO NumericValue property directly return 0?
                     self.otherUsersNumericValue = self.NumericValue !== null
                         ? self.NumericValue
                         : 0;
