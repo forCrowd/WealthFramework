@@ -111,10 +111,10 @@
             // TODO Compare this function with server-side
             self.directIncome = function () {
 
-                if (self.directIncomeCell() === null || self.directIncomeCell().NumericValue === null)
+                if (self.directIncomeCell() === null)
                     return 0;
 
-                return self.directIncomeCell().NumericValue;
+                return self.directIncomeCell().numericValue();
             }
 
             self.multiplier = function () {
