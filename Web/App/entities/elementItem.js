@@ -3,9 +3,9 @@
 
     var serviceId = 'elementItem';
     angular.module('main')
-        .factory(serviceId, ['logger', elementItem]);
+        .factory(serviceId, ['$rootScope', 'logger', elementItem]);
 
-    function elementItem(logger) {
+    function elementItem($rootScope, logger) {
 
         // Logger
         logger = logger.forSource(serviceId);
@@ -25,7 +25,14 @@
             // Local variables
             var _elementCellIndexSet = [];
             var _directIncomeCell = null;
-            var _multiplierCell = null;
+            var _multiplier = null;
+
+            // Events
+            $rootScope.$on('elementMultiplierUpdated', function (event, args) {
+                if (args.elementCell === self.multiplierCell() && args.value !== _multiplier) {
+                    _multiplier = args.value;
+                }
+            });
 
             self.elementCellIndexSet = function () {
 
@@ -84,21 +91,21 @@
 
             self.multiplierCell = function () {
 
-                // Cached value
-                // TODO In case of add / remove field?
-                if (_multiplierCell !== null) {
-                    return _multiplierCell;
+                if (typeof self.ElementCellSet === 'undefined') {
+                    return null;
                 }
+
+                var multiplierCell = null;
 
                 for (var i = 0; i < self.ElementCellSet.length; i++) {
                     var cell = self.ElementCellSet[i];
                     if (cell.ElementField.ElementFieldType === 12) {
-                        _multiplierCell = cell;
+                        multiplierCell = cell;
                         break;
                     }
                 }
 
-                return _multiplierCell;
+                return multiplierCell;
             }
 
             // TODO Compare this function with server-side
@@ -112,19 +119,27 @@
 
             self.multiplier = function () {
 
-                // If there is no multiplier field defined on this element, return 1, so it can return calculate the income correctly
-                if (self.multiplierCell() === null) {
-                    return 1;
+                if (_multiplier === null) {
+
+                    var multiplierCell = self.multiplierCell();
+
+                    // If there is no multiplier field defined on this element, return 1, so it can return calculate the income correctly
+                    // TODO Cover 'add new multiplier field' case as well!
+                    if (multiplierCell === null) {
+                        _multiplier = 1;
+                    } else {
+
+                        // If there is a multiplier field on the element but user is not set any value, return 0 as the default value
+                        if (multiplierCell.userCell() === null
+                            || multiplierCell.userCell().DecimalValue === null) {
+                            _multiplier = 0;
+                        } else { // Else, user's
+                            _multiplier = multiplierCell.userCell().DecimalValue;
+                        }
+                    }
                 }
 
-                // If there is a multiplier field on the element but user is not set any value, return 0 as the default value
-                if (self.multiplierCell().userCell() === null
-                    || self.multiplierCell().userCell().DecimalValue === null) {
-                    return 0;
-                }
-
-                // Return user's
-                return self.multiplierCell().userCell().DecimalValue;
+                return _multiplier;
             }
 
             self.totalDirectIncome = function () {

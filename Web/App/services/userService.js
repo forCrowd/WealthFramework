@@ -153,7 +153,8 @@
             // Find user element cell
             for (var i = 0; i < element.ElementItemSet.length; i++) {
 
-                var userCell = element.ElementItemSet[i].multiplierCell().userCell();
+                var elementCell = element.ElementItemSet[i].multiplierCell();
+                var userCell = elementCell.userCell();
 
                 switch (updateType) {
                     case 'increase': {
@@ -162,11 +163,12 @@
                         if (userCell === null) {
                             userCell = {
                                 UserId: userInfo.Id,
-                                ElementCellId: element.ElementItemSet[i].multiplierCell().Id,
+                                ElementCellId: elementCell.Id,
                                 DecimalValue: 1
                             };
 
                             dataContext.createEntity('UserElementCell', userCell);
+
                         } else {
 
                             // If it's marked as deleted, cancel that deletion and set it to default + 1
@@ -199,6 +201,11 @@
 
                         break;
                     }
+                }
+
+                // Broadcast the update
+                if (userCell !== null) {
+                    $rootScope.$broadcast('elementMultiplierUpdated', { elementCell: elementCell, value: userCell.DecimalValue });
                 }
             }
         }
