@@ -276,6 +276,11 @@
                     break;
                 }
             }
+
+            // Broadcast the update
+            if (userCell !== null) {
+                $rootScope.$broadcast('elementCellNumericValueUpdated', { elementCell: elementCell, value: userCell.DecimalValue });
+            }
         }
 
         function updateElementFieldIndexRating(elementField, updateType) {
