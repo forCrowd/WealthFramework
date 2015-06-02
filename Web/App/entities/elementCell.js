@@ -122,52 +122,6 @@
                             default: { throw 'Not supported'; }
                         }
 
-                        //if (self.userElementCell() !== null) {
-
-                        //    switch (self.ElementField.ElementFieldType) {
-                        //        case 2: {
-                        //            value = self.userElementCell().BooleanValue;
-                        //            break;
-                        //        }
-                        //        case 3: {
-                        //            value = self.userElementCell().IntegerValue;
-                        //            break;
-                        //        }
-                        //        case 4:
-                        //            // TODO 5 (DateTime?)
-                        //        case 11:
-                        //        case 12: {
-                        //            value = self.userElementCell().DecimalValue;
-                        //            break;
-                        //        }
-                        //        default: { throw 'Not supported'; }
-                        //    }
-
-                        //} else {
-
-                        //    switch (self.ElementField.ElementFieldType) {
-                        //        case 2: {
-                        //            value = 0;
-                        //            break;
-                        //        }
-                        //        case 3: {
-                        //            value = 50; // Default value?
-                        //            break;
-                        //        }
-                        //        case 4: {
-                        //            value = 50; // Default value?
-                        //            break;
-                        //        }
-                        //            // TODO 5 (DateTime?)
-                        //        case 11:
-                        //        case 12: {
-                        //            value = 0;
-                        //            break;
-                        //        }
-                        //        default: { throw 'Not supported'; }
-                        //    }
-                        //    break;
-                        //}
                         break;
                     }
                     case 2: { // All users' ratings
@@ -179,7 +133,6 @@
                         throw 'Invalid switch case';
                     }
                 }
-                //}
 
                 return value;
             }
