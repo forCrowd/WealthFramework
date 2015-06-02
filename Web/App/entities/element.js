@@ -27,7 +27,7 @@
             var _parent = null;
             var _parents = [];
             var _elementFieldIndexSet = [];
-            var _resourcePoolField = null;
+            var _directIncomeField = null;
             var _multiplierField = null;
 
             // UI related: Determines whether the chart & element details will use full row (col-md-4 vs col-md-12 etc.)
@@ -127,22 +127,22 @@
                 return indexSet;
             }
 
-            self.resourcePoolField = function () {
+            self.directIncomeField = function () {
 
                 // Cached value
                 // TODO In case of add / remove fields?
-                if (_resourcePoolField)
-                    return _resourcePoolField;
+                if (_directIncomeField)
+                    return _directIncomeField;
 
                 for (var i = 0; i < self.ElementFieldSet.length; i++) {
                     var field = self.ElementFieldSet[i];
                     if (field.ElementFieldType === 11) {
-                        _resourcePoolField = field;
+                        _directIncomeField = field;
                         break;
                     }
                 }
 
-                return _resourcePoolField;
+                return _directIncomeField;
             }
 
             self.multiplierField = function () {

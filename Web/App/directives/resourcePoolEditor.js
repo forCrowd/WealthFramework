@@ -222,7 +222,7 @@
 
                     scope.chartConfig.title = { text: element.Name };
 
-                    if (element.resourcePoolField()) {
+                    if (element.directIncomeField()) {
 
                         // Column type
                         scope.chartConfig.options.chart = { type: 'column' };
