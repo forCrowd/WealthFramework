@@ -138,6 +138,10 @@
             }
 
             self.numericValueMultiplied = function () {
+
+                if (typeof self.ElementField === 'undefined' || !self.ElementField.IndexEnabled)
+                    return 0; // ?
+
                 return self.numericValue() * self.ElementItem.multiplier();
             }
 
