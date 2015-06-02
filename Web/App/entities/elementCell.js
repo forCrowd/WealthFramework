@@ -129,9 +129,6 @@
                         value = self.numericValueAverage();
                         break;
                     }
-                    default: {
-                        throw 'Invalid switch case';
-                    }
                 }
 
                 return value;
@@ -166,9 +163,6 @@
                     case 2: { // HighestToLowest (High number is better)
                         value = self.passiveRatingPercentage() / referenceRating;
                         break;
-                    }
-                    default: {
-                        throw 'Invalid switch case';
                     }
                 }
 
@@ -215,9 +209,6 @@
                     }
                     case 2: { // HighestToLowest (High number is better)
                         return 1 - (self.numericValueMultiplied() / fieldNumericValueMultiplied);
-                    }
-                    default: {
-                        throw 'Invalid switch case';
                     }
                 }
             }

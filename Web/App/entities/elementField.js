@@ -88,9 +88,6 @@
                                 value = cell.passiveRatingPercentage();
                                 break;
                             }
-                            default: {
-                                throw 'Invalid switch case';
-                            }
                         }
 
                     } else {
@@ -118,9 +115,6 @@
                                     value = cell.passiveRatingPercentage();
                                 }
                                 break;
-                            }
-                            default: {
-                                throw 'Invalid switch case';
                             }
                         }
                     }
@@ -218,9 +212,6 @@
                     case 2: {
                         value = self.indexRatingAverage();
                         break;
-                    }
-                    default: {
-                        throw 'Invalid switch case';
                     }
                 }
 

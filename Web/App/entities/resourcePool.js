@@ -205,9 +205,6 @@
                         value = self.resourcePoolRateAverage();
                         break;
                     }
-                    default: {
-                        throw 'Invalid switch case';
-                    }
                 }
 
                 return value;
