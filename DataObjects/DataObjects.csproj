@@ -101,6 +101,14 @@
     <Compile Include="Migrations\201505300934336_Initial_Manual.Designer.cs">
       <DependentUpon>201505300934336_Initial_Manual.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506031859088_Test.cs" />
+    <Compile Include="Migrations\201506031859088_Test.Designer.cs">
+      <DependentUpon>201506031859088_Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506032204337_Test_2.cs" />
+    <Compile Include="Migrations\201506032204337_Test_2.Designer.cs">
+      <DependentUpon>201506032204337_Test_2.cs</DependentUpon>
+    </Compile>
     <Compile Include="ResourcePoolRepository.cs" />
     <Compile Include="RoleStore.cs" />
     <Compile Include="UserStore.cs" />
@@ -169,6 +177,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505300934336_Initial_Manual.resx">
       <DependentUpon>201505300934336_Initial_Manual.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506031859088_Test.resx">
+      <DependentUpon>201506031859088_Test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506032204337_Test_2.resx">
+      <DependentUpon>201506032204337_Test_2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

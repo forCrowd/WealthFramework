@@ -6,7 +6,6 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
     using System;
     using System.Collections.Generic;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
     internal sealed class DbMigrationsConfiguration : DbMigrationsConfiguration<WealthEconomyContext>
     {
