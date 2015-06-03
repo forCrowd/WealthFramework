@@ -90,7 +90,7 @@
             var sectorElement = resourcePool.AddElement("Sector");
 
             // Importance field
-            var importanceField = sectorElement.AddField("Rating", ElementFieldTypes.Decimal, false);
+            var importanceField = sectorElement.AddField("Sector Rating", ElementFieldTypes.Decimal, false);
             importanceField.AddIndex(RatingSortType.HighestToLowest);
 
             // Items, cells, user cells
@@ -147,7 +147,7 @@
             var rightToCopyField = licenseElement.AddField("Right to Copy", ElementFieldTypes.String);
             var rightToModifyField = licenseElement.AddField("Right to Modify", ElementFieldTypes.String);
             var rightToSellField = licenseElement.AddField("Right to Sell", ElementFieldTypes.String);
-            var licenseRatingField = licenseElement.AddField("Rating", ElementFieldTypes.Decimal, false);
+            var licenseRatingField = licenseElement.AddField("License Rating", ElementFieldTypes.Decimal, false);
             licenseRatingField.AddIndex(RatingSortType.HighestToLowest);
 
             // Items, cell, user cells
@@ -200,7 +200,7 @@
 
             // Fields
             var linkField = licenseElement.AddField("Link", ElementFieldTypes.String);
-            var importanceField = licenseElement.AddField("Rating", ElementFieldTypes.Decimal, false);
+            var importanceField = licenseElement.AddField("License Rating", ElementFieldTypes.Decimal, false);
             importanceField.AddIndex(RatingSortType.HighestToLowest);
 
             // Items, cell, user cells
@@ -230,8 +230,8 @@
                 .AddCell(importanceField);
 
             // TODO Check it again
-            licenseElement.AddItem("Microsoft EULA")
-                .AddCell(linkField).SetValue("<a href='https://msdn.microsoft.com/en-us/library/aa188798(v=office.10).aspx' target='_blank'>Link</a>")
+            licenseElement.AddItem("EULA (Wikipedia)")
+                .AddCell(linkField).SetValue("<a href='http://en.wikipedia.org/wiki/End-user_license_agreement' target='_blank'>Link</a>")
                 .ElementItem
                 .AddCell(importanceField);
 
@@ -254,7 +254,7 @@
             //mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(licenseField).SetValue(licenseElement.ElementItemSet.Skip(3).Take(1).Single());
             mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "MIT Organization";
             mainElement.ElementItemSet.Skip(2).Take(1).Single().AddCell(licenseField).SetValue(licenseElement.ElementItemSet.Skip(4).Take(1).Single());
-            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Microsoft EULA Organization";
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "EULA Organization";
             mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(licenseField).SetValue(licenseElement.ElementItemSet.Skip(5).Take(1).Single());
 
             // Return
@@ -274,7 +274,7 @@
 
             // Fields
             var linkField = mainElement.AddField("Link", ElementFieldTypes.String);
-            var importanceField = mainElement.AddField("Rating", ElementFieldTypes.Decimal, false);
+            var importanceField = mainElement.AddField("License Rating", ElementFieldTypes.Decimal, false);
             importanceField.AddIndex(RatingSortType.HighestToLowest);
 
             // Items, cell, user cells
@@ -299,8 +299,8 @@
             mainElement.ElementItemSet.Skip(2).Take(1).Single().AddCell(importanceField);
 
             // TODO Check it again
-            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Microsoft EULA";
-            mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(linkField).SetValue("<a href='https://msdn.microsoft.com/en-us/library/aa188798(v=office.10).aspx' target='_blank'>Link</a>");
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "EULA (Wikipedia)";
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(linkField).SetValue("<a href='http://en.wikipedia.org/wiki/End-user_license_agreement' target='_blank'>Link</a>");
             mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(importanceField);
 
             // Return
@@ -319,7 +319,7 @@
             var mainElement = resourcePool.ElementSet.First();
 
             // Fields
-            var importanceField = mainElement.AddField("Rating", ElementFieldTypes.Decimal, false);
+            var importanceField = mainElement.AddField("License Rating", ElementFieldTypes.Decimal, false);
             importanceField.AddIndex(RatingSortType.HighestToLowest);
 
             // Items, cell, user cells
@@ -344,8 +344,8 @@
             mainElement.ElementItemSet.Skip(2).Take(1).Single().AddCell(importanceField);
 
             // TODO Check it again
-            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Microsoft EULA";
-            mainElement.ElementItemSet.Skip(3).Take(1).Single().NameCell.SetValue("<a href='https://msdn.microsoft.com/en-us/library/aa188798(v=office.10).aspx' target='_blank'>Microsoft EULA</a>");
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "EULA (Wikipedia)";
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().NameCell.SetValue("<a href='http://en.wikipedia.org/wiki/End-user_license_agreement' target='_blank'>EULA (Wikipedia)</a>");
             mainElement.ElementItemSet.Skip(3).Take(1).Single().AddCell(importanceField);
 
             // Return
@@ -472,7 +472,7 @@
 
             // Fields
             var fairShareDesciptionField = fairShareElement.AddField("Description", ElementFieldTypes.String);
-            var fairShareImportanceField = fairShareElement.AddField("Rating", ElementFieldTypes.Decimal, false);
+            var fairShareImportanceField = fairShareElement.AddField("Fair Share Rating", ElementFieldTypes.Decimal, false);
             fairShareImportanceField.AddIndex(RatingSortType.HighestToLowest);
 
             // Items, cell, user cells
@@ -742,7 +742,7 @@
             var sectorElement = resourcePool.AddElement("Sector");
 
             // Fields
-            var sectorRatingField = sectorElement.AddField("Rating", ElementFieldTypes.Decimal, false);
+            var sectorRatingField = sectorElement.AddField("Sector Rating", ElementFieldTypes.Decimal, false);
             sectorRatingField.AddIndex(RatingSortType.HighestToLowest);
 
             // Items, cells, user cells
@@ -759,7 +759,7 @@
             var rightToCopyField = licenseElement.AddField("Right to Copy", ElementFieldTypes.String);
             var rightToModifyField = licenseElement.AddField("Right to Modify", ElementFieldTypes.String);
             var rightToSellField = licenseElement.AddField("Right to Sell", ElementFieldTypes.String);
-            var licenseRatingField = licenseElement.AddField("Rating", ElementFieldTypes.Decimal, false);
+            var licenseRatingField = licenseElement.AddField("License Rating", ElementFieldTypes.Decimal, false);
             licenseRatingField.AddIndex(RatingSortType.HighestToLowest);
 
             // Items, cell, user cells
@@ -782,7 +782,7 @@
 
             // Fields
             var fairShareDesciptionField = fairShareElement.AddField("Description", ElementFieldTypes.String);
-            var fairShareRatingField = fairShareElement.AddField("Rating", ElementFieldTypes.Decimal, false);
+            var fairShareRatingField = fairShareElement.AddField("Fair Share Rating", ElementFieldTypes.Decimal, false);
             fairShareRatingField.AddIndex(RatingSortType.HighestToLowest);
 
             // Items, cell, user cells

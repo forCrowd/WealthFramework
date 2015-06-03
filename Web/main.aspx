@@ -13,7 +13,7 @@
 
     <!-- Internal CSS -->
     <link href="/Content/site.css?v=022" rel="stylesheet" />
-    <link href="/App/directives/resourcePoolEditor.css?v=022" rel="stylesheet" />
+    <link href="/App/directives/resourcePoolEditor.css?v=028" rel="stylesheet" />
 
     <!-- jQuery -->
     <script src="/Scripts/jquery-2.1.4.min.js"></script>
@@ -79,7 +79,7 @@
         <hr />
         <footer>
             <p class="small">
-                {{ vm.applicationInfo.CurrentVersion }} - Beta<br />
+                {{ vm.applicationInfo.CurrentVersion }} - Alpha ~ Beta<br />
                 {{ vm.applicationInfo.Organization }}<br />
             </p>
         </footer>

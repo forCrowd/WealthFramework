@@ -6,8 +6,8 @@
             </p>
             <h3 class="panel-title">{{ resourcePool.Name }}</h3>
             <div class="resourcePoolFilter">
-                <small>
-                    <a href="" data-ng-click="resourcePool.currentElement.toggleValueFilter()">{{ resourcePool.currentElement.valueFilterText() }}</a>
+                <small data-ng-if="resourcePool.EnableResourcePoolAddition || resourcePool.currentElement.elementFieldIndexSet().length > 0">
+                    <a href="" data-ng data-ng-click="resourcePool.currentElement.toggleValueFilter()">{{ resourcePool.currentElement.valueFilterText() }}</a>
                 </small>
             </div>
         </div>
@@ -88,7 +88,7 @@
                                 </th>
                                 <!-- CMRP Income & Details -->
                                 <th data-ng-if="displayIndexDetails" data-ng-repeat="field in resourcePool.currentElement.elementFieldIndexSet()">
-                                    {{ field.Name }} Income
+                                    {{ field.Name }} (I) Income
                                     <!--- {{ field.ElementField.Element.ResourcePool.MainElement.indexRating() }}
                                     - {{ index.fieldRating() }}
                                     - {{ field.indexRatingPercentage() }}
@@ -102,7 +102,7 @@
                                     <!-- Display 'CMRP Income' view link only if there are more than one index -->
                                     <a href="" data-ng-if="resourcePool.currentElement.elementFieldIndexSet().length > 1" data-ng-click="toggleIndexDetails()">CMRP Income</a>
                                     <!-- If there is only one index, then use that index's name -->
-                                    <span data-ng-if="resourcePool.currentElement.elementFieldIndexSet().length === 1">{{ resourcePool.currentElement.elementFieldIndexSet()[0].Name }} Income</span>
+                                    <span data-ng-if="resourcePool.currentElement.elementFieldIndexSet().length === 1">{{ resourcePool.currentElement.elementFieldIndexSet()[0].Name }} (I) Income</span>
                                 </th>
                                 <!-- Total Income -->
                                 <th data-ng-if="resourcePool.currentElement.directIncomeField()">

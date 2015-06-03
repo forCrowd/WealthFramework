@@ -454,9 +454,7 @@
       <DependentUpon>service.tt</DependentUpon>
     </Content>
     <Content Include="App\services\resourcePoolService.js" />
-    <Content Include="App\views\content\logos.html" />
     <Content Include="App\views\content\closingNotes.html" />
-    <Content Include="App\views\content\feedback.html" />
     <Content Include="App\views\content\conclusion.html" />
     <Content Include="App\views\content\basics.html" />
     <Content Include="App\views\content\allInOneSample.html" />
