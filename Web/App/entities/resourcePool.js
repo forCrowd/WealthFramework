@@ -3,9 +3,9 @@
 
     var serviceId = 'resourcePoolFactory';
     angular.module('main')
-        .factory(serviceId, ['logger', resourcePoolFactory]);
+        .factory(serviceId, ['$rootScope', 'logger', resourcePoolFactory]);
 
-    function resourcePoolFactory(logger) {
+    function resourcePoolFactory($rootScope, logger) {
 
         // Logger
         logger = logger.forSource(serviceId);
@@ -63,6 +63,23 @@
         function resourcePool() {
 
             var self = this;
+
+            var _resourcePoolRate = null;
+            var _currentUserResourcePoolRate = null;
+
+            // Events
+            $rootScope.$on('resourcePoolRateUpdated', function (event, args) {
+                if (args.resourcePool === self) {
+                    _currentUserResourcePoolRate = args.value;
+                    setResourcePoolRate();
+                }
+            });
+
+            $rootScope.$on('elementValueFilterChanged', function (event, args) {
+                if (args.element.ResourcePool === self) {
+                    setResourcePoolRate();
+                }
+            });
 
             function propertyTests2() {
                 self.testField = 'field - initial';
@@ -143,6 +160,17 @@
                 return self._userResourcePool;
             }
 
+            self.currentUserResourcePoolRate = function () {
+
+                if (_currentUserResourcePoolRate === null) {
+                    _currentUserResourcePoolRate = self.userResourcePool() !== null
+                        ? self.userResourcePool().ResourcePoolRate
+                        : 10 // Default value?
+                }
+
+                return _currentUserResourcePoolRate;
+            }
+
             self.resourcePoolRateAverage = function () {
 
                 // Set other users' value on the initial call
@@ -153,16 +181,13 @@
                         ? self.ResourcePoolRate
                         : 0;
 
+                    // Exclude current user's rate 
                     if (self.userResourcePool() !== null) {
                         self.otherUsersResourcePoolRate -= self.userResourcePool().ResourcePoolRate;
                     }
                 }
 
-                var resourcePoolRate = self.otherUsersResourcePoolRate;
-
-                resourcePoolRate += self.userResourcePool() !== null
-                    ? self.userResourcePool().ResourcePoolRate
-                    : 10; // Default value?
+                var resourcePoolRate = self.otherUsersResourcePoolRate + self.currentUserResourcePoolRate();
 
                 return resourcePoolRate / self.resourcePoolRateCount();
             }
@@ -188,26 +213,25 @@
 
             self.resourcePoolRate = function () {
 
-                var value = 0;
+                if (_resourcePoolRate === null) {
+                    setResourcePoolRate();
+                }
 
+                return _resourcePoolRate;
+            }
+
+            function setResourcePoolRate() {
                 switch (self.currentElement.valueFilter) {
                     case 1: { // My ratings
-
-                        if (self.userResourcePool() !== null) {
-                            value = self.userResourcePool().ResourcePoolRate;
-                        } else {
-                            value = 10; // Default value?
-                        }
+                        _resourcePoolRate = self.currentUserResourcePoolRate();
 
                         break;
                     }
                     case 2: { // All ratings
-                        value = self.resourcePoolRateAverage();
+                        _resourcePoolRate = self.resourcePoolRateAverage();
                         break;
                     }
                 }
-
-                return value;
             }
 
             // Resource pool rate percentage

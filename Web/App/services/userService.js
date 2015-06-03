@@ -349,6 +349,11 @@
                     break;
                 }
             }
+
+            // Broadcast the update
+            if (userElementField !== null) {
+                $rootScope.$broadcast('elementMultiplierUpdated', { elementField: elementField, value: userElementField.Rating });
+            }
         }
 
         function updateResourcePoolRate(resourcePool, updateType) {
@@ -416,6 +421,11 @@
 
                     break;
                 }
+            }
+
+            // Broadcast the update
+            if (userResourcePool !== null) {
+                $rootScope.$broadcast('resourcePoolRateUpdated', { resourcePool: resourcePool, value: userResourcePool.ResourcePoolRate });
             }
         }
     }

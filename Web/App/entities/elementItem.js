@@ -29,8 +29,16 @@
 
             // Events
             $rootScope.$on('elementMultiplierUpdated', function (event, args) {
-                if (args.elementCell === self.multiplierCell() && args.value !== _multiplier) {
+                // if (args.elementCell === self.multiplierCell() && args.value !== _multiplier) {
+                if (args.elementCell === self.multiplierCell()) {
                     _multiplier = args.value;
+
+                    // TODO Raise an event and handle this?
+                    // Or is updating the related entities manually a better approach?
+                    for (var i = 0; i < self.ElementCellSet.length; i++) {
+                        var cell = self.ElementCellSet[i];
+                        cell.setNumericValueMultiplied();
+                    }
                 }
             });
 
@@ -79,9 +87,9 @@
                 }
 
                 for (var i = 0; i < self.ElementCellSet.length; i++) {
-                    var cell = self.ElementCellSet[i];
-                    if (cell.ElementField.ElementFieldType === 11) {
-                        _directIncomeCell = cell;
+                    var elementCell = self.ElementCellSet[i];
+                    if (elementCell.ElementField.ElementFieldType === 11) {
+                        _directIncomeCell = elementCell;
                         break;
                     }
                 }
@@ -98,9 +106,9 @@
                 var multiplierCell = null;
 
                 for (var i = 0; i < self.ElementCellSet.length; i++) {
-                    var cell = self.ElementCellSet[i];
-                    if (cell.ElementField.ElementFieldType === 12) {
-                        multiplierCell = cell;
+                    var elementCell = self.ElementCellSet[i];
+                    if (elementCell.ElementField.ElementFieldType === 12) {
+                        multiplierCell = elementCell;
                         break;
                     }
                 }
@@ -120,26 +128,30 @@
             self.multiplier = function () {
 
                 if (_multiplier === null) {
-
-                    var multiplierCell = self.multiplierCell();
-
-                    // If there is no multiplier field defined on this element, return 1, so it can return calculate the income correctly
-                    // TODO Cover 'add new multiplier field' case as well!
-                    if (multiplierCell === null) {
-                        _multiplier = 1;
-                    } else {
-
-                        // If there is a multiplier field on the element but user is not set any value, return 0 as the default value
-                        if (multiplierCell.userCell() === null
-                            || multiplierCell.userCell().DecimalValue === null) {
-                            _multiplier = 0;
-                        } else { // Else, user's
-                            _multiplier = multiplierCell.userCell().DecimalValue;
-                        }
-                    }
+                    setMultiplier();
                 }
 
                 return _multiplier;
+            }
+
+            function setMultiplier() {
+
+                var multiplierCell = self.multiplierCell();
+
+                // If there is no multiplier field defined on this element, return 1, so it can return calculate the income correctly
+                // TODO Cover 'add new multiplier field' case as well!
+                if (multiplierCell === null) {
+                    _multiplier = 1;
+                } else {
+
+                    // If there is a multiplier field on the element but user is not set any value, return 0 as the default value
+                    if (multiplierCell.userCell() === null
+                        || multiplierCell.userCell().DecimalValue === null) {
+                        _multiplier = 0;
+                    } else { // Else, user's
+                        _multiplier = multiplierCell.userCell().DecimalValue;
+                    }
+                }
             }
 
             self.totalDirectIncome = function () {

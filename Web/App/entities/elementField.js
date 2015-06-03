@@ -3,9 +3,9 @@
 
     var serviceId = 'elementField';
     angular.module('main')
-        .factory(serviceId, ['logger', elementField]);
+        .factory(serviceId, ['$rootScope', 'logger', elementField]);
 
-    function elementField(logger) {
+    function elementField($rootScope, logger) {
 
         // Logger
         logger = logger.forSource(serviceId);
@@ -23,10 +23,28 @@
             var self = this;
 
             self._userElementField = null;
+            var _indexRating = null;
+            var _currentUserIndexRating = null;
 
             // Other users' values: Keeps the values excluding current user's
             self.otherUsersIndexRating = null;
             self.otherUsersIndexRatingCount = null;
+
+            // Events
+            $rootScope.$on('elementMultiplierUpdated', function (event, args) {
+                if (args.elementField === self) {
+
+                    _currentUserIndexRating = args.value;
+                    //_currentUserResourcePoolRate = args.value;
+                    setIndexRating();
+                }
+            });
+
+            $rootScope.$on('elementValueFilterChanged', function (event, args) {
+                if (args.element.ResourcePool === self.Element.ResourcePool) {
+                    setIndexRating();
+                }
+            });
 
             self.numericValueMultiplied = function () {
 
@@ -151,6 +169,17 @@
                 return self._userElementField;
             }
 
+            self.currentUserIndexRating = function () {
+
+                if (_currentUserIndexRating === null) {
+                    _currentUserIndexRating = self.userElementField() !== null
+                        ? self.userElementField().Rating
+                        : 50; // Default value?
+                }
+
+                return _currentUserIndexRating;
+            }
+
             self.indexRatingAverage = function () {
 
                 // Set other users' value on the initial call
@@ -166,11 +195,13 @@
                     }
                 }
 
-                var indexRating = self.otherUsersIndexRating;
+                //var indexRating = self.otherUsersIndexRating;
 
-                indexRating += self.userElementField() !== null
-                    ? self.userElementField().Rating
-                    : 50; // Default value?
+                //indexRating += self.userElementField() !== null
+                //    ? self.userElementField().Rating
+                //    : 50; // Default value?
+
+                var indexRating = self.otherUsersIndexRating + self.currentUserIndexRating();
 
                 return indexRating / self.indexRatingCount();
             }
@@ -196,26 +227,31 @@
 
             self.indexRating = function () {
 
-                var value = 0;
+                if (_indexRating === null) {
+                    setIndexRating();
+                }
 
+                return _indexRating;
+            }
+
+            function setIndexRating() {
                 switch (self.Element.valueFilter) {
-                    case 1: {
+                    case 1: { // Current user's
+                        _indexRating = self.currentUserIndexRating();
 
-                        if (self.userElementField() !== null) {
-                            value = self.userElementField().Rating;
-                        } else {
-                            value = 50; // Default value?
-                        }
+                        //if (self.userElementField() !== null) {
+                        //    value = self.userElementField().Rating;
+                        //} else {
+                        //    value = 50; // Default value?
+                        //}
 
                         break;
                     }
-                    case 2: {
-                        value = self.indexRatingAverage();
+                    case 2: { // All
+                        _indexRating = self.indexRatingAverage();
                         break;
                     }
                 }
-
-                return value;
             }
 
             self.indexRatingPercentage = function () {

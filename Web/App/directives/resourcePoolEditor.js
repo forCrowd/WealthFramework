@@ -199,6 +199,11 @@
                 // Current element
                 var element = scope.resourcePool.currentElement;
 
+                // Item length check
+                if (element.ElementItemSet.length > 20) {
+                    return;
+                }
+
                 //scope.chartConfig.loading = true;
                 scope.chartConfig.title = { text: element.Name };
                 scope.chartConfig.series = [];
@@ -254,7 +259,7 @@
                     }
                 }
 
-                scope.chartConfig.loading = false;
+                //scope.chartConfig.loading = false;
             }
 
             function saveChanges() {

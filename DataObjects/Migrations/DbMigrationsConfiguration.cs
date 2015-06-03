@@ -122,7 +122,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             var fairShareSample = resourcePoolRepository.CreateFairShareSample(sampleUser);
             var indexesPieSample = resourcePoolRepository.CreateIndexesPieSample(sampleUser);
             var resourcePoolRateSample = resourcePoolRepository.CreateResourcePoolRateSample(sampleUser);
-            //var allInOneSample = resourcePoolRepository.CreateAllInOneSample(sampleUser);
+            var allInOneSample = resourcePoolRepository.CreateAllInOneSample(sampleUser);
 
             // Set Id fields explicitly, since strangely EF doesn't save them in the order that they've been added to ResourcePoolSet.
             // And they're referred with these Ids on front-end samples
@@ -138,6 +138,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             fairShareSample.Id = 10;
             indexesPieSample.Id = 11;
             resourcePoolRateSample.Id = 12;
+            allInOneSample.Id = 13;
             
             // Insert
             resourcePoolRepository.Insert(upoSample);
@@ -152,7 +153,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             resourcePoolRepository.Insert(fairShareSample);
             resourcePoolRepository.Insert(indexesPieSample);
             resourcePoolRepository.Insert(resourcePoolRateSample);
-            //resourcePoolRepository.Insert(allInOneSample);
+            resourcePoolRepository.Insert(allInOneSample);
 
             // First save
             context.SaveChanges();
@@ -170,6 +171,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             fairShareSample.SetMainElement();
             indexesPieSample.SetMainElement();
             resourcePoolRateSample.SetMainElement();
+            allInOneSample.SetMainElement();
 
             // Second save for main elements
             context.SaveChanges();

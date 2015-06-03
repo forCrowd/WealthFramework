@@ -2,7 +2,7 @@
 
 **0.28**
 
-* 
+* https://github.com/forCrowd/WealthEconomy/issues/27
 
 **0.27.1**
 
