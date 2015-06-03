@@ -111,18 +111,12 @@
                         indexSet.push(field);
                     }
 
-                    //if (field.ElementFieldIndexSet.length > 0) {
-                    //    indexSet.push(field.ElementFieldIndexSet[0]);
-                    //}
-
                     if (field.ElementFieldType === 6) {
                         var childIndexSet = getElementFieldIndexSet(field.SelectedElement);
 
                         for (var x = 0; x < childIndexSet.length; x++) {
                             indexSet.push(childIndexSet[x]);
                         }
-
-                        // indexSet = indexSet.concat(childIndexSet);
                     }
                 }
 

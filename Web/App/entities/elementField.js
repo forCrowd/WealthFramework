@@ -33,9 +33,7 @@
             // Events
             $rootScope.$on('elementMultiplierUpdated', function (event, args) {
                 if (args.elementField === self) {
-
                     _currentUserIndexRating = args.value;
-                    //_currentUserResourcePoolRate = args.value;
                     setIndexRating();
                 }
             });
@@ -195,12 +193,6 @@
                     }
                 }
 
-                //var indexRating = self.otherUsersIndexRating;
-
-                //indexRating += self.userElementField() !== null
-                //    ? self.userElementField().Rating
-                //    : 50; // Default value?
-
                 var indexRating = self.otherUsersIndexRating + self.currentUserIndexRating();
 
                 return indexRating / self.indexRatingCount();
@@ -217,12 +209,8 @@
                     }
                 }
 
-                var count = self.otherUsersIndexRatingCount;
-
-                // Increase count in any case, even if the user didn't set any value yet, there is a default value
-                count++;
-
-                return count;
+                // Since there is always a default value for the current user, calculate count by increasing 1
+                return self.otherUsersIndexRatingCount++;
             }
 
             self.indexRating = function () {
@@ -236,21 +224,8 @@
 
             function setIndexRating() {
                 switch (self.Element.valueFilter) {
-                    case 1: { // Current user's
-                        _indexRating = self.currentUserIndexRating();
-
-                        //if (self.userElementField() !== null) {
-                        //    value = self.userElementField().Rating;
-                        //} else {
-                        //    value = 50; // Default value?
-                        //}
-
-                        break;
-                    }
-                    case 2: { // All
-                        _indexRating = self.indexRatingAverage();
-                        break;
-                    }
+                    case 1: { _indexRating = self.currentUserIndexRating(); break; } // Current user's
+                    case 2: { _indexRating = self.indexRatingAverage(); break; } // All
                 }
             }
 

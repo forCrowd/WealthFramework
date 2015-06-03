@@ -27,35 +27,6 @@
             }
         });
 
-        function propertyTests1() {
-
-            Object.defineProperty(resourcePool.prototype, 'testPropWithEnumConfProt', {
-                enumerable: true,
-                configurable: true,
-                get: function () {
-                    logger.log(this.Id + ' with EnumConfProt - about to GET');
-                    return this._testPropWithEnumConfProt;
-                },
-                set: function (value) {
-                    logger.log(this.Id + ' with EnumConfProt - about to SET');
-                    this._testPropWithEnumConfProt = value;
-                }
-            });
-
-            Object.defineProperty(resourcePool.prototype, 'testPropWithEnumConfProtBack', {
-                enumerable: true,
-                configurable: true,
-                get: function () {
-                    logger.log(this.Id + ' with EnumConfProtBack - about to GET');
-                    return this.backingFields._testPropWithEnumConfProtBack;
-                },
-                set: function (value) {
-                    logger.log(this.Id + ' with EnumConfProtBack - about to SET');
-                    this.backingFields._testPropWithEnumConfProtBack = value;
-                }
-            });
-        }
-
         return (service);
 
         /*** Implementations ***/
@@ -66,6 +37,18 @@
 
             var _resourcePoolRate = null;
             var _currentUserResourcePoolRate = null;
+
+            // Local variables
+            self.backingFields = {
+                _currentElement: null,
+                _ElementSet: []
+            }
+
+            self._userResourcePool = null;
+
+            // Other users' values: Keeps the values excluding current user's
+            self.otherUsersResourcePoolRate = null;
+            self.otherUsersResourcePoolRateCount = null;
 
             // Events
             $rootScope.$on('resourcePoolRateUpdated', function (event, args) {
@@ -81,72 +64,7 @@
                 }
             });
 
-            function propertyTests2() {
-                self.testField = 'field - initial';
-
-                Object.defineProperty(self, 'testPropOnlyGet', {
-                    get: function () { return 'only get - initial'; }
-                });
-
-                var _testPropGetSet = 'get set - initial';
-                Object.defineProperty(self, 'testPropGetSet', {
-                    get: function () {
-                        //logger.log(self.Id + ' get set - about to GET');
-                        return _testPropGetSet;
-                    },
-                    set: function (value) {
-                        //logger.log(self.Id + ' get set - about to SET');
-                        _testPropGetSet = value;
-                    }
-                });
-
-                var _testPropWithEnumConf = 'with EnumConf - initial';
-                Object.defineProperty(self, 'testPropWithEnumConf', {
-                    enumerable: true,
-                    configurable: true,
-                    get: function () {
-                        logger.log(this.Id + ' with EnumConf - about to GET');
-                        return _testPropWithEnumConf;
-                    },
-                    set: function (value) {
-                        logger.log(this.Id + ' with EnumConf - about to SET');
-                        _testPropWithEnumConf = value;
-                    }
-                });
-
-                Object.defineProperty(self, 'testPropWithEnumConfBack', {
-                    enumerable: true,
-                    configurable: true,
-                    get: function () {
-                        logger.log(this.Id + ' with EnumConfBack - about to GET');
-                        return this.backingFields._testPropWithEnumConfBack;
-                    },
-                    set: function (value) {
-                        logger.log(this.Id + ' with EnumConfBack - about to SET');
-                        this.backingFields._testPropWithEnumConfBack = value;
-                    }
-                });
-
-                var _testPropWithEnumConfProt = 'with EnumConfProt - initial';
-
-                self.backingFields = {
-                    _testPropWithEnumConfBack: 'with EnumConfBack - initial',
-                    _testPropWithEnumConfProtBack: 'with EnumConfProtBack - initial'
-                };
-            }
-
-            // Local variables
-            self.backingFields = {
-                _currentElement: null,
-                _ElementSet: []
-            }
-
-            self._userResourcePool = null;
-
-            // Other users' values: Keeps the values excluding current user's
-            self.otherUsersResourcePoolRate = null;
-            self.otherUsersResourcePoolRateCount = null;
-
+            // Functions
             self.userResourcePool = function () {
 
                 if (self._userResourcePool !== null && self._userResourcePool.entityAspect.entityState.isDetached()) {
@@ -203,12 +121,8 @@
                     }
                 }
 
-                var count = self.otherUsersResourcePoolRateCount;
-
-                // Increase count in any case, even if the user didn't set any value yet, there is a default value
-                count++;
-
-                return count;
+                // Since there is always a default value for the current user, calculate count by increasing 1
+                return self.otherUsersResourcePoolRateCount++;
             }
 
             self.resourcePoolRate = function () {
@@ -222,15 +136,8 @@
 
             function setResourcePoolRate() {
                 switch (self.currentElement.valueFilter) {
-                    case 1: { // My ratings
-                        _resourcePoolRate = self.currentUserResourcePoolRate();
-
-                        break;
-                    }
-                    case 2: { // All ratings
-                        _resourcePoolRate = self.resourcePoolRateAverage();
-                        break;
-                    }
+                    case 1: { _resourcePoolRate = self.currentUserResourcePoolRate(); break; } // Current user's
+                    case 2: { _resourcePoolRate = self.resourcePoolRateAverage(); break; } // All
                 }
             }
 

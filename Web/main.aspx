@@ -109,11 +109,11 @@
     <script src="/App/authorization.js?v=022"></script>
 
     <!-- Entities -->
-    <script src="/App/entities/resourcePool.js?v=027"></script>
-    <script src="/App/entities/element.js?v=027"></script>
-    <script src="/App/entities/elementCell.js?v=027"></script>
-    <script src="/App/entities/elementField.js?v=027"></script>
-    <script src="/App/entities/elementItem.js?v=027"></script>
+    <script src="/App/entities/resourcePool.js?v=028"></script>
+    <script src="/App/entities/element.js?v=028"></script>
+    <script src="/App/entities/elementCell.js?v=028"></script>
+    <script src="/App/entities/elementField.js?v=028"></script>
+    <script src="/App/entities/elementItem.js?v=028"></script>
     <script src="/App/entities/userElementCell.js?v=027"></script>
 
     <!-- breezeJS -->
@@ -126,7 +126,7 @@
     <script src="/App/includes/manageScripts.js?v=027"></script>
 
     <!-- Service extensions -->
-    <script src="/App/services/userService.js?v=027"></script>
+    <script src="/App/services/userService.js?v=028"></script>
     <script src="/App/services/resourcePoolService.js?v=027"></script>
 
     <!-- Content -->
@@ -152,7 +152,7 @@
     <script src="/App/controllers/manage/resourcePool/resourcePoolCustomViewController.js?v=027"></script>
 
     <!-- Directives -->
-    <script src="/App/directives/resourcePoolEditor.js?v=027"></script>
+    <script src="/App/directives/resourcePoolEditor.js?v=028"></script>
 
     <!-- Filters -->
     <script src="/App/filters/angular-percentage.js?v=022"></script>

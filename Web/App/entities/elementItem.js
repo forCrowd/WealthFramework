@@ -29,7 +29,6 @@
 
             // Events
             $rootScope.$on('elementMultiplierUpdated', function (event, args) {
-                // if (args.elementCell === self.multiplierCell() && args.value !== _multiplier) {
                 if (args.elementCell === self.multiplierCell()) {
                     _multiplier = args.value;
 
