@@ -14,6 +14,12 @@
                 <input id="Email" name="Email" type="text" data-ng-model="vm.email" class="form-control" required />
             </div>
         </div>
+        <div class="col-md-10 col-md-offset-2">
+            <p class="text-danger">
+                Password must be at least 6 characters long,<br />
+                must have at least one lowercase ('a'-'z') and one digit ('0'-'9')
+            </p>
+        </div>
         <div class="form-group">
             <label for="Password" class="control-label col-md-2">Password</label>
             <div class="col-md-10" data-ng-class="{'has-error': registerForm.Password.$invalid && !registerForm.Password.$pristine}">
