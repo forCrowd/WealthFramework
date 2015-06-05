@@ -53,8 +53,8 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown" data-ng-if="(vm.userInfo !== null)">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown">User: {{ vm.userInfo.Email }} <b class="caret"></b></a>
+                    <li class="dropdown" data-ng-if="vm.userInfo !== null">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown"><span data-ng-bind="'User: ' + vm.userInfo.Email"></span> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="/account/accountEdit">Edit</a></li>
                             <li><a href="/account/changePassword">Change password</a></li>
@@ -79,8 +79,11 @@
         <hr />
         <footer>
             <p class="small">
-                {{ vm.applicationInfo.CurrentVersion }} - Alpha ~ Beta<br />
-                {{ vm.applicationInfo.Organization }}<br />
+                <span></span>
+                <span data-ng-bind="vm.applicationInfo.CurrentVersionText"></span>
+                <br />
+                <span data-ng-bind="vm.applicationInfo.Organization"></span>
+                <br />
             </p>
         </footer>
     </div>
@@ -130,7 +133,7 @@
     <script src="/App/services/resourcePoolService.js?v=027"></script>
 
     <!-- Content -->
-    <script src="/App/controllers/content/mainController.js?v=027"></script>
+    <script src="/App/controllers/content/mainController.js?v=028"></script>
     <script src="/App/controllers/content/introductionController.js?v=027"></script>
     <script src="/App/controllers/content/basicsController.js?v=027"></script>
     <script src="/App/controllers/content/sectorIndexSampleController.js?v=022"></script>

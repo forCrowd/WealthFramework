@@ -57,6 +57,8 @@
             mainService.getApplicationInfo()
                 .then(function (applicationInfo) {
                     vm.applicationInfo = applicationInfo;
+                    
+                    vm.applicationInfo.CurrentVersionText = vm.applicationInfo.CurrentVersion + ' - Alpha ~ Beta';
                 });
         }
 
