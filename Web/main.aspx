@@ -155,7 +155,7 @@
     <script src="/App/controllers/manage/resourcePool/resourcePoolCustomViewController.js?v=027"></script>
 
     <!-- Directives -->
-    <script src="/App/directives/resourcePoolEditor.js?v=028"></script>
+    <script src="/App/directives/resourcePoolEditor.js?v=029"></script>
 
     <!-- Filters -->
     <script src="/App/filters/angular-percentage.js?v=022"></script>
