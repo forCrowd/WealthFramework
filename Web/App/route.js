@@ -5,7 +5,7 @@
         .config(routeConfig);
 
     angular.module('main')
-        .run(['$rootScope', '$location', 'logger', routeRun]);
+        .run(['userService', '$rootScope', '$location', 'logger', routeRun]);
 
     function routeConfig($routeProvider, $locationProvider) {
 
@@ -86,13 +86,25 @@
         }
     }
 
-    function routeRun($rootScope, $location, logger) {
+    function routeRun(userService, $rootScope, $location, logger) {
 
         // Logger
         logger = logger.forSource('routeRun');
 
         // Default location
         $rootScope.locationHistory = ['/'];
+
+        $rootScope.$on('$routeChangeStart', function (event, next, current) {
+
+            // Navigate the authenticated user to home page, in case they try to go login or register
+            userService.getUserInfo()
+                .then(function (userInfo) {
+                    var isAuthenticated = userInfo !== null;
+                    if (isAuthenticated && ($location.path() === '/account/login' || $location.path() === '/account/register')) {
+                        $location.path('/');
+                    }
+                });
+        });
 
         $rootScope.$on('$routeChangeSuccess', function (event, next, current) {
 

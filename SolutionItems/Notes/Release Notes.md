@@ -1,5 +1,9 @@
 ﻿### Release Notes
 
+**0.29**
+
+* https://github.com/forCrowd/WealthEconomy/issues/48
+
 **0.28**
 
 * https://github.com/forCrowd/WealthEconomy/issues/27

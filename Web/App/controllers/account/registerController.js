@@ -37,6 +37,8 @@
 
                     userService.getAccessToken(vm.email, vm.password)
                         .success(function () {
+
+                            // Redirect the user to the previous page, except if it's login
                             $location.path($rootScope.locationHistory[$rootScope.locationHistory.length - 2]);
                         })
                         .error(function (response) {
