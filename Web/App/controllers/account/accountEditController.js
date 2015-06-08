@@ -32,17 +32,8 @@
 
             userService.getUserInfo()
                 .then(function (userInfo) {
-                    if (userInfo === null) {
-                        return;
-                    }
 
-                    userService.getUser(userInfo.Id)
-                        .then(function (data) {
-                            vm.user = data;
-                        })
-                        .catch(function (error) {
-                            // TODO User-friendly message?
-                        });
+                    vm.user = userInfo;
 
                 }, function () {
                     // TODO Error?

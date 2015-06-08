@@ -39,16 +39,16 @@
                     // Prepare the query
                     var query = null;
 
-                    // Is authorized, no, then get only the public data, yes, then get include user's own records
-                    if (userInfo === null) {
+                    // Is authorized? No, then get only the public data, yes, then get include user's own records
+                    if (userInfo.Id > 0) {
                         query = breeze.EntityQuery
                             .from('ResourcePool')
-                            .expand('ElementSet.ElementFieldSet, ElementSet.ElementItemSet.ElementCellSet')
+                            .expand('UserResourcePoolSet, ElementSet.ElementFieldSet.UserElementFieldSet, ElementSet.ElementItemSet.ElementCellSet.UserElementCellSet')
                             .where('Id', 'eq', resourcePoolId);
                     } else {
                         query = breeze.EntityQuery
                             .from('ResourcePool')
-                            .expand('UserResourcePoolSet, ElementSet.ElementFieldSet.UserElementFieldSet, ElementSet.ElementItemSet.ElementCellSet.UserElementCellSet')
+                            .expand('ElementSet.ElementFieldSet, ElementSet.ElementItemSet.ElementCellSet')
                             .where('Id', 'eq', resourcePoolId);
                     }
 

@@ -19,7 +19,7 @@
 		// Logger
 		logger = logger.forSource(serviceId);
 
-        // To determine whether the data will be fecthed from server or local
+        // To determine whether the data will be fetched from server or local
         var minimumDate = new Date(0);
         var fetchedOn = minimumDate;
 
@@ -80,11 +80,11 @@
 
             // Prepare the query
             if (fetchFromServer) { // From remote
-                query = query.using(breeze.FetchStrategy.FromServer)
+                query = query.using(breeze.FetchStrategy.FromServer);
                 fetchedOn = new Date();
             }
             else { // From local
-                query = query.using(breeze.FetchStrategy.FromLocalCache)
+                query = query.using(breeze.FetchStrategy.FromLocalCache);
             }
 
             return dataContext.executeQuery(query)

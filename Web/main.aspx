@@ -43,17 +43,17 @@
                             <li><a href="/content/technologies">Technologies</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown hide" data-ng-show="vm.userInfo !== null">
+                    <li class="dropdown hide" data-ng-show="vm.userInfo.Id > 0">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown">Manage <b class="caret"></b></a>
                         <!-- Manage Menu - Generated -->
                         <script src="/App/includes/manageMenu.js?v=027"></script>
                     </li>
-                    <li class="dropdown" data-ng-show="vm.userInfo !== null">
+                    <li class="dropdown" data-ng-show="vm.userInfo.Id > 0 || true">
                         <a href="/manage/custom/resourcePool">CMRP</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown" data-ng-if="vm.userInfo !== null">
+                    <li class="dropdown" data-ng-if="vm.userInfo.Id > 0">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown"><span data-ng-bind="'User: ' + vm.userInfo.Email"></span> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="/account/accountEdit">Edit</a></li>
@@ -61,7 +61,7 @@
                             <li><a href="" data-ng-click="vm.logout()">Logout</a></li>
                         </ul>
                     </li>
-                    <li data-ng-if="vm.userInfo === null">
+                    <li data-ng-if="vm.userInfo.Id <= 0">
                         <div class="navbar-text nofloat">
                             <a href="/account/register">Register</a>
                             &nbsp;
@@ -109,7 +109,7 @@
     <script src="/App/main.js?v=022"></script>
     <script src="/App/logger.js?v=022"></script>
     <script src="/App/route.js?v=029"></script>
-    <script src="/App/authorization.js?v=022"></script>
+    <script src="/App/authorization.js?v=029"></script>
 
     <!-- Entities -->
     <script src="/App/entities/resourcePool.js?v=028"></script>
@@ -126,28 +126,28 @@
     <script src="/App/services/mainService.js?v=022"></script>
 
     <!-- Manage Scripts - Generated (Services, Controllers) -->
-    <script src="/App/includes/manageScripts.js?v=027"></script>
+    <script src="/App/includes/manageScripts.js?v=029"></script>
 
     <!-- Service extensions -->
-    <script src="/App/services/userService.js?v=028"></script>
-    <script src="/App/services/resourcePoolService.js?v=027"></script>
+    <script src="/App/services/userService.js?v=029"></script>
+    <script src="/App/services/resourcePoolService.js?v=029"></script>
 
     <!-- Content -->
-    <script src="/App/controllers/content/mainController.js?v=028"></script>
-    <script src="/App/controllers/content/introductionController.js?v=027"></script>
-    <script src="/App/controllers/content/basicsController.js?v=027"></script>
-    <script src="/App/controllers/content/sectorIndexSampleController.js?v=022"></script>
-    <script src="/App/controllers/content/knowledgeIndexSampleController.js?v=022"></script>
-    <script src="/App/controllers/content/totalCostIndexSampleController.js?v=022"></script>
-    <script src="/App/controllers/content/fairShareIndexSampleController.js?v=022"></script>
-    <script src="/App/controllers/content/indexesPieSampleController.js?v=022"></script>
-    <script src="/App/controllers/content/resourcePoolRateSampleController.js?v=022"></script>
+    <script src="/App/controllers/content/mainController.js?v=029"></script>
+    <script src="/App/controllers/content/introductionController.js?v=029"></script>
+    <script src="/App/controllers/content/basicsController.js?v=029"></script>
+    <script src="/App/controllers/content/sectorIndexSampleController.js?v=029"></script>
+    <script src="/App/controllers/content/knowledgeIndexSampleController.js?v=029"></script>
+    <script src="/App/controllers/content/totalCostIndexSampleController.js?v=029"></script>
+    <script src="/App/controllers/content/fairShareIndexSampleController.js?v=029"></script>
+    <script src="/App/controllers/content/indexesPieSampleController.js?v=029"></script>
+    <script src="/App/controllers/content/resourcePoolRateSampleController.js?v=029"></script>
     <script src="/App/controllers/content/closingNotesController.js?v=026"></script>
 
     <!-- Account -->
     <script src="/App/controllers/account/loginController.js?v=022"></script>
     <script src="/App/controllers/account/registerController.js?v=029"></script>
-    <script src="/App/controllers/account/accountEditController.js?v=022"></script>
+    <script src="/App/controllers/account/accountEditController.js?v=029"></script>
     <script src="/App/controllers/account/changePasswordController.js?v=022"></script>
 
     <!-- Manage Scripts - Custom -->

@@ -78,11 +78,7 @@
         // Logged in?
         userService.getUserInfo()
             .then(function (userInfo) {
-                if (userInfo === null) {
-                    return;
-                }
-
-                vm.isAuthenticated = true;
+                vm.isAuthenticated = userInfo.Id > 0;
             })
             .catch(function (error) {
 

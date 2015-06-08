@@ -20,11 +20,7 @@
         // Logged in?
         userService.getUserInfo()
             .then(function (userInfo) {
-                if (userInfo === null) {
-                    return;
-                }
-
-                vm.isAuthenticated = true;
+                vm.isAuthenticated = userInfo.Id > 0;
 
                 increaseMultiplierTimeoutInitial = $timeout(increaseMultiplier, 5000);
             })
@@ -42,9 +38,6 @@
 
         function increaseMultiplier() {
 
-            if (!vm.isAuthenticated)
-                return;
-
             // Call the service to increase the multiplier
             resourcePoolService.getResourcePoolExpanded(vm.introduction_UPOResourcePoolId)
                 .then(function (resourcePoolSet) {
@@ -55,15 +48,9 @@
 
                     var resourcePool = resourcePoolSet[0];
                     for (var i = 0; i < resourcePool.ElementSet.length; i++) {
+
                         var element = resourcePool.ElementSet[i];
-                        var updated = userService.updateElementMultiplier(element, 'increase');
-
-                        if (updated) {
-
-                            // Don't save these changes, not that important, if there will be another save operation, they can go together?
-                            // resourcePoolService.saveChanges(1000);
-
-                        }
+                        userService.updateElementMultiplier(element, 'increase');
                     }
                 });
 

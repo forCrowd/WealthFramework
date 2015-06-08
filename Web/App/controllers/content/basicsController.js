@@ -15,11 +15,7 @@
         // Logged in?
         userService.getUserInfo()
             .then(function (userInfo) {
-                if (userInfo === null) {
-                    return;
-                }
-
-                vm.isAuthenticated = true;
+                vm.isAuthenticated = userInfo.Id > 0;
             })
             .catch(function (error) {
 
@@ -41,10 +37,6 @@
 
         function updateOppositeResourcePool(event, element) {
 
-            if (!vm.isAuthenticated) {
-                return;
-            }
-
             if (element.ResourcePool.Id === vm.basics_ExistingModelResourcePoolId
                 || element.ResourcePool.Id === vm.basics_NewModelResourcePoolId) {
 
@@ -60,12 +52,12 @@
 
                         var result = false;
                         switch (event.name) {
-                            case 'resourcePoolEditor_elementMultiplierIncreased': { result = userService.updateElementMultiplier(resourcePool.MainElement, 'increase'); break; }
-                            case 'resourcePoolEditor_elementMultiplierDecreased': { result = userService.updateElementMultiplier(resourcePool.MainElement, 'decrease'); break; }
-                            case 'resourcePoolEditor_elementMultiplierReset': { result = userService.updateElementMultiplier(resourcePool.MainElement, 'reset'); break; }
+                            case 'resourcePoolEditor_elementMultiplierIncreased': { userService.updateElementMultiplier(resourcePool.MainElement, 'increase'); break; }
+                            case 'resourcePoolEditor_elementMultiplierDecreased': { userService.updateElementMultiplier(resourcePool.MainElement, 'decrease'); break; }
+                            case 'resourcePoolEditor_elementMultiplierReset': { userService.updateElementMultiplier(resourcePool.MainElement, 'reset'); break; }
                         }
 
-                        if (result) {
+                        if (vm.isAuthenticated) {
                             resourcePoolService.saveChanges(1500);
                         }
                     });

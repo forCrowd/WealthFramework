@@ -82,7 +82,7 @@
                 ? params.key
                 : 'home'; // Default view
 
-            return '/App/views/content/' + key + '.html?v=028';
+            return '/App/views/content/' + key + '.html?v=029';
         }
     }
 
@@ -99,7 +99,7 @@
             // Navigate the authenticated user to home page, in case they try to go login or register
             userService.getUserInfo()
                 .then(function (userInfo) {
-                    var isAuthenticated = userInfo !== null;
+                    var isAuthenticated = userInfo.Id > 0;
                     if (isAuthenticated && ($location.path() === '/account/login' || $location.path() === '/account/register')) {
                         $location.path('/');
                     }

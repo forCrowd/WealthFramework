@@ -24,40 +24,20 @@
             scope.isAuthenticated = false;
             scope.errorMessage = '';
 
+            initChart();
+            
             // User logged in & out
             $rootScope.$on('userLoggedIn', function () {
                 scope.isAuthenticated = true;
             });
             $rootScope.$on('userLoggedOut', function () {
-                scope.isAuthenticated = false;
-            });
 
-            scope.chartConfig = {
-                loading: true,
-                title: { text: '' },
-                options: {
-                    plotOptions: {
-                        column: {
-                            allowPointSelect: true,
-                            pointWidth: 15
-                        },
-                        pie: {
-                            allowPointSelect: true,
-                            cursor: 'pointer',
-                            dataLabels: {
-                                enabled: false
-                            },
-                            showInLegend: true
-                        }
-                    },
-                    xAxis: { categories: [''] },
-                    yAxis: {
-                        allowDecimals: false,
-                        min: 0
-                    }
-                },
-                size: {}
-            };
+                scope.isAuthenticated = false;
+
+                initChart();
+                getResourcePool();
+
+            });
 
             scope.changeCurrentElement = function (element) {
                 scope.resourcePool.currentElement = element;
@@ -74,64 +54,88 @@
             scope.increaseElementMultiplier = function (element) {
                 userService.updateElementMultiplier(element, 'increase');
                 $rootScope.$broadcast('resourcePoolEditor_elementMultiplierIncreased', element);
-                saveChanges();
+                if (scope.isAuthenticated) {
+                    saveChanges();
+                }
             }
 
             scope.decreaseElementMultiplier = function (element) {
                 userService.updateElementMultiplier(element, 'decrease');
                 $rootScope.$broadcast('resourcePoolEditor_elementMultiplierDecreased', element);
-                saveChanges();
+                if (scope.isAuthenticated) {
+                    saveChanges();
+                }
             }
 
             scope.resetElementMultiplier = function (element) {
                 userService.updateElementMultiplier(element, 'reset');
                 $rootScope.$broadcast('resourcePoolEditor_elementMultiplierReset', element);
-                saveChanges();
+                if (scope.isAuthenticated) {
+                    saveChanges();
+                }
             }
 
             scope.increaseElementCellNumericValue = function (cell) {
                 userService.updateElementCellNumericValue(cell, 'increase');
-                saveChanges();
+                if (scope.isAuthenticated) {
+                    saveChanges();
+                }
             }
 
             scope.decreaseElementCellNumericValue = function (cell) {
                 userService.updateElementCellNumericValue(cell, 'decrease');
-                saveChanges();
+                if (scope.isAuthenticated) {
+                    saveChanges();
+                }
             }
 
             scope.resetElementCellNumericValue = function (cell) {
                 userService.updateElementCellNumericValue(cell, 'reset');
-                saveChanges();
+                if (scope.isAuthenticated) {
+                    saveChanges();
+                }
             }
 
             scope.increaseIndexRating = function (field) {
                 userService.updateElementFieldIndexRating(field, 'increase');
-                saveChanges();
+                if (scope.isAuthenticated) {
+                    saveChanges();
+                }
             }
 
             scope.decreaseIndexRating = function (field) {
                 userService.updateElementFieldIndexRating(field, 'decrease');
-                saveChanges();
+                if (scope.isAuthenticated) {
+                    saveChanges();
+                }
             }
 
             scope.resetIndexRating = function (field) {
                 userService.updateElementFieldIndexRating(field, 'reset');
-                saveChanges();
+                if (scope.isAuthenticated) {
+                    saveChanges();
+                }
             }
 
             scope.increaseResourcePoolRate = function () {
                 userService.updateResourcePoolRate(scope.resourcePool, 'increase');
-                saveChanges();
+                if (scope.isAuthenticated) {
+                    saveChanges();
+                }
             }
 
             scope.decreaseResourcePoolRate = function () {
                 userService.updateResourcePoolRate(scope.resourcePool, 'decrease');
-                saveChanges();
+                if (scope.isAuthenticated) {
+                    saveChanges();
+                }
             }
 
             scope.resetResourcePoolRate = function () {
                 userService.updateResourcePoolRate(scope.resourcePool, 'reset');
-                saveChanges();
+                if (scope.isAuthenticated) {
+                    saveChanges();
+                }
             }
 
             // Resource pool id: Get the current resource pool
@@ -140,6 +144,35 @@
                 getResourcePool();
 
             }, true);
+
+            function initChart() {
+
+                scope.chartConfig = {
+                    title: { text: '' },
+                    options: {
+                        plotOptions: {
+                            column: {
+                                allowPointSelect: true,
+                                pointWidth: 15
+                            },
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: false
+                                },
+                                showInLegend: true
+                            }
+                        },
+                        xAxis: { categories: [''] },
+                        yAxis: {
+                            allowDecimals: false,
+                            min: 0
+                        }
+                    },
+                    size: {}
+                };
+            }
 
             function getResourcePool() {
 
@@ -156,9 +189,9 @@
                 userService.getUserInfo()
                     .then(function (userInfo) {
 
-                        if (userInfo !== null) {
-                            scope.isAuthenticated = true;
-                        }
+                        scope.isAuthenticated = userInfo.Id > 0;
+
+                        scope.chartConfig.loading = true;
 
                         resourcePoolService.getResourcePoolExpanded(scope.resourcePoolId)
                                 .then(loadResourcePool)

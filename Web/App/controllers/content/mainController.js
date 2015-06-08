@@ -49,7 +49,7 @@
 
             // User logged out
             $rootScope.$on('userLoggedOut', function () {
-                vm.userInfo = null;
+                vm.userInfo = { Id: 0 };
             });
         };
 
@@ -65,10 +65,6 @@
         function getUserInfo() {
             userService.getUserInfo()
                 .then(function (userInfo) {
-                    if (userInfo === null) {
-                        return;
-                    }
-
                     vm.userInfo = userInfo;
                 }, function () {
                     // TODO Error?

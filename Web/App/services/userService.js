@@ -12,12 +12,19 @@
         logger = logger.forSource(serviceId);
 
         var accessTokenUrl = '/api/Token';
-        var changePasswordUrl = '/api/Account/ChangePassword';
+        var changePasswordUrl = '/api/Account/-ChangePassword';
         var logoutUrl = '/api/Account/Logout';
         var registerUrl = '/api/Account/Register';
         var userInfoUrl = '/api/Account/UserInfo';
-        var userInfo = null;
-        var userInfoFetched = false;
+        //var userInfo = { Id: 0 };
+
+        // var user = { Id: 0, Email: '', UserName: '' };
+        //user = { Id: 0, Email: '' };
+        //dataContext.createEntity('User', user);
+
+        // var user = null;
+
+        //var userInfoFetched = false;
 
         // Service methods
         $delegate.changePassword = changePassword;
@@ -30,6 +37,15 @@
         $delegate.updateElementCellNumericValue = updateElementCellNumericValue;
         $delegate.updateElementFieldIndexRating = updateElementFieldIndexRating;
         $delegate.updateResourcePoolRate = updateResourcePoolRate;
+
+        var user = null;
+        var getUserPromise = null;
+        //var user = { Id: 0, Email: '', UserName: '' };
+        //dataContext.createEntity('User', {})
+        //    .then(function (newUser) {
+        //        user = newUser;
+        //        logger.log('newUser', user, false);
+        //    });
 
         return $delegate;
 
@@ -48,13 +64,12 @@
                     // Set access token to the session
                     $window.localStorage.setItem('access_token', data.access_token);
 
-                    // Clear userInfo
-                    userInfo = null;
-                    userInfoFetched = false;
+                    // Clear user promise
+                    getUserPromise = null;
 
                     // Get the updated userInfo
                     getUserInfo()
-                        .then(function () {
+                        .then(function (user) {
 
                             // Raise logged in event
                             $rootScope.$broadcast('userLoggedIn');
@@ -64,43 +79,59 @@
         }
 
         function getUserInfo() {
+
             var deferred = $q.defer();
 
-            if (userInfoFetched) {
-                deferred.resolve(userInfo);
+            if (getUserPromise === null) {
+                getUserPromise = deferred.promise;
 
-            } else {
-                $http.get(userInfoUrl)
-                    .success(function (data) {
-                        // A temp fix for WebApi returns 'null' (as string), instead of null
-                        // TODO Find a permanent fix!
-                        if (data === 'null') {
-                            data = null;
-                        }
+                var query = breeze.EntityQuery
+                    .from('Users')
+                    .using(breeze.FetchStrategy.FromServer);
 
-                        userInfo = data;
-
-                        deferred.resolve(userInfo);
-                    })
-                    .error(function (data, status, headers, config) {
-                        userInfo = null;
-
-                        // TODO
-                        // If it returns Unauthorized (status === 401), then it's not logged in yet and it's okay, no need to show an error
-                        // It's something else, server may not be unreachle or internal error? Just say 'Something went wrong'?
-                        deferred.reject({ data: data, status: status, headers: headers, config: config });
-                    })
-                    .finally(function () {
-                        userInfoFetched = true;
-
-                    });
+                dataContext.executeQuery(query)
+                    .then(success)
+                    .catch(failed);
             }
 
-            return deferred.promise;
+            return getUserPromise;
+
+            function success(response) {
+
+                if (response.results.length > 0) {
+                    user = response.results[0];
+                    deferred.resolve(user);
+
+                } else {
+                    dataContext.createEntity('User', {})
+                            .then(function (newUser) {
+                                user = newUser;
+                                deferred.resolve(user);
+                            })
+                    .catch(function () {
+                        deferred.reject();
+                    });
+                }
+            }
+
+            function failed(error) {
+                var message = error.message || 'User query failed';
+                deferred.reject(message);
+            }
         }
 
         function register(registerBindingModel) {
             return $http.post(registerUrl, registerBindingModel)
+                .success(function (newUser) {
+
+                    // breeze context user entity fix-up!
+                    // TODO Try to make this part better, use OData method?
+                    user.Id = newUser.Id;
+                    user.Email = newUser.Email;
+                    user.UserName = newUser.UserName;
+                    user.entityAspect.acceptChanges();
+
+                })
                 .error(function (data, status, headers, config) {
 
                     // TODO
@@ -119,14 +150,13 @@
                     // Remove access token from the session
                     $window.localStorage.removeItem('access_token');
 
-                    // Clear userInfo
-                    userInfo = null;
-                    userInfoFetched = false;
+                    // Clear user promise
+                    getUserPromise = null;
 
                     // Clear breeze's metadata store
                     dataContext.clear();
 
-                    // Raise logged outevent
+                    // Raise logged out event
                     $rootScope.$broadcast('userLoggedOut');
                 })
                 .error(function (data, status, headers, config) {
@@ -146,10 +176,6 @@
 
         function updateElementMultiplier(element, updateType) {
 
-            // Validate
-            if (element.multiplierField() === null)
-                return false;
-
             // Find user element cell
             for (var i = 0; i < element.ElementItemSet.length; i++) {
 
@@ -162,8 +188,8 @@
                         // If there is no item, create it
                         if (userCell === null) {
                             userCell = {
-                                UserId: userInfo.Id,
-                                ElementCellId: elementCell.Id,
+                                User: user,
+                                ElementCell: elementCell,
                                 DecimalValue: 1
                             };
 
@@ -220,8 +246,8 @@
                     // If there is no item, create it
                     if (userCell === null) {
                         userCell = {
-                            UserId: userInfo.Id,
-                            ElementCellId: elementCell.Id,
+                            User: user,
+                            ElementCell: elementCell,
                             DecimalValue: 55
                         };
 
@@ -245,8 +271,8 @@
                     // If there is no item, create it
                     if (userCell === null) {
                         userCell = {
-                            UserId: userInfo.Id,
-                            ElementCellId: elementCell.Id,
+                            User: user,
+                            ElementCell: elementCell,
                             DecimalValue: 45
                         };
 
@@ -293,8 +319,8 @@
                     // If there is no item, create it
                     if (userElementField === null) {
                         userElementField = {
-                            UserId: userInfo.Id,
-                            ElementFieldId: elementField.Id,
+                            User: user,
+                            ElementField: elementField,
                             Rating: 55
                         };
 
@@ -318,8 +344,8 @@
                     // If there is no item, create it
                     if (userElementField === null) {
                         userElementField = {
-                            UserId: userInfo.Id,
-                            ElementFieldId: elementField.Id,
+                            User: user,
+                            ElementField: elementField,
                             Rating: 45
                         };
 
@@ -366,8 +392,8 @@
                     // If there is no item, create it
                     if (userResourcePool === null) {
                         userResourcePool = {
-                            UserId: userInfo.Id,
-                            ResourcePoolId: resourcePool.Id,
+                            User: user,
+                            ResourcePool: resourcePool,
                             ResourcePoolRate: 15
                         };
 
@@ -391,8 +417,8 @@
                     // If there is no item, create
                     if (userResourcePool === null) {
                         userResourcePool = {
-                            UserId: userInfo.Id,
-                            ResourcePoolId: resourcePool.Id,
+                            User: user,
+                            ResourcePool: resourcePool,
                             ResourcePoolRate: 5
                         };
 

@@ -31,8 +31,7 @@
             request: function (request, success, error) {
                 request.headers = request.headers || {};
                 var access_token = $window.localStorage.getItem('access_token');
-                if (access_token !== null)
-                    request.headers.Authorization = 'Bearer ' + access_token;
+                request.headers.Authorization = access_token !== null ? 'Bearer ' + access_token : '';
                 return oldClient.request(request, success, error);
             }
         };
@@ -49,8 +48,7 @@
             request: function (config) {
                 config.headers = config.headers || {};
                 var access_token = $window.localStorage.getItem('access_token');
-                if (access_token !== null)
-                    config.headers.Authorization = 'Bearer ' + access_token;
+                config.headers.Authorization = access_token !== null ? 'Bearer ' + access_token : '';
                 return config;
             },
             response: function (response) {

@@ -7,20 +7,27 @@ namespace forCrowd.WealthEconomy.Web.Controllers.OData
     using System.Web.Http;
     using System.Web.Http.OData;
     using forCrowd.WealthEconomy.Web.Controllers.Extensions;
+    using System.Collections.Generic;
 
     public partial class UsersController
     {
         // GET odata/User
+        [AllowAnonymous]
         public override IQueryable<User> Get()
         {
-            var list = base.Get();
+            IQueryable<User> list = new HashSet<User>().AsQueryable();
 
-            // Only admin can get all
             var userId = this.GetCurrentUserId();
-            var isAdmin = this.GetCurrentUserIsAdmin();
-            if (userId.HasValue && !isAdmin)
-                list = list.Where(item => item.Id == userId.Value);
+            if (userId.HasValue) {
+                
+                list = base.Get();
 
+                // Only admin can get all
+                var isAdmin = this.GetCurrentUserIsAdmin();
+                if (!isAdmin)
+                    list = list.Where(item => item.Id == userId.Value);
+            }
+            
             return list;
         }
 
