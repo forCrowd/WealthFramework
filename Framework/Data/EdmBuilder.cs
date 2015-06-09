@@ -145,6 +145,8 @@ namespace Microsoft.Data.Edm
                 // This way of adding new properties actually work, but these properties are not necessary anymore
                 // So keep them as a sample
                 var edmx = System.Xml.Linq.XDocument.Load(stream);
+                RemoveProperty(edmx, "User", "SecurityStamp");
+                RemoveProperty(edmx, "User", "PasswordHash");
                 //AddReadonlyProperty(edmx, "ResourcePool", "OtherUsersResourcePoolRateTotal", "Decimal", true);
                 //AddReadonlyProperty(edmx, "ResourcePool", "OtherUsersResourcePoolRateCount", "Int32", false);
                 //AddReadonlyProperty(edmx, "ElementField", "OtherUsersIndexRatingTotal", "Decimal", true);
@@ -188,6 +190,20 @@ namespace Microsoft.Data.Edm
             if (!nullable)
                 property.Add(new XAttribute("Nullable", "false"));
             element.Add(property);
+        }
+
+        static void RemoveProperty(XDocument edmx, string entityName, string propertyName)
+        {
+            var entities = edmx
+                .Root
+                .Elements().First()
+                .Elements().First()
+                .Elements().First()
+                .Elements();
+
+            var element = entities.Single(item => item.Attributes().Any(attr => attr.Name == "Name" && attr.Value == entityName));
+            var property = element.Elements().Single(item => item.Attributes().Any(attr => attr.Name == "Name" && attr.Value == propertyName));
+            property.Remove();
         }
 
         /// <summary>
