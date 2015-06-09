@@ -24,19 +24,23 @@
             scope.isAuthenticated = false;
             scope.errorMessage = '';
 
-            initChart();
-            
-            // User logged in & out
-            $rootScope.$on('userLoggedIn', function () {
-                scope.isAuthenticated = true;
-            });
-            $rootScope.$on('userLoggedOut', function () {
-
-                scope.isAuthenticated = false;
-
-                initChart();
+            // Resource pool id: Get the current resource pool
+            scope.$watch('resourcePoolId', function () {
                 getResourcePool();
+            }, true);
 
+            // Chart height
+            scope.$watch('chartHeight', function () {
+                scope.chartConfig.size.height = scope.chartHeight;
+            }, true);
+
+            // User logged in & out
+            scope.$on('userLoggedIn', function () {
+                getResourcePool();
+            });
+
+            scope.$on('userLoggedOut', function () {
+                getResourcePool();
             });
 
             scope.changeCurrentElement = function (element) {
@@ -138,16 +142,10 @@
                 }
             }
 
-            // Resource pool id: Get the current resource pool
-            scope.$watch('resourcePoolId', function () {
-
-                getResourcePool();
-
-            }, true);
-
             function initChart() {
 
                 scope.chartConfig = {
+                    loading: true,
                     title: { text: '' },
                     options: {
                         plotOptions: {
@@ -179,6 +177,9 @@
                 // Clear previous error messages
                 scope.errorMessage = '';
 
+                // Initialize the chart
+                initChart();
+
                 // Validate
                 if (typeof scope.resourcePoolId === 'undefined') {
                     scope.errorMessage = 'Undefined CMRP Id';
@@ -190,8 +191,6 @@
                     .then(function (userInfo) {
 
                         scope.isAuthenticated = userInfo.Id > 0;
-
-                        scope.chartConfig.loading = true;
 
                         resourcePoolService.getResourcePoolExpanded(scope.resourcePoolId)
                                 .then(loadResourcePool)
@@ -222,11 +221,6 @@
                 }
             }
 
-            // Chart height
-            scope.$watch('chartHeight', function () {
-                scope.chartConfig.size.height = scope.chartHeight;
-            }, true);
-
             function loadChartData() {
 
                 // Current element
@@ -237,7 +231,6 @@
                     return;
                 }
 
-                //scope.chartConfig.loading = true;
                 scope.chartConfig.title = { text: element.Name };
                 scope.chartConfig.series = [];
 
@@ -291,8 +284,6 @@
                         scope.chartConfig.series = [{ data: chartData }];
                     }
                 }
-
-                //scope.chartConfig.loading = false;
             }
 
             function saveChanges() {

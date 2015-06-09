@@ -12,7 +12,7 @@
         vm.getAccessToken = getAccessToken;
 
         function getAccessToken() {
-            userService.getAccessToken(vm.email, vm.password)
+            userService.getAccessToken(vm.email, vm.password, true)
                 .success(function () {
                     $location.path($rootScope.locationHistory[$rootScope.locationHistory.length - 2]);
                 })

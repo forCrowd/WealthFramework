@@ -20,7 +20,8 @@
             var day = now.getDate();
             var hour = now.getHours();
             var minute = now.getMinutes();
-            var email = 'local_' + year + month + day + '_' + hour + minute + '@forcrowd.org';
+            var second = now.getSeconds();
+            var email = 'local_' + year + month + day + '_' + hour + minute + second + '@forcrowd.org';
 
             vm.email = email;
             vm.password = 'q1w2e3';
@@ -35,14 +36,16 @@
 
                     logger.logSuccess('You have been registered!', null, true);
 
-                    userService.getAccessToken(vm.email, vm.password)
+                    userService.getAccessToken(vm.email, vm.password, false)
                         .success(function () {
 
                             // Save changes
-                            userService.saveChanges();
+                            userService.saveChanges()
+                                .then(function () {
 
-                            // Redirect the user to the previous page, except if it's login
-                            $location.path($rootScope.locationHistory[$rootScope.locationHistory.length - 2]);
+                                    // Redirect the user to the previous page, except if it's login
+                                    $location.path($rootScope.locationHistory[$rootScope.locationHistory.length - 2]);
+                                });
                         })
                         .error(function (response) {
                             if (typeof response.error_description !== 'undefined') {

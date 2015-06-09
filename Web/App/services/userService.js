@@ -55,7 +55,7 @@
             return $http.post(changePasswordUrl, changePasswordBindingModel)
         }
 
-        function getAccessToken(email, password) {
+        function getAccessToken(email, password, resetDataContext) {
             var accessTokenData = 'grant_type=password&username=' + email + '&password=' + password;
 
             return $http.post(accessTokenUrl, accessTokenData, { 'Content-Type': 'application/x-www-form-urlencoded' })
@@ -66,6 +66,11 @@
 
                     // Clear user promise
                     getUserPromise = null;
+
+                    // Clear breeze's metadata store
+                    if (resetDataContext) {
+                        dataContext.clear();
+                    }
 
                     // Get the updated userInfo
                     getUserInfo()

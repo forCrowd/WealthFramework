@@ -145,7 +145,7 @@
     <script src="/App/controllers/content/closingNotesController.js?v=026"></script>
 
     <!-- Account -->
-    <script src="/App/controllers/account/loginController.js?v=022"></script>
+    <script src="/App/controllers/account/loginController.js?v=029"></script>
     <script src="/App/controllers/account/registerController.js?v=029"></script>
     <script src="/App/controllers/account/accountEditController.js?v=029"></script>
     <script src="/App/controllers/account/changePasswordController.js?v=022"></script>
