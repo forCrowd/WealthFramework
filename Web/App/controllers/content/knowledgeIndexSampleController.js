@@ -76,9 +76,9 @@
         };
 
         // Logged in?
-        userService.getUserInfo()
-            .then(function (userInfo) {
-                vm.isAuthenticated = userInfo.Id > 0;
+        userService.getCurrentUser()
+            .then(function (currentUser) {
+                vm.isAuthenticated = currentUser.Id > 0;
             })
             .catch(function (error) {
 

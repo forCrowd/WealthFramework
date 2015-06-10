@@ -33,14 +33,14 @@
 
         function getResourcePoolExpanded(resourcePoolId) {
 
-            return userService.getUserInfo()
-                .then(function (userInfo) {
+            return userService.getCurrentUser()
+                .then(function (currentUser) {
 
                     // Prepare the query
                     var query = null;
 
                     // Is authorized? No, then get only the public data, yes, then get include user's own records
-                    if (userInfo.Id > 0) {
+                    if (currentUser.Id > 0) {
                         query = breeze.EntityQuery
                             .from('ResourcePool')
                             .expand('UserResourcePoolSet, ElementSet.ElementFieldSet.UserElementFieldSet, ElementSet.ElementItemSet.ElementCellSet.UserElementCellSet')

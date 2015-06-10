@@ -187,10 +187,10 @@
                     return;
                 }
 
-                userService.getUserInfo()
-                    .then(function (userInfo) {
+                userService.getCurrentUser()
+                    .then(function (currentUser) {
 
-                        scope.isAuthenticated = userInfo.Id > 0;
+                        scope.isAuthenticated = currentUser.Id > 0;
 
                         resourcePoolService.getResourcePoolExpanded(scope.resourcePoolId)
                                 .then(loadResourcePool)

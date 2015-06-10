@@ -34,22 +34,22 @@
         vm.applicationInfo = null;
         vm.currentDate = new Date();
         vm.logout = logout;
-        vm.userInfo = null;
+        vm.currentUser = null;
 
         initialize();
 
         function initialize() {
             getApplicationInfo();
-            getUserInfo();
+            getCurrentUser();
 
             // User logged in
             $rootScope.$on('userLoggedIn', function () {
-                getUserInfo();
+                getCurrentUser();
             });
 
             // User logged out
             $rootScope.$on('userLoggedOut', function () {
-                vm.userInfo = { Id: 0 };
+                vm.currentUser = { Id: 0 };
             });
         };
 
@@ -62,10 +62,10 @@
                 });
         }
 
-        function getUserInfo() {
-            userService.getUserInfo()
-                .then(function (userInfo) {
-                    vm.userInfo = userInfo;
+        function getCurrentUser() {
+            userService.getCurrentUser()
+                .then(function (currentUser) {
+                    vm.currentUser = currentUser;
                 }, function () {
                     // TODO Error?
                 });

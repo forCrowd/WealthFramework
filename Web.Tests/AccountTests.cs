@@ -33,7 +33,7 @@ namespace forCrowd.WealthEconomy.Web.Tests
             Console.WriteLine("");
 
             Console.WriteLine("Getting User Info:");
-            Console.WriteLine(GetUserInfo(token["access_token"]));
+            Console.WriteLine(GetCurrentUser(token["access_token"]));
         }
 
         string Register(string email, string password)
@@ -95,7 +95,8 @@ namespace forCrowd.WealthEconomy.Web.Tests
             }
         }
 
-        static string GetUserInfo(string token)
+        [Obsolete("Account UserInfo is not in use anymore")]
+        static string GetCurrentUser(string token)
         {
             using (var client = new HttpClient())
             {

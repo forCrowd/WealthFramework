@@ -15,21 +15,11 @@
         var changePasswordUrl = '/api/Account/ChangePassword';
         var logoutUrl = '/api/Account/Logout';
         var registerUrl = '/api/Account/Register';
-        var userInfoUrl = '/api/Account/UserInfo';
-        //var userInfo = { Id: 0 };
-
-        // var user = { Id: 0, Email: '', UserName: '' };
-        //user = { Id: 0, Email: '' };
-        //dataContext.createEntity('User', user);
-
-        // var user = null;
-
-        //var userInfoFetched = false;
 
         // Service methods
         $delegate.changePassword = changePassword;
         $delegate.getAccessToken = getAccessToken;
-        $delegate.getUserInfo = getUserInfo;
+        $delegate.getCurrentUser = getCurrentUser;
         $delegate.logout = logout;
         $delegate.register = register;
 
@@ -72,8 +62,8 @@
                         dataContext.clear();
                     }
 
-                    // Get the updated userInfo
-                    getUserInfo()
+                    // Get current user
+                    getCurrentUser()
                         .then(function (user) {
 
                             // Raise logged in event
@@ -83,7 +73,7 @@
                 })
         }
 
-        function getUserInfo() {
+        function getCurrentUser() {
 
             var deferred = $q.defer();
 

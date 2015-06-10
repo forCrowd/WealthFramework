@@ -97,9 +97,9 @@
         $rootScope.$on('$routeChangeStart', function (event, next, current) {
 
             // Navigate the authenticated user to home page, in case they try to go login or register
-            userService.getUserInfo()
-                .then(function (userInfo) {
-                    var isAuthenticated = userInfo.Id > 0;
+            userService.getCurrentUser()
+                .then(function (currentUser) {
+                    var isAuthenticated = currentUser.Id > 0;
                     if (isAuthenticated && ($location.path() === '/account/login' || $location.path() === '/account/register')) {
                         $location.path('/');
                     }

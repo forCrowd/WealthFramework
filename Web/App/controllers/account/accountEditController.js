@@ -30,10 +30,10 @@
 
         function initialize() {
 
-            userService.getUserInfo()
-                .then(function (userInfo) {
+            userService.getCurrentUser()
+                .then(function (currentUser) {
 
-                    vm.user = userInfo;
+                    vm.user = currentUser;
 
                 }, function () {
                     // TODO Error?
