@@ -76,8 +76,7 @@
             ]
         };
 
-        var timeoutInitial = $timeout(refreshPage, 10000);
-        var timeoutRecursive = null;
+        var timeout = $timeout(refreshPage, 10000);
 
         function refreshPage() {
 
@@ -85,7 +84,7 @@
             vm.oldModelChartConfig.series[organizationIndex].data[0] += 1;
             vm.newModelChartConfig.series[0].data[0] += 1;
 
-            timeoutRecursive = $timeout(refreshPage, 1000);
+            timeout = $timeout(refreshPage, 1000);
         }
 
         // When the DOM element is removed from the page,
@@ -93,8 +92,7 @@
         // the scope. This gives us a chance to cancel any
         // pending timer that we may have.
         $scope.$on("$destroy", function (event) {
-            $timeout.cancel(timeoutInitial);
-            $timeout.cancel(timeoutRecursive);
+            $timeout.cancel(timeout);
         });
     };
 })();

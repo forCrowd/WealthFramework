@@ -3,9 +3,9 @@
 
     var controllerId = 'mainController';
     angular.module('main')
-        .controller(controllerId, ['mainService', 'userService', '$rootScope', '$location', '$window', 'logger', mainController]);
+        .controller(controllerId, ['mainService', 'userService', '$scope', '$location', '$window', 'logger', mainController]);
 
-    function mainController(mainService, userService, $rootScope, $location, $window, logger) {
+    function mainController(mainService, userService, $scope, $location, $window, logger) {
 
         // Logger
         logger = logger.forSource(controllerId);
@@ -32,7 +32,7 @@
             });
 
         // User logged in
-        $rootScope.$on('userLoggedIn', function (event, args) {
+        $scope.$on('userLoggedIn', function (event, args) {
             vm.currentUser = args.currentUser;
         });
 

@@ -3,9 +3,9 @@
 
     var controllerId = 'basicsController';
     angular.module('main')
-        .controller(controllerId, ['resourcePoolService', 'userService', '$rootScope', 'logger', basicsController]);
+        .controller(controllerId, ['resourcePoolService', 'userService', '$scope', 'logger', basicsController]);
 
-    function basicsController(resourcePoolService, userService, $rootScope, logger) {
+    function basicsController(resourcePoolService, userService, $scope, logger) {
 
         logger = logger.forSource(controllerId);
 
@@ -14,9 +14,9 @@
         vm.basics_NewModelResourcePoolId = 3;
 
         // Listen resource pool updated event
-        $rootScope.$on('resourcePoolEditor_elementMultiplierIncreased', updateOppositeResourcePool);
-        $rootScope.$on('resourcePoolEditor_elementMultiplierDecreased', updateOppositeResourcePool);
-        $rootScope.$on('resourcePoolEditor_elementMultiplierReset', updateOppositeResourcePool);
+        $scope.$on('resourcePoolEditor_elementMultiplierIncreased', updateOppositeResourcePool);
+        $scope.$on('resourcePoolEditor_elementMultiplierDecreased', updateOppositeResourcePool);
+        $scope.$on('resourcePoolEditor_elementMultiplierReset', updateOppositeResourcePool);
 
         function updateOppositeResourcePool(event, element) {
 

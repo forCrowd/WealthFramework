@@ -10,9 +10,8 @@
         // Logger
         logger = logger.forSource(controllerId);
 
-        // Timers
-        var increaseMultiplierTimeoutInitial = $timeout(increaseMultiplier, 5000);
-        var increaseMultiplierTimeoutRecursive = null;
+        // Timer
+        var increaseMultiplierTimeout = $timeout(increaseMultiplier, 5000);
 
         var vm = this;
         vm.introduction_UPOResourcePoolId = 1;
@@ -51,7 +50,7 @@
                 });
 
             // Then increase recursively
-            var increaseMultiplierTimeoutRecursive = $timeout(increaseMultiplier, 2500);
+            increaseMultiplierTimeout = $timeout(increaseMultiplier, 2500);
         }
 
         // When the DOM element is removed from the page,
@@ -59,8 +58,7 @@
         // the scope. This gives us a chance to cancel any
         // pending timer that we may have.
         $scope.$on("$destroy", function (event) {
-            $timeout.cancel(increaseMultiplierTimeoutInitial);
-            $timeout.cancel(increaseMultiplierTimeoutRecursive);
+            $timeout.cancel(increaseMultiplierTimeout);
         });
     };
 })();

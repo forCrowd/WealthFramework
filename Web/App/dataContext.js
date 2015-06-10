@@ -20,7 +20,7 @@
         // Manager
         var manager = null;
         var saveTimer = null;
-        var saveLogTimer = null;
+
         initializeStore();
 
         // Service methods
