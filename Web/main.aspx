@@ -23,8 +23,18 @@
     <script src="/Scripts/modernizr-2.8.3.js"></script>-->
 
     <!-- Google Analytics -->
-    <script src="/App/external/googleAnalytics.js?v=029"></script>
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
+        ga('create', 'UA-62498767-2', 'auto');
+        ga('send', 'pageview');
+
+    </script>
 </head>
 <body data-ng-app="main" data-ng-controller="mainController as vm">
     <div class="navbar navbar-inverse navbar-fixed-top">
