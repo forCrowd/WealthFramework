@@ -140,7 +140,7 @@ foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
 
             function failed(error) {
                 var message = error.message || '<#= entityTypeName #> query failed';
-                logger.logError(message, error);
+                logger.logError(message, error, true);
             }
         }
 
@@ -154,7 +154,7 @@ foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
 
             function failed(error) {
                 var message = error.message || 'get<#= entityTypeName #> query failed';
-                logger.logError(message, error);
+                logger.logError(message, error, true);
             }
         }
 

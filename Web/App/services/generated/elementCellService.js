@@ -99,7 +99,7 @@
 
             function failed(error) {
                 var message = error.message || 'ElementCell query failed';
-                logger.logError(message, error);
+                logger.logError(message, error, true);
             }
         }
 
@@ -113,7 +113,7 @@
 
             function failed(error) {
                 var message = error.message || 'getElementCell query failed';
-                logger.logError(message, error);
+                logger.logError(message, error, true);
             }
         }
 

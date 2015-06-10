@@ -86,7 +86,7 @@
 
                     function failed(error) {
                         var message = error.message || 'ResourcePool query failed';
-                        logger.logError(message, error);
+                        logger.logError(message, error, true);
                     }
                 });
         }

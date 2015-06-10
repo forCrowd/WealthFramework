@@ -99,7 +99,7 @@
 
             function failed(error) {
                 var message = error.message || 'UserClaim query failed';
-                logger.logError(message, error);
+                logger.logError(message, error, true);
             }
         }
 
@@ -113,7 +113,7 @@
 
             function failed(error) {
                 var message = error.message || 'getUserClaim query failed';
-                logger.logError(message, error);
+                logger.logError(message, error, true);
             }
         }
 

@@ -150,7 +150,7 @@
                     //logger.logError('Error!', { data: data, status: status, headers: headers, config: config });
                     if (typeof data.ModelState !== 'undefined') {
                         var modelErrors = Object.keys(data.ModelState);
-                        logger.logError(data.ModelState[modelErrors], data.ModelState[modelErrors]);
+                        logger.logError(data.ModelState[modelErrors], data.ModelState[modelErrors], true);
                     }
                 });
         }
@@ -178,7 +178,7 @@
                     //logger.logError('Error!', { data: data, status: status, headers: headers, config: config });
                     if (typeof data.ModelState !== 'undefined') {
                         var modelErrors = Object.keys(data.ModelState);
-                        logger.logError(data.ModelState[modelErrors], data.ModelState[modelErrors]);
+                        logger.logError(data.ModelState[modelErrors], data.ModelState[modelErrors], true);
                     }
                 });
         }

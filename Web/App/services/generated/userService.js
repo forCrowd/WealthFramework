@@ -98,7 +98,7 @@
 
             function failed(error) {
                 var message = error.message || 'User query failed';
-                logger.logError(message, error);
+                logger.logError(message, error, true);
             }
         }
 
@@ -112,7 +112,7 @@
 
             function failed(error) {
                 var message = error.message || 'getUser query failed';
-                logger.logError(message, error);
+                logger.logError(message, error, true);
             }
         }
 
