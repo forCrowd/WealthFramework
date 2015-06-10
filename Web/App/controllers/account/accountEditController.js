@@ -20,25 +20,17 @@
         vm.saveChanges = saveChanges;
         vm.hasChanges = hasChanges;
 
-        initialize();
+        // Get current user
+        userService.getCurrentUser()
+            .then(function (currentUser) {
+                vm.user = currentUser;
+            });
 
         /*** Implementations ***/
 
         function hasChanges() {
             return userService.hasChanges();
         }
-
-        function initialize() {
-
-            userService.getCurrentUser()
-                .then(function (currentUser) {
-
-                    vm.user = currentUser;
-
-                }, function () {
-                    // TODO Error?
-                });
-        };
 
         function isSaveDisabled() {
             return isSaving ||

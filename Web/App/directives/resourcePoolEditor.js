@@ -21,7 +21,6 @@
         function link(scope, elm, attrs) {
 
             scope.resourcePool = null;
-            scope.isAuthenticated = false;
             scope.errorMessage = '';
 
             // Resource pool id: Get the current resource pool
@@ -163,20 +162,14 @@
                     return;
                 }
 
-                userService.getCurrentUser()
-                    .then(function (currentUser) {
-
-                        scope.isAuthenticated = currentUser.Id > 0;
-
-                        resourcePoolService.getResourcePoolExpanded(scope.resourcePoolId)
-                                .then(loadResourcePool)
-                                .catch(function () {
-                                    // TODO scope.errorMessage ?
-                                })
-                                .finally(function () {
-                                    scope.chartConfig.loading = false;
-                                });
-                    });
+                resourcePoolService.getResourcePoolExpanded(scope.resourcePoolId)
+                        .then(loadResourcePool)
+                        .catch(function () {
+                            // TODO scope.errorMessage ?
+                        })
+                        .finally(function () {
+                            scope.chartConfig.loading = false;
+                        });
             }
 
             function loadResourcePool(resourcePoolSet) {
