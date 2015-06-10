@@ -43,17 +43,17 @@
                             <li><a href="/content/technologies">Technologies</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown hide" data-ng-show="vm.currentUser.Id > 0">
+                    <li class="dropdown hide" data-ng-show="vm.isAuthenticated()">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown">Manage <b class="caret"></b></a>
                         <!-- Manage Menu - Generated -->
                         <script src="/App/includes/manageMenu.js?v=027"></script>
                     </li>
-                    <li class="dropdown" data-ng-show="vm.currentUser.Id > 0 || true">
+                    <li class="dropdown" data-ng-show="vm.isAuthenticated()">
                         <a href="/manage/custom/resourcePool">CMRP</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown" data-ng-if="vm.currentUser.Id > 0">
+                    <li class="dropdown" data-ng-if="vm.isAuthenticated()">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown"><span data-ng-bind="'User: ' + vm.currentUser.Email"></span> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="/account/accountEdit">Edit</a></li>
@@ -61,7 +61,7 @@
                             <li><a href="" data-ng-click="vm.logout()">Logout</a></li>
                         </ul>
                     </li>
-                    <li data-ng-if="vm.currentUser.Id <= 0">
+                    <li data-ng-if="!vm.isAuthenticated()">
                         <div class="navbar-text nofloat">
                             <a href="/account/register">Register</a>
                             &nbsp;
