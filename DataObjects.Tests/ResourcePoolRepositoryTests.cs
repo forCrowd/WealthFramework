@@ -336,7 +336,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Tests
 
         //User GenerateUser()
         //{
-        //    var email = string.Format("user_{0:yyyyMMdd_HHmmssfff}@wealth.azurewebsites.com", DateTime.Now);
+        //    var email = string.Format("user_{0:yyyyMMdd_HHmmssfff}@forcrowd.org", DateTime.Now);
         //    return new User(email);
         //}
 

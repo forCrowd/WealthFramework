@@ -11,7 +11,7 @@ namespace forCrowd.WealthEconomy.Web.Controllers.Api
         public ApplicationInfo GetApplicationInfo()
         {
             var assembly = Assembly.GetAssembly(this.GetType());
-            var organization = ((AssemblyCompanyAttribute)assembly.GetCustomAttribute(typeof(AssemblyCompanyAttribute))).Company;
+            //var organization = ((AssemblyCompanyAttribute)assembly.GetCustomAttribute(typeof(AssemblyCompanyAttribute))).Company;
             var version = assembly.GetName().Version;
 
             var versionText = string.Format("{0}.{1}.{2}",
@@ -21,7 +21,7 @@ namespace forCrowd.WealthEconomy.Web.Controllers.Api
                 
             return new ApplicationInfo()
             {
-                Organization = organization,
+                //Organization = organization,
                 CurrentVersion = versionText
             };
         }
@@ -29,7 +29,7 @@ namespace forCrowd.WealthEconomy.Web.Controllers.Api
 
     public class ApplicationInfo
     {
-        public string Organization { get; set; }
+        //public string Organization { get; set; }
         public string CurrentVersion { get; set; }
     }
 }

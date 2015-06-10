@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("forCrowd Foundation")]
 [assembly: AssemblyProduct("Wealth Economy")]
-[assembly: AssemblyCopyright("forCrowd Foundation")]
+[assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

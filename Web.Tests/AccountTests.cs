@@ -12,7 +12,7 @@ namespace forCrowd.WealthEconomy.Web.Tests
         [TestMethod]
         public void TestMethod1()
         {
-            var email = string.Format("user_{0:yyyyMMdd_HHmmssfff}@wealth.azurewebsites.com", DateTime.Now);
+            var email = string.Format("user_{0:yyyyMMdd_HHmmssfff}@forcrowd.org", DateTime.Now);
             var password = "Password@123";
             var registerResult = Register(email, password);
 

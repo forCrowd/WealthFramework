@@ -22,6 +22,9 @@
     <!--
     <script src="/Scripts/modernizr-2.8.3.js"></script>-->
 
+    <!-- Google Analytics -->
+    <script src="/App/external/googleAnalytics.js?v=029"></script>
+
 </head>
 <body data-ng-app="main" data-ng-controller="mainController as vm">
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -82,7 +85,7 @@
                 <span></span>
                 <span data-ng-bind="vm.applicationInfo.CurrentVersionText"></span>
                 <br />
-                <span data-ng-bind="vm.applicationInfo.Organization"></span>
+                <a href="http://forcrowd.org" target="_blank">forCrowd Foundation</a>
                 <br />
             </p>
         </footer>
@@ -159,9 +162,6 @@
 
     <!-- Filters -->
     <script src="/App/filters/angular-percentage.js?v=022"></script>
-
-    <!-- Google Analytics -->
-    <script src="/App/external/googleAnalytics.js"></script>
 
 </body>
 </html>
