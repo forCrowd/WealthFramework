@@ -12,7 +12,7 @@
         logger = logger.forSource(serviceId);
 
         var accessTokenUrl = '/api/Token';
-        var changePasswordUrl = '/api/Account/-ChangePassword';
+        var changePasswordUrl = '/api/Account/ChangePassword';
         var logoutUrl = '/api/Account/Logout';
         var registerUrl = '/api/Account/Register';
         var userInfoUrl = '/api/Account/UserInfo';
