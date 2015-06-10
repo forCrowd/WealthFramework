@@ -41,9 +41,12 @@
                         }
 
                         // Save changes, if there is a registered user
-                        if (userService.isAuthenticated()) {
-                            resourcePoolService.saveChanges(1500);
-                        }
+                        userService.isAuthenticated()
+                            .then(function (isAuthenticated) {
+                                if (isAuthenticated) {
+                                    resourcePoolService.saveChanges(1500);
+                                }
+                            });
                     });
             }
         }

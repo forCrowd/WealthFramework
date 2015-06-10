@@ -26,19 +26,15 @@
             });
 
         // Current user
-        getCurrentUser();
+        userService.getCurrentUser()
+            .then(function (currentUser) {
+                vm.currentUser = currentUser;
+            });
 
         // User logged in
-        $rootScope.$on('userLoggedIn', function () {
-            getCurrentUser();
+        $rootScope.$on('userLoggedIn', function (event, args) {
+            vm.currentUser = args.currentUser;
         });
-
-        function getCurrentUser() {
-            userService.getCurrentUser()
-                .then(function (currentUser) {
-                    vm.currentUser = currentUser;
-                });
-        }
 
         function isAuthenticated() {
             return vm.currentUser !== null && vm.currentUser.Id > 0;

@@ -256,25 +256,19 @@
             }
 
             function saveChanges() {
-
-                if (!userService.isAuthenticated()) {
-                    return;
-                }
-
-                resourcePoolService.saveChanges(1500)
-                    .then(function (result) {
-
-                    })
-                    .catch(function (error) {
-                        // Conflict (Concurrency exception)
-                        if (typeof error.status !== 'undefined' && error.status === '409') {
-                            // TODO Try to recover!
-                        } else if (typeof error.entityErrors !== 'undefined') {
-                            // vm.entityErrors = error.entityErrors;
+                userService.isAuthenticated()
+                    .then(function (isAuthenticated) {
+                        if (isAuthenticated) {
+                            resourcePoolService.saveChanges(1500)
+                                .catch(function (error) {
+                                    // Conflict (Concurrency exception)
+                                    if (typeof error.status !== 'undefined' && error.status === '409') {
+                                        // TODO Try to recover!
+                                    } else if (typeof error.entityErrors !== 'undefined') {
+                                        // vm.entityErrors = error.entityErrors;
+                                    }
+                                });
                         }
-                    })
-                    .finally(function () {
-
                     });
             }
 

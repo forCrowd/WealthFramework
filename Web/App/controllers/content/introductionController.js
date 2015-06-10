@@ -15,10 +15,22 @@
         var increaseMultiplierTimeoutRecursive = null;
 
         var vm = this;
-        vm.isAuthenticated = function () {
-            return userService.isAuthenticated();
-        }
         vm.introduction_UPOResourcePoolId = 1;
+        vm.isAuthenticated = false;
+
+        userService.isAuthenticated()
+            .then(function (isAuthenticated) {
+                vm.isAuthenticated = isAuthenticated;
+            });
+
+        // User logged in & out
+        $scope.$on('userLoggedIn', function () {
+            vm.isAuthenticated = true;
+        });
+
+        $scope.$on('userLoggedOut', function () {
+            vm.isAuthenticated = false;
+        });
 
         function increaseMultiplier() {
 

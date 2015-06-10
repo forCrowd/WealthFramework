@@ -16,8 +16,9 @@
         var logoutUrl = '/api/Account/Logout';
         var registerUrl = '/api/Account/Register';
 
-        var user = null;
-        var getUserPromise = null;
+        var currentUser = null;
+        var getCurrentUserPromise = null;
+        var isAuthenticatedPromise = null;
 
         // Service methods
         $delegate.changePassword = changePassword;
@@ -50,7 +51,8 @@
                     $window.localStorage.setItem('access_token', data.access_token);
 
                     // Clear user promise
-                    getUserPromise = null;
+                    getCurrentUserPromise = null;
+                    isAuthenticatedPromise = null;
 
                     // Clear breeze's metadata store
                     if (resetDataContext) {
@@ -59,10 +61,10 @@
 
                     // Get current user
                     getCurrentUser()
-                        .then(function (user) {
+                        .then(function (currentUser) {
 
                             // Raise logged in event
-                            $rootScope.$broadcast('userLoggedIn');
+                            $rootScope.$broadcast('userLoggedIn', { currentUser: currentUser });
 
                         });
                 })
@@ -72,8 +74,8 @@
 
             var deferred = $q.defer();
 
-            if (getUserPromise === null) {
-                getUserPromise = deferred.promise;
+            if (getCurrentUserPromise === null) {
+                getCurrentUserPromise = deferred.promise;
 
                 var query = breeze.EntityQuery
                     .from('Users')
@@ -84,21 +86,22 @@
                     .catch(failed);
             }
 
-            return getUserPromise;
+            return getCurrentUserPromise;
 
             function success(response) {
 
                 if (response.results.length > 0) {
-                    user = response.results[0];
-                    deferred.resolve(user);
+                    currentUser = response.results[0];
+                    deferred.resolve(currentUser);
 
                 } else {
                     dataContext.createEntity('User', {})
                             .then(function (newUser) {
-                                user = newUser;
-                                deferred.resolve(user);
+                                currentUser = newUser;
+                                deferred.resolve(currentUser);
                             })
                     .catch(function () {
+                        currentUser = null;
                         deferred.reject();
                     });
                 }
@@ -111,7 +114,22 @@
         }
 
         function isAuthenticated() {
-            return user !== null && user.Id > 0;
+
+            var deferred = $q.defer();
+
+            if (isAuthenticatedPromise === null) {
+                isAuthenticatedPromise = deferred.promise;
+
+                getCurrentUser()
+                    .then(function (currentUser) {
+                        deferred.resolve(currentUser.Id > 0);
+                    })
+                    .catch(function () {
+                        deferred.reject();
+                    });
+            }
+
+            return isAuthenticatedPromise;
         }
 
         function register(registerBindingModel) {
@@ -120,10 +138,10 @@
 
                     // breeze context user entity fix-up!
                     // TODO Try to make this part better, use OData method?
-                    user.Id = newUser.Id;
-                    user.Email = newUser.Email;
-                    user.UserName = newUser.UserName;
-                    user.entityAspect.acceptChanges();
+                    currentUser.Id = newUser.Id;
+                    currentUser.Email = newUser.Email;
+                    currentUser.UserName = newUser.UserName;
+                    currentUser.entityAspect.acceptChanges();
 
                 })
                 .error(function (data, status, headers, config) {
@@ -145,7 +163,8 @@
                     $window.localStorage.removeItem('access_token');
 
                     // Clear user promise
-                    getUserPromise = null;
+                    getCurrentUserPromise = null;
+                    isAuthenticatedPromise = null;
 
                     // Clear breeze's metadata store
                     dataContext.clear();
@@ -182,7 +201,7 @@
                         // If there is no item, create it
                         if (userCell === null) {
                             userCell = {
-                                User: user,
+                                User: currentUser,
                                 ElementCell: elementCell,
                                 DecimalValue: 1
                             };
@@ -240,7 +259,7 @@
                     // If there is no item, create it
                     if (userCell === null) {
                         userCell = {
-                            User: user,
+                            User: currentUser,
                             ElementCell: elementCell,
                             DecimalValue: 55
                         };
@@ -265,7 +284,7 @@
                     // If there is no item, create it
                     if (userCell === null) {
                         userCell = {
-                            User: user,
+                            User: currentUser,
                             ElementCell: elementCell,
                             DecimalValue: 45
                         };
@@ -313,7 +332,7 @@
                     // If there is no item, create it
                     if (userElementField === null) {
                         userElementField = {
-                            User: user,
+                            User: currentUser,
                             ElementField: elementField,
                             Rating: 55
                         };
@@ -338,7 +357,7 @@
                     // If there is no item, create it
                     if (userElementField === null) {
                         userElementField = {
-                            User: user,
+                            User: currentUser,
                             ElementField: elementField,
                             Rating: 45
                         };
@@ -386,7 +405,7 @@
                     // If there is no item, create it
                     if (userResourcePool === null) {
                         userResourcePool = {
-                            User: user,
+                            User: currentUser,
                             ResourcePool: resourcePool,
                             ResourcePoolRate: 15
                         };
@@ -411,7 +430,7 @@
                     // If there is no item, create
                     if (userResourcePool === null) {
                         userResourcePool = {
-                            User: user,
+                            User: currentUser,
                             ResourcePool: resourcePool,
                             ResourcePoolRate: 5
                         };
