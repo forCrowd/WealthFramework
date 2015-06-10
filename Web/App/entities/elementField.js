@@ -39,7 +39,10 @@
             });
 
             $rootScope.$on('elementValueFilterChanged', function (event, args) {
-                if (args.element.ResourcePool === self.Element.ResourcePool) {
+
+                // TODO No idea why but there is one ElementField with no Element (breeze creates it with setConstructor I guess)
+                // Therefore there is this Element undefined check
+                if (typeof self.Element !== 'undefined' && args.element.ResourcePool === self.Element.ResourcePool) {
                     setIndexRating();
                 }
             });
@@ -210,7 +213,7 @@
                 }
 
                 // Since there is always a default value for the current user, calculate count by increasing 1
-                return self.otherUsersIndexRatingCount++;
+                return self.otherUsersIndexRatingCount + 1;
             }
 
             self.indexRating = function () {

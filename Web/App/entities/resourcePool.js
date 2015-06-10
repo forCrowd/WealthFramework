@@ -122,7 +122,7 @@
                 }
 
                 // Since there is always a default value for the current user, calculate count by increasing 1
-                return self.otherUsersResourcePoolRateCount++;
+                return self.otherUsersResourcePoolRateCount + 1;
             }
 
             self.resourcePoolRate = function () {

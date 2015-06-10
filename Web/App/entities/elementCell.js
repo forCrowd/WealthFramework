@@ -139,7 +139,7 @@
                 }
 
                 // Since there is always a default value for the current user, calculate count by increasing 1
-                return self.otherUsersNumericValueCount++;
+                return self.otherUsersNumericValueCount + 1;
             }
 
             self.numericValue = function () {
