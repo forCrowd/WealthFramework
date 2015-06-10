@@ -3,30 +3,13 @@
 
     var controllerId = 'fairShareIndexSampleController';
     angular.module('main')
-        .controller(controllerId, ['userService', '$rootScope', 'logger', fairShareIndexSampleController]);
+        .controller(controllerId, ['userService', 'logger', fairShareIndexSampleController]);
 
-    function fairShareIndexSampleController(userService, $rootScope, logger) {
+    function fairShareIndexSampleController(userService, logger) {
 
         logger = logger.forSource(controllerId);
 
         var vm = this;
-        vm.isAuthenticated = false;
-
-        // Logged in?
-        userService.getCurrentUser()
-            .then(function (currentUser) {
-                vm.isAuthenticated = currentUser.Id > 0;
-            })
-            .catch(function (error) {
-
-            })
-            .finally(function () {
-                vm.fairShareIndex_SampleResourcePoolId = 10;
-            });
-
-        // User logged out
-        $rootScope.$on('userLoggedOut', function () {
-            vm.isAuthenticated = false;
-        });
+        vm.fairShareIndex_SampleResourcePoolId = 10;
     };
 })();

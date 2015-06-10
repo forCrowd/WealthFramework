@@ -16,10 +16,14 @@
         var logoutUrl = '/api/Account/Logout';
         var registerUrl = '/api/Account/Register';
 
+        var user = null;
+        var getUserPromise = null;
+
         // Service methods
         $delegate.changePassword = changePassword;
         $delegate.getAccessToken = getAccessToken;
         $delegate.getCurrentUser = getCurrentUser;
+        $delegate.isAuthenticated = isAuthenticated;
         $delegate.logout = logout;
         $delegate.register = register;
 
@@ -27,15 +31,6 @@
         $delegate.updateElementCellNumericValue = updateElementCellNumericValue;
         $delegate.updateElementFieldIndexRating = updateElementFieldIndexRating;
         $delegate.updateResourcePoolRate = updateResourcePoolRate;
-
-        var user = null;
-        var getUserPromise = null;
-        //var user = { Id: 0, Email: '', UserName: '' };
-        //dataContext.createEntity('User', {})
-        //    .then(function (newUser) {
-        //        user = newUser;
-        //        logger.log('newUser', user, false);
-        //    });
 
         return $delegate;
 
@@ -113,6 +108,10 @@
                 var message = error.message || 'User query failed';
                 deferred.reject(message);
             }
+        }
+
+        function isAuthenticated() {
+            return user !== null && user.Id > 0;
         }
 
         function register(registerBindingModel) {

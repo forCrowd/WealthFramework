@@ -3,38 +3,22 @@
 
     var controllerId = 'introductionController';
     angular.module('main')
-        .controller(controllerId, ['resourcePoolService', 'userService', '$scope', '$timeout', '$rootScope', 'logger', introductionController]);
+        .controller(controllerId, ['resourcePoolService', 'userService', '$scope', '$timeout', 'logger', introductionController]);
 
-    function introductionController(resourcePoolService, userService, $scope, $timeout, $rootScope, logger) {
+    function introductionController(resourcePoolService, userService, $scope, $timeout, logger) {
 
         // Logger
         logger = logger.forSource(controllerId);
 
         // Timers
-        var increaseMultiplierTimeoutInitial = null;
+        var increaseMultiplierTimeoutInitial = $timeout(increaseMultiplier, 5000);
         var increaseMultiplierTimeoutRecursive = null;
 
         var vm = this;
-        vm.isAuthenticated = false;
-
-        // Logged in?
-        userService.getCurrentUser()
-            .then(function (currentUser) {
-                vm.isAuthenticated = currentUser.Id > 0;
-
-                increaseMultiplierTimeoutInitial = $timeout(increaseMultiplier, 5000);
-            })
-            .catch(function (error) {
-
-            })
-            .finally(function () {
-                vm.introduction_UPOResourcePoolId = 1;
-            });
-
-        // User logged out
-        $rootScope.$on('userLoggedOut', function () {
-            vm.isAuthenticated = false;
-        });
+        vm.isAuthenticated = function () {
+            return userService.isAuthenticated();
+        }
+        vm.introduction_UPOResourcePoolId = 1;
 
         function increaseMultiplier() {
 

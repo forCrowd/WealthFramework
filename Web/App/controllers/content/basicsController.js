@@ -10,25 +10,8 @@
         logger = logger.forSource(controllerId);
 
         var vm = this;
-        vm.isAuthenticated = false;
-
-        // Logged in?
-        userService.getCurrentUser()
-            .then(function (currentUser) {
-                vm.isAuthenticated = currentUser.Id > 0;
-            })
-            .catch(function (error) {
-
-            })
-            .finally(function () {
-                vm.basics_ExistingModelResourcePoolId = 2;
-                vm.basics_NewModelResourcePoolId = 3;
-            });
-
-        // User logged out
-        $rootScope.$on('userLoggedOut', function () {
-            vm.isAuthenticated = false;
-        });
+        vm.basics_ExistingModelResourcePoolId = 2;
+        vm.basics_NewModelResourcePoolId = 3;
 
         // Listen resource pool updated event
         $rootScope.$on('resourcePoolEditor_elementMultiplierIncreased', updateOppositeResourcePool);
@@ -57,7 +40,8 @@
                             case 'resourcePoolEditor_elementMultiplierReset': { userService.updateElementMultiplier(resourcePool.MainElement, 'reset'); break; }
                         }
 
-                        if (vm.isAuthenticated) {
+                        // Save changes, if there is a registered user
+                        if (userService.isAuthenticated()) {
                             resourcePoolService.saveChanges(1500);
                         }
                     });

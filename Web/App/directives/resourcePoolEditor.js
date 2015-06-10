@@ -58,88 +58,64 @@
             scope.increaseElementMultiplier = function (element) {
                 userService.updateElementMultiplier(element, 'increase');
                 $rootScope.$broadcast('resourcePoolEditor_elementMultiplierIncreased', element);
-                if (scope.isAuthenticated) {
-                    saveChanges();
-                }
+                saveChanges();
             }
 
             scope.decreaseElementMultiplier = function (element) {
                 userService.updateElementMultiplier(element, 'decrease');
                 $rootScope.$broadcast('resourcePoolEditor_elementMultiplierDecreased', element);
-                if (scope.isAuthenticated) {
-                    saveChanges();
-                }
+                saveChanges();
             }
 
             scope.resetElementMultiplier = function (element) {
                 userService.updateElementMultiplier(element, 'reset');
                 $rootScope.$broadcast('resourcePoolEditor_elementMultiplierReset', element);
-                if (scope.isAuthenticated) {
-                    saveChanges();
-                }
+                saveChanges();
             }
 
             scope.increaseElementCellNumericValue = function (cell) {
                 userService.updateElementCellNumericValue(cell, 'increase');
-                if (scope.isAuthenticated) {
-                    saveChanges();
-                }
+                saveChanges();
             }
 
             scope.decreaseElementCellNumericValue = function (cell) {
                 userService.updateElementCellNumericValue(cell, 'decrease');
-                if (scope.isAuthenticated) {
-                    saveChanges();
-                }
+                saveChanges();
             }
 
             scope.resetElementCellNumericValue = function (cell) {
                 userService.updateElementCellNumericValue(cell, 'reset');
-                if (scope.isAuthenticated) {
-                    saveChanges();
-                }
+                saveChanges();
             }
 
             scope.increaseIndexRating = function (field) {
                 userService.updateElementFieldIndexRating(field, 'increase');
-                if (scope.isAuthenticated) {
-                    saveChanges();
-                }
+                saveChanges();
             }
 
             scope.decreaseIndexRating = function (field) {
                 userService.updateElementFieldIndexRating(field, 'decrease');
-                if (scope.isAuthenticated) {
-                    saveChanges();
-                }
+                saveChanges();
             }
 
             scope.resetIndexRating = function (field) {
                 userService.updateElementFieldIndexRating(field, 'reset');
-                if (scope.isAuthenticated) {
-                    saveChanges();
-                }
+                saveChanges();
             }
 
             scope.increaseResourcePoolRate = function () {
                 userService.updateResourcePoolRate(scope.resourcePool, 'increase');
-                if (scope.isAuthenticated) {
-                    saveChanges();
-                }
+                saveChanges();
             }
 
             scope.decreaseResourcePoolRate = function () {
                 userService.updateResourcePoolRate(scope.resourcePool, 'decrease');
-                if (scope.isAuthenticated) {
-                    saveChanges();
-                }
+                saveChanges();
             }
 
             scope.resetResourcePoolRate = function () {
                 userService.updateResourcePoolRate(scope.resourcePool, 'reset');
-                if (scope.isAuthenticated) {
-                    saveChanges();
-                }
+                saveChanges();
             }
 
             function initChart() {
@@ -287,6 +263,10 @@
             }
 
             function saveChanges() {
+
+                if (!userService.isAuthenticated()) {
+                    return;
+                }
 
                 resourcePoolService.saveChanges(1500)
                     .then(function (result) {

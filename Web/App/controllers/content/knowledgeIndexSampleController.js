@@ -3,14 +3,15 @@
 
     var controllerId = 'knowledgeIndexSampleController';
     angular.module('main')
-        .controller(controllerId, ['userService', '$scope', '$timeout', '$rootScope', 'logger', knowledgeIndexSampleController]);
+        .controller(controllerId, ['$scope', '$timeout', 'logger', knowledgeIndexSampleController]);
 
-    function knowledgeIndexSampleController(userService, $scope, $timeout, $rootScope, logger) {
+    function knowledgeIndexSampleController($scope, $timeout, logger) {
 
         logger = logger.forSource(controllerId);
 
         var vm = this;
-        vm.isAuthenticated = false;
+        vm.sampleResourcePoolId = 5;
+        vm.popuplarSoftwareLicensesResourcePoolId = 6;
 
         vm.oldModelChartConfig = {
             title: {
@@ -74,24 +75,6 @@
                 { name: 'Global Knowledge Database', data: [0] }
             ]
         };
-
-        // Logged in?
-        userService.getCurrentUser()
-            .then(function (currentUser) {
-                vm.isAuthenticated = currentUser.Id > 0;
-            })
-            .catch(function (error) {
-
-            })
-            .finally(function () {
-                vm.sampleResourcePoolId = 5;
-                vm.popuplarSoftwareLicensesResourcePoolId = 6;
-            });
-
-        // User logged out
-        $rootScope.$on('userLoggedOut', function () {
-            vm.isAuthenticated = false;
-        });
 
         var timeoutInitial = $timeout(refreshPage, 10000);
         var timeoutRecursive = null;
