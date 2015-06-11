@@ -1,5 +1,9 @@
 ﻿### Release Notes
 
+**0.29.1**
+
+* Minor content updates
+
 **0.29**
 
 * https://github.com/forCrowd/WealthEconomy/issues/15
