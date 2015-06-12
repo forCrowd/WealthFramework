@@ -46,8 +46,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a href="/" class="navbar-brand">
-                    <span>
-                        <img src="/Content/images/forCrowd_logo_20x20.jpg?v=0292" /></span>
+                    <%--<span><img src="/Content/images/forCrowd_logo_20x20.jpg?v=0292" /></span>--%>
                     Wealth Economy
                 </a>
             </div>
