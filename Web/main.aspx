@@ -12,7 +12,7 @@
     <link href="/Content/toastr.css?v=024" rel="stylesheet" />
 
     <!-- Internal CSS -->
-    <link href="/Content/site.css?v=022" rel="stylesheet" />
+    <link href="/Content/site.css?v=0292" rel="stylesheet" />
     <link href="/App/directives/resourcePoolEditor.css?v=028" rel="stylesheet" />
 
     <!-- jQuery -->
@@ -23,7 +23,7 @@
     <script src="/Scripts/modernizr-2.8.3.js"></script>-->
 
     <!-- Google Analytics -->
-    <script>
+        <script>
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
                 (i[r].q = i[r].q || []).push(arguments)
@@ -45,7 +45,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="/" class="navbar-brand">Wealth Economy</a>
+                <a href="/" class="navbar-brand">
+                    <span>
+                        <img src="/Content/images/forCrowd_logo_20x20.jpg?v=0292" /></span>
+                    Wealth Economy
+                </a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -67,7 +71,7 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown" data-ng-if="vm.isAuthenticated()">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown"><span data-ng-bind="'User: ' + vm.currentUser.Email"></span> <b class="caret"></b></a>
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown"><span data-ng-bind="'User: ' + vm.currentUser.Email"></span><b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="/account/accountEdit">Edit</a></li>
                             <li><a href="/account/changePassword">Change password</a></li>
@@ -92,12 +96,18 @@
         <hr />
         <footer>
             <p class="small">
-                <span></span>
                 <span data-ng-bind="vm.applicationInfo.CurrentVersionText"></span>
-                <br />
-                <a href="http://forcrowd.org" target="_blank">forCrowd Foundation</a>
-                <br />
             </p>
+            <p class="brandLink">
+                <a href="http://forcrowd.org" target="_blank">
+                    <img src="/Content/images/forCrowd_logo_34x34.jpg?v=0292" class="brandLinkImage" />
+                    <span class="brandLinkText">
+                        <span class="brandLinkPrimary">forCrowd</span><br />
+                        <span class="brandLinkSecondary">FOUNDATION</span>
+                    </span>
+                </a>
+            </p>
+            <p style="height: 150px;">&nbsp;</p>
         </footer>
     </div>
 

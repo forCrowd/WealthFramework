@@ -1,4 +1,34 @@
-﻿body {
+﻿/* Brand styling - Probably css class names can be better, parent child structure? */
+.brandLink,
+.brandLink > a,
+.brandLink > a:focus,
+.brandLink > a:hover {
+    text-decoration: none;
+    line-height: 1em;
+}
+
+.brandLinkImage {
+    margin-right: 10px;
+    float: left;
+}
+
+.brandLinkText {
+    font-family: 'Century Gothic';
+    text-decoration: none;
+    line-height: 1em;
+}
+
+.brandLinkPrimary {
+    color: #b08b5f;
+    font-size: 16px;
+}
+
+.brandLinkSecondary {
+    color: #2B2A28;
+    font-size: 11px;
+}
+
+body {
     font-size: 15px;
     padding-top: 50px;
     padding-bottom: 20px;
