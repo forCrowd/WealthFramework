@@ -3,7 +3,7 @@
 **0.29.2**
 
 * https://github.com/forCrowd/WealthEconomy/issues/8
-* Logo was added to both navbar & footer
+* Logo was added to footer
 
 **0.29.1**
 
