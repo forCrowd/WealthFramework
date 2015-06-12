@@ -137,7 +137,6 @@
             //    $timeout.cancel(increaseMultiplierTimeoutInitial);
             //    $timeout.cancel(increaseMultiplierTimeoutRecursive);
             //});
-
         }
 
         function saveChangesInternal() {
@@ -151,12 +150,16 @@
                     saveBatches.forEach(function (batch) {
                         // ignore empty batches (except 'null' which means "save everything else")
                         if (batch === null || batch.length > 0) {
+
+                            // Broadcast, so UI can block
+                            $rootScope.$broadcast('saveChangesStart');
+
                             promise = promise ?
                                 promise.then(function () { return manager.saveChanges(batch); }) :
                                 manager.saveChanges(batch);
                         }
                     });
-                    return promise.then(success).catch(failed);
+                    return promise.then(success).catch(failed).finally(completed);
 
                     function success(result) {
                         logger.logSuccess('Saved ' + count + ' change(s)', null, false);
@@ -170,6 +173,12 @@
                             logger.logError('Save failed!', error, false);
                         }
                         return $q.reject(error); // pass error along to next handler
+                    }
+
+                    function completed() {
+
+                        // Broadcast, so UI can unblock
+                        $rootScope.$broadcast('saveChangesCompleted');
                     }
 
                     function prepareSaveBatches() {

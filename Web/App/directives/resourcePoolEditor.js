@@ -22,6 +22,7 @@
 
             scope.resourcePool = null;
             scope.errorMessage = '';
+            scope.isSaving = false;
 
             // Resource pool id: Get the current resource pool
             scope.$watch('resourcePoolId', function () {
@@ -40,6 +41,14 @@
 
             scope.$on('userLoggedOut', function () {
                 getResourcePool();
+            });
+
+            scope.$on('saveChangesStart', function () {
+                scope.isSaving = true;
+            });
+
+            scope.$on('saveChangesCompleted', function () {
+                scope.isSaving = false;
             });
 
             scope.changeCurrentElement = function (element) {
@@ -325,7 +334,7 @@
 
         return {
             restrict: 'E',
-            templateUrl: '/App/directives/resourcePoolEditor.html?v=029',
+            templateUrl: '/App/directives/resourcePoolEditor.html?v=0292',
             scope: {
                 resourcePoolId: '=',
                 chartHeight: '='

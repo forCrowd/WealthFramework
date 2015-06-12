@@ -41,9 +41,9 @@
                                         {{ resourcePool.resourcePoolRatePercentage() | percentage: 2 }}
                                     </span>
                                     <div data-ng-if="resourcePool.EnableResourcePoolAddition" class="btn-group" role="group">
-                                        <button title="Increase CMRP Rate" type="button" data-ng-click="increaseResourcePoolRate()" class="btn btn-default btn-xs">+</button>
-                                        <button title="Decrease CMRP Rate" type="button" data-ng-click="decreaseResourcePoolRate()" class="btn btn-default btn-xs">-</button>
-                                        <button title="Reset CMRP Rate" type="button" data-ng-click="resetResourcePoolRate()" class="btn btn-default btn-xs">0</button>
+                                        <button title="Increase CMRP Rate" type="button" data-ng-click="increaseResourcePoolRate()" data-ng-disabled="isSaving" class="btn btn-default btn-xs">+</button>
+                                        <button title="Decrease CMRP Rate" type="button" data-ng-click="decreaseResourcePoolRate()" data-ng-disabled="isSaving" class="btn btn-default btn-xs">-</button>
+                                        <button title="Reset CMRP Rate" type="button" data-ng-click="resetResourcePoolRate()" data-ng-disabled="isSaving" class="btn btn-default btn-xs">0</button>
                                     </div>
                                 </td>
                             </tr>
@@ -108,9 +108,9 @@
                                             {{ elementCell.numericValue() | number: 2 }}
                                         </span>
                                         <div class="btn-group" role="group" data-ng-if="elementCell.ElementField.ElementFieldType === 4 && elementCell.ElementField.IndexEnabled">
-                                            <button title="Increase" type="button" data-ng-click="increaseElementCellNumericValue(elementCell)" class="btn btn-default btn-xs">+</button>
-                                            <button title="Decrease" type="button" data-ng-click="decreaseElementCellNumericValue(elementCell)" class="btn btn-default btn-xs">-</button>
-                                            <button title="Reset" type="button" data-ng-click="resetElementCellNumericValue(elementCell)" class="btn btn-default btn-xs hide">0</button>
+                                            <button title="Increase" type="button" data-ng-click="increaseElementCellNumericValue(elementCell)" data-ng-disabled="isSaving" class="btn btn-default btn-xs">+</button>
+                                            <button title="Decrease" type="button" data-ng-click="decreaseElementCellNumericValue(elementCell)" data-ng-disabled="isSaving" class="btn btn-default btn-xs">-</button>
+                                            <button title="Reset" type="button" data-ng-click="resetElementCellNumericValue(elementCell)" data-ng-disabled="isSaving" class="btn btn-default btn-xs hide">0</button>
                                         </div>
                                     </div>
                                     <span data-ng-if="elementCell.ElementField.ElementFieldType === 6">
@@ -176,9 +176,9 @@
                                     </div>
                                     <div data-ng-if="field.ElementFieldType === 12">
                                         <div class="btn-group" role="group">
-                                            <button title="Increase {{ resourcePool.currentElement.multiplierField().Name }}" type="button" data-ng-click="increaseElementMultiplier(resourcePool.currentElement)" class="btn btn-default btn-xs">+</button>
-                                            <button title="Decrease {{ resourcePool.currentElement.multiplierField().Name }}" type="button" data-ng-click="decreaseElementMultiplier(resourcePool.currentElement)" class="btn btn-default btn-xs">-</button>
-                                            <button title="Reset {{ resourcePool.currentElement.multiplierField().Name }}" type="button" data-ng-click="resetElementMultiplier(resourcePool.currentElement)" class="btn btn-default btn-xs">0</button>
+                                            <button title="Increase {{ resourcePool.currentElement.multiplierField().Name }}" type="button" data-ng-disabled="isSaving" data-ng-click="increaseElementMultiplier(resourcePool.currentElement)" class="btn btn-default btn-xs">+</button>
+                                            <button title="Decrease {{ resourcePool.currentElement.multiplierField().Name }}" type="button" data-ng-disabled="isSaving" data-ng-click="decreaseElementMultiplier(resourcePool.currentElement)" class="btn btn-default btn-xs">-</button>
+                                            <button title="Reset {{ resourcePool.currentElement.multiplierField().Name }}" type="button" data-ng-disabled="isSaving" data-ng-click="resetElementMultiplier(resourcePool.currentElement)" class="btn btn-default btn-xs">0</button>
                                         </div>
                                     </div>
                                 </td>
@@ -189,9 +189,9 @@
                                 <!-- CMRP Income & Details -->
                                 <td data-ng-if="displayIndexDetails && resourcePool.currentElement.elementFieldIndexSet().length > 1" data-ng-repeat="field in resourcePool.currentElement.elementFieldIndexSet()">
                                     <div class="btn-group" role="group">
-                                        <button title="Increase {{ field.Name }}" type="button" data-ng-click="increaseIndexRating(field)" class="btn btn-default btn-xs">+</button>
-                                        <button title="Decrease {{ field.Name }}" type="button" data-ng-click="decreaseIndexRating(field)" class="btn btn-default btn-xs">-</button>
-                                        <button title="Reset {{ field.Name }}" type="button" data-ng-click="resetIndexRating(field)" class="btn btn-default btn-xs">0</button>
+                                        <button title="Increase {{ field.Name }}" type="button" data-ng-click="increaseIndexRating(field)" data-ng-disabled="isSaving" class="btn btn-default btn-xs">+</button>
+                                        <button title="Decrease {{ field.Name }}" type="button" data-ng-click="decreaseIndexRating(field)" data-ng-disabled="isSaving" class="btn btn-default btn-xs">-</button>
+                                        <button title="Reset {{ field.Name }}" type="button" data-ng-click="resetIndexRating(field)" data-ng-disabled="isSaving" class="btn btn-default btn-xs">0</button>
                                     </div>
                                 </td>
                                 <td data-ng-if="resourcePool.currentElement.directIncomeField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">
