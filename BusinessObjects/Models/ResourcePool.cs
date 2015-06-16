@@ -33,7 +33,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects
             User = user;
             Name = name;
             UseFixedResourcePoolRate = true;
-            EnableSubtotals = true;
         }
 
         [DisplayOnListView(false)]
@@ -59,11 +58,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         [DisplayOnListView(false)]
         [DisplayOnEditView(true)]
         public bool UseFixedResourcePoolRate { get; set; }
-
-        [Display(Name = "Enable Subtotals")]
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(true)]
-        public bool EnableSubtotals { get; set; }
 
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]

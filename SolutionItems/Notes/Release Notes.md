@@ -4,6 +4,7 @@
 
 * Tooltips for resource pool editor
 * ResourcePool EnableResourcePoolAddition was renamed to UseFixedResourcePoolRate
+* ResourcePool EnableSubtotals field was removed
 * angular-ui-bootstrap instead of bootstrap.js
 
 **0.29.2**

@@ -139,7 +139,7 @@
                             </tr>
                         </tbody>
                         <tfoot>
-                            <tr data-ng-if="resourcePool.EnableSubtotals">
+                            <tr data-ng-if="resourcePool.currentElement.ElementItemSet.length > 1">
                                 <!-- Fields -->
                                 <td data-ng-repeat="field in resourcePool.currentElement.ElementFieldSet | orderBy: 'SortOrder'">
                                     <span data-ng-if="field.ElementFieldType === 11">

@@ -16,7 +16,6 @@
             // Resource pool
             var resourcePool = CreateDefaultResourcePool(user, "UPO", "Organization", true, true, false, 1);
             resourcePool.UseFixedResourcePoolRate = true;
-            resourcePool.EnableSubtotals = false;
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
