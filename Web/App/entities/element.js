@@ -229,13 +229,14 @@
 
                 // TODO Check totalIncome notes
 
-                if (self == self.ResourcePool.MainElement) {
+                if (self === self.ResourcePool.MainElement) {
 
-                    var value = 0;
+                    var value = self.ResourcePool.InitialValue;
                     for (var i = 0; i < self.ElementItemSet.length; i++) {
                         var item = self.ElementItemSet[i];
                         value += item.totalResourcePoolAmount();
                     }
+
                 } else {
                     if (self.ResourcePool.MainElement !== null) {
                         value = self.ResourcePool.MainElement.totalResourcePoolAmount();

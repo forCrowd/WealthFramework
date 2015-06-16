@@ -123,6 +123,8 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             var resourcePoolRateSample = resourcePoolRepository.CreateResourcePoolRateSample(sampleUser);
             var allInOneSample = resourcePoolRepository.CreateAllInOneSample(sampleUser);
 
+            var initialValueSample = resourcePoolRepository.CreateInitialValueSample(sampleUser);
+
             // Set Id fields explicitly, since strangely EF doesn't save them in the order that they've been added to ResourcePoolSet.
             // And they're referred with these Ids on front-end samples
             upoSample.Id = 1;
@@ -138,6 +140,8 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             indexesPieSample.Id = 11;
             resourcePoolRateSample.Id = 12;
             allInOneSample.Id = 13;
+
+            initialValueSample.Id = 14;
             
             // Insert
             resourcePoolRepository.Insert(upoSample);
@@ -154,10 +158,14 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             resourcePoolRepository.Insert(resourcePoolRateSample);
             resourcePoolRepository.Insert(allInOneSample);
 
+            resourcePoolRepository.Insert(initialValueSample);
+
             // First save
             context.SaveChanges();
 
-            // Set main elements
+            // Set main elements; ResourcePool has both child elements and a main element navigation property
+            // If main element will be set on initially, it would try to create a resource pool with an element and that's not been inserted to database, which fails.
+            // So, creating resource pools & elements and main element selections are done separately.
             upoSample.SetMainElement();
             basicsExistingSystemSample.SetMainElement();
             basicsNewSystemSample.SetMainElement();
@@ -171,6 +179,8 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             indexesPieSample.SetMainElement();
             resourcePoolRateSample.SetMainElement();
             allInOneSample.SetMainElement();
+
+            initialValueSample.SetMainElement();
 
             // Second save for main elements
             context.SaveChanges();

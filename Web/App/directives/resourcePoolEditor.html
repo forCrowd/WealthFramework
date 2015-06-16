@@ -14,7 +14,6 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-12">
-
                     <ol class="breadcrumb" data-ng-if="resourcePool.ElementSet.length > 1">
                         <li data-ng-repeat="parent in resourcePool.currentElement.parents()" data-ng-class="{ active: $last }">
                             <a href="#" data-tooltip="Switch to {{ parent.Name }} view" data-ng-if="!$last" data-ng-click="changeCurrentElement(parent)">
@@ -32,7 +31,7 @@
                 <div class="col-md-12">
                     <table class="resourcePoolTable table-striped" border="0">
                         <thead>
-                            <tr data-ng-if="resourcePool.currentElement.directIncomeField() !== null && resourcePool.currentElement.elementFieldIndexSet().length > 0">
+                            <tr data-ng-if="resourcePool.currentElement.directIncomeField() && resourcePool.currentElement.elementFieldIndexSet().length > 0">
                                 <th>
                                     CMRP Rate
                                 </th>
@@ -47,7 +46,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr data-ng-if="resourcePool.currentElement.directIncomeField() !== null && resourcePool.currentElement.elementFieldIndexSet().length > 0">
+                            <tr data-ng-if="resourcePool.currentElement.elementFieldIndexSet().length > 0">
                                 <th>
                                     CMRP Amount
                                 </th>
@@ -80,7 +79,7 @@
                                     <span data-ng-if="resourcePool.currentElement.elementFieldIndexSet().length === 1">{{ resourcePool.currentElement.elementFieldIndexSet()[0].Name }} (I) Income</span>
                                 </th>
                                 <!-- Total Income -->
-                                <th data-ng-if="resourcePool.currentElement.directIncomeField()">
+                                <th>
                                     Total Income
                                 </th>
                             </tr>
@@ -134,7 +133,7 @@
                                     {{ elementItem.totalResourcePoolIncome() | number: 2 }}
                                 </td>
                                 <!-- Total Income -->
-                                <td data-ng-if="resourcePool.currentElement.directIncomeField()" data-ng-class="{ 'incomeStatusLow': elementItem.incomeStatus() === 'low', 'incomeStatusHigh': elementItem.incomeStatus() === 'high' }">
+                                <td data-ng-class="{ 'incomeStatusLow': elementItem.incomeStatus() === 'low', 'incomeStatusHigh': elementItem.incomeStatus() === 'high' }">
                                     {{ elementItem.totalIncome() | number: 2 }}
                                 </td>
                             </tr>
@@ -162,7 +161,7 @@
                                     {{ resourcePool.currentElement.totalResourcePoolIncome() | number: 2 }}
                                 </td>
                                 <!-- Total Income -->
-                                <td data-ng-if="resourcePool.currentElement.directIncomeField()">
+                                <td>
                                     {{ resourcePool.currentElement.totalIncome() | number: 2 }}
                                 </td>
                             </tr>
@@ -197,7 +196,7 @@
                                     &nbsp;
                                 </td>
                                 <!-- Total Income -->
-                                <td data-ng-if="resourcePool.currentElement.directIncomeField()">
+                                <td>
                                     &nbsp;
                                 </td>
                             </tr>

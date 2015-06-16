@@ -2,6 +2,7 @@
 {
     using forCrowd.WealthEconomy.BusinessObjects;
     using forCrowd.WealthEconomy.DataObjects.Extensions;
+    using System;
     using System.Data.Entity;
     using System.Linq;
     using System.Threading.Tasks;
@@ -187,6 +188,7 @@
             return resourcePool;
         }
 
+        [Obsolete("Not in use")]
         public ResourcePool CreateKnowledgeIndexPopularSoftwareLicenseSampleAlternative(User user)
         {
             const int numberOfItems = 4;
@@ -261,6 +263,7 @@
             return resourcePool;
         }
 
+        [Obsolete("Not in use")]
         public ResourcePool CreateKnowledgeIndexPopularSoftwareLicenseSampleAlternative2(User user)
         {
             const int numberOfItems = 4;
@@ -434,6 +437,7 @@
             return resourcePool;
         }
 
+        [Obsolete("Not in use")]
         public ResourcePool CreateTotalCostIndexSampleOld(User user)
         {
             // Resource pool
@@ -579,6 +583,7 @@
             return resourcePool;
         }
 
+        [Obsolete("Not in use")]
         public ResourcePool CreateIndexesPieSampleOld(User user)
         {
             // Resource pool
@@ -1035,6 +1040,32 @@
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(sectorField).SetValue(healthcareItem);
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(licenseField).SetValue(openSourceLicense);
             mainElement.ElementItemSet.Skip(itemIndex).Take(1).Single().AddCell(fairShareField).SetValue(sharerItem);
+
+            // Return
+            return resourcePool;
+        }
+
+        public ResourcePool CreateInitialValueSample(User user)
+        {
+            // Resource pool
+            var resourcePool = CreateDefaultResourcePool(user, "Initial Value", "Organization", false, false, true, 4);
+            resourcePool.EnableResourcePoolAddition = false;
+            resourcePool.InitialValue = 100;
+
+            // Main element
+            var mainElement = resourcePool.ElementSet.First();
+
+            // Fields
+            //mainElement.DirectIncomeField.Name = "Sales Price";
+            //mainElement.MultiplierField.Name = "Number of Sales";
+
+            mainElement.ElementFieldSet.Single(item => item.IndexEnabled).Name = "Employee Satisfaction";
+
+            // Items, cell, user cells
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "Alpha";
+            mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Beta";
+            mainElement.ElementItemSet.Skip(2).Take(1).Single().Name = "Charlie";
+            mainElement.ElementItemSet.Skip(3).Take(1).Single().Name = "Delta";
 
             // Return
             return resourcePool;
