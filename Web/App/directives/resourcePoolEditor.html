@@ -58,10 +58,9 @@
                             <tr>
                                 <!-- Fields -->
                                 <th data-ng-repeat="field in resourcePool.currentElement.ElementFieldSet | orderBy: 'SortOrder'">
-                                    <span data-ng-if="field.ElementFieldType !== 6">
-                                        {{ field.Name }}
-                                    </span>
-                                    <span data-ng-if="field.IndexEnabled"> (I)</span>
+                                    <div data-ng-if="field.ElementFieldType !== 6">
+                                        {{ field.Name }}<span data-ng-if="field.IndexEnabled" data-tooltip="Index" class="indexInfo">(I)</span>
+                                    </div>
                                     <span data-ng-if="field.ElementFieldType === 6">
                                         <a href="" data-tooltip="Switch to {{ field.Name }} view" data-ng-click="changeCurrentElement(field.SelectedElement)">{{ field.Name }}</a>
                                     </span>

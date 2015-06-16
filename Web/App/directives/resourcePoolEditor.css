@@ -37,6 +37,10 @@
         width: 45px;
     }
 
+    .resourcePoolTable .indexInfo {
+        margin-left: 2px;
+    }
+
     .resourcePoolTable .incomeStatusLow {
         color: #F34146;
     }

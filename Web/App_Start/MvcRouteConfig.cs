@@ -21,7 +21,7 @@ namespace forCrowd.WealthEconomy.Web
             routes.MapPageRoute(
                 routeName: "Default",
                 routeUrl: "{*catchall}",
-                physicalFile: "~/main.aspx?v=0292");
+                physicalFile: "~/main.aspx?v=030");
         }
     }
 }
