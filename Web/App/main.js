@@ -10,6 +10,7 @@
     angular.module('main', [
         'ngRoute', // Angular routing
         'ngSanitize',
+        'ui.bootstrap',
         'breeze.angular',
         'highcharts-ng'
     ]);

@@ -110,14 +110,16 @@
         </footer>
     </div>
 
-    <script src="/Scripts/bootstrap.min.js?v=024"></script>
+    <%--<script src="/Scripts/bootstrap.min.js?v=024"></script>--%>
     <script src="/Scripts/respond.min.js?v=024"></script>
+    <script src="/Scripts/datajs-1.1.3.min.js?v=024"></script>
+    <script src="/Scripts/toastr.min.js?v=024"></script>
 
     <script src="/Scripts/angular.min.js?v=024"></script>
     <script src="/Scripts/angular-route.min.js?v=024"></script>
     <script src="/Scripts/angular-sanitize.min.js?v=024"></script>
-    <script src="/Scripts/datajs-1.1.3.min.js?v=024"></script>
-    <script src="/Scripts/toastr.min.js?v=024"></script>
+
+    <script src="/App/external/ui-bootstrap-tpls-0.13.0.min.js?v=030"></script>
 
     <script src="/Scripts/breeze.min.js?v=024"></script>
     <script src="/Scripts/breeze.bridge.angular.js?v=024"></script>
@@ -128,7 +130,7 @@
     <script src="/App/external/highcharts-ng.js?v=024"></script>
 
     <!-- Main -->
-    <script src="/App/main.js?v=022"></script>
+    <script src="/App/main.js?v=030"></script>
     <script src="/App/logger.js?v=029"></script>
     <script src="/App/route.js?v=0292"></script>
     <script src="/App/authorization.js?v=029"></script>
@@ -177,7 +179,7 @@
     <script src="/App/controllers/manage/resourcePool/resourcePoolCustomViewController.js?v=027"></script>
 
     <!-- Directives -->
-    <script src="/App/directives/resourcePoolEditor.js?v=0292"></script>
+    <script src="/App/directives/resourcePoolEditor.js?v=030"></script>
 
     <!-- Filters -->
     <script src="/App/filters/angular-percentage.js?v=022"></script>

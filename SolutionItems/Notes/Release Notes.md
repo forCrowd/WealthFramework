@@ -1,5 +1,10 @@
 ﻿### Release Notes
 
+**0.30**
+
+* Tooltips for resource pool editor
+* angular-ui-bootstrap instead of bootstrap.js
+
 **0.29.2**
 
 * https://github.com/forCrowd/WealthEconomy/issues/8

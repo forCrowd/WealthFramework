@@ -402,7 +402,9 @@
     <Content Include="App\entities\elementCell.js" />
     <Content Include="App\external\disqus.js" />
     <Content Include="App\external\gratipay.js" />
+    <Content Include="App\external\0 ReadMe.txt" />
     <Content Include="App\external\twitter.js" />
+    <Content Include="App\external\ui-bootstrap-tpls-0.13.0.min.js" />
     <Content Include="App\includes\manageMenu.js">
       <DependentUpon>manageMenu.tt</DependentUpon>
       <AutoGen>True</AutoGen>
