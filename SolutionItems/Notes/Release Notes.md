@@ -3,6 +3,7 @@
 **0.30**
 
 * Tooltips for resource pool editor
+* ResourcePool EnableResourcePoolAddition was renamed to UseFixedResourcePoolRate
 * angular-ui-bootstrap instead of bootstrap.js
 
 **0.29.2**

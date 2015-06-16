@@ -6,7 +6,7 @@
             </p>
             <h3 class="panel-title">{{ resourcePool.Name }}</h3>
             <div class="resourcePoolFilter">
-                <small data-ng-if="resourcePool.EnableResourcePoolAddition || resourcePool.currentElement.elementFieldIndexSet().length > 0">
+                <small data-ng-if="!resourcePool.UseFixedResourcePoolRate || resourcePool.currentElement.elementFieldIndexSet().length > 0">
                     <a href="" data-tooltip="Toggle between 'Only My Ratings' & 'All Ratings'" data-ng data-ng-click="resourcePool.currentElement.toggleValueFilter()">{{ resourcePool.currentElement.valueFilterText() }}</a>
                 </small>
             </div>
@@ -39,7 +39,7 @@
                                     <span class="fixedWidth45Cell">
                                         {{ resourcePool.resourcePoolRatePercentage() | percentage: 2 }}
                                     </span>
-                                    <div data-ng-if="resourcePool.EnableResourcePoolAddition" class="btn-group" role="group">
+                                    <div data-ng-if="!resourcePool.UseFixedResourcePoolRate" class="btn-group" role="group">
                                         <button data-tooltip="Increase CMRP Rate" data-tooltip-append-to-body="true" type="button" data-ng-click="increaseResourcePoolRate()" data-ng-disabled="isSaving" class="btn btn-default btn-xs">+</button>
                                         <button data-tooltip="Decrease CMRP Rate" data-tooltip-append-to-body="true" type="button" data-ng-click="decreaseResourcePoolRate()" data-ng-disabled="isSaving" class="btn btn-default btn-xs">-</button>
                                         <button data-tooltip="Reset CMRP Rate" data-tooltip-append-to-body="true" type="button" data-ng-click="resetResourcePoolRate()" data-ng-disabled="isSaving" class="btn btn-default btn-xs">0</button>
@@ -103,7 +103,7 @@
                                         || elementCell.ElementField.ElementFieldType === 5)
                                         && !elementCell.ElementField.UseFixedValue">
                                         <span class="fixedWidth35Cell">
-                                            {{ elementCell.numericValue() | number: 2 }}
+                                            {{ elementCell.numericValue() | number: 2 }} 
                                         </span>
                                         <div class="btn-group" role="group" data-ng-if="elementCell.ElementField.ElementFieldType === 4 && elementCell.ElementField.IndexEnabled">
                                             <button data-tooltip="Increase" data-tooltip-append-to-body="true" type="button" data-ng-click="increaseElementCellNumericValue(elementCell)" data-ng-disabled="isSaving" class="btn btn-default btn-xs">+</button>

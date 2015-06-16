@@ -32,7 +32,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects
 
             User = user;
             Name = name;
-            EnableResourcePoolAddition = true;
+            UseFixedResourcePoolRate = true;
             EnableSubtotals = true;
         }
 
@@ -58,7 +58,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         [Display(Name = "Enable CMRP Addition")]
         [DisplayOnListView(false)]
         [DisplayOnEditView(true)]
-        public bool EnableResourcePoolAddition { get; set; }
+        public bool UseFixedResourcePoolRate { get; set; }
 
         [Display(Name = "Enable Subtotals")]
         [DisplayOnListView(false)]

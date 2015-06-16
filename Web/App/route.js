@@ -62,7 +62,7 @@
                 templateUrl = '/App/views/manage/list/' + params.entity + 'List.html?v=027';
 
             if (action === 'new' || action === 'edit')
-                templateUrl = '/App/views/manage/edit/' + params.entity + 'Edit.html?v=027';
+                templateUrl = '/App/views/manage/edit/' + params.entity + 'Edit.html?v=030';
 
             return templateUrl;
         }

@@ -133,7 +133,7 @@
     <!-- Main -->
     <script src="/App/main.js?v=030"></script>
     <script src="/App/logger.js?v=029"></script>
-    <script src="/App/route.js?v=0292"></script>
+    <script src="/App/route.js?v=030"></script>
     <script src="/App/authorization.js?v=029"></script>
 
     <!-- Entities -->

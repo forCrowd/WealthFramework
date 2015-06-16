@@ -15,7 +15,7 @@
         {
             // Resource pool
             var resourcePool = CreateDefaultResourcePool(user, "UPO", "Organization", true, true, false, 1);
-            resourcePool.EnableResourcePoolAddition = false;
+            resourcePool.UseFixedResourcePoolRate = true;
             resourcePool.EnableSubtotals = false;
 
             // Main element
@@ -35,7 +35,7 @@
         {
             // Resource pool
             var resourcePool = CreateDefaultResourcePool(user, "Basics - Existing Model", "Organization", true, true, false, 4);
-            resourcePool.EnableResourcePoolAddition = false;
+            resourcePool.UseFixedResourcePoolRate = true;
             //resourcePool.EnableSubtotals = false;
 
             // Main element
@@ -57,7 +57,7 @@
         {
             // Resource pool
             var resourcePool = CreateDefaultResourcePool(user, "Basics - New Model", "Organization", true, true, true, 4);
-            resourcePool.EnableResourcePoolAddition = false;
+            resourcePool.UseFixedResourcePoolRate = true;
             //resourcePool.EnableSubtotals = false;
 
             // Main element
@@ -85,7 +85,7 @@
 
             // Resource pool
             var resourcePool = CreateDefaultResourcePool(user, "Sector Index Sample", "Organization", true, true, false, numberOfItems);
-            resourcePool.EnableResourcePoolAddition = false;
+            resourcePool.UseFixedResourcePoolRate = true;
 
             // Sector element
             var sectorElement = resourcePool.AddElement("Sector");
@@ -138,7 +138,7 @@
 
             // Resource pool
             var resourcePool = CreateDefaultResourcePool(user, "Knowledge Index Sample", "Organization", true, true, false, numberOfItems);
-            resourcePool.EnableResourcePoolAddition = false;
+            resourcePool.UseFixedResourcePoolRate = true;
 
             // License element
             var licenseElement = resourcePool.AddElement("License");
@@ -195,7 +195,7 @@
 
             // Resource pool
             var resourcePool = CreateDefaultResourcePool(user, "Knowledge Index - Popular Software Licenses", "Organization", true, true, false, numberOfItems);
-            resourcePool.EnableResourcePoolAddition = false;
+            resourcePool.UseFixedResourcePoolRate = true;
 
             // License element
             var licenseElement = resourcePool.AddElement("License");
@@ -270,7 +270,7 @@
 
             // Resource pool
             var resourcePool = CreateDefaultResourcePool(user, "Knowledge Index - Popular Software Licenses", "License", false, false, false, numberOfItems);
-            resourcePool.EnableResourcePoolAddition = false;
+            resourcePool.UseFixedResourcePoolRate = true;
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
@@ -316,7 +316,7 @@
 
             // Resource pool
             var resourcePool = CreateDefaultResourcePool(user, "Knowledge Index - Popular Software Licenses", "License", false, false, false, numberOfItems);
-            resourcePool.EnableResourcePoolAddition = false;
+            resourcePool.UseFixedResourcePoolRate = true;
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
@@ -359,7 +359,7 @@
         {
             // Resource pool
             var resourcePool = CreateDefaultResourcePool(user, "Total Cost Index - Existing Model", "Product", true, true, false, 3);
-            resourcePool.EnableResourcePoolAddition = false;
+            resourcePool.UseFixedResourcePoolRate = true;
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
@@ -384,7 +384,7 @@
         {
             // Resource pool
             var resourcePool = CreateDefaultResourcePool(user, "Total Cost Index - New Model", "Product", true, true, false, 3);
-            resourcePool.EnableResourcePoolAddition = false;
+            resourcePool.UseFixedResourcePoolRate = true;
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
@@ -412,7 +412,7 @@
         {
             // Resource pool
             var resourcePool = CreateDefaultResourcePool(user, "Total Cost Index - New Model - Aftermath", "Product", true, true, false, 3);
-            resourcePool.EnableResourcePoolAddition = false;
+            resourcePool.UseFixedResourcePoolRate = true;
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
@@ -442,7 +442,7 @@
         {
             // Resource pool
             var resourcePool = CreateDefaultResourcePool(user, "Total Cost Index Sample", "Organization", true, true, false, 2);
-            resourcePool.EnableResourcePoolAddition = false;
+            resourcePool.UseFixedResourcePoolRate = true;
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
@@ -468,7 +468,7 @@
 
             // Resource pool
             var resourcePool = CreateDefaultResourcePool(user, "Fair Share Index", "Organization", addResourcePoolField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: numberOfItems);
-            resourcePool.EnableResourcePoolAddition = false;
+            resourcePool.UseFixedResourcePoolRate = true;
             //resourcePool.EnableSubtotals = false;
 
             // Fair share element
@@ -512,7 +512,7 @@
 
             // Resource pool
             var resourcePool = CreateDefaultResourcePool(user, "Indexes Pie", "Organization", addResourcePoolField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: numberOfItems);
-            resourcePool.EnableResourcePoolAddition = false;
+            resourcePool.UseFixedResourcePoolRate = true;
             //resourcePool.EnableSubtotals = false;
 
             //// Fair share element
@@ -588,7 +588,7 @@
         {
             // Resource pool
             var resourcePool = CreateDefaultResourcePool(user, "Indexes Pie", "Organization", addResourcePoolField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: 2);
-            resourcePool.EnableResourcePoolAddition = false;
+            resourcePool.UseFixedResourcePoolRate = true;
             //resourcePool.EnableSubtotals = false;
 
             //// Fair share element
@@ -660,7 +660,7 @@
 
             // Resource pool
             var resourcePool = CreateDefaultResourcePool(user, "CMRP Rate", "Organization", addResourcePoolField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: numberOfItems);
-            resourcePool.EnableResourcePoolAddition = true;
+            resourcePool.UseFixedResourcePoolRate = false;
             //resourcePool.EnableSubtotals = false;
 
             //// Fair share element
@@ -740,7 +740,7 @@
 
             // Resource pool
             var resourcePool = CreateDefaultResourcePool(user, "All in One - Slow!", "Organization", addResourcePoolField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: numberOfItems);
-            resourcePool.EnableResourcePoolAddition = true;
+            resourcePool.UseFixedResourcePoolRate = false;
             //resourcePool.EnableSubtotals = false;
 
             // Sector element
@@ -1049,7 +1049,7 @@
         {
             // Resource pool
             var resourcePool = CreateDefaultResourcePool(user, "Initial Value", "Organization", false, false, true, 4);
-            resourcePool.EnableResourcePoolAddition = false;
+            resourcePool.UseFixedResourcePoolRate = true;
             resourcePool.InitialValue = 100;
 
             // Main element
