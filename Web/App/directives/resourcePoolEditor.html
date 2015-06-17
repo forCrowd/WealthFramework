@@ -79,7 +79,7 @@
                                     <span data-ng-if="resourcePool.currentElement.elementFieldIndexSet().length === 1">{{ resourcePool.currentElement.elementFieldIndexSet()[0].Name }} (I) Income</span>
                                 </th>
                                 <!-- Total Income -->
-                                <th data-ng-if="resourcePool.InitialValue > 0 || (resourcePool.currentElement.directIncomeField() && resourcePool.currentElement.elementFieldIndexSet().length > 0)">
+                                <th data-ng-if="resourcePool.InitialValue > 0 || resourcePool.currentElement.directIncomeField()">
                                     Total Income
                                 </th>
                             </tr>
@@ -133,7 +133,7 @@
                                     {{ elementItem.totalResourcePoolIncome() | number: 2 }}
                                 </td>
                                 <!-- Total Income -->
-                                <td data-ng-if="resourcePool.InitialValue > 0 || (resourcePool.currentElement.directIncomeField() && resourcePool.currentElement.elementFieldIndexSet().length > 0)" data-ng-class="{ 'incomeStatusLow': elementItem.incomeStatus() === 'low', 'incomeStatusHigh': elementItem.incomeStatus() === 'high' }">
+                                <td data-ng-if="resourcePool.InitialValue > 0 || resourcePool.currentElement.directIncomeField()" data-ng-class="{ 'incomeStatusLow': elementItem.incomeStatus() === 'low', 'incomeStatusHigh': elementItem.incomeStatus() === 'high' }">
                                     {{ elementItem.totalIncome() | number: 2 }}
                                 </td>
                             </tr>
@@ -161,7 +161,7 @@
                                     {{ resourcePool.currentElement.totalResourcePoolIncome() | number: 2 }}
                                 </td>
                                 <!-- Total Income -->
-                                <td data-ng-if="resourcePool.InitialValue > 0 || (resourcePool.currentElement.directIncomeField() && resourcePool.currentElement.elementFieldIndexSet().length > 0)">
+                                <td data-ng-if="resourcePool.InitialValue > 0 || resourcePool.currentElement.directIncomeField()">
                                     {{ resourcePool.currentElement.totalIncome() | number: 2 }}
                                 </td>
                             </tr>
@@ -196,7 +196,7 @@
                                     &nbsp;
                                 </td>
                                 <!-- Total Income -->
-                                <td data-ng-if="resourcePool.InitialValue > 0 || (resourcePool.currentElement.directIncomeField() && resourcePool.currentElement.elementFieldIndexSet().length > 0)">
+                                <td data-ng-if="resourcePool.InitialValue > 0 || resourcePool.currentElement.directIncomeField()">
                                     &nbsp;
                                 </td>
                             </tr>

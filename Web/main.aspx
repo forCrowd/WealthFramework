@@ -107,7 +107,6 @@
                     </span>
                 </a>
             </p>
-            <p style="height: 150px;">&nbsp;</p>
         </footer>
     </div>
 
