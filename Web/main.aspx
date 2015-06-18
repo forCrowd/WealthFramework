@@ -53,25 +53,25 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="dropdown hide">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Content <b class="caret"></b></a>
+                    <li class="dropdown hide" data-dropdown>
+                        <a href="" class="dropdown-toggle" data-dropdown-toggle>Content <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="/content/overview">Overview</a></li>
                             <li><a href="/content/technologies">Technologies</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown hide" data-ng-show="vm.isAuthenticated()">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Manage <b class="caret"></b></a>
+                    <li class="dropdown hide" data-dropdown data-ng-show="vm.isAuthenticated()">
+                        <a href="" class="dropdown-toggle" data-dropdown-toggle>Manage <b class="caret"></b></a>
                         <!-- Manage Menu - Generated -->
                         <script src="/App/includes/manageMenu.js?v=027"></script>
                     </li>
-                    <li class="dropdown" data-ng-show="vm.isAuthenticated()">
+                    <li data-ng-show="vm.isAuthenticated()">
                         <a href="/manage/custom/resourcePool">CMRP</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown" data-ng-if="vm.isAuthenticated()">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown"><span data-ng-bind="'User: ' + vm.currentUser.Email"></span><b class="caret"></b></a>
+                    <li class="dropdown" data-dropdown data-ng-if="vm.isAuthenticated()">
+                        <a href="" class="dropdown-toggle" data-dropdown-toggle><span data-ng-bind="'User: ' + vm.currentUser.Email"></span><b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="/account/accountEdit">Edit</a></li>
                             <li><a href="/account/changePassword">Change password</a></li>
