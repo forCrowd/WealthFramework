@@ -13,7 +13,7 @@
 
     <!-- Internal CSS -->
     <link href="/Content/site.css?v=030" rel="stylesheet" />
-    <link href="/App/directives/resourcePoolEditor.css?v=028" rel="stylesheet" />
+    <link href="/App/directives/resourcePoolEditor.css?v=031" rel="stylesheet" />
 
     <!-- jQuery -->
     <script src="/Scripts/jquery-2.1.4.min.js"></script>
@@ -138,8 +138,8 @@
     <!-- Entities -->
     <script src="/App/entities/resourcePool.js?v=029"></script>
     <script src="/App/entities/element.js?v=030"></script>
-    <script src="/App/entities/elementCell.js?v=029"></script>
-    <script src="/App/entities/elementField.js?v=029"></script>
+    <script src="/App/entities/elementCell.js?v=031"></script>
+    <script src="/App/entities/elementField.js?v=031"></script>
     <script src="/App/entities/elementItem.js?v=028"></script>
     <script src="/App/entities/userElementCell.js?v=027"></script>
 
@@ -179,7 +179,7 @@
     <script src="/App/controllers/manage/resourcePool/resourcePoolCustomViewController.js?v=027"></script>
 
     <!-- Directives -->
-    <script src="/App/directives/resourcePoolEditor.js?v=030"></script>
+    <script src="/App/directives/resourcePoolEditor.js?v=031"></script>
 
     <!-- Filters -->
     <script src="/App/filters/angular-percentage.js?v=022"></script>

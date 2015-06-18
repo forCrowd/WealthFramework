@@ -37,7 +37,7 @@
         width: 45px;
     }
 
-    .resourcePoolTable .indexInfo {
+    .resourcePoolTable .infoText {
         margin-left: 2px;
     }
 
@@ -52,3 +52,27 @@
     .resourcePoolTable .incomeStatusHigh {
         color: #81C14F;
     }
+
+.label-as-on-badge {
+    border-radius: 1em;
+    background-color: #5cb85c;
+    cursor: pointer;
+    margin-left: 2px;
+}
+
+.label-as-on-badge:hover,
+.label-as-on-badge:focus {
+    background-color: #d9534f;
+}
+
+.label-as-off-badge {
+    border-radius: 1em;
+    background-color: #d9534f;
+    cursor: pointer;
+    margin-left: 2px;
+}
+
+.label-as-off-badge:hover,
+.label-as-off-badge:focus {
+    background-color: #5cb85c;
+}

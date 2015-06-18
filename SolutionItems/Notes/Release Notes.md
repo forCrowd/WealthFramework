@@ -1,5 +1,10 @@
 ﻿### Release Notes
 
+**0.31**
+
+* Separation of valueFilters
+* label as on / off badge
+
 **0.30**
 
 * Tooltips for resource pool editor

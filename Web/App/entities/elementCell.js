@@ -36,33 +36,33 @@
             $rootScope.$on('elementCellNumericValueUpdated', function (event, args) {
                 if (args.elementCell === self) {
                     _currentUserNumericValue = args.value;
-                    setNumericValue();
+                    self.setNumericValue();
                     self.setNumericValueMultiplied();
                 }
             });
 
-            $rootScope.$on('elementValueFilterChanged', function (event, args) {
+            //$rootScope.$on('elementValueFilterChanged', function (event, args) {
 
-                if (typeof self.ElementItem === 'undefined') {
-                    return;
-                }
+            //    if (typeof self.ElementItem === 'undefined') {
+            //        return;
+            //    }
 
-                if (args.element !== self.ElementItem.Element) {
-                    return;
-                }
+            //    if (args.element !== self.ElementItem.Element) {
+            //        return;
+            //    }
 
-                // If it's not numeric value, there is nothing to do
-                if (self.ElementField.ElementFieldType !== 2
-                    && self.ElementField.ElementFieldType !== 3
-                    && self.ElementField.ElementFieldType !== 4
-                    // TODO 5 (DateTime?)
-                    && self.ElementField.ElementFieldType !== 11) {
-                    return;
-                }
+            //    // If it's not numeric value, there is nothing to do
+            //    if (self.ElementField.ElementFieldType !== 2
+            //        && self.ElementField.ElementFieldType !== 3
+            //        && self.ElementField.ElementFieldType !== 4
+            //        // TODO 5 (DateTime?)
+            //        && self.ElementField.ElementFieldType !== 11) {
+            //        return;
+            //    }
 
-                setNumericValue();
-                self.setNumericValueMultiplied();
-            });
+            //    self.setNumericValue();
+            //    self.setNumericValueMultiplied();
+            //});
 
             self.userCell = function () {
 
@@ -145,16 +145,16 @@
             self.numericValue = function () {
 
                 if (_numericValue === null) {
-                    setNumericValue();
+                    self.setNumericValue();
                 }
 
                 return _numericValue;
             }
 
-            function setNumericValue() {
+            self.setNumericValue = function() {
 
                 if (typeof self.ElementField !== 'undefined') {
-                    switch (self.ElementItem.Element.valueFilter) {
+                    switch (self.ElementField.valueFilter) {
                         case 1: { _numericValue = self.currentUserNumericValue(); break; } // Current user's
                         case 2: { _numericValue = self.numericValueAverage(); break; } // All
                     }
