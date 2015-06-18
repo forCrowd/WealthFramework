@@ -42,7 +42,7 @@
                 { name: "My Precious Jewelry", data: [0] },
                 { name: 'Death Star Architecture', data: [0] },
                 { name: "Christina's Secret", data: [0] },
-                { name: 'Nuka Cola Formula', data: [0] }
+                { name: 'Nuka Cola Company', data: [0] }
             ]
         };
 

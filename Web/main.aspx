@@ -161,7 +161,7 @@
     <script src="/App/controllers/content/introductionController.js?v=029"></script>
     <script src="/App/controllers/content/basicsController.js?v=029"></script>
     <script src="/App/controllers/content/sectorIndexSampleController.js?v=029"></script>
-    <script src="/App/controllers/content/knowledgeIndexSampleController.js?v=029"></script>
+    <script src="/App/controllers/content/knowledgeIndexSampleController.js?v=030"></script>
     <script src="/App/controllers/content/totalCostIndexSampleController.js?v=029"></script>
     <script src="/App/controllers/content/fairShareIndexSampleController.js?v=029"></script>
     <script src="/App/controllers/content/indexesPieSampleController.js?v=029"></script>
