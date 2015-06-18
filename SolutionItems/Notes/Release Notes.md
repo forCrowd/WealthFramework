@@ -6,6 +6,7 @@
 * ResourcePool EnableResourcePoolAddition was renamed to UseFixedResourcePoolRate
 * ResourcePool EnableSubtotals field was removed
 * angular-ui-bootstrap instead of bootstrap.js
+* Content updates
 
 **0.29.2**
 
