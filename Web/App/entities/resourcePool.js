@@ -46,16 +46,67 @@
 
             self._userResourcePool = null;
 
-            // Value filter for element cells
-            self.valueFilter = 1;
-            self.toggleValueFilter = function () {
+            // Checks whether resource pool has any item that can be rateable
+            self.displayRatingMode = function () {
 
-                self.valueFilter = self.valueFilter === 1 ? 2 : 1;
+                // Check resource pool level first
+                if (!resourcePool.UseFixedResourcePoolRate) {
+                    return true;
+                }
 
-                // Manually calculate the rest
-                setResourcePoolRate();
+                // Field index level
+                for (var elementIndex = 0; elementIndex < self.ElementSet.length; elementIndex++) {
+                    var element = self.ElementSet[elementIndex];
+
+                    // If there are multiple indexes, then the users can set index rating
+                    if (element.elementFieldIndexSet().length > 1) {
+                        return true;
+                    }
+
+                    // If there is an index without a fixed value
+                    if (element.elementFieldIndexSet().length > 0 && !element.elementFieldIndexSet()[0].UseFixedValue) {
+                        return true;
+                    }
+                }
+
+                return false;
             }
-            self.valueFilterText = function () {
+
+            // Value filter for element cells
+            self.ratingMode = 1;
+            self.toggleRatingMode = function () {
+
+                self.ratingMode = self.ratingMode === 1 ? 2 : 1;
+
+                // ResourcePool calculations
+                setResourcePoolRate();
+
+                for (var elementIndex = 0; elementIndex < self.ElementSet.length; elementIndex++) {
+                    var element = self.ElementSet[elementIndex];
+
+                    for (var fieldIndex = 0; fieldIndex < element.ElementFieldSet.length; fieldIndex++) {
+
+                        var field = element.ElementFieldSet[fieldIndex];
+
+                        // Field calculations
+                        if (field.IndexEnabled) {
+                            field.setIndexRating();
+                        }
+
+                        if (!field.UseFixedValue && field.IndexEnabled) {
+                            for (var cellIndex = 0; cellIndex < field.ElementCellSet.length; cellIndex++) {
+                                var cell = field.ElementCellSet[cellIndex];
+
+                                // Cell calculations
+                                cell.setNumericValue();
+                                cell.setNumericValueMultiplied();
+                            }
+                        }
+                    }
+                }
+            }
+
+            self.ratingModeText = function () {
                 return self.resourcePoolRateCount();
             }
 
@@ -70,12 +121,6 @@
                     setResourcePoolRate();
                 }
             });
-
-            //$rootScope.$on('elementValueFilterChanged', function (event, args) {
-            //    if (args.element.ResourcePool === self) {
-            //        setResourcePoolRate();
-            //    }
-            //});
 
             // Functions
             self.userResourcePool = function () {
@@ -149,7 +194,7 @@
             }
 
             function setResourcePoolRate() {
-                switch (self.valueFilter) {
+                switch (self.ratingMode) {
                     case 1: { _resourcePoolRate = self.currentUserResourcePoolRate(); break; } // Current user's
                     case 2: { _resourcePoolRate = self.resourcePoolRateAverage(); break; } // All
                 }

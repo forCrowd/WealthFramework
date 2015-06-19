@@ -2,8 +2,8 @@
 
 **0.31**
 
-* Separation of valueFilters
-* label as on / off badge
+* https://github.com/forCrowd/WealthEconomy/issues/50
+* Label as on / off badge was created
 
 **0.30**
 

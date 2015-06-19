@@ -69,6 +69,11 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public int? ResourcePoolRateCount { get; private set; }
 
+        [DisplayOnListView(false)]
+        [DisplayOnEditView(false)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public int? RatingCount { get; private set; }
+
         public virtual User User { get; set; }
         public virtual Element MainElement { get; set; }
         public virtual ICollection<Element> ElementSet { get; set; }

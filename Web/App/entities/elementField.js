@@ -26,23 +26,6 @@
             var _indexRating = null;
             var _currentUserIndexRating = null;
 
-            // Value filter for element cells
-            self.valueFilter = 1;
-            self.toggleValueFilter = function () {
-
-                self.valueFilter = self.valueFilter === 1 ? 2 : 1;
-
-                // Manually calculate the rest
-                for (var i = 0; i < self.ElementCellSet.length; i++) {
-                    var cell = self.ElementCellSet[i];
-                    cell.setNumericValue();
-                    cell.setNumericValueMultiplied();
-                }
-            }
-            self.valueFilterText = function () {
-                return self.ElementCellSet[0].numericValueCount();
-            }
-
             // Other users' values: Keeps the values excluding current user's
             self.otherUsersIndexRating = null;
             self.otherUsersIndexRatingCount = null;
@@ -51,16 +34,7 @@
             $rootScope.$on('elementMultiplierUpdated', function (event, args) {
                 if (args.elementField === self) {
                     _currentUserIndexRating = args.value;
-                    setIndexRating();
-                }
-            });
-
-            $rootScope.$on('elementValueFilterChanged', function (event, args) {
-
-                // TODO No idea why but there is one ElementField with no Element (breeze creates it with setConstructor I guess)
-                // Therefore there is this Element undefined check
-                if (typeof self.Element !== 'undefined' && args.element.ResourcePool === self.Element.ResourcePool) {
-                    setIndexRating();
+                    self.setIndexRating();
                 }
             });
 
@@ -236,14 +210,14 @@
             self.indexRating = function () {
 
                 if (_indexRating === null) {
-                    setIndexRating();
+                    self.setIndexRating();
                 }
 
                 return _indexRating;
             }
 
-            function setIndexRating() {
-                switch (self.Element.valueFilter) {
+            self.setIndexRating = function() {
+                switch (self.Element.ResourcePool.ratingMode) {
                     case 1: { _indexRating = self.currentUserIndexRating(); break; } // Current user's
                     case 2: { _indexRating = self.indexRatingAverage(); break; } // All
                 }

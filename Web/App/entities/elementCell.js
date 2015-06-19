@@ -41,29 +41,6 @@
                 }
             });
 
-            //$rootScope.$on('elementValueFilterChanged', function (event, args) {
-
-            //    if (typeof self.ElementItem === 'undefined') {
-            //        return;
-            //    }
-
-            //    if (args.element !== self.ElementItem.Element) {
-            //        return;
-            //    }
-
-            //    // If it's not numeric value, there is nothing to do
-            //    if (self.ElementField.ElementFieldType !== 2
-            //        && self.ElementField.ElementFieldType !== 3
-            //        && self.ElementField.ElementFieldType !== 4
-            //        // TODO 5 (DateTime?)
-            //        && self.ElementField.ElementFieldType !== 11) {
-            //        return;
-            //    }
-
-            //    self.setNumericValue();
-            //    self.setNumericValueMultiplied();
-            //});
-
             self.userCell = function () {
 
                 if (self._userCell !== null && self._userCell.entityAspect.entityState.isDetached()) {
@@ -88,7 +65,7 @@
                             // TODO 5 (DateTime?)
                         case 11: { _currentUserNumericValue = self.NumericValue !== null ? self.NumericValue : 0; break; } // DirectIncome: No need to try user's cell, always return all users', which will be CMRP owner's value
                             // case 12: { value = userCell !== null ? userCell.DecimalValue : 0; break; }
-                        default: { throw 'Not supported'; }
+                        default: { throw 'Not supported ' + self.ElementField.ElementFieldType; }
                     }
 
                 }
@@ -116,7 +93,7 @@
                             case 11: { self.otherUsersNumericValue -= self.userCell().DecimalValue; break; }
                                 //case 12: { value = userCell !== null ? userCell.DecimalValue : 0; break; }
                             default: {
-                                throw 'Not supported';
+                                throw 'Not supported ' + self.ElementField.ElementFieldType;
                             }
                         }
                     }
@@ -155,7 +132,7 @@
             self.setNumericValue = function() {
 
                 if (typeof self.ElementField !== 'undefined') {
-                    switch (self.ElementField.valueFilter) {
+                    switch (self.ElementField.Element.ResourcePool.ratingMode) {
                         case 1: { _numericValue = self.currentUserNumericValue(); break; } // Current user's
                         case 2: { _numericValue = self.numericValueAverage(); break; } // All
                     }

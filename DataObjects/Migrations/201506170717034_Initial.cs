@@ -189,6 +189,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
                         UseFixedResourcePoolRate = c.Boolean(nullable: false),
                         ResourcePoolRate = c.Decimal(precision: 18, scale: 2),
                         ResourcePoolRateCount = c.Int(),
+                        RatingCount = c.Int(),
                         CreatedOn = c.DateTime(nullable: false),
                         ModifiedOn = c.DateTime(nullable: false),
                         DeletedOn = c.DateTime(),

@@ -4,12 +4,10 @@
             <p data-ng-if="errorMessage.length > 0">
                 <span class="label label-warning">{{ errorMessage }}</span>
             </p>
-            <h3 class="panel-title">{{ resourcePool.Name }}</h3>
-            <div class="resourcePoolFilter">
-                <small data-ng-if="!resourcePool.UseFixedResourcePoolRate || resourcePool.currentElement.elementFieldIndexSet().length > 0">
-                    <a href="" data-tooltip="Toggle between 'Only My Ratings' & 'All Ratings'" data-ng data-ng-click="resourcePool.currentElement.toggleValueFilter()">{{ resourcePool.currentElement.valueFilterText() }}</a>
-                </small>
-            </div>
+            <h3 class="panel-title">
+                {{ resourcePool.Name }}
+                <span data-ng-if="resourcePool.displayRatingMode()" data-tooltip="Number of ratings: Toggle to display the results with only your ratings or all users'" data-ng-click="resourcePool.toggleRatingMode()" class="label" data-ng-class="{ 'label-as-off-badge': resourcePool.ratingMode === 1, 'label-as-on-badge': resourcePool.ratingMode === 2 }">{{ resourcePool.RatingCount }}</span>
+            </h3>
         </div>
         <div class="panel-body">
             <div class="row">
@@ -44,7 +42,6 @@
                                         <button data-tooltip="Decrease CMRP Rate" data-tooltip-append-to-body="true" type="button" data-ng-click="decreaseResourcePoolRate()" data-ng-disabled="isSaving" class="btn btn-default btn-xs">-</button>
                                         <button data-tooltip="Reset CMRP Rate" data-tooltip-append-to-body="true" type="button" data-ng-click="resetResourcePoolRate()" data-ng-disabled="isSaving" class="btn btn-default btn-xs">0</button>
                                     </div>
-                                    <span data-ng-if="!resourcePool.UseFixedResourcePoolRate" data-tooltip="Number of ratings: Toggle to display only your ratings or all ratings" data-ng data-ng-click="resourcePool.toggleValueFilter()" class="label" data-ng-class="{ 'label-as-off-badge': resourcePool.valueFilter === 1, 'label-as-on-badge': resourcePool.valueFilter === 2 }">{{ resourcePool.valueFilterText() }}</span>
                                 </td>
                             </tr>
                             <tr data-ng-if="resourcePool.InitialValue > 0 || (resourcePool.currentElement.directIncomeField() && resourcePool.currentElement.elementFieldIndexSet().length > 0)">
@@ -59,7 +56,7 @@
                                 <!-- Fields -->
                                 <th data-ng-repeat="field in resourcePool.currentElement.ElementFieldSet | orderBy: 'SortOrder'">
                                     <div data-ng-if="field.ElementFieldType !== 6">
-                                        {{ field.Name }}<span data-ng-if="field.IndexEnabled" data-tooltip="Index" class="infoText">(I)</span><span data-ng-if="!field.UseFixedValue && field.IndexEnabled" data-tooltip="Number of ratings: Toggle to display only your ratings or all ratings" data-ng data-ng-click="field.toggleValueFilter()" class="label" data-ng-class="{ 'label-as-off-badge': field.valueFilter === 1, 'label-as-on-badge': field.valueFilter === 2 }">{{ field.valueFilterText() }}</span>
+                                        {{ field.Name }}<span data-ng-if="field.IndexEnabled" data-tooltip="Index" class="infoText">(I)</span>
                                     </div>
                                     <span data-ng-if="field.ElementFieldType === 6">
                                         <a href="" data-tooltip="Switch to {{ field.Name }} view" data-ng-click="changeCurrentElement(field.SelectedElement)">{{ field.Name }}</a>

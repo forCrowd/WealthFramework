@@ -19,6 +19,12 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             Sql("ALTER TABLE dbo.ResourcePool DROP COLUMN ResourcePoolRateCount;");
             Sql("ALTER TABLE dbo.ResourcePool ADD ResourcePoolRateCount AS dbo.getResourcePoolRateCount(Id);");
 
+            // ResourcePool RatingCount
+            Sql(PrepareDropFunctionBlock("ResourcePool", "RatingCount", "getResourcePoolRatingCount"));
+            Sql(PrepareGetResourcePoolRatingCountFunctionBlock());
+            Sql("ALTER TABLE dbo.ResourcePool DROP COLUMN RatingCount;");
+            Sql("ALTER TABLE dbo.ResourcePool ADD RatingCount AS dbo.getResourcePoolRatingCount(Id);");
+
             // ElementField IndexRating
             Sql(PrepareDropFunctionBlock("ElementField", "IndexRating", "getElementFieldIndexRating"));
             Sql(PrepareGetElementFieldIndexRatingFunctionBlock());
@@ -61,6 +67,11 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             Sql("ALTER TABLE dbo.ResourcePool DROP COLUMN ResourcePoolRateCount;");
             Sql("ALTER TABLE dbo.ResourcePool ADD ResourcePoolRateCount int;");
             Sql("DROP FUNCTION dbo.getResourcePoolRateCount;");
+
+            // ResourcePool RatingCount
+            Sql("ALTER TABLE dbo.ResourcePool DROP COLUMN RatingCount;");
+            Sql("ALTER TABLE dbo.ResourcePool ADD RatingCount int;");
+            Sql("DROP FUNCTION dbo.getResourcePoolRatingCount;");
 
             // ElementField IndexRating
             Sql("ALTER TABLE dbo.ElementField DROP COLUMN IndexRating;");
@@ -111,6 +122,43 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             sbOutput.AppendLine("BEGIN");
             sbOutput.AppendLine("    DECLARE @result int");
             sbOutput.AppendLine("    SELECT @result = COUNT(ResourcePoolRate) FROM UserResourcePool WHERE ResourcePoolId = @resourcePoolId AND DeletedOn IS NULL");
+            sbOutput.AppendLine("    RETURN @result");
+            sbOutput.AppendLine("END");
+            return sbOutput.ToString();
+        }
+
+        string PrepareGetResourcePoolRatingCountFunctionBlock()
+        {
+            var sbOutput = new StringBuilder();
+            sbOutput.AppendLine("CREATE FUNCTION dbo.getResourcePoolRatingCount(@resourcePoolId int)");
+            sbOutput.AppendLine("RETURNS int");
+            sbOutput.AppendLine("AS");
+            sbOutput.AppendLine("BEGIN");
+            sbOutput.AppendLine("    DECLARE @result int");
+            sbOutput.AppendLine("    SELECT @result = COUNT(Id) FROM [User] WHERE DeletedOn IS NULL AND Id IN (");
+            sbOutput.AppendLine("    SELECT T1.UserId");
+            sbOutput.AppendLine("    	FROM UserElementCell T1");
+            sbOutput.AppendLine("    	JOIN ElementCell T2 ON T1.ElementCellId = T2.Id");
+            sbOutput.AppendLine("    	JOIN ElementField T3 ON T2.ElementFieldId = T3.Id");
+            sbOutput.AppendLine("    	JOIN Element T4 ON T3.ElementId = T4.Id");
+            sbOutput.AppendLine("    	WHERE T4.ResourcePoolId = @ResourcePoolId");
+            sbOutput.AppendLine("    		AND T3.UseFixedValue = 0");
+            sbOutput.AppendLine("    		AND T1.DeletedOn IS NULL");
+            sbOutput.AppendLine("    UNION ALL");
+            sbOutput.AppendLine("    SELECT T1.UserId");
+            sbOutput.AppendLine("    	FROM UserElementField T1");
+            sbOutput.AppendLine("    	JOIN ElementField T2 ON T1.ElementFieldId = T2.Id");
+            sbOutput.AppendLine("    	JOIN Element T3 ON T2.ElementId = T3.Id");
+            sbOutput.AppendLine("    	WHERE T3.ResourcePoolId = @ResourcePoolId");
+            sbOutput.AppendLine("    		AND T1.DeletedOn IS NULL");
+            sbOutput.AppendLine("    UNION ALL");
+            sbOutput.AppendLine("    SELECT T1.UserId");
+            sbOutput.AppendLine("    	FROM UserResourcePool T1");
+            sbOutput.AppendLine("    	JOIN ResourcePool T2 ON T1.ResourcePoolId = T2.Id");
+            sbOutput.AppendLine("    	WHERE T1.ResourcePoolId = @ResourcePoolId");
+            sbOutput.AppendLine("    		AND T2.UseFixedResourcePoolRate = 0");
+            sbOutput.AppendLine("    		AND T1.DeletedOn IS NULL");
+            sbOutput.AppendLine("    )");
             sbOutput.AppendLine("    RETURN @result");
             sbOutput.AppendLine("END");
             return sbOutput.ToString();

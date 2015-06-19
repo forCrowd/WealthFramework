@@ -5,11 +5,6 @@
     padding: 1.5em 0;
 }
 
-    .resourcePoolEditor .resourcePoolFilter {
-        margin-top: 1em;
-        height: 1em;
-    }
-
 .resourcePoolTable {
     /*table-layout: fixed;*/
 }
