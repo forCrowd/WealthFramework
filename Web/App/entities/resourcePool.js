@@ -46,6 +46,19 @@
 
             self._userResourcePool = null;
 
+            // Value filter for element cells
+            self.valueFilter = 1;
+            self.toggleValueFilter = function () {
+
+                self.valueFilter = self.valueFilter === 1 ? 2 : 1;
+
+                // Manually calculate the rest
+                setResourcePoolRate();
+            }
+            self.valueFilterText = function () {
+                return self.resourcePoolRateCount();
+            }
+
             // Other users' values: Keeps the values excluding current user's
             self.otherUsersResourcePoolRate = null;
             self.otherUsersResourcePoolRateCount = null;
@@ -58,11 +71,11 @@
                 }
             });
 
-            $rootScope.$on('elementValueFilterChanged', function (event, args) {
-                if (args.element.ResourcePool === self) {
-                    setResourcePoolRate();
-                }
-            });
+            //$rootScope.$on('elementValueFilterChanged', function (event, args) {
+            //    if (args.element.ResourcePool === self) {
+            //        setResourcePoolRate();
+            //    }
+            //});
 
             // Functions
             self.userResourcePool = function () {
@@ -122,6 +135,7 @@
                 }
 
                 // Since there is always a default value for the current user, calculate count by increasing 1
+                // TODO How about UseFixedResourcePoolRate field?
                 return self.otherUsersResourcePoolRateCount + 1;
             }
 
@@ -135,7 +149,7 @@
             }
 
             function setResourcePoolRate() {
-                switch (self.currentElement.valueFilter) {
+                switch (self.valueFilter) {
                     case 1: { _resourcePoolRate = self.currentUserResourcePoolRate(); break; } // Current user's
                     case 2: { _resourcePoolRate = self.resourcePoolRateAverage(); break; } // All
                 }

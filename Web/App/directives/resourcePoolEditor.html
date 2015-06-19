@@ -44,6 +44,7 @@
                                         <button data-tooltip="Decrease CMRP Rate" data-tooltip-append-to-body="true" type="button" data-ng-click="decreaseResourcePoolRate()" data-ng-disabled="isSaving" class="btn btn-default btn-xs">-</button>
                                         <button data-tooltip="Reset CMRP Rate" data-tooltip-append-to-body="true" type="button" data-ng-click="resetResourcePoolRate()" data-ng-disabled="isSaving" class="btn btn-default btn-xs">0</button>
                                     </div>
+                                    <span data-ng-if="!resourcePool.UseFixedResourcePoolRate" data-tooltip="Number of ratings: Toggle to display only your ratings or all ratings" data-ng data-ng-click="resourcePool.toggleValueFilter()" class="label" data-ng-class="{ 'label-as-off-badge': resourcePool.valueFilter === 1, 'label-as-on-badge': resourcePool.valueFilter === 2 }">{{ resourcePool.valueFilterText() }}</span>
                                 </td>
                             </tr>
                             <tr data-ng-if="resourcePool.InitialValue > 0 || (resourcePool.currentElement.directIncomeField() && resourcePool.currentElement.elementFieldIndexSet().length > 0)">
@@ -58,7 +59,7 @@
                                 <!-- Fields -->
                                 <th data-ng-repeat="field in resourcePool.currentElement.ElementFieldSet | orderBy: 'SortOrder'">
                                     <div data-ng-if="field.ElementFieldType !== 6">
-                                        {{ field.Name }}<span data-ng-if="field.IndexEnabled" data-tooltip="Index" class="infoText">(I)</span><span data-ng-if="field.IndexEnabled" data-tooltip="Toggle between 'Only My Ratings' & 'All Ratings'" data-ng data-ng-click="field.toggleValueFilter()" class="label" data-ng-class="{ 'label-as-off-badge': field.valueFilter === 1, 'label-as-on-badge': field.valueFilter === 2 }">{{ field.valueFilterText() }}</span>
+                                        {{ field.Name }}<span data-ng-if="field.IndexEnabled" data-tooltip="Index" class="infoText">(I)</span><span data-ng-if="!field.UseFixedValue && field.IndexEnabled" data-tooltip="Number of ratings: Toggle to display only your ratings or all ratings" data-ng data-ng-click="field.toggleValueFilter()" class="label" data-ng-class="{ 'label-as-off-badge': field.valueFilter === 1, 'label-as-on-badge': field.valueFilter === 2 }">{{ field.valueFilterText() }}</span>
                                     </div>
                                     <span data-ng-if="field.ElementFieldType === 6">
                                         <a href="" data-tooltip="Switch to {{ field.Name }} view" data-ng-click="changeCurrentElement(field.SelectedElement)">{{ field.Name }}</a>
@@ -88,24 +89,15 @@
                             <tr data-ng-repeat="elementItem in resourcePool.currentElement.ElementItemSet">
                                 <!-- Cells -->
                                 <td data-ng-repeat="elementCell in elementItem.ElementCellSet | orderBy: 'ElementField.SortOrder'">
-                                    <span data-ng-if="elementCell.ElementField.ElementFieldType === 1" data-ng-bind-html="elementCell.StringValue">
-                                    </span>
-                                    <span data-ng-if="(elementCell.ElementField.ElementFieldType === 2
-                                          || elementCell.ElementField.ElementFieldType === 3
-                                          || elementCell.ElementField.ElementFieldType === 4
-                                          || elementCell.ElementField.ElementFieldType === 5)
-                                          && elementCell.ElementField.UseFixedValue">
-                                        {{ elementCell.numericValue() | number: 2 }}
-                                    </span>
-                                    <div data-ng-if="(elementCell.ElementField.ElementFieldType === 2
+                                    <span data-ng-if="elementCell.ElementField.ElementFieldType === 1" data-ng-bind-html="elementCell.StringValue"></span>
+                                    <div data-ng-if="elementCell.ElementField.ElementFieldType === 2
                                         || elementCell.ElementField.ElementFieldType === 3
                                         || elementCell.ElementField.ElementFieldType === 4
-                                        || elementCell.ElementField.ElementFieldType === 5)
-                                        && !elementCell.ElementField.UseFixedValue">
-                                        <span class="fixedWidth35Cell">
+                                        || elementCell.ElementField.ElementFieldType === 5">
+                                        <span data-ng-class="{ 'fixedWidth35Cell': !elementCell.ElementField.UseFixedValue }">
                                             {{ elementCell.numericValue() | number: 2 }}
                                         </span>
-                                        <div class="btn-group" role="group" data-ng-if="elementCell.ElementField.ElementFieldType === 4 && elementCell.ElementField.IndexEnabled">
+                                        <div class="btn-group" role="group" data-ng-if="!elementCell.ElementField.UseFixedValue && elementCell.ElementField.IndexEnabled">
                                             <button data-tooltip="Increase" data-tooltip-append-to-body="true" type="button" data-ng-click="increaseElementCellNumericValue(elementCell)" data-ng-disabled="isSaving" class="btn btn-default btn-xs">+</button>
                                             <button data-tooltip="Decrease" data-tooltip-append-to-body="true" type="button" data-ng-click="decreaseElementCellNumericValue(elementCell)" data-ng-disabled="isSaving" class="btn btn-default btn-xs">-</button>
                                             <button data-tooltip="Reset" data-tooltip-append-to-body="true" type="button" data-ng-click="resetElementCellNumericValue(elementCell)" data-ng-disabled="isSaving" class="btn btn-default btn-xs hide">0</button>

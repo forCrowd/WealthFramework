@@ -29,15 +29,15 @@
             // Value filter for element cells
             self.valueFilter = 1;
             self.toggleValueFilter = function () {
+
                 self.valueFilter = self.valueFilter === 1 ? 2 : 1;
 
+                // Manually calculate the rest
                 for (var i = 0; i < self.ElementCellSet.length; i++) {
                     var cell = self.ElementCellSet[i];
                     cell.setNumericValue();
                     cell.setNumericValueMultiplied();
                 }
-
-                // $rootScope.$broadcast('elementValueFilterChanged', { element: self });
             }
             self.valueFilterText = function () {
                 return self.ElementCellSet[0].numericValueCount();

@@ -57,7 +57,7 @@
     border-radius: 1em;
     background-color: #5cb85c;
     cursor: pointer;
-    margin-left: 2px;
+    margin-left: 5px;
 }
 
 .label-as-on-badge:hover,
@@ -69,7 +69,7 @@
     border-radius: 1em;
     background-color: #d9534f;
     cursor: pointer;
-    margin-left: 2px;
+    margin-left: 5px;
 }
 
 .label-as-off-badge:hover,

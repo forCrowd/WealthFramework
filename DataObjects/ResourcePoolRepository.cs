@@ -466,7 +466,7 @@
             const int numberOfItems = 2;
 
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user, "Fair Share Index", "Organization", addResourcePoolField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: numberOfItems);
+            var resourcePool = CreateDefaultResourcePool(user, "Fair Share Index", "Organization", addDirectIncomeField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: numberOfItems);
             resourcePool.UseFixedResourcePoolRate = true;
             //resourcePool.EnableSubtotals = false;
 
@@ -510,7 +510,7 @@
             const int numberOfItems = 1;
 
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user, "Indexes Pie", "Organization", addResourcePoolField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: numberOfItems);
+            var resourcePool = CreateDefaultResourcePool(user, "Indexes Pie", "Organization", addDirectIncomeField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: numberOfItems);
             resourcePool.UseFixedResourcePoolRate = true;
             //resourcePool.EnableSubtotals = false;
 
@@ -557,10 +557,10 @@
 
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).Take(1).Single().Name = "One and Only";
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(sectorField);
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(licenseField);
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(sectorField).SetValue(50M);
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(licenseField).SetValue(50M);
             // mainElement.ElementItemSet.Skip(0).Take(1).Single().DirectIncomeCell.SetValue(100M);
-            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(fairShareField);
+            mainElement.ElementItemSet.Skip(0).Take(1).Single().AddCell(fairShareField).SetValue(50M);
 
             //mainElement.ElementItemSet.Skip(1).Take(1).Single().Name = "Organization B";
             //mainElement.ElementItemSet.Skip(1).Take(1).Single().DirectIncomeCell.SetValue(100M);
@@ -586,7 +586,7 @@
         public ResourcePool CreateIndexesPieSampleOld(User user)
         {
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user, "Indexes Pie", "Organization", addResourcePoolField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: 2);
+            var resourcePool = CreateDefaultResourcePool(user, "Indexes Pie", "Organization", addDirectIncomeField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: 2);
             resourcePool.UseFixedResourcePoolRate = true;
             //resourcePool.EnableSubtotals = false;
 
@@ -658,7 +658,7 @@
             const int numberOfItems = 4;
 
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user, "CMRP Rate", "Organization", addResourcePoolField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: numberOfItems);
+            var resourcePool = CreateDefaultResourcePool(user, "CMRP Rate", "Organization", addDirectIncomeField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: numberOfItems);
             resourcePool.UseFixedResourcePoolRate = false;
             //resourcePool.EnableSubtotals = false;
 
@@ -738,7 +738,7 @@
             const int numberOfItems = 32;
 
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user, "All in One - Slow!", "Organization", addResourcePoolField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: numberOfItems);
+            var resourcePool = CreateDefaultResourcePool(user, "All in One - Slow!", "Organization", addDirectIncomeField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: numberOfItems);
             resourcePool.UseFixedResourcePoolRate = false;
             //resourcePool.EnableSubtotals = false;
 
@@ -1070,7 +1070,7 @@
             return resourcePool;
         }
 
-        public ResourcePool CreateDefaultResourcePool(User user, string resourcePoolName, string mainElementName, bool addResourcePoolField, bool addMultiplierField, bool addImportanceIndex, int numberOfItems)
+        public ResourcePool CreateDefaultResourcePool(User user, string resourcePoolName, string mainElementName, bool addDirectIncomeField, bool addMultiplierField, bool addImportanceIndex, int numberOfItems)
         {
             // Resource pool, main element, fields
             var resourcePool = new ResourcePool(user, resourcePoolName);
@@ -1079,8 +1079,8 @@
             var element = resourcePool.AddElement(mainElementName);
 
             // Resource pool field
-            if (addResourcePoolField)
-                element.AddField("Resource Pool Field", ElementFieldTypes.DirectIncome, true);
+            if (addDirectIncomeField)
+                element.AddField("Direct Income", ElementFieldTypes.DirectIncome, true);
 
             // Multiplier field
             if (addMultiplierField)
@@ -1101,7 +1101,7 @@
 
                 var item = element.AddItem(itemName);
 
-                if (addResourcePoolField)
+                if (addDirectIncomeField)
                     item.AddCell(element.DirectIncomeField).SetValue(100M); // Default value
 
                 if (addMultiplierField)
