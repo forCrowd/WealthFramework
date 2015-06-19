@@ -46,11 +46,14 @@
 
             self._userResourcePool = null;
 
+            // 'Only my ratings' vs. 'All users' ratings'
+            self.ratingMode = 1;
+
             // Checks whether resource pool has any item that can be rateable
             self.displayRatingMode = function () {
 
                 // Check resource pool level first
-                if (!resourcePool.UseFixedResourcePoolRate) {
+                if (!self.UseFixedResourcePoolRate) {
                     return true;
                 }
 
@@ -72,8 +75,6 @@
                 return false;
             }
 
-            // Value filter for element cells
-            self.ratingMode = 1;
             self.toggleRatingMode = function () {
 
                 self.ratingMode = self.ratingMode === 1 ? 2 : 1;

@@ -655,7 +655,7 @@
             const int numberOfItems = 4;
 
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user: user, resourcePoolName: "CMRP Rate", useFixedResourcePoolRate: true, mainElementName: "Organization", addDirectIncomeField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: numberOfItems);
+            var resourcePool = CreateDefaultResourcePool(user: user, resourcePoolName: "CMRP Rate", useFixedResourcePoolRate: false, mainElementName: "Organization", addDirectIncomeField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: numberOfItems);
 
             //// Fair share element
             //var fairShareElement = resourcePool.AddElement("Fair Share");
@@ -733,7 +733,7 @@
             const int numberOfItems = 32;
 
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user: user, resourcePoolName: "All in One - Slow!", useFixedResourcePoolRate: true, mainElementName: "Organization", addDirectIncomeField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: numberOfItems);
+            var resourcePool = CreateDefaultResourcePool(user: user, resourcePoolName: "All in One - Slow!", useFixedResourcePoolRate: false, mainElementName: "Organization", addDirectIncomeField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: numberOfItems);
 
             // Sector element
             var sectorElement = resourcePool.AddElement("Sector");
