@@ -179,9 +179,9 @@
                     }
                 }
 
-                // Since there is always a default value for the current user, calculate count by increasing 1
-                // TODO How about UseFixedResourcePoolRate field?
-                return self.otherUsersResourcePoolRateCount + 1;
+                return self.UseFixedResourcePoolRate
+                    ? self.otherUsersResourcePoolRateCount
+                    : self.otherUsersResourcePoolRateCount + 1; // There is always default value, increase count by 1
             }
 
             self.resourcePoolRate = function () {

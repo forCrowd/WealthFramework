@@ -203,7 +203,7 @@
                     }
                 }
 
-                // Since there is always a default value for the current user, calculate count by increasing 1
+                // There is always default value, increase count by 1
                 return self.otherUsersIndexRatingCount + 1;
             }
 

@@ -3,6 +3,7 @@
 **0.31**
 
 * https://github.com/forCrowd/WealthEconomy/issues/50
+* https://github.com/forCrowd/WealthEconomy/issues/25
 * Label as on / off badge was created
 
 **0.30**
