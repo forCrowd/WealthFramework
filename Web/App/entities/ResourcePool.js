@@ -1,22 +1,17 @@
 ﻿(function () {
     'use strict';
 
-    var serviceId = 'resourcePoolServiceX';
+    var serviceId = 'ResourcePool';
     angular.module('main')
-        .factory(serviceId, ['$rootScope', 'logger', resourcePoolServiceX]);
+        .factory(serviceId, ['$rootScope', 'logger', resourcePoolFactory]);
 
-    function resourcePoolServiceX($rootScope, logger) {
+    function resourcePoolFactory($rootScope, logger) {
 
         // Logger
         logger = logger.forSource(serviceId);
 
-        // Service methods
-        var service = {
-            resourcePool: resourcePool
-        }
-
         // Properties
-        Object.defineProperty(resourcePool.prototype, 'currentElement', {
+        Object.defineProperty(ResourcePool.prototype, 'currentElement', {
             enumerable: true,
             configurable: true,
             get: function () { return this.backingFields._currentElement; },
@@ -27,11 +22,12 @@
             }
         });
 
-        return service;
+        // Return
+        return ResourcePool;
 
         /*** Implementations ***/
 
-        function resourcePool() {
+        function ResourcePool() {
 
             var self = this;
 
@@ -209,8 +205,6 @@
 
                 return self.resourcePoolRate() / 100;
             }
-
-            return self;
         }
     }
 })();

@@ -1,23 +1,18 @@
 ﻿(function () {
     'use strict';
 
-    var serviceId = 'userElementCellServiceX';
+    var serviceId = 'UserElementCell';
     angular.module('main')
-        .factory(serviceId, ['logger', userElementCellServiceX]);
+        .factory(serviceId, ['logger', userElementCellFactory]);
 
-    function userElementCellServiceX(logger) {
+    function userElementCellFactory(logger) {
 
         // Logger
         logger = logger.forSource(serviceId);
 
-        // Service methods
-        var service = {
-            userElementCell: userElementCell
-        }
-
         // Properties
         // Doesn't do anything but keep this as a sample for the moment
-        Object.defineProperty(userElementCell.prototype, 'DecimalValue', {
+        Object.defineProperty(UserElementCell.prototype, 'DecimalValue', {
             enumerable: true,
             configurable: true,
             get: function () { return this.backingFields._DecimalValue; },
@@ -28,19 +23,18 @@
             }
         });
 
-        return service;
+        // Return
+        return UserElementCell;
 
         /*** Implementations ***/
 
-        function userElementCell() {
+        function UserElementCell() {
 
             var self = this;
 
             self.backingFields = {
                 _DecimalValue: null
             };
-
-            return self;
         }
     }
 })();

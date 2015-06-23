@@ -136,12 +136,12 @@
     <script src="/App/authorization.js?v=029"></script>
 
     <!-- Entities -->
-    <script src="/App/entities/resourcePoolFactory.js?v=032"></script>
-    <script src="/App/entities/elementFactory.js?v=032"></script>
-    <script src="/App/entities/elementCellFactory.js?v=032"></script>
-    <script src="/App/entities/elementFieldFactory.js?v=032"></script>
-    <script src="/App/entities/elementItemFactory.js?v=032"></script>
-    <script src="/App/entities/userElementCellFactory.js?v=032"></script>
+    <script src="/App/entities/resourcePool.js?v=032"></script>
+    <script src="/App/entities/element.js?v=032"></script>
+    <script src="/App/entities/elementCell.js?v=032"></script>
+    <script src="/App/entities/elementField.js?v=032"></script>
+    <script src="/App/entities/elementItem.js?v=032"></script>
+    <script src="/App/entities/userElementCell.js?v=032"></script>
 
     <!-- breezeJS -->
     <script src="/App/entityManagerFactory.js?v=027"></script>

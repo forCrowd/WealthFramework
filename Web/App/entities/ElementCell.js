@@ -1,25 +1,21 @@
 ﻿(function () {
     'use strict';
 
-    var serviceId = 'elementCellServiceX';
+    var serviceId = 'ElementCell';
     angular.module('main')
-        .factory(serviceId, ['$rootScope', 'logger', elementCellServiceX]);
+        .factory(serviceId, ['$rootScope', 'logger', elementCellFactory]);
 
-    function elementCellServiceX($rootScope, logger) {
+    function elementCellFactory($rootScope, logger) {
 
         // Logger
         logger = logger.forSource(serviceId);
 
-        // Service methods
-        var service = {
-            elementCell: elementCell
-        }
-
-        return service;
+        // Return
+        return ElementCell;
 
         /*** Implementations ***/
 
-        function elementCell() {
+        function ElementCell() {
 
             var self = this;
 
@@ -243,8 +239,6 @@
                     }
                 }
             }
-
-            return self;
         }
     }
 })();

@@ -1,25 +1,21 @@
 ﻿(function () {
     'use strict';
 
-    var serviceId = 'elementServiceX';
+    var serviceId = 'Element';
     angular.module('main')
-        .factory(serviceId, ['$rootScope', 'logger', elementServiceX]);
+        .factory(serviceId, ['$rootScope', 'logger', elementFactory]);
 
-    function elementServiceX($rootScope, logger) {
+    function elementFactory($rootScope, logger) {
 
         // Logger
         logger = logger.forSource(serviceId);
 
-        // Service methods
-        var service = {
-            element: element
-        }
-
-        return service;
+        // Return
+        return Element;
 
         /*** Implementations ***/
 
-        function element() {
+        function Element() {
 
             var self = this;
 
@@ -296,8 +292,6 @@
 
                 return self.totalIncome() / self.ElementItemSet.length;
             }
-
-            return self;
         }
     }
 })();

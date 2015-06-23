@@ -1,25 +1,21 @@
 ﻿(function () {
     'use strict';
 
-    var serviceId = 'elementItemServiceX';
+    var serviceId = 'ElementItem';
     angular.module('main')
-        .factory(serviceId, ['$rootScope', 'logger', elementItemServiceX]);
+        .factory(serviceId, ['$rootScope', 'logger', elementItemFactory]);
 
-    function elementItemServiceX($rootScope, logger) {
+    function elementItemFactory($rootScope, logger) {
 
         // Logger
         logger = logger.forSource(serviceId);
 
-        // Service methods
-        var service = {
-            elementItem: elementItem
-        }
-
-        return service;
+        // Return
+        return ElementItem;
 
         /*** Implementations ***/
 
-        function elementItem() {
+        function ElementItem() {
             var self = this;
 
             // Local variables
@@ -198,8 +194,6 @@
                     return 'high';
                 };
             }
-
-            return self;
         }
     }
 })();

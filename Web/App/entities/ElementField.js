@@ -1,25 +1,21 @@
 ﻿(function () {
     'use strict';
 
-    var serviceId = 'elementFieldServiceX';
+    var serviceId = 'ElementField';
     angular.module('main')
-        .factory(serviceId, ['$rootScope', 'logger', elementFieldServiceX]);
+        .factory(serviceId, ['$rootScope', 'logger', elementFieldFactory]);
 
-    function elementFieldServiceX($rootScope, logger) {
+    function elementFieldFactory($rootScope, logger) {
 
         // Logger
         logger = logger.forSource(serviceId);
 
-        // Service methods
-        var service = {
-            elementField: elementField
-        }
-
-        return service;
+        // Return
+        return ElementField;
 
         /*** Implementations ***/
 
-        function elementField() {
+        function ElementField() {
             var self = this;
 
             self._userElementField = null;
@@ -238,8 +234,6 @@
                 var value = self.Element.totalResourcePoolAmount() * self.indexRatingPercentage();
                 return value;
             }
-
-            return self;
         }
     }
 })();
