@@ -11,23 +11,23 @@
     var serviceId = 'entityManagerFactory';
     angular.module('main')
         .factory(serviceId, ['breeze',
-            'element',
-            'elementCell',
-            'elementField',
-            'elementItem',
-            'resourcePoolFactory',
-            'userElementCell',
+            'elementServiceX',
+            'elementCellServiceX',
+            'elementFieldServiceX',
+            'elementItemServiceX',
+            'resourcePoolServiceX',
+            'userElementCellServiceX',
             '$rootScope',
             'logger',
             entityManagerFactory]);
 
     function entityManagerFactory(breeze,
-        element,
-        elementCell,
-        elementField,
-        elementItem,
-        resourcePoolFactory,
-        userElementCell,
+        elementServiceX,
+        elementCellServiceX,
+        elementFieldServiceX,
+        elementItemServiceX,
+        resourcePoolServiceX,
+        userElementCellServiceX,
         $rootScope,
         logger) {
 
@@ -81,12 +81,12 @@
             var manager = new breeze.EntityManager(serviceName);
             var store = manager.metadataStore;
 
-            store.registerEntityTypeCtor('Element', element.constructor);
-            store.registerEntityTypeCtor('ElementCell', elementCell.constructor);
-            store.registerEntityTypeCtor('ElementField', elementField.constructor);
-            store.registerEntityTypeCtor('ElementItem', elementItem.constructor);
-            store.registerEntityTypeCtor('ResourcePool', resourcePoolFactory.resourcePool);
-            store.registerEntityTypeCtor('UserElementCell', userElementCell.constructor);
+            store.registerEntityTypeCtor('Element', elementServiceX.element);
+            store.registerEntityTypeCtor('ElementCell', elementCellServiceX.elementCell);
+            store.registerEntityTypeCtor('ElementField', elementFieldServiceX.elementField);
+            store.registerEntityTypeCtor('ElementItem', elementItemServiceX.elementItem);
+            store.registerEntityTypeCtor('ResourcePool', resourcePoolServiceX.resourcePool);
+            store.registerEntityTypeCtor('UserElementCell', userElementCellServiceX.userElementCell);
 
             return manager;
         }

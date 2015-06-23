@@ -1,5 +1,9 @@
 ﻿### Release Notes
 
+**0.32**
+
+* angular unit testing?
+
 **0.31**
 
 * https://github.com/forCrowd/WealthEconomy/issues/50

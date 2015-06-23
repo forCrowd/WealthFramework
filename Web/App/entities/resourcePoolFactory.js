@@ -1,11 +1,11 @@
 ﻿(function () {
     'use strict';
 
-    var serviceId = 'resourcePoolFactory';
+    var serviceId = 'resourcePoolServiceX';
     angular.module('main')
-        .factory(serviceId, ['$rootScope', 'logger', resourcePoolFactory]);
+        .factory(serviceId, ['$rootScope', 'logger', resourcePoolServiceX]);
 
-    function resourcePoolFactory($rootScope, logger) {
+    function resourcePoolServiceX($rootScope, logger) {
 
         // Logger
         logger = logger.forSource(serviceId);
@@ -27,7 +27,7 @@
             }
         });
 
-        return (service);
+        return service;
 
         /*** Implementations ***/
 
@@ -209,6 +209,8 @@
 
                 return self.resourcePoolRate() / 100;
             }
+
+            return self;
         }
     }
 })();

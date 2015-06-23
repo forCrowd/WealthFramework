@@ -1,25 +1,25 @@
 ﻿(function () {
     'use strict';
 
-    var serviceId = 'elementField';
+    var serviceId = 'elementFieldServiceX';
     angular.module('main')
-        .factory(serviceId, ['$rootScope', 'logger', elementField]);
+        .factory(serviceId, ['$rootScope', 'logger', elementFieldServiceX]);
 
-    function elementField($rootScope, logger) {
+    function elementFieldServiceX($rootScope, logger) {
 
         // Logger
         logger = logger.forSource(serviceId);
 
         // Service methods
         var service = {
-            constructor: constructor
+            elementField: elementField
         }
 
-        return (service);
+        return service;
 
         /*** Implementations ***/
 
-        function constructor() {
+        function elementField() {
             var self = this;
 
             self._userElementField = null;
@@ -239,6 +239,7 @@
                 return value;
             }
 
+            return self;
         }
     }
 })();
