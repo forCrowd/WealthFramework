@@ -115,7 +115,7 @@
     <script src="/Scripts/datajs-1.1.3.min.js?v=024"></script>
     <script src="/Scripts/toastr.min.js?v=024"></script>
 
-    <script src="/Scripts/angular.js?v=024"></script>
+    <script src="/Scripts/angular.min.js?v=024"></script>
     <script src="/Scripts/angular-route.min.js?v=024"></script>
     <script src="/Scripts/angular-sanitize.min.js?v=024"></script>
 
@@ -136,12 +136,12 @@
     <script src="/App/authorization.js?v=029"></script>
 
     <!-- Entities -->
-    <script src="/App/entities/resourcePool.js?v=032"></script>
-    <script src="/App/entities/element.js?v=032"></script>
-    <script src="/App/entities/elementCell.js?v=032"></script>
-    <script src="/App/entities/elementField.js?v=032"></script>
-    <script src="/App/entities/elementItem.js?v=032"></script>
-    <script src="/App/entities/userElementCell.js?v=032"></script>
+    <script src="/App/entities/ResourcePool.js?v=032"></script>
+    <script src="/App/entities/Element.js?v=032"></script>
+    <script src="/App/entities/ElementCell.js?v=032"></script>
+    <script src="/App/entities/ElementField.js?v=032"></script>
+    <script src="/App/entities/ElementItem.js?v=032"></script>
+    <script src="/App/entities/UserElementCell.js?v=032"></script>
 
     <!-- breezeJS -->
     <script src="/App/entityManagerFactory.js?v=027"></script>
