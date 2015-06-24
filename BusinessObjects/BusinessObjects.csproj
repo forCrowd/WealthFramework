@@ -63,8 +63,6 @@
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="BaseEntity.cs" />
-    <Compile Include="Models\ElementCellTypes\BaseCellType.cs" />
-    <Compile Include="Models\ElementCellTypes\StringCellType.cs" />
     <Compile Include="Models\RatingSortType.cs" />
     <Compile Include="Models\ElementFieldType.cs" />
     <Compile Include="Models\ElementField.cs" />

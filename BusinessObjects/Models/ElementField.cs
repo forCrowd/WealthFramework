@@ -7,7 +7,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Linq;
 
     [DisplayName("Element Field")]
     [forCrowd.WealthEconomy.BusinessObjects.Attributes.DefaultProperty("Name")]
@@ -99,23 +98,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         public virtual Element SelectedElement { get; set; }
         public virtual ICollection<ElementCell> ElementCellSet { get; set; }
         public virtual ICollection<UserElementField> UserElementFieldSet { get; set; }
-
-        #region - ReadOnly Properties -
-
-        public decimal ValueMultiplied()
-        {
-            return ElementCellSet.Sum(item => item.RatingMultiplied());
-        }
-
-        public UserElementField UserElementField
-        {
-            get
-            {
-                return UserElementFieldSet.SingleOrDefault();
-            }
-        }
-
-        #endregion
 
         #region - Methods -
 

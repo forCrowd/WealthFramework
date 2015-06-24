@@ -71,96 +71,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects
             get { return UserElementCellSet.SingleOrDefault(); }
         }
 
-        /* Obsolete starting from here? */
-
-        public decimal Rating
-        {
-            get
-            {
-                // TODO Serialization issue?
-                if (ElementField == null)
-                    return 0;
-
-                var fieldType = (ElementFieldTypes)ElementField.ElementFieldType;
-
-                if (ElementField.UseFixedValue.Value)
-                {
-                    switch (fieldType)
-                    {
-                        case ElementFieldTypes.Boolean:
-                            // return Convert.ToDecimal(BooleanValue.GetValueOrDefault());
-                            return 0;
-                        case ElementFieldTypes.Integer:
-                            return 0;
-                        //return Convert.ToDecimal(IntegerValue.GetValueOrDefault());
-                        case ElementFieldTypes.Decimal:
-                        case ElementFieldTypes.DirectIncome: // TODO Same as Decimal type? How about base & child types?
-                            return 0;
-                        //return DecimalValue.GetValueOrDefault();
-                        default:
-                            throw new InvalidOperationException("Invalid field type: " + fieldType);
-                    }
-                }
-                else
-                {
-                    switch (fieldType)
-                    {
-                        case ElementFieldTypes.Boolean:
-                        case ElementFieldTypes.Integer:
-                        case ElementFieldTypes.Decimal:
-                        case ElementFieldTypes.DirectIncome: // TODO Same as Decimal type? How about base & child types?
-                            {
-                                return NumericValue.HasValue
-                                    ? NumericValue.Value
-                                    : 0;
-                            }
-                        default:
-                            throw new InvalidOperationException("Invalid field type: " + fieldType);
-                    }
-                }
-            }
-        }
-
-        public decimal RatingMultiplied()
-        {
-            return Rating * ElementItem.MultiplierValue();
-        }
-
-        public decimal RatingPercentage()
-        {
-            var elementFieldValueMultiplied = ElementField.ValueMultiplied();
-
-            return elementFieldValueMultiplied == 0
-                ? 0
-                : RatingMultiplied() / elementFieldValueMultiplied;
-        }
-
-        public decimal IndexIncome()
-        {
-            return 0;
-            //if (ElementField.ElementFieldIndex == null)
-            //{
-            //    return ElementField.ElementFieldType == (byte)ElementFieldTypes.Element && SelectedElementItem != null
-            //        ? SelectedElementItem.IndexIncome()
-            //        : 0;
-            //}
-
-            //var value = RatingPercentage();
-
-            //switch (ElementField.ElementFieldIndex.RatingSortType)
-            //{
-            //    case (byte)RatingSortType.HighestToLowest:
-            //        /* Do nothing */
-            //        break;
-            //    case (byte)RatingSortType.LowestToHighest:
-            //        value = 1 - value; break;
-            //    default:
-            //        throw new ArgumentOutOfRangeException();
-            //}
-
-            //return ElementField.ElementFieldIndex.IndexShare() * value;
-        }
-
         #region - Methods -
 
         public ElementCell ClearValue()
@@ -180,13 +90,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects
 
             return this;
         }
-
-        //public ElementCell SetValue(string value)
-        //{
-        //    SetValueHelper(ElementFieldTypes.String, null);
-        //    StringValue = value;
-        //    return this;
-        //}
 
         public ElementCell SetValue(string value)
         {

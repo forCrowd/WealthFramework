@@ -3,6 +3,7 @@
 **0.32**
 
 * angular unit testing?
+* BusinessObjects cleanup
 
 **0.31**
 

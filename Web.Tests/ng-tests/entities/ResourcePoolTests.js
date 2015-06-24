@@ -199,4 +199,11 @@ describe('ng-tests ResourcePool', function () {
 
     });
 
+    /*
+    * element field tests
+    * element cell tests
+    * initial value?
+    * index sort type
+    */
+
 });
