@@ -1,52 +1,40 @@
-﻿/// <reference path="../../Web/Scripts/angular.js" />
-/// <reference path="../../Web/Scripts/angular-route.js" />
-/// <reference path="../../Web/Scripts/angular-sanitize.js" />
-/// <reference path="../../Web/Scripts/angular-mocks.js" />
-/// <reference path="../../Web/Scripts/breeze.debug.js" />
-/// <reference path="../../Web/Scripts/breeze.bridge.angular.js" />
-/// <reference path="../../Web/Scripts/toastr.js" />
-/// <reference path="../../Web/App/external/highcharts.js" />
-/// <reference path="../../Web/App/external/highcharts-ng.js" />
-/// <reference path="../../Web/App/external/ui-bootstrap-tpls-0.13.0.min.js" />
-/// <reference path="../../Web/App/main.js" />
-/// <reference path="../../Web/App/logger.js" />
-/// <reference path="../../Web/App/entities/Element.js" />
-/// <reference path="../../Web/App/entities/ElementCell.js" />
-/// <reference path="../../Web/App/entities/ElementField.js" />
-/// <reference path="../../Web/App/entities/ElementItem.js" />
-/// <reference path="../../Web/App/entities/ResourcePool.js" />
-/// <reference path="../../Web/App/entities/UserElementCell.js" />
+﻿/// <reference path="../../../Web/Scripts/angular.js" />
+/// <reference path="../../../Web/Scripts/angular-route.js" />
+/// <reference path="../../../Web/Scripts/angular-sanitize.js" />
+/// <reference path="../../../Web/Scripts/angular-mocks.js" />
+/// <reference path="../../../Web/Scripts/breeze.debug.js" />
+/// <reference path="../../../Web/Scripts/breeze.bridge.angular.js" />
+/// <reference path="../../../Web/Scripts/toastr.js" />
+/// <reference path="../../../Web/App/external/highcharts.js" />
+/// <reference path="../../../Web/App/external/highcharts-ng.js" />
+/// <reference path="../../../Web/App/external/ui-bootstrap-tpls-0.13.0.min.js" />
+/// <reference path="../../../Web/App/main.js" />
+/// <reference path="../../../Web/App/logger.js" />
+/// <reference path="../../../Web/App/entities/Element.js" />
+/// <reference path="../../../Web/App/entities/ElementCell.js" />
+/// <reference path="../../../Web/App/entities/ElementField.js" />
+/// <reference path="../../../Web/App/entities/ElementItem.js" />
+/// <reference path="../../../Web/App/entities/ResourcePool.js" />
+/// <reference path="../../../Web/App/entities/UserElementCell.js" />
 
 describe('ng-tests ResourcePool', function () {
 
-    it('sanity check', function () {
+    var ResourcePool, $rootScope;
+    beforeEach(module('main'));
+    beforeEach(function () {
+        inject(function ($injector) {
 
-        expect(0).toBe(0);
+            $rootScope = $injector.get('$rootScope');
 
-        var x1 = 1000000; // 1mil
-        var x2 = 1000000000; // 1bil
-        var x3 = 1000000000000; // 1tril
-        var x4 = 1000000000000000; // 1?
-        var x5 = 1000000000000000000; // 1?
-        var x6 = 1000000000000000000000; // 1?
-        var x7 = 1000000000000000000000000; // 1?
-        var x8 = 1000000000000000000000000000; // 1?
-        var x9 = 1000000000000000000000000000000; // 1?
-        var x10 = 1000000000000000000000000000000000; // 1?
-        var y = 99;
-        var total = x10 * y;
+            ResourcePool = $injector.get('ResourcePool');
+            ResourcePool.prototype.ElementSet = [];
+            ResourcePool.prototype.UserResourcePoolSet = [];
 
-        expect(x1 * y).toBe(x1 * y);
-        expect(x2 * y).toBe(x2 * y);
-        expect(x3 * y).toBe(x3 * y);
-        expect(x4 * y).toBe(x4 * y);
-        expect(x5 * y).toBe(x5 * y);
-        expect(x6 * y).toBe(x6 * y);
-        expect(x7 * y).toBe(x7 * y);
-        expect(x8 * y).toBe(x8 * y);
-        expect(x9 * y).toBe(x9 * y);
-
-        expect(total).toBe(total);
+            Element = $injector.get('Element');
+            ElementField = $injector.get('ElementField');
+            ElementItem = $injector.get('ElementItem');
+            ElementCell = $injector.get('ElementCell');
+        });
     });
 
     function UserResourcePool() {
@@ -62,30 +50,19 @@ describe('ng-tests ResourcePool', function () {
         }
     }
 
-    var resourcePool, rootScope;
-    beforeEach(module('main'));
-    beforeEach(function () {
-        inject(function ($injector) {
-            resourcePool = $injector.get('ResourcePool');
-            rootScope = $injector.get('$rootScope');
+    it('Sanity checks', function () {
 
-            resourcePool.prototype.ElementSet = [];
-            resourcePool.prototype.UserResourcePoolSet = [];
+        expect(0).toBe(0);
 
-            element = $injector.get('Element');
-            elementField = $injector.get('ElementField');
-            elementItem = $injector.get('ElementItem');
-            elementCell = $injector.get('ElementCell');
-        });
-    });
+        var number = 1000000000000000000000000000000000;
+        var total = number * number;
+        expect(total).toBe(total);
 
-    it('Defined?', function () {
-
-        var resourcePool1 = new resourcePool();
-        var element1 = new element();
-        var elementField1 = new elementField();
-        var elementItem1 = new elementItem();
-        var elementCell1 = new elementCell();
+        var resourcePool1 = new ResourcePool();
+        var element1 = new Element();
+        var elementField1 = new ElementField();
+        var elementItem1 = new ElementItem();
+        var elementCell1 = new ElementCell();
 
         expect(resourcePool1).toBeDefined();
         expect(element1).toBeDefined();
@@ -97,7 +74,7 @@ describe('ng-tests ResourcePool', function () {
 
     it('resourcePoolRate - userResourcePool()', function () {
 
-        var resourcePool1 = new resourcePool();
+        var resourcePool1 = new ResourcePool();
 
         var userResourcePool1 = new UserResourcePool();
         userResourcePool1.ResourcePoolRate = 30;
@@ -112,7 +89,7 @@ describe('ng-tests ResourcePool', function () {
 
     it('resourcePoolRate - otherUsers w/o userResourcePool', function () {
 
-        var resourcePool1 = new resourcePool();
+        var resourcePool1 = new ResourcePool();
         resourcePool1.ResourcePoolRate = 15;
         resourcePool1.ResourcePoolRateCount = 2;
 
@@ -124,7 +101,7 @@ describe('ng-tests ResourcePool', function () {
 
     it('resourcePoolRate - otherUsers w userResourcePool', function () {
 
-        var resourcePool1 = new resourcePool();
+        var resourcePool1 = new ResourcePool();
         resourcePool1.ResourcePoolRate = 20;
         resourcePool1.ResourcePoolRateCount = 3;
 
@@ -140,9 +117,9 @@ describe('ng-tests ResourcePool', function () {
 
     });
 
-    it('resourcePoolRate - resourcePoolRate - only my ratings', function () {
+    it('resourcePoolRate - only my ratings', function () {
 
-        var resourcePool1 = new resourcePool();
+        var resourcePool1 = new ResourcePool();
         resourcePool1.ratingMode = 1; // Only my ratings
 
         var userResourcePool1 = new UserResourcePool();
@@ -154,9 +131,9 @@ describe('ng-tests ResourcePool', function () {
         expect(resourcePool1.resourcePoolRate()).toBe(10);
     });
 
-    it('resourcePoolRate - resourcePoolRate - all ratings w/o userResourcePool', function () {
+    it('resourcePoolRate - all ratings w/o userResourcePool', function () {
 
-        var resourcePool1 = new resourcePool();
+        var resourcePool1 = new ResourcePool();
         resourcePool1.ResourcePoolRate = 15;
         resourcePool1.ResourcePoolRateCount = 2;
         resourcePool1.UseFixedResourcePoolRate = false;
@@ -172,9 +149,9 @@ describe('ng-tests ResourcePool', function () {
 
     });
 
-    it('resourcePoolRate - resourcePoolRate - all ratings w userResourcePool', function () {
+    it('resourcePoolRate - all ratings w userResourcePool', function () {
 
-        var resourcePool1 = new resourcePool();
+        var resourcePool1 = new ResourcePool();
         resourcePool1.ResourcePoolRate = 20;
         resourcePool1.ResourcePoolRateCount = 3;
         resourcePool1.UseFixedResourcePoolRate = false;
@@ -191,9 +168,9 @@ describe('ng-tests ResourcePool', function () {
 
     });
 
-    it('resourcePoolRate - resourcePoolRate - all ratings w late userResourcePool', function () {
+    it('resourcePoolRate - all ratings w late userResourcePool', function () {
 
-        var resourcePool1 = new resourcePool();
+        var resourcePool1 = new ResourcePool();
         resourcePool1.ResourcePoolRate = 15;
         resourcePool1.ResourcePoolRateCount = 2;
         resourcePool1.UseFixedResourcePoolRate = false;
@@ -211,7 +188,7 @@ describe('ng-tests ResourcePool', function () {
         resourcePool1.UserResourcePoolSet.push(userResourcePool1);
 
         // Broadcast ?!
-        rootScope.$broadcast('resourcePoolRateUpdated', { resourcePool: resourcePool1, value: userResourcePool1.ResourcePoolRate });
+        $rootScope.$broadcast('resourcePoolRateUpdated', { resourcePool: resourcePool1, value: userResourcePool1.ResourcePoolRate });
         expect(resourcePool1.currentUserResourcePoolRate()).toBe(30); // Default value
 
         // Manually update!
@@ -221,10 +198,5 @@ describe('ng-tests ResourcePool', function () {
         expect(resourcePool1.resourcePoolRateCount()).toBe(3);
 
     });
-
-    it('', function () {
-
-
-    })
 
 });
