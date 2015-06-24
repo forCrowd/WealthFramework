@@ -8,7 +8,7 @@
     'use strict';
 
     angular.module('main', [
-        'ngRoute', // Angular routing
+        'ngRoute',
         'ngSanitize',
         'ui.bootstrap',
         'breeze.angular',
