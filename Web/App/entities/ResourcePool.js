@@ -157,7 +157,9 @@
                         // If current user already has a rate, exclude
                         if (self.userResourcePool() !== null) {
                             var total = self.ResourcePoolRate * self.ResourcePoolRateCount;
-                            self._otherUsersResourcePoolRate = (total - self.userResourcePool().ResourcePoolRate) / (self.ResourcePoolRateCount - 1);
+                            var rateExcluded = total - self.userResourcePool().ResourcePoolRate;
+                            var countExcluded = self.ResourcePoolRateCount - 1;
+                            self._otherUsersResourcePoolRate = rateExcluded / countExcluded;
                         } else {
                             // Otherwise, ResourcePoolRate equals to other users' rate
                             self._otherUsersResourcePoolRate = self.ResourcePoolRate;
@@ -199,7 +201,6 @@
             }
 
             self.resourcePoolRateCount = function () {
-
                 return self.UseFixedResourcePoolRate
                     ? self.otherUsersResourcePoolRateCount()
                     : self.otherUsersResourcePoolRateCount() + 1; // There is always default value, increase count by 1

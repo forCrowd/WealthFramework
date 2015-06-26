@@ -22,7 +22,7 @@
             // Local variables
             var _parent = null;
             var _parents = [];
-            var _elementFieldIndexSet = [];
+            var _elementFieldIndexSet = null;
             var _directIncomeField = null;
             var _multiplierField = null;
 
@@ -72,16 +72,14 @@
             }
 
             self.elementFieldIndexSet = function () {
-
-                // Cached value
-                // TODO In case of add / remove fields?
-                if (_elementFieldIndexSet.length > 0) {
-                    return _elementFieldIndexSet;
+                if (_elementFieldIndexSet === null) {
+                    self.setElementFieldIndexSet();
                 }
-
-                _elementFieldIndexSet = getElementFieldIndexSet(self);
-
                 return _elementFieldIndexSet;
+            }
+
+            self.setElementFieldIndexSet = function () {
+                _elementFieldIndexSet = getElementFieldIndexSet(self);
             }
 
             function getElementFieldIndexSet(element) {
@@ -284,7 +282,7 @@
             }
 
             self.totalIncomeAverage = function () {
-                
+
                 // Validate
                 if (self.ElementItemSet.length === 0) {
                     return 0;

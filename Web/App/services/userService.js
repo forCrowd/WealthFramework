@@ -391,7 +391,7 @@
 
             // Broadcast the update
             if (userElementField !== null) {
-                $rootScope.$broadcast('elementMultiplierUpdated', { elementField: elementField, value: userElementField.Rating });
+                $rootScope.$broadcast('elementFieldIndexRatingUpdated', { elementField: elementField, value: userElementField.Rating });
             }
         }
 

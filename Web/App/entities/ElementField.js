@@ -23,11 +23,12 @@
             var _currentUserIndexRating = null;
 
             // Other users' values: Keeps the values excluding current user's
-            self.otherUsersIndexRating = null;
-            self.otherUsersIndexRatingCount = null;
+            self._otherUsersIndexRating = null;
+            self._otherUsersIndexRatingCount = null;
+            self._otherUsersIndexRatingTotal = null;
 
             // Events
-            $rootScope.$on('elementMultiplierUpdated', function (event, args) {
+            $rootScope.$on('elementFieldIndexRatingUpdated', function (event, args) {
                 if (args.elementField === self) {
                     _currentUserIndexRating = args.value;
                     self.setIndexRating();
@@ -168,39 +169,65 @@
                 return _currentUserIndexRating;
             }
 
-            self.indexRatingAverage = function () {
+            self.otherUsersIndexRating = function () {
 
                 // Set other users' value on the initial call
-                if (self.otherUsersIndexRating === null) {
+                if (self._otherUsersIndexRating === null) {
 
                     // TODO IndexRating property could directly return 0?
-                    self.otherUsersIndexRating = self.IndexRating !== null
-                        ? self.IndexRating
-                        : 0;
-
-                    if (self.userElementField() !== null) {
-                        self.otherUsersIndexRating -= self.userElementField().Rating;
+                    if (self.IndexRating === null) {
+                        self._otherUsersIndexRating = 0;
+                    } else {
+                        // If current user already has a rate, exclude
+                        if (self.userElementField() !== null) {
+                            var total = self.IndexRating * self.IndexRatingCount;
+                            var ratingExcluded = total - self.userElementField().IndexRating;
+                            var countExcluded = self.IndexRatingCount - 1;
+                            self._otherUsersIndexRating = ratingExcluded / countExcluded;
+                        } else {
+                            // Otherwise, IndexRating equals to other users' rating
+                            self._otherUsersIndexRating = self.IndexRating;
+                        }
                     }
                 }
 
-                var indexRating = self.otherUsersIndexRating + self.currentUserIndexRating();
+                return self._otherUsersIndexRating;
+            }
 
+            self.otherUsersIndexRatingCount = function () {
+
+                // Set other users' value on the initial call
+                if (self._otherUsersIndexRatingCount === null) {
+                    self._otherUsersIndexRatingCount = self.IndexRatingCount;
+
+                    // Decrease by 1 current user's rating
+                    if (self.userElementField() !== null) {
+                        self._otherUsersIndexRatingCount--;
+                    }
+                }
+
+                return self._otherUsersIndexRatingCount;
+            }
+
+            self.otherUsersIndexRatingTotal = function () {
+
+                // Set other users' value on the initial call
+                if (self._otherUsersIndexRatingTotal === null) {
+                    self._otherUsersIndexRatingTotal = self.otherUsersIndexRating() * self.otherUsersIndexRatingCount();
+                }
+
+                return self._otherUsersIndexRatingTotal;
+            }
+
+            self.indexRatingAverage = function () {
+                var indexRating = self.otherUsersIndexRatingTotal() + self.currentUserIndexRating();
                 return indexRating / self.indexRatingCount();
             }
 
             self.indexRatingCount = function () {
-
-                // Set other users' value on the initial call
-                if (self.otherUsersIndexRatingCount === null) {
-                    self.otherUsersIndexRatingCount = self.IndexRatingCount;
-
-                    if (self.userElementField() !== null) {
-                        self.otherUsersIndexRatingCount--;
-                    }
-                }
-
                 // There is always default value, increase count by 1
-                return self.otherUsersIndexRatingCount + 1;
+                // TODO How about the case that if there is only one field, UI doesn't make the only field rateable?
+                return self.otherUsersIndexRatingCount() + 1;
             }
 
             self.indexRating = function () {
