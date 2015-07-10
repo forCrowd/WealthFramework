@@ -121,3 +121,6 @@ Queries/
 
 # Configs
 Web/Configs/*.config
+
+# Chutzpah
+_Chutzpah.*

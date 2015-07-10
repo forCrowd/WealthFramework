@@ -25,8 +25,9 @@
             self._userCell = null;
 
             // Other users' values: Keeps the values excluding current user's
-            self.otherUsersNumericValue = null;
-            self.otherUsersNumericValueCount = null;
+            self._otherUsersNumericValue = null;
+            self._otherUsersNumericValueCount = null;
+            self._otherUsersNumericValueTotal = null;
 
             // Events
             $rootScope.$on('elementCellNumericValueUpdated', function (event, args) {
@@ -69,51 +70,80 @@
                 return _currentUserNumericValue;
             }
 
-            self.numericValueAverage = function () {
+            self.otherUsersNumericValue() = function () {
 
                 // Set other users' value on the initial call
-                if (self.otherUsersNumericValue === null) {
+                if (self._otherUsersNumericValue === null) {
 
                     // TODO NumericValue property directly return 0?
-                    self.otherUsersNumericValue = self.NumericValue !== null
-                        ? self.NumericValue
-                        : 0;
+                    if (self.NumericValue === null) {
+                        self._otherUsersNumericValue = 0;
+                    } else {
+                        // If current user already has a rate, exclude
+                        if (self.userCell() !== null) {
+                            var total = self.NumericValue * self.NumericValueCount;
+                            var userValue = 0;
 
-                    if (self.userCell() !== null) {
-                        switch (self.ElementField.ElementFieldType) {
-                            // TODO Check bool to decimal conversion?
-                            case 2: { self.otherUsersNumericValue -= self.userCell().BooleanValue; break; }
-                            case 3: { self.otherUsersNumericValue -= self.userCell().IntegerValue; break; }
-                            case 4: { self.otherUsersNumericValue -= self.userCell().DecimalValue; break; }
-                                // TODO 5 (DateTime?)
-                            case 11: { self.otherUsersNumericValue -= self.userCell().DecimalValue; break; }
-                                //case 12: { value = userCell !== null ? userCell.DecimalValue : 0; break; }
-                            default: {
-                                throw 'Not supported ' + self.ElementField.ElementFieldType;
+                            switch (self.ElementField.ElementFieldType) {
+                                // TODO Check bool to decimal conversion?
+                                case 2: { userValue = self.userCell().BooleanValue; break; }
+                                case 3: { userValue = self.userCell().IntegerValue; break; }
+                                case 4: { userValue = self.userCell().DecimalValue; break; }
+                                    // TODO 5 - DateTime?
+                                case 11: { userValue = self.userCell().DecimalValue; break; }
+                                    // TODO 12 - Multiplier?
+                                default: {
+                                    throw 'Not supported ' + self.ElementField.ElementFieldType;
+                                }
                             }
+
+                            var ratingExcluded = total - userValue;
+                            var countExcluded = self.NumericValueCount - 1;
+                            self._otherUsersNumericValue = ratingExcluded / countExcluded;
+                        } else {
+                            // Otherwise, IndexRating equals to other users' rating
+                            self._otherUsersNumericValue = self.NumericValue;
                         }
                     }
                 }
 
-                var numericValue = self.otherUsersNumericValue + self.currentUserNumericValue();
+                return self._otherUsersNumericValue;
+            }
 
+            self.otherUsersNumericValueCount = function () {
+
+                // Set other users' value on the initial call
+                if (self._otherUsersNumericValueCount === null) {
+                    self._otherUsersNumericValueCount = self.NumericValueCount;
+
+                    // Decrease by 1 current user's rating
+                    if (self.userCell() !== null) {
+                        self._otherUsersNumericValueCount--;
+                    }
+                }
+
+                return self._otherUsersNumericValueCount;
+            }
+
+            self.otherUsersNumericValueTotal = function () {
+
+                // Set other users' value on the initial call
+                if (self._otherUsersNumericValueTotal === null) {
+                    self._otherUsersNumericValueTotal = self.otherUsersNumericValue() * self.otherUsersNumericValueCount();
+                }
+
+                return self._otherUsersNumericValueTotal;
+            }
+
+            self.numericValueAverage = function () {
+                var numericValue = self.otherUsersNumericValue() + self.currentUserNumericValue();
                 return numericValue / self.numericValueCount();
             }
 
             self.numericValueCount = function () {
-
-                // Set other users' value on the initial call
-                if (self.otherUsersNumericValueCount === null) {
-                    self.otherUsersNumericValueCount = self.NumericValueCount;
-
-                    if (self.userCell() !== null) {
-                        self.otherUsersNumericValueCount--;
-                    }
-                }
-
                 return self.ElementField.UseFixedValue
-                    ? self.otherUsersNumericValueCount
-                    : self.otherUsersNumericValueCount + 1; // There is always default value, increase count by 1
+                    ? self.otherUsersNumericValueCount()
+                    : self.otherUsersNumericValueCount() + 1; // There is always default value, increase count by 1
             }
 
             self.numericValue = function () {

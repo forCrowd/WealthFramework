@@ -44,6 +44,7 @@ describe('ng-tests ResourcePool', function () {
             ElementItem = $injector.get('ElementItem');
             ElementItem.prototype.Element = null;
             ElementItem.prototype.ElementCellSet = [];
+            ElementItem.prototype.ParentCellSet = [];
 
             ElementCell = $injector.get('ElementCell');
             ElementCell.prototype.ElementField = null;
@@ -83,10 +84,12 @@ describe('ng-tests ResourcePool', function () {
 
         expect(0).toBe(0);
 
+        // Just experimental
         var number = 1000000000000000000000000000000000;
         var total = number * number;
         expect(total).toBe(total);
 
+        // Entities
         var resourcePool1 = new ResourcePool();
         var element1 = new Element();
         var elementField1 = new ElementField();
@@ -245,7 +248,6 @@ describe('ng-tests ResourcePool', function () {
         field1.IndexEnabled = true;
         field1.IndexRating = 65;
         field1.IndexRatingCount = 2;
-        field1.UseFixedValue = false;
         organization.ElementFieldSet.push(field1);
 
         expect(field1.otherUsersIndexRating()).toBe(65);
@@ -317,7 +319,6 @@ describe('ng-tests ResourcePool', function () {
         field1.IndexEnabled = true;
         field1.IndexRating = 65;
         field1.IndexRatingCount = 2;
-        field1.UseFixedValue = false;
         organization.ElementFieldSet.push(field1);
 
         var field2 = new ElementField();
@@ -326,7 +327,6 @@ describe('ng-tests ResourcePool', function () {
         field2.IndexEnabled = true;
         field2.IndexRating = 35;
         field2.IndexRatingCount = 2;
-        field2.UseFixedValue = false;
         organization.ElementFieldSet.push(field2);
 
         expect(field1.otherUsersIndexRating()).toBe(65);
@@ -416,8 +416,53 @@ describe('ng-tests ResourcePool', function () {
 
     })
 
+    it('elementCell', function () {
+
+        var resourcePool1 = new ResourcePool();
+        resourcePool1.ResourcePoolRate = 10;
+        resourcePool1.ResourcePoolRateCount = 1;
+        resourcePool1.UseFixedResourcePoolRate = true;
+        resourcePool1.ratingMode = 1; // Only my ratings
+        resourcePool1.InitialValue = 0;
+
+        var organization = new Element();
+        organization.ResourcePool = resourcePool1;
+        resourcePool1.ElementSet.push(organization);
+        resourcePool1.MainElement = organization;
+
+        // Fields
+        var field1 = new ElementField();
+        field1.Element = organization;
+        field1.ElementFieldType = 4;
+        field1.IndexEnabled = true;
+        field1.IndexRating = 100;
+        field1.IndexRatingCount = 1;
+        field1.UseFixedValue = false;
+        organization.ElementFieldSet.push(field1);
+
+        // Item
+        var item1 = new ElementItem();
+        item1.Element = organization;
+        
+        // Cell
+        var cell1 = new ElementCell();
+        cell1.ElementField = field1;
+        cell1.ElementItem = item1;
+        cell1.NumericValue = 75;
+        cell1.NumericValueCount = 2;
+        field1.ElementCellSet.push(cell1);
+        item1.ElementCellSet.push(cell1);
+
+        //
+        expect(cell1.userCell()).toBe(null);
+        expect(cell1.currentUserNumericValue()).toBe(50);
+        expect(cell1.numericValueAverage()).toBe(200 / 3);
+        expect(cell1.numericValueCount()).toBe(3);
+        expect(cell1.numericValue()).toBe(50);
+
+    })
+
     /*
-    * element field tests
     * element cell tests
     * initial value?
     * index sort type
