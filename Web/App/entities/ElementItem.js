@@ -77,7 +77,7 @@
 
                 // Cached value
                 // TODO In case of add / remove field?
-                if (_directIncomeCell) {
+                if (_directIncomeCell !== null) {
                     return _directIncomeCell;
                 }
 

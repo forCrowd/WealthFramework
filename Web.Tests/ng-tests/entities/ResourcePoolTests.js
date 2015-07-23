@@ -416,50 +416,92 @@ describe('ng-tests ResourcePool', function () {
 
     })
 
-    it('ElementItem', function () {
+    it('ElementItem - elementCellIndexSet', function () {
 
         var resourcePool1 = new ResourcePool();
-        resourcePool1.ResourcePoolRate = 10;
-        resourcePool1.ResourcePoolRateCount = 1;
-        resourcePool1.UseFixedResourcePoolRate = true;
-        resourcePool1.ratingMode = 1; // Only my ratings
-        resourcePool1.InitialValue = 0;
 
-        var organization = new Element();
-        organization.ResourcePool = resourcePool1;
-        resourcePool1.ElementSet.push(organization);
-        resourcePool1.MainElement = organization;
-
-        // Fields
-        var field1 = new ElementField();
-        field1.Element = organization;
-        field1.ElementFieldType = 4;
-        field1.IndexEnabled = true;
-        field1.IndexRating = 100;
-        field1.IndexRatingCount = 1;
-        field1.UseFixedValue = false;
-        organization.ElementFieldSet.push(field1);
+        var element1 = new Element();
+        element1.ResourcePool = resourcePool1;
+        resourcePool1.ElementSet.push(element1);
+        resourcePool1.MainElement = element1;
 
         // Item
         var item1 = new ElementItem();
-        item1.Element = organization;
+        item1.Element = element1;
 
-        // TODO!
+        // Should have no elements
+        expect(item1.elementCellIndexSet().length === 0);
 
-        //elementCellIndexSet
-        //directIncomeCell
-        //multiplierCell
-        //directIncome
-        //multiplier
-        //totalDirectIncome
-        //resourcePoolAmount
-        //totalResourcePoolAmount
-        //directIncomeIncludingResourcePoolAmount
-        //totalDirectIncomeIncludingResourcePoolAmount
-        //totalResourcePoolIncome
-        //totalIncome
-        //incomeStatus
+        // Field 1
+        var field1 = new ElementField();
+        field1.Element = element1;
+        field1.IndexEnabled = false;
+        element1.ElementFieldSet.push(field1);
 
+        // Cell 1
+        var cell1 = new ElementCell();
+        cell1.ElementField = field1;
+        cell1.ElementItem = item1;
+        field1.ElementCellSet.push(cell1);
+        item1.ElementCellSet.push(cell1);
+
+        // Still...
+        expect(item1.elementCellIndexSet().length === 0);
+
+        // Field 2
+        var field2 = new ElementField();
+        field2.Element = element1;
+        field2.ElementFieldType = 4;
+        field2.IndexEnabled = true;
+        element1.ElementFieldSet.push(field2);
+
+        // Cell 2
+        var cell2 = new ElementCell();
+        cell2.ElementField = field2;
+        cell2.ElementItem = item1;
+        field2.ElementCellSet.push(cell2);
+        item1.ElementCellSet.push(cell2);
+
+        // And now 1 item
+        expect(item1.elementCellIndexSet().length === 1);
+    })
+
+    it('ElementCell - directIncomeCell & directIncome', function () {
+
+        var resourcePool1 = new ResourcePool();
+
+        var element1 = new Element();
+        element1.ResourcePool = resourcePool1;
+        resourcePool1.ElementSet.push(element1);
+        resourcePool1.MainElement = element1;
+
+        // Item
+        var item1 = new ElementItem();
+        item1.Element = element1;
+
+        // Should have no directIncomeCell() and 0 value
+        expect(item1.directIncomeCell()).toBe(null);
+        expect(item1.directIncome()).toBe(0);
+
+        // DirectIncome field
+        var directIncomeField = new ElementField();
+        directIncomeField.Element = element1;
+        directIncomeField.ElementFieldType = 11;
+        element1.ElementFieldSet.push(directIncomeField);
+
+        // DirectIncome cell
+        var directIncomeCell = new ElementCell();
+        directIncomeCell.ElementField = directIncomeField;
+        directIncomeCell.ElementItem = item1;
+        directIncomeCell.NumericValue = 50;
+        directIncomeField.ElementCellSet.push(directIncomeCell);
+        item1.ElementCellSet.push(directIncomeCell);
+
+        // Now
+        expect(item1.directIncomeCell()).not.toBe(null);
+        expect(item1.directIncome()).toBe(50);
+
+        // TODO Remove!
     })
 
     it('ElementCell', function () {

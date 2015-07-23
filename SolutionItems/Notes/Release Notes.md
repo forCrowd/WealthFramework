@@ -1,5 +1,9 @@
 ﻿### Release Notes
 
+**0.34**
+
+* New Angular tests
+
 **0.33**
 
 * Cache breaker value update (033 -> 0.33)
