@@ -16,6 +16,7 @@
         /*** Implementations ***/
 
         function ElementField() {
+
             var self = this;
 
             self._userElementField = null;

@@ -70,7 +70,7 @@
                 return _currentUserNumericValue;
             }
 
-            self.otherUsersNumericValue() = function () {
+            self.otherUsersNumericValue = function () {
 
                 // Set other users' value on the initial call
                 if (self._otherUsersNumericValue === null) {
@@ -136,7 +136,7 @@
             }
 
             self.numericValueAverage = function () {
-                var numericValue = self.otherUsersNumericValue() + self.currentUserNumericValue();
+                var numericValue = self.otherUsersNumericValueTotal() + self.currentUserNumericValue();
                 return numericValue / self.numericValueCount();
             }
 
@@ -155,7 +155,7 @@
                 return _numericValue;
             }
 
-            self.setNumericValue = function() {
+            self.setNumericValue = function () {
 
                 if (typeof self.ElementField !== 'undefined') {
                     switch (self.ElementField.Element.ResourcePool.ratingMode) {

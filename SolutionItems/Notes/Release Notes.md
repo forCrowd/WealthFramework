@@ -2,7 +2,8 @@
 
 **0.32**
 
-* angular unit testing?
+* angular unit testing: Node.js, Chutzpah, Jasmine
+* Other users' properties calculation fixes
 * BusinessObjects cleanup
 
 **0.31**
