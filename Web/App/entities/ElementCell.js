@@ -81,9 +81,8 @@
                     } else {
                         // If current user already has a rate, exclude
                         if (self.userCell() !== null) {
-                            var total = self.NumericValue * self.NumericValueCount;
-                            var userValue = 0;
 
+                            var userValue = 0;
                             switch (self.ElementField.ElementFieldType) {
                                 // TODO Check bool to decimal conversion?
                                 case 2: { userValue = self.userCell().BooleanValue; break; }
@@ -97,12 +96,12 @@
                                 }
                             }
 
-                            var ratingExcluded = total - userValue;
+                            var ratingExcluded = self.NumericValue - userValue;
                             var countExcluded = self.NumericValueCount - 1;
                             self._otherUsersNumericValue = ratingExcluded / countExcluded;
                         } else {
-                            // Otherwise, IndexRating equals to other users' rating
-                            self._otherUsersNumericValue = self.NumericValue;
+                            // Otherwise, it's only NumericValue / NumericValueCount
+                            self._otherUsersNumericValue = self.NumericValue / self.NumericValueCount;
                         }
                     }
                 }

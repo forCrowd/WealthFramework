@@ -18,14 +18,14 @@
             .when('/content/:key/', { title: getContentRouteTitle, templateUrl: getContentTemplateUrl })
 
             /* Account */
-            .when('/account/register', { title: function () { return 'Register'; }, templateUrl: '/App/views/account/register.html?v=028', controller: 'registerController as vm' })
-            .when('/account/login', { title: function () { return 'Login'; }, templateUrl: '/App/views/account/login.html?v=022', controller: 'loginController as vm' })
-            .when('/account/accountEdit', { title: function () { return 'Account Edit'; }, templateUrl: '/App/views/account/accountEdit.html?v=022', controller: 'accountEditController as vm' })
-            .when('/account/changePassword', { title: function () { return 'Change Password'; }, templateUrl: '/App/views/account/changePassword.html?v=022', controller: 'changePasswordController as vm' })
+            .when('/account/register', { title: function () { return 'Register'; }, templateUrl: '/App/views/account/register.html?v=0.28', controller: 'registerController as vm' })
+            .when('/account/login', { title: function () { return 'Login'; }, templateUrl: '/App/views/account/login.html?v=0.22', controller: 'loginController as vm' })
+            .when('/account/accountEdit', { title: function () { return 'Account Edit'; }, templateUrl: '/App/views/account/accountEdit.html?v=0.22', controller: 'accountEditController as vm' })
+            .when('/account/changePassword', { title: function () { return 'Change Password'; }, templateUrl: '/App/views/account/changePassword.html?v=0.22', controller: 'changePasswordController as vm' })
 
             /* Custom List + Edit pages */
-            .when('/manage/custom/resourcePool', { title: function () { return 'CMRP List'; }, templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomList.html?v=022' })
-            .when('/manage/custom/resourcePool/:Id', { title: function () { return ''; }, templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomView.html?v=022' })
+            .when('/manage/custom/resourcePool', { title: function () { return 'CMRP List'; }, templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomList.html?v=0.22' })
+            .when('/manage/custom/resourcePool/:Id', { title: function () { return ''; }, templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomView.html?v=0.22' })
 
             /* Default List + Edit pages */
             .when('/manage/:entity', { title: getManageRouteTitle, templateUrl: getManageRouteTemplateUrl })
@@ -59,10 +59,10 @@
                 : 'list'; // Default action
 
             if (action === 'list')
-                templateUrl = '/App/views/manage/list/' + params.entity + 'List.html?v=027';
+                templateUrl = '/App/views/manage/list/' + params.entity + 'List.html?v=0.27';
 
             if (action === 'new' || action === 'edit')
-                templateUrl = '/App/views/manage/edit/' + params.entity + 'Edit.html?v=030';
+                templateUrl = '/App/views/manage/edit/' + params.entity + 'Edit.html?v=0.30';
 
             return templateUrl;
         }
@@ -82,7 +82,7 @@
                 ? params.key
                 : 'home'; // Default view
 
-            return '/App/views/content/' + key + '.html?v=032';
+            return '/App/views/content/' + key + '.html?v=0.33';
         }
     }
 

@@ -181,13 +181,12 @@
                     } else {
                         // If current user already has a rate, exclude
                         if (self.userElementField() !== null) {
-                            var total = self.IndexRating * self.IndexRatingCount;
-                            var ratingExcluded = total - self.userElementField().IndexRating;
+                            var ratingExcluded = self.IndexRating - self.userElementField().IndexRating;
                             var countExcluded = self.IndexRatingCount - 1;
                             self._otherUsersIndexRating = ratingExcluded / countExcluded;
                         } else {
-                            // Otherwise, IndexRating equals to other users' rating
-                            self._otherUsersIndexRating = self.IndexRating;
+                            // Otherwise, it's only IndexRating / IndexRatingCount
+                            self._otherUsersIndexRating = self.IndexRating / self.IndexRatingCount;
                         }
                     }
                 }

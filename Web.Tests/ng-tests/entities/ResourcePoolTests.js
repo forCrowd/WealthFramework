@@ -122,7 +122,7 @@ describe('ng-tests ResourcePool', function () {
     it('resourcePoolRate - otherUsers w/o userResourcePool', function () {
 
         var resourcePool1 = new ResourcePool();
-        resourcePool1.ResourcePoolRate = 15;
+        resourcePool1.ResourcePoolRate = 30;
         resourcePool1.ResourcePoolRateCount = 2;
 
         expect(resourcePool1.otherUsersResourcePoolRate()).toBe(15);
@@ -134,7 +134,7 @@ describe('ng-tests ResourcePool', function () {
     it('resourcePoolRate - otherUsers w userResourcePool', function () {
 
         var resourcePool1 = new ResourcePool();
-        resourcePool1.ResourcePoolRate = 20;
+        resourcePool1.ResourcePoolRate = 60;
         resourcePool1.ResourcePoolRateCount = 3;
 
         var userResourcePool1 = new UserResourcePool();
@@ -164,7 +164,7 @@ describe('ng-tests ResourcePool', function () {
     it('resourcePoolRate - all ratings w/o userResourcePool', function () {
 
         var resourcePool1 = new ResourcePool();
-        resourcePool1.ResourcePoolRate = 15;
+        resourcePool1.ResourcePoolRate = 30;
         resourcePool1.ResourcePoolRateCount = 2;
         resourcePool1.UseFixedResourcePoolRate = false;
         resourcePool1.ratingMode = 2; // All ratings
@@ -182,7 +182,7 @@ describe('ng-tests ResourcePool', function () {
     it('resourcePoolRate - all ratings w userResourcePool', function () {
 
         var resourcePool1 = new ResourcePool();
-        resourcePool1.ResourcePoolRate = 20;
+        resourcePool1.ResourcePoolRate = 60;
         resourcePool1.ResourcePoolRateCount = 3;
         resourcePool1.UseFixedResourcePoolRate = false;
         resourcePool1.ratingMode = 2; // All ratings
@@ -200,7 +200,7 @@ describe('ng-tests ResourcePool', function () {
     it('resourcePoolRate - all ratings w late userResourcePool', function () {
 
         var resourcePool1 = new ResourcePool();
-        resourcePool1.ResourcePoolRate = 15;
+        resourcePool1.ResourcePoolRate = 30;
         resourcePool1.ResourcePoolRateCount = 2;
         resourcePool1.UseFixedResourcePoolRate = false;
         resourcePool1.ratingMode = 2; // All ratings
@@ -246,7 +246,7 @@ describe('ng-tests ResourcePool', function () {
         field1.Element = organization;
         field1.ElementFieldType = 4;
         field1.IndexEnabled = true;
-        field1.IndexRating = 65;
+        field1.IndexRating = 130;
         field1.IndexRatingCount = 2;
         organization.ElementFieldSet.push(field1);
 
@@ -317,7 +317,7 @@ describe('ng-tests ResourcePool', function () {
         field1.Element = organization;
         field1.ElementFieldType = 4;
         field1.IndexEnabled = true;
-        field1.IndexRating = 65;
+        field1.IndexRating = 130;
         field1.IndexRatingCount = 2;
         organization.ElementFieldSet.push(field1);
 
@@ -325,7 +325,7 @@ describe('ng-tests ResourcePool', function () {
         field2.Element = organization;
         field2.ElementFieldType = 4;
         field2.IndexEnabled = true;
-        field2.IndexRating = 35;
+        field2.IndexRating = 70;
         field2.IndexRatingCount = 2;
         organization.ElementFieldSet.push(field2);
 
@@ -494,7 +494,7 @@ describe('ng-tests ResourcePool', function () {
         var cell1 = new ElementCell();
         cell1.ElementField = field1;
         cell1.ElementItem = item1;
-        cell1.NumericValue = 75;
+        cell1.NumericValue = 150;
         cell1.NumericValueCount = 2;
         field1.ElementCellSet.push(cell1);
         item1.ElementCellSet.push(cell1);

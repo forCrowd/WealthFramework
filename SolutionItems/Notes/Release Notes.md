@@ -1,5 +1,10 @@
 ﻿### Release Notes
 
+**0.33**
+
+* Cache breaker value update (033 -> 0.33)
+* Other users' properties calculation fixes (again)
+
 **0.32**
 
 * angular unit testing: Node.js, Chutzpah, Jasmine

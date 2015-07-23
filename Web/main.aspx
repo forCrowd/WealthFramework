@@ -7,13 +7,13 @@
     <base href="/" />
 
     <!-- External CSS -->
-    <link href="/Content/bootstrap.min.css?v=024" rel="stylesheet" />
-    <link href="/Content/breeze.directives.css?v=024" rel="stylesheet" />
-    <link href="/Content/toastr.css?v=024" rel="stylesheet" />
+    <link href="/Content/bootstrap.min.css?v=0.24" rel="stylesheet" />
+    <link href="/Content/breeze.directives.css?v=0.24" rel="stylesheet" />
+    <link href="/Content/toastr.css?v=0.24" rel="stylesheet" />
 
     <!-- Internal CSS -->
-    <link href="/Content/site.css?v=030" rel="stylesheet" />
-    <link href="/App/directives/resourcePoolEditor.css?v=031" rel="stylesheet" />
+    <link href="/Content/site.css?v=0.30" rel="stylesheet" />
+    <link href="/App/directives/resourcePoolEditor.css?v=0.31" rel="stylesheet" />
 
     <!-- jQuery -->
     <script src="/Scripts/jquery-2.1.4.min.js"></script>
@@ -47,7 +47,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a href="/" class="navbar-brand">
-                    <%--<span><img src="/Content/images/forCrowd_logo_20x20.jpg?v=0292" /></span>--%>
+                    <%--<span><img src="/Content/images/forCrowd_logo_20x20.jpg?v=0.29.2" /></span>--%>
                     Wealth Economy
                 </a>
             </div>
@@ -63,7 +63,7 @@
                     <li class="dropdown hide" data-dropdown data-ng-show="vm.isAuthenticated()">
                         <a href="" class="dropdown-toggle" data-dropdown-toggle>Manage <b class="caret"></b></a>
                         <!-- Manage Menu - Generated -->
-                        <script src="/App/includes/manageMenu.js?v=027"></script>
+                        <script src="/App/includes/manageMenu.js?v=0.27"></script>
                     </li>
                     <li data-ng-show="vm.isAuthenticated()">
                         <a href="/manage/custom/resourcePool">CMRP</a>
@@ -100,7 +100,7 @@
             </p>
             <p class="brandLink">
                 <a href="http://forcrowd.org" target="_blank">
-                    <img src="/Content/images/forCrowd_logo_34x34.jpg?v=0292" class="brandLinkImage" />
+                    <img src="/Content/images/forCrowd_logo_34x34.jpg?v=0.29.2" class="brandLinkImage" />
                     <span class="brandLinkText">
                         <span class="brandLinkPrimary">forCrowd</span><br />
                         <span class="brandLinkSecondary">FOUNDATION</span>
@@ -110,79 +110,79 @@
         </footer>
     </div>
 
-    <%--<script src="/Scripts/bootstrap.min.js?v=024"></script>--%>
-    <script src="/Scripts/respond.min.js?v=024"></script>
-    <script src="/Scripts/datajs-1.1.3.min.js?v=024"></script>
-    <script src="/Scripts/toastr.min.js?v=024"></script>
+    <%--<script src="/Scripts/bootstrap.min.js?v=0.24"></script>--%>
+    <script src="/Scripts/respond.min.js?v=0.24"></script>
+    <script src="/Scripts/datajs-1.1.3.min.js?v=0.24"></script>
+    <script src="/Scripts/toastr.min.js?v=0.24"></script>
 
-    <script src="/Scripts/angular.min.js?v=024"></script>
-    <script src="/Scripts/angular-route.min.js?v=024"></script>
-    <script src="/Scripts/angular-sanitize.min.js?v=024"></script>
+    <script src="/Scripts/angular.min.js?v=0.24"></script>
+    <script src="/Scripts/angular-route.min.js?v=0.24"></script>
+    <script src="/Scripts/angular-sanitize.min.js?v=0.24"></script>
 
-    <script src="/App/external/ui-bootstrap-tpls-0.13.0.min.js?v=030"></script>
+    <script src="/App/external/ui-bootstrap-tpls-0.13.0.min.js?v=0.30"></script>
 
-    <script src="/Scripts/breeze.min.js?v=024"></script>
-    <script src="/Scripts/breeze.bridge.angular.js?v=024"></script>
-    <script src="/Scripts/breeze.directives.js?v=024"></script>
+    <script src="/Scripts/breeze.min.js?v=0.24"></script>
+    <script src="/Scripts/breeze.bridge.angular.js?v=0.24"></script>
+    <script src="/Scripts/breeze.directives.js?v=0.24"></script>
 
     <!-- Highcharts - TODO Try to find (or create) nuget package for these two -->
-    <script src="/App/external/highcharts.js?v=024"></script>
-    <script src="/App/external/highcharts-ng.js?v=024"></script>
+    <script src="/App/external/highcharts.js?v=0.24"></script>
+    <script src="/App/external/highcharts-ng.js?v=0.24"></script>
 
     <!-- Main -->
-    <script src="/App/main.js?v=032"></script>
-    <script src="/App/logger.js?v=029"></script>
-    <script src="/App/route.js?v=032"></script>
-    <script src="/App/authorization.js?v=029"></script>
+    <script src="/App/main.js?v=0.32"></script>
+    <script src="/App/logger.js?v=0.29"></script>
+    <script src="/App/route.js?v=0.33"></script>
+    <script src="/App/authorization.js?v=0.29"></script>
 
     <!-- Entities -->
-    <script src="/App/entities/ResourcePool.js?v=032"></script>
-    <script src="/App/entities/Element.js?v=032"></script>
-    <script src="/App/entities/ElementCell.js?v=032"></script>
-    <script src="/App/entities/ElementField.js?v=032"></script>
-    <script src="/App/entities/ElementItem.js?v=032"></script>
-    <script src="/App/entities/UserElementCell.js?v=032"></script>
+    <script src="/App/entities/ResourcePool.js?v=0.33"></script>
+    <script src="/App/entities/Element.js?v=0.32"></script>
+    <script src="/App/entities/ElementCell.js?v=0.33"></script>
+    <script src="/App/entities/ElementField.js?v=0.33"></script>
+    <script src="/App/entities/ElementItem.js?v=0.32"></script>
+    <script src="/App/entities/UserElementCell.js?v=0.32"></script>
 
     <!-- breezeJS -->
-    <script src="/App/entityManagerFactory.js?v=027"></script>
-    <script src="/App/dataContext.js?v=0292"></script>
+    <script src="/App/entityManagerFactory.js?v=0.27"></script>
+    <script src="/App/dataContext.js?v=0.29.2"></script>
 
-    <script src="/App/services/mainService.js?v=022"></script>
+    <script src="/App/services/mainService.js?v=0.22"></script>
 
     <!-- Manage Scripts - Generated (Services, Controllers) -->
-    <script src="/App/includes/manageScripts.js?v=029"></script>
+    <script src="/App/includes/manageScripts.js?v=0.33"></script>
 
     <!-- Service extensions -->
-    <script src="/App/services/userService.js?v=029"></script>
-    <script src="/App/services/resourcePoolService.js?v=029"></script>
+    <script src="/App/services/userService.js?v=0.29"></script>
+    <script src="/App/services/resourcePoolService.js?v=0.29"></script>
 
     <!-- Content -->
-    <script src="/App/controllers/content/mainController.js?v=029"></script>
-    <script src="/App/controllers/content/introductionController.js?v=029"></script>
-    <script src="/App/controllers/content/basicsController.js?v=029"></script>
-    <script src="/App/controllers/content/sectorIndexSampleController.js?v=029"></script>
-    <script src="/App/controllers/content/knowledgeIndexSampleController.js?v=030"></script>
-    <script src="/App/controllers/content/totalCostIndexSampleController.js?v=029"></script>
-    <script src="/App/controllers/content/fairShareIndexSampleController.js?v=029"></script>
-    <script src="/App/controllers/content/indexesPieSampleController.js?v=029"></script>
-    <script src="/App/controllers/content/resourcePoolRateSampleController.js?v=029"></script>
-    <script src="/App/controllers/content/closingNotesController.js?v=029"></script>
+    <script src="/App/controllers/content/mainController.js?v=0.29"></script>
+    <script src="/App/controllers/content/introductionController.js?v=0.29"></script>
+    <script src="/App/controllers/content/basicsController.js?v=0.29"></script>
+    <script src="/App/controllers/content/sectorIndexSampleController.js?v=0.29"></script>
+    <script src="/App/controllers/content/knowledgeIndexSampleController.js?v=0.30"></script>
+    <script src="/App/controllers/content/totalCostIndexSampleController.js?v=0.29"></script>
+    <script src="/App/controllers/content/fairShareIndexSampleController.js?v=0.29"></script>
+    <script src="/App/controllers/content/indexesPieSampleController.js?v=0.29"></script>
+    <script src="/App/controllers/content/resourcePoolRateSampleController.js?v=0.29"></script>
+    <script src="/App/controllers/content/closingNotesController.js?v=0.29"></script>
 
     <!-- Account -->
-    <script src="/App/controllers/account/loginController.js?v=029"></script>
-    <script src="/App/controllers/account/registerController.js?v=029"></script>
-    <script src="/App/controllers/account/accountEditController.js?v=029"></script>
-    <script src="/App/controllers/account/changePasswordController.js?v=022"></script>
+    <script src="/App/controllers/account/loginController.js?v=0.29"></script>
+    <script src="/App/controllers/account/registerController.js?v=0.29"></script>
+    <script src="/App/controllers/account/accountEditController.js?v=0.29"></script>
+    <script src="/App/controllers/account/changePasswordController.js?v=0.22"></script>
 
     <!-- Manage Scripts - Custom -->
-    <script src="/App/controllers/manage/resourcePool/resourcePoolCustomListController.js?v=022"></script>
-    <script src="/App/controllers/manage/resourcePool/resourcePoolCustomViewController.js?v=027"></script>
+    <script src="/App/controllers/manage/resourcePool/resourcePoolCustomListController.js?v=0.22"></script>
+    <script src="/App/controllers/manage/resourcePool/resourcePoolCustomViewController.js?v=0.27"></script>
 
     <!-- Directives -->
-    <script src="/App/directives/resourcePoolEditor.js?v=031"></script>
+    <script src="/App/directives/resourcePoolEditor.js?v=0.33"></script>
 
     <!-- Filters -->
-    <script src="/App/filters/angular-percentage.js?v=022"></script>
+    <script src="/App/filters/angular-percentage.js?v=0.22"></script>
 
 </body>
 </html>

@@ -156,13 +156,12 @@
                     } else {
                         // If current user already has a rate, exclude
                         if (self.userResourcePool() !== null) {
-                            var total = self.ResourcePoolRate * self.ResourcePoolRateCount;
-                            var rateExcluded = total - self.userResourcePool().ResourcePoolRate;
+                            var rateExcluded = self.ResourcePoolRate - self.userResourcePool().ResourcePoolRate;
                             var countExcluded = self.ResourcePoolRateCount - 1;
                             self._otherUsersResourcePoolRate = rateExcluded / countExcluded;
                         } else {
-                            // Otherwise, ResourcePoolRate equals to other users' rate
-                            self._otherUsersResourcePoolRate = self.ResourcePoolRate;
+                            // Otherwise, it's only ResourcePoolRate / ResourcePoolRateCount
+                            self._otherUsersResourcePoolRate = self.ResourcePoolRate / self.ResourcePoolRateCount;
                         }
                     }
                 }
