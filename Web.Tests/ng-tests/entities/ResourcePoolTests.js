@@ -1,108 +1,39 @@
-﻿/// <reference path="../../../Web/Scripts/angular.js" />
-/// <reference path="../../../Web/Scripts/angular-route.js" />
-/// <reference path="../../../Web/Scripts/angular-sanitize.js" />
-/// <reference path="../../../Web/Scripts/angular-mocks.js" />
-/// <reference path="../../../Web/Scripts/breeze.debug.js" />
-/// <reference path="../../../Web/Scripts/breeze.bridge.angular.js" />
-/// <reference path="../../../Web/Scripts/toastr.js" />
-/// <reference path="../../../Web/App/external/highcharts.js" />
-/// <reference path="../../../Web/App/external/highcharts-ng.js" />
-/// <reference path="../../../Web/App/external/ui-bootstrap-tpls-0.13.0.min.js" />
-/// <reference path="../../../Web/App/main.js" />
-/// <reference path="../../../Web/App/logger.js" />
-/// <reference path="../../../Web/App/entities/Element.js" />
-/// <reference path="../../../Web/App/entities/ElementCell.js" />
-/// <reference path="../../../Web/App/entities/ElementField.js" />
-/// <reference path="../../../Web/App/entities/ElementItem.js" />
-/// <reference path="../../../Web/App/entities/ResourcePool.js" />
-/// <reference path="../../../Web/App/entities/UserElementCell.js" />
+﻿/// <reference path="Commons.js" />
 
 describe('ng-tests ResourcePool', function () {
 
-    var ResourcePool, $rootScope;
+    var $rootScope, ResourcePool, Element, ElementField, ElementItem, ElementCell;
+
     beforeEach(module('main'));
+
     beforeEach(function () {
         inject(function ($injector) {
 
             $rootScope = $injector.get('$rootScope');
-
             ResourcePool = $injector.get('ResourcePool');
-            ResourcePool.prototype.MainElement = null;
-            ResourcePool.prototype.ElementSet = [];
-            ResourcePool.prototype.UserResourcePoolSet = [];
-
             Element = $injector.get('Element');
-            Element.prototype.ResourcePool = null;
-            Element.prototype.ElementFieldSet = [];
-            Element.prototype.ElementItemSet = [];
-
             ElementField = $injector.get('ElementField');
-            ElementField.prototype.Element = null;
-            ElementField.prototype.ElementCellSet = [];
-            ElementField.prototype.UserElementFieldSet = [];
-
             ElementItem = $injector.get('ElementItem');
-            ElementItem.prototype.Element = null;
-            ElementItem.prototype.ElementCellSet = [];
-            ElementItem.prototype.ParentCellSet = [];
-
             ElementCell = $injector.get('ElementCell');
-            ElementCell.prototype.ElementField = null;
-            ElementCell.prototype.ElementItem = null;
-            ElementCell.prototype.UserElementCellSet = [];
+
+            registerPrototypes($injector);
 
         });
     });
 
-    function UserResourcePool() {
-        var self = this;
-        self.ResourcePool = null;
-        self.ResourcePoolRate = 0;
-        self.entityAspect = {
-            entityState: {
-                isDetached: function () {
-                    return false;
-                }
-            }
-        }
-    }
-
-    function UserElementField() {
-        var self = this;
-        self.Element = null;
-        self.Rating = 0;
-        self.entityAspect = {
-            entityState: {
-                isDetached: function () {
-                    return false;
-                }
-            }
-        }
-    }
-
-    it('Sanity checks', function () {
-
-        expect(0).toBe(0);
-
-        // Just experimental
-        var number = 1000000000000000000000000000000000;
-        var total = number * number;
-        expect(total).toBe(total);
-
-        // Entities
-        var resourcePool1 = new ResourcePool();
-        var element1 = new Element();
-        var elementField1 = new ElementField();
-        var elementItem1 = new ElementItem();
-        var elementCell1 = new ElementCell();
-
-        expect(resourcePool1).toBeDefined();
-        expect(element1).toBeDefined();
-        expect(elementField1).toBeDefined();
-        expect(elementItem1).toBeDefined();
-        expect(elementCell1).toBeDefined();
-
-    });
+    //displayRatingMode
+    //toggleRatingMode
+    //ratingModeText
+    //userResourcePool
+    //currentUserResourcePoolRate
+    //otherUsersResourcePoolRate
+    //otherUsersResourcePoolRateCount
+    //otherUsersResourcePoolRateTotal
+    //resourcePoolRateAverage
+    //resourcePoolRateCount
+    //resourcePoolRate
+    //setResourcePoolRate
+    //resourcePoolRatePercentage
 
     it('resourcePoolRate - userResourcePool()', function () {
 
@@ -219,7 +150,7 @@ describe('ng-tests ResourcePool', function () {
         $rootScope.$broadcast('resourcePoolRateUpdated', { resourcePool: resourcePool1, value: userResourcePool1.ResourcePoolRate });
         expect(resourcePool1.currentUserResourcePoolRate()).toBe(30); // Default value
 
-        // Manually update!
+        // TODO Manually update?!
         resourcePool1.setResourcePoolRate();
 
         expect(resourcePool1.resourcePoolRateAverage()).toBe(60 / 3);
@@ -236,19 +167,19 @@ describe('ng-tests ResourcePool', function () {
         resourcePool1.ratingMode = 1; // Only my ratings
         resourcePool1.InitialValue = 500;
 
-        var organization = new Element();
-        organization.ResourcePool = resourcePool1;
-        resourcePool1.ElementSet.push(organization);
-        resourcePool1.MainElement = organization;
+        var element1 = new Element();
+        element1.ResourcePool = resourcePool1;
+        resourcePool1.ElementSet.push(element1);
+        resourcePool1.MainElement = element1;
 
         // Fields
         var field1 = new ElementField();
-        field1.Element = organization;
+        field1.Element = element1;
         field1.ElementFieldType = 4;
         field1.IndexEnabled = true;
         field1.IndexRating = 130;
         field1.IndexRatingCount = 2;
-        organization.ElementFieldSet.push(field1);
+        element1.ElementFieldSet.push(field1);
 
         expect(field1.otherUsersIndexRating()).toBe(65);
         expect(field1.otherUsersIndexRatingCount()).toBe(2);
@@ -262,7 +193,7 @@ describe('ng-tests ResourcePool', function () {
 
         // With all ratings
         resourcePool1.ratingMode = 2;
-        field1.setIndexRating(); // Manually update
+        field1.setIndexRating(); // TODO Manually update?!
 
         expect(field1.indexRatingAverage()).toBe(60);
         expect(field1.indexRatingCount()).toBe(3);
@@ -289,14 +220,14 @@ describe('ng-tests ResourcePool', function () {
 
         // With all ratings
         resourcePool1.ratingMode = 2;
-        field1.setIndexRating(); // Manually update
+        field1.setIndexRating(); // TODO Manually update?!
 
         expect(field1.indexRatingAverage()).toBe(55);
         expect(field1.indexRatingCount()).toBe(3);
         expect(field1.indexRating()).toBe(55);
         expect(field1.indexRatingPercentage()).toBe(1);
         expect(field1.indexIncome()).toBe(500);
-    })
+    });
 
     it('ElementField - two indexes', function () {
 
@@ -307,27 +238,27 @@ describe('ng-tests ResourcePool', function () {
         resourcePool1.ratingMode = 1; // Only my ratings
         resourcePool1.InitialValue = 500;
 
-        var organization = new Element();
-        organization.ResourcePool = resourcePool1;
-        resourcePool1.ElementSet.push(organization);
-        resourcePool1.MainElement = organization;
+        var element1 = new Element();
+        element1.ResourcePool = resourcePool1;
+        resourcePool1.ElementSet.push(element1);
+        resourcePool1.MainElement = element1;
 
         // Fields
         var field1 = new ElementField();
-        field1.Element = organization;
+        field1.Element = element1;
         field1.ElementFieldType = 4;
         field1.IndexEnabled = true;
         field1.IndexRating = 130;
         field1.IndexRatingCount = 2;
-        organization.ElementFieldSet.push(field1);
+        element1.ElementFieldSet.push(field1);
 
         var field2 = new ElementField();
-        field2.Element = organization;
+        field2.Element = element1;
         field2.ElementFieldType = 4;
         field2.IndexEnabled = true;
         field2.IndexRating = 70;
         field2.IndexRatingCount = 2;
-        organization.ElementFieldSet.push(field2);
+        element1.ElementFieldSet.push(field2);
 
         expect(field1.otherUsersIndexRating()).toBe(65);
         expect(field1.otherUsersIndexRatingCount()).toBe(2);
@@ -351,8 +282,8 @@ describe('ng-tests ResourcePool', function () {
 
         // With all ratings
         resourcePool1.ratingMode = 2;
-        field1.setIndexRating(); // Manually update
-        field2.setIndexRating(); // Manually update
+        field1.setIndexRating(); // TODO Manually update?!
+        field2.setIndexRating(); // TODO Manually update?!
 
         expect(field1.indexRatingAverage()).toBe(60);
         expect(field1.indexRatingCount()).toBe(3);
@@ -399,8 +330,8 @@ describe('ng-tests ResourcePool', function () {
 
         // With all ratings
         resourcePool1.ratingMode = 2;
-        field1.setIndexRating(); // Manually update
-        field2.setIndexRating(); // Manually update
+        field1.setIndexRating(); // TODO Manually update?!
+        field2.setIndexRating(); // TODO Manually update?!
 
         expect(field1.indexRatingAverage()).toBe(55);
         expect(field1.indexRatingCount()).toBe(3);
@@ -414,95 +345,7 @@ describe('ng-tests ResourcePool', function () {
         expect(field2.indexRatingPercentage()).toBe(0.45);
         expect(field2.indexIncome()).toBe(225);
 
-    })
-
-    it('ElementItem - elementCellIndexSet', function () {
-
-        var resourcePool1 = new ResourcePool();
-
-        var element1 = new Element();
-        element1.ResourcePool = resourcePool1;
-        resourcePool1.ElementSet.push(element1);
-        resourcePool1.MainElement = element1;
-
-        // Item
-        var item1 = new ElementItem();
-        item1.Element = element1;
-
-        // Should have no elements
-        expect(item1.elementCellIndexSet().length === 0);
-
-        // Field 1
-        var field1 = new ElementField();
-        field1.Element = element1;
-        field1.IndexEnabled = false;
-        element1.ElementFieldSet.push(field1);
-
-        // Cell 1
-        var cell1 = new ElementCell();
-        cell1.ElementField = field1;
-        cell1.ElementItem = item1;
-        field1.ElementCellSet.push(cell1);
-        item1.ElementCellSet.push(cell1);
-
-        // Still...
-        expect(item1.elementCellIndexSet().length === 0);
-
-        // Field 2
-        var field2 = new ElementField();
-        field2.Element = element1;
-        field2.ElementFieldType = 4;
-        field2.IndexEnabled = true;
-        element1.ElementFieldSet.push(field2);
-
-        // Cell 2
-        var cell2 = new ElementCell();
-        cell2.ElementField = field2;
-        cell2.ElementItem = item1;
-        field2.ElementCellSet.push(cell2);
-        item1.ElementCellSet.push(cell2);
-
-        // And now 1 item
-        expect(item1.elementCellIndexSet().length === 1);
-    })
-
-    it('ElementCell - directIncomeCell & directIncome', function () {
-
-        var resourcePool1 = new ResourcePool();
-
-        var element1 = new Element();
-        element1.ResourcePool = resourcePool1;
-        resourcePool1.ElementSet.push(element1);
-        resourcePool1.MainElement = element1;
-
-        // Item
-        var item1 = new ElementItem();
-        item1.Element = element1;
-
-        // Should have no directIncomeCell() and 0 value
-        expect(item1.directIncomeCell()).toBe(null);
-        expect(item1.directIncome()).toBe(0);
-
-        // DirectIncome field
-        var directIncomeField = new ElementField();
-        directIncomeField.Element = element1;
-        directIncomeField.ElementFieldType = 11;
-        element1.ElementFieldSet.push(directIncomeField);
-
-        // DirectIncome cell
-        var directIncomeCell = new ElementCell();
-        directIncomeCell.ElementField = directIncomeField;
-        directIncomeCell.ElementItem = item1;
-        directIncomeCell.NumericValue = 50;
-        directIncomeField.ElementCellSet.push(directIncomeCell);
-        item1.ElementCellSet.push(directIncomeCell);
-
-        // Now
-        expect(item1.directIncomeCell()).not.toBe(null);
-        expect(item1.directIncome()).toBe(50);
-
-        // TODO Remove!
-    })
+    });
 
     it('ElementCell', function () {
 
@@ -513,25 +356,26 @@ describe('ng-tests ResourcePool', function () {
         resourcePool1.ratingMode = 1; // Only my ratings
         resourcePool1.InitialValue = 0;
 
-        var organization = new Element();
-        organization.ResourcePool = resourcePool1;
-        resourcePool1.ElementSet.push(organization);
-        resourcePool1.MainElement = organization;
+        var element1 = new Element();
+        element1.ResourcePool = resourcePool1;
+        resourcePool1.ElementSet.push(element1);
+        resourcePool1.MainElement = element1;
 
         // Fields
         var field1 = new ElementField();
-        field1.Element = organization;
+        field1.Element = element1;
         field1.ElementFieldType = 4;
         field1.IndexEnabled = true;
         field1.IndexRating = 100;
         field1.IndexRatingCount = 1;
         field1.UseFixedValue = false;
-        organization.ElementFieldSet.push(field1);
+        element1.ElementFieldSet.push(field1);
 
         // Item
         var item1 = new ElementItem();
-        item1.Element = organization;
-        
+        item1.Element = element1;
+        element1.ElementItemSet.push(item1);
+
         // Cell
         var cell1 = new ElementCell();
         cell1.ElementField = field1;
@@ -554,12 +398,6 @@ describe('ng-tests ResourcePool', function () {
         //expect(field1.indexRatingPercentage()).toBe(1);
         //expect(field1.indexIncome()).toBe(500);
 
-    })
-
-    /*
-    * element cell tests
-    * initial value?
-    * index sort type
-    */
+    });
 
 });

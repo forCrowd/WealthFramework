@@ -92,6 +92,15 @@
                 return _directIncomeCell;
             }
 
+            // TODO Compare this function with server-side
+            self.directIncome = function () {
+
+                if (self.directIncomeCell() === null)
+                    return 0;
+
+                return self.directIncomeCell().numericValue();
+            }
+
             self.multiplierCell = function () {
 
                 if (typeof self.ElementCellSet === 'undefined') {
@@ -111,25 +120,16 @@
                 return multiplierCell;
             }
 
-            // TODO Compare this function with server-side
-            self.directIncome = function () {
-
-                if (self.directIncomeCell() === null)
-                    return 0;
-
-                return self.directIncomeCell().numericValue();
-            }
-
             self.multiplier = function () {
 
                 if (_multiplier === null) {
-                    setMultiplier();
+                    self.setMultiplier();
                 }
 
                 return _multiplier;
             }
 
-            function setMultiplier() {
+            self.setMultiplier = function() {
 
                 var multiplierCell = self.multiplierCell();
 

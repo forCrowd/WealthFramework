@@ -140,7 +140,7 @@
     <script src="/App/entities/Element.js?v=0.32"></script>
     <script src="/App/entities/ElementCell.js?v=0.33"></script>
     <script src="/App/entities/ElementField.js?v=0.33"></script>
-    <script src="/App/entities/ElementItem.js?v=0.32"></script>
+    <script src="/App/entities/ElementItem.js?v=0.34"></script>
     <script src="/App/entities/UserElementCell.js?v=0.32"></script>
 
     <!-- breezeJS -->

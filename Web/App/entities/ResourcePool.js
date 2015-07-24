@@ -221,7 +221,6 @@
                 }
             }
 
-            // Resource pool rate percentage
             self.resourcePoolRatePercentage = function () {
 
                 if (self.resourcePoolRate() === 0)
