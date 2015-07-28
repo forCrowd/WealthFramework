@@ -2,7 +2,7 @@
 
 **0.34**
 
-* New Angular tests
+* New javascript tests
 
 **0.33**
 

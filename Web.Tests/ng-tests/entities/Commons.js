@@ -22,6 +22,10 @@ function registerPrototypes($injector) {
     var ResourcePool, Element, ElementField, ElementItem, ElementCell;
 
     ResourcePool = $injector.get('ResourcePool');
+    ResourcePool.prototype.InitialValue = 0;
+    ResourcePool.prototype.UseFixedResourcePoolRate = false;
+    ResourcePool.prototype.ResourcePoolRate = null;
+    ResourcePool.prototype.ResourcePoolRateCount = 0;
     ResourcePool.prototype.MainElement = null;
     ResourcePool.prototype.ElementSet = [];
     ResourcePool.prototype.UserResourcePoolSet = [];
@@ -32,6 +36,7 @@ function registerPrototypes($injector) {
     Element.prototype.ElementItemSet = [];
 
     ElementField = $injector.get('ElementField');
+    ElementField.prototype.UseFixedValue = false;
     ElementField.prototype.Element = null;
     ElementField.prototype.ElementCellSet = [];
     ElementField.prototype.UserElementFieldSet = [];

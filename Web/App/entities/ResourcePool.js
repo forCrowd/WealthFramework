@@ -103,10 +103,6 @@
                 }
             }
 
-            self.ratingModeText = function () {
-                return self.resourcePoolRateCount();
-            }
-
             // Other users' values: Keeps the values excluding current user's
             self._otherUsersResourcePoolRate = null;
             self._otherUsersResourcePoolRateCount = null;
@@ -137,72 +133,94 @@
             self.currentUserResourcePoolRate = function () {
 
                 if (_currentUserResourcePoolRate === null) {
-                    _currentUserResourcePoolRate = self.userResourcePool() !== null
-                        ? self.userResourcePool().ResourcePoolRate
-                        : 10; // Default value?
+                    self.setCurrentUserResourcePoolRate();
                 }
 
                 return _currentUserResourcePoolRate;
+            }
+
+            self.setCurrentUserResourcePoolRate = function () {
+                _currentUserResourcePoolRate = self.UseFixedResourcePoolRate
+                    ? 0
+                    : self.userResourcePool() !== null
+                    ? self.userResourcePool().ResourcePoolRate
+                    : 10; // Default value?
             }
 
             self.otherUsersResourcePoolRate = function () {
 
                 // Set other users' value on the initial call
                 if (self._otherUsersResourcePoolRate === null) {
-
-                    // TODO ResourcePoolRate property could directly return 0?
-                    if (self.ResourcePoolRate === null) {
-                        self._otherUsersResourcePoolRate = 0;
-                    } else {
-                        // If current user already has a rate, exclude
-                        if (self.userResourcePool() !== null) {
-                            var rateExcluded = self.ResourcePoolRate - self.userResourcePool().ResourcePoolRate;
-                            var countExcluded = self.ResourcePoolRateCount - 1;
-                            self._otherUsersResourcePoolRate = rateExcluded / countExcluded;
-                        } else {
-                            // Otherwise, it's only ResourcePoolRate / ResourcePoolRateCount
-                            self._otherUsersResourcePoolRate = self.ResourcePoolRate / self.ResourcePoolRateCount;
-                        }
-                    }
+                    self.setOtherUsersResourcePoolRate();
                 }
 
                 return self._otherUsersResourcePoolRate;
+            }
+
+            self.setOtherUsersResourcePoolRate = function () {
+
+                // TODO ResourcePoolRate property could directly return 0?
+                if (self.ResourcePoolRate === null) {
+                    self._otherUsersResourcePoolRate = 0;
+                } else {
+                    // If current user already has a rate, exclude
+                    if (self.userResourcePool() !== null) {
+                        var rateExcluded = self.ResourcePoolRate - self.userResourcePool().ResourcePoolRate;
+                        var countExcluded = self.ResourcePoolRateCount - 1;
+                        self._otherUsersResourcePoolRate = rateExcluded / countExcluded;
+                    } else {
+                        // Otherwise, it's only ResourcePoolRate / ResourcePoolRateCount
+                        self._otherUsersResourcePoolRate = self.ResourcePoolRate / self.ResourcePoolRateCount;
+                    }
+                }
             }
 
             self.otherUsersResourcePoolRateCount = function () {
 
                 // Set other users' value on the initial call
                 if (self._otherUsersResourcePoolRateCount === null) {
-                    self._otherUsersResourcePoolRateCount = self.ResourcePoolRateCount;
-
-                    // Decrease by 1 current user's rating
-                    if (self.userResourcePool() !== null) {
-                        self._otherUsersResourcePoolRateCount--;
-                    }
+                    self.setOtherUsersResourcePoolRateCount();
                 }
 
                 return self._otherUsersResourcePoolRateCount;
+            }
+
+            self.setOtherUsersResourcePoolRateCount = function () {
+                self._otherUsersResourcePoolRateCount = self.ResourcePoolRateCount;
+
+                // Decrease by 1 current user's rating
+                if (self.userResourcePool() !== null) {
+                    self._otherUsersResourcePoolRateCount--;
+                }
             }
 
             self.otherUsersResourcePoolRateTotal = function () {
 
                 // Set other users' value on the initial call
                 if (self._otherUsersResourcePoolRateTotal === null) {
-                    self._otherUsersResourcePoolRateTotal = self.otherUsersResourcePoolRate() * self.otherUsersResourcePoolRateCount();
+                    self.setOtherUsersResourcePoolRateTotal();
                 }
 
                 return self._otherUsersResourcePoolRateTotal;
             }
 
-            self.resourcePoolRateAverage = function () {
-                var resourcePoolRateTotal = self.otherUsersResourcePoolRateTotal() + self.currentUserResourcePoolRate();
-                return resourcePoolRateTotal / self.resourcePoolRateCount();
+            self.setOtherUsersResourcePoolRateTotal = function () {
+
+                self._otherUsersResourcePoolRateTotal = self.otherUsersResourcePoolRate() * self.otherUsersResourcePoolRateCount();
+
             }
 
             self.resourcePoolRateCount = function () {
                 return self.UseFixedResourcePoolRate
                     ? self.otherUsersResourcePoolRateCount()
                     : self.otherUsersResourcePoolRateCount() + 1; // There is always default value, increase count by 1
+            }
+
+            self.resourcePoolRateAverage = function () {
+                var resourcePoolRateTotal = self.otherUsersResourcePoolRateTotal() + self.currentUserResourcePoolRate();
+                return resourcePoolRateTotal === 0
+                    ? 0
+                    : resourcePoolRateTotal / self.resourcePoolRateCount();
             }
 
             self.resourcePoolRate = function () {
