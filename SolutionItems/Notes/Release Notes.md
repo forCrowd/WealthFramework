@@ -2,6 +2,7 @@
 
 **0.34**
 
+* Hosting plan upgrade
 * New javascript tests
 
 **0.33**
