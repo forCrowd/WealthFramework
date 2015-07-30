@@ -16,6 +16,7 @@
         /*** Implementations ***/
 
         function ElementItem() {
+
             var self = this;
 
             // Local variables
@@ -92,7 +93,6 @@
                 return _directIncomeCell;
             }
 
-            // TODO Compare this function with server-side
             self.directIncome = function () {
 
                 if (self.directIncomeCell() === null)

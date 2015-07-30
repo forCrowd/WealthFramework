@@ -111,7 +111,7 @@ describe('ng-tests ElementItem', function () {
         // TODO Remove case!
     });
 
-    it('ElementCell - multiplierCell & multiplier', function () {
+    it('multiplierCell & multiplier', function () {
 
         var resourcePool1 = new ResourcePool();
 

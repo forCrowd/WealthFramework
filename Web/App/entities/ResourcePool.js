@@ -45,6 +45,21 @@
             // 'Only my ratings' vs. 'All users' ratings'
             self.ratingMode = 1;
 
+            // Other users' values: Keeps the values excluding current user's
+            self._otherUsersResourcePoolRate = null;
+            self._otherUsersResourcePoolRateCount = null;
+            self._otherUsersResourcePoolRateTotal = null;
+
+            // Events
+            $rootScope.$on('resourcePoolRateUpdated', function (event, args) {
+                if (args.resourcePool === self) {
+                    _currentUserResourcePoolRate = args.value;
+                    self.setResourcePoolRate();
+                }
+            });
+
+            // Functions
+
             // Checks whether resource pool has any item that can be rateable
             self.displayRatingMode = function () {
 
@@ -103,20 +118,6 @@
                 }
             }
 
-            // Other users' values: Keeps the values excluding current user's
-            self._otherUsersResourcePoolRate = null;
-            self._otherUsersResourcePoolRateCount = null;
-            self._otherUsersResourcePoolRateTotal = null;
-
-            // Events
-            $rootScope.$on('resourcePoolRateUpdated', function (event, args) {
-                if (args.resourcePool === self) {
-                    _currentUserResourcePoolRate = args.value;
-                    self.setResourcePoolRate();
-                }
-            });
-
-            // Functions
             self.userResourcePool = function () {
 
                 if (self._userResourcePool !== null && self._userResourcePool.entityAspect.entityState.isDetached()) {
