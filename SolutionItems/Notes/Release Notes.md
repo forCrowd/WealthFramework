@@ -1,5 +1,9 @@
 ﻿### Release Notes
 
+**0.35**
+
+* Further with js tests & entities cleanup
+
 **0.34.1**
 
 * ResourcePoolRate calculation fix

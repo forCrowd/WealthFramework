@@ -7,11 +7,11 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
     {
         public override void Up()
         {
-            // ResourcePool ResourcePoolRate
-            Sql(PrepareDropFunctionBlock("ResourcePool", "ResourcePoolRate", "getResourcePoolRate"));
-            Sql(PrepareGetResourcePoolRateFunctionBlock());
-            Sql("ALTER TABLE dbo.ResourcePool DROP COLUMN ResourcePoolRate;");
-            Sql("ALTER TABLE dbo.ResourcePool ADD ResourcePoolRate AS dbo.getResourcePoolRate(Id);");
+            // ResourcePool ResourcePoolRateTotal
+            Sql(PrepareDropFunctionBlock("ResourcePool", "ResourcePoolRateTotal", "getResourcePoolRateTotal"));
+            Sql(PrepareGetResourcePoolRateTotalFunctionBlock());
+            Sql("ALTER TABLE dbo.ResourcePool DROP COLUMN ResourcePoolRateTotal;");
+            Sql("ALTER TABLE dbo.ResourcePool ADD ResourcePoolRateTotal AS dbo.getResourcePoolRateTotal(Id);");
 
             // ResourcePool ResourcePoolRateCount
             Sql(PrepareDropFunctionBlock("ResourcePool", "ResourcePoolRateCount", "getResourcePoolRateCount"));
@@ -58,10 +58,10 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
 
         public override void Down()
         {
-            // ResourcePool ResourcePoolRate
-            Sql("ALTER TABLE dbo.ResourcePool DROP COLUMN ResourcePoolRate;");
-            Sql("ALTER TABLE dbo.ResourcePool ADD ResourcePoolRate [decimal](18,2);");
-            Sql("DROP FUNCTION dbo.getResourcePoolRate;");
+            // ResourcePool ResourcePoolRateTotal
+            Sql("ALTER TABLE dbo.ResourcePool DROP COLUMN ResourcePoolRateTotal;");
+            Sql("ALTER TABLE dbo.ResourcePool ADD ResourcePoolRateTotal [decimal](18,2);");
+            Sql("DROP FUNCTION dbo.getResourcePoolRateTotal;");
 
             // ResourcePool ResourcePoolRateCount
             Sql("ALTER TABLE dbo.ResourcePool DROP COLUMN ResourcePoolRateCount;");
@@ -99,15 +99,15 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             Sql("DROP FUNCTION dbo.getElementCellNumericValueCount;");
         }
 
-        string PrepareGetResourcePoolRateFunctionBlock()
+        string PrepareGetResourcePoolRateTotalFunctionBlock()
         {
             var sbOutput = new StringBuilder();
-            sbOutput.AppendLine("CREATE FUNCTION dbo.getResourcePoolRate(@resourcePoolId int)");
+            sbOutput.AppendLine("CREATE FUNCTION dbo.getResourcePoolRateTotal(@resourcePoolId int)");
             sbOutput.AppendLine("RETURNS decimal");
             sbOutput.AppendLine("AS");
             sbOutput.AppendLine("BEGIN");
             sbOutput.AppendLine("    DECLARE @result decimal");
-            sbOutput.AppendLine("    SELECT @result = SUM(ResourcePoolRate) FROM UserResourcePool WHERE ResourcePoolId = @resourcePoolId AND DeletedOn IS NULL");
+            sbOutput.AppendLine("    SELECT @result = ISNULL(SUM(ResourcePoolRate), 0) FROM UserResourcePool WHERE ResourcePoolId = @resourcePoolId AND DeletedOn IS NULL");
             sbOutput.AppendLine("    RETURN @result");
             sbOutput.AppendLine("END");
             return sbOutput.ToString();
@@ -172,7 +172,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             sbOutput.AppendLine("AS");
             sbOutput.AppendLine("BEGIN");
             sbOutput.AppendLine("    DECLARE @result decimal");
-            sbOutput.AppendLine("    SELECT @result = SUM(Rating) FROM UserElementField WHERE ElementFieldId = @elementFieldId AND DeletedOn IS NULL");
+            sbOutput.AppendLine("    SELECT @result = ISNULL(SUM(Rating), 0) FROM UserElementField WHERE ElementFieldId = @elementFieldId AND DeletedOn IS NULL");
             sbOutput.AppendLine("    RETURN @result");
             sbOutput.AppendLine("END");
             return sbOutput.ToString();
@@ -217,12 +217,12 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             sbOutput.AppendLine("    SELECT @result = ");
             sbOutput.AppendLine("        CASE T3.ElementFieldType");
             sbOutput.AppendLine("            WHEN 1 THEN NULL -- String");
-            sbOutput.AppendLine("            WHEN 2 THEN SUM(CAST(T1.BooleanValue AS decimal)) -- Boolean");
-            sbOutput.AppendLine("            WHEN 3 THEN SUM(CAST(T1.IntegerValue AS decimal)) -- Integer");
-            sbOutput.AppendLine("            WHEN 4 THEN SUM(T1.DecimalValue) -- Decimal");
-            sbOutput.AppendLine("            WHEN 5 THEN SUM(CAST(T1.DateTimeValue AS decimal)) -- DateTime");
+            sbOutput.AppendLine("            WHEN 2 THEN ISNULL(SUM(CAST(T1.BooleanValue AS decimal)), 0) -- Boolean");
+            sbOutput.AppendLine("            WHEN 3 THEN ISNULL(SUM(CAST(T1.IntegerValue AS decimal)), 0) -- Integer");
+            sbOutput.AppendLine("            WHEN 4 THEN ISNULL(SUM(T1.DecimalValue), 0) -- Decimal");
+            sbOutput.AppendLine("            WHEN 5 THEN ISNULL(SUM(CAST(T1.DateTimeValue AS decimal)), 0) -- DateTime");
             sbOutput.AppendLine("            WHEN 6 THEN NULL -- Element");
-            sbOutput.AppendLine("            WHEN 11 THEN SUM(T1.DecimalValue) -- DirectIncome");
+            sbOutput.AppendLine("            WHEN 11 THEN ISNULL(SUM(T1.DecimalValue), 0) -- DirectIncome");
             sbOutput.AppendLine("            WHEN 12 THEN NULL -- Multiplier");
             sbOutput.AppendLine("        END");
             sbOutput.AppendLine("        FROM UserElementCell T1");

@@ -187,7 +187,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
                         InitialValue = c.Decimal(nullable: false, precision: 18, scale: 2),
                         MainElementId = c.Int(),
                         UseFixedResourcePoolRate = c.Boolean(nullable: false),
-                        ResourcePoolRate = c.Decimal(precision: 18, scale: 2),
+                        ResourcePoolRateTotal = c.Decimal(precision: 18, scale: 2),
                         ResourcePoolRateCount = c.Int(),
                         RatingCount = c.Int(),
                         CreatedOn = c.DateTime(nullable: false),

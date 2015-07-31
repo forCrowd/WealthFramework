@@ -156,12 +156,7 @@ describe('ng-tests ResourcePool', function () {
         // Case 1: Default value
         expect(resourcePool1.currentUserResourcePoolRate()).toBe(10);
 
-        // Case 2: Use fixed cmrp rate is true
-        resourcePool1.UseFixedResourcePoolRate = true;
-
-        expect(resourcePool1.currentUserResourcePoolRate()).toBe(0);
-
-        // Case 3: Add new userResourcePool
+        // Case 2: Add new userResourcePool
         resourcePool1.UseFixedResourcePoolRate = false;
 
         var userResourcePool1 = new UserResourcePool();
@@ -174,25 +169,26 @@ describe('ng-tests ResourcePool', function () {
 
         expect(resourcePool1.currentUserResourcePoolRate()).toBe(20);
 
-        // TODO Case 4: Remove userResourcePool
+        // TODO Case 3: Remove userResourcePool
 
     });
 
-    it('otherUsersResourcePoolRate', function () {
+    it('otherUsersResourcePoolRateTotal', function () {
 
         var resourcePool1 = new ResourcePool();
 
         // Default value
-        expect(resourcePool1.otherUsersResourcePoolRate()).toBe(0);
+        expect(resourcePool1.otherUsersResourcePoolRateTotal()).toBe(0);
 
         // Without userResourcePool
-        resourcePool1.ResourcePoolRate = 30;
+        resourcePool1.ResourcePoolRateTotal = 30;
         resourcePool1.ResourcePoolRateCount = 2;
 
         // TODO Manually update?!
-        resourcePool1.setOtherUsersResourcePoolRate();
+        resourcePool1.setOtherUsersResourcePoolRateTotal();
+        resourcePool1.setOtherUsersResourcePoolRateCount();
 
-        expect(resourcePool1.otherUsersResourcePoolRate()).toBe(15);
+        expect(resourcePool1.otherUsersResourcePoolRateTotal()).toBe(30);
 
         // With userResourcePool
         var userResourcePool1 = new UserResourcePool();
@@ -201,9 +197,10 @@ describe('ng-tests ResourcePool', function () {
         resourcePool1.UserResourcePoolSet.push(userResourcePool1);
 
         // TODO Manually update?!
-        resourcePool1.setOtherUsersResourcePoolRate();
+        resourcePool1.setOtherUsersResourcePoolRateTotal();
+        resourcePool1.setOtherUsersResourcePoolRateCount();
 
-        expect(resourcePool1.otherUsersResourcePoolRate()).toBe(20);
+        expect(resourcePool1.otherUsersResourcePoolRateTotal()).toBe(20);
 
     });
 
@@ -215,7 +212,7 @@ describe('ng-tests ResourcePool', function () {
         expect(resourcePool1.otherUsersResourcePoolRateCount()).toBe(0);
 
         // Without userResourcePool
-        resourcePool1.ResourcePoolRate = 30;
+        resourcePool1.ResourcePoolRateTotal = 30;
         resourcePool1.ResourcePoolRateCount = 2;
 
         // TODO Manually update?!
@@ -236,36 +233,31 @@ describe('ng-tests ResourcePool', function () {
 
     });
 
-    it('otherUsersResourcePoolRateTotal', function () {
+    it('resourcePoolRateTotal', function () {
 
         var resourcePool1 = new ResourcePool();
 
-        // Default value
-        expect(resourcePool1.otherUsersResourcePoolRateTotal()).toBe(0);
+        // Case 1: Initial value
+        expect(resourcePool1.resourcePoolRateTotal()).toBe(10);
 
-        // Without userResourcePool
-        resourcePool1.ResourcePoolRate = 30;
-        resourcePool1.ResourcePoolRateCount = 2;
+        // Case 2: Use fixed cmrp rate true; the value should come from the server (ResourcePoolRateTotal)
+        // but it's not defined yet, so total is 0
+        resourcePool1.UseFixedResourcePoolRate = true;
 
-        // TODO Manually update?!
-        resourcePool1.setOtherUsersResourcePoolRate();
-        resourcePool1.setOtherUsersResourcePoolRateCount();
-        resourcePool1.setOtherUsersResourcePoolRateTotal();
+        expect(resourcePool1.resourcePoolRateTotal()).toBe(0);
 
-        expect(resourcePool1.otherUsersResourcePoolRateTotal()).toBe(30);
-
-        // With userResourcePool
-        var userResourcePool1 = new UserResourcePool();
-        userResourcePool1.ResourcePool = resourcePool1;
-        userResourcePool1.ResourcePoolRate = 10;
-        resourcePool1.UserResourcePoolSet.push(userResourcePool1);
+        // Case 3: Define server-side variables
+        resourcePool1.ResourcePoolRateTotal = 30;
 
         // TODO Manually update?!
-        resourcePool1.setOtherUsersResourcePoolRate();
-        resourcePool1.setOtherUsersResourcePoolRateCount();
         resourcePool1.setOtherUsersResourcePoolRateTotal();
 
-        expect(resourcePool1.otherUsersResourcePoolRateTotal()).toBe(20);
+        expect(resourcePool1.resourcePoolRateTotal()).toBe(30);
+
+        // Case 4: Use fixed cmrp rate false; means the current user also will have a value
+        resourcePool1.UseFixedResourcePoolRate = false;
+
+        expect(resourcePool1.resourcePoolRateTotal()).toBe(40);
 
     });
 
@@ -283,7 +275,7 @@ describe('ng-tests ResourcePool', function () {
         expect(resourcePool1.resourcePoolRateCount()).toBe(0);
 
         // Case 3: Define server-side variables
-        resourcePool1.ResourcePoolRate = 30;
+        resourcePool1.ResourcePoolRateTotal = 30;
         resourcePool1.ResourcePoolRateCount = 2;
 
         // TODO Manually update?!
@@ -306,13 +298,12 @@ describe('ng-tests ResourcePool', function () {
         expect(resourcePool1.resourcePoolRateAverage()).toBe(10);
 
         // Case 2: With server-side variables
-        resourcePool1.ResourcePoolRate = 20;
+        resourcePool1.ResourcePoolRateTotal = 20;
         resourcePool1.ResourcePoolRateCount = 1;
 
         // TODO Manually update?!
-        resourcePool1.setOtherUsersResourcePoolRate();
-        resourcePool1.setOtherUsersResourcePoolRateCount();
         resourcePool1.setOtherUsersResourcePoolRateTotal();
+        resourcePool1.setOtherUsersResourcePoolRateCount();
 
         expect(resourcePool1.resourcePoolRateAverage()).toBe(15);
 
@@ -326,13 +317,12 @@ describe('ng-tests ResourcePool', function () {
         expect(resourcePool1.resourcePoolRate()).toBe(10);
 
         // Case 2: With server-side variables & toggle
-        resourcePool1.ResourcePoolRate = 20;
+        resourcePool1.ResourcePoolRateTotal = 20;
         resourcePool1.ResourcePoolRateCount = 1;
 
         // TODO Manually update?!
-        resourcePool1.setOtherUsersResourcePoolRate();
-        resourcePool1.setOtherUsersResourcePoolRateCount();
         resourcePool1.setOtherUsersResourcePoolRateTotal();
+        resourcePool1.setOtherUsersResourcePoolRateCount();
 
         resourcePool1.toggleRatingMode();
 

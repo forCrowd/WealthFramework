@@ -62,7 +62,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public decimal? ResourcePoolRate { get; private set; }
+        public decimal? ResourcePoolRateTotal { get; private set; }
 
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]

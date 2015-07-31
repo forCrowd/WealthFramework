@@ -26,7 +26,7 @@ describe('ng-tests ElementCell', function () {
     it('ElementCell', function () {
 
         var resourcePool1 = new ResourcePool();
-        resourcePool1.ResourcePoolRate = 10;
+        resourcePool1.ResourcePoolRateTotal = 10;
         resourcePool1.ResourcePoolRateCount = 1;
         resourcePool1.UseFixedResourcePoolRate = true;
         resourcePool1.ratingMode = 1; // Only my ratings
