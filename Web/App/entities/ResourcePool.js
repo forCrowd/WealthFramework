@@ -27,7 +27,15 @@
             }
         });
 
-        // Properties
+        // TODO Array property sample (without setter)
+        // However it doesn't work since it's a navigation prop and breeze somehow doesn't like it
+        //Object.defineProperty(ResourcePool.prototype, 'UserResourcePoolSet', {
+        //    enumerable: true,
+        //    configurable: true,
+        //    get: function () { return this.backingFields._UserResourcePoolSet; }
+        //});
+
+        // Client-side properties
         Object.defineProperty(ResourcePool.prototype, 'currentElement', {
             enumerable: true,
             configurable: true,
@@ -54,8 +62,7 @@
             self.backingFields = {
                 _UseFixedResourcePoolRate: false,
                 _currentUserResourcePoolRate: null,
-                _currentElement: null,
-                _ElementSet: []
+                _currentElement: null
             }
 
             self._userResourcePool = null;
@@ -159,9 +166,7 @@
             }
 
             self.setCurrentUserResourcePoolRate = function () {
-                self.backingFields._currentUserResourcePoolRate = self.UseFixedResourcePoolRate
-                    ? 0
-                    : self.userResourcePool() !== null
+                self.backingFields._currentUserResourcePoolRate = self.userResourcePool() !== null
                     ? self.userResourcePool().ResourcePoolRate
                     : 10; // Default value?
             }
