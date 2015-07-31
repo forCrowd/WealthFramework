@@ -136,7 +136,7 @@
     <script src="/App/authorization.js?v=0.29"></script>
 
     <!-- Entities -->
-    <script src="/App/entities/ResourcePool.js?v=0.34"></script>
+    <script src="/App/entities/ResourcePool.js?v=0.34.1"></script>
     <script src="/App/entities/Element.js?v=0.32"></script>
     <script src="/App/entities/ElementCell.js?v=0.33"></script>
     <script src="/App/entities/ElementField.js?v=0.33"></script>

@@ -10,6 +10,23 @@
         // Logger
         logger = logger.forSource(serviceId);
 
+        // Server-side properties
+        Object.defineProperty(ResourcePool.prototype, 'UseFixedResourcePoolRate', {
+            enumerable: true,
+            configurable: true,
+            get: function () { return this.backingFields._UseFixedResourcePoolRate; },
+            set: function (value) {
+
+                if (this.backingFields._UseFixedResourcePoolRate !== value) {
+                    this.backingFields._UseFixedResourcePoolRate = value;
+
+                    if (value) {
+                        this.backingFields._currentUserResourcePoolRate = 0;
+                    }
+                }
+            }
+        });
+
         // Properties
         Object.defineProperty(ResourcePool.prototype, 'currentElement', {
             enumerable: true,
@@ -32,10 +49,11 @@
             var self = this;
 
             var _resourcePoolRate = null;
-            var _currentUserResourcePoolRate = null;
 
             // Local variables
             self.backingFields = {
+                _UseFixedResourcePoolRate: false,
+                _currentUserResourcePoolRate: null,
                 _currentElement: null,
                 _ElementSet: []
             }
@@ -53,7 +71,7 @@
             // Events
             $rootScope.$on('resourcePoolRateUpdated', function (event, args) {
                 if (args.resourcePool === self) {
-                    _currentUserResourcePoolRate = args.value;
+                    self.backingFields._currentUserResourcePoolRate = args.value;
                     self.setResourcePoolRate();
                 }
             });
@@ -133,15 +151,15 @@
 
             self.currentUserResourcePoolRate = function () {
 
-                if (_currentUserResourcePoolRate === null) {
+                if (self.backingFields._currentUserResourcePoolRate === null) {
                     self.setCurrentUserResourcePoolRate();
                 }
 
-                return _currentUserResourcePoolRate;
+                return self.backingFields._currentUserResourcePoolRate;
             }
 
             self.setCurrentUserResourcePoolRate = function () {
-                _currentUserResourcePoolRate = self.UseFixedResourcePoolRate
+                self.backingFields._currentUserResourcePoolRate = self.UseFixedResourcePoolRate
                     ? 0
                     : self.userResourcePool() !== null
                     ? self.userResourcePool().ResourcePoolRate
@@ -234,9 +252,14 @@
             }
 
             self.setResourcePoolRate = function () {
-                switch (self.ratingMode) {
-                    case 1: { _resourcePoolRate = self.currentUserResourcePoolRate(); break; } // Current user's
-                    case 2: { _resourcePoolRate = self.resourcePoolRateAverage(); break; } // All
+
+                if (self.UseFixedResourcePoolRate) {
+                    _resourcePoolRate = self.resourcePoolRateAverage();
+                } else {
+                    switch (self.ratingMode) {
+                        case 1: { _resourcePoolRate = self.currentUserResourcePoolRate(); break; } // Current user's
+                        case 2: { _resourcePoolRate = self.resourcePoolRateAverage(); break; } // All
+                    }
                 }
             }
 

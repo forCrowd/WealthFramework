@@ -1,5 +1,10 @@
 ﻿### Release Notes
 
+**0.34.1**
+
+* ResourcePoolRate calculation fix
+* Minor updates
+
 **0.34**
 
 * Hosting plan upgrade

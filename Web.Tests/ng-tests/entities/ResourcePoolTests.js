@@ -159,9 +159,6 @@ describe('ng-tests ResourcePool', function () {
         // Case 2: Use fixed cmrp rate is true
         resourcePool1.UseFixedResourcePoolRate = true;
 
-        // TODO Manually update?!
-        resourcePool1.setCurrentUserResourcePoolRate();
-
         expect(resourcePool1.currentUserResourcePoolRate()).toBe(0);
 
         // Case 3: Add new userResourcePool

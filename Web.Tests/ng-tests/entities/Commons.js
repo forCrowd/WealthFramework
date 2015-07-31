@@ -23,7 +23,6 @@ function registerPrototypes($injector) {
 
     ResourcePool = $injector.get('ResourcePool');
     ResourcePool.prototype.InitialValue = 0;
-    ResourcePool.prototype.UseFixedResourcePoolRate = false;
     ResourcePool.prototype.ResourcePoolRate = null;
     ResourcePool.prototype.ResourcePoolRateCount = 0;
     ResourcePool.prototype.MainElement = null;
