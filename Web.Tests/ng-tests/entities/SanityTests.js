@@ -1,6 +1,6 @@
 ﻿/// <reference path="Commons.js" />
 
-describe('ng-tests Sanity', function () {
+describe('ng-tests Sanity Checks', function () {
 
     var ResourcePool, Element, ElementField, ElementItem, ElementCell;
 
@@ -20,14 +20,22 @@ describe('ng-tests Sanity', function () {
         });
     });
 
-    it('Sanity checks', function () {
+    it('Pure sanity', function () {
 
         expect(0).toBe(0);
+
+    });
+
+    it('Experimental', function () {
 
         // Just experimental
         var number = 1000000000000000000000000000000000;
         var total = number * number;
         expect(total).toBe(total);
+
+    });
+
+    it('Entities', function () {
 
         // Entities
         var resourcePool1 = new ResourcePool();

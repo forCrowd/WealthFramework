@@ -182,11 +182,9 @@ describe('ng-tests ResourcePool', function () {
 
         // Without userResourcePool
         resourcePool1.ResourcePoolRateTotal = 30;
-        resourcePool1.ResourcePoolRateCount = 2;
 
         // TODO Manually update?!
         resourcePool1.setOtherUsersResourcePoolRateTotal();
-        resourcePool1.setOtherUsersResourcePoolRateCount();
 
         expect(resourcePool1.otherUsersResourcePoolRateTotal()).toBe(30);
 
@@ -198,7 +196,6 @@ describe('ng-tests ResourcePool', function () {
 
         // TODO Manually update?!
         resourcePool1.setOtherUsersResourcePoolRateTotal();
-        resourcePool1.setOtherUsersResourcePoolRateCount();
 
         expect(resourcePool1.otherUsersResourcePoolRateTotal()).toBe(20);
 
@@ -212,7 +209,6 @@ describe('ng-tests ResourcePool', function () {
         expect(resourcePool1.otherUsersResourcePoolRateCount()).toBe(0);
 
         // Without userResourcePool
-        resourcePool1.ResourcePoolRateTotal = 30;
         resourcePool1.ResourcePoolRateCount = 2;
 
         // TODO Manually update?!
