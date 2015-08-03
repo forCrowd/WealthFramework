@@ -138,8 +138,8 @@
     <!-- Entities -->
     <script src="/App/entities/ResourcePool.js?v=0.35"></script>
     <script src="/App/entities/Element.js?v=0.32"></script>
-    <script src="/App/entities/ElementCell.js?v=0.33"></script>
-    <script src="/App/entities/ElementField.js?v=0.33"></script>
+    <script src="/App/entities/ElementCell.js?v=0.35"></script>
+    <script src="/App/entities/ElementField.js?v=0.35"></script>
     <script src="/App/entities/ElementItem.js?v=0.34"></script>
     <script src="/App/entities/UserElementCell.js?v=0.32"></script>
 
@@ -179,7 +179,7 @@
     <script src="/App/controllers/manage/resourcePool/resourcePoolCustomViewController.js?v=0.27"></script>
 
     <!-- Directives -->
-    <script src="/App/directives/resourcePoolEditor.js?v=0.33"></script>
+    <script src="/App/directives/resourcePoolEditor.js?v=0.35"></script>
 
     <!-- Filters -->
     <script src="/App/filters/angular-percentage.js?v=0.22"></script>

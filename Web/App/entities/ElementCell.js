@@ -157,7 +157,7 @@
             self.setNumericValue = function () {
 
                 if (typeof self.ElementField !== 'undefined') {
-                    switch (self.ElementField.Element.ResourcePool.ratingMode) {
+                    switch (self.ElementField.Element.ResourcePool.RatingMode) {
                         case 1: { _numericValue = self.currentUserNumericValue(); break; } // Current user's
                         case 2: { _numericValue = self.numericValueAverage(); break; } // All
                     }

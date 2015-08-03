@@ -19,6 +19,7 @@
 
                 if (this.backingFields._UseFixedResourcePoolRate !== value) {
                     this.backingFields._UseFixedResourcePoolRate = value;
+                    this.setResourcePoolRate();
                 }
             }
         });
@@ -43,6 +44,18 @@
             }
         });
 
+        Object.defineProperty(ResourcePool.prototype, 'RatingMode', {
+            enumerable: true,
+            configurable: true,
+            get: function () { return this.backingFields._ratingMode; },
+            set: function (value) {
+                if (value !== this.backingFields._ratingMode) {
+                    this.backingFields._ratingMode = value;
+                    this.setResourcePoolRate();
+                }
+            }
+        });
+
         // Return
         return ResourcePool;
 
@@ -52,23 +65,18 @@
 
             var self = this;
 
-            var _resourcePoolRate = null;
-
             // Local variables
             self.backingFields = {
                 _UseFixedResourcePoolRate: false,
+                _ratingMode: 1, // Only my ratings vs. All users' ratings
+                _userResourcePool: null,
                 _currentUserResourcePoolRate: null,
-                _currentElement: null
+                // Other users' values: Keeps the values excluding current user's
+                _otherUsersResourcePoolRateTotal: null,
+                _otherUsersResourcePoolRateCount: null,
+                _currentElement: null,
+                _resourcePoolRate: null
             }
-
-            self._userResourcePool = null;
-
-            // 'Only my ratings' vs. 'All users' ratings'
-            self.ratingMode = 1;
-
-            // Other users' values: Keeps the values excluding current user's
-            self._otherUsersResourcePoolRateCount = null;
-            self._otherUsersResourcePoolRateTotal = null;
 
             // Events
             $rootScope.$on('resourcePoolRateUpdated', function (event, args) {
@@ -108,10 +116,10 @@
 
             self.toggleRatingMode = function () {
 
-                self.ratingMode = self.ratingMode === 1 ? 2 : 1;
+                self.RatingMode = self.RatingMode === 1 ? 2 : 1;
 
                 // ResourcePool calculations
-                self.setResourcePoolRate();
+                //self.setResourcePoolRate();
 
                 for (var elementIndex = 0; elementIndex < self.ElementSet.length; elementIndex++) {
                     var element = self.ElementSet[elementIndex];
@@ -140,15 +148,15 @@
 
             self.userResourcePool = function () {
 
-                if (self._userResourcePool !== null && self._userResourcePool.entityAspect.entityState.isDetached()) {
-                    self._userResourcePool = null;
+                if (self.backingFields._userResourcePool !== null && self.backingFields._userResourcePool.entityAspect.entityState.isDetached()) {
+                    self.backingFields._userResourcePool = null;
                 }
 
-                if (self._userResourcePool === null && self.UserResourcePoolSet.length !== 0) {
-                    self._userResourcePool = self.UserResourcePoolSet[0];
+                if (self.backingFields._userResourcePool === null && self.UserResourcePoolSet.length !== 0) {
+                    self.backingFields._userResourcePool = self.UserResourcePoolSet[0];
                 }
 
-                return self._userResourcePool;
+                return self.backingFields._userResourcePool;
             }
 
             self.currentUserResourcePoolRate = function () {
@@ -166,42 +174,46 @@
                     : 10; // Default value?
             }
 
+            // TODO Since this is a fixed value based on ResourcePoolRateTotal & current user's rate,
+            // it could be calculated on server, check it later again / SH - 03 Aug. '15
             self.otherUsersResourcePoolRateTotal = function () {
 
                 // Set other users' value on the initial call
-                if (self._otherUsersResourcePoolRateTotal === null) {
+                if (self.backingFields._otherUsersResourcePoolRateTotal === null) {
                     self.setOtherUsersResourcePoolRateTotal();
                 }
 
-                return self._otherUsersResourcePoolRateTotal;
+                return self.backingFields._otherUsersResourcePoolRateTotal;
             }
 
             self.setOtherUsersResourcePoolRateTotal = function () {
 
-                self._otherUsersResourcePoolRateTotal = self.ResourcePoolRateTotal;
+                self.backingFields._otherUsersResourcePoolRateTotal = self.ResourcePoolRateTotal;
 
                 // Exclude current user's
                 if (self.userResourcePool() !== null) {
-                    self._otherUsersResourcePoolRateTotal -= self.userResourcePool().ResourcePoolRate;
+                    self.backingFields._otherUsersResourcePoolRateTotal -= self.userResourcePool().ResourcePoolRate;
                 }
             }
 
             self.otherUsersResourcePoolRateCount = function () {
 
                 // Set other users' value on the initial call
-                if (self._otherUsersResourcePoolRateCount === null) {
+                if (self.backingFields._otherUsersResourcePoolRateCount === null) {
                     self.setOtherUsersResourcePoolRateCount();
                 }
 
-                return self._otherUsersResourcePoolRateCount;
+                return self.backingFields._otherUsersResourcePoolRateCount;
             }
 
+            // TODO Since this is a fixed value based on ResourcePoolRateTotal & current user's rate,
+            // it could be calculated on server, check it later again / SH - 03 Aug. '15
             self.setOtherUsersResourcePoolRateCount = function () {
-                self._otherUsersResourcePoolRateCount = self.ResourcePoolRateCount;
+                self.backingFields._otherUsersResourcePoolRateCount = self.ResourcePoolRateCount;
 
                 // Exclude current user's
                 if (self.userResourcePool() !== null) {
-                    self._otherUsersResourcePoolRateCount--;
+                    self.backingFields._otherUsersResourcePoolRateCount--;
                 }
             }
 
@@ -225,21 +237,21 @@
 
             self.resourcePoolRate = function () {
 
-                if (_resourcePoolRate === null) {
+                if (self.backingFields._resourcePoolRate === null) {
                     self.setResourcePoolRate();
                 }
 
-                return _resourcePoolRate;
+                return self.backingFields._resourcePoolRate;
             }
 
             self.setResourcePoolRate = function () {
 
                 if (self.UseFixedResourcePoolRate) {
-                    _resourcePoolRate = self.resourcePoolRateAverage();
+                    self.backingFields._resourcePoolRate = self.resourcePoolRateAverage();
                 } else {
-                    switch (self.ratingMode) {
-                        case 1: { _resourcePoolRate = self.currentUserResourcePoolRate(); break; } // Current user's
-                        case 2: { _resourcePoolRate = self.resourcePoolRateAverage(); break; } // All
+                    switch (self.RatingMode) {
+                        case 1: { self.backingFields._resourcePoolRate = self.currentUserResourcePoolRate(); break; } // Current user's
+                        case 2: { self.backingFields._resourcePoolRate = self.resourcePoolRateAverage(); break; } // All
                     }
                 }
             }

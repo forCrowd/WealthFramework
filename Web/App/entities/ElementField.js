@@ -240,7 +240,7 @@
             }
 
             self.setIndexRating = function() {
-                switch (self.Element.ResourcePool.ratingMode) {
+                switch (self.Element.ResourcePool.RatingMode) {
                     case 1: { _indexRating = self.currentUserIndexRating(); break; } // Current user's
                     case 2: { _indexRating = self.indexRatingAverage(); break; } // All
                 }

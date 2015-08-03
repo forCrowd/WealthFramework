@@ -29,7 +29,7 @@ describe('ng-tests ElementField', function () {
         resourcePool1.ResourcePoolRateTotal = 15;
         resourcePool1.ResourcePoolRateCount = 1;
         resourcePool1.UseFixedResourcePoolRate = true;
-        resourcePool1.ratingMode = 1; // Only my ratings
+        resourcePool1.RatingMode = 1; // Only my ratings
         resourcePool1.InitialValue = 500;
 
         var element1 = new Element();
@@ -57,7 +57,7 @@ describe('ng-tests ElementField', function () {
         expect(field1.indexIncome()).toBe(500);
 
         // With all ratings
-        resourcePool1.ratingMode = 2;
+        resourcePool1.RatingMode = 2;
         field1.setIndexRating(); // TODO Manually update?!
 
         expect(field1.indexRatingAverage()).toBe(60);
@@ -67,7 +67,7 @@ describe('ng-tests ElementField', function () {
         expect(field1.indexIncome()).toBe(500);
 
         // With user element field & only my ratings
-        resourcePool1.ratingMode = 1;
+        resourcePool1.RatingMode = 1;
 
         var userElementField1 = new UserElementField();
         userElementField1.ElementField = field1;
@@ -84,7 +84,7 @@ describe('ng-tests ElementField', function () {
         expect(field1.indexIncome()).toBe(500);
 
         // With all ratings
-        resourcePool1.ratingMode = 2;
+        resourcePool1.RatingMode = 2;
         field1.setIndexRating(); // TODO Manually update?!
 
         expect(field1.indexRatingAverage()).toBe(55);
@@ -100,7 +100,7 @@ describe('ng-tests ElementField', function () {
         resourcePool1.ResourcePoolRateTotal = 15;
         resourcePool1.ResourcePoolRateCount = 1;
         resourcePool1.UseFixedResourcePoolRate = true;
-        resourcePool1.ratingMode = 1; // Only my ratings
+        resourcePool1.RatingMode = 1; // Only my ratings
         resourcePool1.InitialValue = 500;
 
         var element1 = new Element();
@@ -146,7 +146,7 @@ describe('ng-tests ElementField', function () {
         expect(field2.indexIncome()).toBe(250);
 
         // With all ratings
-        resourcePool1.ratingMode = 2;
+        resourcePool1.RatingMode = 2;
         field1.setIndexRating(); // TODO Manually update?!
         field2.setIndexRating(); // TODO Manually update?!
 
@@ -163,7 +163,7 @@ describe('ng-tests ElementField', function () {
         expect(field2.indexIncome()).toBe(200);
 
         // With user element field & only my ratings
-        resourcePool1.ratingMode = 1;
+        resourcePool1.RatingMode = 1;
 
         var userElementField1 = new UserElementField();
         userElementField1.ElementField = field1;
@@ -194,7 +194,7 @@ describe('ng-tests ElementField', function () {
         expect(field2.indexIncome()).toBe(325);
 
         // With all ratings
-        resourcePool1.ratingMode = 2;
+        resourcePool1.RatingMode = 2;
         field1.setIndexRating(); // TODO Manually update?!
         field2.setIndexRating(); // TODO Manually update?!
 

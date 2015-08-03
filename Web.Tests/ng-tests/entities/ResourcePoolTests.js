@@ -106,32 +106,15 @@ describe('ng-tests ResourcePool', function () {
         var resourcePool1 = new ResourcePool();
 
         // Default
-        expect(resourcePool1.ratingMode).toBe(1);
+        expect(resourcePool1.RatingMode).toBe(1);
 
         // First toggle
         resourcePool1.toggleRatingMode();
-        expect(resourcePool1.ratingMode).toBe(2);
+        expect(resourcePool1.RatingMode).toBe(2);
 
         // Second toggle
         resourcePool1.toggleRatingMode();
-        expect(resourcePool1.ratingMode).toBe(1);
-
-    });
-
-    it('toggleRatingMode', function () {
-
-        var resourcePool1 = new ResourcePool();
-
-        // Default
-        expect(resourcePool1.ratingMode).toBe(1);
-
-        // First toggle
-        resourcePool1.toggleRatingMode();
-        expect(resourcePool1.ratingMode).toBe(2);
-
-        // Second toggle
-        resourcePool1.toggleRatingMode();
-        expect(resourcePool1.ratingMode).toBe(1);
+        expect(resourcePool1.RatingMode).toBe(1);
 
     });
 
@@ -309,18 +292,35 @@ describe('ng-tests ResourcePool', function () {
 
         var resourcePool1 = new ResourcePool();
 
-        // Case 1: Initial value; current user's cmrp rate
+        // Case 1: Initial values
+        // a. UseFixedResourcePoolRate: false
+        // b. RatingMode: 1
+        // c. No server variables
+        // expect currentUsers' default value: 10
         expect(resourcePool1.resourcePoolRate()).toBe(10);
 
-        // Case 2: With server-side variables & toggle
+        // Case 1: UseFixedResourcePoolRate
+        // a. UseFixedResourcePoolRate: true
+        // b. RatingMode: 1
+        // c. No server variables
+        // expect 0, since there are no server variables yet
+        resourcePool1.UseFixedResourcePoolRate = true;
+
+        expect(resourcePool1.resourcePoolRate()).toBe(0);
+
+        // Case 3: RatingMode
+        // a. UseFixedResourcePoolRate: false
+        // b. RatingMode: 2
+        // c. With server variables
+        // expect 20 + 10 (current user's default) / 2
         resourcePool1.ResourcePoolRateTotal = 20;
         resourcePool1.ResourcePoolRateCount = 1;
 
         // TODO Manually update?!
         resourcePool1.setOtherUsersResourcePoolRateTotal();
         resourcePool1.setOtherUsersResourcePoolRateCount();
-
         resourcePool1.toggleRatingMode();
+        resourcePool1.UseFixedResourcePoolRate = false;
 
         expect(resourcePool1.resourcePoolRate()).toBe(15);
 

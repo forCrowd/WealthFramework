@@ -6,7 +6,7 @@
             </p>
             <h3 class="panel-title">
                 {{ resourcePool.Name }}
-                <span data-ng-if="resourcePool.displayRatingMode()" data-tooltip="Number of ratings: Toggle to display the results with only your ratings or all users'" data-ng-click="resourcePool.toggleRatingMode()" class="label" data-ng-class="{ 'label-as-off-badge': resourcePool.ratingMode === 1, 'label-as-on-badge': resourcePool.ratingMode === 2 }">{{ resourcePool.RatingCount }}</span>
+                <span data-ng-if="resourcePool.displayRatingMode()" data-tooltip="Number of ratings: Toggle to display the results with only your ratings or all users'" data-ng-click="resourcePool.toggleRatingMode()" class="label" data-ng-class="{ 'label-as-off-badge': resourcePool.RatingMode === 1, 'label-as-on-badge': resourcePool.RatingMode === 2 }">{{ resourcePool.RatingCount }}</span>
             </h3>
         </div>
         <div class="panel-body">

@@ -334,7 +334,7 @@
 
         return {
             restrict: 'E',
-            templateUrl: '/App/directives/resourcePoolEditor.html?v=0.31',
+            templateUrl: '/App/directives/resourcePoolEditor.html?v=0.35',
             scope: {
                 resourcePoolId: '=',
                 chartHeight: '='
