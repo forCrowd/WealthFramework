@@ -67,7 +67,6 @@
             self.ratingMode = 1;
 
             // Other users' values: Keeps the values excluding current user's
-            self._otherUsersResourcePoolRate = null;
             self._otherUsersResourcePoolRateCount = null;
             self._otherUsersResourcePoolRateTotal = null;
 
