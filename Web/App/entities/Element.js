@@ -21,11 +21,10 @@
 
             // Local variables
             self.backingFields = {
-                _parent: null
+                _parent: null,
+                _familyTree: []
             }
 
-            var _parent = null;
-            var _parents = [];
             var _elementFieldIndexSet = null;
             var _directIncomeField = null;
             var _multiplierField = null;
@@ -41,38 +40,28 @@
 
                 // Cached value
                 // TODO In case of add / remove fields?
-                if (self.backingFields._parent !== null) {
-                    return self.backingFields._parent;
-                }
-
-                self.backingFields._parent = self;
-                if (self.ParentFieldSet.length > 0) {
-                    self.backingFields._parent = self.ParentFieldSet[0].Element;
+                if (self.backingFields._parent === null) {
+                    if (self.ParentFieldSet.length > 0) {
+                        self.backingFields._parent = self.ParentFieldSet[0].Element;
+                    }
                 }
 
                 return self.backingFields._parent;
             }
 
-            self.parents = function () {
+            self.familyTree = function () {
 
                 // Cached value
                 // TODO In case of add / remove elements?
-                if (_parents.length > 0) {
-                    return _parents;
+                if (self.backingFields._familyTree.length === 0) {
+                    var element = self;
+                    while (element !== null) {
+                        self.backingFields._familyTree.unshift(element);
+                        element = element.parent();
+                    }
                 }
 
-                var element = null;
-                do {
-
-                    element = element === null
-                        ? self
-                        : element.parent();
-
-                    _parents.unshift(element);
-
-                } while (element !== element.parent());
-
-                return _parents;
+                return self.backingFields._familyTree;
             }
 
             self.elementFieldIndexSet = function () {

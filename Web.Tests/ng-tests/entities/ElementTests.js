@@ -24,11 +24,11 @@ describe('ng-tests Element', function () {
     it('parent - initial', function () {
 
         var element = new Element();
-        expect(element.parent()).toBe(element);
+        expect(element.parent()).toBe(null);
 
     });
 
-    it('parent - child', function () {
+    it('parent - one child', function () {
 
         // Parent element
         var parent = new Element();
@@ -49,7 +49,7 @@ describe('ng-tests Element', function () {
 
     });
 
-    it('parents', function () {
+    it('parent - multiple children', function () {
 
         // Grand parent element
         var grandParent = new Element();
@@ -79,6 +79,43 @@ describe('ng-tests Element', function () {
         // Assert
         expect(parent.parent()).toBe(grandParent);
         expect(child.parent()).toBe(parent);
+
+    });
+
+    it('familyTree', function () {
+
+        // Grand parent element
+        var grandParent = new Element();
+
+        // Parent
+        var parent = new Element();
+
+        // Child element
+        var child = new Element();
+
+        // Grand parent's field
+        var grandParentField = new ElementField();
+        grandParentField.Element = grandParent;
+        grandParentField.ElementFieldType = 6;
+        grandParentField.SelectedElement = parent;
+        grandParent.ElementFieldSet = [grandParentField];
+        parent.ParentFieldSet = [grandParentField];
+
+        // Parent's field
+        var parentField = new ElementField();
+        parentField.Element = parent;
+        parentField.ElementFieldType = 6;
+        parentField.SelectedElement = child;
+        parent.ElementFieldSet = [parentField];
+        child.ParentFieldSet = [parentField];
+
+        // Assert
+        expect(parent.familyTree().length).toBe(2);
+        //expect(child.familyTree().length).toBe(3);
+
+        //expect(parent.familyTree()[0]).toBe(grandParent);
+        //expect(child.familyTree()[0]).toBe(grandParent);
+        //expect(child.familyTree()[1]).toBe(parent);
 
     });
 
