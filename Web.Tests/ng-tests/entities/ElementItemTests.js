@@ -27,13 +27,13 @@ describe('ng-tests ElementItem', function () {
 
         var element1 = new Element();
         element1.ResourcePool = resourcePool1;
-        resourcePool1.ElementSet.push(element1);
+        resourcePool1.ElementSet = [element1];
         resourcePool1.MainElement = element1;
 
         // Item
         var item1 = new ElementItem();
         item1.Element = element1;
-        element1.ElementItemSet.push(item1);
+        element1.ElementItemSet = [item1];
 
         // Should have no elements
         expect(item1.elementCellIndexSet().length === 0);
@@ -42,14 +42,14 @@ describe('ng-tests ElementItem', function () {
         var field1 = new ElementField();
         field1.Element = element1;
         field1.IndexEnabled = false;
-        element1.ElementFieldSet.push(field1);
+        element1.ElementFieldSet = [field1];
 
         // Cell 1
         var cell1 = new ElementCell();
         cell1.ElementField = field1;
         cell1.ElementItem = item1;
-        field1.ElementCellSet.push(cell1);
-        item1.ElementCellSet.push(cell1);
+        field1.ElementCellSet = [cell1];
+        item1.ElementCellSet = [cell1];
 
         // Still...
         expect(item1.elementCellIndexSet().length === 0);
@@ -59,14 +59,14 @@ describe('ng-tests ElementItem', function () {
         field2.Element = element1;
         field2.ElementFieldType = 4;
         field2.IndexEnabled = true;
-        element1.ElementFieldSet.push(field2);
+        element1.ElementFieldSet = [field2];
 
         // Cell 2
         var cell2 = new ElementCell();
         cell2.ElementField = field2;
         cell2.ElementItem = item1;
-        field2.ElementCellSet.push(cell2);
-        item1.ElementCellSet.push(cell2);
+        field2.ElementCellSet = [cell2];
+        item1.ElementCellSet = [cell2];
 
         // And now 1 item
         expect(item1.elementCellIndexSet().length === 1);
@@ -78,13 +78,13 @@ describe('ng-tests ElementItem', function () {
 
         var element1 = new Element();
         element1.ResourcePool = resourcePool1;
-        resourcePool1.ElementSet.push(element1);
+        resourcePool1.ElementSet = [element1];
         resourcePool1.MainElement = element1;
 
         // Item
         var item1 = new ElementItem();
         item1.Element = element1;
-        element1.ElementItemSet.push(item1);
+        element1.ElementItemSet = [item1];
 
         // Should have no directIncomeCell() and 0 value
         expect(item1.directIncomeCell()).toBe(null);
@@ -94,15 +94,15 @@ describe('ng-tests ElementItem', function () {
         var directIncomeField = new ElementField();
         directIncomeField.Element = element1;
         directIncomeField.ElementFieldType = 11;
-        element1.ElementFieldSet.push(directIncomeField);
+        element1.ElementFieldSet = [directIncomeField];
 
         // DirectIncome cell
         var directIncomeCell = new ElementCell();
         directIncomeCell.ElementField = directIncomeField;
         directIncomeCell.ElementItem = item1;
         directIncomeCell.NumericValue = 50;
-        directIncomeField.ElementCellSet.push(directIncomeCell);
-        item1.ElementCellSet.push(directIncomeCell);
+        directIncomeField.ElementCellSet = [directIncomeCell];
+        item1.ElementCellSet = [directIncomeCell];
 
         // Now should have the cell
         expect(item1.directIncomeCell()).not.toBe(null);
@@ -117,13 +117,13 @@ describe('ng-tests ElementItem', function () {
 
         var element1 = new Element();
         element1.ResourcePool = resourcePool1;
-        resourcePool1.ElementSet.push(element1);
+        resourcePool1.ElementSet = [element1];
         resourcePool1.MainElement = element1;
 
         // Item
         var item1 = new ElementItem();
         item1.Element = element1;
-        element1.ElementItemSet.push(item1);
+        element1.ElementItemSet = [item1];
 
         // Should have no multiplierCell() and "1" as the default value
         expect(item1.multiplierCell()).toBe(null);
@@ -133,15 +133,15 @@ describe('ng-tests ElementItem', function () {
         var multiplierField = new ElementField();
         multiplierField.Element = element1;
         multiplierField.ElementFieldType = 12;
-        element1.ElementFieldSet.push(multiplierField);
+        element1.ElementFieldSet = [multiplierField];
 
         // Multiplier cell
         var multiplierCell = new ElementCell();
         multiplierCell.ElementField = multiplierField;
         multiplierCell.ElementItem = item1;
         // multiplierCell.NumericValue = 50;
-        multiplierField.ElementCellSet.push(multiplierCell);
-        item1.ElementCellSet.push(multiplierCell);
+        multiplierField.ElementCellSet = [multiplierCell];
+        item1.ElementCellSet = [multiplierCell];
 
         item1.setMultiplier(); // TODO Manually update?!
 
@@ -153,7 +153,7 @@ describe('ng-tests ElementItem', function () {
         userCell = new UserElementCell();
         userCell.ElementCell = multiplierCell;
         userCell.DecimalValue = 2;
-        multiplierCell.UserElementCellSet.push(userCell);
+        multiplierCell.UserElementCellSet = [userCell];
 
         item1.setMultiplier(); // TODO Manually update?!
 
@@ -173,27 +173,27 @@ describe('ng-tests ElementItem', function () {
         // Element
         var element1 = new Element();
         element1.ResourcePool = resourcePool1;
-        resourcePool1.ElementSet.push(element1);
+        resourcePool1.ElementSet = [element1];
         resourcePool1.MainElement = element1;
 
         // Item
         var item1 = new ElementItem();
         item1.Element = element1;
-        element1.ElementItemSet.push(item1);
+        element1.ElementItemSet = [item1];
 
         // DirectIncome field
         var directIncomeField = new ElementField();
         directIncomeField.Element = element1;
         directIncomeField.ElementFieldType = 11;
-        element1.ElementFieldSet.push(directIncomeField);
+        element1.ElementFieldSet = [directIncomeField];
 
         // DirectIncome cell
         var directIncomeCell = new ElementCell();
         directIncomeCell.ElementField = directIncomeField;
         directIncomeCell.ElementItem = item1;
         directIncomeCell.NumericValue = 25;
-        directIncomeField.ElementCellSet.push(directIncomeCell);
-        item1.ElementCellSet.push(directIncomeCell);
+        directIncomeField.ElementCellSet = [directIncomeCell];
+        item1.ElementCellSet = [directIncomeCell];
 
         // Multiplier field
         var multiplierField = new ElementField();
@@ -205,14 +205,14 @@ describe('ng-tests ElementItem', function () {
         var multiplierCell = new ElementCell();
         multiplierCell.ElementField = multiplierField;
         multiplierCell.ElementItem = item1;
-        multiplierField.ElementCellSet.push(multiplierCell);
+        multiplierField.ElementCellSet = [multiplierCell];
         item1.ElementCellSet.push(multiplierCell);
 
         // User multiplier cell
         userCell = new UserElementCell();
         userCell.ElementCell = multiplierCell;
         userCell.DecimalValue = 3;
-        multiplierCell.UserElementCellSet.push(userCell);
+        multiplierCell.UserElementCellSet = [userCell];
 
         // Assert
         expect(item1.totalDirectIncome()).toBe(75);
@@ -227,27 +227,27 @@ describe('ng-tests ElementItem', function () {
         // Element
         var element1 = new Element();
         element1.ResourcePool = resourcePool1;
-        resourcePool1.ElementSet.push(element1);
+        resourcePool1.ElementSet = [element1];
         resourcePool1.MainElement = element1;
 
         // Item
         var item1 = new ElementItem();
         item1.Element = element1;
-        element1.ElementItemSet.push(item1);
+        element1.ElementItemSet = [item1];
 
         // DirectIncome field
         var directIncomeField = new ElementField();
         directIncomeField.Element = element1;
         directIncomeField.ElementFieldType = 11;
-        element1.ElementFieldSet.push(directIncomeField);
+        element1.ElementFieldSet = [directIncomeField];
 
         // DirectIncome cell
         var directIncomeCell = new ElementCell();
         directIncomeCell.ElementField = directIncomeField;
         directIncomeCell.ElementItem = item1;
         directIncomeCell.NumericValue = 50;
-        directIncomeField.ElementCellSet.push(directIncomeCell);
-        item1.ElementCellSet.push(directIncomeCell);
+        directIncomeField.ElementCellSet = [directIncomeCell];
+        item1.ElementCellSet = [directIncomeCell];
 
         // Assert
         expect(item1.resourcePoolAmount()).toBe(5);
@@ -262,27 +262,27 @@ describe('ng-tests ElementItem', function () {
         // Element
         var element1 = new Element();
         element1.ResourcePool = resourcePool1;
-        resourcePool1.ElementSet.push(element1);
+        resourcePool1.ElementSet = [element1];
         resourcePool1.MainElement = element1;
 
         // Item
         var item1 = new ElementItem();
         item1.Element = element1;
-        element1.ElementItemSet.push(item1);
+        element1.ElementItemSet = [item1];
 
         // DirectIncome field
         var directIncomeField = new ElementField();
         directIncomeField.Element = element1;
         directIncomeField.ElementFieldType = 11;
-        element1.ElementFieldSet.push(directIncomeField);
+        element1.ElementFieldSet = [directIncomeField];
 
         // DirectIncome cell
         var directIncomeCell = new ElementCell();
         directIncomeCell.ElementField = directIncomeField;
         directIncomeCell.ElementItem = item1;
         directIncomeCell.NumericValue = 50;
-        directIncomeField.ElementCellSet.push(directIncomeCell);
-        item1.ElementCellSet.push(directIncomeCell);
+        directIncomeField.ElementCellSet = [directIncomeCell];
+        item1.ElementCellSet = [directIncomeCell];
 
         // Multiplier field
         var multiplierField = new ElementField();
@@ -294,14 +294,14 @@ describe('ng-tests ElementItem', function () {
         var multiplierCell = new ElementCell();
         multiplierCell.ElementField = multiplierField;
         multiplierCell.ElementItem = item1;
-        multiplierField.ElementCellSet.push(multiplierCell);
+        multiplierField.ElementCellSet = [multiplierCell];
         item1.ElementCellSet.push(multiplierCell);
 
         // User multiplier cell
         userCell = new UserElementCell();
         userCell.ElementCell = multiplierCell;
         userCell.DecimalValue = 3;
-        multiplierCell.UserElementCellSet.push(userCell);
+        multiplierCell.UserElementCellSet = [userCell];
 
         // Assert
         expect(item1.totalResourcePoolAmount()).toBe(15);
@@ -316,27 +316,27 @@ describe('ng-tests ElementItem', function () {
         // Element
         var element1 = new Element();
         element1.ResourcePool = resourcePool1;
-        resourcePool1.ElementSet.push(element1);
+        resourcePool1.ElementSet = [element1];
         resourcePool1.MainElement = element1;
 
         // Item
         var item1 = new ElementItem();
         item1.Element = element1;
-        element1.ElementItemSet.push(item1);
+        element1.ElementItemSet = [item1];
 
         // DirectIncome field
         var directIncomeField = new ElementField();
         directIncomeField.Element = element1;
         directIncomeField.ElementFieldType = 11;
-        element1.ElementFieldSet.push(directIncomeField);
+        element1.ElementFieldSet = [directIncomeField];
 
         // DirectIncome cell
         var directIncomeCell = new ElementCell();
         directIncomeCell.ElementField = directIncomeField;
         directIncomeCell.ElementItem = item1;
         directIncomeCell.NumericValue = 50;
-        directIncomeField.ElementCellSet.push(directIncomeCell);
-        item1.ElementCellSet.push(directIncomeCell);
+        directIncomeField.ElementCellSet = [directIncomeCell];
+        item1.ElementCellSet = [directIncomeCell];
 
         // Assert
         expect(item1.directIncomeIncludingResourcePoolAmount()).toBe(55);
@@ -351,27 +351,27 @@ describe('ng-tests ElementItem', function () {
         // Element
         var element1 = new Element();
         element1.ResourcePool = resourcePool1;
-        resourcePool1.ElementSet.push(element1);
+        resourcePool1.ElementSet = [element1];
         resourcePool1.MainElement = element1;
 
         // Item
         var item1 = new ElementItem();
         item1.Element = element1;
-        element1.ElementItemSet.push(item1);
+        element1.ElementItemSet = [item1];
 
         // DirectIncome field
         var directIncomeField = new ElementField();
         directIncomeField.Element = element1;
         directIncomeField.ElementFieldType = 11;
-        element1.ElementFieldSet.push(directIncomeField);
+        element1.ElementFieldSet = [directIncomeField];
 
         // DirectIncome cell
         var directIncomeCell = new ElementCell();
         directIncomeCell.ElementField = directIncomeField;
         directIncomeCell.ElementItem = item1;
         directIncomeCell.NumericValue = 50;
-        directIncomeField.ElementCellSet.push(directIncomeCell);
-        item1.ElementCellSet.push(directIncomeCell);
+        directIncomeField.ElementCellSet = [directIncomeCell];
+        item1.ElementCellSet = [directIncomeCell];
 
         // Multiplier field
         var multiplierField = new ElementField();
@@ -383,14 +383,14 @@ describe('ng-tests ElementItem', function () {
         var multiplierCell = new ElementCell();
         multiplierCell.ElementField = multiplierField;
         multiplierCell.ElementItem = item1;
-        multiplierField.ElementCellSet.push(multiplierCell);
+        multiplierField.ElementCellSet = [multiplierCell];
         item1.ElementCellSet.push(multiplierCell);
 
         // User multiplier cell
         userCell = new UserElementCell();
         userCell.ElementCell = multiplierCell;
         userCell.DecimalValue = 3;
-        multiplierCell.UserElementCellSet.push(userCell);
+        multiplierCell.UserElementCellSet = [userCell];
 
         // Assert
         expect(item1.totalDirectIncomeIncludingResourcePoolAmount()).toBe(165);
@@ -406,13 +406,13 @@ describe('ng-tests ElementItem', function () {
         // Element
         var element1 = new Element();
         element1.ResourcePool = resourcePool1;
-        resourcePool1.ElementSet.push(element1);
+        resourcePool1.ElementSet = [element1];
         resourcePool1.MainElement = element1;
 
         // Item
         var item1 = new ElementItem();
         item1.Element = element1;
-        element1.ElementItemSet.push(item1);
+        element1.ElementItemSet = [item1];
 
         // DirectIncome field
         var directIncomeField = new ElementField();
@@ -421,15 +421,15 @@ describe('ng-tests ElementItem', function () {
         directIncomeField.IndexEnabled = true;
         directIncomeField.IndexRating = 100;
         directIncomeField.IndexRatingCount = 1;
-        element1.ElementFieldSet.push(directIncomeField);
+        element1.ElementFieldSet = [directIncomeField];
 
         // DirectIncome cell
         var directIncomeCell = new ElementCell();
         directIncomeCell.ElementField = directIncomeField;
         directIncomeCell.ElementItem = item1;
         directIncomeCell.NumericValue = 50;
-        directIncomeField.ElementCellSet.push(directIncomeCell);
-        item1.ElementCellSet.push(directIncomeCell);
+        directIncomeField.ElementCellSet = [directIncomeCell];
+        item1.ElementCellSet = [directIncomeCell];
 
         // Multiplier field
         var multiplierField = new ElementField();
@@ -441,14 +441,14 @@ describe('ng-tests ElementItem', function () {
         var multiplierCell = new ElementCell();
         multiplierCell.ElementField = multiplierField;
         multiplierCell.ElementItem = item1;
-        multiplierField.ElementCellSet.push(multiplierCell);
+        multiplierField.ElementCellSet = [multiplierCell];
         item1.ElementCellSet.push(multiplierCell);
 
         // User multiplier cell
         userCell = new UserElementCell();
         userCell.ElementCell = multiplierCell;
         userCell.DecimalValue = 3;
-        multiplierCell.UserElementCellSet.push(userCell);
+        multiplierCell.UserElementCellSet = [userCell];
 
         // Assert
         // TODO Actually there is 15 amount in the pool and this item should get them all but because there is no other item,
@@ -467,13 +467,13 @@ describe('ng-tests ElementItem', function () {
         // Element
         var element1 = new Element();
         element1.ResourcePool = resourcePool1;
-        resourcePool1.ElementSet.push(element1);
+        resourcePool1.ElementSet = [element1];
         resourcePool1.MainElement = element1;
 
         // Item
         var item1 = new ElementItem();
         item1.Element = element1;
-        element1.ElementItemSet.push(item1);
+        element1.ElementItemSet = [item1];
 
         // DirectIncome field
         var directIncomeField = new ElementField();
@@ -482,15 +482,15 @@ describe('ng-tests ElementItem', function () {
         directIncomeField.IndexEnabled = true;
         directIncomeField.IndexRating = 100;
         directIncomeField.IndexRatingCount = 1;
-        element1.ElementFieldSet.push(directIncomeField);
+        element1.ElementFieldSet = [directIncomeField];
 
         // DirectIncome cell
         var directIncomeCell = new ElementCell();
         directIncomeCell.ElementField = directIncomeField;
         directIncomeCell.ElementItem = item1;
         directIncomeCell.NumericValue = 50;
-        directIncomeField.ElementCellSet.push(directIncomeCell);
-        item1.ElementCellSet.push(directIncomeCell);
+        directIncomeField.ElementCellSet = [directIncomeCell];
+        item1.ElementCellSet = [directIncomeCell];
 
         // Multiplier field
         var multiplierField = new ElementField();
@@ -502,14 +502,14 @@ describe('ng-tests ElementItem', function () {
         var multiplierCell = new ElementCell();
         multiplierCell.ElementField = multiplierField;
         multiplierCell.ElementItem = item1;
-        multiplierField.ElementCellSet.push(multiplierCell);
+        multiplierField.ElementCellSet = [multiplierCell];
         item1.ElementCellSet.push(multiplierCell);
 
         // User multiplier cell
         userCell = new UserElementCell();
         userCell.ElementCell = multiplierCell;
         userCell.DecimalValue = 3;
-        multiplierCell.UserElementCellSet.push(userCell);
+        multiplierCell.UserElementCellSet = [userCell];
 
         // Assert
         // TODO Actually there is 15 amount in the pool and this item should get them all but because there is no other item,
@@ -528,13 +528,13 @@ describe('ng-tests ElementItem', function () {
         // Element
         var element1 = new Element();
         element1.ResourcePool = resourcePool1;
-        resourcePool1.ElementSet.push(element1);
+        resourcePool1.ElementSet = [element1];
         resourcePool1.MainElement = element1;
 
         // Item
         var item1 = new ElementItem();
         item1.Element = element1;
-        element1.ElementItemSet.push(item1);
+        element1.ElementItemSet = [item1];
 
         // DirectIncome field
         var directIncomeField = new ElementField();
@@ -543,34 +543,34 @@ describe('ng-tests ElementItem', function () {
         directIncomeField.IndexEnabled = true;
         directIncomeField.IndexRating = 100;
         directIncomeField.IndexRatingCount = 1;
-        element1.ElementFieldSet.push(directIncomeField);
+        element1.ElementFieldSet = [directIncomeField];
 
         // DirectIncome cell
         var directIncomeCell = new ElementCell();
         directIncomeCell.ElementField = directIncomeField;
         directIncomeCell.ElementItem = item1;
         directIncomeCell.NumericValue = 50;
-        directIncomeField.ElementCellSet.push(directIncomeCell);
-        item1.ElementCellSet.push(directIncomeCell);
+        directIncomeField.ElementCellSet = [directIncomeCell];
+        item1.ElementCellSet = [directIncomeCell];
 
         // Multiplier field
         var multiplierField = new ElementField();
         multiplierField.Element = element1;
         multiplierField.ElementFieldType = 12;
-        element1.ElementFieldSet.push(multiplierField);
+        element1.ElementFieldSet = [multiplierField];
 
         // Multiplier cell
         var multiplierCell = new ElementCell();
         multiplierCell.ElementField = multiplierField;
         multiplierCell.ElementItem = item1;
-        multiplierField.ElementCellSet.push(multiplierCell);
-        item1.ElementCellSet.push(multiplierCell);
+        multiplierField.ElementCellSet = [multiplierCell];
+        item1.ElementCellSet = [multiplierCell];
 
         // User multiplier cell
         userCell = new UserElementCell();
         userCell.ElementCell = multiplierCell;
         userCell.DecimalValue = 3;
-        multiplierCell.UserElementCellSet.push(userCell);
+        multiplierCell.UserElementCellSet = [userCell];
 
         // Assert
         expect(item1.incomeStatus()).toBe('average');

@@ -20,6 +20,10 @@
             var self = this;
 
             // Local variables
+            self.backingFields = {
+                _parent: null
+            }
+
             var _parent = null;
             var _parents = [];
             var _elementFieldIndexSet = null;
@@ -37,16 +41,16 @@
 
                 // Cached value
                 // TODO In case of add / remove fields?
-                if (_parent !== null) {
-                    return _parent;
+                if (self.backingFields._parent !== null) {
+                    return self.backingFields._parent;
                 }
 
-                _parent = self;
-                if (_parent.ParentFieldSet.length > 0) {
-                    _parent = _parent.ParentFieldSet[0].Element;
+                self.backingFields._parent = self;
+                if (self.ParentFieldSet.length > 0) {
+                    self.backingFields._parent = self.ParentFieldSet[0].Element;
                 }
 
-                return _parent;
+                return self.backingFields._parent;
             }
 
             self.parents = function () {

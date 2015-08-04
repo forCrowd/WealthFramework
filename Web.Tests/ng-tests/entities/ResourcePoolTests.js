@@ -49,7 +49,7 @@ describe('ng-tests ResourcePool', function () {
 
         var element1 = new Element();
         element1.ResourcePool = resourcePool1;
-        resourcePool1.ElementSet.push(element1);
+        resourcePool1.ElementSet = [element1];
         resourcePool1.MainElement = element1;
         // Since default is already 'true', To be sure that adding a field index makes it 'true'
         resourcePool1.UseFixedResourcePoolRate = true;
@@ -58,7 +58,7 @@ describe('ng-tests ResourcePool', function () {
         field1.Element = element1;
         field1.ElementFieldType = 4;
         field1.IndexEnabled = true;
-        element1.ElementFieldSet.push(field1);
+        element1.ElementFieldSet = [field1];
 
         // false vs. true
         field1.UseFixedValue = false;
@@ -78,7 +78,7 @@ describe('ng-tests ResourcePool', function () {
 
         var element1 = new Element();
         element1.ResourcePool = resourcePool1;
-        resourcePool1.ElementSet.push(element1);
+        resourcePool1.ElementSet = [element1];
         resourcePool1.MainElement = element1;
         // Since default is already 'true', To be sure that adding a field index makes it 'true'
         resourcePool1.UseFixedResourcePoolRate = true;
@@ -87,13 +87,13 @@ describe('ng-tests ResourcePool', function () {
         field1.Element = element1;
         field1.ElementFieldType = 4;
         field1.IndexEnabled = true;
-        element1.ElementFieldSet.push(field1);
+        element1.ElementFieldSet = [field1];
 
         var field2 = new ElementField();
         field2.Element = element1;
         field2.ElementFieldType = 4;
         field2.IndexEnabled = true;
-        element1.ElementFieldSet.push(field2);
+        element1.ElementFieldSet = [field2];
 
         expect(resourcePool1.displayRatingMode()).toBe(true);
 
@@ -126,7 +126,7 @@ describe('ng-tests ResourcePool', function () {
 
         var userResourcePool1 = new UserResourcePool();
         userResourcePool1.ResourcePool = resourcePool1;
-        resourcePool1.UserResourcePoolSet.push(userResourcePool1);
+        resourcePool1.UserResourcePoolSet = [userResourcePool1];
 
         expect(resourcePool1.userResourcePool()).not.toBe(null);
 
@@ -145,7 +145,7 @@ describe('ng-tests ResourcePool', function () {
         var userResourcePool1 = new UserResourcePool();
         userResourcePool1.ResourcePool = resourcePool1;
         userResourcePool1.ResourcePoolRate = 20;
-        resourcePool1.UserResourcePoolSet.push(userResourcePool1);
+        resourcePool1.UserResourcePoolSet = [userResourcePool1];
 
         // TODO Manually update?!
         resourcePool1.setCurrentUserResourcePoolRate();
@@ -175,7 +175,7 @@ describe('ng-tests ResourcePool', function () {
         var userResourcePool1 = new UserResourcePool();
         userResourcePool1.ResourcePool = resourcePool1;
         userResourcePool1.ResourcePoolRate = 10;
-        resourcePool1.UserResourcePoolSet.push(userResourcePool1);
+        resourcePool1.UserResourcePoolSet = [userResourcePool1];
 
         // TODO Manually update?!
         resourcePool1.setOtherUsersResourcePoolRateTotal();
@@ -203,7 +203,7 @@ describe('ng-tests ResourcePool', function () {
         var userResourcePool1 = new UserResourcePool();
         userResourcePool1.ResourcePool = resourcePool1;
         userResourcePool1.ResourcePoolRate = 10;
-        resourcePool1.UserResourcePoolSet.push(userResourcePool1);
+        resourcePool1.UserResourcePoolSet = [userResourcePool1];
 
         // TODO Manually update?!
         resourcePool1.setOtherUsersResourcePoolRateCount();

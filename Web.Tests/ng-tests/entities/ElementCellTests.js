@@ -34,7 +34,7 @@ describe('ng-tests ElementCell', function () {
 
         var element1 = new Element();
         element1.ResourcePool = resourcePool1;
-        resourcePool1.ElementSet.push(element1);
+        resourcePool1.ElementSet = [element1];
         resourcePool1.MainElement = element1;
 
         // Fields
@@ -45,12 +45,12 @@ describe('ng-tests ElementCell', function () {
         field1.IndexRating = 100;
         field1.IndexRatingCount = 1;
         field1.UseFixedValue = false;
-        element1.ElementFieldSet.push(field1);
+        element1.ElementFieldSet = [field1];
 
         // Item
         var item1 = new ElementItem();
         item1.Element = element1;
-        element1.ElementItemSet.push(item1);
+        element1.ElementItemSet = [item1];
 
         // Cell
         var cell1 = new ElementCell();
@@ -58,8 +58,8 @@ describe('ng-tests ElementCell', function () {
         cell1.ElementItem = item1;
         cell1.NumericValue = 150;
         cell1.NumericValueCount = 2;
-        field1.ElementCellSet.push(cell1);
-        item1.ElementCellSet.push(cell1);
+        field1.ElementCellSet = [cell1];
+        item1.ElementCellSet = [cell1];
 
         expect(cell1.otherUsersNumericValue()).toBe(75);
         expect(cell1.otherUsersNumericValueCount()).toBe(2);

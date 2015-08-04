@@ -3,6 +3,9 @@
 **0.35**
 
 * Further with js tests & entities cleanup
+* resourcePool.js - otherUsersResourcePoolRate() was merged with otherUsersResourcePoolRateTotal()
+* Js tests array fix; intial push() lines were replaced with assigments (.array = [object])
+* ResourcePool.cs - ResourcePoolRate renamed to ResourcePoolRateTotal
 
 **0.34.1**
 

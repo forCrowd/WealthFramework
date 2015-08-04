@@ -34,7 +34,7 @@ describe('ng-tests ElementField', function () {
 
         var element1 = new Element();
         element1.ResourcePool = resourcePool1;
-        resourcePool1.ElementSet.push(element1);
+        resourcePool1.ElementSet = [element1];
         resourcePool1.MainElement = element1;
 
         // Fields
@@ -44,7 +44,7 @@ describe('ng-tests ElementField', function () {
         field1.IndexEnabled = true;
         field1.IndexRating = 130;
         field1.IndexRatingCount = 2;
-        element1.ElementFieldSet.push(field1);
+        element1.ElementFieldSet = [field1];
 
         expect(field1.otherUsersIndexRating()).toBe(65);
         expect(field1.otherUsersIndexRatingCount()).toBe(2);
@@ -72,7 +72,7 @@ describe('ng-tests ElementField', function () {
         var userElementField1 = new UserElementField();
         userElementField1.ElementField = field1;
         userElementField1.Rating = 35;
-        field1.UserElementFieldSet.push(userElementField1);
+        field1.UserElementFieldSet = [userElementField1];
 
         // Broadcast ?!
         $rootScope.$broadcast('elementFieldIndexRatingUpdated', { elementField: field1, value: userElementField1.Rating });
@@ -105,7 +105,7 @@ describe('ng-tests ElementField', function () {
 
         var element1 = new Element();
         element1.ResourcePool = resourcePool1;
-        resourcePool1.ElementSet.push(element1);
+        resourcePool1.ElementSet = [element1];
         resourcePool1.MainElement = element1;
 
         // Fields
@@ -115,7 +115,7 @@ describe('ng-tests ElementField', function () {
         field1.IndexEnabled = true;
         field1.IndexRating = 130;
         field1.IndexRatingCount = 2;
-        element1.ElementFieldSet.push(field1);
+        element1.ElementFieldSet = [field1];
 
         var field2 = new ElementField();
         field2.Element = element1;
@@ -168,14 +168,14 @@ describe('ng-tests ElementField', function () {
         var userElementField1 = new UserElementField();
         userElementField1.ElementField = field1;
         userElementField1.Rating = 35;
-        field1.UserElementFieldSet.push(userElementField1);
+        field1.UserElementFieldSet = [userElementField1];
         // Broadcast ?!
         $rootScope.$broadcast('elementFieldIndexRatingUpdated', { elementField: field1, value: userElementField1.Rating });
 
         var userElementField2 = new UserElementField();
         userElementField2.ElementField = field2;
         userElementField2.Rating = 65;
-        field2.UserElementFieldSet.push(userElementField2);
+        field2.UserElementFieldSet = [userElementField2];
         // Broadcast ?!
         $rootScope.$broadcast('elementFieldIndexRatingUpdated', { elementField: field2, value: userElementField2.Rating });
 

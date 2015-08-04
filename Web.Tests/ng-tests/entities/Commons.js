@@ -26,30 +26,35 @@ function registerPrototypes($injector) {
     ResourcePool.prototype.ResourcePoolRateTotal = 0;
     ResourcePool.prototype.ResourcePoolRateCount = 0;
     ResourcePool.prototype.MainElement = null;
-    ResourcePool.prototype.ElementSet = [];
-    ResourcePool.prototype.UserResourcePoolSet = [];
+    ResourcePool.prototype.ElementSet = []; // *
+    ResourcePool.prototype.UserResourcePoolSet = []; // *
 
     Element = $injector.get('Element');
     Element.prototype.ResourcePool = null;
-    Element.prototype.ElementFieldSet = [];
-    Element.prototype.ElementItemSet = [];
+    Element.prototype.ResourcePoolMainElementSubSet = []; // *
+    Element.prototype.ElementFieldSet = []; // *
+    Element.prototype.ElementItemSet = []; // *
+    Element.prototype.ParentFieldSet = []; // *
 
     ElementField = $injector.get('ElementField');
     ElementField.prototype.UseFixedValue = false;
     ElementField.prototype.Element = null;
-    ElementField.prototype.ElementCellSet = [];
-    ElementField.prototype.UserElementFieldSet = [];
+    ElementField.prototype.ElementCellSet = []; // *
+    ElementField.prototype.UserElementFieldSet = []; // *
 
     ElementItem = $injector.get('ElementItem');
     ElementItem.prototype.Element = null;
-    ElementItem.prototype.ElementCellSet = [];
-    ElementItem.prototype.ParentCellSet = [];
+    ElementItem.prototype.ElementCellSet = []; // *
+    ElementItem.prototype.ParentCellSet = []; // *
 
     ElementCell = $injector.get('ElementCell');
     ElementCell.prototype.ElementField = null;
     ElementCell.prototype.ElementItem = null;
-    ElementCell.prototype.UserElementCellSet = [];
+    ElementCell.prototype.UserElementCellSet = []; // *
 
+    // * A friendly reminder for a while;
+    // With this definition, array is a shared prop between the objects
+    // Set a new array before using it, instead of push()
 }
 
 function UserResourcePool() {

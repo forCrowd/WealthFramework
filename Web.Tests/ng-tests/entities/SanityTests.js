@@ -49,5 +49,6 @@ describe('ng-tests Sanity Checks', function () {
         expect(elementField1).toBeDefined();
         expect(elementItem1).toBeDefined();
         expect(elementCell1).toBeDefined();
+
     });
 });

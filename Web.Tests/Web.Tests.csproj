@@ -71,6 +71,7 @@
   <ItemGroup>
     <Content Include="ng-tests\entities\ElementCellTests.js" />
     <Content Include="ng-tests\entities\ElementFieldTests.js" />
+    <Content Include="ng-tests\entities\ElementTests.js" />
     <Content Include="ng-tests\entities\SanityTests.js" />
     <Content Include="ng-tests\entities\ElementItemTests.js" />
     <Content Include="ng-tests\entities\Commons.js" />
