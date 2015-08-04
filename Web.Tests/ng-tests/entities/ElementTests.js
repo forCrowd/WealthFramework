@@ -162,7 +162,6 @@ describe('ng-tests Element', function () {
 
     });
 
-
     it('indexRating', function () {
 
         // Case 1: Initial
@@ -225,7 +224,6 @@ describe('ng-tests Element', function () {
 
         // Case 1: Initial
         var resourcePool = new ResourcePool();
-        resourcePool.RatingMode = 2; // To make the configuration easier
 
         var element = new Element();
         element.ResourcePool = resourcePool;
@@ -243,13 +241,12 @@ describe('ng-tests Element', function () {
         item1.Element = element;
         element.ElementItemSet = [item1];
 
-        var cell1 = new ElementCell();
-        cell1.ElementField = directIncomeField;
-        cell1.ElementItem = item1;
-        cell1.NumericValue = 50;
-        cell1.NumericValueCount = 1;
-        directIncomeField.ElementCellSet = [cell1];
-        item1.ElementCellSet = [cell1];
+        var directIncomeCell1 = new ElementCell();
+        directIncomeCell1.ElementField = directIncomeField;
+        directIncomeCell1.ElementItem = item1;
+        directIncomeCell1.NumericValue = 50;
+        directIncomeField.ElementCellSet = [directIncomeCell1];
+        item1.ElementCellSet = [directIncomeCell1];
 
         expect(element.directIncome()).toBe(50);
 
@@ -258,13 +255,12 @@ describe('ng-tests Element', function () {
         item2.Element = element;
         element.ElementItemSet.push(item2);
 
-        var cell2 = new ElementCell();
-        cell2.ElementField = directIncomeField;
-        cell2.ElementItem = item2;
-        cell2.NumericValue = 150;
-        cell2.NumericValueCount = 1;
-        directIncomeField.ElementCellSet.push(cell2);
-        item2.ElementCellSet = [cell2];
+        var directIncomeCell2 = new ElementCell();
+        directIncomeCell2.ElementField = directIncomeField;
+        directIncomeCell2.ElementItem = item2;
+        directIncomeCell2.NumericValue = 150;
+        directIncomeField.ElementCellSet.push(directIncomeCell2);
+        item2.ElementCellSet = [directIncomeCell2];
 
         expect(element.directIncome()).toBe(200);
 
@@ -313,16 +309,16 @@ describe('ng-tests Element', function () {
         item1.Element = element;
         element.ElementItemSet = [item1];
 
-        var cell1 = new ElementCell();
-        cell1.ElementField = multiplierField;
-        cell1.ElementItem = item1;
-        multiplierField.ElementCellSet = [cell1];
-        item1.ElementCellSet = [cell1];
+        var directIncomeCell1 = new ElementCell();
+        directIncomeCell1.ElementField = multiplierField;
+        directIncomeCell1.ElementItem = item1;
+        multiplierField.ElementCellSet = [directIncomeCell1];
+        item1.ElementCellSet = [directIncomeCell1];
 
-        var userCell1 = new UserElementCell();
-        userCell1.ElementCell = cell1;
-        userCell1.DecimalValue = 5;
-        cell1.UserElementCellSet = [userCell1];
+        var userdirectIncomeCell1 = new UserElementCell();
+        userdirectIncomeCell1.ElementCell = directIncomeCell1;
+        userdirectIncomeCell1.DecimalValue = 5;
+        directIncomeCell1.UserElementCellSet = [userdirectIncomeCell1];
 
         expect(element.multiplier()).toBe(5);
 
@@ -374,24 +370,23 @@ describe('ng-tests Element', function () {
         item1.Element = element;
         element.ElementItemSet = [item1];
 
-        var cell1 = new ElementCell();
-        cell1.ElementField = directIncomeField;
-        cell1.ElementItem = item1;
-        cell1.NumericValue = 50;
-        cell1.NumericValueCount = 1;
-        directIncomeField.ElementCellSet = [cell1];
-        item1.ElementCellSet = [cell1];
+        var directIncomeCell1 = new ElementCell();
+        directIncomeCell1.ElementField = directIncomeField;
+        directIncomeCell1.ElementItem = item1;
+        directIncomeCell1.NumericValue = 50;
+        directIncomeField.ElementCellSet = [directIncomeCell1];
+        item1.ElementCellSet = [directIncomeCell1];
 
-        var cell2 = new ElementCell();
-        cell2.ElementField = multiplierField;
-        cell2.ElementItem = item1;
-        multiplierField.ElementCellSet = [cell2];
-        item1.ElementCellSet.push(cell2);
+        var multiplierCell1 = new ElementCell();
+        multiplierCell1.ElementField = multiplierField;
+        multiplierCell1.ElementItem = item1;
+        multiplierField.ElementCellSet = [multiplierCell1];
+        item1.ElementCellSet.push(multiplierCell1);
 
-        var userCell1 = new UserElementCell();
-        userCell1.ElementCell = cell2;
-        userCell1.DecimalValue = 5;
-        cell2.UserElementCellSet = [userCell1];
+        var userMultiplierCell1 = new UserElementCell();
+        userMultiplierCell1.ElementCell = multiplierCell1;
+        userMultiplierCell1.DecimalValue = 5;
+        multiplierCell1.UserElementCellSet = [userMultiplierCell1];
 
         expect(element.totalDirectIncome()).toBe(250);
 
@@ -400,24 +395,23 @@ describe('ng-tests Element', function () {
         item2.Element = element;
         element.ElementItemSet.push(item2);
 
-        var cell3 = new ElementCell();
-        cell3.ElementField = directIncomeField;
-        cell3.ElementItem = item2;
-        cell3.NumericValue = 150;
-        cell3.NumericValueCount = 1;
-        directIncomeField.ElementCellSet.push(cell3);
-        item2.ElementCellSet = [cell3];
+        var directIncomeCell2 = new ElementCell();
+        directIncomeCell2.ElementField = directIncomeField;
+        directIncomeCell2.ElementItem = item2;
+        directIncomeCell2.NumericValue = 150;
+        directIncomeField.ElementCellSet.push(directIncomeCell2);
+        item2.ElementCellSet = [directIncomeCell2];
 
-        var cell4 = new ElementCell();
-        cell4.ElementField = multiplierField;
-        cell4.ElementItem = item2;
-        multiplierField.ElementCellSet = [cell4];
-        item2.ElementCellSet.push(cell4);
+        var multiplierCell2 = new ElementCell();
+        multiplierCell2.ElementField = multiplierField;
+        multiplierCell2.ElementItem = item2;
+        multiplierField.ElementCellSet = [multiplierCell2];
+        item2.ElementCellSet.push(multiplierCell2);
 
-        var userCell2 = new UserElementCell();
-        userCell2.ElementCell = cell4;
-        userCell2.DecimalValue = 15;
-        cell4.UserElementCellSet = [userCell2];
+        var userMultiplierCell2 = new UserElementCell();
+        userMultiplierCell2.ElementCell = multiplierCell2;
+        userMultiplierCell2.DecimalValue = 15;
+        multiplierCell2.UserElementCellSet = [userMultiplierCell2];
 
         expect(element.totalDirectIncome()).toBe(2500);
 
@@ -427,15 +421,595 @@ describe('ng-tests Element', function () {
 
     it('resourcePoolAmount', function () {
 
+        // Case 1: Initial
+        var resourcePool = new ResourcePool();
 
+        var element = new Element();
+        element.ResourcePool = resourcePool;
+        resourcePool.ElementSet = [element];
+
+        expect(element.resourcePoolAmount()).toBe(0);
+
+        // Case 2: Add the fields, first item and the cell
+        var item1 = new ElementItem();
+        item1.Element = element;
+        element.ElementItemSet = [item1];
+
+        // DirectIncome field
+        var directIncomeField = new ElementField();
+        directIncomeField.Element = element;
+        directIncomeField.ElementFieldType = 11;
+        element.ElementFieldSet = [directIncomeField];
+
+        // DirectIncome cell
+        var directIncomeCell = new ElementCell();
+        directIncomeCell.ElementField = directIncomeField;
+        directIncomeCell.ElementItem = item1;
+        directIncomeCell.NumericValue = 50;
+        directIncomeField.ElementCellSet = [directIncomeCell];
+        item1.ElementCellSet = [directIncomeCell];
+
+        expect(element.resourcePoolAmount()).toBe(5);
+
+        // Case 3: Add the second item
+        var item2 = new ElementItem();
+        item2.Element = element;
+        element.ElementItemSet.push(item2);
+
+        var directIncomeCell2 = new ElementCell();
+        directIncomeCell2.ElementField = directIncomeField;
+        directIncomeCell2.ElementItem = item2;
+        directIncomeCell2.NumericValue = 150;
+        directIncomeField.ElementCellSet.push(directIncomeCell2);
+        item2.ElementCellSet = [directIncomeCell2];
+
+        expect(element.resourcePoolAmount()).toBe(20);
+
+        // TODO Update / remove
 
     });
 
-    //totalResourcePoolAmount
-    //directIncomeIncludingResourcePoolAmount
-    //totalDirectIncomeIncludingResourcePoolAmount
-    //totalResourcePoolIncome
-    //totalIncome
-    //totalIncomeAverage
+    it('totalResourcePoolAmount', function () {
+
+        // Case 1: Initial
+        var resourcePool = new ResourcePool();
+
+        var element = new Element();
+        element.ResourcePool = resourcePool;
+        resourcePool.ElementSet = [element];
+        resourcePool.MainElement = element;
+
+        expect(element.totalResourcePoolAmount()).toBe(0);
+
+        // Case 2: Add the fields, first item and the cell
+        var item1 = new ElementItem();
+        item1.Element = element;
+        element.ElementItemSet = [item1];
+
+        // DirectIncome field
+        var directIncomeField = new ElementField();
+        directIncomeField.Element = element;
+        directIncomeField.ElementFieldType = 11;
+        element.ElementFieldSet = [directIncomeField];
+
+        var multiplierField = new ElementField();
+        multiplierField.Element = element;
+        multiplierField.ElementFieldType = 12;
+        element.ElementFieldSet.push(multiplierField);
+
+        // DirectIncome cell
+        var directIncomeCell = new ElementCell();
+        directIncomeCell.ElementField = directIncomeField;
+        directIncomeCell.ElementItem = item1;
+        directIncomeCell.NumericValue = 50;
+        directIncomeField.ElementCellSet = [directIncomeCell];
+        item1.ElementCellSet = [directIncomeCell];
+
+        var multiplierCell1 = new ElementCell();
+        multiplierCell1.ElementField = multiplierField;
+        multiplierCell1.ElementItem = item1;
+        multiplierField.ElementCellSet = [multiplierCell1];
+        item1.ElementCellSet.push(multiplierCell1);
+
+        var userMultiplierCell1 = new UserElementCell();
+        userMultiplierCell1.ElementCell = multiplierCell1;
+        userMultiplierCell1.DecimalValue = 5;
+        multiplierCell1.UserElementCellSet = [userMultiplierCell1];
+
+        expect(element.totalResourcePoolAmount()).toBe(25);
+
+        // Case 3: Add the second item
+        var item2 = new ElementItem();
+        item2.Element = element;
+        element.ElementItemSet.push(item2);
+
+        var directIncomeCell2 = new ElementCell();
+        directIncomeCell2.ElementField = directIncomeField;
+        directIncomeCell2.ElementItem = item2;
+        directIncomeCell2.NumericValue = 150;
+        directIncomeField.ElementCellSet.push(directIncomeCell2);
+        item2.ElementCellSet = [directIncomeCell2];
+
+        var multiplierCell2 = new ElementCell();
+        multiplierCell2.ElementField = multiplierField;
+        multiplierCell2.ElementItem = item2;
+        multiplierField.ElementCellSet = [multiplierCell2];
+        item2.ElementCellSet.push(multiplierCell2);
+
+        var userMultiplierCell2 = new UserElementCell();
+        userMultiplierCell2.ElementCell = multiplierCell2;
+        userMultiplierCell2.DecimalValue = 15;
+        multiplierCell2.UserElementCellSet = [userMultiplierCell2];
+
+        expect(element.totalResourcePoolAmount()).toBe(250);
+
+        // TODO Update / remove
+
+    });
+
+    it('directIncomeIncludingResourcePoolAmount', function () {
+
+        // Case 1: Initial
+        var resourcePool = new ResourcePool();
+
+        var element = new Element();
+        element.ResourcePool = resourcePool;
+        resourcePool.ElementSet = [element];
+        resourcePool.MainElement = element;
+
+        expect(element.directIncomeIncludingResourcePoolAmount()).toBe(0);
+
+        // Case 2: Add the fields, first item and the cell
+        var item1 = new ElementItem();
+        item1.Element = element;
+        element.ElementItemSet = [item1];
+
+        // DirectIncome field
+        var directIncomeField = new ElementField();
+        directIncomeField.Element = element;
+        directIncomeField.ElementFieldType = 11;
+        element.ElementFieldSet = [directIncomeField];
+
+        // DirectIncome cell
+        var directIncomeCell = new ElementCell();
+        directIncomeCell.ElementField = directIncomeField;
+        directIncomeCell.ElementItem = item1;
+        directIncomeCell.NumericValue = 50;
+        directIncomeField.ElementCellSet = [directIncomeCell];
+        item1.ElementCellSet = [directIncomeCell];
+
+        expect(element.directIncomeIncludingResourcePoolAmount()).toBe(55);
+
+        // Case 3: Add the second item
+        var item2 = new ElementItem();
+        item2.Element = element;
+        element.ElementItemSet.push(item2);
+
+        var directIncomeCell2 = new ElementCell();
+        directIncomeCell2.ElementField = directIncomeField;
+        directIncomeCell2.ElementItem = item2;
+        directIncomeCell2.NumericValue = 150;
+        directIncomeField.ElementCellSet.push(directIncomeCell2);
+        item2.ElementCellSet = [directIncomeCell2];
+
+        expect(element.directIncomeIncludingResourcePoolAmount()).toBe(220);
+
+        // TODO Update / remove
+
+    });
+
+    it('totalDirectIncomeIncludingResourcePoolAmount', function () {
+
+        // Case 1: Initial
+        var resourcePool = new ResourcePool();
+
+        var element = new Element();
+        element.ResourcePool = resourcePool;
+        resourcePool.ElementSet = [element];
+        resourcePool.MainElement = element;
+
+        expect(element.totalDirectIncomeIncludingResourcePoolAmount()).toBe(0);
+
+        // Case 2: Add the fields, first item and the cell
+        var item1 = new ElementItem();
+        item1.Element = element;
+        element.ElementItemSet = [item1];
+
+        // DirectIncome field
+        var directIncomeField = new ElementField();
+        directIncomeField.Element = element;
+        directIncomeField.ElementFieldType = 11;
+        element.ElementFieldSet = [directIncomeField];
+
+        var multiplierField = new ElementField();
+        multiplierField.Element = element;
+        multiplierField.ElementFieldType = 12;
+        element.ElementFieldSet.push(multiplierField);
+
+        // DirectIncome cell
+        var directIncomeCell = new ElementCell();
+        directIncomeCell.ElementField = directIncomeField;
+        directIncomeCell.ElementItem = item1;
+        directIncomeCell.NumericValue = 50;
+        directIncomeField.ElementCellSet = [directIncomeCell];
+        item1.ElementCellSet = [directIncomeCell];
+
+        var multiplierCell1 = new ElementCell();
+        multiplierCell1.ElementField = multiplierField;
+        multiplierCell1.ElementItem = item1;
+        multiplierField.ElementCellSet = [multiplierCell1];
+        item1.ElementCellSet.push(multiplierCell1);
+
+        var userMultiplierCell1 = new UserElementCell();
+        userMultiplierCell1.ElementCell = multiplierCell1;
+        userMultiplierCell1.DecimalValue = 5;
+        multiplierCell1.UserElementCellSet = [userMultiplierCell1];
+
+        expect(element.totalDirectIncomeIncludingResourcePoolAmount()).toBe(275);
+
+        // Case 3: Add the second item
+        var item2 = new ElementItem();
+        item2.Element = element;
+        element.ElementItemSet.push(item2);
+
+        var directIncomeCell2 = new ElementCell();
+        directIncomeCell2.ElementField = directIncomeField;
+        directIncomeCell2.ElementItem = item2;
+        directIncomeCell2.NumericValue = 150;
+        directIncomeField.ElementCellSet.push(directIncomeCell2);
+        item2.ElementCellSet = [directIncomeCell2];
+
+        var multiplierCell2 = new ElementCell();
+        multiplierCell2.ElementField = multiplierField;
+        multiplierCell2.ElementItem = item2;
+        multiplierField.ElementCellSet = [multiplierCell2];
+        item2.ElementCellSet.push(multiplierCell2);
+
+        var userMultiplierCell2 = new UserElementCell();
+        userMultiplierCell2.ElementCell = multiplierCell2;
+        userMultiplierCell2.DecimalValue = 15;
+        multiplierCell2.UserElementCellSet = [userMultiplierCell2];
+
+        expect(element.totalDirectIncomeIncludingResourcePoolAmount()).toBe(2750);
+
+        // TODO Update / remove
+
+    });
+
+    it('totalResourcePoolIncome', function () {
+
+        // Case 1: Initial
+        var resourcePool = new ResourcePool();
+
+        var element = new Element();
+        element.ResourcePool = resourcePool;
+        resourcePool.ElementSet = [element];
+        resourcePool.MainElement = element;
+
+        expect(element.totalResourcePoolIncome()).toBe(0);
+
+        // Case 2: Add the fields, first item and the cell
+        var item1 = new ElementItem();
+        item1.Element = element;
+        element.ElementItemSet = [item1];
+
+        // DirectIncome field
+        var directIncomeField = new ElementField();
+        directIncomeField.Element = element;
+        directIncomeField.ElementFieldType = 11;
+        element.ElementFieldSet = [directIncomeField];
+
+        var multiplierField = new ElementField();
+        multiplierField.Element = element;
+        multiplierField.ElementFieldType = 12;
+        element.ElementFieldSet.push(multiplierField);
+
+        // DirectIncome cell
+        var directIncomeCell = new ElementCell();
+        directIncomeCell.ElementField = directIncomeField;
+        directIncomeCell.ElementItem = item1;
+        directIncomeCell.NumericValue = 50;
+        directIncomeField.ElementCellSet = [directIncomeCell];
+        item1.ElementCellSet = [directIncomeCell];
+
+        var multiplierCell1 = new ElementCell();
+        multiplierCell1.ElementField = multiplierField;
+        multiplierCell1.ElementItem = item1;
+        multiplierField.ElementCellSet = [multiplierCell1];
+        item1.ElementCellSet.push(multiplierCell1);
+
+        var userMultiplierCell1 = new UserElementCell();
+        userMultiplierCell1.ElementCell = multiplierCell1;
+        userMultiplierCell1.DecimalValue = 5;
+        multiplierCell1.UserElementCellSet = [userMultiplierCell1];
+
+        // TODO Actually there is 25 amount in the pool and this item should get them all but because there is no other item,
+        // (probably) aggressiveRating calculation fails and it gets 0 amount from the pool.
+        // Fix it later / SH - 04 Aug. '15
+        expect(element.totalResourcePoolIncome()).toBe(25);
+
+        // Case 3: Add the second item
+        var item2 = new ElementItem();
+        item2.Element = element;
+        element.ElementItemSet.push(item2);
+
+        var directIncomeCell2 = new ElementCell();
+        directIncomeCell2.ElementField = directIncomeField;
+        directIncomeCell2.ElementItem = item2;
+        directIncomeCell2.NumericValue = 150;
+        directIncomeField.ElementCellSet.push(directIncomeCell2);
+        item2.ElementCellSet = [directIncomeCell2];
+
+        var multiplierCell2 = new ElementCell();
+        multiplierCell2.ElementField = multiplierField;
+        multiplierCell2.ElementItem = item2;
+        multiplierField.ElementCellSet = [multiplierCell2];
+        item2.ElementCellSet.push(multiplierCell2);
+
+        var userMultiplierCell2 = new UserElementCell();
+        userMultiplierCell2.ElementCell = multiplierCell2;
+        userMultiplierCell2.DecimalValue = 15;
+        multiplierCell2.UserElementCellSet = [userMultiplierCell2];
+
+        // TODO Actually there is 250 amount in the pool and this item should get them all but because there is no other item,
+        // (probably) aggressiveRating calculation fails and it gets 0 amount from the pool.
+        // Fix it later / SH - 04 Aug. '15
+        expect(element.totalResourcePoolIncome()).toBe(250);
+
+        // TODO Update / remove
+
+    });
+
+    it('totalIncome', function () {
+
+        // Case 1: Initial
+        var resourcePool = new ResourcePool();
+
+        var element = new Element();
+        element.ResourcePool = resourcePool;
+        resourcePool.ElementSet = [element];
+        resourcePool.MainElement = element;
+
+        expect(element.totalIncome()).toBe(0);
+
+        // Case 2: Add the fields, first item and the cell
+        var item1 = new ElementItem();
+        item1.Element = element;
+        element.ElementItemSet = [item1];
+
+        // DirectIncome field
+        var directIncomeField = new ElementField();
+        directIncomeField.Element = element;
+        directIncomeField.ElementFieldType = 11;
+        element.ElementFieldSet = [directIncomeField];
+
+        var multiplierField = new ElementField();
+        multiplierField.Element = element;
+        multiplierField.ElementFieldType = 12;
+        element.ElementFieldSet.push(multiplierField);
+
+        // DirectIncome cell
+        var directIncomeCell = new ElementCell();
+        directIncomeCell.ElementField = directIncomeField;
+        directIncomeCell.ElementItem = item1;
+        directIncomeCell.NumericValue = 50;
+        directIncomeField.ElementCellSet = [directIncomeCell];
+        item1.ElementCellSet = [directIncomeCell];
+
+        var multiplierCell1 = new ElementCell();
+        multiplierCell1.ElementField = multiplierField;
+        multiplierCell1.ElementItem = item1;
+        multiplierField.ElementCellSet = [multiplierCell1];
+        item1.ElementCellSet.push(multiplierCell1);
+
+        var userMultiplierCell1 = new UserElementCell();
+        userMultiplierCell1.ElementCell = multiplierCell1;
+        userMultiplierCell1.DecimalValue = 5;
+        multiplierCell1.UserElementCellSet = [userMultiplierCell1];
+
+        // TODO Actually there is 25 amount in the pool and this item should get them all but because there is no other item,
+        // (probably) aggressiveRating calculation fails and it gets 0 amount from the pool.
+        // Fix it later / SH - 04 Aug. '15
+        expect(element.totalIncome()).toBe(275);
+
+        // Case 3: Add the second item
+        var item2 = new ElementItem();
+        item2.Element = element;
+        element.ElementItemSet.push(item2);
+
+        var directIncomeCell2 = new ElementCell();
+        directIncomeCell2.ElementField = directIncomeField;
+        directIncomeCell2.ElementItem = item2;
+        directIncomeCell2.NumericValue = 150;
+        directIncomeField.ElementCellSet.push(directIncomeCell2);
+        item2.ElementCellSet = [directIncomeCell2];
+
+        var multiplierCell2 = new ElementCell();
+        multiplierCell2.ElementField = multiplierField;
+        multiplierCell2.ElementItem = item2;
+        multiplierField.ElementCellSet = [multiplierCell2];
+        item2.ElementCellSet.push(multiplierCell2);
+
+        var userMultiplierCell2 = new UserElementCell();
+        userMultiplierCell2.ElementCell = multiplierCell2;
+        userMultiplierCell2.DecimalValue = 15;
+        multiplierCell2.UserElementCellSet = [userMultiplierCell2];
+
+        // TODO Actually there is 250 amount in the pool and this item should get them all but because there is no other item,
+        // (probably) aggressiveRating calculation fails and it gets 0 amount from the pool.
+        // Fix it later / SH - 04 Aug. '15
+        expect(element.totalIncome()).toBe(2750);
+
+        // TODO Update / remove
+
+    });
+
+    it('totalIncome', function () {
+
+        // Case 1: Initial
+        var resourcePool = new ResourcePool();
+
+        var element = new Element();
+        element.ResourcePool = resourcePool;
+        resourcePool.ElementSet = [element];
+        resourcePool.MainElement = element;
+
+        expect(element.totalIncome()).toBe(0);
+
+        // Case 2: Add the fields, first item and the cell
+        var item1 = new ElementItem();
+        item1.Element = element;
+        element.ElementItemSet = [item1];
+
+        // DirectIncome field
+        var directIncomeField = new ElementField();
+        directIncomeField.Element = element;
+        directIncomeField.ElementFieldType = 11;
+        element.ElementFieldSet = [directIncomeField];
+
+        var multiplierField = new ElementField();
+        multiplierField.Element = element;
+        multiplierField.ElementFieldType = 12;
+        element.ElementFieldSet.push(multiplierField);
+
+        // DirectIncome cell
+        var directIncomeCell = new ElementCell();
+        directIncomeCell.ElementField = directIncomeField;
+        directIncomeCell.ElementItem = item1;
+        directIncomeCell.NumericValue = 50;
+        directIncomeField.ElementCellSet = [directIncomeCell];
+        item1.ElementCellSet = [directIncomeCell];
+
+        var multiplierCell1 = new ElementCell();
+        multiplierCell1.ElementField = multiplierField;
+        multiplierCell1.ElementItem = item1;
+        multiplierField.ElementCellSet = [multiplierCell1];
+        item1.ElementCellSet.push(multiplierCell1);
+
+        var userMultiplierCell1 = new UserElementCell();
+        userMultiplierCell1.ElementCell = multiplierCell1;
+        userMultiplierCell1.DecimalValue = 5;
+        multiplierCell1.UserElementCellSet = [userMultiplierCell1];
+
+        // TODO Actually there is 25 amount in the pool and this item should get them all but because there is no other item,
+        // (probably) aggressiveRating calculation fails and it gets 0 amount from the pool.
+        // Fix it later / SH - 04 Aug. '15
+        expect(element.totalIncome()).toBe(275);
+
+        // Case 3: Add the second item
+        var item2 = new ElementItem();
+        item2.Element = element;
+        element.ElementItemSet.push(item2);
+
+        var directIncomeCell2 = new ElementCell();
+        directIncomeCell2.ElementField = directIncomeField;
+        directIncomeCell2.ElementItem = item2;
+        directIncomeCell2.NumericValue = 150;
+        directIncomeField.ElementCellSet.push(directIncomeCell2);
+        item2.ElementCellSet = [directIncomeCell2];
+
+        var multiplierCell2 = new ElementCell();
+        multiplierCell2.ElementField = multiplierField;
+        multiplierCell2.ElementItem = item2;
+        multiplierField.ElementCellSet = [multiplierCell2];
+        item2.ElementCellSet.push(multiplierCell2);
+
+        var userMultiplierCell2 = new UserElementCell();
+        userMultiplierCell2.ElementCell = multiplierCell2;
+        userMultiplierCell2.DecimalValue = 15;
+        multiplierCell2.UserElementCellSet = [userMultiplierCell2];
+
+        // TODO Actually there is 250 amount in the pool and this item should get them all but because there is no other item,
+        // (probably) aggressiveRating calculation fails and it gets 0 amount from the pool.
+        // Fix it later / SH - 04 Aug. '15
+        expect(element.totalIncome()).toBe(2750);
+
+        // TODO Update / remove
+
+    });
+
+    it('totalIncomeAverage', function () {
+
+        // Case 1: Initial
+        var resourcePool = new ResourcePool();
+
+        var element = new Element();
+        element.ResourcePool = resourcePool;
+        resourcePool.ElementSet = [element];
+        resourcePool.MainElement = element;
+
+        expect(element.totalIncomeAverage()).toBe(0);
+
+        // Case 2: Add the fields, first item and the cell
+        var item1 = new ElementItem();
+        item1.Element = element;
+        element.ElementItemSet = [item1];
+
+        // DirectIncome field
+        var directIncomeField = new ElementField();
+        directIncomeField.Element = element;
+        directIncomeField.ElementFieldType = 11;
+        element.ElementFieldSet = [directIncomeField];
+
+        var multiplierField = new ElementField();
+        multiplierField.Element = element;
+        multiplierField.ElementFieldType = 12;
+        element.ElementFieldSet.push(multiplierField);
+
+        // DirectIncome cell
+        var directIncomeCell = new ElementCell();
+        directIncomeCell.ElementField = directIncomeField;
+        directIncomeCell.ElementItem = item1;
+        directIncomeCell.NumericValue = 50;
+        directIncomeField.ElementCellSet = [directIncomeCell];
+        item1.ElementCellSet = [directIncomeCell];
+
+        var multiplierCell1 = new ElementCell();
+        multiplierCell1.ElementField = multiplierField;
+        multiplierCell1.ElementItem = item1;
+        multiplierField.ElementCellSet = [multiplierCell1];
+        item1.ElementCellSet.push(multiplierCell1);
+
+        var userMultiplierCell1 = new UserElementCell();
+        userMultiplierCell1.ElementCell = multiplierCell1;
+        userMultiplierCell1.DecimalValue = 5;
+        multiplierCell1.UserElementCellSet = [userMultiplierCell1];
+
+        // TODO Actually there is 25 amount in the pool and this item should get them all but because there is no other item,
+        // (probably) aggressiveRating calculation fails and it gets 0 amount from the pool.
+        // Fix it later / SH - 04 Aug. '15
+        expect(element.totalIncomeAverage()).toBe(275);
+
+        // Case 3: Add the second item
+        var item2 = new ElementItem();
+        item2.Element = element;
+        element.ElementItemSet.push(item2);
+
+        var directIncomeCell2 = new ElementCell();
+        directIncomeCell2.ElementField = directIncomeField;
+        directIncomeCell2.ElementItem = item2;
+        directIncomeCell2.NumericValue = 150;
+        directIncomeField.ElementCellSet.push(directIncomeCell2);
+        item2.ElementCellSet = [directIncomeCell2];
+
+        var multiplierCell2 = new ElementCell();
+        multiplierCell2.ElementField = multiplierField;
+        multiplierCell2.ElementItem = item2;
+        multiplierField.ElementCellSet = [multiplierCell2];
+        item2.ElementCellSet.push(multiplierCell2);
+
+        var userMultiplierCell2 = new UserElementCell();
+        userMultiplierCell2.ElementCell = multiplierCell2;
+        userMultiplierCell2.DecimalValue = 15;
+        multiplierCell2.UserElementCellSet = [userMultiplierCell2];
+
+        // TODO Actually there is 250 amount in the pool and this item should get them all but because there is no other item,
+        // (probably) aggressiveRating calculation fails and it gets 0 amount from the pool.
+        // Fix it later / SH - 04 Aug. '15
+        expect(element.totalIncomeAverage()).toBe(2750 / 2);
+
+        // TODO Update / remove
+
+    });
 
 });
