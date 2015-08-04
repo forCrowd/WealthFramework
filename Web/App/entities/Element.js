@@ -39,7 +39,7 @@
             self.parent = function () {
 
                 // Cached value
-                // TODO In case of add / remove fields?
+                // TODO In case of add / remove elements?
                 if (self.backingFields._parent === null) {
                     if (self.ParentFieldSet.length > 0) {
                         self.backingFields._parent = self.ParentFieldSet[0].Element;
@@ -60,6 +60,8 @@
                         element = element.parent();
                     }
                 }
+
+                // TODO At the moment it's only upwards, later include children?
 
                 return self.backingFields._familyTree;
             }
