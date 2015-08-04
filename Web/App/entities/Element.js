@@ -22,10 +22,10 @@
             // Local variables
             self.backingFields = {
                 _parent: null,
-                _familyTree: []
+                _familyTree: [],
+                _elementFieldIndexSet: null
             }
 
-            var _elementFieldIndexSet = null;
             var _directIncomeField = null;
             var _multiplierField = null;
 
@@ -67,14 +67,14 @@
             }
 
             self.elementFieldIndexSet = function () {
-                if (_elementFieldIndexSet === null) {
+                if (self.backingFields._elementFieldIndexSet === null) {
                     self.setElementFieldIndexSet();
                 }
-                return _elementFieldIndexSet;
+                return self.backingFields._elementFieldIndexSet;
             }
 
             self.setElementFieldIndexSet = function () {
-                _elementFieldIndexSet = getElementFieldIndexSet(self);
+                self.backingFields._elementFieldIndexSet = getElementFieldIndexSet(self);
             }
 
             function getElementFieldIndexSet(element) {
@@ -101,12 +101,27 @@
                 return indexSet;
             }
 
+            self.indexRating = function () {
+
+                // TODO Check totalIncome notes
+
+                var indexSet = self.elementFieldIndexSet();
+
+                var value = 0;
+                for (var i = 0; i < indexSet.length; i++) {
+                    value += indexSet[i].indexRating();
+                }
+
+                return value;
+            }
+
             self.directIncomeField = function () {
 
                 // Cached value
                 // TODO In case of add / remove fields?
-                if (_directIncomeField)
+                if (_directIncomeField !== null) {
                     return _directIncomeField;
+                }
 
                 for (var i = 0; i < self.ElementFieldSet.length; i++) {
                     var field = self.ElementFieldSet[i];
@@ -117,24 +132,6 @@
                 }
 
                 return _directIncomeField;
-            }
-
-            self.multiplierField = function () {
-
-                // Cached value
-                // TODO In case of add / remove field?
-                if (_multiplierField)
-                    return _multiplierField;
-
-                for (var i = 0; i < self.ElementFieldSet.length; i++) {
-                    var field = self.ElementFieldSet[i];
-                    if (field.ElementFieldType === 12) {
-                        _multiplierField = field;
-                        break;
-                    }
-                }
-
-                return _multiplierField;
             }
 
             self.directIncome = function () {
@@ -150,6 +147,25 @@
                 return value;
             }
 
+            self.multiplierField = function () {
+
+                // Cached value
+                // TODO In case of add / remove field?
+                if (_multiplierField !== null) {
+                    return _multiplierField;
+                }
+
+                for (var i = 0; i < self.ElementFieldSet.length; i++) {
+                    var field = self.ElementFieldSet[i];
+                    if (field.ElementFieldType === 12) {
+                        _multiplierField = field;
+                        break;
+                    }
+                }
+
+                return _multiplierField;
+            }
+
             self.multiplier = function () {
 
                 // TODO Check totalIncome notes
@@ -158,20 +174,6 @@
                 for (var i = 0; i < self.ElementItemSet.length; i++) {
                     var item = self.ElementItemSet[i];
                     value += item.multiplier();
-                }
-
-                return value;
-            }
-
-            self.indexRating = function () {
-
-                // TODO Check totalIncome notes
-
-                var indexSet = self.elementFieldIndexSet();
-
-                var value = 0;
-                for (var i = 0; i < indexSet.length; i++) {
-                    value += indexSet[i].indexRating();
                 }
 
                 return value;
