@@ -697,6 +697,7 @@ describe('ng-tests Element', function () {
         var directIncomeField = new ElementField();
         directIncomeField.Element = element;
         directIncomeField.ElementFieldType = 11;
+        directIncomeField.IndexEnabled = true;
         element.ElementFieldSet = [directIncomeField];
 
         var multiplierField = new ElementField();
@@ -723,9 +724,6 @@ describe('ng-tests Element', function () {
         userMultiplierCell1.DecimalValue = 5;
         multiplierCell1.UserElementCellSet = [userMultiplierCell1];
 
-        // TODO Actually there is 25 amount in the pool and this item should get them all but because there is no other item,
-        // (probably) aggressiveRating calculation fails and it gets 0 amount from the pool.
-        // Fix it later / SH - 04 Aug. '15
         expect(element.totalResourcePoolIncome()).toBe(25);
 
         // Case 3: Add the second item
@@ -751,9 +749,6 @@ describe('ng-tests Element', function () {
         userMultiplierCell2.DecimalValue = 15;
         multiplierCell2.UserElementCellSet = [userMultiplierCell2];
 
-        // TODO Actually there is 250 amount in the pool and this item should get them all but because there is no other item,
-        // (probably) aggressiveRating calculation fails and it gets 0 amount from the pool.
-        // Fix it later / SH - 04 Aug. '15
         expect(element.totalResourcePoolIncome()).toBe(250);
 
         // TODO Update / remove
@@ -781,6 +776,7 @@ describe('ng-tests Element', function () {
         var directIncomeField = new ElementField();
         directIncomeField.Element = element;
         directIncomeField.ElementFieldType = 11;
+        directIncomeField.IndexEnabled = true;
         element.ElementFieldSet = [directIncomeField];
 
         var multiplierField = new ElementField();
@@ -807,9 +803,6 @@ describe('ng-tests Element', function () {
         userMultiplierCell1.DecimalValue = 5;
         multiplierCell1.UserElementCellSet = [userMultiplierCell1];
 
-        // TODO Actually there is 25 amount in the pool and this item should get them all but because there is no other item,
-        // (probably) aggressiveRating calculation fails and it gets 0 amount from the pool.
-        // Fix it later / SH - 04 Aug. '15
         expect(element.totalIncome()).toBe(275);
 
         // Case 3: Add the second item
@@ -835,93 +828,6 @@ describe('ng-tests Element', function () {
         userMultiplierCell2.DecimalValue = 15;
         multiplierCell2.UserElementCellSet = [userMultiplierCell2];
 
-        // TODO Actually there is 250 amount in the pool and this item should get them all but because there is no other item,
-        // (probably) aggressiveRating calculation fails and it gets 0 amount from the pool.
-        // Fix it later / SH - 04 Aug. '15
-        expect(element.totalIncome()).toBe(2750);
-
-        // TODO Update / remove
-
-    });
-
-    it('totalIncome', function () {
-
-        // Case 1: Initial
-        var resourcePool = new ResourcePool();
-
-        var element = new Element();
-        element.ResourcePool = resourcePool;
-        resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
-
-        expect(element.totalIncome()).toBe(0);
-
-        // Case 2: Add the fields, first item and the cell
-        var item1 = new ElementItem();
-        item1.Element = element;
-        element.ElementItemSet = [item1];
-
-        // DirectIncome field
-        var directIncomeField = new ElementField();
-        directIncomeField.Element = element;
-        directIncomeField.ElementFieldType = 11;
-        element.ElementFieldSet = [directIncomeField];
-
-        var multiplierField = new ElementField();
-        multiplierField.Element = element;
-        multiplierField.ElementFieldType = 12;
-        element.ElementFieldSet.push(multiplierField);
-
-        // DirectIncome cell
-        var directIncomeCell = new ElementCell();
-        directIncomeCell.ElementField = directIncomeField;
-        directIncomeCell.ElementItem = item1;
-        directIncomeCell.NumericValue = 50;
-        directIncomeField.ElementCellSet = [directIncomeCell];
-        item1.ElementCellSet = [directIncomeCell];
-
-        var multiplierCell1 = new ElementCell();
-        multiplierCell1.ElementField = multiplierField;
-        multiplierCell1.ElementItem = item1;
-        multiplierField.ElementCellSet = [multiplierCell1];
-        item1.ElementCellSet.push(multiplierCell1);
-
-        var userMultiplierCell1 = new UserElementCell();
-        userMultiplierCell1.ElementCell = multiplierCell1;
-        userMultiplierCell1.DecimalValue = 5;
-        multiplierCell1.UserElementCellSet = [userMultiplierCell1];
-
-        // TODO Actually there is 25 amount in the pool and this item should get them all but because there is no other item,
-        // (probably) aggressiveRating calculation fails and it gets 0 amount from the pool.
-        // Fix it later / SH - 04 Aug. '15
-        expect(element.totalIncome()).toBe(275);
-
-        // Case 3: Add the second item
-        var item2 = new ElementItem();
-        item2.Element = element;
-        element.ElementItemSet.push(item2);
-
-        var directIncomeCell2 = new ElementCell();
-        directIncomeCell2.ElementField = directIncomeField;
-        directIncomeCell2.ElementItem = item2;
-        directIncomeCell2.NumericValue = 150;
-        directIncomeField.ElementCellSet.push(directIncomeCell2);
-        item2.ElementCellSet = [directIncomeCell2];
-
-        var multiplierCell2 = new ElementCell();
-        multiplierCell2.ElementField = multiplierField;
-        multiplierCell2.ElementItem = item2;
-        multiplierField.ElementCellSet = [multiplierCell2];
-        item2.ElementCellSet.push(multiplierCell2);
-
-        var userMultiplierCell2 = new UserElementCell();
-        userMultiplierCell2.ElementCell = multiplierCell2;
-        userMultiplierCell2.DecimalValue = 15;
-        multiplierCell2.UserElementCellSet = [userMultiplierCell2];
-
-        // TODO Actually there is 250 amount in the pool and this item should get them all but because there is no other item,
-        // (probably) aggressiveRating calculation fails and it gets 0 amount from the pool.
-        // Fix it later / SH - 04 Aug. '15
         expect(element.totalIncome()).toBe(2750);
 
         // TODO Update / remove
@@ -949,6 +855,7 @@ describe('ng-tests Element', function () {
         var directIncomeField = new ElementField();
         directIncomeField.Element = element;
         directIncomeField.ElementFieldType = 11;
+        directIncomeField.IndexEnabled = true;
         element.ElementFieldSet = [directIncomeField];
 
         var multiplierField = new ElementField();
@@ -975,9 +882,6 @@ describe('ng-tests Element', function () {
         userMultiplierCell1.DecimalValue = 5;
         multiplierCell1.UserElementCellSet = [userMultiplierCell1];
 
-        // TODO Actually there is 25 amount in the pool and this item should get them all but because there is no other item,
-        // (probably) aggressiveRating calculation fails and it gets 0 amount from the pool.
-        // Fix it later / SH - 04 Aug. '15
         expect(element.totalIncomeAverage()).toBe(275);
 
         // Case 3: Add the second item
@@ -1003,9 +907,6 @@ describe('ng-tests Element', function () {
         userMultiplierCell2.DecimalValue = 15;
         multiplierCell2.UserElementCellSet = [userMultiplierCell2];
 
-        // TODO Actually there is 250 amount in the pool and this item should get them all but because there is no other item,
-        // (probably) aggressiveRating calculation fails and it gets 0 amount from the pool.
-        // Fix it later / SH - 04 Aug. '15
         expect(element.totalIncomeAverage()).toBe(2750 / 2);
 
         // TODO Update / remove
