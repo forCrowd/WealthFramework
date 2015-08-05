@@ -38,6 +38,11 @@ function registerPrototypes($injector) {
 
     ElementField = $injector.get('ElementField');
     ElementField.prototype.UseFixedValue = false;
+    ElementField.prototype.IndexEnabled = false;
+    ElementField.prototype.IndexRatingSortType = 1;
+    ElementField.prototype.SortOrder = 0;
+    ElementField.prototype.IndexRating = 0;
+    ElementField.prototype.IndexRatingCount = 0;
     ElementField.prototype.Element = null;
     ElementField.prototype.ElementCellSet = []; // *
     ElementField.prototype.UserElementFieldSet = []; // *

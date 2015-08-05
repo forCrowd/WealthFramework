@@ -451,9 +451,6 @@ describe('ng-tests ElementItem', function () {
         multiplierCell.UserElementCellSet = [userCell];
 
         // Assert
-        // TODO Actually there is 15 amount in the pool and this item should get them all but because there is no other item,
-        // (probably) aggressiveRating calculation fails and it gets 0 amount from the pool.
-        // Fix it later / SH - 24 Jul. '15
         expect(item1.totalResourcePoolIncome()).toBe(15);
 
     });
@@ -512,9 +509,6 @@ describe('ng-tests ElementItem', function () {
         multiplierCell.UserElementCellSet = [userCell];
 
         // Assert
-        // TODO Actually there is 15 amount in the pool and this item should get them all but because there is no other item,
-        // (probably) aggressiveRating calculation fails and it gets 0 amount from the pool.
-        // Fix it later / SH - 24 Jul. '15
         expect(item1.totalIncome()).toBe(165);
 
     });
@@ -574,6 +568,8 @@ describe('ng-tests ElementItem', function () {
 
         // Assert
         expect(item1.incomeStatus()).toBe('average');
+
+        // TODO Try this with a second item?
 
     });
 

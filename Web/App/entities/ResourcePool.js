@@ -196,6 +196,8 @@
                 }
             }
 
+            // TODO Since this is a fixed value based on ResourcePoolRateTotal & current user's rate,
+            // it could be calculated on server, check it later again / SH - 03 Aug. '15
             self.otherUsersResourcePoolRateCount = function () {
 
                 // Set other users' value on the initial call
@@ -206,8 +208,6 @@
                 return self.backingFields._otherUsersResourcePoolRateCount;
             }
 
-            // TODO Since this is a fixed value based on ResourcePoolRateTotal & current user's rate,
-            // it could be calculated on server, check it later again / SH - 03 Aug. '15
             self.setOtherUsersResourcePoolRateCount = function () {
                 self.backingFields._otherUsersResourcePoolRateCount = self.ResourcePoolRateCount;
 
@@ -230,7 +230,7 @@
             }
 
             self.resourcePoolRateAverage = function () {
-                return self.resourcePoolRateTotal() === 0
+                return self.resourcePoolRateCount() === 0
                     ? 0
                     : self.resourcePoolRateTotal() / self.resourcePoolRateCount();
             }

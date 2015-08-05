@@ -24,9 +24,8 @@
             var _currentUserIndexRating = null;
 
             // Other users' values: Keeps the values excluding current user's
-            self._otherUsersIndexRating = null;
-            self._otherUsersIndexRatingCount = null;
             self._otherUsersIndexRatingTotal = null;
+            self._otherUsersIndexRatingCount = null;
 
             // Events
             $rootScope.$on('elementFieldIndexRatingUpdated', function (event, args) {
@@ -39,8 +38,9 @@
             self.numericValueMultiplied = function () {
 
                 // Validate
-                if (self.ElementCellSet.length === 0)
+                if (self.ElementCellSet.length === 0) {
                     return 0; // ?
+                }
 
                 var value = 0;
                 for (var i = 0; i < self.ElementCellSet.length; i++) {
@@ -162,72 +162,73 @@
             self.currentUserIndexRating = function () {
 
                 if (_currentUserIndexRating === null) {
-                    _currentUserIndexRating = self.userElementField() !== null
-                        ? self.userElementField().Rating
-                        : 50; // Default value?
+                    self.setCurrentUserIndexRating();
                 }
 
                 return _currentUserIndexRating;
             }
 
-            self.otherUsersIndexRating = function () {
-
-                // Set other users' value on the initial call
-                if (self._otherUsersIndexRating === null) {
-
-                    // TODO IndexRating property could directly return 0?
-                    if (self.IndexRating === null) {
-                        self._otherUsersIndexRating = 0;
-                    } else {
-                        // If current user already has a rate, exclude
-                        if (self.userElementField() !== null) {
-                            var ratingExcluded = self.IndexRating - self.userElementField().IndexRating;
-                            var countExcluded = self.IndexRatingCount - 1;
-                            self._otherUsersIndexRating = ratingExcluded / countExcluded;
-                        } else {
-                            // Otherwise, it's only IndexRating / IndexRatingCount
-                            self._otherUsersIndexRating = self.IndexRating / self.IndexRatingCount;
-                        }
-                    }
-                }
-
-                return self._otherUsersIndexRating;
+            self.setCurrentUserIndexRating = function () {
+                _currentUserIndexRating = self.userElementField() !== null
+                    ? self.userElementField().Rating
+                    : 50; // Default value?
             }
 
-            self.otherUsersIndexRatingCount = function () {
-
-                // Set other users' value on the initial call
-                if (self._otherUsersIndexRatingCount === null) {
-                    self._otherUsersIndexRatingCount = self.IndexRatingCount;
-
-                    // Decrease by 1 current user's rating
-                    if (self.userElementField() !== null) {
-                        self._otherUsersIndexRatingCount--;
-                    }
-                }
-
-                return self._otherUsersIndexRatingCount;
-            }
-
+            // TODO Since this is a fixed value based on ResourcePoolRateTotal & current user's rate,
+            // it could be calculated on server, check it later again / SH - 03 Aug. '15
             self.otherUsersIndexRatingTotal = function () {
 
                 // Set other users' value on the initial call
                 if (self._otherUsersIndexRatingTotal === null) {
-                    self._otherUsersIndexRatingTotal = self.otherUsersIndexRating() * self.otherUsersIndexRatingCount();
+                    self.setOtherUsersIndexRatingTotal();
                 }
 
                 return self._otherUsersIndexRatingTotal;
             }
 
-            self.indexRatingAverage = function () {
-                var indexRating = self.otherUsersIndexRatingTotal() + self.currentUserIndexRating();
-                return indexRating / self.indexRatingCount();
+            self.setOtherUsersIndexRatingTotal = function () {
+
+                self._otherUsersIndexRatingTotal = self.IndexRating;
+
+                // Exclude current user's
+                if (self.userElementField() !== null) {
+                    self._otherUsersIndexRatingTotal -= self.userElementField().Rating;
+                }
+            }
+
+            // TODO Since this is a fixed value based on ResourcePoolRateTotal & current user's rate,
+            // it could be calculated on server, check it later again / SH - 03 Aug. '15
+            self.otherUsersIndexRatingCount = function () {
+
+                // Set other users' value on the initial call
+                if (self._otherUsersIndexRatingCount === null) {
+                    self.setOtherUsersIndexRatingCount();
+                }
+
+                return self._otherUsersIndexRatingCount;
+            }
+
+            self.setOtherUsersIndexRatingCount = function () {
+                self._otherUsersIndexRatingCount = self.IndexRatingCount;
+
+                // Exclude current user's
+                if (self.userElementField() !== null) {
+                    self._otherUsersIndexRatingCount--;
+                }
+            }
+
+            self.indexRatingTotal = function () {
+                return self.otherUsersIndexRatingTotal() + self.currentUserIndexRating();
             }
 
             self.indexRatingCount = function () {
-                // There is always default value, increase count by 1
-                // TODO How about the case that if there is only one field, UI doesn't make the only field rateable?
                 return self.otherUsersIndexRatingCount() + 1;
+            }
+
+            self.indexRatingAverage = function () {
+                return self.indexRatingCount() === 0
+                    ? 0
+                    : self.indexRatingTotal() / self.indexRatingCount();
             }
 
             self.indexRating = function () {
@@ -253,13 +254,11 @@
                 if (elementIndexRating === 0)
                     return 0;
 
-                var value = self.indexRating() / elementIndexRating;
-                return value;
+                return self.indexRating() / elementIndexRating;
             }
 
             self.indexIncome = function () {
-                var value = self.Element.totalResourcePoolAmount() * self.indexRatingPercentage();
-                return value;
+                return self.Element.totalResourcePoolAmount() * self.indexRatingPercentage();
             }
         }
     }
