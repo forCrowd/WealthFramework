@@ -25,9 +25,8 @@
             self._userCell = null;
 
             // Other users' values: Keeps the values excluding current user's
-            self._otherUsersNumericValue = null;
-            self._otherUsersNumericValueCount = null;
             self._otherUsersNumericValueTotal = null;
+            self._otherUsersNumericValueCount = null;
 
             // Events
             $rootScope.$on('elementCellNumericValueUpdated', function (event, args) {
@@ -54,95 +53,99 @@
             self.currentUserNumericValue = function () {
 
                 if (_currentUserNumericValue === null) {
-
-                    switch (self.ElementField.ElementFieldType) {
-                        case 2: { _currentUserNumericValue = self.userCell() !== null ? self.userCell().BooleanValue : 0; break; }
-                        case 3: { _currentUserNumericValue = self.userCell() !== null ? self.userCell().IntegerValue : 0; break; }
-                        case 4: { _currentUserNumericValue = self.userCell() !== null ? self.userCell().DecimalValue : 50; /* Default value? */ break; }
-                            // TODO 5 (DateTime?)
-                        case 11: { _currentUserNumericValue = self.NumericValue !== null ? self.NumericValue : 0; break; } // DirectIncome: No need to try user's cell, always return all users', which will be CMRP owner's value
-                            // case 12: { value = userCell !== null ? userCell.DecimalValue : 0; break; }
-                        default: { throw 'Not supported ' + self.ElementField.ElementFieldType; }
-                    }
-
+                    self.setCurrentUserNumericValue();
                 }
 
                 return _currentUserNumericValue;
             }
 
-            self.otherUsersNumericValue = function () {
+            self.setCurrentUserNumericValue = function () {
 
-                // Set other users' value on the initial call
-                if (self._otherUsersNumericValue === null) {
-
-                    // TODO NumericValue property directly return 0?
-                    if (self.NumericValue === null) {
-                        self._otherUsersNumericValue = 0;
-                    } else {
-                        // If current user already has a rate, exclude
-                        if (self.userCell() !== null) {
-
-                            var userValue = 0;
-                            switch (self.ElementField.ElementFieldType) {
-                                // TODO Check bool to decimal conversion?
-                                case 2: { userValue = self.userCell().BooleanValue; break; }
-                                case 3: { userValue = self.userCell().IntegerValue; break; }
-                                case 4: { userValue = self.userCell().DecimalValue; break; }
-                                    // TODO 5 - DateTime?
-                                case 11: { userValue = self.userCell().DecimalValue; break; }
-                                    // TODO 12 - Multiplier?
-                                default: {
-                                    throw 'Not supported ' + self.ElementField.ElementFieldType;
-                                }
-                            }
-
-                            var ratingExcluded = self.NumericValue - userValue;
-                            var countExcluded = self.NumericValueCount - 1;
-                            self._otherUsersNumericValue = ratingExcluded / countExcluded;
-                        } else {
-                            // Otherwise, it's only NumericValue / NumericValueCount
-                            self._otherUsersNumericValue = self.NumericValue / self.NumericValueCount;
-                        }
-                    }
+                switch (self.ElementField.ElementFieldType) {
+                    case 2: { _currentUserNumericValue = self.userCell() !== null ? self.userCell().BooleanValue : 0; break; }
+                    case 3: { _currentUserNumericValue = self.userCell() !== null ? self.userCell().IntegerValue : 0; break; }
+                    case 4: { _currentUserNumericValue = self.userCell() !== null ? self.userCell().DecimalValue : 50; /* Default value? */ break; }
+                        // TODO 5 (DateTime?)
+                    case 11: { _currentUserNumericValue = self.NumericValue !== null ? self.NumericValue : 0; break; } // DirectIncome: No need to try user's cell, always return all users', which will be CMRP owner's value
+                        // case 12: { value = userCell !== null ? userCell.DecimalValue : 0; break; }
+                    default: { throw 'Not supported ' + self.ElementField.ElementFieldType; }
                 }
-
-                return self._otherUsersNumericValue;
             }
 
-            self.otherUsersNumericValueCount = function () {
-
-                // Set other users' value on the initial call
-                if (self._otherUsersNumericValueCount === null) {
-                    self._otherUsersNumericValueCount = self.NumericValueCount;
-
-                    // Decrease by 1 current user's rating
-                    if (self.userCell() !== null) {
-                        self._otherUsersNumericValueCount--;
-                    }
-                }
-
-                return self._otherUsersNumericValueCount;
-            }
-
+            // TODO Since this is a fixed value based on NumericValue & current user's rate,
+            // it could be calculated on server, check it later again / SH - 03 Aug. '15
             self.otherUsersNumericValueTotal = function () {
 
                 // Set other users' value on the initial call
                 if (self._otherUsersNumericValueTotal === null) {
-                    self._otherUsersNumericValueTotal = self.otherUsersNumericValue() * self.otherUsersNumericValueCount();
+                    self.setOtherUsersNumericValueTotal();
                 }
 
                 return self._otherUsersNumericValueTotal;
             }
 
-            self.numericValueAverage = function () {
-                var numericValue = self.otherUsersNumericValueTotal() + self.currentUserNumericValue();
-                return numericValue / self.numericValueCount();
+            self.setOtherUsersNumericValueTotal = function () {
+
+                self._otherUsersNumericValueTotal = self.NumericValue;
+
+                // Exclude current user's
+                if (self.userCell() !== null) {
+
+                    var userValue = 0;
+                    switch (self.ElementField.ElementFieldType) {
+                        // TODO Check bool to decimal conversion?
+                        case 2: { userValue = self.userCell().BooleanValue; break; }
+                        case 3: { userValue = self.userCell().IntegerValue; break; }
+                        case 4: { userValue = self.userCell().DecimalValue; break; }
+                            // TODO 5 - DateTime?
+                        case 11: { userValue = self.userCell().DecimalValue; break; }
+                            // TODO 12 - Multiplier?
+                        default: {
+                            throw 'Not supported ' + self.ElementField.ElementFieldType;
+                        }
+                    }
+
+                    self._otherUsersNumericValueTotal -= userValue;
+                }
+            }
+
+            // TODO Since this is a fixed value based on NumericValueCount & current user's rate,
+            // it could be calculated on server, check it later again / SH - 03 Aug. '15
+            self.otherUsersNumericValueCount = function () {
+
+                // Set other users' value on the initial call
+                if (self._otherUsersNumericValueCount === null) {
+                    self.setOtherUsersNumericValueCount();
+                }
+
+                return self._otherUsersNumericValueCount;
+            }
+
+            self.setOtherUsersNumericValueCount = function () {
+                self._otherUsersNumericValueCount = self.NumericValueCount;
+
+                // Exclude current user's
+                if (self.userCell() !== null) {
+                    self._otherUsersNumericValueCount--;
+                }
+            }
+
+            self.numericValueTotal = function () {
+                return self.ElementField.UseFixedValue
+                    ? self.otherUsersNumericValueTotal()
+                    : self.otherUsersNumericValueTotal() + self.currentUserNumericValue();
             }
 
             self.numericValueCount = function () {
                 return self.ElementField.UseFixedValue
                     ? self.otherUsersNumericValueCount()
                     : self.otherUsersNumericValueCount() + 1; // There is always default value, increase count by 1
+            }
+
+            self.numericValueAverage = function () {
+                return self.numericValueCount() === 0
+                    ? 0
+                    : self.numericValueTotal() / self.numericValueCount();
             }
 
             self.numericValue = function () {

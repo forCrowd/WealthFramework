@@ -196,7 +196,7 @@
                 }
             }
 
-            // TODO Since this is a fixed value based on ResourcePoolRateTotal & current user's rate,
+            // TODO Since this is a fixed value based on ResourcePoolRateCount & current user's rate,
             // it could be calculated on server, check it later again / SH - 03 Aug. '15
             self.otherUsersResourcePoolRateCount = function () {
 

@@ -174,7 +174,7 @@
                     : 50; // Default value?
             }
 
-            // TODO Since this is a fixed value based on ResourcePoolRateTotal & current user's rate,
+            // TODO Since this is a fixed value based on IndexRating & current user's rate,
             // it could be calculated on server, check it later again / SH - 03 Aug. '15
             self.otherUsersIndexRatingTotal = function () {
 
@@ -196,7 +196,7 @@
                 }
             }
 
-            // TODO Since this is a fixed value based on ResourcePoolRateTotal & current user's rate,
+            // TODO Since this is a fixed value based on IndexRatingCount & current user's rate,
             // it could be calculated on server, check it later again / SH - 03 Aug. '15
             self.otherUsersIndexRatingCount = function () {
 
