@@ -20,14 +20,16 @@
             var self = this;
 
             // Local variables
-            var _elementCellIndexSet = [];
-            var _directIncomeCell = null;
-            var _multiplier = null;
+            self.backingFields = {
+                _elementCellIndexSet: [],
+                _directIncomeCell: null,
+                _multiplier: null
+            }
 
             // Events
             $rootScope.$on('elementMultiplierUpdated', function (event, args) {
                 if (args.elementCell === self.multiplierCell()) {
-                    _multiplier = args.value;
+                    self.backingFields._multiplier = args.value;
 
                     // TODO Raise an event and handle this?
                     // Or is updating the related entities manually a better approach?
@@ -38,19 +40,7 @@
                 }
             });
 
-            self.elementCellIndexSet = function () {
-
-                // Cached value
-                // TODO In case of add / remove fields?
-                if (_elementCellIndexSet.length > 0) {
-                    return _elementCellIndexSet;
-                }
-
-                _elementCellIndexSet = getElementCellIndexSet(self);
-
-                return _elementCellIndexSet;
-            }
-
+            // Private functions
             function getElementCellIndexSet(elementItem) {
 
                 var indexSet = [];
@@ -74,23 +64,37 @@
                 return indexSet;
             }
 
+            // Public functions
+            self.elementCellIndexSet = function () {
+
+                // Cached value
+                // TODO In case of add / remove fields?
+                if (self.backingFields._elementCellIndexSet.length > 0) {
+                    return self.backingFields._elementCellIndexSet;
+                }
+
+                self.backingFields._elementCellIndexSet = getElementCellIndexSet(self);
+
+                return self.backingFields._elementCellIndexSet;
+            }
+
             self.directIncomeCell = function () {
 
                 // Cached value
                 // TODO In case of add / remove field?
-                if (_directIncomeCell !== null) {
-                    return _directIncomeCell;
+                if (self.backingFields._directIncomeCell !== null) {
+                    return self.backingFields._directIncomeCell;
                 }
 
                 for (var i = 0; i < self.ElementCellSet.length; i++) {
                     var elementCell = self.ElementCellSet[i];
                     if (elementCell.ElementField.ElementFieldType === 11) {
-                        _directIncomeCell = elementCell;
+                        self.backingFields._directIncomeCell = elementCell;
                         break;
                     }
                 }
 
-                return _directIncomeCell;
+                return self.backingFields._directIncomeCell;
             }
 
             self.directIncome = function () {
@@ -122,11 +126,11 @@
 
             self.multiplier = function () {
 
-                if (_multiplier === null) {
+                if (self.backingFields._multiplier === null) {
                     self.setMultiplier();
                 }
 
-                return _multiplier;
+                return self.backingFields._multiplier;
             }
 
             self.setMultiplier = function() {
@@ -136,15 +140,15 @@
                 // If there is no multiplier field defined on this element, return 1, so it can return calculate the income correctly
                 // TODO Cover 'add new multiplier field' case as well!
                 if (multiplierCell === null) {
-                    _multiplier = 1;
+                    self.backingFields._multiplier = 1;
                 } else {
 
                     // If there is a multiplier field on the element but user is not set any value, return 0 as the default value
                     if (multiplierCell.userCell() === null
                         || multiplierCell.userCell().DecimalValue === null) {
-                        _multiplier = 0;
+                        self.backingFields._multiplier = 0;
                     } else { // Else, user's
-                        _multiplier = multiplierCell.userCell().DecimalValue;
+                        self.backingFields._multiplier = multiplierCell.userCell().DecimalValue;
                     }
                 }
             }

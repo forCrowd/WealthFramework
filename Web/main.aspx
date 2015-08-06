@@ -140,8 +140,8 @@
     <script src="/App/entities/Element.js?v=0.35"></script>
     <script src="/App/entities/ElementCell.js?v=0.35"></script>
     <script src="/App/entities/ElementField.js?v=0.35"></script>
-    <script src="/App/entities/ElementItem.js?v=0.34"></script>
-    <script src="/App/entities/UserElementCell.js?v=0.32"></script>
+    <script src="/App/entities/ElementItem.js?v=0.35"></script>
+    <script src="/App/entities/UserElementCell.js?v=0.35"></script>
 
     <!-- breezeJS -->
     <script src="/App/entityManagerFactory.js?v=0.27"></script>

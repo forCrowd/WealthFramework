@@ -23,11 +23,38 @@
             self.backingFields = {
                 _parent: null,
                 _familyTree: [],
-                _elementFieldIndexSet: null
+                _elementFieldIndexSet: null,
+                _directIncomeField: null,
+                _multiplierField: null
             }
 
-            var _directIncomeField = null;
-            var _multiplierField = null;
+            // Private functions
+
+            function getElementFieldIndexSet(element) {
+
+                var indexSet = [];
+
+                // Validate
+                for (var i = 0; i < element.ElementFieldSet.length; i++) {
+                    var field = element.ElementFieldSet.sort(function (a, b) { return a.SortOrder - b.SortOrder; })[i];
+
+                    if (field.IndexEnabled) {
+                        indexSet.push(field);
+                    }
+
+                    if (field.ElementFieldType === 6) {
+                        var childIndexSet = getElementFieldIndexSet(field.SelectedElement);
+
+                        for (var x = 0; x < childIndexSet.length; x++) {
+                            indexSet.push(childIndexSet[x]);
+                        }
+                    }
+                }
+
+                return indexSet;
+            }
+
+            // Public functions
 
             // UI related: Determines whether the chart & element details will use full row (col-md-4 vs col-md-12 etc.)
             // TODO Obsolete for the moment!
@@ -77,30 +104,6 @@
                 self.backingFields._elementFieldIndexSet = getElementFieldIndexSet(self);
             }
 
-            function getElementFieldIndexSet(element) {
-
-                var indexSet = [];
-
-                // Validate
-                for (var i = 0; i < element.ElementFieldSet.length; i++) {
-                    var field = element.ElementFieldSet.sort(function (a, b) { return a.SortOrder - b.SortOrder; })[i];
-
-                    if (field.IndexEnabled) {
-                        indexSet.push(field);
-                    }
-
-                    if (field.ElementFieldType === 6) {
-                        var childIndexSet = getElementFieldIndexSet(field.SelectedElement);
-
-                        for (var x = 0; x < childIndexSet.length; x++) {
-                            indexSet.push(childIndexSet[x]);
-                        }
-                    }
-                }
-
-                return indexSet;
-            }
-
             self.indexRating = function () {
 
                 // TODO Check totalIncome notes
@@ -119,19 +122,19 @@
 
                 // Cached value
                 // TODO In case of add / remove fields?
-                if (_directIncomeField !== null) {
-                    return _directIncomeField;
+                if (self.backingFields._directIncomeField !== null) {
+                    return self.backingFields._directIncomeField;
                 }
 
                 for (var i = 0; i < self.ElementFieldSet.length; i++) {
                     var field = self.ElementFieldSet[i];
                     if (field.ElementFieldType === 11) {
-                        _directIncomeField = field;
+                        self.backingFields._directIncomeField = field;
                         break;
                     }
                 }
 
-                return _directIncomeField;
+                return self.backingFields._directIncomeField;
             }
 
             self.directIncome = function () {
@@ -151,19 +154,19 @@
 
                 // Cached value
                 // TODO In case of add / remove field?
-                if (_multiplierField !== null) {
-                    return _multiplierField;
+                if (self.backingFields._multiplierField !== null) {
+                    return self.backingFields._multiplierField;
                 }
 
                 for (var i = 0; i < self.ElementFieldSet.length; i++) {
                     var field = self.ElementFieldSet[i];
                     if (field.ElementFieldType === 12) {
-                        _multiplierField = field;
+                        self.backingFields._multiplierField = field;
                         break;
                     }
                 }
 
-                return _multiplierField;
+                return self.backingFields._multiplierField;
             }
 
             self.multiplier = function () {

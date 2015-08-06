@@ -19,22 +19,31 @@
 
             var self = this;
 
-            self._userElementField = null;
-            var _indexRating = null;
-            var _currentUserIndexRating = null;
-
-            // Other users' values: Keeps the values excluding current user's
-            self._otherUsersIndexRatingTotal = null;
-            self._otherUsersIndexRatingCount = null;
+            // Local variables
+            self.backingFields = {
+                _userElementField: null,
+                _indexRating: null,
+                _currentUserIndexRating: null,
+                // Other users' values: Keeps the values excluding current user's
+                _otherUsersIndexRatingTotal: null,
+                _otherUsersIndexRatingCount: null,
+                // Aggressive rating formula prevents the organizations with the worst rating to get any income.
+                // However, in case all ratings are equal, then no one can get any income from the pool.
+                // This flag is used to determine this special case and let all organizations get a same share from the pool.
+                // See the usage in aggressiveRating() in elementCell.js
+                // TODO Usage of this field is correct?
+                _referenceRatingAllEqualFlag: true
+            }
 
             // Events
             $rootScope.$on('elementFieldIndexRatingUpdated', function (event, args) {
                 if (args.elementField === self) {
-                    _currentUserIndexRating = args.value;
+                    self.backingFields._currentUserIndexRating = args.value;
                     self.setIndexRating();
                 }
             });
 
+            // Public functions
             self.numericValueMultiplied = function () {
 
                 // Validate
@@ -66,19 +75,13 @@
                 return value;
             }
 
-            // Aggressive rating formula prevents the organizations with the worst rating to get any income.
-            // However, in case all ratings are equal, then no one can get any income from the pool.
-            // This flag is used to determine this special case and let all organizations get a same share from the pool.
-            // See the usage in aggressiveRating() in elementCell.js
-            self.referenceRatingAllEqualFlag = true;
-
             self.referenceRatingMultiplied = function () {
 
                 // Validate
                 if (self.ElementCellSet.length === 0)
                     return 0; // ?
 
-                self.referenceRatingAllEqualFlag = true;
+                self.backingFields._referenceRatingAllEqualFlag = true;
 
                 var value = null;
                 for (var i = 0; i < self.ElementCellSet.length; i++) {
@@ -104,7 +107,7 @@
                             case 1: { // LowestToHighest (Low number is better)
 
                                 if (value !== cell.numericValueMultiplied()) {
-                                    self.referenceRatingAllEqualFlag = false;
+                                    self.backingFields._referenceRatingAllEqualFlag = false;
                                 }
 
                                 if (cell.numericValueMultiplied() > value) {
@@ -116,7 +119,7 @@
                             case 2: { // HighestToLowest (High number is better)
 
                                 if (value !== cell.passiveRatingPercentage()) {
-                                    self.referenceRatingAllEqualFlag = false;
+                                    self.backingFields._referenceRatingAllEqualFlag = false;
                                 }
 
                                 if (cell.passiveRatingPercentage() > value) {
@@ -148,28 +151,28 @@
 
             self.userElementField = function () {
 
-                if (self._userElementField !== null && self._userElementField.entityAspect.entityState.isDetached()) {
-                    self._userElementField = null;
+                if (self.backingFields._userElementField !== null && self.backingFields._userElementField.entityAspect.entityState.isDetached()) {
+                    self.backingFields._userElementField = null;
                 }
 
-                if (self._userElementField === null && self.UserElementFieldSet.length !== 0) {
-                    self._userElementField = self.UserElementFieldSet[0];
+                if (self.backingFields._userElementField === null && self.UserElementFieldSet.length !== 0) {
+                    self.backingFields._userElementField = self.UserElementFieldSet[0];
                 }
 
-                return self._userElementField;
+                return self.backingFields._userElementField;
             }
 
             self.currentUserIndexRating = function () {
 
-                if (_currentUserIndexRating === null) {
+                if (self.backingFields._currentUserIndexRating === null) {
                     self.setCurrentUserIndexRating();
                 }
 
-                return _currentUserIndexRating;
+                return self.backingFields._currentUserIndexRating;
             }
 
             self.setCurrentUserIndexRating = function () {
-                _currentUserIndexRating = self.userElementField() !== null
+                self.backingFields._currentUserIndexRating = self.userElementField() !== null
                     ? self.userElementField().Rating
                     : 50; // Default value?
             }
@@ -179,20 +182,20 @@
             self.otherUsersIndexRatingTotal = function () {
 
                 // Set other users' value on the initial call
-                if (self._otherUsersIndexRatingTotal === null) {
+                if (self.backingFields._otherUsersIndexRatingTotal === null) {
                     self.setOtherUsersIndexRatingTotal();
                 }
 
-                return self._otherUsersIndexRatingTotal;
+                return self.backingFields._otherUsersIndexRatingTotal;
             }
 
             self.setOtherUsersIndexRatingTotal = function () {
 
-                self._otherUsersIndexRatingTotal = self.IndexRating;
+                self.backingFields._otherUsersIndexRatingTotal = self.IndexRating;
 
                 // Exclude current user's
                 if (self.userElementField() !== null) {
-                    self._otherUsersIndexRatingTotal -= self.userElementField().Rating;
+                    self.backingFields._otherUsersIndexRatingTotal -= self.userElementField().Rating;
                 }
             }
 
@@ -201,19 +204,19 @@
             self.otherUsersIndexRatingCount = function () {
 
                 // Set other users' value on the initial call
-                if (self._otherUsersIndexRatingCount === null) {
+                if (self.backingFields._otherUsersIndexRatingCount === null) {
                     self.setOtherUsersIndexRatingCount();
                 }
 
-                return self._otherUsersIndexRatingCount;
+                return self.backingFields._otherUsersIndexRatingCount;
             }
 
             self.setOtherUsersIndexRatingCount = function () {
-                self._otherUsersIndexRatingCount = self.IndexRatingCount;
+                self.backingFields._otherUsersIndexRatingCount = self.IndexRatingCount;
 
                 // Exclude current user's
                 if (self.userElementField() !== null) {
-                    self._otherUsersIndexRatingCount--;
+                    self.backingFields._otherUsersIndexRatingCount--;
                 }
             }
 
@@ -238,17 +241,17 @@
 
             self.indexRating = function () {
 
-                if (_indexRating === null) {
+                if (self.backingFields._indexRating === null) {
                     self.setIndexRating();
                 }
 
-                return _indexRating;
+                return self.backingFields._indexRating;
             }
 
             self.setIndexRating = function() {
                 switch (self.Element.ResourcePool.RatingMode) {
-                    case 1: { _indexRating = self.currentUserIndexRating(); break; } // Current user's
-                    case 2: { _indexRating = self.indexRatingAverage(); break; } // All
+                    case 1: { self.backingFields._indexRating = self.currentUserIndexRating(); break; } // Current user's
+                    case 2: { self.backingFields._indexRating = self.indexRatingAverage(); break; } // All
                 }
             }
 

@@ -19,54 +19,57 @@
 
             var self = this;
 
-            var _currentUserNumericValue = null;
-            var _numericValue = null;
-            var _numericValueMultiplied = null;
-            self._userCell = null;
-
-            // Other users' values: Keeps the values excluding current user's
-            self._otherUsersNumericValueTotal = null;
-            self._otherUsersNumericValueCount = null;
+            // Local variables
+            self.backingFields = {
+                _currentUserNumericValue: null,
+                _numericValue: null,
+                _numericValueMultiplied: null,
+                _userCell: null,
+                // Other users' values: Keeps the values excluding current user's
+                _otherUsersNumericValueTotal: null,
+                _otherUsersNumericValueCount: null
+            }
 
             // Events
             $rootScope.$on('elementCellNumericValueUpdated', function (event, args) {
                 if (args.elementCell === self) {
-                    _currentUserNumericValue = args.value;
+                    self.backingFields._currentUserNumericValue = args.value;
                     self.setNumericValue();
                     self.setNumericValueMultiplied();
                 }
             });
 
+            // Public functions
             self.userCell = function () {
 
-                if (self._userCell !== null && self._userCell.entityAspect.entityState.isDetached()) {
-                    self._userCell = null;
+                if (self.backingFields._userCell !== null && self.backingFields._userCell.entityAspect.entityState.isDetached()) {
+                    self.backingFields._userCell = null;
                 }
 
-                if (self._userCell === null && self.UserElementCellSet.length > 0) {
-                    self._userCell = self.UserElementCellSet[0];
+                if (self.backingFields._userCell === null && self.UserElementCellSet.length > 0) {
+                    self.backingFields._userCell = self.UserElementCellSet[0];
                 }
 
-                return self._userCell;
+                return self.backingFields._userCell;
             }
 
             self.currentUserNumericValue = function () {
 
-                if (_currentUserNumericValue === null) {
+                if (self.backingFields._currentUserNumericValue === null) {
                     self.setCurrentUserNumericValue();
                 }
 
-                return _currentUserNumericValue;
+                return self.backingFields._currentUserNumericValue;
             }
 
             self.setCurrentUserNumericValue = function () {
 
                 switch (self.ElementField.ElementFieldType) {
-                    case 2: { _currentUserNumericValue = self.userCell() !== null ? self.userCell().BooleanValue : 0; break; }
-                    case 3: { _currentUserNumericValue = self.userCell() !== null ? self.userCell().IntegerValue : 0; break; }
-                    case 4: { _currentUserNumericValue = self.userCell() !== null ? self.userCell().DecimalValue : 50; /* Default value? */ break; }
+                    case 2: { self.backingFields._currentUserNumericValue = self.userCell() !== null ? self.userCell().BooleanValue : 0; break; }
+                    case 3: { self.backingFields._currentUserNumericValue = self.userCell() !== null ? self.userCell().IntegerValue : 0; break; }
+                    case 4: { self.backingFields._currentUserNumericValue = self.userCell() !== null ? self.userCell().DecimalValue : 50; /* Default value? */ break; }
                         // TODO 5 (DateTime?)
-                    case 11: { _currentUserNumericValue = self.NumericValue !== null ? self.NumericValue : 0; break; } // DirectIncome: No need to try user's cell, always return all users', which will be CMRP owner's value
+                    case 11: { self.backingFields._currentUserNumericValue = self.NumericValue !== null ? self.NumericValue : 0; break; } // DirectIncome: No need to try user's cell, always return all users', which will be CMRP owner's value
                         // case 12: { value = userCell !== null ? userCell.DecimalValue : 0; break; }
                     default: { throw 'Not supported ' + self.ElementField.ElementFieldType; }
                 }
@@ -77,16 +80,16 @@
             self.otherUsersNumericValueTotal = function () {
 
                 // Set other users' value on the initial call
-                if (self._otherUsersNumericValueTotal === null) {
+                if (self.backingFields._otherUsersNumericValueTotal === null) {
                     self.setOtherUsersNumericValueTotal();
                 }
 
-                return self._otherUsersNumericValueTotal;
+                return self.backingFields._otherUsersNumericValueTotal;
             }
 
             self.setOtherUsersNumericValueTotal = function () {
 
-                self._otherUsersNumericValueTotal = self.NumericValue;
+                self.backingFields._otherUsersNumericValueTotal = self.NumericValue;
 
                 // Exclude current user's
                 if (self.userCell() !== null) {
@@ -105,7 +108,7 @@
                         }
                     }
 
-                    self._otherUsersNumericValueTotal -= userValue;
+                    self.backingFields._otherUsersNumericValueTotal -= userValue;
                 }
             }
 
@@ -114,19 +117,19 @@
             self.otherUsersNumericValueCount = function () {
 
                 // Set other users' value on the initial call
-                if (self._otherUsersNumericValueCount === null) {
+                if (self.backingFields._otherUsersNumericValueCount === null) {
                     self.setOtherUsersNumericValueCount();
                 }
 
-                return self._otherUsersNumericValueCount;
+                return self.backingFields._otherUsersNumericValueCount;
             }
 
             self.setOtherUsersNumericValueCount = function () {
-                self._otherUsersNumericValueCount = self.NumericValueCount;
+                self.backingFields._otherUsersNumericValueCount = self.NumericValueCount;
 
                 // Exclude current user's
                 if (self.userCell() !== null) {
-                    self._otherUsersNumericValueCount--;
+                    self.backingFields._otherUsersNumericValueCount--;
                 }
             }
 
@@ -155,37 +158,37 @@
 
             self.numericValue = function () {
 
-                if (_numericValue === null) {
+                if (self.backingFields._numericValue === null) {
                     self.setNumericValue();
                 }
 
-                return _numericValue;
+                return self.backingFields._numericValue;
             }
 
             self.setNumericValue = function () {
 
                 if (typeof self.ElementField !== 'undefined') {
                     switch (self.ElementField.Element.ResourcePool.RatingMode) {
-                        case 1: { _numericValue = self.currentUserNumericValue(); break; } // Current user's
-                        case 2: { _numericValue = self.numericValueAverage(); break; } // All
+                        case 1: { self.backingFields._numericValue = self.currentUserNumericValue(); break; } // Current user's
+                        case 2: { self.backingFields._numericValue = self.numericValueAverage(); break; } // All
                     }
                 }
             }
 
             self.numericValueMultiplied = function () {
 
-                if (_numericValueMultiplied === null) {
+                if (self.backingFields._numericValueMultiplied === null) {
                     self.setNumericValueMultiplied();
                 }
 
-                return _numericValueMultiplied;
+                return self.backingFields._numericValueMultiplied;
             }
 
             self.setNumericValueMultiplied = function () {
                 if (typeof self.ElementField === 'undefined' || !self.ElementField.IndexEnabled) {
-                    _numericValueMultiplied = 0; // ?
+                    self.backingFields._numericValueMultiplied = 0; // ?
                 } else {
-                    _numericValueMultiplied = self.numericValue() * self.ElementItem.multiplier();
+                    self.backingFields._numericValueMultiplied = self.numericValue() * self.ElementItem.multiplier();
                 }
             }
 
@@ -213,7 +216,8 @@
                     }
                 }
 
-                return self.ElementField.referenceRatingAllEqualFlag
+                // TODO This is not correct usage, create a prop around 'referenceRatingAllEqualFlag'
+                return self.ElementField.backingFields._referenceRatingAllEqualFlag
                     ? value
                     : 1 - value;
             }
