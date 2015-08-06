@@ -21,13 +21,12 @@
 
             // Local variables
             self.backingFields = {
-                _currentUserNumericValue: null,
-                _numericValue: null,
-                _numericValueMultiplied: null,
                 _userCell: null,
-                // Other users' values: Keeps the values excluding current user's
+                _currentUserNumericValue: null,
                 _otherUsersNumericValueTotal: null,
-                _otherUsersNumericValueCount: null
+                _otherUsersNumericValueCount: null,
+                _numericValue: null,
+                _numericValueMultiplied: null
             }
 
             // Events

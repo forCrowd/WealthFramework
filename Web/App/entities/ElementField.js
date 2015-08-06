@@ -21,18 +21,17 @@
 
             // Local variables
             self.backingFields = {
-                _userElementField: null,
-                _indexRating: null,
-                _currentUserIndexRating: null,
-                // Other users' values: Keeps the values excluding current user's
-                _otherUsersIndexRatingTotal: null,
-                _otherUsersIndexRatingCount: null,
                 // Aggressive rating formula prevents the organizations with the worst rating to get any income.
                 // However, in case all ratings are equal, then no one can get any income from the pool.
                 // This flag is used to determine this special case and let all organizations get a same share from the pool.
                 // See the usage in aggressiveRating() in elementCell.js
                 // TODO Usage of this field is correct?
-                _referenceRatingAllEqualFlag: true
+                _referenceRatingAllEqualFlag: true,
+                _userElementField: null,
+                _currentUserIndexRating: null,
+                _otherUsersIndexRatingTotal: null,
+                _otherUsersIndexRatingCount: null,
+                _indexRating: null
             }
 
             // Events

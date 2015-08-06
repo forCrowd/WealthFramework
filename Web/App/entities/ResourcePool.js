@@ -68,13 +68,12 @@
             // Local variables
             self.backingFields = {
                 _useFixedResourcePoolRate: false,
+                _currentElement: null,
                 _ratingMode: 1, // Only my ratings vs. All users' ratings
                 _userResourcePool: null,
                 _currentUserResourcePoolRate: null,
-                // Other users' values: Keeps the values excluding current user's
                 _otherUsersResourcePoolRateTotal: null,
                 _otherUsersResourcePoolRateCount: null,
-                _currentElement: null,
                 _resourcePoolRate: null
             }
 
