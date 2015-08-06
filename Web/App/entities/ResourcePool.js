@@ -14,11 +14,11 @@
         Object.defineProperty(ResourcePool.prototype, 'UseFixedResourcePoolRate', {
             enumerable: true,
             configurable: true,
-            get: function () { return this.backingFields._UseFixedResourcePoolRate; },
+            get: function () { return this.backingFields._useFixedResourcePoolRate; },
             set: function (value) {
 
-                if (this.backingFields._UseFixedResourcePoolRate !== value) {
-                    this.backingFields._UseFixedResourcePoolRate = value;
+                if (this.backingFields._useFixedResourcePoolRate !== value) {
+                    this.backingFields._useFixedResourcePoolRate = value;
                     this.setResourcePoolRate();
                 }
             }
@@ -33,7 +33,7 @@
         //});
 
         // Client-side properties
-        Object.defineProperty(ResourcePool.prototype, 'currentElement', {
+        Object.defineProperty(ResourcePool.prototype, 'CurrentElement', {
             enumerable: true,
             configurable: true,
             get: function () { return this.backingFields._currentElement; },
@@ -67,7 +67,7 @@
 
             // Local variables
             self.backingFields = {
-                _UseFixedResourcePoolRate: false,
+                _useFixedResourcePoolRate: false,
                 _ratingMode: 1, // Only my ratings vs. All users' ratings
                 _userResourcePool: null,
                 _currentUserResourcePoolRate: null,
@@ -86,7 +86,7 @@
                 }
             });
 
-            // Functions
+            // Public functions
 
             // Checks whether resource pool has any item that can be rateable
             self.displayRatingMode = function () {

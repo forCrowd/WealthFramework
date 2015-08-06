@@ -52,7 +52,7 @@
             });
 
             scope.changeCurrentElement = function (element) {
-                scope.resourcePool.currentElement = element;
+                scope.resourcePool.CurrentElement = element;
                 loadChartData();
             }
 
@@ -192,7 +192,7 @@
                 scope.resourcePool = resourcePoolSet[0];
 
                 // Current element
-                if (scope.resourcePool.currentElement === null) {
+                if (scope.resourcePool.CurrentElement === null) {
                     scope.changeCurrentElement(scope.resourcePool.MainElement);
                 } else {
                     loadChartData();
@@ -202,7 +202,7 @@
             function loadChartData() {
 
                 // Current element
-                var element = scope.resourcePool.currentElement;
+                var element = scope.resourcePool.CurrentElement;
 
                 // Item length check
                 if (element.ElementItemSet.length > 20) {
@@ -298,7 +298,7 @@
             }
 
             // TODO Store these in a better place?
-            // TODO Also test these better, by comparing it with resourcePool.currentElement property!
+            // TODO Also test these better, by comparing it with resourcePool.CurrentElement property!
             function columnChartItem(elementItem) {
                 var self = this;
 

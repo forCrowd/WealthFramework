@@ -3,9 +3,9 @@
 **0.35**
 
 * Further with javascript tests & entities cleanup
-* resourcePool.js - otherUsersResourcePoolRate() was merged with otherUsersResourcePoolRateTotal()
+* resourcePool, elementField, elementCell - other users' average properties were merged with other users' total
 * element.js - parents() renamed to familyTree() & parent() returns null if there is no actual parent (instead of self)
-* Js tests array fix; initial push() lines were replaced with assignments (.array = [object])
+* Javascript tests array fix; initial push() lines were replaced with assignments (.array = [object])
 * ResourcePool.cs - ResourcePoolRate renamed to ResourcePoolRateTotal
 
 **0.34.1**
