@@ -226,6 +226,11 @@
             }
 
             self.indexRatingAverage = function () {
+
+                if (self.indexRatingCount() === null) {
+                    return null;
+                }
+
                 return self.indexRatingCount() === 0
                     ? 0
                     : self.indexRatingTotal() / self.indexRatingCount();

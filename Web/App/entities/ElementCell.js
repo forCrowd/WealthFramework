@@ -143,6 +143,11 @@
             }
 
             self.numericValueAverage = function () {
+
+                if (self.numericValueCount() === null) {
+                    return null;
+                }
+
                 return self.numericValueCount() === 0
                     ? 0
                     : self.numericValueTotal() / self.numericValueCount();

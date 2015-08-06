@@ -209,6 +209,7 @@
             }
 
             self.setOtherUsersResourcePoolRateCount = function () {
+
                 self.backingFields._otherUsersResourcePoolRateCount = self.ResourcePoolRateCount;
 
                 // Exclude current user's
@@ -230,6 +231,11 @@
             }
 
             self.resourcePoolRateAverage = function () {
+
+                if (self.resourcePoolRateCount() === null) {
+                    return null;
+                }
+
                 return self.resourcePoolRateCount() === 0
                     ? 0
                     : self.resourcePoolRateTotal() / self.resourcePoolRateCount();
@@ -258,8 +264,9 @@
 
             self.resourcePoolRatePercentage = function () {
 
-                if (self.resourcePoolRate() === 0)
+                if (self.resourcePoolRate() === 0) {
                     return 0; // Null?
+                }
 
                 return self.resourcePoolRate() / 100;
             }
