@@ -486,74 +486,289 @@ describe('ng-tests ElementCell', function () {
 
     it('numericValueMultiplied', function () {
 
+        // Case 1: Initial
+        var resourcePool = new ResourcePool();
+
+        var element = new Element();
+        element.ResourcePool = resourcePool;
+        resourcePool.ElementSet = [element];
+
+        var decimalField = new ElementField();
+        decimalField.Element = element;
+        decimalField.ElementFieldType = 4;
+        decimalField.IndexEnabled = true;
+        element.ElementFieldSet = [decimalField];
+
+        var item1 = new ElementItem();
+        item1.Element = element;
+        element.ElementItemSet = [item1];
+
+        var decimalCell1 = new ElementCell();
+        decimalCell1.ElementField = decimalField;
+        decimalCell1.ElementItem = item1;
+        decimalCell1.NumericValue = 50;
+        decimalField.ElementCellSet = [decimalCell1];
+        item1.ElementCellSet = [decimalCell1];
+
+        expect(decimalCell1.numericValueMultiplied()).toBe(50);
+
+        // Case 2: Add the multiplier field and the first item
+        var multiplierField = new ElementField();
+        multiplierField.Element = element;
+        multiplierField.ElementFieldType = 12;
+        element.ElementFieldSet.push(multiplierField);
+
+        var multiplierCell1 = new ElementCell();
+        multiplierCell1.ElementField = multiplierField;
+        multiplierCell1.ElementItem = item1;
+        multiplierField.ElementCellSet = [multiplierCell1];
+        item1.ElementCellSet.push(multiplierCell1);
+
+        var userMultiplierCell1 = new UserElementCell();
+        userMultiplierCell1.ElementCell = multiplierCell1;
+        userMultiplierCell1.DecimalValue = 5;
+        multiplierCell1.UserElementCellSet = [userMultiplierCell1];
+
+        // TODO Manually update?!
+        item1.setMultiplier();
+        decimalCell1.setNumericValueMultiplied();
+
+        expect(decimalCell1.numericValueMultiplied()).toBe(250);
+
+        // TODO Update / remove cases
+
     });
 
     it('aggressiveRating', function () {
+
+        // Case 1: Initial
+        var resourcePool = new ResourcePool();
+
+        var element = new Element();
+        element.ResourcePool = resourcePool;
+        resourcePool.ElementSet = [element];
+
+        var decimalField = new ElementField();
+        decimalField.Element = element;
+        decimalField.ElementFieldType = 4;
+        decimalField.IndexEnabled = true;
+        element.ElementFieldSet = [decimalField];
+
+        var item1 = new ElementItem();
+        item1.Element = element;
+        element.ElementItemSet = [item1];
+
+        var decimalCell1 = new ElementCell();
+        decimalCell1.ElementField = decimalField;
+        decimalCell1.ElementItem = item1;
+        decimalCell1.NumericValue = 50;
+        decimalField.ElementCellSet = [decimalCell1];
+        item1.ElementCellSet = [decimalCell1];
+
+        expect(decimalCell1.aggressiveRating()).toBe(1);
+
+        // Case 2: Add the multiplier field and the first item
+        var multiplierField = new ElementField();
+        multiplierField.Element = element;
+        multiplierField.ElementFieldType = 12;
+        element.ElementFieldSet.push(multiplierField);
+
+        var multiplierCell1 = new ElementCell();
+        multiplierCell1.ElementField = multiplierField;
+        multiplierCell1.ElementItem = item1;
+        multiplierField.ElementCellSet = [multiplierCell1];
+        item1.ElementCellSet.push(multiplierCell1);
+
+        var userMultiplierCell1 = new UserElementCell();
+        userMultiplierCell1.ElementCell = multiplierCell1;
+        userMultiplierCell1.DecimalValue = 5;
+        multiplierCell1.UserElementCellSet = [userMultiplierCell1];
+
+        // TODO Manually update?!
+        item1.setMultiplier();
+        decimalCell1.setNumericValueMultiplied();
+
+        expect(decimalCell1.aggressiveRating()).toBe(1);
+
+        // TODO Update / remove cases
+        // TODO Multiple items?
+        // TODO field.IndexRatingSortType = 2 case?
 
     });
 
     it('aggressiveRatingPercentage', function () {
 
+        // Case 1: Initial
+        var resourcePool = new ResourcePool();
+
+        var element = new Element();
+        element.ResourcePool = resourcePool;
+        resourcePool.ElementSet = [element];
+
+        var decimalField = new ElementField();
+        decimalField.Element = element;
+        decimalField.ElementFieldType = 4;
+        decimalField.IndexEnabled = true;
+        element.ElementFieldSet = [decimalField];
+
+        var item1 = new ElementItem();
+        item1.Element = element;
+        element.ElementItemSet = [item1];
+
+        var decimalCell1 = new ElementCell();
+        decimalCell1.ElementField = decimalField;
+        decimalCell1.ElementItem = item1;
+        decimalCell1.NumericValue = 50;
+        decimalField.ElementCellSet = [decimalCell1];
+        item1.ElementCellSet = [decimalCell1];
+
+        expect(decimalCell1.aggressiveRatingPercentage()).toBe(1);
+
+        // Case 2: Add the multiplier field and the first item
+        var multiplierField = new ElementField();
+        multiplierField.Element = element;
+        multiplierField.ElementFieldType = 12;
+        element.ElementFieldSet.push(multiplierField);
+
+        var multiplierCell1 = new ElementCell();
+        multiplierCell1.ElementField = multiplierField;
+        multiplierCell1.ElementItem = item1;
+        multiplierField.ElementCellSet = [multiplierCell1];
+        item1.ElementCellSet.push(multiplierCell1);
+
+        var userMultiplierCell1 = new UserElementCell();
+        userMultiplierCell1.ElementCell = multiplierCell1;
+        userMultiplierCell1.DecimalValue = 5;
+        multiplierCell1.UserElementCellSet = [userMultiplierCell1];
+
+        // TODO Manually update?!
+        item1.setMultiplier();
+        decimalCell1.setNumericValueMultiplied();
+
+        expect(decimalCell1.aggressiveRatingPercentage()).toBe(1);
+
+        // TODO Update / remove cases
+        // TODO Multiple items?
+        // TODO field.IndexRatingSortType = 2 case?
+
     });
 
     it('passiveRatingPercentage', function () {
+
+        // Case 1: Initial
+        var resourcePool = new ResourcePool();
+
+        var element = new Element();
+        element.ResourcePool = resourcePool;
+        resourcePool.ElementSet = [element];
+
+        var decimalField = new ElementField();
+        decimalField.Element = element;
+        decimalField.ElementFieldType = 4;
+        decimalField.IndexEnabled = true;
+        element.ElementFieldSet = [decimalField];
+
+        var item1 = new ElementItem();
+        item1.Element = element;
+        element.ElementItemSet = [item1];
+
+        var decimalCell1 = new ElementCell();
+        decimalCell1.ElementField = decimalField;
+        decimalCell1.ElementItem = item1;
+        decimalCell1.NumericValue = 50;
+        decimalField.ElementCellSet = [decimalCell1];
+        item1.ElementCellSet = [decimalCell1];
+
+        expect(decimalCell1.passiveRatingPercentage()).toBe(1);
+
+        // Case 2: Add the multiplier field and the first item
+        var multiplierField = new ElementField();
+        multiplierField.Element = element;
+        multiplierField.ElementFieldType = 12;
+        element.ElementFieldSet.push(multiplierField);
+
+        var multiplierCell1 = new ElementCell();
+        multiplierCell1.ElementField = multiplierField;
+        multiplierCell1.ElementItem = item1;
+        multiplierField.ElementCellSet = [multiplierCell1];
+        item1.ElementCellSet.push(multiplierCell1);
+
+        var userMultiplierCell1 = new UserElementCell();
+        userMultiplierCell1.ElementCell = multiplierCell1;
+        userMultiplierCell1.DecimalValue = 5;
+        multiplierCell1.UserElementCellSet = [userMultiplierCell1];
+
+        // TODO Manually update?!
+        item1.setMultiplier();
+        decimalCell1.setNumericValueMultiplied();
+
+        expect(decimalCell1.passiveRatingPercentage()).toBe(1);
+
+        // TODO Update / remove cases
+        // TODO Multiple items?
+        // TODO field.IndexRatingSortType = 2 case?
 
     });
 
     it('indexIncome', function () {
 
-    });
+        // Case 1: Initial
+        var resourcePool = new ResourcePool();
 
-    // Old one
-    it('old', function () {
+        var element = new Element();
+        element.ResourcePool = resourcePool;
+        resourcePool.ElementSet = [element];
+        resourcePool.MainElement = element;
 
-        var resourcePool1 = new ResourcePool();
-        resourcePool1.ResourcePoolRateTotal = 10;
-        resourcePool1.ResourcePoolRateCount = 1;
-        resourcePool1.UseFixedResourcePoolRate = true;
-        resourcePool1.RatingMode = 1; // Only my ratings
-        resourcePool1.InitialValue = 0;
-
-        var element1 = new Element();
-        element1.ResourcePool = resourcePool1;
-        resourcePool1.ElementSet = [element1];
-        resourcePool1.MainElement = element1;
-
-        // Fields
-        var field1 = new ElementField();
-        field1.Element = element1;
-        field1.ElementFieldType = 4;
-        field1.IndexEnabled = true;
-        field1.IndexRating = 100;
-        field1.IndexRatingCount = 1;
-        field1.UseFixedValue = false;
-        element1.ElementFieldSet = [field1];
-
-        // Item
         var item1 = new ElementItem();
-        item1.Element = element1;
-        element1.ElementItemSet = [item1];
+        item1.Element = element;
+        element.ElementItemSet = [item1];
 
-        // Cell
-        var cell1 = new ElementCell();
-        cell1.ElementField = field1;
-        cell1.ElementItem = item1;
-        cell1.NumericValue = 150;
-        cell1.NumericValueCount = 2;
-        field1.ElementCellSet = [cell1];
-        item1.ElementCellSet = [cell1];
+        var directIncomeField = new ElementField();
+        directIncomeField.Element = element;
+        directIncomeField.ElementFieldType = 11;
+        directIncomeField.IndexEnabled = true;
+        element.ElementFieldSet = [directIncomeField];
 
-        expect(cell1.otherUsersNumericValueTotal()).toBe(150);
-        expect(cell1.otherUsersNumericValueCount()).toBe(2);
-        expect(cell1.userCell()).toBe(null);
-        expect(cell1.currentUserNumericValue()).toBe(50); // No user element cell, default value
-        expect(cell1.numericValueAverage()).toBe(200 / 3);
-        expect(cell1.numericValueCount()).toBe(3);
-        expect(cell1.numericValue()).toBe(50);
-        expect(cell1.numericValueMultiplied()).toBe(50); // No multiplier cell defined, then multiplier value is 1
+        var directIncomeCell = new ElementCell();
+        directIncomeCell.ElementField = directIncomeField;
+        directIncomeCell.ElementItem = item1;
+        directIncomeCell.NumericValue = 50;
+        directIncomeField.ElementCellSet = [directIncomeCell];
+        item1.ElementCellSet = [directIncomeCell];
 
-        //expect(field1.indexRatingPercentage()).toBe(1);
-        //expect(field1.indexIncome()).toBe(500);
+        expect(directIncomeCell.indexIncome()).toBe(5);
+
+        // Case 2: Add the multiplier field
+
+        // Multiplier field
+        var multiplierField = new ElementField();
+        multiplierField.Element = element;
+        multiplierField.ElementFieldType = 12;
+        element.ElementFieldSet.push(multiplierField);
+
+        // Multiplier cell
+        var multiplierCell = new ElementCell();
+        multiplierCell.ElementField = multiplierField;
+        multiplierCell.ElementItem = item1;
+        multiplierField.ElementCellSet = [multiplierCell];
+        item1.ElementCellSet.push(multiplierCell);
+
+        // User multiplier cell
+        userMultiplierCell1 = new UserElementCell();
+        userMultiplierCell1.ElementCell = multiplierCell;
+        userMultiplierCell1.DecimalValue = 3;
+        multiplierCell.UserElementCellSet = [userMultiplierCell1];
+
+        // TODO Manually update?!
+        item1.setMultiplier();
+
+        // Assert
+        expect(directIncomeCell.indexIncome()).toBe(15);
+
+        // TODO Update / remove cases
+        // TODO Multiple items?
+        // TODO field.IndexRatingSortType = 2 case?
 
     });
 
