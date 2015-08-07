@@ -55,7 +55,6 @@
 
             // Local variables
             self.backingFields = {
-                _userCell: null,
                 _currentUserCell: null,
                 _currentUserNumericValue: null,
                 _otherUsersNumericValueTotal: null,
@@ -65,19 +64,6 @@
             }
 
             // Public functions
-            self.userCell = function () {
-
-                if (self.backingFields._userCell !== null && self.backingFields._userCell.entityAspect.entityState.isDetached()) {
-                    self.backingFields._userCell = null;
-                }
-
-                if (self.backingFields._userCell === null && self.UserElementCellSet.length > 0) {
-                    self.backingFields._userCell = self.UserElementCellSet[0];
-                }
-
-                return self.backingFields._userCell;
-            }
-
             self.currentUserNumericValue = function () {
 
                 if (self.backingFields._currentUserNumericValue === null) {
