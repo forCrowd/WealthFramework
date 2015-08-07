@@ -2,14 +2,13 @@
 
 describe('ng-tests ResourcePool', function () {
 
-    var $rootScope, ResourcePool, Element, ElementField, ElementItem, ElementCell;
+    var ResourcePool, Element, ElementField, ElementItem, ElementCell;
 
     beforeEach(module('main'));
 
     beforeEach(function () {
         inject(function ($injector) {
 
-            $rootScope = $injector.get('$rootScope');
             ResourcePool = $injector.get('ResourcePool');
             Element = $injector.get('Element');
             ElementField = $injector.get('ElementField');

@@ -191,89 +191,101 @@
 
             // Find user element cell
             for (var i = 0; i < element.ElementItemSet.length; i++) {
-
                 var elementCell = element.ElementItemSet[i].multiplierCell();
-                var userCell = elementCell.userCell();
+                updateElementCellMultiplier(elementCell, updateType);
+            }
+        }
 
-                switch (updateType) {
-                    case 'increase': {
+        function updateElementCellMultiplier(elementCell, updateType) {
 
-                        // If there is no item, create it
-                        if (userCell === null) {
-                            userCell = {
-                                User: currentUser,
-                                ElementCell: elementCell,
-                                DecimalValue: 1
-                            };
+            if (elementCell.CurrentUserCell !== null
+                && typeof elementCell.CurrentUserCell.entityAspect !== 'undefined'
+                && elementCell.CurrentUserCell.entityAspect.entityState.isDetached()) {
+                elementCell.CurrentUserCell = null;
+            }
 
-                            dataContext.createEntity('UserElementCell', userCell);
+            switch (updateType) {
+                case 'increase': {
 
-                        } else {
+                    // If there is no item, create it
+                    if (elementCell.CurrentUserCell === null) {
 
-                            // If it's marked as deleted, cancel that deletion and set it to default + 1
-                            if (userCell.entityAspect.entityState.isDeleted()) {
-                                userCell.entityAspect.rejectChanges();
-                                userCell.DecimalValue = 1;
-                            } else { // Otherwise, go ahead!
-                                userCell.DecimalValue++;
-                            }
+                        dataContext.createEntity('UserElementCell', {
+                            User: currentUser,
+                            ElementCell: elementCell,
+                            DecimalValue: 1
+                        }).then(function (newUserCell) {
+                            elementCell.CurrentUserCell = newUserCell;
+                        });
+
+                    } else {
+
+                        // If it's marked as deleted, cancel that deletion and set it to default + 1
+                        if (elementCell.CurrentUserCell.entityAspect.entityState.isDeleted()) {
+                            elementCell.CurrentUserCell.entityAspect.rejectChanges();
+                            elementCell.CurrentUserCell.DecimalValue = 1;
+                        } else { // Otherwise, go ahead!
+                            elementCell.CurrentUserCell.DecimalValue++;
                         }
-
-                        break;
                     }
-                    case 'decrease': {
 
-                        // If there is an item, decrease
-                        if (userCell !== null) {
-                            userCell.DecimalValue = userCell.DecimalValue - 1 < 0 ? 0 : userCell.DecimalValue - 1;
-                        }
-
-                        break;
-                    }
-                    case 'reset': {
-
-                        // If there is an item and not marked as deleted, delete it
-                        if (userCell !== null && !userCell.entityAspect.entityState.isDeleted()) {
-                            userCell.DecimalValue = 0;
-                            userCell.entityAspect.setDeleted();
-                        }
-
-                        break;
-                    }
+                    break;
                 }
+                case 'decrease': {
 
-                // Broadcast the update
-                if (userCell !== null) {
-                    $rootScope.$broadcast('elementMultiplierUpdated', { elementCell: elementCell, value: userCell.DecimalValue });
+                    // If there is an item, decrease
+                    if (elementCell.CurrentUserCell !== null) {
+                        elementCell.CurrentUserCell.DecimalValue = elementCell.CurrentUserCell.DecimalValue - 1 < 0 ? 0 : elementCell.CurrentUserCell.DecimalValue - 1;
+                    }
+
+                    break;
+                }
+                case 'reset': {
+
+                    // If there is an item and not marked as deleted, delete it
+                    if (elementCell.CurrentUserCell !== null && !elementCell.CurrentUserCell.entityAspect.entityState.isDeleted()) {
+                        elementCell.CurrentUserCell.DecimalValue = 0;
+                        elementCell.CurrentUserCell.entityAspect.setDeleted();
+                    }
+
+                    break;
                 }
             }
         }
 
         function updateElementCellNumericValue(elementCell, updateType) {
 
-            var userCell = elementCell.userCell();
+            if (elementCell.CurrentUserCell !== null
+                && typeof elementCell.CurrentUserCell.entityAspect !== 'undefined'
+                && elementCell.CurrentUserCell.entityAspect.entityState.isDetached()) {
+                elementCell.CurrentUserCell = null;
+            }
 
             switch (updateType) {
                 case 'increase': {
 
                     // If there is no item, create it
-                    if (userCell === null) {
-                        userCell = {
+                    if (elementCell.CurrentUserCell === null) {
+
+                        dataContext.createEntity('UserElementCell', {
                             User: currentUser,
                             ElementCell: elementCell,
-                            DecimalValue: 55
-                        };
-
-                        dataContext.createEntity('UserElementCell', userCell);
+                            DecimalValue: typeof value !== 'undefined' ? value : 55
+                        }).then(function (newUserCell) {
+                            elementCell.CurrentUserCell = newUserCell;
+                        });
 
                     } else {
 
                         // If it's marked as deleted, cancel that deletion and set it to default + 5
-                        if (userCell.entityAspect.entityState.isDeleted()) {
-                            userCell.entityAspect.rejectChanges();
-                            userCell.DecimalValue = 55;
+                        if (typeof elementCell.CurrentUserCell.entityAspect != 'undefined'
+                            && elementCell.CurrentUserCell.entityAspect.entityState.isDeleted()) {
+                            elementCell.CurrentUserCell.entityAspect.rejectChanges();
+                            elementCell.CurrentUserCell.DecimalValue = 55;
                         } else { // Otherwise, go ahead!
-                            userCell.DecimalValue = userCell.DecimalValue + 5 > 100 ? 100 : userCell.DecimalValue + 5;
+                            elementCell.CurrentUserCell.DecimalValue = elementCell.CurrentUserCell.DecimalValue + 5 > 100
+                                ? 100
+                                : elementCell.CurrentUserCell.DecimalValue + 5;
                         }
                     }
 
@@ -282,23 +294,24 @@
                 case 'decrease': {
 
                     // If there is no item, create it
-                    if (userCell === null) {
-                        userCell = {
+                    if (elementCell.CurrentUserCell === null) {
+
+                        dataContext.createEntity('UserElementCell', {
                             User: currentUser,
                             ElementCell: elementCell,
                             DecimalValue: 45
-                        };
-
-                        dataContext.createEntity('UserElementCell', userCell);
+                        }).then(function (newUserCell) {
+                            elementCell.CurrentUserCell = newUserCell;
+                        });
 
                     } else {
 
                         // If it's marked as deleted, cancel that deletion and set it to default - 5
-                        if (userCell.entityAspect.entityState.isDeleted()) {
-                            userCell.entityAspect.rejectChanges();
-                            userCell.DecimalValue = 45;
+                        if (elementCell.CurrentUserCell.entityAspect.entityState.isDeleted()) {
+                            elementCell.CurrentUserCell.entityAspect.rejectChanges();
+                            elementCell.CurrentUserCell.DecimalValue = 45;
                         } else { // Otherwise, go ahead!
-                            userCell.DecimalValue = userCell.DecimalValue - 5 < 0 ? 0 : userCell.DecimalValue - 5;
+                            elementCell.CurrentUserCell.DecimalValue = elementCell.CurrentUserCell.DecimalValue - 5 < 0 ? 0 : elementCell.CurrentUserCell.DecimalValue - 5;
                         }
                     }
 
@@ -307,18 +320,13 @@
                 case 'reset': {
 
                     // If there is an item and not marked as deleted, delete it
-                    if (userCell !== null && !userCell.entityAspect.entityState.isDeleted()) {
-                        userCell.DecimalValue = 50;
-                        userCell.entityAspect.setDeleted();
+                    if (elementCell.CurrentUserCell !== null && !elementCell.CurrentUserCell.entityAspect.entityState.isDeleted()) {
+                        elementCell.CurrentUserCell.DecimalValue = 50;
+                        elementCell.CurrentUserCell.entityAspect.setDeleted();
                     }
 
                     break;
                 }
-            }
-
-            // Broadcast the update
-            if (userCell !== null) {
-                $rootScope.$broadcast('elementCellNumericValueUpdated', { elementCell: elementCell, value: userCell.DecimalValue });
             }
         }
 

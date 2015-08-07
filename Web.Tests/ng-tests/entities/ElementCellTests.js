@@ -2,14 +2,13 @@
 
 describe('ng-tests ElementCell', function () {
 
-    var $rootScope, ResourcePool, Element, ElementField, ElementItem, ElementCell;
+    var ResourcePool, Element, ElementField, ElementItem, ElementCell;
 
     beforeEach(module('main'));
 
     beforeEach(function () {
         inject(function ($injector) {
 
-            $rootScope = $injector.get('$rootScope');
             ResourcePool = $injector.get('ResourcePool');
             Element = $injector.get('Element');
             ElementField = $injector.get('ElementField');
@@ -49,14 +48,15 @@ describe('ng-tests ElementCell', function () {
         field1.ElementCellSet = [cell1];
         item1.ElementCellSet = [cell1];
 
-        expect(cell1.userCell()).toBe(null);
+        expect(cell1.CurrentUserCell).toBe(null);
 
         // Case 2: Add user cell
         var userCell1 = new UserElementCell();
         userCell1.ElementCell = cell1;
         cell1.UserElementCellSet = [userCell1];
+        cell1.CurrentUserCell = userCell1;
 
-        expect(cell1.userCell()).toBe(userCell1);
+        expect(cell1.CurrentUserCell).toBe(userCell1);
 
     });
 
@@ -95,9 +95,11 @@ describe('ng-tests ElementCell', function () {
         userCell1.ElementCell = cell1;
         userCell1.DecimalValue = 25;
         cell1.UserElementCellSet = [userCell1];
+        cell1.CurrentUserCell = userCell1;
 
         // TODO Manually update?!
-        cell1.setCurrentUserNumericValue();
+        cell1.CurrentUserCell = userCell1;
+        //cell1.setCurrentUserNumericValue();
 
         expect(cell1.currentUserNumericValue()).toBe(25);
 
@@ -149,6 +151,7 @@ describe('ng-tests ElementCell', function () {
         userCell1.ElementCell = cell1;
         userCell1.DecimalValue = 10;
         cell1.UserElementCellSet = [userCell1];
+        cell1.CurrentUserCell = userCell1;
 
         // TODO Manually update?!
         cell1.setOtherUsersNumericValueTotal();
@@ -203,6 +206,7 @@ describe('ng-tests ElementCell', function () {
         userCell1.ElementCell = cell1;
         userCell1.DecimalValue = 10;
         cell1.UserElementCellSet = [userCell1];
+        cell1.CurrentUserCell = userCell1;
 
         // TODO Manually update?!
         cell1.setOtherUsersNumericValueCount();
@@ -256,9 +260,11 @@ describe('ng-tests ElementCell', function () {
         userCell1.ElementCell = cell1;
         userCell1.DecimalValue = 10;
         cell1.UserElementCellSet = [userCell1];
+        cell1.CurrentUserCell = userCell1;
 
         // TODO Manually update?!
-        cell1.setCurrentUserNumericValue();
+        cell1.CurrentUserCell = userCell1;
+        //cell1.setCurrentUserNumericValue();
 
         expect(cell1.numericValueTotal()).toBe(35);
 
@@ -309,6 +315,7 @@ describe('ng-tests ElementCell', function () {
         userCell1.ElementCell = cell1;
         userCell1.DecimalValue = 10;
         cell1.UserElementCellSet = [userCell1];
+        cell1.CurrentUserCell = userCell1;
 
         expect(cell1.numericValueCount()).toBe(4);
 
@@ -360,9 +367,11 @@ describe('ng-tests ElementCell', function () {
         userCell1.ElementCell = cell1;
         userCell1.DecimalValue = 10;
         cell1.UserElementCellSet = [userCell1];
+        cell1.CurrentUserCell = userCell1;
 
         // TODO Manually update?!
-        cell1.setCurrentUserNumericValue();
+        cell1.CurrentUserCell = userCell1;
+        //cell1.setCurrentUserNumericValue();
 
         expect(cell1.numericValueAverage()).toBe(85  / 4);
 
@@ -416,9 +425,11 @@ describe('ng-tests ElementCell', function () {
         userCell1.ElementCell = cell1;
         userCell1.DecimalValue = 10;
         cell1.UserElementCellSet = [userCell1];
+        cell1.CurrentUserCell = userCell1;
 
         // TODO Manually update?!
-        cell1.setCurrentUserNumericValue();
+        cell1.CurrentUserCell = userCell1;
+        //cell1.setCurrentUserNumericValue();
         cell1.setNumericValue();
 
         expect(cell1.numericValue()).toBe(10);
@@ -473,9 +484,11 @@ describe('ng-tests ElementCell', function () {
         userCell1.ElementCell = cell1;
         userCell1.DecimalValue = 10;
         cell1.UserElementCellSet = [userCell1];
+        cell1.CurrentUserCell = userCell1;
 
         // TODO Manually update?!
-        cell1.setCurrentUserNumericValue();
+        cell1.CurrentUserCell = userCell1;
+        //cell1.setCurrentUserNumericValue();
         cell1.setNumericValue();
 
         expect(cell1.numericValue()).toBe(85 / 4);
@@ -528,6 +541,7 @@ describe('ng-tests ElementCell', function () {
         userMultiplierCell1.ElementCell = multiplierCell1;
         userMultiplierCell1.DecimalValue = 5;
         multiplierCell1.UserElementCellSet = [userMultiplierCell1];
+        multiplierCell1.CurrentUserCell = userMultiplierCell1;
 
         // TODO Manually update?!
         item1.setMultiplier();
@@ -583,6 +597,7 @@ describe('ng-tests ElementCell', function () {
         userMultiplierCell1.ElementCell = multiplierCell1;
         userMultiplierCell1.DecimalValue = 5;
         multiplierCell1.UserElementCellSet = [userMultiplierCell1];
+        multiplierCell1.CurrentUserCell = userMultiplierCell1;
 
         // TODO Manually update?!
         item1.setMultiplier();
@@ -640,6 +655,7 @@ describe('ng-tests ElementCell', function () {
         userMultiplierCell1.ElementCell = multiplierCell1;
         userMultiplierCell1.DecimalValue = 5;
         multiplierCell1.UserElementCellSet = [userMultiplierCell1];
+        multiplierCell1.CurrentUserCell = userMultiplierCell1;
 
         // TODO Manually update?!
         item1.setMultiplier();
@@ -697,6 +713,7 @@ describe('ng-tests ElementCell', function () {
         userMultiplierCell1.ElementCell = multiplierCell1;
         userMultiplierCell1.DecimalValue = 5;
         multiplierCell1.UserElementCellSet = [userMultiplierCell1];
+        multiplierCell1.CurrentUserCell = userMultiplierCell1;
 
         // TODO Manually update?!
         item1.setMultiplier();
@@ -759,6 +776,7 @@ describe('ng-tests ElementCell', function () {
         userMultiplierCell1.ElementCell = multiplierCell;
         userMultiplierCell1.DecimalValue = 3;
         multiplierCell.UserElementCellSet = [userMultiplierCell1];
+        multiplierCell.CurrentUserCell = userMultiplierCell1;
 
         // TODO Manually update?!
         item1.setMultiplier();

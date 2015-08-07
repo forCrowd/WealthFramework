@@ -64,6 +64,7 @@ describe('ng-tests ElementField', function () {
         userMultiplierCell1.ElementCell = multiplierCell1;
         userMultiplierCell1.DecimalValue = 5;
         multiplierCell1.UserElementCellSet = [userMultiplierCell1];
+        multiplierCell1.CurrentUserCell = userMultiplierCell1;
 
         expect(decimalField.numericValueMultiplied()).toBe(250);
 
@@ -89,6 +90,7 @@ describe('ng-tests ElementField', function () {
         userMultiplierCell2.ElementCell = multiplierCell2;
         userMultiplierCell2.DecimalValue = 15;
         multiplierCell2.UserElementCellSet = [userMultiplierCell2];
+        multiplierCell2.CurrentUserCell = userMultiplierCell2;
 
         expect(decimalField.numericValueMultiplied()).toBe(2500);
 
@@ -140,6 +142,7 @@ describe('ng-tests ElementField', function () {
         userMultiplierCell1.ElementCell = multiplierCell1;
         userMultiplierCell1.DecimalValue = 5;
         multiplierCell1.UserElementCellSet = [userMultiplierCell1];
+        multiplierCell1.CurrentUserCell = userMultiplierCell1;
 
         expect(decimalField.passiveRatingPercentage()).toBe(1);
 
@@ -165,6 +168,7 @@ describe('ng-tests ElementField', function () {
         userMultiplierCell2.ElementCell = multiplierCell2;
         userMultiplierCell2.DecimalValue = 15;
         multiplierCell2.UserElementCellSet = [userMultiplierCell2];
+        multiplierCell2.CurrentUserCell = userMultiplierCell2;
 
         // TODO Will always be 100%?
         expect(decimalField.passiveRatingPercentage()).toBe(1);
@@ -217,6 +221,7 @@ describe('ng-tests ElementField', function () {
         userMultiplierCell1.ElementCell = multiplierCell1;
         userMultiplierCell1.DecimalValue = 5;
         multiplierCell1.UserElementCellSet = [userMultiplierCell1];
+        multiplierCell1.CurrentUserCell = userMultiplierCell1;
 
         expect(decimalField.referenceRatingMultiplied()).toBe(250);
 
@@ -242,6 +247,7 @@ describe('ng-tests ElementField', function () {
         userMultiplierCell2.ElementCell = multiplierCell2;
         userMultiplierCell2.DecimalValue = 15;
         multiplierCell2.UserElementCellSet = [userMultiplierCell2];
+        multiplierCell2.CurrentUserCell = userMultiplierCell2;
 
         expect(decimalField.referenceRatingMultiplied()).toBe(2250);
 
@@ -294,6 +300,7 @@ describe('ng-tests ElementField', function () {
         userMultiplierCell1.ElementCell = multiplierCell1;
         userMultiplierCell1.DecimalValue = 5;
         multiplierCell1.UserElementCellSet = [userMultiplierCell1];
+        multiplierCell1.CurrentUserCell = userMultiplierCell1;
 
         expect(decimalField.aggressiveRating()).toBe(1);
 
@@ -319,6 +326,7 @@ describe('ng-tests ElementField', function () {
         userMultiplierCell2.ElementCell = multiplierCell2;
         userMultiplierCell2.DecimalValue = 15;
         multiplierCell2.UserElementCellSet = [userMultiplierCell2];
+        multiplierCell2.CurrentUserCell = userMultiplierCell2;
 
         expect(decimalField.aggressiveRating()).toBe(1 - (250 / 2250) + 1 - (2250 / 2250));
 

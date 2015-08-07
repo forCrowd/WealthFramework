@@ -2,14 +2,13 @@
 
 describe('ng-tests Element', function () {
 
-    var $rootScope, ResourcePool, Element, ElementField, ElementItem, ElementCell;
+    var ResourcePool, Element, ElementField, ElementItem, ElementCell;
 
     beforeEach(module('main'));
 
     beforeEach(function () {
         inject(function ($injector) {
 
-            $rootScope = $injector.get('$rootScope');
             ResourcePool = $injector.get('ResourcePool');
             Element = $injector.get('Element');
             ElementField = $injector.get('ElementField');
@@ -315,10 +314,11 @@ describe('ng-tests Element', function () {
         multiplierField.ElementCellSet = [directIncomeCell1];
         item1.ElementCellSet = [directIncomeCell1];
 
-        var userdirectIncomeCell1 = new UserElementCell();
-        userdirectIncomeCell1.ElementCell = directIncomeCell1;
-        userdirectIncomeCell1.DecimalValue = 5;
-        directIncomeCell1.UserElementCellSet = [userdirectIncomeCell1];
+        var userDirectIncomeCell1 = new UserElementCell();
+        userDirectIncomeCell1.ElementCell = directIncomeCell1;
+        userDirectIncomeCell1.DecimalValue = 5;
+        directIncomeCell1.UserElementCellSet = [userDirectIncomeCell1];
+        directIncomeCell1.CurrentUserCell = userDirectIncomeCell1;
 
         expect(element.multiplier()).toBe(5);
 
@@ -337,6 +337,7 @@ describe('ng-tests Element', function () {
         userCell2.ElementCell = cell2;
         userCell2.DecimalValue = 15;
         cell2.UserElementCellSet = [userCell2];
+        cell2.CurrentUserCell = userCell2;
 
         expect(element.multiplier()).toBe(20);
 
@@ -387,6 +388,7 @@ describe('ng-tests Element', function () {
         userMultiplierCell1.ElementCell = multiplierCell1;
         userMultiplierCell1.DecimalValue = 5;
         multiplierCell1.UserElementCellSet = [userMultiplierCell1];
+        multiplierCell1.CurrentUserCell = userMultiplierCell1;
 
         expect(element.totalDirectIncome()).toBe(250);
 
@@ -412,6 +414,7 @@ describe('ng-tests Element', function () {
         userMultiplierCell2.ElementCell = multiplierCell2;
         userMultiplierCell2.DecimalValue = 15;
         multiplierCell2.UserElementCellSet = [userMultiplierCell2];
+        multiplierCell2.CurrentUserCell = userMultiplierCell2;
 
         expect(element.totalDirectIncome()).toBe(2500);
 
@@ -515,6 +518,7 @@ describe('ng-tests Element', function () {
         userMultiplierCell1.ElementCell = multiplierCell1;
         userMultiplierCell1.DecimalValue = 5;
         multiplierCell1.UserElementCellSet = [userMultiplierCell1];
+        multiplierCell1.CurrentUserCell = userMultiplierCell1;
 
         expect(element.totalResourcePoolAmount()).toBe(25);
 
@@ -540,6 +544,7 @@ describe('ng-tests Element', function () {
         userMultiplierCell2.ElementCell = multiplierCell2;
         userMultiplierCell2.DecimalValue = 15;
         multiplierCell2.UserElementCellSet = [userMultiplierCell2];
+        multiplierCell2.CurrentUserCell = userMultiplierCell2;
 
         expect(element.totalResourcePoolAmount()).toBe(250);
 
@@ -644,6 +649,7 @@ describe('ng-tests Element', function () {
         userMultiplierCell1.ElementCell = multiplierCell1;
         userMultiplierCell1.DecimalValue = 5;
         multiplierCell1.UserElementCellSet = [userMultiplierCell1];
+        multiplierCell1.CurrentUserCell = userMultiplierCell1;
 
         expect(element.totalDirectIncomeIncludingResourcePoolAmount()).toBe(275);
 
@@ -669,6 +675,7 @@ describe('ng-tests Element', function () {
         userMultiplierCell2.ElementCell = multiplierCell2;
         userMultiplierCell2.DecimalValue = 15;
         multiplierCell2.UserElementCellSet = [userMultiplierCell2];
+        multiplierCell2.CurrentUserCell = userMultiplierCell2;
 
         expect(element.totalDirectIncomeIncludingResourcePoolAmount()).toBe(2750);
 
@@ -723,6 +730,7 @@ describe('ng-tests Element', function () {
         userMultiplierCell1.ElementCell = multiplierCell1;
         userMultiplierCell1.DecimalValue = 5;
         multiplierCell1.UserElementCellSet = [userMultiplierCell1];
+        multiplierCell1.CurrentUserCell = userMultiplierCell1;
 
         expect(element.totalResourcePoolIncome()).toBe(25);
 
@@ -748,6 +756,7 @@ describe('ng-tests Element', function () {
         userMultiplierCell2.ElementCell = multiplierCell2;
         userMultiplierCell2.DecimalValue = 15;
         multiplierCell2.UserElementCellSet = [userMultiplierCell2];
+        multiplierCell2.CurrentUserCell = userMultiplierCell2;
 
         expect(element.totalResourcePoolIncome()).toBe(250);
 
@@ -802,6 +811,7 @@ describe('ng-tests Element', function () {
         userMultiplierCell1.ElementCell = multiplierCell1;
         userMultiplierCell1.DecimalValue = 5;
         multiplierCell1.UserElementCellSet = [userMultiplierCell1];
+        multiplierCell1.CurrentUserCell = userMultiplierCell1;
 
         expect(element.totalIncome()).toBe(275);
 
@@ -827,7 +837,8 @@ describe('ng-tests Element', function () {
         userMultiplierCell2.ElementCell = multiplierCell2;
         userMultiplierCell2.DecimalValue = 15;
         multiplierCell2.UserElementCellSet = [userMultiplierCell2];
-
+        multiplierCell2.CurrentUserCell = userMultiplierCell2;
+    
         expect(element.totalIncome()).toBe(2750);
 
         // TODO Update / remove
@@ -881,6 +892,7 @@ describe('ng-tests Element', function () {
         userMultiplierCell1.ElementCell = multiplierCell1;
         userMultiplierCell1.DecimalValue = 5;
         multiplierCell1.UserElementCellSet = [userMultiplierCell1];
+        multiplierCell1.CurrentUserCell = userMultiplierCell1;
 
         expect(element.totalIncomeAverage()).toBe(275);
 
@@ -906,6 +918,7 @@ describe('ng-tests Element', function () {
         userMultiplierCell2.ElementCell = multiplierCell2;
         userMultiplierCell2.DecimalValue = 15;
         multiplierCell2.UserElementCellSet = [userMultiplierCell2];
+        multiplierCell2.CurrentUserCell = userMultiplierCell2;
 
         expect(element.totalIncomeAverage()).toBe(2750 / 2);
 

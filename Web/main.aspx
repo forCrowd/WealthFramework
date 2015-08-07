@@ -153,7 +153,7 @@
     <script src="/App/includes/manageScripts.js?v=0.33"></script>
 
     <!-- Service extensions -->
-    <script src="/App/services/userService.js?v=0.29"></script>
+    <script src="/App/services/userService.js?v=0.35"></script>
     <script src="/App/services/resourcePoolService.js?v=0.29"></script>
 
     <!-- Content -->

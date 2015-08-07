@@ -3,9 +3,9 @@
 
     var serviceId = 'ElementItem';
     angular.module('main')
-        .factory(serviceId, ['$rootScope', 'logger', elementItemFactory]);
+        .factory(serviceId, ['logger', elementItemFactory]);
 
-    function elementItemFactory($rootScope, logger) {
+    function elementItemFactory(logger) {
 
         // Logger
         logger = logger.forSource(serviceId);
@@ -25,20 +25,6 @@
                 _directIncomeCell: null,
                 _multiplier: null
             }
-
-            // Events
-            $rootScope.$on('elementMultiplierUpdated', function (event, args) {
-                if (args.elementCell === self.multiplierCell()) {
-                    self.backingFields._multiplier = args.value;
-
-                    // TODO Raise an event and handle this?
-                    // Or is updating the related entities manually a better approach?
-                    for (var i = 0; i < self.ElementCellSet.length; i++) {
-                        var cell = self.ElementCellSet[i];
-                        cell.setNumericValueMultiplied();
-                    }
-                }
-            });
 
             // Private functions
             function getElementCellIndexSet(elementItem) {
@@ -144,11 +130,11 @@
                 } else {
 
                     // If there is a multiplier field on the element but user is not set any value, return 0 as the default value
-                    if (multiplierCell.userCell() === null
-                        || multiplierCell.userCell().DecimalValue === null) {
+                    if (multiplierCell.CurrentUserCell === null
+                        || multiplierCell.CurrentUserCell.DecimalValue === null) {
                         self.backingFields._multiplier = 0;
                     } else { // Else, user's
-                        self.backingFields._multiplier = multiplierCell.userCell().DecimalValue;
+                        self.backingFields._multiplier = multiplierCell.CurrentUserCell.DecimalValue;
                     }
                 }
             }
