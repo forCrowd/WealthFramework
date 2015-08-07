@@ -20,16 +20,7 @@
                     this.backingFields._DecimalValue = value;
 
                     if (typeof this.ElementCell !== 'undefined' && this.ElementCell !== null) {
-
-                        this.ElementCell.setCurrentUserNumericValue();
-
-                        if (typeof this.ElementCell.ElementItem !== 'undefined' && this.ElementCell.ElementItem !== null) {
-                            this.ElementCell.ElementItem.setMultiplier();
-                        }
-
-                        this.ElementCell.setNumericValue();
-                        this.ElementCell.setNumericValueMultiplied();
-
+                        this.ElementCell.CurrentUserNumericValue = value;
                     }
                 }
             }

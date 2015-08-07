@@ -19,15 +19,43 @@
                 if (value !== this.backingFields._currentUserCell) {
                     this.backingFields._currentUserCell = value;
 
-                    // Update currentUserNumericValue as well
+                    // Update CurrentUserNumericValue as well
                     switch (this.ElementField.ElementFieldType) {
-                        case 2: { this.backingFields._currentUserNumericValue = value !== null ? value.BooleanValue : 0; break; }
-                        case 3: { this.backingFields._currentUserNumericValue = value !== null ? value.IntegerValue : 0; break; }
-                        case 4: { this.backingFields._currentUserNumericValue = value !== null ? value.DecimalValue : 50; /* Default value? */ break; }
+                        case 2: { this.CurrentUserNumericValue = value !== null ? value.BooleanValue : 0; break; }
+                        case 3: { this.CurrentUserNumericValue = value !== null ? value.IntegerValue : 0; break; }
+                        case 4: { this.CurrentUserNumericValue = value !== null ? value.DecimalValue : 50; /* Default value? */ break; }
                         // TODO 5 (DateTime?)
+                        case 11: { this.CurrentUserNumericValue = this.NumericValue !== null ? this.NumericValue : 0; break; } // DirectIncome: No need to try user's cell, always return all users', which will be CMRP owner's value
+                        case 12: {
+                            this.CurrentUserNumericValue = value !== null ? value.DecimalValue : 0;
+                            break;
+                        }
+                        default: { throw 'Not supported ' + this.ElementField.ElementFieldType; }
+                    }
+                }
+            }
+        });
+
+        Object.defineProperty(ElementCell.prototype, 'CurrentUserNumericValue', {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+
+                // Initial value
+                // TODO Can this be done in a better way?
+                if (this.backingFields._currentUserNumericValue === null
+                    && typeof this.ElementField !== 'undefined') {
+
+                    switch (this.ElementField.ElementFieldType) {
+                        case 2: { this.backingFields._currentUserNumericValue = this.CurrentUserCell !== null ? this.CurrentUserCell.BooleanValue : 0; break; }
+                        case 3: { this.backingFields._currentUserNumericValue = this.CurrentUserCell !== null ? this.CurrentUserCell.IntegerValue : 0; break; }
+                        case 4: { this.backingFields._currentUserNumericValue = this.CurrentUserCell !== null ? this.CurrentUserCell.DecimalValue : 50; /* Default value? */ break; }
+                            // TODO 5 (DateTime?)
                         case 11: { this.backingFields._currentUserNumericValue = this.NumericValue !== null ? this.NumericValue : 0; break; } // DirectIncome: No need to try user's cell, always return all users', which will be CMRP owner's value
                         case 12: {
-                            this.backingFields._currentUserNumericValue = value !== null ? value.DecimalValue : 0;
+                            this.backingFields._currentUserNumericValue = this.CurrentUserCell !== null
+                                ? this.CurrentUserCell.DecimalValue
+                                : 0; /* Default value? */
 
                             if (typeof this.ElementItem !== 'undefined' && this.ElementItem !== null) {
                                 this.ElementItem.setMultiplier();
@@ -35,11 +63,43 @@
 
                             break;
                         }
+                            // case 12: { value = userCell !== null ? userCell.DecimalValue : 0; break; }
                         default: { throw 'Not supported ' + this.ElementField.ElementFieldType; }
                     }
 
                     this.setNumericValue();
                     this.setNumericValueMultiplied();
+                }
+
+                return this.backingFields._currentUserNumericValue;
+            },
+            set: function (value) {
+
+                if (value !== this.backingFields._currentUserNumericValue) {
+                    this.backingFields._currentUserNumericValue = value;
+
+                    switch (this.ElementField.ElementFieldType) {
+                        case 2:
+                        case 3:
+                        case 4:
+                            // TODO 5 (DateTime?)
+                        case 11:
+                            {
+                                this.setNumericValue();
+                                this.setNumericValueMultiplied();
+                                break;
+                            }
+                        case 12: {
+                            if (typeof this.ElementItem !== 'undefined' && this.ElementItem !== null) {
+                                this.ElementItem.setMultiplier();
+                            }
+
+                            this.setNumericValue();
+                            this.setNumericValueMultiplied();
+                            break;
+                        }
+                        default: { throw 'Not supported ' + this.ElementField.ElementFieldType; }
+                    }
                 }
             }
         });
@@ -64,41 +124,6 @@
             }
 
             // Public functions
-            self.currentUserNumericValue = function () {
-
-                if (self.backingFields._currentUserNumericValue === null) {
-
-                    // self.setCurrentUserNumericValue();
-
-                    switch (self.ElementField.ElementFieldType) {
-                        case 2: { self.backingFields._currentUserNumericValue = self.CurrentUserCell !== null ? self.CurrentUserCell.BooleanValue : 0; break; }
-                        case 3: { self.backingFields._currentUserNumericValue = self.CurrentUserCell !== null ? self.CurrentUserCell.IntegerValue : 0; break; }
-                        case 4: { self.backingFields._currentUserNumericValue = self.CurrentUserCell !== null ? self.CurrentUserCell.DecimalValue : 50; /* Default value? */ break; }
-                            // TODO 5 (DateTime?)
-                        case 11: { self.backingFields._currentUserNumericValue = self.NumericValue !== null ? self.NumericValue : 0; break; } // DirectIncome: No need to try user's cell, always return all users', which will be CMRP owner's value
-                        case 12: { self.backingFields._currentUserNumericValue = self.CurrentUserCell !== null ? self.CurrentUserCell.DecimalValue : 0; /* Default value? */ break; }
-                            // case 12: { value = userCell !== null ? userCell.DecimalValue : 0; break; }
-                        default: { throw 'Not supported ' + self.ElementField.ElementFieldType; }
-                    }
-
-                }
-
-                return self.backingFields._currentUserNumericValue;
-            }
-
-            self.setCurrentUserNumericValue = function () {
-
-                switch (self.ElementField.ElementFieldType) {
-                    case 2: { self.backingFields._currentUserNumericValue = self.CurrentUserCell !== null ? self.CurrentUserCell.BooleanValue : 0; break; }
-                    case 3: { self.backingFields._currentUserNumericValue = self.CurrentUserCell !== null ? self.CurrentUserCell.IntegerValue : 0; break; }
-                    case 4: { self.backingFields._currentUserNumericValue = self.CurrentUserCell !== null ? self.CurrentUserCell.DecimalValue : 50; /* Default value? */ break; }
-                        // TODO 5 (DateTime?)
-                    case 11: { self.backingFields._currentUserNumericValue = self.NumericValue !== null ? self.NumericValue : 0; break; } // DirectIncome: No need to try user's cell, always return all users', which will be CMRP owner's value
-                    case 12: { self.backingFields._currentUserNumericValue = self.CurrentUserCell !== null ? self.CurrentUserCell.DecimalValue : 0; /* Default value? */ break; }
-                                                       // case 12: { value = userCell !== null ? userCell.DecimalValue : 0; break; }
-                    default: { throw 'Not supported ' + self.ElementField.ElementFieldType; }
-                }
-            }
 
             // TODO Since this is a fixed value based on NumericValue & current user's rate,
             // it could be calculated on server, check it later again / SH - 03 Aug. '15
@@ -135,26 +160,6 @@
 
                     self.backingFields._otherUsersNumericValueTotal -= userValue;
                 }
-
-                //// Exclude current user's
-                //if (self.userCell() !== null) {
-
-                //    var userValue = 0;
-                //    switch (self.ElementField.ElementFieldType) {
-                //        // TODO Check bool to decimal conversion?
-                //        case 2: { userValue = self.userCell().BooleanValue; break; }
-                //        case 3: { userValue = self.userCell().IntegerValue; break; }
-                //        case 4: { userValue = self.userCell().DecimalValue; break; }
-                //            // TODO 5 - DateTime?
-                //        case 11: { userValue = self.userCell().DecimalValue; break; }
-                //            // TODO 12 - Multiplier?
-                //        default: {
-                //            throw 'Not supported ' + self.ElementField.ElementFieldType;
-                //        }
-                //    }
-
-                //    self.backingFields._otherUsersNumericValueTotal -= userValue;
-                //}
             }
 
             // TODO Since this is a fixed value based on NumericValueCount & current user's rate,
@@ -176,17 +181,12 @@
                 if (self.UserElementCellSet.length > 0) {
                     self.backingFields._otherUsersNumericValueCount--;
                 }
-
-                //// Exclude current user's
-                //if (self.userCell() !== null) {
-                //    self.backingFields._otherUsersNumericValueCount--;
-                //}
             }
 
             self.numericValueTotal = function () {
                 return self.ElementField.UseFixedValue
                     ? self.otherUsersNumericValueTotal()
-                    : self.otherUsersNumericValueTotal() + self.currentUserNumericValue();
+                    : self.otherUsersNumericValueTotal() + self.CurrentUserNumericValue;
             }
 
             self.numericValueCount = function () {
@@ -219,7 +219,7 @@
 
                 if (typeof self.ElementField !== 'undefined') {
                     switch (self.ElementField.Element.ResourcePool.RatingMode) {
-                        case 1: { self.backingFields._numericValue = self.currentUserNumericValue(); break; } // Current user's
+                        case 1: { self.backingFields._numericValue = self.CurrentUserNumericValue; break; } // Current user's
                         case 2: { self.backingFields._numericValue = self.numericValueAverage(); break; } // All
                     }
                 }

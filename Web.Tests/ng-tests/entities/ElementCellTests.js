@@ -88,7 +88,7 @@ describe('ng-tests ElementCell', function () {
         field1.ElementCellSet = [cell1];
         item1.ElementCellSet = [cell1];
 
-        expect(cell1.currentUserNumericValue()).toBe(50);
+        expect(cell1.CurrentUserNumericValue).toBe(50);
 
         // Case 2: Add user cell
         var userCell1 = new UserElementCell();
@@ -97,11 +97,7 @@ describe('ng-tests ElementCell', function () {
         cell1.UserElementCellSet = [userCell1];
         cell1.CurrentUserCell = userCell1;
 
-        // TODO Manually update?!
-        cell1.CurrentUserCell = userCell1;
-        //cell1.setCurrentUserNumericValue();
-
-        expect(cell1.currentUserNumericValue()).toBe(25);
+        expect(cell1.CurrentUserNumericValue).toBe(25);
 
         // TODO Remove case!
         // TODO With other field types
