@@ -52,6 +52,30 @@
                 if (value !== this.backingFields._ratingMode) {
                     this.backingFields._ratingMode = value;
                     this.setResourcePoolRate();
+
+                    for (var elementIndex = 0; elementIndex < this.ElementSet.length; elementIndex++) {
+                        var element = this.ElementSet[elementIndex];
+
+                        for (var fieldIndex = 0; fieldIndex < element.ElementFieldSet.length; fieldIndex++) {
+
+                            var field = element.ElementFieldSet[fieldIndex];
+
+                            // Field calculations
+                            if (field.IndexEnabled) {
+                                field.setIndexRating();
+                            }
+
+                            if (!field.UseFixedValue && field.IndexEnabled) {
+                                for (var cellIndex = 0; cellIndex < field.ElementCellSet.length; cellIndex++) {
+                                    var cell = field.ElementCellSet[cellIndex];
+
+                                    // Cell calculations
+                                    cell.setNumericValue();
+                                    cell.setNumericValueMultiplied();
+                                }
+                            }
+                        }
+                    }
                 }
             }
         });
@@ -114,35 +138,7 @@
             }
 
             self.toggleRatingMode = function () {
-
                 self.RatingMode = self.RatingMode === 1 ? 2 : 1;
-
-                // ResourcePool calculations
-                //self.setResourcePoolRate();
-
-                for (var elementIndex = 0; elementIndex < self.ElementSet.length; elementIndex++) {
-                    var element = self.ElementSet[elementIndex];
-
-                    for (var fieldIndex = 0; fieldIndex < element.ElementFieldSet.length; fieldIndex++) {
-
-                        var field = element.ElementFieldSet[fieldIndex];
-
-                        // Field calculations
-                        if (field.IndexEnabled) {
-                            field.setIndexRating();
-                        }
-
-                        if (!field.UseFixedValue && field.IndexEnabled) {
-                            for (var cellIndex = 0; cellIndex < field.ElementCellSet.length; cellIndex++) {
-                                var cell = field.ElementCellSet[cellIndex];
-
-                                // Cell calculations
-                                cell.setNumericValue();
-                                cell.setNumericValueMultiplied();
-                            }
-                        }
-                    }
-                }
             }
 
             self.userResourcePool = function () {
