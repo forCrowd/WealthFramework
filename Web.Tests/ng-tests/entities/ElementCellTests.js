@@ -135,7 +135,7 @@ describe('ng-tests ElementCell', function () {
         expect(cell1.otherUsersNumericValueTotal()).toBe(0);
 
         // Case 2: Without user rating
-        cell1.NumericValue = 25;
+        cell1.NumericValueTotal = 25;
 
         // TODO Manually update?!
         cell1.setOtherUsersNumericValueTotal();
@@ -244,7 +244,7 @@ describe('ng-tests ElementCell', function () {
         expect(cell1.numericValueTotal()).toBe(50);
 
         // Case 2: Without user rating
-        cell1.NumericValue = 25;
+        cell1.NumericValueTotal = 25;
 
         // TODO Manually update?!
         cell1.setOtherUsersNumericValueTotal();
@@ -349,7 +349,7 @@ describe('ng-tests ElementCell', function () {
         expect(cell1.numericValueAverage()).toBe(50);
 
         // Case 2: Without user rating
-        cell1.NumericValue = 75;
+        cell1.NumericValueTotal = 75;
         cell1.NumericValueCount = 3;
 
         // TODO Manually update?!
@@ -406,7 +406,7 @@ describe('ng-tests ElementCell', function () {
         expect(cell1.numericValue()).toBe(50);
 
         // Case 2: Without user rating
-        cell1.NumericValue = 75;
+        cell1.NumericValueTotal = 75;
         cell1.NumericValueCount = 3;
 
         // TODO Manually update?!
@@ -465,7 +465,7 @@ describe('ng-tests ElementCell', function () {
         expect(cell1.numericValue()).toBe(50);
 
         // Case 2: Without user rating
-        cell1.NumericValue = 75;
+        cell1.NumericValueTotal = 75;
         cell1.NumericValueCount = 3;
 
         // TODO Manually update?!
@@ -515,7 +515,7 @@ describe('ng-tests ElementCell', function () {
         var decimalCell1 = new ElementCell();
         decimalCell1.ElementField = decimalField;
         decimalCell1.ElementItem = item1;
-        decimalCell1.NumericValue = 50;
+        decimalCell1.NumericValueTotal = 50;
         decimalField.ElementCellSet = [decimalCell1];
         item1.ElementCellSet = [decimalCell1];
 
@@ -571,7 +571,7 @@ describe('ng-tests ElementCell', function () {
         var decimalCell1 = new ElementCell();
         decimalCell1.ElementField = decimalField;
         decimalCell1.ElementItem = item1;
-        decimalCell1.NumericValue = 50;
+        decimalCell1.NumericValueTotal = 50;
         decimalField.ElementCellSet = [decimalCell1];
         item1.ElementCellSet = [decimalCell1];
 
@@ -629,7 +629,7 @@ describe('ng-tests ElementCell', function () {
         var decimalCell1 = new ElementCell();
         decimalCell1.ElementField = decimalField;
         decimalCell1.ElementItem = item1;
-        decimalCell1.NumericValue = 50;
+        decimalCell1.NumericValueTotal = 50;
         decimalField.ElementCellSet = [decimalCell1];
         item1.ElementCellSet = [decimalCell1];
 
@@ -687,7 +687,7 @@ describe('ng-tests ElementCell', function () {
         var decimalCell1 = new ElementCell();
         decimalCell1.ElementField = decimalField;
         decimalCell1.ElementItem = item1;
-        decimalCell1.NumericValue = 50;
+        decimalCell1.NumericValueTotal = 50;
         decimalField.ElementCellSet = [decimalCell1];
         item1.ElementCellSet = [decimalCell1];
 
@@ -746,7 +746,7 @@ describe('ng-tests ElementCell', function () {
         var directIncomeCell = new ElementCell();
         directIncomeCell.ElementField = directIncomeField;
         directIncomeCell.ElementItem = item1;
-        directIncomeCell.NumericValue = 50;
+        directIncomeCell.NumericValueTotal = 50;
         directIncomeField.ElementCellSet = [directIncomeCell];
         item1.ElementCellSet = [directIncomeCell];
 

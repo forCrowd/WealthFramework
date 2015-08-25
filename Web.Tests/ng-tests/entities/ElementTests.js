@@ -243,7 +243,7 @@ describe('ng-tests Element', function () {
         var directIncomeCell1 = new ElementCell();
         directIncomeCell1.ElementField = directIncomeField;
         directIncomeCell1.ElementItem = item1;
-        directIncomeCell1.NumericValue = 50;
+        directIncomeCell1.NumericValueTotal = 50;
         directIncomeField.ElementCellSet = [directIncomeCell1];
         item1.ElementCellSet = [directIncomeCell1];
 
@@ -257,7 +257,7 @@ describe('ng-tests Element', function () {
         var directIncomeCell2 = new ElementCell();
         directIncomeCell2.ElementField = directIncomeField;
         directIncomeCell2.ElementItem = item2;
-        directIncomeCell2.NumericValue = 150;
+        directIncomeCell2.NumericValueTotal = 150;
         directIncomeField.ElementCellSet.push(directIncomeCell2);
         item2.ElementCellSet = [directIncomeCell2];
 
@@ -374,7 +374,7 @@ describe('ng-tests Element', function () {
         var directIncomeCell1 = new ElementCell();
         directIncomeCell1.ElementField = directIncomeField;
         directIncomeCell1.ElementItem = item1;
-        directIncomeCell1.NumericValue = 50;
+        directIncomeCell1.NumericValueTotal = 50;
         directIncomeField.ElementCellSet = [directIncomeCell1];
         item1.ElementCellSet = [directIncomeCell1];
 
@@ -400,7 +400,7 @@ describe('ng-tests Element', function () {
         var directIncomeCell2 = new ElementCell();
         directIncomeCell2.ElementField = directIncomeField;
         directIncomeCell2.ElementItem = item2;
-        directIncomeCell2.NumericValue = 150;
+        directIncomeCell2.NumericValueTotal = 150;
         directIncomeField.ElementCellSet.push(directIncomeCell2);
         item2.ElementCellSet = [directIncomeCell2];
 
@@ -448,7 +448,7 @@ describe('ng-tests Element', function () {
         var directIncomeCell = new ElementCell();
         directIncomeCell.ElementField = directIncomeField;
         directIncomeCell.ElementItem = item1;
-        directIncomeCell.NumericValue = 50;
+        directIncomeCell.NumericValueTotal = 50;
         directIncomeField.ElementCellSet = [directIncomeCell];
         item1.ElementCellSet = [directIncomeCell];
 
@@ -462,7 +462,7 @@ describe('ng-tests Element', function () {
         var directIncomeCell2 = new ElementCell();
         directIncomeCell2.ElementField = directIncomeField;
         directIncomeCell2.ElementItem = item2;
-        directIncomeCell2.NumericValue = 150;
+        directIncomeCell2.NumericValueTotal = 150;
         directIncomeField.ElementCellSet.push(directIncomeCell2);
         item2.ElementCellSet = [directIncomeCell2];
 
@@ -504,7 +504,7 @@ describe('ng-tests Element', function () {
         var directIncomeCell = new ElementCell();
         directIncomeCell.ElementField = directIncomeField;
         directIncomeCell.ElementItem = item1;
-        directIncomeCell.NumericValue = 50;
+        directIncomeCell.NumericValueTotal = 50;
         directIncomeField.ElementCellSet = [directIncomeCell];
         item1.ElementCellSet = [directIncomeCell];
 
@@ -530,7 +530,7 @@ describe('ng-tests Element', function () {
         var directIncomeCell2 = new ElementCell();
         directIncomeCell2.ElementField = directIncomeField;
         directIncomeCell2.ElementItem = item2;
-        directIncomeCell2.NumericValue = 150;
+        directIncomeCell2.NumericValueTotal = 150;
         directIncomeField.ElementCellSet.push(directIncomeCell2);
         item2.ElementCellSet = [directIncomeCell2];
 
@@ -579,7 +579,7 @@ describe('ng-tests Element', function () {
         var directIncomeCell = new ElementCell();
         directIncomeCell.ElementField = directIncomeField;
         directIncomeCell.ElementItem = item1;
-        directIncomeCell.NumericValue = 50;
+        directIncomeCell.NumericValueTotal = 50;
         directIncomeField.ElementCellSet = [directIncomeCell];
         item1.ElementCellSet = [directIncomeCell];
 
@@ -593,7 +593,7 @@ describe('ng-tests Element', function () {
         var directIncomeCell2 = new ElementCell();
         directIncomeCell2.ElementField = directIncomeField;
         directIncomeCell2.ElementItem = item2;
-        directIncomeCell2.NumericValue = 150;
+        directIncomeCell2.NumericValueTotal = 150;
         directIncomeField.ElementCellSet.push(directIncomeCell2);
         item2.ElementCellSet = [directIncomeCell2];
 
@@ -635,7 +635,7 @@ describe('ng-tests Element', function () {
         var directIncomeCell = new ElementCell();
         directIncomeCell.ElementField = directIncomeField;
         directIncomeCell.ElementItem = item1;
-        directIncomeCell.NumericValue = 50;
+        directIncomeCell.NumericValueTotal = 50;
         directIncomeField.ElementCellSet = [directIncomeCell];
         item1.ElementCellSet = [directIncomeCell];
 
@@ -661,7 +661,7 @@ describe('ng-tests Element', function () {
         var directIncomeCell2 = new ElementCell();
         directIncomeCell2.ElementField = directIncomeField;
         directIncomeCell2.ElementItem = item2;
-        directIncomeCell2.NumericValue = 150;
+        directIncomeCell2.NumericValueTotal = 150;
         directIncomeField.ElementCellSet.push(directIncomeCell2);
         item2.ElementCellSet = [directIncomeCell2];
 
@@ -716,7 +716,7 @@ describe('ng-tests Element', function () {
         var directIncomeCell = new ElementCell();
         directIncomeCell.ElementField = directIncomeField;
         directIncomeCell.ElementItem = item1;
-        directIncomeCell.NumericValue = 50;
+        directIncomeCell.NumericValueTotal = 50;
         directIncomeField.ElementCellSet = [directIncomeCell];
         item1.ElementCellSet = [directIncomeCell];
 
@@ -742,7 +742,7 @@ describe('ng-tests Element', function () {
         var directIncomeCell2 = new ElementCell();
         directIncomeCell2.ElementField = directIncomeField;
         directIncomeCell2.ElementItem = item2;
-        directIncomeCell2.NumericValue = 150;
+        directIncomeCell2.NumericValueTotal = 150;
         directIncomeField.ElementCellSet.push(directIncomeCell2);
         item2.ElementCellSet = [directIncomeCell2];
 
@@ -797,7 +797,7 @@ describe('ng-tests Element', function () {
         var directIncomeCell = new ElementCell();
         directIncomeCell.ElementField = directIncomeField;
         directIncomeCell.ElementItem = item1;
-        directIncomeCell.NumericValue = 50;
+        directIncomeCell.NumericValueTotal = 50;
         directIncomeField.ElementCellSet = [directIncomeCell];
         item1.ElementCellSet = [directIncomeCell];
 
@@ -823,7 +823,7 @@ describe('ng-tests Element', function () {
         var directIncomeCell2 = new ElementCell();
         directIncomeCell2.ElementField = directIncomeField;
         directIncomeCell2.ElementItem = item2;
-        directIncomeCell2.NumericValue = 150;
+        directIncomeCell2.NumericValueTotal = 150;
         directIncomeField.ElementCellSet.push(directIncomeCell2);
         item2.ElementCellSet = [directIncomeCell2];
 
@@ -878,7 +878,7 @@ describe('ng-tests Element', function () {
         var directIncomeCell = new ElementCell();
         directIncomeCell.ElementField = directIncomeField;
         directIncomeCell.ElementItem = item1;
-        directIncomeCell.NumericValue = 50;
+        directIncomeCell.NumericValueTotal = 50;
         directIncomeField.ElementCellSet = [directIncomeCell];
         item1.ElementCellSet = [directIncomeCell];
 
@@ -904,7 +904,7 @@ describe('ng-tests Element', function () {
         var directIncomeCell2 = new ElementCell();
         directIncomeCell2.ElementField = directIncomeField;
         directIncomeCell2.ElementItem = item2;
-        directIncomeCell2.NumericValue = 150;
+        directIncomeCell2.NumericValueTotal = 150;
         directIncomeField.ElementCellSet.push(directIncomeCell2);
         item2.ElementCellSet = [directIncomeCell2];
 

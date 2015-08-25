@@ -43,11 +43,11 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             Sql("ALTER TABLE dbo.ElementCell DROP COLUMN StringValue;");
             Sql("ALTER TABLE dbo.ElementCell ADD StringValue AS dbo.getElementCellStringValue(Id);");
 
-            // ElementCell NumericValue
-            Sql(PrepareDropFunctionBlock("ElementCell", "NumericValue", "getElementCellNumericValue"));
-            Sql(PrepareGetElementCellNumericValueFunctionBlock());
-            Sql("ALTER TABLE dbo.ElementCell DROP COLUMN NumericValue;");
-            Sql("ALTER TABLE dbo.ElementCell ADD NumericValue AS dbo.getElementCellNumericValue(Id);");
+            // ElementCell NumericValueTotal
+            Sql(PrepareDropFunctionBlock("ElementCell", "NumericValueTotal", "getElementCellNumericValueTotal"));
+            Sql(PrepareGetElementCellNumericValueTotalFunctionBlock());
+            Sql("ALTER TABLE dbo.ElementCell DROP COLUMN NumericValueTotal;");
+            Sql("ALTER TABLE dbo.ElementCell ADD NumericValueTotal AS dbo.getElementCellNumericValueTotal(Id);");
 
             // ElementCell NumericValueCount
             Sql(PrepareDropFunctionBlock("ElementCell", "NumericValueCount", "getElementCellNumericValueCount"));
@@ -88,9 +88,9 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             Sql("ALTER TABLE dbo.ElementCell ADD StringValue [nvarchar](MAX);");
             Sql("DROP FUNCTION dbo.getElementCellStringValue;");
 
-            // ElementCell NumericValue
-            Sql("ALTER TABLE dbo.ElementCell DROP COLUMN NumericValue;");
-            Sql("ALTER TABLE dbo.ElementCell ADD NumericValue [decimal](18,2);");
+            // ElementCell NumericValueTotal
+            Sql("ALTER TABLE dbo.ElementCell DROP COLUMN NumericValueTotal;");
+            Sql("ALTER TABLE dbo.ElementCell ADD NumericValueTotal [decimal](18,2);");
             Sql("DROP FUNCTION dbo.getElementCellNumericValue;");
 
             // ElementCell NumericValueCount
@@ -206,10 +206,10 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             return sbOutput.ToString();
         }
 
-        string PrepareGetElementCellNumericValueFunctionBlock()
+        string PrepareGetElementCellNumericValueTotalFunctionBlock()
         {
             var sbOutput = new StringBuilder();
-            sbOutput.AppendLine("CREATE FUNCTION dbo.getElementCellNumericValue(@elementCellId int)");
+            sbOutput.AppendLine("CREATE FUNCTION dbo.getElementCellNumericValueTotal(@elementCellId int)");
             sbOutput.AppendLine("RETURNS decimal");
             sbOutput.AppendLine("AS");
             sbOutput.AppendLine("BEGIN");

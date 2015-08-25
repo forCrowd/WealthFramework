@@ -59,7 +59,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
                         ElementItemId = c.Int(nullable: false),
                         ElementFieldId = c.Int(nullable: false),
                         StringValue = c.String(),
-                        NumericValue = c.Decimal(precision: 18, scale: 2),
+                        NumericValueTotal = c.Decimal(precision: 18, scale: 2),
                         NumericValueCount = c.Int(),
                         SelectedElementItemId = c.Int(),
                         CreatedOn = c.DateTime(nullable: false),

@@ -55,7 +55,7 @@ function registerPrototypes($injector) {
     ElementCell = $injector.get('ElementCell');
     ElementCell.prototype.ElementField = null;
     ElementCell.prototype.ElementItem = null;
-    ElementCell.prototype.NumericValue = 0;
+    ElementCell.prototype.NumericValueTotal = 0;
     ElementCell.prototype.NumericValueCount = 0;
     ElementCell.prototype.UserElementCellSet = []; // *
 

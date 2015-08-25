@@ -14,7 +14,9 @@
         Object.defineProperty(ElementCell.prototype, 'CurrentUserCell', {
             enumerable: true,
             configurable: true,
-            get: function () { return this.backingFields._currentUserCell; },
+            get: function () {
+                return this.backingFields._currentUserCell;
+            },
             set: function (value) {
                 if (value !== this.backingFields._currentUserCell) {
                     this.backingFields._currentUserCell = value;
@@ -25,7 +27,7 @@
                         case 3: { this.CurrentUserNumericValue = value !== null ? value.IntegerValue : 0; break; }
                         case 4: { this.CurrentUserNumericValue = value !== null ? value.DecimalValue : 50; /* Default value? */ break; }
                         // TODO 5 (DateTime?)
-                        case 11: { this.CurrentUserNumericValue = this.NumericValue !== null ? this.NumericValue : 0; break; } // DirectIncome: No need to try user's cell, always return all users', which will be CMRP owner's value
+                        case 11: { this.CurrentUserNumericValue = this.NumericValueTotal !== null ? this.NumericValueTotal : 0; break; } // DirectIncome: No need to try user's cell, always return all users', which will be CMRP owner's value
                         case 12: {
                             this.CurrentUserNumericValue = value !== null ? value.DecimalValue : 0;
                             break;
@@ -51,7 +53,7 @@
                         case 3: { this.backingFields._currentUserNumericValue = this.CurrentUserCell !== null ? this.CurrentUserCell.IntegerValue : 0; break; }
                         case 4: { this.backingFields._currentUserNumericValue = this.CurrentUserCell !== null ? this.CurrentUserCell.DecimalValue : 50; /* Default value? */ break; }
                             // TODO 5 (DateTime?)
-                        case 11: { this.backingFields._currentUserNumericValue = this.NumericValue !== null ? this.NumericValue : 0; break; } // DirectIncome: No need to try user's cell, always return all users', which will be CMRP owner's value
+                        case 11: { this.backingFields._currentUserNumericValue = this.NumericValueTotal !== null ? this.NumericValueTotal : 0; break; } // DirectIncome: No need to try user's cell, always return all users', which will be CMRP owner's value
                         case 12: {
                             this.backingFields._currentUserNumericValue = this.CurrentUserCell !== null
                                 ? this.CurrentUserCell.DecimalValue
@@ -83,8 +85,7 @@
                         case 3:
                         case 4:
                             // TODO 5 (DateTime?)
-                        case 11:
-                            {
+                        case 11: {
                                 this.setNumericValue();
                                 this.setNumericValueMultiplied();
                                 break;
@@ -125,7 +126,7 @@
 
             // Public functions
 
-            // TODO Since this is a fixed value based on NumericValue & current user's rate,
+            // TODO Since this is a fixed value based on NumericValueTotal & current user's rate,
             // it could be calculated on server, check it later again / SH - 03 Aug. '15
             self.otherUsersNumericValueTotal = function () {
 
@@ -139,7 +140,7 @@
 
             self.setOtherUsersNumericValueTotal = function () {
 
-                self.backingFields._otherUsersNumericValueTotal = self.NumericValue;
+                self.backingFields._otherUsersNumericValueTotal = self.NumericValueTotal;
 
                 // Exclude current user's
                 if (self.UserElementCellSet.length > 0) {

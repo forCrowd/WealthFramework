@@ -50,7 +50,7 @@ describe('ng-tests ElementField', function () {
         var decimalCell1 = new ElementCell();
         decimalCell1.ElementField = decimalField;
         decimalCell1.ElementItem = item1;
-        decimalCell1.NumericValue = 50;
+        decimalCell1.NumericValueTotal = 50;
         decimalField.ElementCellSet = [decimalCell1];
         item1.ElementCellSet = [decimalCell1];
 
@@ -76,7 +76,7 @@ describe('ng-tests ElementField', function () {
         var decimalCell2 = new ElementCell();
         decimalCell2.ElementField = decimalField;
         decimalCell2.ElementItem = item2;
-        decimalCell2.NumericValue = 150;
+        decimalCell2.NumericValueTotal = 150;
         decimalField.ElementCellSet.push(decimalCell2);
         item2.ElementCellSet = [decimalCell2];
 
@@ -128,7 +128,7 @@ describe('ng-tests ElementField', function () {
         var decimalCell1 = new ElementCell();
         decimalCell1.ElementField = decimalField;
         decimalCell1.ElementItem = item1;
-        decimalCell1.NumericValue = 50;
+        decimalCell1.NumericValueTotal = 50;
         decimalField.ElementCellSet = [decimalCell1];
         item1.ElementCellSet = [decimalCell1];
 
@@ -154,7 +154,7 @@ describe('ng-tests ElementField', function () {
         var decimalCell2 = new ElementCell();
         decimalCell2.ElementField = decimalField;
         decimalCell2.ElementItem = item2;
-        decimalCell2.NumericValue = 150;
+        decimalCell2.NumericValueTotal = 150;
         decimalField.ElementCellSet.push(decimalCell2);
         item2.ElementCellSet = [decimalCell2];
 
@@ -207,7 +207,7 @@ describe('ng-tests ElementField', function () {
         var decimalCell1 = new ElementCell();
         decimalCell1.ElementField = decimalField;
         decimalCell1.ElementItem = item1;
-        decimalCell1.NumericValue = 50;
+        decimalCell1.NumericValueTotal = 50;
         decimalField.ElementCellSet = [decimalCell1];
         item1.ElementCellSet = [decimalCell1];
 
@@ -233,7 +233,7 @@ describe('ng-tests ElementField', function () {
         var decimalCell2 = new ElementCell();
         decimalCell2.ElementField = decimalField;
         decimalCell2.ElementItem = item2;
-        decimalCell2.NumericValue = 150;
+        decimalCell2.NumericValueTotal = 150;
         decimalField.ElementCellSet.push(decimalCell2);
         item2.ElementCellSet = [decimalCell2];
 
@@ -286,7 +286,7 @@ describe('ng-tests ElementField', function () {
         var decimalCell1 = new ElementCell();
         decimalCell1.ElementField = decimalField;
         decimalCell1.ElementItem = item1;
-        decimalCell1.NumericValue = 50;
+        decimalCell1.NumericValueTotal = 50;
         decimalField.ElementCellSet = [decimalCell1];
         item1.ElementCellSet = [decimalCell1];
 
@@ -312,7 +312,7 @@ describe('ng-tests ElementField', function () {
         var decimalCell2 = new ElementCell();
         decimalCell2.ElementField = decimalField;
         decimalCell2.ElementItem = item2;
-        decimalCell2.NumericValue = 150;
+        decimalCell2.NumericValueTotal = 150;
         decimalField.ElementCellSet.push(decimalCell2);
         item2.ElementCellSet = [decimalCell2];
 

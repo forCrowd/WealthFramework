@@ -99,7 +99,7 @@ describe('ng-tests ElementItem', function () {
         var directIncomeCell = new ElementCell();
         directIncomeCell.ElementField = directIncomeField;
         directIncomeCell.ElementItem = item1;
-        directIncomeCell.NumericValue = 50;
+        directIncomeCell.NumericValueTotal = 50;
         directIncomeField.ElementCellSet = [directIncomeCell];
         item1.ElementCellSet = [directIncomeCell];
 
@@ -138,7 +138,7 @@ describe('ng-tests ElementItem', function () {
         var multiplierCell = new ElementCell();
         multiplierCell.ElementField = multiplierField;
         multiplierCell.ElementItem = item1;
-        // multiplierCell.NumericValue = 50;
+        // multiplierCell.NumericValueTotal = 50;
         multiplierField.ElementCellSet = [multiplierCell];
         item1.ElementCellSet = [multiplierCell];
 
@@ -191,7 +191,7 @@ describe('ng-tests ElementItem', function () {
         var directIncomeCell = new ElementCell();
         directIncomeCell.ElementField = directIncomeField;
         directIncomeCell.ElementItem = item1;
-        directIncomeCell.NumericValue = 25;
+        directIncomeCell.NumericValueTotal = 25;
         directIncomeField.ElementCellSet = [directIncomeCell];
         item1.ElementCellSet = [directIncomeCell];
 
@@ -246,7 +246,7 @@ describe('ng-tests ElementItem', function () {
         var directIncomeCell = new ElementCell();
         directIncomeCell.ElementField = directIncomeField;
         directIncomeCell.ElementItem = item1;
-        directIncomeCell.NumericValue = 50;
+        directIncomeCell.NumericValueTotal = 50;
         directIncomeField.ElementCellSet = [directIncomeCell];
         item1.ElementCellSet = [directIncomeCell];
 
@@ -281,7 +281,7 @@ describe('ng-tests ElementItem', function () {
         var directIncomeCell = new ElementCell();
         directIncomeCell.ElementField = directIncomeField;
         directIncomeCell.ElementItem = item1;
-        directIncomeCell.NumericValue = 50;
+        directIncomeCell.NumericValueTotal = 50;
         directIncomeField.ElementCellSet = [directIncomeCell];
         item1.ElementCellSet = [directIncomeCell];
 
@@ -336,7 +336,7 @@ describe('ng-tests ElementItem', function () {
         var directIncomeCell = new ElementCell();
         directIncomeCell.ElementField = directIncomeField;
         directIncomeCell.ElementItem = item1;
-        directIncomeCell.NumericValue = 50;
+        directIncomeCell.NumericValueTotal = 50;
         directIncomeField.ElementCellSet = [directIncomeCell];
         item1.ElementCellSet = [directIncomeCell];
 
@@ -371,7 +371,7 @@ describe('ng-tests ElementItem', function () {
         var directIncomeCell = new ElementCell();
         directIncomeCell.ElementField = directIncomeField;
         directIncomeCell.ElementItem = item1;
-        directIncomeCell.NumericValue = 50;
+        directIncomeCell.NumericValueTotal = 50;
         directIncomeField.ElementCellSet = [directIncomeCell];
         item1.ElementCellSet = [directIncomeCell];
 
@@ -435,7 +435,7 @@ describe('ng-tests ElementItem', function () {
         var directIncomeCell = new ElementCell();
         directIncomeCell.ElementField = directIncomeField;
         directIncomeCell.ElementItem = item1;
-        directIncomeCell.NumericValue = 50;
+        directIncomeCell.NumericValueTotal = 50;
         directIncomeField.ElementCellSet = [directIncomeCell];
         item1.ElementCellSet = [directIncomeCell];
 
@@ -488,7 +488,7 @@ describe('ng-tests ElementItem', function () {
         var directIncomeCell = new ElementCell();
         directIncomeCell.ElementField = directIncomeField;
         directIncomeCell.ElementItem = item1;
-        directIncomeCell.NumericValue = 50;
+        directIncomeCell.NumericValueTotal = 50;
         directIncomeField.ElementCellSet = [directIncomeCell];
         item1.ElementCellSet = [directIncomeCell];
 
@@ -547,7 +547,7 @@ describe('ng-tests ElementItem', function () {
         var directIncomeCell = new ElementCell();
         directIncomeCell.ElementField = directIncomeField;
         directIncomeCell.ElementItem = item1;
-        directIncomeCell.NumericValue = 50;
+        directIncomeCell.NumericValueTotal = 50;
         directIncomeField.ElementCellSet = [directIncomeCell];
         item1.ElementCellSet = [directIncomeCell];
 
