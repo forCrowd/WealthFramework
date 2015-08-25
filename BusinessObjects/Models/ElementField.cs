@@ -87,7 +87,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public decimal? IndexRating { get; private set; }
+        public decimal? IndexRatingTotal { get; private set; }
         
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]

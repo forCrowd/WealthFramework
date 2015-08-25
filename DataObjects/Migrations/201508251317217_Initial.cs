@@ -38,7 +38,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
                         IndexEnabled = c.Boolean(nullable: false),
                         IndexRatingSortType = c.Byte(nullable: false),
                         SortOrder = c.Byte(nullable: false),
-                        IndexRating = c.Decimal(precision: 18, scale: 2),
+                        IndexRatingTotal = c.Decimal(precision: 18, scale: 2),
                         IndexRatingCount = c.Int(),
                         CreatedOn = c.DateTime(nullable: false),
                         ModifiedOn = c.DateTime(nullable: false),

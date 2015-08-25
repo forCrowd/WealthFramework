@@ -25,11 +25,11 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             Sql("ALTER TABLE dbo.ResourcePool DROP COLUMN RatingCount;");
             Sql("ALTER TABLE dbo.ResourcePool ADD RatingCount AS dbo.getResourcePoolRatingCount(Id);");
 
-            // ElementField IndexRating
-            Sql(PrepareDropFunctionBlock("ElementField", "IndexRating", "getElementFieldIndexRating"));
-            Sql(PrepareGetElementFieldIndexRatingFunctionBlock());
-            Sql("ALTER TABLE dbo.ElementField DROP COLUMN IndexRating;");
-            Sql("ALTER TABLE dbo.ElementField ADD IndexRating AS dbo.getElementFieldIndexRating(Id);");
+            // ElementField IndexRatingTotal
+            Sql(PrepareDropFunctionBlock("ElementField", "IndexRatingTotal", "getElementFieldIndexRatingTotal"));
+            Sql(PrepareGetElementFieldIndexRatingTotalFunctionBlock());
+            Sql("ALTER TABLE dbo.ElementField DROP COLUMN IndexRatingTotal;");
+            Sql("ALTER TABLE dbo.ElementField ADD IndexRatingTotal AS dbo.getElementFieldIndexRatingTotal(Id);");
 
             // ElementField IndexRatingCount
             Sql(PrepareDropFunctionBlock("ElementField", "IndexRatingCount", "getElementFieldIndexRatingCount"));
@@ -73,10 +73,10 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             Sql("ALTER TABLE dbo.ResourcePool ADD RatingCount int;");
             Sql("DROP FUNCTION dbo.getResourcePoolRatingCount;");
 
-            // ElementField IndexRating
-            Sql("ALTER TABLE dbo.ElementField DROP COLUMN IndexRating;");
-            Sql("ALTER TABLE dbo.ElementField ADD IndexRating [decimal](18,2);");
-            Sql("DROP FUNCTION dbo.getElementFieldIndexRating;");
+            // ElementField IndexRatingTotal
+            Sql("ALTER TABLE dbo.ElementField DROP COLUMN IndexRatingTotal;");
+            Sql("ALTER TABLE dbo.ElementField ADD IndexRatingTotal [decimal](18,2);");
+            Sql("DROP FUNCTION dbo.getElementFieldIndexRatingTotal;");
 
             // ElementField IndexRatingCount
             Sql("ALTER TABLE dbo.ElementField DROP COLUMN IndexRatingCount;");
@@ -91,7 +91,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             // ElementCell NumericValueTotal
             Sql("ALTER TABLE dbo.ElementCell DROP COLUMN NumericValueTotal;");
             Sql("ALTER TABLE dbo.ElementCell ADD NumericValueTotal [decimal](18,2);");
-            Sql("DROP FUNCTION dbo.getElementCellNumericValue;");
+            Sql("DROP FUNCTION dbo.getElementCellNumericValueTotal;");
 
             // ElementCell NumericValueCount
             Sql("ALTER TABLE dbo.ElementCell DROP COLUMN NumericValueCount;");
@@ -164,10 +164,10 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             return sbOutput.ToString();
         }
 
-        string PrepareGetElementFieldIndexRatingFunctionBlock()
+        string PrepareGetElementFieldIndexRatingTotalFunctionBlock()
         {
             var sbOutput = new StringBuilder();
-            sbOutput.AppendLine("CREATE FUNCTION dbo.getElementFieldIndexRating(@elementFieldId int)");
+            sbOutput.AppendLine("CREATE FUNCTION dbo.getElementFieldIndexRatingTotal(@elementFieldId int)");
             sbOutput.AppendLine("RETURNS decimal");
             sbOutput.AppendLine("AS");
             sbOutput.AppendLine("BEGIN");

@@ -410,7 +410,7 @@ describe('ng-tests ElementField', function () {
         expect(decimalField.otherUsersIndexRatingTotal()).toBe(0);
 
         // Case 2: Without user rating
-        decimalField.IndexRating = 25;
+        decimalField.IndexRatingTotal = 25;
 
         // TODO Manually update?!
         decimalField.setOtherUsersIndexRatingTotal();
@@ -488,7 +488,7 @@ describe('ng-tests ElementField', function () {
         expect(decimalField.indexRatingTotal()).toBe(50);
 
         // Case 2: Without user rating
-        decimalField.IndexRating = 25;
+        decimalField.IndexRatingTotal = 25;
 
         // TODO Manually update?!
         decimalField.setOtherUsersIndexRatingTotal();
@@ -563,7 +563,7 @@ describe('ng-tests ElementField', function () {
         expect(decimalField.indexRatingAverage()).toBe(50);
 
         // Case 2: Without user rating
-        decimalField.IndexRating = 75;
+        decimalField.IndexRatingTotal = 75;
         decimalField.IndexRatingCount = 3;
 
         // TODO Manually update?!
@@ -605,7 +605,7 @@ describe('ng-tests ElementField', function () {
         expect(decimalField.indexRating()).toBe(50);
 
         // Case 2: Without user rating
-        decimalField.IndexRating = 75;
+        decimalField.IndexRatingTotal = 75;
         decimalField.IndexRatingCount = 3;
 
         // TODO Manually update?!
@@ -648,7 +648,7 @@ describe('ng-tests ElementField', function () {
         expect(decimalField.indexRating()).toBe(50);
 
         // Case 2: Without user rating
-        decimalField.IndexRating = 75;
+        decimalField.IndexRatingTotal = 75;
         decimalField.IndexRatingCount = 3;
 
         // TODO Manually update?!

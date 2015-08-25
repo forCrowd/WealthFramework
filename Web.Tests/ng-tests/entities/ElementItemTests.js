@@ -421,7 +421,7 @@ describe('ng-tests ElementItem', function () {
         directIncomeField.Element = element;
         directIncomeField.ElementFieldType = 11;
         directIncomeField.IndexEnabled = true;
-        directIncomeField.IndexRating = 100;
+        directIncomeField.IndexRatingTotal = 100;
         directIncomeField.IndexRatingCount = 1;
         element.ElementFieldSet = [directIncomeField];
 
@@ -480,7 +480,7 @@ describe('ng-tests ElementItem', function () {
         directIncomeField.Element = element;
         directIncomeField.ElementFieldType = 11;
         directIncomeField.IndexEnabled = true;
-        directIncomeField.IndexRating = 100;
+        directIncomeField.IndexRatingTotal = 100;
         directIncomeField.IndexRatingCount = 1;
         element.ElementFieldSet = [directIncomeField];
 
@@ -539,7 +539,7 @@ describe('ng-tests ElementItem', function () {
         directIncomeField.Element = element;
         directIncomeField.ElementFieldType = 11;
         directIncomeField.IndexEnabled = true;
-        directIncomeField.IndexRating = 100;
+        directIncomeField.IndexRatingTotal = 100;
         directIncomeField.IndexRatingCount = 1;
         element.ElementFieldSet = [directIncomeField];
 

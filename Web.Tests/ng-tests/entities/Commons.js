@@ -41,7 +41,7 @@ function registerPrototypes($injector) {
     ElementField.prototype.IndexEnabled = false;
     ElementField.prototype.IndexRatingSortType = 1;
     ElementField.prototype.SortOrder = 0;
-    ElementField.prototype.IndexRating = 0;
+    ElementField.prototype.IndexRatingTotal = 0;
     ElementField.prototype.IndexRatingCount = 0;
     ElementField.prototype.Element = null;
     ElementField.prototype.ElementCellSet = []; // *

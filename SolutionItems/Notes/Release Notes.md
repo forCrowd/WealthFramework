@@ -7,6 +7,7 @@
 * element.js - parents() was renamed to familyTree() & parent() returns null if there is no actual parent (instead of self)
 * Javascript tests array fix; initial push() lines were replaced with assignments (.array = [object])
 * ResourcePool - ResourcePoolRate was renamed to ResourcePoolRateTotal
+* ElementField - IndexRating was renamed to IndexRatingTotal
 * ElementCell - NumericValue was renamed to NumericValueTotal
 
 **0.34.1**
