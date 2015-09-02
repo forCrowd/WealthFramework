@@ -71,7 +71,7 @@
 
                                     // Cell calculations
                                     cell.setNumericValue();
-                                    cell.setNumericValueMultiplied();
+                                    //cell.setNumericValueMultiplied();
                                 }
                             }
                         }

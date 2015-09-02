@@ -26,7 +26,7 @@
                         case 2: { this.CurrentUserNumericValue = value !== null ? value.BooleanValue : 0; break; }
                         case 3: { this.CurrentUserNumericValue = value !== null ? value.IntegerValue : 0; break; }
                         case 4: { this.CurrentUserNumericValue = value !== null ? value.DecimalValue : 50; /* Default value? */ break; }
-                        // TODO 5 (DateTime?)
+                            // TODO 5 (DateTime?)
                         case 11: { this.CurrentUserNumericValue = this.NumericValueTotal !== null ? this.NumericValueTotal : 0; break; } // DirectIncome: No need to try user's cell, always return all users', which will be CMRP owner's value
                         case 12: {
                             this.CurrentUserNumericValue = value !== null ? value.DecimalValue : 0;
@@ -70,7 +70,7 @@
                     }
 
                     this.setNumericValue();
-                    this.setNumericValueMultiplied();
+                    //this.setNumericValueMultiplied();
                 }
 
                 return this.backingFields._currentUserNumericValue;
@@ -86,17 +86,17 @@
                         case 4:
                             // TODO 5 (DateTime?)
                         case 11: {
-                                this.setNumericValue();
-                                this.setNumericValueMultiplied();
-                                break;
-                            }
+                            this.setNumericValue();
+                            //this.setNumericValueMultiplied();
+                            break;
+                        }
                         case 12: {
                             if (typeof this.ElementItem !== 'undefined' && this.ElementItem !== null) {
                                 this.ElementItem.setMultiplier();
                             }
 
                             this.setNumericValue();
-                            this.setNumericValueMultiplied();
+                            //this.setNumericValueMultiplied();
                             break;
                         }
                         default: { throw 'Not supported ' + this.ElementField.ElementFieldType; }
@@ -121,7 +121,9 @@
                 _otherUsersNumericValueTotal: null,
                 _otherUsersNumericValueCount: null,
                 _numericValue: null,
-                _numericValueMultiplied: null
+                _numericValueMultiplied: null,
+                _aggressiveRating: null,
+                _aggressiveRatingPercentage: null
             }
 
             // Public functions
@@ -218,11 +220,21 @@
 
             self.setNumericValue = function () {
 
+                var value;
+
                 if (typeof self.ElementField !== 'undefined') {
                     switch (self.ElementField.Element.ResourcePool.RatingMode) {
-                        case 1: { self.backingFields._numericValue = self.CurrentUserNumericValue; break; } // Current user's
-                        case 2: { self.backingFields._numericValue = self.numericValueAverage(); break; } // All
+                        case 1: { value = self.CurrentUserNumericValue; break; } // Current user's
+                        case 2: { value = self.numericValueAverage(); break; } // All
                     }
+
+                }
+
+                // If it's different...
+                if (self.backingFields._numericValue !== value) {
+                    self.backingFields._numericValue = value;
+
+                    self.setNumericValueMultiplied();
                 }
             }
 
@@ -236,55 +248,96 @@
             }
 
             self.setNumericValueMultiplied = function () {
+
+                var value;
+
                 if (typeof self.ElementField === 'undefined' || !self.ElementField.IndexEnabled) {
-                    self.backingFields._numericValueMultiplied = 0; // ?
+                    value = 0; // ?
                 } else {
-                    self.backingFields._numericValueMultiplied = self.numericValue() * self.ElementItem.multiplier();
+                    value = self.numericValue() * self.ElementItem.multiplier();
+                }
+
+                if (value !== self.backingFields._numericValueMultiplied) {
+                    self.backingFields._numericValueMultiplied = value;
+
+                    // Update related
+                    self.ElementField.setReferenceRatingMultiplied();
                 }
             }
 
             self.aggressiveRating = function () {
 
-                if (typeof self.ElementField === 'undefined' || !self.ElementField.IndexEnabled)
-                    return 0; // ?
-
-                var referenceRating = self.ElementField.referenceRatingMultiplied();
-
-                if (referenceRating === 0) {
-                    return 0;
+                if (self.backingFields._aggressiveRating === null) {
+                    self.setAggressiveRating();
                 }
 
-                var value = 0;
+                return self.backingFields._aggressiveRating;
 
-                switch (self.ElementField.IndexRatingSortType) {
-                    case 1: { // LowestToHighest (Low number is better)
-                        value = self.numericValueMultiplied() / referenceRating;
-                        break;
-                    }
-                    case 2: { // HighestToLowest (High number is better)
-                        value = self.passiveRatingPercentage() / referenceRating;
-                        break;
+            }
+
+            self.setAggressiveRating = function () {
+
+                var value = 0; // Default value?
+
+                if (typeof self.ElementField === 'undefined' || !self.ElementField.IndexEnabled) {
+                    // value = 0; // ?
+                } else {
+
+                    var referenceRating = self.ElementField.referenceRatingMultiplied();
+
+                    if (referenceRating === 0) {
+                        // value = 0; // ?
+                    } else {
+
+                        switch (self.ElementField.IndexRatingSortType) {
+                            case 1: { // LowestToHighest (Low number is better)
+                                value = self.numericValueMultiplied() / referenceRating;
+                                break;
+                            }
+                            case 2: { // HighestToLowest (High number is better)
+                                value = self.passiveRatingPercentage() / referenceRating;
+                                break;
+                            }
+                        }
+
+                        // TODO This is not correct usage, create a prop around 'referenceRatingAllEqualFlag'
+                        value = self.ElementField.backingFields._referenceRatingAllEqualFlag
+                            ? value
+                            : 1 - value;
                     }
                 }
 
-                // TODO This is not correct usage, create a prop around 'referenceRatingAllEqualFlag'
-                return self.ElementField.backingFields._referenceRatingAllEqualFlag
-                    ? value
-                    : 1 - value;
+                if (value !== self.backingFields._aggressiveRating) {
+                    self.backingFields._aggressiveRating = value; // ?
+
+                    self.ElementField.setAggressiveRating();
+
+                    // TODO Update related values
+                }
             }
 
             self.aggressiveRatingPercentage = function () {
 
-                if (typeof self.ElementField === 'undefined' || !self.ElementField.IndexEnabled)
-                    return 0; // ?
+                if (self.backingFields._aggressiveRatingPercentage === null) {
+                    self.setAggressiveRatingPercentage();
+                }
+
+                return self.backingFields._aggressiveRatingPercentage;
+            }
+
+            self.setAggressiveRatingPercentage = function () {
+
+                if (typeof self.ElementField === 'undefined' || !self.ElementField.IndexEnabled) {
+                    self.backingFields._aggressiveRatingPercentage = 0; // ?
+                }
 
                 var indexAggressiveRating = self.ElementField.aggressiveRating();
 
                 if (indexAggressiveRating === 0) {
-                    return 0; // ?
+                    self.backingFields._aggressiveRatingPercentage = 0; // ?
                 }
 
-                return self.aggressiveRating() / indexAggressiveRating;
+                self.backingFields._aggressiveRatingPercentage = self.aggressiveRating() / indexAggressiveRating;
             }
 
             // TODO This is obsolete for now and probably not calculating correctly. Check it later, either remove or fix it / SH - 13 Mar. '15

@@ -31,6 +31,8 @@
                 _currentUserIndexRating: null,
                 _otherUsersIndexRatingTotal: null,
                 _otherUsersIndexRatingCount: null,
+                _referenceRatingMultiplied: null,
+                _aggressiveRating: null,
                 _indexRating: null
             }
 
@@ -74,78 +76,117 @@
                 return value;
             }
 
+            // TODO Not cached but using backingFields and 'only if different' block!
             self.referenceRatingMultiplied = function () {
 
-                // Validate
-                if (self.ElementCellSet.length === 0)
-                    return 0; // ?
+                self.setReferenceRatingMultiplied();
 
-                self.backingFields._referenceRatingAllEqualFlag = true;
+                return self.backingFields._referenceRatingMultiplied;
+            }
+
+            self.setReferenceRatingMultiplied = function () {
 
                 var value = null;
-                for (var i = 0; i < self.ElementCellSet.length; i++) {
 
-                    var cell = self.ElementCellSet[i];
+                // Validate
+                if (self.ElementCellSet.length === 0) {
+                    value = 0; // ?
+                } else {
 
-                    if (value === null) {
+                    self.backingFields._referenceRatingAllEqualFlag = true;
 
-                        switch (self.IndexRatingSortType) {
-                            case 1: { // LowestToHighe/st (Low number is better)
-                                value = cell.numericValueMultiplied();
-                                break;
-                            }
-                            case 2: { // HighestToLowest (High number is better)
-                                value = cell.passiveRatingPercentage();
-                                break;
-                            }
-                        }
+                    for (var i = 0; i < self.ElementCellSet.length; i++) {
 
-                    } else {
+                        var cell = self.ElementCellSet[i];
 
-                        switch (self.IndexRatingSortType) {
-                            case 1: { // LowestToHighest (Low number is better)
+                        if (value === null) {
 
-                                if (value !== cell.numericValueMultiplied()) {
-                                    self.backingFields._referenceRatingAllEqualFlag = false;
-                                }
-
-                                if (cell.numericValueMultiplied() > value) {
+                            switch (self.IndexRatingSortType) {
+                                case 1: { // LowestToHighest (Low number is better)
                                     value = cell.numericValueMultiplied();
+                                    break;
                                 }
-
-                                break;
-                            }
-                            case 2: { // HighestToLowest (High number is better)
-
-                                if (value !== cell.passiveRatingPercentage()) {
-                                    self.backingFields._referenceRatingAllEqualFlag = false;
-                                }
-
-                                if (cell.passiveRatingPercentage() > value) {
+                                case 2: { // HighestToLowest (High number is better)
                                     value = cell.passiveRatingPercentage();
+                                    break;
                                 }
-                                break;
+                            }
+
+                        } else {
+
+                            switch (self.IndexRatingSortType) {
+                                case 1: { // LowestToHighest (Low number is better)
+
+                                    if (value !== cell.numericValueMultiplied()) {
+                                        self.backingFields._referenceRatingAllEqualFlag = false;
+                                    }
+
+                                    if (cell.numericValueMultiplied() > value) {
+                                        value = cell.numericValueMultiplied();
+                                    }
+
+                                    break;
+                                }
+                                case 2: { // HighestToLowest (High number is better)
+
+                                    if (value !== cell.passiveRatingPercentage()) {
+                                        self.backingFields._referenceRatingAllEqualFlag = false;
+                                    }
+
+                                    if (cell.passiveRatingPercentage() > value) {
+                                        value = cell.passiveRatingPercentage();
+                                    }
+                                    break;
+                                }
                             }
                         }
                     }
                 }
 
-                return value;
+                // Only if it's different..
+                if (value !== self.backingFields._referenceRatingMultiplied) {
+                    self.backingFields._referenceRatingMultiplied = value;
+
+                    // Update related
+                    for (var i = 0; i < self.ElementCellSet.length; i++) {
+                        var cell = self.ElementCellSet[i];
+                        cell.setAggressiveRating();
+                    }
+                }
             }
 
+            // TODO Not cached but using ..
             self.aggressiveRating = function () {
 
-                // Validate
-                if (self.ElementCellSet.length === 0)
-                    return 0; // ?
+                //if (self.backingFields._aggressiveRating === null) {
+                self.setAggressiveRating();
+                //}
 
-                var value = 0;
-                for (var i = 0; i < self.ElementCellSet.length; i++) {
-                    var cell = self.ElementCellSet[i];
-                    value += cell.aggressiveRating();
+                return self.backingFields._aggressiveRating;
+            }
+
+            self.setAggressiveRating = function () {
+
+                var value = 0; // Default value?
+
+                // Validate
+                if (self.ElementCellSet.length > 0) {
+
+                    for (var i = 0; i < self.ElementCellSet.length; i++) {
+                        var cell = self.ElementCellSet[i];
+                        value += cell.aggressiveRating();
+                    }
                 }
 
-                return value;
+                if (self.backingFields._aggressiveRating !== value) {
+                    self.backingFields._aggressiveRating = value;
+
+                    // Update related
+                    for (var i = 0; i < self.ElementCellSet.length; i++) {
+                        var cell = self.ElementCellSet[i];
+                        cell.setAggressiveRatingPercentage();
+                    }
+                }
             }
 
             self.userElementField = function () {
@@ -247,7 +288,7 @@
                 return self.backingFields._indexRating;
             }
 
-            self.setIndexRating = function() {
+            self.setIndexRating = function () {
                 switch (self.Element.ResourcePool.RatingMode) {
                     case 1: { self.backingFields._indexRating = self.currentUserIndexRating(); break; } // Current user's
                     case 2: { self.backingFields._indexRating = self.indexRatingAverage(); break; } // All
