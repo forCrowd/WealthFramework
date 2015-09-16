@@ -327,17 +327,27 @@
 
             self.setAggressiveRatingPercentage = function () {
 
+                var value = 0; // Default value?
+
                 if (typeof self.ElementField === 'undefined' || !self.ElementField.IndexEnabled) {
-                    self.backingFields._aggressiveRatingPercentage = 0; // ?
+                    // self.backingFields._aggressiveRatingPercentage = 0; // ?
+                } else {
+                    var indexAggressiveRating = self.ElementField.aggressiveRating();
+
+                    if (indexAggressiveRating === 0) {
+                        // self.backingFields._aggressiveRatingPercentage = 0; // ?
+                    } else {
+                        value = self.aggressiveRating() / indexAggressiveRating;
+                    }
                 }
 
-                var indexAggressiveRating = self.ElementField.aggressiveRating();
+                //self.backingFields._aggressiveRatingPercentage = self.aggressiveRating() / indexAggressiveRating;
 
-                if (indexAggressiveRating === 0) {
-                    self.backingFields._aggressiveRatingPercentage = 0; // ?
+                if (value !== self.backingFields._aggressiveRatingPercentage) {
+                    self.backingFields._aggressiveRatingPercentage = value;
+
+                    // TODO Update related values
                 }
-
-                self.backingFields._aggressiveRatingPercentage = self.aggressiveRating() / indexAggressiveRating;
             }
 
             // TODO This is obsolete for now and probably not calculating correctly. Check it later, either remove or fix it / SH - 13 Mar. '15
