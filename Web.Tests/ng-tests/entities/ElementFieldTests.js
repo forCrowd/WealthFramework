@@ -170,6 +170,9 @@ describe('ng-tests ElementField', function () {
         multiplierCell2.UserElementCellSet = [userMultiplierCell2];
         multiplierCell2.CurrentUserCell = userMultiplierCell2;
 
+        // TODO Manually update?!
+        decimalCell1.setPassiveRatingPercentage();
+
         // TODO Will always be 100%?
         expect(decimalField.passiveRatingPercentage()).toBe(1);
 

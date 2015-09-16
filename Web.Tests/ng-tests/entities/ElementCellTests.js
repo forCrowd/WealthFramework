@@ -665,7 +665,7 @@ describe('ng-tests ElementCell', function () {
 
     });
 
-    it('passiveRatingPercentage', function () {
+    it('0 passiveRatingPercentage', function () {
 
         // Case 1: Initial
         var resourcePool = new ResourcePool();

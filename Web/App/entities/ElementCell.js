@@ -123,7 +123,8 @@
                 _numericValue: null,
                 _numericValueMultiplied: null,
                 _aggressiveRating: null,
-                _aggressiveRatingPercentage: null
+                _aggressiveRatingPercentage: null,
+                _passiveRatingPercentage: null
             }
 
             // Public functions
@@ -261,6 +262,7 @@
                     self.backingFields._numericValueMultiplied = value;
 
                     // Update related
+                    self.setPassiveRatingPercentage();
                     self.ElementField.setReferenceRatingMultiplied();
                 }
             }
@@ -346,7 +348,7 @@
                 if (value !== self.backingFields._aggressiveRatingPercentage) {
                     self.backingFields._aggressiveRatingPercentage = value;
 
-                    // TODO Update related values
+                    // TODO Update related values?
                 }
             }
 
@@ -354,27 +356,49 @@
             // TODO Now it's in use again but for a different purpose, rename it? / SH - 24 Mar. '15
             self.passiveRatingPercentage = function () {
 
-                if (typeof self.ElementField === 'undefined' || !self.ElementField.IndexEnabled)
-                    return 0;
-
-                var fieldNumericValueMultiplied = self.ElementField.numericValueMultiplied();
-
-                // Means there is only one item in the element, always 100%
-                if (self.numericValueMultiplied() === fieldNumericValueMultiplied) {
-                    return 1;
+                if (self.backingFields._passiveRatingPercentage === null) {
+                    self.setPassiveRatingPercentage();
                 }
 
-                if (fieldNumericValueMultiplied === 0) {
-                    return 0;
+                return self.backingFields._passiveRatingPercentage;
+            }
+
+            self.setPassiveRatingPercentage = function () {
+
+                var value = 0; // Default value?
+
+                if (typeof self.ElementField === 'undefined' || !self.ElementField.IndexEnabled) {
+                    // return 0;
+                } else {
+
+                    var fieldNumericValueMultiplied = self.ElementField.numericValueMultiplied();
+
+                    // Means there is only one item in the element, always 100%
+                    if (self.numericValueMultiplied() === fieldNumericValueMultiplied) {
+                        // return 1;
+                        value = 1;
+                    } else {
+                        if (fieldNumericValueMultiplied === 0) {
+                            // return 0;
+                        } else {
+                            switch (self.ElementField.IndexRatingSortType) {
+                                case 1: { // LowestToHighest (Low number is better)
+                                    //return self.numericValueMultiplied() / fieldNumericValueMultiplied;
+                                    value = self.numericValueMultiplied() / fieldNumericValueMultiplied;
+                                }
+                                case 2: { // HighestToLowest (High number is better)
+                                    //return 1 - (self.numericValueMultiplied() / fieldNumericValueMultiplied);
+                                    value = 1 - (self.numericValueMultiplied() / fieldNumericValueMultiplied);
+                                }
+                            }
+                        }
+                    }
                 }
 
-                switch (self.ElementField.IndexRatingSortType) {
-                    case 1: { // LowestToHighest (Low number is better)
-                        return self.numericValueMultiplied() / fieldNumericValueMultiplied;
-                    }
-                    case 2: { // HighestToLowest (High number is better)
-                        return 1 - (self.numericValueMultiplied() / fieldNumericValueMultiplied);
-                    }
+                if (value !== self.backingFields._passiveRatingPercentage) {
+                    self.backingFields._passiveRatingPercentage = value;
+
+                    // TODO Update related values?
                 }
             }
 
