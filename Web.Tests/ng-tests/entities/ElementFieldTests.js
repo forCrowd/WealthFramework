@@ -28,6 +28,7 @@ describe('ng-tests ElementField', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
+        resourcePool.MainElement = element;
 
         var decimalField = new ElementField();
         decimalField.Element = element;
@@ -106,6 +107,7 @@ describe('ng-tests ElementField', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
+        resourcePool.MainElement = element;
 
         var decimalField = new ElementField();
         decimalField.Element = element;
@@ -188,6 +190,7 @@ describe('ng-tests ElementField', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
+        resourcePool.MainElement = element;
 
         var decimalField = new ElementField();
         decimalField.Element = element;
@@ -267,6 +270,7 @@ describe('ng-tests ElementField', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
+        resourcePool.MainElement = element;
 
         var decimalField = new ElementField();
         decimalField.Element = element;

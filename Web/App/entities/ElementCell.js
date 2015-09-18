@@ -349,6 +349,8 @@
                 if (value !== self.backingFields._aggressiveRatingPercentage) {
                     self.backingFields._aggressiveRatingPercentage = value;
 
+                    self.setIndexIncome();
+
                     // TODO Update related values?
                 }
             }

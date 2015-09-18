@@ -33,7 +33,8 @@
                 _otherUsersIndexRatingCount: null,
                 _referenceRatingMultiplied: null,
                 _aggressiveRating: null,
-                _indexRating: null
+                _indexRating: null,
+                _indexIncome: null
             }
 
             // Events
@@ -306,7 +307,20 @@
             }
 
             self.indexIncome = function () {
-                return self.Element.totalResourcePoolAmount() * self.indexRatingPercentage();
+                
+                var value = self.Element.totalResourcePoolAmount() * self.indexRatingPercentage();
+
+                if (self.backingFields._indexIncome !== value) {
+                    self.backingFields._indexIncome = value;
+
+                    // Update related
+                    for (var i = 0; i < self.ElementCellSet.length; i++) {
+                        var cell = self.ElementCellSet[i];
+                        cell.setIndexIncome();
+                    }
+                }
+
+                return self.backingFields._indexIncome;
             }
         }
     }
