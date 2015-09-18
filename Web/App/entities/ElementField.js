@@ -118,7 +118,7 @@
                             switch (self.IndexRatingSortType) {
                                 case 1: { // LowestToHighest (Low number is better)
 
-                                    if (value !== cell.numericValueMultiplied()) {
+                                    if (cell.numericValueMultiplied() !== value) {
                                         self.backingFields._referenceRatingAllEqualFlag = false;
                                     }
 
@@ -130,7 +130,7 @@
                                 }
                                 case 2: { // HighestToLowest (High number is better)
 
-                                    if (value !== cell.passiveRatingPercentage()) {
+                                    if (cell.passiveRatingPercentage() !== value) {
                                         self.backingFields._referenceRatingAllEqualFlag = false;
                                     }
 
@@ -145,7 +145,7 @@
                 }
 
                 // Only if it's different..
-                if (value !== self.backingFields._referenceRatingMultiplied) {
+                if (self.backingFields._referenceRatingMultiplied !== value) {
                     self.backingFields._referenceRatingMultiplied = value;
 
                     // Update related

@@ -38,7 +38,7 @@
             configurable: true,
             get: function () { return this.backingFields._currentElement; },
             set: function (value) {
-                if (value !== this.backingFields._currentElement) {
+                if (this.backingFields._currentElement !== value) {
                     this.backingFields._currentElement = value;
                 }
             }
@@ -49,7 +49,7 @@
             configurable: true,
             get: function () { return this.backingFields._ratingMode; },
             set: function (value) {
-                if (value !== this.backingFields._ratingMode) {
+                if (this.backingFields._ratingMode !== value) {
                     this.backingFields._ratingMode = value;
                     this.setResourcePoolRate();
 

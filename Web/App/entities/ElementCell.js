@@ -18,7 +18,7 @@
                 return this.backingFields._currentUserCell;
             },
             set: function (value) {
-                if (value !== this.backingFields._currentUserCell) {
+                if (this.backingFields._currentUserCell !== value) {
                     this.backingFields._currentUserCell = value;
 
                     // Update CurrentUserNumericValue as well
@@ -77,7 +77,7 @@
             },
             set: function (value) {
 
-                if (value !== this.backingFields._currentUserNumericValue) {
+                if (this.backingFields._currentUserNumericValue !== value) {
                     this.backingFields._currentUserNumericValue = value;
 
                     switch (this.ElementField.ElementFieldType) {
@@ -259,7 +259,7 @@
                     value = self.numericValue() * self.ElementItem.multiplier();
                 }
 
-                if (value !== self.backingFields._numericValueMultiplied) {
+                if (self.backingFields._numericValueMultiplied !== value) {
                     self.backingFields._numericValueMultiplied = value;
 
                     // Update related
@@ -310,7 +310,7 @@
                     }
                 }
 
-                if (value !== self.backingFields._aggressiveRating) {
+                if (self.backingFields._aggressiveRating !== value) {
                     self.backingFields._aggressiveRating = value; // ?
 
                     self.ElementField.setAggressiveRating();
@@ -346,7 +346,7 @@
 
                 //self.backingFields._aggressiveRatingPercentage = self.aggressiveRating() / indexAggressiveRating;
 
-                if (value !== self.backingFields._aggressiveRatingPercentage) {
+                if (self.backingFields._aggressiveRatingPercentage !== value) {
                     self.backingFields._aggressiveRatingPercentage = value;
 
                     self.setIndexIncome();
@@ -398,7 +398,7 @@
                     }
                 }
 
-                if (value !== self.backingFields._passiveRatingPercentage) {
+                if (self.backingFields._passiveRatingPercentage !== value) {
                     self.backingFields._passiveRatingPercentage = value;
 
                     // TODO Update related values?
