@@ -32,7 +32,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects
 
             User = user;
             Name = name;
-            UseFixedResourcePoolRate = true;
         }
 
         [DisplayOnListView(false)]

@@ -16,7 +16,14 @@
             const int numberOfItems = 1;
 
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user: user, resourcePoolName: "UPO", useFixedResourcePoolRate: true, mainElementName: "Organization", addDirectIncomeField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: numberOfItems);
+            var resourcePool = CreateDefaultResourcePool(user: user,
+                resourcePoolName: "UPO",
+                useFixedResourcePoolRate: true,
+                mainElementName: "Organization",
+                addDirectIncomeField: true,
+                addMultiplierField: true,
+                addImportanceIndex: false,
+                numberOfItems: numberOfItems);
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
@@ -36,7 +43,14 @@
             const int numberOfItems = 4;
 
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user: user, resourcePoolName: "Basics - Existing Model", useFixedResourcePoolRate: true, mainElementName: "Organization", addDirectIncomeField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: numberOfItems);
+            var resourcePool = CreateDefaultResourcePool(user: user,
+                resourcePoolName: "Basics - Existing Model",
+                useFixedResourcePoolRate: true,
+                mainElementName: "Organization",
+                addDirectIncomeField: true,
+                addMultiplierField: true,
+                addImportanceIndex: false,
+                numberOfItems: numberOfItems);
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
@@ -58,7 +72,14 @@
             const int numberOfItems = 4;
             
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user: user, resourcePoolName: "Basics - New Model", useFixedResourcePoolRate: true, mainElementName: "Organization", addDirectIncomeField: true, addMultiplierField: true, addImportanceIndex: true, numberOfItems: numberOfItems);
+            var resourcePool = CreateDefaultResourcePool(user: user,
+                resourcePoolName: "Basics - New Model",
+                useFixedResourcePoolRate: true,
+                mainElementName: "Organization",
+                addDirectIncomeField: true,
+                addMultiplierField: true,
+                addImportanceIndex: true,
+                numberOfItems: numberOfItems);
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
@@ -84,7 +105,14 @@
             const int numberOfItems = 4;
 
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user: user, resourcePoolName: "Sector Index Sample", useFixedResourcePoolRate: true, mainElementName: "Organization", addDirectIncomeField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: numberOfItems);
+            var resourcePool = CreateDefaultResourcePool(user: user,
+                resourcePoolName: "Sector Index Sample",
+                useFixedResourcePoolRate: true,
+                mainElementName: "Organization",
+                addDirectIncomeField: true,
+                addMultiplierField: true,
+                addImportanceIndex: false,
+                numberOfItems: numberOfItems);
 
             // Sector element
             var sectorElement = resourcePool.AddElement("Sector");
@@ -136,7 +164,14 @@
             const int numberOfItems = 2;
 
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user: user, resourcePoolName: "Knowledge Index Sample", useFixedResourcePoolRate: true, mainElementName: "Organization", addDirectIncomeField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: numberOfItems);
+            var resourcePool = CreateDefaultResourcePool(user: user,
+                resourcePoolName: "Knowledge Index Sample",
+                useFixedResourcePoolRate: true,
+                mainElementName: "Organization",
+                addDirectIncomeField: true,
+                addMultiplierField: true,
+                addImportanceIndex: false,
+                numberOfItems: numberOfItems);
 
             // License element
             var licenseElement = resourcePool.AddElement("License");
@@ -192,7 +227,14 @@
             const int numberOfItems = 4;
 
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user: user, resourcePoolName: "Knowledge Index - Popular Software Licenses", useFixedResourcePoolRate: true, mainElementName: "Organization", addDirectIncomeField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: numberOfItems);
+            var resourcePool = CreateDefaultResourcePool(user: user,
+                resourcePoolName: "Knowledge Index - Popular Software Licenses",
+                useFixedResourcePoolRate: true,
+                mainElementName: "Organization",
+                addDirectIncomeField: true,
+                addMultiplierField: true,
+                addImportanceIndex: false,
+                numberOfItems: numberOfItems);
 
             // License element
             var licenseElement = resourcePool.AddElement("License");
@@ -266,7 +308,14 @@
             const int numberOfItems = 4;
 
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user: user, resourcePoolName: "Knowledge Index - Popular Software Licenses", useFixedResourcePoolRate: true, mainElementName: "License", addDirectIncomeField: false, addMultiplierField: false, addImportanceIndex: false, numberOfItems: numberOfItems);
+            var resourcePool = CreateDefaultResourcePool(user: user,
+                resourcePoolName: "Knowledge Index - Popular Software Licenses",
+                useFixedResourcePoolRate: true,
+                mainElementName: "License",
+                addDirectIncomeField: false,
+                addMultiplierField: false,
+                addImportanceIndex: false,
+                numberOfItems: numberOfItems);
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
@@ -311,7 +360,14 @@
             const int numberOfItems = 4;
 
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user: user, resourcePoolName: "Knowledge Index - Popular Software Licenses", useFixedResourcePoolRate: true, mainElementName: "License", addDirectIncomeField: false, addMultiplierField: false, addImportanceIndex: false, numberOfItems: numberOfItems);
+            var resourcePool = CreateDefaultResourcePool(user: user,
+                resourcePoolName: "Knowledge Index - Popular Software Licenses",
+                useFixedResourcePoolRate: true,
+                mainElementName: "License",
+                addDirectIncomeField: false,
+                addMultiplierField: false,
+                addImportanceIndex: false,
+                numberOfItems: numberOfItems);
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
@@ -355,7 +411,14 @@
             const int numberOfItems = 3;
 
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user: user, resourcePoolName: "Total Cost Index - Existing Model", useFixedResourcePoolRate: true, mainElementName: "Product", addDirectIncomeField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: numberOfItems);
+            var resourcePool = CreateDefaultResourcePool(user: user,
+                resourcePoolName: "Total Cost Index - Existing Model",
+                useFixedResourcePoolRate: true,
+                mainElementName: "Product",
+                addDirectIncomeField: true,
+                addMultiplierField: true,
+                addImportanceIndex: false,
+                numberOfItems: numberOfItems);
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
@@ -381,7 +444,14 @@
             const int numberOfItems = 3;
 
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user: user, resourcePoolName: "Total Cost Index - New Model", useFixedResourcePoolRate: true, mainElementName: "Product", addDirectIncomeField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: numberOfItems);
+            var resourcePool = CreateDefaultResourcePool(user: user,
+                resourcePoolName: "Total Cost Index - New Model",
+                useFixedResourcePoolRate: true, 
+               mainElementName: "Product",
+               addDirectIncomeField: true,
+               addMultiplierField: true,
+               addImportanceIndex: false,
+               numberOfItems: numberOfItems);
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
@@ -410,7 +480,14 @@
             const int numberOfItems = 3;
 
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user: user, resourcePoolName: "Total Cost Index - New Model - Aftermath", useFixedResourcePoolRate: true, mainElementName: "Product", addDirectIncomeField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: numberOfItems);
+            var resourcePool = CreateDefaultResourcePool(user: user,
+                resourcePoolName: "Total Cost Index - New Model - Aftermath",
+                useFixedResourcePoolRate: true,
+                mainElementName: "Product",
+                addDirectIncomeField: true,
+                addMultiplierField: true,
+                addImportanceIndex: false,
+                numberOfItems: numberOfItems);
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
@@ -441,7 +518,14 @@
             const int numberOfItems = 2;
 
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user: user, resourcePoolName: "Total Cost Index Sample", useFixedResourcePoolRate: true, mainElementName: "Organization", addDirectIncomeField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: numberOfItems);
+            var resourcePool = CreateDefaultResourcePool(user: user,
+                resourcePoolName: "Total Cost Index Sample",
+                useFixedResourcePoolRate: true,
+                mainElementName: "Organization",
+                addDirectIncomeField: true,
+                addMultiplierField: true,
+                addImportanceIndex: false,
+                numberOfItems: numberOfItems);
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
@@ -466,7 +550,15 @@
             const int numberOfItems = 2;
 
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user: user, resourcePoolName: "Fair Share Index", useFixedResourcePoolRate: true, mainElementName: "Organization", addDirectIncomeField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: numberOfItems);
+            var resourcePool = CreateDefaultResourcePool(user: user,
+                resourcePoolName: "Fair Share Index",
+                useFixedResourcePoolRate: true,
+                mainElementName: "Organization",
+                addDirectIncomeField: true,
+                addMultiplierField: true,
+                addImportanceIndex: false,
+                numberOfItems: numberOfItems);
+
             //resourcePool.EnableSubtotals = false;
 
             // Fair share element
@@ -509,7 +601,15 @@
             const int numberOfItems = 1;
 
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user: user, resourcePoolName: "Indexes Pie", useFixedResourcePoolRate: true, mainElementName: "Organization", addDirectIncomeField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: numberOfItems);
+            var resourcePool = CreateDefaultResourcePool(user: user,
+                resourcePoolName: "Indexes Pie",
+                useFixedResourcePoolRate: true,
+                mainElementName: "Organization",
+                addDirectIncomeField: true,
+                addMultiplierField: true,
+                addImportanceIndex: false,
+                numberOfItems: numberOfItems);
+            
             //resourcePool.EnableSubtotals = false;
 
             //// Fair share element
@@ -584,7 +684,15 @@
         public ResourcePool CreateIndexesPieSampleOld(User user)
         {
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user: user, resourcePoolName: "Indexes Pie", useFixedResourcePoolRate: true, mainElementName: "Organization", addDirectIncomeField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: 2);
+            var resourcePool = CreateDefaultResourcePool(user: user,
+                resourcePoolName: "Indexes Pie",
+                useFixedResourcePoolRate: true,
+                mainElementName: "Organization",
+                addDirectIncomeField: true,
+                addMultiplierField: true,
+                addImportanceIndex: false,
+                numberOfItems: 2);
+            
             //resourcePool.EnableSubtotals = false;
 
             //// Fair share element
@@ -655,7 +763,14 @@
             const int numberOfItems = 4;
 
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user: user, resourcePoolName: "CMRP Rate", useFixedResourcePoolRate: false, mainElementName: "Organization", addDirectIncomeField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: numberOfItems);
+            var resourcePool = CreateDefaultResourcePool(user: user,
+                resourcePoolName: "CMRP Rate",
+                useFixedResourcePoolRate: false,
+                mainElementName: "Organization",
+                addDirectIncomeField: true,
+                addMultiplierField: true,
+                addImportanceIndex: false,
+                numberOfItems: numberOfItems);
 
             //// Fair share element
             //var fairShareElement = resourcePool.AddElement("Fair Share");
@@ -733,7 +848,14 @@
             const int numberOfItems = 32;
 
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user: user, resourcePoolName: "All in One - Slow!", useFixedResourcePoolRate: false, mainElementName: "Organization", addDirectIncomeField: true, addMultiplierField: true, addImportanceIndex: false, numberOfItems: numberOfItems);
+            var resourcePool = CreateDefaultResourcePool(user: user,
+                resourcePoolName: "All in One - Slow!",
+                useFixedResourcePoolRate: false,
+                mainElementName: "Organization",
+                addDirectIncomeField: true,
+                addMultiplierField: true,
+                addImportanceIndex: false,
+                numberOfItems: numberOfItems);
 
             // Sector element
             var sectorElement = resourcePool.AddElement("Sector");
@@ -1042,7 +1164,15 @@
             const int numberOfItems = 4;
 
             // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user: user, resourcePoolName: "Initial Value", useFixedResourcePoolRate: true, mainElementName: "Organization", addDirectIncomeField: false, addMultiplierField: false, addImportanceIndex: true, numberOfItems: numberOfItems);
+            var resourcePool = CreateDefaultResourcePool(user: user,
+                resourcePoolName: "Initial Value",
+                useFixedResourcePoolRate: true,
+                mainElementName: "Organization",
+                addDirectIncomeField: false,
+                addMultiplierField: false,
+                addImportanceIndex: true,
+                numberOfItems: numberOfItems);
+
             resourcePool.InitialValue = 100;
 
             // Main element
