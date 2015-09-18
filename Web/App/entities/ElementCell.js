@@ -124,7 +124,8 @@
                 _numericValueMultiplied: null,
                 _aggressiveRating: null,
                 _aggressiveRatingPercentage: null,
-                _passiveRatingPercentage: null
+                _passiveRatingPercentage: null,
+                _indexIncome: null
             }
 
             // Public functions
@@ -404,18 +405,33 @@
 
             self.indexIncome = function () {
 
+                if (self.backingFields._indexIncome === null) {
+                    self.setIndexIncome();
+                }
+
+                return self.backingFields._indexIncome;
+            }
+
+            self.setIndexIncome = function () {
+
+                var value = 0; // Default value?
+
                 if (self.ElementField.ElementFieldType === 6 && self.SelectedElementItem !== null) {
 
                     // item's index income / how many times this item has been selected (used) by higher items
                     // TODO Check whether ParentCellSet gets updated when selecting / deselecting an item
-                    return self.SelectedElementItem.totalResourcePoolIncome() / self.SelectedElementItem.ParentCellSet.length;
+                    value = self.SelectedElementItem.totalResourcePoolIncome() / self.SelectedElementItem.ParentCellSet.length;
                 } else {
 
                     if (self.ElementField.IndexEnabled) {
-                        return self.ElementField.indexIncome() * self.aggressiveRatingPercentage();
+                        value = self.ElementField.indexIncome() * self.aggressiveRatingPercentage();
                     } else {
-                        return 0;
+                        value = 0;
                     }
+                }
+
+                if (self.backingFields._indexIncome !== value) {
+                    self.backingFields._indexIncome = value;
                 }
             }
         }

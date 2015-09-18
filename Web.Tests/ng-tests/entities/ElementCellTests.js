@@ -665,7 +665,7 @@ describe('ng-tests ElementCell', function () {
 
     });
 
-    it('0 passiveRatingPercentage', function () {
+    it('passiveRatingPercentage', function () {
 
         // Case 1: Initial
         var resourcePool = new ResourcePool();
@@ -776,6 +776,7 @@ describe('ng-tests ElementCell', function () {
 
         // TODO Manually update?!
         item1.setMultiplier();
+        directIncomeCell.setIndexIncome();
 
         // Assert
         expect(directIncomeCell.indexIncome()).toBe(15);
