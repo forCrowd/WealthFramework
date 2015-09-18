@@ -67,6 +67,9 @@ describe('ng-tests ElementField', function () {
         multiplierCell1.UserElementCellSet = [userMultiplierCell1];
         multiplierCell1.CurrentUserCell = userMultiplierCell1;
 
+        // TODO Manually update?!
+        decimalField.setNumericValueMultiplied();
+
         expect(decimalField.numericValueMultiplied()).toBe(250);
 
         // Case 3: Add the second item
@@ -92,6 +95,9 @@ describe('ng-tests ElementField', function () {
         userMultiplierCell2.DecimalValue = 15;
         multiplierCell2.UserElementCellSet = [userMultiplierCell2];
         multiplierCell2.CurrentUserCell = userMultiplierCell2;
+
+        // TODO Manually update?!
+        decimalField.setNumericValueMultiplied();
 
         expect(decimalField.numericValueMultiplied()).toBe(2500);
 
@@ -146,6 +152,9 @@ describe('ng-tests ElementField', function () {
         multiplierCell1.UserElementCellSet = [userMultiplierCell1];
         multiplierCell1.CurrentUserCell = userMultiplierCell1;
 
+        // TODO Manually update?!
+        decimalField.setNumericValueMultiplied();
+
         expect(decimalField.passiveRatingPercentage()).toBe(1);
 
         // Case 3: Add the second item
@@ -173,7 +182,8 @@ describe('ng-tests ElementField', function () {
         multiplierCell2.CurrentUserCell = userMultiplierCell2;
 
         // TODO Manually update?!
-        decimalCell1.setPassiveRatingPercentage();
+        decimalField.setNumericValueMultiplied();
+        //decimalCell1.setPassiveRatingPercentage();
 
         // TODO Will always be 100%?
         expect(decimalField.passiveRatingPercentage()).toBe(1);

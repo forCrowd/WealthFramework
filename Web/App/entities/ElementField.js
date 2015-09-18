@@ -21,6 +21,7 @@
 
             // Local variables
             self.backingFields = {
+                _numericValueMultiplied: null,
                 // Aggressive rating formula prevents the organizations with the worst rating to get any income.
                 // However, in case all ratings are equal, then no one can get any income from the pool.
                 // This flag is used to determine this special case and let all organizations get a same share from the pool.
@@ -48,18 +49,36 @@
             // Public functions
             self.numericValueMultiplied = function () {
 
+                if (self.backingFields._numericValueMultiplied === null) {
+                    self.setNumericValueMultiplied();
+                }
+
+                return self.backingFields._numericValueMultiplied;
+            }
+
+            self.setNumericValueMultiplied = function () {
+
+                var value = 0; // Default value?
+
                 // Validate
                 if (self.ElementCellSet.length === 0) {
-                    return 0; // ?
+                    value = 0; // ?
+                } else {
+                    for (var i = 0; i < self.ElementCellSet.length; i++) {
+                        var cell = self.ElementCellSet[i];
+                        value += cell.numericValueMultiplied();
+                    }
                 }
 
-                var value = 0;
-                for (var i = 0; i < self.ElementCellSet.length; i++) {
-                    var cell = self.ElementCellSet[i];
-                    value += cell.numericValueMultiplied();
-                }
+                if (self.backingFields._numericValueMultiplied !== value) {
+                    self.backingFields._numericValueMultiplied = value;
 
-                return value;
+                    // Update related?
+                    for (var i = 0; i < self.ElementCellSet.length; i++) {
+                        var cell = self.ElementCellSet[i];
+                        cell.setPassiveRatingPercentage();
+                    }
+                }
             }
 
             self.passiveRatingPercentage = function () {
@@ -307,7 +326,7 @@
             }
 
             self.indexIncome = function () {
-                
+
                 var value = self.Element.totalResourcePoolAmount() * self.indexRatingPercentage();
 
                 if (self.backingFields._indexIncome !== value) {

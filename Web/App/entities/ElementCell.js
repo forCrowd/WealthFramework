@@ -263,7 +263,8 @@
                     self.backingFields._numericValueMultiplied = value;
 
                     // Update related
-                    self.setPassiveRatingPercentage();
+                    self.ElementField.setNumericValueMultiplied();
+                    // self.setPassiveRatingPercentage();
                     self.ElementField.setReferenceRatingMultiplied();
                 }
             }
@@ -372,6 +373,7 @@
 
                 if (typeof self.ElementField === 'undefined' || !self.ElementField.IndexEnabled) {
                     // return 0;
+                    value = 0;
                 } else {
 
                     var fieldNumericValueMultiplied = self.ElementField.numericValueMultiplied();
@@ -383,6 +385,7 @@
                     } else {
                         if (fieldNumericValueMultiplied === 0) {
                             // return 0;
+                            value = 0;
                         } else {
                             switch (self.ElementField.IndexRatingSortType) {
                                 case 1: { // LowestToHighest (Low number is better)
