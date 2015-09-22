@@ -81,21 +81,6 @@
                 }
             }
 
-            self.passiveRatingPercentage = function () {
-
-                // Validate
-                if (self.ElementCellSet.length === 0)
-                    return 0; // ?
-
-                var value = 0;
-                for (var i = 0; i < self.ElementCellSet.length; i++) {
-                    var cell = self.ElementCellSet[i];
-                    value += cell.passiveRatingPercentage();
-                }
-
-                return value;
-            }
-
             // TODO Not cached but using backingFields and 'only if different' block!
             self.referenceRatingMultiplied = function () {
 
