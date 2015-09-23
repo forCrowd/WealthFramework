@@ -25,6 +25,7 @@
                 _currentUserIndexRating: null,
                 _otherUsersIndexRatingTotal: null,
                 _otherUsersIndexRatingCount: null,
+                _indexRating: null,
                 _numericValueMultiplied: null,
                 _referenceRatingMultiplied: null,
                 // Aggressive rating formula prevents the organizations with the worst rating to get any income.
@@ -34,7 +35,6 @@
                 // TODO Usage of this field is correct?
                 _referenceRatingAllEqualFlag: true,
                 _aggressiveRating: null,
-                _indexRating: null,
                 _indexIncome: null
             }
 
@@ -71,9 +71,17 @@
             }
 
             self.setCurrentUserIndexRating = function () {
-                self.backingFields._currentUserIndexRating = self.currentUserElementField() !== null
+
+                var value = self.currentUserElementField() !== null
                     ? self.currentUserElementField().Rating
-                    : 50; // Default value?
+                    : 50; // If there is no rating, this is the default value?
+
+                if (self.backingFields._currentUserIndexRating !== value) {
+                    self.backingFields._currentUserIndexRating = value;
+
+                    // TODO Update related
+                    self.setIndexRating();
+                }
             }
 
             // TODO Since this is a fixed value based on IndexRatingTotal & current user's rate,
