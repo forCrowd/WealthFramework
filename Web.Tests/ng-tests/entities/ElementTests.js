@@ -169,6 +169,7 @@ describe('ng-tests Element', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
+        resourcePool.MainElement = element;
 
         expect(element.indexRating()).toBe(0);
 

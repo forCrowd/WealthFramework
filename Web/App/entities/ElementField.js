@@ -26,6 +26,7 @@
                 _otherUsersIndexRatingTotal: null,
                 _otherUsersIndexRatingCount: null,
                 _indexRating: null,
+                _indexRatingPercentage: null,
                 _numericValueMultiplied: null,
                 _referenceRatingMultiplied: null,
                 // Aggressive rating formula prevents the organizations with the worst rating to get any income.
@@ -156,20 +157,48 @@
             }
 
             self.setIndexRating = function () {
+
+                var value = 0; // Default value?
+
                 switch (self.Element.ResourcePool.RatingMode) {
-                    case 1: { self.backingFields._indexRating = self.currentUserIndexRating(); break; } // Current user's
-                    case 2: { self.backingFields._indexRating = self.indexRatingAverage(); break; } // All
+                    case 1: { value = self.currentUserIndexRating(); break; } // Current user's
+                    case 2: { value = self.indexRatingAverage(); break; } // All
+                }
+
+                if (self.backingFields._indexRating !== value) {
+                    self.backingFields._indexRating = value;
+
+                    // TODO Update related
+                    self.setIndexRatingPercentage();
                 }
             }
 
             self.indexRatingPercentage = function () {
 
+                if (self.backingFields._indexRatingPercentage === null) {
+                    self.setIndexRatingPercentage();
+                }
+
+                return self.backingFields._indexRatingPercentage;
+            }
+
+            self.setIndexRatingPercentage = function () {
+
+                var value = 0; // Default value?
+
                 var elementIndexRating = self.Element.ResourcePool.MainElement.indexRating();
 
-                if (elementIndexRating === 0)
-                    return 0;
+                if (elementIndexRating === 0) {
+                    value = 0;
+                } else {
+                    value = self.indexRating() / elementIndexRating;
+                }
 
-                return self.indexRating() / elementIndexRating;
+                if (self.backingFields._indexRatingPercentage !== value) {
+                    self.backingFields._indexRatingPercentage = value;
+
+                    // TODO Update related?
+                }
             }
 
             self.numericValueMultiplied = function () {

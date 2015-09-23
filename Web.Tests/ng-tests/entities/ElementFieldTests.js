@@ -55,6 +55,7 @@ describe('ng-tests ElementField', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
+        resourcePool.MainElement = element;
 
         var decimalField = new ElementField();
         decimalField.Element = element;
@@ -164,6 +165,7 @@ describe('ng-tests ElementField', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
+        resourcePool.MainElement = element;
 
         var decimalField = new ElementField();
         decimalField.Element = element;
@@ -239,6 +241,7 @@ describe('ng-tests ElementField', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
+        resourcePool.MainElement = element;
 
         var decimalField = new ElementField();
         decimalField.Element = element;
@@ -281,6 +284,7 @@ describe('ng-tests ElementField', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
+        resourcePool.MainElement = element;
 
         var decimalField = new ElementField();
         decimalField.Element = element;
@@ -324,6 +328,7 @@ describe('ng-tests ElementField', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
+        resourcePool.MainElement = element;
 
         var decimalField = new ElementField();
         decimalField.Element = element;
@@ -403,6 +408,7 @@ describe('ng-tests ElementField', function () {
 
         // TODO Manually update?!
         element.setElementFieldIndexSet();
+        decimalField1.setIndexRatingPercentage();
 
         expect(decimalField1.indexRatingPercentage()).toBe(0.25);
         expect(decimalField2.indexRatingPercentage()).toBe(0.75);
@@ -701,6 +707,7 @@ describe('ng-tests ElementField', function () {
 
         // TODO Manually update?!
         element.setElementFieldIndexSet();
+        decimalField1.setIndexRatingPercentage();
 
         expect(decimalField1.indexIncome()).toBe(50 * 0.25);
         expect(decimalField2.indexIncome()).toBe(50 * 0.75);
