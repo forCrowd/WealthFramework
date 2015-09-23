@@ -332,7 +332,7 @@
 
         function updateElementFieldIndexRating(elementField, updateType) {
 
-            var userElementField = elementField.userElementField();
+            var userElementField = elementField.currentUserElementField();
 
             switch (updateType) {
                 case 'increase': {

@@ -21,18 +21,18 @@
 
             // Local variables
             self.backingFields = {
+                _currentUserElementField: null,
+                _currentUserIndexRating: null,
+                _otherUsersIndexRatingTotal: null,
+                _otherUsersIndexRatingCount: null,
                 _numericValueMultiplied: null,
+                _referenceRatingMultiplied: null,
                 // Aggressive rating formula prevents the organizations with the worst rating to get any income.
                 // However, in case all ratings are equal, then no one can get any income from the pool.
                 // This flag is used to determine this special case and let all organizations get a same share from the pool.
                 // See the usage in aggressiveRating() in elementCell.js
                 // TODO Usage of this field is correct?
                 _referenceRatingAllEqualFlag: true,
-                _userElementField: null,
-                _currentUserIndexRating: null,
-                _otherUsersIndexRatingTotal: null,
-                _otherUsersIndexRatingCount: null,
-                _referenceRatingMultiplied: null,
                 _aggressiveRating: null,
                 _indexRating: null,
                 _indexIncome: null
@@ -47,6 +47,123 @@
             });
 
             // Public functions
+            self.currentUserElementField = function () {
+
+                // TODO Try to move these entityAspect check to its service?
+                if (self.backingFields._currentUserElementField !== null && self.backingFields._currentUserElementField.entityAspect.entityState.isDetached()) {
+                    self.backingFields._currentUserElementField = null;
+                }
+
+                if (self.backingFields._currentUserElementField === null && self.UserElementFieldSet.length !== 0) {
+                    self.backingFields._currentUserElementField = self.UserElementFieldSet[0];
+                }
+
+                return self.backingFields._currentUserElementField;
+            }
+
+            self.currentUserIndexRating = function () {
+
+                if (self.backingFields._currentUserIndexRating === null) {
+                    self.setCurrentUserIndexRating();
+                }
+
+                return self.backingFields._currentUserIndexRating;
+            }
+
+            self.setCurrentUserIndexRating = function () {
+                self.backingFields._currentUserIndexRating = self.currentUserElementField() !== null
+                    ? self.currentUserElementField().Rating
+                    : 50; // Default value?
+            }
+
+            // TODO Since this is a fixed value based on IndexRatingTotal & current user's rate,
+            // it could be calculated on server, check it later again / SH - 03 Aug. '15
+            self.otherUsersIndexRatingTotal = function () {
+
+                // Set other users' value on the initial call
+                if (self.backingFields._otherUsersIndexRatingTotal === null) {
+                    self.setOtherUsersIndexRatingTotal();
+                }
+
+                return self.backingFields._otherUsersIndexRatingTotal;
+            }
+
+            self.setOtherUsersIndexRatingTotal = function () {
+
+                self.backingFields._otherUsersIndexRatingTotal = self.IndexRatingTotal;
+
+                // Exclude current user's
+                if (self.currentUserElementField() !== null) {
+                    self.backingFields._otherUsersIndexRatingTotal -= self.currentUserElementField().Rating;
+                }
+            }
+
+            // TODO Since this is a fixed value based on IndexRatingCount & current user's rate,
+            // it could be calculated on server, check it later again / SH - 03 Aug. '15
+            self.otherUsersIndexRatingCount = function () {
+
+                // Set other users' value on the initial call
+                if (self.backingFields._otherUsersIndexRatingCount === null) {
+                    self.setOtherUsersIndexRatingCount();
+                }
+
+                return self.backingFields._otherUsersIndexRatingCount;
+            }
+
+            self.setOtherUsersIndexRatingCount = function () {
+                self.backingFields._otherUsersIndexRatingCount = self.IndexRatingCount;
+
+                // Exclude current user's
+                if (self.currentUserElementField() !== null) {
+                    self.backingFields._otherUsersIndexRatingCount--;
+                }
+            }
+
+            self.indexRatingTotal = function () {
+                return self.otherUsersIndexRatingTotal() + self.currentUserIndexRating();
+            }
+
+            self.indexRatingCount = function () {
+                return self.otherUsersIndexRatingCount() + 1;
+            }
+
+            self.indexRatingAverage = function () {
+
+                if (self.indexRatingCount() === null) {
+                    return null;
+                }
+
+                return self.indexRatingCount() === 0
+                    ? 0
+                    : self.indexRatingTotal() / self.indexRatingCount();
+            }
+
+            self.indexRating = function () {
+
+                if (self.backingFields._indexRating === null) {
+                    self.setIndexRating();
+                }
+
+                return self.backingFields._indexRating;
+            }
+
+            self.setIndexRating = function () {
+                switch (self.Element.ResourcePool.RatingMode) {
+                    case 1: { self.backingFields._indexRating = self.currentUserIndexRating(); break; } // Current user's
+                    case 2: { self.backingFields._indexRating = self.indexRatingAverage(); break; } // All
+                }
+            }
+
+            self.indexRatingPercentage = function () {
+
+                var elementIndexRating = self.Element.ResourcePool.MainElement.indexRating();
+
+                if (elementIndexRating === 0)
+                    return 0;
+
+                return self.indexRating() / elementIndexRating;
+            }
+
             self.numericValueMultiplied = function () {
 
                 if (self.backingFields._numericValueMultiplied === null) {
@@ -192,122 +309,6 @@
                         cell.setAggressiveRatingPercentage();
                     }
                 }
-            }
-
-            self.userElementField = function () {
-
-                if (self.backingFields._userElementField !== null && self.backingFields._userElementField.entityAspect.entityState.isDetached()) {
-                    self.backingFields._userElementField = null;
-                }
-
-                if (self.backingFields._userElementField === null && self.UserElementFieldSet.length !== 0) {
-                    self.backingFields._userElementField = self.UserElementFieldSet[0];
-                }
-
-                return self.backingFields._userElementField;
-            }
-
-            self.currentUserIndexRating = function () {
-
-                if (self.backingFields._currentUserIndexRating === null) {
-                    self.setCurrentUserIndexRating();
-                }
-
-                return self.backingFields._currentUserIndexRating;
-            }
-
-            self.setCurrentUserIndexRating = function () {
-                self.backingFields._currentUserIndexRating = self.userElementField() !== null
-                    ? self.userElementField().Rating
-                    : 50; // Default value?
-            }
-
-            // TODO Since this is a fixed value based on IndexRatingTotal & current user's rate,
-            // it could be calculated on server, check it later again / SH - 03 Aug. '15
-            self.otherUsersIndexRatingTotal = function () {
-
-                // Set other users' value on the initial call
-                if (self.backingFields._otherUsersIndexRatingTotal === null) {
-                    self.setOtherUsersIndexRatingTotal();
-                }
-
-                return self.backingFields._otherUsersIndexRatingTotal;
-            }
-
-            self.setOtherUsersIndexRatingTotal = function () {
-
-                self.backingFields._otherUsersIndexRatingTotal = self.IndexRatingTotal;
-
-                // Exclude current user's
-                if (self.userElementField() !== null) {
-                    self.backingFields._otherUsersIndexRatingTotal -= self.userElementField().Rating;
-                }
-            }
-
-            // TODO Since this is a fixed value based on IndexRatingCount & current user's rate,
-            // it could be calculated on server, check it later again / SH - 03 Aug. '15
-            self.otherUsersIndexRatingCount = function () {
-
-                // Set other users' value on the initial call
-                if (self.backingFields._otherUsersIndexRatingCount === null) {
-                    self.setOtherUsersIndexRatingCount();
-                }
-
-                return self.backingFields._otherUsersIndexRatingCount;
-            }
-
-            self.setOtherUsersIndexRatingCount = function () {
-                self.backingFields._otherUsersIndexRatingCount = self.IndexRatingCount;
-
-                // Exclude current user's
-                if (self.userElementField() !== null) {
-                    self.backingFields._otherUsersIndexRatingCount--;
-                }
-            }
-
-            self.indexRatingTotal = function () {
-                return self.otherUsersIndexRatingTotal() + self.currentUserIndexRating();
-            }
-
-            self.indexRatingCount = function () {
-                return self.otherUsersIndexRatingCount() + 1;
-            }
-
-            self.indexRatingAverage = function () {
-
-                if (self.indexRatingCount() === null) {
-                    return null;
-                }
-
-                return self.indexRatingCount() === 0
-                    ? 0
-                    : self.indexRatingTotal() / self.indexRatingCount();
-            }
-
-            self.indexRating = function () {
-
-                if (self.backingFields._indexRating === null) {
-                    self.setIndexRating();
-                }
-
-                return self.backingFields._indexRating;
-            }
-
-            self.setIndexRating = function () {
-                switch (self.Element.ResourcePool.RatingMode) {
-                    case 1: { self.backingFields._indexRating = self.currentUserIndexRating(); break; } // Current user's
-                    case 2: { self.backingFields._indexRating = self.indexRatingAverage(); break; } // All
-                }
-            }
-
-            self.indexRatingPercentage = function () {
-
-                var elementIndexRating = self.Element.ResourcePool.MainElement.indexRating();
-
-                if (elementIndexRating === 0)
-                    return 0;
-
-                return self.indexRating() / elementIndexRating;
             }
 
             self.indexIncome = function () {
