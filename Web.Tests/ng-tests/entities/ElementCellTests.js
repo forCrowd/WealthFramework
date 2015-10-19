@@ -20,6 +20,50 @@ describe('ng-tests ElementCell', function () {
         });
     });
 
+    function getSampleResourcePool(addUserCell) {
+
+        addUserCell = typeof addUserCell === 'undefined' ? false : addUserCell;
+
+        // ResourcePool
+        var resourcePool = new ResourcePool();
+
+        // Element
+        var element = new Element();
+        element.ResourcePool = resourcePool;
+        resourcePool.ElementSet = [element];
+        resourcePool.MainElement = element;
+
+        // Item
+        var item1 = new ElementItem();
+        item1.Element = element;
+        element.ElementItemSet = [item1];
+
+        // Field
+        var field1 = new ElementField();
+        field1.Element = element;
+        field1.ElementFieldType = 4;
+        element.ElementFieldSet = [field1];
+
+        // Cell
+        var cell1 = new ElementCell();
+        cell1.ElementField = field1;
+        cell1.ElementItem = item1;
+        field1.ElementCellSet = [cell1];
+        item1.ElementCellSet = [cell1];
+
+        // User cell
+        if (addUserCell) {
+            var userCell1 = new UserElementCell();
+            userCell1.ElementCell = cell1;
+            userCell1.DecimalValue = 10;
+            cell1.UserElementCellSet = [userCell1];
+            cell1.CurrentUserCell = userCell1;
+        }
+
+        // Return
+        return resourcePool;
+    }
+
     it('userCell', function () {
 
         // Case 1: Initial
@@ -104,114 +148,56 @@ describe('ng-tests ElementCell', function () {
 
     });
 
-    it('otherUsersNumericValueTotal', function () {
+    it('otherUsersNumericValueTotal - Initial', function () {
 
-        // Case 1: Initial
-        var resourcePool = new ResourcePool();
+        var resourcePool = getSampleResourcePool();
+        var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
 
-        var element = new Element();
-        element.ResourcePool = resourcePool;
-        resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
-
-        // Item
-        var item1 = new ElementItem();
-        item1.Element = element;
-        element.ElementItemSet = [item1];
-
-        // Field 1
-        var field1 = new ElementField();
-        field1.Element = element;
-        field1.ElementFieldType = 4;
-        element.ElementFieldSet = [field1];
-
-        // Cell 1
-        var cell1 = new ElementCell();
-        cell1.ElementField = field1;
-        cell1.ElementItem = item1;
-        field1.ElementCellSet = [cell1];
-        item1.ElementCellSet = [cell1];
-
-        expect(cell1.otherUsersNumericValueTotal()).toBe(0);
-
-        // Case 2: Without user rating
-        cell1.NumericValueTotal = 25;
-
-        // TODO Manually update?!
-        cell1.setOtherUsersNumericValueTotal();
-
-        expect(cell1.otherUsersNumericValueTotal()).toBe(25);
-
-        // Case 3: With user rating
-        var userCell1 = new UserElementCell();
-        userCell1.ElementCell = cell1;
-        userCell1.DecimalValue = 10;
-        cell1.UserElementCellSet = [userCell1];
-        cell1.CurrentUserCell = userCell1;
-
-        // TODO Manually update?!
-        cell1.setOtherUsersNumericValueTotal();
-
-        expect(cell1.otherUsersNumericValueTotal()).toBe(15);
-
-        // TODO Update / remove cases
-        // TODO With other field types
-
+        expect(cell.otherUsersNumericValueTotal()).toBe(0);
     });
 
-    it('otherUsersNumericValueCount', function () {
+    it('otherUsersNumericValueTotal - Without user rating', function () {
 
-        // Case 1: Initial
-        var resourcePool = new ResourcePool();
+        var resourcePool = getSampleResourcePool();
+        var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
+        cell.NumericValueTotal = 25;
 
-        var element = new Element();
-        element.ResourcePool = resourcePool;
-        resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        expect(cell.otherUsersNumericValueTotal()).toBe(25);
+    });
 
-        // Field 1
-        var field1 = new ElementField();
-        field1.Element = element;
-        field1.ElementFieldType = 4;
-        element.ElementFieldSet = [field1];
+    it('otherUsersNumericValueTotal - With user rating', function () {
 
-        // Item
-        var item1 = new ElementItem();
-        item1.Element = element;
-        element.ElementItemSet = [item1];
+        var resourcePool = getSampleResourcePool(true);
+        var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
+        cell.NumericValueTotal = 25;
 
-        // Cell 1
-        var cell1 = new ElementCell();
-        cell1.ElementField = field1;
-        cell1.ElementItem = item1;
-        field1.ElementCellSet = [cell1];
-        item1.ElementCellSet = [cell1];
+        expect(cell.otherUsersNumericValueTotal()).toBe(15);
+    });
 
-        expect(cell1.otherUsersNumericValueCount()).toBe(0);
+    it('otherUsersNumericValueCount - Initial', function () {
 
-        // Case 2: Without user rating
-        cell1.NumericValueCount = 3;
+        var resourcePool = getSampleResourcePool();
+        var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
 
-        // TODO Manually update?!
-        cell1.setOtherUsersNumericValueCount();
+        expect(cell.otherUsersNumericValueCount()).toBe(0);
+    });
 
-        expect(cell1.otherUsersNumericValueCount()).toBe(3);
+    it('otherUsersNumericValueCount - Without user rating', function () {
 
-        // Case 3: With user rating
-        var userCell1 = new UserElementCell();
-        userCell1.ElementCell = cell1;
-        userCell1.DecimalValue = 10;
-        cell1.UserElementCellSet = [userCell1];
-        cell1.CurrentUserCell = userCell1;
+        var resourcePool = getSampleResourcePool();
+        var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
+        cell.NumericValueCount = 3;
 
-        // TODO Manually update?!
-        cell1.setOtherUsersNumericValueCount();
+        expect(cell.otherUsersNumericValueCount()).toBe(3);
+    });
 
-        expect(cell1.otherUsersNumericValueCount()).toBe(2);
+    it('otherUsersNumericValueCount - With user rating', function () {
 
-        // TODO Update / remove cases
-        // TODO With other field types
+        var resourcePool = getSampleResourcePool(true);
+        var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
+        cell.NumericValueCount = 3;
 
+        expect(cell.otherUsersNumericValueCount()).toBe(2);
     });
 
     it('numericValueTotal', function () {
