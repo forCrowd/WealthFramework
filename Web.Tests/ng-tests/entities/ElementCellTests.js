@@ -780,7 +780,7 @@ describe('ng-tests ElementCell', function () {
 
         // TODO Manually update?!
         item1.setMultiplier();
-        directIncomeCell.setIndexIncome();
+        directIncomeField.setIndexIncome();
 
         // Assert
         expect(directIncomeCell.indexIncome()).toBe(15);

@@ -197,6 +197,7 @@
                 if (self.backingFields._indexRatingPercentage !== value) {
                     self.backingFields._indexRatingPercentage = value;
 
+                    self.setIndexIncome();
                     // TODO Update related?
                 }
             }
@@ -235,10 +236,11 @@
                 }
             }
 
-            // TODO Not cached but using backingFields and 'only if different' block!
             self.referenceRatingMultiplied = function () {
 
-                self.setReferenceRatingMultiplied();
+                if (self.backingFields._referenceRatingMultiplied === null) {
+                    self.setReferenceRatingMultiplied();
+                }
 
                 return self.backingFields._referenceRatingMultiplied;
             }
@@ -314,12 +316,11 @@
                 }
             }
 
-            // TODO Not cached but using ..
             self.aggressiveRating = function () {
 
-                //if (self.backingFields._aggressiveRating === null) {
-                self.setAggressiveRating();
-                //}
+                if (self.backingFields._aggressiveRating === null) {
+                    self.setAggressiveRating();
+                }
 
                 return self.backingFields._aggressiveRating;
             }
@@ -350,6 +351,15 @@
 
             self.indexIncome = function () {
 
+                if (self.backingFields._indexIncome === null) {
+                    self.setIndexIncome();
+                }
+
+                return self.backingFields._indexIncome;
+            }
+
+            self.setIndexIncome = function () {
+
                 var value = self.Element.totalResourcePoolAmount() * self.indexRatingPercentage();
 
                 if (self.backingFields._indexIncome !== value) {
@@ -361,8 +371,6 @@
                         cell.setIndexIncome();
                     }
                 }
-
-                return self.backingFields._indexIncome;
             }
         }
     }

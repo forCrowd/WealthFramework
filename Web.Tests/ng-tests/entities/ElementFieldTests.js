@@ -549,6 +549,7 @@ describe('ng-tests ElementField', function () {
         multiplierCell1.UserElementCellSet = [userMultiplierCell1];
         multiplierCell1.CurrentUserCell = userMultiplierCell1;
 
+        decimalCell1.setNumericValueMultiplied();
         expect(decimalField.referenceRatingMultiplied()).toBe(250);
 
         // Case 3: Add the second item
@@ -575,6 +576,8 @@ describe('ng-tests ElementField', function () {
         multiplierCell2.UserElementCellSet = [userMultiplierCell2];
         multiplierCell2.CurrentUserCell = userMultiplierCell2;
 
+        decimalCell1.setNumericValueMultiplied();
+        decimalCell2.setNumericValueMultiplied();
         expect(decimalField.referenceRatingMultiplied()).toBe(2250);
 
         // TODO Update / remove cases
@@ -629,6 +632,7 @@ describe('ng-tests ElementField', function () {
         multiplierCell1.UserElementCellSet = [userMultiplierCell1];
         multiplierCell1.CurrentUserCell = userMultiplierCell1;
 
+        decimalCell1.setNumericValueMultiplied();
         expect(decimalField.aggressiveRating()).toBe(1);
 
         // Case 3: Add the second item
@@ -655,6 +659,8 @@ describe('ng-tests ElementField', function () {
         multiplierCell2.UserElementCellSet = [userMultiplierCell2];
         multiplierCell2.CurrentUserCell = userMultiplierCell2;
 
+        decimalCell1.setNumericValueMultiplied();
+        decimalCell2.setNumericValueMultiplied();
         expect(decimalField.aggressiveRating()).toBe(1 - (250 / 2250) + 1 - (2250 / 2250));
 
         // TODO Update / remove cases

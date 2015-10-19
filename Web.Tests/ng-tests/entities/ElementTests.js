@@ -760,8 +760,7 @@ describe('ng-tests Element', function () {
         multiplierCell2.CurrentUserCell = userMultiplierCell2;
 
         // TODO Manually update?!
-        directIncomeCell.setIndexIncome();
-        directIncomeCell2.setIndexIncome();
+        directIncomeField.setIndexIncome();
 
         expect(element.totalResourcePoolIncome()).toBe(250);
 
@@ -845,8 +844,7 @@ describe('ng-tests Element', function () {
         multiplierCell2.CurrentUserCell = userMultiplierCell2;
     
         // TODO Manually update?!
-        directIncomeCell.setIndexIncome();
-        directIncomeCell2.setIndexIncome();
+        directIncomeField.setIndexIncome();
 
         expect(element.totalIncome()).toBe(2750);
 
@@ -930,8 +928,7 @@ describe('ng-tests Element', function () {
         multiplierCell2.CurrentUserCell = userMultiplierCell2;
 
         // TODO Manually update?!
-        directIncomeCell.setIndexIncome();
-        directIncomeCell2.setIndexIncome();
+        directIncomeField.setIndexIncome();
 
         expect(element.totalIncomeAverage()).toBe(2750 / 2);
 
