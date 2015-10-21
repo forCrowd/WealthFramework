@@ -65,7 +65,7 @@
                                 field.setIndexRating();
                             }
 
-                            if (!field.UseFixedValue && field.IndexEnabled) {
+                            if (!field.UseFixedValue) {
                                 for (var cellIndex = 0; cellIndex < field.ElementCellSet.length; cellIndex++) {
                                     var cell = field.ElementCellSet[cellIndex];
 

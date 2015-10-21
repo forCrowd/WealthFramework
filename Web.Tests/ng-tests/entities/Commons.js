@@ -60,7 +60,7 @@ function registerPrototypes($injector) {
     ElementCell.prototype.UserElementCellSet = []; // *
 
     // * A friendly reminder for a while;
-    // With this definition, array is a shared prop between the objects
+    // With this prototype definition, array is a shared prop between the objects
     // Set a new array before using it, instead of push()
 }
 
