@@ -487,66 +487,22 @@ describe('ng Cell', function () {
 
     it('indexIncome', function () {
 
-        // Case 1: Initial
-        var resourcePool = new ResourcePool();
+        var resourcePool = createResourcePool();
+        var element = resourcePool.MainElement;
 
-        var element = new Element();
-        element.ResourcePool = resourcePool;
-        resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        var field = element.ElementFieldSet[0];
+        field.ElementFieldType = 11; // DirectIncome field type
+        field.IndexEnabled = true;
 
-        var item1 = new ElementItem();
-        item1.Element = element;
-        element.ElementItemSet = [item1];
+        var cell1 = field.ElementCellSet[0];
+        cell1.NumericValueTotal = 55;
 
-        var directIncomeField = new ElementField();
-        directIncomeField.Element = element;
-        directIncomeField.ElementFieldType = 11;
-        directIncomeField.IndexEnabled = true;
-        element.ElementFieldSet = [directIncomeField];
+        var item2 = createItem(element);
+        var cell2 = createCell(field, item2);
+        cell2.NumericValueTotal = 45;
 
-        var directIncomeCell = new ElementCell();
-        directIncomeCell.ElementField = directIncomeField;
-        directIncomeCell.ElementItem = item1;
-        directIncomeCell.NumericValueTotal = 50;
-        directIncomeField.ElementCellSet = [directIncomeCell];
-        item1.ElementCellSet = [directIncomeCell];
-
-        expect(directIncomeCell.indexIncome()).toBe(5);
-
-        // Case 2: Add the multiplier field
-
-        // Multiplier field
-        var multiplierField = new ElementField();
-        multiplierField.Element = element;
-        multiplierField.ElementFieldType = 12;
-        element.ElementFieldSet.push(multiplierField);
-
-        // Multiplier cell
-        var multiplierCell = new ElementCell();
-        multiplierCell.ElementField = multiplierField;
-        multiplierCell.ElementItem = item1;
-        multiplierField.ElementCellSet = [multiplierCell];
-        item1.ElementCellSet.push(multiplierCell);
-
-        // User multiplier cell
-        userMultiplierCell1 = new UserElementCell();
-        userMultiplierCell1.ElementCell = multiplierCell;
-        userMultiplierCell1.DecimalValue = 3;
-        multiplierCell.UserElementCellSet = [userMultiplierCell1];
-        multiplierCell.CurrentUserCell = userMultiplierCell1;
-
-        // TODO Manually update?!
-        item1.setMultiplier();
-        directIncomeField.setIndexIncome();
-
-        // Assert
-        expect(directIncomeCell.indexIncome()).toBe(15);
-
-        // TODO Update / remove cases
-        // TODO Multiple items?
-        // TODO field.IndexRatingSortType = 2 case?
-
+        expect(cell1.indexIncome()).toBe(field.indexIncome() * cell1.aggressiveRatingPercentage());
+        expect(cell2.indexIncome()).toBe(field.indexIncome() * cell2.aggressiveRatingPercentage());
     });
 
 });
