@@ -119,22 +119,34 @@
                 return self.backingFields._multiplier;
             }
 
-            self.setMultiplier = function() {
+            self.setMultiplier = function (x) {
+
+                var value = 0;
 
                 var multiplierCell = self.multiplierCell();
 
                 // If there is no multiplier field defined on this element, return 1, so it can return calculate the income correctly
                 // TODO Cover 'add new multiplier field' case as well!
                 if (multiplierCell === null) {
-                    self.backingFields._multiplier = 1;
+                    value = 1;
                 } else {
 
                     // If there is a multiplier field on the element but user is not set any value, return 0 as the default value
                     if (multiplierCell.CurrentUserCell === null
                         || multiplierCell.CurrentUserCell.DecimalValue === null) {
-                        self.backingFields._multiplier = 0;
+                        value = 0;
                     } else { // Else, user's
-                        self.backingFields._multiplier = multiplierCell.CurrentUserCell.DecimalValue;
+                        value = multiplierCell.CurrentUserCell.DecimalValue;
+                    }
+                }
+
+                if (self.backingFields._multiplier !== value) {
+                    self.backingFields._multiplier = value;
+
+                    // Update related
+                    for (var i = 0; i < self.ElementCellSet.length; i++) {
+                        var cell = self.ElementCellSet[i];
+                        cell.setNumericValueMultiplied(x);
                     }
                 }
             }

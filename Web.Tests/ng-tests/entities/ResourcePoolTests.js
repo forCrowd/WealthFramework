@@ -1,6 +1,6 @@
 ﻿/// <reference path="Commons.js" />
 
-describe('ng-tests ResourcePool', function () {
+describe('ng ResourcePool', function () {
 
     var ResourcePool, Element, ElementField, ElementItem, ElementCell;
 

@@ -254,7 +254,7 @@
                     value = 0; // ?
                 } else {
 
-                    self.backingFields._referenceRatingAllEqualFlag = true;
+                    var allEqualFlag = true;
 
                     for (var i = 0; i < self.ElementCellSet.length; i++) {
 
@@ -279,7 +279,7 @@
                                 case 1: { // LowestToHighest (Low number is better)
 
                                     if (cell.numericValueMultiplied() !== value) {
-                                        self.backingFields._referenceRatingAllEqualFlag = false;
+                                        allEqualFlag = false;
                                     }
 
                                     if (cell.numericValueMultiplied() > value) {
@@ -291,7 +291,7 @@
                                 case 2: { // HighestToLowest (High number is better)
 
                                     if (cell.passiveRatingPercentage() !== value) {
-                                        self.backingFields._referenceRatingAllEqualFlag = false;
+                                        allEqualFlag = false;
                                     }
 
                                     if (cell.passiveRatingPercentage() > value) {
@@ -302,6 +302,9 @@
                             }
                         }
                     }
+
+                    // Set all equal flag
+                    self.referenceRatingAllEqualFlag(allEqualFlag);
                 }
 
                 // Only if it's different..
@@ -314,6 +317,21 @@
                         cell.setAggressiveRating();
                     }
                 }
+            }
+
+            self.referenceRatingAllEqualFlag = function (value) {
+
+                if (typeof value !== 'undefined' && self.backingFields._referenceRatingAllEqualFlag !== value) {
+                    self.backingFields._referenceRatingAllEqualFlag = value;
+
+                    // Update related
+                    for (var i = 0; i < self.ElementCellSet.length; i++) {
+                        var cell = self.ElementCellSet[i];
+                        cell.setAggressiveRating();
+                    }
+                }
+
+                return self.backingFields._referenceRatingAllEqualFlag;
             }
 
             self.aggressiveRating = function () {

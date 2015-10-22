@@ -10,6 +10,7 @@
         // Logger
         logger = logger.forSource(serviceId);
 
+
         // Client-side properties
         Object.defineProperty(ElementCell.prototype, 'CurrentUserCell', {
             enumerable: true,
@@ -60,7 +61,7 @@
                                 : 0; /* Default value? */
 
                             if (typeof this.ElementItem !== 'undefined' && this.ElementItem !== null) {
-                                this.ElementItem.setMultiplier();
+                                this.ElementItem.setMultiplier(-6);
                             }
 
                             break;
@@ -92,7 +93,7 @@
                         }
                         case 12: {
                             if (typeof this.ElementItem !== 'undefined' && this.ElementItem !== null) {
-                                this.ElementItem.setMultiplier();
+                                this.ElementItem.setMultiplier(-5);
                             }
 
                             this.setNumericValue();
@@ -236,24 +237,25 @@
                 if (self.backingFields._numericValue !== value) {
                     self.backingFields._numericValue = value;
 
-                    self.setNumericValueMultiplied();
+                    self.setNumericValueMultiplied(-9);
                 }
             }
 
             self.numericValueMultiplied = function () {
 
                 if (self.backingFields._numericValueMultiplied === null) {
-                    self.setNumericValueMultiplied();
+                    self.setNumericValueMultiplied(-8);
                 }
 
                 return self.backingFields._numericValueMultiplied;
             }
 
-            self.setNumericValueMultiplied = function () {
+            self.setNumericValueMultiplied = function (x) {
 
                 var value;
 
-                if (typeof self.ElementField === 'undefined' || !self.ElementField.IndexEnabled) {
+                // if (typeof self.ElementField === 'undefined' || !self.ElementField.IndexEnabled) {
+                if (typeof self.ElementField === 'undefined') {
                     value = 0; // ?
                 } else {
                     value = self.numericValue() * self.ElementItem.multiplier();
@@ -264,7 +266,55 @@
 
                     // Update related
                     self.ElementField.setNumericValueMultiplied();
-                    // self.setPassiveRatingPercentage();
+
+                    // IMPORTANT REMARK: If the field is using IndexRatingSortType 1,
+                    // then it would be better to directly call field.setReferenceRatingMultiplied() method.
+                    // It would be quicker to calculate.
+                    // However, since field.setNumericValueMultiplied() will make 'passiveRatingPercentage' calculations
+                    // which meanwhile will call referenceRatingMultiplied() method anyway. So it becomes redundant.
+                    // This code block could possibly be improved with a IndexRatingSortType switch case,
+                    // but it seems it would be bit overkill.
+                    // Still something to think about it later? / SH - 22 Oct. '15
+                    //self.ElementField.setReferenceRatingMultiplied();
+                }
+            }
+
+            // TODO Is the name of this function good? / SH - 22 Oct. '15
+            self.passiveRatingPercentage = function () {
+
+                if (self.backingFields._passiveRatingPercentage === null) {
+                    self.setPassiveRatingPercentage();
+                }
+
+                return self.backingFields._passiveRatingPercentage;
+            }
+
+            self.setPassiveRatingPercentage = function () {
+
+                var value;
+
+                if (typeof self.ElementField === 'undefined' || !self.ElementField.IndexEnabled) {
+                    value = 0;
+                } else {
+
+                    // If there is only one item, always 100%
+                    if (self.ElementField.ElementCellSet.length === 1) {
+                        value = 1;
+                    } else {
+                        var fieldNumericValueMultiplied = self.ElementField.numericValueMultiplied();
+
+                        if (fieldNumericValueMultiplied === 0) {
+                            value = 0;
+                        } else {
+                            value = 1 - (self.numericValueMultiplied() / fieldNumericValueMultiplied);
+                        }
+                    }
+                }
+
+                if (self.backingFields._passiveRatingPercentage !== value) {
+                    self.backingFields._passiveRatingPercentage = value;
+
+                    // Update related values
                     self.ElementField.setReferenceRatingMultiplied();
                 }
             }
@@ -276,7 +326,6 @@
                 }
 
                 return self.backingFields._aggressiveRating;
-
             }
 
             self.setAggressiveRating = function () {
@@ -305,7 +354,7 @@
                         }
 
                         // TODO This is not correct usage, create a prop around 'referenceRatingAllEqualFlag'
-                        value = self.ElementField.backingFields._referenceRatingAllEqualFlag
+                        value = self.ElementField.referenceRatingAllEqualFlag()
                             ? value
                             : 1 - value;
                     }
@@ -314,9 +363,8 @@
                 if (self.backingFields._aggressiveRating !== value) {
                     self.backingFields._aggressiveRating = value; // ?
 
+                    // Update related values
                     self.ElementField.setAggressiveRating();
-
-                    // TODO Update related values
                 }
             }
 
@@ -334,77 +382,22 @@
                 var value = 0; // Default value?
 
                 if (typeof self.ElementField === 'undefined' || !self.ElementField.IndexEnabled) {
-                    // self.backingFields._aggressiveRatingPercentage = 0; // ?
+                    value = 0;
                 } else {
-                    var indexAggressiveRating = self.ElementField.aggressiveRating();
 
+                    var indexAggressiveRating = self.ElementField.aggressiveRating();
                     if (indexAggressiveRating === 0) {
-                        // self.backingFields._aggressiveRatingPercentage = 0; // ?
+                        value = 0;
                     } else {
                         value = self.aggressiveRating() / indexAggressiveRating;
                     }
                 }
 
-                //self.backingFields._aggressiveRatingPercentage = self.aggressiveRating() / indexAggressiveRating;
-
                 if (self.backingFields._aggressiveRatingPercentage !== value) {
                     self.backingFields._aggressiveRatingPercentage = value;
 
+                    // Update related
                     self.setIndexIncome();
-
-                    // TODO Update related values?
-                }
-            }
-
-            // TODO This is obsolete for now and probably not calculating correctly. Check it later, either remove or fix it / SH - 13 Mar. '15
-            // TODO Now it's in use again but for a different purpose, rename it? / SH - 24 Mar. '15
-            self.passiveRatingPercentage = function () {
-
-                if (self.backingFields._passiveRatingPercentage === null) {
-                    self.setPassiveRatingPercentage();
-                }
-
-                return self.backingFields._passiveRatingPercentage;
-            }
-
-            self.setPassiveRatingPercentage = function () {
-
-                var value = 0; // Default value?
-
-                if (typeof self.ElementField === 'undefined' || !self.ElementField.IndexEnabled) {
-                    // return 0;
-                    value = 0;
-                } else {
-
-                    var fieldNumericValueMultiplied = self.ElementField.numericValueMultiplied();
-
-                    // Means there is only one item in the element, always 100%
-                    if (self.numericValueMultiplied() === fieldNumericValueMultiplied) {
-                        // return 1;
-                        value = 1;
-                    } else {
-                        if (fieldNumericValueMultiplied === 0) {
-                            // return 0;
-                            value = 0;
-                        } else {
-                            switch (self.ElementField.IndexRatingSortType) {
-                                case 1: { // LowestToHighest (Low number is better)
-                                    //return self.numericValueMultiplied() / fieldNumericValueMultiplied;
-                                    value = self.numericValueMultiplied() / fieldNumericValueMultiplied;
-                                }
-                                case 2: { // HighestToLowest (High number is better)
-                                    //return 1 - (self.numericValueMultiplied() / fieldNumericValueMultiplied);
-                                    value = 1 - (self.numericValueMultiplied() / fieldNumericValueMultiplied);
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if (self.backingFields._passiveRatingPercentage !== value) {
-                    self.backingFields._passiveRatingPercentage = value;
-
-                    // TODO Update related values?
                 }
             }
 
@@ -437,6 +430,8 @@
 
                 if (self.backingFields._indexIncome !== value) {
                     self.backingFields._indexIncome = value;
+
+                    // TODO Update related?
                 }
             }
         }

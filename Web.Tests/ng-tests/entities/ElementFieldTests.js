@@ -1,6 +1,6 @@
 ﻿/// <reference path="Commons.js" />
 
-describe('ng-tests ElementField', function () {
+describe('ng ElementField', function () {
 
     var ResourcePool, Element, ElementField, ElementItem, ElementCell;
 

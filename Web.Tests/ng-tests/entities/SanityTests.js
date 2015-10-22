@@ -1,6 +1,6 @@
 ﻿/// <reference path="Commons.js" />
 
-describe('ng-tests Sanity Checks', function () {
+describe('ng Sanity Checks', function () {
 
     var ResourcePool, Element, ElementField, ElementItem, ElementCell;
 

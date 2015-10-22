@@ -1,6 +1,6 @@
 ﻿/// <reference path="Commons.js" />
 
-describe('ElementCell', function () {
+describe('ng Cell', function () {
 
     var ResourcePool, Element, ElementField, ElementItem, ElementCell;
 
@@ -20,7 +20,8 @@ describe('ElementCell', function () {
         });
     });
 
-    function getSampleResourcePool(addMultiplierField) {
+    function createResourcePool(addMultiplierField) {
+
         addMultiplierField = typeof addMultiplierField === 'undefined' ? false : addMultiplierField;
 
         // ResourcePool
@@ -32,23 +33,17 @@ describe('ElementCell', function () {
         resourcePool.ElementSet = [element];
         resourcePool.MainElement = element;
 
-        // Item
-        var item1 = new ElementItem();
-        item1.Element = element;
-        element.ElementItemSet = [item1];
-
         // Decimal field
         var decimalField = new ElementField();
         decimalField.Element = element;
         decimalField.ElementFieldType = 4;
         element.ElementFieldSet = [decimalField];
 
+        // Item
+        var item = createItem(element);
+
         // Decimal cell
-        var decimalCell = new ElementCell();
-        decimalCell.ElementField = decimalField;
-        decimalCell.ElementItem = item1;
-        decimalField.ElementCellSet = [decimalCell];
-        item1.ElementCellSet = [decimalCell];
+        createCell(decimalField, item);
 
         // Multiplier field & cell & userCell?
         if (addMultiplierField) {
@@ -59,12 +54,13 @@ describe('ElementCell', function () {
 
             var multiplierCell = new ElementCell();
             multiplierCell.ElementField = multiplierField;
-            multiplierCell.ElementItem = item1;
+            multiplierCell.ElementItem = item;
             multiplierField.ElementCellSet = [multiplierCell];
-            item1.ElementCellSet.push(multiplierCell);
+            item.ElementCellSet.push(multiplierCell);
 
             var userMultiplierCell = new UserElementCell();
             userMultiplierCell.ElementCell = multiplierCell;
+            userMultiplierCell.DecimalValue = 1;
             multiplierCell.UserElementCellSet = [userMultiplierCell];
             multiplierCell.CurrentUserCell = userMultiplierCell;
         }
@@ -73,7 +69,42 @@ describe('ElementCell', function () {
         return resourcePool;
     }
 
-    function addUserCell(cell, rating) {
+    function createItem(element) {
+
+        var item = new ElementItem();
+        item.Element = element;
+
+        if (element.ElementItemSet.length === 0) {
+            element.ElementItemSet = [item];
+        } else {
+            element.ElementItemSet.push(item);
+        }
+
+        return item;
+    }
+
+    function createCell(field, item) {
+
+        var cell = new ElementCell();
+        cell.ElementField = field;
+        cell.ElementItem = item;
+
+        if (field.ElementCellSet.length === 0) {
+            field.ElementCellSet = [cell];
+        } else {
+            field.ElementCellSet.push(cell);
+        }
+
+        if (item.ElementCellSet.length === 0) {
+            item.ElementCellSet = [cell];
+        } else {
+            item.ElementCellSet.push(cell);
+        }
+
+        return cell;
+    }
+
+    function createUserCell(cell, rating) {
 
         var userCell = new UserElementCell();
         userCell.ElementCell = cell;
@@ -88,7 +119,7 @@ describe('ElementCell', function () {
 
     it('userCell - Initial', function () {
 
-        var resourcePool = getSampleResourcePool();
+        var resourcePool = createResourcePool();
         var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
 
         expect(cell.CurrentUserCell).toBe(null);
@@ -96,11 +127,11 @@ describe('ElementCell', function () {
 
     it('userCell - With user cell', function () {
 
-        var resourcePool = getSampleResourcePool();
+        var resourcePool = createResourcePool();
         var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
 
         // Add user cell
-        addUserCell(cell, 10);
+        createUserCell(cell, 10);
         var userCell = cell.UserElementCellSet[0];
 
         // Assert
@@ -110,7 +141,7 @@ describe('ElementCell', function () {
 
     it('currentUserNumericValue - Initial', function () {
 
-        var resourcePool = getSampleResourcePool();
+        var resourcePool = createResourcePool();
         var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
 
         expect(cell.CurrentUserNumericValue).toBe(50);
@@ -118,11 +149,11 @@ describe('ElementCell', function () {
 
     it('currentUserNumericValue - With user cell', function () {
 
-        var resourcePool = getSampleResourcePool();
+        var resourcePool = createResourcePool();
         var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
 
         // Add user cell
-        addUserCell(cell, 10);
+        createUserCell(cell, 10);
         var userCell = cell.UserElementCellSet[0];
 
         // Assert
@@ -131,7 +162,7 @@ describe('ElementCell', function () {
 
     it('otherUsersNumericValueTotal - Initial', function () {
 
-        var resourcePool = getSampleResourcePool();
+        var resourcePool = createResourcePool();
         var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
 
         expect(cell.otherUsersNumericValueTotal()).toBe(0);
@@ -139,7 +170,7 @@ describe('ElementCell', function () {
 
     it('otherUsersNumericValueTotal - Without user rating', function () {
 
-        var resourcePool = getSampleResourcePool();
+        var resourcePool = createResourcePool();
         var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
         cell.NumericValueTotal = 25;
 
@@ -148,17 +179,17 @@ describe('ElementCell', function () {
 
     it('otherUsersNumericValueTotal - With user rating', function () {
 
-        var resourcePool = getSampleResourcePool();
+        var resourcePool = createResourcePool();
         var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
         cell.NumericValueTotal = 25;
-        addUserCell(cell, 10);
+        createUserCell(cell, 10);
 
         expect(cell.otherUsersNumericValueTotal()).toBe(15);
     });
 
     it('otherUsersNumericValueCount - Initial', function () {
 
-        var resourcePool = getSampleResourcePool();
+        var resourcePool = createResourcePool();
         var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
 
         expect(cell.otherUsersNumericValueCount()).toBe(0);
@@ -166,7 +197,7 @@ describe('ElementCell', function () {
 
     it('otherUsersNumericValueCount - Without user rating', function () {
 
-        var resourcePool = getSampleResourcePool();
+        var resourcePool = createResourcePool();
         var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
         cell.NumericValueCount = 3;
 
@@ -175,17 +206,17 @@ describe('ElementCell', function () {
 
     it('otherUsersNumericValueCount - With user rating', function () {
 
-        var resourcePool = getSampleResourcePool();
+        var resourcePool = createResourcePool();
         var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
         cell.NumericValueCount = 3;
-        addUserCell(cell, 10);
+        createUserCell(cell, 10);
 
         expect(cell.otherUsersNumericValueCount()).toBe(2);
     });
 
     it('numericValueTotal - Initial', function () {
 
-        var resourcePool = getSampleResourcePool();
+        var resourcePool = createResourcePool();
         var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
 
         expect(cell.numericValueTotal()).toBe(50);
@@ -193,7 +224,7 @@ describe('ElementCell', function () {
 
     it('numericValueTotal - Without user rating', function () {
 
-        var resourcePool = getSampleResourcePool();
+        var resourcePool = createResourcePool();
         var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
         cell.NumericValueTotal = 25;
 
@@ -202,17 +233,17 @@ describe('ElementCell', function () {
 
     it('numericValueTotal - Including user rating', function () {
 
-        var resourcePool = getSampleResourcePool();
+        var resourcePool = createResourcePool();
         var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
         cell.NumericValueTotal = 25;
-        addUserCell(cell, 10);
+        createUserCell(cell, 10);
 
         expect(cell.numericValueTotal()).toBe(25);
     });
 
     it('numericValueTotal - Adding user rating', function () {
 
-        var resourcePool = getSampleResourcePool();
+        var resourcePool = createResourcePool();
         var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
         cell.NumericValueTotal = 25;
 
@@ -221,7 +252,7 @@ describe('ElementCell', function () {
         cell.numericValueTotal();
 
         // Act
-        addUserCell(cell, 10);
+        createUserCell(cell, 10);
 
         // Assert
         expect(cell.numericValueTotal()).toBe(25 + 10);
@@ -229,7 +260,7 @@ describe('ElementCell', function () {
 
     it('numericValueCount - Initial', function () {
 
-        var resourcePool = getSampleResourcePool();
+        var resourcePool = createResourcePool();
         var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
 
         expect(cell.numericValueCount()).toBe(1);
@@ -237,7 +268,7 @@ describe('ElementCell', function () {
 
     it('numericValueCount - Without user rating', function () {
 
-        var resourcePool = getSampleResourcePool();
+        var resourcePool = createResourcePool();
         var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
         cell.NumericValueCount = 3;
 
@@ -246,17 +277,17 @@ describe('ElementCell', function () {
 
     it('numericValueCount - Including user rating', function () {
 
-        var resourcePool = getSampleResourcePool();
+        var resourcePool = createResourcePool();
         var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
         cell.NumericValueCount = 3;
-        addUserCell(cell, 10);
+        createUserCell(cell, 10);
 
         expect(cell.numericValueCount()).toBe(3);
     });
 
     it('numericValueCount - Adding user rating', function () {
 
-        var resourcePool = getSampleResourcePool();
+        var resourcePool = createResourcePool();
         var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
         cell.NumericValueCount = 3;
 
@@ -265,7 +296,7 @@ describe('ElementCell', function () {
         cell.numericValueCount();
 
         // Act
-        addUserCell(cell, 10);
+        createUserCell(cell, 10);
 
         // Assert
         expect(cell.numericValueCount()).toBe(3 + 1);
@@ -273,7 +304,7 @@ describe('ElementCell', function () {
 
     it('numericValueAverage', function () {
 
-        var resourcePool = getSampleResourcePool();
+        var resourcePool = createResourcePool();
         var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
         cell.NumericValueTotal = 75;
         cell.NumericValueCount = 3;
@@ -281,10 +312,10 @@ describe('ElementCell', function () {
         expect(cell.numericValueAverage()).toBe((75 + 50) / (3 + 1));
     });
 
-    it('numericValue - RatingMode 1 (Default)', function () {
+    it('numericValue', function () {
 
         // Arrange & act - Case 1: RatingMode 1 (Default)
-        var resourcePool = getSampleResourcePool();
+        var resourcePool = createResourcePool();
         var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
         cell.NumericValueTotal = 75;
         cell.NumericValueCount = 3;
@@ -299,213 +330,159 @@ describe('ElementCell', function () {
         expect(cell.numericValue()).toBe(cell.numericValueAverage());
     });
 
-    it('numericValueMultiplied - !IndexEnabled', function () {
+    it('numericValueMultiplied - Without multiplierCell', function () {
 
-        var resourcePool = getSampleResourcePool();
-        var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
+        var resourcePool = createResourcePool();
+        var field = resourcePool.MainElement.ElementFieldSet[0];
+        var cell = field.ElementCellSet[0];
 
-        expect(cell.numericValueMultiplied()).toBe(0);
+        expect(cell.numericValueMultiplied()).toBe(50 * 1);
     });
 
-    it('numericValueMultiplied - IndexEnabled, without multiplierCell', function () {
+    it('numericValueMultiplied - With multiplierCell', function () {
 
-        var resourcePool = getSampleResourcePool();
+        var resourcePool = createResourcePool(true);
+        var decimalField = resourcePool.MainElement.ElementFieldSet[0];
+        var decimalCell = decimalField.ElementCellSet[0];
+
+        expect(decimalCell.numericValueMultiplied()).toBe(50 * 1); // This time 1 is coming from userCell
+
+        // Case 2: Cached value
+        // TODO Actually this case belongs to ElementItemTests.js - setMultiplier() test?
+        var userMultiplierCell = resourcePool.MainElement.ElementFieldSet[1].ElementCellSet[0].UserElementCellSet[0];
+        userMultiplierCell.DecimalValue = 5;
+
+        // TODO Manually update?!
+        var item = resourcePool.MainElement.ElementItemSet[0];
+        item.setMultiplier();
+
+        expect(decimalCell.numericValueMultiplied()).toBe(50 * 5);
+    });
+
+    it('passiveRatingPercentage - !IndexEnabled', function () {
+
+        var resourcePool = createResourcePool();
+        var field = resourcePool.MainElement.ElementFieldSet[0];
+        var cell = field.ElementCellSet[0];
+
+        expect(cell.passiveRatingPercentage()).toBe(0);
+    });
+
+    it('passiveRatingPercentage - IndexEnabled, One Item', function () {
+
+        var resourcePool = createResourcePool();
         var field = resourcePool.MainElement.ElementFieldSet[0];
         field.IndexEnabled = true;
         var cell = field.ElementCellSet[0];
 
-        expect(cell.numericValueMultiplied()).toBe(50);
+        expect(cell.passiveRatingPercentage()).toBe(1);
     });
 
-    it('numericValueMultiplied - IndexEnabled, with multiplierCell', function () {
+    it('passiveRatingPercentage - IndexEnabled, Two Items', function () {
 
-        var resourcePool = getSampleResourcePool(true);
-        var decimalField = resourcePool.MainElement.ElementFieldSet[0];
-        decimalField.IndexEnabled = true;
-        var decimalCell = decimalField.ElementCellSet[0];
-        var multiplierField = resourcePool.MainElement.ElementFieldSet[1];
-        var multiplierCell = multiplierField.ElementCellSet[0];
-        var userMultiplierCell = multiplierCell.UserElementCellSet[0];
-        userMultiplierCell.DecimalValue = 5;
+        var resourcePool = createResourcePool();
+        var element = resourcePool.MainElement;
 
-        expect(decimalCell.numericValueMultiplied()).toBe(250);
+        var field = element.ElementFieldSet[0];
+        field.IndexEnabled = true;
+
+        var cell1 = field.ElementCellSet[0];
+        createUserCell(cell1, 55);
+
+        var item2 = createItem(element);
+        var cell2 = createCell(field, item2);
+        createUserCell(cell2, 45);
+
+        expect(cell1.passiveRatingPercentage()).toBe(1 - (55 / (45 + 55)));
+        expect(cell2.passiveRatingPercentage()).toBe(1 - (45 / (45 + 55)));
     });
 
-    it('aggressiveRating', function () {
+    it('aggressiveRating - !IndexEnabled', function () {
 
-        // Case 1: Initial
-        var resourcePool = new ResourcePool();
+        var resourcePool = createResourcePool();
+        var field = resourcePool.MainElement.ElementFieldSet[0];
+        var cell = field.ElementCellSet[0];
 
-        var element = new Element();
-        element.ResourcePool = resourcePool;
-        resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        expect(cell.aggressiveRating()).toBe(0);
+    });
 
-        var decimalField = new ElementField();
-        decimalField.Element = element;
-        decimalField.ElementFieldType = 4;
-        decimalField.IndexEnabled = true;
-        element.ElementFieldSet = [decimalField];
+    it('aggressiveRating - RatingSortType 1 (Def.), One Item', function () {
 
-        var item1 = new ElementItem();
-        item1.Element = element;
-        element.ElementItemSet = [item1];
+        var resourcePool = createResourcePool();
+        var field = resourcePool.MainElement.ElementFieldSet[0];
+        field.IndexEnabled = true;
+        var cell = field.ElementCellSet[0];
 
-        var decimalCell1 = new ElementCell();
-        decimalCell1.ElementField = decimalField;
-        decimalCell1.ElementItem = item1;
-        decimalCell1.NumericValueTotal = 50;
-        decimalField.ElementCellSet = [decimalCell1];
-        item1.ElementCellSet = [decimalCell1];
+        expect(cell.aggressiveRating()).toBe(1);
+    });
 
-        expect(decimalCell1.aggressiveRating()).toBe(1);
+    it('aggressiveRating - RatingSortType 1 (Def.), Two Items', function () {
 
-        // Case 2: Add the multiplier field and the first item
-        var multiplierField = new ElementField();
-        multiplierField.Element = element;
-        multiplierField.ElementFieldType = 12;
-        element.ElementFieldSet.push(multiplierField);
+        var resourcePool = createResourcePool();
+        var element = resourcePool.MainElement;
 
-        var multiplierCell1 = new ElementCell();
-        multiplierCell1.ElementField = multiplierField;
-        multiplierCell1.ElementItem = item1;
-        multiplierField.ElementCellSet = [multiplierCell1];
-        item1.ElementCellSet.push(multiplierCell1);
+        var field = element.ElementFieldSet[0];
+        field.IndexEnabled = true;
 
-        var userMultiplierCell1 = new UserElementCell();
-        userMultiplierCell1.ElementCell = multiplierCell1;
-        userMultiplierCell1.DecimalValue = 5;
-        multiplierCell1.UserElementCellSet = [userMultiplierCell1];
-        multiplierCell1.CurrentUserCell = userMultiplierCell1;
+        var cell1 = field.ElementCellSet[0];
+        createUserCell(cell1, 55);
 
-        // TODO Manually update?!
-        item1.setMultiplier();
-        decimalCell1.setNumericValueMultiplied();
+        var item2 = createItem(element);
+        var cell2 = createCell(field, item2);
+        createUserCell(cell2, 45);
 
-        expect(decimalCell1.aggressiveRating()).toBe(1);
+        expect(cell1.aggressiveRating()).toBe(1 - (cell1.numericValueMultiplied() / field.referenceRatingMultiplied()));
+        expect(cell2.aggressiveRating()).toBe(1 - (cell2.numericValueMultiplied() / field.referenceRatingMultiplied()));
+    });
 
-        // TODO Update / remove cases
-        // TODO Multiple items?
-        // TODO field.IndexRatingSortType = 2 case?
+    it('aggressiveRating - RatingSortType 2, One Item', function () {
 
+        var resourcePool = createResourcePool();
+        var field = resourcePool.MainElement.ElementFieldSet[0];
+        field.IndexRatingSortType = 2;
+        field.IndexEnabled = true;
+        var cell = field.ElementCellSet[0];
+
+        expect(cell.aggressiveRating()).toBe(1);
+    });
+
+    it('aggressiveRating - RatingSortType 2 (Def.), Two Items', function () {
+
+        var resourcePool = createResourcePool();
+        var element = resourcePool.MainElement;
+
+        var field = element.ElementFieldSet[0];
+        field.IndexRatingSortType = 2;
+        field.IndexEnabled = true;
+
+        var cell1 = field.ElementCellSet[0];
+        createUserCell(cell1, 55);
+
+        var item2 = createItem(element);
+        var cell2 = createCell(field, item2);
+        createUserCell(cell2, 45);
+
+        expect(cell1.aggressiveRating()).toBe(1 - (cell1.passiveRatingPercentage() / field.referenceRatingMultiplied()));
+        expect(cell2.aggressiveRating()).toBe(1 - (cell2.passiveRatingPercentage() / field.referenceRatingMultiplied()));
     });
 
     it('aggressiveRatingPercentage', function () {
 
-        // Case 1: Initial
-        var resourcePool = new ResourcePool();
+        var resourcePool = createResourcePool();
+        var element = resourcePool.MainElement;
 
-        var element = new Element();
-        element.ResourcePool = resourcePool;
-        resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        var field = element.ElementFieldSet[0];
+        field.IndexEnabled = true;
 
-        var decimalField = new ElementField();
-        decimalField.Element = element;
-        decimalField.ElementFieldType = 4;
-        decimalField.IndexEnabled = true;
-        element.ElementFieldSet = [decimalField];
+        var cell1 = field.ElementCellSet[0];
+        createUserCell(cell1, 55);
 
-        var item1 = new ElementItem();
-        item1.Element = element;
-        element.ElementItemSet = [item1];
+        var item2 = createItem(element);
+        var cell2 = createCell(field, item2);
+        createUserCell(cell2, 45);
 
-        var decimalCell1 = new ElementCell();
-        decimalCell1.ElementField = decimalField;
-        decimalCell1.ElementItem = item1;
-        decimalCell1.NumericValueTotal = 50;
-        decimalField.ElementCellSet = [decimalCell1];
-        item1.ElementCellSet = [decimalCell1];
-
-        expect(decimalCell1.aggressiveRatingPercentage()).toBe(1);
-
-        // Case 2: Add the multiplier field and the first item
-        var multiplierField = new ElementField();
-        multiplierField.Element = element;
-        multiplierField.ElementFieldType = 12;
-        element.ElementFieldSet.push(multiplierField);
-
-        var multiplierCell1 = new ElementCell();
-        multiplierCell1.ElementField = multiplierField;
-        multiplierCell1.ElementItem = item1;
-        multiplierField.ElementCellSet = [multiplierCell1];
-        item1.ElementCellSet.push(multiplierCell1);
-
-        var userMultiplierCell1 = new UserElementCell();
-        userMultiplierCell1.ElementCell = multiplierCell1;
-        userMultiplierCell1.DecimalValue = 5;
-        multiplierCell1.UserElementCellSet = [userMultiplierCell1];
-        multiplierCell1.CurrentUserCell = userMultiplierCell1;
-
-        // TODO Manually update?!
-        item1.setMultiplier();
-        decimalCell1.setNumericValueMultiplied();
-
-        expect(decimalCell1.aggressiveRatingPercentage()).toBe(1);
-
-        // TODO Update / remove cases
-        // TODO Multiple items?
-        // TODO field.IndexRatingSortType = 2 case?
-
-    });
-
-    it('passiveRatingPercentage', function () {
-
-        // Case 1: Initial
-        var resourcePool = new ResourcePool();
-
-        var element = new Element();
-        element.ResourcePool = resourcePool;
-        resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
-
-        var decimalField = new ElementField();
-        decimalField.Element = element;
-        decimalField.ElementFieldType = 4;
-        decimalField.IndexEnabled = true;
-        element.ElementFieldSet = [decimalField];
-
-        var item1 = new ElementItem();
-        item1.Element = element;
-        element.ElementItemSet = [item1];
-
-        var decimalCell1 = new ElementCell();
-        decimalCell1.ElementField = decimalField;
-        decimalCell1.ElementItem = item1;
-        decimalCell1.NumericValueTotal = 50;
-        decimalField.ElementCellSet = [decimalCell1];
-        item1.ElementCellSet = [decimalCell1];
-
-        expect(decimalCell1.passiveRatingPercentage()).toBe(1);
-
-        // Case 2: Add the multiplier field and the first item
-        var multiplierField = new ElementField();
-        multiplierField.Element = element;
-        multiplierField.ElementFieldType = 12;
-        element.ElementFieldSet.push(multiplierField);
-
-        var multiplierCell1 = new ElementCell();
-        multiplierCell1.ElementField = multiplierField;
-        multiplierCell1.ElementItem = item1;
-        multiplierField.ElementCellSet = [multiplierCell1];
-        item1.ElementCellSet.push(multiplierCell1);
-
-        var userMultiplierCell1 = new UserElementCell();
-        userMultiplierCell1.ElementCell = multiplierCell1;
-        userMultiplierCell1.DecimalValue = 5;
-        multiplierCell1.UserElementCellSet = [userMultiplierCell1];
-        multiplierCell1.CurrentUserCell = userMultiplierCell1;
-
-        // TODO Manually update?!
-        item1.setMultiplier();
-        decimalCell1.setNumericValueMultiplied();
-
-        expect(decimalCell1.passiveRatingPercentage()).toBe(1);
-
-        // TODO Update / remove cases
-        // TODO Multiple items?
-        // TODO field.IndexRatingSortType = 2 case?
-
+        expect(cell1.aggressiveRatingPercentage()).toBe(cell1.aggressiveRating() / field.aggressiveRating());
+        expect(cell2.aggressiveRatingPercentage()).toBe(cell2.aggressiveRating() / field.aggressiveRating());
     });
 
     it('indexIncome', function () {
