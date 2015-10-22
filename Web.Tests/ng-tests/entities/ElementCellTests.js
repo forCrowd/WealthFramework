@@ -342,10 +342,11 @@ describe('ng Cell', function () {
     it('numericValueMultiplied - With multiplierCell', function () {
 
         var resourcePool = createResourcePool(true);
-        var decimalField = resourcePool.MainElement.ElementFieldSet[0];
-        var decimalCell = decimalField.ElementCellSet[0];
+        var field = resourcePool.MainElement.ElementFieldSet[0];
+        var item = resourcePool.MainElement.ElementItemSet[0];
+        var cell = field.ElementCellSet[0];
 
-        expect(decimalCell.numericValueMultiplied()).toBe(50 * 1); // This time 1 is coming from userCell
+        expect(cell.numericValueMultiplied()).toBe(cell.numericValue() * item.multiplier());
 
         // Case 2: Cached value
         // TODO Actually this case belongs to ElementItemTests.js - setMultiplier() test?
@@ -353,10 +354,9 @@ describe('ng Cell', function () {
         userMultiplierCell.DecimalValue = 5;
 
         // TODO Manually update?!
-        var item = resourcePool.MainElement.ElementItemSet[0];
         item.setMultiplier();
 
-        expect(decimalCell.numericValueMultiplied()).toBe(50 * 5);
+        expect(cell.numericValueMultiplied()).toBe(cell.numericValue() * item.multiplier());
     });
 
     it('passiveRatingPercentage - !IndexEnabled', function () {

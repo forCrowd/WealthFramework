@@ -119,7 +119,7 @@
                 return self.backingFields._multiplier;
             }
 
-            self.setMultiplier = function (x) {
+            self.setMultiplier = function () {
 
                 var value = 0;
 
@@ -146,7 +146,7 @@
                     // Update related
                     for (var i = 0; i < self.ElementCellSet.length; i++) {
                         var cell = self.ElementCellSet[i];
-                        cell.setNumericValueMultiplied(x);
+                        cell.setNumericValueMultiplied();
                     }
                 }
             }

@@ -61,7 +61,7 @@
                                 : 0; /* Default value? */
 
                             if (typeof this.ElementItem !== 'undefined' && this.ElementItem !== null) {
-                                this.ElementItem.setMultiplier(-6);
+                                this.ElementItem.setMultiplier();
                             }
 
                             break;
@@ -93,7 +93,7 @@
                         }
                         case 12: {
                             if (typeof this.ElementItem !== 'undefined' && this.ElementItem !== null) {
-                                this.ElementItem.setMultiplier(-5);
+                                this.ElementItem.setMultiplier();
                             }
 
                             this.setNumericValue();
@@ -237,20 +237,20 @@
                 if (self.backingFields._numericValue !== value) {
                     self.backingFields._numericValue = value;
 
-                    self.setNumericValueMultiplied(-9);
+                    self.setNumericValueMultiplied();
                 }
             }
 
             self.numericValueMultiplied = function () {
 
                 if (self.backingFields._numericValueMultiplied === null) {
-                    self.setNumericValueMultiplied(-8);
+                    self.setNumericValueMultiplied();
                 }
 
                 return self.backingFields._numericValueMultiplied;
             }
 
-            self.setNumericValueMultiplied = function (x) {
+            self.setNumericValueMultiplied = function () {
 
                 var value;
 
