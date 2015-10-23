@@ -213,9 +213,11 @@
 
                 // TODO Check totalIncome notes
 
+                var value;
+
                 if (self === self.ResourcePool.MainElement) {
 
-                    var value = self.ResourcePool.InitialValue;
+                    value = self.ResourcePool.InitialValue;
                     for (var i = 0; i < self.ElementItemSet.length; i++) {
                         var item = self.ElementItemSet[i];
                         value += item.totalResourcePoolAmount();
@@ -224,6 +226,18 @@
                 } else {
                     if (self.ResourcePool.MainElement !== null) {
                         value = self.ResourcePool.MainElement.totalResourcePoolAmount();
+                    }
+                }
+
+                if (self.backingFields._totalResourcePoolAmount !== value) {
+                    self.backingFields._totalResourcePoolAmount = value;
+
+                    for (var i = 0; i < self.ElementFieldSet.length; i++) {
+                        var field = self.ElementFieldSet[i];
+
+                        // if (field.ElementFieldType === 11) { - TODO How about this check?
+                        field.setIndexIncome();
+                        // }
                     }
                 }
 
@@ -264,18 +278,6 @@
                 for (var i = 0; i < self.ElementItemSet.length; i++) {
                     var item = self.ElementItemSet[i];
                     value += item.totalResourcePoolIncome();
-                }
-
-                if (self.backingFields._totalResourcePoolAmount !== value) {
-                    self.backingFields._totalResourcePoolAmount = value;
-
-                    for (var i = 0; i < self.ElementFieldSet.length; i++) {
-                        var field = self.ElementFieldSet[i];
-
-                        // if (field.ElementFieldType === 11) { - TODO How about this check?
-                        field.setIndexIncome();
-                        // }
-                    }
                 }
 
                 return value;

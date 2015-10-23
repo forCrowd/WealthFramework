@@ -70,8 +70,17 @@
                                     var cell = field.ElementCellSet[cellIndex];
 
                                     // Cell calculations
-                                    cell.setNumericValue();
-                                    //cell.setNumericValueMultiplied();
+                                    switch (field.ElementFieldType) {
+                                        case 2:
+                                        case 3:
+                                        case 4:
+                                            // TODO 5 (DateTime?)
+                                        case 11:
+                                        case 12: {
+                                            cell.setNumericValue();
+                                            break;
+                                        }
+                                    }
                                 }
                             }
                         }

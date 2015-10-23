@@ -20,6 +20,7 @@
             },
             set: function (value) {
                 if (this.backingFields._currentUserCell !== value) {
+
                     this.backingFields._currentUserCell = value;
 
                     // Update CurrentUserNumericValue as well
@@ -33,7 +34,7 @@
                             this.CurrentUserNumericValue = value !== null ? value.DecimalValue : 0;
                             break;
                         }
-                        default: { throw 'Not supported ' + this.ElementField.ElementFieldType; }
+                        default: { throw 'CurrentCell - Not supported element field type: ' + this.ElementField.ElementFieldType; }
                     }
                 }
             }
@@ -50,15 +51,49 @@
                     && typeof this.ElementField !== 'undefined') {
 
                     switch (this.ElementField.ElementFieldType) {
-                        case 2: { this.backingFields._currentUserNumericValue = this.CurrentUserCell !== null ? this.CurrentUserCell.BooleanValue : 0; break; }
-                        case 3: { this.backingFields._currentUserNumericValue = this.CurrentUserCell !== null ? this.CurrentUserCell.IntegerValue : 0; break; }
-                        case 4: { this.backingFields._currentUserNumericValue = this.CurrentUserCell !== null ? this.CurrentUserCell.DecimalValue : 50; /* Default value? */ break; }
+                        case 2: {
+                            this.backingFields._currentUserNumericValue = this.CurrentUserCell !== null
+                                ? this.CurrentUserCell.BooleanValue
+                                : 0;
+
+                            this.setNumericValue();
+
+                            break;
+                        }
+                        case 3: {
+                            this.backingFields._currentUserNumericValue = this.CurrentUserCell !== null
+                                ? this.CurrentUserCell.IntegerValue
+                                : 0;
+
+                            this.setNumericValue();
+
+                            break;
+                        }
+                        case 4: {
+                            this.backingFields._currentUserNumericValue = this.CurrentUserCell !== null
+                                ? this.CurrentUserCell.DecimalValue
+                                : 50; /* Default value? */
+
+                            this.setNumericValue();
+
+                            break;
+                        }
                             // TODO 5 (DateTime?)
-                        case 11: { this.backingFields._currentUserNumericValue = this.NumericValueTotal !== null ? this.NumericValueTotal : 0; break; } // DirectIncome: No need to try user's cell, always return all users', which will be CMRP owner's value
+                        case 11: { // DirectIncome: No need to try user's cell, always return all users', which will be CMRP owner's value
+                            this.backingFields._currentUserNumericValue = this.NumericValueTotal !== null
+                                ? this.NumericValueTotal
+                                : 0;
+
+                            this.setNumericValue();
+
+                            break;
+                        }
                         case 12: {
                             this.backingFields._currentUserNumericValue = this.CurrentUserCell !== null
                                 ? this.CurrentUserCell.DecimalValue
                                 : 0; /* Default value? */
+
+                            this.setNumericValue();
 
                             if (typeof this.ElementItem !== 'undefined' && this.ElementItem !== null) {
                                 this.ElementItem.setMultiplier();
@@ -67,11 +102,8 @@
                             break;
                         }
                             // case 12: { value = userCell !== null ? userCell.DecimalValue : 0; break; }
-                        default: { throw 'Not supported ' + this.ElementField.ElementFieldType; }
+                            //default: { throw 'CurrentUserNumericValue, get - Not supported element field type: ' + this.ElementField.ElementFieldType; }
                     }
-
-                    this.setNumericValue();
-                    //this.setNumericValueMultiplied();
                 }
 
                 return this.backingFields._currentUserNumericValue;
@@ -88,7 +120,6 @@
                             // TODO 5 (DateTime?)
                         case 11: {
                             this.setNumericValue();
-                            //this.setNumericValueMultiplied();
                             break;
                         }
                         case 12: {
@@ -97,10 +128,9 @@
                             }
 
                             this.setNumericValue();
-                            //this.setNumericValueMultiplied();
                             break;
                         }
-                        default: { throw 'Not supported ' + this.ElementField.ElementFieldType; }
+                        default: { throw 'CurrentUserNumericValue, set - Not supported element field type: ' + this.ElementField.ElementFieldType; }
                     }
                 }
             }
@@ -160,7 +190,7 @@
                         case 11: { userValue = self.UserElementCellSet[0].DecimalValue; break; }
                             // TODO 12 - Multiplier?
                         default: {
-                            throw 'Not supported ' + self.ElementField.ElementFieldType;
+                            throw 'setOtherUsersNumericValueTotal - Not supported element field type: ' + self.ElementField.ElementFieldType;
                         }
                     }
 
@@ -403,9 +433,9 @@
 
             self.indexIncome = function () {
 
-                if (self.backingFields._indexIncome === null) {
+                //if (self.backingFields._indexIncome === null) {
                     self.setIndexIncome();
-                }
+                //}
 
                 return self.backingFields._indexIncome;
             }
@@ -415,7 +445,6 @@
                 var value = 0; // Default value?
 
                 if (self.ElementField.ElementFieldType === 6 && self.SelectedElementItem !== null) {
-
                     // item's index income / how many times this item has been selected (used) by higher items
                     // TODO Check whether ParentCellSet gets updated when selecting / deselecting an item
                     value = self.SelectedElementItem.totalResourcePoolIncome() / self.SelectedElementItem.ParentCellSet.length;

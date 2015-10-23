@@ -23,7 +23,8 @@
             self.backingFields = {
                 _elementCellIndexSet: [],
                 _directIncomeCell: null,
-                _multiplier: null
+                _multiplier: null,
+                _totalResourcePoolIncome: null
             }
 
             // Private functions
@@ -32,7 +33,9 @@
                 var indexSet = [];
 
                 for (var i = 0; i < elementItem.ElementCellSet.length; i++) {
-                    var cell = elementItem.ElementCellSet.sort(function (a, b) { return a.ElementField.SortOrder - b.ElementField.SortOrder; })[i];
+                    var cell = elementItem.ElementCellSet.sort(function (a, b) {
+                        return a.ElementField.SortOrder - b.ElementField.SortOrder;
+                    })[i];
 
                     if (cell.ElementField.IndexEnabled) {
                         indexSet.push(cell);
@@ -174,9 +177,21 @@
             self.totalResourcePoolIncome = function () {
 
                 var value = 0;
+                
                 for (var i = 0; i < self.ElementCellSet.length; i++) {
                     var cell = self.ElementCellSet[i];
                     value += cell.indexIncome();
+                }
+
+                if (self.backingFields._totalResourcePoolIncome !== value) {
+                    self.backingFields._totalResourcePoolIncome = value;
+
+                    // Update related
+                    // TODO Is this correct? It looks like it didn't affect anything?
+                    for (var i = 0; i < self.ParentCellSet.length; i++) {
+                        var parentCell = self.ParentCellSet[i];
+                        parentCell.setIndexIncome();
+                    }
                 }
 
                 return value;

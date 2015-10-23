@@ -191,7 +191,8 @@
 
             // Find user element cell
             for (var i = 0; i < element.ElementItemSet.length; i++) {
-                var elementCell = element.ElementItemSet[i].multiplierCell();
+                var elementItem = element.ElementItemSet[i];
+                var elementCell = elementItem.multiplierCell();
                 updateElementCellMultiplier(elementCell, updateType);
             }
         }

@@ -369,9 +369,9 @@
 
             self.indexIncome = function () {
 
-                if (self.backingFields._indexIncome === null) {
-                    self.setIndexIncome();
-                }
+                //if (self.backingFields._indexIncome === null) {
+                self.setIndexIncome();
+                //}
 
                 return self.backingFields._indexIncome;
             }
