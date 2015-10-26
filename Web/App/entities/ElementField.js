@@ -310,48 +310,41 @@
                     }
                 }
 
+                // Set all equal flag
+                var flagUpdated = self.setReferenceRatingAllEqualFlag(allEqualFlag);
+                var ratingUpdated = false;
+
                 // Only if it's different..
                 if (self.backingFields._referenceRatingMultiplied !== value) {
                     self.backingFields._referenceRatingMultiplied = value;
 
+                    ratingUpdated = true;
+
                     //logger.log(self.Name[0] + ' RRMB ' + value);
+                }
 
-                    // Set all equal flag
-                    self.referenceRatingAllEqualFlag(allEqualFlag);
-
-                    // Update related
+                // Update related
+                if (flagUpdated || ratingUpdated) {
                     for (var i = 0; i < self.ElementCellSet.length; i++) {
                         var cell = self.ElementCellSet[i];
                         cell.setAggressiveRating(false);
                     }
 
                     self.setAggressiveRating();
-
-                } else {
-
-                    // Set all equal flag
-                    self.referenceRatingAllEqualFlag(allEqualFlag);
-
                 }
             }
 
             self.referenceRatingAllEqualFlag = function (value) {
-
-                if (typeof value !== 'undefined' && self.backingFields._referenceRatingAllEqualFlag !== value) {
-                    self.backingFields._referenceRatingAllEqualFlag = value;
-
-                    //logger.log(self.Name[0] + ' RRAE ' + value);
-
-                    // Update related
-                    for (var i = 0; i < self.ElementCellSet.length; i++) {
-                        var cell = self.ElementCellSet[i];
-                        cell.setAggressiveRating(false);
-                    }
-
-                    self.setAggressiveRating();
-                }
-
                 return self.backingFields._referenceRatingAllEqualFlag;
+            }
+
+            self.setReferenceRatingAllEqualFlag = function (value) {
+
+                if (self.backingFields._referenceRatingAllEqualFlag !== value) {
+                    self.backingFields._referenceRatingAllEqualFlag = value;
+                    return true;
+                }
+                return false;
             }
 
             self.aggressiveRating = function () {

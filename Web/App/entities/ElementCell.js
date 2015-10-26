@@ -310,12 +310,16 @@
                         switch (self.ElementField.IndexRatingSortType) {
                             case 1: { // LowestToHighest (Low number is better)
                                 value = self.numericValueMultiplied() / referenceRating;
+
+                                //logger.log(self.ElementItem.Name[0] + ' AR3A ' + self.numericValueMultiplied());
+
                                 break;
                             }
                             case 2: { // HighestToLowest (High number is better)
                                 value = self.passiveRatingPercentage() / referenceRating;
-                                //logger.log(self.ElementItem.Name[0] + ' AR3A ' + self.passiveRatingPercentage());
-                                //logger.log(self.ElementItem.Name[0] + ' AR3B ' + referenceRating);
+
+                                //logger.log(self.ElementItem.Name[0] + ' AR3B ' + self.passiveRatingPercentage());
+
                                 break;
                             }
                         }
