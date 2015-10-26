@@ -217,6 +217,9 @@
                             DecimalValue: 1
                         }).then(function (newUserCell) {
                             elementCell.CurrentUserCell = newUserCell;
+
+                            // Update the cached value
+                            elementCell.ElementItem.setMultiplier();
                         });
 
                     } else {
@@ -228,6 +231,9 @@
                         } else { // Otherwise, go ahead!
                             elementCell.CurrentUserCell.DecimalValue++;
                         }
+
+                        // Update the cached value
+                        elementCell.ElementItem.setMultiplier();
                     }
 
                     break;
@@ -237,6 +243,9 @@
                     // If there is an item, decrease
                     if (elementCell.CurrentUserCell !== null) {
                         elementCell.CurrentUserCell.DecimalValue = elementCell.CurrentUserCell.DecimalValue - 1 < 0 ? 0 : elementCell.CurrentUserCell.DecimalValue - 1;
+
+                        // Update the cached value
+                        elementCell.ElementItem.setMultiplier();
                     }
 
                     break;
@@ -247,6 +256,9 @@
                     if (elementCell.CurrentUserCell !== null && !elementCell.CurrentUserCell.entityAspect.entityState.isDeleted()) {
                         elementCell.CurrentUserCell.DecimalValue = 0;
                         elementCell.CurrentUserCell.entityAspect.setDeleted();
+
+                        // Update the cached value
+                        elementCell.ElementItem.setMultiplier();
                     }
 
                     break;
@@ -274,6 +286,9 @@
                             DecimalValue: typeof value !== 'undefined' ? value : 55
                         }).then(function (newUserCell) {
                             elementCell.CurrentUserCell = newUserCell;
+
+                            // Update the cached value
+                            elementCell.setCurrentUserNumericValue();
                         });
 
                     } else {
@@ -288,6 +303,9 @@
                                 ? 100
                                 : elementCell.CurrentUserCell.DecimalValue + 5;
                         }
+
+                        // Update the cached value
+                        elementCell.setCurrentUserNumericValue();
                     }
 
                     break;
@@ -303,6 +321,9 @@
                             DecimalValue: 45
                         }).then(function (newUserCell) {
                             elementCell.CurrentUserCell = newUserCell;
+
+                            // Update the cached value
+                            elementCell.setCurrentUserNumericValue();
                         });
 
                     } else {
@@ -314,6 +335,9 @@
                         } else { // Otherwise, go ahead!
                             elementCell.CurrentUserCell.DecimalValue = elementCell.CurrentUserCell.DecimalValue - 5 < 0 ? 0 : elementCell.CurrentUserCell.DecimalValue - 5;
                         }
+
+                        // Update the cached value
+                        elementCell.setCurrentUserNumericValue();
                     }
 
                     break;
@@ -324,6 +348,9 @@
                     if (elementCell.CurrentUserCell !== null && !elementCell.CurrentUserCell.entityAspect.entityState.isDeleted()) {
                         elementCell.CurrentUserCell.DecimalValue = 50;
                         elementCell.CurrentUserCell.entityAspect.setDeleted();
+
+                        // Update the cached value
+                        elementCell.setCurrentUserNumericValue();
                     }
 
                     break;

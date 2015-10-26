@@ -19,9 +19,9 @@
                 if (this.backingFields._DecimalValue !== value) {
                     this.backingFields._DecimalValue = value;
 
-                    if (typeof this.ElementCell !== 'undefined' && this.ElementCell !== null) {
-                        this.ElementCell.CurrentUserNumericValue = value;
-                    }
+                    //if (typeof this.ElementCell !== 'undefined' && this.ElementCell !== null) {
+                    //    this.ElementCell.CurrentUserNumericValue = value;
+                    //}
                 }
             }
         });

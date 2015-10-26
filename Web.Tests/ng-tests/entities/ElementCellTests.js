@@ -144,7 +144,7 @@ describe('ng Cell', function () {
         var resourcePool = createResourcePool();
         var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
 
-        expect(cell.CurrentUserNumericValue).toBe(50);
+        expect(cell.currentUserNumericValue()).toBe(50);
     });
 
     it('currentUserNumericValue - With user cell', function () {
@@ -157,7 +157,7 @@ describe('ng Cell', function () {
         var userCell = cell.UserElementCellSet[0];
 
         // Assert
-        expect(cell.CurrentUserNumericValue).toBe(10);
+        expect(cell.currentUserNumericValue()).toBe(10);
     });
 
     it('otherUsersNumericValueTotal - Initial', function () {
@@ -254,6 +254,10 @@ describe('ng Cell', function () {
         // Act
         createUserCell(cell, 10);
 
+        // This has to be called manually in order to update the cached value
+        // In the application, this is done by updateElementCellNumericValue method under userService.js
+        cell.setCurrentUserNumericValue();
+
         // Assert
         expect(cell.numericValueTotal()).toBe(25 + 10);
     });
@@ -321,7 +325,7 @@ describe('ng Cell', function () {
         cell.NumericValueCount = 3;
 
         // Assert
-        expect(cell.numericValue()).toBe(cell.CurrentUserNumericValue);
+        expect(cell.numericValue()).toBe(cell.currentUserNumericValue());
 
         // Act -  Cast 2: RatingMode 2 & also cache case
         resourcePool.RatingMode = 2;

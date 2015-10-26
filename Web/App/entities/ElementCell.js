@@ -20,118 +20,7 @@
             },
             set: function (value) {
                 if (this.backingFields._currentUserCell !== value) {
-
                     this.backingFields._currentUserCell = value;
-
-                    // Update CurrentUserNumericValue as well
-                    switch (this.ElementField.ElementFieldType) {
-                        case 2: { this.CurrentUserNumericValue = value !== null ? value.BooleanValue : 0; break; }
-                        case 3: { this.CurrentUserNumericValue = value !== null ? value.IntegerValue : 0; break; }
-                        case 4: { this.CurrentUserNumericValue = value !== null ? value.DecimalValue : 50; /* Default value? */ break; }
-                            // TODO 5 (DateTime?)
-                        case 11: { this.CurrentUserNumericValue = this.NumericValueTotal !== null ? this.NumericValueTotal : 0; break; } // DirectIncome: No need to try user's cell, always return all users', which will be CMRP owner's value
-                        case 12: {
-                            this.CurrentUserNumericValue = value !== null ? value.DecimalValue : 0;
-                            break;
-                        }
-                        default: { throw 'CurrentCell - Not supported element field type: ' + this.ElementField.ElementFieldType; }
-                    }
-                }
-            }
-        });
-
-        Object.defineProperty(ElementCell.prototype, 'CurrentUserNumericValue', {
-            enumerable: true,
-            configurable: true,
-            get: function () {
-
-                // Initial value
-                // TODO Can this be done in a better way?
-                if (this.backingFields._currentUserNumericValue === null
-                    && typeof this.ElementField !== 'undefined') {
-
-                    switch (this.ElementField.ElementFieldType) {
-                        case 2: {
-                            this.backingFields._currentUserNumericValue = this.CurrentUserCell !== null
-                                ? this.CurrentUserCell.BooleanValue
-                                : 0;
-
-                            this.setNumericValue();
-
-                            break;
-                        }
-                        case 3: {
-                            this.backingFields._currentUserNumericValue = this.CurrentUserCell !== null
-                                ? this.CurrentUserCell.IntegerValue
-                                : 0;
-
-                            this.setNumericValue();
-
-                            break;
-                        }
-                        case 4: {
-                            this.backingFields._currentUserNumericValue = this.CurrentUserCell !== null
-                                ? this.CurrentUserCell.DecimalValue
-                                : 50; /* Default value? */
-
-                            this.setNumericValue();
-
-                            break;
-                        }
-                            // TODO 5 (DateTime?)
-                        case 11: { // DirectIncome: No need to try user's cell, always return all users', which will be CMRP owner's value
-                            this.backingFields._currentUserNumericValue = this.NumericValueTotal !== null
-                                ? this.NumericValueTotal
-                                : 0;
-
-                            this.setNumericValue();
-
-                            break;
-                        }
-                        case 12: {
-                            this.backingFields._currentUserNumericValue = this.CurrentUserCell !== null
-                                ? this.CurrentUserCell.DecimalValue
-                                : 0; /* Default value? */
-
-                            this.setNumericValue();
-
-                            if (typeof this.ElementItem !== 'undefined' && this.ElementItem !== null) {
-                                this.ElementItem.setMultiplier();
-                            }
-
-                            break;
-                        }
-                            // case 12: { value = userCell !== null ? userCell.DecimalValue : 0; break; }
-                            //default: { throw 'CurrentUserNumericValue, get - Not supported element field type: ' + this.ElementField.ElementFieldType; }
-                    }
-                }
-
-                return this.backingFields._currentUserNumericValue;
-            },
-            set: function (value) {
-
-                if (this.backingFields._currentUserNumericValue !== value) {
-                    this.backingFields._currentUserNumericValue = value;
-
-                    switch (this.ElementField.ElementFieldType) {
-                        case 2:
-                        case 3:
-                        case 4:
-                            // TODO 5 (DateTime?)
-                        case 11: {
-                            this.setNumericValue();
-                            break;
-                        }
-                        case 12: {
-                            if (typeof this.ElementItem !== 'undefined' && this.ElementItem !== null) {
-                                this.ElementItem.setMultiplier();
-                            }
-
-                            this.setNumericValue();
-                            break;
-                        }
-                        default: { throw 'CurrentUserNumericValue, set - Not supported element field type: ' + this.ElementField.ElementFieldType; }
-                    }
                 }
             }
         });
@@ -160,6 +49,42 @@
             }
 
             // Public functions
+
+            self.currentUserNumericValue = function () {
+
+                if (self.backingFields._currentUserNumericValue === null) {
+                    self.setCurrentUserNumericValue();
+                }
+
+                return self.backingFields._currentUserNumericValue;
+            }
+
+            self.setCurrentUserNumericValue = function () {
+
+                var value;
+                var cell = self.CurrentUserCell;
+
+                switch (self.ElementField.ElementFieldType) {
+                    case 2: { value = cell !== null ? cell.BooleanValue : 0; break; }
+                    case 3: { value = cell !== null ? cell.IntegerValue : 0; break; }
+                    case 4: { value = cell !== null ? cell.DecimalValue : 50; /* Default value? */ break; }
+                        // TODO 5 (DateTime?)
+                    case 11: {
+                        // DirectIncome: No need to try user's cell, always return all users', which will be CMRP owner's value
+                        value = self.NumericValueTotal !== null ? self.NumericValueTotal : 0;
+                        break;
+                    }
+                    case 12: { value = cell !== null ? cell.DecimalValue : 0; /* Default value? */ break; }
+                        // default: { throw 'currentUserNumericValue() - Not supported element field type: ' + self.ElementField.ElementFieldType; }
+                }
+
+                if (self.backingFields._currentUserNumericValue !== value) {
+                    self.backingFields._currentUserNumericValue = value;
+
+                    // Update related
+                    self.setNumericValue();
+                }
+            }
 
             // TODO Since this is a fixed value based on NumericValueTotal & current user's rate,
             // it could be calculated on server, check it later again / SH - 03 Aug. '15
@@ -222,7 +147,7 @@
             self.numericValueTotal = function () {
                 return self.ElementField.UseFixedValue
                     ? self.otherUsersNumericValueTotal()
-                    : self.otherUsersNumericValueTotal() + self.CurrentUserNumericValue;
+                    : self.otherUsersNumericValueTotal() + self.currentUserNumericValue();
             }
 
             self.numericValueCount = function () {
@@ -257,7 +182,7 @@
 
                 if (typeof self.ElementField !== 'undefined') {
                     switch (self.ElementField.Element.ResourcePool.RatingMode) {
-                        case 1: { value = self.CurrentUserNumericValue; break; } // Current user's
+                        case 1: { value = self.currentUserNumericValue(); break; } // Current user's
                         case 2: { value = self.numericValueAverage(); break; } // All
                     }
 
@@ -344,6 +269,8 @@
                 if (self.backingFields._passiveRatingPercentage !== value) {
                     self.backingFields._passiveRatingPercentage = value;
 
+                    //logger.log(self.ElementItem.Name[0] + ' PRP ' + value);
+
                     // Update related values
                     self.ElementField.setReferenceRatingMultiplied();
                 }
@@ -364,12 +291,14 @@
 
                 if (typeof self.ElementField === 'undefined' || !self.ElementField.IndexEnabled) {
                     // value = 0; // ?
+                    //logger.log(self.ElementItem.Name[0] + ' AR1');
                 } else {
 
                     var referenceRating = self.ElementField.referenceRatingMultiplied();
 
                     if (referenceRating === 0) {
                         // value = 0; // ?
+                        //logger.log(self.ElementItem.Name[0] + ' AR2 ' + referenceRating);
                     } else {
 
                         switch (self.ElementField.IndexRatingSortType) {
@@ -379,19 +308,25 @@
                             }
                             case 2: { // HighestToLowest (High number is better)
                                 value = self.passiveRatingPercentage() / referenceRating;
+                                //logger.log(self.ElementItem.Name[0] + ' AR3A ' + self.passiveRatingPercentage());
+                                //logger.log(self.ElementItem.Name[0] + ' AR3B ' + referenceRating);
                                 break;
                             }
                         }
 
-                        // TODO This is not correct usage, create a prop around 'referenceRatingAllEqualFlag'
-                        value = self.ElementField.referenceRatingAllEqualFlag()
-                            ? value
-                            : 1 - value;
+                        if (!self.ElementField.referenceRatingAllEqualFlag()) {
+                            //logger.log(self.ElementItem.Name[0] + ' AR4A ' + value);
+                            value = 1 - value;
+                            //logger.log(self.ElementItem.Name[0] + ' AR4B ' + value);
+                        }
                     }
                 }
 
                 if (self.backingFields._aggressiveRating !== value) {
-                    self.backingFields._aggressiveRating = value; // ?
+                    self.backingFields._aggressiveRating = value;
+
+                    //logger.log(self.ElementItem.Name[0] + ' RM ' + self.ElementField.referenceRatingMultiplied());
+                    //logger.log(self.ElementItem.Name[0] + ' AR ' + value);
 
                     // Update related values
                     self.ElementField.setAggressiveRating();
@@ -425,6 +360,8 @@
 
                 if (self.backingFields._aggressiveRatingPercentage !== value) {
                     self.backingFields._aggressiveRatingPercentage = value;
+
+                    //logger.log(self.ElementItem.Name[0] + ' ARP ' + value);
 
                     // Update related
                     self.setIndexIncome();
