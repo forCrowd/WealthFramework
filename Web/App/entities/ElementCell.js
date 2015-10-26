@@ -244,7 +244,9 @@
                 return self.backingFields._passiveRatingPercentage;
             }
 
-            self.setPassiveRatingPercentage = function () {
+            self.setPassiveRatingPercentage = function (updateRelated) {
+
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value;
 
@@ -272,7 +274,9 @@
                     //logger.log(self.ElementItem.Name[0] + ' PRP ' + value);
 
                     // Update related values
-                    self.ElementField.setReferenceRatingMultiplied();
+                    if (updateRelated) {
+                        self.ElementField.setReferenceRatingMultiplied();
+                    }
                 }
             }
 
@@ -285,7 +289,9 @@
                 return self.backingFields._aggressiveRating;
             }
 
-            self.setAggressiveRating = function () {
+            self.setAggressiveRating = function (updateRelated) {
+
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value = 0; // Default value?
 
@@ -325,11 +331,12 @@
                 if (self.backingFields._aggressiveRating !== value) {
                     self.backingFields._aggressiveRating = value;
 
-                    //logger.log(self.ElementItem.Name[0] + ' RM ' + self.ElementField.referenceRatingMultiplied());
                     //logger.log(self.ElementItem.Name[0] + ' AR ' + value);
 
                     // Update related values
-                    self.ElementField.setAggressiveRating();
+                    if (updateRelated) {
+                        self.ElementField.setAggressiveRating();
+                    }
                 }
             }
 
@@ -342,7 +349,9 @@
                 return self.backingFields._aggressiveRatingPercentage;
             }
 
-            self.setAggressiveRatingPercentage = function () {
+            self.setAggressiveRatingPercentage = function (updateRelated) {
+
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value = 0; // Default value?
 
@@ -364,20 +373,24 @@
                     //logger.log(self.ElementItem.Name[0] + ' ARP ' + value);
 
                     // Update related
-                    self.setIndexIncome();
+                    if (updateRelated) {
+                        self.setIndexIncome();
+                    }
                 }
             }
 
             self.indexIncome = function () {
 
                 //if (self.backingFields._indexIncome === null) {
-                    self.setIndexIncome();
+                self.setIndexIncome();
                 //}
 
                 return self.backingFields._indexIncome;
             }
 
-            self.setIndexIncome = function () {
+            self.setIndexIncome = function (updateRelated) {
+
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value = 0; // Default value?
 

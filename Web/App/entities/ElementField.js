@@ -228,11 +228,15 @@
                 if (self.backingFields._numericValueMultiplied !== value) {
                     self.backingFields._numericValueMultiplied = value;
 
+                    //logger.log(self.Name[0] + ' NVM ' + value);
+
                     // Update related?
                     for (var i = 0; i < self.ElementCellSet.length; i++) {
                         var cell = self.ElementCellSet[i];
-                        cell.setPassiveRatingPercentage();
+                        cell.setPassiveRatingPercentage(false);
                     }
+
+                    self.setReferenceRatingMultiplied();
                 }
             }
 
@@ -248,13 +252,12 @@
             self.setReferenceRatingMultiplied = function () {
 
                 var value = null;
+                var allEqualFlag = true;
 
                 // Validate
                 if (self.ElementCellSet.length === 0) {
                     value = 0; // ?
                 } else {
-
-                    var allEqualFlag = true;
 
                     for (var i = 0; i < self.ElementCellSet.length; i++) {
 
@@ -301,21 +304,34 @@
                                 }
                             }
                         }
-                    }
 
-                    // Set all equal flag
-                    self.referenceRatingAllEqualFlag(allEqualFlag);
+                        //logger.log(cell.ElementItem.Name[0] + ' RRMA ' + value);
+
+                    }
                 }
 
                 // Only if it's different..
                 if (self.backingFields._referenceRatingMultiplied !== value) {
                     self.backingFields._referenceRatingMultiplied = value;
 
+                    //logger.log(self.Name[0] + ' RRMB ' + value);
+
+                    // Set all equal flag
+                    self.referenceRatingAllEqualFlag(allEqualFlag);
+
                     // Update related
                     for (var i = 0; i < self.ElementCellSet.length; i++) {
                         var cell = self.ElementCellSet[i];
-                        cell.setAggressiveRating();
+                        cell.setAggressiveRating(false);
                     }
+
+                    self.setAggressiveRating();
+
+                } else {
+
+                    // Set all equal flag
+                    self.referenceRatingAllEqualFlag(allEqualFlag);
+
                 }
             }
 
@@ -324,11 +340,15 @@
                 if (typeof value !== 'undefined' && self.backingFields._referenceRatingAllEqualFlag !== value) {
                     self.backingFields._referenceRatingAllEqualFlag = value;
 
+                    //logger.log(self.Name[0] + ' RRAE ' + value);
+
                     // Update related
                     for (var i = 0; i < self.ElementCellSet.length; i++) {
                         var cell = self.ElementCellSet[i];
-                        cell.setAggressiveRating();
+                        cell.setAggressiveRating(false);
                     }
+
+                    self.setAggressiveRating();
                 }
 
                 return self.backingFields._referenceRatingAllEqualFlag;
@@ -362,8 +382,10 @@
                     // Update related
                     for (var i = 0; i < self.ElementCellSet.length; i++) {
                         var cell = self.ElementCellSet[i];
-                        cell.setAggressiveRatingPercentage();
+                        cell.setAggressiveRatingPercentage(false);
                     }
+
+                    self.setIndexIncome();
                 }
             }
 
@@ -386,7 +408,7 @@
                     // Update related
                     for (var i = 0; i < self.ElementCellSet.length; i++) {
                         var cell = self.ElementCellSet[i];
-                        cell.setIndexIncome();
+                        cell.setIndexIncome(false);
                     }
                 }
             }

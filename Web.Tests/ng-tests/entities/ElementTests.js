@@ -228,6 +228,7 @@ describe('ng Element', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
+        resourcePool.MainElement = element;
 
         expect(element.directIncome()).toBe(0);
 
@@ -296,6 +297,7 @@ describe('ng Element', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
+        resourcePool.MainElement = element;
 
         expect(element.multiplier()).toBe(0);
 
@@ -354,6 +356,7 @@ describe('ng Element', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
+        resourcePool.MainElement = element;
 
         expect(element.totalDirectIncome()).toBe(0);
 
@@ -431,6 +434,7 @@ describe('ng Element', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
+        resourcePool.MainElement = element;
 
         expect(element.resourcePoolAmount()).toBe(0);
 
