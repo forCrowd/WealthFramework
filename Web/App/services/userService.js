@@ -189,15 +189,46 @@
 
         function updateElementMultiplier(element, updateType) {
 
+            var promises = [];
+
             // Find user element cell
             for (var i = 0; i < element.ElementItemSet.length; i++) {
-                var elementItem = element.ElementItemSet[i];
-                var elementCell = elementItem.multiplierCell();
-                updateElementCellMultiplier(elementCell, updateType);
+                var elementCell = element.ElementItemSet[i].multiplierCell();
+                promises.push(updateElementCellMultiplier(elementCell, updateType));
             }
+
+            // Update related
+            $q.all(promises).then(function () {
+
+                // Update items
+                for (var i = 0; i < element.ElementItemSet.length; i++) {
+                    var item = element.ElementItemSet[i];
+                    item.setMultiplier();
+                }
+
+                for (var i = 0; i < element.ElementFieldSet.length; i++) {
+                    var field = element.ElementFieldSet[i];
+
+                    if (!field.IndexEnabled) {
+                        continue;
+                    }
+
+                    // Update numeric value cells
+                    for (var cellIndex = 0; cellIndex < field.ElementCellSet.length; cellIndex++) {
+
+                        var cell = field.ElementCellSet[cellIndex];
+                        cell.setNumericValueMultiplied(false);
+                    }
+
+                    // Update fields
+                    field.setNumericValueMultiplied();
+                }
+            });
         }
 
         function updateElementCellMultiplier(elementCell, updateType) {
+
+            var deferred = $q.defer();
 
             if (elementCell.CurrentUserCell !== null
                 && typeof elementCell.CurrentUserCell.entityAspect !== 'undefined'
@@ -218,8 +249,9 @@
                         }).then(function (newUserCell) {
                             elementCell.CurrentUserCell = newUserCell;
 
-                            // Update the cached value
-                            elementCell.ElementItem.setMultiplier();
+                            deferred.resolve();
+                        }, function () {
+                            deferred.reject();
                         });
 
                     } else {
@@ -232,8 +264,7 @@
                             elementCell.CurrentUserCell.DecimalValue++;
                         }
 
-                        // Update the cached value
-                        elementCell.ElementItem.setMultiplier();
+                        deferred.resolve();
                     }
 
                     break;
@@ -243,10 +274,9 @@
                     // If there is an item, decrease
                     if (elementCell.CurrentUserCell !== null) {
                         elementCell.CurrentUserCell.DecimalValue = elementCell.CurrentUserCell.DecimalValue - 1 < 0 ? 0 : elementCell.CurrentUserCell.DecimalValue - 1;
-
-                        // Update the cached value
-                        elementCell.ElementItem.setMultiplier();
                     }
+
+                    deferred.resolve();
 
                     break;
                 }
@@ -256,14 +286,15 @@
                     if (elementCell.CurrentUserCell !== null && !elementCell.CurrentUserCell.entityAspect.entityState.isDeleted()) {
                         elementCell.CurrentUserCell.DecimalValue = 0;
                         elementCell.CurrentUserCell.entityAspect.setDeleted();
-
-                        // Update the cached value
-                        elementCell.ElementItem.setMultiplier();
                     }
+
+                    deferred.resolve();
 
                     break;
                 }
             }
+
+            return deferred.promise;
         }
 
         function updateElementCellNumericValue(elementCell, updateType) {

@@ -359,6 +359,7 @@ describe('ng Cell', function () {
 
         // TODO Manually update?!
         item.setMultiplier();
+        cell.setNumericValueMultiplied();
 
         expect(cell.numericValueMultiplied()).toBe(cell.numericValue() * item.multiplier());
     });

@@ -65,13 +65,15 @@
             self.currentUserIndexRating = function () {
 
                 if (self.backingFields._currentUserIndexRating === null) {
-                    self.setCurrentUserIndexRating();
+                    self.setCurrentUserIndexRating(false);
                 }
 
                 return self.backingFields._currentUserIndexRating;
             }
 
-            self.setCurrentUserIndexRating = function () {
+            self.setCurrentUserIndexRating = function (updateRelated) {
+
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value = self.currentUserElementField() !== null
                     ? self.currentUserElementField().Rating
@@ -81,7 +83,9 @@
                     self.backingFields._currentUserIndexRating = value;
 
                     // TODO Update related
-                    self.setIndexRating();
+                    if (updateRelated) {
+                        self.setIndexRating();
+                    }
                 }
             }
 
@@ -150,13 +154,15 @@
             self.indexRating = function () {
 
                 if (self.backingFields._indexRating === null) {
-                    self.setIndexRating();
+                    self.setIndexRating(false);
                 }
 
                 return self.backingFields._indexRating;
             }
 
-            self.setIndexRating = function () {
+            self.setIndexRating = function (updateRelated) {
+
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value = 0; // Default value?
 
@@ -169,20 +175,24 @@
                     self.backingFields._indexRating = value;
 
                     // TODO Update related
-                    self.setIndexRatingPercentage();
+                    if (updateRelated) {
+                        self.setIndexRatingPercentage();
+                    }
                 }
             }
 
             self.indexRatingPercentage = function () {
 
                 if (self.backingFields._indexRatingPercentage === null) {
-                    self.setIndexRatingPercentage();
+                    self.setIndexRatingPercentage(false);
                 }
 
                 return self.backingFields._indexRatingPercentage;
             }
 
-            self.setIndexRatingPercentage = function () {
+            self.setIndexRatingPercentage = function (updateRelated) {
+
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value = 0; // Default value?
 
@@ -197,7 +207,9 @@
                 if (self.backingFields._indexRatingPercentage !== value) {
                     self.backingFields._indexRatingPercentage = value;
 
-                    self.setIndexIncome();
+                    if (updateRelated) {
+                        self.setIndexIncome();
+                    }
                     // TODO Update related?
                 }
             }
@@ -205,13 +217,15 @@
             self.numericValueMultiplied = function () {
 
                 if (self.backingFields._numericValueMultiplied === null) {
-                    self.setNumericValueMultiplied();
+                    self.setNumericValueMultiplied(false);
                 }
 
                 return self.backingFields._numericValueMultiplied;
             }
 
-            self.setNumericValueMultiplied = function () {
+            self.setNumericValueMultiplied = function (updateRelated) {
+
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value = 0; // Default value?
 
@@ -222,34 +236,39 @@
                     for (var i = 0; i < self.ElementCellSet.length; i++) {
                         var cell = self.ElementCellSet[i];
                         value += cell.numericValueMultiplied();
+                        //logger.log(self.Name[0] + '-' + cell.ElementItem.Name[0] + ' NVMA ' + cell.numericValueMultiplied());
                     }
                 }
 
                 if (self.backingFields._numericValueMultiplied !== value) {
                     self.backingFields._numericValueMultiplied = value;
 
-                    //logger.log(self.Name[0] + ' NVM ' + value);
+                    //logger.log(self.Name[0] + ' NVMB ' + value);
 
                     // Update related?
-                    for (var i = 0; i < self.ElementCellSet.length; i++) {
-                        var cell = self.ElementCellSet[i];
-                        cell.setPassiveRatingPercentage(false);
-                    }
+                    if (updateRelated) {
+                        for (var i = 0; i < self.ElementCellSet.length; i++) {
+                            var cell = self.ElementCellSet[i];
+                            cell.setPassiveRatingPercentage(false);
+                        }
 
-                    self.setReferenceRatingMultiplied();
+                        self.setReferenceRatingMultiplied();
+                    }
                 }
             }
 
             self.referenceRatingMultiplied = function () {
 
                 if (self.backingFields._referenceRatingMultiplied === null) {
-                    self.setReferenceRatingMultiplied();
+                    self.setReferenceRatingMultiplied(false);
                 }
 
                 return self.backingFields._referenceRatingMultiplied;
             }
 
-            self.setReferenceRatingMultiplied = function () {
+            self.setReferenceRatingMultiplied = function (updateRelated) {
+
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value = null;
                 var allEqualFlag = true;
@@ -305,7 +324,7 @@
                             }
                         }
 
-                        //logger.log(cell.ElementItem.Name[0] + ' RRMA ' + value);
+                        //logger.log(self.Name[0] + '-' + cell.ElementItem.Name[0] + ' RRMA ' + value);
 
                     }
                 }
@@ -324,7 +343,7 @@
                 }
 
                 // Update related
-                if (flagUpdated || ratingUpdated) {
+                if ((flagUpdated || ratingUpdated) && updateRelated) {
                     for (var i = 0; i < self.ElementCellSet.length; i++) {
                         var cell = self.ElementCellSet[i];
                         cell.setAggressiveRating(false);
@@ -350,13 +369,15 @@
             self.aggressiveRating = function () {
 
                 if (self.backingFields._aggressiveRating === null) {
-                    self.setAggressiveRating();
+                    self.setAggressiveRating(false);
                 }
 
                 return self.backingFields._aggressiveRating;
             }
 
-            self.setAggressiveRating = function () {
+            self.setAggressiveRating = function (updateRelated) {
+
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value = 0; // Default value?
 
@@ -372,13 +393,16 @@
                 if (self.backingFields._aggressiveRating !== value) {
                     self.backingFields._aggressiveRating = value;
 
-                    // Update related
-                    for (var i = 0; i < self.ElementCellSet.length; i++) {
-                        var cell = self.ElementCellSet[i];
-                        cell.setAggressiveRatingPercentage(false);
-                    }
+                    if (updateRelated) {
 
-                    self.setIndexIncome();
+                        // Update related
+                        for (var i = 0; i < self.ElementCellSet.length; i++) {
+                            var cell = self.ElementCellSet[i];
+                            cell.setAggressiveRatingPercentage(false);
+                        }
+
+                        self.setIndexIncome();
+                    }
                 }
             }
 
@@ -401,7 +425,7 @@
                     // Update related
                     for (var i = 0; i < self.ElementCellSet.length; i++) {
                         var cell = self.ElementCellSet[i];
-                        cell.setIndexIncome(false);
+                        cell.setIndexIncome();
                     }
                 }
             }

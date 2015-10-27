@@ -116,13 +116,15 @@
             self.multiplier = function () {
 
                 if (self.backingFields._multiplier === null) {
-                    self.setMultiplier();
+                    self.setMultiplier(false);
                 }
 
                 return self.backingFields._multiplier;
             }
 
-            self.setMultiplier = function () {
+            self.setMultiplier = function (updateRelated) {
+
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value = 0;
 
@@ -147,9 +149,25 @@
                     self.backingFields._multiplier = value;
 
                     // Update related
-                    for (var i = 0; i < self.ElementCellSet.length; i++) {
-                        var cell = self.ElementCellSet[i];
-                        cell.setNumericValueMultiplied();
+                    if (updateRelated) {
+
+                        //for (var i = 0; i < self.Element.ElementFieldSet.length; i++) {
+                        //    var field = self.Element.ElementFieldSet[i];
+
+                        //    if (field.IndexEnabled) {
+                        //        for (var cellIndex = 0; cellIndex < field.ElementCellSet.length; cellIndex++) {
+
+                        //            var cell = field.ElementCellSet[cellIndex];
+
+                        //            //logger.log(field.Name[0] + '-' + self.Name + ' MA ' + self.multiplier());
+                        //            //logger.log(field.Name[0] + '-' + cell.ElementItem.Name + ' MB ' + cell.ElementItem.multiplier());
+
+                        //            cell.setNumericValueMultiplied(false, 'item multiplier');
+                        //        }
+                        //    }
+
+                        //    field.setNumericValueMultiplied();
+                        //}
                     }
                 }
             }
