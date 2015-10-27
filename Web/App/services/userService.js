@@ -404,7 +404,10 @@
                             Rating: 55
                         };
 
-                        dataContext.createEntity('UserElementField', userElementField);
+                        dataContext.createEntity('UserElementField', userElementField)
+                            .then(function () {
+                                elementField.setCurrentUserIndexRating();
+                            });
 
                     } else {
 
@@ -415,6 +418,8 @@
                         } else { // Otherwise, go ahead!
                             userElementField.Rating = userElementField.Rating + 5 > 100 ? 100 : userElementField.Rating + 5;
                         }
+
+                        elementField.setCurrentUserIndexRating();
                     }
 
                     break;
@@ -429,7 +434,10 @@
                             Rating: 45
                         };
 
-                        dataContext.createEntity('UserElementField', userElementField);
+                        dataContext.createEntity('UserElementField', userElementField)
+                            .then(function () {
+                                elementField.setCurrentUserIndexRating();
+                            });
 
                     } else {
 
@@ -440,6 +448,8 @@
                         } else { // Otherwise, go ahead!
                             userElementField.Rating = userElementField.Rating - 5 < 0 ? 0 : userElementField.Rating - 5;
                         }
+
+                        elementField.setCurrentUserIndexRating();
                     }
 
                     break;
@@ -450,6 +460,8 @@
                     if (userElementField !== null && !userElementField.entityAspect.entityState.isDeleted()) {
                         userElementField.Rating = 50;
                         userElementField.entityAspect.setDeleted();
+
+                        elementField.setCurrentUserIndexRating();
                     }
 
                     break;

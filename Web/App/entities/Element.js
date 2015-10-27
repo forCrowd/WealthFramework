@@ -24,6 +24,7 @@
                 _parent: null,
                 _familyTree: [],
                 _elementFieldIndexSet: null,
+                _indexRating: null,
                 _directIncomeField: null,
                 _multiplierField: null,
                 _totalResourcePoolAmount: null
@@ -114,6 +115,16 @@
                 var value = 0;
                 for (var i = 0; i < indexSet.length; i++) {
                     value += indexSet[i].indexRating();
+                }
+
+                if (self.backingFields._indexRating !== value) {
+                    self.backingFields._indexRating = value;
+
+                    // Update related
+                    for (var i = 0; i < self.elementFieldIndexSet().length; i++) {
+                        var index = self.elementFieldIndexSet()[i];
+                        index.setIndexRatingPercentage();
+                    }
                 }
 
                 return value;

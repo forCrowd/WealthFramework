@@ -51,6 +51,7 @@
             set: function (value) {
                 if (this.backingFields._ratingMode !== value) {
                     this.backingFields._ratingMode = value;
+
                     this.setResourcePoolRate();
 
                     for (var elementIndex = 0; elementIndex < this.ElementSet.length; elementIndex++) {
