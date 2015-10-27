@@ -192,9 +192,20 @@
             var promises = [];
 
             // Find user element cell
-            for (var i = 0; i < element.ElementItemSet.length; i++) {
-                var elementCell = element.ElementItemSet[i].multiplierCell();
-                promises.push(updateElementCellMultiplier(elementCell, updateType));
+            for (var itemIndex = 0; itemIndex < element.ElementItemSet.length; itemIndex++) {
+
+                var item = element.ElementItemSet[itemIndex];
+
+                var multiplierCell;
+                for (var cellIndex = 0; cellIndex < item.ElementCellSet.length; cellIndex++) {
+                    var elementCell = item.ElementCellSet[cellIndex];
+                    if (elementCell.ElementField.ElementFieldType === 12) {
+                        multiplierCell = elementCell;
+                        break;
+                    }
+                }
+
+                promises.push(updateElementCellMultiplier(multiplierCell, updateType));
             }
 
             // Update related

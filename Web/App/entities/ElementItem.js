@@ -107,25 +107,6 @@
                 }
             }
 
-            self.multiplierCell = function () {
-
-                if (typeof self.ElementCellSet === 'undefined') {
-                    return null;
-                }
-
-                var multiplierCell = null;
-
-                for (var i = 0; i < self.ElementCellSet.length; i++) {
-                    var elementCell = self.ElementCellSet[i];
-                    if (elementCell.ElementField.ElementFieldType === 12) {
-                        multiplierCell = elementCell;
-                        break;
-                    }
-                }
-
-                return multiplierCell;
-            }
-
             self.multiplier = function () {
 
                 if (self.backingFields._multiplier === null) {
@@ -136,12 +117,19 @@
             }
 
             self.setMultiplier = function (updateRelated) {
-
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
-                var value = 0;
+                // First, find the multiplier cell
+                var multiplierCell = null;
+                for (var i = 0; i < self.ElementCellSet.length; i++) {
+                    var elementCell = self.ElementCellSet[i];
+                    if (elementCell.ElementField.ElementFieldType === 12) {
+                        multiplierCell = elementCell;
+                        break;
+                    }
+                }
 
-                var multiplierCell = self.multiplierCell();
+                var value = 0;
 
                 // If there is no multiplier field defined on this element, return 1, so it can return calculate the income correctly
                 // TODO Cover 'add new multiplier field' case as well!

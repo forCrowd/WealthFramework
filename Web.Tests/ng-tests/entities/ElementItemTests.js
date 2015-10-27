@@ -124,8 +124,7 @@ describe('ng ElementItem', function () {
         item1.Element = element;
         element.ElementItemSet = [item1];
 
-        // Should have no multiplierCell() and "1" as the default value
-        expect(item1.multiplierCell()).toBe(null);
+        // Should have "1" as the default value
         expect(item1.multiplier()).toBe(1);
 
         // Multiplier field
@@ -144,8 +143,7 @@ describe('ng ElementItem', function () {
 
         item1.setMultiplier(); // TODO Manually update?!
 
-        // Now should have the cell and value "0" as the default value
-        expect(item1.multiplierCell()).not.toBe(null);
+        // Now should have "0" as the default value
         expect(item1.multiplier()).toBe(0);
 
         // User multiplier cell
@@ -157,8 +155,7 @@ describe('ng ElementItem', function () {
 
         item1.setMultiplier(); // TODO Manually update?!
 
-        // Now should have the cell and value "0" as the default value
-        expect(item1.multiplierCell()).not.toBe(null);
+        // Now should "2" as the default value
         expect(item1.multiplier()).toBe(2);
 
         // TODO Remove case!
