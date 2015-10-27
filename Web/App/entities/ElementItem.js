@@ -22,8 +22,9 @@
             // Local variables
             self.backingFields = {
                 _elementCellIndexSet: [],
-                _directIncomeCell: null,
+                _directIncome: null,
                 _multiplier: null,
+                _totalDirectIncome: null,
                 _totalResourcePoolIncome: null
             }
 
@@ -67,31 +68,43 @@
                 return self.backingFields._elementCellIndexSet;
             }
 
-            self.directIncomeCell = function () {
+            self.directIncome = function () {
 
-                // Cached value
-                // TODO In case of add / remove field?
-                if (self.backingFields._directIncomeCell !== null) {
-                    return self.backingFields._directIncomeCell;
+                if (self.backingFields._directIncome === null) {
+                    self.setDirectIncome(false);
                 }
 
+                return self.backingFields._directIncome;
+            }
+
+            self.setDirectIncome = function (updateRelated) {
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
+
+                // First, find direct income cell
+                var directIncomeCell = null;
                 for (var i = 0; i < self.ElementCellSet.length; i++) {
                     var elementCell = self.ElementCellSet[i];
                     if (elementCell.ElementField.ElementFieldType === 11) {
-                        self.backingFields._directIncomeCell = elementCell;
+                        directIncomeCell = elementCell;
                         break;
                     }
                 }
 
-                return self.backingFields._directIncomeCell;
-            }
+                var value;
+                if (directIncomeCell === null) {
+                    value = 0;
+                } else {
+                    value = directIncomeCell.numericValue();
+                }
 
-            self.directIncome = function () {
+                if (self.backingFields._directIncome !== value) {
+                    self.backingFields._directIncome = value;
 
-                if (self.directIncomeCell() === null)
-                    return 0;
-
-                return self.directIncomeCell().numericValue();
+                    // Update related
+                    if (updateRelated) {
+                        self.setTotalDirectIncome();
+                    }
+                }
             }
 
             self.multiplierCell = function () {
@@ -149,31 +162,32 @@
                     self.backingFields._multiplier = value;
 
                     // Update related
-                    if (updateRelated) {
-
-                        //for (var i = 0; i < self.Element.ElementFieldSet.length; i++) {
-                        //    var field = self.Element.ElementFieldSet[i];
-
-                        //    if (field.IndexEnabled) {
-                        //        for (var cellIndex = 0; cellIndex < field.ElementCellSet.length; cellIndex++) {
-
-                        //            var cell = field.ElementCellSet[cellIndex];
-
-                        //            //logger.log(field.Name[0] + '-' + self.Name + ' MA ' + self.multiplier());
-                        //            //logger.log(field.Name[0] + '-' + cell.ElementItem.Name + ' MB ' + cell.ElementItem.multiplier());
-
-                        //            cell.setNumericValueMultiplied(false, 'item multiplier');
-                        //        }
-                        //    }
-
-                        //    field.setNumericValueMultiplied();
-                        //}
-                    }
+                    self.setTotalDirectIncome();
                 }
             }
 
             self.totalDirectIncome = function () {
-                return self.directIncome() * self.multiplier();
+
+                if (self.backingFields._totalDirectIncome === null) {
+                    self.setTotalDirectIncome(false);
+                }
+
+                return self.backingFields._totalDirectIncome;
+            }
+
+            self.setTotalDirectIncome = function (updateRelated) {
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
+
+                var value = self.directIncome() * self.multiplier();
+
+                if (self.backingFields._totalDirectIncome !== value) {
+                    self.backingFields._totalDirectIncome = value;
+
+                    // TODO Update related
+                    if (updateRelated) {
+
+                    }
+                }
             }
 
             self.resourcePoolAmount = function () {

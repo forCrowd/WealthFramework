@@ -71,7 +71,7 @@ describe('ng ElementItem', function () {
         expect(item1.elementCellIndexSet().length === 1).toBe(true);
     });
 
-    it('directIncomeCell & directIncome', function () {
+    it('directIncome', function () {
 
         var resourcePool = new ResourcePool();
 
@@ -85,8 +85,7 @@ describe('ng ElementItem', function () {
         item1.Element = element;
         element.ElementItemSet = [item1];
 
-        // Should have no directIncomeCell() and 0 value
-        expect(item1.directIncomeCell()).toBe(null);
+        // Should have 0 value
         expect(item1.directIncome()).toBe(0);
 
         // DirectIncome field
@@ -103,8 +102,9 @@ describe('ng ElementItem', function () {
         directIncomeField.ElementCellSet = [directIncomeCell];
         item1.ElementCellSet = [directIncomeCell];
 
-        // Now should have the cell
-        expect(item1.directIncomeCell()).not.toBe(null);
+        // TODO Manually update?!
+        item1.setDirectIncome();
+
         expect(item1.directIncome()).toBe(50);
 
         // TODO Remove case!

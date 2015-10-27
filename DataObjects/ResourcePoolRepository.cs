@@ -849,7 +849,7 @@
 
             // Resource pool
             var resourcePool = CreateDefaultResourcePool(user: user,
-                resourcePoolName: "All in One - Slow!",
+                resourcePoolName: "All in One",
                 useFixedResourcePoolRate: false,
                 mainElementName: "Organization",
                 addDirectIncomeField: true,

@@ -200,6 +200,11 @@
 
                     // Update related
                     if (updateRelated) {
+
+                        if (self.ElementField.ElementFieldType === 11) {
+                            self.ElementItem.setDirectIncome();
+                        }
+
                         self.setNumericValueMultiplied();
                     }
                 }

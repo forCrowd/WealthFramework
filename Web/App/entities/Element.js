@@ -229,6 +229,7 @@
                 if (self === self.ResourcePool.MainElement) {
 
                     value = self.ResourcePool.InitialValue;
+
                     for (var i = 0; i < self.ElementItemSet.length; i++) {
                         var item = self.ElementItemSet[i];
                         value += item.totalResourcePoolAmount();
