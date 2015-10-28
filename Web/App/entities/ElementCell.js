@@ -118,9 +118,9 @@
                             // TODO 5 - DateTime?
                         case 11: { userValue = self.UserElementCellSet[0].DecimalValue; break; }
                             // TODO 12 - Multiplier?
-                        default: {
-                            throw 'setOtherUsersNumericValueTotal - Not supported element field type: ' + self.ElementField.ElementFieldType;
-                        }
+                        //default: {
+                        //    throw 'setOtherUsersNumericValueTotal - Not supported element field type: ' + self.ElementField.ElementFieldType;
+                        //}
                     }
 
                     self.backingFields._otherUsersNumericValueTotal -= userValue;

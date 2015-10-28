@@ -25,6 +25,8 @@
                 _directIncome: null,
                 _multiplier: null,
                 _totalDirectIncome: null,
+                _resourcePoolAmount: null,
+                _totalResourcePoolAmount: null,
                 _totalResourcePoolIncome: null
             }
 
@@ -103,6 +105,7 @@
                     // Update related
                     if (updateRelated) {
                         self.setTotalDirectIncome();
+                        self.setResourcePoolAmount();
                     }
                 }
             }
@@ -151,6 +154,7 @@
 
                     // Update related
                     self.setTotalDirectIncome();
+                    self.setTotalResourcePoolAmount();
                 }
             }
 
@@ -179,11 +183,51 @@
             }
 
             self.resourcePoolAmount = function () {
-                return self.directIncome() * self.Element.ResourcePool.resourcePoolRatePercentage();
+
+                if (self.backingFields._resourcePoolAmount === null) {
+                    self.setResourcePoolAmount(false);
+                }
+
+                return self.backingFields._resourcePoolAmount;
+            }
+
+            self.setResourcePoolAmount = function (updateRelated) {
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
+
+                var value = self.directIncome() * self.Element.ResourcePool.resourcePoolRatePercentage();
+
+                if (self.backingFields._resourcePoolAmount !== value) {
+                    self.backingFields._resourcePoolAmount = value;
+
+                    // TODO Update related
+                    if (updateRelated) {
+                        self.setTotalResourcePoolAmount();
+                    }
+                }
             }
 
             self.totalResourcePoolAmount = function () {
-                return self.resourcePoolAmount() * self.multiplier();
+
+                if (self.backingFields._totalResourcePoolAmount === null) {
+                    self.setTotalResourcePoolAmount(false);
+                }
+
+                return self.backingFields._totalResourcePoolAmount;
+            }
+
+            self.setTotalResourcePoolAmount = function (updateRelated) {
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
+
+                var value = self.resourcePoolAmount() * self.multiplier();
+
+                if (self.backingFields._totalResourcePoolAmount !== value) {
+                    self.backingFields._totalResourcePoolAmount = value;
+
+                    // TODO Update related
+                    if (updateRelated) {
+
+                    }
+                }
             }
 
             self.directIncomeIncludingResourcePoolAmount = function () { // A.k.a Sales Price incl. VAT

@@ -108,7 +108,8 @@
                 _currentUserResourcePoolRate: null,
                 _otherUsersResourcePoolRateTotal: null,
                 _otherUsersResourcePoolRateCount: null,
-                _resourcePoolRate: null
+                _resourcePoolRate: null,
+                _resourcePoolRatePercentage: null
             }
 
             // Events
@@ -269,11 +270,30 @@
 
             self.resourcePoolRatePercentage = function () {
 
+                var value = 0;
+
                 if (self.resourcePoolRate() === 0) {
-                    return 0; // Null?
+                    // return 0; // Null?
+                    value = 0;
+                } else {
+                    value = self.resourcePoolRate() / 100;
                 }
 
-                return self.resourcePoolRate() / 100;
+                if (self.backingFields._resourcePoolRatePercentage !== value) {
+                    self.backingFields._resourcePoolRatePercentage = value;
+
+                    // Update related
+                    for (var elementIndex = 0; elementIndex < self.ElementSet.length; elementIndex++) {
+                        var element = self.ElementSet[elementIndex];
+
+                        for (var itemIndex = 0; itemIndex < element.ElementItemSet.length; itemIndex++) {
+                            var item = element.ElementItemSet[itemIndex];
+                            item.setResourcePoolAmount();
+                        }
+                    }
+                }
+
+                return value;
             }
         }
     }
