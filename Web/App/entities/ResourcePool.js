@@ -105,7 +105,6 @@
                 _useFixedResourcePoolRate: false,
                 _currentElement: null,
                 _ratingMode: 1, // Only my ratings vs. All users' ratings
-                _userResourcePool: null,
                 _currentUserResourcePoolRate: null,
                 _otherUsersResourcePoolRateTotal: null,
                 _otherUsersResourcePoolRateCount: null,
@@ -146,16 +145,9 @@
             }
 
             self.userResourcePool = function () {
-
-                if (self.backingFields._userResourcePool !== null && self.backingFields._userResourcePool.entityAspect.entityState.isDetached()) {
-                    self.backingFields._userResourcePool = null;
-                }
-
-                if (self.backingFields._userResourcePool === null && self.UserResourcePoolSet.length !== 0) {
-                    self.backingFields._userResourcePool = self.UserResourcePoolSet[0];
-                }
-
-                return self.backingFields._userResourcePool;
+                return self.UserResourcePoolSet.length > 0
+                    ? self.UserResourcePoolSet[0]
+                    : null;
             }
 
             self.currentUserResourcePoolRate = function () {

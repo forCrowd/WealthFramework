@@ -68,24 +68,10 @@ function UserResourcePool() {
     var self = this;
     self.ResourcePool = null;
     self.ResourcePoolRate = 0;
-    self.entityAspect = {
-        entityState: {
-            isDetached: function () {
-                return false;
-            }
-        }
-    }
 }
 
 function UserElementField() {
     var self = this;
     self.Element = null;
     self.Rating = 0;
-    self.entityAspect = {
-        entityState: {
-            isDetached: function () {
-                return false;
-            }
-        }
-    }
 }

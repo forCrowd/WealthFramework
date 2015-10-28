@@ -490,6 +490,12 @@
 
             var userResourcePool = resourcePool.userResourcePool();
 
+            if (userResourcePool !== null
+                && typeof userResourcePool.entityAspect !== 'undefined'
+                && userResourcePool.entityAspect.entityState.isDetached()) {
+                userResourcePool = null;
+            }
+
             switch (updateType) {
                 case 'increase': {
 
