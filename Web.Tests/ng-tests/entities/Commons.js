@@ -89,17 +89,3 @@ function UserElementField() {
         }
     }
 }
-
-function UserElementCell() {
-    var self = this;
-    self.User = null;
-    self.ElementCell = null;
-    self.DecimalValue = null;
-    self.entityAspect = {
-        entityState: {
-            isDetached: function () {
-                return false;
-            }
-        }
-    }
-}

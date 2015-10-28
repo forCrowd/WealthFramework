@@ -14,6 +14,7 @@ describe('ng Element', function () {
             ElementField = $injector.get('ElementField');
             ElementItem = $injector.get('ElementItem');
             ElementCell = $injector.get('ElementCell');
+            UserElementCell = $injector.get('UserElementCell');
 
             registerPrototypes($injector);
 
