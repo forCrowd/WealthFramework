@@ -478,11 +478,6 @@
                     break;
                 }
             }
-
-            // Broadcast the update
-            if (userElementField !== null) {
-                $rootScope.$broadcast('elementFieldIndexRatingUpdated', { elementField: elementField, value: userElementField.Rating });
-            }
         }
 
         function updateResourcePoolRate(resourcePool, updateType) {
@@ -500,7 +495,10 @@
                             ResourcePoolRate: 15
                         };
 
-                        dataContext.createEntity('UserResourcePool', userResourcePool);
+                        dataContext.createEntity('UserResourcePool', userResourcePool)
+                            .then(function () {
+                                resourcePool.setCurrentUserResourcePoolRate();
+                            });
 
                     } else {
 
@@ -511,6 +509,8 @@
                         } else { // Otherwise, go ahead!
                             userResourcePool.ResourcePoolRate = userResourcePool.ResourcePoolRate + 5 > 1000 ? 1000 : userResourcePool.ResourcePoolRate + 5;
                         }
+
+                        resourcePool.setCurrentUserResourcePoolRate();
                     }
 
                     break;
@@ -525,7 +525,10 @@
                             ResourcePoolRate: 5
                         };
 
-                        dataContext.createEntity('UserResourcePool', userResourcePool);
+                        dataContext.createEntity('UserResourcePool', userResourcePool)
+                            .then(function () {
+                                resourcePool.setCurrentUserResourcePoolRate();
+                            });
 
                     } else {
 
@@ -536,6 +539,8 @@
                         } else { // Otherwise, go ahead!
                             userResourcePool.ResourcePoolRate = userResourcePool.ResourcePoolRate - 5 < 0 ? 0 : userResourcePool.ResourcePoolRate - 5;
                         }
+
+                        resourcePool.setCurrentUserResourcePoolRate();
                     }
 
                     break;
@@ -546,15 +551,12 @@
                     if (userResourcePool !== null && !userResourcePool.entityAspect.entityState.isDeleted()) {
                         userResourcePool.ResourcePoolRate = 10;
                         userResourcePool.entityAspect.setDeleted();
+
+                        resourcePool.setCurrentUserResourcePoolRate();
                     }
 
                     break;
                 }
-            }
-
-            // Broadcast the update
-            if (userResourcePool !== null) {
-                $rootScope.$broadcast('resourcePoolRateUpdated', { resourcePool: resourcePool, value: userResourcePool.ResourcePoolRate });
             }
         }
     }

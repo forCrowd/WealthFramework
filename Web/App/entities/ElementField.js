@@ -3,9 +3,9 @@
 
     var serviceId = 'ElementField';
     angular.module('main')
-        .factory(serviceId, ['$rootScope', 'logger', elementFieldFactory]);
+        .factory(serviceId, ['logger', elementFieldFactory]);
 
-    function elementFieldFactory($rootScope, logger) {
+    function elementFieldFactory(logger) {
 
         // Logger
         logger = logger.forSource(serviceId);
@@ -38,14 +38,6 @@
                 _aggressiveRating: null,
                 _indexIncome: null
             }
-
-            // Events
-            $rootScope.$on('elementFieldIndexRatingUpdated', function (event, args) {
-                if (args.elementField === self) {
-                    self.backingFields._currentUserIndexRating = args.value;
-                    self.setIndexRating();
-                }
-            });
 
             // Public functions
             self.currentUserElementField = function () {

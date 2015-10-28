@@ -3,9 +3,9 @@
 
     var serviceId = 'ResourcePool';
     angular.module('main')
-        .factory(serviceId, ['$rootScope', 'logger', resourcePoolFactory]);
+        .factory(serviceId, ['logger', resourcePoolFactory]);
 
-    function resourcePoolFactory($rootScope, logger) {
+    function resourcePoolFactory(logger) {
 
         // Logger
         logger = logger.forSource(serviceId);
@@ -113,14 +113,6 @@
                 _resourcePoolRatePercentage: null
             }
 
-            // Events
-            $rootScope.$on('resourcePoolRateUpdated', function (event, args) {
-                if (args.resourcePool === self) {
-                    self.backingFields._currentUserResourcePoolRate = args.value;
-                    self.setResourcePoolRate();
-                }
-            });
-
             // Public functions
 
             // Checks whether resource pool has any item that can be rateable
@@ -169,16 +161,27 @@
             self.currentUserResourcePoolRate = function () {
 
                 if (self.backingFields._currentUserResourcePoolRate === null) {
-                    self.setCurrentUserResourcePoolRate();
+                    self.setCurrentUserResourcePoolRate(false);
                 }
 
                 return self.backingFields._currentUserResourcePoolRate;
             }
 
-            self.setCurrentUserResourcePoolRate = function () {
-                self.backingFields._currentUserResourcePoolRate = self.userResourcePool() !== null
+            self.setCurrentUserResourcePoolRate = function (updateRelated) {
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
+
+                var value = self.userResourcePool() !== null
                     ? self.userResourcePool().ResourcePoolRate
                     : 10; // Default value?
+
+                if (self.backingFields._currentUserResourcePoolRate !== value) {
+                    self.backingFields._currentUserResourcePoolRate = value;
+
+                    // Update related
+                    if (updateRelated) {
+                        self.setResourcePoolRate();
+                    }
+                }
             }
 
             // TODO Since this is a fixed value based on ResourcePoolRateTotal & current user's rate,
