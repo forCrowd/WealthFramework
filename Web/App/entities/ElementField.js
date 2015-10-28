@@ -21,7 +21,6 @@
 
             // Local variables
             self.backingFields = {
-                _currentUserElementField: null,
                 _currentUserIndexRating: null,
                 _otherUsersIndexRatingTotal: null,
                 _otherUsersIndexRatingCount: null,
@@ -41,17 +40,9 @@
 
             // Public functions
             self.currentUserElementField = function () {
-
-                // TODO Try to move these entityAspect check to its service?
-                if (self.backingFields._currentUserElementField !== null && self.backingFields._currentUserElementField.entityAspect.entityState.isDetached()) {
-                    self.backingFields._currentUserElementField = null;
-                }
-
-                if (self.backingFields._currentUserElementField === null && self.UserElementFieldSet.length !== 0) {
-                    self.backingFields._currentUserElementField = self.UserElementFieldSet[0];
-                }
-
-                return self.backingFields._currentUserElementField;
+                return self.UserElementFieldSet.length > 0
+                    ? self.UserElementFieldSet[0]
+                    : null;
             }
 
             self.currentUserIndexRating = function () {

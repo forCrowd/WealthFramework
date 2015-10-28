@@ -404,6 +404,12 @@
 
             var userElementField = elementField.currentUserElementField();
 
+            if (userElementField !== null
+                && typeof userElementField.entityAspect !== 'undefined'
+                && userElementField.entityAspect.entityState.isDetached()) {
+                userElementField = null;
+            }
+
             switch (updateType) {
                 case 'increase': {
 
