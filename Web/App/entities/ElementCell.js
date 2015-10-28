@@ -60,7 +60,6 @@
             }
 
             self.setCurrentUserNumericValue = function (updateRelated) {
-
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value;
@@ -219,7 +218,6 @@
             }
 
             self.setNumericValueMultiplied = function (updateRelated) {
-
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value;
@@ -313,7 +311,6 @@
             }
 
             self.setAggressiveRating = function (updateRelated) {
-
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value = 0; // Default value?
@@ -377,7 +374,6 @@
             }
 
             self.setAggressiveRatingPercentage = function (updateRelated) {
-
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value = 0; // Default value?
@@ -416,7 +412,6 @@
             }
 
             self.setIndexIncome = function (updateRelated) {
-
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value = 0; // Default value?

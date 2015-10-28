@@ -72,7 +72,6 @@
             }
 
             self.setCurrentUserIndexRating = function (updateRelated) {
-
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value = self.currentUserElementField() !== null
@@ -161,7 +160,6 @@
             }
 
             self.setIndexRating = function (updateRelated) {
-
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value = 0; // Default value?
@@ -191,7 +189,6 @@
             }
 
             self.setIndexRatingPercentage = function (updateRelated) {
-
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value = 0; // Default value?
@@ -224,7 +221,6 @@
             }
 
             self.setNumericValueMultiplied = function (updateRelated) {
-
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value = 0; // Default value?
@@ -267,7 +263,6 @@
             }
 
             self.setReferenceRatingMultiplied = function (updateRelated) {
-
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value = null;
