@@ -376,7 +376,6 @@
             }
 
             self.setAggressiveRating = function (updateRelated) {
-
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value = 0; // Default value?
@@ -408,14 +407,15 @@
 
             self.indexIncome = function () {
 
-                //if (self.backingFields._indexIncome === null) {
-                self.setIndexIncome();
-                //}
+                if (self.backingFields._indexIncome === null) {
+                    self.setIndexIncome(false);
+                }
 
                 return self.backingFields._indexIncome;
             }
 
-            self.setIndexIncome = function () {
+            self.setIndexIncome = function (updateRelated) {
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value = self.Element.totalResourcePoolAmount() * self.indexRatingPercentage();
 
@@ -423,9 +423,11 @@
                     self.backingFields._indexIncome = value;
 
                     // Update related
-                    for (var i = 0; i < self.ElementCellSet.length; i++) {
-                        var cell = self.ElementCellSet[i];
-                        cell.setIndexIncome();
+                    if (updateRelated) {
+                        for (var i = 0; i < self.ElementCellSet.length; i++) {
+                            var cell = self.ElementCellSet[i];
+                            cell.setIndexIncome();
+                        }
                     }
                 }
             }
