@@ -264,25 +264,29 @@
             }
 
             self.setPassiveRatingPercentage = function (updateRelated) {
-
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value;
 
                 if (typeof self.ElementField === 'undefined' || !self.ElementField.IndexEnabled) {
                     value = 0;
+
+                    //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' PRPA ' + value);
                 } else {
 
                     // If there is only one item, always 100%
                     if (self.ElementField.ElementCellSet.length === 1) {
                         value = 1;
+                        //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' PRPB ' + value);
                     } else {
                         var fieldNumericValueMultiplied = self.ElementField.numericValueMultiplied();
 
                         if (fieldNumericValueMultiplied === 0) {
                             value = 0;
+                            //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' PRPC ' + value);
                         } else {
                             value = 1 - (self.numericValueMultiplied() / fieldNumericValueMultiplied);
+                            //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' PRPD ' + value);
                         }
                     }
                 }
@@ -290,7 +294,7 @@
                 if (self.backingFields._passiveRatingPercentage !== value) {
                     self.backingFields._passiveRatingPercentage = value;
 
-                    //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' PRP ' + value);
+                    //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' PRPE ' + value);
 
                     // Update related values
                     if (updateRelated) {
