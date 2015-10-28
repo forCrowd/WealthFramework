@@ -282,19 +282,6 @@
                 return value;
             }
 
-            self.totalResourcePoolIncome = function () {
-
-                // TODO Check totalIncome notes
-
-                var value = 0;
-                for (var i = 0; i < self.ElementItemSet.length; i++) {
-                    var item = self.ElementItemSet[i];
-                    value += item.totalResourcePoolIncome();
-                }
-
-                return value;
-            }
-
             self.totalIncome = function () {
 
                 // TODO If elementItems could set their parent element's totalIncome when their totalIncome changes, it wouldn't be necessary to sum this result everytime?

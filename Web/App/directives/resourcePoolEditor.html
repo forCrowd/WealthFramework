@@ -147,7 +147,7 @@
                                     {{ field.indexIncome() | number: 2 }}
                                 </td>
                                 <td data-ng-if="resourcePool.CurrentElement.directIncomeField() && resourcePool.CurrentElement.elementFieldIndexSet().length > 0">
-                                    {{ resourcePool.CurrentElement.totalResourcePoolIncome() | number: 2 }}
+                                    {{ resourcePool.CurrentElement.totalResourcePoolAmount() | number: 2 }} <!-- Same as income -->
                                 </td>
                                 <!-- Total Income -->
                                 <td data-ng-if="resourcePool.InitialValue > 0 || resourcePool.CurrentElement.directIncomeField()">
