@@ -181,7 +181,6 @@
             }
 
             self.setNumericValue = function (updateRelated) {
-
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value;

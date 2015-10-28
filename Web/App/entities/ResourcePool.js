@@ -19,6 +19,7 @@
 
                 if (this.backingFields._useFixedResourcePoolRate !== value) {
                     this.backingFields._useFixedResourcePoolRate = value;
+
                     this.setResourcePoolRate();
                 }
             }
@@ -250,20 +251,32 @@
             self.resourcePoolRate = function () {
 
                 if (self.backingFields._resourcePoolRate === null) {
-                    self.setResourcePoolRate();
+                    self.setResourcePoolRate(false);
                 }
 
                 return self.backingFields._resourcePoolRate;
             }
 
-            self.setResourcePoolRate = function () {
+            self.setResourcePoolRate = function (updateRelated) {
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
+
+                var value;
 
                 if (self.UseFixedResourcePoolRate) {
-                    self.backingFields._resourcePoolRate = self.resourcePoolRateAverage();
+                     value = self.resourcePoolRateAverage();
                 } else {
                     switch (self.RatingMode) {
-                        case 1: { self.backingFields._resourcePoolRate = self.currentUserResourcePoolRate(); break; } // Current user's
-                        case 2: { self.backingFields._resourcePoolRate = self.resourcePoolRateAverage(); break; } // All
+                        case 1: { value = self.currentUserResourcePoolRate(); break; } // Current user's
+                        case 2: { value = self.resourcePoolRateAverage(); break; } // All
+                    }
+                }
+
+                if (self.backingFields._resourcePoolRate !== value) {
+                    self.backingFields._resourcePoolRate = value;
+
+                    // TODO Update related?
+                    if (updateRelated) {
+                        
                     }
                 }
             }
