@@ -256,7 +256,7 @@
                 var value;
 
                 if (self.UseFixedResourcePoolRate) {
-                     value = self.resourcePoolRateAverage();
+                    value = self.resourcePoolRateAverage();
                 } else {
                     switch (self.RatingMode) {
                         case 1: { value = self.currentUserResourcePoolRate(); break; } // Current user's
@@ -267,39 +267,44 @@
                 if (self.backingFields._resourcePoolRate !== value) {
                     self.backingFields._resourcePoolRate = value;
 
-                    // TODO Update related?
+                    // Update related
                     if (updateRelated) {
-                        
+                        self.setResourcePoolRatePercentage();
                     }
                 }
             }
 
             self.resourcePoolRatePercentage = function () {
 
-                var value = 0;
-
-                if (self.resourcePoolRate() === 0) {
-                    // return 0; // Null?
-                    value = 0;
-                } else {
-                    value = self.resourcePoolRate() / 100;
+                if (self.backingFields._resourcePoolRatePercentage === null) {
+                    self.setResourcePoolRatePercentage(false);
                 }
+
+                return self.backingFields._resourcePoolRatePercentage;
+            }
+
+            self.setResourcePoolRatePercentage = function (updateRelated) {
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
+
+                var value = self.resourcePoolRate() === 0
+                    ? 0
+                    : self.resourcePoolRate() / 100;
 
                 if (self.backingFields._resourcePoolRatePercentage !== value) {
                     self.backingFields._resourcePoolRatePercentage = value;
 
                     // Update related
-                    for (var elementIndex = 0; elementIndex < self.ElementSet.length; elementIndex++) {
-                        var element = self.ElementSet[elementIndex];
+                    if (updateRelated) {
+                        for (var elementIndex = 0; elementIndex < self.ElementSet.length; elementIndex++) {
+                            var element = self.ElementSet[elementIndex];
 
-                        for (var itemIndex = 0; itemIndex < element.ElementItemSet.length; itemIndex++) {
-                            var item = element.ElementItemSet[itemIndex];
-                            item.setResourcePoolAmount();
+                            for (var itemIndex = 0; itemIndex < element.ElementItemSet.length; itemIndex++) {
+                                var item = element.ElementItemSet[itemIndex];
+                                item.setResourcePoolAmount();
+                            }
                         }
                     }
                 }
-
-                return value;
             }
         }
     }
