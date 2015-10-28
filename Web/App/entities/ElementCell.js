@@ -10,20 +10,19 @@
         // Logger
         logger = logger.forSource(serviceId);
 
-
         // Client-side properties
-        Object.defineProperty(ElementCell.prototype, 'CurrentUserCell', {
-            enumerable: true,
-            configurable: true,
-            get: function () {
-                return this.backingFields._currentUserCell;
-            },
-            set: function (value) {
-                if (this.backingFields._currentUserCell !== value) {
-                    this.backingFields._currentUserCell = value;
-                }
-            }
-        });
+        //Object.defineProperty(ElementCell.prototype, 'CurrentUserCell', {
+        //    enumerable: true,
+        //    configurable: true,
+        //    get: function () {
+        //        return this.backingFields._currentUserCell;
+        //    },
+        //    set: function (value) {
+        //        if (this.backingFields._currentUserCell !== value) {
+        //            this.backingFields._currentUserCell = value;
+        //        }
+        //    }
+        //});
 
         // Return
         return ElementCell;
@@ -36,7 +35,7 @@
 
             // Local variables
             self.backingFields = {
-                _currentUserCell: null,
+                //_currentUserCell: null,
                 _currentUserNumericValue: null,
                 _otherUsersNumericValueTotal: null,
                 _otherUsersNumericValueCount: null,
@@ -49,6 +48,12 @@
             }
 
             // Public functions
+
+            self.currentUserCell = function () {
+                return self.UserElementCellSet.length > 0
+                    ? self.UserElementCellSet[0]
+                    : null;
+            }
 
             self.currentUserNumericValue = function () {
 
@@ -63,7 +68,7 @@
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value;
-                var cell = self.CurrentUserCell;
+                var cell = self.currentUserCell();
 
                 switch (self.ElementField.ElementFieldType) {
                     case 2: { value = cell !== null ? cell.BooleanValue : 0; break; }

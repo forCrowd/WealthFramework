@@ -122,13 +122,13 @@ describe('ng ResourcePool', function () {
 
         var resourcePool1 = new ResourcePool();
 
-        expect(resourcePool1.userResourcePool()).toBe(null);
+        expect(resourcePool1.currentUserResourcePool()).toBe(null);
 
         var userResourcePool1 = new UserResourcePool();
         userResourcePool1.ResourcePool = resourcePool1;
         resourcePool1.UserResourcePoolSet = [userResourcePool1];
 
-        expect(resourcePool1.userResourcePool()).not.toBe(null);
+        expect(resourcePool1.currentUserResourcePool()).not.toBe(null);
 
     });
 

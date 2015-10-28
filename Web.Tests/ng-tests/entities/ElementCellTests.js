@@ -63,7 +63,7 @@ describe('ng Cell', function () {
             userMultiplierCell.ElementCell = multiplierCell;
             userMultiplierCell.DecimalValue = 1;
             multiplierCell.UserElementCellSet = [userMultiplierCell];
-            multiplierCell.CurrentUserCell = userMultiplierCell;
+            //multiplierCell.CurrentUserCell = userMultiplierCell;
         }
 
         // Return
@@ -113,7 +113,7 @@ describe('ng Cell', function () {
         cell.UserElementCellSet = [userCell];
 
         // TODO Manually update?!
-        cell.CurrentUserCell = userCell;
+        //cell.CurrentUserCell = userCell;
     }
 
     // TODO removeUserCell function and related tests?
@@ -123,7 +123,7 @@ describe('ng Cell', function () {
         var resourcePool = createResourcePool();
         var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
 
-        expect(cell.CurrentUserCell).toBe(null);
+        expect(cell.currentUserCell()).toBe(null);
     });
 
     it('userCell - With user cell', function () {
@@ -136,7 +136,7 @@ describe('ng Cell', function () {
         var userCell = cell.UserElementCellSet[0];
 
         // Assert
-        expect(cell.CurrentUserCell).toBe(userCell);
+        expect(cell.currentUserCell()).toBe(userCell);
 
     });
 

@@ -463,7 +463,7 @@ describe('ng ElementField', function () {
         userMultiplierCell1.ElementCell = multiplierCell1;
         userMultiplierCell1.DecimalValue = 5;
         multiplierCell1.UserElementCellSet = [userMultiplierCell1];
-        multiplierCell1.CurrentUserCell = userMultiplierCell1;
+        //multiplierCell1.CurrentUserCell = userMultiplierCell1;
 
         // TODO Manually update?!
         decimalField.setNumericValueMultiplied();
@@ -492,7 +492,7 @@ describe('ng ElementField', function () {
         userMultiplierCell2.ElementCell = multiplierCell2;
         userMultiplierCell2.DecimalValue = 15;
         multiplierCell2.UserElementCellSet = [userMultiplierCell2];
-        multiplierCell2.CurrentUserCell = userMultiplierCell2;
+        //multiplierCell2.CurrentUserCell = userMultiplierCell2;
 
         // TODO Manually update?!
         decimalField.setNumericValueMultiplied();
@@ -548,7 +548,7 @@ describe('ng ElementField', function () {
         userMultiplierCell1.ElementCell = multiplierCell1;
         userMultiplierCell1.DecimalValue = 5;
         multiplierCell1.UserElementCellSet = [userMultiplierCell1];
-        multiplierCell1.CurrentUserCell = userMultiplierCell1;
+        //multiplierCell1.CurrentUserCell = userMultiplierCell1;
 
         decimalCell1.setNumericValueMultiplied();
         expect(decimalField.referenceRatingMultiplied()).toBe(250);
@@ -575,7 +575,7 @@ describe('ng ElementField', function () {
         userMultiplierCell2.ElementCell = multiplierCell2;
         userMultiplierCell2.DecimalValue = 15;
         multiplierCell2.UserElementCellSet = [userMultiplierCell2];
-        multiplierCell2.CurrentUserCell = userMultiplierCell2;
+        //multiplierCell2.CurrentUserCell = userMultiplierCell2;
 
         decimalCell1.setNumericValueMultiplied();
         decimalCell2.setNumericValueMultiplied();
@@ -631,7 +631,7 @@ describe('ng ElementField', function () {
         userMultiplierCell1.ElementCell = multiplierCell1;
         userMultiplierCell1.DecimalValue = 5;
         multiplierCell1.UserElementCellSet = [userMultiplierCell1];
-        multiplierCell1.CurrentUserCell = userMultiplierCell1;
+        //multiplierCell1.CurrentUserCell = userMultiplierCell1;
 
         decimalCell1.setNumericValueMultiplied();
         expect(decimalField.aggressiveRating()).toBe(1);
@@ -658,7 +658,7 @@ describe('ng ElementField', function () {
         userMultiplierCell2.ElementCell = multiplierCell2;
         userMultiplierCell2.DecimalValue = 15;
         multiplierCell2.UserElementCellSet = [userMultiplierCell2];
-        multiplierCell2.CurrentUserCell = userMultiplierCell2;
+        //multiplierCell2.CurrentUserCell = userMultiplierCell2;
 
         decimalCell1.setNumericValueMultiplied();
         decimalCell2.setNumericValueMultiplied();

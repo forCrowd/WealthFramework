@@ -241,24 +241,26 @@
 
             var deferred = $q.defer();
 
-            if (elementCell.CurrentUserCell !== null
-                && typeof elementCell.CurrentUserCell.entityAspect !== 'undefined'
-                && elementCell.CurrentUserCell.entityAspect.entityState.isDetached()) {
-                elementCell.CurrentUserCell = null;
+            var userCell = elementCell.currentUserCell();
+
+            if (userCell !== null
+                && typeof userCell.entityAspect !== 'undefined'
+                && userCell.entityAspect.entityState.isDetached()) {
+                userCell = null;
             }
 
             switch (updateType) {
                 case 'increase': {
 
                     // If there is no item, create it
-                    if (elementCell.CurrentUserCell === null) {
+                    if (userCell === null) {
 
                         dataContext.createEntity('UserElementCell', {
                             User: currentUser,
                             ElementCell: elementCell,
                             DecimalValue: 1
                         }).then(function (newUserCell) {
-                            elementCell.CurrentUserCell = newUserCell;
+                            // elementCell.CurrentUserCell = newUserCell;
 
                             deferred.resolve();
                         }, function () {
@@ -268,11 +270,11 @@
                     } else {
 
                         // If it's marked as deleted, cancel that deletion and set it to default + 1
-                        if (elementCell.CurrentUserCell.entityAspect.entityState.isDeleted()) {
-                            elementCell.CurrentUserCell.entityAspect.rejectChanges();
-                            elementCell.CurrentUserCell.DecimalValue = 1;
+                        if (userCell.entityAspect.entityState.isDeleted()) {
+                            userCell.entityAspect.rejectChanges();
+                            userCell.DecimalValue = 1;
                         } else { // Otherwise, go ahead!
-                            elementCell.CurrentUserCell.DecimalValue++;
+                            userCell.DecimalValue++;
                         }
 
                         deferred.resolve();
@@ -283,8 +285,8 @@
                 case 'decrease': {
 
                     // If there is an item, decrease
-                    if (elementCell.CurrentUserCell !== null) {
-                        elementCell.CurrentUserCell.DecimalValue = elementCell.CurrentUserCell.DecimalValue - 1 < 0 ? 0 : elementCell.CurrentUserCell.DecimalValue - 1;
+                    if (userCell !== null) {
+                        userCell.DecimalValue = userCell.DecimalValue - 1 < 0 ? 0 : userCell.DecimalValue - 1;
                     }
 
                     deferred.resolve();
@@ -294,9 +296,9 @@
                 case 'reset': {
 
                     // If there is an item and not marked as deleted, delete it
-                    if (elementCell.CurrentUserCell !== null && !elementCell.CurrentUserCell.entityAspect.entityState.isDeleted()) {
-                        elementCell.CurrentUserCell.DecimalValue = 0;
-                        elementCell.CurrentUserCell.entityAspect.setDeleted();
+                    if (userCell !== null && !userCell.entityAspect.entityState.isDeleted()) {
+                        userCell.DecimalValue = 0;
+                        userCell.entityAspect.setDeleted();
                     }
 
                     deferred.resolve();
@@ -310,24 +312,26 @@
 
         function updateElementCellNumericValue(elementCell, updateType) {
 
-            if (elementCell.CurrentUserCell !== null
-                && typeof elementCell.CurrentUserCell.entityAspect !== 'undefined'
-                && elementCell.CurrentUserCell.entityAspect.entityState.isDetached()) {
-                elementCell.CurrentUserCell = null;
+            var userCell = elementCell.currentUserCell();
+
+            if (userCell !== null
+                && typeof userCell.entityAspect !== 'undefined'
+                && userCell.entityAspect.entityState.isDetached()) {
+                userCell = null;
             }
 
             switch (updateType) {
                 case 'increase': {
 
                     // If there is no item, create it
-                    if (elementCell.CurrentUserCell === null) {
+                    if (userCell === null) {
 
                         dataContext.createEntity('UserElementCell', {
                             User: currentUser,
                             ElementCell: elementCell,
                             DecimalValue: typeof value !== 'undefined' ? value : 55
                         }).then(function (newUserCell) {
-                            elementCell.CurrentUserCell = newUserCell;
+                            // elementCell.CurrentUserCell = newUserCell;
 
                             // Update the cached value
                             elementCell.setCurrentUserNumericValue();
@@ -336,14 +340,14 @@
                     } else {
 
                         // If it's marked as deleted, cancel that deletion and set it to default + 5
-                        if (typeof elementCell.CurrentUserCell.entityAspect != 'undefined'
-                            && elementCell.CurrentUserCell.entityAspect.entityState.isDeleted()) {
-                            elementCell.CurrentUserCell.entityAspect.rejectChanges();
-                            elementCell.CurrentUserCell.DecimalValue = 55;
+                        if (typeof userCell.entityAspect != 'undefined'
+                            && userCell.entityAspect.entityState.isDeleted()) {
+                            userCell.entityAspect.rejectChanges();
+                            userCell.DecimalValue = 55;
                         } else { // Otherwise, go ahead!
-                            elementCell.CurrentUserCell.DecimalValue = elementCell.CurrentUserCell.DecimalValue + 5 > 100
+                            userCell.DecimalValue = userCell.DecimalValue + 5 > 100
                                 ? 100
-                                : elementCell.CurrentUserCell.DecimalValue + 5;
+                                : userCell.DecimalValue + 5;
                         }
 
                         // Update the cached value
@@ -355,14 +359,14 @@
                 case 'decrease': {
 
                     // If there is no item, create it
-                    if (elementCell.CurrentUserCell === null) {
+                    if (userCell === null) {
 
                         dataContext.createEntity('UserElementCell', {
                             User: currentUser,
                             ElementCell: elementCell,
                             DecimalValue: 45
                         }).then(function (newUserCell) {
-                            elementCell.CurrentUserCell = newUserCell;
+                            //elementCell.CurrentUserCell = newUserCell;
 
                             // Update the cached value
                             elementCell.setCurrentUserNumericValue();
@@ -371,11 +375,11 @@
                     } else {
 
                         // If it's marked as deleted, cancel that deletion and set it to default - 5
-                        if (elementCell.CurrentUserCell.entityAspect.entityState.isDeleted()) {
-                            elementCell.CurrentUserCell.entityAspect.rejectChanges();
-                            elementCell.CurrentUserCell.DecimalValue = 45;
+                        if (userCell.entityAspect.entityState.isDeleted()) {
+                            userCell.entityAspect.rejectChanges();
+                            userCell.DecimalValue = 45;
                         } else { // Otherwise, go ahead!
-                            elementCell.CurrentUserCell.DecimalValue = elementCell.CurrentUserCell.DecimalValue - 5 < 0 ? 0 : elementCell.CurrentUserCell.DecimalValue - 5;
+                            userCell.DecimalValue = userCell.DecimalValue - 5 < 0 ? 0 : userCell.DecimalValue - 5;
                         }
 
                         // Update the cached value
@@ -387,9 +391,9 @@
                 case 'reset': {
 
                     // If there is an item and not marked as deleted, delete it
-                    if (elementCell.CurrentUserCell !== null && !elementCell.CurrentUserCell.entityAspect.entityState.isDeleted()) {
-                        elementCell.CurrentUserCell.DecimalValue = 50;
-                        elementCell.CurrentUserCell.entityAspect.setDeleted();
+                    if (userCell !== null && !userCell.entityAspect.entityState.isDeleted()) {
+                        userCell.DecimalValue = 50;
+                        userCell.entityAspect.setDeleted();
 
                         // Update the cached value
                         elementCell.setCurrentUserNumericValue();
@@ -488,7 +492,7 @@
 
         function updateResourcePoolRate(resourcePool, updateType) {
 
-            var userResourcePool = resourcePool.userResourcePool();
+            var userResourcePool = resourcePool.currentUserResourcePool();
 
             if (userResourcePool !== null
                 && typeof userResourcePool.entityAspect !== 'undefined'

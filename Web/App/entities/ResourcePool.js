@@ -144,7 +144,7 @@
                 self.RatingMode = self.RatingMode === 1 ? 2 : 1;
             }
 
-            self.userResourcePool = function () {
+            self.currentUserResourcePool = function () {
                 return self.UserResourcePoolSet.length > 0
                     ? self.UserResourcePoolSet[0]
                     : null;
@@ -162,8 +162,8 @@
             self.setCurrentUserResourcePoolRate = function (updateRelated) {
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
-                var value = self.userResourcePool() !== null
-                    ? self.userResourcePool().ResourcePoolRate
+                var value = self.currentUserResourcePool() !== null
+                    ? self.currentUserResourcePool().ResourcePoolRate
                     : 10; // Default value?
 
                 if (self.backingFields._currentUserResourcePoolRate !== value) {
@@ -189,12 +189,11 @@
             }
 
             self.setOtherUsersResourcePoolRateTotal = function () {
-
                 self.backingFields._otherUsersResourcePoolRateTotal = self.ResourcePoolRateTotal;
 
                 // Exclude current user's
-                if (self.userResourcePool() !== null) {
-                    self.backingFields._otherUsersResourcePoolRateTotal -= self.userResourcePool().ResourcePoolRate;
+                if (self.currentUserResourcePool() !== null) {
+                    self.backingFields._otherUsersResourcePoolRateTotal -= self.currentUserResourcePool().ResourcePoolRate;
                 }
             }
 
@@ -211,11 +210,10 @@
             }
 
             self.setOtherUsersResourcePoolRateCount = function () {
-
                 self.backingFields._otherUsersResourcePoolRateCount = self.ResourcePoolRateCount;
 
                 // Exclude current user's
-                if (self.userResourcePool() !== null) {
+                if (self.currentUserResourcePool() !== null) {
                     self.backingFields._otherUsersResourcePoolRateCount--;
                 }
             }

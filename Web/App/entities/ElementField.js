@@ -84,7 +84,6 @@
             }
 
             self.setOtherUsersIndexRatingTotal = function () {
-
                 self.backingFields._otherUsersIndexRatingTotal = self.IndexRatingTotal;
 
                 // Exclude current user's
