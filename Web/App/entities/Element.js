@@ -67,32 +67,38 @@
 
             self.parent = function () {
 
-                // Cached value
                 // TODO In case of add / remove elements?
                 if (self.backingFields._parent === null) {
-                    if (self.ParentFieldSet.length > 0) {
-                        self.backingFields._parent = self.ParentFieldSet[0].Element;
-                    }
+                    self.setParent();
                 }
 
                 return self.backingFields._parent;
             }
 
+            self.setParent = function () {
+                if (self.ParentFieldSet.length > 0) {
+                    self.backingFields._parent = self.ParentFieldSet[0].Element;
+                }
+            }
+
             self.familyTree = function () {
 
-                // Cached value
                 // TODO In case of add / remove elements?
-                if (self.backingFields._familyTree.length === 0) {
-                    var element = self;
-                    while (element !== null) {
-                        self.backingFields._familyTree.unshift(element);
-                        element = element.parent();
-                    }
+                if (self.backingFields._familyTree === null) {
+                    self.setFamilyTree();
+                }
+
+                return self.backingFields._familyTree;
+            }
+
+            self.setFamilyTree = function () {
+                var element = self;
+                while (element !== null) {
+                    self.backingFields._familyTree.unshift(element);
+                    element = element.parent();
                 }
 
                 // TODO At the moment it's only upwards, later include children?
-
-                return self.backingFields._familyTree;
             }
 
             self.elementFieldIndexSet = function () {
@@ -132,12 +138,15 @@
 
             self.directIncomeField = function () {
 
-                // Cached value
                 // TODO In case of add / remove fields?
-                if (self.backingFields._directIncomeField !== null) {
-                    return self.backingFields._directIncomeField;
+                if (self.backingFields._directIncomeField === null) {
+                    self.setDirectIncomeField();
                 }
 
+                return self.backingFields._directIncomeField;
+            }
+
+            self.setDirectIncomeField = function () {
                 for (var i = 0; i < self.ElementFieldSet.length; i++) {
                     var field = self.ElementFieldSet[i];
                     if (field.ElementFieldType === 11) {
@@ -145,8 +154,6 @@
                         break;
                     }
                 }
-
-                return self.backingFields._directIncomeField;
             }
 
             self.directIncome = function () {
@@ -164,12 +171,15 @@
 
             self.multiplierField = function () {
 
-                // Cached value
                 // TODO In case of add / remove field?
                 if (self.backingFields._multiplierField !== null) {
-                    return self.backingFields._multiplierField;
+                    self.setMultiplierField();
                 }
 
+                return self.backingFields._multiplierField;
+            }
+
+            self.setMultiplierField = function () {
                 for (var i = 0; i < self.ElementFieldSet.length; i++) {
                     var field = self.ElementFieldSet[i];
                     if (field.ElementFieldType === 12) {
@@ -177,8 +187,6 @@
                         break;
                     }
                 }
-
-                return self.backingFields._multiplierField;
             }
 
             self.multiplier = function () {

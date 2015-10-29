@@ -21,6 +21,8 @@ describe('ng ElementField', function () {
         });
     });
 
+    // TODO IndexEnabled tests!
+
     it('userElementField', function () {
 
         // Case 1: Initial

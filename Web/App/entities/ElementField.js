@@ -10,6 +10,44 @@
         // Logger
         logger = logger.forSource(serviceId);
 
+        // Server-side properties
+        Object.defineProperty(ElementField.prototype, 'IndexEnabled', {
+            enumerable: true,
+            configurable: true,
+            get: function () { return this.backingFields._indexEnabled; },
+            set: function (value) {
+
+                if (this.backingFields._indexEnabled !== value) {
+                    this.backingFields._indexEnabled = value;
+
+                    // TODO Complete this block!
+
+                    //// Update related
+                    //// a. Element
+                    //this.Element.setElementFieldIndexSet();
+
+                    //// b. Item(s)
+                    //for (var i = 0; i < this.ElementCellSet.length; i++) {
+                    //    var cell = this.ElementCellSet[i];
+                    //    var item = cell.ElementItem;
+                    //    item.setElementCellIndexSet();
+                    //}
+
+                    //// c. Cells
+                    //for (var i = 0; i < this.ElementCellSet.length; i++) {
+                    //    var cell = this.ElementCellSet[i];
+                    //    cell.setPassiveRatingPercentage(false);
+                    //}
+                    //this.setReferenceRatingMultiplied();
+
+                    /* IndexEnabled related functions */
+                    //cell.setAggressiveRating();
+                    //cell.setAggressiveRatingPercentage();
+                    //cell.setIndexIncome();
+                }
+            }
+        });
+
         // Return
         return ElementField;
 
@@ -21,6 +59,7 @@
 
             // Local variables
             self.backingFields = {
+                _indexEnabled: false,
                 _currentUserIndexRating: null,
                 _otherUsersIndexRatingTotal: null,
                 _otherUsersIndexRatingCount: null,

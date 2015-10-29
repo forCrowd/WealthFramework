@@ -110,6 +110,11 @@ describe('ng Element', function () {
         child.ParentFieldSet = [parentField];
 
         // Assert
+
+        // TODO Manually update?!
+        parent.setFamilyTree();
+        child.setFamilyTree();
+
         expect(parent.familyTree().length).toBe(2);
         expect(child.familyTree().length).toBe(3);
 
@@ -282,6 +287,9 @@ describe('ng Element', function () {
         multiplierField.Element = element;
         multiplierField.ElementFieldType = 12;
         element.ElementFieldSet = [multiplierField];
+
+        // TODO Manually update?!
+        element.setMultiplierField();
 
         expect(element.multiplierField()).toBe(multiplierField);
 

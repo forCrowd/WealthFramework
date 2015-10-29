@@ -21,7 +21,7 @@
 
             // Local variables
             self.backingFields = {
-                _elementCellIndexSet: [],
+                _elementCellIndexSet: null,
                 _directIncome: null,
                 _multiplier: null,
                 _totalDirectIncome: null,
@@ -59,15 +59,15 @@
             // Public functions
             self.elementCellIndexSet = function () {
 
-                // Cached value
-                // TODO In case of add / remove fields?
-                if (self.backingFields._elementCellIndexSet.length > 0) {
-                    return self.backingFields._elementCellIndexSet;
+                if (self.backingFields._elementCellIndexSet === null) {
+                    self.setElementCellIndexSet();
                 }
 
-                self.backingFields._elementCellIndexSet = getElementCellIndexSet(self);
-
                 return self.backingFields._elementCellIndexSet;
+            }
+
+            self.setElementCellIndexSet = function () {
+                self.backingFields._elementCellIndexSet = getElementCellIndexSet(self);
             }
 
             self.directIncome = function () {

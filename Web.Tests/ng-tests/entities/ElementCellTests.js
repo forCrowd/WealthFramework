@@ -111,6 +111,9 @@ describe('ng Cell', function () {
         userCell.ElementCell = cell;
         userCell.DecimalValue = rating;
         cell.UserElementCellSet = [userCell];
+
+        // TODO Manually update?!
+        cell.setCurrentUserNumericValue();
     }
 
     // TODO removeUserCell function and related tests?

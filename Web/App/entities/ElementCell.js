@@ -10,20 +10,6 @@
         // Logger
         logger = logger.forSource(serviceId);
 
-        // Client-side properties
-        //Object.defineProperty(ElementCell.prototype, 'CurrentUserCell', {
-        //    enumerable: true,
-        //    configurable: true,
-        //    get: function () {
-        //        return this.backingFields._currentUserCell;
-        //    },
-        //    set: function (value) {
-        //        if (this.backingFields._currentUserCell !== value) {
-        //            this.backingFields._currentUserCell = value;
-        //        }
-        //    }
-        //});
-
         // Return
         return ElementCell;
 
@@ -35,7 +21,6 @@
 
             // Local variables
             self.backingFields = {
-                //_currentUserCell: null,
                 _currentUserNumericValue: null,
                 _otherUsersNumericValueTotal: null,
                 _otherUsersNumericValueCount: null,
@@ -266,6 +251,7 @@
                 return self.backingFields._passiveRatingPercentage;
             }
 
+            // TODO Currently updateRelated is always 'false'?
             self.setPassiveRatingPercentage = function (updateRelated) {
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
@@ -315,6 +301,7 @@
                 return self.backingFields._aggressiveRating;
             }
 
+            // TODO Currently updateRelated is always 'false'?
             self.setAggressiveRating = function (updateRelated) {
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
@@ -438,6 +425,7 @@
                     self.backingFields._indexIncome = value;
 
                     // TODO Update related?
+                    // item.totalResourcePoolIncome
                 }
             }
         }

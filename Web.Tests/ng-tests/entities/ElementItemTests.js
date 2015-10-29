@@ -68,6 +68,9 @@ describe('ng ElementItem', function () {
         field2.ElementCellSet = [cell2];
         item1.ElementCellSet = [cell2];
 
+        // TODO Manually update?!
+        item1.setElementCellIndexSet();
+
         // And now 1 item
         expect(item1.elementCellIndexSet().length === 1).toBe(true);
     });
@@ -142,7 +145,8 @@ describe('ng ElementItem', function () {
         multiplierField.ElementCellSet = [multiplierCell];
         item1.ElementCellSet = [multiplierCell];
 
-        item1.setMultiplier(); // TODO Manually update?!
+        // TODO Manually update?!
+        item1.setMultiplier();
 
         // Now should have "0" as the default value
         expect(item1.multiplier()).toBe(0);
@@ -154,7 +158,8 @@ describe('ng ElementItem', function () {
         multiplierCell.UserElementCellSet = [userCell];
         //multiplierCell.CurrentUserCell = userCell;
 
-        item1.setMultiplier(); // TODO Manually update?!
+        // TODO Manually update?!
+        item1.setMultiplier();
 
         // Now should "2" as the default value
         expect(item1.multiplier()).toBe(2);
