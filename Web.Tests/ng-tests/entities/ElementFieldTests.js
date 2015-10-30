@@ -411,7 +411,7 @@ describe('ng ElementField', function () {
 
         // TODO Manually update?!
         element.setElementFieldIndexSet();
-        decimalField1.setIndexRatingPercentage();
+        decimalField2.setIndexRating();
 
         expect(decimalField1.indexRatingPercentage()).toBe(0.25);
         expect(decimalField2.indexRatingPercentage()).toBe(0.75);
@@ -716,7 +716,7 @@ describe('ng ElementField', function () {
 
         // TODO Manually update?!
         element.setElementFieldIndexSet();
-        decimalField1.setIndexRatingPercentage();
+        decimalField2.setIndexRating();
 
         expect(decimalField1.indexIncome()).toBe(50 * 0.25);
         expect(decimalField2.indexIncome()).toBe(50 * 0.75);

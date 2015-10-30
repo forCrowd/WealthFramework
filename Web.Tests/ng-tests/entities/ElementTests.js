@@ -188,6 +188,7 @@ describe('ng Element', function () {
 
         // TODO Manually update?!
         element.setElementFieldIndexSet();
+        element.setIndexRating();
 
         expect(element.indexRating()).toBe(50);
 
@@ -200,6 +201,7 @@ describe('ng Element', function () {
 
         // TODO Manually update?!
         element.setElementFieldIndexSet();
+        element.setIndexRating();
 
         expect(element.indexRating()).toBe(100);
 

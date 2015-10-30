@@ -22,7 +22,7 @@
             // Local variables
             self.backingFields = {
                 _parent: null,
-                _familyTree: [],
+                _familyTree: null,
                 _elementFieldIndexSet: null,
                 _indexRating: null,
                 _directIncomeField: null,
@@ -92,6 +92,9 @@
             }
 
             self.setFamilyTree = function () {
+
+                self.backingFields._familyTree = [];
+
                 var element = self;
                 while (element !== null) {
                     self.backingFields._familyTree.unshift(element);
@@ -114,7 +117,15 @@
 
             self.indexRating = function () {
 
-                // TODO Check totalIncome notes
+                if (self.backingFields._indexRating === null) {
+                    self.setIndexRating(false);
+                }
+
+                return self.backingFields._indexRating;
+            }
+
+            self.setIndexRating = function (updateRelated) {
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var indexSet = self.elementFieldIndexSet();
 
@@ -127,13 +138,13 @@
                     self.backingFields._indexRating = value;
 
                     // Update related
-                    for (var i = 0; i < self.elementFieldIndexSet().length; i++) {
-                        var index = self.elementFieldIndexSet()[i];
-                        index.setIndexRatingPercentage();
+                    if (updateRelated) {
+                        for (var i = 0; i < self.elementFieldIndexSet().length; i++) {
+                            var index = self.elementFieldIndexSet()[i];
+                            index.setIndexRatingPercentage();
+                        }
                     }
                 }
-
-                return value;
             }
 
             self.directIncomeField = function () {
@@ -249,11 +260,15 @@
                     }
                 }
 
+                //logger.log('TRPA-A ' + value);
+
                 if (self.backingFields._totalResourcePoolAmount !== value) {
                     self.backingFields._totalResourcePoolAmount = value;
 
-                    for (var i = 0; i < self.ElementFieldSet.length; i++) {
-                        var field = self.ElementFieldSet[i];
+                    //logger.log('TRPA-B ' + value);
+
+                    for (var i = 0; i < self.elementFieldIndexSet().length; i++) {
+                        var field = self.elementFieldIndexSet()[i];
 
                         // if (field.ElementFieldType === 11) { - TODO How about this check?
                         field.setIndexIncome();

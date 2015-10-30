@@ -190,12 +190,14 @@
                     case 2: { value = self.indexRatingAverage(); break; } // All
                 }
 
+                //logger.log(self.Name[0] + ' IR ' + value);
+
                 if (self.backingFields._indexRating !== value) {
                     self.backingFields._indexRating = value;
 
                     // TODO Update related
                     if (updateRelated) {
-                        self.setIndexRatingPercentage();
+                        self.Element.ResourcePool.MainElement.setIndexRating();
                     }
                 }
             }
@@ -222,13 +224,15 @@
                     value = self.indexRating() / elementIndexRating;
                 }
 
+                //logger.log(self.Name[0] + ' IRP ' + value);
+
                 if (self.backingFields._indexRatingPercentage !== value) {
                     self.backingFields._indexRatingPercentage = value;
 
+                    // Update related
                     if (updateRelated) {
                         self.setIndexIncome();
                     }
-                    // TODO Update related?
                 }
             }
 
@@ -434,6 +438,10 @@
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value = self.Element.totalResourcePoolAmount() * self.indexRatingPercentage();
+
+                //if (self.IndexEnabled) {
+                    //logger.log(self.Name[0] + ' II ' + value);
+                //}
 
                 if (self.backingFields._indexIncome !== value) {
                     self.backingFields._indexIncome = value;
