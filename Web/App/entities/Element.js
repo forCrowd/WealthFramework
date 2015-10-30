@@ -239,6 +239,7 @@
                 return value;
             }
 
+            // TODO This is out of pattern!
             self.totalResourcePoolAmount = function () {
 
                 // TODO Check totalIncome notes

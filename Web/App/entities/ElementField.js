@@ -267,7 +267,7 @@
                     //logger.log(self.Name[0] + ' NVMB ' + value.toFixed(2));
 
                     // Update related?
-                    if (updateRelated) {
+                    if (updateRelated && self.IndexEnabled) {
                         for (var i = 0; i < self.ElementCellSet.length; i++) {
                             var cell = self.ElementCellSet[i];
                             cell.setPassiveRatingPercentage(false);
@@ -429,17 +429,9 @@
                     }
                 }
 
-
-                // Bugfix attempt
-                var forceUpdate = value.toFixed(2) == 1;
-                forceUpdate = false;
-
                 //logger.log(self.Name[0] + ' AR ' + value.toFixed(2));
-                //logger.log(self.Name[0] + ' AR ' + value.toFixed(6) + ' ' + forceUpdate);
-                //logger.log(self.Name[0] + ' AR ' + value.toFixed(2));
-                //logger.log(self.Name[0] + ' AR ' + 1);
 
-                if (self.backingFields._aggressiveRating !== value || forceUpdate) {
+                if (self.backingFields._aggressiveRating !== value) {
                     self.backingFields._aggressiveRating = value;
 
                     //logger.log(self.Name[0] + ' AR OK');

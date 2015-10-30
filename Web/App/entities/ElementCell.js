@@ -280,10 +280,10 @@
                     }
                 }
 
+                //logger.log(self.ElementField.Name + '-' + self.ElementItem.Name + ' PRP ' + value.toFixed(2));
+
                 if (self.backingFields._passiveRatingPercentage !== value) {
                     self.backingFields._passiveRatingPercentage = value;
-
-                    //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' PRPE ' + value.toFixed(2));
 
                     // Update related values
                     if (updateRelated) {
@@ -396,6 +396,7 @@
                 }
             }
 
+            // TODO This is out of pattern!
             self.indexIncome = function () {
 
                 //if (self.backingFields._indexIncome === null) {

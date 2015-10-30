@@ -238,6 +238,7 @@
                 return self.directIncomeIncludingResourcePoolAmount() * self.multiplier();
             }
 
+            // TODO This is out of pattern!
             self.totalResourcePoolIncome = function () {
 
                 var value = 0;
