@@ -260,12 +260,12 @@
                     }
                 }
 
-                //logger.log('TRPA-A ' + value);
+                //logger.log('TRPA-A ' + value.toFixed(2));
 
                 if (self.backingFields._totalResourcePoolAmount !== value) {
                     self.backingFields._totalResourcePoolAmount = value;
 
-                    //logger.log('TRPA-B ' + value);
+                    //logger.log('TRPA-B ' + value.toFixed(2));
 
                     for (var i = 0; i < self.elementFieldIndexSet().length; i++) {
                         var field = self.elementFieldIndexSet()[i];

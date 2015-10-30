@@ -260,22 +260,22 @@
                 if (typeof self.ElementField === 'undefined' || !self.ElementField.IndexEnabled) {
                     value = 0;
 
-                    //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' PRPA ' + value);
+                    //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' PRPA ' + value.toFixed(2));
                 } else {
 
                     // If there is only one item, always 100%
                     if (self.ElementField.ElementCellSet.length === 1) {
                         value = 1;
-                        //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' PRPB ' + value);
+                        //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' PRPB ' + value.toFixed(2));
                     } else {
                         var fieldNumericValueMultiplied = self.ElementField.numericValueMultiplied();
 
                         if (fieldNumericValueMultiplied === 0) {
                             value = 0;
-                            //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' PRPC ' + value);
+                            //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' PRPC ' + value.toFixed(2));
                         } else {
                             value = 1 - (self.numericValueMultiplied() / fieldNumericValueMultiplied);
-                            //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' PRPD ' + value);
+                            //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' PRPD ' + value.toFixed(2));
                         }
                     }
                 }
@@ -283,7 +283,7 @@
                 if (self.backingFields._passiveRatingPercentage !== value) {
                     self.backingFields._passiveRatingPercentage = value;
 
-                    //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' PRPE ' + value);
+                    //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' PRPE ' + value.toFixed(2));
 
                     // Update related values
                     if (updateRelated) {
@@ -337,9 +337,9 @@
                         }
 
                         if (!self.ElementField.referenceRatingAllEqualFlag()) {
-                            //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' AR4A ' + value);
+                            //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' AR4A ' + value.toFixed(2));
                             value = 1 - value;
-                            //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' AR4B ' + value);
+                            //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' AR4B ' + value.toFixed(2));
                         }
                     }
                 }
@@ -347,7 +347,7 @@
                 if (self.backingFields._aggressiveRating !== value) {
                     self.backingFields._aggressiveRating = value;
 
-                    //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' AR ' + value);
+                    //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' AR ' + value.toFixed(2));
 
                     // Update related values
                     if (updateRelated) {
@@ -382,10 +382,12 @@
                     }
                 }
 
+                //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' ARP ' + value.toFixed(2));
+
                 if (self.backingFields._aggressiveRatingPercentage !== value) {
                     self.backingFields._aggressiveRatingPercentage = value;
 
-                    //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' ARP ' + value);
+                    //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' ARP OK');
 
                     // Update related
                     if (updateRelated) {

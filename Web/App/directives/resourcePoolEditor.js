@@ -197,6 +197,23 @@
                 } else {
                     loadChartData();
                 }
+
+                // TODO Just for test, remove later
+                //scope.increaseElementMultiplier(scope.resourcePool.MainElement);
+
+                //for (var i = 0; i < scope.resourcePool.MainElement.ElementFieldSet.length; i++) {
+                //    var field = scope.resourcePool.MainElement.ElementFieldSet[i];
+                //    if (field.IndexEnabled) {
+                //        var cell1 = field.ElementCellSet[0];
+                //        scope.decreaseElementCellNumericValue(cell1);
+
+                //        var cell2 = field.ElementCellSet[1];
+                //        scope.decreaseElementCellNumericValue(cell2);
+
+                //        var cell3 = field.ElementCellSet[2];
+                //        scope.decreaseElementCellNumericValue(cell3);
+                //    }
+                //}
             }
 
             function loadChartData() {

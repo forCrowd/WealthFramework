@@ -190,7 +190,7 @@
                     case 2: { value = self.indexRatingAverage(); break; } // All
                 }
 
-                //logger.log(self.Name[0] + ' IR ' + value);
+                //logger.log(self.Name[0] + ' IR ' + value.toFixed(2));
 
                 if (self.backingFields._indexRating !== value) {
                     self.backingFields._indexRating = value;
@@ -224,7 +224,7 @@
                     value = self.indexRating() / elementIndexRating;
                 }
 
-                //logger.log(self.Name[0] + ' IRP ' + value);
+                //logger.log(self.Name[0] + ' IRP ' + value.toFixed(2));
 
                 if (self.backingFields._indexRatingPercentage !== value) {
                     self.backingFields._indexRatingPercentage = value;
@@ -264,7 +264,7 @@
                 if (self.backingFields._numericValueMultiplied !== value) {
                     self.backingFields._numericValueMultiplied = value;
 
-                    //logger.log(self.Name[0] + ' NVMB ' + value);
+                    //logger.log(self.Name[0] + ' NVMB ' + value.toFixed(2));
 
                     // Update related?
                     if (updateRelated) {
@@ -273,7 +273,22 @@
                             cell.setPassiveRatingPercentage(false);
                         }
 
-                        self.setReferenceRatingMultiplied();
+                        self.setReferenceRatingMultiplied(false);
+
+                        for (var i = 0; i < self.ElementCellSet.length; i++) {
+                            var cell = self.ElementCellSet[i];
+                            cell.setAggressiveRating(false);
+                        }
+
+                        self.setAggressiveRating(false);
+
+                        // Update related
+                        for (var i = 0; i < self.ElementCellSet.length; i++) {
+                            var cell = self.ElementCellSet[i];
+                            cell.setAggressiveRatingPercentage(false);
+                        }
+
+                        self.setIndexIncome();
                     }
                 }
             }
@@ -287,6 +302,7 @@
                 return self.backingFields._referenceRatingMultiplied;
             }
 
+            // TODO Currently updateRelated is always 'false'?
             self.setReferenceRatingMultiplied = function (updateRelated) {
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
@@ -343,11 +359,15 @@
                                 }
                             }
                         }
-
-                        //logger.log(self.Name[0] + '-' + cell.ElementItem.Name[0] + ' RRMA ' + value);
-
                     }
                 }
+
+                //// Bug fix attempt
+                //if (value === 1) {
+                //    value = 0.9999;
+                //}
+
+                //logger.log(self.Name[0] + '-' + cell.ElementItem.Name[0] + ' RRMA ' + value.toFixed(2));
 
                 // Set all equal flag
                 var flagUpdated = self.setReferenceRatingAllEqualFlag(allEqualFlag);
@@ -359,7 +379,7 @@
 
                     ratingUpdated = true;
 
-                    //logger.log(self.Name[0] + ' RRMB ' + value);
+                    //logger.log(self.Name[0] + ' RRMB ' + value.toFixed(2));
                 }
 
                 // Update related
@@ -409,8 +429,20 @@
                     }
                 }
 
-                if (self.backingFields._aggressiveRating !== value) {
+
+                // Bugfix attempt
+                var forceUpdate = value.toFixed(2) == 1;
+                forceUpdate = false;
+
+                //logger.log(self.Name[0] + ' AR ' + value.toFixed(2));
+                //logger.log(self.Name[0] + ' AR ' + value.toFixed(6) + ' ' + forceUpdate);
+                //logger.log(self.Name[0] + ' AR ' + value.toFixed(2));
+                //logger.log(self.Name[0] + ' AR ' + 1);
+
+                if (self.backingFields._aggressiveRating !== value || forceUpdate) {
                     self.backingFields._aggressiveRating = value;
+
+                    //logger.log(self.Name[0] + ' AR OK');
 
                     if (updateRelated) {
 
@@ -440,7 +472,7 @@
                 var value = self.Element.totalResourcePoolAmount() * self.indexRatingPercentage();
 
                 //if (self.IndexEnabled) {
-                    //logger.log(self.Name[0] + ' II ' + value);
+                    //logger.log(self.Name[0] + ' II ' + value.toFixed(2));
                 //}
 
                 if (self.backingFields._indexIncome !== value) {
