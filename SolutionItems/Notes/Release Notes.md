@@ -2,8 +2,9 @@
 
 **0.35**
 
-* Performance Update: Most of the calculation functions (numericValue, passiveRating, aggressiveRating, indexIncome etc.) are cached
+* Performance Update: Most of the calculations (numericValue, passiveRating, aggressiveRating, indexIncome etc. functions) are cached
 and they only calculated when there is an actually change in one of the related values.
+All in One sample increase multiplier action was reduced under a second from 7 seconds.
 * Further with javascript tests & entities cleanup
 * resourcePool, elementField, elementCell - other users' average properties were merged with other users' total
 * element.js - parents() was renamed to familyTree() & parent() returns null if there is no actual parent (instead of self)
