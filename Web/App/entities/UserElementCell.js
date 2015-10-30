@@ -11,13 +11,12 @@
         logger = logger.forSource(serviceId);
 
         // Properties
-        // Doesn't do anything but keep this as a sample for the moment
         Object.defineProperty(UserElementCell.prototype, 'DecimalValue', {
             enumerable: true,
             configurable: true,
             get: function () { return this.backingFields._DecimalValue; },
             set: function (value) {
-                if (value !== this.backingFields._DecimalValue) {
+                if (this.backingFields._DecimalValue !== value) {
                     this.backingFields._DecimalValue = value;
                 }
             }

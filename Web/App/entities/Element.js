@@ -20,67 +20,17 @@
             var self = this;
 
             // Local variables
-            var _parent = null;
-            var _parents = [];
-            var _elementFieldIndexSet = null;
-            var _directIncomeField = null;
-            var _multiplierField = null;
-
-            // UI related: Determines whether the chart & element details will use full row (col-md-4 vs col-md-12 etc.)
-            // TODO Obsolete for the moment!
-            self.fullSize = function () {
-                return (self.ElementFieldSet.length > 4)
-                    || self.elementFieldIndexSet().length > 2;
+            self.backingFields = {
+                _parent: null,
+                _familyTree: null,
+                _elementFieldIndexSet: null,
+                _indexRating: null,
+                _directIncomeField: null,
+                _multiplierField: null,
+                _totalResourcePoolAmount: null
             }
 
-            self.parent = function () {
-
-                // Cached value
-                // TODO In case of add / remove fields?
-                if (_parent !== null) {
-                    return _parent;
-                }
-
-                _parent = self;
-                if (_parent.ParentFieldSet.length > 0) {
-                    _parent = _parent.ParentFieldSet[0].Element;
-                }
-
-                return _parent;
-            }
-
-            self.parents = function () {
-
-                // Cached value
-                // TODO In case of add / remove elements?
-                if (_parents.length > 0) {
-                    return _parents;
-                }
-
-                var element = null;
-                do {
-
-                    element = element === null
-                        ? self
-                        : element.parent();
-
-                    _parents.unshift(element);
-
-                } while (element !== element.parent());
-
-                return _parents;
-            }
-
-            self.elementFieldIndexSet = function () {
-                if (_elementFieldIndexSet === null) {
-                    self.setElementFieldIndexSet();
-                }
-                return _elementFieldIndexSet;
-            }
-
-            self.setElementFieldIndexSet = function () {
-                _elementFieldIndexSet = getElementFieldIndexSet(self);
-            }
+            // Private functions
 
             function getElementFieldIndexSet(element) {
 
@@ -106,40 +56,115 @@
                 return indexSet;
             }
 
+            // Public functions
+
+            // UI related: Determines whether the chart & element details will use full row (col-md-4 vs col-md-12 etc.)
+            // TODO Obsolete for the moment!
+            self.fullSize = function () {
+                return (self.ElementFieldSet.length > 4)
+                    || self.elementFieldIndexSet().length > 2;
+            }
+
+            self.parent = function () {
+
+                // TODO In case of add / remove elements?
+                if (self.backingFields._parent === null) {
+                    self.setParent();
+                }
+
+                return self.backingFields._parent;
+            }
+
+            self.setParent = function () {
+                if (self.ParentFieldSet.length > 0) {
+                    self.backingFields._parent = self.ParentFieldSet[0].Element;
+                }
+            }
+
+            self.familyTree = function () {
+
+                // TODO In case of add / remove elements?
+                if (self.backingFields._familyTree === null) {
+                    self.setFamilyTree();
+                }
+
+                return self.backingFields._familyTree;
+            }
+
+            self.setFamilyTree = function () {
+
+                self.backingFields._familyTree = [];
+
+                var element = self;
+                while (element !== null) {
+                    self.backingFields._familyTree.unshift(element);
+                    element = element.parent();
+                }
+
+                // TODO At the moment it's only upwards, later include children?
+            }
+
+            self.elementFieldIndexSet = function () {
+                if (self.backingFields._elementFieldIndexSet === null) {
+                    self.setElementFieldIndexSet();
+                }
+                return self.backingFields._elementFieldIndexSet;
+            }
+
+            self.setElementFieldIndexSet = function () {
+                self.backingFields._elementFieldIndexSet = getElementFieldIndexSet(self);
+            }
+
+            self.indexRating = function () {
+
+                if (self.backingFields._indexRating === null) {
+                    self.setIndexRating(false);
+                }
+
+                return self.backingFields._indexRating;
+            }
+
+            self.setIndexRating = function (updateRelated) {
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
+
+                var indexSet = self.elementFieldIndexSet();
+
+                var value = 0;
+                for (var i = 0; i < indexSet.length; i++) {
+                    value += indexSet[i].indexRating();
+                }
+
+                if (self.backingFields._indexRating !== value) {
+                    self.backingFields._indexRating = value;
+
+                    // Update related
+                    if (updateRelated) {
+                        for (var i = 0; i < self.elementFieldIndexSet().length; i++) {
+                            var index = self.elementFieldIndexSet()[i];
+                            index.setIndexRatingPercentage();
+                        }
+                    }
+                }
+            }
+
             self.directIncomeField = function () {
 
-                // Cached value
                 // TODO In case of add / remove fields?
-                if (_directIncomeField)
-                    return _directIncomeField;
+                if (self.backingFields._directIncomeField === null) {
+                    self.setDirectIncomeField();
+                }
 
+                return self.backingFields._directIncomeField;
+            }
+
+            self.setDirectIncomeField = function () {
                 for (var i = 0; i < self.ElementFieldSet.length; i++) {
                     var field = self.ElementFieldSet[i];
                     if (field.ElementFieldType === 11) {
-                        _directIncomeField = field;
+                        self.backingFields._directIncomeField = field;
                         break;
                     }
                 }
-
-                return _directIncomeField;
-            }
-
-            self.multiplierField = function () {
-
-                // Cached value
-                // TODO In case of add / remove field?
-                if (_multiplierField)
-                    return _multiplierField;
-
-                for (var i = 0; i < self.ElementFieldSet.length; i++) {
-                    var field = self.ElementFieldSet[i];
-                    if (field.ElementFieldType === 12) {
-                        _multiplierField = field;
-                        break;
-                    }
-                }
-
-                return _multiplierField;
             }
 
             self.directIncome = function () {
@@ -155,6 +180,26 @@
                 return value;
             }
 
+            self.multiplierField = function () {
+
+                // TODO In case of add / remove field?
+                if (self.backingFields._multiplierField !== null) {
+                    self.setMultiplierField();
+                }
+
+                return self.backingFields._multiplierField;
+            }
+
+            self.setMultiplierField = function () {
+                for (var i = 0; i < self.ElementFieldSet.length; i++) {
+                    var field = self.ElementFieldSet[i];
+                    if (field.ElementFieldType === 12) {
+                        self.backingFields._multiplierField = field;
+                        break;
+                    }
+                }
+            }
+
             self.multiplier = function () {
 
                 // TODO Check totalIncome notes
@@ -163,20 +208,6 @@
                 for (var i = 0; i < self.ElementItemSet.length; i++) {
                     var item = self.ElementItemSet[i];
                     value += item.multiplier();
-                }
-
-                return value;
-            }
-
-            self.indexRating = function () {
-
-                // TODO Check totalIncome notes
-
-                var indexSet = self.elementFieldIndexSet();
-
-                var value = 0;
-                for (var i = 0; i < indexSet.length; i++) {
-                    value += indexSet[i].indexRating();
                 }
 
                 return value;
@@ -208,13 +239,17 @@
                 return value;
             }
 
+            // TODO This is out of pattern!
             self.totalResourcePoolAmount = function () {
 
                 // TODO Check totalIncome notes
 
+                var value;
+
                 if (self === self.ResourcePool.MainElement) {
 
-                    var value = self.ResourcePool.InitialValue;
+                    value = self.ResourcePool.InitialValue;
+
                     for (var i = 0; i < self.ElementItemSet.length; i++) {
                         var item = self.ElementItemSet[i];
                         value += item.totalResourcePoolAmount();
@@ -223,6 +258,22 @@
                 } else {
                     if (self.ResourcePool.MainElement !== null) {
                         value = self.ResourcePool.MainElement.totalResourcePoolAmount();
+                    }
+                }
+
+                //logger.log('TRPA-A ' + value.toFixed(2));
+
+                if (self.backingFields._totalResourcePoolAmount !== value) {
+                    self.backingFields._totalResourcePoolAmount = value;
+
+                    //logger.log('TRPA-B ' + value.toFixed(2));
+
+                    for (var i = 0; i < self.elementFieldIndexSet().length; i++) {
+                        var field = self.elementFieldIndexSet()[i];
+
+                        // if (field.ElementFieldType === 11) { - TODO How about this check?
+                        field.setIndexIncome();
+                        // }
                     }
                 }
 
@@ -250,19 +301,6 @@
                 for (var i = 0; i < self.ElementItemSet.length; i++) {
                     var item = self.ElementItemSet[i];
                     value += item.totalDirectIncomeIncludingResourcePoolAmount();
-                }
-
-                return value;
-            }
-
-            self.totalResourcePoolIncome = function () {
-
-                // TODO Check totalIncome notes
-
-                var value = 0;
-                for (var i = 0; i < self.ElementItemSet.length; i++) {
-                    var item = self.ElementItemSet[i];
-                    value += item.totalResourcePoolIncome();
                 }
 
                 return value;

@@ -3,9 +3,9 @@
 
     var serviceId = 'ElementItem';
     angular.module('main')
-        .factory(serviceId, ['$rootScope', 'logger', elementItemFactory]);
+        .factory(serviceId, ['logger', elementItemFactory]);
 
-    function elementItemFactory($rootScope, logger) {
+    function elementItemFactory(logger) {
 
         // Logger
         logger = logger.forSource(serviceId);
@@ -16,46 +16,29 @@
         /*** Implementations ***/
 
         function ElementItem() {
+
             var self = this;
 
             // Local variables
-            var _elementCellIndexSet = [];
-            var _directIncomeCell = null;
-            var _multiplier = null;
-
-            // Events
-            $rootScope.$on('elementMultiplierUpdated', function (event, args) {
-                if (args.elementCell === self.multiplierCell()) {
-                    _multiplier = args.value;
-
-                    // TODO Raise an event and handle this?
-                    // Or is updating the related entities manually a better approach?
-                    for (var i = 0; i < self.ElementCellSet.length; i++) {
-                        var cell = self.ElementCellSet[i];
-                        cell.setNumericValueMultiplied();
-                    }
-                }
-            });
-
-            self.elementCellIndexSet = function () {
-
-                // Cached value
-                // TODO In case of add / remove fields?
-                if (_elementCellIndexSet.length > 0) {
-                    return _elementCellIndexSet;
-                }
-
-                _elementCellIndexSet = getElementCellIndexSet(self);
-
-                return _elementCellIndexSet;
+            self.backingFields = {
+                _elementCellIndexSet: null,
+                _directIncome: null,
+                _multiplier: null,
+                _totalDirectIncome: null,
+                _resourcePoolAmount: null,
+                _totalResourcePoolAmount: null,
+                _totalResourcePoolIncome: null
             }
 
+            // Private functions
             function getElementCellIndexSet(elementItem) {
 
                 var indexSet = [];
 
                 for (var i = 0; i < elementItem.ElementCellSet.length; i++) {
-                    var cell = elementItem.ElementCellSet.sort(function (a, b) { return a.ElementField.SortOrder - b.ElementField.SortOrder; })[i];
+                    var cell = elementItem.ElementCellSet.sort(function (a, b) {
+                        return a.ElementField.SortOrder - b.ElementField.SortOrder;
+                    })[i];
 
                     if (cell.ElementField.IndexEnabled) {
                         indexSet.push(cell);
@@ -73,33 +56,74 @@
                 return indexSet;
             }
 
-            self.directIncomeCell = function () {
+            // Public functions
+            self.elementCellIndexSet = function () {
 
-                // Cached value
-                // TODO In case of add / remove field?
-                if (_directIncomeCell) {
-                    return _directIncomeCell;
+                if (self.backingFields._elementCellIndexSet === null) {
+                    self.setElementCellIndexSet();
                 }
 
+                return self.backingFields._elementCellIndexSet;
+            }
+
+            self.setElementCellIndexSet = function () {
+                self.backingFields._elementCellIndexSet = getElementCellIndexSet(self);
+            }
+
+            self.directIncome = function () {
+
+                if (self.backingFields._directIncome === null) {
+                    self.setDirectIncome(false);
+                }
+
+                return self.backingFields._directIncome;
+            }
+
+            self.setDirectIncome = function (updateRelated) {
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
+
+                // First, find direct income cell
+                var directIncomeCell = null;
                 for (var i = 0; i < self.ElementCellSet.length; i++) {
                     var elementCell = self.ElementCellSet[i];
                     if (elementCell.ElementField.ElementFieldType === 11) {
-                        _directIncomeCell = elementCell;
+                        directIncomeCell = elementCell;
                         break;
                     }
                 }
 
-                return _directIncomeCell;
-            }
-
-            self.multiplierCell = function () {
-
-                if (typeof self.ElementCellSet === 'undefined') {
-                    return null;
+                var value;
+                if (directIncomeCell === null) {
+                    value = 0;
+                } else {
+                    value = directIncomeCell.numericValue();
                 }
 
-                var multiplierCell = null;
+                if (self.backingFields._directIncome !== value) {
+                    self.backingFields._directIncome = value;
 
+                    // Update related
+                    if (updateRelated) {
+                        self.setTotalDirectIncome();
+                        self.setResourcePoolAmount();
+                    }
+                }
+            }
+
+            self.multiplier = function () {
+
+                if (self.backingFields._multiplier === null) {
+                    self.setMultiplier(false);
+                }
+
+                return self.backingFields._multiplier;
+            }
+
+            self.setMultiplier = function (updateRelated) {
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
+
+                // First, find the multiplier cell
+                var multiplierCell = null;
                 for (var i = 0; i < self.ElementCellSet.length; i++) {
                     var elementCell = self.ElementCellSet[i];
                     if (elementCell.ElementField.ElementFieldType === 12) {
@@ -108,57 +132,102 @@
                     }
                 }
 
-                return multiplierCell;
-            }
-
-            // TODO Compare this function with server-side
-            self.directIncome = function () {
-
-                if (self.directIncomeCell() === null)
-                    return 0;
-
-                return self.directIncomeCell().numericValue();
-            }
-
-            self.multiplier = function () {
-
-                if (_multiplier === null) {
-                    setMultiplier();
-                }
-
-                return _multiplier;
-            }
-
-            function setMultiplier() {
-
-                var multiplierCell = self.multiplierCell();
+                var value = 0;
 
                 // If there is no multiplier field defined on this element, return 1, so it can return calculate the income correctly
                 // TODO Cover 'add new multiplier field' case as well!
                 if (multiplierCell === null) {
-                    _multiplier = 1;
+                    value = 1;
                 } else {
 
                     // If there is a multiplier field on the element but user is not set any value, return 0 as the default value
-                    if (multiplierCell.userCell() === null
-                        || multiplierCell.userCell().DecimalValue === null) {
-                        _multiplier = 0;
+                    if (multiplierCell.currentUserCell() === null
+                        || multiplierCell.currentUserCell().DecimalValue === null) {
+                        value = 0;
                     } else { // Else, user's
-                        _multiplier = multiplierCell.userCell().DecimalValue;
+                        value = multiplierCell.currentUserCell().DecimalValue;
                     }
+                }
+
+                if (self.backingFields._multiplier !== value) {
+                    self.backingFields._multiplier = value;
+
+                    // Update related
+                    self.setTotalDirectIncome();
+                    self.setTotalResourcePoolAmount();
                 }
             }
 
             self.totalDirectIncome = function () {
-                return self.directIncome() * self.multiplier();
+
+                if (self.backingFields._totalDirectIncome === null) {
+                    self.setTotalDirectIncome(false);
+                }
+
+                return self.backingFields._totalDirectIncome;
+            }
+
+            self.setTotalDirectIncome = function (updateRelated) {
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
+
+                var value = self.directIncome() * self.multiplier();
+
+                if (self.backingFields._totalDirectIncome !== value) {
+                    self.backingFields._totalDirectIncome = value;
+
+                    // TODO Update related
+                    if (updateRelated) {
+
+                    }
+                }
             }
 
             self.resourcePoolAmount = function () {
-                return self.directIncome() * self.Element.ResourcePool.resourcePoolRatePercentage();
+
+                if (self.backingFields._resourcePoolAmount === null) {
+                    self.setResourcePoolAmount(false);
+                }
+
+                return self.backingFields._resourcePoolAmount;
+            }
+
+            self.setResourcePoolAmount = function (updateRelated) {
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
+
+                var value = self.directIncome() * self.Element.ResourcePool.resourcePoolRatePercentage();
+
+                if (self.backingFields._resourcePoolAmount !== value) {
+                    self.backingFields._resourcePoolAmount = value;
+
+                    // TODO Update related
+                    if (updateRelated) {
+                        self.setTotalResourcePoolAmount();
+                    }
+                }
             }
 
             self.totalResourcePoolAmount = function () {
-                return self.resourcePoolAmount() * self.multiplier();
+
+                if (self.backingFields._totalResourcePoolAmount === null) {
+                    self.setTotalResourcePoolAmount(false);
+                }
+
+                return self.backingFields._totalResourcePoolAmount;
+            }
+
+            self.setTotalResourcePoolAmount = function (updateRelated) {
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
+
+                var value = self.resourcePoolAmount() * self.multiplier();
+
+                if (self.backingFields._totalResourcePoolAmount !== value) {
+                    self.backingFields._totalResourcePoolAmount = value;
+
+                    // TODO Update related
+                    if (updateRelated) {
+
+                    }
+                }
             }
 
             self.directIncomeIncludingResourcePoolAmount = function () { // A.k.a Sales Price incl. VAT
@@ -169,12 +238,25 @@
                 return self.directIncomeIncludingResourcePoolAmount() * self.multiplier();
             }
 
+            // TODO This is out of pattern!
             self.totalResourcePoolIncome = function () {
 
                 var value = 0;
+                
                 for (var i = 0; i < self.ElementCellSet.length; i++) {
                     var cell = self.ElementCellSet[i];
                     value += cell.indexIncome();
+                }
+
+                if (self.backingFields._totalResourcePoolIncome !== value) {
+                    self.backingFields._totalResourcePoolIncome = value;
+
+                    // Update related
+                    // TODO Is this correct? It looks like it didn't affect anything?
+                    for (var i = 0; i < self.ParentCellSet.length; i++) {
+                        var parentCell = self.ParentCellSet[i];
+                        parentCell.setIndexIncome();
+                    }
                 }
 
                 return value;

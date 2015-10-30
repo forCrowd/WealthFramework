@@ -189,92 +189,169 @@
 
         function updateElementMultiplier(element, updateType) {
 
+            var promises = [];
+
             // Find user element cell
-            for (var i = 0; i < element.ElementItemSet.length; i++) {
+            for (var itemIndex = 0; itemIndex < element.ElementItemSet.length; itemIndex++) {
 
-                var elementCell = element.ElementItemSet[i].multiplierCell();
-                var userCell = elementCell.userCell();
+                var item = element.ElementItemSet[itemIndex];
 
-                switch (updateType) {
-                    case 'increase': {
-
-                        // If there is no item, create it
-                        if (userCell === null) {
-                            userCell = {
-                                User: currentUser,
-                                ElementCell: elementCell,
-                                DecimalValue: 1
-                            };
-
-                            dataContext.createEntity('UserElementCell', userCell);
-
-                        } else {
-
-                            // If it's marked as deleted, cancel that deletion and set it to default + 1
-                            if (userCell.entityAspect.entityState.isDeleted()) {
-                                userCell.entityAspect.rejectChanges();
-                                userCell.DecimalValue = 1;
-                            } else { // Otherwise, go ahead!
-                                userCell.DecimalValue++;
-                            }
-                        }
-
-                        break;
-                    }
-                    case 'decrease': {
-
-                        // If there is an item, decrease
-                        if (userCell !== null) {
-                            userCell.DecimalValue = userCell.DecimalValue - 1 < 0 ? 0 : userCell.DecimalValue - 1;
-                        }
-
-                        break;
-                    }
-                    case 'reset': {
-
-                        // If there is an item and not marked as deleted, delete it
-                        if (userCell !== null && !userCell.entityAspect.entityState.isDeleted()) {
-                            userCell.DecimalValue = 0;
-                            userCell.entityAspect.setDeleted();
-                        }
-
+                var multiplierCell;
+                for (var cellIndex = 0; cellIndex < item.ElementCellSet.length; cellIndex++) {
+                    var elementCell = item.ElementCellSet[cellIndex];
+                    if (elementCell.ElementField.ElementFieldType === 12) {
+                        multiplierCell = elementCell;
                         break;
                     }
                 }
 
-                // Broadcast the update
-                if (userCell !== null) {
-                    $rootScope.$broadcast('elementMultiplierUpdated', { elementCell: elementCell, value: userCell.DecimalValue });
-                }
+                promises.push(updateElementCellMultiplier(multiplierCell, updateType));
             }
+
+            // Update related
+            $q.all(promises).then(function () {
+
+                // Update items
+                for (var i = 0; i < element.ElementItemSet.length; i++) {
+                    var item = element.ElementItemSet[i];
+                    item.setMultiplier();
+                }
+
+                for (var i = 0; i < element.ElementFieldSet.length; i++) {
+                    var field = element.ElementFieldSet[i];
+
+                    if (!field.IndexEnabled) {
+                        continue;
+                    }
+
+                    // Update numeric value cells
+                    for (var cellIndex = 0; cellIndex < field.ElementCellSet.length; cellIndex++) {
+
+                        var cell = field.ElementCellSet[cellIndex];
+                        cell.setNumericValueMultiplied(false);
+                    }
+
+                    // Update fields
+                    field.setNumericValueMultiplied();
+                }
+            });
         }
 
-        function updateElementCellNumericValue(elementCell, updateType) {
+        function updateElementCellMultiplier(elementCell, updateType) {
 
-            var userCell = elementCell.userCell();
+            var deferred = $q.defer();
+
+            var userCell = elementCell.currentUserCell();
+
+            if (userCell !== null
+                && typeof userCell.entityAspect !== 'undefined'
+                && userCell.entityAspect.entityState.isDetached()) {
+                userCell = null;
+            }
 
             switch (updateType) {
                 case 'increase': {
 
                     // If there is no item, create it
                     if (userCell === null) {
-                        userCell = {
+
+                        dataContext.createEntity('UserElementCell', {
                             User: currentUser,
                             ElementCell: elementCell,
-                            DecimalValue: 55
-                        };
+                            DecimalValue: 1
+                        }).then(function (newUserCell) {
+                            // elementCell.CurrentUserCell = newUserCell;
 
-                        dataContext.createEntity('UserElementCell', userCell);
+                            deferred.resolve();
+                        }, function () {
+                            deferred.reject();
+                        });
+
+                    } else {
+
+                        // If it's marked as deleted, cancel that deletion and set it to default + 1
+                        if (userCell.entityAspect.entityState.isDeleted()) {
+                            userCell.entityAspect.rejectChanges();
+                            userCell.DecimalValue = 1;
+                        } else { // Otherwise, go ahead!
+                            userCell.DecimalValue++;
+                        }
+
+                        deferred.resolve();
+                    }
+
+                    break;
+                }
+                case 'decrease': {
+
+                    // If there is an item, decrease
+                    if (userCell !== null) {
+                        userCell.DecimalValue = userCell.DecimalValue - 1 < 0 ? 0 : userCell.DecimalValue - 1;
+                    }
+
+                    deferred.resolve();
+
+                    break;
+                }
+                case 'reset': {
+
+                    // If there is an item and not marked as deleted, delete it
+                    if (userCell !== null && !userCell.entityAspect.entityState.isDeleted()) {
+                        userCell.DecimalValue = 0;
+                        userCell.entityAspect.setDeleted();
+                    }
+
+                    deferred.resolve();
+
+                    break;
+                }
+            }
+
+            return deferred.promise;
+        }
+
+        function updateElementCellNumericValue(elementCell, updateType) {
+
+            var userCell = elementCell.currentUserCell();
+
+            if (userCell !== null
+                && typeof userCell.entityAspect !== 'undefined'
+                && userCell.entityAspect.entityState.isDetached()) {
+                userCell = null;
+            }
+
+            switch (updateType) {
+                case 'increase': {
+
+                    // If there is no item, create it
+                    if (userCell === null) {
+
+                        dataContext.createEntity('UserElementCell', {
+                            User: currentUser,
+                            ElementCell: elementCell,
+                            DecimalValue: typeof value !== 'undefined' ? value : 55
+                        }).then(function (newUserCell) {
+                            // elementCell.CurrentUserCell = newUserCell;
+
+                            // Update the cached value
+                            elementCell.setCurrentUserNumericValue();
+                        });
 
                     } else {
 
                         // If it's marked as deleted, cancel that deletion and set it to default + 5
-                        if (userCell.entityAspect.entityState.isDeleted()) {
+                        if (typeof userCell.entityAspect != 'undefined'
+                            && userCell.entityAspect.entityState.isDeleted()) {
                             userCell.entityAspect.rejectChanges();
                             userCell.DecimalValue = 55;
                         } else { // Otherwise, go ahead!
-                            userCell.DecimalValue = userCell.DecimalValue + 5 > 100 ? 100 : userCell.DecimalValue + 5;
+                            userCell.DecimalValue = userCell.DecimalValue + 5 > 100
+                                ? 100
+                                : userCell.DecimalValue + 5;
                         }
+
+                        // Update the cached value
+                        elementCell.setCurrentUserNumericValue();
                     }
 
                     break;
@@ -283,13 +360,17 @@
 
                     // If there is no item, create it
                     if (userCell === null) {
-                        userCell = {
+
+                        dataContext.createEntity('UserElementCell', {
                             User: currentUser,
                             ElementCell: elementCell,
                             DecimalValue: 45
-                        };
+                        }).then(function (newUserCell) {
+                            //elementCell.CurrentUserCell = newUserCell;
 
-                        dataContext.createEntity('UserElementCell', userCell);
+                            // Update the cached value
+                            elementCell.setCurrentUserNumericValue();
+                        });
 
                     } else {
 
@@ -300,6 +381,9 @@
                         } else { // Otherwise, go ahead!
                             userCell.DecimalValue = userCell.DecimalValue - 5 < 0 ? 0 : userCell.DecimalValue - 5;
                         }
+
+                        // Update the cached value
+                        elementCell.setCurrentUserNumericValue();
                     }
 
                     break;
@@ -310,21 +394,25 @@
                     if (userCell !== null && !userCell.entityAspect.entityState.isDeleted()) {
                         userCell.DecimalValue = 50;
                         userCell.entityAspect.setDeleted();
+
+                        // Update the cached value
+                        elementCell.setCurrentUserNumericValue();
                     }
 
                     break;
                 }
             }
-
-            // Broadcast the update
-            if (userCell !== null) {
-                $rootScope.$broadcast('elementCellNumericValueUpdated', { elementCell: elementCell, value: userCell.DecimalValue });
-            }
         }
 
         function updateElementFieldIndexRating(elementField, updateType) {
 
-            var userElementField = elementField.userElementField();
+            var userElementField = elementField.currentUserElementField();
+
+            if (userElementField !== null
+                && typeof userElementField.entityAspect !== 'undefined'
+                && userElementField.entityAspect.entityState.isDetached()) {
+                userElementField = null;
+            }
 
             switch (updateType) {
                 case 'increase': {
@@ -337,7 +425,10 @@
                             Rating: 55
                         };
 
-                        dataContext.createEntity('UserElementField', userElementField);
+                        dataContext.createEntity('UserElementField', userElementField)
+                            .then(function () {
+                                elementField.setCurrentUserIndexRating();
+                            });
 
                     } else {
 
@@ -348,6 +439,8 @@
                         } else { // Otherwise, go ahead!
                             userElementField.Rating = userElementField.Rating + 5 > 100 ? 100 : userElementField.Rating + 5;
                         }
+
+                        elementField.setCurrentUserIndexRating();
                     }
 
                     break;
@@ -362,7 +455,10 @@
                             Rating: 45
                         };
 
-                        dataContext.createEntity('UserElementField', userElementField);
+                        dataContext.createEntity('UserElementField', userElementField)
+                            .then(function () {
+                                elementField.setCurrentUserIndexRating();
+                            });
 
                     } else {
 
@@ -373,6 +469,8 @@
                         } else { // Otherwise, go ahead!
                             userElementField.Rating = userElementField.Rating - 5 < 0 ? 0 : userElementField.Rating - 5;
                         }
+
+                        elementField.setCurrentUserIndexRating();
                     }
 
                     break;
@@ -383,21 +481,24 @@
                     if (userElementField !== null && !userElementField.entityAspect.entityState.isDeleted()) {
                         userElementField.Rating = 50;
                         userElementField.entityAspect.setDeleted();
+
+                        elementField.setCurrentUserIndexRating();
                     }
 
                     break;
                 }
             }
-
-            // Broadcast the update
-            if (userElementField !== null) {
-                $rootScope.$broadcast('elementFieldIndexRatingUpdated', { elementField: elementField, value: userElementField.Rating });
-            }
         }
 
         function updateResourcePoolRate(resourcePool, updateType) {
 
-            var userResourcePool = resourcePool.userResourcePool();
+            var userResourcePool = resourcePool.currentUserResourcePool();
+
+            if (userResourcePool !== null
+                && typeof userResourcePool.entityAspect !== 'undefined'
+                && userResourcePool.entityAspect.entityState.isDetached()) {
+                userResourcePool = null;
+            }
 
             switch (updateType) {
                 case 'increase': {
@@ -410,7 +511,10 @@
                             ResourcePoolRate: 15
                         };
 
-                        dataContext.createEntity('UserResourcePool', userResourcePool);
+                        dataContext.createEntity('UserResourcePool', userResourcePool)
+                            .then(function () {
+                                resourcePool.setCurrentUserResourcePoolRate();
+                            });
 
                     } else {
 
@@ -421,6 +525,8 @@
                         } else { // Otherwise, go ahead!
                             userResourcePool.ResourcePoolRate = userResourcePool.ResourcePoolRate + 5 > 1000 ? 1000 : userResourcePool.ResourcePoolRate + 5;
                         }
+
+                        resourcePool.setCurrentUserResourcePoolRate();
                     }
 
                     break;
@@ -435,7 +541,10 @@
                             ResourcePoolRate: 5
                         };
 
-                        dataContext.createEntity('UserResourcePool', userResourcePool);
+                        dataContext.createEntity('UserResourcePool', userResourcePool)
+                            .then(function () {
+                                resourcePool.setCurrentUserResourcePoolRate();
+                            });
 
                     } else {
 
@@ -446,6 +555,8 @@
                         } else { // Otherwise, go ahead!
                             userResourcePool.ResourcePoolRate = userResourcePool.ResourcePoolRate - 5 < 0 ? 0 : userResourcePool.ResourcePoolRate - 5;
                         }
+
+                        resourcePool.setCurrentUserResourcePoolRate();
                     }
 
                     break;
@@ -456,15 +567,12 @@
                     if (userResourcePool !== null && !userResourcePool.entityAspect.entityState.isDeleted()) {
                         userResourcePool.ResourcePoolRate = 10;
                         userResourcePool.entityAspect.setDeleted();
+
+                        resourcePool.setCurrentUserResourcePoolRate();
                     }
 
                     break;
                 }
-            }
-
-            // Broadcast the update
-            if (userResourcePool !== null) {
-                $rootScope.$broadcast('resourcePoolRateUpdated', { resourcePool: resourcePool, value: userResourcePool.ResourcePoolRate });
             }
         }
     }

@@ -1,5 +1,28 @@
 ﻿### Release Notes
 
+**0.35**
+
+* Performance Update: Most of the calculations (numericValue, passiveRating, aggressiveRating, indexIncome etc. functions) are cached
+and they only calculated when there is an actually change in one of the related values.
+All in One sample increase multiplier action was reduced under a second from 7 seconds.
+* Further with javascript tests & entities cleanup
+* resourcePool, elementField, elementCell - other users' average properties were merged with other users' total
+* element.js - parents() was renamed to familyTree() & parent() returns null if there is no actual parent (instead of self)
+* Javascript tests array fix; initial push() lines were replaced with assignments (.array = [object])
+* ResourcePool - ResourcePoolRate was renamed to ResourcePoolRateTotal
+* ElementField - IndexRating was renamed to IndexRatingTotal
+* ElementCell - NumericValue was renamed to NumericValueTotal
+
+**0.34.1**
+
+* ResourcePoolRate calculation fix
+* Minor updates
+
+**0.34**
+
+* Hosting plan upgrade
+* New javascript tests
+
 **0.33**
 
 * Cache breaker value update (033 -> 0.33)

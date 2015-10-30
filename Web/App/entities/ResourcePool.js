@@ -3,21 +3,90 @@
 
     var serviceId = 'ResourcePool';
     angular.module('main')
-        .factory(serviceId, ['$rootScope', 'logger', resourcePoolFactory]);
+        .factory(serviceId, ['logger', resourcePoolFactory]);
 
-    function resourcePoolFactory($rootScope, logger) {
+    function resourcePoolFactory(logger) {
 
         // Logger
         logger = logger.forSource(serviceId);
 
-        // Properties
-        Object.defineProperty(ResourcePool.prototype, 'currentElement', {
+        // Server-side properties
+        Object.defineProperty(ResourcePool.prototype, 'UseFixedResourcePoolRate', {
+            enumerable: true,
+            configurable: true,
+            get: function () { return this.backingFields._useFixedResourcePoolRate; },
+            set: function (value) {
+
+                if (this.backingFields._useFixedResourcePoolRate !== value) {
+                    this.backingFields._useFixedResourcePoolRate = value;
+
+                    this.setResourcePoolRate();
+                }
+            }
+        });
+
+        // TODO Array property sample (without setter)
+        // However it doesn't work since it's a navigation prop and breeze somehow doesn't like it
+        //Object.defineProperty(ResourcePool.prototype, 'UserResourcePoolSet', {
+        //    enumerable: true,
+        //    configurable: true,
+        //    get: function () { return this.backingFields._UserResourcePoolSet; }
+        //});
+
+        // Client-side properties
+        Object.defineProperty(ResourcePool.prototype, 'CurrentElement', {
             enumerable: true,
             configurable: true,
             get: function () { return this.backingFields._currentElement; },
             set: function (value) {
-                if (value !== this.backingFields._currentElement) {
+                if (this.backingFields._currentElement !== value) {
                     this.backingFields._currentElement = value;
+                }
+            }
+        });
+
+        Object.defineProperty(ResourcePool.prototype, 'RatingMode', {
+            enumerable: true,
+            configurable: true,
+            get: function () { return this.backingFields._ratingMode; },
+            set: function (value) {
+                if (this.backingFields._ratingMode !== value) {
+                    this.backingFields._ratingMode = value;
+
+                    this.setResourcePoolRate();
+
+                    for (var elementIndex = 0; elementIndex < this.ElementSet.length; elementIndex++) {
+                        var element = this.ElementSet[elementIndex];
+
+                        for (var fieldIndex = 0; fieldIndex < element.ElementFieldSet.length; fieldIndex++) {
+
+                            var field = element.ElementFieldSet[fieldIndex];
+
+                            // Field calculations
+                            if (field.IndexEnabled) {
+                                field.setIndexRating();
+                            }
+
+                            if (!field.UseFixedValue) {
+                                for (var cellIndex = 0; cellIndex < field.ElementCellSet.length; cellIndex++) {
+                                    var cell = field.ElementCellSet[cellIndex];
+
+                                    // Cell calculations
+                                    switch (field.ElementFieldType) {
+                                        case 2:
+                                        case 3:
+                                        case 4:
+                                            // TODO 5 (DateTime?)
+                                        case 11:
+                                        case 12: {
+                                            cell.setNumericValue();
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         });
@@ -31,19 +100,19 @@
 
             var self = this;
 
-            var _resourcePoolRate = null;
-            var _currentUserResourcePoolRate = null;
-
             // Local variables
             self.backingFields = {
+                _useFixedResourcePoolRate: false,
                 _currentElement: null,
-                _ElementSet: []
+                _ratingMode: 1, // Only my ratings vs. All users' ratings
+                _currentUserResourcePoolRate: null,
+                _otherUsersResourcePoolRateTotal: null,
+                _otherUsersResourcePoolRateCount: null,
+                _resourcePoolRate: null,
+                _resourcePoolRatePercentage: null
             }
 
-            self._userResourcePool = null;
-
-            // 'Only my ratings' vs. 'All users' ratings'
-            self.ratingMode = 1;
+            // Public functions
 
             // Checks whether resource pool has any item that can be rateable
             self.displayRatingMode = function () {
@@ -72,131 +141,87 @@
             }
 
             self.toggleRatingMode = function () {
-
-                self.ratingMode = self.ratingMode === 1 ? 2 : 1;
-
-                // ResourcePool calculations
-                self.setResourcePoolRate();
-
-                for (var elementIndex = 0; elementIndex < self.ElementSet.length; elementIndex++) {
-                    var element = self.ElementSet[elementIndex];
-
-                    for (var fieldIndex = 0; fieldIndex < element.ElementFieldSet.length; fieldIndex++) {
-
-                        var field = element.ElementFieldSet[fieldIndex];
-
-                        // Field calculations
-                        if (field.IndexEnabled) {
-                            field.setIndexRating();
-                        }
-
-                        if (!field.UseFixedValue && field.IndexEnabled) {
-                            for (var cellIndex = 0; cellIndex < field.ElementCellSet.length; cellIndex++) {
-                                var cell = field.ElementCellSet[cellIndex];
-
-                                // Cell calculations
-                                cell.setNumericValue();
-                                cell.setNumericValueMultiplied();
-                            }
-                        }
-                    }
-                }
+                self.RatingMode = self.RatingMode === 1 ? 2 : 1;
             }
 
-            self.ratingModeText = function () {
-                return self.resourcePoolRateCount();
-            }
-
-            // Other users' values: Keeps the values excluding current user's
-            self._otherUsersResourcePoolRate = null;
-            self._otherUsersResourcePoolRateCount = null;
-            self._otherUsersResourcePoolRateTotal = null;
-
-            // Events
-            $rootScope.$on('resourcePoolRateUpdated', function (event, args) {
-                if (args.resourcePool === self) {
-                    _currentUserResourcePoolRate = args.value;
-                    self.setResourcePoolRate();
-                }
-            });
-
-            // Functions
-            self.userResourcePool = function () {
-
-                if (self._userResourcePool !== null && self._userResourcePool.entityAspect.entityState.isDetached()) {
-                    self._userResourcePool = null;
-                }
-
-                if (self._userResourcePool === null && self.UserResourcePoolSet.length !== 0) {
-                    self._userResourcePool = self.UserResourcePoolSet[0];
-                }
-
-                return self._userResourcePool;
+            self.currentUserResourcePool = function () {
+                return self.UserResourcePoolSet.length > 0
+                    ? self.UserResourcePoolSet[0]
+                    : null;
             }
 
             self.currentUserResourcePoolRate = function () {
 
-                if (_currentUserResourcePoolRate === null) {
-                    _currentUserResourcePoolRate = self.userResourcePool() !== null
-                        ? self.userResourcePool().ResourcePoolRate
-                        : 10; // Default value?
+                if (self.backingFields._currentUserResourcePoolRate === null) {
+                    self.setCurrentUserResourcePoolRate(false);
                 }
 
-                return _currentUserResourcePoolRate;
+                return self.backingFields._currentUserResourcePoolRate;
             }
 
-            self.otherUsersResourcePoolRate = function () {
+            self.setCurrentUserResourcePoolRate = function (updateRelated) {
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
-                // Set other users' value on the initial call
-                if (self._otherUsersResourcePoolRate === null) {
+                var value = self.currentUserResourcePool() !== null
+                    ? self.currentUserResourcePool().ResourcePoolRate
+                    : 10; // Default value?
 
-                    // TODO ResourcePoolRate property could directly return 0?
-                    if (self.ResourcePoolRate === null) {
-                        self._otherUsersResourcePoolRate = 0;
-                    } else {
-                        // If current user already has a rate, exclude
-                        if (self.userResourcePool() !== null) {
-                            var rateExcluded = self.ResourcePoolRate - self.userResourcePool().ResourcePoolRate;
-                            var countExcluded = self.ResourcePoolRateCount - 1;
-                            self._otherUsersResourcePoolRate = rateExcluded / countExcluded;
-                        } else {
-                            // Otherwise, it's only ResourcePoolRate / ResourcePoolRateCount
-                            self._otherUsersResourcePoolRate = self.ResourcePoolRate / self.ResourcePoolRateCount;
-                        }
+                if (self.backingFields._currentUserResourcePoolRate !== value) {
+                    self.backingFields._currentUserResourcePoolRate = value;
+
+                    // Update related
+                    if (updateRelated) {
+                        self.setResourcePoolRate();
                     }
                 }
-
-                return self._otherUsersResourcePoolRate;
             }
 
-            self.otherUsersResourcePoolRateCount = function () {
-
-                // Set other users' value on the initial call
-                if (self._otherUsersResourcePoolRateCount === null) {
-                    self._otherUsersResourcePoolRateCount = self.ResourcePoolRateCount;
-
-                    // Decrease by 1 current user's rating
-                    if (self.userResourcePool() !== null) {
-                        self._otherUsersResourcePoolRateCount--;
-                    }
-                }
-
-                return self._otherUsersResourcePoolRateCount;
-            }
-
+            // TODO Since this is a fixed value based on ResourcePoolRateTotal & current user's rate,
+            // it could be calculated on server, check it later again / SH - 03 Aug. '15
             self.otherUsersResourcePoolRateTotal = function () {
 
                 // Set other users' value on the initial call
-                if (self._otherUsersResourcePoolRateTotal === null) {
-                    self._otherUsersResourcePoolRateTotal = self.otherUsersResourcePoolRate() * self.otherUsersResourcePoolRateCount();
+                if (self.backingFields._otherUsersResourcePoolRateTotal === null) {
+                    self.setOtherUsersResourcePoolRateTotal();
                 }
 
-                return self._otherUsersResourcePoolRateTotal;
+                return self.backingFields._otherUsersResourcePoolRateTotal;
             }
 
-            self.resourcePoolRateAverage = function () {
-                var resourcePoolRateTotal = self.otherUsersResourcePoolRateTotal() + self.currentUserResourcePoolRate();
-                return resourcePoolRateTotal / self.resourcePoolRateCount();
+            self.setOtherUsersResourcePoolRateTotal = function () {
+                self.backingFields._otherUsersResourcePoolRateTotal = self.ResourcePoolRateTotal;
+
+                // Exclude current user's
+                if (self.currentUserResourcePool() !== null) {
+                    self.backingFields._otherUsersResourcePoolRateTotal -= self.currentUserResourcePool().ResourcePoolRate;
+                }
+            }
+
+            // TODO Since this is a fixed value based on ResourcePoolRateCount & current user's rate,
+            // it could be calculated on server, check it later again / SH - 03 Aug. '15
+            self.otherUsersResourcePoolRateCount = function () {
+
+                // Set other users' value on the initial call
+                if (self.backingFields._otherUsersResourcePoolRateCount === null) {
+                    self.setOtherUsersResourcePoolRateCount();
+                }
+
+                return self.backingFields._otherUsersResourcePoolRateCount;
+            }
+
+            self.setOtherUsersResourcePoolRateCount = function () {
+                self.backingFields._otherUsersResourcePoolRateCount = self.ResourcePoolRateCount;
+
+                // Exclude current user's
+                if (self.currentUserResourcePool() !== null) {
+                    self.backingFields._otherUsersResourcePoolRateCount--;
+                }
+            }
+
+            self.resourcePoolRateTotal = function () {
+                return self.UseFixedResourcePoolRate
+                    ? self.otherUsersResourcePoolRateTotal()
+                    : self.otherUsersResourcePoolRateTotal() + self.currentUserResourcePoolRate();
             }
 
             self.resourcePoolRateCount = function () {
@@ -205,29 +230,81 @@
                     : self.otherUsersResourcePoolRateCount() + 1; // There is always default value, increase count by 1
             }
 
+            self.resourcePoolRateAverage = function () {
+
+                if (self.resourcePoolRateCount() === null) {
+                    return null;
+                }
+
+                return self.resourcePoolRateCount() === 0
+                    ? 0
+                    : self.resourcePoolRateTotal() / self.resourcePoolRateCount();
+            }
+
             self.resourcePoolRate = function () {
 
-                if (_resourcePoolRate === null) {
-                    self.setResourcePoolRate();
+                if (self.backingFields._resourcePoolRate === null) {
+                    self.setResourcePoolRate(false);
                 }
 
-                return _resourcePoolRate;
+                return self.backingFields._resourcePoolRate;
             }
 
-            self.setResourcePoolRate = function () {
-                switch (self.ratingMode) {
-                    case 1: { _resourcePoolRate = self.currentUserResourcePoolRate(); break; } // Current user's
-                    case 2: { _resourcePoolRate = self.resourcePoolRateAverage(); break; } // All
+            self.setResourcePoolRate = function (updateRelated) {
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
+
+                var value;
+
+                if (self.UseFixedResourcePoolRate) {
+                    value = self.resourcePoolRateAverage();
+                } else {
+                    switch (self.RatingMode) {
+                        case 1: { value = self.currentUserResourcePoolRate(); break; } // Current user's
+                        case 2: { value = self.resourcePoolRateAverage(); break; } // All
+                    }
+                }
+
+                if (self.backingFields._resourcePoolRate !== value) {
+                    self.backingFields._resourcePoolRate = value;
+
+                    // Update related
+                    if (updateRelated) {
+                        self.setResourcePoolRatePercentage();
+                    }
                 }
             }
 
-            // Resource pool rate percentage
             self.resourcePoolRatePercentage = function () {
 
-                if (self.resourcePoolRate() === 0)
-                    return 0; // Null?
+                if (self.backingFields._resourcePoolRatePercentage === null) {
+                    self.setResourcePoolRatePercentage(false);
+                }
 
-                return self.resourcePoolRate() / 100;
+                return self.backingFields._resourcePoolRatePercentage;
+            }
+
+            self.setResourcePoolRatePercentage = function (updateRelated) {
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
+
+                var value = self.resourcePoolRate() === 0
+                    ? 0
+                    : self.resourcePoolRate() / 100;
+
+                if (self.backingFields._resourcePoolRatePercentage !== value) {
+                    self.backingFields._resourcePoolRatePercentage = value;
+
+                    // Update related
+                    if (updateRelated) {
+                        for (var elementIndex = 0; elementIndex < self.ElementSet.length; elementIndex++) {
+                            var element = self.ElementSet[elementIndex];
+
+                            for (var itemIndex = 0; itemIndex < element.ElementItemSet.length; itemIndex++) {
+                                var item = element.ElementItemSet[itemIndex];
+                                item.setResourcePoolAmount();
+                            }
+                        }
+                    }
+                }
             }
         }
     }

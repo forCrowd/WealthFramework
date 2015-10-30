@@ -44,11 +44,15 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public string StringValue { get; private set; }
 
+        // TODO Doesn't have to be nullable but it requires a default value then which needs to be done
+        // by manually editing migration file which is not necessary at the moment / SH - 03 Aug. '15
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public decimal? NumericValue { get; private set; }
+        public decimal? NumericValueTotal { get; private set; }
 
+        // TODO Doesn't have to be nullable but it requires a default value then which needs to be done
+        // by manually editing migration file which is not necessary at the moment / SH - 03 Aug. '15
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]

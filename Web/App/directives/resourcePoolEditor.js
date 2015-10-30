@@ -52,7 +52,7 @@
             });
 
             scope.changeCurrentElement = function (element) {
-                scope.resourcePool.currentElement = element;
+                scope.resourcePool.CurrentElement = element;
                 loadChartData();
             }
 
@@ -192,17 +192,34 @@
                 scope.resourcePool = resourcePoolSet[0];
 
                 // Current element
-                if (scope.resourcePool.currentElement === null) {
+                if (scope.resourcePool.CurrentElement === null) {
                     scope.changeCurrentElement(scope.resourcePool.MainElement);
                 } else {
                     loadChartData();
                 }
+
+                // TODO Just for test, remove later
+                //scope.increaseElementMultiplier(scope.resourcePool.MainElement);
+
+                //for (var i = 0; i < scope.resourcePool.MainElement.ElementFieldSet.length; i++) {
+                //    var field = scope.resourcePool.MainElement.ElementFieldSet[i];
+                //    if (field.IndexEnabled) {
+                //        var cell1 = field.ElementCellSet[0];
+                //        scope.decreaseElementCellNumericValue(cell1);
+
+                //        var cell2 = field.ElementCellSet[1];
+                //        scope.decreaseElementCellNumericValue(cell2);
+
+                //        var cell3 = field.ElementCellSet[2];
+                //        scope.decreaseElementCellNumericValue(cell3);
+                //    }
+                //}
             }
 
             function loadChartData() {
 
                 // Current element
-                var element = scope.resourcePool.currentElement;
+                var element = scope.resourcePool.CurrentElement;
 
                 // Item length check
                 if (element.ElementItemSet.length > 20) {
@@ -298,7 +315,7 @@
             }
 
             // TODO Store these in a better place?
-            // TODO Also test these better, by comparing it with resourcePool.currentElement property!
+            // TODO Also test these better, by comparing it with resourcePool.CurrentElement property!
             function columnChartItem(elementItem) {
                 var self = this;
 
@@ -334,7 +351,7 @@
 
         return {
             restrict: 'E',
-            templateUrl: '/App/directives/resourcePoolEditor.html?v=0.31',
+            templateUrl: '/App/directives/resourcePoolEditor.html?v=0.35',
             scope: {
                 resourcePoolId: '=',
                 chartHeight: '='
