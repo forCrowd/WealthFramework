@@ -2,6 +2,10 @@
 
 **0.35**
 
+* nuget package updates
+
+**0.35**
+
 * Performance Update: Most of the calculations (numericValue, passiveRating, aggressiveRating, indexIncome etc. functions) are cached
 and they only calculated when there is an actually change in one of the related values.
 All in One sample increase multiplier action was reduced under a second from 7 seconds.
