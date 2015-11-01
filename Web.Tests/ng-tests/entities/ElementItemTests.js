@@ -1,6 +1,6 @@
 ﻿/// <reference path="Commons.js" />
 
-describe('ng-tests ElementItem', function () {
+describe('ng ElementItem', function () {
 
     var ResourcePool, Element, ElementField, ElementItem, ElementCell;
 
@@ -14,6 +14,7 @@ describe('ng-tests ElementItem', function () {
             ElementField = $injector.get('ElementField');
             ElementItem = $injector.get('ElementItem');
             ElementCell = $injector.get('ElementCell');
+            UserElementCell = $injector.get('UserElementCell');
 
             registerPrototypes($injector);
 
@@ -67,11 +68,14 @@ describe('ng-tests ElementItem', function () {
         field2.ElementCellSet = [cell2];
         item1.ElementCellSet = [cell2];
 
+        // TODO Manually update?!
+        item1.setElementCellIndexSet();
+
         // And now 1 item
         expect(item1.elementCellIndexSet().length === 1).toBe(true);
     });
 
-    it('directIncomeCell & directIncome', function () {
+    it('directIncome', function () {
 
         var resourcePool = new ResourcePool();
 
@@ -85,8 +89,7 @@ describe('ng-tests ElementItem', function () {
         item1.Element = element;
         element.ElementItemSet = [item1];
 
-        // Should have no directIncomeCell() and 0 value
-        expect(item1.directIncomeCell()).toBe(null);
+        // Should have 0 value
         expect(item1.directIncome()).toBe(0);
 
         // DirectIncome field
@@ -103,8 +106,9 @@ describe('ng-tests ElementItem', function () {
         directIncomeField.ElementCellSet = [directIncomeCell];
         item1.ElementCellSet = [directIncomeCell];
 
-        // Now should have the cell
-        expect(item1.directIncomeCell()).not.toBe(null);
+        // TODO Manually update?!
+        item1.setDirectIncome();
+
         expect(item1.directIncome()).toBe(50);
 
         // TODO Remove case!
@@ -124,8 +128,7 @@ describe('ng-tests ElementItem', function () {
         item1.Element = element;
         element.ElementItemSet = [item1];
 
-        // Should have no multiplierCell() and "1" as the default value
-        expect(item1.multiplierCell()).toBe(null);
+        // Should have "1" as the default value
         expect(item1.multiplier()).toBe(1);
 
         // Multiplier field
@@ -142,10 +145,10 @@ describe('ng-tests ElementItem', function () {
         multiplierField.ElementCellSet = [multiplierCell];
         item1.ElementCellSet = [multiplierCell];
 
-        item1.setMultiplier(); // TODO Manually update?!
+        // TODO Manually update?!
+        item1.setMultiplier();
 
-        // Now should have the cell and value "0" as the default value
-        expect(item1.multiplierCell()).not.toBe(null);
+        // Now should have "0" as the default value
         expect(item1.multiplier()).toBe(0);
 
         // User multiplier cell
@@ -153,12 +156,12 @@ describe('ng-tests ElementItem', function () {
         userCell.ElementCell = multiplierCell;
         userCell.DecimalValue = 2;
         multiplierCell.UserElementCellSet = [userCell];
-        multiplierCell.CurrentUserCell = userCell;
+        //multiplierCell.CurrentUserCell = userCell;
 
-        item1.setMultiplier(); // TODO Manually update?!
+        // TODO Manually update?!
+        item1.setMultiplier();
 
-        // Now should have the cell and value "0" as the default value
-        expect(item1.multiplierCell()).not.toBe(null);
+        // Now should "2" as the default value
         expect(item1.multiplier()).toBe(2);
 
         // TODO Remove case!
@@ -213,7 +216,7 @@ describe('ng-tests ElementItem', function () {
         userCell.ElementCell = multiplierCell;
         userCell.DecimalValue = 3;
         multiplierCell.UserElementCellSet = [userCell];
-        multiplierCell.CurrentUserCell = userCell;
+        //multiplierCell.CurrentUserCell = userCell;
 
         // Assert
         expect(item1.totalDirectIncome()).toBe(75);
@@ -303,7 +306,7 @@ describe('ng-tests ElementItem', function () {
         userCell.ElementCell = multiplierCell;
         userCell.DecimalValue = 3;
         multiplierCell.UserElementCellSet = [userCell];
-        multiplierCell.CurrentUserCell = userCell;
+        //multiplierCell.CurrentUserCell = userCell;
 
         // Assert
         expect(item1.totalResourcePoolAmount()).toBe(15);
@@ -393,7 +396,7 @@ describe('ng-tests ElementItem', function () {
         userCell.ElementCell = multiplierCell;
         userCell.DecimalValue = 3;
         multiplierCell.UserElementCellSet = [userCell];
-        multiplierCell.CurrentUserCell = userCell;
+        //multiplierCell.CurrentUserCell = userCell;
 
         // Assert
         expect(item1.totalDirectIncomeIncludingResourcePoolAmount()).toBe(165);
@@ -451,7 +454,7 @@ describe('ng-tests ElementItem', function () {
         userMultiplierCell1.ElementCell = multiplierCell;
         userMultiplierCell1.DecimalValue = 3;
         multiplierCell.UserElementCellSet = [userMultiplierCell1];
-        multiplierCell.CurrentUserCell = userMultiplierCell1;
+        //multiplierCell.CurrentUserCell = userMultiplierCell1;
 
         // Assert
         expect(item1.totalResourcePoolIncome()).toBe(15);
@@ -510,7 +513,7 @@ describe('ng-tests ElementItem', function () {
         userCell.ElementCell = multiplierCell;
         userCell.DecimalValue = 3;
         multiplierCell.UserElementCellSet = [userCell];
-        multiplierCell.CurrentUserCell = userCell;
+        //multiplierCell.CurrentUserCell = userCell;
 
         // Assert
         expect(item1.totalIncome()).toBe(165);
@@ -569,7 +572,7 @@ describe('ng-tests ElementItem', function () {
         userCell.ElementCell = multiplierCell;
         userCell.DecimalValue = 3;
         multiplierCell.UserElementCellSet = [userCell];
-        multiplierCell.CurrentUserCell = userCell;
+        //multiplierCell.CurrentUserCell = userCell;
 
         // Assert
         expect(item1.incomeStatus()).toBe('average');

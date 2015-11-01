@@ -1,6 +1,6 @@
 ﻿/// <reference path="Commons.js" />
 
-describe('ng-tests Sanity Checks', function () {
+describe('ng Sanity Checks', function () {
 
     var ResourcePool, Element, ElementField, ElementItem, ElementCell;
 
@@ -14,6 +14,7 @@ describe('ng-tests Sanity Checks', function () {
             ElementField = $injector.get('ElementField');
             ElementItem = $injector.get('ElementItem');
             ElementCell = $injector.get('ElementCell');
+            UserElementCell = $injector.get('UserElementCell');
 
             registerPrototypes($injector);
 

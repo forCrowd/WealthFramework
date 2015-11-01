@@ -38,7 +38,6 @@ function registerPrototypes($injector) {
 
     ElementField = $injector.get('ElementField');
     ElementField.prototype.UseFixedValue = false;
-    ElementField.prototype.IndexEnabled = false;
     ElementField.prototype.IndexRatingSortType = 1;
     ElementField.prototype.SortOrder = 0;
     ElementField.prototype.IndexRatingTotal = 0;
@@ -60,7 +59,7 @@ function registerPrototypes($injector) {
     ElementCell.prototype.UserElementCellSet = []; // *
 
     // * A friendly reminder for a while;
-    // With this definition, array is a shared prop between the objects
+    // With this prototype definition, array is a shared prop between the objects
     // Set a new array before using it, instead of push()
 }
 
@@ -68,38 +67,10 @@ function UserResourcePool() {
     var self = this;
     self.ResourcePool = null;
     self.ResourcePoolRate = 0;
-    self.entityAspect = {
-        entityState: {
-            isDetached: function () {
-                return false;
-            }
-        }
-    }
 }
 
 function UserElementField() {
     var self = this;
     self.Element = null;
     self.Rating = 0;
-    self.entityAspect = {
-        entityState: {
-            isDetached: function () {
-                return false;
-            }
-        }
-    }
-}
-
-function UserElementCell() {
-    var self = this;
-    self.User = null;
-    self.ElementCell = null;
-    self.DecimalValue = null;
-    self.entityAspect = {
-        entityState: {
-            isDetached: function () {
-                return false;
-            }
-        }
-    }
 }
