@@ -25,4 +25,4 @@ To be able display "Jasmine" tests under "Web.Tests\ng-test" folder in "Test Exp
 
 ---
 
-#### [Release Notes](/SolutionItems/Notes/Release Notes.md)
+#### [Release Notes](/SolutionItems/Documents/Release Notes.md)
