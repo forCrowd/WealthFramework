@@ -19,7 +19,7 @@ EntityFramework.SqlServerCompact.6.0 -> This file is not used by this applicatio
 ERROR
 
 During Build operation, in Output - Build window;
-File D:\Development\Projects\GitHub\coni2k\WealthEconomy\SolutionItems\Scripts\Build\WarmUp.ps1 cannot be loaded because running scripts is disabled on this system. For more information, see about_Execution_Policies at http://go.microsoft.com/fwlink/?LinkID=135170.
+File (SolutionDir)\SolutionItems\Scripts\Build\WarmUp.ps1 cannot be loaded because running scripts is disabled on this system. For more information, see about_Execution_Policies at http://go.microsoft.com/fwlink/?LinkID=135170.
       + CategoryInfo          : SecurityError: (:) [], ParentContainsErrorRecord 
      Exception
       + FullyQualifiedErrorId : UnauthorizedAccess

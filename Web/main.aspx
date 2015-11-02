@@ -7,13 +7,13 @@
     <base href="/" />
 
     <!-- External CSS -->
-    <link href="/Content/bootstrap.min.css?v=0.24" rel="stylesheet" />
+    <link href="/Content/bootstrap.min.css?v=0.35.1" rel="stylesheet" />
     <link href="/Content/breeze.directives.css?v=0.24" rel="stylesheet" />
     <link href="/Content/toastr.css?v=0.24" rel="stylesheet" />
 
     <!-- Internal CSS -->
     <link href="/Content/site.css?v=0.30" rel="stylesheet" />
-    <link href="/App/directives/resourcePoolEditor.css?v=0.31" rel="stylesheet" />
+    <link href="/App/directives/resourcePoolEditor.css?v=0.31.2" rel="stylesheet" />
 
     <!-- jQuery -->
     <script src="/Scripts/jquery-2.1.4.min.js"></script>
@@ -110,7 +110,7 @@
         </footer>
     </div>
 
-    <%--<script src="/Scripts/bootstrap.min.js?v=0.24"></script>--%>
+    <%--<script src="/Scripts/bootstrap.min.js?v=0.35.1"></script>--%>
     <script src="/Scripts/respond.min.js?v=0.24"></script>
     <script src="/Scripts/datajs-1.1.3.min.js?v=0.24"></script>
     <script src="/Scripts/toastr.min.js?v=0.24"></script>
