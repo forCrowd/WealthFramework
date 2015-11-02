@@ -124,3 +124,6 @@ Web/Configs/*.config
 
 # Chutzpah
 _Chutzpah.*
+
+# Visual Studio 2015
+.vs/
