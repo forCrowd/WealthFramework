@@ -2,8 +2,7 @@
 
 **0.35.1**
 
-* Switched to Visual Studio 2015
-* Upgraded to .NET Framework 4.6
+* Upgraded to Visual Studio 2015 & .NET Framework 4.6
 * nuget package updates were installed
 * SolutionItems/Notes folder was renamed to Documents
 * ResourcePoolEditor - label as badge toggle color fix
