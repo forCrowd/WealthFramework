@@ -3,6 +3,7 @@
 **0.35.1**
 
 * nuget package updates
+* Switched to Visual Studio 2015
 
 **0.35**
 
