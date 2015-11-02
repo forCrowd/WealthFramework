@@ -6,6 +6,7 @@
 * Upgraded to .NET Framework 4.6
 * nuget package updates were installed
 * SolutionItems/Notes folder was renamed to Documents
+* ResourcePoolEditor - label as badge toggle color fix
 
 **0.35**
 
