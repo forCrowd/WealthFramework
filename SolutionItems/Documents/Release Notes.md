@@ -4,6 +4,7 @@
 
 * nuget package updates
 * Switched to Visual Studio 2015
+* SolutionItems/Notes folder was renamed to Documents
 
 **0.35**
 
