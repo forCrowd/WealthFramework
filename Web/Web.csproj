@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>forCrowd.WealthEconomy.Web</RootNamespace>
     <AssemblyName>forCrowd.WealthEconomy.Web</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -23,6 +23,7 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkProfile />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -327,6 +328,11 @@
     <Content Include="App\controllers\content\totalCostIndexSampleController.js" />
     <Content Include="App\controllers\content\sectorIndexSampleController.js" />
     <Content Include="App\controllers\content\introductionController.js" />
+    <None Include="App\controllers\manage\edit\editController.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>editController.tt</DependentUpon>
+    </None>
     <Content Include="App\controllers\manage\edit\elementCellEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
@@ -369,6 +375,11 @@
     <Content Include="App\controllers\manage\list\elementListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
+    <None Include="App\controllers\manage\list\listController.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>listController.tt</DependentUpon>
+    </None>
     <Content Include="App\controllers\manage\list\roleListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
@@ -405,14 +416,14 @@
     <Content Include="App\external\0 ReadMe.txt" />
     <Content Include="App\external\twitter.js" />
     <Content Include="App\external\ui-bootstrap-tpls-0.13.0.min.js" />
-    <Content Include="App\includes\manageMenu.js">
-      <DependentUpon>manageMenu.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Content>
     <Content Include="App\authorization.js" />
     <Content Include="App\external\highcharts-ng.js" />
     <Content Include="App\external\highcharts.js" />
+    <Content Include="App\includes\manageMenu.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>manageMenu.tt</DependentUpon>
+    </Content>
     <Content Include="App\includes\manageScripts.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -433,11 +444,11 @@
     <Content Include="App\services\generated\roleService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="App\services\generated\service.txt">
+    <None Include="App\services\generated\service.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>service.tt</DependentUpon>
-    </Content>
+    </None>
     <Content Include="App\services\generated\userClaimService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
@@ -471,11 +482,11 @@
     <Content Include="App\views\content\introduction.html" />
     <Content Include="App\views\content\technologies.html" />
     <Content Include="App\directives\resourcePoolEditor.html" />
-    <Content Include="App\views\manage\edit\editView.txt">
+    <None Include="App\views\manage\edit\editView.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>editView.tt</DependentUpon>
-    </Content>
+    </None>
     <Content Include="App\views\manage\edit\elementCellEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
@@ -527,6 +538,11 @@
     <Content Include="App\views\manage\list\elementList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
+    <None Include="App\views\manage\list\listView.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>listView.tt</DependentUpon>
+    </None>
     <Content Include="App\views\manage\list\roleList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
@@ -622,17 +638,7 @@
     <Content Include="404.aspx" />
     <Content Include="main.aspx" />
     <Content Include="App\controllers\account\accountEditController.js" />
-    <Content Include="App\controllers\manage\edit\editController.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>editController.tt</DependentUpon>
-    </Content>
     <Content Include="App\controllers\content\mainController.js" />
-    <Content Include="App\controllers\manage\list\listController.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>listController.tt</DependentUpon>
-    </Content>
     <Content Include="App\controllers\account\changePasswordController.js" />
     <Content Include="App\controllers\account\registerController.js" />
     <Content Include="App\controllers\account\loginController.js" />
@@ -718,11 +724,6 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="App\views\manage\list\listView.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>listView.tt</DependentUpon>
-    </Content>
     <None Include="App\views\manage\list\listView.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>listView.txt</LastGenOutput>
