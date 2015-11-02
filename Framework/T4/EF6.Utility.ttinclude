@@ -5,17 +5,18 @@
 <#@ assembly name="System.Xml" #>
 <#@ assembly name="System.Xml.Linq"#>
 <#@ assembly name="EnvDTE"#>
-/*
-EntityFramework.dll + EntityFramework.SqlServer.dll files under
-C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE folder
-were replaced with Entity Framework 6.1 versions.
-v0.10.9
-SH - 09 May '14
-*/
-<#@ assembly name="%VS120COMNTOOLS%..\IDE\EntityFramework.dll" #>
-<#@ assembly name="%VS120COMNTOOLS%..\IDE\Microsoft.Data.Entity.Design.dll" #>
-<#@ assembly name="$(SolutionDir)DataObjects\bin\Debug\Microsoft.AspNet.Identity.Core.dll" #>
-<#@ assembly name="$(SolutionDir)DataObjects\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll" #>
+<# /*
+IMPORTANT REMARK: EntityFramework.dll + EntityFramework.SqlServer.dll files under
+"C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE folder"
+were replaced with Entity Framework 6.1.3 versions
+that copied from "packages" folder under the solution.
+v0.35.1 - SH - 02 Nov. '15
+*/ #>
+<#@ assembly name="%VS140COMNTOOLS%..\IDE\EntityFramework.dll" #>
+<#@ assembly name="%VS140COMNTOOLS%..\IDE\Microsoft.Data.Entity.Design.dll" #>
+<# /* ASP.NET Identity libraries */ #>
+<#@ assembly name="$(SolutionDir)packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll" #>
+<#@ assembly name="$(SolutionDir)packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll" #>
 <#@ import namespace="System" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.IO" #>

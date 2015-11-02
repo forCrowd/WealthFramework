@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>forCrowd.WealthEconomy.Web</RootNamespace>
     <AssemblyName>forCrowd.WealthEconomy.Web</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -23,6 +23,7 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkProfile />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -91,13 +92,13 @@
       <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Data.Edm, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Data.Edm, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.Data.Edm.5.6.2\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Data.Edm.5.6.4\lib\net40\Microsoft.Data.Edm.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Data.OData, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Data.OData, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.Data.OData.5.6.2\lib\net40\Microsoft.Data.OData.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Data.OData.5.6.4\lib\net40\Microsoft.Data.OData.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -119,9 +120,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -136,9 +137,9 @@
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
-    <Reference Include="System.Spatial, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Spatial, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\System.Spatial.5.6.2\lib\net40\System.Spatial.dll</HintPath>
+      <HintPath>..\packages\System.Spatial.5.6.4\lib\net40\System.Spatial.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -153,9 +154,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Http.OData, Version=5.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.Http.OData, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.OData.5.3.0\lib\net45\System.Web.Http.OData.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.OData.5.7.0\lib\net45\System.Web.Http.OData.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Http.Owin, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -327,6 +328,11 @@
     <Content Include="App\controllers\content\totalCostIndexSampleController.js" />
     <Content Include="App\controllers\content\sectorIndexSampleController.js" />
     <Content Include="App\controllers\content\introductionController.js" />
+    <None Include="App\controllers\manage\edit\editController.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>editController.tt</DependentUpon>
+    </None>
     <Content Include="App\controllers\manage\edit\elementCellEditController.js">
       <DependentUpon>editController.tt</DependentUpon>
     </Content>
@@ -369,6 +375,11 @@
     <Content Include="App\controllers\manage\list\elementListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
+    <None Include="App\controllers\manage\list\listController.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>listController.tt</DependentUpon>
+    </None>
     <Content Include="App\controllers\manage\list\roleListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
@@ -405,14 +416,14 @@
     <Content Include="App\external\0 ReadMe.txt" />
     <Content Include="App\external\twitter.js" />
     <Content Include="App\external\ui-bootstrap-tpls-0.13.0.min.js" />
-    <Content Include="App\includes\manageMenu.js">
-      <DependentUpon>manageMenu.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Content>
     <Content Include="App\authorization.js" />
     <Content Include="App\external\highcharts-ng.js" />
     <Content Include="App\external\highcharts.js" />
+    <Content Include="App\includes\manageMenu.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>manageMenu.tt</DependentUpon>
+    </Content>
     <Content Include="App\includes\manageScripts.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -433,11 +444,11 @@
     <Content Include="App\services\generated\roleService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
-    <Content Include="App\services\generated\service.txt">
+    <None Include="App\services\generated\service.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>service.tt</DependentUpon>
-    </Content>
+    </None>
     <Content Include="App\services\generated\userClaimService.js">
       <DependentUpon>service.tt</DependentUpon>
     </Content>
@@ -471,11 +482,11 @@
     <Content Include="App\views\content\introduction.html" />
     <Content Include="App\views\content\technologies.html" />
     <Content Include="App\directives\resourcePoolEditor.html" />
-    <Content Include="App\views\manage\edit\editView.txt">
+    <None Include="App\views\manage\edit\editView.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>editView.tt</DependentUpon>
-    </Content>
+    </None>
     <Content Include="App\views\manage\edit\elementCellEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
@@ -527,6 +538,11 @@
     <Content Include="App\views\manage\list\elementList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
+    <None Include="App\views\manage\list\listView.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>listView.tt</DependentUpon>
+    </None>
     <Content Include="App\views\manage\list\roleList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
@@ -603,14 +619,14 @@
     <None Include="Configs\Setup\appSettings.config">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\images\PresentvsNew.png" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
     <Content Include="Content\toastr.scss" />
     <Content Include="Content\toastr.less" />
     <None Include="Configs\system.net.mailSettings.smtp.config" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
     <None Include="Controllers\OData\Generated\ODataController.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -620,20 +636,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="404.aspx" />
-    <Content Include="Icon.png" />
     <Content Include="main.aspx" />
     <Content Include="App\controllers\account\accountEditController.js" />
-    <Content Include="App\controllers\manage\edit\editController.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>editController.tt</DependentUpon>
-    </Content>
     <Content Include="App\controllers\content\mainController.js" />
-    <Content Include="App\controllers\manage\list\listController.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>listController.tt</DependentUpon>
-    </Content>
     <Content Include="App\controllers\account\changePasswordController.js" />
     <Content Include="App\controllers\account\registerController.js" />
     <Content Include="App\controllers\account\loginController.js" />
@@ -686,13 +691,13 @@
       <LastGenOutput>editController.txt</LastGenOutput>
     </None>
     <Content Include="Scripts\angular-mocks.js" />
-    <Content Include="Scripts\angular-route.js" />
-    <Content Include="Scripts\angular-route.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="Properties\PublishProfiles\Wealth - Azure.pubxml" />
+    <Content Include="Scripts\angular-route.js" />
+    <Content Include="Scripts\angular-route.min.js" />
     <Content Include="Scripts\angular-sanitize.js" />
     <Content Include="Scripts\angular-sanitize.min.js" />
     <Content Include="Scripts\angular.js" />
@@ -705,26 +710,20 @@
     <Content Include="Scripts\breeze.min.js" />
     <Content Include="Scripts\datajs-1.1.3.js" />
     <Content Include="Scripts\datajs-1.1.3.min.js" />
+    <None Include="Properties\PublishProfiles\Wealth - SmarterASP.NET.pubxml" />
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\angular-route.min.js.map" />
     <Content Include="Scripts\angular-sanitize.min.js.map" />
-    <None Include="Properties\PublishProfiles\Wealth - SmarterASP.NET.pubxml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\q.js" />
     <Content Include="Scripts\q.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="App\views\manage\list\listView.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>listView.tt</DependentUpon>
-    </Content>
     <None Include="App\views\manage\list\listView.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>listView.txt</LastGenOutput>

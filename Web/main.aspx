@@ -115,9 +115,9 @@
     <script src="/Scripts/datajs-1.1.3.min.js?v=0.24"></script>
     <script src="/Scripts/toastr.min.js?v=0.24"></script>
 
-    <script src="/Scripts/angular.min.js?v=0.24"></script>
-    <script src="/Scripts/angular-route.min.js?v=0.24"></script>
-    <script src="/Scripts/angular-sanitize.min.js?v=0.24"></script>
+    <script src="/Scripts/angular.min.js?v=0.35.1"></script>
+    <script src="/Scripts/angular-route.min.js?v=0.35.1"></script>
+    <script src="/Scripts/angular-sanitize.min.js?v=0.35.1"></script>
 
     <script src="/App/external/ui-bootstrap-tpls-0.13.0.min.js?v=0.30"></script>
 

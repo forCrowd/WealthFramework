@@ -1,5 +1,12 @@
 ﻿### Release Notes
 
+**0.35.1**
+
+* Switched to Visual Studio 2015
+* Upgraded to .NET Framework 4.6
+* nuget package updates were installed
+* SolutionItems/Notes folder was renamed to Documents
+
 **0.35**
 
 * Performance Update: Most of the calculations (numericValue, passiveRating, aggressiveRating, indexIncome etc. functions) are cached
