@@ -23,4 +23,6 @@ To be able run Entity Framework related T4 files (.tt files that include "EF6.Ut
 To be able display "Jasmine" tests under "Web.Tests\ng-test" folder in "Test Explorer" window, install the following extension:
 * Chutzpah Test Adapter for the Test Explorer
 
+---
+
 #### [Release Notes](/SolutionItems/Notes/Release Notes.md)
