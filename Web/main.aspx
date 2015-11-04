@@ -132,7 +132,7 @@
     <!-- Main -->
     <script src="/App/main.js?v=0.32"></script>
     <script src="/App/logger.js?v=0.29"></script>
-    <script src="/App/route.js?v=0.33"></script>
+    <script src="/App/route.js?v=0.35.2"></script>
     <script src="/App/authorization.js?v=0.29"></script>
 
     <!-- Entities -->
@@ -179,7 +179,7 @@
     <script src="/App/controllers/manage/resourcePool/resourcePoolCustomViewController.js?v=0.27"></script>
 
     <!-- Directives -->
-    <script src="/App/directives/resourcePoolEditor.js?v=0.35"></script>
+    <script src="/App/directives/resourcePoolEditor.js?v=0.35.2"></script>
 
     <!-- Filters -->
     <script src="/App/filters/angular-percentage.js?v=0.22"></script>

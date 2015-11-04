@@ -82,7 +82,7 @@
                 ? params.key
                 : 'home'; // Default view
 
-            return '/App/views/content/' + key + '.html?v=0.33';
+            return '/App/views/content/' + key + '.html?v=0.35.2';
         }
     }
 

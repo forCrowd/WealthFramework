@@ -1,5 +1,9 @@
 ﻿### Release Notes
 
+**0.35.2**
+
+* Content updates
+
 **0.35.1**
 
 * Upgraded to Visual Studio 2015 & .NET Framework 4.6
