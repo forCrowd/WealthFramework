@@ -1,11 +1,9 @@
 ﻿namespace forCrowd.WealthEconomy.DataObjects
 {
-    using forCrowd.WealthEconomy.BusinessObjects;
-    using forCrowd.WealthEconomy.DataObjects.Extensions;
+    using BusinessObjects;
     using System;
     using System.Data.Entity;
     using System.Linq;
-    using System.Threading.Tasks;
 
     public partial class ResourcePoolRepository
     {
@@ -571,11 +569,11 @@
 
             // Items, cell, user cells
             var fairShareNoItem = fairShareElement.AddItem("Keeper")
-                .AddCell(fairShareDesciptionField).SetValue("The owner of the organization keeps all the income to himself, ignores the contributions").ElementItem
+                .AddCell(fairShareDesciptionField).SetValue("Uses the classic approach; the owner gets all the profit, workers get a fixed salary").ElementItem
                 .AddCell(fairShareImportanceField).ElementItem;
 
             var fairShareYesItem = fairShareElement.AddItem("Sharer")
-                .AddCell(fairShareDesciptionField).SetValue("The organization shares it's income with its employees based on their contributions").ElementItem
+                .AddCell(fairShareDesciptionField).SetValue("Considers contributions from all parties and share the income based on this outcome").ElementItem
                 .AddCell(fairShareImportanceField).ElementItem;
 
             // Main element
