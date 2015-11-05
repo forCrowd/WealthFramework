@@ -3,7 +3,9 @@
 **0.36**
 
 * Billion Dollar Question
-* Passive rating was introduced again (for Initial Value cases)
+* ElementField - IndexType property was added
+There are two types; Aggressive (existing) & Passive
+Passive case covers CMRPs that only use Initial value (like Billion Dollar Question)
 
 **0.35.2**
 

@@ -268,11 +268,11 @@
 
             self.incomeStatus = function () {
 
-                if (self.totalIncome() < self.Element.totalIncomeAverage()) {
+                if (self.totalIncome().toFixed(4) < self.Element.totalIncomeAverage().toFixed(4)) {
                     return 'low';
-                } else if (self.totalIncome() === self.Element.totalIncomeAverage()) {
+                } else if (self.totalIncome().toFixed(4) === self.Element.totalIncomeAverage().toFixed(4)) {
                     return 'average';
-                } else if (self.totalIncome() > self.Element.totalIncomeAverage()) {
+                } else if (self.totalIncome().toFixed(4) > self.Element.totalIncomeAverage().toFixed(4)) {
                     return 'high';
                 };
             }

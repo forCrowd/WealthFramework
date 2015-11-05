@@ -22,7 +22,6 @@ describe('ng Cell', function () {
     });
 
     function createResourcePool(addMultiplierField) {
-
         addMultiplierField = typeof addMultiplierField === 'undefined' ? false : addMultiplierField;
 
         // ResourcePool
@@ -365,26 +364,26 @@ describe('ng Cell', function () {
         expect(cell.numericValueMultiplied()).toBe(cell.numericValue() * item.multiplier());
     });
 
-    it('passiveRatingPercentage - !IndexEnabled', function () {
+    it('numericValueMultipliedPercentage - !IndexEnabled', function () {
 
         var resourcePool = createResourcePool();
         var field = resourcePool.MainElement.ElementFieldSet[0];
         var cell = field.ElementCellSet[0];
 
-        expect(cell.passiveRatingPercentage()).toBe(0);
+        expect(cell.numericValueMultipliedPercentage()).toBe(0);
     });
 
-    it('passiveRatingPercentage - IndexEnabled, One Item', function () {
+    it('numericValueMultipliedPercentage - IndexEnabled, One Item', function () {
 
         var resourcePool = createResourcePool();
         var field = resourcePool.MainElement.ElementFieldSet[0];
         field.IndexEnabled = true;
         var cell = field.ElementCellSet[0];
 
-        expect(cell.passiveRatingPercentage()).toBe(1);
+        expect(cell.numericValueMultipliedPercentage()).toBe(1);
     });
 
-    it('passiveRatingPercentage - IndexEnabled, Two Items', function () {
+    it('numericValueMultipliedPercentage - IndexEnabled, Two Items', function () {
 
         var resourcePool = createResourcePool();
         var element = resourcePool.MainElement;
@@ -399,8 +398,8 @@ describe('ng Cell', function () {
         var cell2 = createCell(field, item2);
         createUserCell(cell2, 45);
 
-        expect(cell1.passiveRatingPercentage()).toBe(1 - (55 / (45 + 55)));
-        expect(cell2.passiveRatingPercentage()).toBe(1 - (45 / (45 + 55)));
+        expect(cell1.numericValueMultipliedPercentage()).toBe(55 / (45 + 55));
+        expect(cell2.numericValueMultipliedPercentage()).toBe(45 / (45 + 55));
     });
 
     it('aggressiveRating - !IndexEnabled', function () {
@@ -449,7 +448,8 @@ describe('ng Cell', function () {
         field.IndexEnabled = true;
         var cell = field.ElementCellSet[0];
 
-        expect(cell.aggressiveRating()).toBe(1);
+        //expect(cell.aggressiveRating()).toBe(1);
+        expect(cell.aggressiveRating()).toBe(0);
     });
 
     it('aggressiveRating - RatingSortType 2 (Def.), Two Items', function () {
@@ -468,11 +468,13 @@ describe('ng Cell', function () {
         var cell2 = createCell(field, item2);
         createUserCell(cell2, 45);
 
-        expect(cell1.aggressiveRating()).toBe(1 - (cell1.passiveRatingPercentage() / field.referenceRatingMultiplied()));
-        expect(cell2.aggressiveRating()).toBe(1 - (cell2.passiveRatingPercentage() / field.referenceRatingMultiplied()));
+        expect(cell1.aggressiveRating()).toBe(1 - ((1 - cell1.numericValueMultipliedPercentage()) / field.referenceRatingMultiplied()));
+        expect(cell2.aggressiveRating()).toBe(1 - ((1 - cell2.numericValueMultipliedPercentage()) / field.referenceRatingMultiplied()));
     });
 
-    it('aggressiveRatingPercentage', function () {
+    // TODO rating tests!
+
+    it('ratingPercentage', function () {
 
         var resourcePool = createResourcePool();
         var element = resourcePool.MainElement;
@@ -487,8 +489,8 @@ describe('ng Cell', function () {
         var cell2 = createCell(field, item2);
         createUserCell(cell2, 45);
 
-        expect(cell1.aggressiveRatingPercentage()).toBe(cell1.aggressiveRating() / field.aggressiveRating());
-        expect(cell2.aggressiveRatingPercentage()).toBe(cell2.aggressiveRating() / field.aggressiveRating());
+        expect(cell1.ratingPercentage()).toBe(cell1.rating() / field.rating());
+        expect(cell2.ratingPercentage()).toBe(cell2.rating() / field.rating());
     });
 
     it('indexIncome', function () {
@@ -507,8 +509,8 @@ describe('ng Cell', function () {
         var cell2 = createCell(field, item2);
         cell2.NumericValueTotal = 45;
 
-        expect(cell1.indexIncome()).toBe(field.indexIncome() * cell1.aggressiveRatingPercentage());
-        expect(cell2.indexIncome()).toBe(field.indexIncome() * cell2.aggressiveRatingPercentage());
+        expect(cell1.indexIncome()).toBe(field.indexIncome() * cell1.ratingPercentage());
+        expect(cell2.indexIncome()).toBe(field.indexIncome() * cell2.ratingPercentage());
     });
 
 });

@@ -36,13 +36,13 @@
                     //// c. Cells
                     //for (var i = 0; i < this.ElementCellSet.length; i++) {
                     //    var cell = this.ElementCellSet[i];
-                    //    cell.setPassiveRatingPercentage(false);
+                    //    cell.setNumericValueMultipliedPercentage(false);
                     //}
                     //this.setReferenceRatingMultiplied();
 
                     /* IndexEnabled related functions */
                     //cell.setAggressiveRating();
-                    //cell.setAggressiveRatingPercentage();
+                    //cell.setratingPercentage();
                     //cell.setIndexIncome();
                 }
             }
@@ -66,6 +66,7 @@
                 _indexRating: null,
                 _indexRatingPercentage: null,
                 _numericValueMultiplied: null,
+                _passiveRating: null,
                 _referenceRatingMultiplied: null,
                 // Aggressive rating formula prevents the organizations with the worst rating to get any income.
                 // However, in case all ratings are equal, then no one can get any income from the pool.
@@ -74,6 +75,7 @@
                 // TODO Usage of this field is correct?
                 _referenceRatingAllEqualFlag: true,
                 _aggressiveRating: null,
+                _rating: null,
                 _indexIncome: null
             }
 
@@ -103,7 +105,7 @@
                 if (self.backingFields._currentUserIndexRating !== value) {
                     self.backingFields._currentUserIndexRating = value;
 
-                    // TODO Update related
+                    // Update related
                     if (updateRelated) {
                         self.setIndexRating();
                     }
@@ -268,9 +270,17 @@
 
                     // Update related?
                     if (updateRelated && self.IndexEnabled) {
+
                         for (var i = 0; i < self.ElementCellSet.length; i++) {
                             var cell = self.ElementCellSet[i];
-                            cell.setPassiveRatingPercentage(false);
+                            cell.setNumericValueMultipliedPercentage(false);
+                        }
+
+                        self.setPassiveRating(false);
+
+                        for (var i = 0; i < self.ElementCellSet.length; i++) {
+                            var cell = self.ElementCellSet[i];
+                            cell.setPassiveRating(false);
                         }
 
                         self.setReferenceRatingMultiplied(false);
@@ -280,15 +290,49 @@
                             cell.setAggressiveRating(false);
                         }
 
-                        self.setAggressiveRating(false);
-
-                        // Update related
                         for (var i = 0; i < self.ElementCellSet.length; i++) {
                             var cell = self.ElementCellSet[i];
-                            cell.setAggressiveRatingPercentage(false);
+                            cell.setRating(false);
+                        }
+
+                        self.setRating(false);
+
+                        for (var i = 0; i < self.ElementCellSet.length; i++) {
+                            var cell = self.ElementCellSet[i];
+                            cell.setRatingPercentage(false);
                         }
 
                         self.setIndexIncome();
+                    }
+                }
+            }
+
+            // Helper function for Index Rating Type 1 case (low rating is better)
+            self.passiveRating = function () {
+                if (self.backingFields._passiveRating === null) {
+                    self.setPassiveRating(false);
+                }
+
+                return self.backingFields._passiveRating;
+            }
+
+            self.setPassiveRating = function (updateRelated) {
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
+
+                var value = 0;
+
+                if (self.ElementCellSet.length > 0) {
+                    for (var i = 0; i < self.ElementCellSet.length; i++) {
+                        var cell = self.ElementCellSet[i];
+                        value += 1 - cell.numericValueMultipliedPercentage();
+                    }
+                }
+
+                if (self.backingFields._passiveRating !== value) {
+                    self.backingFields._passiveRating = value;
+
+                    if (updateRelated) {
+                        // TODO ?
                     }
                 }
             }
@@ -326,7 +370,7 @@
                                     break;
                                 }
                                 case 2: { // HighestToLowest (High number is better)
-                                    value = cell.passiveRatingPercentage();
+                                    value = (1 - cell.numericValueMultipliedPercentage());
                                     break;
                                 }
                             }
@@ -348,12 +392,12 @@
                                 }
                                 case 2: { // HighestToLowest (High number is better)
 
-                                    if (cell.passiveRatingPercentage() !== value) {
+                                    if (1 - cell.numericValueMultipliedPercentage() !== value) {
                                         allEqualFlag = false;
                                     }
 
-                                    if (cell.passiveRatingPercentage() > value) {
-                                        value = cell.passiveRatingPercentage();
+                                    if (1 - cell.numericValueMultipliedPercentage() > value) {
+                                        value = 1 - cell.numericValueMultipliedPercentage();
                                     }
                                     break;
                                 }
@@ -361,11 +405,6 @@
                         }
                     }
                 }
-
-                //// Bug fix attempt
-                //if (value === 1) {
-                //    value = 0.9999;
-                //}
 
                 //logger.log(self.Name[0] + '-' + cell.ElementItem.Name[0] + ' RRMA ' + value.toFixed(2));
 
@@ -384,12 +423,15 @@
 
                 // Update related
                 if ((flagUpdated || ratingUpdated) && updateRelated) {
+
+                    // TODO ?!
+
                     for (var i = 0; i < self.ElementCellSet.length; i++) {
                         var cell = self.ElementCellSet[i];
                         cell.setAggressiveRating(false);
                     }
 
-                    self.setAggressiveRating();
+                    // self.setAggressiveRating();
                 }
             }
 
@@ -406,16 +448,16 @@
                 return false;
             }
 
-            self.aggressiveRating = function () {
+            self.rating = function () {
 
-                if (self.backingFields._aggressiveRating === null) {
-                    self.setAggressiveRating(false);
+                if (self.backingFields._rating === null) {
+                    self.setRating(false);
                 }
 
-                return self.backingFields._aggressiveRating;
+                return self.backingFields._rating;
             }
 
-            self.setAggressiveRating = function (updateRelated) {
+            self.setRating = function (updateRelated) {
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value = 0; // Default value?
@@ -425,14 +467,14 @@
 
                     for (var i = 0; i < self.ElementCellSet.length; i++) {
                         var cell = self.ElementCellSet[i];
-                        value += cell.aggressiveRating();
+                        value += cell.rating();
                     }
                 }
 
                 //logger.log(self.Name[0] + ' AR ' + value.toFixed(2));
 
-                if (self.backingFields._aggressiveRating !== value) {
-                    self.backingFields._aggressiveRating = value;
+                if (self.backingFields._rating !== value) {
+                    self.backingFields._rating = value;
 
                     //logger.log(self.Name[0] + ' AR OK');
 
@@ -441,7 +483,7 @@
                         // Update related
                         for (var i = 0; i < self.ElementCellSet.length; i++) {
                             var cell = self.ElementCellSet[i];
-                            cell.setAggressiveRatingPercentage(false);
+                            cell.setRatingPercentage(false);
                         }
 
                         self.setIndexIncome();
@@ -464,7 +506,7 @@
                 var value = self.Element.totalResourcePoolAmount() * self.indexRatingPercentage();
 
                 //if (self.IndexEnabled) {
-                    //logger.log(self.Name[0] + ' II ' + value.toFixed(2));
+                //logger.log(self.Name[0] + ' II ' + value.toFixed(2));
                 //}
 
                 if (self.backingFields._indexIncome !== value) {
