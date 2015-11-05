@@ -1,5 +1,10 @@
 ﻿### Release Notes
 
+**0.36**
+
+* Billion Dollar Question
+* Passive rating was introduced again (for Initial Value cases)
+
 **0.35.2**
 
 * Content updates

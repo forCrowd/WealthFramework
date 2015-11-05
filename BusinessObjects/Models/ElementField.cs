@@ -78,6 +78,9 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         [Display(Name = "Index Enabled")]
         public bool IndexEnabled { get; set; }
 
+        [Display(Name = "Index Type")]
+        public byte IndexType { get; set; }
+
         [Display(Name = "Index Rating Sort Type")]
         public byte IndexRatingSortType { get; set; }
 
@@ -110,10 +113,27 @@ namespace forCrowd.WealthEconomy.BusinessObjects
             return userRating;
         }
 
-        public ElementField AddIndex(RatingSortType sortType)
+        public ElementField EnableIndex()
         {
             this.IndexEnabled = true;
-            this.IndexRatingSortType = (byte)sortType;
+            this.IndexType = (byte)BusinessObjects.IndexType.Aggressive;
+            this.IndexRatingSortType = (byte)BusinessObjects.IndexRatingSortType.HighestToLowest;
+            return this;
+        }
+
+        public ElementField EnableIndex(IndexRatingSortType ratingSortType)
+        {
+            this.IndexEnabled = true;
+            this.IndexType = (byte)BusinessObjects.IndexType.Aggressive;
+            this.IndexRatingSortType = (byte)ratingSortType;
+            return this;
+        }
+
+        public ElementField EnableIndex(IndexType type, IndexRatingSortType ratingSortType)
+        {
+            this.IndexEnabled = true;
+            this.IndexType = (byte)type;
+            this.IndexRatingSortType = (byte)ratingSortType;
             return this;
         }
 

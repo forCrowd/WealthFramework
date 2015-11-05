@@ -14,7 +14,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Tests
             new ResourcePool(user, "CMRP")
                 .AddElement("Element")
                 .AddField("Field", ElementFieldTypes.Boolean, true)
-                .AddIndex(RatingSortType.HighestToLowest);
+                .EnableIndex(IndexRatingSortType.HighestToLowest);
         }
 
         [TestMethod]
@@ -25,7 +25,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Tests
             new ResourcePool(user, "CMRP")
                 .AddElement("Element")
                 .AddField("Field", ElementFieldTypes.String)
-                .AddIndex(RatingSortType.HighestToLowest);
+                .EnableIndex(IndexRatingSortType.HighestToLowest);
         }
 
         [TestMethod]
@@ -36,7 +36,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Tests
             new ResourcePool(user, "CMRP")
                 .AddElement("Element")
                 .AddField("Field", ElementFieldTypes.String)
-                .AddIndex(RatingSortType.HighestToLowest);
+                .EnableIndex(IndexRatingSortType.HighestToLowest);
         }
     }
 }

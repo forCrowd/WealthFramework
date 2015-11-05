@@ -132,7 +132,7 @@
     <!-- Main -->
     <script src="/App/main.js?v=0.32"></script>
     <script src="/App/logger.js?v=0.29"></script>
-    <script src="/App/route.js?v=0.35.2"></script>
+    <script src="/App/route.js?v=0.36"></script>
     <script src="/App/authorization.js?v=0.29"></script>
 
     <!-- Entities -->
@@ -141,7 +141,7 @@
     <script src="/App/entities/ElementCell.js?v=0.35"></script>
     <script src="/App/entities/ElementField.js?v=0.35"></script>
     <script src="/App/entities/ElementItem.js?v=0.35"></script>
-    <script src="/App/entities/UserElementCell.js?v=0.35"></script>
+    <script src="/App/entities/UserElementCell.js?v=0.36"></script>
 
     <!-- breezeJS -->
     <script src="/App/entityManagerFactory.js?v=0.27"></script>

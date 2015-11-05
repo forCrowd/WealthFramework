@@ -71,6 +71,12 @@
                 </div>
             </div>
             <div class="form-group">
+                <label for="IndexType" class="control-label col-md-2">Index Type</label>
+                <div class="col-md-10" data-ng-class="{'has-error': editForm.IndexType.$invalid && !editForm.IndexType.$pristine}">
+                    <input id="IndexType" name="IndexType" type="text" data-ng-model="vm.elementField.IndexType" class="form-control" required />
+                </div>
+            </div>
+            <div class="form-group">
                 <label for="IndexRatingSortType" class="control-label col-md-2">Index Rating Sort Type</label>
                 <div class="col-md-10" data-ng-class="{'has-error': editForm.IndexRatingSortType.$invalid && !editForm.IndexRatingSortType.$pristine}">
                     <input id="IndexRatingSortType" name="IndexRatingSortType" type="text" data-ng-model="vm.elementField.IndexRatingSortType" class="form-control" required />

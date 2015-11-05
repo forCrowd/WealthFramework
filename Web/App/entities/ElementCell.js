@@ -312,34 +312,57 @@
                     //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' AR1');
                 } else {
 
-                    var referenceRating = self.ElementField.referenceRatingMultiplied();
+                    switch (self.ElementField.IndexType) {
+                        case 1: {
 
-                    if (referenceRating === 0) {
-                        // value = 0; // ?
-                        //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' AR2 ' + referenceRating);
-                    } else {
+                            var referenceRating = self.ElementField.referenceRatingMultiplied();
 
-                        switch (self.ElementField.IndexRatingSortType) {
-                            case 1: { // LowestToHighest (Low number is better)
-                                value = self.numericValueMultiplied() / referenceRating;
+                            if (referenceRating === 0) {
+                                // value = 0; // ?
+                                //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' AR2 ' + referenceRating);
+                            } else {
 
-                                //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' AR3A ' + self.numericValueMultiplied());
+                                switch (self.ElementField.IndexRatingSortType) {
+                                    case 1: { // LowestToHighest (Low rating is better)
+                                        value = self.numericValueMultiplied() / referenceRating;
 
-                                break;
+                                        //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' AR3A ' + self.numericValueMultiplied());
+
+                                        break;
+                                    }
+                                    case 2: { // HighestToLowest (High rating is better)
+                                        value = self.passiveRatingPercentage() / referenceRating;
+
+                                        //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' AR3B ' + self.passiveRatingPercentage());
+
+                                        break;
+                                    }
+                                }
+
+                                if (!self.ElementField.referenceRatingAllEqualFlag()) {
+                                    //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' AR4A ' + value.toFixed(2));
+                                    value = 1 - value;
+                                    //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' AR4B ' + value.toFixed(2));
+                                }
                             }
-                            case 2: { // HighestToLowest (High number is better)
-                                value = self.passiveRatingPercentage() / referenceRating;
 
-                                //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' AR3B ' + self.passiveRatingPercentage());
-
-                                break;
-                            }
+                            break;
                         }
+                        case 2: {
 
-                        if (!self.ElementField.referenceRatingAllEqualFlag()) {
-                            //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' AR4A ' + value.toFixed(2));
-                            value = 1 - value;
-                            //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' AR4B ' + value.toFixed(2));
+                            switch (self.ElementField.IndexRatingSortType) {
+                                case 1: { // LowestToHighest (Low rating is better)
+                                    // TODO
+                                    value = 0;
+                                    break;
+                                }
+                                case 2: { // HighestToLowest (High rating is better)
+                                    value = self.numericValueMultiplied();
+                                    break;
+                                }
+                            }
+
+                            break;
                         }
                     }
                 }

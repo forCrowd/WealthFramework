@@ -59,10 +59,10 @@
                 : 'list'; // Default action
 
             if (action === 'list')
-                templateUrl = '/App/views/manage/list/' + params.entity + 'List.html?v=0.27';
+                templateUrl = '/App/views/manage/list/' + params.entity + 'List.html?v=0.36';
 
             if (action === 'new' || action === 'edit')
-                templateUrl = '/App/views/manage/edit/' + params.entity + 'Edit.html?v=0.30';
+                templateUrl = '/App/views/manage/edit/' + params.entity + 'Edit.html?v=0.36';
 
             return templateUrl;
         }
@@ -82,7 +82,7 @@
                 ? params.key
                 : 'home'; // Default view
 
-            return '/App/views/content/' + key + '.html?v=0.35.2';
+            return '/App/views/content/' + key + '.html?v=0.36';
         }
     }
 

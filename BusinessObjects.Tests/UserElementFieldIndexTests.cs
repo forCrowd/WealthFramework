@@ -16,7 +16,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Tests
             var newIndex = resourcePool
                 .AddElement("Element")
                 .AddField("Field", ElementFieldTypes.Boolean, true)
-                .AddIndex(RatingSortType.HighestToLowest)
+                .EnableIndex(IndexRatingSortType.HighestToLowest)
                 .AddUserRating(user, 0);
         }
     }
