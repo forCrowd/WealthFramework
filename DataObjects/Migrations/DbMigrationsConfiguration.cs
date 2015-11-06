@@ -123,7 +123,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             var resourcePoolRateSample = resourcePoolRepository.CreateResourcePoolRateSample(sampleUser);
             var allInOneSample = resourcePoolRepository.CreateAllInOneSample(sampleUser);
 
-            var initialValueSample = resourcePoolRepository.CreateInitialValueSample(sampleUser);
+            var billionDollarQuestion = resourcePoolRepository.CreateBillionDollarQuestion(sampleUser);
 
             // Set Id fields explicitly, since strangely EF doesn't save them in the order that they've been added to ResourcePoolSet.
             // And they're referred with these Ids on front-end samples
@@ -141,7 +141,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             resourcePoolRateSample.Id = 12;
             allInOneSample.Id = 13;
 
-            initialValueSample.Id = 14;
+            billionDollarQuestion.Id = 14;
             
             // Insert
             resourcePoolRepository.Insert(upoSample);
@@ -158,7 +158,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             resourcePoolRepository.Insert(resourcePoolRateSample);
             resourcePoolRepository.Insert(allInOneSample);
 
-            resourcePoolRepository.Insert(initialValueSample);
+            resourcePoolRepository.Insert(billionDollarQuestion);
 
             // First save
             context.SaveChanges();
@@ -180,7 +180,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             resourcePoolRateSample.SetMainElement();
             allInOneSample.SetMainElement();
 
-            initialValueSample.SetMainElement();
+            billionDollarQuestion.SetMainElement();
 
             // Second save for main elements
             context.SaveChanges();

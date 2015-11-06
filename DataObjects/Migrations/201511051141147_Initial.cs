@@ -36,6 +36,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
                         SelectedElementId = c.Int(),
                         UseFixedValue = c.Boolean(),
                         IndexEnabled = c.Boolean(nullable: false),
+                        IndexType = c.Byte(nullable: false),
                         IndexRatingSortType = c.Byte(nullable: false),
                         SortOrder = c.Byte(nullable: false),
                         IndexRatingTotal = c.Decimal(precision: 18, scale: 2),

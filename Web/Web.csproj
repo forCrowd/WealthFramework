@@ -466,6 +466,7 @@
     </Content>
     <Content Include="App\services\resourcePoolService.js" />
     <Content Include="App\views\content\closingNotes.html" />
+    <Content Include="App\views\content\prologue.html" />
     <Content Include="App\views\content\roadmap.html" />
     <Content Include="App\views\content\conclusion.html" />
     <Content Include="App\views\content\basics.html" />

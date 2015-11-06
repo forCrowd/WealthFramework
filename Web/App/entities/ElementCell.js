@@ -26,9 +26,11 @@
                 _otherUsersNumericValueCount: null,
                 _numericValue: null,
                 _numericValueMultiplied: null,
+                _numericValueMultipliedPercentage: null,
+                _passiveRating: null,
                 _aggressiveRating: null,
-                _aggressiveRatingPercentage: null,
-                _passiveRatingPercentage: null,
+                _rating: null,
+                _ratingPercentage: null,
                 _indexIncome: null
             }
 
@@ -107,9 +109,9 @@
                             // TODO 5 - DateTime?
                         case 11: { userValue = self.UserElementCellSet[0].DecimalValue; break; }
                             // TODO 12 - Multiplier?
-                        //default: {
-                        //    throw 'setOtherUsersNumericValueTotal - Not supported element field type: ' + self.ElementField.ElementFieldType;
-                        //}
+                            //default: {
+                            //    throw 'setOtherUsersNumericValueTotal - Not supported element field type: ' + self.ElementField.ElementFieldType;
+                            //}
                     }
 
                     self.backingFields._otherUsersNumericValueTotal -= userValue;
@@ -232,7 +234,7 @@
                     // IMPORTANT REMARK: If the field is using IndexRatingSortType 1,
                     // then it would be better to directly call field.setReferenceRatingMultiplied() method.
                     // It would be quicker to calculate.
-                    // However, since field.setNumericValueMultiplied() will make 'passiveRatingPercentage' calculations
+                    // However, since field.setNumericValueMultiplied() will make 'numericValueMultipliedPercentage' calculations
                     // which meanwhile will call referenceRatingMultiplied() method anyway. So it becomes redundant.
                     // This code block could possibly be improved with a IndexRatingSortType switch case,
                     // but it seems it would be bit overkill.
@@ -241,53 +243,68 @@
                 }
             }
 
-            // TODO Is the name of this function good? / SH - 22 Oct. '15
-            self.passiveRatingPercentage = function () {
-
-                if (self.backingFields._passiveRatingPercentage === null) {
-                    self.setPassiveRatingPercentage(false);
+            self.numericValueMultipliedPercentage = function () {
+                if (self.backingFields._numericValueMultipliedPercentage === null) {
+                    self.setNumericValueMultipliedPercentage(false);
                 }
 
-                return self.backingFields._passiveRatingPercentage;
+                return self.backingFields._numericValueMultipliedPercentage;
             }
 
-            // TODO Currently updateRelated is always 'false'?
-            self.setPassiveRatingPercentage = function (updateRelated) {
+            self.setNumericValueMultipliedPercentage = function (updateRelated) {
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
-                var value;
+                var value = 0;
 
-                if (typeof self.ElementField === 'undefined' || !self.ElementField.IndexEnabled) {
-                    value = 0;
+                if (self.ElementField.IndexEnabled && self.ElementField.numericValueMultiplied() > 0) {
+                    value = self.numericValueMultiplied() / self.ElementField.numericValueMultiplied();
+                }
 
-                    //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' PRPA ' + value.toFixed(2));
-                } else {
+                if (self.backingFields._numericValueMultipliedPercentage !== value) {
+                    self.backingFields._numericValueMultipliedPercentage = value;
 
-                    // If there is only one item, always 100%
-                    if (self.ElementField.ElementCellSet.length === 1) {
-                        value = 1;
-                        //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' PRPB ' + value.toFixed(2));
-                    } else {
-                        var fieldNumericValueMultiplied = self.ElementField.numericValueMultiplied();
+                    // Update related
+                    if (updateRelated) {
+                        // TODO ?
+                    }
+                }
+            }
 
-                        if (fieldNumericValueMultiplied === 0) {
-                            value = 0;
-                            //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' PRPC ' + value.toFixed(2));
-                        } else {
-                            value = 1 - (self.numericValueMultiplied() / fieldNumericValueMultiplied);
-                            //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' PRPD ' + value.toFixed(2));
+            self.passiveRating = function () {
+                if (self.backingFields._passiveRating === null) {
+                    self.setPassiveRating(false);
+                }
+
+                return self.backingFields._passiveRating;
+            }
+
+            self.setPassiveRating = function (updateRelated) {
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
+
+                var value = 0;
+
+                if (self.ElementField.IndexEnabled) {
+
+                    switch (self.ElementField.IndexRatingSortType) {
+                        case 1: { // LowestToHighest (Low rating is better)
+                            if (self.ElementField.passiveRating() > 0) {
+                                value = (1 - self.numericValueMultipliedPercentage()) / self.ElementField.passiveRating();
+                            }
+                            break;
+                        }
+                        case 2: { // HightestToLowest (High rating is better)
+                            value = self.numericValueMultipliedPercentage();
+                            break;
                         }
                     }
                 }
 
-                //logger.log(self.ElementField.Name + '-' + self.ElementItem.Name + ' PRP ' + value.toFixed(2));
+                if (self.backingFields._passiveRating !== value) {
+                    self.backingFields._passiveRating = value;
 
-                if (self.backingFields._passiveRatingPercentage !== value) {
-                    self.backingFields._passiveRatingPercentage = value;
-
-                    // Update related values
+                    // Update related
                     if (updateRelated) {
-                        self.ElementField.setReferenceRatingMultiplied();
+                        // TODO ?
                     }
                 }
             }
@@ -307,91 +324,99 @@
 
                 var value = 0; // Default value?
 
-                if (typeof self.ElementField === 'undefined' || !self.ElementField.IndexEnabled) {
-                    // value = 0; // ?
-                    //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' AR1');
-                } else {
-
-                    var referenceRating = self.ElementField.referenceRatingMultiplied();
-
-                    if (referenceRating === 0) {
-                        // value = 0; // ?
-                        //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' AR2 ' + referenceRating);
-                    } else {
-
-                        switch (self.ElementField.IndexRatingSortType) {
-                            case 1: { // LowestToHighest (Low number is better)
-                                value = self.numericValueMultiplied() / referenceRating;
-
-                                //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' AR3A ' + self.numericValueMultiplied());
-
-                                break;
-                            }
-                            case 2: { // HighestToLowest (High number is better)
-                                value = self.passiveRatingPercentage() / referenceRating;
-
-                                //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' AR3B ' + self.passiveRatingPercentage());
-
-                                break;
-                            }
+                if (self.ElementField.IndexEnabled && self.ElementField.referenceRatingMultiplied() > 0) {
+                    switch (self.ElementField.IndexRatingSortType) {
+                        case 1: { // LowestToHighest (Low rating is better)
+                            value = self.numericValueMultiplied() / self.ElementField.referenceRatingMultiplied();
+                            break;
                         }
-
-                        if (!self.ElementField.referenceRatingAllEqualFlag()) {
-                            //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' AR4A ' + value.toFixed(2));
-                            value = 1 - value;
-                            //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' AR4B ' + value.toFixed(2));
+                        case 2: { // HighestToLowest (High rating is better)
+                            value = (1 - self.numericValueMultipliedPercentage()) / self.ElementField.referenceRatingMultiplied();
+                            break;
                         }
+                    }
+
+                    if (!self.ElementField.referenceRatingAllEqualFlag()) {
+                        value = 1 - value;
                     }
                 }
 
                 if (self.backingFields._aggressiveRating !== value) {
                     self.backingFields._aggressiveRating = value;
 
-                    //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' AR ' + value.toFixed(2));
-
                     // Update related values
                     if (updateRelated) {
-                        self.ElementField.setAggressiveRating();
+                        // TODO ?
                     }
                 }
             }
 
-            self.aggressiveRatingPercentage = function () {
+            self.rating = function () {
 
-                if (self.backingFields._aggressiveRatingPercentage === null) {
-                    self.setAggressiveRatingPercentage(false);
+                if (self.backingFields._rating === null) {
+                    self.setRating(false);
                 }
 
-                return self.backingFields._aggressiveRatingPercentage;
+                return self.backingFields._rating;
             }
 
-            self.setAggressiveRatingPercentage = function (updateRelated) {
+            self.setRating = function (updateRelated) {
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
-                var value = 0; // Default value?
+                var value = 0;
 
-                if (typeof self.ElementField === 'undefined' || !self.ElementField.IndexEnabled) {
-                    value = 0;
+                // If there is only one item, then always %100
+                if (self.ElementField.ElementCellSet.length === 1) {
+                    value = 1;
                 } else {
-
-                    var indexAggressiveRating = self.ElementField.aggressiveRating();
-                    if (indexAggressiveRating === 0) {
-                        value = 0;
-                    } else {
-                        value = self.aggressiveRating() / indexAggressiveRating;
+                    switch (self.ElementField.IndexType) {
+                        case 1: // Aggressive rating
+                            {
+                                value = self.aggressiveRating();
+                                break;
+                            }
+                        case 2: // Passive rating
+                            {
+                                value = self.passiveRating();
+                                break;
+                            }
                     }
                 }
 
-                //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' ARP ' + value.toFixed(2));
-
-                if (self.backingFields._aggressiveRatingPercentage !== value) {
-                    self.backingFields._aggressiveRatingPercentage = value;
-
-                    //logger.log(self.ElementField.Name[0] + '-' + self.ElementItem.Name[0] + ' ARP OK');
+                if (self.backingFields._rating !== value) {
+                    self.backingFields._rating = value;
 
                     // Update related
                     if (updateRelated) {
-                        self.setIndexIncome();
+                        // TODO ?
+                    }
+                }
+            }
+
+            self.ratingPercentage = function () {
+
+                if (self.backingFields._ratingPercentage === null) {
+                    self.setRatingPercentage(false);
+                }
+
+                return self.backingFields._ratingPercentage;
+            }
+
+            self.setRatingPercentage = function (updateRelated) {
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
+
+                var value = 0;
+
+                if (self.ElementField.IndexEnabled && self.ElementField.rating() > 0) {
+                    value = self.rating() / self.ElementField.rating();
+                }
+
+                if (self.backingFields._ratingPercentage !== value) {
+                    self.backingFields._ratingPercentage = value;
+
+                    // Update related
+                    if (updateRelated) {
+                        // TODO ?
                     }
                 }
             }
@@ -416,11 +441,8 @@
                     // TODO Check whether ParentCellSet gets updated when selecting / deselecting an item
                     value = self.SelectedElementItem.totalResourcePoolIncome() / self.SelectedElementItem.ParentCellSet.length;
                 } else {
-
                     if (self.ElementField.IndexEnabled) {
-                        value = self.ElementField.indexIncome() * self.aggressiveRatingPercentage();
-                    } else {
-                        value = 0;
+                        value = self.ElementField.indexIncome() * self.ratingPercentage();
                     }
                 }
 

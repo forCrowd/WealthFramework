@@ -11,7 +11,7 @@ To build and run the project:
 * Open it with Visual Studio
 * Build the solution
 * Optional: Update the files under Web\Configs folder with your own settings
-* Run "Web" project under "1. Presentation Layer"
+* Run "Web" project under "1. Presentation Layer" folder
 * Navigate to [http://localhost:15001/](http://localhost:15001/) with your browser
 
 To be able run Entity Framework related T4 files (.tt files that include "EF6.Utility.ttinclude" file):
