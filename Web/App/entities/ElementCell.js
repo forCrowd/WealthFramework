@@ -365,17 +365,22 @@
 
                 var value = 0;
 
-                switch (self.ElementField.IndexType) {
-                    case 1: // Aggressive rating
-                        {
-                            value = self.aggressiveRating();
-                            break;
-                        }
-                    case 2: // Passive rating
-                        {
-                            value = self.passiveRating();
-                            break;
-                        }
+                // If there is only one item, then always %100
+                if (self.ElementField.ElementCellSet.length === 1) {
+                    value = 1;
+                } else {
+                    switch (self.ElementField.IndexType) {
+                        case 1: // Aggressive rating
+                            {
+                                value = self.aggressiveRating();
+                                break;
+                            }
+                        case 2: // Passive rating
+                            {
+                                value = self.passiveRating();
+                                break;
+                            }
+                    }
                 }
 
                 if (self.backingFields._rating !== value) {

@@ -6,6 +6,7 @@
 * ElementField - IndexType property was added
 There are two types; Aggressive (existing) & Passive
 Passive case covers CMRPs that only use Initial value (like Billion Dollar Question)
+* Content updates
 
 **0.35.2**
 

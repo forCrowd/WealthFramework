@@ -302,7 +302,12 @@
                             cell.setRatingPercentage(false);
                         }
 
-                        self.setIndexIncome();
+                        //self.setIndexIncome(false);
+
+                        for (var i = 0; i < self.ElementCellSet.length; i++) {
+                            var cell = self.ElementCellSet[i];
+                            cell.setIndexIncome(false);
+                        }
                     }
                 }
             }
