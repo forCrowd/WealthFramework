@@ -95,7 +95,9 @@
 
             self.setOtherUsersNumericValueTotal = function () {
 
-                self.backingFields._otherUsersNumericValueTotal = self.NumericValueTotal;
+                self.backingFields._otherUsersNumericValueTotal = self.NumericValueTotal !== null
+                    ? self.NumericValueTotal
+                    : 0;
 
                 // Exclude current user's
                 if (self.UserElementCellSet.length > 0) {

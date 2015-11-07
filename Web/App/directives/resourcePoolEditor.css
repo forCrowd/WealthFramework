@@ -37,7 +37,7 @@
     }
 
     .resourcePoolTable .incomeStatusLow {
-        color: #F34146;
+        color: #a94442;
     }
 
     .resourcePoolTable .incomeStatusAverage {
@@ -45,19 +45,19 @@
     }
 
     .resourcePoolTable .incomeStatusHigh {
-        color: #81C14F;
+        color: #3c763d;
     }
 
 .label-as-on-badge {
     border-radius: 1em;
-    background-color: #5cb85c;
+    background-color: #3c763d;
     cursor: pointer;
     margin-left: 5px;
 }
 
 .label-as-off-badge {
     border-radius: 1em;
-    background-color: #d9534f;
+    background-color: #a94442;
     cursor: pointer;
     margin-left: 5px;
 }

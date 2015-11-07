@@ -189,7 +189,9 @@
             }
 
             self.setOtherUsersResourcePoolRateTotal = function () {
-                self.backingFields._otherUsersResourcePoolRateTotal = self.ResourcePoolRateTotal;
+                self.backingFields._otherUsersResourcePoolRateTotal = self.ResourcePoolRateTotal !== null
+                    ? self.ResourcePoolRateTotal
+                    : 0;
 
                 // Exclude current user's
                 if (self.currentUserResourcePool() !== null) {

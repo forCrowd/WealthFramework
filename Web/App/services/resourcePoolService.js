@@ -81,6 +81,38 @@
                         var count = response.results.length;
                         //logger.logSuccess('Got ' + count + ' resourcePool(s)', response, true);
 
+                        // Set otherUsers' properties
+                        
+                        // ResourcePool
+                        var resourcePool = response.results[0];
+                        resourcePool.setOtherUsersResourcePoolRateTotal();
+                        resourcePool.setOtherUsersResourcePoolRateCount();
+
+                        // Elements
+                        if (typeof resourcePool.ElementSet !== 'undefined') {
+                            for (var elementIndex = 0; elementIndex < resourcePool.ElementSet.length; elementIndex++) {
+                                var element = resourcePool.ElementSet[elementIndex];
+
+                                // Fields
+                                if (typeof element.ElementFieldSet !== 'undefined') {
+                                    for (var fieldIndex = 0; fieldIndex < element.ElementFieldSet.length; fieldIndex++) {
+                                        var field = element.ElementFieldSet[fieldIndex];
+                                        field.setOtherUsersIndexRatingTotal();
+                                        field.setOtherUsersIndexRatingCount();
+
+                                        // Cells
+                                        if (typeof field.ElementCellSet !== 'undefined') {
+                                            for (var cellIndex = 0; cellIndex < field.ElementCellSet.length; cellIndex++) {
+                                                var cell = field.ElementCellSet[cellIndex];
+                                                cell.setOtherUsersNumericValueTotal();
+                                                cell.setOtherUsersNumericValueCount();
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
                         return response.results;
                     }
 

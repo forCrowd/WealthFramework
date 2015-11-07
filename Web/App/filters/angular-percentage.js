@@ -14,5 +14,4 @@
                 return $filter('number')(input * 100, decimals) + '%';
             };
         }]);
-
 })();

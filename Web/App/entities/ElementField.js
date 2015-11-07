@@ -125,7 +125,9 @@
             }
 
             self.setOtherUsersIndexRatingTotal = function () {
-                self.backingFields._otherUsersIndexRatingTotal = self.IndexRatingTotal;
+                self.backingFields._otherUsersIndexRatingTotal = self.IndexRatingTotal !== null
+                    ? self.IndexRatingTotal
+                    : 0;
 
                 // Exclude current user's
                 if (self.currentUserElementField() !== null) {
