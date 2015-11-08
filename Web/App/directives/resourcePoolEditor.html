@@ -49,7 +49,7 @@
                                     CMRP Amount
                                 </th>
                                 <td>
-                                    {{ resourcePool.CurrentElement.totalResourcePoolAmount() | number: 2 }}
+                                    {{ resourcePool.CurrentElement.totalResourcePoolAmount() | numberSymbol: 2 }}
                                 </td>
                             </tr>
                             <tr>
@@ -92,7 +92,7 @@
                                         || elementCell.ElementField.ElementFieldType === 4
                                         || elementCell.ElementField.ElementFieldType === 5">
                                         <span data-ng-class="{ 'fixedWidth35Cell': !elementCell.ElementField.UseFixedValue }">
-                                            {{ elementCell.numericValue() | number: 2 }}
+                                            {{ elementCell.numericValue() | numberSymbol: 2 }}
                                         </span>
                                         <div class="btn-group" role="group" data-ng-if="!elementCell.ElementField.UseFixedValue && elementCell.ElementField.IndexEnabled">
                                             <button data-tooltip="Increase" data-tooltip-append-to-body="true" type="button" data-ng-click="increaseElementCellNumericValue(elementCell)" data-ng-disabled="isSaving" class="btn btn-default btn-xs">+</button>
@@ -104,26 +104,26 @@
                                         {{ elementCell.SelectedElementItem.Name }}
                                     </span>
                                     <span data-ng-if="elementCell.ElementField.ElementFieldType === 11">
-                                        {{ elementItem.directIncome() | number: 2 }}
+                                        {{ elementItem.directIncome() | numberSymbol: 2 }}
                                     </span>
                                     <span data-ng-if="elementCell.ElementField.ElementFieldType === 12">
-                                        {{ elementItem.multiplier() | number: 2 }}
+                                        {{ elementItem.multiplier() | numberSymbol: 2 }}
                                     </span>
                                 </td>
                                 <!-- Direct Income -->
                                 <td data-ng-if="resourcePool.CurrentElement.directIncomeField() && resourcePool.CurrentElement.elementFieldIndexSet().length > 0">
-                                    {{ elementItem.totalDirectIncome() | number: 2 }}
+                                    {{ elementItem.totalDirectIncome() | numberSymbol: 2 }}
                                 </td>
                                 <!-- CMRP Income & Details -->
                                 <td data-ng-if="displayIndexDetails" data-ng-repeat="cellIndex in elementItem.elementCellIndexSet()">
-                                    {{ cellIndex.indexIncome() | number: 2 }}
+                                    {{ cellIndex.indexIncome() | numberSymbol: 2 }}
                                 </td>
                                 <td data-ng-if="resourcePool.CurrentElement.directIncomeField() && resourcePool.CurrentElement.elementFieldIndexSet().length > 0">
-                                    {{ elementItem.totalResourcePoolIncome() | number: 2 }}
+                                    {{ elementItem.totalResourcePoolIncome() | numberSymbol: 2 }}
                                 </td>
                                 <!-- Total Income -->
                                 <td data-ng-if="resourcePool.InitialValue > 0 || resourcePool.CurrentElement.directIncomeField()" data-ng-class="{ 'incomeStatusLow': elementItem.incomeStatus() === 'low', 'incomeStatusHigh': elementItem.incomeStatus() === 'high' }">
-                                    {{ elementItem.totalIncome() | number: 2 }}
+                                    {{ elementItem.totalIncome() | numberSymbol: 2 }}
                                 </td>
                             </tr>
                         </tbody>
@@ -132,26 +132,26 @@
                                 <!-- Fields -->
                                 <td data-ng-repeat="field in resourcePool.CurrentElement.ElementFieldSet | orderBy: 'SortOrder'">
                                     <span data-ng-if="field.ElementFieldType === 11">
-                                        {{ resourcePool.CurrentElement.directIncome() | number: 2 }}
+                                        {{ resourcePool.CurrentElement.directIncome() | numberSymbol: 2 }}
                                     </span>
                                     <span data-ng-if="field.ElementFieldType === 12">
-                                        {{ resourcePool.CurrentElement.multiplier() | number: 2 }}
+                                        {{ resourcePool.CurrentElement.multiplier() | numberSymbol: 2 }}
                                     </span>
                                 </td>
                                 <!-- Direct Income -->
                                 <td data-ng-if="resourcePool.CurrentElement.directIncomeField() && resourcePool.CurrentElement.elementFieldIndexSet().length > 0">
-                                    {{ resourcePool.CurrentElement.totalDirectIncome() | number: 2 }}
+                                    {{ resourcePool.CurrentElement.totalDirectIncome() | numberSymbol: 2 }}
                                 </td>
                                 <!-- CMRP Income & Details -->
                                 <td data-ng-if="displayIndexDetails" data-ng-repeat="field in resourcePool.CurrentElement.elementFieldIndexSet()">
-                                    {{ field.indexIncome() | number: 2 }}
+                                    {{ field.indexIncome() | numberSymbol: 2 }}
                                 </td>
                                 <td data-ng-if="resourcePool.CurrentElement.directIncomeField() && resourcePool.CurrentElement.elementFieldIndexSet().length > 0">
-                                    {{ resourcePool.CurrentElement.totalResourcePoolAmount() | number: 2 }} <!-- Same as income -->
+                                    {{ resourcePool.CurrentElement.totalResourcePoolAmount() | numberSymbol: 2 }} <!-- Same as income -->
                                 </td>
                                 <!-- Total Income -->
                                 <td data-ng-if="resourcePool.InitialValue > 0 || resourcePool.CurrentElement.directIncomeField()">
-                                    {{ resourcePool.CurrentElement.totalIncome() | number: 2 }}
+                                    {{ resourcePool.CurrentElement.totalIncome() | numberSymbol: 2 }}
                                 </td>
                             </tr>
                             <!-- Functions -->

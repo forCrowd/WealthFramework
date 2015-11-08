@@ -1,5 +1,11 @@
 ﻿### Release Notes
 
+**0.36.1**
+
+* angular-moneySymbol filter
+* OtherUsers' values calculation bug fix
+* Content updates
+
 **0.36**
 
 * Billion Dollar Question

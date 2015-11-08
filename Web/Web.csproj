@@ -419,6 +419,7 @@
     <Content Include="App\authorization.js" />
     <Content Include="App\external\highcharts-ng.js" />
     <Content Include="App\external\highcharts.js" />
+    <Content Include="App\filters\angular-numberSymbol.js" />
     <Content Include="App\includes\manageMenu.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

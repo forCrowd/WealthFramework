@@ -13,7 +13,7 @@
 
     <!-- Internal CSS -->
     <link href="/Content/site.css?v=0.30" rel="stylesheet" />
-    <link href="/App/directives/resourcePoolEditor.css?v=0.31.2" rel="stylesheet" />
+    <link href="/App/directives/resourcePoolEditor.css?v=0.36.1" rel="stylesheet" />
 
     <!-- jQuery -->
     <script src="/Scripts/jquery-2.1.4.min.js"></script>
@@ -132,14 +132,14 @@
     <!-- Main -->
     <script src="/App/main.js?v=0.32"></script>
     <script src="/App/logger.js?v=0.29"></script>
-    <script src="/App/route.js?v=0.36"></script>
+    <script src="/App/route.js?v=0.36.1"></script>
     <script src="/App/authorization.js?v=0.29"></script>
 
     <!-- Entities -->
-    <script src="/App/entities/ResourcePool.js?v=0.35"></script>
+    <script src="/App/entities/ResourcePool.js?v=0.36.1"></script>
     <script src="/App/entities/Element.js?v=0.35"></script>
-    <script src="/App/entities/ElementCell.js?v=0.36"></script>
-    <script src="/App/entities/ElementField.js?v=0.36"></script>
+    <script src="/App/entities/ElementCell.js?v=0.36.1"></script>
+    <script src="/App/entities/ElementField.js?v=0.36.1"></script>
     <script src="/App/entities/ElementItem.js?v=0.36"></script>
     <script src="/App/entities/UserElementCell.js?v=0.35"></script>
 
@@ -179,10 +179,11 @@
     <script src="/App/controllers/manage/resourcePool/resourcePoolCustomViewController.js?v=0.27"></script>
 
     <!-- Directives -->
-    <script src="/App/directives/resourcePoolEditor.js?v=0.35.2"></script>
+    <script src="/App/directives/resourcePoolEditor.js?v=0.36.1"></script>
 
     <!-- Filters -->
     <script src="/App/filters/angular-percentage.js?v=0.22"></script>
+    <script src="/App/filters/angular-numberSymbol.js?v=0.36.1"></script>
 
 </body>
 </html>
