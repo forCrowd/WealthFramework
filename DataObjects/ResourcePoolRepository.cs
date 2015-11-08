@@ -1181,12 +1181,12 @@
             mainElement.ElementFieldSet.Single(item => item.IndexEnabled).IndexType = (byte)IndexType.Passive;
 
             // Items, cell, user cells
-            mainElement.ElementItemSet.Skip(0).First().Name = "Improving healthcare";
-            mainElement.ElementItemSet.Skip(1).First().Name = "Improving education";
-            mainElement.ElementItemSet.Skip(2).First().Name = "Providing entertainment";
-            mainElement.ElementItemSet.Skip(3).First().Name = "Providing cosmetic products";
-            mainElement.ElementItemSet.Skip(4).First().Name = "Solving hunger";
-            mainElement.ElementItemSet.Skip(5).First().Name = "Solving poverty";
+            mainElement.ElementItemSet.Skip(0).First().Name = "Cosmetics: Curing baldness";
+            mainElement.ElementItemSet.Skip(1).First().Name = "Education: Reducing illiteracy";
+            mainElement.ElementItemSet.Skip(2).First().Name = "Entertainment: Improving aug. reality in v. games";
+            mainElement.ElementItemSet.Skip(3).First().Name = "Healthcare: Curing cancer";
+            mainElement.ElementItemSet.Skip(4).First().Name = "Hunger: Clean water for everyone";
+            mainElement.ElementItemSet.Skip(5).First().Name = "Poverty: Reducing infant mortality rates";
 
             // Return
             return resourcePool;

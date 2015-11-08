@@ -132,7 +132,7 @@
     <!-- Main -->
     <script src="/App/main.js?v=0.32"></script>
     <script src="/App/logger.js?v=0.29"></script>
-    <script src="/App/route.js?v=0.36.1"></script>
+    <script src="/App/route.js?v=0.36.2"></script>
     <script src="/App/authorization.js?v=0.29"></script>
 
     <!-- Entities -->

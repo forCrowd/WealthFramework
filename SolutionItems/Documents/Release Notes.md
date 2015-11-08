@@ -1,5 +1,9 @@
 ﻿### Release Notes
 
+**0.36.2**
+
+* Content updates
+
 **0.36.1**
 
 * angular-moneySymbol filter
