@@ -1183,7 +1183,7 @@
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).First().Name = "Cosmetics: Curing baldness";
             mainElement.ElementItemSet.Skip(1).First().Name = "Education: Reducing illiteracy";
-            mainElement.ElementItemSet.Skip(2).First().Name = "Entertainment: Improving aug. reality in v. games";
+            mainElement.ElementItemSet.Skip(2).First().Name = "Entertainment: Improving augmented reality in video games";
             mainElement.ElementItemSet.Skip(3).First().Name = "Healthcare: Curing cancer";
             mainElement.ElementItemSet.Skip(4).First().Name = "Hunger: Clean water for everyone";
             mainElement.ElementItemSet.Skip(5).First().Name = "Poverty: Reducing infant mortality rates";
