@@ -1,5 +1,10 @@
 ﻿### Release Notes
 
+**0.36.2**
+
+* ElementItem name was updated to 250 chars
+* Content updates
+
 **0.36.1**
 
 * angular-moneySymbol filter

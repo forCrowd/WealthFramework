@@ -40,7 +40,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects
 
         [Display(Name = "Element Item")]
         [Required]
-        [StringLength(50)]
+        [StringLength(250)]
         public string Name
         {
             get { return _name; }

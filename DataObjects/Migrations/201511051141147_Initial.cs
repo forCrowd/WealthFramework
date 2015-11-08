@@ -81,7 +81,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         ElementId = c.Int(nullable: false),
-                        Name = c.String(nullable: false, maxLength: 50),
+                        Name = c.String(nullable: false, maxLength: 250),
                         CreatedOn = c.DateTime(nullable: false),
                         ModifiedOn = c.DateTime(nullable: false),
                         DeletedOn = c.DateTime(),
