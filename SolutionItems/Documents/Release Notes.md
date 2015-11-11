@@ -1,5 +1,9 @@
 ﻿### Release Notes
 
+**0.37**
+
+* (An empty) robots.txt was created
+
 **0.36.2**
 
 * ElementItem name was updated to 250 chars

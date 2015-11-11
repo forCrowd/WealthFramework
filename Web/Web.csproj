@@ -692,6 +692,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>editController.txt</LastGenOutput>
     </None>
+    <Content Include="robots.txt" />
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
