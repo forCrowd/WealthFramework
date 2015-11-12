@@ -13,7 +13,7 @@
 
     <!-- Internal CSS -->
     <link href="/Content/site.css?v=0.30" rel="stylesheet" />
-    <link href="/App/directives/resourcePoolEditor.css?v=0.36.1" rel="stylesheet" />
+    <link href="/App/directives/resourcePoolEditor/resourcePoolEditor.css?v=0.37" rel="stylesheet" />
 
     <!-- jQuery -->
     <script src="/Scripts/jquery-2.1.4.min.js"></script>
@@ -63,10 +63,10 @@
                     <li class="dropdown hide" data-dropdown data-ng-show="vm.isAuthenticated()">
                         <a href="" class="dropdown-toggle" data-dropdown-toggle>Manage <b class="caret"></b></a>
                         <!-- Manage Menu - Generated -->
-                        <script src="/App/includes/manageMenu.js?v=0.27"></script>
+                        <script src="/App/includes/manageMenu.js?v=0.37"></script>
                     </li>
                     <li data-ng-show="vm.isAuthenticated()">
-                        <a href="/manage/custom/resourcePool">CMRP</a>
+                        <a href="/manage/resourcePool">CMRP</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -132,7 +132,7 @@
     <!-- Main -->
     <script src="/App/main.js?v=0.32"></script>
     <script src="/App/logger.js?v=0.29"></script>
-    <script src="/App/route.js?v=0.36.2"></script>
+    <script src="/App/route.js?v=0.37"></script>
     <script src="/App/authorization.js?v=0.29"></script>
 
     <!-- Entities -->
@@ -150,7 +150,7 @@
     <script src="/App/services/mainService.js?v=0.22"></script>
 
     <!-- Manage Scripts - Generated (Services, Controllers) -->
-    <script src="/App/includes/manageScripts.js?v=0.33"></script>
+    <script src="/App/includes/manageScripts.js?v=0.37"></script>
 
     <!-- Service extensions -->
     <script src="/App/services/userService.js?v=0.35"></script>
@@ -179,7 +179,7 @@
     <script src="/App/controllers/manage/resourcePool/resourcePoolCustomViewController.js?v=0.27"></script>
 
     <!-- Directives -->
-    <script src="/App/directives/resourcePoolEditor.js?v=0.36.1"></script>
+    <script src="/App/directives/resourcePoolEditor/resourcePoolEditor.js?v=0.37"></script>
 
     <!-- Filters -->
     <script src="/App/filters/angular-percentage.js?v=0.22"></script>

@@ -3,7 +3,8 @@
 **0.37**
 
 * (An empty) robots.txt was created
-* Minor updates to folder structure
+* File & folder structure updates
+* New / edit entity view bug fix
 
 **0.36.2**
 

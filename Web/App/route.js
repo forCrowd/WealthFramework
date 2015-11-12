@@ -24,14 +24,15 @@
             .when('/account/changePassword', { title: function () { return 'Change Password'; }, templateUrl: '/App/views/account/changePassword.html?v=0.22', controller: 'changePasswordController as vm' })
 
             /* Custom List + Edit pages */
-            .when('/manage/custom/resourcePool', { title: function () { return 'CMRP List'; }, templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomList.html?v=0.22' })
-            .when('/manage/custom/resourcePool/:Id', { title: function () { return ''; }, templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomView.html?v=0.22' })
+            .when('/manage/resourcePool', { title: function () { return 'CMRP List'; }, templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomList.html?v=0.22' })
+            .when('/manage/resourcePool/:Id', { title: function () { return ''; }, templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomView.html?v=0.22' })
 
-            /* Default List + Edit pages */
-            .when('/manage/:entity', { title: getManageRouteTitle, templateUrl: getManageRouteTemplateUrl })
-            .when('/manage/:entity/:action', { title: getManageRouteTitle, templateUrl: getManageRouteTemplateUrl })
-            .when('/manage/:entity/:action/:Id', { title: getManageRouteTitle, templateUrl: getManageRouteTemplateUrl })
+            /* Generated List + Edit pages */
+            .when('/manage/generated/:entity', { title: getManageRouteTitle, templateUrl: getManageRouteTemplateUrl })
+            .when('/manage/generated/:entity/:action', { title: getManageRouteTitle, templateUrl: getManageRouteTemplateUrl })
+            .when('/manage/generated/:entity/:action/:Id', { title: getManageRouteTitle, templateUrl: getManageRouteTemplateUrl })
 
+            /* Otherwise */
             .otherwise({ redirectTo: '/content/404' }); // TODO Is it possible to return Response.StatusCode = 404; ?
 
         // Html5Mode is on, if supported (# will not be used)
@@ -44,7 +45,7 @@
             var entity = params.entity[0].toUpperCase() + params.entity.substring(1);
 
             var action = typeof params.action !== 'undefined'
-                ? action[0].toUpperCase() + action.substring(1)
+                ? params.action[0].toUpperCase() + params.action.substring(1)
                 : 'List';
 
             return entity + ' ' + action;
@@ -55,14 +56,15 @@
             var templateUrl = '';
 
             var action = typeof params.action !== 'undefined'
-                ? params.actions
+                ? params.action
                 : 'list'; // Default action
 
             if (action === 'list')
-                templateUrl = '/App/views/manage/list/' + params.entity + 'List.html?v=0.36';
+                templateUrl = '/App/views/manage/generated/list/' + params.entity + 'List.html?v=0.37';
 
-            if (action === 'new' || action === 'edit')
-                templateUrl = '/App/views/manage/edit/' + params.entity + 'Edit.html?v=0.36';
+            if (action === 'new' || action === 'edit') {
+                templateUrl = '/App/views/manage/generated/edit/' + params.entity + 'Edit.html?v=0.37';
+            }
 
             return templateUrl;
         }

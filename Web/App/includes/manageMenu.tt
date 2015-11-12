@@ -48,12 +48,8 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 
 	if (businessObjectDisplayAttribute != null)
 		entityTitle = businessObjectDisplayAttribute.DisplayName;
-
-	var entityServiceScriptFileName = string.Format("{0}Service.js", entityVariable);
-	var entityListControllerScriptFileName = string.Format("{0}ListController.js", entityVariable);
-	var entityEditControllerScriptFileName = string.Format("{0}EditController.js", entityVariable);
 #>
-    <li><a href="/manage/<#= entityVariable #>"><#= entityTitle #></a></li>\
+    <li><a href="/manage/generated/<#= entityVariable #>"><#= entityTitle #></a></li>\
 <#
 }
 #>
