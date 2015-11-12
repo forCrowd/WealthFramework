@@ -3,6 +3,7 @@
 **0.37**
 
 * (An empty) robots.txt was created
+* Minor updates to folder structure
 
 **0.36.2**
 

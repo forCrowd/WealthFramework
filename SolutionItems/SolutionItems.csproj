@@ -51,7 +51,8 @@
     </None>
     <None Include="Documents\Index Income Calculation.xlsx" />
     <None Include="Documents\Release Notes.md" />
-    <None Include="Documents\Todo.md" />
+    <None Include="Documents\TodoHot.md" />
+    <None Include="Documents\TodoUnsorted.md" />
     <Content Include="Documents\Troubleshoot.txt" />
     <Content Include="Scripts\Database\Sql\Local - Backup Database.sql" />
     <Content Include="Scripts\Database\Sql\Local - Create Login + User.sql" />
@@ -62,10 +63,10 @@
       <Link>Scripts\Build\appveyor.yml</Link>
     </None>
     <None Include="..\LICENSE">
-      <Link>Notes\LICENSE</Link>
+      <Link>Documents\LICENSE</Link>
     </None>
     <None Include="..\README.md">
-      <Link>Notes\README.md</Link>
+      <Link>Documents\README.md</Link>
     </None>
     <None Include="Links\Industry Browser - Yahoo! Finance - Full Industry List.URL" />
     <None Include="Links\Sector List - Yahoo! Finance Industry Browser.URL" />
