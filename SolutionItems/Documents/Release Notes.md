@@ -2,6 +2,11 @@
 
 **0.37**
 
+* dataContext.js createEntity() was updated to a synchronous function again
+Creating sample entities was too difficult & complex with async. function
+metadataReady() function is now called under initializeStore() and it doesn't wait for the result.
+To fix this issue permanently;
+https://github.com/angular/angular.js/issues/4003
 * (An empty) robots.txt was created
 * File & folder structure updates
 * New / edit entity view bug fix
@@ -13,7 +18,7 @@
 
 **0.36.1**
 
-* angular-moneySymbol filter
+* angular-numberSymbol filter
 * OtherUsers' values calculation bug fix
 * Content updates
 

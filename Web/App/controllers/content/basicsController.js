@@ -29,9 +29,11 @@
 
                 // Call the service to increase the multiplier
                 resourcePoolService.getResourcePoolExpanded(oppositeResourcePoolId)
-                    .then(function (resourcePoolSet) {
+                    .then(function (resourcePool) {
 
-                        var resourcePool = resourcePoolSet[0];
+                        if (resourcePool === null) {
+                            return;
+                        }
 
                         var result = false;
                         switch (event.name) {

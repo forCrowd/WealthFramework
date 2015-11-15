@@ -415,7 +415,6 @@
     <Content Include="App\external\gratipay.js" />
     <Content Include="App\external\0 ReadMe.txt" />
     <Content Include="App\external\twitter.js" />
-    <Content Include="App\external\ui-bootstrap-tpls-0.13.0.min.js" />
     <Content Include="App\authorization.js" />
     <Content Include="App\external\highcharts-ng.js" />
     <Content Include="App\external\highcharts.js" />
@@ -634,6 +633,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ODataController.tt</DependentUpon>
     </None>
+    <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -703,6 +703,10 @@
     <Content Include="Scripts\angular-route.min.js" />
     <Content Include="Scripts\angular-sanitize.js" />
     <Content Include="Scripts\angular-sanitize.min.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />

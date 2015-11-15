@@ -23,7 +23,7 @@
     <script src="/Scripts/modernizr-2.8.3.js"></script>-->
 
     <!-- Google Analytics -->
-    <script>
+<%--    <script>
         (function (i, s, o, g, r, a, m) {
             //return;
             i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
@@ -35,7 +35,7 @@
         ga('create', 'UA-62498767-2', 'auto');
         ga('send', 'pageview');
 
-    </script>
+    </script>--%>
 </head>
 <body data-ng-app="main" data-ng-controller="mainController as vm">
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -110,7 +110,7 @@
         </footer>
     </div>
 
-    <%--<script src="/Scripts/bootstrap.min.js?v=0.35.1"></script>--%>
+    <%--<script src="/Scripts/bootstrap.min.js?v=0.37"></script>--%>
     <script src="/Scripts/respond.min.js?v=0.24"></script>
     <script src="/Scripts/datajs-1.1.3.min.js?v=0.24"></script>
     <script src="/Scripts/toastr.min.js?v=0.24"></script>
@@ -119,8 +119,10 @@
     <script src="/Scripts/angular-route.min.js?v=0.35.1"></script>
     <script src="/Scripts/angular-sanitize.min.js?v=0.35.1"></script>
 
-    <script src="/App/external/ui-bootstrap-tpls-0.13.0.min.js?v=0.30"></script>
+    <!-- Angular UI -->
+    <script src="/Scripts/angular-ui/ui-bootstrap-tpls.min.js?v=0.37"></script>
 
+    <!-- breeze -->
     <script src="/Scripts/breeze.min.js?v=0.24"></script>
     <script src="/Scripts/breeze.bridge.angular.js?v=0.24"></script>
     <script src="/Scripts/breeze.directives.js?v=0.24"></script>
@@ -130,7 +132,7 @@
     <script src="/App/external/highcharts-ng.js?v=0.24"></script>
 
     <!-- Main -->
-    <script src="/App/main.js?v=0.32"></script>
+    <script src="/App/main.js?v=0.37"></script>
     <script src="/App/logger.js?v=0.29"></script>
     <script src="/App/route.js?v=0.37"></script>
     <script src="/App/authorization.js?v=0.29"></script>
@@ -145,7 +147,7 @@
 
     <!-- breezeJS -->
     <script src="/App/entityManagerFactory.js?v=0.27"></script>
-    <script src="/App/dataContext.js?v=0.29.2"></script>
+    <script src="/App/dataContext.js?v=0.37"></script>
 
     <script src="/App/services/mainService.js?v=0.22"></script>
 
@@ -154,12 +156,12 @@
 
     <!-- Service extensions -->
     <script src="/App/services/userService.js?v=0.35"></script>
-    <script src="/App/services/resourcePoolService.js?v=0.29"></script>
+    <script src="/App/services/resourcePoolService.js?v=0.37"></script>
 
     <!-- Content -->
     <script src="/App/controllers/content/mainController.js?v=0.29"></script>
-    <script src="/App/controllers/content/introductionController.js?v=0.29"></script>
-    <script src="/App/controllers/content/basicsController.js?v=0.29"></script>
+    <script src="/App/controllers/content/introductionController.js?v=0.37"></script>
+    <script src="/App/controllers/content/basicsController.js?v=0.37"></script>
     <script src="/App/controllers/content/sectorIndexSampleController.js?v=0.29"></script>
     <script src="/App/controllers/content/knowledgeIndexSampleController.js?v=0.30"></script>
     <script src="/App/controllers/content/totalCostIndexSampleController.js?v=0.29"></script>
@@ -176,7 +178,7 @@
 
     <!-- Manage Scripts - Custom -->
     <script src="/App/controllers/manage/resourcePool/resourcePoolCustomListController.js?v=0.22"></script>
-    <script src="/App/controllers/manage/resourcePool/resourcePoolCustomViewController.js?v=0.27"></script>
+    <script src="/App/controllers/manage/resourcePool/resourcePoolCustomViewController.js?v=0.37"></script>
 
     <!-- Directives -->
     <script src="/App/directives/resourcePoolEditor/resourcePoolEditor.js?v=0.37"></script>

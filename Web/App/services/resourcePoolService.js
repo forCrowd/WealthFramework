@@ -5,10 +5,25 @@
     var serviceId = 'resourcePoolService';
     angular.module('main')
         .config(function ($provide) {
-            $provide.decorator(serviceId, ['$delegate', 'userService', 'dataContext', '$rootScope', 'logger', resourcePoolService]);
+            $provide.decorator(serviceId, [
+                '$delegate',
+                'ResourcePool',
+                'Element',
+                'userService',
+                'dataContext',
+                '$rootScope',
+                'logger',
+                resourcePoolService]);
         });
 
-    function resourcePoolService($delegate, userService, dataContext, $rootScope, logger) {
+    function resourcePoolService(
+        $delegate,
+        ResourcePool,
+        Element,
+        userService,
+        dataContext,
+        $rootScope,
+        logger) {
 
         // Logger
         logger = logger.forSource(serviceId);
@@ -17,6 +32,7 @@
         var fetched = [];
 
         // Service methods
+        $delegate.getNewResourcePool = getNewResourcePool;
         $delegate.getResourcePoolExpanded = getResourcePoolExpanded;
 
         // User logged out
@@ -30,6 +46,159 @@
         return $delegate;
 
         /*** Implementations ***/
+
+        function getNewResourcePool() {
+
+            return userService.getCurrentUser()
+                .then(function (currentUser) {
+
+                    var resourcePoolInitial = {};
+                    resourcePoolInitial.User = currentUser;
+                    resourcePoolInitial.Name = 'New CMRP';
+                    resourcePoolInitial.InitialValue = 0;
+                    resourcePoolInitial.UseFixedResourcePoolRate = false;
+
+                    var resourcePool = dataContext.createEntity('ResourcePool', resourcePoolInitial);
+
+                    var elementInitial = {};
+                    elementInitial.ResourcePool = resourcePool;
+                    elementInitial.Name = 'Element';
+
+                    var element = dataContext.createEntity('Element', elementInitial);
+
+                    // Name field
+                    var nameFieldInitial = {};
+                    nameFieldInitial.Element = element;
+                    nameFieldInitial.Name = 'Name';
+                    nameFieldInitial.ElementFieldType = 1;
+                    nameFieldInitial.UseFixedValue = true;
+                    nameFieldInitial.SortOrder = 1;
+
+                    var nameField = dataContext.createEntity('ElementField', nameFieldInitial);
+
+                    // Importance field index
+                    var importanceFieldInitial = {};
+                    importanceFieldInitial.Element = element;
+                    importanceFieldInitial.Name = 'Importance';
+                    importanceFieldInitial.ElementFieldType = 4;
+                    importanceFieldInitial.UseFixedValue = false;
+                    importanceFieldInitial.IndexEnabled = true;
+                    importanceFieldInitial.IndexType = 2;
+                    importanceFieldInitial.IndexRatingSortType = 2;
+                    importanceFieldInitial.SortOrder = 2;
+
+                    var importanceField = dataContext.createEntity('ElementField', importanceFieldInitial);
+
+                    var item1Initial = {};
+                    item1Initial.Element = element;
+                    item1Initial.Name = 'Item 1'; // ?
+
+                    var item1 = dataContext.createEntity('ElementItem', item1Initial);
+
+                    var cell1Initial = {};
+                    cell1Initial.ElementField = nameField;
+                    cell1Initial.ElementItem = item1;
+
+                    var cell1 = dataContext.createEntity('ElementCell', cell1Initial);
+
+                    var userCell1Initial = {};
+                    userCell1Initial.User = currentUser;
+                    userCell1Initial.ElementCell = cell1;
+                    userCell1Initial.StringValue = 'Item 1';
+
+                    var userCell1 = dataContext.createEntity('UserElementCell', userCell1Initial);
+
+                    var item1Initial = {};
+                    item1Initial.Element = element;
+                    item1Initial.Name = 'Item 1'; // ?
+
+                    var cell2Initial = {};
+                    cell2Initial.ElementField = importanceField;
+                    cell2Initial.ElementItem = item1;
+
+                    var cell2 = dataContext.createEntity('ElementCell', cell2Initial);
+
+                    return resourcePool;
+
+                    //logger.log('cmrp id', cmrp.Id);
+                    //logger.log('elm cmrp id', elm.ResourcePool.Id);
+                    //logger.log('elm cmrp id 2', elm.ResourcePoolId);
+
+                });
+
+        }
+
+        function getNewResourcePoolCreateEntityAsync() {
+
+            return userService.getCurrentUser()
+                .then(function (currentUser) {
+
+                    var resourcePoolInitial = {};
+                    resourcePoolInitial.User = currentUser;
+                    resourcePoolInitial.Name = 'New CMRP';
+                    resourcePoolInitial.InitialValue = 0;
+                    resourcePoolInitial.UseFixedResourcePoolRate = false;
+
+                    return dataContext.createEntity('ResourcePool', resourcePoolInitial)
+                        .then(function (resourcePool) {
+
+                            var elementInitial = {};
+                            elementInitial.ResourcePool = resourcePool;
+                            elementInitial.Name = 'Element';
+
+                            return dataContext.createEntity('Element', elementInitial)
+                                .then(function (element) {
+
+                                    // Name field
+                                    var nameFieldInitial = {};
+                                    nameFieldInitial.Element = element;
+                                    nameFieldInitial.Name = 'Name';
+                                    nameFieldInitial.ElementFieldType = 1;
+                                    nameFieldInitial.UseFixedValue = null;
+                                    nameFieldInitial.SortOrder = 1;
+
+                                    return dataContext.createEntity('ElementField', nameFieldInitial)
+                                        .then(function (nameField) {
+
+                                            var item1Initial = {};
+                                            item1Initial.Element = element;
+                                            item1Initial.Name = 'Item 1'; // ?
+
+                                            return dataContext.createEntity('ElementItem', item1Initial)
+                                                .then(function (item1) {
+
+                                                    var cell1Initial = {};
+                                                    cell1Initial.ElementField = nameField;
+                                                    cell1Initial.ElementItem = item1;
+
+                                                    return dataContext.createEntity('ElementCell', cell1Initial)
+                                                        .then(function (cell1) {
+
+                                                            var userCell1Initial = {};
+                                                            userCell1Initial.User = currentUser;
+                                                            userCell1Initial.ElementCell = cell1;
+                                                            userCell1Initial.StringValue = 'Item 1';
+
+                                                            return dataContext.createEntity('UserElementCell', userCell1Initial)
+                                                                .then(function (userCell1) {
+
+                                                                    return resourcePool;
+                                                                });
+                                                        });
+                                                });
+                                        });
+
+                                    //logger.log('cmrp id', cmrp.Id);
+                                    //logger.log('elm cmrp id', elm.ResourcePool.Id);
+                                    //logger.log('elm cmrp id 2', elm.ResourcePoolId);
+
+                                });
+
+                        });
+
+                });
+
+        }
 
         function getResourcePoolExpanded(resourcePoolId) {
 
@@ -78,13 +247,15 @@
                         // Add the record into fetched list
                         fetched.push(resourcePoolId);
 
-                        var count = response.results.length;
-                        //logger.logSuccess('Got ' + count + ' resourcePool(s)', response, true);
+                        // If there is no cmrp with this Id, return null
+                        if (response.results.length === 0) {
+                            return null;
+                        }
 
-                        // Set otherUsers' properties
-                        
                         // ResourcePool
                         var resourcePool = response.results[0];
+
+                        // Set otherUsers' properties
                         resourcePool.setOtherUsersResourcePoolRateTotal();
                         resourcePool.setOtherUsersResourcePoolRateCount();
 
@@ -113,7 +284,7 @@
                             }
                         }
 
-                        return response.results;
+                        return resourcePool;
                     }
 
                     function failed(error) {

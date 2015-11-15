@@ -1,28 +1,32 @@
 ﻿(function () {
     'use strict';
 
-    var resourcePoolEditorDirectiveId = 'resourcePoolEditor';
+    var directiveId = 'resourcePoolEditor';
 
     angular.module('main')
-        .directive(resourcePoolEditorDirectiveId, ['resourcePoolService',
+        .directive(directiveId, ['resourcePoolService',
             'userService',
             '$rootScope',
+            '$uibModal',
             'logger',
             resourcePoolEditor]);
 
     function resourcePoolEditor(resourcePoolService,
         userService,
         $rootScope,
+        $uibModal,
         logger) {
 
         // Logger
-        logger = logger.forSource(resourcePoolEditorDirectiveId);
+        logger = logger.forSource(directiveId);
 
         function link(scope, elm, attrs) {
 
             scope.resourcePool = null;
-            scope.errorMessage = '';
             scope.isSaving = false;
+            scope.errorMessage = '';
+
+            scope.showEditModal = showEditModal;
 
             // Resource pool id: Get the current resource pool
             scope.$watch('resourcePoolId', function () {
@@ -126,6 +130,123 @@
                 saveChanges();
             }
 
+            function showEditModal() {
+
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'editModal.html',
+                    controllerAs: 'vm',
+                    controller: function ($location, logger, $uibModalInstance, resourcePool) {
+
+                        var vm = this;
+                        vm.cancelChanges = cancelChanges;
+                        vm.isNew = $location.path() === '/manage/resourcePool/0';
+                        vm.isSaveDisabled = isSaveDisabled;
+                        vm.isSaving = false;
+                        vm.entityErrors = [];
+                        vm.resourcePool = resourcePool;
+                        vm.saveChanges = saveChanges;
+
+                        function cancelChanges() {
+
+                            // Changes canceled
+                            scope.resourcePool.entityAspect.rejectChanges();
+
+                            // If it was new, re-create it
+                            if (vm.isNew) {
+                                scope.resourcePool = resourcePoolService.getNewResourcePool();
+                            }
+
+                            $uibModalInstance.dismiss('cancel');
+                        };
+
+                        function isSaveDisabled() {
+                            //var value = vm.isSaving || (!vm.isNew && !resourcePoolService.hasChanges());
+                            var value = vm.isSaving;
+                            return value;
+                        }
+
+                        function saveChanges() {
+
+                            vm.isSaving = true;
+
+                            //if (vm.isNew) {
+                            //    resourcePoolService.createResourcePool(vm.resourcePool)
+                            //        .then(function (resourcePool) {
+
+                            //            logger.log('resourcePool', resourcePool);
+                            //            logger.log('vm.resourcePool', vm.resourcePool);
+
+                            //            vm.resourcePool = resourcePool;
+
+                            //            saveChangesInternal();
+                            //        });
+                            //} else {
+                            saveChangesInternal();
+
+                            //}
+
+                            function saveChangesInternal() {
+
+                                resourcePoolService.saveChanges()
+                                    .then(function (result) {
+
+                                        // Main element fix
+                                        if (vm.isNew && resourcePool.ElementSet.length > 0) {
+                                            resourcePool.MainElement = resourcePool.ElementSet[0];
+
+                                            resourcePoolService.saveChanges()
+                                                .then(function (result) {
+
+                                                    $uibModalInstance.close();
+
+                                                    if (vm.isNew) {
+                                                        $location.path('/manage/resourcePool/' + vm.resourcePool.Id);
+                                                    }
+                                                });
+                                        } else {
+                                            $uibModalInstance.close();
+
+                                            if (vm.isNew) {
+                                                $location.path('/manage/resourcePool/' + vm.resourcePool.Id);
+                                            }
+                                        }
+                                    })
+                                    .catch(function (error) {
+                                        // Conflict (Concurrency exception)
+                                        if (typeof error.status !== 'undefined' && error.status === '409') {
+                                            // TODO Try to recover!
+                                        } else if (typeof error.entityErrors !== 'undefined') {
+                                            vm.entityErrors = error.entityErrors;
+                                        }
+                                    })
+                                    .finally(function () {
+                                        vm.isSaving = false;
+                                    });
+
+                            }
+                        };
+                    },
+                    size: '',
+                    resolve: {
+                        resourcePool: function () {
+                            return scope.resourcePool;
+                        }
+                    }
+                });
+
+                modalInstance.result.then(function () {
+
+                    // saved
+
+                }, function () {
+
+                    // Canceled
+
+                    logger.log('Modal dismissed at: ' + new Date());
+                });
+
+            }
+
             function initChart() {
 
                 scope.chartConfig = {
@@ -171,55 +292,75 @@
                     return;
                 }
 
-                resourcePoolService.getResourcePoolExpanded(scope.resourcePoolId)
-                        .then(loadResourcePool)
-                        .catch(function () {
-                            // TODO scope.errorMessage ?
-                        })
-                        .finally(function () {
+                // New
+                if (scope.resourcePoolId === '0') {
+
+                    resourcePoolService.getNewResourcePool()
+                        .then(function (resourcePool) {
+
+                            scope.resourcePool = resourcePool;
+
+                            logger.log('scope.resourcePool', scope.resourcePool);
+
+                            scope.showEditModal();
+
                             scope.chartConfig.loading = false;
                         });
-            }
 
-            function loadResourcePool(resourcePoolSet) {
+                } else { // Existing
+                    resourcePoolService.getResourcePoolExpanded(scope.resourcePoolId)
+                            .then(function (resourcePool) {
 
-                if (resourcePoolSet.length === 0) {
-                    scope.errorMessage = 'Invalid CMRP Id';
-                    return;
+                                if (resourcePool === null) {
+                                    scope.errorMessage = 'Invalid CMRP Id';
+                                    return;
+                                }
+
+                                // It returns an array, set the first item in the list
+                                scope.resourcePool = resourcePool;
+
+                                // Current element
+                                if (scope.resourcePool.CurrentElement === null) {
+                                    scope.changeCurrentElement(scope.resourcePool.MainElement);
+                                } else {
+                                    loadChartData();
+                                }
+
+                                // TODO Just for test, remove later
+                                //scope.increaseElementMultiplier(scope.resourcePool.MainElement);
+
+                                //for (var i = 0; i < scope.resourcePool.MainElement.ElementFieldSet.length; i++) {
+                                //    var field = scope.resourcePool.MainElement.ElementFieldSet[i];
+                                //    if (field.IndexEnabled) {
+                                //        var cell1 = field.ElementCellSet[0];
+                                //        scope.decreaseElementCellNumericValue(cell1);
+
+                                //        var cell2 = field.ElementCellSet[1];
+                                //        scope.decreaseElementCellNumericValue(cell2);
+
+                                //        var cell3 = field.ElementCellSet[2];
+                                //        scope.decreaseElementCellNumericValue(cell3);
+                                //    }
+                                //}
+
+                            })
+                            .catch(function () {
+                                // TODO scope.errorMessage ?
+                            })
+                            .finally(function () {
+                                scope.chartConfig.loading = false;
+                            });
                 }
-
-                // It returns an array, set the first item in the list
-                scope.resourcePool = resourcePoolSet[0];
-
-                // Current element
-                if (scope.resourcePool.CurrentElement === null) {
-                    scope.changeCurrentElement(scope.resourcePool.MainElement);
-                } else {
-                    loadChartData();
-                }
-
-                // TODO Just for test, remove later
-                //scope.increaseElementMultiplier(scope.resourcePool.MainElement);
-
-                //for (var i = 0; i < scope.resourcePool.MainElement.ElementFieldSet.length; i++) {
-                //    var field = scope.resourcePool.MainElement.ElementFieldSet[i];
-                //    if (field.IndexEnabled) {
-                //        var cell1 = field.ElementCellSet[0];
-                //        scope.decreaseElementCellNumericValue(cell1);
-
-                //        var cell2 = field.ElementCellSet[1];
-                //        scope.decreaseElementCellNumericValue(cell2);
-
-                //        var cell3 = field.ElementCellSet[2];
-                //        scope.decreaseElementCellNumericValue(cell3);
-                //    }
-                //}
             }
 
             function loadChartData() {
 
                 // Current element
                 var element = scope.resourcePool.CurrentElement;
+
+                if (element === null) {
+                    return;
+                }
 
                 // Item length check
                 if (element.ElementItemSet.length > 20) {

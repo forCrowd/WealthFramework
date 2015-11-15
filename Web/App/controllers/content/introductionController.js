@@ -35,9 +35,9 @@
 
             // Call the service to increase the multiplier
             resourcePoolService.getResourcePoolExpanded(vm.introduction_UPOResourcePoolId)
-                .then(function (resourcePoolSet) {
+                .then(function (resourcePool) {
 
-                    if (resourcePoolSet.length === 0) {
+                    if (resourcePool === null) {
                         return;
                     }
 

@@ -1,13 +1,74 @@
-﻿<div class="resourcePoolEditor">
+﻿<script type="text/ng-template" id="editModal.html">
+    <form name="editForm">
+        <div class="modal-header">
+            <h2 class="modal-title">New / Edit CMRP</h2>
+        </div>
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="form-group has-error" data-ng-show="vm.entityErrors">
+                    <ul>
+                        <li data-ng-repeat="error in vm.entityErrors">
+                            <label class="control-label">{{ error.errorMessage }}</label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="form-group">
+                    <label for="Name" class="control-label col-md-2">Resource Pool</label>
+                    <div class="col-md-10" data-ng-class="{'has-error': editForm.Name.$invalid && !editForm.Name.$pristine}">
+                        <input id="Name" name="Name" type="text" data-ng-model="vm.resourcePool.Name" class="form-control" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="InitialValue" class="control-label col-md-2">Initial Value</label>
+                    <div class="col-md-10" data-ng-class="{'has-error': editForm.InitialValue.$invalid && !editForm.InitialValue.$pristine}">
+                        <input id="InitialValue" name="InitialValue" type="text" data-ng-model="vm.resourcePool.InitialValue" class="form-control" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="UseFixedResourcePoolRate" class="control-label col-md-2">Enable CMRP Addition</label>
+                    <div class="col-md-10" data-ng-class="{'has-error': editForm.UseFixedResourcePoolRate.$invalid && !editForm.UseFixedResourcePoolRate.$pristine}">
+                        <label class="radio-inline">
+                            <input id="UseFixedResourcePoolRate_True" name="UseFixedResourcePoolRate" type="radio" data-ng-model="vm.resourcePool.UseFixedResourcePoolRate" data-ng-value="true"> True
+                        </label>
+                        <label class="radio-inline">
+                            <input id="UseFixedResourcePoolRate_False" name="UseFixedResourcePoolRate" type="radio" data-ng-model="vm.resourcePool.UseFixedResourcePoolRate" data-ng-value="false"> False
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <input id="RowVersion" name="RowVersion" data-ng-model="vm.resourcePool.RowVersion" type="hidden">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" data-ng-click="vm.saveChanges()" data-ng-disabled="editForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
+                Save
+            </button>
+            <button type="button" data-ng-click="vm.cancelChanges()" class="btn btn-warning">
+                Cancel
+            </button>
+        </div>
+    </form>
+</script>
+<div class="resourcePoolEditor">
     <div class="panel panel-default">
         <div class="panel-heading">
             <p data-ng-if="errorMessage.length > 0">
                 <span class="label label-warning">{{ errorMessage }}</span>
             </p>
             <h3 class="panel-title">
-                {{ resourcePool.Name }}
+                <span data-ng-bind="resourcePool.Name"></span><button type="button" class="btn btn-link" ng-click="showEditModal()">Edit</button>
                 <span data-ng-if="resourcePool.displayRatingMode()" data-tooltip="Number of Ratings: Toggle to display the results with only your ratings or all users'" data-ng-click="resourcePool.toggleRatingMode()" class="label" data-ng-class="{ 'label-as-off-badge': resourcePool.RatingMode === 1, 'label-as-on-badge': resourcePool.RatingMode === 2 }">{{ resourcePool.RatingCount }}</span>
             </h3>
+
+            <div ng-show="selected">Selection from a modal: {{ selected }}</div>
+
         </div>
         <div class="panel-body">
             <div class="row">

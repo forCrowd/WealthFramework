@@ -51,6 +51,8 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         public decimal InitialValue { get; set; }
 
         [Display(Name = "Main Element")]
+        [DisplayOnListView(false)]
+        [DisplayOnEditView(false)]
         public int? MainElementId { get; set; }
 
         [Display(Name = "Enable CMRP Addition")]

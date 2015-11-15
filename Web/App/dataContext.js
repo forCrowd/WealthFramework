@@ -20,6 +20,7 @@
         // Manager
         var manager = null;
         var saveTimer = null;
+        var metadataLoaded = false;
 
         initializeStore();
 
@@ -33,6 +34,7 @@
             getChangesCount: getChangesCount,
             hasChanges: hasChanges,
             initializeStore: initializeStore,
+            metadataReady: metadataReady,
             rejectChanges: rejectChanges,
             saveChanges: saveChanges
         };
@@ -41,7 +43,7 @@
 
         /*** Implementations ***/
 
-        function createEntity(entityType, initialValues) {
+        function createEntityOld(entityType, initialValues) {
 
             var deferred = $q.defer();
 
@@ -54,6 +56,15 @@
                 });
 
             return deferred.promise;
+        }
+
+        function createEntity(entityType, initialValues) {
+
+            if (!metadataLoaded) {
+                logger.logError('Metadata has not been loaded yet!');
+            }
+
+            return manager.createEntity(entityType, initialValues);
         }
 
         function clear() {
@@ -82,6 +93,15 @@
 
         function initializeStore() {
             manager = entityManagerFactory.newManager();
+            
+            // TODO Fix this in a better way
+            // angular app should start after loading the metadata;
+            // https://github.com/angular/angular.js/issues/4003
+
+            metadataReady()
+                .then(function () {
+                    metadataLoaded = true;
+                });
         }
 
         function metadataReady() {
@@ -210,8 +230,20 @@
                         * 3. Added TodoLists
                         * 4. Every other change
                         */
-                        //batches.push(manager.getEntities(['License'], [breeze.EntityState.Deleted]));
-                        //batches.push(manager.getEntities(['License'], [breeze.EntityState.Added]));
+                        //batches.push(manager.getEntities(['TodoItem'], [breeze.EntityState.Deleted]));
+                        //batches.push(manager.getEntities(['TodoList'], [breeze.EntityState.Deleted]));
+                        //batches.push(manager.getEntities(['TodoList'], [breeze.EntityState.Added]));
+
+                        // TODO Deleted!
+
+                        batches.push(manager.getEntities(['ResourcePool'], [breeze.EntityState.Added]));
+                        batches.push(manager.getEntities(['UserResourcePool'], [breeze.EntityState.Added]));
+                        batches.push(manager.getEntities(['Element'], [breeze.EntityState.Added]));
+                        batches.push(manager.getEntities(['ElementField'], [breeze.EntityState.Added]));
+                        batches.push(manager.getEntities(['UserElementField'], [breeze.EntityState.Added]));
+                        batches.push(manager.getEntities(['ElementItem'], [breeze.EntityState.Added]));
+                        batches.push(manager.getEntities(['ElementCell'], [breeze.EntityState.Added]));
+                        batches.push(manager.getEntities(['UserElementCell'], [breeze.EntityState.Added]));
 
                         batches.push(null); // empty = save all remaining pending changes
                         return batches;

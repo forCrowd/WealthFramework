@@ -19,13 +19,18 @@
         vm.resourcePoolId = $routeParams.Id;
 
         // Title
-        resourcePoolService.getResourcePoolExpanded(vm.resourcePoolId)
-            .then(function (resourcePoolSet) {
-                if (resourcePoolSet.length === 0) {
-                    return;
-                }
+        if (vm.resourcePoolId === '0') {
+            $rootScope.viewTitle = 'New';
+        } else {
+            resourcePoolService.getResourcePoolExpanded(vm.resourcePoolId)
+                .then(function (resourcePool) {
 
-                $rootScope.viewTitle = resourcePoolSet[0].Name;
-            });
+                    if (resourcePool === null) {
+                        return;
+                    }
+
+                    $rootScope.viewTitle = resourcePool.Name;
+                });
+        }
     };
 })();

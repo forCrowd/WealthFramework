@@ -57,7 +57,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         public ElementField NameField
         {
             // TODO Correct approach?
-            get { return ElementFieldSet.Single(item => item.SortOrder == 1); }
+            get { return ElementFieldSet.SingleOrDefault(item => item.SortOrder == 1); }
         }
 
         public ElementField DirectIncomeField

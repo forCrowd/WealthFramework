@@ -1,7 +1,21 @@
 ﻿. resourcePoolEditor - new / edit cmrp features!
-continue with /manage/resourcePool/new route - editor.html + editor.js updates
+continue with creating new sample cmprs?
+find / check createEntity cases!
+
+. fix these;
+DropdownController is now deprecated. Use UibDropdownController instead. angular.min.js:107:207
+dropdown-toggle is now deprecated. Use uib-dropdown-toggle instead. angular.min.js:107:207
+dropdown-menu is now deprecated. Use uib-dropdown-menu instead. angular.min.js:107:207
+dropdown is now deprecated. Use uib-dropdown instead. angular.min.js:107:207
+$tooltip is now deprecated. Use $uibTooltip instead.
 
 . Alpha team review!
+
+---
+. add constructor to client-side entities?
+resourcePool.js -> self.ElementSet = []; ?
+
+. https://material.angularjs.org/latest/
 
 . Find a designer! Ozgur's Ali
 

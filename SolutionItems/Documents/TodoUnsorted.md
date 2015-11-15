@@ -1,4 +1,6 @@
-﻿* sales price is actually not correct in CMRP samples?
+﻿* apply "// Set otherUsers' properties" section in custom resourcepoolservice.js to all getResourcePool options?
+
+* sales price is actually not correct in CMRP samples?
 should it show sales price including cmrp tax instead? it's not clear where the money comes from..?
 or it doesn't matter at the moment? at least mention it in CMRP Rate: The Fountain section?
 
