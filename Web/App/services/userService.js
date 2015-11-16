@@ -95,15 +95,8 @@
                     deferred.resolve(currentUser);
 
                 } else {
-                    dataContext.createEntity('User', {})
-                            .then(function (newUser) {
-                                currentUser = newUser;
-                                deferred.resolve(currentUser);
-                            })
-                    .catch(function () {
-                        currentUser = null;
-                        deferred.reject();
-                    });
+                    currentUser = dataContext.createEntity('User', {});
+                    deferred.resolve(currentUser);
                 }
             }
 
@@ -189,6 +182,110 @@
 
         function updateElementMultiplier(element, updateType) {
 
+            // Find user element cell
+            for (var itemIndex = 0; itemIndex < element.ElementItemSet.length; itemIndex++) {
+
+                var item = element.ElementItemSet[itemIndex];
+
+                var multiplierCell;
+                for (var cellIndex = 0; cellIndex < item.ElementCellSet.length; cellIndex++) {
+                    var elementCell = item.ElementCellSet[cellIndex];
+                    if (elementCell.ElementField.ElementFieldType === 12) {
+                        multiplierCell = elementCell;
+                        break;
+                    }
+                }
+
+                updateElementCellMultiplier(multiplierCell, updateType);
+            }
+
+            // Update related
+
+            // Update items
+            for (var i = 0; i < element.ElementItemSet.length; i++) {
+                var item = element.ElementItemSet[i];
+                item.setMultiplier();
+            }
+
+            for (var i = 0; i < element.ElementFieldSet.length; i++) {
+                var field = element.ElementFieldSet[i];
+
+                if (!field.IndexEnabled) {
+                    continue;
+                }
+
+                // Update numeric value cells
+                for (var cellIndex = 0; cellIndex < field.ElementCellSet.length; cellIndex++) {
+
+                    var cell = field.ElementCellSet[cellIndex];
+                    cell.setNumericValueMultiplied(false);
+                }
+
+                // Update fields
+                field.setNumericValueMultiplied();
+            }
+        }
+
+        function updateElementCellMultiplier(elementCell, updateType) {
+
+            var userCell = elementCell.currentUserCell();
+
+            if (userCell !== null
+                && typeof userCell.entityAspect !== 'undefined'
+                && userCell.entityAspect.entityState.isDetached()) {
+                userCell = null;
+            }
+
+            switch (updateType) {
+                case 'increase': {
+
+                    // If there is no item, create it
+                    if (userCell === null) {
+
+                        dataContext.createEntity('UserElementCell', {
+                            User: currentUser,
+                            ElementCell: elementCell,
+                            DecimalValue: 1
+                        });
+
+                    } else {
+
+                        // If it's marked as deleted, cancel that deletion and set it to default + 1
+                        if (userCell.entityAspect.entityState.isDeleted()) {
+                            userCell.entityAspect.rejectChanges();
+                            userCell.DecimalValue = 1;
+                        } else { // Otherwise, go ahead!
+                            userCell.DecimalValue++;
+                        }
+                    }
+
+                    break;
+                }
+                case 'decrease': {
+
+                    // If there is an item, decrease
+                    if (userCell !== null) {
+                        userCell.DecimalValue = userCell.DecimalValue - 1 < 0 ? 0 : userCell.DecimalValue - 1;
+                    }
+
+                    break;
+                }
+                case 'reset': {
+
+                    // If there is an item and not marked as deleted, delete it
+                    if (userCell !== null && !userCell.entityAspect.entityState.isDeleted()) {
+                        userCell.DecimalValue = 0;
+                        userCell.entityAspect.setDeleted();
+                    }
+
+                    break;
+                }
+            }
+        }
+
+        // Obsolete
+        function updateElementMultiplierOld(element, updateType) {
+
             var promises = [];
 
             // Find user element cell
@@ -205,7 +302,7 @@
                     }
                 }
 
-                promises.push(updateElementCellMultiplier(multiplierCell, updateType));
+                promises.push(updateElementCellMultiplierOld(multiplierCell, updateType));
             }
 
             // Update related
@@ -237,7 +334,8 @@
             });
         }
 
-        function updateElementCellMultiplier(elementCell, updateType) {
+        // Obsolete
+        function updateElementCellMultiplierOld(elementCell, updateType) {
 
             var deferred = $q.defer();
 
@@ -330,12 +428,10 @@
                             User: currentUser,
                             ElementCell: elementCell,
                             DecimalValue: typeof value !== 'undefined' ? value : 55
-                        }).then(function (newUserCell) {
-                            // elementCell.CurrentUserCell = newUserCell;
-
-                            // Update the cached value
-                            elementCell.setCurrentUserNumericValue();
                         });
+
+                        // Update the cached value
+                        elementCell.setCurrentUserNumericValue();
 
                     } else {
 
@@ -365,12 +461,10 @@
                             User: currentUser,
                             ElementCell: elementCell,
                             DecimalValue: 45
-                        }).then(function (newUserCell) {
-                            //elementCell.CurrentUserCell = newUserCell;
-
-                            // Update the cached value
-                            elementCell.setCurrentUserNumericValue();
                         });
+
+                        // Update the cached value
+                        elementCell.setCurrentUserNumericValue();
 
                     } else {
 
@@ -425,10 +519,10 @@
                             Rating: 55
                         };
 
-                        dataContext.createEntity('UserElementField', userElementField)
-                            .then(function () {
-                                elementField.setCurrentUserIndexRating();
-                            });
+                        dataContext.createEntity('UserElementField', userElementField);
+
+                        // Update related
+                        elementField.setCurrentUserIndexRating();
 
                     } else {
 
@@ -440,6 +534,7 @@
                             userElementField.Rating = userElementField.Rating + 5 > 100 ? 100 : userElementField.Rating + 5;
                         }
 
+                        // Update related
                         elementField.setCurrentUserIndexRating();
                     }
 
@@ -455,10 +550,10 @@
                             Rating: 45
                         };
 
-                        dataContext.createEntity('UserElementField', userElementField)
-                            .then(function () {
-                                elementField.setCurrentUserIndexRating();
-                            });
+                        dataContext.createEntity('UserElementField', userElementField);
+                        
+                        // Update related
+                        elementField.setCurrentUserIndexRating();
 
                     } else {
 
@@ -511,10 +606,10 @@
                             ResourcePoolRate: 15
                         };
 
-                        dataContext.createEntity('UserResourcePool', userResourcePool)
-                            .then(function () {
-                                resourcePool.setCurrentUserResourcePoolRate();
-                            });
+                        dataContext.createEntity('UserResourcePool', userResourcePool);
+
+                        // Update related
+                        resourcePool.setCurrentUserResourcePoolRate();
 
                     } else {
 
@@ -526,6 +621,7 @@
                             userResourcePool.ResourcePoolRate = userResourcePool.ResourcePoolRate + 5 > 1000 ? 1000 : userResourcePool.ResourcePoolRate + 5;
                         }
 
+                        // Update related
                         resourcePool.setCurrentUserResourcePoolRate();
                     }
 
@@ -541,10 +637,10 @@
                             ResourcePoolRate: 5
                         };
 
-                        dataContext.createEntity('UserResourcePool', userResourcePool)
-                            .then(function () {
-                                resourcePool.setCurrentUserResourcePoolRate();
-                            });
+                        dataContext.createEntity('UserResourcePool', userResourcePool);
+
+                        // Update related
+                        resourcePool.setCurrentUserResourcePoolRate();
 
                     } else {
 
@@ -556,6 +652,7 @@
                             userResourcePool.ResourcePoolRate = userResourcePool.ResourcePoolRate - 5 < 0 ? 0 : userResourcePool.ResourcePoolRate - 5;
                         }
 
+                        // Update related
                         resourcePool.setCurrentUserResourcePoolRate();
                     }
 
@@ -568,6 +665,7 @@
                         userResourcePool.ResourcePoolRate = 10;
                         userResourcePool.entityAspect.setDeleted();
 
+                        // Update related
                         resourcePool.setCurrentUserResourcePoolRate();
                     }
 

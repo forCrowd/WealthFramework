@@ -12,7 +12,7 @@
     <link href="/Content/toastr.css?v=0.24" rel="stylesheet" />
 
     <!-- Internal CSS -->
-    <link href="/Content/site.css?v=0.30" rel="stylesheet" />
+    <link href="/Content/site.css?v=0.37" rel="stylesheet" />
     <link href="/App/directives/resourcePoolEditor/resourcePoolEditor.css?v=0.37" rel="stylesheet" />
 
     <!-- jQuery -->
@@ -155,7 +155,7 @@
     <script src="/App/includes/manageScripts.js?v=0.37"></script>
 
     <!-- Service extensions -->
-    <script src="/App/services/userService.js?v=0.35"></script>
+    <script src="/App/services/userService.js?v=0.37"></script>
     <script src="/App/services/resourcePoolService.js?v=0.37"></script>
 
     <!-- Content -->

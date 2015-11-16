@@ -55,7 +55,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         [DisplayOnEditView(false)]
         public int? MainElementId { get; set; }
 
-        [Display(Name = "Enable CMRP Addition")]
+        [Display(Name = "Use Fixed Resource Pool Rate")]
         [DisplayOnListView(false)]
         [DisplayOnEditView(true)]
         public bool UseFixedResourcePoolRate { get; set; }

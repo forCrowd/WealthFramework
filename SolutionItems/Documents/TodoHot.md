@@ -1,6 +1,14 @@
 ﻿. resourcePoolEditor - new / edit cmrp features!
 continue with creating new sample cmprs?
-find / check createEntity cases!
+create field/item - related cells
+edit?
+remove?
+entity errors?
+cancel cases?
+user resource pool / user element field / user cell?
+cached values!
+
+google analytics!
 
 . fix these;
 DropdownController is now deprecated. Use UibDropdownController instead. angular.min.js:107:207
@@ -11,9 +19,13 @@ $tooltip is now deprecated. Use $uibTooltip instead.
 
 . Alpha team review!
 
----
+---	
 . add constructor to client-side entities?
 resourcePool.js -> self.ElementSet = []; ?
+
+. info tooltips hover, won't work on mobiles?
+
+. replace {{ with ng-bind?
 
 . https://material.angularjs.org/latest/
 

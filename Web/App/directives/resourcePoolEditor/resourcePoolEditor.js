@@ -26,7 +26,7 @@
             scope.isSaving = false;
             scope.errorMessage = '';
 
-            scope.showEditModal = showEditModal;
+            scope.showEditorModal = showEditorModal;
 
             // Resource pool id: Get the current resource pool
             scope.$watch('resourcePoolId', function () {
@@ -130,103 +130,13 @@
                 saveChanges();
             }
 
-            function showEditModal() {
+            function showEditorModal() {
 
                 var modalInstance = $uibModal.open({
-                    templateUrl: 'editModal.html',
+                    templateUrl: '/App/directives/resourcePoolEditor/resourcePoolEditorModal.html?v=0.37',
                     controllerAs: 'vm',
-                    controller: function ($location, logger, $uibModalInstance, resourcePool) {
-
-                        var vm = this;
-                        vm.cancelChanges = cancelChanges;
-                        vm.isNew = $location.path() === '/manage/resourcePool/0';
-                        vm.isSaveDisabled = isSaveDisabled;
-                        vm.isSaving = false;
-                        vm.entityErrors = [];
-                        vm.resourcePool = resourcePool;
-                        vm.saveChanges = saveChanges;
-
-                        function cancelChanges() {
-
-                            // Changes canceled
-                            scope.resourcePool.entityAspect.rejectChanges();
-
-                            // If it was new, re-create it
-                            if (vm.isNew) {
-                                scope.resourcePool = resourcePoolService.getNewResourcePool();
-                            }
-
-                            $uibModalInstance.dismiss('cancel');
-                        };
-
-                        function isSaveDisabled() {
-                            //var value = vm.isSaving || (!vm.isNew && !resourcePoolService.hasChanges());
-                            var value = vm.isSaving;
-                            return value;
-                        }
-
-                        function saveChanges() {
-
-                            vm.isSaving = true;
-
-                            //if (vm.isNew) {
-                            //    resourcePoolService.createResourcePool(vm.resourcePool)
-                            //        .then(function (resourcePool) {
-
-                            //            logger.log('resourcePool', resourcePool);
-                            //            logger.log('vm.resourcePool', vm.resourcePool);
-
-                            //            vm.resourcePool = resourcePool;
-
-                            //            saveChangesInternal();
-                            //        });
-                            //} else {
-                            saveChangesInternal();
-
-                            //}
-
-                            function saveChangesInternal() {
-
-                                resourcePoolService.saveChanges()
-                                    .then(function (result) {
-
-                                        // Main element fix
-                                        if (vm.isNew && resourcePool.ElementSet.length > 0) {
-                                            resourcePool.MainElement = resourcePool.ElementSet[0];
-
-                                            resourcePoolService.saveChanges()
-                                                .then(function (result) {
-
-                                                    $uibModalInstance.close();
-
-                                                    if (vm.isNew) {
-                                                        $location.path('/manage/resourcePool/' + vm.resourcePool.Id);
-                                                    }
-                                                });
-                                        } else {
-                                            $uibModalInstance.close();
-
-                                            if (vm.isNew) {
-                                                $location.path('/manage/resourcePool/' + vm.resourcePool.Id);
-                                            }
-                                        }
-                                    })
-                                    .catch(function (error) {
-                                        // Conflict (Concurrency exception)
-                                        if (typeof error.status !== 'undefined' && error.status === '409') {
-                                            // TODO Try to recover!
-                                        } else if (typeof error.entityErrors !== 'undefined') {
-                                            vm.entityErrors = error.entityErrors;
-                                        }
-                                    })
-                                    .finally(function () {
-                                        vm.isSaving = false;
-                                    });
-
-                            }
-                        };
-                    },
-                    size: '',
+                    controller: resourcePoolEditorModalController,
+                    size: 'lg',
                     resolve: {
                         resourcePool: function () {
                             return scope.resourcePool;
@@ -238,7 +148,7 @@
 
                     // saved
 
-                }, function () {
+                }, function (action) {
 
                     // Canceled
 
@@ -297,13 +207,11 @@
 
                     resourcePoolService.getNewResourcePool()
                         .then(function (resourcePool) {
-
                             scope.resourcePool = resourcePool;
-
-                            logger.log('scope.resourcePool', scope.resourcePool);
-
-                            scope.showEditModal();
-
+                            scope.showEditorModal();
+                        })
+                        .catch(function () { })
+                        .finally(function () {
                             scope.chartConfig.loading = false;
                         });
 
@@ -439,6 +347,158 @@
                     });
             }
 
+            function resourcePoolEditorModalController($location, logger, $uibModalInstance, resourcePool) {
+
+                var vm = this;
+                vm.addElement = addElement;
+                vm.addElementField = addElementField;
+                vm.addElementItem = addElementItem;
+                vm.cancelChanges = cancelChanges;
+                vm.editElement = editElement;
+                vm.editElementField = editElementField;
+                vm.editElementItem = editElementItem;
+                vm.element = null;
+                vm.elementField = null;
+                vm.elementFieldSet = elementFieldSet;
+                vm.elementItem = null;
+                vm.elementItemSet = elementItemSet;
+                vm.isElementEdit = false;
+                vm.isElementFieldEdit = false;
+                vm.isElementItemEdit = false;
+                vm.isNew = $location.path() === '/manage/resourcePool/0';
+                vm.isSaveDisabled = isSaveDisabled;
+                vm.isSaving = false;
+                vm.entityErrors = [];
+                vm.resourcePool = resourcePool;
+                vm.saveChanges = saveChanges;
+                vm.saveElement = saveElement;
+                vm.saveElementField = saveElementField;
+                vm.saveElementItem = saveElementItem;
+
+                function addElement() {
+                    vm.element = resourcePoolService.createNewElement(vm.resourcePool);
+                    vm.isElementEdit = true;
+                }
+
+                function addElementField() {
+                    vm.elementField = resourcePoolService.createNewElementField(vm.element);
+                    vm.isElementFieldEdit = true;
+                }
+
+                function addElementItem() {
+                    vm.elementItem = resourcePoolService.createNewElementItem(vm.element);
+                    vm.isElementItemEdit = true;
+                }
+
+                function cancelChanges() {
+
+                    // Changes canceled
+                    // TODO Sub entities!
+                    vm.resourcePool.entityAspect.rejectChanges();
+
+                    $uibModalInstance.dismiss('cancel', vm.resourcePool);
+
+                }
+
+                function editElement(element) {
+                    vm.element = element;
+                    vm.isElementEdit = true;
+                }
+
+                function editElementField(elementField) {
+                    vm.elementField = elementField;
+                    vm.isElementFieldEdit = true;
+                }
+
+                function editElementItem(elementItem) {
+                    vm.elementItem = elementItem;
+                    vm.isElementItemEdit = true;
+                }
+
+                function elementFieldSet() {
+                    var list = [];
+                    for (var i = 0; i < vm.resourcePool.ElementSet.length; i++) {
+                        var element = vm.resourcePool.ElementSet[i];
+                        for (var i2 = 0; i2 < element.ElementFieldSet.length; i2++) {
+                            list.push(element.ElementFieldSet[i2]);
+                        }
+                    }
+                    return list;
+                }
+
+                function elementItemSet() {
+                    var list = [];
+                    for (var i = 0; i < vm.resourcePool.ElementSet.length; i++) {
+                        var element = vm.resourcePool.ElementSet[i];
+                        for (var i2 = 0; i2 < element.ElementItemSet.length; i2++) {
+                            list.push(element.ElementItemSet[i2]);
+                        }
+                    }
+                    return list;
+                }
+
+                function isSaveDisabled() {
+                    //var value = vm.isSaving || (!vm.isNew && !resourcePoolService.hasChanges());
+                    var value = vm.isSaving;
+                    return value;
+                }
+
+                function saveChanges() {
+
+                    vm.isSaving = true;
+                    resourcePoolService.saveChanges()
+                        .then(function (result) {
+
+                            // Main element fix
+                            if (vm.isNew && resourcePool.ElementSet.length > 0) {
+                                resourcePool.MainElement = resourcePool.ElementSet[0];
+
+                                resourcePoolService.saveChanges()
+                                    .then(function (result) {
+
+                                        $uibModalInstance.close();
+
+                                        if (vm.isNew) {
+                                            $location.path('/manage/resourcePool/' + vm.resourcePool.Id);
+                                        }
+                                    });
+                            } else {
+                                $uibModalInstance.close();
+
+                                if (vm.isNew) {
+                                    $location.path('/manage/resourcePool/' + vm.resourcePool.Id);
+                                }
+                            }
+                        })
+                        .catch(function (error) {
+                            // Conflict (Concurrency exception)
+                            if (typeof error.status !== 'undefined' && error.status === '409') {
+                                // TODO Try to recover!
+                            } else if (typeof error.entityErrors !== 'undefined') {
+                                vm.entityErrors = error.entityErrors;
+                            }
+                        })
+                        .finally(function () {
+                            vm.isSaving = false;
+                        });
+                };
+
+                function saveElement() {
+                    vm.isElementEdit = false;
+                    vm.element = null;
+                }
+
+                function saveElementField() {
+                    vm.isElementFieldEdit = false;
+                    vm.elementField = null;
+                }
+
+                function saveElementItem() {
+                    vm.isElementItemEdit = false;
+                    vm.elementItem = null;
+                }
+            };
+
             function elementFieldIndexChartItem(elementFieldIndex) {
                 var self = this;
 
@@ -492,7 +552,7 @@
 
         return {
             restrict: 'E',
-            templateUrl: '/App/directives/resourcePoolEditor/resourcePoolEditor.html?v=0.36.1',
+            templateUrl: '/App/directives/resourcePoolEditor/resourcePoolEditor.html?v=0.37',
             scope: {
                 resourcePoolId: '=',
                 chartHeight: '='

@@ -61,7 +61,8 @@
         function createEntity(entityType, initialValues) {
 
             if (!metadataLoaded) {
-                logger.logError('Metadata has not been loaded yet!');
+                logger.logError('Load metadata first!');
+                return;
             }
 
             return manager.createEntity(entityType, initialValues);

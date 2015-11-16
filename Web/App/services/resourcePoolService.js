@@ -32,6 +32,9 @@
         var fetched = [];
 
         // Service methods
+        $delegate.createNewElement = createNewElement;
+        $delegate.createNewElementField = createNewElementField;
+        $delegate.createNewElementItem = createNewElementItem;
         $delegate.getNewResourcePool = getNewResourcePool;
         $delegate.getResourcePoolExpanded = getResourcePoolExpanded;
 
@@ -46,6 +49,33 @@
         return $delegate;
 
         /*** Implementations ***/
+
+        function createNewElement(resourcePool) {
+            return dataContext.createEntity('Element', {
+                ResourcePool: resourcePool,
+                Name: 'New element'
+            });
+        }
+
+        function createNewElementField(element) {
+
+            // TODO Related cells?
+
+            return dataContext.createEntity('ElementField', {
+                Element: element,
+                Name: 'New field'
+            });
+        }
+
+        function createNewElementItem(element) {
+
+            // TODO Related cells?
+
+            return dataContext.createEntity('ElementItem', {
+                Element: element,
+                Name: 'New item'
+            });
+        }
 
         function getNewResourcePool() {
 
@@ -62,7 +92,7 @@
 
                     var elementInitial = {};
                     elementInitial.ResourcePool = resourcePool;
-                    elementInitial.Name = 'Element';
+                    elementInitial.Name = 'New Element';
 
                     var element = dataContext.createEntity('Element', elementInitial);
 
@@ -120,12 +150,7 @@
 
                     return resourcePool;
 
-                    //logger.log('cmrp id', cmrp.Id);
-                    //logger.log('elm cmrp id', elm.ResourcePool.Id);
-                    //logger.log('elm cmrp id 2', elm.ResourcePoolId);
-
                 });
-
         }
 
         function getNewResourcePoolCreateEntityAsync() {
