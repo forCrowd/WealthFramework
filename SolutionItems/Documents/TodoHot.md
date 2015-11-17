@@ -1,12 +1,13 @@
 ﻿. resourcePoolEditor - new / edit cmrp features!
-continue with creating new sample cmprs?
-create field/item - related cells
-edit?
+field type - index type - index rating sort type ?
+cell's boolean value ?
 remove?
 entity errors?
 cancel cases?
-user resource pool / user element field / user cell?
 cached values!
+copy from a existing?
+
+remove name field!
 
 google analytics!
 

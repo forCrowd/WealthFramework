@@ -33,6 +33,7 @@
                 _ratingPercentage: null,
                 _indexIncome: null
             }
+            self.value = value;
 
             // Public functions
 
@@ -454,6 +455,48 @@
                     // TODO Update related?
                     // item.totalResourcePoolIncome
                 }
+            }
+
+            function value() {
+
+                var value = null;
+
+                switch (self.ElementField.ElementFieldType) {
+                    case 1: {
+                        if (self.currentUserCell() !== null) {
+                            value = self.currentUserCell().StringValue;
+                        }
+                        break;
+                    }
+                    case 2: {
+                        if (self.currentUserCell() !== null) {
+                            value = self.currentUserCell().BooleanValue;
+                        }
+                        break;
+                    }
+                    case 3: {
+                        if (self.currentUserCell() !== null) {
+                            value = self.currentUserCell().IntegerValue;
+                        }
+                        break;
+                    }
+                    // TODO 5 (DateTime?)
+                    case 4:
+                    case 11:
+                    case 12: {
+                        if (self.currentUserCell() !== null) {
+                            value = self.currentUserCell().DecimalValue;
+                        }
+                        break;
+                    }
+                    case 6: {
+                        if (self.SelectedElementItem !== null) {
+                            value = self.SelectedElementItem.Name;
+                        }
+                    }
+                }
+
+                return value;
             }
         }
     }

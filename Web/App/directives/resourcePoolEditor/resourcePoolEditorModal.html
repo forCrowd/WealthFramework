@@ -4,349 +4,476 @@
     </div>
     <div class="modal-body">
         <uib-tabset>
-            <uib-tab heading="Resource Pool">
-                <form name="resourcePoolForm">
-                    <div class="form-horizontal">
-                        <div class="form-group has-error" data-ng-show="vm.entityErrors">
-                            <ul>
-                                <li data-ng-repeat="error in vm.entityErrors">
-                                    <label class="control-label">{{ error.errorMessage }}</label>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="form-group">
-                            <label for="Name" class="control-label col-md-2">Name</label>
-                            <div class="col-md-10" data-ng-class="{'has-error': resourcePoolForm.Name.$invalid && !resourcePoolForm.Name.$pristine}">
-                                <input id="Name" name="Name" type="text" data-ng-model="vm.resourcePool.Name" class="form-control" required />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="InitialValue" class="control-label col-md-2">Initial Value</label>
-                            <div class="col-md-10" data-ng-class="{'has-error': resourcePoolForm.InitialValue.$invalid && !resourcePoolForm.InitialValue.$pristine}">
-                                <input id="InitialValue" name="InitialValue" type="text" data-ng-model="vm.resourcePool.InitialValue" class="form-control" required />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="UseFixedResourcePoolRate" class="control-label col-md-2">Use Fixed Resource Pool Rate</label>
-                            <div class="col-md-10" data-ng-class="{'has-error': resourcePoolForm.UseFixedResourcePoolRate.$invalid && !resourcePoolForm.UseFixedResourcePoolRate.$pristine}">
-                                <label class="radio-inline">
-                                    <input id="UseFixedResourcePoolRate_True" name="UseFixedResourcePoolRate" type="radio" data-ng-model="vm.resourcePool.UseFixedResourcePoolRate" data-ng-value="true"> True
-                                </label>
-                                <label class="radio-inline">
-                                    <input id="UseFixedResourcePoolRate_False" name="UseFixedResourcePoolRate" type="radio" data-ng-model="vm.resourcePool.UseFixedResourcePoolRate" data-ng-value="false"> False
-                                </label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-10">
-                                <input id="RowVersion" name="RowVersion" data-ng-model="vm.resourcePool.RowVersion" type="hidden">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </uib-tab>
-            <uib-tab heading="Elements">
+            <uib-tab heading="New">
 
-                <!-- Element add/edit -->
-                <div data-ng-if="vm.isElementEdit">
-                    <form name="elementForm">
-                        <div class="form-horizontal">
-                            <div class="form-group has-error" data-ng-show="vm.entityErrors">
-                                <ul>
-                                    <li data-ng-repeat="error in vm.entityErrors">
-                                        <label class="control-label">{{ error.errorMessage }}</label>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="form-group">
-                                <label for="Name" class="control-label col-md-2">Element</label>
-                                <div class="col-md-10" data-ng-class="{'has-error': elementForm.Name.$invalid && !elementForm.Name.$pristine}">
-                                    <input id="Name" name="Name" type="text" data-ng-model="vm.element.Name" class="form-control" required />
+                <uib-tabset>
+                    <uib-tab heading="Resource Pool">
+                        <form name="resourcePoolForm">
+                            <div class="form-horizontal">
+                                <div class="form-group has-error" data-ng-show="vm.entityErrors">
+                                    <ul>
+                                        <li data-ng-repeat="error in vm.entityErrors">
+                                            <label class="control-label">{{ error.errorMessage }}</label>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Name" class="control-label col-md-2">Name</label>
+                                    <div class="col-md-10" data-ng-class="{'has-error': resourcePoolForm.Name.$invalid && !resourcePoolForm.Name.$pristine}">
+                                        <input id="Name" name="Name" type="text" data-ng-model="vm.resourcePool.Name" class="form-control" required />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="InitialValue" class="control-label col-md-2">Initial Value</label>
+                                    <div class="col-md-10" data-ng-class="{'has-error': resourcePoolForm.InitialValue.$invalid && !resourcePoolForm.InitialValue.$pristine}">
+                                        <input id="InitialValue" name="InitialValue" type="text" data-ng-model="vm.resourcePool.InitialValue" class="form-control" required />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="UseFixedResourcePoolRate" class="control-label col-md-2">Use Fixed Resource Pool Rate</label>
+                                    <div class="col-md-10" data-ng-class="{'has-error': resourcePoolForm.UseFixedResourcePoolRate.$invalid && !resourcePoolForm.UseFixedResourcePoolRate.$pristine}">
+                                        <label class="radio-inline">
+                                            <input id="UseFixedResourcePoolRate_True" name="UseFixedResourcePoolRate" type="radio" data-ng-model="vm.resourcePool.UseFixedResourcePoolRate" data-ng-value="true"> True
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input id="UseFixedResourcePoolRate_False" name="UseFixedResourcePoolRate" type="radio" data-ng-model="vm.resourcePool.UseFixedResourcePoolRate" data-ng-value="false"> False
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ResourcePoolRate" class="control-label col-md-2">Resource Pool Rate</label>
+                                    <div class="col-md-10" data-ng-class="{'has-error': resourcePoolForm.ResourcePoolRate.$invalid && !resourcePoolForm.ResourcePoolRate.$pristine}">
+                                        <input id="ResourcePoolRate" name="ResourcePoolRate" type="text" data-ng-model="vm.resourcePool.currentUserResourcePool().ResourcePoolRate" class="form-control" required />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-10">
+                                        <input id="RowVersion" name="RowVersion" data-ng-model="vm.resourcePool.RowVersion" type="hidden">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="col-md-10">
-                                    <input id="RowVersion" name="RowVersion" data-ng-model="vm.element.RowVersion" type="hidden">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-10">
-                                    <button type="submit" data-ng-click="vm.saveElement()" data-ng-disabled="elementForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
-                                        Okay
-                                    </button>
-                                    <!--<button type="button" data-ng-click="vm.cancelChanges()" class="btn btn-danger">
-                                        Cancel
-                                    </button>-->
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                        </form>
+                    </uib-tab>
+                    <uib-tab heading="Elements">
 
-                <!-- Element list -->
-                <div data-ng-if="!vm.isElementEdit">
-                    <p class="top-buffer">
-                        <a href="" data-ng-click="vm.addElement()">
-                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create New
-                        </a>
-                    </p>
-                    <table class="table">
-                        <tr>
-                            <th>
-                                Name
-                            </th>
-                            <th></th>
-                        </tr>
-                        <tr data-ng-repeat="element in vm.resourcePool.ElementSet">
-                            <td>
-                                {{ element.Name }}
-                            </td>
-                            <td>
-                                <a href="" data-ng-click="vm.editElement(element)">
-                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
+                        <!-- Element add/edit -->
+                        <div data-ng-if="vm.isElementEdit">
+                            <form name="elementForm">
+                                <div class="form-horizontal">
+                                    <div class="form-group has-error" data-ng-show="vm.entityErrors">
+                                        <ul>
+                                            <li data-ng-repeat="error in vm.entityErrors">
+                                                <label class="control-label">{{ error.errorMessage }}</label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Name" class="control-label col-md-2">Element</label>
+                                        <div class="col-md-10" data-ng-class="{'has-error': elementForm.Name.$invalid && !elementForm.Name.$pristine}">
+                                            <input id="Name" name="Name" type="text" data-ng-model="vm.element.Name" class="form-control" required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-10">
+                                            <input id="RowVersion" name="RowVersion" data-ng-model="vm.element.RowVersion" type="hidden">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <button type="submit" data-ng-click="vm.saveElement()" data-ng-disabled="elementForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
+                                                Okay
+                                            </button>
+                                            <!--<button type="button" data-ng-click="vm.cancelChanges()" class="btn btn-danger">
+                                                Cancel
+                                            </button>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Element list -->
+                        <div data-ng-if="!vm.isElementEdit">
+                            <p class="top-buffer">
+                                <a href="" data-ng-click="vm.addElement()">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create New
                                 </a>
-                                <!--<a href="" data-ng-click="vm.deleteElement(element)">
-                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove
-                                </a>-->
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </uib-tab>
-            <uib-tab heading="Fields">
-
-                <!-- Element field add/edit -->
-                <div data-ng-if="vm.isElementFieldEdit">
-                    <form name="elementFieldForm">
-                        <div class="form-horizontal">
-                            <div class="form-group has-error" data-ng-show="vm.entityErrors">
-                                <ul>
-                                    <li data-ng-repeat="error in vm.entityErrors">
-                                        <label class="control-label">{{ error.errorMessage }}</label>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="form-group">
-                                <label for="ElementId" class="control-label col-md-2">Element</label>
-                                <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.ElementId.$invalid && !elementFieldForm.ElementId.$pristine}">
-                                    <select id="ElementId" name="ElementId" data-ng-model="vm.elementField.Element" data-ng-options="element.Name for element in vm.resourcePool.ElementSet" class="form-control" required></select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="Name" class="control-label col-md-2">Name</label>
-                                <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.Name.$invalid && !elementFieldForm.Name.$pristine}">
-                                    <input id="Name" name="Name" type="text" data-ng-model="vm.elementField.Name" class="form-control" required />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="ElementFieldType" class="control-label col-md-2">Element Field Type</label>
-                                <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.ElementFieldType.$invalid && !elementFieldForm.ElementFieldType.$pristine}">
-                                    <input id="ElementFieldType" name="ElementFieldType" type="text" data-ng-model="vm.elementField.ElementFieldType" class="form-control" required />
-                                </div>
-                            </div>
-                            <div class="form-group" data-ng-if="vm.elementField.ElementFieldType === 6">
-                                <label for="SelectedElementId" class="control-label col-md-2">Selected Element</label>
-                                <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.SelectedElementId.$invalid && !elementFieldForm.SelectedElementId.$pristine}">
-                                    <input id="SelectedElementId" name="SelectedElementId" type="text" data-ng-model="vm.elementField.SelectedElementId" class="form-control" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="UseFixedValue" class="control-label col-md-2">Use Fixed Value</label>
-                                <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.UseFixedValue.$invalid && !elementFieldForm.UseFixedValue.$pristine}">
-                                    <label class="radio-inline">
-                                        <input id="UseFixedValue_True" name="UseFixedValue" type="radio" data-ng-model="vm.elementField.UseFixedValue" data-ng-value="true"> True
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input id="UseFixedValue_False" name="UseFixedValue" type="radio" data-ng-model="vm.elementField.UseFixedValue" data-ng-value="false"> False
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input id="UseFixedValue_Null" name="UseFixedValue" type="radio" data-ng-model="vm.elementField.UseFixedValue" data-ng-value=""> Default
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="IndexEnabled" class="control-label col-md-2">Index Enabled</label>
-                                <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.IndexEnabled.$invalid && !elementFieldForm.IndexEnabled.$pristine}">
-                                    <label class="radio-inline">
-                                        <input id="IndexEnabled_True" name="IndexEnabled" type="radio" data-ng-model="vm.elementField.IndexEnabled" data-ng-value="true"> True
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input id="IndexEnabled_False" name="IndexEnabled" type="radio" data-ng-model="vm.elementField.IndexEnabled" data-ng-value="false"> False
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group" data-ng-if="vm.elementField.IndexEnabled">
-                                <label for="IndexType" class="control-label col-md-2">Index Type</label>
-                                <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.IndexType.$invalid && !elementFieldForm.IndexType.$pristine}">
-                                    <input id="IndexType" name="IndexType" type="text" data-ng-model="vm.elementField.IndexType" class="form-control" required />
-                                </div>
-                            </div>
-                            <div class="form-group" data-ng-if="vm.elementField.IndexEnabled">
-                                <label for="IndexRatingSortType" class="control-label col-md-2">Index Rating Sort Type</label>
-                                <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.IndexRatingSortType.$invalid && !elementFieldForm.IndexRatingSortType.$pristine}">
-                                    <input id="IndexRatingSortType" name="IndexRatingSortType" type="text" data-ng-model="vm.elementField.IndexRatingSortType" class="form-control" required />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="SortOrder" class="control-label col-md-2">Sort Order</label>
-                                <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.SortOrder.$invalid && !elementFieldForm.SortOrder.$pristine}">
-                                    <input id="SortOrder" name="SortOrder" type="text" data-ng-model="vm.elementField.SortOrder" class="form-control" required />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-10">
-                                    <input id="RowVersion" name="RowVersion" data-ng-model="vm.elementField.RowVersion" type="hidden">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-10">
-                                    <button type="submit" data-ng-click="vm.saveElementField()" data-ng-disabled="elementFieldForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
-                                        Save
-                                    </button>
-                                    <!--<button type="button" data-ng-click="vm.cancelChanges()" class="btn btn-danger">
-                                        Cancel
-                                    </button>-->
-                                </div>
-                            </div>
+                            </p>
+                            <table class="table">
+                                <tr>
+                                    <th>
+                                        Name
+                                    </th>
+                                    <th></th>
+                                </tr>
+                                <tr data-ng-repeat="element in vm.resourcePool.ElementSet">
+                                    <td>
+                                        {{ element.Name }}
+                                    </td>
+                                    <td>
+                                        <a href="" data-ng-click="vm.editElement(element)">
+                                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
+                                        </a>
+                                        <!--<a href="" data-ng-click="vm.deleteElement(element)">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove
+                                        </a>-->
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
-                    </form>
-                </div>
+                    </uib-tab>
+                    <uib-tab heading="Fields">
 
-                <!-- Element field list -->
-                <div data-ng-if="!vm.isElementFieldEdit">
-                    <p class="top-buffer">
-                        <a href="" data-ng-click="vm.addElementField()">
-                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create New
-                        </a>
-                    </p>
-                    <table class="table">
-                        <tr>
-                            <th>
-                                Element
-                            </th>
-                            <th>
-                                Name
-                            </th>
-                            <th>
-                                Field Type
-                            </th>
-                            <th>
-                                Index Enabled
-                            </th>
-                            <th></th>
-                        </tr>
-                        <tr data-ng-repeat="elementField in vm.elementFieldSet()">
-                            <td>
-                                {{ elementField.Element.Name }}
-                            </td>
-                            <td>
-                                {{ elementField.Name }}
-                            </td>
-                            <td>
-                                {{ elementField.ElementFieldType }}
-                            </td>
-                            <td>
-                                {{ elementField.IndexEnabled }}
-                            </td>
-                            <td>
-                                <a href="" data-ng-click="vm.editElementField(elementField)">
-                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
-                                </a>
-                                <!--<a href="" data-ng-click="vm.deleteElementField(elementField)">
-                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove
-                                </a>-->
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </uib-tab>
-            <uib-tab heading="Items">
-
-                <!-- Element item add/edit -->
-                <div data-ng-if="vm.isElementItemEdit">
-                    <form name="elementItemForm">
-                        <div class="form-horizontal">
-                            <div class="form-group has-error" data-ng-show="vm.entityErrors">
-                                <ul>
-                                    <li data-ng-repeat="error in vm.entityErrors">
-                                        <label class="control-label">{{ error.errorMessage }}</label>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="form-group">
-                                <label for="ElementId" class="control-label col-md-2">Element</label>
-                                <div class="col-md-10" data-ng-class="{'has-error': elementItemForm.ElementId.$invalid && !elementItemForm.ElementId.$pristine}">
-                                    <select id="ElementId" name="ElementId" data-ng-model="vm.elementItem.Element" data-ng-options="element.Name for element in vm.resourcePool.ElementSet" class="form-control" required></select>
+                        <!-- Element field add/edit -->
+                        <div data-ng-if="vm.isElementFieldEdit">
+                            <form name="elementFieldForm">
+                                <div class="form-horizontal">
+                                    <div class="form-group has-error" data-ng-show="vm.entityErrors">
+                                        <ul>
+                                            <li data-ng-repeat="error in vm.entityErrors">
+                                                <label class="control-label">{{ error.errorMessage }}</label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ElementId" class="control-label col-md-2">Element</label>
+                                        <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.ElementId.$invalid && !elementFieldForm.ElementId.$pristine}">
+                                            <select id="ElementId" name="ElementId" data-ng-model="vm.elementField.Element" data-ng-options="element.Name for element in vm.resourcePool.ElementSet" class="form-control" required></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Name" class="control-label col-md-2">Name</label>
+                                        <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.Name.$invalid && !elementFieldForm.Name.$pristine}">
+                                            <input id="Name" name="Name" type="text" data-ng-model="vm.elementField.Name" class="form-control" required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ElementFieldType" class="control-label col-md-2">Element Field Type</label>
+                                        <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.ElementFieldType.$invalid && !elementFieldForm.ElementFieldType.$pristine}">
+                                            <input id="ElementFieldType" name="ElementFieldType" type="text" data-ng-model="vm.elementField.ElementFieldType" class="form-control" required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group" data-ng-if="vm.elementField.ElementFieldType === 6">
+                                        <label for="SelectedElementId" class="control-label col-md-2">Selected Element</label>
+                                        <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.SelectedElementId.$invalid && !elementFieldForm.SelectedElementId.$pristine}">
+                                            <input id="SelectedElementId" name="SelectedElementId" type="text" data-ng-model="vm.elementField.SelectedElementId" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="UseFixedValue" class="control-label col-md-2">Use Fixed Value</label>
+                                        <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.UseFixedValue.$invalid && !elementFieldForm.UseFixedValue.$pristine}">
+                                            <label class="radio-inline">
+                                                <input id="UseFixedValue_True" name="UseFixedValue" type="radio" data-ng-model="vm.elementField.UseFixedValue" data-ng-value="true"> True
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input id="UseFixedValue_False" name="UseFixedValue" type="radio" data-ng-model="vm.elementField.UseFixedValue" data-ng-value="false"> False
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input id="UseFixedValue_Null" name="UseFixedValue" type="radio" data-ng-model="vm.elementField.UseFixedValue" data-ng-value=""> Default
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="IndexEnabled" class="control-label col-md-2">Index Enabled</label>
+                                        <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.IndexEnabled.$invalid && !elementFieldForm.IndexEnabled.$pristine}">
+                                            <label class="radio-inline">
+                                                <input id="IndexEnabled_True" name="IndexEnabled" type="radio" data-ng-model="vm.elementField.IndexEnabled" data-ng-value="true"> True
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input id="IndexEnabled_False" name="IndexEnabled" type="radio" data-ng-model="vm.elementField.IndexEnabled" data-ng-value="false"> False
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" data-ng-if="vm.elementField.IndexEnabled">
+                                        <label for="IndexType" class="control-label col-md-2">Index Type</label>
+                                        <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.IndexType.$invalid && !elementFieldForm.IndexType.$pristine}">
+                                            <input id="IndexType" name="IndexType" type="text" data-ng-model="vm.elementField.IndexType" class="form-control" required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group" data-ng-if="vm.elementField.IndexEnabled">
+                                        <label for="IndexRatingSortType" class="control-label col-md-2">Index Rating Sort Type</label>
+                                        <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.IndexRatingSortType.$invalid && !elementFieldForm.IndexRatingSortType.$pristine}">
+                                            <input id="IndexRatingSortType" name="IndexRatingSortType" type="text" data-ng-model="vm.elementField.IndexRatingSortType" class="form-control" required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="SortOrder" class="control-label col-md-2">Sort Order</label>
+                                        <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.SortOrder.$invalid && !elementFieldForm.SortOrder.$pristine}">
+                                            <input id="SortOrder" name="SortOrder" type="text" data-ng-model="vm.elementField.SortOrder" class="form-control" required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-10">
+                                            <input id="RowVersion" name="RowVersion" data-ng-model="vm.elementField.RowVersion" type="hidden">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <button type="submit" data-ng-click="vm.saveElementField()" data-ng-disabled="elementFieldForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
+                                                Save
+                                            </button>
+                                            <!--<button type="button" data-ng-click="vm.cancelChanges()" class="btn btn-danger">
+                                                Cancel
+                                            </button>-->
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="Name" class="control-label col-md-2">Name</label>
-                                <div class="col-md-10" data-ng-class="{'has-error': elementItemForm.Name.$invalid && !elementItemForm.Name.$pristine}">
-                                    <input id="Name" name="Name" type="text" data-ng-model="vm.elementItem.Name" class="form-control" required />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-10">
-                                    <input id="RowVersion" name="RowVersion" data-ng-model="vm.elementItem.RowVersion" type="hidden">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-10">
-                                    <button type="submit" data-ng-click="vm.saveElementItem()" data-ng-disabled="elementItemForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
-                                        Okay
-                                    </button>
-                                    <!--<button type="button" data-ng-click="vm.cancelChanges()" class="btn btn-danger">
-                                        Cancel
-                                    </button>-->
-                                </div>
-                            </div>
+                            </form>
                         </div>
-                    </form>
-                </div>
 
-                <!-- Element item list -->
-                <div data-ng-if="!vm.isElementItemEdit">
-                    <p class="top-buffer">
-                        <a href="" data-ng-click="vm.addElementItem()">
-                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create New
-                        </a>
-                    </p>
-                    <table class="table">
-                        <tr>
-                            <th>
-                                Element
-                            </th>
-                            <th>
-                                Name
-                            </th>
-                            <th></th>
-                        </tr>
-                        <tr data-ng-repeat="elementItem in vm.elementItemSet()">
-                            <td>
-                                {{ elementItem.Element.Name }}
-                            </td>
-                            <td>
-                                {{ elementItem.Name }}
-                            </td>
-                            <td>
-                                <a href="" data-ng-click="vm.editElementItem(elementItem)">
-                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
+                        <!-- Element field list -->
+                        <div data-ng-if="!vm.isElementFieldEdit">
+                            <p class="top-buffer">
+                                <a href="" data-ng-click="vm.addElementField()">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create New
                                 </a>
-                                <!--<a href="" data-ng-click="vm.deleteElementItem(elementItem)">
-                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove
-                                </a>-->
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                            </p>
+                            <table class="table">
+                                <tr>
+                                    <th>
+                                        Element
+                                    </th>
+                                    <th>
+                                        Name
+                                    </th>
+                                    <th>
+                                        Field Type
+                                    </th>
+                                    <th>
+                                        Index Enabled
+                                    </th>
+                                    <th></th>
+                                </tr>
+                                <tr data-ng-repeat="elementField in vm.elementFieldSet()">
+                                    <td>
+                                        {{ elementField.Element.Name }}
+                                    </td>
+                                    <td>
+                                        {{ elementField.Name }}
+                                    </td>
+                                    <td>
+                                        {{ elementField.ElementFieldType }}
+                                    </td>
+                                    <td>
+                                        {{ elementField.IndexEnabled }}
+                                    </td>
+                                    <td>
+                                        <a href="" data-ng-click="vm.editElementField(elementField)">
+                                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
+                                        </a>
+                                        <!--<a href="" data-ng-click="vm.deleteElementField(elementField)">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove
+                                        </a>-->
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </uib-tab>
+                    <uib-tab heading="Items">
+
+                        <!-- Element item add/edit -->
+                        <div data-ng-if="vm.isElementItemEdit">
+                            <form name="elementItemForm">
+                                <div class="form-horizontal">
+                                    <div class="form-group has-error" data-ng-show="vm.entityErrors">
+                                        <ul>
+                                            <li data-ng-repeat="error in vm.entityErrors">
+                                                <label class="control-label">{{ error.errorMessage }}</label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ElementId" class="control-label col-md-2">Element</label>
+                                        <div class="col-md-10" data-ng-class="{'has-error': elementItemForm.ElementId.$invalid && !elementItemForm.ElementId.$pristine}">
+                                            <select id="ElementId" name="ElementId" data-ng-model="vm.elementItem.Element" data-ng-options="element.Name for element in vm.resourcePool.ElementSet" class="form-control" required></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Name" class="control-label col-md-2">Name</label>
+                                        <div class="col-md-10" data-ng-class="{'has-error': elementItemForm.Name.$invalid && !elementItemForm.Name.$pristine}">
+                                            <input id="Name" name="Name" type="text" data-ng-model="vm.elementItem.Name" class="form-control" required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-10">
+                                            <input id="RowVersion" name="RowVersion" data-ng-model="vm.elementItem.RowVersion" type="hidden">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <button type="submit" data-ng-click="vm.saveElementItem()" data-ng-disabled="elementItemForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
+                                                Okay
+                                            </button>
+                                            <!--<button type="button" data-ng-click="vm.cancelChanges()" class="btn btn-danger">
+                                                Cancel
+                                            </button>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Element item list -->
+                        <div data-ng-if="!vm.isElementItemEdit">
+                            <p class="top-buffer">
+                                <a href="" data-ng-click="vm.addElementItem()">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create New
+                                </a>
+                            </p>
+                            <table class="table">
+                                <tr>
+                                    <th>
+                                        Element
+                                    </th>
+                                    <th>
+                                        Name
+                                    </th>
+                                    <th></th>
+                                </tr>
+                                <tr data-ng-repeat="elementItem in vm.elementItemSet()">
+                                    <td>
+                                        {{ elementItem.Element.Name }}
+                                    </td>
+                                    <td>
+                                        {{ elementItem.Name }}
+                                    </td>
+                                    <td>
+                                        <a href="" data-ng-click="vm.editElementItem(elementItem)">
+                                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
+                                        </a>
+                                        <!--<a href="" data-ng-click="vm.deleteElementItem(elementItem)">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove
+                                        </a>-->
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </uib-tab>
+                    <uib-tab heading="Cells">
+
+                        <!-- Element cell add/edit -->
+                        <div data-ng-if="vm.isElementCellEdit">
+                            <form name="elementCellForm">
+                                <div class="form-horizontal">
+                                    <div class="form-group has-error" data-ng-show="vm.entityErrors">
+                                        <ul>
+                                            <li data-ng-repeat="error in vm.entityErrors">
+                                                <label class="control-label">{{ error.errorMessage }}</label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2">Element</label>
+                                        <p class="form-control-static col-md-10" data-ng-bind="vm.elementCell.ElementField.Element.Name"></p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2">Element Field</label>
+                                        <p class="form-control-static col-md-10" data-ng-bind="vm.elementCell.ElementField.Name"></p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2">Element Item</label>
+                                        <p class="form-control-static col-md-10" data-ng-bind="vm.elementCell.ElementItem.Name"></p>
+                                    </div>
+                                    <div class="form-group" data-ng-if="vm.elementCell.ElementField.ElementFieldType === 1">
+                                        <label for="StringValue" class="control-label col-md-2">Value</label>
+                                        <div class="col-md-10" data-ng-class="{'has-error': elementCellForm.StringValue.$invalid && !elementCellForm.StringValue.$pristine}">
+                                            <input id="StringValue" name="StringValue" type="text" data-ng-model="vm.elementCell.currentUserCell().StringValue" class="form-control" required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group" data-ng-if="vm.elementCell.ElementField.ElementFieldType === 2">
+                                        <label for="BooleanValue" class="control-label col-md-2">Value</label>
+                                        <div class="col-md-10" data-ng-class="{'has-error': elementCellForm.BooleanValue.$invalid && !elementCellForm.BooleanValue.$pristine}">
+                                            <input id="BooleanValue" name="BooleanValue" type="text" data-ng-model="vm.elementCell.currentUserCell().BooleanValue" class="form-control" required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group" data-ng-if="vm.elementCell.ElementField.ElementFieldType === 3">
+                                        <label for="IntegerValue" class="control-label col-md-2">Value</label>
+                                        <div class="col-md-10" data-ng-class="{'has-error': elementCellForm.IntegerValue.$invalid && !elementCellForm.IntegerValue.$pristine}">
+                                            <input id="IntegerValue" name="IntegerValue" type="text" data-ng-model="vm.elementCell.currentUserCell().IntegerValue" class="form-control" required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group" data-ng-if="vm.elementCell.ElementField.ElementFieldType === 4 || vm.elementCell.ElementField.ElementFieldType === 11 || vm.elementCell.ElementField.ElementFieldType === 12">
+                                        <label for="DecimalValue" class="control-label col-md-2">Value</label>
+                                        <div class="col-md-10" data-ng-class="{'has-error': elementCellForm.DecimalValue.$invalid && !elementCellForm.DecimalValue.$pristine}">
+                                            <input id="DecimalValue" name="DecimalValue" type="text" data-ng-model="vm.elementCell.currentUserCell().DecimalValue" class="form-control" required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group" data-ng-if="vm.elementCell.ElementField.ElementFieldType === 6">
+                                        <label for="SelectedElementItemId" class="control-label col-md-2">Selected Item</label>
+                                        <div class="col-md-10" data-ng-class="{'has-error': elementCellForm.SelectedElementItemId.$invalid && !elementCellForm.SelectedElementItemId.$pristine}">
+                                            <select id="SelectedElementItemId" name="SelectedElementItemId" data-ng-model="vm.elementCell.SelectedElementItem" data-ng-options="elementItem.Name for elementItem in vm.elementCell.ElementField.SelectedElement.ElementItemSet" class="form-control" required></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-10">
+                                            <input id="RowVersion" name="RowVersion" data-ng-model="vm.elementCell.RowVersion" type="hidden">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <button type="submit" data-ng-click="vm.saveElementCell()" data-ng-disabled="elementCellForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
+                                                Okay
+                                            </button>
+                                            <!--<button type="button" data-ng-click="vm.cancelChanges()" class="btn btn-danger">
+                                                Cancel
+                                            </button>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Element cell list -->
+                        <div data-ng-if="!vm.isElementCellEdit">
+                            <p class="top-buffer">
+                                &nbsp;
+                            </p>
+                            <table class="table">
+                                <tr>
+                                    <th>
+                                        Element
+                                    </th>
+                                    <th>
+                                        Element Field
+                                    </th>
+                                    <th>
+                                        Element Item
+                                    </th>
+                                    <th>
+                                        Value
+                                    </th>
+                                    <th></th>
+                                </tr>
+                                <tr data-ng-repeat="elementCell in vm.elementCellSet()">
+                                    <td>
+                                        {{ elementCell.ElementField.Element.Name }}
+                                    </td>
+                                    <td>
+                                        {{ elementCell.ElementField.Name }}
+                                    </td>
+                                    <td>
+                                        {{ elementCell.ElementItem.Name }}
+                                    </td>
+                                    <td>
+                                        {{ elementCell.value() }}
+                                    </td>
+                                    <td>
+                                        <a href="" data-ng-click="vm.editElementCell(elementCell)">
+                                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </uib-tab>
+                </uib-tabset>
             </uib-tab>
-            <!--<uib-tab heading="Cells">
-                Cells
-            </uib-tab>-->
+            <uib-tab heading="Copy from Existing">
+            </uib-tab>
         </uib-tabset>
     </div>
     <div class="modal-footer">

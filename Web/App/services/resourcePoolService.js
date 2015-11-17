@@ -32,10 +32,11 @@
         var fetched = [];
 
         // Service methods
-        $delegate.createNewElement = createNewElement;
-        $delegate.createNewElementField = createNewElementField;
-        $delegate.createNewElementItem = createNewElementItem;
-        $delegate.getNewResourcePool = getNewResourcePool;
+        $delegate.createElement = createElement;
+        $delegate.createElementField = createElementField;
+        $delegate.createElementItem = createElementItem;
+        $delegate.createResourcePoolBasic = createResourcePoolBasic;
+        $delegate.createResourcePoolTwoElements = createResourcePoolTwoElements;
         $delegate.getResourcePoolExpanded = getResourcePoolExpanded;
 
         // User logged out
@@ -50,106 +51,200 @@
 
         /*** Implementations ***/
 
-        function createNewElement(resourcePool) {
-            return dataContext.createEntity('Element', {
-                ResourcePool: resourcePool,
-                Name: 'New element'
-            });
+        function createElement(element) {
+            return dataContext.createEntity('Element', element);
         }
 
-        function createNewElementField(element) {
+        function createElementCell(elementCell) {
 
-            // TODO Related cells?
+            var elementCell = dataContext.createEntity('ElementCell', elementCell);
 
-            return dataContext.createEntity('ElementField', {
-                Element: element,
-                Name: 'New field'
-            });
+            // User element cell
+            if (elementCell.ElementField.ElementFieldType !== 6) {
+                var userElementCell = dataContext.createEntity('UserElementCell', {
+                    User: elementCell.ElementField.Element.ResourcePool.User,
+                    ElementCell: elementCell
+                });
+
+                switch (elementCell.ElementField.ElementFieldType) {
+                    case 1: {
+                        userElementCell.StringValue = '';
+
+                        // Special name field
+                        if (elementCell.ElementField.Name === 'Name') {
+                            userElementCell.StringValue = elementCell.ElementItem.Name;
+                        }
+
+                        break;
+                    }
+                    case 2: { userElementCell.BooleanValue = false; break; }
+                    case 3: { userElementCell.IntegerValue = 0; break; }
+                    case 4: { userElementCell.DecimalValue = 50; break; }
+                        // TODO 5 (DateTime?)
+                    case 11: { userElementCell.DecimalValue = 100; break; }
+                    case 12: { userElementCell.DecimalValue = 0; break; }
+                }
+            }
+
+            return elementCell;
         }
 
-        function createNewElementItem(element) {
+        function createElementField(elementField) {
 
-            // TODO Related cells?
+            elementField = dataContext.createEntity('ElementField', elementField);
 
-            return dataContext.createEntity('ElementItem', {
-                Element: element,
-                Name: 'New item'
-            });
+            // Related cells
+            for (var i = 0; i < elementField.Element.ElementItemSet.length; i++) {
+                var elementItem = elementField.Element.ElementItemSet[i];
+                createElementCell({
+                    ElementField: elementField,
+                    ElementItem: elementItem
+                });
+            }
+
+            return elementField;
         }
 
-        function getNewResourcePool() {
+        function createElementItem(elementItem) {
+
+            elementItem = dataContext.createEntity('ElementItem', elementItem);
+
+            // Related cells
+            for (var i = 0; i < elementItem.Element.ElementFieldSet.length; i++) {
+                var elementField = elementItem.Element.ElementFieldSet[i];
+                createElementCell({
+                    ElementField: elementField,
+                    ElementItem: elementItem
+                });
+            }
+
+            return elementItem;
+        }
+
+        function createResourcePoolBasic() {
 
             return userService.getCurrentUser()
                 .then(function (currentUser) {
 
-                    var resourcePoolInitial = {};
-                    resourcePoolInitial.User = currentUser;
-                    resourcePoolInitial.Name = 'New CMRP';
-                    resourcePoolInitial.InitialValue = 0;
-                    resourcePoolInitial.UseFixedResourcePoolRate = false;
+                    var resourcePool = dataContext.createEntity('ResourcePool', {
+                        User: currentUser,
+                        Name: 'New CMRP',
+                        InitialValue: 0,
+                        UseFixedResourcePoolRate: false
+                    });
 
-                    var resourcePool = dataContext.createEntity('ResourcePool', resourcePoolInitial);
+                    dataContext.createEntity('UserResourcePool', {
+                        User: currentUser,
+                        ResourcePool: resourcePool,
+                        ResourcePoolRate: 10
+                    });
 
-                    var elementInitial = {};
-                    elementInitial.ResourcePool = resourcePool;
-                    elementInitial.Name = 'New Element';
-
-                    var element = dataContext.createEntity('Element', elementInitial);
+                    var element = dataContext.createEntity('Element', {
+                        ResourcePool: resourcePool,
+                        Name: 'New element'
+                    });
 
                     // Name field
-                    var nameFieldInitial = {};
-                    nameFieldInitial.Element = element;
-                    nameFieldInitial.Name = 'Name';
-                    nameFieldInitial.ElementFieldType = 1;
-                    nameFieldInitial.UseFixedValue = true;
-                    nameFieldInitial.SortOrder = 1;
+                    var nameField = createElementField({
+                        Element: element,
+                        Name: 'Name',
+                        ElementFieldType: 1,
+                        UseFixedValue: true,
+                        SortOrder: 1
+                    });
 
-                    var nameField = dataContext.createEntity('ElementField', nameFieldInitial);
+                    // Importance field (index)
+                    var importanceField = createElementField({
+                        Element: element,
+                        Name: 'Importance',
+                        ElementFieldType: 4,
+                        UseFixedValue: false,
+                        IndexEnabled: true,
+                        IndexType: 2,
+                        IndexRatingSortType: 2,
+                        SortOrder: 2
+                    });
 
-                    // Importance field index
-                    var importanceFieldInitial = {};
-                    importanceFieldInitial.Element = element;
-                    importanceFieldInitial.Name = 'Importance';
-                    importanceFieldInitial.ElementFieldType = 4;
-                    importanceFieldInitial.UseFixedValue = false;
-                    importanceFieldInitial.IndexEnabled = true;
-                    importanceFieldInitial.IndexType = 2;
-                    importanceFieldInitial.IndexRatingSortType = 2;
-                    importanceFieldInitial.SortOrder = 2;
+                    // Item 1
+                    var item1 = createElementItem({
+                        Element: element,
+                        Name: 'New item 1' // ?
+                    });
 
-                    var importanceField = dataContext.createEntity('ElementField', importanceFieldInitial);
-
-                    var item1Initial = {};
-                    item1Initial.Element = element;
-                    item1Initial.Name = 'Item 1'; // ?
-
-                    var item1 = dataContext.createEntity('ElementItem', item1Initial);
-
-                    var cell1Initial = {};
-                    cell1Initial.ElementField = nameField;
-                    cell1Initial.ElementItem = item1;
-
-                    var cell1 = dataContext.createEntity('ElementCell', cell1Initial);
-
-                    var userCell1Initial = {};
-                    userCell1Initial.User = currentUser;
-                    userCell1Initial.ElementCell = cell1;
-                    userCell1Initial.StringValue = 'Item 1';
-
-                    var userCell1 = dataContext.createEntity('UserElementCell', userCell1Initial);
-
-                    var item1Initial = {};
-                    item1Initial.Element = element;
-                    item1Initial.Name = 'Item 1'; // ?
-
-                    var cell2Initial = {};
-                    cell2Initial.ElementField = importanceField;
-                    cell2Initial.ElementItem = item1;
-
-                    var cell2 = dataContext.createEntity('ElementCell', cell2Initial);
+                    // Item 2
+                    var item2 = createElementItem({
+                        Element: element,
+                        Name: 'New item 2' // ?
+                    });
 
                     return resourcePool;
+                });
+        }
 
+        function createResourcePoolTwoElements() {
+
+            return createResourcePoolBasic()
+                .then(function (resourcePool) {
+
+                    // Resource pool
+                    resourcePool.InitialValue = 100;
+
+                    // Element 2 & items
+                    var element2 = resourcePool.ElementSet[0];
+                    element2.Name = 'Child';
+
+                    var element2Item1 = element2.ElementItemSet[0];
+                    var element2Item2 = element2.ElementItemSet[1];
+
+                    // Element 1
+                    var element1 = dataContext.createEntity('Element', {
+                        ResourcePool: resourcePool,
+                        Name: 'Parent'
+                    });
+
+                    // Switch places of the elements
+                    // Otherwise 'Child' becomes the main and viewer shows that one first
+                    resourcePool.ElementSet[0] = element1;
+                    resourcePool.ElementSet[1] = element2;
+
+                    // Name field
+                    var nameField = createElementField({
+                        Element: element1,
+                        Name: 'Name',
+                        ElementFieldType: 1,
+                        UseFixedValue: true,
+                        SortOrder: 1
+                    });
+
+                    // Child field (second element)
+                    var childField = createElementField({
+                        Element: element1,
+                        Name: 'Child',
+                        ElementFieldType: 6,
+                        SelectedElement: element2,
+                        UseFixedValue: true,
+                        SortOrder: 2
+                    });
+
+                    // Item 1
+                    var item1 = createElementItem({
+                        Element: element1,
+                        Name: 'Parent 1' // ?
+                    });
+
+                    // Item 1 Cell
+                    item1.ElementCell[1].SelectedElementItem = element2Item1;
+
+                    // Item 2
+                    var item2 = createElementItem({
+                        Element: element1,
+                        Name: 'Parent 2' // ?
+                    });
+
+                    // Item 2 Cell
+                    item2.ElementCell[1].SelectedElementItem = element2Item2;
+
+                    return resourcePool;
                 });
         }
 

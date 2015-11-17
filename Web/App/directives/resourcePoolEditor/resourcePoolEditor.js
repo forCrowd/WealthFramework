@@ -205,7 +205,7 @@
                 // New
                 if (scope.resourcePoolId === '0') {
 
-                    resourcePoolService.getNewResourcePool()
+                    resourcePoolService.createResourcePoolBasic()
                         .then(function (resourcePool) {
                             scope.resourcePool = resourcePool;
                             scope.showEditorModal();
@@ -297,7 +297,8 @@
 
                     scope.chartConfig.title = { text: element.Name };
 
-                    if (element.directIncomeField()) {
+                    // TODO Check this rule?
+                    if (element === element.ResourcePool.MainElement && (element.totalIncome() > 0 || element.directIncomeField() !== null)) {
 
                         // Column type
                         scope.chartConfig.options.chart = { type: 'column' };
@@ -355,9 +356,11 @@
                 vm.addElementItem = addElementItem;
                 vm.cancelChanges = cancelChanges;
                 vm.editElement = editElement;
+                vm.editElementCell = editElementCell;
                 vm.editElementField = editElementField;
                 vm.editElementItem = editElementItem;
                 vm.element = null;
+                vm.elementCellSet = elementCellSet;
                 vm.elementField = null;
                 vm.elementFieldSet = elementFieldSet;
                 vm.elementItem = null;
@@ -372,21 +375,22 @@
                 vm.resourcePool = resourcePool;
                 vm.saveChanges = saveChanges;
                 vm.saveElement = saveElement;
+                vm.saveElementCell = saveElementCell;
                 vm.saveElementField = saveElementField;
                 vm.saveElementItem = saveElementItem;
 
                 function addElement() {
-                    vm.element = resourcePoolService.createNewElement(vm.resourcePool);
+                    vm.element = { ResourcePool: vm.resourcePool, Name: 'New element' };
                     vm.isElementEdit = true;
                 }
 
                 function addElementField() {
-                    vm.elementField = resourcePoolService.createNewElementField(vm.element);
+                    vm.elementField = { Name: 'New field' };
                     vm.isElementFieldEdit = true;
                 }
 
                 function addElementItem() {
-                    vm.elementItem = resourcePoolService.createNewElementItem(vm.element);
+                    vm.elementItem = { Name: 'New item' };
                     vm.isElementItemEdit = true;
                 }
 
@@ -405,6 +409,11 @@
                     vm.isElementEdit = true;
                 }
 
+                function editElementCell(elementCell) {
+                    vm.elementCell = elementCell;
+                    vm.isElementCellEdit = true;
+                }
+
                 function editElementField(elementField) {
                     vm.elementField = elementField;
                     vm.isElementFieldEdit = true;
@@ -413,6 +422,20 @@
                 function editElementItem(elementItem) {
                     vm.elementItem = elementItem;
                     vm.isElementItemEdit = true;
+                }
+
+                function elementCellSet() {
+
+                    var elementItems = elementItemSet();
+
+                    var list = [];
+                    for (var i = 0; i < elementItems.length; i++) {
+                        var elementItem = elementItems[i];
+                        for (var i2 = 0; i2 < elementItem.ElementCellSet.length; i2++) {
+                            list.push(elementItem.ElementCellSet[i2]);
+                        }
+                    }
+                    return list;
                 }
 
                 function elementFieldSet() {
@@ -451,6 +474,7 @@
 
                             // Main element fix
                             if (vm.isNew && resourcePool.ElementSet.length > 0) {
+
                                 resourcePool.MainElement = resourcePool.ElementSet[0];
 
                                 resourcePoolService.saveChanges()
@@ -484,16 +508,39 @@
                 };
 
                 function saveElement() {
+
+                    // New
+                    if (typeof vm.element.entityAspect === 'undefined') {
+                        resourcePoolService.createElement(vm.element);
+                    }
+
                     vm.isElementEdit = false;
                     vm.element = null;
                 }
 
+                function saveElementCell() {
+                    vm.isElementCellEdit = false;
+                    vm.elementCell = null;
+                }
+
                 function saveElementField() {
+
+                    // New
+                    if (typeof vm.elementField.entityAspect === 'undefined') {
+                        resourcePoolService.createElementField(vm.elementField);
+                    }
+
                     vm.isElementFieldEdit = false;
                     vm.elementField = null;
                 }
 
                 function saveElementItem() {
+
+                    // New
+                    if (typeof vm.elementItem.entityAspect === 'undefined') {
+                        resourcePoolService.createElementItem(vm.elementItem);
+                    }
+
                     vm.isElementItemEdit = false;
                     vm.elementItem = null;
                 }
