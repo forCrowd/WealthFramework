@@ -33,13 +33,13 @@ foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
 	var entityType = entitySet.ElementType;
 	var entityTypeName = typeMapper.GetTypeName(entityType);
 	var entityVariable = codeStringGenerator.GetCamelCase(entityTypeName);
-	var serviceId = string.Format("{0}Service", entityVariable);
+	var factoryId = string.Format("{0}Factory", entityVariable);
 	var primaryKey = entityType.KeyMembers[0];
     var primaryKeyShortTypeName = typeMapper.GetTypeName(primaryKey.TypeUsage);
     var simpleProperties = typeMapper.GetSimpleProperties(entityType);
     var relatedProperties = typeMapper.GetRelatedNavigationProperties(entityType);
 
-	var outputFileName = string.Format(@"{0}.js", serviceId);
+	var outputFileName = string.Format(@"{0}.js", factoryId);
 
     fileManager.StartNewFile(outputFileName);
 #>
@@ -47,21 +47,21 @@ foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
 (function () {
     'use strict';
 
-    var serviceId = '<#= serviceId #>';
+    var factoryId = '<#= factoryId #>';
     angular.module('main')
-        .factory(serviceId, ['dataContext', '$rootScope', 'logger', <#= serviceId #>]);
+        .factory(factoryId, ['dataContext', '$rootScope', 'logger', <#= factoryId #>]);
 
-    function <#= serviceId #>(dataContext, $rootScope, logger) {
+    function <#= factoryId #>(dataContext, $rootScope, logger) {
         
 		// Logger
-		logger = logger.forSource(serviceId);
+		logger = logger.forSource(factoryId);
 
         // To determine whether the data will be fetched from server or local
         var minimumDate = new Date(0);
         var fetchedOn = minimumDate;
 
-        // Service methods (alphabetically)
-        var service = {
+        // Factory methods (alphabetically)
+        var factory = {
             create<#= entityTypeName #>: create<#= entityTypeName #>,
             delete<#= entityTypeName #>: delete<#= entityTypeName #>,
             getChanges: getChanges,
@@ -78,7 +78,7 @@ foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
             fetchedOn = minimumDate;
         });
 
-        return service;
+        return factory;
 
         /*** Implementations ***/
 

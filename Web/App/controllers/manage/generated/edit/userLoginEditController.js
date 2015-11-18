@@ -12,15 +12,15 @@
 
     var controllerId = 'userLoginEditController';
     angular.module('main')
-        .controller(controllerId, ['userLoginService',
-            'userService',
+        .controller(controllerId, ['userLoginFactory',
+            'userFactory',
             'logger',
             '$location',
             '$routeParams',
             userLoginEditController]);
 
-    function userLoginEditController(userLoginService,
-		userService,
+    function userLoginEditController(userLoginFactory,
+		userFactory,
 		logger,
 		$location,
 		$routeParams) {
@@ -47,19 +47,19 @@
 
             $location.path('/manage/generated/userLogin');
 
-            //if (userLoginService.hasChanges()) {
-            //    userLoginService.rejectChanges();
+            //if (userLoginFactory.hasChanges()) {
+            //    userLoginFactory.rejectChanges();
             //    logWarning('Discarded pending change(s)', null, true);
             //}
         }
 
         function hasChanges() {
-            return userLoginService.hasChanges();
+            return userLoginFactory.hasChanges();
         }
 
         function initialize() {
 
-            userService.getUserSet(false)
+            userFactory.getUserSet(false)
                 .then(function (data) {
                     vm.userSet = data;
                 });
@@ -68,7 +68,7 @@
                 // TODO For development enviroment, create test entity?
             }
             else {
-                userLoginService.getUserLogin($routeParams.Id)
+                userLoginFactory.getUserLogin($routeParams.Id)
                     .then(function (data) {
                         vm.userLogin = data;
                     })
@@ -80,17 +80,17 @@
 
         function isSaveDisabled() {
             return isSaving ||
-                (!isNew && !userLoginService.hasChanges());
+                (!isNew && !userLoginFactory.hasChanges());
         }
 
         function saveChanges() {
 
             if (isNew) {
-                userLoginService.createUserLogin(vm.userLogin);
+                userLoginFactory.createUserLogin(vm.userLogin);
             }
 
             isSaving = true;
-            userLoginService.saveChanges()
+            userLoginFactory.saveChanges()
                 .then(function (result) {
                     $location.path('/manage/generated/userLogin');
                 })

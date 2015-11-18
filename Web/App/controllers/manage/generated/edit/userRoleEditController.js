@@ -12,17 +12,17 @@
 
     var controllerId = 'userRoleEditController';
     angular.module('main')
-        .controller(controllerId, ['userRoleService',
-            'roleService',
-            'userService',
+        .controller(controllerId, ['userRoleFactory',
+            'roleFactory',
+            'userFactory',
             'logger',
             '$location',
             '$routeParams',
             userRoleEditController]);
 
-    function userRoleEditController(userRoleService,
-		roleService,
-		userService,
+    function userRoleEditController(userRoleFactory,
+		roleFactory,
+		userFactory,
 		logger,
 		$location,
 		$routeParams) {
@@ -50,24 +50,24 @@
 
             $location.path('/manage/generated/userRole');
 
-            //if (userRoleService.hasChanges()) {
-            //    userRoleService.rejectChanges();
+            //if (userRoleFactory.hasChanges()) {
+            //    userRoleFactory.rejectChanges();
             //    logWarning('Discarded pending change(s)', null, true);
             //}
         }
 
         function hasChanges() {
-            return userRoleService.hasChanges();
+            return userRoleFactory.hasChanges();
         }
 
         function initialize() {
 
-            roleService.getRoleSet(false)
+            roleFactory.getRoleSet(false)
                 .then(function (data) {
                     vm.roleSet = data;
                 });
 
-            userService.getUserSet(false)
+            userFactory.getUserSet(false)
                 .then(function (data) {
                     vm.userSet = data;
                 });
@@ -76,7 +76,7 @@
                 // TODO For development enviroment, create test entity?
             }
             else {
-                userRoleService.getUserRole($routeParams.Id)
+                userRoleFactory.getUserRole($routeParams.Id)
                     .then(function (data) {
                         vm.userRole = data;
                     })
@@ -88,17 +88,17 @@
 
         function isSaveDisabled() {
             return isSaving ||
-                (!isNew && !userRoleService.hasChanges());
+                (!isNew && !userRoleFactory.hasChanges());
         }
 
         function saveChanges() {
 
             if (isNew) {
-                userRoleService.createUserRole(vm.userRole);
+                userRoleFactory.createUserRole(vm.userRole);
             }
 
             isSaving = true;
-            userRoleService.saveChanges()
+            userRoleFactory.saveChanges()
                 .then(function (result) {
                     $location.path('/manage/generated/userRole');
                 })

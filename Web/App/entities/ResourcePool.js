@@ -1,14 +1,14 @@
 ﻿(function () {
     'use strict';
 
-    var serviceId = 'ResourcePool';
+    var factoryId = 'ResourcePool';
     angular.module('main')
-        .factory(serviceId, ['logger', resourcePoolFactory]);
+        .factory(factoryId, ['logger', resourcePoolFactory]);
 
     function resourcePoolFactory(logger) {
 
         // Logger
-        logger = logger.forSource(serviceId);
+        logger = logger.forSource(factoryId);
 
         // Server-side properties
         Object.defineProperty(ResourcePool.prototype, 'UseFixedResourcePoolRate', {

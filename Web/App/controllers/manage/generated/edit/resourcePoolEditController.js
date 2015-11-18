@@ -12,15 +12,15 @@
 
     var controllerId = 'resourcePoolEditController';
     angular.module('main')
-        .controller(controllerId, ['resourcePoolService',
-            'userService',
+        .controller(controllerId, ['resourcePoolFactory',
+            'userFactory',
             'logger',
             '$location',
             '$routeParams',
             resourcePoolEditController]);
 
-    function resourcePoolEditController(resourcePoolService,
-		userService,
+    function resourcePoolEditController(resourcePoolFactory,
+		userFactory,
 		logger,
 		$location,
 		$routeParams) {
@@ -47,19 +47,19 @@
 
             $location.path('/manage/generated/resourcePool');
 
-            //if (resourcePoolService.hasChanges()) {
-            //    resourcePoolService.rejectChanges();
+            //if (resourcePoolFactory.hasChanges()) {
+            //    resourcePoolFactory.rejectChanges();
             //    logWarning('Discarded pending change(s)', null, true);
             //}
         }
 
         function hasChanges() {
-            return resourcePoolService.hasChanges();
+            return resourcePoolFactory.hasChanges();
         }
 
         function initialize() {
 
-            userService.getUserSet(false)
+            userFactory.getUserSet(false)
                 .then(function (data) {
                     vm.userSet = data;
                 });
@@ -68,7 +68,7 @@
                 // TODO For development enviroment, create test entity?
             }
             else {
-                resourcePoolService.getResourcePool($routeParams.Id)
+                resourcePoolFactory.getResourcePool($routeParams.Id)
                     .then(function (data) {
                         vm.resourcePool = data;
                     })
@@ -80,17 +80,17 @@
 
         function isSaveDisabled() {
             return isSaving ||
-                (!isNew && !resourcePoolService.hasChanges());
+                (!isNew && !resourcePoolFactory.hasChanges());
         }
 
         function saveChanges() {
 
             if (isNew) {
-                resourcePoolService.createResourcePool(vm.resourcePool);
+                resourcePoolFactory.createResourcePool(vm.resourcePool);
             }
 
             isSaving = true;
-            resourcePoolService.saveChanges()
+            resourcePoolFactory.saveChanges()
                 .then(function (result) {
                     $location.path('/manage/generated/resourcePool');
                 })

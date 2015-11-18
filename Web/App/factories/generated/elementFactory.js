@@ -10,27 +10,27 @@
 (function () {
     'use strict';
 
-    var serviceId = 'elementFieldService';
+    var factoryId = 'elementFactory';
     angular.module('main')
-        .factory(serviceId, ['dataContext', '$rootScope', 'logger', elementFieldService]);
+        .factory(factoryId, ['dataContext', '$rootScope', 'logger', elementFactory]);
 
-    function elementFieldService(dataContext, $rootScope, logger) {
+    function elementFactory(dataContext, $rootScope, logger) {
         
 		// Logger
-		logger = logger.forSource(serviceId);
+		logger = logger.forSource(factoryId);
 
         // To determine whether the data will be fetched from server or local
         var minimumDate = new Date(0);
         var fetchedOn = minimumDate;
 
-        // Service methods (alphabetically)
-        var service = {
-            createElementField: createElementField,
-            deleteElementField: deleteElementField,
+        // Factory methods (alphabetically)
+        var factory = {
+            createElement: createElement,
+            deleteElement: deleteElement,
             getChanges: getChanges,
             getChangesCount: getChangesCount,
-            getElementFieldSet: getElementFieldSet,
-            getElementField: getElementField,
+            getElementSet: getElementSet,
+            getElement: getElement,
             hasChanges: hasChanges,
             rejectChanges: rejectChanges,
             saveChanges: saveChanges
@@ -41,16 +41,16 @@
             fetchedOn = minimumDate;
         });
 
-        return service;
+        return factory;
 
         /*** Implementations ***/
 
-        function createElementField(elementField) {
-            return dataContext.createEntity('ElementField', elementField);
+        function createElement(element) {
+            return dataContext.createEntity('Element', element);
         }
 
-        function deleteElementField(elementField) {
-            elementField.entityAspect.setDeleted();
+        function deleteElement(element) {
+            element.entityAspect.setDeleted();
         }
 
         function getChanges() {
@@ -61,7 +61,7 @@
             return dataContext.getChangesCount();
         }
 
-        function getElementFieldSet(forceRefresh) {
+        function getElementSet(forceRefresh) {
             var count;
             if (forceRefresh) {
                 if (dataContext.hasChanges()) {
@@ -72,8 +72,8 @@
             }
 
             var query = breeze.EntityQuery
-				.from('ElementField')
-				.expand(['Element'])
+				.from('Element')
+				.expand(['ResourcePool'])
             ;
 
             // Fetch the data from server, in case if it's not fetched earlier or forced
@@ -93,18 +93,18 @@
 
             function success(response) {
                 count = response.results.length;
-                //logger.logSuccess('Got ' + count + ' elementField(s)', response);
+                //logger.logSuccess('Got ' + count + ' element(s)', response);
                 return response.results;
             }
 
             function failed(error) {
-                var message = error.message || 'ElementField query failed';
+                var message = error.message || 'Element query failed';
                 logger.logError(message, error, true);
             }
         }
 
-        function getElementField(elementFieldId, forceRefresh) {
-            return dataContext.fetchEntityByKey('ElementField', elementFieldId, !forceRefresh)
+        function getElement(elementId, forceRefresh) {
+            return dataContext.fetchEntityByKey('Element', elementId, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {
@@ -112,7 +112,7 @@
             }
 
             function failed(error) {
-                var message = error.message || 'getElementField query failed';
+                var message = error.message || 'getElement query failed';
                 logger.logError(message, error, true);
             }
         }

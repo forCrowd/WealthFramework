@@ -12,11 +12,11 @@
 
     var controllerId = 'userClaimListController';
     angular.module('main')
-        .controller(controllerId, ['userClaimService',
+        .controller(controllerId, ['userClaimFactory',
             'logger',
 			userClaimListController]);
 
-    function userClaimListController(userClaimService,
+    function userClaimListController(userClaimFactory,
         logger) {
         logger = logger.forSource(controllerId);
 
@@ -31,9 +31,9 @@
         };
 
         function deleteUserClaim(userClaim) {
-            userClaimService.deleteUserClaim(userClaim);
+            userClaimFactory.deleteUserClaim(userClaim);
 
-            userClaimService.saveChanges()
+            userClaimFactory.saveChanges()
                 .then(function () {
                     vm.userClaimSet.splice(vm.userClaimSet.indexOf(userClaim), 1);
                     logger.logSuccess("Hooray we saved", null, true);
@@ -47,7 +47,7 @@
         };
 
         function getUserClaimSet() {
-            userClaimService.getUserClaimSet(false)
+            userClaimFactory.getUserClaimSet(false)
 			    .then(function (data) {
                     vm.userClaimSet = data;
                 });

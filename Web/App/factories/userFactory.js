@@ -2,14 +2,14 @@
 (function () {
     'use strict';
 
-    var serviceId = 'userService';
+    var factoryId = 'userFactory';
     angular.module('main')
         .config(function ($provide) {
-            $provide.decorator(serviceId, ['$delegate', 'dataContext', '$http', '$q', '$rootScope', '$window', 'logger', userService]);
+            $provide.decorator(factoryId, ['$delegate', 'dataContext', '$http', '$q', '$rootScope', '$window', 'logger', userFactory]);
         });
 
-    function userService($delegate, dataContext, $http, $q, $rootScope, $window, logger) {
-        logger = logger.forSource(serviceId);
+    function userFactory($delegate, dataContext, $http, $q, $rootScope, $window, logger) {
+        logger = logger.forSource(factoryId);
 
         var accessTokenUrl = '/api/Token';
         var changePasswordUrl = '/api/Account/ChangePassword';

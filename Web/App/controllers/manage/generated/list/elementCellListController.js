@@ -12,11 +12,11 @@
 
     var controllerId = 'elementCellListController';
     angular.module('main')
-        .controller(controllerId, ['elementCellService',
+        .controller(controllerId, ['elementCellFactory',
             'logger',
 			elementCellListController]);
 
-    function elementCellListController(elementCellService,
+    function elementCellListController(elementCellFactory,
         logger) {
         logger = logger.forSource(controllerId);
 
@@ -31,9 +31,9 @@
         };
 
         function deleteElementCell(elementCell) {
-            elementCellService.deleteElementCell(elementCell);
+            elementCellFactory.deleteElementCell(elementCell);
 
-            elementCellService.saveChanges()
+            elementCellFactory.saveChanges()
                 .then(function () {
                     vm.elementCellSet.splice(vm.elementCellSet.indexOf(elementCell), 1);
                     logger.logSuccess("Hooray we saved", null, true);
@@ -47,7 +47,7 @@
         };
 
         function getElementCellSet() {
-            elementCellService.getElementCellSet(false)
+            elementCellFactory.getElementCellSet(false)
 			    .then(function (data) {
                     vm.elementCellSet = data;
                 });

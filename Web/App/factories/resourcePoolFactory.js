@@ -2,31 +2,31 @@
 (function () {
     'use strict';
 
-    var serviceId = 'resourcePoolService';
+    var factoryId = 'resourcePoolFactory';
     angular.module('main')
         .config(function ($provide) {
-            $provide.decorator(serviceId, [
+            $provide.decorator(factoryId, [
                 '$delegate',
                 'ResourcePool',
                 'Element',
-                'userService',
+                'userFactory',
                 'dataContext',
                 '$rootScope',
                 'logger',
-                resourcePoolService]);
+                resourcePoolFactory]);
         });
 
-    function resourcePoolService(
+    function resourcePoolFactory(
         $delegate,
         ResourcePool,
         Element,
-        userService,
+        userFactory,
         dataContext,
         $rootScope,
         logger) {
 
         // Logger
-        logger = logger.forSource(serviceId);
+        logger = logger.forSource(factoryId);
 
         var userLoggedIn = false;
         var fetched = [];
@@ -123,7 +123,7 @@
 
         function createResourcePoolBasic() {
 
-            return userService.getCurrentUser()
+            return userFactory.getCurrentUser()
                 .then(function (currentUser) {
 
                     var resourcePool = dataContext.createEntity('ResourcePool', {
@@ -250,7 +250,7 @@
 
         function getNewResourcePoolCreateEntityAsync() {
 
-            return userService.getCurrentUser()
+            return userFactory.getCurrentUser()
                 .then(function (currentUser) {
 
                     var resourcePoolInitial = {};
@@ -322,7 +322,7 @@
 
         function getResourcePoolExpanded(resourcePoolId) {
 
-            return userService.getCurrentUser()
+            return userFactory.getCurrentUser()
                 .then(function (currentUser) {
 
                     // Prepare the query

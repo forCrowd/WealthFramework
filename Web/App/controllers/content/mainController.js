@@ -3,9 +3,9 @@
 
     var controllerId = 'mainController';
     angular.module('main')
-        .controller(controllerId, ['mainService', 'userService', '$scope', '$location', '$window', 'logger', mainController]);
+        .controller(controllerId, ['mainFactory', 'userFactory', '$scope', '$location', '$window', 'logger', mainController]);
 
-    function mainController(mainService, userService, $scope, $location, $window, logger) {
+    function mainController(mainFactory, userFactory, $scope, $location, $window, logger) {
 
         // Logger
         logger = logger.forSource(controllerId);
@@ -19,14 +19,14 @@
         vm.logout = logout;
 
         // Application info
-        mainService.getApplicationInfo()
+        mainFactory.getApplicationInfo()
             .then(function (applicationInfo) {
                 vm.applicationInfo = applicationInfo;
                 vm.applicationInfo.CurrentVersionText = vm.applicationInfo.CurrentVersion + ' - Alpha ~ Beta';
             });
 
         // Current user
-        userService.getCurrentUser()
+        userFactory.getCurrentUser()
             .then(function (currentUser) {
                 vm.currentUser = currentUser;
             });
@@ -41,7 +41,7 @@
         }
 
         function logout() {
-            userService.logout()
+            userFactory.logout()
                 .success(function () {
                     // Reset current user and go back to home
                     vm.currentUser = null;

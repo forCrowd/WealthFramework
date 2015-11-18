@@ -12,11 +12,11 @@
 
     var controllerId = 'elementItemListController';
     angular.module('main')
-        .controller(controllerId, ['elementItemService',
+        .controller(controllerId, ['elementItemFactory',
             'logger',
 			elementItemListController]);
 
-    function elementItemListController(elementItemService,
+    function elementItemListController(elementItemFactory,
         logger) {
         logger = logger.forSource(controllerId);
 
@@ -31,9 +31,9 @@
         };
 
         function deleteElementItem(elementItem) {
-            elementItemService.deleteElementItem(elementItem);
+            elementItemFactory.deleteElementItem(elementItem);
 
-            elementItemService.saveChanges()
+            elementItemFactory.saveChanges()
                 .then(function () {
                     vm.elementItemSet.splice(vm.elementItemSet.indexOf(elementItem), 1);
                     logger.logSuccess("Hooray we saved", null, true);
@@ -47,7 +47,7 @@
         };
 
         function getElementItemSet() {
-            elementItemService.getElementItemSet(false)
+            elementItemFactory.getElementItemSet(false)
 			    .then(function (data) {
                     vm.elementItemSet = data;
                 });

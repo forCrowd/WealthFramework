@@ -10,27 +10,27 @@
 (function () {
     'use strict';
 
-    var serviceId = 'userClaimService';
+    var factoryId = 'userRoleFactory';
     angular.module('main')
-        .factory(serviceId, ['dataContext', '$rootScope', 'logger', userClaimService]);
+        .factory(factoryId, ['dataContext', '$rootScope', 'logger', userRoleFactory]);
 
-    function userClaimService(dataContext, $rootScope, logger) {
+    function userRoleFactory(dataContext, $rootScope, logger) {
         
 		// Logger
-		logger = logger.forSource(serviceId);
+		logger = logger.forSource(factoryId);
 
         // To determine whether the data will be fetched from server or local
         var minimumDate = new Date(0);
         var fetchedOn = minimumDate;
 
-        // Service methods (alphabetically)
-        var service = {
-            createUserClaim: createUserClaim,
-            deleteUserClaim: deleteUserClaim,
+        // Factory methods (alphabetically)
+        var factory = {
+            createUserRole: createUserRole,
+            deleteUserRole: deleteUserRole,
             getChanges: getChanges,
             getChangesCount: getChangesCount,
-            getUserClaimSet: getUserClaimSet,
-            getUserClaim: getUserClaim,
+            getUserRoleSet: getUserRoleSet,
+            getUserRole: getUserRole,
             hasChanges: hasChanges,
             rejectChanges: rejectChanges,
             saveChanges: saveChanges
@@ -41,16 +41,16 @@
             fetchedOn = minimumDate;
         });
 
-        return service;
+        return factory;
 
         /*** Implementations ***/
 
-        function createUserClaim(userClaim) {
-            return dataContext.createEntity('UserClaims', userClaim);
+        function createUserRole(userRole) {
+            return dataContext.createEntity('UserRoles', userRole);
         }
 
-        function deleteUserClaim(userClaim) {
-            userClaim.entityAspect.setDeleted();
+        function deleteUserRole(userRole) {
+            userRole.entityAspect.setDeleted();
         }
 
         function getChanges() {
@@ -61,7 +61,7 @@
             return dataContext.getChangesCount();
         }
 
-        function getUserClaimSet(forceRefresh) {
+        function getUserRoleSet(forceRefresh) {
             var count;
             if (forceRefresh) {
                 if (dataContext.hasChanges()) {
@@ -72,8 +72,8 @@
             }
 
             var query = breeze.EntityQuery
-				.from('UserClaims')
-				.expand(['User'])
+				.from('UserRoles')
+				.expand(['Role', 'User'])
             ;
 
             // Fetch the data from server, in case if it's not fetched earlier or forced
@@ -93,18 +93,18 @@
 
             function success(response) {
                 count = response.results.length;
-                //logger.logSuccess('Got ' + count + ' userClaim(s)', response);
+                //logger.logSuccess('Got ' + count + ' userRole(s)', response);
                 return response.results;
             }
 
             function failed(error) {
-                var message = error.message || 'UserClaim query failed';
+                var message = error.message || 'UserRole query failed';
                 logger.logError(message, error, true);
             }
         }
 
-        function getUserClaim(userClaimId, forceRefresh) {
-            return dataContext.fetchEntityByKey('UserClaim', userClaimId, !forceRefresh)
+        function getUserRole(userRoleId, forceRefresh) {
+            return dataContext.fetchEntityByKey('UserRole', userRoleId, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {
@@ -112,7 +112,7 @@
             }
 
             function failed(error) {
-                var message = error.message || 'getUserClaim query failed';
+                var message = error.message || 'getUserRole query failed';
                 logger.logError(message, error, true);
             }
         }

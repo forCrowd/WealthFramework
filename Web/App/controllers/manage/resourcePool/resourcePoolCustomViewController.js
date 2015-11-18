@@ -3,13 +3,13 @@
 
     var controllerId = 'resourcePoolCustomViewController';
     angular.module('main')
-        .controller(controllerId, ['resourcePoolService',
+        .controller(controllerId, ['resourcePoolFactory',
             '$routeParams',
             '$rootScope',
             'logger',
             resourcePoolCustomViewController]);
 
-    function resourcePoolCustomViewController(resourcePoolService, $routeParams, $rootScope, logger) {
+    function resourcePoolCustomViewController(resourcePoolFactory, $routeParams, $rootScope, logger) {
 
         // Logger
         logger = logger.forSource(controllerId);
@@ -22,7 +22,7 @@
         if (vm.resourcePoolId === '0') {
             $rootScope.viewTitle = 'New';
         } else {
-            resourcePoolService.getResourcePoolExpanded(vm.resourcePoolId)
+            resourcePoolFactory.getResourcePoolExpanded(vm.resourcePoolId)
                 .then(function (resourcePool) {
 
                     if (resourcePool === null) {

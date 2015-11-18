@@ -10,27 +10,27 @@
 (function () {
     'use strict';
 
-    var serviceId = 'resourcePoolService';
+    var factoryId = 'elementItemFactory';
     angular.module('main')
-        .factory(serviceId, ['dataContext', '$rootScope', 'logger', resourcePoolService]);
+        .factory(factoryId, ['dataContext', '$rootScope', 'logger', elementItemFactory]);
 
-    function resourcePoolService(dataContext, $rootScope, logger) {
+    function elementItemFactory(dataContext, $rootScope, logger) {
         
 		// Logger
-		logger = logger.forSource(serviceId);
+		logger = logger.forSource(factoryId);
 
         // To determine whether the data will be fetched from server or local
         var minimumDate = new Date(0);
         var fetchedOn = minimumDate;
 
-        // Service methods (alphabetically)
-        var service = {
-            createResourcePool: createResourcePool,
-            deleteResourcePool: deleteResourcePool,
+        // Factory methods (alphabetically)
+        var factory = {
+            createElementItem: createElementItem,
+            deleteElementItem: deleteElementItem,
             getChanges: getChanges,
             getChangesCount: getChangesCount,
-            getResourcePoolSet: getResourcePoolSet,
-            getResourcePool: getResourcePool,
+            getElementItemSet: getElementItemSet,
+            getElementItem: getElementItem,
             hasChanges: hasChanges,
             rejectChanges: rejectChanges,
             saveChanges: saveChanges
@@ -41,16 +41,16 @@
             fetchedOn = minimumDate;
         });
 
-        return service;
+        return factory;
 
         /*** Implementations ***/
 
-        function createResourcePool(resourcePool) {
-            return dataContext.createEntity('ResourcePool', resourcePool);
+        function createElementItem(elementItem) {
+            return dataContext.createEntity('ElementItem', elementItem);
         }
 
-        function deleteResourcePool(resourcePool) {
-            resourcePool.entityAspect.setDeleted();
+        function deleteElementItem(elementItem) {
+            elementItem.entityAspect.setDeleted();
         }
 
         function getChanges() {
@@ -61,7 +61,7 @@
             return dataContext.getChangesCount();
         }
 
-        function getResourcePoolSet(forceRefresh) {
+        function getElementItemSet(forceRefresh) {
             var count;
             if (forceRefresh) {
                 if (dataContext.hasChanges()) {
@@ -72,8 +72,8 @@
             }
 
             var query = breeze.EntityQuery
-				.from('ResourcePool')
-				.expand(['User'])
+				.from('ElementItem')
+				.expand(['Element'])
             ;
 
             // Fetch the data from server, in case if it's not fetched earlier or forced
@@ -93,18 +93,18 @@
 
             function success(response) {
                 count = response.results.length;
-                //logger.logSuccess('Got ' + count + ' resourcePool(s)', response);
+                //logger.logSuccess('Got ' + count + ' elementItem(s)', response);
                 return response.results;
             }
 
             function failed(error) {
-                var message = error.message || 'ResourcePool query failed';
+                var message = error.message || 'ElementItem query failed';
                 logger.logError(message, error, true);
             }
         }
 
-        function getResourcePool(resourcePoolId, forceRefresh) {
-            return dataContext.fetchEntityByKey('ResourcePool', resourcePoolId, !forceRefresh)
+        function getElementItem(elementItemId, forceRefresh) {
+            return dataContext.fetchEntityByKey('ElementItem', elementItemId, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {
@@ -112,7 +112,7 @@
             }
 
             function failed(error) {
-                var message = error.message || 'getResourcePool query failed';
+                var message = error.message || 'getElementItem query failed';
                 logger.logError(message, error, true);
             }
         }

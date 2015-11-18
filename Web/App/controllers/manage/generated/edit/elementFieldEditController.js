@@ -12,15 +12,15 @@
 
     var controllerId = 'elementFieldEditController';
     angular.module('main')
-        .controller(controllerId, ['elementFieldService',
-            'elementService',
+        .controller(controllerId, ['elementFieldFactory',
+            'elementFactory',
             'logger',
             '$location',
             '$routeParams',
             elementFieldEditController]);
 
-    function elementFieldEditController(elementFieldService,
-		elementService,
+    function elementFieldEditController(elementFieldFactory,
+		elementFactory,
 		logger,
 		$location,
 		$routeParams) {
@@ -47,19 +47,19 @@
 
             $location.path('/manage/generated/elementField');
 
-            //if (elementFieldService.hasChanges()) {
-            //    elementFieldService.rejectChanges();
+            //if (elementFieldFactory.hasChanges()) {
+            //    elementFieldFactory.rejectChanges();
             //    logWarning('Discarded pending change(s)', null, true);
             //}
         }
 
         function hasChanges() {
-            return elementFieldService.hasChanges();
+            return elementFieldFactory.hasChanges();
         }
 
         function initialize() {
 
-            elementService.getElementSet(false)
+            elementFactory.getElementSet(false)
                 .then(function (data) {
                     vm.elementSet = data;
                 });
@@ -68,7 +68,7 @@
                 // TODO For development enviroment, create test entity?
             }
             else {
-                elementFieldService.getElementField($routeParams.Id)
+                elementFieldFactory.getElementField($routeParams.Id)
                     .then(function (data) {
                         vm.elementField = data;
                     })
@@ -80,17 +80,17 @@
 
         function isSaveDisabled() {
             return isSaving ||
-                (!isNew && !elementFieldService.hasChanges());
+                (!isNew && !elementFieldFactory.hasChanges());
         }
 
         function saveChanges() {
 
             if (isNew) {
-                elementFieldService.createElementField(vm.elementField);
+                elementFieldFactory.createElementField(vm.elementField);
             }
 
             isSaving = true;
-            elementFieldService.saveChanges()
+            elementFieldFactory.saveChanges()
                 .then(function (result) {
                     $location.path('/manage/generated/elementField');
                 })

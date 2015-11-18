@@ -14,55 +14,55 @@
 
     document.write('\
 	\
-    <script src="/App/services/generated/elementService.js?v=0.29"></script>\
+    <script src="/App/factories/generated/elementFactory.js?v=0.37"></script>\
     <script src="/App/controllers/manage/generated/list/elementListController.js?v=0.37"></script>\
     <script src="/App/controllers/manage/generated/edit/elementEditController.js?v=0.37"></script>\
 	\
-    <script src="/App/services/generated/elementCellService.js?v=0.29"></script>\
+    <script src="/App/factories/generated/elementCellFactory.js?v=0.37"></script>\
     <script src="/App/controllers/manage/generated/list/elementCellListController.js?v=0.37"></script>\
     <script src="/App/controllers/manage/generated/edit/elementCellEditController.js?v=0.37"></script>\
 	\
-    <script src="/App/services/generated/elementFieldService.js?v=0.29"></script>\
+    <script src="/App/factories/generated/elementFieldFactory.js?v=0.37"></script>\
     <script src="/App/controllers/manage/generated/list/elementFieldListController.js?v=0.37"></script>\
     <script src="/App/controllers/manage/generated/edit/elementFieldEditController.js?v=0.37"></script>\
 	\
-    <script src="/App/services/generated/elementItemService.js?v=0.29"></script>\
+    <script src="/App/factories/generated/elementItemFactory.js?v=0.37"></script>\
     <script src="/App/controllers/manage/generated/list/elementItemListController.js?v=0.37"></script>\
     <script src="/App/controllers/manage/generated/edit/elementItemEditController.js?v=0.37"></script>\
 	\
-    <script src="/App/services/generated/resourcePoolService.js?v=0.29"></script>\
+    <script src="/App/factories/generated/resourcePoolFactory.js?v=0.37"></script>\
     <script src="/App/controllers/manage/generated/list/resourcePoolListController.js?v=0.37"></script>\
     <script src="/App/controllers/manage/generated/edit/resourcePoolEditController.js?v=0.37"></script>\
 	\
-    <script src="/App/services/generated/roleService.js?v=0.29"></script>\
+    <script src="/App/factories/generated/roleFactory.js?v=0.37"></script>\
     <script src="/App/controllers/manage/generated/list/roleListController.js?v=0.37"></script>\
     <script src="/App/controllers/manage/generated/edit/roleEditController.js?v=0.37"></script>\
 	\
-    <script src="/App/services/generated/userService.js?v=0.29"></script>\
+    <script src="/App/factories/generated/userFactory.js?v=0.37"></script>\
     <script src="/App/controllers/manage/generated/list/userListController.js?v=0.37"></script>\
     <script src="/App/controllers/manage/generated/edit/userEditController.js?v=0.37"></script>\
 	\
-    <script src="/App/services/generated/userClaimService.js?v=0.29"></script>\
+    <script src="/App/factories/generated/userClaimFactory.js?v=0.37"></script>\
     <script src="/App/controllers/manage/generated/list/userClaimListController.js?v=0.37"></script>\
     <script src="/App/controllers/manage/generated/edit/userClaimEditController.js?v=0.37"></script>\
 	\
-    <script src="/App/services/generated/userElementCellService.js?v=0.29"></script>\
+    <script src="/App/factories/generated/userElementCellFactory.js?v=0.37"></script>\
     <script src="/App/controllers/manage/generated/list/userElementCellListController.js?v=0.37"></script>\
     <script src="/App/controllers/manage/generated/edit/userElementCellEditController.js?v=0.37"></script>\
 	\
-    <script src="/App/services/generated/userElementFieldService.js?v=0.29"></script>\
+    <script src="/App/factories/generated/userElementFieldFactory.js?v=0.37"></script>\
     <script src="/App/controllers/manage/generated/list/userElementFieldListController.js?v=0.37"></script>\
     <script src="/App/controllers/manage/generated/edit/userElementFieldEditController.js?v=0.37"></script>\
 	\
-    <script src="/App/services/generated/userLoginService.js?v=0.29"></script>\
+    <script src="/App/factories/generated/userLoginFactory.js?v=0.37"></script>\
     <script src="/App/controllers/manage/generated/list/userLoginListController.js?v=0.37"></script>\
     <script src="/App/controllers/manage/generated/edit/userLoginEditController.js?v=0.37"></script>\
 	\
-    <script src="/App/services/generated/userResourcePoolService.js?v=0.29"></script>\
+    <script src="/App/factories/generated/userResourcePoolFactory.js?v=0.37"></script>\
     <script src="/App/controllers/manage/generated/list/userResourcePoolListController.js?v=0.37"></script>\
     <script src="/App/controllers/manage/generated/edit/userResourcePoolEditController.js?v=0.37"></script>\
 	\
-    <script src="/App/services/generated/userRoleService.js?v=0.29"></script>\
+    <script src="/App/factories/generated/userRoleFactory.js?v=0.37"></script>\
     <script src="/App/controllers/manage/generated/list/userRoleListController.js?v=0.37"></script>\
     <script src="/App/controllers/manage/generated/edit/userRoleEditController.js?v=0.37"></script>\
 	\

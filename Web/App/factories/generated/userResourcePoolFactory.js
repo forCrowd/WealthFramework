@@ -10,27 +10,27 @@
 (function () {
     'use strict';
 
-    var serviceId = 'elementItemService';
+    var factoryId = 'userResourcePoolFactory';
     angular.module('main')
-        .factory(serviceId, ['dataContext', '$rootScope', 'logger', elementItemService]);
+        .factory(factoryId, ['dataContext', '$rootScope', 'logger', userResourcePoolFactory]);
 
-    function elementItemService(dataContext, $rootScope, logger) {
+    function userResourcePoolFactory(dataContext, $rootScope, logger) {
         
 		// Logger
-		logger = logger.forSource(serviceId);
+		logger = logger.forSource(factoryId);
 
         // To determine whether the data will be fetched from server or local
         var minimumDate = new Date(0);
         var fetchedOn = minimumDate;
 
-        // Service methods (alphabetically)
-        var service = {
-            createElementItem: createElementItem,
-            deleteElementItem: deleteElementItem,
+        // Factory methods (alphabetically)
+        var factory = {
+            createUserResourcePool: createUserResourcePool,
+            deleteUserResourcePool: deleteUserResourcePool,
             getChanges: getChanges,
             getChangesCount: getChangesCount,
-            getElementItemSet: getElementItemSet,
-            getElementItem: getElementItem,
+            getUserResourcePoolSet: getUserResourcePoolSet,
+            getUserResourcePool: getUserResourcePool,
             hasChanges: hasChanges,
             rejectChanges: rejectChanges,
             saveChanges: saveChanges
@@ -41,16 +41,16 @@
             fetchedOn = minimumDate;
         });
 
-        return service;
+        return factory;
 
         /*** Implementations ***/
 
-        function createElementItem(elementItem) {
-            return dataContext.createEntity('ElementItem', elementItem);
+        function createUserResourcePool(userResourcePool) {
+            return dataContext.createEntity('UserResourcePool', userResourcePool);
         }
 
-        function deleteElementItem(elementItem) {
-            elementItem.entityAspect.setDeleted();
+        function deleteUserResourcePool(userResourcePool) {
+            userResourcePool.entityAspect.setDeleted();
         }
 
         function getChanges() {
@@ -61,7 +61,7 @@
             return dataContext.getChangesCount();
         }
 
-        function getElementItemSet(forceRefresh) {
+        function getUserResourcePoolSet(forceRefresh) {
             var count;
             if (forceRefresh) {
                 if (dataContext.hasChanges()) {
@@ -72,8 +72,8 @@
             }
 
             var query = breeze.EntityQuery
-				.from('ElementItem')
-				.expand(['Element'])
+				.from('UserResourcePool')
+				.expand(['ResourcePool', 'User'])
             ;
 
             // Fetch the data from server, in case if it's not fetched earlier or forced
@@ -93,18 +93,18 @@
 
             function success(response) {
                 count = response.results.length;
-                //logger.logSuccess('Got ' + count + ' elementItem(s)', response);
+                //logger.logSuccess('Got ' + count + ' userResourcePool(s)', response);
                 return response.results;
             }
 
             function failed(error) {
-                var message = error.message || 'ElementItem query failed';
+                var message = error.message || 'UserResourcePool query failed';
                 logger.logError(message, error, true);
             }
         }
 
-        function getElementItem(elementItemId, forceRefresh) {
-            return dataContext.fetchEntityByKey('ElementItem', elementItemId, !forceRefresh)
+        function getUserResourcePool(userResourcePoolId, forceRefresh) {
+            return dataContext.fetchEntityByKey('UserResourcePool', userResourcePoolId, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {
@@ -112,7 +112,7 @@
             }
 
             function failed(error) {
-                var message = error.message || 'getElementItem query failed';
+                var message = error.message || 'getUserResourcePool query failed';
                 logger.logError(message, error, true);
             }
         }

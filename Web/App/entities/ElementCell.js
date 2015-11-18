@@ -1,14 +1,14 @@
 ﻿(function () {
     'use strict';
 
-    var serviceId = 'ElementCell';
+    var factoryId = 'ElementCell';
     angular.module('main')
-        .factory(serviceId, ['logger', elementCellFactory]);
+        .factory(factoryId, ['logger', elementCellFactory]);
 
     function elementCellFactory(logger) {
 
         // Logger
-        logger = logger.forSource(serviceId);
+        logger = logger.forSource(factoryId);
 
         // Return
         return ElementCell;

@@ -12,11 +12,11 @@
 
     var controllerId = 'elementFieldListController';
     angular.module('main')
-        .controller(controllerId, ['elementFieldService',
+        .controller(controllerId, ['elementFieldFactory',
             'logger',
 			elementFieldListController]);
 
-    function elementFieldListController(elementFieldService,
+    function elementFieldListController(elementFieldFactory,
         logger) {
         logger = logger.forSource(controllerId);
 
@@ -31,9 +31,9 @@
         };
 
         function deleteElementField(elementField) {
-            elementFieldService.deleteElementField(elementField);
+            elementFieldFactory.deleteElementField(elementField);
 
-            elementFieldService.saveChanges()
+            elementFieldFactory.saveChanges()
                 .then(function () {
                     vm.elementFieldSet.splice(vm.elementFieldSet.indexOf(elementField), 1);
                     logger.logSuccess("Hooray we saved", null, true);
@@ -47,7 +47,7 @@
         };
 
         function getElementFieldSet() {
-            elementFieldService.getElementFieldSet(false)
+            elementFieldFactory.getElementFieldSet(false)
 			    .then(function (data) {
                     vm.elementFieldSet = data;
                 });

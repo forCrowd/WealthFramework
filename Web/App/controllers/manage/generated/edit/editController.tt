@@ -32,7 +32,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 	var entityVariable = codeStringGenerator.GetCamelCase(entityTypeName);
 	var entitySetName = string.Format("{0}Set", entityVariable);
 	var controllerId = string.Format("{0}EditController", entityVariable);
-	var serviceId = string.Format("{0}Service", entityVariable);
+	var factoryId = string.Format("{0}Factory", entityVariable);
 	var primaryKey = entityType.KeyMembers[0];
     var primaryKeyShortTypeName = typeMapper.GetTypeName(primaryKey.TypeUsage);
     var simpleProperties = typeMapper.GetSimpleProperties(entityType);
@@ -47,28 +47,28 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 
     var controllerId = '<#= controllerId #>';
     angular.module('main')
-        .controller(controllerId, ['<#= serviceId #>',
+        .controller(controllerId, ['<#= factoryId #>',
 <#
 	foreach (var property in relatedProperties)
 	{
 		var relatedVariable = codeStringGenerator.GetCamelCase(property.Name);
-		var relatedServiceId = string.Format("{0}Service", relatedVariable);
+		var relatedFactoryId = string.Format("{0}Factory", relatedVariable);
 #>
-            '<#= relatedServiceId #>',
+            '<#= relatedFactoryId #>',
 <# } #>
             'logger',
             '$location',
             '$routeParams',
             <#= controllerId #>]);
 
-    function <#= controllerId #>(<#= serviceId #>,
+    function <#= controllerId #>(<#= factoryId #>,
 <#
 	foreach (var property in relatedProperties)
 	{
 		var relatedVariable = codeStringGenerator.GetCamelCase(property.Name);
-		var relatedServiceId = string.Format("{0}Service", relatedVariable);
+		var relatedFactoryId = string.Format("{0}Factory", relatedVariable);
 #>
-		<#= relatedServiceId #>,
+		<#= relatedFactoryId #>,
 <# } #>
 		logger,
 		$location,
@@ -103,14 +103,14 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 
             $location.path('/manage/generated/<#= entityVariable #>');
 
-            //if (<#= serviceId #>.hasChanges()) {
-            //    <#= serviceId #>.rejectChanges();
+            //if (<#= factoryId #>.hasChanges()) {
+            //    <#= factoryId #>.rejectChanges();
             //    logWarning('Discarded pending change(s)', null, true);
             //}
         }
 
         function hasChanges() {
-            return <#= serviceId #>.hasChanges();
+            return <#= factoryId #>.hasChanges();
         }
 
         function initialize() {
@@ -119,11 +119,11 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 	foreach (var property in relatedProperties)
 	{
 		var relatedVariable = codeStringGenerator.GetCamelCase(property.Name);
-		var relatedServiceId = string.Format("{0}Service", relatedVariable);
+		var relatedFactoryId = string.Format("{0}Factory", relatedVariable);
 		var relatedSetGetMethod = string.Format("get{0}Set", property.Name);
 		var relatedSetName = string.Format("{0}Set", relatedVariable);
 #>
-            <#= relatedServiceId #>.<#= relatedSetGetMethod #>(false)
+            <#= relatedFactoryId #>.<#= relatedSetGetMethod #>(false)
                 .then(function (data) {
                     vm.<#= relatedSetName #> = data;
                 });
@@ -133,7 +133,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
                 // TODO For development enviroment, create test entity?
             }
             else {
-                <#= serviceId #>.get<#= entityTypeName #>($routeParams.Id)
+                <#= factoryId #>.get<#= entityTypeName #>($routeParams.Id)
                     .then(function (data) {
                         vm.<#= entityVariable #> = data;
                     })
@@ -145,17 +145,17 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 
         function isSaveDisabled() {
             return isSaving ||
-                (!isNew && !<#= serviceId #>.hasChanges());
+                (!isNew && !<#= factoryId #>.hasChanges());
         }
 
         function saveChanges() {
 
             if (isNew) {
-                <#= serviceId #>.create<#= entityTypeName #>(vm.<#= entityVariable #>);
+                <#= factoryId #>.create<#= entityTypeName #>(vm.<#= entityVariable #>);
             }
 
             isSaving = true;
-            <#= serviceId #>.saveChanges()
+            <#= factoryId #>.saveChanges()
                 .then(function (result) {
                     $location.path('/manage/generated/<#= entityVariable #>');
                 })

@@ -3,16 +3,16 @@
 
     var controllerId = 'loginController';
     angular.module('main')
-        .controller(controllerId, ['userService', '$location', '$rootScope', 'logger', loginController]);
+        .controller(controllerId, ['userFactory', '$location', '$rootScope', 'logger', loginController]);
 
-    function loginController(userService, $location, $rootScope, logger) {
+    function loginController(userFactory, $location, $rootScope, logger) {
         logger = logger.forSource(controllerId);
 
         var vm = this;
         vm.getAccessToken = getAccessToken;
 
         function getAccessToken() {
-            userService.getAccessToken(vm.email, vm.password, true)
+            userFactory.getAccessToken(vm.email, vm.password, true)
                 .success(function () {
                     $location.path($rootScope.locationHistory[$rootScope.locationHistory.length - 2]);
                 })

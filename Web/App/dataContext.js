@@ -8,14 +8,14 @@
 (function () {
     'use strict';
 
-    var serviceId = 'dataContext';
+    var factoryId = 'dataContext';
     angular.module('main')
-        .factory(serviceId, ['entityManagerFactory', '$q', '$rootScope', '$timeout', 'logger', dataContext]);
+        .factory(factoryId, ['entityManagerFactory', '$q', '$rootScope', '$timeout', 'logger', dataContext]);
 
     function dataContext(entityManagerFactory, $q, $rootScope, $timeout, logger) {
 
         // Logger
-        logger = logger.forSource(serviceId);
+        logger = logger.forSource(factoryId);
 
         // Manager
         var manager = null;

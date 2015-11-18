@@ -12,11 +12,11 @@
 
     var controllerId = 'userResourcePoolListController';
     angular.module('main')
-        .controller(controllerId, ['userResourcePoolService',
+        .controller(controllerId, ['userResourcePoolFactory',
             'logger',
 			userResourcePoolListController]);
 
-    function userResourcePoolListController(userResourcePoolService,
+    function userResourcePoolListController(userResourcePoolFactory,
         logger) {
         logger = logger.forSource(controllerId);
 
@@ -31,9 +31,9 @@
         };
 
         function deleteUserResourcePool(userResourcePool) {
-            userResourcePoolService.deleteUserResourcePool(userResourcePool);
+            userResourcePoolFactory.deleteUserResourcePool(userResourcePool);
 
-            userResourcePoolService.saveChanges()
+            userResourcePoolFactory.saveChanges()
                 .then(function () {
                     vm.userResourcePoolSet.splice(vm.userResourcePoolSet.indexOf(userResourcePool), 1);
                     logger.logSuccess("Hooray we saved", null, true);
@@ -47,7 +47,7 @@
         };
 
         function getUserResourcePoolSet() {
-            userResourcePoolService.getUserResourcePoolSet(false)
+            userResourcePoolFactory.getUserResourcePoolSet(false)
 			    .then(function (data) {
                     vm.userResourcePoolSet = data;
                 });

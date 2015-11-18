@@ -32,7 +32,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 	var entityVariable = codeStringGenerator.GetCamelCase(entityTypeName);
 	var entitySetName = string.Format("{0}Set", entityVariable);
 	var controllerId = string.Format("{0}ListController", entityVariable);
-	var serviceId = string.Format("{0}Service", entityVariable);
+	var factoryId = string.Format("{0}Factory", entityVariable);
 	var entitySetGetMethod = string.Format("get{0}Set", entityTypeName);
 	var entityDeleteMethod = string.Format("delete{0}", entityTypeName);
 	var primaryKey = entityType.KeyMembers[0];
@@ -50,11 +50,11 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 
     var controllerId = '<#= controllerId #>';
     angular.module('main')
-        .controller(controllerId, ['<#= serviceId #>',
+        .controller(controllerId, ['<#= factoryId #>',
             'logger',
 			<#= controllerId #>]);
 
-    function <#= controllerId #>(<#= serviceId #>,
+    function <#= controllerId #>(<#= factoryId #>,
         logger) {
         logger = logger.forSource(controllerId);
 
@@ -69,9 +69,9 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
         };
 
         function <#= entityDeleteMethod #>(<#= entityVariable #>) {
-            <#= serviceId #>.<#= entityDeleteMethod #>(<#= entityVariable #>);
+            <#= factoryId #>.<#= entityDeleteMethod #>(<#= entityVariable #>);
 
-            <#= serviceId #>.saveChanges()
+            <#= factoryId #>.saveChanges()
                 .then(function () {
                     vm.<#= entitySetName #>.splice(vm.<#= entitySetName #>.indexOf(<#= entityVariable #>), 1);
                     logger.logSuccess("Hooray we saved", null, true);
@@ -85,7 +85,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
         };
 
         function <#= entitySetGetMethod #>() {
-            <#= serviceId #>.<#= entitySetGetMethod #>(false)
+            <#= factoryId #>.<#= entitySetGetMethod #>(false)
 			    .then(function (data) {
                     vm.<#= entitySetName #> = data;
                 });

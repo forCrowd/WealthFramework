@@ -12,11 +12,11 @@
 
     var controllerId = 'userLoginListController';
     angular.module('main')
-        .controller(controllerId, ['userLoginService',
+        .controller(controllerId, ['userLoginFactory',
             'logger',
 			userLoginListController]);
 
-    function userLoginListController(userLoginService,
+    function userLoginListController(userLoginFactory,
         logger) {
         logger = logger.forSource(controllerId);
 
@@ -31,9 +31,9 @@
         };
 
         function deleteUserLogin(userLogin) {
-            userLoginService.deleteUserLogin(userLogin);
+            userLoginFactory.deleteUserLogin(userLogin);
 
-            userLoginService.saveChanges()
+            userLoginFactory.saveChanges()
                 .then(function () {
                     vm.userLoginSet.splice(vm.userLoginSet.indexOf(userLogin), 1);
                     logger.logSuccess("Hooray we saved", null, true);
@@ -47,7 +47,7 @@
         };
 
         function getUserLoginSet() {
-            userLoginService.getUserLoginSet(false)
+            userLoginFactory.getUserLoginSet(false)
 			    .then(function (data) {
                     vm.userLoginSet = data;
                 });

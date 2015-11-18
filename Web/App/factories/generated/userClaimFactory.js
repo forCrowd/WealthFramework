@@ -10,27 +10,27 @@
 (function () {
     'use strict';
 
-    var serviceId = 'elementService';
+    var factoryId = 'userClaimFactory';
     angular.module('main')
-        .factory(serviceId, ['dataContext', '$rootScope', 'logger', elementService]);
+        .factory(factoryId, ['dataContext', '$rootScope', 'logger', userClaimFactory]);
 
-    function elementService(dataContext, $rootScope, logger) {
+    function userClaimFactory(dataContext, $rootScope, logger) {
         
 		// Logger
-		logger = logger.forSource(serviceId);
+		logger = logger.forSource(factoryId);
 
         // To determine whether the data will be fetched from server or local
         var minimumDate = new Date(0);
         var fetchedOn = minimumDate;
 
-        // Service methods (alphabetically)
-        var service = {
-            createElement: createElement,
-            deleteElement: deleteElement,
+        // Factory methods (alphabetically)
+        var factory = {
+            createUserClaim: createUserClaim,
+            deleteUserClaim: deleteUserClaim,
             getChanges: getChanges,
             getChangesCount: getChangesCount,
-            getElementSet: getElementSet,
-            getElement: getElement,
+            getUserClaimSet: getUserClaimSet,
+            getUserClaim: getUserClaim,
             hasChanges: hasChanges,
             rejectChanges: rejectChanges,
             saveChanges: saveChanges
@@ -41,16 +41,16 @@
             fetchedOn = minimumDate;
         });
 
-        return service;
+        return factory;
 
         /*** Implementations ***/
 
-        function createElement(element) {
-            return dataContext.createEntity('Element', element);
+        function createUserClaim(userClaim) {
+            return dataContext.createEntity('UserClaims', userClaim);
         }
 
-        function deleteElement(element) {
-            element.entityAspect.setDeleted();
+        function deleteUserClaim(userClaim) {
+            userClaim.entityAspect.setDeleted();
         }
 
         function getChanges() {
@@ -61,7 +61,7 @@
             return dataContext.getChangesCount();
         }
 
-        function getElementSet(forceRefresh) {
+        function getUserClaimSet(forceRefresh) {
             var count;
             if (forceRefresh) {
                 if (dataContext.hasChanges()) {
@@ -72,8 +72,8 @@
             }
 
             var query = breeze.EntityQuery
-				.from('Element')
-				.expand(['ResourcePool'])
+				.from('UserClaims')
+				.expand(['User'])
             ;
 
             // Fetch the data from server, in case if it's not fetched earlier or forced
@@ -93,18 +93,18 @@
 
             function success(response) {
                 count = response.results.length;
-                //logger.logSuccess('Got ' + count + ' element(s)', response);
+                //logger.logSuccess('Got ' + count + ' userClaim(s)', response);
                 return response.results;
             }
 
             function failed(error) {
-                var message = error.message || 'Element query failed';
+                var message = error.message || 'UserClaim query failed';
                 logger.logError(message, error, true);
             }
         }
 
-        function getElement(elementId, forceRefresh) {
-            return dataContext.fetchEntityByKey('Element', elementId, !forceRefresh)
+        function getUserClaim(userClaimId, forceRefresh) {
+            return dataContext.fetchEntityByKey('UserClaim', userClaimId, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {
@@ -112,7 +112,7 @@
             }
 
             function failed(error) {
-                var message = error.message || 'getElement query failed';
+                var message = error.message || 'getUserClaim query failed';
                 logger.logError(message, error, true);
             }
         }

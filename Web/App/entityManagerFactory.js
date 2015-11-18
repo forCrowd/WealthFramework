@@ -8,9 +8,9 @@
 (function () {
     'use strict';
 
-    var serviceId = 'entityManagerFactory';
+    var factoryId = 'entityManagerFactory';
     angular.module('main')
-        .factory(serviceId, ['breeze',
+        .factory(factoryId, ['breeze',
             'Element',
             'ElementCell',
             'ElementField',
@@ -32,7 +32,7 @@
         logger) {
 
         // Logger
-        logger = logger.forSource(serviceId);
+        logger = logger.forSource(factoryId);
 
         configureBreeze();
 

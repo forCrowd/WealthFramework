@@ -12,15 +12,15 @@
 
     var controllerId = 'userClaimEditController';
     angular.module('main')
-        .controller(controllerId, ['userClaimService',
-            'userService',
+        .controller(controllerId, ['userClaimFactory',
+            'userFactory',
             'logger',
             '$location',
             '$routeParams',
             userClaimEditController]);
 
-    function userClaimEditController(userClaimService,
-		userService,
+    function userClaimEditController(userClaimFactory,
+		userFactory,
 		logger,
 		$location,
 		$routeParams) {
@@ -47,19 +47,19 @@
 
             $location.path('/manage/generated/userClaim');
 
-            //if (userClaimService.hasChanges()) {
-            //    userClaimService.rejectChanges();
+            //if (userClaimFactory.hasChanges()) {
+            //    userClaimFactory.rejectChanges();
             //    logWarning('Discarded pending change(s)', null, true);
             //}
         }
 
         function hasChanges() {
-            return userClaimService.hasChanges();
+            return userClaimFactory.hasChanges();
         }
 
         function initialize() {
 
-            userService.getUserSet(false)
+            userFactory.getUserSet(false)
                 .then(function (data) {
                     vm.userSet = data;
                 });
@@ -68,7 +68,7 @@
                 // TODO For development enviroment, create test entity?
             }
             else {
-                userClaimService.getUserClaim($routeParams.Id)
+                userClaimFactory.getUserClaim($routeParams.Id)
                     .then(function (data) {
                         vm.userClaim = data;
                     })
@@ -80,17 +80,17 @@
 
         function isSaveDisabled() {
             return isSaving ||
-                (!isNew && !userClaimService.hasChanges());
+                (!isNew && !userClaimFactory.hasChanges());
         }
 
         function saveChanges() {
 
             if (isNew) {
-                userClaimService.createUserClaim(vm.userClaim);
+                userClaimFactory.createUserClaim(vm.userClaim);
             }
 
             isSaving = true;
-            userClaimService.saveChanges()
+            userClaimFactory.saveChanges()
                 .then(function (result) {
                     $location.path('/manage/generated/userClaim');
                 })

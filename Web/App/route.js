@@ -5,7 +5,7 @@
         .config(routeConfig);
 
     angular.module('main')
-        .run(['userService', '$rootScope', '$location', 'logger', routeRun]);
+        .run(['userFactory', '$rootScope', '$location', 'logger', routeRun]);
 
     function routeConfig($routeProvider, $locationProvider) {
 
@@ -88,7 +88,7 @@
         }
     }
 
-    function routeRun(userService, $rootScope, $location, logger) {
+    function routeRun(userFactory, $rootScope, $location, logger) {
 
         // Logger
         logger = logger.forSource('routeRun');
@@ -99,7 +99,7 @@
         $rootScope.$on('$routeChangeStart', function (event, next, current) {
 
             // Navigate the authenticated user to home page, in case they try to go login or register
-            userService.isAuthenticated()
+            userFactory.isAuthenticated()
                 .then(function (isAuthenticated) {
                     if (isAuthenticated && ($location.path() === '/account/login' || $location.path() === '/account/register')) {
                         $location.path('/');

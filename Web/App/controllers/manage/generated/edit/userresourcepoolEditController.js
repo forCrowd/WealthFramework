@@ -12,17 +12,17 @@
 
     var controllerId = 'userResourcePoolEditController';
     angular.module('main')
-        .controller(controllerId, ['userResourcePoolService',
-            'resourcePoolService',
-            'userService',
+        .controller(controllerId, ['userResourcePoolFactory',
+            'resourcePoolFactory',
+            'userFactory',
             'logger',
             '$location',
             '$routeParams',
             userResourcePoolEditController]);
 
-    function userResourcePoolEditController(userResourcePoolService,
-		resourcePoolService,
-		userService,
+    function userResourcePoolEditController(userResourcePoolFactory,
+		resourcePoolFactory,
+		userFactory,
 		logger,
 		$location,
 		$routeParams) {
@@ -50,24 +50,24 @@
 
             $location.path('/manage/generated/userResourcePool');
 
-            //if (userResourcePoolService.hasChanges()) {
-            //    userResourcePoolService.rejectChanges();
+            //if (userResourcePoolFactory.hasChanges()) {
+            //    userResourcePoolFactory.rejectChanges();
             //    logWarning('Discarded pending change(s)', null, true);
             //}
         }
 
         function hasChanges() {
-            return userResourcePoolService.hasChanges();
+            return userResourcePoolFactory.hasChanges();
         }
 
         function initialize() {
 
-            resourcePoolService.getResourcePoolSet(false)
+            resourcePoolFactory.getResourcePoolSet(false)
                 .then(function (data) {
                     vm.resourcePoolSet = data;
                 });
 
-            userService.getUserSet(false)
+            userFactory.getUserSet(false)
                 .then(function (data) {
                     vm.userSet = data;
                 });
@@ -76,7 +76,7 @@
                 // TODO For development enviroment, create test entity?
             }
             else {
-                userResourcePoolService.getUserResourcePool($routeParams.Id)
+                userResourcePoolFactory.getUserResourcePool($routeParams.Id)
                     .then(function (data) {
                         vm.userResourcePool = data;
                     })
@@ -88,17 +88,17 @@
 
         function isSaveDisabled() {
             return isSaving ||
-                (!isNew && !userResourcePoolService.hasChanges());
+                (!isNew && !userResourcePoolFactory.hasChanges());
         }
 
         function saveChanges() {
 
             if (isNew) {
-                userResourcePoolService.createUserResourcePool(vm.userResourcePool);
+                userResourcePoolFactory.createUserResourcePool(vm.userResourcePool);
             }
 
             isSaving = true;
-            userResourcePoolService.saveChanges()
+            userResourcePoolFactory.saveChanges()
                 .then(function (result) {
                     $location.path('/manage/generated/userResourcePool');
                 })

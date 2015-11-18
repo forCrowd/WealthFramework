@@ -149,14 +149,14 @@
     <script src="/App/entityManagerFactory.js?v=0.27"></script>
     <script src="/App/dataContext.js?v=0.37"></script>
 
-    <script src="/App/services/mainService.js?v=0.22"></script>
+    <script src="/App/factories/mainFactory.js?v=0.37"></script>
 
-    <!-- Manage Scripts - Generated (Services, Controllers) -->
+    <!-- Manage Scripts - Generated (Factories, Controllers) -->
     <script src="/App/includes/manageScripts.js?v=0.37"></script>
 
-    <!-- Service extensions -->
-    <script src="/App/services/userService.js?v=0.37"></script>
-    <script src="/App/services/resourcePoolService.js?v=0.37"></script>
+    <!-- Factory extensions -->
+    <script src="/App/factories/userFactory.js?v=0.37"></script>
+    <script src="/App/factories/resourcePoolFactory.js?v=0.37"></script>
 
     <!-- Content -->
     <script src="/App/controllers/content/mainController.js?v=0.29"></script>

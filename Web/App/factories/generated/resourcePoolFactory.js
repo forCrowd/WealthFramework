@@ -10,27 +10,27 @@
 (function () {
     'use strict';
 
-    var serviceId = 'roleService';
+    var factoryId = 'resourcePoolFactory';
     angular.module('main')
-        .factory(serviceId, ['dataContext', '$rootScope', 'logger', roleService]);
+        .factory(factoryId, ['dataContext', '$rootScope', 'logger', resourcePoolFactory]);
 
-    function roleService(dataContext, $rootScope, logger) {
+    function resourcePoolFactory(dataContext, $rootScope, logger) {
         
 		// Logger
-		logger = logger.forSource(serviceId);
+		logger = logger.forSource(factoryId);
 
         // To determine whether the data will be fetched from server or local
         var minimumDate = new Date(0);
         var fetchedOn = minimumDate;
 
-        // Service methods (alphabetically)
-        var service = {
-            createRole: createRole,
-            deleteRole: deleteRole,
+        // Factory methods (alphabetically)
+        var factory = {
+            createResourcePool: createResourcePool,
+            deleteResourcePool: deleteResourcePool,
             getChanges: getChanges,
             getChangesCount: getChangesCount,
-            getRoleSet: getRoleSet,
-            getRole: getRole,
+            getResourcePoolSet: getResourcePoolSet,
+            getResourcePool: getResourcePool,
             hasChanges: hasChanges,
             rejectChanges: rejectChanges,
             saveChanges: saveChanges
@@ -41,16 +41,16 @@
             fetchedOn = minimumDate;
         });
 
-        return service;
+        return factory;
 
         /*** Implementations ***/
 
-        function createRole(role) {
-            return dataContext.createEntity('Roles', role);
+        function createResourcePool(resourcePool) {
+            return dataContext.createEntity('ResourcePool', resourcePool);
         }
 
-        function deleteRole(role) {
-            role.entityAspect.setDeleted();
+        function deleteResourcePool(resourcePool) {
+            resourcePool.entityAspect.setDeleted();
         }
 
         function getChanges() {
@@ -61,7 +61,7 @@
             return dataContext.getChangesCount();
         }
 
-        function getRoleSet(forceRefresh) {
+        function getResourcePoolSet(forceRefresh) {
             var count;
             if (forceRefresh) {
                 if (dataContext.hasChanges()) {
@@ -72,7 +72,8 @@
             }
 
             var query = breeze.EntityQuery
-				.from('Roles')
+				.from('ResourcePool')
+				.expand(['User'])
             ;
 
             // Fetch the data from server, in case if it's not fetched earlier or forced
@@ -92,18 +93,18 @@
 
             function success(response) {
                 count = response.results.length;
-                //logger.logSuccess('Got ' + count + ' role(s)', response);
+                //logger.logSuccess('Got ' + count + ' resourcePool(s)', response);
                 return response.results;
             }
 
             function failed(error) {
-                var message = error.message || 'Role query failed';
+                var message = error.message || 'ResourcePool query failed';
                 logger.logError(message, error, true);
             }
         }
 
-        function getRole(roleId, forceRefresh) {
-            return dataContext.fetchEntityByKey('Role', roleId, !forceRefresh)
+        function getResourcePool(resourcePoolId, forceRefresh) {
+            return dataContext.fetchEntityByKey('ResourcePool', resourcePoolId, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {
@@ -111,7 +112,7 @@
             }
 
             function failed(error) {
-                var message = error.message || 'getRole query failed';
+                var message = error.message || 'getResourcePool query failed';
                 logger.logError(message, error, true);
             }
         }

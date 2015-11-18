@@ -3,11 +3,11 @@
 
     var controllerId = 'resourcePoolCustomListController';
     angular.module('main')
-        .controller(controllerId, ['resourcePoolService',
+        .controller(controllerId, ['resourcePoolFactory',
             'logger',
 			resourcePoolCustomListController]);
 
-    function resourcePoolCustomListController(resourcePoolService,
+    function resourcePoolCustomListController(resourcePoolFactory,
         logger) {
         logger = logger.forSource(controllerId);
 
@@ -21,7 +21,7 @@
         };
 
         function getResourcePoolSet() {
-            resourcePoolService.getResourcePoolSet(false)
+            resourcePoolFactory.getResourcePoolSet(false)
 			    .then(function (data) {
                     vm.resourcePoolSet = data;
                 });

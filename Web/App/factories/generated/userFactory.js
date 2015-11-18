@@ -10,21 +10,21 @@
 (function () {
     'use strict';
 
-    var serviceId = 'userService';
+    var factoryId = 'userFactory';
     angular.module('main')
-        .factory(serviceId, ['dataContext', '$rootScope', 'logger', userService]);
+        .factory(factoryId, ['dataContext', '$rootScope', 'logger', userFactory]);
 
-    function userService(dataContext, $rootScope, logger) {
+    function userFactory(dataContext, $rootScope, logger) {
         
 		// Logger
-		logger = logger.forSource(serviceId);
+		logger = logger.forSource(factoryId);
 
         // To determine whether the data will be fetched from server or local
         var minimumDate = new Date(0);
         var fetchedOn = minimumDate;
 
-        // Service methods (alphabetically)
-        var service = {
+        // Factory methods (alphabetically)
+        var factory = {
             createUser: createUser,
             deleteUser: deleteUser,
             getChanges: getChanges,
@@ -41,7 +41,7 @@
             fetchedOn = minimumDate;
         });
 
-        return service;
+        return factory;
 
         /*** Implementations ***/
 

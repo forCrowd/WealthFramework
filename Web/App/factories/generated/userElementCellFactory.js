@@ -10,27 +10,27 @@
 (function () {
     'use strict';
 
-    var serviceId = 'userResourcePoolService';
+    var factoryId = 'userElementCellFactory';
     angular.module('main')
-        .factory(serviceId, ['dataContext', '$rootScope', 'logger', userResourcePoolService]);
+        .factory(factoryId, ['dataContext', '$rootScope', 'logger', userElementCellFactory]);
 
-    function userResourcePoolService(dataContext, $rootScope, logger) {
+    function userElementCellFactory(dataContext, $rootScope, logger) {
         
 		// Logger
-		logger = logger.forSource(serviceId);
+		logger = logger.forSource(factoryId);
 
         // To determine whether the data will be fetched from server or local
         var minimumDate = new Date(0);
         var fetchedOn = minimumDate;
 
-        // Service methods (alphabetically)
-        var service = {
-            createUserResourcePool: createUserResourcePool,
-            deleteUserResourcePool: deleteUserResourcePool,
+        // Factory methods (alphabetically)
+        var factory = {
+            createUserElementCell: createUserElementCell,
+            deleteUserElementCell: deleteUserElementCell,
             getChanges: getChanges,
             getChangesCount: getChangesCount,
-            getUserResourcePoolSet: getUserResourcePoolSet,
-            getUserResourcePool: getUserResourcePool,
+            getUserElementCellSet: getUserElementCellSet,
+            getUserElementCell: getUserElementCell,
             hasChanges: hasChanges,
             rejectChanges: rejectChanges,
             saveChanges: saveChanges
@@ -41,16 +41,16 @@
             fetchedOn = minimumDate;
         });
 
-        return service;
+        return factory;
 
         /*** Implementations ***/
 
-        function createUserResourcePool(userResourcePool) {
-            return dataContext.createEntity('UserResourcePool', userResourcePool);
+        function createUserElementCell(userElementCell) {
+            return dataContext.createEntity('UserElementCell', userElementCell);
         }
 
-        function deleteUserResourcePool(userResourcePool) {
-            userResourcePool.entityAspect.setDeleted();
+        function deleteUserElementCell(userElementCell) {
+            userElementCell.entityAspect.setDeleted();
         }
 
         function getChanges() {
@@ -61,7 +61,7 @@
             return dataContext.getChangesCount();
         }
 
-        function getUserResourcePoolSet(forceRefresh) {
+        function getUserElementCellSet(forceRefresh) {
             var count;
             if (forceRefresh) {
                 if (dataContext.hasChanges()) {
@@ -72,8 +72,8 @@
             }
 
             var query = breeze.EntityQuery
-				.from('UserResourcePool')
-				.expand(['ResourcePool', 'User'])
+				.from('UserElementCell')
+				.expand(['ElementCell', 'User'])
             ;
 
             // Fetch the data from server, in case if it's not fetched earlier or forced
@@ -93,18 +93,18 @@
 
             function success(response) {
                 count = response.results.length;
-                //logger.logSuccess('Got ' + count + ' userResourcePool(s)', response);
+                //logger.logSuccess('Got ' + count + ' userElementCell(s)', response);
                 return response.results;
             }
 
             function failed(error) {
-                var message = error.message || 'UserResourcePool query failed';
+                var message = error.message || 'UserElementCell query failed';
                 logger.logError(message, error, true);
             }
         }
 
-        function getUserResourcePool(userResourcePoolId, forceRefresh) {
-            return dataContext.fetchEntityByKey('UserResourcePool', userResourcePoolId, !forceRefresh)
+        function getUserElementCell(userElementCellId, forceRefresh) {
+            return dataContext.fetchEntityByKey('UserElementCell', userElementCellId, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {
@@ -112,7 +112,7 @@
             }
 
             function failed(error) {
-                var message = error.message || 'getUserResourcePool query failed';
+                var message = error.message || 'getUserElementCell query failed';
                 logger.logError(message, error, true);
             }
         }

@@ -12,15 +12,15 @@
 
     var controllerId = 'elementEditController';
     angular.module('main')
-        .controller(controllerId, ['elementService',
-            'resourcePoolService',
+        .controller(controllerId, ['elementFactory',
+            'resourcePoolFactory',
             'logger',
             '$location',
             '$routeParams',
             elementEditController]);
 
-    function elementEditController(elementService,
-		resourcePoolService,
+    function elementEditController(elementFactory,
+		resourcePoolFactory,
 		logger,
 		$location,
 		$routeParams) {
@@ -47,19 +47,19 @@
 
             $location.path('/manage/generated/element');
 
-            //if (elementService.hasChanges()) {
-            //    elementService.rejectChanges();
+            //if (elementFactory.hasChanges()) {
+            //    elementFactory.rejectChanges();
             //    logWarning('Discarded pending change(s)', null, true);
             //}
         }
 
         function hasChanges() {
-            return elementService.hasChanges();
+            return elementFactory.hasChanges();
         }
 
         function initialize() {
 
-            resourcePoolService.getResourcePoolSet(false)
+            resourcePoolFactory.getResourcePoolSet(false)
                 .then(function (data) {
                     vm.resourcePoolSet = data;
                 });
@@ -68,7 +68,7 @@
                 // TODO For development enviroment, create test entity?
             }
             else {
-                elementService.getElement($routeParams.Id)
+                elementFactory.getElement($routeParams.Id)
                     .then(function (data) {
                         vm.element = data;
                     })
@@ -80,17 +80,17 @@
 
         function isSaveDisabled() {
             return isSaving ||
-                (!isNew && !elementService.hasChanges());
+                (!isNew && !elementFactory.hasChanges());
         }
 
         function saveChanges() {
 
             if (isNew) {
-                elementService.createElement(vm.element);
+                elementFactory.createElement(vm.element);
             }
 
             isSaving = true;
-            elementService.saveChanges()
+            elementFactory.saveChanges()
                 .then(function (result) {
                     $location.path('/manage/generated/element');
                 })

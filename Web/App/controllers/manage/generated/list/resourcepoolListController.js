@@ -12,11 +12,11 @@
 
     var controllerId = 'resourcePoolListController';
     angular.module('main')
-        .controller(controllerId, ['resourcePoolService',
+        .controller(controllerId, ['resourcePoolFactory',
             'logger',
 			resourcePoolListController]);
 
-    function resourcePoolListController(resourcePoolService,
+    function resourcePoolListController(resourcePoolFactory,
         logger) {
         logger = logger.forSource(controllerId);
 
@@ -31,9 +31,9 @@
         };
 
         function deleteResourcePool(resourcePool) {
-            resourcePoolService.deleteResourcePool(resourcePool);
+            resourcePoolFactory.deleteResourcePool(resourcePool);
 
-            resourcePoolService.saveChanges()
+            resourcePoolFactory.saveChanges()
                 .then(function () {
                     vm.resourcePoolSet.splice(vm.resourcePoolSet.indexOf(resourcePool), 1);
                     logger.logSuccess("Hooray we saved", null, true);
@@ -47,7 +47,7 @@
         };
 
         function getResourcePoolSet() {
-            resourcePoolService.getResourcePoolSet(false)
+            resourcePoolFactory.getResourcePoolSet(false)
 			    .then(function (data) {
                     vm.resourcePoolSet = data;
                 });

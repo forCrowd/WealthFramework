@@ -12,13 +12,13 @@
 
     var controllerId = 'userEditController';
     angular.module('main')
-        .controller(controllerId, ['userService',
+        .controller(controllerId, ['userFactory',
             'logger',
             '$location',
             '$routeParams',
             userEditController]);
 
-    function userEditController(userService,
+    function userEditController(userFactory,
 		logger,
 		$location,
 		$routeParams) {
@@ -44,14 +44,14 @@
 
             $location.path('/manage/generated/user');
 
-            //if (userService.hasChanges()) {
-            //    userService.rejectChanges();
+            //if (userFactory.hasChanges()) {
+            //    userFactory.rejectChanges();
             //    logWarning('Discarded pending change(s)', null, true);
             //}
         }
 
         function hasChanges() {
-            return userService.hasChanges();
+            return userFactory.hasChanges();
         }
 
         function initialize() {
@@ -60,7 +60,7 @@
                 // TODO For development enviroment, create test entity?
             }
             else {
-                userService.getUser($routeParams.Id)
+                userFactory.getUser($routeParams.Id)
                     .then(function (data) {
                         vm.user = data;
                     })
@@ -72,17 +72,17 @@
 
         function isSaveDisabled() {
             return isSaving ||
-                (!isNew && !userService.hasChanges());
+                (!isNew && !userFactory.hasChanges());
         }
 
         function saveChanges() {
 
             if (isNew) {
-                userService.createUser(vm.user);
+                userFactory.createUser(vm.user);
             }
 
             isSaving = true;
-            userService.saveChanges()
+            userFactory.saveChanges()
                 .then(function (result) {
                     $location.path('/manage/generated/user');
                 })

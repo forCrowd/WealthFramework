@@ -4,15 +4,15 @@
     var directiveId = 'resourcePoolEditor';
 
     angular.module('main')
-        .directive(directiveId, ['resourcePoolService',
-            'userService',
+        .directive(directiveId, ['resourcePoolFactory',
+            'userFactory',
             '$rootScope',
             '$uibModal',
             'logger',
             resourcePoolEditor]);
 
-    function resourcePoolEditor(resourcePoolService,
-        userService,
+    function resourcePoolEditor(resourcePoolFactory,
+        userFactory,
         $rootScope,
         $uibModal,
         logger) {
@@ -68,65 +68,65 @@
             }
 
             scope.increaseElementMultiplier = function (element) {
-                userService.updateElementMultiplier(element, 'increase');
+                userFactory.updateElementMultiplier(element, 'increase');
                 $rootScope.$broadcast('resourcePoolEditor_elementMultiplierIncreased', element);
                 saveChanges();
             }
 
             scope.decreaseElementMultiplier = function (element) {
-                userService.updateElementMultiplier(element, 'decrease');
+                userFactory.updateElementMultiplier(element, 'decrease');
                 $rootScope.$broadcast('resourcePoolEditor_elementMultiplierDecreased', element);
                 saveChanges();
             }
 
             scope.resetElementMultiplier = function (element) {
-                userService.updateElementMultiplier(element, 'reset');
+                userFactory.updateElementMultiplier(element, 'reset');
                 $rootScope.$broadcast('resourcePoolEditor_elementMultiplierReset', element);
                 saveChanges();
             }
 
             scope.increaseElementCellNumericValue = function (cell) {
-                userService.updateElementCellNumericValue(cell, 'increase');
+                userFactory.updateElementCellNumericValue(cell, 'increase');
                 saveChanges();
             }
 
             scope.decreaseElementCellNumericValue = function (cell) {
-                userService.updateElementCellNumericValue(cell, 'decrease');
+                userFactory.updateElementCellNumericValue(cell, 'decrease');
                 saveChanges();
             }
 
             scope.resetElementCellNumericValue = function (cell) {
-                userService.updateElementCellNumericValue(cell, 'reset');
+                userFactory.updateElementCellNumericValue(cell, 'reset');
                 saveChanges();
             }
 
             scope.increaseIndexRating = function (field) {
-                userService.updateElementFieldIndexRating(field, 'increase');
+                userFactory.updateElementFieldIndexRating(field, 'increase');
                 saveChanges();
             }
 
             scope.decreaseIndexRating = function (field) {
-                userService.updateElementFieldIndexRating(field, 'decrease');
+                userFactory.updateElementFieldIndexRating(field, 'decrease');
                 saveChanges();
             }
 
             scope.resetIndexRating = function (field) {
-                userService.updateElementFieldIndexRating(field, 'reset');
+                userFactory.updateElementFieldIndexRating(field, 'reset');
                 saveChanges();
             }
 
             scope.increaseResourcePoolRate = function () {
-                userService.updateResourcePoolRate(scope.resourcePool, 'increase');
+                userFactory.updateResourcePoolRate(scope.resourcePool, 'increase');
                 saveChanges();
             }
 
             scope.decreaseResourcePoolRate = function () {
-                userService.updateResourcePoolRate(scope.resourcePool, 'decrease');
+                userFactory.updateResourcePoolRate(scope.resourcePool, 'decrease');
                 saveChanges();
             }
 
             scope.resetResourcePoolRate = function () {
-                userService.updateResourcePoolRate(scope.resourcePool, 'reset');
+                userFactory.updateResourcePoolRate(scope.resourcePool, 'reset');
                 saveChanges();
             }
 
@@ -205,7 +205,7 @@
                 // New
                 if (scope.resourcePoolId === '0') {
 
-                    resourcePoolService.createResourcePoolBasic()
+                    resourcePoolFactory.createResourcePoolBasic()
                         .then(function (resourcePool) {
                             scope.resourcePool = resourcePool;
                             scope.showEditorModal();
@@ -216,7 +216,7 @@
                         });
 
                 } else { // Existing
-                    resourcePoolService.getResourcePoolExpanded(scope.resourcePoolId)
+                    resourcePoolFactory.getResourcePoolExpanded(scope.resourcePoolId)
                             .then(function (resourcePool) {
 
                                 if (resourcePool === null) {
@@ -332,10 +332,10 @@
             }
 
             function saveChanges() {
-                userService.isAuthenticated()
+                userFactory.isAuthenticated()
                     .then(function (isAuthenticated) {
                         if (isAuthenticated) {
-                            resourcePoolService.saveChanges(1500)
+                            resourcePoolFactory.saveChanges(1500)
                                 .catch(function (error) {
                                     // Conflict (Concurrency exception)
                                     if (typeof error.status !== 'undefined' && error.status === '409') {
@@ -461,7 +461,7 @@
                 }
 
                 function isSaveDisabled() {
-                    //var value = vm.isSaving || (!vm.isNew && !resourcePoolService.hasChanges());
+                    //var value = vm.isSaving || (!vm.isNew && !resourcePoolFactory.hasChanges());
                     var value = vm.isSaving;
                     return value;
                 }
@@ -469,7 +469,7 @@
                 function saveChanges() {
 
                     vm.isSaving = true;
-                    resourcePoolService.saveChanges()
+                    resourcePoolFactory.saveChanges()
                         .then(function (result) {
 
                             // Main element fix
@@ -477,7 +477,7 @@
 
                                 resourcePool.MainElement = resourcePool.ElementSet[0];
 
-                                resourcePoolService.saveChanges()
+                                resourcePoolFactory.saveChanges()
                                     .then(function (result) {
 
                                         $uibModalInstance.close();
@@ -511,7 +511,7 @@
 
                     // New
                     if (typeof vm.element.entityAspect === 'undefined') {
-                        resourcePoolService.createElement(vm.element);
+                        resourcePoolFactory.createElement(vm.element);
                     }
 
                     vm.isElementEdit = false;
@@ -527,7 +527,7 @@
 
                     // New
                     if (typeof vm.elementField.entityAspect === 'undefined') {
-                        resourcePoolService.createElementField(vm.elementField);
+                        resourcePoolFactory.createElementField(vm.elementField);
                     }
 
                     vm.isElementFieldEdit = false;
@@ -538,7 +538,7 @@
 
                     // New
                     if (typeof vm.elementItem.entityAspect === 'undefined') {
-                        resourcePoolService.createElementItem(vm.elementItem);
+                        resourcePoolFactory.createElementItem(vm.elementItem);
                     }
 
                     vm.isElementItemEdit = false;

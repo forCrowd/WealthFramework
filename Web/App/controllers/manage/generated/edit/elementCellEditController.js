@@ -12,17 +12,17 @@
 
     var controllerId = 'elementCellEditController';
     angular.module('main')
-        .controller(controllerId, ['elementCellService',
-            'elementFieldService',
-            'elementItemService',
+        .controller(controllerId, ['elementCellFactory',
+            'elementFieldFactory',
+            'elementItemFactory',
             'logger',
             '$location',
             '$routeParams',
             elementCellEditController]);
 
-    function elementCellEditController(elementCellService,
-		elementFieldService,
-		elementItemService,
+    function elementCellEditController(elementCellFactory,
+		elementFieldFactory,
+		elementItemFactory,
 		logger,
 		$location,
 		$routeParams) {
@@ -50,24 +50,24 @@
 
             $location.path('/manage/generated/elementCell');
 
-            //if (elementCellService.hasChanges()) {
-            //    elementCellService.rejectChanges();
+            //if (elementCellFactory.hasChanges()) {
+            //    elementCellFactory.rejectChanges();
             //    logWarning('Discarded pending change(s)', null, true);
             //}
         }
 
         function hasChanges() {
-            return elementCellService.hasChanges();
+            return elementCellFactory.hasChanges();
         }
 
         function initialize() {
 
-            elementFieldService.getElementFieldSet(false)
+            elementFieldFactory.getElementFieldSet(false)
                 .then(function (data) {
                     vm.elementFieldSet = data;
                 });
 
-            elementItemService.getElementItemSet(false)
+            elementItemFactory.getElementItemSet(false)
                 .then(function (data) {
                     vm.elementItemSet = data;
                 });
@@ -76,7 +76,7 @@
                 // TODO For development enviroment, create test entity?
             }
             else {
-                elementCellService.getElementCell($routeParams.Id)
+                elementCellFactory.getElementCell($routeParams.Id)
                     .then(function (data) {
                         vm.elementCell = data;
                     })
@@ -88,17 +88,17 @@
 
         function isSaveDisabled() {
             return isSaving ||
-                (!isNew && !elementCellService.hasChanges());
+                (!isNew && !elementCellFactory.hasChanges());
         }
 
         function saveChanges() {
 
             if (isNew) {
-                elementCellService.createElementCell(vm.elementCell);
+                elementCellFactory.createElementCell(vm.elementCell);
             }
 
             isSaving = true;
-            elementCellService.saveChanges()
+            elementCellFactory.saveChanges()
                 .then(function (result) {
                     $location.path('/manage/generated/elementCell');
                 })

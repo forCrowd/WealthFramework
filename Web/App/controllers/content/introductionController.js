@@ -3,9 +3,9 @@
 
     var controllerId = 'introductionController';
     angular.module('main')
-        .controller(controllerId, ['resourcePoolService', 'userService', '$scope', '$timeout', 'logger', introductionController]);
+        .controller(controllerId, ['resourcePoolFactory', 'userFactory', '$scope', '$timeout', 'logger', introductionController]);
 
-    function introductionController(resourcePoolService, userService, $scope, $timeout, logger) {
+    function introductionController(resourcePoolFactory, userFactory, $scope, $timeout, logger) {
 
         // Logger
         logger = logger.forSource(controllerId);
@@ -17,7 +17,7 @@
         vm.introduction_UPOResourcePoolId = 1;
         vm.isAuthenticated = false;
 
-        userService.isAuthenticated()
+        userFactory.isAuthenticated()
             .then(function (isAuthenticated) {
                 vm.isAuthenticated = isAuthenticated;
             });
@@ -34,7 +34,7 @@
         function increaseMultiplier() {
 
             // Call the service to increase the multiplier
-            resourcePoolService.getResourcePoolExpanded(vm.introduction_UPOResourcePoolId)
+            resourcePoolFactory.getResourcePoolExpanded(vm.introduction_UPOResourcePoolId)
                 .then(function (resourcePool) {
 
                     if (resourcePool === null) {
@@ -45,7 +45,7 @@
                     for (var i = 0; i < resourcePool.ElementSet.length; i++) {
 
                         var element = resourcePool.ElementSet[i];
-                        userService.updateElementMultiplier(element, 'increase');
+                        userFactory.updateElementMultiplier(element, 'increase');
                     }
                 });
 

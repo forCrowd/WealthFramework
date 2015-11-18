@@ -10,27 +10,27 @@
 (function () {
     'use strict';
 
-    var serviceId = 'userElementCellService';
+    var factoryId = 'userElementFieldFactory';
     angular.module('main')
-        .factory(serviceId, ['dataContext', '$rootScope', 'logger', userElementCellService]);
+        .factory(factoryId, ['dataContext', '$rootScope', 'logger', userElementFieldFactory]);
 
-    function userElementCellService(dataContext, $rootScope, logger) {
+    function userElementFieldFactory(dataContext, $rootScope, logger) {
         
 		// Logger
-		logger = logger.forSource(serviceId);
+		logger = logger.forSource(factoryId);
 
         // To determine whether the data will be fetched from server or local
         var minimumDate = new Date(0);
         var fetchedOn = minimumDate;
 
-        // Service methods (alphabetically)
-        var service = {
-            createUserElementCell: createUserElementCell,
-            deleteUserElementCell: deleteUserElementCell,
+        // Factory methods (alphabetically)
+        var factory = {
+            createUserElementField: createUserElementField,
+            deleteUserElementField: deleteUserElementField,
             getChanges: getChanges,
             getChangesCount: getChangesCount,
-            getUserElementCellSet: getUserElementCellSet,
-            getUserElementCell: getUserElementCell,
+            getUserElementFieldSet: getUserElementFieldSet,
+            getUserElementField: getUserElementField,
             hasChanges: hasChanges,
             rejectChanges: rejectChanges,
             saveChanges: saveChanges
@@ -41,16 +41,16 @@
             fetchedOn = minimumDate;
         });
 
-        return service;
+        return factory;
 
         /*** Implementations ***/
 
-        function createUserElementCell(userElementCell) {
-            return dataContext.createEntity('UserElementCell', userElementCell);
+        function createUserElementField(userElementField) {
+            return dataContext.createEntity('UserElementField', userElementField);
         }
 
-        function deleteUserElementCell(userElementCell) {
-            userElementCell.entityAspect.setDeleted();
+        function deleteUserElementField(userElementField) {
+            userElementField.entityAspect.setDeleted();
         }
 
         function getChanges() {
@@ -61,7 +61,7 @@
             return dataContext.getChangesCount();
         }
 
-        function getUserElementCellSet(forceRefresh) {
+        function getUserElementFieldSet(forceRefresh) {
             var count;
             if (forceRefresh) {
                 if (dataContext.hasChanges()) {
@@ -72,8 +72,8 @@
             }
 
             var query = breeze.EntityQuery
-				.from('UserElementCell')
-				.expand(['ElementCell', 'User'])
+				.from('UserElementField')
+				.expand(['ElementField', 'User'])
             ;
 
             // Fetch the data from server, in case if it's not fetched earlier or forced
@@ -93,18 +93,18 @@
 
             function success(response) {
                 count = response.results.length;
-                //logger.logSuccess('Got ' + count + ' userElementCell(s)', response);
+                //logger.logSuccess('Got ' + count + ' userElementField(s)', response);
                 return response.results;
             }
 
             function failed(error) {
-                var message = error.message || 'UserElementCell query failed';
+                var message = error.message || 'UserElementField query failed';
                 logger.logError(message, error, true);
             }
         }
 
-        function getUserElementCell(userElementCellId, forceRefresh) {
-            return dataContext.fetchEntityByKey('UserElementCell', userElementCellId, !forceRefresh)
+        function getUserElementField(userElementFieldId, forceRefresh) {
+            return dataContext.fetchEntityByKey('UserElementField', userElementFieldId, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {
@@ -112,7 +112,7 @@
             }
 
             function failed(error) {
-                var message = error.message || 'getUserElementCell query failed';
+                var message = error.message || 'getUserElementField query failed';
                 logger.logError(message, error, true);
             }
         }

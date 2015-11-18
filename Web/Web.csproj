@@ -219,11 +219,6 @@
     <Compile Include="..\SolutionItems\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="App\controllers\manage\generated\list\listController.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>listController.tt</DependentUpon>
-    </Compile>
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\FormatterConfig.cs" />
     <Compile Include="App_Start\DatabaseConfig.cs" />
@@ -380,6 +375,11 @@
     <Content Include="App\controllers\manage\generated\list\elementListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
+    <Content Include="App\controllers\manage\generated\list\listController.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>listController.tt</DependentUpon>
+    </Content>
     <Content Include="App\controllers\manage\generated\list\roleListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
@@ -419,6 +419,50 @@
     <Content Include="App\authorization.js" />
     <Content Include="App\external\highcharts-ng.js" />
     <Content Include="App\external\highcharts.js" />
+    <Content Include="App\factories\generated\elementCellFactory.js">
+      <DependentUpon>factory.tt</DependentUpon>
+    </Content>
+    <Content Include="App\factories\generated\elementFactory.js">
+      <DependentUpon>factory.tt</DependentUpon>
+    </Content>
+    <Content Include="App\factories\generated\elementFieldFactory.js">
+      <DependentUpon>factory.tt</DependentUpon>
+    </Content>
+    <Content Include="App\factories\generated\elementItemFactory.js">
+      <DependentUpon>factory.tt</DependentUpon>
+    </Content>
+    <Content Include="App\factories\generated\factory.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>factory.tt</DependentUpon>
+    </Content>
+    <Content Include="App\factories\generated\resourcePoolFactory.js">
+      <DependentUpon>factory.tt</DependentUpon>
+    </Content>
+    <Content Include="App\factories\generated\roleFactory.js">
+      <DependentUpon>factory.tt</DependentUpon>
+    </Content>
+    <Content Include="App\factories\generated\userClaimFactory.js">
+      <DependentUpon>factory.tt</DependentUpon>
+    </Content>
+    <Content Include="App\factories\generated\userElementCellFactory.js">
+      <DependentUpon>factory.tt</DependentUpon>
+    </Content>
+    <Content Include="App\factories\generated\userElementFieldFactory.js">
+      <DependentUpon>factory.tt</DependentUpon>
+    </Content>
+    <Content Include="App\factories\generated\userFactory.js">
+      <DependentUpon>factory.tt</DependentUpon>
+    </Content>
+    <Content Include="App\factories\generated\userLoginFactory.js">
+      <DependentUpon>factory.tt</DependentUpon>
+    </Content>
+    <Content Include="App\factories\generated\userResourcePoolFactory.js">
+      <DependentUpon>factory.tt</DependentUpon>
+    </Content>
+    <Content Include="App\factories\generated\userRoleFactory.js">
+      <DependentUpon>factory.tt</DependentUpon>
+    </Content>
     <Content Include="App\filters\angular-numberSymbol.js" />
     <Content Include="App\includes\manageMenu.js">
       <AutoGen>True</AutoGen>
@@ -430,42 +474,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>manageScripts.tt</DependentUpon>
     </Content>
-    <Content Include="App\services\generated\elementCellService.js">
-      <DependentUpon>service.tt</DependentUpon>
-    </Content>
-    <Content Include="App\services\generated\elementFieldService.js">
-      <DependentUpon>service.tt</DependentUpon>
-    </Content>
-    <Content Include="App\services\generated\elementItemService.js">
-      <DependentUpon>service.tt</DependentUpon>
-    </Content>
-    <Content Include="App\services\generated\elementService.js">
-      <DependentUpon>service.tt</DependentUpon>
-    </Content>
-    <Content Include="App\services\generated\roleService.js">
-      <DependentUpon>service.tt</DependentUpon>
-    </Content>
-    <None Include="App\services\generated\service.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>service.tt</DependentUpon>
-    </None>
-    <Content Include="App\services\generated\userClaimService.js">
-      <DependentUpon>service.tt</DependentUpon>
-    </Content>
-    <Content Include="App\services\generated\userElementCellService.js">
-      <DependentUpon>service.tt</DependentUpon>
-    </Content>
-    <Content Include="App\services\generated\userElementFieldService.js">
-      <DependentUpon>service.tt</DependentUpon>
-    </Content>
-    <Content Include="App\services\generated\userLoginService.js">
-      <DependentUpon>service.tt</DependentUpon>
-    </Content>
-    <Content Include="App\services\generated\userRoleService.js">
-      <DependentUpon>service.tt</DependentUpon>
-    </Content>
-    <Content Include="App\services\resourcePoolService.js" />
+    <Content Include="App\factories\resourcePoolFactory.js" />
     <Content Include="App\views\content\closingNotes.html" />
     <Content Include="App\views\content\prologue.html" />
     <Content Include="App\views\content\roadmap.html" />
@@ -666,28 +675,19 @@
     <Content Include="App\logger.js" />
     <Content Include="App\route.js" />
     <Content Include="App\main.js" />
-    <Content Include="App\services\generated\resourcePoolService.js">
-      <DependentUpon>service.tt</DependentUpon>
-    </Content>
-    <Content Include="App\services\generated\userResourcePoolService.js">
-      <DependentUpon>service.tt</DependentUpon>
-    </Content>
-    <Content Include="App\services\generated\userService.js">
-      <DependentUpon>service.tt</DependentUpon>
-    </Content>
-    <Content Include="App\services\mainService.js" />
-    <Content Include="App\services\userService.js" />
+    <Content Include="App\factories\mainFactory.js" />
+    <Content Include="App\factories\userFactory.js" />
     <Content Include="Controllers\OData\Generated\ODataController.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ODataController.txt</LastGenOutput>
     </Content>
-    <Content Include="App\services\generated\service.tt">
+    <Content Include="App\factories\generated\factory.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>service.txt</LastGenOutput>
+      <LastGenOutput>factory.txt</LastGenOutput>
     </Content>
     <None Include="App\controllers\manage\generated\list\listController.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>listController.cs</LastGenOutput>
+      <LastGenOutput>listController.txt</LastGenOutput>
     </None>
     <None Include="App\controllers\manage\generated\edit\editController.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

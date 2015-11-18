@@ -12,17 +12,17 @@
 
     var controllerId = 'userElementFieldEditController';
     angular.module('main')
-        .controller(controllerId, ['userElementFieldService',
-            'elementFieldService',
-            'userService',
+        .controller(controllerId, ['userElementFieldFactory',
+            'elementFieldFactory',
+            'userFactory',
             'logger',
             '$location',
             '$routeParams',
             userElementFieldEditController]);
 
-    function userElementFieldEditController(userElementFieldService,
-		elementFieldService,
-		userService,
+    function userElementFieldEditController(userElementFieldFactory,
+		elementFieldFactory,
+		userFactory,
 		logger,
 		$location,
 		$routeParams) {
@@ -50,24 +50,24 @@
 
             $location.path('/manage/generated/userElementField');
 
-            //if (userElementFieldService.hasChanges()) {
-            //    userElementFieldService.rejectChanges();
+            //if (userElementFieldFactory.hasChanges()) {
+            //    userElementFieldFactory.rejectChanges();
             //    logWarning('Discarded pending change(s)', null, true);
             //}
         }
 
         function hasChanges() {
-            return userElementFieldService.hasChanges();
+            return userElementFieldFactory.hasChanges();
         }
 
         function initialize() {
 
-            elementFieldService.getElementFieldSet(false)
+            elementFieldFactory.getElementFieldSet(false)
                 .then(function (data) {
                     vm.elementFieldSet = data;
                 });
 
-            userService.getUserSet(false)
+            userFactory.getUserSet(false)
                 .then(function (data) {
                     vm.userSet = data;
                 });
@@ -76,7 +76,7 @@
                 // TODO For development enviroment, create test entity?
             }
             else {
-                userElementFieldService.getUserElementField($routeParams.Id)
+                userElementFieldFactory.getUserElementField($routeParams.Id)
                     .then(function (data) {
                         vm.userElementField = data;
                     })
@@ -88,17 +88,17 @@
 
         function isSaveDisabled() {
             return isSaving ||
-                (!isNew && !userElementFieldService.hasChanges());
+                (!isNew && !userElementFieldFactory.hasChanges());
         }
 
         function saveChanges() {
 
             if (isNew) {
-                userElementFieldService.createUserElementField(vm.userElementField);
+                userElementFieldFactory.createUserElementField(vm.userElementField);
             }
 
             isSaving = true;
-            userElementFieldService.saveChanges()
+            userElementFieldFactory.saveChanges()
                 .then(function (result) {
                     $location.path('/manage/generated/userElementField');
                 })

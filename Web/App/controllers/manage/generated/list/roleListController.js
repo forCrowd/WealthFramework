@@ -12,11 +12,11 @@
 
     var controllerId = 'roleListController';
     angular.module('main')
-        .controller(controllerId, ['roleService',
+        .controller(controllerId, ['roleFactory',
             'logger',
 			roleListController]);
 
-    function roleListController(roleService,
+    function roleListController(roleFactory,
         logger) {
         logger = logger.forSource(controllerId);
 
@@ -31,9 +31,9 @@
         };
 
         function deleteRole(role) {
-            roleService.deleteRole(role);
+            roleFactory.deleteRole(role);
 
-            roleService.saveChanges()
+            roleFactory.saveChanges()
                 .then(function () {
                     vm.roleSet.splice(vm.roleSet.indexOf(role), 1);
                     logger.logSuccess("Hooray we saved", null, true);
@@ -47,7 +47,7 @@
         };
 
         function getRoleSet() {
-            roleService.getRoleSet(false)
+            roleFactory.getRoleSet(false)
 			    .then(function (data) {
                     vm.roleSet = data;
                 });

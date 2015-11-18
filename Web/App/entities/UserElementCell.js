@@ -1,14 +1,14 @@
 ﻿(function () {
     'use strict';
 
-    var serviceId = 'UserElementCell';
+    var factoryId = 'UserElementCell';
     angular.module('main')
-        .factory(serviceId, ['logger', userElementCellFactory]);
+        .factory(factoryId, ['logger', userElementCellFactory]);
 
     function userElementCellFactory(logger) {
 
         // Logger
-        logger = logger.forSource(serviceId);
+        logger = logger.forSource(factoryId);
 
         // Properties
         Object.defineProperty(UserElementCell.prototype, 'DecimalValue', {

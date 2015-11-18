@@ -12,13 +12,13 @@
 
     var controllerId = 'roleEditController';
     angular.module('main')
-        .controller(controllerId, ['roleService',
+        .controller(controllerId, ['roleFactory',
             'logger',
             '$location',
             '$routeParams',
             roleEditController]);
 
-    function roleEditController(roleService,
+    function roleEditController(roleFactory,
 		logger,
 		$location,
 		$routeParams) {
@@ -44,14 +44,14 @@
 
             $location.path('/manage/generated/role');
 
-            //if (roleService.hasChanges()) {
-            //    roleService.rejectChanges();
+            //if (roleFactory.hasChanges()) {
+            //    roleFactory.rejectChanges();
             //    logWarning('Discarded pending change(s)', null, true);
             //}
         }
 
         function hasChanges() {
-            return roleService.hasChanges();
+            return roleFactory.hasChanges();
         }
 
         function initialize() {
@@ -60,7 +60,7 @@
                 // TODO For development enviroment, create test entity?
             }
             else {
-                roleService.getRole($routeParams.Id)
+                roleFactory.getRole($routeParams.Id)
                     .then(function (data) {
                         vm.role = data;
                     })
@@ -72,17 +72,17 @@
 
         function isSaveDisabled() {
             return isSaving ||
-                (!isNew && !roleService.hasChanges());
+                (!isNew && !roleFactory.hasChanges());
         }
 
         function saveChanges() {
 
             if (isNew) {
-                roleService.createRole(vm.role);
+                roleFactory.createRole(vm.role);
             }
 
             isSaving = true;
-            roleService.saveChanges()
+            roleFactory.saveChanges()
                 .then(function (result) {
                     $location.path('/manage/generated/role');
                 })

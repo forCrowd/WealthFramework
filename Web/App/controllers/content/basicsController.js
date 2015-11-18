@@ -3,9 +3,9 @@
 
     var controllerId = 'basicsController';
     angular.module('main')
-        .controller(controllerId, ['resourcePoolService', 'userService', '$scope', 'logger', basicsController]);
+        .controller(controllerId, ['resourcePoolFactory', 'userFactory', '$scope', 'logger', basicsController]);
 
-    function basicsController(resourcePoolService, userService, $scope, logger) {
+    function basicsController(resourcePoolFactory, userFactory, $scope, logger) {
 
         logger = logger.forSource(controllerId);
 
@@ -28,7 +28,7 @@
                     : vm.basics_ExistingModelResourcePoolId;
 
                 // Call the service to increase the multiplier
-                resourcePoolService.getResourcePoolExpanded(oppositeResourcePoolId)
+                resourcePoolFactory.getResourcePoolExpanded(oppositeResourcePoolId)
                     .then(function (resourcePool) {
 
                         if (resourcePool === null) {
@@ -37,16 +37,16 @@
 
                         var result = false;
                         switch (event.name) {
-                            case 'resourcePoolEditor_elementMultiplierIncreased': { userService.updateElementMultiplier(resourcePool.MainElement, 'increase'); break; }
-                            case 'resourcePoolEditor_elementMultiplierDecreased': { userService.updateElementMultiplier(resourcePool.MainElement, 'decrease'); break; }
-                            case 'resourcePoolEditor_elementMultiplierReset': { userService.updateElementMultiplier(resourcePool.MainElement, 'reset'); break; }
+                            case 'resourcePoolEditor_elementMultiplierIncreased': { userFactory.updateElementMultiplier(resourcePool.MainElement, 'increase'); break; }
+                            case 'resourcePoolEditor_elementMultiplierDecreased': { userFactory.updateElementMultiplier(resourcePool.MainElement, 'decrease'); break; }
+                            case 'resourcePoolEditor_elementMultiplierReset': { userFactory.updateElementMultiplier(resourcePool.MainElement, 'reset'); break; }
                         }
 
                         // Save changes, if there is a registered user
-                        userService.isAuthenticated()
+                        userFactory.isAuthenticated()
                             .then(function (isAuthenticated) {
                                 if (isAuthenticated) {
-                                    resourcePoolService.saveChanges(1500);
+                                    resourcePoolFactory.saveChanges(1500);
                                 }
                             });
                     });

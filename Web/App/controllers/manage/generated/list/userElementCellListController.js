@@ -12,11 +12,11 @@
 
     var controllerId = 'userElementCellListController';
     angular.module('main')
-        .controller(controllerId, ['userElementCellService',
+        .controller(controllerId, ['userElementCellFactory',
             'logger',
 			userElementCellListController]);
 
-    function userElementCellListController(userElementCellService,
+    function userElementCellListController(userElementCellFactory,
         logger) {
         logger = logger.forSource(controllerId);
 
@@ -31,9 +31,9 @@
         };
 
         function deleteUserElementCell(userElementCell) {
-            userElementCellService.deleteUserElementCell(userElementCell);
+            userElementCellFactory.deleteUserElementCell(userElementCell);
 
-            userElementCellService.saveChanges()
+            userElementCellFactory.saveChanges()
                 .then(function () {
                     vm.userElementCellSet.splice(vm.userElementCellSet.indexOf(userElementCell), 1);
                     logger.logSuccess("Hooray we saved", null, true);
@@ -47,7 +47,7 @@
         };
 
         function getUserElementCellSet() {
-            userElementCellService.getUserElementCellSet(false)
+            userElementCellFactory.getUserElementCellSet(false)
 			    .then(function (data) {
                     vm.userElementCellSet = data;
                 });

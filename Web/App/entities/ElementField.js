@@ -1,14 +1,14 @@
 ﻿(function () {
     'use strict';
 
-    var serviceId = 'ElementField';
+    var factoryId = 'ElementField';
     angular.module('main')
-        .factory(serviceId, ['logger', elementFieldFactory]);
+        .factory(factoryId, ['logger', elementFieldFactory]);
 
     function elementFieldFactory(logger) {
 
         // Logger
-        logger = logger.forSource(serviceId);
+        logger = logger.forSource(factoryId);
 
         // Server-side properties
         Object.defineProperty(ElementField.prototype, 'IndexEnabled', {

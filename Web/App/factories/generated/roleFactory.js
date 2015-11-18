@@ -10,27 +10,27 @@
 (function () {
     'use strict';
 
-    var serviceId = 'elementCellService';
+    var factoryId = 'roleFactory';
     angular.module('main')
-        .factory(serviceId, ['dataContext', '$rootScope', 'logger', elementCellService]);
+        .factory(factoryId, ['dataContext', '$rootScope', 'logger', roleFactory]);
 
-    function elementCellService(dataContext, $rootScope, logger) {
+    function roleFactory(dataContext, $rootScope, logger) {
         
 		// Logger
-		logger = logger.forSource(serviceId);
+		logger = logger.forSource(factoryId);
 
         // To determine whether the data will be fetched from server or local
         var minimumDate = new Date(0);
         var fetchedOn = minimumDate;
 
-        // Service methods (alphabetically)
-        var service = {
-            createElementCell: createElementCell,
-            deleteElementCell: deleteElementCell,
+        // Factory methods (alphabetically)
+        var factory = {
+            createRole: createRole,
+            deleteRole: deleteRole,
             getChanges: getChanges,
             getChangesCount: getChangesCount,
-            getElementCellSet: getElementCellSet,
-            getElementCell: getElementCell,
+            getRoleSet: getRoleSet,
+            getRole: getRole,
             hasChanges: hasChanges,
             rejectChanges: rejectChanges,
             saveChanges: saveChanges
@@ -41,16 +41,16 @@
             fetchedOn = minimumDate;
         });
 
-        return service;
+        return factory;
 
         /*** Implementations ***/
 
-        function createElementCell(elementCell) {
-            return dataContext.createEntity('ElementCell', elementCell);
+        function createRole(role) {
+            return dataContext.createEntity('Roles', role);
         }
 
-        function deleteElementCell(elementCell) {
-            elementCell.entityAspect.setDeleted();
+        function deleteRole(role) {
+            role.entityAspect.setDeleted();
         }
 
         function getChanges() {
@@ -61,7 +61,7 @@
             return dataContext.getChangesCount();
         }
 
-        function getElementCellSet(forceRefresh) {
+        function getRoleSet(forceRefresh) {
             var count;
             if (forceRefresh) {
                 if (dataContext.hasChanges()) {
@@ -72,8 +72,7 @@
             }
 
             var query = breeze.EntityQuery
-				.from('ElementCell')
-				.expand(['ElementField', 'ElementItem'])
+				.from('Roles')
             ;
 
             // Fetch the data from server, in case if it's not fetched earlier or forced
@@ -93,18 +92,18 @@
 
             function success(response) {
                 count = response.results.length;
-                //logger.logSuccess('Got ' + count + ' elementCell(s)', response);
+                //logger.logSuccess('Got ' + count + ' role(s)', response);
                 return response.results;
             }
 
             function failed(error) {
-                var message = error.message || 'ElementCell query failed';
+                var message = error.message || 'Role query failed';
                 logger.logError(message, error, true);
             }
         }
 
-        function getElementCell(elementCellId, forceRefresh) {
-            return dataContext.fetchEntityByKey('ElementCell', elementCellId, !forceRefresh)
+        function getRole(roleId, forceRefresh) {
+            return dataContext.fetchEntityByKey('Role', roleId, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {
@@ -112,7 +111,7 @@
             }
 
             function failed(error) {
-                var message = error.message || 'getElementCell query failed';
+                var message = error.message || 'getRole query failed';
                 logger.logError(message, error, true);
             }
         }

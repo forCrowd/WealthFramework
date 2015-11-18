@@ -12,17 +12,17 @@
 
     var controllerId = 'userElementCellEditController';
     angular.module('main')
-        .controller(controllerId, ['userElementCellService',
-            'elementCellService',
-            'userService',
+        .controller(controllerId, ['userElementCellFactory',
+            'elementCellFactory',
+            'userFactory',
             'logger',
             '$location',
             '$routeParams',
             userElementCellEditController]);
 
-    function userElementCellEditController(userElementCellService,
-		elementCellService,
-		userService,
+    function userElementCellEditController(userElementCellFactory,
+		elementCellFactory,
+		userFactory,
 		logger,
 		$location,
 		$routeParams) {
@@ -50,24 +50,24 @@
 
             $location.path('/manage/generated/userElementCell');
 
-            //if (userElementCellService.hasChanges()) {
-            //    userElementCellService.rejectChanges();
+            //if (userElementCellFactory.hasChanges()) {
+            //    userElementCellFactory.rejectChanges();
             //    logWarning('Discarded pending change(s)', null, true);
             //}
         }
 
         function hasChanges() {
-            return userElementCellService.hasChanges();
+            return userElementCellFactory.hasChanges();
         }
 
         function initialize() {
 
-            elementCellService.getElementCellSet(false)
+            elementCellFactory.getElementCellSet(false)
                 .then(function (data) {
                     vm.elementCellSet = data;
                 });
 
-            userService.getUserSet(false)
+            userFactory.getUserSet(false)
                 .then(function (data) {
                     vm.userSet = data;
                 });
@@ -76,7 +76,7 @@
                 // TODO For development enviroment, create test entity?
             }
             else {
-                userElementCellService.getUserElementCell($routeParams.Id)
+                userElementCellFactory.getUserElementCell($routeParams.Id)
                     .then(function (data) {
                         vm.userElementCell = data;
                     })
@@ -88,17 +88,17 @@
 
         function isSaveDisabled() {
             return isSaving ||
-                (!isNew && !userElementCellService.hasChanges());
+                (!isNew && !userElementCellFactory.hasChanges());
         }
 
         function saveChanges() {
 
             if (isNew) {
-                userElementCellService.createUserElementCell(vm.userElementCell);
+                userElementCellFactory.createUserElementCell(vm.userElementCell);
             }
 
             isSaving = true;
-            userElementCellService.saveChanges()
+            userElementCellFactory.saveChanges()
                 .then(function (result) {
                     $location.path('/manage/generated/userElementCell');
                 })

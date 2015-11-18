@@ -10,27 +10,27 @@
 (function () {
     'use strict';
 
-    var serviceId = 'userRoleService';
+    var factoryId = 'elementFieldFactory';
     angular.module('main')
-        .factory(serviceId, ['dataContext', '$rootScope', 'logger', userRoleService]);
+        .factory(factoryId, ['dataContext', '$rootScope', 'logger', elementFieldFactory]);
 
-    function userRoleService(dataContext, $rootScope, logger) {
+    function elementFieldFactory(dataContext, $rootScope, logger) {
         
 		// Logger
-		logger = logger.forSource(serviceId);
+		logger = logger.forSource(factoryId);
 
         // To determine whether the data will be fetched from server or local
         var minimumDate = new Date(0);
         var fetchedOn = minimumDate;
 
-        // Service methods (alphabetically)
-        var service = {
-            createUserRole: createUserRole,
-            deleteUserRole: deleteUserRole,
+        // Factory methods (alphabetically)
+        var factory = {
+            createElementField: createElementField,
+            deleteElementField: deleteElementField,
             getChanges: getChanges,
             getChangesCount: getChangesCount,
-            getUserRoleSet: getUserRoleSet,
-            getUserRole: getUserRole,
+            getElementFieldSet: getElementFieldSet,
+            getElementField: getElementField,
             hasChanges: hasChanges,
             rejectChanges: rejectChanges,
             saveChanges: saveChanges
@@ -41,16 +41,16 @@
             fetchedOn = minimumDate;
         });
 
-        return service;
+        return factory;
 
         /*** Implementations ***/
 
-        function createUserRole(userRole) {
-            return dataContext.createEntity('UserRoles', userRole);
+        function createElementField(elementField) {
+            return dataContext.createEntity('ElementField', elementField);
         }
 
-        function deleteUserRole(userRole) {
-            userRole.entityAspect.setDeleted();
+        function deleteElementField(elementField) {
+            elementField.entityAspect.setDeleted();
         }
 
         function getChanges() {
@@ -61,7 +61,7 @@
             return dataContext.getChangesCount();
         }
 
-        function getUserRoleSet(forceRefresh) {
+        function getElementFieldSet(forceRefresh) {
             var count;
             if (forceRefresh) {
                 if (dataContext.hasChanges()) {
@@ -72,8 +72,8 @@
             }
 
             var query = breeze.EntityQuery
-				.from('UserRoles')
-				.expand(['Role', 'User'])
+				.from('ElementField')
+				.expand(['Element'])
             ;
 
             // Fetch the data from server, in case if it's not fetched earlier or forced
@@ -93,18 +93,18 @@
 
             function success(response) {
                 count = response.results.length;
-                //logger.logSuccess('Got ' + count + ' userRole(s)', response);
+                //logger.logSuccess('Got ' + count + ' elementField(s)', response);
                 return response.results;
             }
 
             function failed(error) {
-                var message = error.message || 'UserRole query failed';
+                var message = error.message || 'ElementField query failed';
                 logger.logError(message, error, true);
             }
         }
 
-        function getUserRole(userRoleId, forceRefresh) {
-            return dataContext.fetchEntityByKey('UserRole', userRoleId, !forceRefresh)
+        function getElementField(elementFieldId, forceRefresh) {
+            return dataContext.fetchEntityByKey('ElementField', elementFieldId, !forceRefresh)
                 .then(success).catch(failed);
 
             function success(result) {
@@ -112,7 +112,7 @@
             }
 
             function failed(error) {
-                var message = error.message || 'getUserRole query failed';
+                var message = error.message || 'getElementField query failed';
                 logger.logError(message, error, true);
             }
         }
