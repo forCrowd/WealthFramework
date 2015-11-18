@@ -2,6 +2,8 @@
 
 **0.37**
 
+* enumKey angular filter was added: Probably this enum operations can be done in a better way
+but right now this is the easiest way to save the day.
 * dataContext.js createEntity() was updated to a synchronous function again
 Creating sample entities was too difficult & complex with async. function
 metadataReady() function is now called under initializeStore() and it doesn't wait for the result.

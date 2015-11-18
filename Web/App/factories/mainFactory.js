@@ -11,12 +11,12 @@
         var applicationInfoUrl = '/api/Application/ApplicationInfo';
         var applicationInfo = null;
 
-        // Service methods
-        var service = {
+        // Factory methods
+        var factory = {
             getApplicationInfo: getApplicationInfo
         };
 
-        return service;
+        return factory;
 
         /*** Implementations ***/
 

@@ -1,6 +1,5 @@
 ﻿. resourcePoolEditor - new / edit cmrp features!
-field type - index type - index rating sort type ?
-cell's boolean value ?
+field type restrictions - string doesnt use index etc.?
 remove?
 entity errors?
 cancel cases?
@@ -8,6 +7,10 @@ cached values!
 copy from a existing?
 
 remove name field!
+
+elementfieldtype -> DataType?
+
+move enums to their related class?
 
 google analytics!
 

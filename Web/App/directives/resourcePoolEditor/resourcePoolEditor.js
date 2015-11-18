@@ -6,6 +6,7 @@
     angular.module('main')
         .directive(directiveId, ['resourcePoolFactory',
             'userFactory',
+            'Enums',
             '$rootScope',
             '$uibModal',
             'logger',
@@ -13,6 +14,7 @@
 
     function resourcePoolEditor(resourcePoolFactory,
         userFactory,
+        Enums,
         $rootScope,
         $uibModal,
         logger) {
@@ -133,7 +135,7 @@
             function showEditorModal() {
 
                 var modalInstance = $uibModal.open({
-                    templateUrl: '/App/directives/resourcePoolEditor/resourcePoolEditorModal.html?v=0.37',
+                    templateUrl: '/App/directives/resourcePoolEditor/resourcePoolEditorModal.html?v=0.37.3',
                     controllerAs: 'vm',
                     controller: resourcePoolEditorModalController,
                     size: 'lg',
@@ -378,6 +380,11 @@
                 vm.saveElementCell = saveElementCell;
                 vm.saveElementField = saveElementField;
                 vm.saveElementItem = saveElementItem;
+
+                // Enums
+                vm.ElementFieldType = Enums.ElementFieldType;
+                vm.IndexType = Enums.IndexType;
+                vm.IndexRatingSortType = Enums.IndexRatingSortType;
 
                 function addElement() {
                     vm.element = { ResourcePool: vm.resourcePool, Name: 'New element' };

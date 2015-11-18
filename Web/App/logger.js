@@ -14,7 +14,8 @@
 
     function logger($log) {
         configureToastr();
-        var service = {
+
+        var factory = {
             forSource: forSource,
             log: log,
             logError: logError,
@@ -22,7 +23,7 @@
             logWarning: logWarning
         };
 
-        return service;
+        return factory;
 
         function configureToastr() {
             toastr.options = {

@@ -154,7 +154,7 @@
                                     <div class="form-group">
                                         <label for="ElementFieldType" class="control-label col-md-2">Element Field Type</label>
                                         <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.ElementFieldType.$invalid && !elementFieldForm.ElementFieldType.$pristine}">
-                                            <input id="ElementFieldType" name="ElementFieldType" type="text" data-ng-model="vm.elementField.ElementFieldType" class="form-control" required />
+                                            <select id="ElementFieldType" name="ElementFieldType" data-ng-model="vm.elementField.ElementFieldType" data-ng-options="key for (key, value) in vm.ElementFieldType" class="form-control" required></select>
                                         </div>
                                     </div>
                                     <div class="form-group" data-ng-if="vm.elementField.ElementFieldType === 6">
@@ -191,13 +191,13 @@
                                     <div class="form-group" data-ng-if="vm.elementField.IndexEnabled">
                                         <label for="IndexType" class="control-label col-md-2">Index Type</label>
                                         <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.IndexType.$invalid && !elementFieldForm.IndexType.$pristine}">
-                                            <input id="IndexType" name="IndexType" type="text" data-ng-model="vm.elementField.IndexType" class="form-control" required />
+                                            <select id="IndexType" name="IndexType" data-ng-model="vm.elementField.IndexType" data-ng-options="key for (key, value) in vm.IndexType" class="form-control" required></select>
                                         </div>
                                     </div>
                                     <div class="form-group" data-ng-if="vm.elementField.IndexEnabled">
                                         <label for="IndexRatingSortType" class="control-label col-md-2">Index Rating Sort Type</label>
                                         <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.IndexRatingSortType.$invalid && !elementFieldForm.IndexRatingSortType.$pristine}">
-                                            <input id="IndexRatingSortType" name="IndexRatingSortType" type="text" data-ng-model="vm.elementField.IndexRatingSortType" class="form-control" required />
+                                            <select id="IndexRatingSortType" name="IndexRatingSortType" data-ng-model="vm.elementField.IndexRatingSortType" data-ng-options="key for (key, value) in vm.IndexRatingSortType" class="form-control" required></select>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -214,7 +214,7 @@
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-10">
                                             <button type="submit" data-ng-click="vm.saveElementField()" data-ng-disabled="elementFieldForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
-                                                Save
+                                                Okay
                                             </button>
                                             <!--<button type="button" data-ng-click="vm.cancelChanges()" class="btn btn-danger">
                                                 Cancel
@@ -256,7 +256,7 @@
                                         {{ elementField.Name }}
                                     </td>
                                     <td>
-                                        {{ elementField.ElementFieldType }}
+                                        {{ elementField.ElementFieldType | enum: 'ElementFieldType' }}
                                     </td>
                                     <td>
                                         {{ elementField.IndexEnabled }}
@@ -387,7 +387,12 @@
                                     <div class="form-group" data-ng-if="vm.elementCell.ElementField.ElementFieldType === 2">
                                         <label for="BooleanValue" class="control-label col-md-2">Value</label>
                                         <div class="col-md-10" data-ng-class="{'has-error': elementCellForm.BooleanValue.$invalid && !elementCellForm.BooleanValue.$pristine}">
-                                            <input id="BooleanValue" name="BooleanValue" type="text" data-ng-model="vm.elementCell.currentUserCell().BooleanValue" class="form-control" required />
+                                            <label class="radio-inline">
+                                                <input id="BooleanValue_True" name="BooleanValue" type="radio" data-ng-model="vm.elementCell.currentUserCell().BooleanValue" data-ng-value="true"> True
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input id="BooleanValue_False" name="BooleanValue" type="radio" data-ng-model="vm.elementCell.currentUserCell().BooleanValue" data-ng-value="false"> False
+                                            </label>
                                         </div>
                                     </div>
                                     <div class="form-group" data-ng-if="vm.elementCell.ElementField.ElementFieldType === 3">

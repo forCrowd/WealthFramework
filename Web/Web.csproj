@@ -406,6 +406,7 @@
     <Content Include="App\directives\resourcePoolEditor\resourcePoolEditorModal.html" />
     <Content Include="App\directives\resourcePoolEditor\resourcePoolEditor.js" />
     <Content Include="App\directives\resourcePoolEditor\resourcePoolEditor.css" />
+    <Content Include="App\entities\Enums.js" />
     <Content Include="App\entities\Element.js" />
     <Content Include="App\entities\UserElementCell.js" />
     <Content Include="App\entities\ElementItem.js" />

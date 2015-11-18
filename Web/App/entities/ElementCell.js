@@ -470,7 +470,7 @@
                     }
                     case 2: {
                         if (self.currentUserCell() !== null) {
-                            value = self.currentUserCell().BooleanValue;
+                            value = self.currentUserCell().BooleanValue ? 'True' : 'False';
                         }
                         break;
                     }

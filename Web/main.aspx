@@ -133,20 +133,21 @@
 
     <!-- Main -->
     <script src="/App/main.js?v=0.37"></script>
-    <script src="/App/logger.js?v=0.29"></script>
+    <script src="/App/logger.js?v=0.37"></script>
     <script src="/App/route.js?v=0.37"></script>
     <script src="/App/authorization.js?v=0.29"></script>
 
     <!-- Entities -->
-    <script src="/App/entities/ResourcePool.js?v=0.36.1"></script>
-    <script src="/App/entities/Element.js?v=0.35"></script>
+    <script src="/App/entities/ResourcePool.js?v=0.37"></script>
+    <script src="/App/entities/Element.js?v=0.37"></script>
     <script src="/App/entities/ElementCell.js?v=0.37"></script>
-    <script src="/App/entities/ElementField.js?v=0.36.1"></script>
-    <script src="/App/entities/ElementItem.js?v=0.36"></script>
-    <script src="/App/entities/UserElementCell.js?v=0.35"></script>
+    <script src="/App/entities/ElementField.js?v=0.37"></script>
+    <script src="/App/entities/ElementItem.js?v=0.37"></script>
+    <script src="/App/entities/UserElementCell.js?v=0.37"></script>
+    <script src="/App/entities/Enums.js?v=0.37"></script>
 
     <!-- breezeJS -->
-    <script src="/App/entityManagerFactory.js?v=0.27"></script>
+    <script src="/App/entityManagerFactory.js?v=0.37"></script>
     <script src="/App/dataContext.js?v=0.37"></script>
 
     <script src="/App/factories/mainFactory.js?v=0.37"></script>
@@ -159,33 +160,34 @@
     <script src="/App/factories/resourcePoolFactory.js?v=0.37"></script>
 
     <!-- Content -->
-    <script src="/App/controllers/content/mainController.js?v=0.29"></script>
+    <script src="/App/controllers/content/mainController.js?v=0.37"></script>
     <script src="/App/controllers/content/introductionController.js?v=0.37"></script>
     <script src="/App/controllers/content/basicsController.js?v=0.37"></script>
     <script src="/App/controllers/content/sectorIndexSampleController.js?v=0.29"></script>
     <script src="/App/controllers/content/knowledgeIndexSampleController.js?v=0.30"></script>
     <script src="/App/controllers/content/totalCostIndexSampleController.js?v=0.29"></script>
-    <script src="/App/controllers/content/fairShareIndexSampleController.js?v=0.29"></script>
+    <script src="/App/controllers/content/fairShareIndexSampleController.js?v=0.37"></script>
     <script src="/App/controllers/content/indexesPieSampleController.js?v=0.29"></script>
     <script src="/App/controllers/content/resourcePoolRateSampleController.js?v=0.29"></script>
     <script src="/App/controllers/content/closingNotesController.js?v=0.29"></script>
 
     <!-- Account -->
-    <script src="/App/controllers/account/loginController.js?v=0.29"></script>
-    <script src="/App/controllers/account/registerController.js?v=0.29"></script>
-    <script src="/App/controllers/account/accountEditController.js?v=0.29"></script>
-    <script src="/App/controllers/account/changePasswordController.js?v=0.22"></script>
+    <script src="/App/controllers/account/loginController.js?v=0.37"></script>
+    <script src="/App/controllers/account/registerController.js?v=0.37"></script>
+    <script src="/App/controllers/account/accountEditController.js?v=0.37"></script>
+    <script src="/App/controllers/account/changePasswordController.js?v=0.37"></script>
 
     <!-- Manage Scripts - Custom -->
-    <script src="/App/controllers/manage/resourcePool/resourcePoolCustomListController.js?v=0.22"></script>
+    <script src="/App/controllers/manage/resourcePool/resourcePoolCustomListController.js?v=0.37"></script>
     <script src="/App/controllers/manage/resourcePool/resourcePoolCustomViewController.js?v=0.37"></script>
 
     <!-- Directives -->
     <script src="/App/directives/resourcePoolEditor/resourcePoolEditor.js?v=0.37"></script>
 
     <!-- Filters -->
-    <script src="/App/filters/angular-percentage.js?v=0.22"></script>
+    <script src="/App/filters/angular-enum.js?v=0.37"></script>
     <script src="/App/filters/angular-numberSymbol.js?v=0.36.1"></script>
+    <script src="/App/filters/angular-percentage.js?v=0.22"></script>
 
 </body>
 </html>

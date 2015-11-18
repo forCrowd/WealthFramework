@@ -24,8 +24,8 @@
 
         initializeStore();
 
-        // Service methods
-        var service = {
+        // Factory methods
+        var factory = {
             createEntity: createEntity,
             clear: clear,
             executeQuery: executeQuery,
@@ -39,7 +39,7 @@
             saveChanges: saveChanges
         };
 
-        return service;
+        return factory;
 
         /*** Implementations ***/
 

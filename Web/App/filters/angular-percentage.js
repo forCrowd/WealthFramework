@@ -1,5 +1,5 @@
 ﻿/***
- * Filter: Percentage
+ * Filter: percentage
  *
  * Convert the number to a percentage format.
  *

@@ -31,7 +31,7 @@
         var userLoggedIn = false;
         var fetched = [];
 
-        // Service methods
+        // Factory methods
         $delegate.createElement = createElement;
         $delegate.createElementField = createElementField;
         $delegate.createElementItem = createElementItem;
