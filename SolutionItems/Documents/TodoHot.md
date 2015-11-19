@@ -1,5 +1,11 @@
 ﻿. resourcePoolEditor - new / edit cmrp features!
-cancel cases?
+cancel cases - for edit?
+
+cancel
+add entity - cancel - don't create
+edit newly added entity - cancel - how to undo modifications?
+edit existing entity - cancel - reject changes
+
 remove - ok, only cmrp?
 copy from a existing?
 edit an existing cmrp?

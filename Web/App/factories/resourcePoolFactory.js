@@ -41,6 +41,7 @@
         $delegate.removeElement = removeElement;
         $delegate.removeElementField = removeElementField;
         $delegate.removeElementItem = removeElementItem;
+        $delegate.removeResourcePool = removeResourcePool;
 
         // User logged out
         $rootScope.$on('userLoggedIn', function () {
@@ -453,6 +454,12 @@
                 removeElementCell(elementCell);
             });
 
+            // Related user element fields
+            var userElementFieldSet = elementField.UserElementFieldSet.slice();
+            angular.forEach(userElementFieldSet, function (userElementField) {
+                userElementField.entityAspect.setDeleted();
+            });
+
             elementField.entityAspect.setDeleted();
         }
 
@@ -465,6 +472,23 @@
             });
 
             elementItem.entityAspect.setDeleted();
+        }
+
+        function removeResourcePool(resourcePool) {
+
+            // Related elements
+            var elementSet = resourcePool.ElementSet.slice();
+            angular.forEach(elementSet, function (element) {
+                removeElement(element);
+            });
+
+            // Related user resource pools
+            var userResourcePoolSet = resourcePool.UserResourcePoolSet.slice();
+            angular.forEach(userResourcePoolSet, function (userResourcePool) {
+                userResourcePool.entityAspect.setDeleted();
+            });
+
+            resourcePool.entityAspect.setDeleted();
         }
     }
 })();

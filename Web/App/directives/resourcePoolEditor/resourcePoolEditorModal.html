@@ -319,7 +319,6 @@
                                         </ul>
                                     </div>-->
                                     <div class="form-group">
-                                        <label for="E
                                         <label for="ElementId" class="control-label col-md-2">Element</label>
                                         <div class="col-md-10" data-ng-class="{'has-error': elementItemForm.ElementId.$invalid && !elementItemForm.ElementId.$pristine}">
                                             <select id="ElementId" name="ElementId" data-ng-model="vm.elementItem.Element" data-ng-options="element.Name for element in vm.resourcePool.ElementSet" class="form-control" required></select>
@@ -459,9 +458,9 @@
                                             <button type="submit" data-ng-click="vm.saveElementCell()" data-ng-disabled="elementCellForm.$invalid" class="btn btn-primary">
                                                 Save
                                             </button>
-                                            <!--<button type="button" data-ng-click="vm.cancelChanges()" class="btn btn-danger">
+                                            <button type="button" data-ng-click="vm.cancelElementCell()" class="btn btn-danger">
                                                 Cancel
-                                            </button>-->
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -518,11 +517,12 @@
         </uib-tabset>
     </div>
     <div class="modal-footer">
+        <!--<button type="button" data-ng-click="vm.cancelChanges()" data-ng-if="!vm.isNew" class="btn btn-warning">-->
+        <button type="button" data-ng-click="vm.cancelChanges()" class="btn btn-default">
+            Cancel
+        </button>
         <button type="submit" data-ng-bind="vm.isNew ? 'Create' : 'Save'" data-ng-click="vm.saveChanges()" data-ng-disabled="!vm.isSaveEnabled()" class="btn btn-primary">
             <!--Save-->
-        </button>
-        <button type="button" data-ng-click="vm.cancelChanges()" data-ng-if="!vm.isNew" class="btn btn-warning">
-            Cancel
         </button>
     </div>
 </div>

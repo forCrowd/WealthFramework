@@ -138,6 +138,7 @@
                     templateUrl: '/App/directives/resourcePoolEditor/resourcePoolEditorModal.html?v=0.37',
                     controllerAs: 'vm',
                     controller: resourcePoolEditorModalController,
+                    backdrop: 'static',
                     size: 'lg',
                     resolve: {
                         resourcePool: function () {
@@ -413,12 +414,15 @@
 
                 function cancelChanges() {
 
-                    // Changes canceled
-                    // TODO Sub entities!
-                    vm.resourcePool.entityAspect.rejectChanges();
+                    if (vm.isNew) {
+                        resourcePoolFactory.removeResourcePool(vm.resourcePool);
+                    }
 
                     $uibModalInstance.dismiss('cancel', vm.resourcePool);
 
+                    if (vm.isNew) {
+                        $location.path('/manage/resourcePool');
+                    }
                 }
 
                 function editElement(element) {
