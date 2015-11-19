@@ -1,6 +1,9 @@
 ﻿. resourcePoolEditor - new / edit cmrp features!
 cancel cases - for edit?
 
+find a way to create temp entity for edit cases?!
+undo currentUserElementCell changes?
+
 cancel
 add entity - cancel - don't create
 edit newly added entity - cancel - how to undo modifications?

@@ -460,23 +460,26 @@
             function value() {
 
                 var value = null;
+                //var currentUserCell = self.UserElementCellSet.length > 0
+                //    ? self.UserElementCellSet[0]
+                //    : null;
 
                 switch (self.ElementField.ElementFieldType) {
                     case 1: {
-                        if (self.currentUserCell() !== null) {
-                            value = self.currentUserCell().StringValue;
+                        if (self.UserElementCellSet.length > 0) {
+                            value = self.UserElementCellSet[0].StringValue;
                         }
                         break;
                     }
                     case 2: {
-                        if (self.currentUserCell() !== null) {
-                            value = self.currentUserCell().BooleanValue ? 'True' : 'False';
+                        if (self.UserElementCellSet.length > 0) {
+                            value = self.UserElementCellSet[0].BooleanValue ? 'True' : 'False';
                         }
                         break;
                     }
                     case 3: {
-                        if (self.currentUserCell() !== null) {
-                            value = self.currentUserCell().IntegerValue;
+                        if (self.UserElementCellSet.length > 0) {
+                            value = self.UserElementCellSet[0].IntegerValue;
                         }
                         break;
                     }
@@ -484,8 +487,8 @@
                     case 4:
                     case 11:
                     case 12: {
-                        if (self.currentUserCell() !== null) {
-                            value = self.currentUserCell().DecimalValue;
+                        if (self.UserElementCellSet.length > 0) {
+                            value = self.UserElementCellSet[0].DecimalValue;
                         }
                         break;
                     }

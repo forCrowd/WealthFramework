@@ -32,6 +32,7 @@
         var fetched = [];
 
         // Factory methods
+        $delegate.copyElementCell = copyElementCell;
         $delegate.createElement = createElement;
         $delegate.createElementField = createElementField;
         $delegate.createElementItem = createElementItem;
@@ -54,6 +55,26 @@
         return $delegate;
 
         /*** Implementations ***/
+
+        function copyElementCell(elementCell) {
+
+            var copy = angular.copy(elementCell);
+
+            //copy.UserElementCellSet = angular.copy(elementCell.UserElementCellSet);
+            copy.UserElementCellSet[0] = angular.copy(elementCell.UserElementCellSet[0]);
+
+            //// Related user cells
+            //var userElementCellSet = elementCell.UserElementCellSet.slice();
+            //angular.forEach(userElementCellSet, function (userElementCell) {
+            //    userElementCell.entityAspect.setDeleted();
+            //});
+
+            //angular.forEach(elementItemSet, function (elementItem) {
+            //    removeElementItem(elementItem);
+            //});
+
+            return copy;
+        }
 
         function createElement(element) {
             return dataContext.createEntity('Element', element);

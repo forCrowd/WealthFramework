@@ -135,7 +135,7 @@
             function showEditorModal() {
 
                 var modalInstance = $uibModal.open({
-                    templateUrl: '/App/directives/resourcePoolEditor/resourcePoolEditorModal.html?v=0.37',
+                    templateUrl: '/App/directives/resourcePoolEditor/resourcePoolEditorModal.html?v=0.37x',
                     controllerAs: 'vm',
                     controller: resourcePoolEditorModalController,
                     backdrop: 'static',
@@ -149,12 +149,11 @@
 
                 modalInstance.result.then(function () {
 
-                    // saved
+                    // Saved
 
                 }, function (action) {
 
                     // Canceled
-
                     logger.log('Modal dismissed at: ' + new Date());
                 });
 
@@ -357,12 +356,15 @@
                 vm.addElement = addElement;
                 vm.addElementField = addElementField;
                 vm.addElementItem = addElementItem;
-                vm.cancelChanges = cancelChanges;
+                vm.cancelElementCell = cancelElementCell;
+                vm.cancelResourcePool = cancelResourcePool;
                 vm.editElement = editElement;
                 vm.editElementCell = editElementCell;
                 vm.editElementField = editElementField;
                 vm.editElementItem = editElementItem;
                 vm.element = null;
+                vm.elementCell = null;
+                vm.elementCellMaster = null;
                 vm.elementCellSet = elementCellSet;
                 vm.elementField = null;
                 vm.elementFieldSet = elementFieldSet;
@@ -379,7 +381,7 @@
                 vm.removeElementField = removeElementField;
                 vm.removeElementItem = removeElementItem;
                 vm.resourcePool = resourcePool;
-                vm.saveChanges = saveChanges;
+                vm.saveResourcePool = saveResourcePool;
                 vm.saveElement = saveElement;
                 vm.saveElementCell = saveElementCell;
                 vm.saveElementField = saveElementField;
@@ -412,7 +414,23 @@
                     vm.isElementItemEdit = true;
                 }
 
-                function cancelChanges() {
+                function cancelElementCell() {
+
+                    //logger.log('vm.elementCell', vm.elementCell.value());
+                    //logger.log('vm.elementCellMaster', vm.elementCellMaster.value());
+
+                    logger.log('vm.elementCell', vm.elementCell.UserElementCellSet[0].StringValue);
+                    logger.log('vm.elementCellMaster', vm.elementCellMaster.UserElementCellSet[0].StringValue);
+
+                    // vm.elementCell = angular.copy(vm.elementCellMaster);
+                    vm.elementCell = resourcePoolFactory.copyElementCell(vm.elementCellMaster);
+
+                    vm.isElementCellEdit = false;
+                    vm.elementCell = null;
+                    vm.elementCellMaster = null;
+                }
+
+                function cancelResourcePool() {
 
                     if (vm.isNew) {
                         resourcePoolFactory.removeResourcePool(vm.resourcePool);
@@ -431,7 +449,20 @@
                 }
 
                 function editElementCell(elementCell) {
-                    vm.elementCell = elementCell;
+                    // vm.elementCell = elementCell;
+
+                    //elementCell.test = 't1';
+
+                    //vm.elementCellMaster = resourcePoolFactory.copyElementCell(elementCell);
+                    // vm.elementCell = angular.copy(elementCell);
+                    vm.elementCellMaster = elementCell;
+                    vm.elementCell = resourcePoolFactory.copyElementCell(elementCell);
+
+                    // logger.log('vm.elementCell', vm.elementCell);
+
+                    logger.log('vm.elementCell', vm.elementCell.UserElementCellSet[0].StringValue);
+                    logger.log('vm.elementCellMaster', vm.elementCellMaster.UserElementCellSet[0].StringValue);
+
                     vm.isElementCellEdit = true;
                 }
 
@@ -506,7 +537,86 @@
                     resourcePoolFactory.removeElementItem(elementItem);
                 }
 
-                function saveChanges() {
+                function saveElement() {
+
+                    // New
+                    if (typeof vm.element.entityAspect === 'undefined') {
+                        resourcePoolFactory.createElement(vm.element);
+                    }
+
+                    vm.isElementEdit = false;
+                    vm.element = null;
+                }
+
+                function saveElementCell() {
+                    
+                    var originalElementCell;
+                    angular.forEach(vm.resourcePool.ElementSet, function (element) {
+                        angular.forEach(element.ElementItemSet, function (item) {
+                            angular.forEach(item.ElementCellSet, function (cell) {
+                                if (originalElementCell !== null && cell.Id === vm.elementCell.Id) {
+                                    originalElementCell = cell;
+                                }
+                            });
+                        });
+                    });
+
+                    //vm.elementCell.test = 't2';
+
+                    //logger.log('vm.elementCell', vm.elementCell.value());
+                    //logger.log('vm.elementCellMaster', vm.elementCellMaster.value());
+                    logger.log('vm.elementCell a', vm.elementCell.UserElementCellSet[0].StringValue);
+                    logger.log('vm.elementCellMaster a', vm.elementCellMaster.UserElementCellSet[0].StringValue);
+                    logger.log('originalElementCell a', originalElementCell.UserElementCellSet[0].StringValue);
+
+                    //vm.elementCellMaster = angular.copy(vm.elementCell);
+                    // vm.elementCellMaster = resourcePoolFactory.copyElementCell(vm.elementCell);
+                    vm.elementCellMaster = vm.elementCell;
+
+                    logger.log('vm.elementCell b', vm.elementCell.UserElementCellSet[0].StringValue);
+                    logger.log('vm.elementCellMaster b', vm.elementCellMaster.UserElementCellSet[0].StringValue);
+                    logger.log('originalElementCell b', originalElementCell.UserElementCellSet[0].StringValue);
+
+                    vm.isElementCellEdit = false;
+                    vm.elementCell = null;
+                    vm.elementCellMaster = null;
+                }
+
+                function saveElementField() {
+
+                    // New
+                    if (typeof vm.elementField.entityAspect === 'undefined') {
+                        resourcePoolFactory.createElementField(vm.elementField);
+                    }
+
+                    // Fixes
+                    // a. UseFixedValue must be null for String & Element types
+                    if (vm.elementField.ElementFieldType === vm.ElementFieldType.String
+                        || vm.elementField.ElementFieldType === vm.ElementFieldType.Element) {
+                        vm.elementField.UseFixedValue = null;
+                    }
+
+                    // b. UseFixedValue must be 'true' for Multiplier type
+                    if (vm.elementField.ElementFieldType === vm.ElementFieldType.Multiplier) {
+                        vm.elementField.UseFixedValue = true;
+                    }
+
+                    vm.isElementFieldEdit = false;
+                    vm.elementField = null;
+                }
+
+                function saveElementItem() {
+
+                    // New
+                    if (typeof vm.elementItem.entityAspect === 'undefined') {
+                        resourcePoolFactory.createElementItem(vm.elementItem);
+                    }
+
+                    vm.isElementItemEdit = false;
+                    vm.elementItem = null;
+                }
+
+                function saveResourcePool() {
 
                     vm.isSaving = true;
                     resourcePoolFactory.saveChanges()
@@ -546,56 +656,6 @@
                             vm.isSaving = false;
                         });
                 };
-
-                function saveElement() {
-
-                    // New
-                    if (typeof vm.element.entityAspect === 'undefined') {
-                        resourcePoolFactory.createElement(vm.element);
-                    }
-
-                    vm.isElementEdit = false;
-                    vm.element = null;
-                }
-
-                function saveElementCell() {
-                    vm.isElementCellEdit = false;
-                    vm.elementCell = null;
-                }
-
-                function saveElementField() {
-
-                    // New
-                    if (typeof vm.elementField.entityAspect === 'undefined') {
-                        resourcePoolFactory.createElementField(vm.elementField);
-                    }
-
-                    // Fixes
-                    // a. UseFixedValue must be null for String & Element types
-                    if (vm.elementField.ElementFieldType === vm.ElementFieldType.String
-                        || vm.elementField.ElementFieldType === vm.ElementFieldType.Element) {
-                        vm.elementField.UseFixedValue = null;
-                    }
-
-                    // b. UseFixedValue must be 'true' for Multiplier type
-                    if (vm.elementField.ElementFieldType === vm.ElementFieldType.Multiplier) {
-                        vm.elementField.UseFixedValue = true;
-                    }
-
-                    vm.isElementFieldEdit = false;
-                    vm.elementField = null;
-                }
-
-                function saveElementItem() {
-
-                    // New
-                    if (typeof vm.elementItem.entityAspect === 'undefined') {
-                        resourcePoolFactory.createElementItem(vm.elementItem);
-                    }
-
-                    vm.isElementItemEdit = false;
-                    vm.elementItem = null;
-                }
             };
 
             function elementFieldIndexChartItem(elementFieldIndex) {
