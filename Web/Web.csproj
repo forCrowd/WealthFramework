@@ -464,6 +464,7 @@
     <Content Include="App\factories\generated\userRoleFactory.js">
       <DependentUpon>factory.tt</DependentUpon>
     </Content>
+    <Content Include="App\filters\angular-enum.js" />
     <Content Include="App\filters\angular-numberSymbol.js" />
     <Content Include="App\includes\manageMenu.js">
       <AutoGen>True</AutoGen>

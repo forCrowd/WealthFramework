@@ -1,16 +1,17 @@
 ﻿. resourcePoolEditor - new / edit cmrp features!
-field type restrictions - string doesnt use index etc.?
-remove?
-entity errors?
 cancel cases?
-cached values!
+remove - ok, only cmrp?
 copy from a existing?
+edit an existing cmrp?
+cached values!
 
 remove name field!
 
 elementfieldtype -> DataType?
 
 move enums to their related class?
+
+check return conflict() blocks, there's something wrong with them!
 
 google analytics!
 

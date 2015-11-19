@@ -115,6 +115,8 @@ namespace forCrowd.WealthEconomy.BusinessObjects
 
         public ElementField EnableIndex()
         {
+            ValidateEnableIndex();
+
             this.IndexEnabled = true;
             this.IndexType = (byte)BusinessObjects.IndexType.Aggressive;
             this.IndexRatingSortType = (byte)BusinessObjects.IndexRatingSortType.HighestToLowest;
@@ -123,6 +125,8 @@ namespace forCrowd.WealthEconomy.BusinessObjects
 
         public ElementField EnableIndex(IndexRatingSortType ratingSortType)
         {
+            ValidateEnableIndex();
+
             this.IndexEnabled = true;
             this.IndexType = (byte)BusinessObjects.IndexType.Aggressive;
             this.IndexRatingSortType = (byte)ratingSortType;
@@ -131,10 +135,22 @@ namespace forCrowd.WealthEconomy.BusinessObjects
 
         public ElementField EnableIndex(IndexType type, IndexRatingSortType ratingSortType)
         {
+            ValidateEnableIndex();
+
             this.IndexEnabled = true;
             this.IndexType = (byte)type;
             this.IndexRatingSortType = (byte)ratingSortType;
             return this;
+        }
+
+        void ValidateEnableIndex()
+        {
+            if (ElementFieldType == (byte)ElementFieldTypes.String
+                || ElementFieldType == (byte)ElementFieldTypes.String
+                || ElementFieldType == (byte)ElementFieldTypes.String)
+            {
+                throw new InvalidOperationException(string.Format("Index cannot be enabled for this type: {0}", ElementFieldType));
+            }
         }
 
         public override string ToString()

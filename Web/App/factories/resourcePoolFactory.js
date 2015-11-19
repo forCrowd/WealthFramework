@@ -38,6 +38,9 @@
         $delegate.createResourcePoolBasic = createResourcePoolBasic;
         $delegate.createResourcePoolTwoElements = createResourcePoolTwoElements;
         $delegate.getResourcePoolExpanded = getResourcePoolExpanded;
+        $delegate.removeElement = removeElement;
+        $delegate.removeElementField = removeElementField;
+        $delegate.removeElementItem = removeElementItem;
 
         // User logged out
         $rootScope.$on('userLoggedIn', function () {
@@ -412,6 +415,56 @@
                         logger.logError(message, error, true);
                     }
                 });
+        }
+
+        function removeElement(element) {
+
+            // Related items
+            var elementItemSet = element.ElementItemSet.slice();
+            angular.forEach(elementItemSet, function (elementItem) {
+                removeElementItem(elementItem);
+            });
+
+            // Related fields
+            var elementFieldSet = element.ElementFieldSet.slice();
+            angular.forEach(elementFieldSet, function (elementField) {
+                removeElementField(elementField);
+            });
+
+            element.entityAspect.setDeleted();
+        }
+
+        function removeElementCell(elementCell) {
+
+            // Related user cells
+            var userElementCellSet = elementCell.UserElementCellSet.slice();
+            angular.forEach(userElementCellSet, function (userElementCell) {
+                userElementCell.entityAspect.setDeleted();
+            });
+
+            elementCell.entityAspect.setDeleted();
+        }
+
+        function removeElementField(elementField) {
+
+            // Related cells
+            var elementCellSet = elementField.ElementCellSet.slice();
+            angular.forEach(elementCellSet, function (elementCell) {
+                removeElementCell(elementCell);
+            });
+
+            elementField.entityAspect.setDeleted();
+        }
+
+        function removeElementItem(elementItem) {
+
+            // Related cells
+            var elementCellSet = elementItem.ElementCellSet.slice();
+            angular.forEach(elementCellSet, function (elementCell) {
+                removeElementCell(elementCell);
+            });
+
+            elementItem.entityAspect.setDeleted();
         }
     }
 })();

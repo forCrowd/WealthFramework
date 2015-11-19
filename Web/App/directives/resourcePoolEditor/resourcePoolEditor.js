@@ -135,7 +135,7 @@
             function showEditorModal() {
 
                 var modalInstance = $uibModal.open({
-                    templateUrl: '/App/directives/resourcePoolEditor/resourcePoolEditorModal.html?v=0.37.3',
+                    templateUrl: '/App/directives/resourcePoolEditor/resourcePoolEditorModal.html?v=0.37',
                     controllerAs: 'vm',
                     controller: resourcePoolEditorModalController,
                     size: 'lg',
@@ -371,9 +371,12 @@
                 vm.isElementFieldEdit = false;
                 vm.isElementItemEdit = false;
                 vm.isNew = $location.path() === '/manage/resourcePool/0';
-                vm.isSaveDisabled = isSaveDisabled;
+                vm.isSaveEnabled = isSaveEnabled;
                 vm.isSaving = false;
                 vm.entityErrors = [];
+                vm.removeElement = removeElement;
+                vm.removeElementField = removeElementField;
+                vm.removeElementItem = removeElementItem;
                 vm.resourcePool = resourcePool;
                 vm.saveChanges = saveChanges;
                 vm.saveElement = saveElement;
@@ -467,10 +470,29 @@
                     return list;
                 }
 
-                function isSaveDisabled() {
+                function isSaveEnabled() {
                     //var value = vm.isSaving || (!vm.isNew && !resourcePoolFactory.hasChanges());
-                    var value = vm.isSaving;
+
+                    // logger.log('form', vm.resourcePoolForm);
+                    // logger.log('form', vm.resourcePoolForm.$valid);
+
+                    var value = !vm.isSaving
+                        && typeof vm.resourcePoolForm !== 'undefined'
+                        && vm.resourcePoolForm.$valid;
+
                     return value;
+                }
+
+                function removeElement(element) {
+                    resourcePoolFactory.removeElement(element);
+                }
+
+                function removeElementField(elementField) {
+                    resourcePoolFactory.removeElementField(elementField);
+                }
+
+                function removeElementItem(elementItem) {
+                    resourcePoolFactory.removeElementItem(elementItem);
                 }
 
                 function saveChanges() {
@@ -535,6 +557,18 @@
                     // New
                     if (typeof vm.elementField.entityAspect === 'undefined') {
                         resourcePoolFactory.createElementField(vm.elementField);
+                    }
+
+                    // Fixes
+                    // a. UseFixedValue must be null for String & Element types
+                    if (vm.elementField.ElementFieldType === vm.ElementFieldType.String
+                        || vm.elementField.ElementFieldType === vm.ElementFieldType.Element) {
+                        vm.elementField.UseFixedValue = null;
+                    }
+
+                    // b. UseFixedValue must be 'true' for Multiplier type
+                    if (vm.elementField.ElementFieldType === vm.ElementFieldType.Multiplier) {
+                        vm.elementField.UseFixedValue = true;
                     }
 
                     vm.isElementFieldEdit = false;
