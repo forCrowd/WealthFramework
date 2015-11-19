@@ -395,12 +395,19 @@
                 }
 
                 function addElementField() {
-                    vm.elementField = { Name: 'New field' };
+
+                    var element = vm.resourcePool.ElementSet[0];
+
+                    // A temp fix for default value of 'SortOrder'
+                    // Later handle 'SortOrder' by UI, not by asking
+                    var sortOrder = element.ElementFieldSet.length + 1;
+
+                    vm.elementField = { Element: element, Name: 'New field', ElementFieldType: 1, SortOrder: sortOrder };
                     vm.isElementFieldEdit = true;
                 }
 
                 function addElementItem() {
-                    vm.elementItem = { Name: 'New item' };
+                    vm.elementItem = { Element: vm.resourcePool.ElementSet[0], Name: 'New item' };
                     vm.isElementItemEdit = true;
                 }
 

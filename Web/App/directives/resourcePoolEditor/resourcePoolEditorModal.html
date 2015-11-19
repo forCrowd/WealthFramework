@@ -10,13 +10,16 @@
                     <uib-tab heading="Resource Pool">
                         <form name="vm.resourcePoolForm">
                             <div class="form-horizontal">
-                                <div class="form-group has-error" data-ng-show="vm.entityErrors">
+                                <div class="top-buffer">
+                                    &nbsp;
+                                </div>
+                                <!--<div class="form-group has-error" data-ng-show="vm.entityErrors">
                                     <ul>
                                         <li data-ng-repeat="error in vm.entityErrors">
                                             <label class="control-label">{{ error.errorMessage }}</label>
                                         </li>
                                     </ul>
-                                </div>
+                                </div>-->
                                 <div class="form-group">
                                     <label for="Name" class="control-label col-md-2">Name</label>
                                     <div class="col-md-10" data-ng-class="{'has-error': resourcePoolForm.Name.$invalid && !resourcePoolForm.Name.$pristine}">
@@ -26,24 +29,27 @@
                                 <div class="form-group">
                                     <label for="InitialValue" class="control-label col-md-2">Initial Amount</label>
                                     <div class="col-md-10" data-ng-class="{'has-error': resourcePoolForm.InitialValue.$invalid && !resourcePoolForm.InitialValue.$pristine}">
-                                        <input id="InitialValue" name="InitialValue" type="text" data-ng-model="vm.resourcePool.InitialValue" class="form-control" required />
+                                        <input id="InitialValue" name="InitialValue" type="text" data-ng-model="vm.resourcePool.InitialValue" class="form-control" aria-describedby="InitialValueHelp" required />
+                                        <span id="InitialValueHelp" class="help-block">Initial amount in the pool.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ResourcePoolRate" class="control-label col-md-2">Resource Pool Rate (%)</label>
+                                    <div class="col-md-10" data-ng-class="{'has-error': resourcePoolForm.ResourcePoolRate.$invalid && !resourcePoolForm.ResourcePoolRate.$pristine}">
+                                        <input id="ResourcePoolRate" name="ResourcePoolRate" type="text" data-ng-model="vm.resourcePool.currentUserResourcePool().ResourcePoolRate" class="form-control" aria-describedby="ResourcePoolRateHelp" required />
+                                        <span id="ResourcePoolRateHelp" class="help-block">Determines the size of the pool based on Total Income of the organizations.</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="UseFixedResourcePoolRate" class="control-label col-md-2">Use Fixed Resource Pool Rate</label>
                                     <div class="col-md-10" data-ng-class="{'has-error': resourcePoolForm.UseFixedResourcePoolRate.$invalid && !resourcePoolForm.UseFixedResourcePoolRate.$pristine}">
                                         <label class="radio-inline">
-                                            <input id="UseFixedResourcePoolRate_True" name="UseFixedResourcePoolRate" type="radio" data-ng-model="vm.resourcePool.UseFixedResourcePoolRate" data-ng-value="true"> True
+                                            <input id="UseFixedResourcePoolRate_True" name="UseFixedResourcePoolRate" type="radio" data-ng-model="vm.resourcePool.UseFixedResourcePoolRate" data-ng-value="true" aria-describedby="UseFixedResourcePoolRateHelp"> True
                                         </label>
                                         <label class="radio-inline">
-                                            <input id="UseFixedResourcePoolRate_False" name="UseFixedResourcePoolRate" type="radio" data-ng-model="vm.resourcePool.UseFixedResourcePoolRate" data-ng-value="false"> False
+                                            <input id="UseFixedResourcePoolRate_False" name="UseFixedResourcePoolRate" type="radio" data-ng-model="vm.resourcePool.UseFixedResourcePoolRate" data-ng-value="false" aria-describedby="UseFixedResourcePoolRateHelp"> False
                                         </label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="ResourcePoolRate" class="control-label col-md-2">Resource Pool Rate</label>
-                                    <div class="col-md-10" data-ng-class="{'has-error': resourcePoolForm.ResourcePoolRate.$invalid && !resourcePoolForm.ResourcePoolRate.$pristine}">
-                                        <input id="ResourcePoolRate" name="ResourcePoolRate" type="text" data-ng-model="vm.resourcePool.currentUserResourcePool().ResourcePoolRate" class="form-control" required />
+                                        <span id="UseFixedResourcePoolRateHelp" class="help-block">Determines whether the other users can set their own 'Resource Pool Rate' values or only use a fixed value that has been set above.</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -64,6 +70,9 @@
                         <div data-ng-if="vm.isElementEdit">
                             <form name="elementForm">
                                 <div class="form-horizontal">
+                                    <div class="top-buffer">
+                                        &nbsp;
+                                    </div>
                                     <!--<div class="form-group has-error" data-ng-show="vm.entityErrors">
                                         <ul>
                                             <li data-ng-repeat="error in vm.entityErrors">
@@ -85,7 +94,7 @@
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-10">
                                             <button type="submit" data-ng-click="vm.saveElement()" data-ng-disabled="elementForm.$invalid" class="btn btn-primary">
-                                                Okay
+                                                Save
                                             </button>
                                             <!--<button type="button" data-ng-click="vm.cancelChanges()" class="btn btn-danger">
                                                 Cancel
@@ -132,6 +141,9 @@
                         <div data-ng-if="vm.isElementFieldEdit">
                             <form name="elementFieldForm">
                                 <div class="form-horizontal">
+                                    <div class="top-buffer">
+                                        &nbsp;
+                                    </div>
                                     <!--<div class="form-group has-error" data-ng-show="vm.entityErrors">
                                         <ul>
                                             <li data-ng-repeat="error in vm.entityErrors">
@@ -152,7 +164,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="ElementFieldType" class="control-label col-md-2">Element Field Type</label>
+                                        <label for="ElementFieldType" class="control-label col-md-2">Field Type</label>
                                         <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.ElementFieldType.$invalid && !elementFieldForm.ElementFieldType.$pristine}">
                                             <select id="ElementFieldType" name="ElementFieldType" data-ng-model="vm.elementField.ElementFieldType" data-ng-options="key for (key, value) in vm.ElementFieldType" class="form-control" required></select>
                                         </div>
@@ -160,41 +172,61 @@
                                     <div class="form-group" data-ng-if="vm.elementField.ElementFieldType === vm.ElementFieldType.Element">
                                         <label for="SelectedElementId" class="control-label col-md-2">Selected Element</label>
                                         <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.SelectedElementId.$invalid && !elementFieldForm.SelectedElementId.$pristine}">
-                                            <input id="SelectedElementId" name="SelectedElementId" type="text" data-ng-model="vm.elementField.SelectedElementId" class="form-control" />
+                                            <select id="SelectedElementId" name="SelectedElementId" data-ng-model="vm.elementField.SelectedElement" data-ng-options="element.Name disable when element === vm.elementField.Element for element in vm.resourcePool.ElementSet" class="form-control" required></select>
                                         </div>
                                     </div>
                                     <div class="form-group" data-ng-if="vm.elementField.ElementFieldType !== vm.ElementFieldType.String && vm.elementField.ElementFieldType !== vm.ElementFieldType.Element">
                                         <label for="UseFixedValue" class="control-label col-md-2">Use Fixed Value</label>
                                         <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.UseFixedValue.$invalid && !elementFieldForm.UseFixedValue.$pristine}">
                                             <label class="radio-inline">
-                                                <input id="UseFixedValue_True" name="UseFixedValue" type="radio" data-ng-model="vm.elementField.UseFixedValue" data-ng-value="true"> True
+                                                <input id="UseFixedValue_True" name="UseFixedValue" type="radio" data-ng-model="vm.elementField.UseFixedValue" data-ng-value="true" aria-describedby="UseFixedValueHelp"> True
                                             </label>
                                             <label class="radio-inline">
-                                                <input id="UseFixedValue_False" name="UseFixedValue" type="radio" data-ng-model="vm.elementField.UseFixedValue" data-ng-value="false"> False
+                                                <input id="UseFixedValue_False" name="UseFixedValue" type="radio" data-ng-model="vm.elementField.UseFixedValue" data-ng-value="false" aria-describedby="UseFixedValueHelp"> False
                                             </label>
+                                            <span id="UseFixedValueHelp" class="help-block">
+                                                Determines whether the other users can set their own values for this field or only use a fixed value that will be set in Cells tab.<br />
+                                                e.g. 'Sales Price' field should use a fixed value and 'Rating' field should be set by all users.
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="form-group" data-ng-if="vm.elementField.ElementFieldType !== vm.ElementFieldType.String && vm.elementField.ElementFieldType !== vm.ElementFieldType.Element && vm.elementField.ElementFieldType !== vm.ElementFieldType.Multiplier">
                                         <label for="IndexEnabled" class="control-label col-md-2">Index Enabled</label>
                                         <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.IndexEnabled.$invalid && !elementFieldForm.IndexEnabled.$pristine}">
                                             <label class="radio-inline">
-                                                <input id="IndexEnabled_True" name="IndexEnabled" type="radio" data-ng-model="vm.elementField.IndexEnabled" data-ng-value="true"> True
+                                                <input id="IndexEnabled_True" name="IndexEnabled" type="radio" data-ng-model="vm.elementField.IndexEnabled" data-ng-value="true" aria-describedby="IndexEnabledHelp"> True
                                             </label>
                                             <label class="radio-inline">
-                                                <input id="IndexEnabled_False" name="IndexEnabled" type="radio" data-ng-model="vm.elementField.IndexEnabled" data-ng-value="false"> False
+                                                <input id="IndexEnabled_False" name="IndexEnabled" type="radio" data-ng-model="vm.elementField.IndexEnabled" data-ng-value="false" aria-describedby="IndexEnabledHelp"> False
                                             </label>
+                                            <span id="IndexEnabledHelp" class="help-block">
+                                                Determines whether the values of this field will be used for calculating an income from the pool.
+                                                e.g. Should be 'true' for 'Rating' field.
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="form-group" data-ng-if="vm.elementField.IndexEnabled">
                                         <label for="IndexType" class="control-label col-md-2">Index Type</label>
                                         <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.IndexType.$invalid && !elementFieldForm.IndexType.$pristine}">
-                                            <select id="IndexType" name="IndexType" data-ng-model="vm.elementField.IndexType" data-ng-options="key for (key, value) in vm.IndexType" class="form-control" required></select>
+                                            <select id="IndexType" name="IndexType" data-ng-model="vm.elementField.IndexType" data-ng-options="key for (key, value) in vm.IndexType" class="form-control" aria-describedby="IndexTypeHelp" required></select>
+                                            <span id="IndexTypeHelp" class="help-block">
+                                                Aggressive (Default): Uses the lowest score as the base (reference) rating in the group, then calculates the difference from that base.<br />
+                                                Base rating (lowest) gets 0 from the pool and other items get an amount based on their difference.<br />
+                                                Aims to maximize the benefit of the pool.<br />
+                                                <br />
+                                                Passive: Sums all ratings and calculates the percentages.<br />
+                                                All items get an amount, including the lowest scored item.<br />
+                                                Good for cases that only use 'Resource Pool - Initial Amount' feature.<br />
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="form-group" data-ng-if="vm.elementField.IndexEnabled">
                                         <label for="IndexRatingSortType" class="control-label col-md-2">Index Rating Sort Type</label>
                                         <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.IndexRatingSortType.$invalid && !elementFieldForm.IndexRatingSortType.$pristine}">
-                                            <select id="IndexRatingSortType" name="IndexRatingSortType" data-ng-model="vm.elementField.IndexRatingSortType" data-ng-options="key for (key, value) in vm.IndexRatingSortType" class="form-control" required></select>
+                                            <select id="IndexRatingSortType" name="IndexRatingSortType" data-ng-model="vm.elementField.IndexRatingSortType" data-ng-options="key for (key, value) in vm.IndexRatingSortType" class="form-control" aria-describedby="IndexRatingSortTypeHelp" required></select>
+                                            <span id="IndexRatingSortTypeHelp" class="help-block">
+                                                Determines whether the higher values will receive more from the pool, or the lower values.
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -211,7 +243,7 @@
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-10">
                                             <button type="submit" data-ng-click="vm.saveElementField()" data-ng-disabled="elementFieldForm.$invalid" class="btn btn-primary">
-                                                Okay
+                                                Save
                                             </button>
                                             <!--<button type="button" data-ng-click="vm.cancelChanges()" class="btn btn-danger">
                                                 Cancel
@@ -276,6 +308,9 @@
                         <div data-ng-if="vm.isElementItemEdit">
                             <form name="elementItemForm">
                                 <div class="form-horizontal">
+                                    <div class="top-buffer">
+                                        &nbsp;
+                                    </div>
                                     <!--<div class="form-group has-error" data-ng-show="vm.entityErrors">
                                         <ul>
                                             <li data-ng-repeat="error in vm.entityErrors">
@@ -284,6 +319,7 @@
                                         </ul>
                                     </div>-->
                                     <div class="form-group">
+                                        <label for="E
                                         <label for="ElementId" class="control-label col-md-2">Element</label>
                                         <div class="col-md-10" data-ng-class="{'has-error': elementItemForm.ElementId.$invalid && !elementItemForm.ElementId.$pristine}">
                                             <select id="ElementId" name="ElementId" data-ng-model="vm.elementItem.Element" data-ng-options="element.Name for element in vm.resourcePool.ElementSet" class="form-control" required></select>
@@ -303,7 +339,7 @@
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-10">
                                             <button type="submit" data-ng-click="vm.saveElementItem()" data-ng-disabled="elementItemForm.$invalid" class="btn btn-primary">
-                                                Okay
+                                                Save
                                             </button>
                                             <!--<button type="button" data-ng-click="vm.cancelChanges()" class="btn btn-danger">
                                                 Cancel
@@ -356,6 +392,9 @@
                         <div data-ng-if="vm.isElementCellEdit">
                             <form name="elementCellForm">
                                 <div class="form-horizontal">
+                                    <div class="top-buffer">
+                                        &nbsp;
+                                    </div>
                                     <!--<div class="form-group has-error" data-ng-show="vm.entityErrors">
                                         <ul>
                                             <li data-ng-repeat="error in vm.entityErrors">
@@ -365,15 +404,15 @@
                                     </div>-->
                                     <div class="form-group">
                                         <label class="control-label col-md-2">Element</label>
-                                        <p class="form-control-static col-md-10" data-ng-bind="vm.elementCell.ElementField.Element.Name"></p>
+                                        <p data-ng-bind="vm.elementCell.ElementField.Element.Name" class="form-control-static col-md-10"></p>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-md-2">Element Field</label>
-                                        <p class="form-control-static col-md-10" data-ng-bind="vm.elementCell.ElementField.Name"></p>
+                                        <p data-ng-bind="vm.elementCell.ElementField.Name" class="form-control-static col-md-10"></p>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-md-2">Element Item</label>
-                                        <p class="form-control-static col-md-10" data-ng-bind="vm.elementCell.ElementItem.Name"></p>
+                                        <p data-ng-bind="vm.elementCell.ElementItem.Name" class="form-control-static col-md-10"></p>
                                     </div>
                                     <div class="form-group" data-ng-if="vm.elementCell.ElementField.ElementFieldType === vm.ElementFieldType.String">
                                         <label for="StringValue" class="control-label col-md-2">Value</label>
@@ -418,7 +457,7 @@
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-10">
                                             <button type="submit" data-ng-click="vm.saveElementCell()" data-ng-disabled="elementCellForm.$invalid" class="btn btn-primary">
-                                                Okay
+                                                Save
                                             </button>
                                             <!--<button type="button" data-ng-click="vm.cancelChanges()" class="btn btn-danger">
                                                 Cancel
@@ -479,7 +518,7 @@
         </uib-tabset>
     </div>
     <div class="modal-footer">
-        <button type="submit" data-ng-click="vm.saveChanges()" data-ng-disabled="!vm.isSaveEnabled()" class="btn btn-primary" data-ng-bind="vm.isNew ? 'Create' : 'Save'">
+        <button type="submit" data-ng-bind="vm.isNew ? 'Create' : 'Save'" data-ng-click="vm.saveChanges()" data-ng-disabled="!vm.isSaveEnabled()" class="btn btn-primary">
             <!--Save-->
         </button>
         <button type="button" data-ng-click="vm.cancelChanges()" data-ng-if="!vm.isNew" class="btn btn-warning">

@@ -59,7 +59,7 @@
 
             // Sums all ratings and calculates the percentages.
             // All items get an amount, including the lowest scored item.
-            // Good for cases that only use 'CMRP - Initial Value' property.
+            // Good for cases that only use 'Resource Pool - Initial Amount' feature.
             'Passive': 2
         }
 

@@ -8,6 +8,8 @@ cached values!
 remove name field!
 
 elementfieldtype -> DataType?
+IndexRatingSortType -> ?
+IndexType -> Calculation type? or formula type?
 
 move enums to their related class?
 
