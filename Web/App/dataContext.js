@@ -237,6 +237,15 @@
 
                         // TODO Deleted!
 
+                        batches.push(manager.getEntities(['UserElementCell'], [breeze.EntityState.Deleted]));
+                        batches.push(manager.getEntities(['ElementCell'], [breeze.EntityState.Deleted]));
+                        batches.push(manager.getEntities(['ElementItem'], [breeze.EntityState.Deleted]));
+                        batches.push(manager.getEntities(['UserElementField'], [breeze.EntityState.Deleted]));
+                        batches.push(manager.getEntities(['ElementField'], [breeze.EntityState.Deleted]));
+                        batches.push(manager.getEntities(['Element'], [breeze.EntityState.Deleted]));
+                        batches.push(manager.getEntities(['UserResourcePool'], [breeze.EntityState.Deleted]));
+                        batches.push(manager.getEntities(['ResourcePool'], [breeze.EntityState.Deleted]));
+
                         batches.push(manager.getEntities(['ResourcePool'], [breeze.EntityState.Added]));
                         batches.push(manager.getEntities(['UserResourcePool'], [breeze.EntityState.Added]));
                         batches.push(manager.getEntities(['Element'], [breeze.EntityState.Added]));

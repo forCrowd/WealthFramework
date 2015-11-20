@@ -24,15 +24,23 @@
 
         function link(scope, elm, attrs) {
 
+            scope.currentUser = null;
             scope.resourcePool = null;
             scope.isSaving = false;
             scope.errorMessage = '';
 
             scope.showEditorModal = showEditorModal;
 
+            // Initialize the chart
+            initChart();
+
             // Resource pool id: Get the current resource pool
             scope.$watch('resourcePoolId', function () {
-                getResourcePool();
+                userFactory.getCurrentUser()
+                    .then(function (currentUser) {
+                        scope.currentUser = currentUser;
+                        getResourcePool();
+                    });
             }, true);
 
             // Chart height
@@ -41,11 +49,13 @@
             }, true);
 
             // User logged in & out
-            scope.$on('userLoggedIn', function () {
+            scope.$on('userLoggedIn', function (currentUser) {
+                scope.currentUser = currentUser;
                 getResourcePool();
             });
 
             scope.$on('userLoggedOut', function () {
+                scope.currentUser = null;
                 getResourcePool();
             });
 
@@ -135,7 +145,7 @@
             function showEditorModal() {
 
                 var modalInstance = $uibModal.open({
-                    templateUrl: '/App/directives/resourcePoolEditor/resourcePoolEditorModal.html?v=0.37z',
+                    templateUrl: '/App/directives/resourcePoolEditor/resourcePoolEditorModal.html?v=0.37',
                     controllerAs: 'vm',
                     controller: resourcePoolEditorModalController,
                     backdrop: 'static',
@@ -150,6 +160,8 @@
                 modalInstance.result.then(function () {
 
                     // Saved
+                    scope.changeCurrentElement(scope.resourcePool.MainElement);
+                    loadChartData();
 
                 }, function (action) {
 
@@ -205,6 +217,7 @@
                 }
 
                 // New
+                // TODO Is it right way of checking it?
                 if (scope.resourcePoolId === '0') {
 
                     resourcePoolFactory.createResourcePoolBasic()
@@ -488,6 +501,8 @@
 
                     if (vm.isNew) {
                         resourcePoolFactory.removeResourcePool(vm.resourcePool);
+                    } else {
+                        vm.resourcePool.entityAspect.rejectChanges();
                     }
 
                     $uibModalInstance.dismiss('cancel', vm.resourcePool);
@@ -644,14 +659,13 @@
 
                                 resourcePoolFactory.saveChanges()
                                     .then(function (result) {
-
-                                        $uibModalInstance.close();
-
-                                        if (vm.isNew) {
-                                            $location.path('/manage/resourcePool/' + vm.resourcePool.Id);
-                                        }
+                                        closeModal();
                                     });
                             } else {
+                                closeModal();
+                            }
+
+                            function closeModal() {
                                 $uibModalInstance.close();
 
                                 if (vm.isNew) {
@@ -697,13 +711,17 @@
                 Object.defineProperty(self, "name", {
                     enumerable: true,
                     configurable: true,
-                    get: function () { return elementItem.Name; }
+                    get: function () {
+                        return elementItem.Name;
+                    }
                 });
 
                 Object.defineProperty(self, "data", {
                     enumerable: true,
                     configurable: true,
-                    get: function () { return [elementItem.totalIncome()]; }
+                    get: function () {
+                        return [elementItem.totalIncome()];
+                    }
                 });
             }
 
@@ -713,13 +731,17 @@
                 Object.defineProperty(self, "name", {
                     enumerable: true,
                     configurable: true,
-                    get: function () { return elementCell.ElementItem.Name; }
+                    get: function () {
+                        return elementCell.ElementItem.Name;
+                    }
                 });
 
                 Object.defineProperty(self, "y", {
                     enumerable: true,
                     configurable: true,
-                    get: function () { return elementCell.numericValue(); }
+                    get: function () {
+                        return elementCell.numericValue();
+                    }
                 });
             }
         }

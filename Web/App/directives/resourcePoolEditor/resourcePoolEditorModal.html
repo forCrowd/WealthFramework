@@ -3,8 +3,9 @@
         <h2 class="modal-title">New / Edit CMRP</h2>
     </div>
     <div class="modal-body">
-        <uib-tabset>
-            <uib-tab heading="New">
+
+        <!--<uib-tabset>
+            <uib-tab heading="New">-->
 
                 <uib-tabset>
                     <uib-tab heading="Resource Pool">
@@ -31,6 +32,13 @@
                                     <div class="col-md-10" data-ng-class="{'has-error': resourcePoolForm.InitialValue.$invalid && !resourcePoolForm.InitialValue.$pristine}">
                                         <input id="InitialValue" name="InitialValue" type="text" data-ng-model="vm.resourcePool.InitialValue" class="form-control" aria-describedby="InitialValueHelp" required />
                                         <span id="InitialValueHelp" class="help-block">Initial amount in the pool.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group" data-ng-if="!vm.isNew && vm.resourcePool.ElementSet.length > 0">
+                                    <label for="MainElementId" class="control-label col-md-2">Main Element</label>
+                                    <div class="col-md-10" data-ng-class="{'has-error': resourcePoolForm.MainElementId.$invalid && !resourcePoolForm.MainElementId.$pristine}">
+                                        <select id="MainElementId" name="MainElementId" data-ng-model="vm.resourcePool.MainElement" data-ng-options="element.Name for element in vm.resourcePool.ElementSet" class="form-control" aria-describedby="MainElementHelp"></select>
+                                        <span id="MainElementHelp" class="help-block">Determines which element will be shown as the first element.</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -519,10 +527,12 @@
                         </div>
                     </uib-tab>
                 </uib-tabset>
-            </uib-tab>
+
+            <!--</uib-tab>
             <uib-tab heading="Copy from Existing">
             </uib-tab>
-        </uib-tabset>
+        </uib-tabset>-->
+
     </div>
     <div class="modal-footer">
         <button type="button" data-ng-click="vm.cancelResourcePool()" class="btn btn-default">

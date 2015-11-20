@@ -9,9 +9,8 @@ edit added - cancel - ?
 edit existing - save - don't do anything
 edit existing - cancel - reject changes
 
-edit an existing cmrp?
 remove - ok, only cmrp?
-copy from a existing?
+copy from a existing cmrp / template?
 cached values!
 
 remove name field!
@@ -19,6 +18,9 @@ remove name field!
 elementfieldtype -> DataType?
 IndexRatingSortType -> ?
 IndexType -> Calculation type? or formula type?
+
+in js files, first list items; vm. - scope.
+then implementations?
 
 move enums to their related class?
 
