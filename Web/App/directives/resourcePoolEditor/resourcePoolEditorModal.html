@@ -96,9 +96,9 @@
                                             <button type="submit" data-ng-click="vm.saveElement()" data-ng-disabled="elementForm.$invalid" class="btn btn-primary">
                                                 Save
                                             </button>
-                                            <!--<button type="button" data-ng-click="vm.cancelChanges()" class="btn btn-danger">
+                                            <button type="button" data-ng-click="vm.cancelElement()" class="btn btn-default">
                                                 Cancel
-                                            </button>-->
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -151,11 +151,15 @@
                                             </li>
                                         </ul>
                                     </div>-->
-                                    <div class="form-group">
+                                    <div class="form-group" data-ng-if="vm.isElementFieldNew">
                                         <label for="ElementId" class="control-label col-md-2">Element</label>
                                         <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.ElementId.$invalid && !elementFieldForm.ElementId.$pristine}">
                                             <select id="ElementId" name="ElementId" data-ng-model="vm.elementField.Element" data-ng-options="element.Name for element in vm.resourcePool.ElementSet" class="form-control" required></select>
                                         </div>
+                                    </div>
+                                    <div class="form-group" data-ng-if="!vm.isElementFieldNew">
+                                        <label for="ElementId" class="control-label col-md-2">Element</label>
+                                        <p data-ng-bind="vm.elementField.Element.Name" class="form-control-static col-md-10"></p>
                                     </div>
                                     <div class="form-group">
                                         <label for="Name" class="control-label col-md-2">Name</label>
@@ -245,9 +249,9 @@
                                             <button type="submit" data-ng-click="vm.saveElementField()" data-ng-disabled="elementFieldForm.$invalid" class="btn btn-primary">
                                                 Save
                                             </button>
-                                            <!--<button type="button" data-ng-click="vm.cancelChanges()" class="btn btn-danger">
+                                            <button type="button" data-ng-click="vm.cancelElementField()" class="btn btn-default">
                                                 Cancel
-                                            </button>-->
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -318,11 +322,15 @@
                                             </li>
                                         </ul>
                                     </div>-->
-                                    <div class="form-group">
+                                    <div class="form-group" data-ng-if="vm.isElementItemNew">
                                         <label for="ElementId" class="control-label col-md-2">Element</label>
                                         <div class="col-md-10" data-ng-class="{'has-error': elementItemForm.ElementId.$invalid && !elementItemForm.ElementId.$pristine}">
                                             <select id="ElementId" name="ElementId" data-ng-model="vm.elementItem.Element" data-ng-options="element.Name for element in vm.resourcePool.ElementSet" class="form-control" required></select>
                                         </div>
+                                    </div>
+                                    <div class="form-group" data-ng-if="!vm.isElementItemNew">
+                                        <label for="ElementId" class="control-label col-md-2">Element</label>
+                                        <p data-ng-bind="vm.elementItem.Element.Name" class="form-control-static col-md-10"></p>
                                     </div>
                                     <div class="form-group">
                                         <label for="Name" class="control-label col-md-2">Name</label>
@@ -340,9 +348,9 @@
                                             <button type="submit" data-ng-click="vm.saveElementItem()" data-ng-disabled="elementItemForm.$invalid" class="btn btn-primary">
                                                 Save
                                             </button>
-                                            <!--<button type="button" data-ng-click="vm.cancelChanges()" class="btn btn-danger">
+                                            <button type="button" data-ng-click="vm.cancelElementItem()" class="btn btn-default">
                                                 Cancel
-                                            </button>-->
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -517,12 +525,10 @@
         </uib-tabset>
     </div>
     <div class="modal-footer">
-        <!--<button type="button" data-ng-click="vm.cancelResourcePool()" data-ng-if="!vm.isNew" class="btn btn-warning">-->
         <button type="button" data-ng-click="vm.cancelResourcePool()" class="btn btn-default">
             Cancel
         </button>
         <button type="submit" data-ng-bind="vm.isNew ? 'Create' : 'Save'" data-ng-click="vm.saveResourcePool()" data-ng-disabled="!vm.isSaveEnabled()" class="btn btn-primary">
-            <!--Save-->
         </button>
     </div>
 </div>

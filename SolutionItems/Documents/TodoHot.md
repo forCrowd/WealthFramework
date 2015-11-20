@@ -25,6 +25,7 @@ move enums to their related class?
 check return conflict() blocks, there's something wrong with them!
 
 google analytics!
+editor modalInstance templateUrl!
 
 . fix these;
 DropdownController is now deprecated. Use UibDropdownController instead. angular.min.js:107:207

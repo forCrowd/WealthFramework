@@ -135,7 +135,7 @@
             function showEditorModal() {
 
                 var modalInstance = $uibModal.open({
-                    templateUrl: '/App/directives/resourcePoolEditor/resourcePoolEditorModal.html?v=0.37x',
+                    templateUrl: '/App/directives/resourcePoolEditor/resourcePoolEditorModal.html?v=0.37z',
                     controllerAs: 'vm',
                     controller: resourcePoolEditorModalController,
                     backdrop: 'static',
@@ -356,23 +356,32 @@
                 vm.addElement = addElement;
                 vm.addElementField = addElementField;
                 vm.addElementItem = addElementItem;
+                vm.cancelElement = cancelElement;
                 vm.cancelElementCell = cancelElementCell;
+                vm.cancelElementField = cancelElementField;
+                vm.cancelElementItem = cancelElementItem;
                 vm.cancelResourcePool = cancelResourcePool;
                 vm.editElement = editElement;
                 vm.editElementCell = editElementCell;
                 vm.editElementField = editElementField;
                 vm.editElementItem = editElementItem;
                 vm.element = null;
+                vm.elementMaster = null;
                 vm.elementCell = null;
                 vm.elementCellMaster = null;
                 vm.elementCellSet = elementCellSet;
                 vm.elementField = null;
+                vm.elementFieldMaster = null;
                 vm.elementFieldSet = elementFieldSet;
                 vm.elementItem = null;
+                vm.elementItemMaster = null;
                 vm.elementItemSet = elementItemSet;
                 vm.isElementEdit = false;
+                vm.isElementNew = true;
                 vm.isElementFieldEdit = false;
+                vm.isElementFieldNew = true;
                 vm.isElementItemEdit = false;
+                vm.isElementItemNew = true;
                 vm.isNew = $location.path() === '/manage/resourcePool/0';
                 vm.isSaveEnabled = isSaveEnabled;
                 vm.isSaving = false;
@@ -395,6 +404,7 @@
                 function addElement() {
                     vm.element = { ResourcePool: vm.resourcePool, Name: 'New element' };
                     vm.isElementEdit = true;
+                    vm.isElementNew = true;
                 }
 
                 function addElementField() {
@@ -407,27 +417,37 @@
 
                     vm.elementField = { Element: element, Name: 'New field', ElementFieldType: 1, SortOrder: sortOrder };
                     vm.isElementFieldEdit = true;
+                    vm.isElementFieldNew = true;
                 }
 
                 function addElementItem() {
                     vm.elementItem = { Element: vm.resourcePool.ElementSet[0], Name: 'New item' };
                     vm.isElementItemEdit = true;
+                    vm.isElementItemNew = true;
+                }
+
+                function cancelElement() {
+                    vm.isElementEdit = false;
+                    vm.element = null;
+                    vm.elementMaster = null;
                 }
 
                 function cancelElementCell() {
-
-                    //logger.log('vm.elementCell', vm.elementCell.value());
-                    //logger.log('vm.elementCellMaster', vm.elementCellMaster.value());
-
-                    logger.log('vm.elementCell', vm.elementCell.UserElementCellSet[0].StringValue);
-                    logger.log('vm.elementCellMaster', vm.elementCellMaster.UserElementCellSet[0].StringValue);
-
-                    // vm.elementCell = angular.copy(vm.elementCellMaster);
-                    vm.elementCell = resourcePoolFactory.copyElementCell(vm.elementCellMaster);
-
                     vm.isElementCellEdit = false;
                     vm.elementCell = null;
                     vm.elementCellMaster = null;
+                }
+
+                function cancelElementField() {
+                    vm.isElementFieldEdit = false;
+                    vm.elementField = null;
+                    vm.elementFieldMaster = null;
+                }
+
+                function cancelElementItem() {
+                    vm.isElementItemEdit = false;
+                    vm.elementItem = null;
+                    vm.elementItemMaster = null;
                 }
 
                 function cancelResourcePool() {
@@ -444,36 +464,30 @@
                 }
 
                 function editElement(element) {
-                    vm.element = element;
+                    vm.elementMaster = element;
+                    vm.element = angular.copy(element);
                     vm.isElementEdit = true;
+                    vm.isElementNew = false;
                 }
 
                 function editElementCell(elementCell) {
-                    // vm.elementCell = elementCell;
-
-                    //elementCell.test = 't1';
-
-                    //vm.elementCellMaster = resourcePoolFactory.copyElementCell(elementCell);
-                    // vm.elementCell = angular.copy(elementCell);
                     vm.elementCellMaster = elementCell;
-                    vm.elementCell = resourcePoolFactory.copyElementCell(elementCell);
-
-                    // logger.log('vm.elementCell', vm.elementCell);
-
-                    logger.log('vm.elementCell', vm.elementCell.UserElementCellSet[0].StringValue);
-                    logger.log('vm.elementCellMaster', vm.elementCellMaster.UserElementCellSet[0].StringValue);
-
+                    vm.elementCell = angular.copy(elementCell);
                     vm.isElementCellEdit = true;
                 }
 
                 function editElementField(elementField) {
-                    vm.elementField = elementField;
+                    vm.elementFieldMaster = elementField;
+                    vm.elementField = angular.copy(elementField);
                     vm.isElementFieldEdit = true;
+                    vm.isElementFieldNew = false;
                 }
 
                 function editElementItem(elementItem) {
-                    vm.elementItem = elementItem;
+                    vm.elementItemMaster = elementItem;
+                    vm.elementItem = angular.copy(elementItem);
                     vm.isElementItemEdit = true;
+                    vm.isElementItemNew = false;
                 }
 
                 function elementCellSet() {
@@ -539,43 +553,20 @@
 
                 function saveElement() {
 
-                    // New
-                    if (typeof vm.element.entityAspect === 'undefined') {
+                    if (vm.isElementNew) {
                         resourcePoolFactory.createElement(vm.element);
+                    } else {
+                        angular.copy(vm.element, vm.elementMaster);
                     }
 
                     vm.isElementEdit = false;
                     vm.element = null;
+                    vm.elementMaster = null;
                 }
 
                 function saveElementCell() {
-                    
-                    var originalElementCell;
-                    angular.forEach(vm.resourcePool.ElementSet, function (element) {
-                        angular.forEach(element.ElementItemSet, function (item) {
-                            angular.forEach(item.ElementCellSet, function (cell) {
-                                if (originalElementCell !== null && cell.Id === vm.elementCell.Id) {
-                                    originalElementCell = cell;
-                                }
-                            });
-                        });
-                    });
 
-                    //vm.elementCell.test = 't2';
-
-                    //logger.log('vm.elementCell', vm.elementCell.value());
-                    //logger.log('vm.elementCellMaster', vm.elementCellMaster.value());
-                    logger.log('vm.elementCell a', vm.elementCell.UserElementCellSet[0].StringValue);
-                    logger.log('vm.elementCellMaster a', vm.elementCellMaster.UserElementCellSet[0].StringValue);
-                    logger.log('originalElementCell a', originalElementCell.UserElementCellSet[0].StringValue);
-
-                    //vm.elementCellMaster = angular.copy(vm.elementCell);
-                    // vm.elementCellMaster = resourcePoolFactory.copyElementCell(vm.elementCell);
-                    vm.elementCellMaster = vm.elementCell;
-
-                    logger.log('vm.elementCell b', vm.elementCell.UserElementCellSet[0].StringValue);
-                    logger.log('vm.elementCellMaster b', vm.elementCellMaster.UserElementCellSet[0].StringValue);
-                    logger.log('originalElementCell b', originalElementCell.UserElementCellSet[0].StringValue);
+                    angular.copy(vm.elementCell, vm.elementCellMaster);
 
                     vm.isElementCellEdit = false;
                     vm.elementCell = null;
@@ -583,11 +574,6 @@
                 }
 
                 function saveElementField() {
-
-                    // New
-                    if (typeof vm.elementField.entityAspect === 'undefined') {
-                        resourcePoolFactory.createElementField(vm.elementField);
-                    }
 
                     // Fixes
                     // a. UseFixedValue must be null for String & Element types
@@ -601,19 +587,28 @@
                         vm.elementField.UseFixedValue = true;
                     }
 
+                    if (vm.isElementFieldNew) {
+                        resourcePoolFactory.createElementField(vm.elementField);
+                    } else {
+                        angular.copy(vm.elementField, vm.elementFieldMaster);
+                    }
+
                     vm.isElementFieldEdit = false;
                     vm.elementField = null;
+                    vm.elementFieldMaster = null;
                 }
 
                 function saveElementItem() {
 
-                    // New
-                    if (typeof vm.elementItem.entityAspect === 'undefined') {
+                    if (vm.isElementItemNew) {
                         resourcePoolFactory.createElementItem(vm.elementItem);
+                    } else {
+                        angular.copy(vm.elementItem, vm.elementItemMaster);
                     }
 
                     vm.isElementItemEdit = false;
                     vm.elementItem = null;
+                    vm.elementItemMaster = null;
                 }
 
                 function saveResourcePool() {
