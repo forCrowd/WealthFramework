@@ -427,24 +427,58 @@
                 }
 
                 function cancelElement() {
+
+                    // TODO Find a better way?
+                    if (!vm.isElementNew) {
+                        vm.element.Name = vm.elementMaster.Name;
+                    }
+
                     vm.isElementEdit = false;
                     vm.element = null;
                     vm.elementMaster = null;
                 }
 
                 function cancelElementCell() {
+
+                    // TODO Find a better way?
+                    vm.elementCell.SelectedElementItemId = vm.elementCellMaster.SelectedElementItemId;
+                    vm.elementCell.UserElementCellSet[0].StringValue = vm.elementCellMaster.UserElementCellSet[0].StringValue;
+                    vm.elementCell.UserElementCellSet[0].BooleanValue = vm.elementCellMaster.UserElementCellSet[0].BooleanValue;
+                    vm.elementCell.UserElementCellSet[0].IntegerValue = vm.elementCellMaster.UserElementCellSet[0].IntegerValue;
+                    vm.elementCell.UserElementCellSet[0].DecimalValue = vm.elementCellMaster.UserElementCellSet[0].DecimalValue;
+                    vm.elementCell.UserElementCellSet[0].DateTimeValue = vm.elementCellMaster.UserElementCellSet[0].DateTimeValue;
+
                     vm.isElementCellEdit = false;
                     vm.elementCell = null;
                     vm.elementCellMaster = null;
                 }
 
                 function cancelElementField() {
+
+                    // TODO Find a better way?
+                    if (!vm.isElementFieldNew) {
+                        vm.elementField.Name = vm.elementFieldMaster.Name;
+                        vm.elementField.ElementFieldType = vm.elementFieldMaster.ElementFieldType;
+                        vm.elementField.SelectedElementId = vm.elementFieldMaster.SelectedElementId;
+                        vm.elementField.UseFixedValue = vm.elementFieldMaster.UseFixedValue;
+                        vm.elementField.IndexEnabled = vm.elementFieldMaster.IndexEnabled;
+                        vm.elementField.IndexType = vm.elementFieldMaster.IndexType;
+                        vm.elementField.IndexRatingSortType = vm.elementFieldMaster.IndexRatingSortType;
+                        vm.elementField.SortOrder = vm.elementFieldMaster.SortOrder;
+                    }
+
                     vm.isElementFieldEdit = false;
                     vm.elementField = null;
                     vm.elementFieldMaster = null;
                 }
 
                 function cancelElementItem() {
+
+                    // TODO Find a better way?
+                    if (!vm.isElementItemNew) {
+                        vm.elementItem.Name = vm.elementItemMaster.Name;
+                    }
+
                     vm.isElementItemEdit = false;
                     vm.elementItem = null;
                     vm.elementItemMaster = null;
@@ -464,28 +498,28 @@
                 }
 
                 function editElement(element) {
-                    vm.elementMaster = element;
-                    vm.element = angular.copy(element);
+                    vm.elementMaster = angular.copy(element);
+                    vm.element = element;
                     vm.isElementEdit = true;
                     vm.isElementNew = false;
                 }
 
                 function editElementCell(elementCell) {
-                    vm.elementCellMaster = elementCell;
-                    vm.elementCell = angular.copy(elementCell);
+                    vm.elementCellMaster = angular.copy(elementCell);
+                    vm.elementCell = elementCell;
                     vm.isElementCellEdit = true;
                 }
 
                 function editElementField(elementField) {
-                    vm.elementFieldMaster = elementField;
-                    vm.elementField = angular.copy(elementField);
+                    vm.elementFieldMaster = angular.copy(elementField);
+                    vm.elementField = elementField;
                     vm.isElementFieldEdit = true;
                     vm.isElementFieldNew = false;
                 }
 
                 function editElementItem(elementItem) {
-                    vm.elementItemMaster = elementItem;
-                    vm.elementItem = angular.copy(elementItem);
+                    vm.elementItemMaster = angular.copy(elementItem);
+                    vm.elementItem = elementItem;
                     vm.isElementItemEdit = true;
                     vm.isElementItemNew = false;
                 }
@@ -527,11 +561,6 @@
                 }
 
                 function isSaveEnabled() {
-                    //var value = vm.isSaving || (!vm.isNew && !resourcePoolFactory.hasChanges());
-
-                    // logger.log('form', vm.resourcePoolForm);
-                    // logger.log('form', vm.resourcePoolForm.$valid);
-
                     var value = !vm.isSaving
                         && typeof vm.resourcePoolForm !== 'undefined'
                         && vm.resourcePoolForm.$valid;
@@ -555,8 +584,6 @@
 
                     if (vm.isElementNew) {
                         resourcePoolFactory.createElement(vm.element);
-                    } else {
-                        angular.copy(vm.element, vm.elementMaster);
                     }
 
                     vm.isElementEdit = false;
@@ -565,9 +592,6 @@
                 }
 
                 function saveElementCell() {
-
-                    angular.copy(vm.elementCell, vm.elementCellMaster);
-
                     vm.isElementCellEdit = false;
                     vm.elementCell = null;
                     vm.elementCellMaster = null;
@@ -589,8 +613,6 @@
 
                     if (vm.isElementFieldNew) {
                         resourcePoolFactory.createElementField(vm.elementField);
-                    } else {
-                        angular.copy(vm.elementField, vm.elementFieldMaster);
                     }
 
                     vm.isElementFieldEdit = false;
@@ -602,8 +624,6 @@
 
                     if (vm.isElementItemNew) {
                         resourcePoolFactory.createElementItem(vm.elementItem);
-                    } else {
-                        angular.copy(vm.elementItem, vm.elementItemMaster);
                     }
 
                     vm.isElementItemEdit = false;

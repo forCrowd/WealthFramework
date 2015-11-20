@@ -44,7 +44,7 @@
                         indexSet.push(cell);
                     }
 
-                    if (cell.ElementField.ElementFieldType === 6) {
+                    if (cell.ElementField.ElementFieldType === 6 && cell.SelectedElementItem !== null) {
                         var childIndexSet = getElementCellIndexSet(cell.SelectedElementItem);
 
                         if (childIndexSet.length > 0) {

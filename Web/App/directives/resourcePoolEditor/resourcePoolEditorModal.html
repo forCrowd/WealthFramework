@@ -36,7 +36,7 @@
                                 <div class="form-group">
                                     <label for="ResourcePoolRate" class="control-label col-md-2">Resource Pool Rate (%)</label>
                                     <div class="col-md-10" data-ng-class="{'has-error': resourcePoolForm.ResourcePoolRate.$invalid && !resourcePoolForm.ResourcePoolRate.$pristine}">
-                                        <input id="ResourcePoolRate" name="ResourcePoolRate" type="text" data-ng-model="vm.resourcePool.currentUserResourcePool().ResourcePoolRate" class="form-control" aria-describedby="ResourcePoolRateHelp" required />
+                                        <input id="ResourcePoolRate" name="ResourcePoolRate" type="text" data-ng-model="vm.resourcePool.UserResourcePoolSet[0].ResourcePoolRate" class="form-control" aria-describedby="ResourcePoolRateHelp" required />
                                         <span id="ResourcePoolRateHelp" class="help-block">Determines the size of the pool based on Total Income of the organizations.</span>
                                     </div>
                                 </div>
