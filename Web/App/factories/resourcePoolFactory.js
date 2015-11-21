@@ -42,6 +42,7 @@
         $delegate.removeElementField = removeElementField;
         $delegate.removeElementItem = removeElementItem;
         $delegate.removeResourcePool = removeResourcePool;
+        $delegate.removeResourcePoolFromCache = removeResourcePoolFromCache;
 
         // User logged out
         $rootScope.$on('userLoggedIn', function () {
@@ -345,17 +346,17 @@
                             .where('Id', 'eq', resourcePoolId);
                     }
 
-                    // Fetch the data from server, in case if it's not fetched earlier or forced
-                    var fetchFromServer = true;
+                    // Fetch the data from server, in case if it's not fetched earlier
+                    var fetchedEarlier = false;
                     for (var i = 0; i < fetched.length; i++) {
                         if (resourcePoolId === fetched[i]) {
-                            fetchFromServer = false;
+                            fetchedEarlier = true;
                             break;
                         }
                     }
 
                     // Prepare the query
-                    if (fetchFromServer) { // From remote
+                    if (!fetchedEarlier) { // From remote
                         query = query.using(breeze.FetchStrategy.FromServer)
                     }
                     else { // From local
@@ -368,9 +369,6 @@
 
                     function success(response) {
 
-                        // Add the record into fetched list
-                        fetched.push(resourcePoolId);
-
                         // If there is no cmrp with this Id, return null
                         if (response.results.length === 0) {
                             return null;
@@ -378,6 +376,9 @@
 
                         // ResourcePool
                         var resourcePool = response.results[0];
+
+                        // Add the record into fetched list
+                        fetched.push(resourcePool.Id);
 
                         // Set otherUsers' properties
                         resourcePool.setOtherUsersResourcePoolRateTotal();
@@ -489,6 +490,12 @@
             });
 
             resourcePool.entityAspect.setDeleted();
+        }
+
+        function removeResourcePoolFromCache(resourcePoolId) {
+            fetched = fetched.filter(function (item) {
+                return item !== resourcePoolId;
+            });
         }
     }
 })();

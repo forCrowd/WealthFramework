@@ -23,8 +23,10 @@
             .when('/account/accountEdit', { title: function () { return 'Account Edit'; }, templateUrl: '/App/views/account/accountEdit.html?v=0.22', controller: 'accountEditController as vm' })
             .when('/account/changePassword', { title: function () { return 'Change Password'; }, templateUrl: '/App/views/account/changePassword.html?v=0.22', controller: 'changePasswordController as vm' })
 
-            /* Custom List + Edit pages */
+            /* CMRP List + View + Edit pages */
             .when('/manage/resourcePool', { title: function () { return 'CMRP List'; }, templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomList.html?v=0.22' })
+            .when('/manage/resourcePool/new', { title: function () { return 'New CMRP'; }, templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomView.html?v=0.22' })
+            .when('/manage/resourcePool/:Id/edit', { title: function () { return ''; }, templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomView.html?v=0.22' })
             .when('/manage/resourcePool/:Id', { title: function () { return ''; }, templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomView.html?v=0.22' })
 
             /* Generated List + Edit pages */

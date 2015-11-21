@@ -7,6 +7,7 @@
         .directive(directiveId, ['resourcePoolFactory',
             'userFactory',
             'Enums',
+            '$location',
             '$rootScope',
             '$uibModal',
             'logger',
@@ -15,6 +16,7 @@
     function resourcePoolEditor(resourcePoolFactory,
         userFactory,
         Enums,
+        $location,
         $rootScope,
         $uibModal,
         logger) {
@@ -26,22 +28,54 @@
 
             scope.currentUser = null;
             scope.resourcePool = null;
+            scope.isNew = false;
             scope.isSaving = false;
             scope.errorMessage = '';
-
-            scope.showEditorModal = showEditorModal;
+            scope.editResourcePool = editResourcePool;
 
             // Initialize the chart
             initChart();
 
-            // Resource pool id: Get the current resource pool
-            scope.$watch('resourcePoolId', function () {
+            // config
+            scope.$watch('config', function () {
+                scope.isNew = typeof scope.config.isNew === 'undefined' ? false : scope.config.isNew;
+                scope.isEdit = typeof scope.config.isEdit === 'undefined' ? false : scope.config.isEdit;
+                scope.resourcePoolId = typeof scope.config.resourcePoolId === 'undefined' ? 0 : scope.config.resourcePoolId;
+
                 userFactory.getCurrentUser()
-                    .then(function (currentUser) {
-                        scope.currentUser = currentUser;
-                        getResourcePool();
-                    });
+                .then(function (currentUser) {
+                    scope.currentUser = currentUser;
+                    getResourcePool();
+                });
+
             }, true);
+
+            //// isNew
+            //scope.$watch('isNew', function () {
+            //    userFactory.getCurrentUser()
+            //        .then(function (currentUser) {
+            //            scope.currentUser = currentUser;
+            //            getResourcePool();
+            //        });
+            //}, true);
+
+            //// isNew
+            //scope.$watch('isEdit', function () {
+            //    userFactory.getCurrentUser()
+            //        .then(function (currentUser) {
+            //            scope.currentUser = currentUser;
+            //            getResourcePool();
+            //        });
+            //}, true);
+
+            //// Resource pool id: Get the current resource pool
+            //scope.$watch('resourcePoolId', function () {
+            //    userFactory.getCurrentUser()
+            //        .then(function (currentUser) {
+            //            scope.currentUser = currentUser;
+            //            getResourcePool();
+            //        });
+            //}, true);
 
             // Chart height
             scope.$watch('chartHeight', function () {
@@ -142,7 +176,11 @@
                 saveChanges();
             }
 
-            function showEditorModal() {
+            function editResourcePool() {
+                $location.path('/manage/resourcePool/' + scope.resourcePoolId + '/edit');
+            }
+
+            function openModal() {
 
                 var modalInstance = $uibModal.open({
                     templateUrl: '/App/directives/resourcePoolEditor/resourcePoolEditorModal.html?v=0.37',
@@ -160,8 +198,6 @@
                 modalInstance.result.then(function () {
 
                     // Saved
-                    scope.changeCurrentElement(scope.resourcePool.MainElement);
-                    loadChartData();
 
                 }, function (action) {
 
@@ -218,12 +254,12 @@
 
                 // New
                 // TODO Is it right way of checking it?
-                if (scope.resourcePoolId === '0') {
+                if (scope.isNew) {
 
                     resourcePoolFactory.createResourcePoolBasic()
                         .then(function (resourcePool) {
                             scope.resourcePool = resourcePool;
-                            scope.showEditorModal();
+                            openModal();
                         })
                         .catch(function () { })
                         .finally(function () {
@@ -247,6 +283,10 @@
                                     scope.changeCurrentElement(scope.resourcePool.MainElement);
                                 } else {
                                     loadChartData();
+                                }
+
+                                if (scope.isEdit) {
+                                    openModal();
                                 }
 
                                 // TODO Just for test, remove later
@@ -395,7 +435,7 @@
                 vm.isElementFieldNew = true;
                 vm.isElementItemEdit = false;
                 vm.isElementItemNew = true;
-                vm.isNew = $location.path() === '/manage/resourcePool/0';
+                vm.isNew = $location.path() === '/manage/resourcePool/new'; // TODO ?
                 vm.isSaveEnabled = isSaveEnabled;
                 vm.isSaving = false;
                 vm.entityErrors = [];
@@ -505,10 +545,12 @@
                         vm.resourcePool.entityAspect.rejectChanges();
                     }
 
-                    $uibModalInstance.dismiss('cancel', vm.resourcePool);
+                    $uibModalInstance.dismiss('cancel');
 
                     if (vm.isNew) {
                         $location.path('/manage/resourcePool');
+                    } else {
+                        $location.path('/manage/resourcePool/' + vm.resourcePool.Id);
                     }
                 }
 
@@ -653,8 +695,7 @@
                         .then(function (result) {
 
                             // Main element fix
-                            if (vm.isNew && resourcePool.ElementSet.length > 0) {
-
+                            if (resourcePool.MainElement === null && resourcePool.ElementSet.length > 0) {
                                 resourcePool.MainElement = resourcePool.ElementSet[0];
 
                                 resourcePoolFactory.saveChanges()
@@ -666,11 +707,16 @@
                             }
 
                             function closeModal() {
+
                                 $uibModalInstance.close();
 
-                                if (vm.isNew) {
-                                    $location.path('/manage/resourcePool/' + vm.resourcePool.Id);
+                                // If it's an existing cmrp, remove it from 'fetched from server' list
+                                if (!vm.isNew) {
+                                    resourcePoolFactory.removeResourcePoolFromCache(vm.resourcePool.Id);
                                 }
+
+                                // Navigate to 'cmrp view' route
+                                $location.path('/manage/resourcePool/' + vm.resourcePool.Id);
                             }
                         })
                         .catch(function (error) {
@@ -750,8 +796,11 @@
             restrict: 'E',
             templateUrl: '/App/directives/resourcePoolEditor/resourcePoolEditor.html?v=0.37',
             scope: {
+                isNew: '=',
+                isEdit: '=',
                 resourcePoolId: '=',
-                chartHeight: '='
+                chartHeight: '=',
+                config: '='
             },
             link: link
         };
