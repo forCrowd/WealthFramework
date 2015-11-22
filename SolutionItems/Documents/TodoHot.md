@@ -9,9 +9,16 @@ edit added - cancel - ?
 edit existing - save - don't do anything
 edit existing - cancel - reject changes
 
+TEST TEST TEST!
+
+cancel case for existing cmrp - removed elements etc.?
+reject changes to all sub items?
+remove elementItem exception?
+
 remove - ok, only cmrp?
-copy from a existing cmrp / template?
+copy from an existing cmrp / template?
 cached values!
+content for editor?
 
 remove name field!
 

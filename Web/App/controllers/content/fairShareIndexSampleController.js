@@ -10,6 +10,5 @@
         logger = logger.forSource(controllerId);
 
         var vm = this;
-        vm.fairShareIndex_SampleResourcePoolId = 10;
     };
 })();

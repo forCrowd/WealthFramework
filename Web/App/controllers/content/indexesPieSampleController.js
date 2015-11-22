@@ -10,6 +10,5 @@
         logger = logger.forSource(controllerId);
 
         var vm = this;
-        vm.indexesPie_SampleResourcePoolId = 11;
     };
 })();

@@ -10,8 +10,8 @@
         logger = logger.forSource(controllerId);
 
         var vm = this;
-        vm.basics_ExistingModelResourcePoolId = 2;
-        vm.basics_NewModelResourcePoolId = 3;
+        vm.existingModelConfig = { resourcePoolId: 2 };
+        vm.newModelConfig = { resourcePoolId: 3 };
 
         // Listen resource pool updated event
         $scope.$on('resourcePoolEditor_elementMultiplierIncreased', updateOppositeResourcePool);
@@ -20,12 +20,12 @@
 
         function updateOppositeResourcePool(event, element) {
 
-            if (element.ResourcePool.Id === vm.basics_ExistingModelResourcePoolId
-                || element.ResourcePool.Id === vm.basics_NewModelResourcePoolId) {
+            if (element.ResourcePool.Id === vm.existingModelConfig.resourcePoolId
+                || element.ResourcePool.Id === vm.newModelConfig.resourcePoolId) {
 
-                var oppositeResourcePoolId = element.ResourcePool.Id === vm.basics_ExistingModelResourcePoolId
-                    ? vm.basics_NewModelResourcePoolId
-                    : vm.basics_ExistingModelResourcePoolId;
+                var oppositeResourcePoolId = element.ResourcePool.Id === vm.existingModelConfig.resourcePoolId
+                    ? vm.newModelConfig.resourcePoolId
+                    : vm.existingModelConfig.resourcePoolId;
 
                 // Call the service to increase the multiplier
                 resourcePoolFactory.getResourcePoolExpanded(oppositeResourcePoolId)

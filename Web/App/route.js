@@ -17,17 +17,17 @@
             .when('/main.aspx', { title: getContentRouteTitle, templateUrl: getContentTemplateUrl }) // TODO Is it possible to remove 'main.aspx'
             .when('/content/:key/', { title: getContentRouteTitle, templateUrl: getContentTemplateUrl })
 
+            /* CMRP List + View + Edit pages */
+            .when('/manage/resourcePool', { title: function () { return 'CMRP List'; }, templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomList.html?v=0.37' })
+            .when('/manage/resourcePool/new', { title: function () { return 'New CMRP'; }, templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomView.html?v=0.37' })
+            .when('/manage/resourcePool/:Id/edit', { title: function () { return ''; }, templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomView.html?v=0.37' })
+            .when('/manage/resourcePool/:Id', { title: function () { return ''; }, templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomView.html?v=0.37' })
+
             /* Account */
             .when('/account/register', { title: function () { return 'Register'; }, templateUrl: '/App/views/account/register.html?v=0.28', controller: 'registerController as vm' })
             .when('/account/login', { title: function () { return 'Login'; }, templateUrl: '/App/views/account/login.html?v=0.22', controller: 'loginController as vm' })
             .when('/account/accountEdit', { title: function () { return 'Account Edit'; }, templateUrl: '/App/views/account/accountEdit.html?v=0.22', controller: 'accountEditController as vm' })
             .when('/account/changePassword', { title: function () { return 'Change Password'; }, templateUrl: '/App/views/account/changePassword.html?v=0.22', controller: 'changePasswordController as vm' })
-
-            /* CMRP List + View + Edit pages */
-            .when('/manage/resourcePool', { title: function () { return 'CMRP List'; }, templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomList.html?v=0.22' })
-            .when('/manage/resourcePool/new', { title: function () { return 'New CMRP'; }, templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomView.html?v=0.22' })
-            .when('/manage/resourcePool/:Id/edit', { title: function () { return ''; }, templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomView.html?v=0.22' })
-            .when('/manage/resourcePool/:Id', { title: function () { return ''; }, templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomView.html?v=0.22' })
 
             /* Generated List + Edit pages */
             .when('/manage/generated/:entity', { title: getManageRouteTitle, templateUrl: getManageRouteTemplateUrl })
@@ -86,7 +86,7 @@
                 ? params.key
                 : 'home'; // Default view
 
-            return '/App/views/content/' + key + '.html?v=0.36.2';
+            return '/App/views/content/' + key + '.html?v=0.37';
         }
     }
 

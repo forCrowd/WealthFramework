@@ -14,7 +14,7 @@
         var increaseMultiplierTimeout = $timeout(increaseMultiplier, 5000);
 
         var vm = this;
-        vm.introduction_UPOResourcePoolId = 1;
+        vm.upoConfig = { resourcePoolId: 1 };
         vm.isAuthenticated = false;
 
         userFactory.isAuthenticated()
@@ -34,14 +34,13 @@
         function increaseMultiplier() {
 
             // Call the service to increase the multiplier
-            resourcePoolFactory.getResourcePoolExpanded(vm.introduction_UPOResourcePoolId)
+            resourcePoolFactory.getResourcePoolExpanded(vm.upoConfig.resourcePoolId)
                 .then(function (resourcePool) {
 
                     if (resourcePool === null) {
                         return;
                     }
 
-                    var resourcePool = resourcePoolSet[0];
                     for (var i = 0; i < resourcePool.ElementSet.length; i++) {
 
                         var element = resourcePool.ElementSet[i];

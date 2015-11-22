@@ -27,59 +27,29 @@
         function link(scope, elm, attrs) {
 
             scope.currentUser = null;
-            scope.resourcePool = null;
-            scope.isNew = false;
-            scope.isSaving = false;
             scope.errorMessage = '';
+            scope.isNew = false;
+            scope.isEdit = false;
+            scope.isSaving = false;
+            scope.resourcePool = null;
+            scope.resourcePoolId = null;
             scope.editResourcePool = editResourcePool;
 
             // Initialize the chart
             initChart();
 
-            // config
+            // Config
             scope.$watch('config', function () {
                 scope.isNew = typeof scope.config.isNew === 'undefined' ? false : scope.config.isNew;
                 scope.isEdit = typeof scope.config.isEdit === 'undefined' ? false : scope.config.isEdit;
-                scope.resourcePoolId = typeof scope.config.resourcePoolId === 'undefined' ? 0 : scope.config.resourcePoolId;
+                scope.resourcePoolId = typeof scope.config.resourcePoolId === 'undefined' ? null : Number(scope.config.resourcePoolId);
 
                 userFactory.getCurrentUser()
-                .then(function (currentUser) {
-                    scope.currentUser = currentUser;
-                    getResourcePool();
-                });
+                    .then(function (currentUser) {
+                        scope.currentUser = currentUser;
+                        getResourcePool();
+                    });
 
-            }, true);
-
-            //// isNew
-            //scope.$watch('isNew', function () {
-            //    userFactory.getCurrentUser()
-            //        .then(function (currentUser) {
-            //            scope.currentUser = currentUser;
-            //            getResourcePool();
-            //        });
-            //}, true);
-
-            //// isNew
-            //scope.$watch('isEdit', function () {
-            //    userFactory.getCurrentUser()
-            //        .then(function (currentUser) {
-            //            scope.currentUser = currentUser;
-            //            getResourcePool();
-            //        });
-            //}, true);
-
-            //// Resource pool id: Get the current resource pool
-            //scope.$watch('resourcePoolId', function () {
-            //    userFactory.getCurrentUser()
-            //        .then(function (currentUser) {
-            //            scope.currentUser = currentUser;
-            //            getResourcePool();
-            //        });
-            //}, true);
-
-            // Chart height
-            scope.$watch('chartHeight', function () {
-                scope.chartConfig.size.height = scope.chartHeight;
             }, true);
 
             // User logged in & out
@@ -246,8 +216,8 @@
                 initChart();
 
                 // Validate
-                if (typeof scope.resourcePoolId === 'undefined') {
-                    scope.errorMessage = 'Undefined CMRP Id';
+                if (typeof scope.resourcePoolId === null) {
+                    scope.errorMessage = 'CMRP Id cannot be null';
                     scope.chartConfig.loading = false;
                     return;
                 }
@@ -796,10 +766,6 @@
             restrict: 'E',
             templateUrl: '/App/directives/resourcePoolEditor/resourcePoolEditor.html?v=0.37',
             scope: {
-                isNew: '=',
-                isEdit: '=',
-                resourcePoolId: '=',
-                chartHeight: '=',
                 config: '='
             },
             link: link

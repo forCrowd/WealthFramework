@@ -163,11 +163,11 @@
     <script src="/App/controllers/content/mainController.js?v=0.37"></script>
     <script src="/App/controllers/content/introductionController.js?v=0.37"></script>
     <script src="/App/controllers/content/basicsController.js?v=0.37"></script>
-    <script src="/App/controllers/content/sectorIndexSampleController.js?v=0.29"></script>
-    <script src="/App/controllers/content/knowledgeIndexSampleController.js?v=0.30"></script>
-    <script src="/App/controllers/content/totalCostIndexSampleController.js?v=0.29"></script>
+    <script src="/App/controllers/content/sectorIndexSampleController.js?v=0.37"></script>
+    <script src="/App/controllers/content/knowledgeIndexSampleController.js?v=0.37"></script>
+    <script src="/App/controllers/content/totalCostIndexSampleController.js?v=0.37"></script>
     <script src="/App/controllers/content/fairShareIndexSampleController.js?v=0.37"></script>
-    <script src="/App/controllers/content/indexesPieSampleController.js?v=0.29"></script>
+    <script src="/App/controllers/content/indexesPieSampleController.js?v=0.37"></script>
     <script src="/App/controllers/content/resourcePoolRateSampleController.js?v=0.29"></script>
     <script src="/App/controllers/content/closingNotesController.js?v=0.29"></script>
 

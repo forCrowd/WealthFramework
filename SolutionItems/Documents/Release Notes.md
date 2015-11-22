@@ -10,7 +10,7 @@ metadataReady() function is now called under initializeStore() and it doesn't wa
 To fix this issue permanently;
 https://github.com/angular/angular.js/issues/4003
 * (An empty) robots.txt was created
-* File & folder structure updates
+* File & folder / url structure updates
 * New / edit entity view bug fix
 
 **0.36.2**
