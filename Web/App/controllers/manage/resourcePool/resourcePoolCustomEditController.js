@@ -53,13 +53,13 @@
         vm.resourcePool = {
             ElementSet: []
         };
-        // vm.resourcePool = resourcePool;
         vm.resourcePoolId = $routeParams.Id;
         vm.saveResourcePool = saveResourcePool;
         vm.saveElement = saveElement;
         vm.saveElementCell = saveElementCell;
         vm.saveElementField = saveElementField;
         vm.saveElementItem = saveElementItem;
+        vm.title = '';
 
         // Enums
         vm.ElementFieldType = Enums.ElementFieldType;
@@ -69,9 +69,16 @@
         init();
 
         function init() {
+            if (vm.isNew) {
+                resourcePoolFactory.createResourcePoolBasic()
+                    .then(function (resourcePool) {
+                        vm.resourcePool = resourcePool;
 
-            // Title
-            if (!vm.isNew) {
+                        // Title
+                        vm.title = 'New CMRP';
+                        $rootScope.viewTitle = vm.title;
+                    });
+            } else {
                 resourcePoolFactory.getResourcePoolExpanded(vm.resourcePoolId)
                     .then(function (resourcePool) {
 
@@ -81,9 +88,10 @@
                         }
 
                         vm.resourcePool = resourcePool;
-                        
+
                         // Title
-                        $rootScope.viewTitle = 'Edit ' + resourcePool.Name;
+                        vm.title = resourcePool.Name + ' - Edit';
+                        $rootScope.viewTitle = vm.title;
                     });
             }
         }
