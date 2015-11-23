@@ -32,6 +32,7 @@
         var fetched = [];
 
         // Factory methods
+        $delegate.cancelResourcePool = cancelResourcePool;
         $delegate.createElement = createElement;
         $delegate.createElementField = createElementField;
         $delegate.createElementItem = createElementItem;
@@ -55,6 +56,47 @@
         return $delegate;
 
         /*** Implementations ***/
+
+        function cancelResourcePool(resourcePool) {
+
+            // Resource pool itself
+            resourcePool.entityAspect.rejectChanges();
+
+            // User resource pools
+            angular.forEach(resourcePool.UserResourcePoolSet, function (userResourcePool) {
+                userResourcePool.entityAspect.rejectChanges();
+            });
+
+            // Elements
+            angular.forEach(resourcePool.ElementSet, function (element) {
+                element.entityAspect.rejectChanges();
+
+                // Fields
+                angular.forEach(element.ElementFieldSet, function (elementField) {
+                    elementField.entityAspect.rejectChanges();
+
+                    // User element fields
+                    angular.forEach(elementField.UserElementFieldSet, function (userElementField) {
+                        userElementField.entityAspect.rejectChanges();
+                    });
+                });
+
+                // Items
+                angular.forEach(element.ElementItemSet, function (elementItem) {
+                    elementItem.entityAspect.rejectChanges();
+
+                    // Cells
+                    angular.forEach(elementItem.ElementCellSet, function (elementCell) {
+                        elementCell.entityAspect.rejectChanges();
+
+                        // User cells
+                        angular.forEach(elementCell.UserElementCellSet, function (userElementCell) {
+                            userElementCell.entityAspect.rejectChanges();
+                        });
+                    });
+                });
+            });
+        }
 
         function createElement(element) {
             return dataContext.createEntity('Element', element);

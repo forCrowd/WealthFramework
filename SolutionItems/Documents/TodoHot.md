@@ -11,9 +11,6 @@ edit existing - cancel - reject changes
 
 TEST TEST TEST!
 
-cancel case for existing cmrp - removed elements etc.?
-reject changes to all sub items?
-
 remove - ok, only cmrp?
 copy from an existing cmrp / template?
 cached values! elementfieldindexset cache update?

@@ -124,6 +124,7 @@
         function cancelElement() {
 
             // TODO Find a better way?
+            // Can't use reject changes because in 'New CMRP' case, these are newly added entities and reject changes removes them / SH - 23 Nov. '15
             if (!vm.isElementNew) {
                 vm.element.Name = vm.elementMaster.Name;
             }
@@ -136,6 +137,7 @@
         function cancelElementCell() {
 
             // TODO Find a better way?
+            // Can't use reject changes because in 'New CMRP' case, these are newly added entities and reject changes removes them / SH - 23 Nov. '15
             vm.elementCell.SelectedElementItemId = vm.elementCellMaster.SelectedElementItemId;
             vm.elementCell.UserElementCellSet[0].StringValue = vm.elementCellMaster.UserElementCellSet[0].StringValue;
             vm.elementCell.UserElementCellSet[0].BooleanValue = vm.elementCellMaster.UserElementCellSet[0].BooleanValue;
@@ -151,6 +153,7 @@
         function cancelElementField() {
 
             // TODO Find a better way?
+            // Can't use reject changes because in 'New CMRP' case, these are newly added entities and reject changes removes them / SH - 23 Nov. '15
             if (!vm.isElementFieldNew) {
                 vm.elementField.Name = vm.elementFieldMaster.Name;
                 vm.elementField.ElementFieldType = vm.elementFieldMaster.ElementFieldType;
@@ -170,6 +173,7 @@
         function cancelElementItem() {
 
             // TODO Find a better way?
+            // Can't use reject changes because in 'New CMRP' case, these are newly added entities and reject changes removes them / SH - 23 Nov. '15
             if (!vm.isElementItemNew) {
                 vm.elementItem.Name = vm.elementItemMaster.Name;
             }
@@ -184,7 +188,7 @@
             if (vm.isNew) {
                 resourcePoolFactory.removeResourcePool(vm.resourcePool);
             } else {
-                vm.resourcePool.entityAspect.rejectChanges();
+                resourcePoolFactory.cancelResourcePool(vm.resourcePool);
             }
 
             if (vm.isNew) {
