@@ -13,11 +13,10 @@ TEST TEST TEST!
 
 cancel case for existing cmrp - removed elements etc.?
 reject changes to all sub items?
-remove elementItem exception?
 
 remove - ok, only cmrp?
 copy from an existing cmrp / template?
-cached values!
+cached values! elementfieldindexset cache update?
 content for editor?
 
 remove name field!

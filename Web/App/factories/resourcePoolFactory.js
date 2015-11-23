@@ -380,6 +380,9 @@
                         // Add the record into fetched list
                         fetched.push(resourcePool.Id);
 
+                        // Current element
+                        resourcePool.CurrentElement = resourcePool.MainElement !== null ? resourcePool.MainElement : null;
+
                         // Set otherUsers' properties
                         resourcePool.setOtherUsersResourcePoolRateTotal();
                         resourcePool.setOtherUsersResourcePoolRateCount();

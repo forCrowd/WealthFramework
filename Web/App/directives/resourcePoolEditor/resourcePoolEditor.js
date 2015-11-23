@@ -30,6 +30,7 @@
             scope.errorMessage = '';
             scope.isNew = false;
             scope.isEdit = false;
+            scope.isEditing = false;
             scope.isSaving = false;
             scope.resourcePool = null;
             scope.resourcePoolId = null;
@@ -147,10 +148,12 @@
             }
 
             function editResourcePool() {
-                $location.path('/manage/resourcePool/' + scope.resourcePoolId + '/edit');
+                $location.path('/manage/resourcePool/' + scope.resourcePoolId + '/edit2');
             }
 
             function openModal() {
+
+                scope.isEditing = true;
 
                 var modalInstance = $uibModal.open({
                     templateUrl: '/App/directives/resourcePoolEditor/resourcePoolEditorModal.html?v=0.37',
@@ -168,11 +171,19 @@
                 modalInstance.result.then(function () {
 
                     // Saved
+                    scope.isEditing = false;
 
                 }, function (action) {
 
                     // Canceled
                     logger.log('Modal dismissed at: ' + new Date());
+
+                    scope.isEditing = false;
+
+                }, function () {
+
+                    logger.log('finally?');
+
                 });
 
             }
@@ -248,10 +259,7 @@
                                 // It returns an array, set the first item in the list
                                 scope.resourcePool = resourcePool;
 
-                                // Current element
-                                if (scope.resourcePool.CurrentElement === null) {
-                                    scope.changeCurrentElement(scope.resourcePool.MainElement);
-                                } else {
+                                if (scope.resourcePool.CurrentElement !== null) {
                                     loadChartData();
                                 }
 
@@ -287,6 +295,10 @@
             }
 
             function loadChartData() {
+
+                if (scope.isEditing) {
+                    return;
+                }
 
                 // Current element
                 var element = scope.resourcePool.CurrentElement;
