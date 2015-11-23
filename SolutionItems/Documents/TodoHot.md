@@ -11,7 +11,11 @@ edit existing - cancel - reject changes
 
 TEST TEST TEST!
 
-remove - ok, only cmrp?
+modal for remove resourcePool
+modal for other entities?
+when removing an element, first check whether its used in any other fields?
+when removing an item, first check whether its used in any other cells?
+remove - ok, only cmrp? - should also call remove from cache?
 copy from an existing cmrp / template?
 cached values! elementfieldindexset cache update?
 content for editor?

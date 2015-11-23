@@ -522,19 +522,32 @@
 
         function removeResourcePool(resourcePool) {
 
-            // Related elements
-            var elementSet = resourcePool.ElementSet.slice();
-            angular.forEach(elementSet, function (element) {
-                removeElement(element);
-            });
+            resourcePool.MainElement = null;
 
-            // Related user resource pools
-            var userResourcePoolSet = resourcePool.UserResourcePoolSet.slice();
-            angular.forEach(userResourcePoolSet, function (userResourcePool) {
-                userResourcePool.entityAspect.setDeleted();
-            });
+            // TODO Remove other relations as well, field - selected element & cell - selected item
 
-            resourcePool.entityAspect.setDeleted();
+            return $delegate.saveChanges()
+                .then(function () {
+
+                    // Related elements
+                    var elementSet = resourcePool.ElementSet.slice();
+                    angular.forEach(elementSet, function (element) {
+                        removeElement(element);
+                    });
+
+                    // Related user resource pools
+                    var userResourcePoolSet = resourcePool.UserResourcePoolSet.slice();
+                    angular.forEach(userResourcePoolSet, function (userResourcePool) {
+                        userResourcePool.entityAspect.setDeleted();
+                    });
+
+                    resourcePool.entityAspect.setDeleted();
+
+                    return $delegate.saveChanges()
+                        .then(function () {
+
+                        });
+                });
         }
 
         function removeResourcePoolFromCache(resourcePoolId) {

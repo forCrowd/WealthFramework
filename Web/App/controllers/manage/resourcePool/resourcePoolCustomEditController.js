@@ -50,9 +50,8 @@
         vm.removeElement = removeElement;
         vm.removeElementField = removeElementField;
         vm.removeElementItem = removeElementItem;
-        vm.resourcePool = {
-            ElementSet: []
-        };
+        vm.removeResourcePool = removeResourcePool;
+        vm.resourcePool = { ElementSet: [] };
         vm.resourcePoolId = $routeParams.Id;
         vm.saveResourcePool = saveResourcePool;
         vm.saveElement = saveElement;
@@ -185,11 +184,11 @@
 
         function cancelResourcePool() {
 
-            if (vm.isNew) {
-                resourcePoolFactory.removeResourcePool(vm.resourcePool);
-            } else {
-                resourcePoolFactory.cancelResourcePool(vm.resourcePool);
-            }
+            //if (vm.isNew) {
+            //    resourcePoolFactory.removeResourcePool(vm.resourcePool);
+            //} else {
+            resourcePoolFactory.cancelResourcePool(vm.resourcePool);
+            //}
 
             if (vm.isNew) {
                 $location.path('/manage/resourcePool');
@@ -281,6 +280,48 @@
             resourcePoolFactory.removeElementItem(elementItem);
         }
 
+        function removeResourcePool() {
+
+            vm.isSaving = true;
+            resourcePoolFactory.removeResourcePool(vm.resourcePool)
+                .then(function () {
+                    // If it's an existing cmrp, remove it from 'fetched from server' list
+                    // TODO Try to handle this in save operation?
+                    if (!vm.isNew) {
+                        resourcePoolFactory.removeResourcePoolFromCache(vm.resourcePool.Id);
+                    }
+
+                    // Navigate to 'cmrp view' route
+                    $location.path('/manage/resourcePool');
+                })
+                .catch(function (error) {
+                    // TODO ?
+                })
+                .finally(function () {
+                    vm.isSaving = false;
+                });
+
+            //vm.isSaving = true;
+            //resourcePoolFactory.saveChanges()
+            //    .then(function (result) {
+
+            //        // If it's an existing cmrp, remove it from 'fetched from server' list
+            //        // TODO Try to handle this in save operation?
+            //        if (!vm.isNew) {
+            //            resourcePoolFactory.removeResourcePoolFromCache(vm.resourcePool.Id);
+            //        }
+
+            //        // Navigate to 'cmrp view' route
+            //        $location.path('/manage/resourcePool');
+            //    })
+            //    .catch(function (error) {
+            //        // TODO ?
+            //    })
+            //    .finally(function () {
+            //        vm.isSaving = false;
+            //    });
+        }
+
         function saveElement() {
 
             if (vm.isElementNew) {
@@ -344,15 +385,16 @@
 
                         resourcePoolFactory.saveChanges()
                             .then(function (result) {
-                                closeModal();
+                                completeSave();
                             });
                     } else {
-                        closeModal();
+                        completeSave();
                     }
 
-                    function closeModal() {
+                    function completeSave() {
 
                         // If it's an existing cmrp, remove it from 'fetched from server' list
+                        // TODO Try to handle this in save operation?
                         if (!vm.isNew) {
                             resourcePoolFactory.removeResourcePoolFromCache(vm.resourcePool.Id);
                         }
