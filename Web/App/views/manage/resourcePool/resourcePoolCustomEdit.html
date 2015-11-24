@@ -1,9 +1,5 @@
 ﻿<div data-ng-controller="resourcePoolCustomEditController as vm">
     <h2 data-ng-bind="vm.title"></h2>
-
-    <!--<uib-tabset>
-        <uib-tab heading="New">-->
-
     <uib-tabset>
         <uib-tab heading="Resource Pool">
             <form name="vm.resourcePoolForm">
@@ -520,21 +516,27 @@
             </div>
         </uib-tab>
     </uib-tabset>
-
-    <!--</uib-tab>
-        <uib-tab heading="Copy from Existing">
-        </uib-tab>
-    </uib-tabset>-->
-
     <div data-ng-if="!(vm.isElementEdit || vm.isElementFieldEdit || vm.isElementItemEdit || vm.isElementCellEdit)">
         <button type="submit" data-ng-bind="vm.isNew ? 'Create' : 'Save CMRP'" data-ng-click="vm.saveResourcePool()" data-ng-disabled="!vm.isSaveEnabled()" class="btn btn-primary"></button>
         <button type="button" data-ng-click="vm.cancelResourcePool()" class="btn btn-default">
             Cancel
         </button>
-        <button type="button" data-ng-click="vm.removeResourcePool()" class="btn btn-danger pull-right">
+        <button type="button" data-ng-if="!vm.isNew" data-ng-click="vm.confirmRemoveResourcePool()" class="btn btn-danger pull-right">
             Delete CMRP
         </button>
-
     </div>
-
 </div>
+<script type="text/ng-template" id="confirmRemoveResourcePool.html">
+    <div class="modal-header">
+        <h3 class="modal-title">Confirmation</h3>
+    </div>
+    <div class="modal-body">
+        <p>
+            Are you sure you want to remove this resource pool?
+        </p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="remove()">Remove</button>
+        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+</script>

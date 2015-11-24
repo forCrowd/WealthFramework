@@ -7,11 +7,18 @@
             '$location',
             '$routeParams',
             '$rootScope',
+            '$uibModal',
             'Enums',
             'logger',
             resourcePoolCustomEditController]);
 
-    function resourcePoolCustomEditController(resourcePoolFactory, $location, $routeParams, $rootScope, Enums, logger) {
+    function resourcePoolCustomEditController(resourcePoolFactory,
+        $location,
+        $routeParams,
+        $rootScope,
+        $uibModal,
+        Enums,
+        logger) {
 
         var vm = this;
         vm.addElement = addElement;
@@ -22,6 +29,7 @@
         vm.cancelElementField = cancelElementField;
         vm.cancelElementItem = cancelElementItem;
         vm.cancelResourcePool = cancelResourcePool;
+        vm.confirmRemoveResourcePool = confirmRemoveResourcePool;
         vm.editElement = editElement;
         vm.editElementCell = editElementCell;
         vm.editElementField = editElementField;
@@ -43,7 +51,7 @@
         vm.isElementFieldNew = true;
         vm.isElementItemEdit = false;
         vm.isElementItemNew = true;
-        vm.isNew = $location.path() === '/manage/resourcePool/new'; // TODO ?
+        vm.isNew = $location.path() === '/manage/resourcePool/new';
         vm.isSaveEnabled = isSaveEnabled;
         vm.isSaving = false;
         vm.entityErrors = [];
@@ -69,7 +77,7 @@
 
         function init() {
             if (vm.isNew) {
-                resourcePoolFactory.createResourcePoolBasic()
+                resourcePoolFactory.createResourcePoolTwoElements()
                     .then(function (resourcePool) {
                         vm.resourcePool = resourcePool;
 
@@ -118,6 +126,24 @@
             vm.elementItem = { Element: vm.resourcePool.ElementSet[0], Name: 'New item' };
             vm.isElementItemEdit = true;
             vm.isElementItemNew = true;
+        }
+
+        function confirmRemoveResourcePool() {
+            var modalInstance = $uibModal.open({
+                templateUrl: 'confirmRemoveResourcePool.html',
+                controller: function ($scope, $uibModalInstance) {
+                    $scope.cancel = function () {
+                        $uibModalInstance.dismiss('cancel');
+                    }
+                    $scope.remove = function () {
+                        $uibModalInstance.close();
+                    };
+                }
+            });
+
+            modalInstance.result.then(function () {
+                removeResourcePool();
+            });
         }
 
         function cancelElement() {
@@ -285,13 +311,6 @@
             vm.isSaving = true;
             resourcePoolFactory.removeResourcePool(vm.resourcePool)
                 .then(function () {
-                    // If it's an existing cmrp, remove it from 'fetched from server' list
-                    // TODO Try to handle this in save operation?
-                    if (!vm.isNew) {
-                        resourcePoolFactory.removeResourcePoolFromCache(vm.resourcePool.Id);
-                    }
-
-                    // Navigate to 'cmrp view' route
                     $location.path('/manage/resourcePool');
                 })
                 .catch(function (error) {
@@ -300,26 +319,6 @@
                 .finally(function () {
                     vm.isSaving = false;
                 });
-
-            //vm.isSaving = true;
-            //resourcePoolFactory.saveChanges()
-            //    .then(function (result) {
-
-            //        // If it's an existing cmrp, remove it from 'fetched from server' list
-            //        // TODO Try to handle this in save operation?
-            //        if (!vm.isNew) {
-            //            resourcePoolFactory.removeResourcePoolFromCache(vm.resourcePool.Id);
-            //        }
-
-            //        // Navigate to 'cmrp view' route
-            //        $location.path('/manage/resourcePool');
-            //    })
-            //    .catch(function (error) {
-            //        // TODO ?
-            //    })
-            //    .finally(function () {
-            //        vm.isSaving = false;
-            //    });
         }
 
         function saveElement() {
@@ -376,7 +375,7 @@
         function saveResourcePool() {
 
             vm.isSaving = true;
-            resourcePoolFactory.saveChanges()
+            resourcePoolFactory.saveChanges(0, vm.resourcePool)
                 .then(function (result) {
 
                     // Main element fix
@@ -385,21 +384,9 @@
 
                         resourcePoolFactory.saveChanges()
                             .then(function (result) {
-                                completeSave();
+                                $location.path('/manage/resourcePool/' + vm.resourcePool.Id);
                             });
                     } else {
-                        completeSave();
-                    }
-
-                    function completeSave() {
-
-                        // If it's an existing cmrp, remove it from 'fetched from server' list
-                        // TODO Try to handle this in save operation?
-                        if (!vm.isNew) {
-                            resourcePoolFactory.removeResourcePoolFromCache(vm.resourcePool.Id);
-                        }
-
-                        // Navigate to 'cmrp view' route
                         $location.path('/manage/resourcePool/' + vm.resourcePool.Id);
                     }
                 })

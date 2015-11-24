@@ -1,23 +1,9 @@
 ﻿. resourcePoolEditor - new / edit cmrp features!
 
-new - save - createEntity
-new - cancel - don't do anything
-
-edit added - save - don't do anything
-edit added - cancel - ?
-
-edit existing - save - don't do anything
-edit existing - cancel - reject changes
-
-TEST TEST TEST!
-
-modal for remove resourcePool
-modal for other entities?
-when removing an element, first check whether its used in any other fields?
-when removing an item, first check whether its used in any other cells?
-remove - ok, only cmrp? - should also call remove from cache?
 copy from an existing cmrp / template?
+
 cached values! elementfieldindexset cache update?
+
 content for editor?
 
 remove name field!
@@ -31,10 +17,14 @@ then implementations?
 
 move enums to their related class?
 
+currently saveChanges in datacontext (and in all factory.js) files, saves all changes, not one particular entity?!
+
 check return conflict() blocks, there's something wrong with them!
 
 google analytics!
 editor modalInstance templateUrl!
+
+replace logger with angular.$log?
 
 . fix these;
 DropdownController is now deprecated. Use UibDropdownController instead. angular.min.js:107:207

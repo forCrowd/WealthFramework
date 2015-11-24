@@ -401,6 +401,7 @@
     <Content Include="App\controllers\manage\generated\list\userRoleListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
+    <Content Include="App\controllers\manage\resourcePool\resourcePoolCustomEditController.js" />
     <Content Include="App\controllers\manage\resourcePool\resourcePoolCustomViewController.js" />
     <Content Include="App\controllers\manage\resourcePool\resourcePoolCustomListController.js" />
     <Content Include="App\directives\resourcePoolEditor\resourcePoolEditorModal.html" />
@@ -578,6 +579,7 @@
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
     <Content Include="App\views\manage\resourcePool\resourcePoolCustomList.html" />
+    <Content Include="App\views\manage\resourcePool\resourcePoolCustomEdit.html" />
     <Content Include="App\views\manage\resourcePool\resourcePoolCustomView.html" />
     <Content Include="App\includes\manageScripts.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

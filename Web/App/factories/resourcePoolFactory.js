@@ -44,6 +44,7 @@
         $delegate.removeElementItem = removeElementItem;
         $delegate.removeResourcePool = removeResourcePool;
         $delegate.removeResourcePoolFromCache = removeResourcePoolFromCache;
+        $delegate.saveChanges = saveChanges;
 
         // User logged out
         $rootScope.$on('userLoggedIn', function () {
@@ -280,7 +281,7 @@
                     });
 
                     // Item 1 Cell
-                    item1.ElementCell[1].SelectedElementItem = element2Item1;
+                    item1.ElementCellSet[1].SelectedElementItem = element2Item1;
 
                     // Item 2
                     var item2 = createElementItem({
@@ -289,7 +290,7 @@
                     });
 
                     // Item 2 Cell
-                    item2.ElementCell[1].SelectedElementItem = element2Item2;
+                    item2.ElementCellSet[1].SelectedElementItem = element2Item2;
 
                     return resourcePool;
                 });
@@ -541,11 +542,16 @@
                         userResourcePool.entityAspect.setDeleted();
                     });
 
-                    resourcePool.entityAspect.setDeleted();
+                    // Before deleting, is it newly added?
+                    var isAdded = resourcePool.entityAspect.entityState.isAdded();
 
                     return $delegate.saveChanges()
                         .then(function () {
 
+                            // If it's an existing resource pool, remove it from the fetched
+                            if (!isAdded) {
+                                removeResourcePoolFromCache(resourcePool.Id);
+                            }
                         });
                 });
         }
@@ -554,6 +560,18 @@
             fetched = fetched.filter(function (item) {
                 return item !== resourcePoolId;
             });
+        }
+
+        // Overwrites saveChanges function in generated/resoucePoolFactory.js
+        function saveChanges(delay, resourcePoolToBeRemovedFromCache) {
+            resourcePoolToBeRemovedFromCache = typeof resourcePoolToBeRemovedFromCache === 'undefined' ? null : resourcePoolToBeRemovedFromCache;
+
+            return dataContext.saveChanges(delay)
+                .then(function () {
+                    if (resourcePoolToBeRemovedFromCache !== null) {
+                        removeResourcePoolFromCache(resourcePoolToBeRemovedFromCache.Id);
+                    }
+                });
         }
     }
 })();
