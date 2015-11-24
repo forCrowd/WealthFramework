@@ -1,5 +1,8 @@
 ﻿. resourcePoolEditor - new / edit cmrp features!
 
+// TODO Review this!
+vm.filteredElementFieldType = function (element) {
+
 cached values! elementfieldindexset cache update?
 
 content for editor?

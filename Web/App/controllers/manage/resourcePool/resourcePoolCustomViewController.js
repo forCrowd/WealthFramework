@@ -24,7 +24,7 @@
 
             // Title
             if (!vm.editorConfig.isNew) {
-                resourcePoolFactory.getResourcePoolExpanded(vm.editorConfig.resourcePoolId)
+                resourcePoolFactory.getResourcePool(vm.editorConfig.resourcePoolId)
                     .then(function (resourcePool) {
 
                         if (resourcePool === null) {

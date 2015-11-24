@@ -71,6 +71,30 @@
 
         // Enums
         vm.ElementFieldType = Enums.ElementFieldType;
+
+        // TODO Review this!
+        vm.filteredElementFieldType = function (element) {
+
+            var result = {};
+            for (var key in vm.ElementFieldType) {
+                if (key === 'DirectIncome' || key === 'Multiplier') {
+                    var dontAdd = false;
+                    angular.forEach(vm.elementField.Element.ElementFieldSet, function (field) {
+                        if (field.ElementFieldType === vm.ElementFieldType[key]) {
+                            dontAdd = true;
+                        }
+                    });
+
+                    if (!dontAdd) {
+                        result[key] = vm.ElementFieldType[key];
+                    }
+                } else {
+                    result[key] = vm.ElementFieldType[key];
+                }
+            }
+            return result;
+        }
+
         vm.IndexType = Enums.IndexType;
         vm.IndexRatingSortType = Enums.IndexRatingSortType;
 
@@ -78,7 +102,7 @@
 
         function init() {
             if (vm.isNew) {
-                resourcePoolFactory.createResourcePoolTwoElements()
+                resourcePoolFactory.createResourcePoolBasic()
                     .then(function (resourcePool) {
                         vm.resourcePool = resourcePool;
 
@@ -309,8 +333,6 @@
 
             modalInstance.result.then(function (resourcePool) {
                 vm.resourcePool = resourcePool;
-
-                logger.log('cmrp', resourcePool);
             });
         }
 

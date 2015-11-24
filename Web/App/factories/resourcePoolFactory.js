@@ -374,6 +374,8 @@
         }
 
         function getResourcePoolExpanded(resourcePoolId) {
+            // TODO Other validations?
+            resourcePoolId = Number(resourcePoolId);
 
             return userFactory.getCurrentUser()
                 .then(function (currentUser) {
@@ -440,9 +442,15 @@
                             for (var elementIndex = 0; elementIndex < resourcePool.ElementSet.length; elementIndex++) {
                                 var element = resourcePool.ElementSet[elementIndex];
 
+                                // TODO Why this needs to be done, it's not clear
+                                // but without it (even if the resource pool will be retrieved from the server), elementFieldIndexSet() can have detached fields
+                                // Check it later / SH - 24 Nov. '15
+                                element.setElementFieldIndexSet();
+
                                 // Fields
                                 if (typeof element.ElementFieldSet !== 'undefined') {
                                     for (var fieldIndex = 0; fieldIndex < element.ElementFieldSet.length; fieldIndex++) {
+
                                         var field = element.ElementFieldSet[fieldIndex];
                                         field.setOtherUsersIndexRatingTotal();
                                         field.setOtherUsersIndexRatingCount();
@@ -568,13 +576,19 @@
         }
 
         // Overwrites saveChanges function in generated/resoucePoolFactory.js
-        function saveChanges(delay, resourcePoolToBeRemovedFromCache) {
-            resourcePoolToBeRemovedFromCache = typeof resourcePoolToBeRemovedFromCache === 'undefined' ? null : resourcePoolToBeRemovedFromCache;
+        function saveChanges(delay, resourcePool) {
+            resourcePool = typeof resourcePool === 'undefined' ? null : resourcePool;
 
             return dataContext.saveChanges(delay)
                 .then(function () {
-                    if (resourcePoolToBeRemovedFromCache !== null) {
-                        removeResourcePoolFromCache(resourcePoolToBeRemovedFromCache.Id);
+                    if (resourcePool !== null) {
+
+                        // Main element fix
+                        if (resourcePool.MainElement === null && resourcePool.ElementSet.length > 0) {
+                            resourcePool.MainElement = resourcePool.ElementSet[0];
+                        }
+
+                        return dataContext.saveChanges();
                     }
                 });
         }
