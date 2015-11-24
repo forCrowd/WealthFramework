@@ -17,14 +17,10 @@
         initialize();
 
         function initialize() {
-            getResourcePoolSet();
-        };
-
-        function getResourcePoolSet() {
             resourcePoolFactory.getResourcePoolSet(false)
 			    .then(function (data) {
-                    vm.resourcePoolSet = data;
-                });
-        }
+			        vm.resourcePoolSet = data;
+			    });
+        };
     };
 })();

@@ -29,7 +29,6 @@
         vm.cancelElementField = cancelElementField;
         vm.cancelElementItem = cancelElementItem;
         vm.cancelResourcePool = cancelResourcePool;
-        vm.confirmRemoveResourcePool = confirmRemoveResourcePool;
         vm.editElement = editElement;
         vm.editElementCell = editElementCell;
         vm.editElementField = editElementField;
@@ -45,6 +44,7 @@
         vm.elementItem = null;
         vm.elementItemMaster = null;
         vm.elementItemSet = elementItemSet;
+        vm.entityErrors = [];
         vm.isElementEdit = false;
         vm.isElementNew = true;
         vm.isElementFieldEdit = false;
@@ -54,7 +54,8 @@
         vm.isNew = $location.path() === '/manage/resourcePool/new';
         vm.isSaveEnabled = isSaveEnabled;
         vm.isSaving = false;
-        vm.entityErrors = [];
+        vm.openCopyModal = openCopyModal;
+        vm.openRemoveResourcePoolModal = openRemoveResourcePoolModal;
         vm.removeElement = removeElement;
         vm.removeElementField = removeElementField;
         vm.removeElementItem = removeElementItem;
@@ -126,24 +127,6 @@
             vm.elementItem = { Element: vm.resourcePool.ElementSet[0], Name: 'New item' };
             vm.isElementItemEdit = true;
             vm.isElementItemNew = true;
-        }
-
-        function confirmRemoveResourcePool() {
-            var modalInstance = $uibModal.open({
-                templateUrl: 'confirmRemoveResourcePool.html',
-                controller: function ($scope, $uibModalInstance) {
-                    $scope.cancel = function () {
-                        $uibModalInstance.dismiss('cancel');
-                    }
-                    $scope.remove = function () {
-                        $uibModalInstance.close();
-                    };
-                }
-            });
-
-            modalInstance.result.then(function () {
-                removeResourcePool();
-            });
         }
 
         function cancelElement() {
@@ -292,6 +275,61 @@
                 && vm.resourcePoolForm.$valid;
 
             return value;
+        }
+
+        function openCopyModal() {
+            var modalInstance = $uibModal.open({
+                templateUrl: 'copyResourcePoolModal.html',
+                controllerAs: 'vm',
+                controller: function (resourcePoolFactory, $uibModalInstance) {
+
+                    var vm = this;
+                    vm.close = close;
+                    vm.copy = copy;
+                    vm.resourcePoolSet = [];
+
+                    initialize();
+
+                    function close() {
+                        $uibModalInstance.dismiss('cancel');
+                    };
+
+                    function copy(resourcePool) {
+                        $uibModalInstance.close(resourcePool);
+                    };
+
+                    function initialize() {
+                        resourcePoolFactory.getResourcePoolSet(false)
+                            .then(function (data) {
+                                vm.resourcePoolSet = data;
+                            });
+                    };
+                }
+            });
+
+            modalInstance.result.then(function (resourcePool) {
+                vm.resourcePool = resourcePool;
+
+                logger.log('cmrp', resourcePool);
+            });
+        }
+
+        function openRemoveResourcePoolModal() {
+            var modalInstance = $uibModal.open({
+                templateUrl: 'removeResourcePoolModal.html',
+                controller: function ($scope, $uibModalInstance) {
+                    $scope.cancel = function () {
+                        $uibModalInstance.dismiss('cancel');
+                    }
+                    $scope.remove = function () {
+                        $uibModalInstance.close();
+                    };
+                }
+            });
+
+            modalInstance.result.then(function () {
+                removeResourcePool();
+            });
         }
 
         function removeElement(element) {

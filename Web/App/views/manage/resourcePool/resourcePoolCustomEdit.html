@@ -1,5 +1,10 @@
 ﻿<div data-ng-controller="resourcePoolCustomEditController as vm">
     <h2 data-ng-bind="vm.title"></h2>
+    <p data-ng-if="vm.isNew" class="hide">
+        <button type="button" data-ng-click="vm.openCopyModal()" class="btn btn-primary">
+            Copy from an existing CMRP
+        </button>
+    </p>
     <uib-tabset>
         <uib-tab heading="Resource Pool">
             <form name="vm.resourcePoolForm">
@@ -521,12 +526,37 @@
         <button type="button" data-ng-click="vm.cancelResourcePool()" class="btn btn-default">
             Cancel
         </button>
-        <button type="button" data-ng-if="!vm.isNew" data-ng-click="vm.confirmRemoveResourcePool()" class="btn btn-danger pull-right">
+        <button type="button" data-ng-if="!vm.isNew" data-ng-click="vm.openRemoveResourcePoolModal()" class="btn btn-danger pull-right">
             Delete CMRP
         </button>
     </div>
 </div>
-<script type="text/ng-template" id="confirmRemoveResourcePool.html">
+<script type="text/ng-template" id="copyResourcePoolModal.html">
+    <div class="modal-header">
+        <h3 class="modal-title">Copy an existing CMRP</h3>
+    </div>
+    <div class="modal-body">
+        <table class="table">
+            <tr>
+                <th>
+                    Resource Pool
+                </th>
+            </tr>
+            <tr data-ng-repeat="resourcePool in vm.resourcePoolSet | orderBy: Id">
+                <td>
+                    <span data-ng-bind="resourcePool.Name"></span>
+                    <button class="btn btn-primary" type="button" ng-click="vm.copy(resourcePool)">Copy</button>
+                    <!--<a href="/manage/resourcePool/{{ resourcePool.Id }}">{{ resourcePool.Name }}</a>-->
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <!--<button class="btn btn-primary" type="button" ng-click="copy()">Copy</button>-->
+        <button class="btn btn-default" type="button" ng-click="vm.close()">Close</button>
+    </div>
+</script>
+<script type="text/ng-template" id="removeResourcePoolModal.html">
     <div class="modal-header">
         <h3 class="modal-title">Confirmation</h3>
     </div>

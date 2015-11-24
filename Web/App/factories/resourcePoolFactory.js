@@ -33,6 +33,7 @@
 
         // Factory methods
         $delegate.cancelResourcePool = cancelResourcePool;
+        $delegate.copyResourcePool = copyResourcePool;
         $delegate.createElement = createElement;
         $delegate.createElementField = createElementField;
         $delegate.createElementItem = createElementItem;
@@ -97,6 +98,10 @@
                     });
                 });
             });
+        }
+
+        function copyResourcePool(resourcePoolSource) {
+            // TODO
         }
 
         function createElement(element) {

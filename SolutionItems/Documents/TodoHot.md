@@ -1,12 +1,12 @@
 ﻿. resourcePoolEditor - new / edit cmrp features!
 
-copy from an existing cmrp / template?
-
 cached values! elementfieldindexset cache update?
 
 content for editor?
 
 remove name field!
+
+field restrictions, one multiplier, one incomefield?
 
 elementfieldtype -> DataType?
 IndexRatingSortType -> ?
@@ -16,6 +16,9 @@ in js files, first list items; vm. - scope.
 then implementations?
 
 move enums to their related class?
+
+copy from an existing cmrp / template?
+how to handle user level data - only copy computed ones?
 
 currently saveChanges in datacontext (and in all factory.js) files, saves all changes, not one particular entity?!
 
