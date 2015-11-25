@@ -14,6 +14,7 @@ To fix this issue permanently;
 https://github.com/angular/angular.js/issues/4003
 * (An empty) robots.txt was created
 * File & folder / url structure updates
+* highcharts updates
 * angular-ui-bootstrap updates for deprecated directives
 * New / edit entity view bug fix
 

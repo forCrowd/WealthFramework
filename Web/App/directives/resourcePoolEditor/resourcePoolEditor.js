@@ -148,8 +148,10 @@
             function initChart() {
 
                 scope.chartConfig = {
+                    credits: {
+                        enabled: false
+                    },
                     loading: true,
-                    title: { text: '' },
                     options: {
                         plotOptions: {
                             column: {
@@ -166,10 +168,7 @@
                             }
                         },
                         tooltip: {
-                            style: {
-                                padding: 20,
-                                fontWeight: 'bold'
-                            }
+                            headerFormat: ''
                         },
                         xAxis: { categories: [''] },
                         yAxis: {
@@ -177,7 +176,8 @@
                             min: 0
                         }
                     },
-                    size: {}
+                    size: {},
+                    title: { text: '' }
                 };
             }
 

@@ -127,9 +127,10 @@
     <script src="/Scripts/breeze.bridge.angular.js?v=0.24"></script>
     <script src="/Scripts/breeze.directives.js?v=0.24"></script>
 
-    <!-- Highcharts - TODO Try to find (or create) nuget package for these two -->
-    <script src="/App/external/highcharts.js?v=0.24"></script>
-    <script src="/App/external/highcharts-ng.js?v=0.24"></script>
+    <!-- Highcharts -->
+    <script src="/Scripts/highcharts/4.1.5/highcharts.js?v=0.37"></script>
+    <!-- TODO Try to find (or create) nuget package for this - or wait for ASP.NET 5 & bower? -->
+    <script src="/App/external/highcharts-ng.js?v=0.37"></script>
 
     <!-- Main -->
     <script src="/App/main.js?v=0.37"></script>
