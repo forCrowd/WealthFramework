@@ -1,7 +1,5 @@
 ﻿. resourcePoolEditor - new / edit cmrp features!
 
-content for editor?
-
 google analytics!
 database update!
 
@@ -20,12 +18,7 @@ check return conflict() blocks, there's something wrong with them!
 
 replace logger with angular.$log?
 
-. fix these;
-DropdownController is now deprecated. Use UibDropdownController instead. angular.min.js:107:207
-dropdown-toggle is now deprecated. Use uib-dropdown-toggle instead. angular.min.js:107:207
-dropdown-menu is now deprecated. Use uib-dropdown-menu instead. angular.min.js:107:207
-dropdown is now deprecated. Use uib-dropdown instead. angular.min.js:107:207
-$tooltip is now deprecated. Use $uibTooltip instead.
+content for editor? new content or new resourcepool - how to handle the urls?
 
 . Alpha team review!
 

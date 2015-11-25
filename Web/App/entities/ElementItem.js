@@ -263,15 +263,18 @@
             }
 
             self.totalIncome = function () {
-                return self.totalDirectIncome() + self.totalResourcePoolIncome();
+                var totalIncome = self.totalDirectIncome() + self.totalResourcePoolIncome();
+                // TODO Make rounding better, instead of toFixed + number
+                return Number(totalIncome.toFixed(2));
             }
 
             self.incomeStatus = function () {
 
                 var totalIncome = self.totalIncome();
-                var averageIncome = self.Element.totalIncomeAverage();
+                // TODO Make rounding better, instead of toFixed + number
+                var averageIncome = Number(self.Element.totalIncomeAverage().toFixed(2));
 
-                if (totalIncome.toFixed(2) === averageIncome.toFixed(2)) {
+                if (totalIncome === averageIncome.toFixed(2)) {
                     return 'average';
                 } else if (totalIncome < averageIncome) {
                     return 'low';

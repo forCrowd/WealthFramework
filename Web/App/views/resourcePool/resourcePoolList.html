@@ -1,7 +1,7 @@
-<div data-ng-controller="resourcePoolCustomListController as vm">
+<div data-ng-controller="resourcePoolListController as vm">
     <h2>List</h2>
     <p>
-        <a href="/manage/resourcePool/new">Create New</a>
+        <a href="/resourcePool/new">Create New</a>
     </p>
     <table class="table">
         <tr>
@@ -11,7 +11,7 @@
         </tr>
         <tr data-ng-repeat="resourcePool in vm.resourcePoolSet | orderBy: Id">
             <td>
-                <a href="/manage/resourcePool/{{ resourcePool.Id }}">{{ resourcePool.Name }}</a>
+                <a href="/resourcePool/{{ resourcePool.Id }}">{{ resourcePool.Name }}</a>
             </td>
         </tr>
     </table>

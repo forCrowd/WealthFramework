@@ -1,7 +1,7 @@
 ﻿(function () {
     'use strict';
 
-    var controllerId = 'resourcePoolCustomEditController';
+    var controllerId = 'resourcePoolEditController';
     angular.module('main')
         .controller(controllerId, ['resourcePoolFactory',
             '$location',
@@ -10,9 +10,9 @@
             '$uibModal',
             'Enums',
             'logger',
-            resourcePoolCustomEditController]);
+            resourcePoolEditController]);
 
-    function resourcePoolCustomEditController(resourcePoolFactory,
+    function resourcePoolEditController(resourcePoolFactory,
         $location,
         $routeParams,
         $rootScope,
@@ -53,7 +53,7 @@
         vm.isElementFieldNew = true;
         vm.isElementItemEdit = false;
         vm.isElementItemNew = true;
-        vm.isNew = $location.path() === '/manage/resourcePool/new';
+        vm.isNew = $location.path() === '/resourcePool/new';
         vm.isSaveEnabled = isSaveEnabled;
         vm.isSaving = false;
         vm.openCopyModal = openCopyModal;
@@ -202,9 +202,9 @@
             //}
 
             if (vm.isNew) {
-                $location.path('/manage/resourcePool');
+                $location.path('/resourcePool');
             } else {
-                $location.path('/manage/resourcePool/' + vm.resourcePool.Id);
+                $location.path('/resourcePool/' + vm.resourcePool.Id);
             }
         }
 
@@ -379,7 +379,7 @@
             vm.isSaving = true;
             resourcePoolFactory.removeResourcePool(vm.resourcePool)
                 .then(function () {
-                    $location.path('/manage/resourcePool');
+                    $location.path('/resourcePool');
                 })
                 .catch(function (error) {
                     // TODO ?
@@ -452,10 +452,10 @@
 
                         resourcePoolFactory.saveChanges()
                             .then(function (result) {
-                                $location.path('/manage/resourcePool/' + vm.resourcePool.Id);
+                                $location.path('/resourcePool/' + vm.resourcePool.Id);
                             });
                     } else {
-                        $location.path('/manage/resourcePool/' + vm.resourcePool.Id);
+                        $location.path('/resourcePool/' + vm.resourcePool.Id);
                     }
                 })
                 .catch(function (error) {

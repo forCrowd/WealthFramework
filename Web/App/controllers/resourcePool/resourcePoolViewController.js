@@ -1,16 +1,16 @@
 ﻿(function () {
     'use strict';
 
-    var controllerId = 'resourcePoolCustomViewController';
+    var controllerId = 'resourcePoolViewController';
     angular.module('main')
         .controller(controllerId, ['resourcePoolFactory',
             '$location',
             '$routeParams',
             '$rootScope',
             'logger',
-            resourcePoolCustomViewController]);
+            resourcePoolViewController]);
 
-    function resourcePoolCustomViewController(resourcePoolFactory, $location, $routeParams, $rootScope, logger) {
+    function resourcePoolViewController(resourcePoolFactory, $location, $routeParams, $rootScope, logger) {
 
         // Logger
         logger = logger.forSource(controllerId);

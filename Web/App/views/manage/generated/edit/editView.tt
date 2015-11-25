@@ -29,6 +29,11 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 {
 	// Variables
 	var entityTypeName = typeMapper.GetTypeName(entityType);
+
+	// Temp fix for resource pool generated & custom conflict / SH - 25 Nov. '15
+	if (entityTypeName == "ResourcePool")
+		continue;
+
 	var entityTitle = entityTypeName;
 	var businessObjectType = typeMapper.GetBusinessObjectType(entityTypeName);
 	var businessObjectDisplayAttribute = typeMapper.GetAttribute<System.ComponentModel.DisplayNameAttribute>(businessObjectType);

@@ -142,7 +142,7 @@
 
             function editResourcePool() {
                 // TODO Instead of having fixed url here, broadcast an 'edit request'?
-                $location.path('/manage/resourcePool/' + scope.resourcePoolId + '/edit');
+                $location.path('/resourcePool/' + scope.resourcePoolId + '/edit');
             }
 
             function initChart() {
@@ -163,6 +163,12 @@
                                     enabled: false
                                 },
                                 showInLegend: true
+                            }
+                        },
+                        tooltip: {
+                            style: {
+                                padding: 20,
+                                fontWeight: 'bold'
                             }
                         },
                         xAxis: { categories: [''] },
@@ -330,7 +336,11 @@
                 Object.defineProperty(self, "y", {
                     enumerable: true,
                     configurable: true,
-                    get: function () { return elementFieldIndex.indexRating(); }
+                    get: function () {
+                        var indexRating = elementFieldIndex.indexRating();
+                        // TODO Make rounding better, instead of toFixed + number
+                        return Number(indexRating.toFixed(2));
+                    }
                 });
             }
 
@@ -371,7 +381,9 @@
                     enumerable: true,
                     configurable: true,
                     get: function () {
-                        return elementCell.numericValue();
+                        var numericValue = elementCell.numericValue();
+                        // TODO Make rounding better, instead of toFixed + number
+                        return Number(numericValue.toFixed(2));
                     }
                 });
             }

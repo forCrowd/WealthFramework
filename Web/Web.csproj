@@ -401,9 +401,9 @@
     <Content Include="App\controllers\manage\generated\list\userRoleListController.js">
       <DependentUpon>listController.tt</DependentUpon>
     </Content>
-    <Content Include="App\controllers\manage\resourcePool\resourcePoolCustomEditController.js" />
-    <Content Include="App\controllers\manage\resourcePool\resourcePoolCustomViewController.js" />
-    <Content Include="App\controllers\manage\resourcePool\resourcePoolCustomListController.js" />
+    <Content Include="App\controllers\resourcePool\resourcePoolEditController.js" />
+    <Content Include="App\controllers\resourcePool\resourcePoolViewController.js" />
+    <Content Include="App\controllers\resourcePool\resourcePoolListController.js" />
     <Content Include="App\directives\resourcePoolEditor\resourcePoolEditor.js" />
     <Content Include="App\directives\resourcePoolEditor\resourcePoolEditor.css" />
     <Content Include="App\entities\Enums.js" />
@@ -512,9 +512,6 @@
     <Content Include="App\views\manage\generated\edit\elementItemEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
-    <Content Include="App\views\manage\generated\edit\resourcePoolEdit.html">
-      <DependentUpon>editView.tt</DependentUpon>
-    </Content>
     <Content Include="App\views\manage\generated\edit\roleEdit.html">
       <DependentUpon>editView.tt</DependentUpon>
     </Content>
@@ -577,9 +574,9 @@
     <Content Include="App\views\manage\generated\list\userRoleList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
-    <Content Include="App\views\manage\resourcePool\resourcePoolCustomList.html" />
-    <Content Include="App\views\manage\resourcePool\resourcePoolCustomEdit.html" />
-    <Content Include="App\views\manage\resourcePool\resourcePoolCustomView.html" />
+    <Content Include="App\views\resourcePool\resourcePoolList.html" />
+    <Content Include="App\views\resourcePool\resourcePoolEdit.html" />
+    <Content Include="App\views\resourcePool\resourcePoolView.html" />
     <Content Include="App\includes\manageScripts.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>manageScripts.js</LastGenOutput>
@@ -742,9 +739,6 @@
     <Content Include="App\views\manage\generated\edit\editView.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>editView.txt</LastGenOutput>
-    </Content>
-    <Content Include="App\views\manage\generated\list\resourcePoolList.html">
-      <DependentUpon>listView.tt</DependentUpon>
     </Content>
     <Content Include="App\views\manage\generated\list\userList.html">
       <DependentUpon>listView.tt</DependentUpon>

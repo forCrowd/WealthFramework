@@ -53,25 +53,25 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="dropdown hide" data-dropdown>
-                        <a href="" class="dropdown-toggle" data-dropdown-toggle>Content <b class="caret"></b></a>
+                    <li class="dropdown hide" data-uib-dropdown>
+                        <a href="" class="dropdown-toggle" data-uib-dropdown-toggle>Content <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="/content/overview">Overview</a></li>
                             <li><a href="/content/technologies">Technologies</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown hide" data-dropdown data-ng-show="vm.isAuthenticated()">
-                        <a href="" class="dropdown-toggle" data-dropdown-toggle>Manage <b class="caret"></b></a>
+                    <li class="dropdown hide" data-uib-dropdown data-ng-show="vm.isAuthenticated()">
+                        <a href="" class="dropdown-toggle" data-uib-dropdown-toggle>Manage <b class="caret"></b></a>
                         <!-- Manage Menu - Generated -->
                         <script src="/App/includes/manageMenu.js?v=0.37"></script>
                     </li>
                     <li data-ng-show="vm.isAuthenticated()">
-                        <a href="/manage/resourcePool">CMRP</a>
+                        <a href="/resourcePool">CMRP</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown" data-dropdown data-ng-if="vm.isAuthenticated()">
-                        <a href="" class="dropdown-toggle" data-dropdown-toggle><span data-ng-bind="'User: ' + vm.currentUser.Email"></span><b class="caret"></b></a>
+                    <li class="dropdown" data-uib-dropdown data-ng-if="vm.isAuthenticated()">
+                        <a href="" class="dropdown-toggle" data-uib-dropdown-toggle><span data-ng-bind="'User: ' + vm.currentUser.Email"></span><b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="/account/accountEdit">Edit</a></li>
                             <li><a href="/account/changePassword">Change password</a></li>
@@ -171,16 +171,16 @@
     <script src="/App/controllers/content/resourcePoolRateSampleController.js?v=0.29"></script>
     <script src="/App/controllers/content/closingNotesController.js?v=0.29"></script>
 
+    <!-- Resource Pool -->
+    <script src="/App/controllers/resourcePool/resourcePoolEditController.js?v=0.37"></script>
+    <script src="/App/controllers/resourcePool/resourcePoolListController.js?v=0.37"></script>
+    <script src="/App/controllers/resourcePool/resourcePoolViewController.js?v=0.37"></script>
+
     <!-- Account -->
     <script src="/App/controllers/account/loginController.js?v=0.37"></script>
     <script src="/App/controllers/account/registerController.js?v=0.37"></script>
     <script src="/App/controllers/account/accountEditController.js?v=0.37"></script>
     <script src="/App/controllers/account/changePasswordController.js?v=0.37"></script>
-
-    <!-- Manage Scripts - Custom -->
-    <script src="/App/controllers/manage/resourcePool/resourcePoolCustomEditController.js?v=0.37"></script>
-    <script src="/App/controllers/manage/resourcePool/resourcePoolCustomListController.js?v=0.37"></script>
-    <script src="/App/controllers/manage/resourcePool/resourcePoolCustomViewController.js?v=0.37"></script>
 
     <!-- Directives -->
     <script src="/App/directives/resourcePoolEditor/resourcePoolEditor.js?v=0.37"></script>

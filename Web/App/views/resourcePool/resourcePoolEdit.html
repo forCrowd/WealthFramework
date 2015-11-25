@@ -1,4 +1,4 @@
-﻿<div data-ng-controller="resourcePoolCustomEditController as vm">
+﻿<div data-ng-controller="resourcePoolEditController as vm">
     <h2 data-ng-bind="vm.title"></h2>
     <p data-ng-if="vm.isNew" class="hide">
         <button type="button" data-ng-click="vm.openCopyModal()" class="btn btn-primary">
@@ -546,7 +546,7 @@
                 <td>
                     <span data-ng-bind="resourcePool.Name"></span>
                     <button class="btn btn-primary" type="button" ng-click="vm.copy(resourcePool)">Copy</button>
-                    <!--<a href="/manage/resourcePool/{{ resourcePool.Id }}">{{ resourcePool.Name }}</a>-->
+                    <!--<a href="/resourcePool/{{ resourcePool.Id }}">{{ resourcePool.Name }}</a>-->
                 </td>
             </tr>
         </table>
