@@ -74,9 +74,9 @@
         //    sectorResourcePool.AddElement(sectorElement);
 
         //    // Fields
-        //    var sectorNameField = new ElementField() { Name = "Name", ElementFieldType = (byte)ElementFieldType.String };
-        //    var sectorSalesPriceField = new ElementField() { Name = "Sales Price", ElementFieldType = (byte)ElementFieldType.ResourcePool };
-        //    var sectorSalesNumberField = new ElementField() { Name = "Number of Sales", ElementFieldType = (byte)ElementFieldType.Multiplier };
+        //    var sectorNameField = new ElementField() { Name = "Name", DataType = (byte)DataType.String };
+        //    var sectorSalesPriceField = new ElementField() { Name = "Sales Price", DataType = (byte)DataType.ResourcePool };
+        //    var sectorSalesNumberField = new ElementField() { Name = "Number of Sales", DataType = (byte)DataType.Multiplier };
 
         //    sectorElement
         //        .AddField(sectorNameField)
@@ -85,7 +85,7 @@
 
         //    // Importance Index
         //    // TODO Will be updated with new field / index combo
-        //    sectorResourcePool.AddIndex(new ResourcePoolIndex() { Name = "Importance Index", ElementField = sectorNameField, IndexRatingSortType = (byte)IndexRatingSortType.HighestToLowest });
+        //    sectorResourcePool.AddIndex(new ResourcePoolIndex() { Name = "Importance Index", ElementField = sectorNameField, ElementFieldIndexSortType = (byte)ElementFieldIndexSortType.HighestToLowest });
 
         //    // Items, cell, user cells
         //    sectorElement
@@ -156,7 +156,7 @@
         //{
         //    // TODO Update this with Dynamic Field Index
         //    var totalCostResourcePool = new ResourcePool() { Name = "Total Cost Index Sample", IsSample = true };
-        //    var totalCostResourcePoolIndex = new ResourcePoolIndex() { ResourcePool = totalCostResourcePool, Name = "Total Cost Index", ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicElementFieldIndex, IndexRatingSortType = (byte)IndexRatingSortType.LowestToHighest };
+        //    var totalCostResourcePoolIndex = new ResourcePoolIndex() { ResourcePool = totalCostResourcePool, Name = "Total Cost Index", ResourcePoolIndexType = (byte)ResourcePoolIndexType.DynamicElementFieldIndex, ElementFieldIndexSortType = (byte)ElementFieldIndexSortType.LowestToHighest };
         //    var totalCostOrganization1 = new Organization() { ResourcePool = totalCostResourcePool, Name = "Lowlands", SalesPrice = 125 };
         //    var totalCostOrganization2 = new Organization() { ResourcePool = totalCostResourcePool, Name = "High Coast", SalesPrice = 175 };
         //    var totalCostUserResourcePool = new UserResourcePool() { User = user, ResourcePool = totalCostResourcePool, ResourcePoolRate = 101 };

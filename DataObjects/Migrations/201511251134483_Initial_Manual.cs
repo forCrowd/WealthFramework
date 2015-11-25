@@ -215,7 +215,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             sbOutput.AppendLine("BEGIN");
             sbOutput.AppendLine("    DECLARE @result decimal");
             sbOutput.AppendLine("    SELECT @result = ");
-            sbOutput.AppendLine("        CASE T3.ElementFieldType");
+            sbOutput.AppendLine("        CASE T3.DataType");
             sbOutput.AppendLine("            WHEN 1 THEN NULL -- String");
             sbOutput.AppendLine("            WHEN 2 THEN ISNULL(SUM(CAST(T1.BooleanValue AS decimal)), 0) -- Boolean");
             sbOutput.AppendLine("            WHEN 3 THEN ISNULL(SUM(CAST(T1.IntegerValue AS decimal)), 0) -- Integer");
@@ -229,7 +229,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             sbOutput.AppendLine("        JOIN ElementCell T2 ON T1.ElementCellId = T2.Id");
             sbOutput.AppendLine("        JOIN ElementField T3 ON T2.ElementFieldId = T3.Id");
             sbOutput.AppendLine("        WHERE T1.ElementCellId = @elementCellId AND T1.DeletedOn IS NULL");
-            sbOutput.AppendLine("        GROUP By T3.ElementFieldType");
+            sbOutput.AppendLine("        GROUP By T3.DataType");
             sbOutput.AppendLine("    RETURN @result");
             sbOutput.AppendLine("END");
             return sbOutput.ToString();

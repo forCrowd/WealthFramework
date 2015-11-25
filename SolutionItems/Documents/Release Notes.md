@@ -2,6 +2,9 @@
 
 **0.37**
 
+* Resource Pool Add / Edit feature was added
+* ElementField - ElementFieldType was renamed to DataType, IndexType was renamed to IndexCalculationType, IndexRatingSortType was renamed to IndexSortType
+* Adding a default 'Name' field approach was removed
 * enumKey angular filter was added: Probably this enum operations can be done in a better way
 but right now this is the easiest way to save the day.
 * dataContext.js createEntity() was updated to a synchronous function again

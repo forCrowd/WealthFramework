@@ -127,24 +127,24 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         //{
         //    get
         //    {
-        //        var fieldType = (ElementFieldTypes)ElementCell.ElementField.ElementFieldType;
+        //        var fieldType = (ElementFieldDataType)ElementCell.ElementField.DataType;
 
         //        switch (fieldType)
         //        {
-        //            case ElementFieldTypes.Boolean:
+        //            case ElementFieldDataType.Boolean:
         //                return Convert.ToDecimal(BooleanValue.GetValueOrDefault());
-        //            case ElementFieldTypes.Integer:
+        //            case ElementFieldDataType.Integer:
         //                return Convert.ToDecimal(IntegerValue.GetValueOrDefault());
-        //            case ElementFieldTypes.Decimal:
+        //            case ElementFieldDataType.Decimal:
         //            // TODO This calculation is the same as Decimal type? Are we using the types in a wrong way?
-        //            case ElementFieldTypes.ResourcePool:
-        //            case ElementFieldTypes.Multiplier:
+        //            case ElementFieldDataType.ResourcePool:
+        //            case ElementFieldDataType.Multiplier:
         //                return DecimalValue.GetValueOrDefault();
-        //            case ElementFieldTypes.DateTime:
+        //            case ElementFieldDataType.DateTime:
         //                // TODO Check GetValueOrDefault() method for this type
         //                return Convert.ToDecimal(DateTimeValue.GetValueOrDefault());
-        //            case ElementFieldTypes.String:
-        //            case ElementFieldTypes.Element:
+        //            case ElementFieldDataType.String:
+        //            case ElementFieldDataType.Element:
         //                // TODO At least for now
         //                throw new InvalidOperationException("Value property is not available for this field type");
         //            default:

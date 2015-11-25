@@ -53,12 +53,16 @@
                                 </td>
                             </tr>
                             <tr>
+                                <!-- Name -->
+                                <th>
+                                    {{ resourcePool.CurrentElement.Name }}
+                                </th>
                                 <!-- Fields -->
                                 <th data-ng-repeat="field in resourcePool.CurrentElement.ElementFieldSet | orderBy: 'SortOrder'">
-                                    <div data-ng-if="field.ElementFieldType !== 6">
+                                    <div data-ng-if="field.DataType !== 6">
                                         {{ field.Name }}<span data-ng-if="field.IndexEnabled" data-tooltip="Index" class="infoText">(I)</span>
                                     </div>
-                                    <span data-ng-if="field.ElementFieldType === 6">
+                                    <span data-ng-if="field.DataType === 6">
                                         <a href="" data-tooltip="Switch to {{ field.Name }} view" data-ng-click="changeCurrentElement(field.SelectedElement)">{{ field.Name }}</a>
                                     </span>
                                 </th>
@@ -84,13 +88,17 @@
                         </thead>
                         <tbody>
                             <tr data-ng-repeat="elementItem in resourcePool.CurrentElement.ElementItemSet | orderBy: 'Name'">
+                                <!-- Name -->
+                                <td>
+                                    <span data-ng-bind-html="elementItem.Name"></span>
+                                </td>
                                 <!-- Cells -->
                                 <td data-ng-repeat="elementCell in elementItem.ElementCellSet | orderBy: 'ElementField.SortOrder'">
-                                    <span data-ng-if="elementCell.ElementField.ElementFieldType === 1" data-ng-bind-html="elementCell.StringValue"></span>
-                                    <div data-ng-if="elementCell.ElementField.ElementFieldType === 2
-                                        || elementCell.ElementField.ElementFieldType === 3
-                                        || elementCell.ElementField.ElementFieldType === 4
-                                        || elementCell.ElementField.ElementFieldType === 5">
+                                    <span data-ng-if="elementCell.ElementField.DataType === 1" data-ng-bind-html="elementCell.StringValue"></span>
+                                    <div data-ng-if="elementCell.ElementField.DataType === 2
+                                        || elementCell.ElementField.DataType === 3
+                                        || elementCell.ElementField.DataType === 4
+                                        || elementCell.ElementField.DataType === 5">
                                         <span data-ng-class="{ 'fixedWidth35Cell': !elementCell.ElementField.UseFixedValue }">
                                             {{ elementCell.numericValue() | numberSymbol: 2 }}
                                         </span>
@@ -100,13 +108,13 @@
                                             <button data-tooltip="Reset" data-tooltip-append-to-body="true" type="button" data-ng-click="resetElementCellNumericValue(elementCell)" data-ng-disabled="isSaving" class="btn btn-default btn-xs hide">0</button>
                                         </div>
                                     </div>
-                                    <span data-ng-if="elementCell.ElementField.ElementFieldType === 6">
+                                    <span data-ng-if="elementCell.ElementField.DataType === 6">
                                         {{ elementCell.SelectedElementItem.Name }}
                                     </span>
-                                    <span data-ng-if="elementCell.ElementField.ElementFieldType === 11">
+                                    <span data-ng-if="elementCell.ElementField.DataType === 11">
                                         {{ elementItem.directIncome() | numberSymbol: 2 }}
                                     </span>
-                                    <span data-ng-if="elementCell.ElementField.ElementFieldType === 12">
+                                    <span data-ng-if="elementCell.ElementField.DataType === 12">
                                         {{ elementItem.multiplier() | numberSymbol: 2 }}
                                     </span>
                                 </td>
@@ -129,12 +137,16 @@
                         </tbody>
                         <tfoot>
                             <tr data-ng-if="resourcePool.CurrentElement.ElementItemSet.length > 1">
+                                <!-- Name -->
+                                <td>
+                                    &nbsp;
+                                </td>
                                 <!-- Fields -->
                                 <td data-ng-repeat="field in resourcePool.CurrentElement.ElementFieldSet | orderBy: 'SortOrder'">
-                                    <span data-ng-if="field.ElementFieldType === 11">
+                                    <span data-ng-if="field.DataType === 11">
                                         {{ resourcePool.CurrentElement.directIncome() | numberSymbol: 2 }}
                                     </span>
-                                    <span data-ng-if="field.ElementFieldType === 12">
+                                    <span data-ng-if="field.DataType === 12">
                                         {{ resourcePool.CurrentElement.multiplier() | numberSymbol: 2 }}
                                     </span>
                                 </td>
@@ -156,12 +168,16 @@
                             </tr>
                             <!-- Functions -->
                             <tr>
+                                <!-- Name -->
+                                <td>
+                                    &nbsp;
+                                </td>
                                 <!-- Fields -->
                                 <td data-ng-repeat="field in resourcePool.CurrentElement.ElementFieldSet | orderBy: 'SortOrder'">
-                                    <div data-ng-if="field.ElementFieldType !== 12">
+                                    <div data-ng-if="field.DataType !== 12">
                                         &nbsp;
                                     </div>
-                                    <div data-ng-if="field.ElementFieldType === 12">
+                                    <div data-ng-if="field.DataType === 12">
                                         <div class="btn-group" role="group">
                                             <button data-tooltip="Increase {{ resourcePool.CurrentElement.multiplierField().Name }}" data-tooltip-append-to-body="true" data-ng-disabled="isSaving" data-ng-click="increaseElementMultiplier(resourcePool.CurrentElement)" class="btn btn-default btn-xs">+</button>
                                             <button data-tooltip="Decrease {{ resourcePool.CurrentElement.multiplierField().Name }}" data-tooltip-append-to-body="true" type="button" data-ng-disabled="isSaving" data-ng-click="decreaseElementMultiplier(resourcePool.CurrentElement)" class="btn btn-default btn-xs">-</button>

@@ -39,7 +39,7 @@ describe('ng Element', function () {
         // Parent's field
         var field = new ElementField();
         field.Element = parent;
-        field.ElementFieldType = 6;
+        field.DataType = 6;
         field.SelectedElement = child;
         parent.ElementFieldSet = [field];
         child.ParentFieldSet = [field];
@@ -63,7 +63,7 @@ describe('ng Element', function () {
         // Grand parent's field
         var grandParentField = new ElementField();
         grandParentField.Element = grandParent;
-        grandParentField.ElementFieldType = 6;
+        grandParentField.DataType = 6;
         grandParentField.SelectedElement = parent;
         grandParent.ElementFieldSet = [grandParentField];
         parent.ParentFieldSet = [grandParentField];
@@ -71,7 +71,7 @@ describe('ng Element', function () {
         // Parent's field
         var parentField = new ElementField();
         parentField.Element = parent;
-        parentField.ElementFieldType = 6;
+        parentField.DataType = 6;
         parentField.SelectedElement = child;
         parent.ElementFieldSet = [parentField];
         child.ParentFieldSet = [parentField];
@@ -96,7 +96,7 @@ describe('ng Element', function () {
         // Grand parent's field
         var grandParentField = new ElementField();
         grandParentField.Element = grandParent;
-        grandParentField.ElementFieldType = 6;
+        grandParentField.DataType = 6;
         grandParentField.SelectedElement = parent;
         grandParent.ElementFieldSet = [grandParentField];
         parent.ParentFieldSet = [grandParentField];
@@ -104,7 +104,7 @@ describe('ng Element', function () {
         // Parent's field
         var parentField = new ElementField();
         parentField.Element = parent;
-        parentField.ElementFieldType = 6;
+        parentField.DataType = 6;
         parentField.SelectedElement = child;
         parent.ElementFieldSet = [parentField];
         child.ParentFieldSet = [parentField];
@@ -137,7 +137,7 @@ describe('ng Element', function () {
         // Case 2: Adding a new field but without index
         var field1 = new ElementField();
         field1.Element = element;
-        field1.ElementFieldType = 4;
+        field1.DataType = 4;
         element.ElementFieldSet = [field1];
 
         // TODO Manually update?!
@@ -154,7 +154,7 @@ describe('ng Element', function () {
         // Case 4: Add a new field with index
         var field2 = new ElementField();
         field2.Element = element;
-        field2.ElementFieldType = 4;
+        field2.DataType = 4;
         field2.IndexEnabled = true;
         element.ElementFieldSet.push(field2);
 
@@ -182,7 +182,7 @@ describe('ng Element', function () {
         // Case 2: Adding the first index field
         var field1 = new ElementField();
         field1.Element = element;
-        field1.ElementFieldType = 4;
+        field1.DataType = 4;
         field1.IndexEnabled = true;
         element.ElementFieldSet = [field1];
 
@@ -195,7 +195,7 @@ describe('ng Element', function () {
         // Case 2: Adding the second index field
         var field2 = new ElementField();
         field2.Element = element;
-        field2.ElementFieldType = 4;
+        field2.DataType = 4;
         field2.IndexEnabled = true;
         element.ElementFieldSet.push(field2);
 
@@ -219,7 +219,7 @@ describe('ng Element', function () {
         // Case 2: Add the field
         var directIncomeField = new ElementField();
         directIncomeField.Element = element;
-        directIncomeField.ElementFieldType = 11;
+        directIncomeField.DataType = 11;
         element.ElementFieldSet = [directIncomeField];
 
         expect(element.directIncomeField()).toBe(directIncomeField);
@@ -243,7 +243,7 @@ describe('ng Element', function () {
         // Case 2: Add the field, first item and the cell
         var directIncomeField = new ElementField();
         directIncomeField.Element = element;
-        directIncomeField.ElementFieldType = 11;
+        directIncomeField.DataType = 11;
         element.ElementFieldSet = [directIncomeField];
 
         var item1 = new ElementItem();
@@ -287,7 +287,7 @@ describe('ng Element', function () {
         // Case 2: Add the field
         var multiplierField = new ElementField();
         multiplierField.Element = element;
-        multiplierField.ElementFieldType = 12;
+        multiplierField.DataType = 12;
         element.ElementFieldSet = [multiplierField];
 
         // TODO Manually update?!
@@ -315,7 +315,7 @@ describe('ng Element', function () {
         // Case 2: Add the field, first item and the cell
         var multiplierField = new ElementField();
         multiplierField.Element = element;
-        multiplierField.ElementFieldType = 12;
+        multiplierField.DataType = 12;
         element.ElementFieldSet = [multiplierField];
 
         var item1 = new ElementItem();
@@ -374,12 +374,12 @@ describe('ng Element', function () {
         // Case 2: Add the fields, first item and the cell
         var directIncomeField = new ElementField();
         directIncomeField.Element = element;
-        directIncomeField.ElementFieldType = 11;
+        directIncomeField.DataType = 11;
         element.ElementFieldSet = [directIncomeField];
 
         var multiplierField = new ElementField();
         multiplierField.Element = element;
-        multiplierField.ElementFieldType = 12;
+        multiplierField.DataType = 12;
         element.ElementFieldSet.push(multiplierField);
 
         var item1 = new ElementItem();
@@ -457,7 +457,7 @@ describe('ng Element', function () {
         // DirectIncome field
         var directIncomeField = new ElementField();
         directIncomeField.Element = element;
-        directIncomeField.ElementFieldType = 11;
+        directIncomeField.DataType = 11;
         element.ElementFieldSet = [directIncomeField];
 
         // DirectIncome cell
@@ -508,12 +508,12 @@ describe('ng Element', function () {
         // DirectIncome field
         var directIncomeField = new ElementField();
         directIncomeField.Element = element;
-        directIncomeField.ElementFieldType = 11;
+        directIncomeField.DataType = 11;
         element.ElementFieldSet = [directIncomeField];
 
         var multiplierField = new ElementField();
         multiplierField.Element = element;
-        multiplierField.ElementFieldType = 12;
+        multiplierField.DataType = 12;
         element.ElementFieldSet.push(multiplierField);
 
         // DirectIncome cell
@@ -588,7 +588,7 @@ describe('ng Element', function () {
         // DirectIncome field
         var directIncomeField = new ElementField();
         directIncomeField.Element = element;
-        directIncomeField.ElementFieldType = 11;
+        directIncomeField.DataType = 11;
         element.ElementFieldSet = [directIncomeField];
 
         // DirectIncome cell
@@ -639,12 +639,12 @@ describe('ng Element', function () {
         // DirectIncome field
         var directIncomeField = new ElementField();
         directIncomeField.Element = element;
-        directIncomeField.ElementFieldType = 11;
+        directIncomeField.DataType = 11;
         element.ElementFieldSet = [directIncomeField];
 
         var multiplierField = new ElementField();
         multiplierField.Element = element;
-        multiplierField.ElementFieldType = 12;
+        multiplierField.DataType = 12;
         element.ElementFieldSet.push(multiplierField);
 
         // DirectIncome cell
@@ -719,13 +719,13 @@ describe('ng Element', function () {
         // DirectIncome field
         var directIncomeField = new ElementField();
         directIncomeField.Element = element;
-        directIncomeField.ElementFieldType = 11;
+        directIncomeField.DataType = 11;
         directIncomeField.IndexEnabled = true;
         element.ElementFieldSet = [directIncomeField];
 
         var multiplierField = new ElementField();
         multiplierField.Element = element;
-        multiplierField.ElementFieldType = 12;
+        multiplierField.DataType = 12;
         element.ElementFieldSet.push(multiplierField);
 
         // DirectIncome cell
@@ -804,13 +804,13 @@ describe('ng Element', function () {
         // DirectIncome field
         var directIncomeField = new ElementField();
         directIncomeField.Element = element;
-        directIncomeField.ElementFieldType = 11;
+        directIncomeField.DataType = 11;
         directIncomeField.IndexEnabled = true;
         element.ElementFieldSet = [directIncomeField];
 
         var multiplierField = new ElementField();
         multiplierField.Element = element;
-        multiplierField.ElementFieldType = 12;
+        multiplierField.DataType = 12;
         element.ElementFieldSet.push(multiplierField);
 
         // DirectIncome cell

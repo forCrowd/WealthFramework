@@ -371,21 +371,32 @@
 
                         if (value === null) {
 
-                            switch (self.IndexRatingSortType) {
-                                case 1: { // LowestToHighest (Low number is better)
-                                    value = cell.numericValueMultiplied();
+                            switch (self.IndexSortType) {
+                                case 1: { // HighestToLowest (High number is better)
+                                    value = (1 - cell.numericValueMultipliedPercentage());
                                     break;
                                 }
-                                case 2: { // HighestToLowest (High number is better)
-                                    value = (1 - cell.numericValueMultipliedPercentage());
+                                case 2: { // LowestToHighest (Low number is better)
+                                    value = cell.numericValueMultiplied();
                                     break;
                                 }
                             }
 
                         } else {
 
-                            switch (self.IndexRatingSortType) {
-                                case 1: { // LowestToHighest (Low number is better)
+                            switch (self.IndexSortType) {
+                                case 1: { // HighestToLowest (High number is better)
+
+                                    if (1 - cell.numericValueMultipliedPercentage() !== value) {
+                                        allEqualFlag = false;
+                                    }
+
+                                    if (1 - cell.numericValueMultipliedPercentage() > value) {
+                                        value = 1 - cell.numericValueMultipliedPercentage();
+                                    }
+                                    break;
+                                }
+                                case 2: { // LowestToHighest (Low number is better)
 
                                     if (cell.numericValueMultiplied() !== value) {
                                         allEqualFlag = false;
@@ -395,17 +406,6 @@
                                         value = cell.numericValueMultiplied();
                                     }
 
-                                    break;
-                                }
-                                case 2: { // HighestToLowest (High number is better)
-
-                                    if (1 - cell.numericValueMultipliedPercentage() !== value) {
-                                        allEqualFlag = false;
-                                    }
-
-                                    if (1 - cell.numericValueMultipliedPercentage() > value) {
-                                        value = 1 - cell.numericValueMultipliedPercentage();
-                                    }
                                     break;
                                 }
                             }

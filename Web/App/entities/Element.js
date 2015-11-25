@@ -44,7 +44,7 @@
                         indexSet.push(field);
                     }
 
-                    if (field.ElementFieldType === 6) {
+                    if (field.DataType === 6) {
                         var childIndexSet = getElementFieldIndexSet(field.SelectedElement);
 
                         for (var x = 0; x < childIndexSet.length; x++) {
@@ -160,7 +160,7 @@
             self.setDirectIncomeField = function () {
                 for (var i = 0; i < self.ElementFieldSet.length; i++) {
                     var field = self.ElementFieldSet[i];
-                    if (field.ElementFieldType === 11) {
+                    if (field.DataType === 11) {
                         self.backingFields._directIncomeField = field;
                         break;
                     }
@@ -193,7 +193,7 @@
             self.setMultiplierField = function () {
                 for (var i = 0; i < self.ElementFieldSet.length; i++) {
                     var field = self.ElementFieldSet[i];
-                    if (field.ElementFieldType === 12) {
+                    if (field.DataType === 12) {
                         self.backingFields._multiplierField = field;
                         break;
                     }
@@ -271,7 +271,7 @@
                     for (var i = 0; i < self.elementFieldIndexSet().length; i++) {
                         var field = self.elementFieldIndexSet()[i];
 
-                        // if (field.ElementFieldType === 11) { - TODO How about this check?
+                        // if (field.DataType === 11) { - TODO How about this check?
                         field.setIndexIncome();
                         // }
                     }

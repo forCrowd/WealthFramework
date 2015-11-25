@@ -21,9 +21,6 @@
             <th>
                 Resource Pool
             </th>
-            <th>
-                Main Element
-            </th>
             <th></th>
         </tr>
         <tr data-ng-repeat="resourcePool in vm.resourcePoolSet">
@@ -32,9 +29,6 @@
             </td>
             <td>
                 {{ resourcePool.Name }}
-            </td>
-            <td>
-                {{ resourcePool.MainElementId }}
             </td>
             <td>
                 <a href="/manage/generated/resourcePool/edit/{{ resourcePool.Id }}">Edit</a> |

@@ -12,7 +12,7 @@
 
         var self = this;
 
-        self.ElementFieldType = {
+        self.ElementFieldDataType = {
 
             // A field that holds string value.
             // Use StringValue property to set its value on ElementItem level.
@@ -50,7 +50,7 @@
             'Multiplier': 12
         }
         
-        self.IndexType = {
+        self.ElementFieldIndexCalculationType = {
             // Default type.
             // Uses the lowest score as the base (reference) rating in the group, then calculates the difference from that base.
             // Base rating (lowest) gets 0 from the pool and other items get an amount based on their difference.
@@ -63,14 +63,14 @@
             'Passive': 2
         }
 
-        self.IndexRatingSortType = {
-
-            // Low rating is better.
-            'Lowest': 1,
+        self.ElementFieldIndexSortType = {
 
             // Default type.
             // High rating is better.
-            'Highest': 2
+            'Highest': 1,
+
+            // Low rating is better.
+            'Lowest': 2
         }
 
         self.getEnumKey = function (enumTableKey, value) {

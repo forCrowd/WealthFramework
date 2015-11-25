@@ -12,7 +12,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Tests
             var user = new User("User");
             new ResourcePool(user, "CMRP")
                 .AddElement("Element")
-                .AddField("Field", ElementFieldTypes.String);
+                .AddField("Field", ElementFieldDataType.String);
         }
 
         [TestMethod]
@@ -22,7 +22,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Tests
             var user = new User("User");
             new ResourcePool(user, "CMRP")
             .AddElement("Element")
-            .AddField("Field", ElementFieldTypes.Boolean);
+            .AddField("Field", ElementFieldDataType.Boolean);
         }
     }
 

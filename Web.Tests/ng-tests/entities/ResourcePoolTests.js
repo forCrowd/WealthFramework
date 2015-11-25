@@ -56,7 +56,7 @@ describe('ng ResourcePool', function () {
 
         var field1 = new ElementField();
         field1.Element = element1;
-        field1.ElementFieldType = 4;
+        field1.DataType = 4;
         field1.IndexEnabled = true;
         element1.ElementFieldSet = [field1];
 
@@ -85,13 +85,13 @@ describe('ng ResourcePool', function () {
 
         var field1 = new ElementField();
         field1.Element = element1;
-        field1.ElementFieldType = 4;
+        field1.DataType = 4;
         field1.IndexEnabled = true;
         element1.ElementFieldSet = [field1];
 
         var field2 = new ElementField();
         field2.Element = element1;
-        field2.ElementFieldType = 4;
+        field2.DataType = 4;
         field2.IndexEnabled = true;
         element1.ElementFieldSet = [field2];
 

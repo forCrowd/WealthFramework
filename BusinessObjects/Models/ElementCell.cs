@@ -97,59 +97,59 @@ namespace forCrowd.WealthEconomy.BusinessObjects
 
         public ElementCell SetValue(string value)
         {
-            SetValueHelper(ElementFieldTypes.String, null);
+            SetValueHelper(ElementFieldDataType.String, null);
             GetUserCell().SetValue(value);
             return this;
         }
 
         public ElementCell SetValue(bool value)
         {
-            SetValueHelper(ElementFieldTypes.Boolean, null);
+            SetValueHelper(ElementFieldDataType.Boolean, null);
             GetUserCell().SetValue(value);
             return this;
         }
 
         public ElementCell SetValue(int value)
         {
-            SetValueHelper(ElementFieldTypes.Integer, null);
+            SetValueHelper(ElementFieldDataType.Integer, null);
             GetUserCell().SetValue(value);
             return this;
         }
 
         public ElementCell SetValue(decimal value)
         {
-            SetValueHelper(ElementFieldTypes.Decimal, null);
+            SetValueHelper(ElementFieldDataType.Decimal, null);
             GetUserCell().SetValue(value);
             return this;
         }
 
         public ElementCell SetValue(DateTime value)
         {
-            SetValueHelper(ElementFieldTypes.DateTime, null);
+            SetValueHelper(ElementFieldDataType.DateTime, null);
             GetUserCell().SetValue(value);
             return this;
         }
 
         public ElementCell SetValue(ElementItem value)
         {
-            SetValueHelper(ElementFieldTypes.Element, null);
+            SetValueHelper(ElementFieldDataType.Element, null);
             SelectedElementItem = value;
             return this;
         }
 
-        void SetValueHelper(ElementFieldTypes valueType, User user)
+        void SetValueHelper(ElementFieldDataType valueType, User user)
         {
             // Validations
 
             // a. Field and value type
-            var fieldType = (ElementFieldTypes)ElementField.ElementFieldType;
+            var fieldType = (ElementFieldDataType)ElementField.DataType;
 
             // 1. Field's type & this operation's type has to match
             // 2. And if field type is DirectIncome or Multiplier, value type has to be Decimal
             if (fieldType != valueType
-                && !(fieldType == ElementFieldTypes.DirectIncome
-                || fieldType == ElementFieldTypes.Multiplier
-                    && valueType == ElementFieldTypes.Decimal))
+                && !(fieldType == ElementFieldDataType.DirectIncome
+                || fieldType == ElementFieldDataType.Multiplier
+                    && valueType == ElementFieldDataType.Decimal))
                 throw new InvalidOperationException(string.Format("Invalid value, field and value types don't match - Field type: {0}, Value type: {1}",
                     fieldType,
                     valueType));

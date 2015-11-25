@@ -42,7 +42,7 @@
         vm.elementFieldIndexEnabledChanged = elementFieldIndexEnabledChanged;
         vm.elementFieldMaster = null;
         vm.elementFieldSet = elementFieldSet;
-        vm.elementFieldTypeFiltered = elementFieldTypeFiltered;
+        vm.elementFieldDataTypeFiltered = elementFieldDataTypeFiltered;
         vm.elementItem = null;
         vm.elementItemMaster = null;
         vm.elementItemSet = elementItemSet;
@@ -72,9 +72,9 @@
         vm.title = '';
 
         // Enums
-        vm.ElementFieldType = Enums.ElementFieldType;
-        vm.IndexRatingSortType = Enums.IndexRatingSortType;
-        vm.IndexType = Enums.IndexType;
+        vm.ElementFieldDataType = Enums.ElementFieldDataType;
+        vm.ElementFieldIndexCalculationType = Enums.ElementFieldIndexCalculationType;
+        vm.ElementFieldIndexSortType = Enums.ElementFieldIndexSortType;
 
         init();
 
@@ -120,7 +120,7 @@
             // Later handle 'SortOrder' by UI, not by asking
             var sortOrder = element.ElementFieldSet.length + 1;
 
-            vm.elementField = { Element: element, Name: 'New field', ElementFieldType: 1, SortOrder: sortOrder };
+            vm.elementField = { Element: element, Name: 'New field', DataType: 1, SortOrder: sortOrder };
             vm.isElementFieldEdit = true;
             vm.isElementFieldNew = true;
         }
@@ -166,12 +166,12 @@
             // Can't use reject changes because in 'New CMRP' case, these are newly added entities and reject changes removes them / SH - 23 Nov. '15
             if (!vm.isElementFieldNew) {
                 vm.elementField.Name = vm.elementFieldMaster.Name;
-                vm.elementField.ElementFieldType = vm.elementFieldMaster.ElementFieldType;
+                vm.elementField.DataType = vm.elementFieldMaster.DataType;
                 vm.elementField.SelectedElementId = vm.elementFieldMaster.SelectedElementId;
                 vm.elementField.UseFixedValue = vm.elementFieldMaster.UseFixedValue;
                 vm.elementField.IndexEnabled = vm.elementFieldMaster.IndexEnabled;
-                vm.elementField.IndexType = vm.elementFieldMaster.IndexType;
-                vm.elementField.IndexRatingSortType = vm.elementFieldMaster.IndexRatingSortType;
+                vm.elementField.IndexCalculationType = vm.elementFieldMaster.IndexCalculationType;
+                vm.elementField.IndexSortType = vm.elementFieldMaster.IndexSortType;
                 vm.elementField.SortOrder = vm.elementFieldMaster.SortOrder;
             }
 
@@ -250,8 +250,8 @@
         }
 
         function elementFieldIndexEnabledChanged() {
-            vm.elementField.IndexType = vm.elementField.IndexEnabled ? 1 : 0;
-            vm.elementField.IndexRatingSortType = vm.elementField.IndexEnabled ? 2 : 0;
+            vm.elementField.IndexCalculationType = vm.elementField.IndexEnabled ? 1 : 0;
+            vm.elementField.IndexSortType = vm.elementField.IndexEnabled ? 2 : 0;
         }
 
         function elementFieldSet() {
@@ -265,25 +265,25 @@
             return list;
         }
 
-        function elementFieldTypeFiltered() {
+        function elementFieldDataTypeFiltered() {
 
             var filtered = {};
-            for (var key in vm.ElementFieldType) {
+            for (var key in vm.ElementFieldDataType) {
 
                 // These types can be added only once at the moment
                 if (key === 'DirectIncome' || key === 'Multiplier') {
                     var exists = false;
                     angular.forEach(vm.elementField.Element.ElementFieldSet, function (field) {
-                        if (field.ElementFieldType === vm.ElementFieldType[key]) {
+                        if (field.ElementFieldDataType === vm.ElementFieldDataType[key]) {
                             exists = true;
                         }
                     });
 
                     if (!exists) {
-                        filtered[key] = vm.ElementFieldType[key];
+                        filtered[key] = vm.ElementFieldDataType[key];
                     }
                 } else {
-                    filtered[key] = vm.ElementFieldType[key];
+                    filtered[key] = vm.ElementFieldDataType[key];
                 }
             }
 
@@ -410,13 +410,13 @@
 
             // Fixes
             // a. UseFixedValue must be null for String & Element types
-            if (vm.elementField.ElementFieldType === vm.ElementFieldType.String
-                || vm.elementField.ElementFieldType === vm.ElementFieldType.Element) {
+            if (vm.elementField.DataType === vm.ElementFieldDataType.String
+                || vm.elementField.DataType === vm.ElementFieldDataType.Element) {
                 vm.elementField.UseFixedValue = null;
             }
 
             // b. UseFixedValue must be 'true' for Multiplier type
-            if (vm.elementField.ElementFieldType === vm.ElementFieldType.Multiplier) {
+            if (vm.elementField.DataType === vm.ElementFieldDataType.Multiplier) {
                 vm.elementField.UseFixedValue = true;
             }
 

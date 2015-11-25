@@ -44,7 +44,7 @@
                         indexSet.push(cell);
                     }
 
-                    if (cell.ElementField.ElementFieldType === 6 && cell.SelectedElementItem !== null) {
+                    if (cell.ElementField.DataType === 6 && cell.SelectedElementItem !== null) {
                         var childIndexSet = getElementCellIndexSet(cell.SelectedElementItem);
 
                         if (childIndexSet.length > 0) {
@@ -86,7 +86,7 @@
                 var directIncomeCell = null;
                 for (var i = 0; i < self.ElementCellSet.length; i++) {
                     var elementCell = self.ElementCellSet[i];
-                    if (elementCell.ElementField.ElementFieldType === 11) {
+                    if (elementCell.ElementField.DataType === 11) {
                         directIncomeCell = elementCell;
                         break;
                     }
@@ -126,7 +126,7 @@
                 var multiplierCell = null;
                 for (var i = 0; i < self.ElementCellSet.length; i++) {
                     var elementCell = self.ElementCellSet[i];
-                    if (elementCell.ElementField.ElementFieldType === 12) {
+                    if (elementCell.ElementField.DataType === 12) {
                         multiplierCell = elementCell;
                         break;
                     }

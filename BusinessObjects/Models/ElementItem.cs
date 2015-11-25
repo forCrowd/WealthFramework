@@ -41,25 +41,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         [Display(Name = "Element Item")]
         [Required]
         [StringLength(250)]
-        public string Name
-        {
-            get { return _name; }
-            set
-            {
-                // Try to update 'Name' cell as well
-                if (Element != null && Element.NameField != null)
-                {
-                    if (NameCell == null)
-                        AddCell(Element.NameField);
-
-                    // Only if the old values are the same (means NameCell doesn't have a custom value)
-                    if (NameCell.UserElementCell == null || NameCell.UserElementCell.StringValue == _name)
-                        NameCell.SetValue(value);
-                }
-
-                _name = value;
-            }
-        }
+        public string Name { get; set; }
 
         public virtual Element Element { get; set; }
         public virtual ICollection<ElementCell> ElementCellSet { get; set; }
@@ -68,15 +50,9 @@ namespace forCrowd.WealthEconomy.BusinessObjects
 
         /* */
 
-        public ElementCell NameCell
-        {
-            // TODO Is it correct approach?
-            get { return ElementCellSet.SingleOrDefault(item => item.ElementField.SortOrder == 1); }
-        }
-
         public ElementCell DirectIncomeCell
         {
-            get { return ElementCellSet.SingleOrDefault(item => item.ElementField.ElementFieldType == (byte)ElementFieldTypes.DirectIncome); }
+            get { return ElementCellSet.SingleOrDefault(item => item.ElementField.DataType == (byte)ElementFieldDataType.DirectIncome); }
         }
 
         #region - Methods -

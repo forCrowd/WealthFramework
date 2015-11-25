@@ -58,7 +58,7 @@
                 var value;
                 var cell = self.currentUserCell();
 
-                switch (self.ElementField.ElementFieldType) {
+                switch (self.ElementField.DataType) {
                     case 2: { value = cell !== null ? cell.BooleanValue : 0; break; }
                     case 3: { value = cell !== null ? cell.IntegerValue : 0; break; }
                     case 4: { value = cell !== null ? cell.DecimalValue : 50; /* Default value? */ break; }
@@ -69,7 +69,7 @@
                         break;
                     }
                     case 12: { value = cell !== null ? cell.DecimalValue : 0; /* Default value? */ break; }
-                        // default: { throw 'currentUserNumericValue() - Not supported element field type: ' + self.ElementField.ElementFieldType; }
+                        // default: { throw 'currentUserNumericValue() - Not supported element field type: ' + self.ElementField.DataType; }
                 }
 
                 if (self.backingFields._currentUserNumericValue !== value) {
@@ -104,7 +104,7 @@
                 if (self.UserElementCellSet.length > 0) {
 
                     var userValue = 0;
-                    switch (self.ElementField.ElementFieldType) {
+                    switch (self.ElementField.DataType) {
                         // TODO Check bool to decimal conversion?
                         case 2: { userValue = self.UserElementCellSet[0].BooleanValue; break; }
                         case 3: { userValue = self.UserElementCellSet[0].IntegerValue; break; }
@@ -113,7 +113,7 @@
                         case 11: { userValue = self.UserElementCellSet[0].DecimalValue; break; }
                             // TODO 12 - Multiplier?
                             //default: {
-                            //    throw 'setOtherUsersNumericValueTotal - Not supported element field type: ' + self.ElementField.ElementFieldType;
+                            //    throw 'setOtherUsersNumericValueTotal - Not supported element field type: ' + self.ElementField.DataType;
                             //}
                     }
 
@@ -194,7 +194,7 @@
                     // Update related
                     if (updateRelated) {
 
-                        if (self.ElementField.ElementFieldType === 11) {
+                        if (self.ElementField.DataType === 11) {
                             self.ElementItem.setDirectIncome();
                         }
 
@@ -234,12 +234,12 @@
                         self.ElementField.setNumericValueMultiplied();
                     }
 
-                    // IMPORTANT REMARK: If the field is using IndexRatingSortType 1,
+                    // IMPORTANT REMARK: If the field is using IndexSortType 1,
                     // then it would be better to directly call field.setReferenceRatingMultiplied() method.
                     // It would be quicker to calculate.
                     // However, since field.setNumericValueMultiplied() will make 'numericValueMultipliedPercentage' calculations
                     // which meanwhile will call referenceRatingMultiplied() method anyway. So it becomes redundant.
-                    // This code block could possibly be improved with a IndexRatingSortType switch case,
+                    // This code block could possibly be improved with a IndexSortType switch case,
                     // but it seems it would be bit overkill.
                     // Still something to think about it later? / SH - 22 Oct. '15
                     //self.ElementField.setReferenceRatingMultiplied();
@@ -288,15 +288,15 @@
 
                 if (self.ElementField.IndexEnabled) {
 
-                    switch (self.ElementField.IndexRatingSortType) {
-                        case 1: { // LowestToHighest (Low rating is better)
+                    switch (self.ElementField.IndexSortType) {
+                        case 1: { // HightestToLowest (High rating is better)
+                            value = self.numericValueMultipliedPercentage();
+                            break;
+                        }
+                        case 2: { // LowestToHighest (Low rating is better)
                             if (self.ElementField.passiveRating() > 0) {
                                 value = (1 - self.numericValueMultipliedPercentage()) / self.ElementField.passiveRating();
                             }
-                            break;
-                        }
-                        case 2: { // HightestToLowest (High rating is better)
-                            value = self.numericValueMultipliedPercentage();
                             break;
                         }
                     }
@@ -328,13 +328,13 @@
                 var value = 0; // Default value?
 
                 if (self.ElementField.IndexEnabled && self.ElementField.referenceRatingMultiplied() > 0) {
-                    switch (self.ElementField.IndexRatingSortType) {
-                        case 1: { // LowestToHighest (Low rating is better)
-                            value = self.numericValueMultiplied() / self.ElementField.referenceRatingMultiplied();
+                    switch (self.ElementField.IndexSortType) {
+                        case 1: { // HighestToLowest (High rating is better)
+                            value = (1 - self.numericValueMultipliedPercentage()) / self.ElementField.referenceRatingMultiplied();
                             break;
                         }
-                        case 2: { // HighestToLowest (High rating is better)
-                            value = (1 - self.numericValueMultipliedPercentage()) / self.ElementField.referenceRatingMultiplied();
+                        case 2: { // LowestToHighest (Low rating is better)
+                            value = self.numericValueMultiplied() / self.ElementField.referenceRatingMultiplied();
                             break;
                         }
                     }
@@ -372,7 +372,7 @@
                 if (self.ElementField.ElementCellSet.length === 1) {
                     value = 1;
                 } else {
-                    switch (self.ElementField.IndexType) {
+                    switch (self.ElementField.IndexCalculationType) {
                         case 1: // Aggressive rating
                             {
                                 value = self.aggressiveRating();
@@ -439,7 +439,7 @@
 
                 var value = 0; // Default value?
 
-                if (self.ElementField.ElementFieldType === 6 && self.SelectedElementItem !== null) {
+                if (self.ElementField.DataType === 6 && self.SelectedElementItem !== null) {
                     // item's index income / how many times this item has been selected (used) by higher items
                     // TODO Check whether ParentCellSet gets updated when selecting / deselecting an item
                     value = self.SelectedElementItem.totalResourcePoolIncome() / self.SelectedElementItem.ParentCellSet.length;
@@ -464,7 +464,7 @@
                 //    ? self.UserElementCellSet[0]
                 //    : null;
 
-                switch (self.ElementField.ElementFieldType) {
+                switch (self.ElementField.DataType) {
                     case 1: {
                         if (self.UserElementCellSet.length > 0) {
                             value = self.UserElementCellSet[0].StringValue;

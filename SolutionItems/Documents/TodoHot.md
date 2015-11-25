@@ -1,15 +1,9 @@
 ﻿. resourcePoolEditor - new / edit cmrp features!
 
-remove name field!
-
 content for editor?
 
-elementfieldtype -> DataType?
-IndexRatingSortType -> ?
-IndexType -> Calculation type? or formula type?
-
 google analytics!
-editor modalInstance templateUrl!
+database update!
 
 ---
 in js files, first list items; vm. - scope.
@@ -37,7 +31,7 @@ $tooltip is now deprecated. Use $uibTooltip instead.
 
 . create tests for controllers
 
-. elementfield - indextype + indexratingsortype should have null value?
+. elementfield - indexcalculationtype + indexsortype should have null value?
 
 . field restrictions, one multiplier, one incomefield - server side validation?
 

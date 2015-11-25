@@ -1,6 +1,6 @@
 namespace forCrowd.WealthEconomy.BusinessObjects
 {
-    public enum IndexType : byte
+    public enum ElementFieldIndexCalculationType : byte
     {
         /// <summary>
         /// Default type.

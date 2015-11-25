@@ -36,7 +36,7 @@ describe('ng Cell', function () {
         // Decimal field
         var decimalField = new ElementField();
         decimalField.Element = element;
-        decimalField.ElementFieldType = 4;
+        decimalField.DataType = 4;
         element.ElementFieldSet = [decimalField];
 
         // Item
@@ -49,7 +49,7 @@ describe('ng Cell', function () {
         if (addMultiplierField) {
             var multiplierField = new ElementField();
             multiplierField.Element = element;
-            multiplierField.ElementFieldType = 12;
+            multiplierField.DataType = 12;
             element.ElementFieldSet.push(multiplierField);
 
             var multiplierCell = new ElementCell();
@@ -440,11 +440,11 @@ describe('ng Cell', function () {
         expect(cell2.aggressiveRating()).toBe(1 - (cell2.numericValueMultiplied() / field.referenceRatingMultiplied()));
     });
 
-    it('aggressiveRating - RatingSortType 2, One Item', function () {
+    it('aggressiveRating - IndexSortType 1, One Item', function () {
 
         var resourcePool = createResourcePool();
         var field = resourcePool.MainElement.ElementFieldSet[0];
-        field.IndexRatingSortType = 2;
+        field.IndexSortType = 1;
         field.IndexEnabled = true;
         var cell = field.ElementCellSet[0];
 
@@ -452,13 +452,13 @@ describe('ng Cell', function () {
         expect(cell.aggressiveRating()).toBe(0);
     });
 
-    it('aggressiveRating - RatingSortType 2 (Def.), Two Items', function () {
+    it('aggressiveRating - IndexSortType 1, Two Items', function () {
 
         var resourcePool = createResourcePool();
         var element = resourcePool.MainElement;
 
         var field = element.ElementFieldSet[0];
-        field.IndexRatingSortType = 2;
+        field.IndexSortType = 1;
         field.IndexEnabled = true;
 
         var cell1 = field.ElementCellSet[0];
@@ -499,7 +499,7 @@ describe('ng Cell', function () {
         var element = resourcePool.MainElement;
 
         var field = element.ElementFieldSet[0];
-        field.ElementFieldType = 11; // DirectIncome field type
+        field.DataType = 11; // DirectIncome field type
         field.IndexEnabled = true;
 
         var cell1 = field.ElementCellSet[0];

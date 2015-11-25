@@ -113,23 +113,14 @@
             var elementCell = dataContext.createEntity('ElementCell', elementCell);
 
             // User element cell
-            if (elementCell.ElementField.ElementFieldType !== 6) {
+            if (elementCell.ElementField.DataType !== 6) {
                 var userElementCell = dataContext.createEntity('UserElementCell', {
                     User: elementCell.ElementField.Element.ResourcePool.User,
                     ElementCell: elementCell
                 });
 
-                switch (elementCell.ElementField.ElementFieldType) {
-                    case 1: {
-                        userElementCell.StringValue = '';
-
-                        // Special name field
-                        if (elementCell.ElementField.Name === 'Name') {
-                            userElementCell.StringValue = elementCell.ElementItem.Name;
-                        }
-
-                        break;
-                    }
+                switch (elementCell.ElementField.DataType) {
+                    case 1: { userElementCell.StringValue = ''; break; }
                     case 2: { userElementCell.BooleanValue = false; break; }
                     case 3: { userElementCell.IntegerValue = 0; break; }
                     case 4: { userElementCell.DecimalValue = 50; break; }
@@ -197,37 +188,28 @@
                         Name: 'New element'
                     });
 
-                    // Name field
-                    var nameField = createElementField({
-                        Element: element,
-                        Name: 'Name',
-                        ElementFieldType: 1,
-                        UseFixedValue: true,
-                        SortOrder: 1
-                    });
-
                     // Importance field (index)
                     var importanceField = createElementField({
                         Element: element,
                         Name: 'Importance',
-                        ElementFieldType: 4,
+                        DataType: 4,
                         UseFixedValue: false,
                         IndexEnabled: true,
-                        IndexType: 2,
-                        IndexRatingSortType: 2,
-                        SortOrder: 2
+                        IndexCalculationType: 2,
+                        IndexSortType: 1,
+                        SortOrder: 1
                     });
 
                     // Item 1
                     var item1 = createElementItem({
                         Element: element,
-                        Name: 'New item 1' // ?
+                        Name: 'New item 1'
                     });
 
                     // Item 2
                     var item2 = createElementItem({
                         Element: element,
-                        Name: 'New item 2' // ?
+                        Name: 'New item 2'
                     });
 
                     return resourcePool;
@@ -260,29 +242,20 @@
                     resourcePool.ElementSet[0] = element1;
                     resourcePool.ElementSet[1] = element2;
 
-                    // Name field
-                    var nameField = createElementField({
-                        Element: element1,
-                        Name: 'Name',
-                        ElementFieldType: 1,
-                        UseFixedValue: true,
-                        SortOrder: 1
-                    });
-
                     // Child field (second element)
                     var childField = createElementField({
                         Element: element1,
                         Name: 'Child',
-                        ElementFieldType: 6,
+                        DataType: 6,
                         SelectedElement: element2,
                         UseFixedValue: true,
-                        SortOrder: 2
+                        SortOrder: 1
                     });
 
                     // Item 1
                     var item1 = createElementItem({
                         Element: element1,
-                        Name: 'Parent 1' // ?
+                        Name: 'Parent 1'
                     });
 
                     // Item 1 Cell
@@ -291,7 +264,7 @@
                     // Item 2
                     var item2 = createElementItem({
                         Element: element1,
-                        Name: 'Parent 2' // ?
+                        Name: 'Parent 2'
                     });
 
                     // Item 2 Cell
@@ -299,78 +272,6 @@
 
                     return resourcePool;
                 });
-        }
-
-        function getNewResourcePoolCreateEntityAsync() {
-
-            return userFactory.getCurrentUser()
-                .then(function (currentUser) {
-
-                    var resourcePoolInitial = {};
-                    resourcePoolInitial.User = currentUser;
-                    resourcePoolInitial.Name = 'New CMRP';
-                    resourcePoolInitial.InitialValue = 0;
-                    resourcePoolInitial.UseFixedResourcePoolRate = false;
-
-                    return dataContext.createEntity('ResourcePool', resourcePoolInitial)
-                        .then(function (resourcePool) {
-
-                            var elementInitial = {};
-                            elementInitial.ResourcePool = resourcePool;
-                            elementInitial.Name = 'Element';
-
-                            return dataContext.createEntity('Element', elementInitial)
-                                .then(function (element) {
-
-                                    // Name field
-                                    var nameFieldInitial = {};
-                                    nameFieldInitial.Element = element;
-                                    nameFieldInitial.Name = 'Name';
-                                    nameFieldInitial.ElementFieldType = 1;
-                                    nameFieldInitial.UseFixedValue = null;
-                                    nameFieldInitial.SortOrder = 1;
-
-                                    return dataContext.createEntity('ElementField', nameFieldInitial)
-                                        .then(function (nameField) {
-
-                                            var item1Initial = {};
-                                            item1Initial.Element = element;
-                                            item1Initial.Name = 'Item 1'; // ?
-
-                                            return dataContext.createEntity('ElementItem', item1Initial)
-                                                .then(function (item1) {
-
-                                                    var cell1Initial = {};
-                                                    cell1Initial.ElementField = nameField;
-                                                    cell1Initial.ElementItem = item1;
-
-                                                    return dataContext.createEntity('ElementCell', cell1Initial)
-                                                        .then(function (cell1) {
-
-                                                            var userCell1Initial = {};
-                                                            userCell1Initial.User = currentUser;
-                                                            userCell1Initial.ElementCell = cell1;
-                                                            userCell1Initial.StringValue = 'Item 1';
-
-                                                            return dataContext.createEntity('UserElementCell', userCell1Initial)
-                                                                .then(function (userCell1) {
-
-                                                                    return resourcePool;
-                                                                });
-                                                        });
-                                                });
-                                        });
-
-                                    //logger.log('cmrp id', cmrp.Id);
-                                    //logger.log('elm cmrp id', elm.ResourcePool.Id);
-                                    //logger.log('elm cmrp id 2', elm.ResourcePoolId);
-
-                                });
-
-                        });
-
-                });
-
         }
 
         function getResourcePoolExpanded(resourcePoolId) {

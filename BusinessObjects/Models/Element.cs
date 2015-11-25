@@ -29,8 +29,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects
 
             ResourcePool = resourcePool;
             Name = name;
-
-            AddField(name, ElementFieldTypes.String);
         }
 
         [DisplayOnListView(false)]
@@ -54,27 +52,21 @@ namespace forCrowd.WealthEconomy.BusinessObjects
 
         #region - ReadOnly Properties -
 
-        public ElementField NameField
-        {
-            // TODO Correct approach?
-            get { return ElementFieldSet.SingleOrDefault(item => item.SortOrder == 1); }
-        }
-
         public ElementField DirectIncomeField
         {
-            get { return ElementFieldSet.SingleOrDefault(item => item.ElementFieldType == (byte)ElementFieldTypes.DirectIncome); }
+            get { return ElementFieldSet.SingleOrDefault(item => item.DataType == (byte)ElementFieldDataType.DirectIncome); }
         }
 
         public ElementField MultiplierField
         {
-            get { return ElementFieldSet.SingleOrDefault(item => item.ElementFieldType == (byte)ElementFieldTypes.Multiplier); }
+            get { return ElementFieldSet.SingleOrDefault(item => item.DataType == (byte)ElementFieldDataType.Multiplier); }
         }
 
         #endregion
 
         #region - Methods -
 
-        public ElementField AddField(string name, ElementFieldTypes fieldType, bool? useFixedValue = null)
+        public ElementField AddField(string name, ElementFieldDataType fieldType, bool? useFixedValue = null)
         {
             var sortOrder = Convert.ToByte(ElementFieldSet.Count + 1);
             var field = new ElementField(this, name, fieldType, sortOrder, useFixedValue);

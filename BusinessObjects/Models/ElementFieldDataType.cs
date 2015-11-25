@@ -1,6 +1,6 @@
 namespace forCrowd.WealthEconomy.BusinessObjects
 {
-    public enum ElementFieldTypes : byte
+    public enum ElementFieldDataType : byte
     {
         /// <summary>
         /// A field that holds string value.

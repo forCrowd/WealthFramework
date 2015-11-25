@@ -190,7 +190,7 @@
                 var multiplierCell;
                 for (var cellIndex = 0; cellIndex < item.ElementCellSet.length; cellIndex++) {
                     var elementCell = item.ElementCellSet[cellIndex];
-                    if (elementCell.ElementField.ElementFieldType === 12) {
+                    if (elementCell.ElementField.DataType === 12) {
                         multiplierCell = elementCell;
                         break;
                     }
@@ -296,7 +296,7 @@
                 var multiplierCell;
                 for (var cellIndex = 0; cellIndex < item.ElementCellSet.length; cellIndex++) {
                     var elementCell = item.ElementCellSet[cellIndex];
-                    if (elementCell.ElementField.ElementFieldType === 12) {
+                    if (elementCell.ElementField.DataType === 12) {
                         multiplierCell = elementCell;
                         break;
                     }

@@ -170,18 +170,18 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="ElementFieldType" class="control-label col-md-2">Field Type</label>
-                            <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.ElementFieldType.$invalid && !elementFieldForm.ElementFieldType.$pristine}">
-                                <select id="ElementFieldType" name="ElementFieldType" data-ng-model="vm.elementField.ElementFieldType" data-ng-options="key for (key, value) in vm.elementFieldTypeFiltered()" class="form-control" required></select>
+                            <label for="DataType" class="control-label col-md-2">Data Type</label>
+                            <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.DataType.$invalid && !elementFieldForm.DataType.$pristine}">
+                                <select id="DataType" name="DataType" data-ng-model="vm.elementField.DataType" data-ng-options="key for (key, value) in vm.elementFieldDataTypeFiltered()" class="form-control" required></select>
                             </div>
                         </div>
-                        <div class="form-group" data-ng-if="vm.elementField.ElementFieldType === vm.ElementFieldType.Element">
+                        <div class="form-group" data-ng-if="vm.elementField.DataType === vm.ElementFieldDataType.Element">
                             <label for="SelectedElementId" class="control-label col-md-2">Selected Element</label>
                             <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.SelectedElementId.$invalid && !elementFieldForm.SelectedElementId.$pristine}">
                                 <select id="SelectedElementId" name="SelectedElementId" data-ng-model="vm.elementField.SelectedElement" data-ng-options="element.Name disable when element === vm.elementField.Element for element in vm.resourcePool.ElementSet" class="form-control" required></select>
                             </div>
                         </div>
-                        <div class="form-group" data-ng-if="vm.elementField.ElementFieldType !== vm.ElementFieldType.String && vm.elementField.ElementFieldType !== vm.ElementFieldType.Element">
+                        <div class="form-group" data-ng-if="vm.elementField.DataType !== vm.ElementFieldDataType.String && vm.elementField.DataType !== vm.ElementFieldDataType.Element">
                             <label for="UseFixedValue" class="control-label col-md-2">Use Fixed Value</label>
                             <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.UseFixedValue.$invalid && !elementFieldForm.UseFixedValue.$pristine}">
                                 <label class="radio-inline">
@@ -196,7 +196,7 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="form-group" data-ng-if="vm.elementField.ElementFieldType !== vm.ElementFieldType.String && vm.elementField.ElementFieldType !== vm.ElementFieldType.Element && vm.elementField.ElementFieldType !== vm.ElementFieldType.Multiplier">
+                        <div class="form-group" data-ng-if="vm.elementField.DataType !== vm.ElementFieldDataType.String && vm.elementField.DataType !== vm.ElementFieldDataType.Element && vm.elementField.DataType !== vm.ElementFieldDataType.Multiplier">
                             <label for="IndexEnabled" class="control-label col-md-2">Index Enabled</label>
                             <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.IndexEnabled.$invalid && !elementFieldForm.IndexEnabled.$pristine}">
                                 <label class="radio-inline">
@@ -212,10 +212,10 @@
                             </div>
                         </div>
                         <div class="form-group" data-ng-if="vm.elementField.IndexEnabled">
-                            <label for="IndexType" class="control-label col-md-2">Index Type</label>
-                            <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.IndexType.$invalid && !elementFieldForm.IndexType.$pristine}">
-                                <select id="IndexType" name="IndexType" data-ng-model="vm.elementField.IndexType" data-ng-options="key for (key, value) in vm.IndexType" class="form-control" aria-describedby="IndexTypeHelp" required></select>
-                                <span id="IndexTypeHelp" class="help-block">
+                            <label for="IndexCalculationType" class="control-label col-md-2">Index Calculation Type</label>
+                            <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.IndexCalculationType.$invalid && !elementFieldForm.IndexCalculationType.$pristine}">
+                                <select id="IndexCalculationType" name="IndexCalculationType" data-ng-model="vm.elementField.IndexCalculationType" data-ng-options="key for (key, value) in vm.ElementFieldIndexCalculationType" class="form-control" aria-describedby="IndexCalculationTypeHelp" required></select>
+                                <span id="IndexCalculationTypeHelp" class="help-block">
                                     Aggressive (Default): Uses the lowest score as the base (reference) rating in the group, then calculates the difference from that base.<br />
                                     Base rating (lowest) gets 0 from the pool and other items get an amount based on their difference.<br />
                                     Aims to maximize the benefit of the pool.<br />
@@ -227,10 +227,10 @@
                             </div>
                         </div>
                         <div class="form-group" data-ng-if="vm.elementField.IndexEnabled">
-                            <label for="IndexRatingSortType" class="control-label col-md-2">Index Rating Sort Type</label>
-                            <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.IndexRatingSortType.$invalid && !elementFieldForm.IndexRatingSortType.$pristine}">
-                                <select id="IndexRatingSortType" name="IndexRatingSortType" data-ng-model="vm.elementField.IndexRatingSortType" data-ng-options="key for (key, value) in vm.IndexRatingSortType" class="form-control" aria-describedby="IndexRatingSortTypeHelp" required></select>
-                                <span id="IndexRatingSortTypeHelp" class="help-block">
+                            <label for="IndexSortType" class="control-label col-md-2">Index Sort Type</label>
+                            <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.IndexSortType.$invalid && !elementFieldForm.IndexSortType.$pristine}">
+                                <select id="IndexSortType" name="IndexSortType" data-ng-model="vm.elementField.IndexSortType" data-ng-options="key for (key, value) in vm.IndexSortType" class="form-control" aria-describedby="IndexSortTypeHelp" required></select>
+                                <span id="IndexSortTypeHelp" class="help-block">
                                     Determines whether the higher values will receive more from the pool, or the lower values.
                                 </span>
                             </div>
@@ -291,7 +291,7 @@
                             {{ elementField.Name }}
                         </td>
                         <td>
-                            {{ elementField.ElementFieldType | enum: 'ElementFieldType' }}
+                            {{ elementField.DataType | enum: 'ElementFieldDataType' }}
                         </td>
                         <td>
                             {{ elementField.IndexEnabled }}
@@ -423,13 +423,13 @@
                             <label class="control-label col-md-2">Element Item</label>
                             <p data-ng-bind="vm.elementCell.ElementItem.Name" class="form-control-static col-md-10"></p>
                         </div>
-                        <div class="form-group" data-ng-if="vm.elementCell.ElementField.ElementFieldType === vm.ElementFieldType.String">
+                        <div class="form-group" data-ng-if="vm.elementCell.ElementField.DataType === vm.ElementFieldDataType.String">
                             <label for="StringValue" class="control-label col-md-2">Value</label>
                             <div class="col-md-10" data-ng-class="{'has-error': elementCellForm.StringValue.$invalid && !elementCellForm.StringValue.$pristine}">
                                 <input id="StringValue" name="StringValue" type="text" data-ng-model="vm.elementCell.UserElementCellSet[0].StringValue" class="form-control" required />
                             </div>
                         </div>
-                        <div class="form-group" data-ng-if="vm.elementCell.ElementField.ElementFieldType === vm.ElementFieldType.Boolean">
+                        <div class="form-group" data-ng-if="vm.elementCell.ElementField.DataType === vm.ElementFieldDataType.Boolean">
                             <label for="BooleanValue" class="control-label col-md-2">Value</label>
                             <div class="col-md-10" data-ng-class="{'has-error': elementCellForm.BooleanValue.$invalid && !elementCellForm.BooleanValue.$pristine}">
                                 <label class="radio-inline">
@@ -440,19 +440,19 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="form-group" data-ng-if="vm.elementCell.ElementField.ElementFieldType === vm.ElementFieldType.Integer">
+                        <div class="form-group" data-ng-if="vm.elementCell.ElementField.DataType === vm.ElementFieldDataType.Integer">
                             <label for="IntegerValue" class="control-label col-md-2">Value</label>
                             <div class="col-md-10" data-ng-class="{'has-error': elementCellForm.IntegerValue.$invalid && !elementCellForm.IntegerValue.$pristine}">
                                 <input id="IntegerValue" name="IntegerValue" type="text" data-ng-model="vm.elementCell.UserElementCellSet[0].IntegerValue" class="form-control" required />
                             </div>
                         </div>
-                        <div class="form-group" data-ng-if="vm.elementCell.ElementField.ElementFieldType === vm.ElementFieldType.Decimal || vm.elementCell.ElementField.ElementFieldType === vm.ElementFieldType.DirectIncome || vm.elementCell.ElementField.ElementFieldType === vm.ElementFieldType.Multiplier">
+                        <div class="form-group" data-ng-if="vm.elementCell.ElementField.DataType === vm.ElementFieldDataType.Decimal || vm.elementCell.ElementField.DataType === vm.ElementFieldDataType.DirectIncome || vm.elementCell.ElementField.DataType === vm.ElementFieldDataType.Multiplier">
                             <label for="DecimalValue" class="control-label col-md-2">Value</label>
                             <div class="col-md-10" data-ng-class="{'has-error': elementCellForm.DecimalValue.$invalid && !elementCellForm.DecimalValue.$pristine}">
                                 <input id="DecimalValue" name="DecimalValue" type="text" data-ng-model="vm.elementCell.UserElementCellSet[0].DecimalValue" class="form-control" required />
                             </div>
                         </div>
-                        <div class="form-group" data-ng-if="vm.elementCell.ElementField.ElementFieldType === vm.ElementFieldType.Element">
+                        <div class="form-group" data-ng-if="vm.elementCell.ElementField.DataType === vm.ElementFieldDataType.Element">
                             <label for="SelectedElementItemId" class="control-label col-md-2">Selected Item</label>
                             <div class="col-md-10" data-ng-class="{'has-error': elementCellForm.SelectedElementItemId.$invalid && !elementCellForm.SelectedElementItemId.$pristine}">
                                 <select id="SelectedElementItemId" name="SelectedElementItemId" data-ng-model="vm.elementCell.SelectedElementItem" data-ng-options="elementItem.Name for elementItem in vm.elementCell.ElementField.SelectedElement.ElementItemSet" class="form-control" required></select>

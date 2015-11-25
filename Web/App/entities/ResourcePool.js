@@ -72,7 +72,7 @@
                                     var cell = field.ElementCellSet[cellIndex];
 
                                     // Cell calculations
-                                    switch (field.ElementFieldType) {
+                                    switch (field.DataType) {
                                         case 2:
                                         case 3:
                                         case 4:

@@ -404,7 +404,6 @@
     <Content Include="App\controllers\manage\resourcePool\resourcePoolCustomEditController.js" />
     <Content Include="App\controllers\manage\resourcePool\resourcePoolCustomViewController.js" />
     <Content Include="App\controllers\manage\resourcePool\resourcePoolCustomListController.js" />
-    <Content Include="App\directives\resourcePoolEditor\resourcePoolEditorModal.html" />
     <Content Include="App\directives\resourcePoolEditor\resourcePoolEditor.js" />
     <Content Include="App\directives\resourcePoolEditor\resourcePoolEditor.css" />
     <Content Include="App\entities\Enums.js" />

@@ -116,7 +116,7 @@
             var sectorElement = resourcePool.AddElement("Sector");
 
             // Importance field
-            var importanceField = sectorElement.AddField("Sector Rating", ElementFieldTypes.Decimal, false);
+            var importanceField = sectorElement.AddField("Sector Rating", ElementFieldDataType.Decimal, false);
             importanceField.EnableIndex();
 
             // Items, cells, user cells
@@ -129,7 +129,7 @@
             var mainElement = resourcePool.ElementSet.First();
             mainElement.DirectIncomeField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Number of Sales";
-            var sectorField = mainElement.AddField("Sector", ElementFieldTypes.Element);
+            var sectorField = mainElement.AddField("Sector", ElementFieldDataType.Element);
             sectorField.SelectedElement = sectorElement;
 
             // Items, cell, user cells
@@ -175,11 +175,11 @@
             var licenseElement = resourcePool.AddElement("License");
 
             // Fields
-            var rightToUseField = licenseElement.AddField("Right to Use", ElementFieldTypes.String);
-            var rightToCopyField = licenseElement.AddField("Right to Copy", ElementFieldTypes.String);
-            var rightToModifyField = licenseElement.AddField("Right to Modify", ElementFieldTypes.String);
-            var rightToSellField = licenseElement.AddField("Right to Sell", ElementFieldTypes.String);
-            var licenseRatingField = licenseElement.AddField("License Rating", ElementFieldTypes.Decimal, false);
+            var rightToUseField = licenseElement.AddField("Right to Use", ElementFieldDataType.String);
+            var rightToCopyField = licenseElement.AddField("Right to Copy", ElementFieldDataType.String);
+            var rightToModifyField = licenseElement.AddField("Right to Modify", ElementFieldDataType.String);
+            var rightToSellField = licenseElement.AddField("Right to Sell", ElementFieldDataType.String);
+            var licenseRatingField = licenseElement.AddField("License Rating", ElementFieldDataType.Decimal, false);
             licenseRatingField.EnableIndex();
 
             // Items, cell, user cells
@@ -201,7 +201,7 @@
             var mainElement = resourcePool.ElementSet.First();
             mainElement.DirectIncomeField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Number of Sales";
-            var licenseField = mainElement.AddField("License", ElementFieldTypes.Element);
+            var licenseField = mainElement.AddField("License", ElementFieldDataType.Element);
             licenseField.SelectedElement = licenseElement;
 
             // Items, cell, user cells
@@ -238,8 +238,8 @@
             var licenseElement = resourcePool.AddElement("License");
 
             // Fields
-            var linkField = licenseElement.AddField("Link", ElementFieldTypes.String);
-            var importanceField = licenseElement.AddField("License Rating", ElementFieldTypes.Decimal, false);
+            var linkField = licenseElement.AddField("Link", ElementFieldDataType.String);
+            var importanceField = licenseElement.AddField("License Rating", ElementFieldDataType.Decimal, false);
             importanceField.EnableIndex();
 
             // Items, cell, user cells
@@ -278,7 +278,7 @@
             var mainElement = resourcePool.ElementSet.First();
             mainElement.DirectIncomeField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Number of Sales";
-            var licenseField = mainElement.AddField("License", ElementFieldTypes.Element);
+            var licenseField = mainElement.AddField("License", ElementFieldDataType.Element);
             licenseField.SelectedElement = licenseElement;
 
             // Items, cell, user cells
@@ -319,8 +319,8 @@
             var mainElement = resourcePool.ElementSet.First();
 
             // Fields
-            var linkField = mainElement.AddField("Link", ElementFieldTypes.String);
-            var importanceField = mainElement.AddField("License Rating", ElementFieldTypes.Decimal, false);
+            var linkField = mainElement.AddField("Link", ElementFieldDataType.String);
+            var importanceField = mainElement.AddField("License Rating", ElementFieldDataType.Decimal, false);
             importanceField.EnableIndex();
 
             // Items, cell, user cells
@@ -371,33 +371,37 @@
             var mainElement = resourcePool.ElementSet.First();
 
             // Fields
-            var importanceField = mainElement.AddField("License Rating", ElementFieldTypes.Decimal, false);
+            var importanceField = mainElement.AddField("License Rating", ElementFieldDataType.Decimal, false);
             importanceField.EnableIndex();
 
             // Items, cell, user cells
-            mainElement.ElementItemSet.Skip(0).First().Name = "Apache-2.0";
-            mainElement.ElementItemSet.Skip(0).First().NameCell.SetValue("<a href='http://opensource.org/licenses/Apache-2.0' target='_blank'>Apache-2.0</a>");
+            mainElement.ElementItemSet.Skip(0).First().Name = "<a href='http://opensource.org/licenses/Apache-2.0' target='_blank'>Apache-2.0</a>";
+            //mainElement.ElementItemSet.Skip(0).First().Name = "Apache-2.0";
+            //mainElement.ElementItemSet.Skip(0).First().NameCell.SetValue("<a href='http://opensource.org/licenses/Apache-2.0' target='_blank'>Apache-2.0</a>");
             mainElement.ElementItemSet.Skip(0).First().AddCell(importanceField);
 
             //mainElement.ElementItemSet.Skip(1).First().Name = "BSD-3-Clause";
             //mainElement.ElementItemSet.Skip(1).First().NameCell.SetValue("<a href='http://opensource.org/licenses/BSD-3-Clause' target='_blank'>BSD-3-Clause</a>");
             //mainElement.ElementItemSet.Skip(1).First().AddCell(importanceField).SetValue(ratingPerLicense);
 
-            mainElement.ElementItemSet.Skip(1).First().Name = "GPL-3.0";
-            mainElement.ElementItemSet.Skip(1).First().NameCell.SetValue("<a href='http://opensource.org/licenses/GPL-3.0' target='_blank'>GPL-3.0</a>");
+            mainElement.ElementItemSet.Skip(1).First().Name = "<a href='http://opensource.org/licenses/GPL-3.0' target='_blank'>GPL-3.0</a>";
+            //mainElement.ElementItemSet.Skip(1).First().Name = "GPL-3.0";
+            //mainElement.ElementItemSet.Skip(1).First().NameCell.SetValue("<a href='http://opensource.org/licenses/GPL-3.0' target='_blank'>GPL-3.0</a>");
             mainElement.ElementItemSet.Skip(1).First().AddCell(importanceField);
 
             //mainElement.ElementItemSet.Skip(3).First().Name = "LGPL-3.0";
             //mainElement.ElementItemSet.Skip(3).First().NameCell.SetValue("<a href='http://opensource.org/licenses/LGPL-3.0' target='_blank'>LGPL-3.0</a>");
             //mainElement.ElementItemSet.Skip(3).First().AddCell(importanceField).SetValue(ratingPerLicense);
 
-            mainElement.ElementItemSet.Skip(2).First().Name = "MIT";
-            mainElement.ElementItemSet.Skip(2).First().NameCell.SetValue("<a href='http://opensource.org/licenses/MIT' target='_blank'>MIT</a>");
+            mainElement.ElementItemSet.Skip(2).First().Name = "<a href='http://opensource.org/licenses/MIT' target='_blank'>MIT</a>";
+            //mainElement.ElementItemSet.Skip(2).First().Name = "MIT";
+            //mainElement.ElementItemSet.Skip(2).First().NameCell.SetValue("<a href='http://opensource.org/licenses/MIT' target='_blank'>MIT</a>");
             mainElement.ElementItemSet.Skip(2).First().AddCell(importanceField);
 
             // TODO Check it again
-            mainElement.ElementItemSet.Skip(3).First().Name = "EULA (Wikipedia)";
-            mainElement.ElementItemSet.Skip(3).First().NameCell.SetValue("<a href='http://en.wikipedia.org/wiki/End-user_license_agreement' target='_blank'>EULA (Wikipedia)</a>");
+            mainElement.ElementItemSet.Skip(3).First().Name = "<a href='http://en.wikipedia.org/wiki/End-user_license_agreement' target='_blank'>EULA (Wikipedia)</a>";
+            //mainElement.ElementItemSet.Skip(3).First().Name = "EULA (Wikipedia)";
+            //mainElement.ElementItemSet.Skip(3).First().NameCell.SetValue("<a href='http://en.wikipedia.org/wiki/End-user_license_agreement' target='_blank'>EULA (Wikipedia)</a>");
             mainElement.ElementItemSet.Skip(3).First().AddCell(importanceField);
 
             // Return
@@ -459,7 +463,7 @@
             mainElement.MultiplierField.Name = "Number of Sales";
 
             // Resource pool index; use to Sales Price itself
-            mainElement.DirectIncomeField.EnableIndex(IndexRatingSortType.LowestToHighest);
+            mainElement.DirectIncomeField.EnableIndex(ElementFieldIndexSortType.LowestToHighest);
 
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).First().Name = "Average Profit";
@@ -496,7 +500,7 @@
             mainElement.MultiplierField.SortOrder = 3;
 
             // Resource pool index; use to Sales Price itself
-            mainElement.DirectIncomeField.EnableIndex(IndexRatingSortType.LowestToHighest);
+            mainElement.DirectIncomeField.EnableIndex(ElementFieldIndexSortType.LowestToHighest);
 
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).First().Name = "<s>Average Profit</s>";
@@ -531,7 +535,7 @@
             mainElement.MultiplierField.Name = "Number of Sales";
 
             // Resource pool index; use to Sales Price itself
-            resourcePool.ElementSet.First().DirectIncomeField.EnableIndex(IndexRatingSortType.LowestToHighest);
+            resourcePool.ElementSet.First().DirectIncomeField.EnableIndex(ElementFieldIndexSortType.LowestToHighest);
 
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).First().Name = "Lowlands";
@@ -563,8 +567,8 @@
             var fairShareElement = resourcePool.AddElement("Fair Share");
 
             // Fields
-            var fairShareDesciptionField = fairShareElement.AddField("Description", ElementFieldTypes.String);
-            var fairShareImportanceField = fairShareElement.AddField("Fair Share Rating", ElementFieldTypes.Decimal, false);
+            var fairShareDesciptionField = fairShareElement.AddField("Description", ElementFieldDataType.String);
+            var fairShareImportanceField = fairShareElement.AddField("Fair Share Rating", ElementFieldDataType.Decimal, false);
             fairShareImportanceField.EnableIndex();
 
             // Items, cell, user cells
@@ -580,7 +584,7 @@
             var mainElement = resourcePool.ElementSet.First();
             mainElement.DirectIncomeField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Number of Sales";
-            var fairShareField = mainElement.AddField("Fair Share", ElementFieldTypes.Element);
+            var fairShareField = mainElement.AddField("Fair Share", ElementFieldDataType.Element);
             fairShareField.SelectedElement = fairShareElement;
 
             // Items, cell, user cells
@@ -614,8 +618,8 @@
             //var fairShareElement = resourcePool.AddElement("Fair Share");
 
             //// Fields
-            //var fairShareDesciptionField = fairShareElement.AddField("Description", ElementFieldTypes.String);
-            //var fairShareImportanceField = fairShareElement.AddField("Rating", ElementFieldTypes.Decimal, false);
+            //var fairShareDesciptionField = fairShareElement.AddField("Description", ElementFieldDataType.String);
+            //var fairShareImportanceField = fairShareElement.AddField("Rating", ElementFieldDataType.Decimal, false);
             //fairShareImportanceField.AddIndex("Fair Share Index");
 
             //// Items, cell, user cells
@@ -634,18 +638,18 @@
             mainElement.MultiplierField.Name = "Number of Sales";
 
             // Sector Index
-            var sectorField = resourcePool.ElementSet.First().AddField("Sector", ElementFieldTypes.Decimal, true);
+            var sectorField = resourcePool.ElementSet.First().AddField("Sector", ElementFieldDataType.Decimal, true);
             sectorField.EnableIndex();
 
             // Knowledge Index
-            var licenseField = resourcePool.ElementSet.First().AddField("License", ElementFieldTypes.Decimal, true);
+            var licenseField = resourcePool.ElementSet.First().AddField("License", ElementFieldDataType.Decimal, true);
             licenseField.EnableIndex();
 
             // Total Cost Index
-            mainElement.DirectIncomeField.EnableIndex(IndexRatingSortType.LowestToHighest);
+            mainElement.DirectIncomeField.EnableIndex(ElementFieldIndexSortType.LowestToHighest);
 
             // Fair Share Index
-            var fairShareField = resourcePool.ElementSet.First().AddField("Fair Share", ElementFieldTypes.Decimal, true);
+            var fairShareField = resourcePool.ElementSet.First().AddField("Fair Share", ElementFieldDataType.Decimal, true);
             fairShareField.EnableIndex();
 
             //mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).Name = "Rating";
@@ -664,7 +668,7 @@
             //mainElement.ElementItemSet.Skip(1).First().AddCell(licenseField).SetValue(25M);
 
             // mainElement.ElementItemSet.Skip(1).First().Name = "Organization B";
-            // var fairShareField = mainElement.AddField("Fair Share", ElementFieldTypes.Element);
+            // var fairShareField = mainElement.AddField("Fair Share", ElementFieldDataType.Element);
             // fairShareField.SelectedElement = fairShareElement;
 
             // Items, cell, user cells
@@ -697,8 +701,8 @@
             //var fairShareElement = resourcePool.AddElement("Fair Share");
 
             //// Fields
-            //var fairShareDesciptionField = fairShareElement.AddField("Description", ElementFieldTypes.String);
-            //var fairShareImportanceField = fairShareElement.AddField("Rating", ElementFieldTypes.Decimal, false);
+            //var fairShareDesciptionField = fairShareElement.AddField("Description", ElementFieldDataType.String);
+            //var fairShareImportanceField = fairShareElement.AddField("Rating", ElementFieldDataType.Decimal, false);
             //fairShareImportanceField.AddIndex("Fair Share Index");
 
             //// Items, cell, user cells
@@ -717,17 +721,17 @@
             mainElement.MultiplierField.Name = "Number of Sales";
 
             // 1. index
-            mainElement.DirectIncomeField.EnableIndex(IndexRatingSortType.LowestToHighest);
+            mainElement.DirectIncomeField.EnableIndex(ElementFieldIndexSortType.LowestToHighest);
 
             //mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).Name = "Rating";
             //mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).ElementFieldIndex.Name = "Employee Satisfaction";
 
             // 2. index
-            var importanceField1 = resourcePool.ElementSet.First().AddField("Importance Field 1", ElementFieldTypes.Decimal, false);
+            var importanceField1 = resourcePool.ElementSet.First().AddField("Importance Field 1", ElementFieldDataType.Decimal, false);
             importanceField1.EnableIndex();
 
             // 3. index
-            var importanceField2 = resourcePool.ElementSet.First().AddField("Importance Field 2", ElementFieldTypes.Decimal, false);
+            var importanceField2 = resourcePool.ElementSet.First().AddField("Importance Field 2", ElementFieldDataType.Decimal, false);
             importanceField2.EnableIndex();
 
             // Items, cell, user cells
@@ -742,7 +746,7 @@
             mainElement.ElementItemSet.Skip(1).First().AddCell(importanceField2).SetValue(25M);
             
             // mainElement.ElementItemSet.Skip(1).First().Name = "Organization B";
-            // var fairShareField = mainElement.AddField("Fair Share", ElementFieldTypes.Element);
+            // var fairShareField = mainElement.AddField("Fair Share", ElementFieldDataType.Element);
             // fairShareField.SelectedElement = fairShareElement;
 
             // Items, cell, user cells
@@ -774,8 +778,8 @@
             //var fairShareElement = resourcePool.AddElement("Fair Share");
 
             //// Fields
-            //var fairShareDesciptionField = fairShareElement.AddField("Description", ElementFieldTypes.String);
-            //var fairShareImportanceField = fairShareElement.AddField("Rating", ElementFieldTypes.Decimal, false);
+            //var fairShareDesciptionField = fairShareElement.AddField("Description", ElementFieldDataType.String);
+            //var fairShareImportanceField = fairShareElement.AddField("Rating", ElementFieldDataType.Decimal, false);
             //fairShareImportanceField.AddIndex("Fair Share Index");
 
             //// Items, cell, user cells
@@ -794,17 +798,17 @@
             mainElement.MultiplierField.Name = "Number of Sales";
 
             // 1. index
-            //mainElement.ResourcePoolField.AddIndex("Total Cost Index", IndexRatingSortType.LowestToHighest);
+            //mainElement.ResourcePoolField.AddIndex("Total Cost Index", ElementFieldIndexSortType.LowestToHighest);
 
             //mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).Name = "Rating";
             //mainElement.ElementFieldSet.Single(item => item.ElementFieldIndexSet.Any()).ElementFieldIndex.Name = "Employee Satisfaction";
 
             // 2. index
-            var veryImportantField = resourcePool.ElementSet.First().AddField("Very Important Index", ElementFieldTypes.Decimal, false);
+            var veryImportantField = resourcePool.ElementSet.First().AddField("Very Important Index", ElementFieldDataType.Decimal, false);
             veryImportantField.EnableIndex();
 
             // 3. index
-            //var importanceField2 = resourcePool.ElementSet.First().AddField("Importance Field 2", ElementFieldTypes.Decimal, false);
+            //var importanceField2 = resourcePool.ElementSet.First().AddField("Importance Field 2", ElementFieldDataType.Decimal, false);
             //importanceField2.AddIndex("Importance Index 2");
 
             // Items, cell, user cells
@@ -827,7 +831,7 @@
             //mainElement.ElementItemSet.Skip(1).First().AddCell(importanceField2).SetValue(25M);
 
             // mainElement.ElementItemSet.Skip(1).First().Name = "Organization B";
-            // var fairShareField = mainElement.AddField("Fair Share", ElementFieldTypes.Element);
+            // var fairShareField = mainElement.AddField("Fair Share", ElementFieldDataType.Element);
             // fairShareField.SelectedElement = fairShareElement;
 
             // Items, cell, user cells
@@ -859,7 +863,7 @@
             var sectorElement = resourcePool.AddElement("Sector");
 
             // Fields
-            var sectorRatingField = sectorElement.AddField("Sector Rating", ElementFieldTypes.Decimal, false);
+            var sectorRatingField = sectorElement.AddField("Sector Rating", ElementFieldDataType.Decimal, false);
             sectorRatingField.EnableIndex();
 
             // Items, cells, user cells
@@ -872,11 +876,11 @@
             var licenseElement = resourcePool.AddElement("License");
 
             // Fields
-            var rightToUseField = licenseElement.AddField("Right to Use", ElementFieldTypes.String);
-            var rightToCopyField = licenseElement.AddField("Right to Copy", ElementFieldTypes.String);
-            var rightToModifyField = licenseElement.AddField("Right to Modify", ElementFieldTypes.String);
-            var rightToSellField = licenseElement.AddField("Right to Sell", ElementFieldTypes.String);
-            var licenseRatingField = licenseElement.AddField("License Rating", ElementFieldTypes.Decimal, false);
+            var rightToUseField = licenseElement.AddField("Right to Use", ElementFieldDataType.String);
+            var rightToCopyField = licenseElement.AddField("Right to Copy", ElementFieldDataType.String);
+            var rightToModifyField = licenseElement.AddField("Right to Modify", ElementFieldDataType.String);
+            var rightToSellField = licenseElement.AddField("Right to Sell", ElementFieldDataType.String);
+            var licenseRatingField = licenseElement.AddField("License Rating", ElementFieldDataType.Decimal, false);
             licenseRatingField.EnableIndex();
 
             // Items, cell, user cells
@@ -898,8 +902,8 @@
             var fairShareElement = resourcePool.AddElement("Fair Share");
 
             // Fields
-            var fairShareDesciptionField = fairShareElement.AddField("Description", ElementFieldTypes.String);
-            var fairShareRatingField = fairShareElement.AddField("Fair Share Rating", ElementFieldTypes.Decimal, false);
+            var fairShareDesciptionField = fairShareElement.AddField("Description", ElementFieldDataType.String);
+            var fairShareRatingField = fairShareElement.AddField("Fair Share Rating", ElementFieldDataType.Decimal, false);
             fairShareRatingField.EnableIndex();
 
             // Items, cell, user cells
@@ -916,17 +920,17 @@
             mainElement.DirectIncomeField.Name = "Sales Price";
             mainElement.MultiplierField.Name = "Number of Sales";
             
-            var sectorField = mainElement.AddField("Sector", ElementFieldTypes.Element);
+            var sectorField = mainElement.AddField("Sector", ElementFieldDataType.Element);
             sectorField.SelectedElement = sectorElement;
             
-            var licenseField = mainElement.AddField("License", ElementFieldTypes.Element);
+            var licenseField = mainElement.AddField("License", ElementFieldDataType.Element);
             licenseField.SelectedElement = licenseElement;
             
-            var fairShareField = mainElement.AddField("Fair Share", ElementFieldTypes.Element);
+            var fairShareField = mainElement.AddField("Fair Share", ElementFieldDataType.Element);
             fairShareField.SelectedElement = fairShareElement;
             
             // Resource pool index; use to Sales Price itself
-            mainElement.DirectIncomeField.EnableIndex(IndexRatingSortType.LowestToHighest);
+            mainElement.DirectIncomeField.EnableIndex(ElementFieldIndexSortType.LowestToHighest);
 
             // Items, cell, user cells
             var itemIndex = 0;
@@ -1178,7 +1182,7 @@
 
             // Fields
             mainElement.ElementFieldSet.Single(item => item.IndexEnabled).Name = "Rating";
-            mainElement.ElementFieldSet.Single(item => item.IndexEnabled).IndexType = (byte)IndexType.Passive;
+            mainElement.ElementFieldSet.Single(item => item.IndexEnabled).IndexCalculationType = (byte)ElementFieldIndexCalculationType.Passive;
 
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).First().Name = "Cosmetics: Curing baldness";
@@ -1208,17 +1212,17 @@
 
             // Resource pool field
             if (addDirectIncomeField)
-                element.AddField("Direct Income", ElementFieldTypes.DirectIncome, true);
+                element.AddField("Direct Income", ElementFieldDataType.DirectIncome, true);
 
             // Multiplier field
             if (addMultiplierField)
-                element.AddField("Multiplier", ElementFieldTypes.Multiplier);
+                element.AddField("Multiplier", ElementFieldDataType.Multiplier);
 
             // Importance field
             ElementField importanceField = null;
             if (addImportanceIndex)
             {
-                importanceField = element.AddField("Importance Field", ElementFieldTypes.Decimal, false);
+                importanceField = element.AddField("Importance Field", ElementFieldDataType.Decimal, false);
                 importanceField.EnableIndex();
             }
 
