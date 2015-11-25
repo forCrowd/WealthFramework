@@ -229,7 +229,7 @@
                         <div class="form-group" data-ng-if="vm.elementField.IndexEnabled">
                             <label for="IndexSortType" class="control-label col-md-2">Index Sort Type</label>
                             <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.IndexSortType.$invalid && !elementFieldForm.IndexSortType.$pristine}">
-                                <select id="IndexSortType" name="IndexSortType" data-ng-model="vm.elementField.IndexSortType" data-ng-options="key for (key, value) in vm.IndexSortType" class="form-control" aria-describedby="IndexSortTypeHelp" required></select>
+                                <select id="IndexSortType" name="IndexSortType" data-ng-model="vm.elementField.IndexSortType" data-ng-options="key for (key, value) in vm.ElementFieldIndexSortType" class="form-control" aria-describedby="IndexSortTypeHelp" required></select>
                                 <span id="IndexSortTypeHelp" class="help-block">
                                     Determines whether the higher values will receive more from the pool, or the lower values.
                                 </span>
@@ -522,7 +522,7 @@
         </uib-tab>
     </uib-tabset>
     <div data-ng-if="!(vm.isElementEdit || vm.isElementFieldEdit || vm.isElementItemEdit || vm.isElementCellEdit)">
-        <button type="submit" data-ng-bind="vm.isNew ? 'Create' : 'Save CMRP'" data-ng-click="vm.saveResourcePool()" data-ng-disabled="!vm.isSaveEnabled()" class="btn btn-primary"></button>
+        <button type="submit" data-ng-bind="vm.isNew ? 'Create CMRP' : 'Save CMRP'" data-ng-click="vm.saveResourcePool()" data-ng-disabled="!vm.isSaveEnabled()" class="btn btn-primary"></button>
         <button type="button" data-ng-click="vm.cancelResourcePool()" class="btn btn-default">
             Cancel
         </button>

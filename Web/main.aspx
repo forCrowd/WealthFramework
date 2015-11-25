@@ -170,7 +170,7 @@
     <script src="/App/controllers/content/fairShareIndexSampleController.js?v=0.37"></script>
     <script src="/App/controllers/content/indexesPieSampleController.js?v=0.37"></script>
     <script src="/App/controllers/content/resourcePoolRateSampleController.js?v=0.29"></script>
-    <script src="/App/controllers/content/closingNotesController.js?v=0.29"></script>
+    <script src="/App/controllers/content/closingNotesController.js?v=0.37"></script>
 
     <!-- Resource Pool -->
     <script src="/App/controllers/resourcePool/resourcePoolEditController.js?v=0.37"></script>

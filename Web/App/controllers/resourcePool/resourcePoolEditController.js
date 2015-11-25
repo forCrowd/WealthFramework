@@ -251,7 +251,7 @@
 
         function elementFieldIndexEnabledChanged() {
             vm.elementField.IndexCalculationType = vm.elementField.IndexEnabled ? 1 : 0;
-            vm.elementField.IndexSortType = vm.elementField.IndexEnabled ? 2 : 0;
+            vm.elementField.IndexSortType = vm.elementField.IndexEnabled ? 1 : 0;
         }
 
         function elementFieldSet() {
