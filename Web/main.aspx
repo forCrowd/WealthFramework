@@ -23,7 +23,7 @@
     <script src="/Scripts/modernizr-2.8.3.js"></script>-->
 
     <!-- Google Analytics -->
-<%--    <script>
+    <script>
         (function (i, s, o, g, r, a, m) {
             //return;
             i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
@@ -35,7 +35,7 @@
         ga('create', 'UA-62498767-2', 'auto');
         ga('send', 'pageview');
 
-    </script>--%>
+    </script>
 </head>
 <body data-ng-app="main" data-ng-controller="mainController as vm">
     <div class="navbar navbar-inverse navbar-fixed-top">

@@ -3,11 +3,13 @@
         <div class="col-md-12">
 
             <!-- Create New -->
-            <h3>Make Your Own Kind of CMRP</h3>
-            <p>
-                Now it's possible to create your own simulations, would like to try?<br />
-                <a href="/resourcePool/new">Create a new CMRP</a>
-            </p>
+            <div data-ng-if="vm.isAuthenticated">
+                <h3>Make Your Own Kind of CMRP</h3>
+                <p>
+                    Now it's possible to create your own simulations, would you like to try?<br />
+                    <a href="/resourcePool/new">Create a new CMRP</a>
+                </p>
+            </div>
             <!-- License -->
             <h3>
                 It's Open Source!
