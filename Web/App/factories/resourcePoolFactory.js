@@ -182,7 +182,7 @@
                     var resourcePool = dataContext.createEntity('ResourcePool', {
                         User: currentUser,
                         Name: 'New CMRP',
-                        InitialValue: 0,
+                        InitialValue: 100,
                         UseFixedResourcePoolRate: false
                     });
 

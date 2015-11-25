@@ -39,8 +39,10 @@
         vm.elementCellMaster = null;
         vm.elementCellSet = elementCellSet;
         vm.elementField = null;
+        vm.elementFieldIndexEnabledChanged = elementFieldIndexEnabledChanged;
         vm.elementFieldMaster = null;
         vm.elementFieldSet = elementFieldSet;
+        vm.elementFieldTypeFiltered = elementFieldTypeFiltered;
         vm.elementItem = null;
         vm.elementItemMaster = null;
         vm.elementItemSet = elementItemSet;
@@ -71,32 +73,8 @@
 
         // Enums
         vm.ElementFieldType = Enums.ElementFieldType;
-
-        // TODO Review this!
-        vm.filteredElementFieldType = function (element) {
-
-            var result = {};
-            for (var key in vm.ElementFieldType) {
-                if (key === 'DirectIncome' || key === 'Multiplier') {
-                    var dontAdd = false;
-                    angular.forEach(vm.elementField.Element.ElementFieldSet, function (field) {
-                        if (field.ElementFieldType === vm.ElementFieldType[key]) {
-                            dontAdd = true;
-                        }
-                    });
-
-                    if (!dontAdd) {
-                        result[key] = vm.ElementFieldType[key];
-                    }
-                } else {
-                    result[key] = vm.ElementFieldType[key];
-                }
-            }
-            return result;
-        }
-
-        vm.IndexType = Enums.IndexType;
         vm.IndexRatingSortType = Enums.IndexRatingSortType;
+        vm.IndexType = Enums.IndexType;
 
         init();
 
@@ -271,6 +249,11 @@
             return list;
         }
 
+        function elementFieldIndexEnabledChanged() {
+            vm.elementField.IndexType = vm.elementField.IndexEnabled ? 1 : 0;
+            vm.elementField.IndexRatingSortType = vm.elementField.IndexEnabled ? 2 : 0;
+        }
+
         function elementFieldSet() {
             var list = [];
             for (var i = 0; i < vm.resourcePool.ElementSet.length; i++) {
@@ -280,6 +263,31 @@
                 }
             }
             return list;
+        }
+
+        function elementFieldTypeFiltered() {
+
+            var filtered = {};
+            for (var key in vm.ElementFieldType) {
+
+                // These types can be added only once at the moment
+                if (key === 'DirectIncome' || key === 'Multiplier') {
+                    var exists = false;
+                    angular.forEach(vm.elementField.Element.ElementFieldSet, function (field) {
+                        if (field.ElementFieldType === vm.ElementFieldType[key]) {
+                            exists = true;
+                        }
+                    });
+
+                    if (!exists) {
+                        filtered[key] = vm.ElementFieldType[key];
+                    }
+                } else {
+                    filtered[key] = vm.ElementFieldType[key];
+                }
+            }
+
+            return filtered;
         }
 
         function elementItemSet() {

@@ -1,20 +1,17 @@
 ﻿. resourcePoolEditor - new / edit cmrp features!
 
-// TODO Review this!
-vm.filteredElementFieldType = function (element) {
-
-cached values! elementfieldindexset cache update?
-
-content for editor?
-
 remove name field!
 
-field restrictions, one multiplier, one incomefield?
+content for editor?
 
 elementfieldtype -> DataType?
 IndexRatingSortType -> ?
 IndexType -> Calculation type? or formula type?
 
+google analytics!
+editor modalInstance templateUrl!
+
+---
 in js files, first list items; vm. - scope.
 then implementations?
 
@@ -27,9 +24,6 @@ currently saveChanges in datacontext (and in all factory.js) files, saves all ch
 
 check return conflict() blocks, there's something wrong with them!
 
-google analytics!
-editor modalInstance templateUrl!
-
 replace logger with angular.$log?
 
 . fix these;
@@ -41,7 +35,12 @@ $tooltip is now deprecated. Use $uibTooltip instead.
 
 . Alpha team review!
 
----	
+. create tests for controllers
+
+. elementfield - indextype + indexratingsortype should have null value?
+
+. field restrictions, one multiplier, one incomefield - server side validation?
+
 . add constructor to client-side entities?
 resourcePool.js -> self.ElementSet = []; ?
 
