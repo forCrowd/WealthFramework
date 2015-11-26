@@ -45,6 +45,7 @@
         $delegate.removeElementItem = removeElementItem;
         $delegate.removeResourcePool = removeResourcePool;
         $delegate.removeResourcePoolFromCache = removeResourcePoolFromCache;
+        $delegate.saveChanges = saveChanges;
 
         // User logged out
         $rootScope.$on('userLoggedIn', function () {
@@ -467,6 +468,18 @@
             fetched = fetched.filter(function (item) {
                 return item !== resourcePoolId;
             });
+        }
+
+        // Overwrites saveChanges function in generated/resoucePoolFactory.js
+        function saveChanges(delay, resourcePool) {
+            resourcePool = typeof resourcePool === 'undefined' ? null : resourcePool;
+
+            return dataContext.saveChanges(delay)
+                .then(function () {
+                    if (resourcePool !== null) {
+                        removeResourcePoolFromCache(resourcePool.Id);
+                    }
+                });
         }
     }
 })();

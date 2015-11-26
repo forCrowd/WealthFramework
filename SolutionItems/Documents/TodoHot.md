@@ -1,11 +1,10 @@
-﻿db update!
+﻿anon version - stringvalue etc. computed fields fail!
+if this will be okay, no need to remove saved resource pool from cache
+
+db update!
 
 ---
-. resourcePoolEditor - new / edit cmrp features!
-
-anonymous cmrp creation is not there?
-
-mainelement issue!
+objects vs entities
 
 in js files, first list items; vm. - scope.
 then implementations?

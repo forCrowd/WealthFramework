@@ -377,27 +377,8 @@
         }
 
         function removeResourcePool() {
-
-            vm.isSaving = true;
-
             resourcePoolFactory.removeResourcePool(vm.resourcePool);
-
-            userFactory.isAuthenticated()
-                .then(function (isAuthenticated) {
-                    if (isAuthenticated) {
-                        vm.isSaving = true;
-                        resourcePoolFactory.saveChanges()
-                            .then(function () {
-                                $location.path('/resourcePool');
-                            })
-                            // TODO catch?
-                            .finally(function () {
-                                vm.isSaving = false;
-                            });
-                    } else {
-                        $location.path('/resourcePool');
-                    }
-                });
+            saveResourcePool('/resourcePool');
         }
 
         function saveElement() {
@@ -460,22 +441,25 @@
             vm.elementItemMaster = null;
         }
 
-        function saveResourcePool() {
+        function saveResourcePool(returnPath) {
 
             userFactory.isAuthenticated()
                 .then(function (isAuthenticated) {
                     if (isAuthenticated) {
                         vm.isSaving = true;
-                        resourcePoolFactory.saveChanges()
-                            .then(function () {
-                                $location.path('/resourcePool/' + vm.resourcePool.Id);
-                            })
+                        resourcePoolFactory.saveChanges(0, vm.resourcePool)
+                            .then(navigateToReturnPath)
                             // TODO catch?
                             .finally(function () {
                                 vm.isSaving = false;
                             });
                     } else {
-                        $location.path('/resourcePool/' + vm.resourcePool.Id);
+                        navigateToReturnPath();
+                    }
+
+                    function navigateToReturnPath() {
+                        returnPath = typeof returnPath !== 'undefined' ? returnPath : '/resourcePool/' + vm.resourcePool.Id;
+                        $location.path(returnPath);
                     }
                 });
         };
