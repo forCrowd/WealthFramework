@@ -5,7 +5,7 @@
         .config(routeConfig);
 
     angular.module('main')
-        .run(['userFactory', '$rootScope', '$location', 'logger', routeRun]);
+        .run(['userFactory', 'resourcePoolFactory', 'LocationItem', '$rootScope', '$location', 'logger', routeRun]);
 
     function routeConfig($routeProvider, $locationProvider) {
 
@@ -20,8 +20,8 @@
             /* CMRP List + View + Edit pages */
             .when('/resourcePool', { title: function () { return 'CMRP List'; }, templateUrl: '/App/views/resourcePool/resourcePoolList.html?v=0.38' })
             .when('/resourcePool/new', { title: function () { return 'New CMRP'; }, templateUrl: '/App/views/resourcePool/resourcePoolEdit.html?v=0.38' })
-            .when('/resourcePool/:Id/edit', { title: function () { return ''; }, templateUrl: '/App/views/resourcePool/resourcePoolEdit.html?v=0.38' })
-            .when('/resourcePool/:Id', { title: function () { return ''; }, templateUrl: '/App/views/resourcePool/resourcePoolView.html?v=0.37' })
+            .when('/resourcePool/:resourcePoolId/edit', { title: function () { return ''; }, templateUrl: '/App/views/resourcePool/resourcePoolEdit.html?v=0.38' })
+            .when('/resourcePool/:resourcePoolId', { title: function () { return ''; }, templateUrl: '/App/views/resourcePool/resourcePoolView.html?v=0.37' })
 
             /* Account */
             .when('/account/register', { title: function () { return 'Register'; }, templateUrl: '/App/views/account/register.html?v=0.28', controller: 'registerController as vm' })
@@ -90,13 +90,13 @@
         }
     }
 
-    function routeRun(userFactory, $rootScope, $location, logger) {
+    function routeRun(userFactory, resourcePoolFactory, LocationItem, $rootScope, $location, logger) {
 
         // Logger
         logger = logger.forSource('routeRun');
 
         // Default location
-        $rootScope.locationHistory = ['/'];
+        $rootScope.locationHistory = [new LocationItem('/')];
 
         $rootScope.$on('$routeChangeStart', function (event, next, current) {
 
@@ -114,17 +114,34 @@
             // View title
             var viewTitle = '';
             if (typeof next.$$route !== 'undefined' && typeof next.$$route.title !== 'undefined') {
+                // TODO Is this correct?
                 viewTitle = next.$$route.title(next.params);
             }
             $rootScope.viewTitle = viewTitle;
 
-            // Add each location to the history
-            $rootScope.locationHistory.push($location.path());
+            // Newly added resource pool fix
+            if (typeof next.params.resourcePoolId !== 'undefined') {
+                var resourcePoolId = next.params.resourcePoolId;
+                resourcePoolFactory.getResourcePool(resourcePoolId)
+                    .then(function (resourcePool) {
+                        createLocationHistory(resourcePool);
+                    });
+            } else {
+                createLocationHistory();
+            }
 
-            // Only keep limited number of items
-            var locationHistoryLimit = 20;
-            if ($rootScope.locationHistory.length > locationHistoryLimit) {
-                $rootScope.locationHistory.splice(0, $rootScope.locationHistory.length - locationHistoryLimit);
+            function createLocationHistory(resourcePool) {
+                resourcePool = typeof resourcePool !== 'undefined' ? resourcePool : null;
+
+                // Add each location to the history
+                var locationItem = new LocationItem($location.path(), resourcePool, $location.path().substring($location.path().lastIndexOf('/') + 1) === 'edit');
+                $rootScope.locationHistory.push(locationItem);
+
+                // Only keep limited number of items
+                var locationHistoryLimit = 10;
+                if ($rootScope.locationHistory.length > locationHistoryLimit) {
+                    $rootScope.locationHistory.splice(0, $rootScope.locationHistory.length - locationHistoryLimit);
+                }
             }
         });
     }

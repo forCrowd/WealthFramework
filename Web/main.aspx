@@ -146,6 +146,7 @@
     <script src="/App/entities/ElementItem.js?v=0.38"></script>
     <script src="/App/entities/UserElementCell.js?v=0.37"></script>
     <script src="/App/entities/Enums.js?v=0.37"></script>
+    <script src="/App/entities/LocationItem.js?v=0.38"></script>
 
     <!-- breezeJS -->
     <script src="/App/entityManagerFactory.js?v=0.37"></script>
@@ -175,11 +176,11 @@
     <!-- Resource Pool -->
     <script src="/App/controllers/resourcePool/resourcePoolEditController.js?v=0.38"></script>
     <script src="/App/controllers/resourcePool/resourcePoolListController.js?v=0.37"></script>
-    <script src="/App/controllers/resourcePool/resourcePoolViewController.js?v=0.37"></script>
+    <script src="/App/controllers/resourcePool/resourcePoolViewController.js?v=0.38"></script>
 
     <!-- Account -->
-    <script src="/App/controllers/account/loginController.js?v=0.37"></script>
-    <script src="/App/controllers/account/registerController.js?v=0.37"></script>
+    <script src="/App/controllers/account/loginController.js?v=0.38"></script>
+    <script src="/App/controllers/account/registerController.js?v=0.38"></script>
     <script src="/App/controllers/account/accountEditController.js?v=0.37"></script>
     <script src="/App/controllers/account/changePasswordController.js?v=0.37"></script>
 

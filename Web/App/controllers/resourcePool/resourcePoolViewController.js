@@ -41,7 +41,7 @@
             var action = $location.path().substring($location.path().lastIndexOf('/') + 1);
             var isNew = action === 'new';
             var isEdit = action === 'edit';
-            var resourcePoolId = $routeParams.Id;
+            var resourcePoolId = $routeParams.resourcePoolId;
 
             var config = {
                 isNew: isNew,

@@ -14,7 +14,7 @@
         function getAccessToken() {
             userFactory.getAccessToken(vm.email, vm.password, true)
                 .success(function () {
-                    $location.path($rootScope.locationHistory[$rootScope.locationHistory.length - 2]);
+                    $location.path($rootScope.locationHistory[$rootScope.locationHistory.length - 2].path());
                 })
                 .error(function (response) {
                     if (typeof response.error_description !== 'undefined') {

@@ -44,7 +44,7 @@
                                 .then(function () {
 
                                     // Redirect the user to the previous page, except if it's login
-                                    $location.path($rootScope.locationHistory[$rootScope.locationHistory.length - 2]);
+                                    $location.path($rootScope.locationHistory[$rootScope.locationHistory.length - 2].path());
                                 });
                         })
                         .error(function (response) {

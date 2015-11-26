@@ -65,7 +65,7 @@
         vm.removeElementItem = removeElementItem;
         vm.removeResourcePool = removeResourcePool;
         vm.resourcePool = { ElementSet: [] };
-        vm.resourcePoolId = $routeParams.Id;
+        vm.resourcePoolId = $routeParams.resourcePoolId;
         vm.saveResourcePool = saveResourcePool;
         vm.saveElement = saveElement;
         vm.saveElementCell = saveElementCell;
