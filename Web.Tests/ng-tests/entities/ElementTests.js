@@ -175,7 +175,7 @@ describe('ng Element', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         expect(element.indexRating()).toBe(0);
 
@@ -236,7 +236,7 @@ describe('ng Element', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         expect(element.directIncome()).toBe(0);
 
@@ -308,7 +308,7 @@ describe('ng Element', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         expect(element.multiplier()).toBe(0);
 
@@ -367,7 +367,7 @@ describe('ng Element', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         expect(element.totalDirectIncome()).toBe(0);
 
@@ -445,7 +445,7 @@ describe('ng Element', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         expect(element.resourcePoolAmount()).toBe(0);
 
@@ -496,7 +496,7 @@ describe('ng Element', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         expect(element.totalResourcePoolAmount()).toBe(0);
 
@@ -576,7 +576,7 @@ describe('ng Element', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         expect(element.directIncomeIncludingResourcePoolAmount()).toBe(0);
 
@@ -627,7 +627,7 @@ describe('ng Element', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         expect(element.totalDirectIncomeIncludingResourcePoolAmount()).toBe(0);
 
@@ -707,7 +707,7 @@ describe('ng Element', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         expect(element.totalIncome()).toBe(0);
 
@@ -792,7 +792,7 @@ describe('ng Element', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         expect(element.totalIncomeAverage()).toBe(0);
 

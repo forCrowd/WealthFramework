@@ -11,6 +11,7 @@
         </tr>
         <tr data-ng-repeat="resourcePool in vm.resourcePoolSet | orderBy: Id">
             <td>
+                {{ resourcePool.entityAspect.entityState }}
                 <a href="/resourcePool/{{ resourcePool.Id }}">{{ resourcePool.Name }}</a>
             </td>
         </tr>

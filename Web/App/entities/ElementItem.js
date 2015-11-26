@@ -274,7 +274,7 @@
                 // TODO Make rounding better, instead of toFixed + number
                 var averageIncome = Number(self.Element.totalIncomeAverage().toFixed(2));
 
-                if (totalIncome === averageIncome.toFixed(2)) {
+                if (totalIncome === averageIncome) {
                     return 'average';
                 } else if (totalIncome < averageIncome) {
                     return 'low';

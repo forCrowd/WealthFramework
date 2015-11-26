@@ -162,28 +162,6 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
 
             // First save
             context.SaveChanges();
-
-            // Set main elements; ResourcePool has both child elements and a main element navigation property
-            // If main element will be set on initially, it would try to create a resource pool with an element and that's not been inserted to database, which fails.
-            // So, creating resource pools & elements and main element selections are done separately.
-            upoSample.SetMainElement();
-            basicsExistingSystemSample.SetMainElement();
-            basicsNewSystemSample.SetMainElement();
-            sectorIndexSample.SetMainElement();
-            knowledgeIndexSample.SetMainElement();
-            knowledgeIndexPopularSoftwareLicenseSample.SetMainElement();
-            totalCostIndexExistingSystemSample.SetMainElement();
-            totalCostIndexNewSystemSample.SetMainElement();
-            totalCostIndexNewSystemAftermathSample.SetMainElement();
-            fairShareSample.SetMainElement();
-            indexesPieSample.SetMainElement();
-            resourcePoolRateSample.SetMainElement();
-            allInOneSample.SetMainElement();
-
-            billionDollarQuestion.SetMainElement();
-
-            // Second save for main elements
-            context.SaveChanges();
         }
     }
 }

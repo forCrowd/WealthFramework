@@ -1,9 +1,12 @@
-﻿. resourcePoolEditor - new / edit cmrp features!
-
-google analytics!
-database update!
+﻿db update!
 
 ---
+. resourcePoolEditor - new / edit cmrp features!
+
+anonymous cmrp creation is not there?
+
+mainelement issue!
+
 in js files, first list items; vm. - scope.
 then implementations?
 

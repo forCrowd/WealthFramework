@@ -201,7 +201,7 @@
 
                     // TODO Update related
                     if (updateRelated) {
-                        self.Element.ResourcePool.MainElement.setIndexRating();
+                        self.Element.ResourcePool.mainElement().setIndexRating();
                     }
                 }
             }
@@ -220,7 +220,7 @@
 
                 var value = 0; // Default value?
 
-                var elementIndexRating = self.Element.ResourcePool.MainElement.indexRating();
+                var elementIndexRating = self.Element.ResourcePool.mainElement().indexRating();
 
                 if (elementIndexRating === 0) {
                     value = 0;

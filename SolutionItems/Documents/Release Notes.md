@@ -1,5 +1,10 @@
 ﻿### Release Notes
 
+**0.38**
+
+* Anonymous CMRP create / edit
+* Element.IsMainElement instead of ResourcePool MainElement (back to previous setup)
+
 **0.37**
 
 * Resource Pool Add / Edit feature was added

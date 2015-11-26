@@ -246,7 +246,7 @@
 
                 var value;
 
-                if (self === self.ResourcePool.MainElement) {
+                if (self === self.ResourcePool.mainElement()) {
 
                     value = self.ResourcePool.InitialValue;
 
@@ -256,8 +256,8 @@
                     }
 
                 } else {
-                    if (self.ResourcePool.MainElement !== null) {
-                        value = self.ResourcePool.MainElement.totalResourcePoolAmount();
+                    if (self.ResourcePool.mainElement() !== null) {
+                        value = self.ResourcePool.mainElement().totalResourcePoolAmount();
                     }
                 }
 

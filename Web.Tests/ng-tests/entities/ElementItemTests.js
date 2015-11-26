@@ -28,7 +28,7 @@ describe('ng ElementItem', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         // Item
         var item1 = new ElementItem();
@@ -82,7 +82,7 @@ describe('ng ElementItem', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         // Item
         var item1 = new ElementItem();
@@ -121,7 +121,7 @@ describe('ng ElementItem', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         // Item
         var item1 = new ElementItem();
@@ -177,7 +177,7 @@ describe('ng ElementItem', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         // Item
         var item1 = new ElementItem();
@@ -232,7 +232,7 @@ describe('ng ElementItem', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         // Item
         var item1 = new ElementItem();
@@ -267,7 +267,7 @@ describe('ng ElementItem', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         // Item
         var item1 = new ElementItem();
@@ -322,7 +322,7 @@ describe('ng ElementItem', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         // Item
         var item1 = new ElementItem();
@@ -357,7 +357,7 @@ describe('ng ElementItem', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         // Item
         var item1 = new ElementItem();
@@ -411,7 +411,7 @@ describe('ng ElementItem', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         var item1 = new ElementItem();
         item1.Element = element;
@@ -471,7 +471,7 @@ describe('ng ElementItem', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         // Item
         var item1 = new ElementItem();
@@ -530,7 +530,7 @@ describe('ng ElementItem', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         // Item
         var item1 = new ElementItem();

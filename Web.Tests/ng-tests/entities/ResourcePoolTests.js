@@ -45,14 +45,14 @@ describe('ng ResourcePool', function () {
 
     it('displayRatingMode - single field index', function () {
 
-        var resourcePool1 = new ResourcePool();
+        var resourcePool = new ResourcePool();
 
         var element1 = new Element();
-        element1.ResourcePool = resourcePool1;
-        resourcePool1.ElementSet = [element1];
-        resourcePool1.MainElement = element1;
+        element1.ResourcePool = resourcePool;
+        resourcePool.ElementSet = [element1];
+        element1.IsMainElement = true;
         // Since default is already 'true', To be sure that adding a field index makes it 'true'
-        resourcePool1.UseFixedResourcePoolRate = true;
+        resourcePool.UseFixedResourcePoolRate = true;
 
         var field1 = new ElementField();
         field1.Element = element1;
@@ -62,11 +62,11 @@ describe('ng ResourcePool', function () {
 
         // false vs. true
         field1.UseFixedValue = false;
-        expect(resourcePool1.displayRatingMode()).toBe(true);
+        expect(resourcePool.displayRatingMode()).toBe(true);
 
         // true vs. false
         field1.UseFixedValue = true;
-        expect(resourcePool1.displayRatingMode()).toBe(false);
+        expect(resourcePool.displayRatingMode()).toBe(false);
 
         // TODO Remove case
 
@@ -74,14 +74,14 @@ describe('ng ResourcePool', function () {
 
     it('displayRatingMode - multiple indexes', function () {
 
-        var resourcePool1 = new ResourcePool();
+        var resourcePool = new ResourcePool();
 
         var element1 = new Element();
-        element1.ResourcePool = resourcePool1;
-        resourcePool1.ElementSet = [element1];
-        resourcePool1.MainElement = element1;
+        element1.ResourcePool = resourcePool;
+        element1.IsMainElement = true;
+        resourcePool.ElementSet = [element1];
         // Since default is already 'true', To be sure that adding a field index makes it 'true'
-        resourcePool1.UseFixedResourcePoolRate = true;
+        resourcePool.UseFixedResourcePoolRate = true;
 
         var field1 = new ElementField();
         field1.Element = element1;
@@ -95,7 +95,7 @@ describe('ng ResourcePool', function () {
         field2.IndexEnabled = true;
         element1.ElementFieldSet = [field2];
 
-        expect(resourcePool1.displayRatingMode()).toBe(true);
+        expect(resourcePool.displayRatingMode()).toBe(true);
 
         // TODO Remove case
 

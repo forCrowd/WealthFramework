@@ -45,7 +45,6 @@
         $delegate.removeElementItem = removeElementItem;
         $delegate.removeResourcePool = removeResourcePool;
         $delegate.removeResourcePoolFromCache = removeResourcePoolFromCache;
-        $delegate.saveChanges = saveChanges;
 
         // User logged out
         $rootScope.$on('userLoggedIn', function () {
@@ -185,7 +184,8 @@
 
                     var element = dataContext.createEntity('Element', {
                         ResourcePool: resourcePool,
-                        Name: 'New element'
+                        Name: 'New element',
+                        IsMainElement: true
                     });
 
                     // Importance field (index)
@@ -283,35 +283,46 @@
 
                     // Prepare the query
                     var query = null;
+                    var fetchedEarlier = false;
 
-                    // Is authorized? No, then get only the public data, yes, then get include user's own records
-                    if (currentUser.Id > 0) {
+                    // Means that this is an existing resource pool
+                    if (resourcePoolId > 0) {
+
+                        // Is authorized? No, then get only the public data, yes, then get include user's own records
+                        if (currentUser.Id > 0) {
+                            query = breeze.EntityQuery
+                                .from('ResourcePool')
+                                .expand('UserResourcePoolSet, ElementSet.ElementFieldSet.UserElementFieldSet, ElementSet.ElementItemSet.ElementCellSet.UserElementCellSet')
+                                .where('Id', 'eq', resourcePoolId);
+                        } else {
+                            query = breeze.EntityQuery
+                                .from('ResourcePool')
+                                .expand('ElementSet.ElementFieldSet, ElementSet.ElementItemSet.ElementCellSet')
+                                .where('Id', 'eq', resourcePoolId);
+                        }
+
+                        // Fetch the data from server, in case if it's not fetched earlier
+                        for (var i = 0; i < fetched.length; i++) {
+                            if (resourcePoolId === fetched[i]) {
+                                fetchedEarlier = true;
+                                break;
+                            }
+                        }
+                    } else { // Means that this CMRP has just been created by this user
                         query = breeze.EntityQuery
                             .from('ResourcePool')
                             .expand('UserResourcePoolSet, ElementSet.ElementFieldSet.UserElementFieldSet, ElementSet.ElementItemSet.ElementCellSet.UserElementCellSet')
                             .where('Id', 'eq', resourcePoolId);
-                    } else {
-                        query = breeze.EntityQuery
-                            .from('ResourcePool')
-                            .expand('ElementSet.ElementFieldSet, ElementSet.ElementItemSet.ElementCellSet')
-                            .where('Id', 'eq', resourcePoolId);
-                    }
 
-                    // Fetch the data from server, in case if it's not fetched earlier
-                    var fetchedEarlier = false;
-                    for (var i = 0; i < fetched.length; i++) {
-                        if (resourcePoolId === fetched[i]) {
-                            fetchedEarlier = true;
-                            break;
-                        }
+                        fetchedEarlier = true;
                     }
 
                     // Prepare the query
                     if (!fetchedEarlier) { // From remote
-                        query = query.using(breeze.FetchStrategy.FromServer)
+                        query = query.using(breeze.FetchStrategy.FromServer);
                     }
                     else { // From local
-                        query = query.using(breeze.FetchStrategy.FromLocalCache)
+                        query = query.using(breeze.FetchStrategy.FromLocalCache);
                     }
 
                     return dataContext.executeQuery(query)
@@ -332,7 +343,7 @@
                         fetched.push(resourcePool.Id);
 
                         // Current element
-                        resourcePool.CurrentElement = resourcePool.MainElement !== null ? resourcePool.MainElement : null;
+                        resourcePool.CurrentElement = resourcePool.mainElement();
 
                         // Set otherUsers' properties
                         resourcePool.setOtherUsersResourcePoolRateTotal();
@@ -437,61 +448,25 @@
 
         function removeResourcePool(resourcePool) {
 
-            resourcePool.MainElement = null;
+            // Related elements
+            var elementSet = resourcePool.ElementSet.slice();
+            angular.forEach(elementSet, function (element) {
+                removeElement(element);
+            });
 
-            // TODO Remove other relations as well, field - selected element & cell - selected item
+            // Related user resource pools
+            var userResourcePoolSet = resourcePool.UserResourcePoolSet.slice();
+            angular.forEach(userResourcePoolSet, function (userResourcePool) {
+                userResourcePool.entityAspect.setDeleted();
+            });
 
-            return $delegate.saveChanges()
-                .then(function () {
-
-                    // Related elements
-                    var elementSet = resourcePool.ElementSet.slice();
-                    angular.forEach(elementSet, function (element) {
-                        removeElement(element);
-                    });
-
-                    // Related user resource pools
-                    var userResourcePoolSet = resourcePool.UserResourcePoolSet.slice();
-                    angular.forEach(userResourcePoolSet, function (userResourcePool) {
-                        userResourcePool.entityAspect.setDeleted();
-                    });
-
-                    // Before deleting, is it newly added?
-                    var isAdded = resourcePool.entityAspect.entityState.isAdded();
-
-                    return $delegate.saveChanges()
-                        .then(function () {
-
-                            // If it's an existing resource pool, remove it from the fetched
-                            if (!isAdded) {
-                                removeResourcePoolFromCache(resourcePool.Id);
-                            }
-                        });
-                });
+            resourcePool.entityAspect.setDeleted();
         }
 
         function removeResourcePoolFromCache(resourcePoolId) {
             fetched = fetched.filter(function (item) {
                 return item !== resourcePoolId;
             });
-        }
-
-        // Overwrites saveChanges function in generated/resoucePoolFactory.js
-        function saveChanges(delay, resourcePool) {
-            resourcePool = typeof resourcePool === 'undefined' ? null : resourcePool;
-
-            return dataContext.saveChanges(delay)
-                .then(function () {
-                    if (resourcePool !== null) {
-
-                        // Main element fix
-                        if (resourcePool.MainElement === null && resourcePool.ElementSet.length > 0) {
-                            resourcePool.MainElement = resourcePool.ElementSet[0];
-                        }
-
-                        return dataContext.saveChanges();
-                    }
-                });
         }
     }
 })();

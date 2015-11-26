@@ -30,7 +30,7 @@
 
             // Items, cell, user cells
             // TODO How about ToList()[0]?
-            mainElement.ElementItemSet.Skip(0).First().Name = "UPO";
+            mainElement.ElementItemSet.First().Name = "UPO";
 
             // Return
             return resourcePool;
@@ -1209,6 +1209,7 @@
 
             // Main element
             var element = resourcePool.AddElement(mainElementName);
+            element.IsMainElement = true;
 
             // Resource pool field
             if (addDirectIncomeField)

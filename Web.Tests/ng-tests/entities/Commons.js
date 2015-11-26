@@ -25,13 +25,12 @@ function registerPrototypes($injector) {
     ResourcePool.prototype.InitialValue = 0;
     ResourcePool.prototype.ResourcePoolRateTotal = 0;
     ResourcePool.prototype.ResourcePoolRateCount = 0;
-    ResourcePool.prototype.MainElement = null;
     ResourcePool.prototype.ElementSet = []; // *
     ResourcePool.prototype.UserResourcePoolSet = []; // *
 
     Element = $injector.get('Element');
+    Element.prototype.IsMainElement = false;
     Element.prototype.ResourcePool = null;
-    Element.prototype.ResourcePoolMainElementSubSet = []; // *
     Element.prototype.ElementFieldSet = []; // *
     Element.prototype.ElementItemSet = []; // *
     Element.prototype.ParentFieldSet = []; // *

@@ -4,6 +4,7 @@
     var controllerId = 'resourcePoolEditController';
     angular.module('main')
         .controller(controllerId, ['resourcePoolFactory',
+            'userFactory',
             '$location',
             '$routeParams',
             '$rootScope',
@@ -13,6 +14,7 @@
             resourcePoolEditController]);
 
     function resourcePoolEditController(resourcePoolFactory,
+        userFactory,
         $location,
         $routeParams,
         $rootScope,
@@ -107,7 +109,7 @@
         }
 
         function addElement() {
-            vm.element = { ResourcePool: vm.resourcePool, Name: 'New element' };
+            vm.element = { ResourcePool: vm.resourcePool, Name: 'New element', IsMainElement: false };
             vm.isElementEdit = true;
             vm.isElementNew = true;
         }
@@ -377,22 +379,40 @@
         function removeResourcePool() {
 
             vm.isSaving = true;
-            resourcePoolFactory.removeResourcePool(vm.resourcePool)
-                .then(function () {
-                    $location.path('/resourcePool');
-                })
-                .catch(function (error) {
-                    // TODO ?
-                })
-                .finally(function () {
-                    vm.isSaving = false;
+
+            resourcePoolFactory.removeResourcePool(vm.resourcePool);
+
+            userFactory.isAuthenticated()
+                .then(function (isAuthenticated) {
+                    if (isAuthenticated) {
+                        vm.isSaving = true;
+                        resourcePoolFactory.saveChanges()
+                            .then(function () {
+                                $location.path('/resourcePool');
+                            })
+                            // TODO catch?
+                            .finally(function () {
+                                vm.isSaving = false;
+                            });
+                    } else {
+                        $location.path('/resourcePool');
+                    }
                 });
         }
 
         function saveElement() {
 
             if (vm.isElementNew) {
-                resourcePoolFactory.createElement(vm.element);
+                vm.element = resourcePoolFactory.createElement(vm.element);
+            }
+
+            // Main element check: If IsMainElement flag is true for this item, remove this flag from other elements
+            if (vm.element.IsMainElement) {
+                angular.forEach(vm.element.ResourcePool.ElementSet, function (element) {
+                    if (element !== vm.element && element.IsMainElement) {
+                        element.IsMainElement = false;
+                    }
+                });
             }
 
             vm.isElementEdit = false;
@@ -421,7 +441,7 @@
             }
 
             if (vm.isElementFieldNew) {
-                resourcePoolFactory.createElementField(vm.elementField);
+                vm.elementField = resourcePoolFactory.createElementField(vm.elementField);
             }
 
             vm.isElementFieldEdit = false;
@@ -432,7 +452,7 @@
         function saveElementItem() {
 
             if (vm.isElementItemNew) {
-                resourcePoolFactory.createElementItem(vm.elementItem);
+                vm.elementItem = resourcePoolFactory.createElementItem(vm.elementItem);
             }
 
             vm.isElementItemEdit = false;
@@ -442,32 +462,21 @@
 
         function saveResourcePool() {
 
-            vm.isSaving = true;
-            resourcePoolFactory.saveChanges(0, vm.resourcePool)
-                .then(function (result) {
-
-                    // Main element fix
-                    if (vm.resourcePool.MainElement === null && vm.resourcePool.ElementSet.length > 0) {
-                        vm.resourcePool.MainElement = vm.resourcePool.ElementSet[0];
-
+            userFactory.isAuthenticated()
+                .then(function (isAuthenticated) {
+                    if (isAuthenticated) {
+                        vm.isSaving = true;
                         resourcePoolFactory.saveChanges()
-                            .then(function (result) {
+                            .then(function () {
                                 $location.path('/resourcePool/' + vm.resourcePool.Id);
+                            })
+                            // TODO catch?
+                            .finally(function () {
+                                vm.isSaving = false;
                             });
                     } else {
                         $location.path('/resourcePool/' + vm.resourcePool.Id);
                     }
-                })
-                .catch(function (error) {
-                    // Conflict (Concurrency exception)
-                    if (typeof error.status !== 'undefined' && error.status === '409') {
-                        // TODO Try to recover!
-                    } else if (typeof error.entityErrors !== 'undefined') {
-                        vm.entityErrors = error.entityErrors;
-                    }
-                })
-                .finally(function () {
-                    vm.isSaving = false;
                 });
         };
     };

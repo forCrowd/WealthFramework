@@ -32,13 +32,6 @@
                             <span id="InitialValueHelp" class="help-block">Initial amount in the pool.</span>
                         </div>
                     </div>
-                    <div class="form-group" data-ng-if="!vm.isNew && vm.resourcePool.ElementSet.length > 0">
-                        <label for="MainElementId" class="control-label col-md-2">Main Element</label>
-                        <div class="col-md-10" data-ng-class="{'has-error': resourcePoolForm.MainElementId.$invalid && !resourcePoolForm.MainElementId.$pristine}">
-                            <select id="MainElementId" name="MainElementId" data-ng-model="vm.resourcePool.MainElement" data-ng-options="element.Name for element in vm.resourcePool.ElementSet" class="form-control" aria-describedby="MainElementHelp"></select>
-                            <span id="MainElementHelp" class="help-block">Determines which element will be shown as the first element.</span>
-                        </div>
-                    </div>
                     <div class="form-group">
                         <label for="ResourcePoolRate" class="control-label col-md-2">Resource Pool Rate (%)</label>
                         <div class="col-md-10" data-ng-class="{'has-error': resourcePoolForm.ResourcePoolRate.$invalid && !resourcePoolForm.ResourcePoolRate.$pristine}">
@@ -89,6 +82,18 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="IsMainElement" class="control-label col-md-2">Is Main Element?</label>
+                            <div class="col-md-10" data-ng-class="{'has-error': elementForm.IsMainElement.$invalid && !elementForm.IsMainElement.$pristine}">
+                                <label class="radio-inline">
+                                    <input id="IsMainElement_True" name="IsMainElement" type="radio" data-ng-model="vm.element.IsMainElement" data-ng-value="true" aria-describedby="IsMainElementHelp"> True
+                                </label>
+                                <label class="radio-inline">
+                                    <input id="IsMainElement_False" name="IsMainElement" type="radio" data-ng-model="vm.element.IsMainElement" data-ng-value="false" aria-describedby="IsMainElementHelp"> False
+                                </label>
+                                <span id="IsMainElementHelp" class="help-block">Determines whether CMRP Editor will start with this item or not. Only one element can be 'Main Element'</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <div class="col-md-10">
                                 <input id="RowVersion" name="RowVersion" data-ng-model="vm.element.RowVersion" type="hidden">
                             </div>
@@ -119,11 +124,17 @@
                         <th>
                             Name
                         </th>
+                        <th>
+                            Is Main Element
+                        </th>
                         <th></th>
                     </tr>
                     <tr data-ng-repeat="element in vm.resourcePool.ElementSet">
                         <td>
                             {{ element.Name }}
+                        </td>
+                        <td>
+                            {{ element.IsMainElement }}
                         </td>
                         <td>
                             <a href="" data-ng-click="vm.editElement(element)">
@@ -566,7 +577,7 @@
         </p>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" type="button" ng-click="remove()">Remove</button>
-        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        <button class="btn btn-danger" type="button" ng-click="remove()">Remove</button>
+        <button class="btn btn-default" type="button" ng-click="cancel()">Cancel</button>
     </div>
 </script>

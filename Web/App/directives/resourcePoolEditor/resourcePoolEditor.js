@@ -212,10 +212,10 @@
                             }
 
                             // TODO Just for test, remove later
-                            //scope.increaseElementMultiplier(scope.resourcePool.MainElement);
+                            //scope.increaseElementMultiplier(scope.resourcePool.mainElement());
 
-                            //for (var i = 0; i < scope.resourcePool.MainElement.ElementFieldSet.length; i++) {
-                            //    var field = scope.resourcePool.MainElement.ElementFieldSet[i];
+                            //for (var i = 0; i < scope.resourcePool.mainElement().ElementFieldSet.length; i++) {
+                            //    var field = scope.resourcePool.mainElement().ElementFieldSet[i];
                             //    if (field.IndexEnabled) {
                             //        var cell1 = field.ElementCellSet[0];
                             //        scope.decreaseElementCellNumericValue(cell1);
@@ -274,7 +274,7 @@
                     scope.chartConfig.title = { text: element.Name };
 
                     // TODO Check this rule?
-                    if (element === element.ResourcePool.MainElement && (element.totalIncome() > 0 || element.directIncomeField() !== null)) {
+                    if (element === element.ResourcePool.mainElement() && (element.totalIncome() > 0 || element.directIncomeField() !== null)) {
 
                         // Column type
                         scope.chartConfig.options.chart = { type: 'column' };

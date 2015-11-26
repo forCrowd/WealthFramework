@@ -58,7 +58,7 @@ describe('ng ElementField', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         var decimalField = new ElementField();
         decimalField.Element = element;
@@ -168,7 +168,7 @@ describe('ng ElementField', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         var decimalField = new ElementField();
         decimalField.Element = element;
@@ -244,7 +244,7 @@ describe('ng ElementField', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         var decimalField = new ElementField();
         decimalField.Element = element;
@@ -287,7 +287,7 @@ describe('ng ElementField', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         var decimalField = new ElementField();
         decimalField.Element = element;
@@ -331,7 +331,7 @@ describe('ng ElementField', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         var decimalField = new ElementField();
         decimalField.Element = element;
@@ -375,7 +375,7 @@ describe('ng ElementField', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         var decimalField1 = new ElementField();
         decimalField1.Element = element;
@@ -428,7 +428,7 @@ describe('ng ElementField', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         var decimalField = new ElementField();
         decimalField.Element = element;
@@ -513,7 +513,7 @@ describe('ng ElementField', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         var decimalField = new ElementField();
         decimalField.Element = element;
@@ -597,7 +597,7 @@ describe('ng ElementField', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         var decimalField1 = new ElementField();
         decimalField1.Element = element;

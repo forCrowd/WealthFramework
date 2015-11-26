@@ -15,7 +15,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         [Obsolete("Parameterless constructors used by OData & EF. Make them private when possible.")]
         public Element()
         {
-            ResourcePoolMainElementSubSet = new HashSet<ResourcePool>();
             ElementFieldSet = new HashSet<ElementField>();
             ElementItemSet = new HashSet<ElementItem>();
             ParentFieldSet = new HashSet<ElementField>();
@@ -42,9 +41,12 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         [StringLength(50)]
         public string Name { get; set; }
 
+        [Display(Name = "Is Main Element")]
+        [Required]
+        public bool IsMainElement { get; set; }
+
         public virtual ResourcePool ResourcePool { get; set; }
-        [InverseProperty("MainElement")]
-        public virtual ICollection<ResourcePool> ResourcePoolMainElementSubSet { get; set; }
+
         public virtual ICollection<ElementField> ElementFieldSet { get; set; }
         public virtual ICollection<ElementItem> ElementItemSet { get; set; }
         [InverseProperty("SelectedElement")]

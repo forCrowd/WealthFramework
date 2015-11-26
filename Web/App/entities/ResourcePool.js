@@ -112,7 +112,19 @@
                 _resourcePoolRatePercentage: null
             }
 
+            self.mainElement = mainElement;
+
             // Public functions
+
+            function mainElement() {
+                for (var i = 0; i < self.ElementSet.length; i++) {
+                    var element = self.ElementSet[i];
+                    if (element.IsMainElement) {
+                        return element;
+                    }
+                }
+                return null;
+            }
 
             // Checks whether resource pool has any item that can be rateable
             self.displayRatingMode = function () {
