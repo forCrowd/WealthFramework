@@ -125,9 +125,51 @@
                 _resourcePoolRatePercentage: null
             }
 
+            self.init = init; // Should be called after createEntity or retrieving it from server
             self.mainElement = mainElement;
 
             // Public functions
+
+            function init() {
+
+                // Current element
+                self.CurrentElement = self.mainElement();
+
+                // Set otherUsers' properties
+                self.setOtherUsersResourcePoolRateTotal();
+                self.setOtherUsersResourcePoolRateCount();
+
+                // Elements
+                if (typeof self.ElementSet !== 'undefined') {
+                    for (var elementIndex = 0; elementIndex < self.ElementSet.length; elementIndex++) {
+                        var element = self.ElementSet[elementIndex];
+
+                        // TODO Why this needs to be done, it's not clear
+                        // but without it (even if the resource pool will be retrieved from the server), elementFieldIndexSet() can have detached fields
+                        // Check it later / SH - 24 Nov. '15
+                        element.setElementFieldIndexSet();
+
+                        // Fields
+                        if (typeof element.ElementFieldSet !== 'undefined') {
+                            for (var fieldIndex = 0; fieldIndex < element.ElementFieldSet.length; fieldIndex++) {
+
+                                var field = element.ElementFieldSet[fieldIndex];
+                                field.setOtherUsersIndexRatingTotal();
+                                field.setOtherUsersIndexRatingCount();
+
+                                // Cells
+                                if (typeof field.ElementCellSet !== 'undefined') {
+                                    for (var cellIndex = 0; cellIndex < field.ElementCellSet.length; cellIndex++) {
+                                        var cell = field.ElementCellSet[cellIndex];
+                                        cell.setOtherUsersNumericValueTotal();
+                                        cell.setOtherUsersNumericValueCount();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
             function mainElement() {
                 for (var i = 0; i < self.ElementSet.length; i++) {
