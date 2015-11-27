@@ -19,6 +19,16 @@
 
             var self = this;
 
+            // Server-side props
+            self.Id = 0;
+            self.Name = '';
+            self.IsMainElement = false;
+            // TODO breezejs - Cannot assign a navigation property in an entity ctor
+            //self.ResourcePool = null;
+            //self.ElementFieldSet = [];
+            //self.ElementItemSet = [];
+            //self.ParentFieldSet = [];
+
             // Local variables
             self.backingFields = {
                 _parent: null,

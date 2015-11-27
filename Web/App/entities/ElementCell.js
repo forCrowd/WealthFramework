@@ -19,6 +19,20 @@
 
             var self = this;
 
+            // Server-side props
+            self.Id = 0;
+            self.ElementFieldId = 0;
+            self.ElementItemId = 0;
+            self.StringValue = ''; // Computed value - Used in: resourcePoolEditor.html
+            self.NumericValueTotal = 0; // Computed value - Used in: setOtherUsersNumericValueTotal, setCurrentUserNumericValue
+            self.NumericValueCount = 0; // Computed value - Used in: setOtherUsersNumericValueCount
+            self.SelectedElementItemId = null;
+            // TODO breezejs - Cannot assign a navigation property in an entity ctor
+            //self.ElementField = null;
+            //self.ElementItem = null;
+            //self.SelectedElementItem = null;
+            //self.UserElementCellSet = [];
+
             // Local variables
             self.backingFields = {
                 _currentUserNumericValue: null,

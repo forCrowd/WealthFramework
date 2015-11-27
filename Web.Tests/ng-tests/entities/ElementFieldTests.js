@@ -519,6 +519,7 @@ describe('ng ElementField', function () {
         decimalField.Element = element;
         decimalField.DataType = 11;
         decimalField.IndexEnabled = true;
+        decimalField.IndexSortType = 2;
         element.ElementFieldSet = [decimalField];
 
         expect(decimalField.referenceRatingMultiplied()).toBe(0);

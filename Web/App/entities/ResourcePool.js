@@ -100,6 +100,19 @@
 
             var self = this;
 
+            // Server-side props
+            self.Id = 0;
+            self.UserId = 0;
+            self.Name = '';
+            self.InitialValue = 0;
+            self.ResourcePoolRateTotal = 0; // Computed value - Used in: setOtherUsersResourcePoolRateTotal
+            self.ResourcePoolRateCount = 0; // Computed value - Used in: setOtherUsersResourcePoolRateCount
+            self.RatingCount = 0; // Computed value - Used in: resourcePoolEditor.html
+            // TODO breezejs - Cannot assign a navigation property in an entity ctor
+            //self.User = null;
+            //self.ElementSet = [];
+            //self.UserResourcePoolSet = [];
+
             // Local variables
             self.backingFields = {
                 _useFixedResourcePoolRate: false,

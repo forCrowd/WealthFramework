@@ -417,6 +417,7 @@ describe('ng Cell', function () {
         var resourcePool = createResourcePool();
         var field = resourcePool.mainElement().ElementFieldSet[0];
         field.IndexEnabled = true;
+        field.IndexSortType = 2;
         var cell = field.ElementCellSet[0];
 
         expect(cell.aggressiveRating()).toBe(1);
@@ -429,6 +430,7 @@ describe('ng Cell', function () {
 
         var field = element.ElementFieldSet[0];
         field.IndexEnabled = true;
+        field.IndexSortType = 2;
 
         var cell1 = field.ElementCellSet[0];
         createUserCell(cell1, 55);
@@ -482,6 +484,8 @@ describe('ng Cell', function () {
 
         var field = element.ElementFieldSet[0];
         field.IndexEnabled = true;
+        field.IndexCalculationType = 1;
+        field.IndexSortType = 2;
 
         var cell1 = field.ElementCellSet[0];
         createUserCell(cell1, 55);

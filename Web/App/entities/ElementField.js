@@ -57,6 +57,24 @@
 
             var self = this;
 
+            // Server-side props
+            self.Id = 0;
+            self.ElementId = 0;
+            self.Name = '';
+            self.DataType = 1;
+            self.SelectedElementId = null;
+            self.UseFixedValue = null;
+            self.IndexCalculationType = 0;
+            self.IndexSortType = 0;
+            self.SortOrder = 0;
+            self.IndexRatingTotal = 0; // Computed value - Used in: setOtherUsersIndexRatingTotal
+            self.IndexRatingCount = 0; // Computed value - Used in: setOtherUsersIndexRatingCount
+            // TODO breezejs - Cannot assign a navigation property in an entity ctor
+            //self.Element = null;
+            //self.SelectedElement = null;
+            //self.ElementCellSet = [];
+            //self.UserElementFieldSet = [];
+
             // Local variables
             self.backingFields = {
                 _indexEnabled: false,

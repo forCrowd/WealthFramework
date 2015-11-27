@@ -141,7 +141,7 @@
     <!-- Entities -->
     <script src="/App/entities/ResourcePool.js?v=0.38"></script>
     <script src="/App/entities/Element.js?v=0.38"></script>
-    <script src="/App/entities/ElementCell.js?v=0.37"></script>
+    <script src="/App/entities/ElementCell.js?v=0.38"></script>
     <script src="/App/entities/ElementField.js?v=0.38"></script>
     <script src="/App/entities/ElementItem.js?v=0.38"></script>
     <script src="/App/entities/UserElementCell.js?v=0.37"></script>

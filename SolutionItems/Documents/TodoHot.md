@@ -1,13 +1,34 @@
-﻿anon version - stringvalue etc. computed fields fail!
-if this will be okay, no need to remove saved resource pool from cache
+﻿test resourcepool init
+
+fix newly added cmrp edit + cancel case!
+
+continue with saveElementCell() - resourcePoolEditController.js
+
+check migration - itemid, fieldId cell.cs change
+
+anon version - stringvalue etc. computed fields fail!-
+if this will be okay, no need to retrieve resource pool from server (and remove saved resource pool from cache)
+
+refresh on this;
+http://localhost:15001/resourcePool/-2/edit
 
 db update!
 
 ---
 objects vs entities
 
+resourcepool - resourcepoolratetotal, count, ratingcount never null
+elementfiel - indexratingtotal, count never null
+elementcell - numericvaluecount never null - ONLY numericvaluetotal CAN BE NULL? which can be changed to NOT NULL!
+
+rules
+directincome type must use fixed value
+multiplier cannot use fixed value
+
 in js files, first list items; vm. - scope.
 then implementations?
+
+try to use enums + js entities in add functions + tests
 
 move enums to their related class?
 

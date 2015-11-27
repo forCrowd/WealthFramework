@@ -22,26 +22,16 @@ function registerPrototypes($injector) {
     var ResourcePool, Element, ElementField, ElementItem, ElementCell;
 
     ResourcePool = $injector.get('ResourcePool');
-    ResourcePool.prototype.InitialValue = 0;
-    ResourcePool.prototype.ResourcePoolRateTotal = 0;
-    ResourcePool.prototype.ResourcePoolRateCount = 0;
     ResourcePool.prototype.ElementSet = []; // *
     ResourcePool.prototype.UserResourcePoolSet = []; // *
 
     Element = $injector.get('Element');
-    Element.prototype.IsMainElement = false;
     Element.prototype.ResourcePool = null;
     Element.prototype.ElementFieldSet = []; // *
     Element.prototype.ElementItemSet = []; // *
     Element.prototype.ParentFieldSet = []; // *
 
     ElementField = $injector.get('ElementField');
-    ElementField.prototype.UseFixedValue = false;
-    ElementField.prototype.IndexCalculationType = 1;
-    ElementField.prototype.IndexSortType = 2;
-    ElementField.prototype.SortOrder = 0;
-    ElementField.prototype.IndexRatingTotal = 0;
-    ElementField.prototype.IndexRatingCount = 0;
     ElementField.prototype.Element = null;
     ElementField.prototype.ElementCellSet = []; // *
     ElementField.prototype.UserElementFieldSet = []; // *
@@ -54,8 +44,6 @@ function registerPrototypes($injector) {
     ElementCell = $injector.get('ElementCell');
     ElementCell.prototype.ElementField = null;
     ElementCell.prototype.ElementItem = null;
-    ElementCell.prototype.NumericValueTotal = 0;
-    ElementCell.prototype.NumericValueCount = 0;
     ElementCell.prototype.UserElementCellSet = []; // *
 
     // * A friendly reminder for a while;
