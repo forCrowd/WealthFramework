@@ -58,8 +58,8 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        ElementItemId = c.Int(nullable: false),
                         ElementFieldId = c.Int(nullable: false),
+                        ElementItemId = c.Int(nullable: false),
                         StringValue = c.String(),
                         NumericValueTotal = c.Decimal(precision: 18, scale: 2),
                         NumericValueCount = c.Int(),
@@ -73,7 +73,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
                 .ForeignKey("dbo.ElementField", t => t.ElementFieldId)
                 .ForeignKey("dbo.ElementItem", t => t.ElementItemId, cascadeDelete: true)
                 .ForeignKey("dbo.ElementItem", t => t.SelectedElementItemId)
-                .Index(t => new { t.ElementItemId, t.ElementFieldId }, unique: true, name: "IX_ElementCellId")
+                .Index(t => new { t.ElementFieldId, t.ElementItemId }, unique: true, name: "IX_ElementCellId")
                 .Index(t => t.SelectedElementItemId);
             
             CreateTable(

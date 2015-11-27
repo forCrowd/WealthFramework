@@ -13,7 +13,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201511261127432_Initial_Manual"; }
+            get { return "201511271208522_Initial_Manual"; }
         }
         
         string IMigrationMetadata.Source

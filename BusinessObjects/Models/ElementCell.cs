@@ -36,10 +36,10 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         public int Id { get; set; }
 
         [Index("IX_ElementCellId", 1, IsUnique = true)]
-        public int ElementItemId { get; set; }
+        public int ElementFieldId { get; set; }
 
         [Index("IX_ElementCellId", 2, IsUnique = true)]
-        public int ElementFieldId { get; set; }
+        public int ElementItemId { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public string StringValue { get; private set; }
