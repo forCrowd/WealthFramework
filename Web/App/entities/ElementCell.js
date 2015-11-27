@@ -70,19 +70,19 @@
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value;
-                var cell = self.currentUserCell();
+                var userCell = self.currentUserCell();
 
                 switch (self.ElementField.DataType) {
-                    case 2: { value = cell !== null ? cell.BooleanValue : 0; break; }
-                    case 3: { value = cell !== null ? cell.IntegerValue : 0; break; }
-                    case 4: { value = cell !== null ? cell.DecimalValue : 50; /* Default value? */ break; }
+                    case 2: { value = userCell !== null ? userCell.BooleanValue : 0; break; }
+                    case 3: { value = userCell !== null ? userCell.IntegerValue : 0; break; }
+                    case 4: { value = userCell !== null ? userCell.DecimalValue : 50; /* Default value? */ break; }
                         // TODO 5 (DateTime?)
                     case 11: {
                         // DirectIncome: No need to try user's cell, always return all users', which will be CMRP owner's value
                         value = self.NumericValueTotal !== null ? self.NumericValueTotal : 0;
                         break;
                     }
-                    case 12: { value = cell !== null ? cell.DecimalValue : 0; /* Default value? */ break; }
+                    case 12: { value = userCell !== null ? userCell.DecimalValue : 0; /* Default value? */ break; }
                         // default: { throw 'currentUserNumericValue() - Not supported element field type: ' + self.ElementField.DataType; }
                 }
 

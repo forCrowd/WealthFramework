@@ -38,6 +38,7 @@
         $delegate.createElementField = createElementField;
         $delegate.createElementItem = createElementItem;
         $delegate.createResourcePoolBasic = createResourcePoolBasic;
+        $delegate.createResourcePoolDirectIncomeAndMultiplier = createResourcePoolDirectIncomeAndMultiplier;
         $delegate.createResourcePoolTwoElements = createResourcePoolTwoElements;
         $delegate.getResourcePoolExpanded = getResourcePoolExpanded;
         $delegate.removeElement = removeElement;
@@ -170,17 +171,22 @@
             return userFactory.getCurrentUser()
                 .then(function (currentUser) {
 
+                    var resourcePoolRate = 10;
+
                     var resourcePool = dataContext.createEntity('ResourcePool', {
                         User: currentUser,
                         Name: 'New CMRP',
                         InitialValue: 100,
+                        ResourcePoolRateTotal: resourcePoolRate,
+                        ResourcePoolRateCount: 1,
+                        RatingCount: 1,
                         UseFixedResourcePoolRate: false
                     });
 
                     dataContext.createEntity('UserResourcePool', {
                         User: currentUser,
                         ResourcePool: resourcePool,
-                        ResourcePoolRate: 10
+                        ResourcePoolRate: resourcePoolRate
                     });
 
                     var element = dataContext.createEntity('Element', {
@@ -213,6 +219,47 @@
                         Name: 'New item 2'
                     });
 
+                    resourcePool.init(true);
+
+                    return resourcePool;
+                });
+        }
+
+        function createResourcePoolDirectIncomeAndMultiplier() {
+
+            return createResourcePoolBasic()
+                .then(function (resourcePool) {
+
+                    // 
+
+                    // Convert Importance field to Sales Price field
+                    var salesPriceField = resourcePool.mainElement().ElementFieldSet[0];
+                    salesPriceField.Name = 'Sales Price';
+                    salesPriceField.DataType = 11;
+                    salesPriceField.UseFixedValue = true;
+                    salesPriceField.IndexCalculationType = 1;
+                    salesPriceField.IndexSortType = 2;
+
+                    // Update Sales Price field cells
+                    var cell1 = salesPriceField.ElementCellSet[0];
+                    cell1.NumericValueTotal = 100;
+                    cell1.UserElementCellSet[0].DecimalValue = 100;
+
+                    var cell2 = salesPriceField.ElementCellSet[1];
+                    cell2.NumericValueTotal = 110;
+                    cell2.UserElementCellSet[0].DecimalValue = 110;
+
+                    // Number of Sales field
+                    var numberOfSalesField = createElementField({
+                        Element: resourcePool.mainElement(),
+                        Name: 'Number of Sales',
+                        DataType: 12,
+                        UseFixedValue: false,
+                        SortOrder: 2
+                    });
+
+                    resourcePool.updateCache();
+
                     return resourcePool;
                 });
         }
@@ -221,9 +268,6 @@
 
             return createResourcePoolBasic()
                 .then(function (resourcePool) {
-
-                    // Resource pool
-                    resourcePool.InitialValue = 100;
 
                     // Element 2 & items
                     var element2 = resourcePool.ElementSet[0];
@@ -240,6 +284,7 @@
 
                     // Switch places of the elements
                     // Otherwise 'Child' becomes the main and viewer shows that one first
+                    // TODO Don't we use 'IsMainElement' for this purpose??? / SH - 27 Nov. 15
                     resourcePool.ElementSet[0] = element1;
                     resourcePool.ElementSet[1] = element2;
 
@@ -284,45 +329,40 @@
 
                     // Prepare the query
                     var query = null;
+                    var newlyCreated = resourcePoolId <= 0; // Determines whether this is just created by this user, or an existing resource pool
                     var fetchedEarlier = false;
+                    var fromServer = false;
 
-                    // Means that this is an existing resource pool
-                    if (resourcePoolId > 0) {
-
-                        // Is authorized? No, then get only the public data, yes, then get include user's own records
-                        if (currentUser.Id > 0) {
-                            query = breeze.EntityQuery
-                                .from('ResourcePool')
-                                .expand('UserResourcePoolSet, ElementSet.ElementFieldSet.UserElementFieldSet, ElementSet.ElementItemSet.ElementCellSet.UserElementCellSet')
-                                .where('Id', 'eq', resourcePoolId);
-                        } else {
-                            query = breeze.EntityQuery
-                                .from('ResourcePool')
-                                .expand('ElementSet.ElementFieldSet, ElementSet.ElementItemSet.ElementCellSet')
-                                .where('Id', 'eq', resourcePoolId);
-                        }
-
-                        // Fetch the data from server, in case if it's not fetched earlier
+                    // If it's not newly created, check the fetched list
+                    if (!newlyCreated) {
                         for (var i = 0; i < fetched.length; i++) {
                             if (resourcePoolId === fetched[i]) {
                                 fetchedEarlier = true;
                                 break;
                             }
                         }
-                    } else { // Means that this CMRP has just been created by this user
+                    }
+
+                    fromServer = !newlyCreated && !fetchedEarlier;
+
+                    // Is authorized? No, then get only the public data, yes, then get include user's own records
+                    if (currentUser.Id > 0 || newlyCreated) {
                         query = breeze.EntityQuery
                             .from('ResourcePool')
                             .expand('UserResourcePoolSet, ElementSet.ElementFieldSet.UserElementFieldSet, ElementSet.ElementItemSet.ElementCellSet.UserElementCellSet')
                             .where('Id', 'eq', resourcePoolId);
-
-                        fetchedEarlier = true;
+                    } else {
+                        query = breeze.EntityQuery
+                            .from('ResourcePool')
+                            .expand('ElementSet.ElementFieldSet, ElementSet.ElementItemSet.ElementCellSet')
+                            .where('Id', 'eq', resourcePoolId);
                     }
 
-                    // Prepare the query
-                    if (!fetchedEarlier) { // From remote
+                    // From server or local?
+                    if (fromServer) {
                         query = query.using(breeze.FetchStrategy.FromServer);
                     }
-                    else { // From local
+                    else {
                         query = query.using(breeze.FetchStrategy.FromLocalCache);
                     }
 
@@ -340,8 +380,8 @@
                         // ResourcePool
                         var resourcePool = response.results[0];
 
-                        // Init
-                        resourcePool.init();
+                        // Init: If it's from server, calculate otherUsersData
+                        resourcePool.init(fromServer);
 
                         // Add the record into fetched list
                         fetched.push(resourcePool.Id);

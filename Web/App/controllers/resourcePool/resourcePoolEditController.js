@@ -443,6 +443,8 @@
 
         function saveResourcePool(returnPath) {
 
+            vm.resourcePool.updateCache();
+
             userFactory.isAuthenticated()
                 .then(function (isAuthenticated) {
                     if (isAuthenticated) {

@@ -127,17 +127,89 @@
 
             self.init = init; // Should be called after createEntity or retrieving it from server
             self.mainElement = mainElement;
+            self.updateCache = updateCache;
 
             // Public functions
 
-            function init() {
+            // TODO Most of these functions are related with userService.js - updateX functions
+            // Try to merge these two - Actually try to handle these actions within the related entity / SH - 27 Nov. '15
+            function updateCache() {
+
+                self.setCurrentUserResourcePoolRate();
+
+                // Elements
+                if (typeof self.ElementSet !== 'undefined') {
+                    for (var elementIndex = 0; elementIndex < self.ElementSet.length; elementIndex++) {
+                        var element = self.ElementSet[elementIndex];
+
+                        // TODO Why this needs to be done, it's not clear
+                        // but without it (even if the resource pool will be retrieved from the server), elementFieldIndexSet() can have detached fields
+                        // Check it later / SH - 24 Nov. '15
+                        // TODO This actually is in init(), but should it be here?
+                        //element.setElementFieldIndexSet();
+
+                        // Fields
+                        if (typeof element.ElementFieldSet !== 'undefined') {
+                            for (var fieldIndex = 0; fieldIndex < element.ElementFieldSet.length; fieldIndex++) {
+
+                                var field = element.ElementFieldSet[fieldIndex];
+
+                                if (field.IndexEnabled) {
+                                    field.setCurrentUserIndexRating();
+                                }
+
+                                // Cells
+                                if (typeof field.ElementCellSet !== 'undefined') {
+                                    for (var cellIndex = 0; cellIndex < field.ElementCellSet.length; cellIndex++) {
+                                        var cell = field.ElementCellSet[cellIndex];
+
+                                        switch (cell.ElementField.DataType) {
+                                            case 2:
+                                            case 3:
+                                            case 4:
+                                                // TODO DateTime?
+                                                {
+                                                    cell.setCurrentUserNumericValue();
+                                                    break;
+                                                }
+                                            case 11:
+                                                {
+                                                    // TODO This is necessary just because UseFixedValue actually doesn't work!
+                                                    // and DirectIncome uses NumericValueTotal as a value!
+                                                    cell.NumericValueTotal = cell.UserElementCellSet[0].DecimalValue;
+                                                    cell.setCurrentUserNumericValue();
+                                                    break;
+                                                }
+                                            case 12:
+                                                {
+                                                    cell.ElementItem.setMultiplier();
+
+                                                    if (cell.ElementField.IndexEnabled) {
+                                                        cell.setNumericValueMultiplied();
+                                                    }
+
+                                                    break;
+                                                }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            function init(calculateOtherUsersData) {
+                calculateOtherUsersData = typeof calculateOtherUsersData !== 'undefined' ? calculateOtherUsersData : false;
 
                 // Current element
                 self.CurrentElement = self.mainElement();
 
-                // Set otherUsers' properties
-                self.setOtherUsersResourcePoolRateTotal();
-                self.setOtherUsersResourcePoolRateCount();
+                // Set otherUsers' data
+                if (calculateOtherUsersData) {
+                    self.setOtherUsersResourcePoolRateTotal();
+                    self.setOtherUsersResourcePoolRateCount();
+                }
 
                 // Elements
                 if (typeof self.ElementSet !== 'undefined') {
@@ -154,15 +226,21 @@
                             for (var fieldIndex = 0; fieldIndex < element.ElementFieldSet.length; fieldIndex++) {
 
                                 var field = element.ElementFieldSet[fieldIndex];
-                                field.setOtherUsersIndexRatingTotal();
-                                field.setOtherUsersIndexRatingCount();
+
+                                if (calculateOtherUsersData) {
+                                    field.setOtherUsersIndexRatingTotal();
+                                    field.setOtherUsersIndexRatingCount();
+                                }
 
                                 // Cells
                                 if (typeof field.ElementCellSet !== 'undefined') {
                                     for (var cellIndex = 0; cellIndex < field.ElementCellSet.length; cellIndex++) {
                                         var cell = field.ElementCellSet[cellIndex];
-                                        cell.setOtherUsersNumericValueTotal();
-                                        cell.setOtherUsersNumericValueCount();
+
+                                        if (calculateOtherUsersData) {
+                                            cell.setOtherUsersNumericValueTotal();
+                                            cell.setOtherUsersNumericValueCount();
+                                        }
                                     }
                                 }
                             }
