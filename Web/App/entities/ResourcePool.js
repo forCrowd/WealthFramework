@@ -34,17 +34,6 @@
         //});
 
         // Client-side properties
-        Object.defineProperty(ResourcePool.prototype, 'CurrentElement', {
-            enumerable: true,
-            configurable: true,
-            get: function () { return this.backingFields._currentElement; },
-            set: function (value) {
-                if (this.backingFields._currentElement !== value) {
-                    this.backingFields._currentElement = value;
-                }
-            }
-        });
-
         Object.defineProperty(ResourcePool.prototype, 'RatingMode', {
             enumerable: true,
             configurable: true,
@@ -118,6 +107,7 @@
                 _useFixedResourcePoolRate: false,
                 _currentElement: null,
                 _ratingMode: 1, // Only my ratings vs. All users' ratings
+                _selectedElement: null,
                 _currentUserResourcePoolRate: null,
                 _otherUsersResourcePoolRateTotal: null,
                 _otherUsersResourcePoolRateCount: null,
@@ -128,8 +118,25 @@
             self.init = init; // Should be called after createEntity or retrieving it from server
             self.mainElement = mainElement;
             self.updateCache = updateCache;
+            self.selectedElement = selectedElement;
 
             // Public functions
+
+            function selectedElement(value) {
+                value = typeof value !== 'undefined' ? value : null;
+
+                // Set new value
+                if (value !== null && self.backingFields._selectedElement !== value) {
+                    self.backingFields._selectedElement = value;
+                }
+
+                // If there is no existing value (initial state), use mainElement() as the selected
+                if (self.backingFields._selectedElement === null && self.mainElement()) {
+                    self.backingFields._selectedElement = self.mainElement();
+                }
+
+                return self.backingFields._selectedElement;
+            }
 
             // TODO Most of these functions are related with userService.js - updateX functions
             // Try to merge these two - Actually try to handle these actions within the related entity / SH - 27 Nov. '15
@@ -201,9 +208,6 @@
 
             function init(calculateOtherUsersData) {
                 calculateOtherUsersData = typeof calculateOtherUsersData !== 'undefined' ? calculateOtherUsersData : false;
-
-                // Current element
-                self.CurrentElement = self.mainElement();
 
                 // Set otherUsers' data
                 if (calculateOtherUsersData) {

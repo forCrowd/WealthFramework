@@ -25,7 +25,15 @@ and last (?!!??!?!) check this;
                         // TODO This actually is in init(), but should it be here?
                         //element.setElementFieldIndexSet();
 
+and laastt (?!) - do this better pls?
+        function elementFieldIndexEnabledChanged() {
+            vm.elementField.IndexCalculationType = vm.elementField.IndexEnabled ? 1 : 0;
+            vm.elementField.IndexSortType = vm.elementField.IndexEnabled ? 1 : 0;
+        }
+
+						
 db update!
+merge with master!
 
 ---
 check two elements case +                     // TODO Don't we use 'IsMainElement' for this purpose??? / SH - 27 Nov. 15

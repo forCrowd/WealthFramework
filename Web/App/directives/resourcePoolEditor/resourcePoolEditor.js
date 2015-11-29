@@ -65,8 +65,8 @@
                 scope.isSaving = false;
             });
 
-            scope.changeCurrentElement = function (element) {
-                scope.resourcePool.CurrentElement = element;
+            scope.changeSelectedElement = function (element) {
+                scope.resourcePool.selectedElement(element);
                 loadChartData();
             }
 
@@ -207,7 +207,7 @@
                             // It returns an array, set the first item in the list
                             scope.resourcePool = resourcePool;
 
-                            if (scope.resourcePool.CurrentElement !== null) {
+                            if (scope.resourcePool.selectedElement() !== null) {
                                 loadChartData();
                             }
 
@@ -240,7 +240,7 @@
             function loadChartData() {
 
                 // Current element
-                var element = scope.resourcePool.CurrentElement;
+                var element = scope.resourcePool.selectedElement();
 
                 if (element === null) {
                     return;
@@ -345,7 +345,7 @@
             }
 
             // TODO Store these in a better place?
-            // TODO Also test these better, by comparing it with resourcePool.CurrentElement property!
+            // TODO Also test these better, by comparing it with resourcePool.selectedElement() property!
             function columnChartItem(elementItem) {
                 var self = this;
 
