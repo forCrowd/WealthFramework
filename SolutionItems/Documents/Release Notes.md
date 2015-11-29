@@ -4,6 +4,8 @@
 
 * Anonymous CMRP create / edit
 LocationItem object was created to hold the newly created resource pools, so it can navigate back to correct Id that's been retrieved from the server
+* Element.IsMainElement property handling was improved
+* ResourcePool.CurrentElement property was replaced with selectedElement function
 * Server-side properties were added to javascript objects, except Navigation Properties (due to breezejs error)
 * Element.IsMainElement instead of ResourcePool MainElement (back to previous setup)
 * resourcePool.js - selectedElement() instead of CurrentElement prop

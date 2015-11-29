@@ -1,37 +1,16 @@
-﻿continue with resourcepoolratetotal + count + rating count initial / update scenarios
-then field indexratingtotal, count
-then cell stringvalue, numericvaluetotal, numericvaluecount
-
-test resourcepool init
-
-fix newly added cmrp edit + cancel case!
+﻿fix newly added cmrp edit + cancel case!
 1. create a temp user and actually save the stuff?
 2. use acceptChanges() + if it's a new cmrp, before saving it, change it to 'added'
-
-continue with saveElementCell() - resourcePoolEditController.js
-
-anon version - stringvalue etc. computed fields fail!-
-if this will be okay, no need to retrieve resource pool from server (and remove saved resource pool from cache)
-
-refresh on these;
 http://localhost:15001/resourcePool/-2
 http://localhost:15001/resourcePool/-2/edit
 
-updateCache & init() functions may ignore field(index), since there is no way of updating it in resourcePoolEdit?
-
-and last (?!!??!?!) check this;
-
-                        // TODO Why this needs to be done, it's not clear
-                        // but without it (even if the resource pool will be retrieved from the server), elementFieldIndexSet() can have detached fields
-                        // Check it later / SH - 24 Nov. '15
-                        // TODO This actually is in init(), but should it be here?
-                        //element.setElementFieldIndexSet();
+if this will be okay, no need to retrieve resource pool from server (and remove saved resource pool from cache)
 
 and laastt (?!) - do this better pls?
-        function elementFieldIndexEnabledChanged() {
-            vm.elementField.IndexCalculationType = vm.elementField.IndexEnabled ? 1 : 0;
-            vm.elementField.IndexSortType = vm.elementField.IndexEnabled ? 1 : 0;
-        }
+function elementFieldIndexEnabledChanged() {
+	vm.elementField.IndexCalculationType = vm.elementField.IndexEnabled ? 1 : 0;
+	vm.elementField.IndexSortType = vm.elementField.IndexEnabled ? 1 : 0;
+}
 
 use createEntity in addX cases!
 
@@ -42,6 +21,8 @@ merge with master!
 // TODO Most of these functions are related with userService.js - updateX functions
 // Try to merge these two - Actually try to handle these actions within the related entity / SH - 27 Nov. '15
 function updateCache() {
+
+also review init() method!
 
 UseFixedValue doesn't work at all! fix it!
 also check resourcePool.UseFixedResourcePoolRate case!

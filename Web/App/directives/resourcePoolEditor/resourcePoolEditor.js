@@ -391,7 +391,7 @@
 
         return {
             restrict: 'E',
-            templateUrl: '/App/directives/resourcePoolEditor/resourcePoolEditor.html?v=0.37',
+            templateUrl: '/App/directives/resourcePoolEditor/resourcePoolEditor.html?v=0.38',
             scope: {
                 config: '='
             },

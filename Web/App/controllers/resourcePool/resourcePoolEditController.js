@@ -438,6 +438,7 @@
 
         function saveResourcePool(returnPath) {
 
+            // TODO Try to move this to a better place?
             vm.resourcePool.updateCache();
 
             userFactory.isAuthenticated()

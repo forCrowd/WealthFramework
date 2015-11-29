@@ -124,8 +124,6 @@
 
             function selectedElement(value) {
 
-                // TODO What happens when you remove the last element?
-
                 // Set new value
                 if (typeof value !== 'undefined' && self.backingFields._selectedElement !== value) {
                     self.backingFields._selectedElement = value;
@@ -150,11 +148,8 @@
                     for (var elementIndex = 0; elementIndex < self.ElementSet.length; elementIndex++) {
                         var element = self.ElementSet[elementIndex];
 
-                        // TODO Why this needs to be done, it's not clear
-                        // but without it (even if the resource pool will be retrieved from the server), elementFieldIndexSet() can have detached fields
-                        // Check it later / SH - 24 Nov. '15
-                        // TODO This actually is in init(), but should it be here?
-                        //element.setElementFieldIndexSet();
+                        // TODO Review this later / SH - 24 Nov. '15
+                        element.setElementFieldIndexSet();
 
                         // Fields
                         if (typeof element.ElementFieldSet !== 'undefined') {
@@ -163,6 +158,8 @@
                                 var field = element.ElementFieldSet[fieldIndex];
 
                                 if (field.IndexEnabled) {
+                                    // TODO Actually index rating can't be set through resourcePoolEdit page and no need to update this cache
+                                    // But still keep it as a reminder? / SH - 29 Nov. '15
                                     field.setCurrentUserIndexRating();
                                 }
 
@@ -172,6 +169,11 @@
                                         var cell = field.ElementCellSet[cellIndex];
 
                                         switch (cell.ElementField.DataType) {
+                                            case 1: {
+                                                // TODO Again what a mess! / SH - 29 Nov. '15
+                                                cell.StringValue = cell.UserElementCellSet[0].StringValue;
+                                                break;
+                                            }
                                             case 2:
                                             case 3:
                                             case 4:
@@ -182,9 +184,10 @@
                                                 }
                                             case 11:
                                                 {
-                                                    // TODO This is necessary just because UseFixedValue actually doesn't work!
-                                                    // and DirectIncome uses NumericValueTotal as a value!
+                                                    // TODO DirectIncome is always calculated from NumericValueTotal
+                                                    // Which is actually not correct but till now, update it like this / SH - 29 Nov. '15
                                                     cell.NumericValueTotal = cell.UserElementCellSet[0].DecimalValue;
+
                                                     cell.setCurrentUserNumericValue();
                                                     break;
                                                 }
@@ -220,11 +223,6 @@
                 if (typeof self.ElementSet !== 'undefined') {
                     for (var elementIndex = 0; elementIndex < self.ElementSet.length; elementIndex++) {
                         var element = self.ElementSet[elementIndex];
-
-                        // TODO Why this needs to be done, it's not clear
-                        // but without it (even if the resource pool will be retrieved from the server), elementFieldIndexSet() can have detached fields
-                        // Check it later / SH - 24 Nov. '15
-                        element.setElementFieldIndexSet();
 
                         // Fields
                         if (typeof element.ElementFieldSet !== 'undefined') {

@@ -256,8 +256,6 @@
                         SortOrder: 2
                     });
 
-                    resourcePool.updateCache();
-
                     return resourcePool;
                 });
         }
