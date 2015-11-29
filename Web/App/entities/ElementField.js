@@ -20,6 +20,9 @@
                 if (this.backingFields._indexEnabled !== value) {
                     this.backingFields._indexEnabled = value;
 
+                    this.IndexCalculationType = value ? 1 : 0;
+                    this.IndexSortType = value ? 1 : 0;
+
                     // TODO Complete this block!
 
                     //// Update related

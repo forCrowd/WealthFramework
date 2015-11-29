@@ -43,7 +43,6 @@
         vm.elementCellMaster = null;
         vm.elementCellSet = elementCellSet;
         vm.elementField = null;
-        vm.elementFieldIndexEnabledChanged = elementFieldIndexEnabledChanged;
         vm.elementFieldMaster = null;
         vm.elementFieldSet = elementFieldSet;
         vm.elementFieldDataTypeFiltered = elementFieldDataTypeFiltered;
@@ -258,11 +257,6 @@
                 }
             }
             return list;
-        }
-
-        function elementFieldIndexEnabledChanged() {
-            vm.elementField.IndexCalculationType = vm.elementField.IndexEnabled ? 1 : 0;
-            vm.elementField.IndexSortType = vm.elementField.IndexEnabled ? 1 : 0;
         }
 
         function elementFieldSet() {

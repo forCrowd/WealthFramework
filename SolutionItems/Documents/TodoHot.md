@@ -6,12 +6,6 @@ http://localhost:15001/resourcePool/-2/edit
 
 if this will be okay, no need to retrieve resource pool from server (and remove saved resource pool from cache)
 
-and laastt (?!) - do this better pls?
-function elementFieldIndexEnabledChanged() {
-	vm.elementField.IndexCalculationType = vm.elementField.IndexEnabled ? 1 : 0;
-	vm.elementField.IndexSortType = vm.elementField.IndexEnabled ? 1 : 0;
-}
-
 use createEntity in addX cases!
 
 db update!
