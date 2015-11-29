@@ -10,6 +10,37 @@
         // Logger
         logger = logger.forSource(factoryId);
 
+        // Server-side properties
+        Object.defineProperty(Element.prototype, 'IsMainElement', {
+            enumerable: true,
+            configurable: true,
+            get: function () { return this.backingFields._IsMainElement; },
+            set: function (value) {
+
+                if (this.backingFields._IsMainElement !== value) {
+                    this.backingFields._IsMainElement = value;
+
+                    // TODO When this prop set in constructor, ResourcePool is null, in such case, ignore
+                    // However, it would be better to always have a ResourcePool? / SH - 29 Nov. '15
+                    if (this.ResoucePool === null) {
+                        return;
+                    }
+
+                    // Main element check: If there is another element that its IsMainElement flag is true, make it false
+                    if (value) {
+                        angular.forEach(this.ResourcePool.ElementSet, function (element) {
+                            if (element !== this && element.IsMainElement) {
+                                element.IsMainElement = false;
+                            }
+                        });
+
+                        // Update selectedElement of resourcePool
+                        this.ResourcePool.selectedElement(this);
+                    }
+                }
+            }
+        });
+
         // Return
         return Element;
 
@@ -22,7 +53,6 @@
             // Server-side props
             self.Id = 0;
             self.Name = '';
-            self.IsMainElement = false;
             // TODO breezejs - Cannot assign a navigation property in an entity ctor
             //self.ResourcePool = null;
             //self.ElementFieldSet = [];
@@ -31,6 +61,10 @@
 
             // Local variables
             self.backingFields = {
+                // Server-side
+                _IsMainElement: false,
+
+                // Client-side
                 _parent: null,
                 _familyTree: null,
                 _elementFieldIndexSet: null,
@@ -54,7 +88,7 @@
                         indexSet.push(field);
                     }
 
-                    if (field.DataType === 6) {
+                    if (field.DataType === 6 && field.SelectedElement !== null) {
                         var childIndexSet = getElementFieldIndexSet(field.SelectedElement);
 
                         for (var x = 0; x < childIndexSet.length; x++) {

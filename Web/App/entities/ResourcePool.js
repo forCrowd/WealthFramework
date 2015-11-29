@@ -123,10 +123,11 @@
             // Public functions
 
             function selectedElement(value) {
-                value = typeof value !== 'undefined' ? value : null;
+
+                // TODO What happens when you remove the last element?
 
                 // Set new value
-                if (value !== null && self.backingFields._selectedElement !== value) {
+                if (typeof value !== 'undefined' && self.backingFields._selectedElement !== value) {
                     self.backingFields._selectedElement = value;
                 }
 

@@ -13,7 +13,9 @@ continue with saveElementCell() - resourcePoolEditController.js
 anon version - stringvalue etc. computed fields fail!-
 if this will be okay, no need to retrieve resource pool from server (and remove saved resource pool from cache)
 
-refresh on this; http://localhost:15001/resourcePool/-2/edit
+refresh on these;
+http://localhost:15001/resourcePool/-2
+http://localhost:15001/resourcePool/-2/edit
 
 updateCache & init() functions may ignore field(index), since there is no way of updating it in resourcePoolEdit?
 
@@ -31,14 +33,12 @@ and laastt (?!) - do this better pls?
             vm.elementField.IndexSortType = vm.elementField.IndexEnabled ? 1 : 0;
         }
 
-						
+use createEntity in addX cases!
+
 db update!
 merge with master!
 
 ---
-check two elements case +                     // TODO Don't we use 'IsMainElement' for this purpose??? / SH - 27 Nov. 15
-
-
 // TODO Most of these functions are related with userService.js - updateX functions
 // Try to merge these two - Actually try to handle these actions within the related entity / SH - 27 Nov. '15
 function updateCache() {

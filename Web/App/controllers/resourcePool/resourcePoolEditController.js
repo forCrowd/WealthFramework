@@ -5,6 +5,7 @@
     angular.module('main')
         .controller(controllerId, ['resourcePoolFactory',
             'userFactory',
+            'Element',
             '$location',
             '$routeParams',
             '$rootScope',
@@ -15,6 +16,7 @@
 
     function resourcePoolEditController(resourcePoolFactory,
         userFactory,
+        Element,
         $location,
         $routeParams,
         $rootScope,
@@ -109,7 +111,12 @@
         }
 
         function addElement() {
-            vm.element = { ResourcePool: vm.resourcePool, Name: 'New element', IsMainElement: false };
+            vm.element = resourcePoolFactory.createElement({
+                    ResourcePool: vm.resourcePool,
+                    Name: 'New element',
+                    IsMainElement: false
+                });
+
             vm.isElementEdit = true;
             vm.isElementNew = true;
         }
@@ -137,7 +144,9 @@
 
             // TODO Find a better way?
             // Can't use reject changes because in 'New CMRP' case, these are newly added entities and reject changes removes them / SH - 23 Nov. '15
-            if (!vm.isElementNew) {
+            if (vm.isElementNew) {
+                vm.element.entityAspect.rejectChanges();
+            } else {
                 vm.element.Name = vm.elementMaster.Name;
             }
 
@@ -382,20 +391,6 @@
         }
 
         function saveElement() {
-
-            if (vm.isElementNew) {
-                vm.element = resourcePoolFactory.createElement(vm.element);
-            }
-
-            // Main element check: If IsMainElement flag is true for this item, remove this flag from other elements
-            if (vm.element.IsMainElement) {
-                angular.forEach(vm.element.ResourcePool.ElementSet, function (element) {
-                    if (element !== vm.element && element.IsMainElement) {
-                        element.IsMainElement = false;
-                    }
-                });
-            }
-
             vm.isElementEdit = false;
             vm.element = null;
             vm.elementMaster = null;

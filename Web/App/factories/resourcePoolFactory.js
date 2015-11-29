@@ -191,9 +191,9 @@
 
                     var element = dataContext.createEntity('Element', {
                         ResourcePool: resourcePool,
-                        Name: 'New element',
-                        IsMainElement: true
+                        Name: 'New element'
                     });
+                    element.IsMainElement = true;
 
                     // Importance field (index)
                     var importanceField = createElementField({
@@ -229,8 +229,6 @@
 
             return createResourcePoolBasic()
                 .then(function (resourcePool) {
-
-                    // 
 
                     // Convert Importance field to Sales Price field
                     var salesPriceField = resourcePool.mainElement().ElementFieldSet[0];
@@ -281,12 +279,7 @@
                         ResourcePool: resourcePool,
                         Name: 'Parent'
                     });
-
-                    // Switch places of the elements
-                    // Otherwise 'Child' becomes the main and viewer shows that one first
-                    // TODO Don't we use 'IsMainElement' for this purpose??? / SH - 27 Nov. 15
-                    resourcePool.ElementSet[0] = element1;
-                    resourcePool.ElementSet[1] = element2;
+                    element1.IsMainElement = true;
 
                     // Child field (second element)
                     var childField = createElementField({
@@ -305,7 +298,7 @@
                     });
 
                     // Item 1 Cell
-                    item1.ElementCellSet[1].SelectedElementItem = element2Item1;
+                    item1.ElementCellSet[0].SelectedElementItem = element2Item1;
 
                     // Item 2
                     var item2 = createElementItem({
@@ -314,7 +307,7 @@
                     });
 
                     // Item 2 Cell
-                    item2.ElementCellSet[1].SelectedElementItem = element2Item2;
+                    item2.ElementCellSet[0].SelectedElementItem = element2Item2;
 
                     return resourcePool;
                 });
@@ -397,6 +390,11 @@
         }
 
         function removeElement(element) {
+
+            // Remove from selectedElement
+            if (element.ResourcePool.selectedElement() === element) {
+                element.ResourcePool.selectedElement(null);
+            }
 
             // Related items
             var elementItemSet = element.ElementItemSet.slice();

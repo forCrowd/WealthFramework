@@ -83,14 +83,15 @@
                         </div>
                         <div class="form-group">
                             <label for="IsMainElement" class="control-label col-md-2">Is Main Element?</label>
-                            <div class="col-md-10" data-ng-class="{'has-error': elementForm.IsMainElement.$invalid && !elementForm.IsMainElement.$pristine}">
-                                <label class="radio-inline">
-                                    <input id="IsMainElement_True" name="IsMainElement" type="radio" data-ng-model="vm.element.IsMainElement" data-ng-value="true" aria-describedby="IsMainElementHelp"> True
-                                </label>
-                                <label class="radio-inline">
-                                    <input id="IsMainElement_False" name="IsMainElement" type="radio" data-ng-model="vm.element.IsMainElement" data-ng-value="false" aria-describedby="IsMainElementHelp"> False
-                                </label>
-                                <span id="IsMainElementHelp" class="help-block">Determines whether CMRP Editor will start with this item or not. Only one element can be 'Main Element'</span>
+                            <div class="col-md-10">
+                                <p class="form-control-static">
+                                    <span data-ng-bind="vm.element.IsMainElement"></span>
+                                    <a href="" data-ng-click="vm.element.IsMainElement = true" data-ng-if="!vm.element.IsMainElement">Set as main element</a>
+                                </p>
+                                <span id="IsMainElementHelp" class="help-block">
+                                    Determines whether CMRP Editor will start with this item or not.
+                                    Only one element can be 'Main Element' and it cannot be deleted.
+                                </span>
                             </div>
                         </div>
                         <div class="form-group">
@@ -140,7 +141,7 @@
                             <a href="" data-ng-click="vm.editElement(element)">
                                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
                             </a>
-                            <a href="" data-ng-click="vm.removeElement(element)">
+                            <a href="" data-ng-click="vm.removeElement(element)" data-ng-if="!element.IsMainElement">
                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove
                             </a>
                         </td>
