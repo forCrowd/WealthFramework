@@ -17,25 +17,27 @@
             get: function () { return this.backingFields._IsMainElement; },
             set: function (value) {
 
-                if (this.backingFields._IsMainElement !== value) {
-                    this.backingFields._IsMainElement = value;
+                var self = this;
+
+                if (self.backingFields._IsMainElement !== value) {
+                    self.backingFields._IsMainElement = value;
 
                     // TODO When this prop set in constructor, ResourcePool is null, in such case, ignore
                     // However, it would be better to always have a ResourcePool? / SH - 29 Nov. '15
-                    if (this.ResoucePool === null) {
+                    if (typeof self.ResoucePool === 'undefined') {
                         return;
                     }
 
                     // Main element check: If there is another element that its IsMainElement flag is true, make it false
                     if (value) {
-                        angular.forEach(this.ResourcePool.ElementSet, function (element) {
-                            if (element !== this && element.IsMainElement) {
+                        angular.forEach(self.ResourcePool.ElementSet, function (element) {
+                            if (element !== self && element.IsMainElement) {
                                 element.IsMainElement = false;
                             }
                         });
 
                         // Update selectedElement of resourcePool
-                        this.ResourcePool.selectedElement(this);
+                        self.ResourcePool.selectedElement(self);
                     }
                 }
             }
