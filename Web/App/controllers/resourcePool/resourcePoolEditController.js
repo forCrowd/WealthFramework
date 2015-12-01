@@ -5,8 +5,6 @@
     angular.module('main')
         .controller(controllerId, ['resourcePoolFactory',
             'userFactory',
-            'Element',
-            'ElementField',
             '$location',
             '$routeParams',
             '$rootScope',
@@ -17,8 +15,6 @@
 
     function resourcePoolEditController(resourcePoolFactory,
         userFactory,
-        Element,
-        ElementField,
         $location,
         $routeParams,
         $rootScope,
@@ -134,11 +130,11 @@
             // Later handle 'SortOrder' by UI, not by asking
             var sortOrder = element.ElementFieldSet.length + 1;
 
-            vm.elementField = new ElementField();
-            vm.elementField.Element = element;
-            vm.elementField.Name = 'New field';
-            vm.elementField.DataType = 1;
-            vm.elementField.SortOrder = sortOrder;
+            vm.elementField = resourcePoolFactory.createElementField({
+                Element: element,
+                Name: 'New field',
+                DataType: 1,
+                SortOrder: sortOrder });
 
             vm.isElementFieldEdit = true;
             vm.isElementFieldNew = true;
@@ -155,7 +151,7 @@
             // TODO Find a better way?
             // Can't use reject changes because in 'New CMRP' case, these are newly added entities and reject changes removes them / SH - 23 Nov. '15
             if (vm.isElementNew) {
-                vm.element.entityAspect.rejectChanges();
+                resourcePoolFactory.removeElement(vm.element);
             } else {
                 vm.element.Name = vm.elementMaster.Name;
             }
@@ -185,7 +181,9 @@
 
             // TODO Find a better way?
             // Can't use reject changes because in 'New CMRP' case, these are newly added entities and reject changes removes them / SH - 23 Nov. '15
-            if (!vm.isElementFieldNew) {
+            if (vm.isElementFieldNew) {
+                resourcePoolFactory.removeElementField(vm.elementField);
+            } else {
                 vm.elementField.Name = vm.elementFieldMaster.Name;
                 vm.elementField.DataType = vm.elementFieldMaster.DataType;
                 vm.elementField.SelectedElementId = vm.elementFieldMaster.SelectedElementId;
@@ -420,10 +418,6 @@
             // c. DirectIncome cannot be Use Fixed Value false at the moment
             if (vm.elementField.DataType === vm.ElementFieldDataType.DirectIncome) {
                 vm.elementField.UseFixedValue = true;
-            }
-
-            if (vm.isElementFieldNew) {
-                vm.elementField = resourcePoolFactory.createElementField(vm.elementField);
             }
 
             vm.isElementFieldEdit = false;
