@@ -6,6 +6,7 @@
         .controller(controllerId, ['resourcePoolFactory',
             'userFactory',
             'Element',
+            'ElementField',
             '$location',
             '$routeParams',
             '$rootScope',
@@ -17,6 +18,7 @@
     function resourcePoolEditController(resourcePoolFactory,
         userFactory,
         Element,
+        ElementField,
         $location,
         $routeParams,
         $rootScope,
@@ -132,7 +134,12 @@
             // Later handle 'SortOrder' by UI, not by asking
             var sortOrder = element.ElementFieldSet.length + 1;
 
-            vm.elementField = { Element: element, Name: 'New field', DataType: 1, SortOrder: sortOrder };
+            vm.elementField = new ElementField();
+            vm.elementField.Element = element;
+            vm.elementField.Name = 'New field';
+            vm.elementField.DataType = 1;
+            vm.elementField.SortOrder = sortOrder;
+
             vm.isElementFieldEdit = true;
             vm.isElementFieldNew = true;
         }
@@ -405,8 +412,13 @@
                 vm.elementField.UseFixedValue = null;
             }
 
-            // b. UseFixedValue must be 'true' for Multiplier type
+            // b. UseFixedValue must be 'false' for Multiplier type
             if (vm.elementField.DataType === vm.ElementFieldDataType.Multiplier) {
+                vm.elementField.UseFixedValue = false;
+            }
+
+            // c. DirectIncome cannot be Use Fixed Value false at the moment
+            if (vm.elementField.DataType === vm.ElementFieldDataType.DirectIncome) {
                 vm.elementField.UseFixedValue = true;
             }
 

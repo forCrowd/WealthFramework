@@ -1,5 +1,11 @@
 ﻿### Release Notes
 
+**0.38.1**
+
+* CMRP Edit - New element field Index Enabled change doesn't set related properties fix
+* CMRP Edit - New element field DirectIncome data type will always be UseFixedValue true
+* CMRP Edit - New element field Multiplier data type will always be UseFixedValue false (fixed)
+
 **0.38**
 
 * Anonymous CMRP create / edit
@@ -12,7 +18,7 @@ If the user logs in after interacting as an 'anonymous user', changes will be sa
 
 **0.37**
 
-* Resource Pool Add / Edit feature was added
+* Resource Pool create / edit feature was added
 * ElementField - ElementFieldType was renamed to DataType, IndexType was renamed to IndexCalculationType, IndexRatingSortType was renamed to IndexSortType
 * Adding a default 'Name' field approach was removed
 * enumKey angular filter was added: Probably this enum operations can be done in a better way

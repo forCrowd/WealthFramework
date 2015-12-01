@@ -1,7 +1,5 @@
-﻿db update!
-merge with master!
+﻿move saveElementField fixes under elementfield.js datatype prop!
 
----
 updateAnonymous changes: if the logged in user has already those entities, it fails!
 
 Alpha team review!
