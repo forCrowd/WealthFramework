@@ -173,7 +173,7 @@
     <script src="/App/controllers/content/closingNotesController.js?v=0.37"></script>
 
     <!-- Resource Pool -->
-    <script src="/App/controllers/resourcePool/resourcePoolEditController.js?v=0.38"></script>
+    <script src="/App/controllers/resourcePool/resourcePoolEditController.js?v=0.38.1"></script>
     <script src="/App/controllers/resourcePool/resourcePoolListController.js?v=0.37"></script>
     <script src="/App/controllers/resourcePool/resourcePoolViewController.js?v=0.38"></script>
 
