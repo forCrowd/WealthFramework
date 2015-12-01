@@ -27,7 +27,9 @@
                 resourcePoolFactory.getResourcePool(vm.editorConfig.resourcePoolId)
                     .then(function (resourcePool) {
 
+                        // Not found, navigate to 404
                         if (resourcePool === null) {
+                            $location.path('/content/404');
                             return;
                         }
 

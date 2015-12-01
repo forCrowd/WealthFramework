@@ -17,6 +17,19 @@
         vm.currentDate = new Date();
         vm.isAuthenticated = isAuthenticated;
         vm.logout = logout;
+        vm.displayAnonymousUserWarning = true;
+
+        // Anonymous user warning
+        $scope.$on('anonymousUserInteracted', function () {
+            if (vm.displayAnonymousUserWarning) {
+                logger.logWarning('To prevent losing your changes, you can register for free or if you have an existing account, please login first.',
+                    null,
+                    true,
+                    'Save your changes?',
+                    { extendedTimeOut: 0, timeOut: 0 });
+                vm.displayAnonymousUserWarning = false;
+            }
+        });
 
         // User logged in
         $scope.$on('userLoggedIn', function () {

@@ -134,7 +134,7 @@
 
     <!-- Main -->
     <script src="/App/main.js?v=0.37"></script>
-    <script src="/App/logger.js?v=0.37"></script>
+    <script src="/App/logger.js?v=0.38"></script>
     <script src="/App/route.js?v=0.38"></script>
     <script src="/App/authorization.js?v=0.29"></script>
 

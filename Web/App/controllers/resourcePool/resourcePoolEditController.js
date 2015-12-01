@@ -98,8 +98,9 @@
                 resourcePoolFactory.getResourcePoolExpanded(vm.resourcePoolId)
                     .then(function (resourcePool) {
 
+                        // Not found, navigate to 404
                         if (resourcePool === null) {
-                            // TODO ?
+                            $location.path('/content/404');
                             return;
                         }
 

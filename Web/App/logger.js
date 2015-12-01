@@ -34,43 +34,43 @@
 
         function forSource(src) {
             return {
-                log: function (m, d, s) { log(m, d, src, s); },
-                logError: function (m, d, s) { logError(m, d, src, s); },
-                logSuccess: function (m, d, s) { logSuccess(m, d, src, s); },
-                logWarning: function (m, d, s) { logWarning(m, d, src, s); },
+                log: function (m, d, s, t, o) { log(m, d, src, s, t, o); },
+                logError: function (m, d, s, t, o) { logError(m, d, src, s, t, o); },
+                logSuccess: function (m, d, s, t, o) { logSuccess(m, d, src, s, t, o); },
+                logWarning: function (m, d, s, t, o) { logWarning(m, d, src, s, t, o); },
             };
         }
 
-        function log(message, data, source, showToast) {
-            logIt(message, data, source, showToast, 'info');
+        function log(message, data, source, showToast, title, optionsOverride) {
+            logIt(message, data, source, showToast, title, optionsOverride, 'info');
         }
 
-        function logWarning(message, data, source, showToast) {
-            logIt(message, data, source, showToast, 'warning');
+        function logWarning(message, data, source, showToast, title, optionsOverride) {
+            logIt(message, data, source, showToast, title, optionsOverride, 'warning');
         }
 
-        function logSuccess(message, data, source, showToast) {
-            logIt(message, data, source, showToast, 'success');
+        function logSuccess(message, data, source, showToast, title, optionsOverride) {
+            logIt(message, data, source, showToast, title, optionsOverride, 'success');
         }
 
-        function logError(message, data, source, showToast) {
-            logIt(message, data, source, showToast, 'error');
+        function logError(message, data, source, showToast, title, optionsOverride) {
+            logIt(message, data, source, showToast, title, optionsOverride, 'error');
         }
 
-        function logIt(message, data, source, showToast, toastType) {
-            showToast = (typeof showToast === 'undefined') ? false : showToast;
+        function logIt(message, data, source, showToast, title, optionsOverride, toastType) {
+            showToast = typeof showToast === 'undefined' ? false : showToast;
             var write = (toastType === 'error') ? $log.error : $log.log;
             source = source ? '[' + source + '] ' : '';
             write(source, message, data);
             if (showToast) {
                 if (toastType === 'error') {
-                    toastr.error(message);
+                    toastr.error(message, title, optionsOverride);
                 } else if (toastType === 'warning') {
-                    toastr.warning(message);
+                    toastr.warning(message, title, optionsOverride);
                 } else if (toastType === 'success') {
-                    toastr.success(message);
+                    toastr.success(message, title, optionsOverride);
                 } else {
-                    toastr.info(message);
+                    toastr.info(message, title, optionsOverride);
                 }
             }
         }
