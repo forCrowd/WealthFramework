@@ -2,6 +2,14 @@
 merge with master!
 
 ---
+updateAnonymous changes: if the logged in user has already those entities, it fails!
+
+Alpha team review!
+
+javascript error log
+
+save anon user to db?
+
 use createEntity in addX cases!
 
 THIS REQUIRES USERID TO BE USED AS WELL?
@@ -48,8 +56,6 @@ check return conflict() blocks, there's something wrong with them!
 replace logger with angular.$log?
 
 content for editor? new content or new resourcepool - how to handle the urls?
-
-. Alpha team review!
 
 . create tests for controllers
 
