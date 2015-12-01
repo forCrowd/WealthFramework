@@ -1,6 +1,6 @@
-﻿fix newly added cmrp edit + cancel case!
-1. create a temp user and actually save the stuff?
-2. use acceptChanges() + if it's a new cmrp, before saving it, change it to 'added'
+﻿anon user interacts with cmrp etc. toaster?
+
+navigate to 404 if cmrp id is not found
 http://localhost:15001/resourcePool/-2
 http://localhost:15001/resourcePool/-2/edit
 
@@ -12,6 +12,10 @@ db update!
 merge with master!
 
 ---
+THIS REQUIRES USERID TO BE USED AS WELL?
+D:\Development\Projects\GitHub\forCrowd\WealthEconomy\Web\Controllers\OData\Generated\UserElementCellController.cs
+if (MainUnitOfWork.Exists(userElementCell.ElementCellId))
+
 // TODO Most of these functions are related with userService.js - updateX functions
 // Try to merge these two - Actually try to handle these actions within the related entity / SH - 27 Nov. '15
 function updateCache() {

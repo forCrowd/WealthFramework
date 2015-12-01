@@ -36,7 +36,7 @@
 
                     logger.logSuccess('You have been registered!', null, true);
 
-                    userFactory.getAccessToken(vm.email, vm.password, false)
+                    userFactory.getAccessToken(vm.email, vm.password)
                         .success(function () {
 
                             // Save changes
@@ -54,8 +54,6 @@
                                 logger.logError(response, null, true);
                             }
                         });
-
-                    //$location.path('/');
                 });
         }
     };

@@ -37,24 +37,22 @@
             // Config
             scope.$watch('config', function () {
                 scope.resourcePoolId = typeof scope.config.resourcePoolId === 'undefined' ? null : Number(scope.config.resourcePoolId);
-
                 userFactory.getCurrentUser()
                     .then(function (currentUser) {
-                        scope.currentUser = currentUser;
-                        getResourcePool();
+                        setCurrentUser(currentUser);
                     });
-
             }, true);
 
             // User logged in & out
-            scope.$on('userLoggedIn', function (currentUser) {
-                scope.currentUser = currentUser;
-                getResourcePool();
+            scope.$on('userLoggedIn', function () {
+                userFactory.getCurrentUser()
+                    .then(function (currentUser) {
+                        setCurrentUser(currentUser);
+                    });
             });
 
             scope.$on('userLoggedOut', function () {
-                scope.currentUser = null;
-                getResourcePool();
+                setCurrentUser(null);
             });
 
             scope.$on('saveChangesStart', function () {
@@ -138,6 +136,11 @@
             scope.resetResourcePoolRate = function () {
                 userFactory.updateResourcePoolRate(scope.resourcePool, 'reset');
                 saveChanges();
+            }
+
+            function setCurrentUser(currentUser) {
+                scope.currentUser = currentUser;
+                getResourcePool();
             }
 
             function editResourcePool() {

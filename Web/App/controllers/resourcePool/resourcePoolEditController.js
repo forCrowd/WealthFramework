@@ -24,6 +24,9 @@
         Enums,
         logger) {
 
+        // Logger
+        logger = logger.forSource(controllerId);
+
         var vm = this;
         vm.addElement = addElement;
         vm.addElementField = addElementField;
@@ -205,17 +208,13 @@
 
         function cancelResourcePool() {
 
-            //if (vm.isNew) {
-            //    resourcePoolFactory.removeResourcePool(vm.resourcePool);
-            //} else {
             resourcePoolFactory.cancelResourcePool(vm.resourcePool);
-            //}
 
-            if (vm.isNew) {
-                $location.path('/resourcePool');
-            } else {
-                $location.path('/resourcePool/' + vm.resourcePool.Id);
-            }
+            var locationPath = vm.isNew
+                ? '/resourcePool'
+                : '/resourcePool/' + vm.resourcePool.Id;
+
+            $location.path(locationPath);
         }
 
         function editElement(element) {
@@ -446,6 +445,7 @@
                                 vm.isSaving = false;
                             });
                     } else {
+                        resourcePoolFactory.acceptChanges(vm.resourcePool);
                         navigateToReturnPath();
                     }
 

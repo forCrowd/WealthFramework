@@ -28,10 +28,10 @@
         // Logger
         logger = logger.forSource(factoryId);
 
-        var userLoggedIn = false;
         var fetched = [];
 
         // Factory methods
+        $delegate.acceptChanges = acceptChanges;
         $delegate.cancelResourcePool = cancelResourcePool;
         $delegate.copyResourcePool = copyResourcePool;
         $delegate.createElement = createElement;
@@ -59,6 +59,58 @@
         return $delegate;
 
         /*** Implementations ***/
+
+        function acceptChanges(resourcePool) {
+
+            // Set isAdded flag to true, so before saving it to database,
+            // we can replace resource pool and its child entities state back to 'isAdded'
+            if (resourcePool.entityAspect.entityState.isAdded()) {
+                resourcePool.isAdded = true;
+            }
+
+            // Resource pool itself
+            resourcePool.entityAspect.acceptChanges();
+
+            // If isAdded, then make it modified, so it be retrieved when getChanges() called
+            if (resourcePool.isAdded) {
+                resourcePool.entityAspect.setModified();
+            }
+
+            // User resource pools
+            angular.forEach(resourcePool.UserResourcePoolSet, function (userResourcePool) {
+                userResourcePool.entityAspect.acceptChanges();
+            });
+
+            // Elements
+            angular.forEach(resourcePool.ElementSet, function (element) {
+                element.entityAspect.acceptChanges();
+
+                // Fields
+                angular.forEach(element.ElementFieldSet, function (elementField) {
+                    elementField.entityAspect.acceptChanges();
+
+                    // User element fields
+                    angular.forEach(elementField.UserElementFieldSet, function (userElementField) {
+                        userElementField.entityAspect.acceptChanges();
+                    });
+                });
+
+                // Items
+                angular.forEach(element.ElementItemSet, function (elementItem) {
+                    elementItem.entityAspect.acceptChanges();
+
+                    // Cells
+                    angular.forEach(elementItem.ElementCellSet, function (elementCell) {
+                        elementCell.entityAspect.acceptChanges();
+
+                        // User cells
+                        angular.forEach(elementCell.UserElementCellSet, function (userElementCell) {
+                            userElementCell.entityAspect.acceptChanges();
+                        });
+                    });
+                });
+            });
+        }
 
         function cancelResourcePool(resourcePool) {
 

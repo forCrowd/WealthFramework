@@ -18,23 +18,35 @@
         vm.isAuthenticated = isAuthenticated;
         vm.logout = logout;
 
-        // Application info
-        mainFactory.getApplicationInfo()
-            .then(function (applicationInfo) {
-                vm.applicationInfo = applicationInfo;
-                vm.applicationInfo.CurrentVersionText = vm.applicationInfo.CurrentVersion + ' - Alpha ~ Beta';
-            });
-
-        // Current user
-        userFactory.getCurrentUser()
-            .then(function (currentUser) {
-                vm.currentUser = currentUser;
-            });
-
         // User logged in
-        $scope.$on('userLoggedIn', function (event, args) {
-            vm.currentUser = args.currentUser;
+        $scope.$on('userLoggedIn', function () {
+            getCurrentUser();
         });
+
+        _init();
+
+        function _init() {
+            // Application info
+            getApplicationInfo();
+
+            // Current user
+            getCurrentUser();
+        }
+
+        function getApplicationInfo() {
+            mainFactory.getApplicationInfo()
+                .then(function (applicationInfo) {
+                    vm.applicationInfo = applicationInfo;
+                    vm.applicationInfo.CurrentVersionText = vm.applicationInfo.CurrentVersion + ' - Alpha ~ Beta';
+                });
+        }
+
+        function getCurrentUser() {
+            userFactory.getCurrentUser()
+                .then(function (currentUser) {
+                    vm.currentUser = currentUser;
+                });
+        }
 
         function isAuthenticated() {
             return vm.currentUser !== null && vm.currentUser.Id > 0;

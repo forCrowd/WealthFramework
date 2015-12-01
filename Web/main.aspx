@@ -150,8 +150,7 @@
 
     <!-- breezeJS -->
     <script src="/App/entityManagerFactory.js?v=0.37"></script>
-    <script src="/App/dataContext.js?v=0.37"></script>
-
+    <script src="/App/dataContext.js?v=0.38"></script>
     <script src="/App/factories/mainFactory.js?v=0.37"></script>
 
     <!-- Manage Scripts - Generated (Factories, Controllers) -->
@@ -162,7 +161,7 @@
     <script src="/App/factories/resourcePoolFactory.js?v=0.38"></script>
 
     <!-- Content -->
-    <script src="/App/controllers/content/mainController.js?v=0.37"></script>
+    <script src="/App/controllers/content/mainController.js?v=0.38"></script>
     <script src="/App/controllers/content/introductionController.js?v=0.37"></script>
     <script src="/App/controllers/content/basicsController.js?v=0.38"></script>
     <script src="/App/controllers/content/sectorIndexSampleController.js?v=0.37"></script>

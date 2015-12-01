@@ -28,6 +28,7 @@
         $delegate.logout = logout;
         $delegate.register = register;
 
+        $delegate.updateAnonymousChanges = updateAnonymousChanges;
         $delegate.updateElementMultiplier = updateElementMultiplier;
         $delegate.updateElementCellNumericValue = updateElementCellNumericValue;
         $delegate.updateElementFieldIndexRating = updateElementFieldIndexRating;
@@ -54,20 +55,9 @@
                     getCurrentUserPromise = null;
                     isAuthenticatedPromise = null;
 
-                    // Clear breeze's metadata store
-                    if (resetDataContext) {
-                        dataContext.clear();
-                    }
-
-                    // Get current user
-                    getCurrentUser()
-                        .then(function (currentUser) {
-
-                            // Raise logged in event
-                            $rootScope.$broadcast('userLoggedIn', { currentUser: currentUser });
-
-                        });
-                })
+                    // Raise logged in event
+                    $rootScope.$broadcast('userLoggedIn');
+                });
         }
 
         function getCurrentUser() {
@@ -174,6 +164,10 @@
                         logger.logError(data.ModelState[modelErrors], data.ModelState[modelErrors], true);
                     }
                 });
+        }
+
+        function updateAnonymousChanges(newUser) {
+            dataContext.updateAnonymousChanges(newUser);
         }
 
         // These 'updateX' functions were defined in their related entities (user.js).
@@ -426,7 +420,7 @@
                         };
 
                         dataContext.createEntity('UserElementField', userElementField);
-                        
+
                         // Update related
                         elementField.setCurrentUserIndexRating();
 
