@@ -1,14 +1,47 @@
 ﻿(function () {
     'use strict';
 
-    var serviceId = 'Element';
+    var factoryId = 'Element';
     angular.module('main')
-        .factory(serviceId, ['$rootScope', 'logger', elementFactory]);
+        .factory(factoryId, ['$rootScope', 'logger', elementFactory]);
 
     function elementFactory($rootScope, logger) {
 
         // Logger
-        logger = logger.forSource(serviceId);
+        logger = logger.forSource(factoryId);
+
+        // Server-side properties
+        Object.defineProperty(Element.prototype, 'IsMainElement', {
+            enumerable: true,
+            configurable: true,
+            get: function () { return this.backingFields._IsMainElement; },
+            set: function (value) {
+
+                var self = this;
+
+                if (self.backingFields._IsMainElement !== value) {
+                    self.backingFields._IsMainElement = value;
+
+                    // TODO When this prop set in constructor, ResourcePool is null, in such case, ignore
+                    // However, it would be better to always have a ResourcePool? / SH - 29 Nov. '15
+                    if (typeof self.ResoucePool === 'undefined') {
+                        return;
+                    }
+
+                    // Main element check: If there is another element that its IsMainElement flag is true, make it false
+                    if (value) {
+                        angular.forEach(self.ResourcePool.ElementSet, function (element) {
+                            if (element !== self && element.IsMainElement) {
+                                element.IsMainElement = false;
+                            }
+                        });
+
+                        // Update selectedElement of resourcePool
+                        self.ResourcePool.selectedElement(self);
+                    }
+                }
+            }
+        });
 
         // Return
         return Element;
@@ -19,8 +52,21 @@
 
             var self = this;
 
+            // Server-side props
+            self.Id = 0;
+            self.Name = '';
+            // TODO breezejs - Cannot assign a navigation property in an entity ctor
+            //self.ResourcePool = null;
+            //self.ElementFieldSet = [];
+            //self.ElementItemSet = [];
+            //self.ParentFieldSet = [];
+
             // Local variables
             self.backingFields = {
+                // Server-side
+                _IsMainElement: false,
+
+                // Client-side
                 _parent: null,
                 _familyTree: null,
                 _elementFieldIndexSet: null,
@@ -44,7 +90,7 @@
                         indexSet.push(field);
                     }
 
-                    if (field.ElementFieldType === 6) {
+                    if (field.DataType === 6 && field.SelectedElement !== null) {
                         var childIndexSet = getElementFieldIndexSet(field.SelectedElement);
 
                         for (var x = 0; x < childIndexSet.length; x++) {
@@ -160,7 +206,7 @@
             self.setDirectIncomeField = function () {
                 for (var i = 0; i < self.ElementFieldSet.length; i++) {
                     var field = self.ElementFieldSet[i];
-                    if (field.ElementFieldType === 11) {
+                    if (field.DataType === 11) {
                         self.backingFields._directIncomeField = field;
                         break;
                     }
@@ -193,7 +239,7 @@
             self.setMultiplierField = function () {
                 for (var i = 0; i < self.ElementFieldSet.length; i++) {
                     var field = self.ElementFieldSet[i];
-                    if (field.ElementFieldType === 12) {
+                    if (field.DataType === 12) {
                         self.backingFields._multiplierField = field;
                         break;
                     }
@@ -246,7 +292,7 @@
 
                 var value;
 
-                if (self === self.ResourcePool.MainElement) {
+                if (self === self.ResourcePool.mainElement()) {
 
                     value = self.ResourcePool.InitialValue;
 
@@ -256,8 +302,8 @@
                     }
 
                 } else {
-                    if (self.ResourcePool.MainElement !== null) {
-                        value = self.ResourcePool.MainElement.totalResourcePoolAmount();
+                    if (self.ResourcePool.mainElement() !== null) {
+                        value = self.ResourcePool.mainElement().totalResourcePoolAmount();
                     }
                 }
 
@@ -271,7 +317,7 @@
                     for (var i = 0; i < self.elementFieldIndexSet().length; i++) {
                         var field = self.elementFieldIndexSet()[i];
 
-                        // if (field.ElementFieldType === 11) { - TODO How about this check?
+                        // if (field.DataType === 11) { - TODO How about this check?
                         field.setIndexIncome();
                         // }
                     }

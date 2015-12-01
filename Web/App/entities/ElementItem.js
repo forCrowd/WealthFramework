@@ -1,14 +1,14 @@
 ﻿(function () {
     'use strict';
 
-    var serviceId = 'ElementItem';
+    var factoryId = 'ElementItem';
     angular.module('main')
-        .factory(serviceId, ['logger', elementItemFactory]);
+        .factory(factoryId, ['logger', elementItemFactory]);
 
     function elementItemFactory(logger) {
 
         // Logger
-        logger = logger.forSource(serviceId);
+        logger = logger.forSource(factoryId);
 
         // Return
         return ElementItem;
@@ -18,6 +18,15 @@
         function ElementItem() {
 
             var self = this;
+
+            // Server-side props
+            self.Id = 0;
+            self.ElementId = 0;
+            self.Name = '';
+            // TODO breezejs - Cannot assign a navigation property in an entity ctor
+            //self.Element = null;
+            //self.ElementCellSet = [];
+            //self.ParentCellSet = [];
 
             // Local variables
             self.backingFields = {
@@ -44,7 +53,7 @@
                         indexSet.push(cell);
                     }
 
-                    if (cell.ElementField.ElementFieldType === 6) {
+                    if (cell.ElementField.DataType === 6 && cell.SelectedElementItem !== null) {
                         var childIndexSet = getElementCellIndexSet(cell.SelectedElementItem);
 
                         if (childIndexSet.length > 0) {
@@ -86,7 +95,7 @@
                 var directIncomeCell = null;
                 for (var i = 0; i < self.ElementCellSet.length; i++) {
                     var elementCell = self.ElementCellSet[i];
-                    if (elementCell.ElementField.ElementFieldType === 11) {
+                    if (elementCell.ElementField.DataType === 11) {
                         directIncomeCell = elementCell;
                         break;
                     }
@@ -126,7 +135,7 @@
                 var multiplierCell = null;
                 for (var i = 0; i < self.ElementCellSet.length; i++) {
                     var elementCell = self.ElementCellSet[i];
-                    if (elementCell.ElementField.ElementFieldType === 12) {
+                    if (elementCell.ElementField.DataType === 12) {
                         multiplierCell = elementCell;
                         break;
                     }
@@ -263,15 +272,18 @@
             }
 
             self.totalIncome = function () {
-                return self.totalDirectIncome() + self.totalResourcePoolIncome();
+                var totalIncome = self.totalDirectIncome() + self.totalResourcePoolIncome();
+                // TODO Make rounding better, instead of toFixed + number
+                return Number(totalIncome.toFixed(2));
             }
 
             self.incomeStatus = function () {
 
                 var totalIncome = self.totalIncome();
-                var averageIncome = self.Element.totalIncomeAverage();
+                // TODO Make rounding better, instead of toFixed + number
+                var averageIncome = Number(self.Element.totalIncomeAverage().toFixed(2));
 
-                if (totalIncome.toFixed(2) === averageIncome.toFixed(2)) {
+                if (totalIncome === averageIncome) {
                     return 'average';
                 } else if (totalIncome < averageIncome) {
                     return 'low';

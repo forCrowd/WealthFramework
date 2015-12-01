@@ -10,9 +10,6 @@
         logger = logger.forSource(controllerId);
 
         var vm = this;
-        vm.sampleResourcePoolId = 5;
-        vm.popuplarSoftwareLicensesResourcePoolId = 6;
-
         vm.oldModelChartConfig = {
             title: {
                 text: ''

@@ -13,7 +13,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Tests
             var newElement = new ResourcePool(user, "CMRP")
                 .AddElement("Element");
 
-            var newField = newElement.AddField("Field", ElementFieldTypes.String);
+            var newField = newElement.AddField("Field", ElementFieldDataType.String);
 
             newElement.AddItem("Item").AddCell(newField);
         }

@@ -3,11 +3,11 @@
 
     var controllerId = 'accountEditController';
     angular.module('main')
-        .controller(controllerId, ['userService',
+        .controller(controllerId, ['userFactory',
             'logger',
             accountEditController]);
 
-    function accountEditController(userService,
+    function accountEditController(userFactory,
 		logger) {
         logger = logger.forSource(controllerId);
 
@@ -21,7 +21,7 @@
         vm.hasChanges = hasChanges;
 
         // Get current user
-        userService.getCurrentUser()
+        userFactory.getCurrentUser()
             .then(function (currentUser) {
                 vm.user = currentUser;
             });
@@ -29,18 +29,18 @@
         /*** Implementations ***/
 
         function hasChanges() {
-            return userService.hasChanges();
+            return userFactory.hasChanges();
         }
 
         function isSaveDisabled() {
             return isSaving ||
-                (!userService.hasChanges());
+                (!userFactory.hasChanges());
         }
 
         function saveChanges() {
 
             isSaving = true;
-            userService.saveChanges()
+            userFactory.saveChanges()
                 .then(function (result) {
                     logger.logSuccess('Your changes has been saved!', null, true);
                 })

@@ -1,5 +1,5 @@
 ﻿/***
- * Filter: NumberSymbol
+ * Filter: numberSymbol
  *
  * Convert the number to a short format with symbol format.
  *

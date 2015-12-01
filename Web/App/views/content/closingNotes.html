@@ -2,6 +2,14 @@
     <div class="row">
         <div class="col-md-12">
 
+            <!-- Create New -->
+            <div data-ng-if="vm.isAuthenticated">
+                <h3>Make Your Own Kind of CMRP</h3>
+                <p>
+                    Now it's possible to create your own simulations, would you like to try?<br />
+                    <a href="/resourcePool/new">Create a new CMRP</a>
+                </p>
+            </div>
             <!-- License -->
             <h3>
                 It's Open Source!
@@ -90,7 +98,6 @@
             <!--<p>
                 <a href="mailto:contact@forcrowd.org">contact@forCrowd.org</a>
             </p>-->
-
             <!-- Disqus -->
             <div data-ng-if="!vm.isLocalhost">
                 <div id="disqus_thread"></div>
@@ -222,14 +229,11 @@
     </div>
 
     <!-- TODO Try to load these scripts under layoutController, or create a directive? -->
-
     <!-- Gratipay -->
     <!--<script src="/App/external/gratipay.js"></script>-->
     <!--<script src="//grtp.co/v1.js"></script>-->
-
     <!-- Twitter -->
     <!--<script src="/App/external/twitter.js"></script>-->
-
     <!-- Disqus -->
     <script src="/App/external/disqus.js"></script>
 

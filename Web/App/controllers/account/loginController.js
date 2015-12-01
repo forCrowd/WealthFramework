@@ -3,18 +3,32 @@
 
     var controllerId = 'loginController';
     angular.module('main')
-        .controller(controllerId, ['userService', '$location', '$rootScope', 'logger', loginController]);
+        .controller(controllerId, ['userFactory', '$location', '$rootScope', 'logger', loginController]);
 
-    function loginController(userService, $location, $rootScope, logger) {
+    function loginController(userFactory, $location, $rootScope, logger) {
         logger = logger.forSource(controllerId);
 
         var vm = this;
         vm.getAccessToken = getAccessToken;
 
         function getAccessToken() {
-            userService.getAccessToken(vm.email, vm.password, true)
+            userFactory.getAccessToken(vm.email, vm.password)
                 .success(function () {
-                    $location.path($rootScope.locationHistory[$rootScope.locationHistory.length - 2]);
+
+                    userFactory.getCurrentUser()
+                        .then(function (currentUser) {
+
+                            // Move anonymously created entities to this logged in user
+                            userFactory.updateAnonymousChanges(currentUser);
+
+                            // Save changes
+                            userFactory.saveChanges()
+                                .then(function () {
+
+                                    // Redirect the user to the previous page, except if it's login
+                                    $location.path($rootScope.locationHistory[$rootScope.locationHistory.length - 2].path());
+                                });
+                        });
                 })
                 .error(function (response) {
                     if (typeof response.error_description !== 'undefined') {

@@ -1,14 +1,14 @@
 ﻿(function () {
     'use strict';
 
-    var serviceId = 'ElementField';
+    var factoryId = 'ElementField';
     angular.module('main')
-        .factory(serviceId, ['logger', elementFieldFactory]);
+        .factory(factoryId, ['logger', elementFieldFactory]);
 
     function elementFieldFactory(logger) {
 
         // Logger
-        logger = logger.forSource(serviceId);
+        logger = logger.forSource(factoryId);
 
         // Server-side properties
         Object.defineProperty(ElementField.prototype, 'IndexEnabled', {
@@ -19,6 +19,9 @@
 
                 if (this.backingFields._indexEnabled !== value) {
                     this.backingFields._indexEnabled = value;
+
+                    this.IndexCalculationType = value ? 1 : 0;
+                    this.IndexSortType = value ? 1 : 0;
 
                     // TODO Complete this block!
 
@@ -56,6 +59,24 @@
         function ElementField() {
 
             var self = this;
+
+            // Server-side props
+            self.Id = 0;
+            self.ElementId = 0;
+            self.Name = '';
+            self.DataType = 1;
+            self.SelectedElementId = null;
+            self.UseFixedValue = null;
+            self.IndexCalculationType = 0;
+            self.IndexSortType = 0;
+            self.SortOrder = 0;
+            self.IndexRatingTotal = 0; // Computed value - Used in: setOtherUsersIndexRatingTotal
+            self.IndexRatingCount = 0; // Computed value - Used in: setOtherUsersIndexRatingCount
+            // TODO breezejs - Cannot assign a navigation property in an entity ctor
+            //self.Element = null;
+            //self.SelectedElement = null;
+            //self.ElementCellSet = [];
+            //self.UserElementFieldSet = [];
 
             // Local variables
             self.backingFields = {
@@ -201,7 +222,7 @@
 
                     // TODO Update related
                     if (updateRelated) {
-                        self.Element.ResourcePool.MainElement.setIndexRating();
+                        self.Element.ResourcePool.mainElement().setIndexRating();
                     }
                 }
             }
@@ -220,7 +241,7 @@
 
                 var value = 0; // Default value?
 
-                var elementIndexRating = self.Element.ResourcePool.MainElement.indexRating();
+                var elementIndexRating = self.Element.ResourcePool.mainElement().indexRating();
 
                 if (elementIndexRating === 0) {
                     value = 0;
@@ -371,21 +392,32 @@
 
                         if (value === null) {
 
-                            switch (self.IndexRatingSortType) {
-                                case 1: { // LowestToHighest (Low number is better)
-                                    value = cell.numericValueMultiplied();
+                            switch (self.IndexSortType) {
+                                case 1: { // HighestToLowest (High number is better)
+                                    value = (1 - cell.numericValueMultipliedPercentage());
                                     break;
                                 }
-                                case 2: { // HighestToLowest (High number is better)
-                                    value = (1 - cell.numericValueMultipliedPercentage());
+                                case 2: { // LowestToHighest (Low number is better)
+                                    value = cell.numericValueMultiplied();
                                     break;
                                 }
                             }
 
                         } else {
 
-                            switch (self.IndexRatingSortType) {
-                                case 1: { // LowestToHighest (Low number is better)
+                            switch (self.IndexSortType) {
+                                case 1: { // HighestToLowest (High number is better)
+
+                                    if (1 - cell.numericValueMultipliedPercentage() !== value) {
+                                        allEqualFlag = false;
+                                    }
+
+                                    if (1 - cell.numericValueMultipliedPercentage() > value) {
+                                        value = 1 - cell.numericValueMultipliedPercentage();
+                                    }
+                                    break;
+                                }
+                                case 2: { // LowestToHighest (Low number is better)
 
                                     if (cell.numericValueMultiplied() !== value) {
                                         allEqualFlag = false;
@@ -395,17 +427,6 @@
                                         value = cell.numericValueMultiplied();
                                     }
 
-                                    break;
-                                }
-                                case 2: { // HighestToLowest (High number is better)
-
-                                    if (1 - cell.numericValueMultipliedPercentage() !== value) {
-                                        allEqualFlag = false;
-                                    }
-
-                                    if (1 - cell.numericValueMultipliedPercentage() > value) {
-                                        value = 1 - cell.numericValueMultipliedPercentage();
-                                    }
                                     break;
                                 }
                             }

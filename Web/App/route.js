@@ -5,7 +5,7 @@
         .config(routeConfig);
 
     angular.module('main')
-        .run(['userService', '$rootScope', '$location', 'logger', routeRun]);
+        .run(['userFactory', 'resourcePoolFactory', 'LocationItem', '$rootScope', '$location', 'logger', routeRun]);
 
     function routeConfig($routeProvider, $locationProvider) {
 
@@ -17,21 +17,24 @@
             .when('/main.aspx', { title: getContentRouteTitle, templateUrl: getContentTemplateUrl }) // TODO Is it possible to remove 'main.aspx'
             .when('/content/:key/', { title: getContentRouteTitle, templateUrl: getContentTemplateUrl })
 
+            /* CMRP List + View + Edit pages */
+            .when('/resourcePool', { title: function () { return 'CMRP List'; }, templateUrl: '/App/views/resourcePool/resourcePoolList.html?v=0.38' })
+            .when('/resourcePool/new', { title: function () { return 'New CMRP'; }, templateUrl: '/App/views/resourcePool/resourcePoolEdit.html?v=0.38' })
+            .when('/resourcePool/:resourcePoolId/edit', { title: function () { return ''; }, templateUrl: '/App/views/resourcePool/resourcePoolEdit.html?v=0.38' })
+            .when('/resourcePool/:resourcePoolId', { title: function () { return ''; }, templateUrl: '/App/views/resourcePool/resourcePoolView.html?v=0.37' })
+
             /* Account */
             .when('/account/register', { title: function () { return 'Register'; }, templateUrl: '/App/views/account/register.html?v=0.28', controller: 'registerController as vm' })
             .when('/account/login', { title: function () { return 'Login'; }, templateUrl: '/App/views/account/login.html?v=0.22', controller: 'loginController as vm' })
             .when('/account/accountEdit', { title: function () { return 'Account Edit'; }, templateUrl: '/App/views/account/accountEdit.html?v=0.22', controller: 'accountEditController as vm' })
             .when('/account/changePassword', { title: function () { return 'Change Password'; }, templateUrl: '/App/views/account/changePassword.html?v=0.22', controller: 'changePasswordController as vm' })
 
-            /* Custom List + Edit pages */
-            .when('/manage/custom/resourcePool', { title: function () { return 'CMRP List'; }, templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomList.html?v=0.22' })
-            .when('/manage/custom/resourcePool/:Id', { title: function () { return ''; }, templateUrl: '/App/views/manage/resourcePool/resourcePoolCustomView.html?v=0.22' })
+            /* Generated List + Edit pages */
+            .when('/manage/generated/:entity', { title: getManageRouteTitle, templateUrl: getManageRouteTemplateUrl })
+            .when('/manage/generated/:entity/:action', { title: getManageRouteTitle, templateUrl: getManageRouteTemplateUrl })
+            .when('/manage/generated/:entity/:action/:Id', { title: getManageRouteTitle, templateUrl: getManageRouteTemplateUrl })
 
-            /* Default List + Edit pages */
-            .when('/manage/:entity', { title: getManageRouteTitle, templateUrl: getManageRouteTemplateUrl })
-            .when('/manage/:entity/:action', { title: getManageRouteTitle, templateUrl: getManageRouteTemplateUrl })
-            .when('/manage/:entity/:action/:Id', { title: getManageRouteTitle, templateUrl: getManageRouteTemplateUrl })
-
+            /* Otherwise */
             .otherwise({ redirectTo: '/content/404' }); // TODO Is it possible to return Response.StatusCode = 404; ?
 
         // Html5Mode is on, if supported (# will not be used)
@@ -44,7 +47,7 @@
             var entity = params.entity[0].toUpperCase() + params.entity.substring(1);
 
             var action = typeof params.action !== 'undefined'
-                ? action[0].toUpperCase() + action.substring(1)
+                ? params.action[0].toUpperCase() + params.action.substring(1)
                 : 'List';
 
             return entity + ' ' + action;
@@ -55,14 +58,15 @@
             var templateUrl = '';
 
             var action = typeof params.action !== 'undefined'
-                ? params.actions
+                ? params.action
                 : 'list'; // Default action
 
             if (action === 'list')
-                templateUrl = '/App/views/manage/list/' + params.entity + 'List.html?v=0.36';
+                templateUrl = '/App/views/manage/generated/list/' + params.entity + 'List.html?v=0.37';
 
-            if (action === 'new' || action === 'edit')
-                templateUrl = '/App/views/manage/edit/' + params.entity + 'Edit.html?v=0.36';
+            if (action === 'new' || action === 'edit') {
+                templateUrl = '/App/views/manage/generated/edit/' + params.entity + 'Edit.html?v=0.37';
+            }
 
             return templateUrl;
         }
@@ -82,22 +86,22 @@
                 ? params.key
                 : 'home'; // Default view
 
-            return '/App/views/content/' + key + '.html?v=0.36.2';
+            return '/App/views/content/' + key + '.html?v=0.38';
         }
     }
 
-    function routeRun(userService, $rootScope, $location, logger) {
+    function routeRun(userFactory, resourcePoolFactory, LocationItem, $rootScope, $location, logger) {
 
         // Logger
         logger = logger.forSource('routeRun');
 
         // Default location
-        $rootScope.locationHistory = ['/'];
+        $rootScope.locationHistory = [new LocationItem('/')];
 
         $rootScope.$on('$routeChangeStart', function (event, next, current) {
 
             // Navigate the authenticated user to home page, in case they try to go login or register
-            userService.isAuthenticated()
+            userFactory.isAuthenticated()
                 .then(function (isAuthenticated) {
                     if (isAuthenticated && ($location.path() === '/account/login' || $location.path() === '/account/register')) {
                         $location.path('/');
@@ -110,17 +114,34 @@
             // View title
             var viewTitle = '';
             if (typeof next.$$route !== 'undefined' && typeof next.$$route.title !== 'undefined') {
+                // TODO Is this correct?
                 viewTitle = next.$$route.title(next.params);
             }
             $rootScope.viewTitle = viewTitle;
 
-            // Add each location to the history
-            $rootScope.locationHistory.push($location.path());
+            // Newly added resource pool fix
+            if (typeof next.params.resourcePoolId !== 'undefined') {
+                var resourcePoolId = next.params.resourcePoolId;
+                resourcePoolFactory.getResourcePool(resourcePoolId)
+                    .then(function (resourcePool) {
+                        createLocationHistory(resourcePool);
+                    });
+            } else {
+                createLocationHistory();
+            }
 
-            // Only keep limited number of items
-            var locationHistoryLimit = 20;
-            if ($rootScope.locationHistory.length > locationHistoryLimit) {
-                $rootScope.locationHistory.splice(0, $rootScope.locationHistory.length - locationHistoryLimit);
+            function createLocationHistory(resourcePool) {
+                resourcePool = typeof resourcePool !== 'undefined' ? resourcePool : null;
+
+                // Add each location to the history
+                var locationItem = new LocationItem($location.path(), resourcePool, $location.path().substring($location.path().lastIndexOf('/') + 1) === 'edit');
+                $rootScope.locationHistory.push(locationItem);
+
+                // Only keep limited number of items
+                var locationHistoryLimit = 10;
+                if ($rootScope.locationHistory.length > locationHistoryLimit) {
+                    $rootScope.locationHistory.splice(0, $rootScope.locationHistory.length - locationHistoryLimit);
+                }
             }
         });
     }

@@ -1,5 +1,33 @@
 ﻿### Release Notes
 
+**0.38**
+
+* Anonymous CMRP create / edit
+LocationItem object was created to hold the newly created resource pools, so it can navigate back to correct Id that's been retrieved from the server
+* Anonymous user login fix
+If the user logs in after interacting as an 'anonymous user', changes will be saved as that logged in user's
+* Element.IsMainElement instead of ResourcePool MainElement (back to previous method)
+* ResourcePool.CurrentElement property was replaced with selectedElement function
+* Server-side properties were added to javascript objects, except Navigation Properties (due to breezejs error)
+
+**0.37**
+
+* Resource Pool Add / Edit feature was added
+* ElementField - ElementFieldType was renamed to DataType, IndexType was renamed to IndexCalculationType, IndexRatingSortType was renamed to IndexSortType
+* Adding a default 'Name' field approach was removed
+* enumKey angular filter was added: Probably this enum operations can be done in a better way
+but right now this is the easiest way to save the day.
+* dataContext.js createEntity() was updated to a synchronous function again
+Creating sample entities was too difficult & complex with async. function
+metadataReady() function is now called under initializeStore() and it doesn't wait for the result.
+To fix this issue permanently;
+https://github.com/angular/angular.js/issues/4003
+* (An empty) robots.txt was created
+* File & folder / url structure updates
+* highcharts updates
+* angular-ui-bootstrap updates for deprecated directives
+* New / edit entity view bug fix
+
 **0.36.2**
 
 * ElementItem name was updated to 250 chars
@@ -7,7 +35,7 @@
 
 **0.36.1**
 
-* angular-moneySymbol filter
+* angular-numberSymbol filter
 * OtherUsers' values calculation bug fix
 * Content updates
 

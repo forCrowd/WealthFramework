@@ -79,7 +79,7 @@
                 It aims to define various parameters for the organizations that are beneficial for the society,
                 measure the organizations' overall performance on these parameters and allocate the resources based on the outcome.-->
                 Wealth Economy is an attempt to create a collaborative, customizable system to allow the society manage its monetary resources.
-                It aims to improve the system by encouraging the organizations that are more beneficial to the society, using the following steps;
+                It aims to improve the system by empowering the organizations that are more beneficial to the society, using the following steps;
                 <ol>
                     <li>
                         <strong>CMRP (Crowd Managed Resource Pool):</strong>
@@ -105,23 +105,20 @@
                     <li>Calculates organizations' overall performance on these <strong>Indexes</strong> and allocate <strong>CMRP Amount</strong> to the organizations based on the outcome.</li>
                 </ul>-->
             </p>
-            <div class="bs-callout bs-callout-warning" data-ng-if="!vm.isAuthenticated">
+            <!--<div class="bs-callout bs-callout-warning" data-ng-if="!vm.isAuthenticated">
                 <h4>Save your changes?</h4>
                 <p>
                     You can interact with the samples anonymously.<br />
                     In order to save your changes you can <a href="/account/register">register</a> for free.<br />
                     If you have an existing account, please <a href="/account/login">login</a> first.
                 </p>
-            </div>
+            </div>-->
         </div>
         <div class="col-md-6">
-            <div>
-                <resource-pool-editor resource-pool-id="vm.introduction_UPOResourcePoolId"></resource-pool-editor>
-                <!--</div>-->
-                <p class="small">
-                    <i>An unknown profiting object. It gets more resources regardless of how and what sort of product or service it is providing to the society.</i>
-                </p>
-            </div>
+            <resource-pool-editor data-config="vm.upoConfig"></resource-pool-editor>
+            <p class="small">
+                <i>An unknown profiting object. It gets more resources regardless of how and what sort of product or service it is providing to the society.</i>
+            </p>
         </div>
     </div>
 </div>

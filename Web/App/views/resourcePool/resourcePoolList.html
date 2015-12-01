@@ -1,0 +1,18 @@
+<div data-ng-controller="resourcePoolListController as vm">
+    <h2>List</h2>
+    <p>
+        <a href="/resourcePool/new">Create New</a>
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                Resource Pool
+            </th>
+        </tr>
+        <tr data-ng-repeat="resourcePool in vm.resourcePoolSet | orderBy: Id">
+            <td>
+                <a href="/resourcePool/{{ resourcePool.Id }}">{{ resourcePool.Name }}</a>
+            </td>
+        </tr>
+    </table>
+</div>

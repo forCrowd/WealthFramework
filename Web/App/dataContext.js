@@ -8,23 +8,24 @@
 (function () {
     'use strict';
 
-    var serviceId = 'dataContext';
+    var factoryId = 'dataContext';
     angular.module('main')
-        .factory(serviceId, ['entityManagerFactory', '$q', '$rootScope', '$timeout', 'logger', dataContext]);
+        .factory(factoryId, ['entityManagerFactory', '$q', '$rootScope', '$timeout', 'logger', dataContext]);
 
     function dataContext(entityManagerFactory, $q, $rootScope, $timeout, logger) {
 
         // Logger
-        logger = logger.forSource(serviceId);
+        logger = logger.forSource(factoryId);
 
         // Manager
         var manager = null;
         var saveTimer = null;
+        var metadataLoaded = false;
 
         initializeStore();
 
-        // Service methods
-        var service = {
+        // Factory methods
+        var factory = {
             createEntity: createEntity,
             clear: clear,
             executeQuery: executeQuery,
@@ -33,27 +34,34 @@
             getChangesCount: getChangesCount,
             hasChanges: hasChanges,
             initializeStore: initializeStore,
+            metadataReady: metadataReady,
             rejectChanges: rejectChanges,
-            saveChanges: saveChanges
+            saveChanges: saveChanges,
+            updateAnonymousChanges: updateAnonymousChanges
         };
 
-        return service;
+        return factory;
 
         /*** Implementations ***/
 
         function createEntity(entityType, initialValues) {
 
-            var deferred = $q.defer();
+            if (!metadataLoaded) {
+                logger.logError('Load metadata first!');
+                return;
+            }
 
-            metadataReady()
-                .then(function () {
-                    var entity = manager.createEntity(entityType, initialValues);
-                    deferred.resolve(entity);
-                }, function (error) {
-                    deferred.reject(error);
-                });
+            // Anonymous user check
+            // TODO Assumes that 'User' business object related properties will always use 'User' as a name
+            //logger.log('initialValues', initialValues);
+            if (typeof initialValues !== 'undefined'
+                && typeof initialValues.User !== 'undefined'
+                && (typeof initialValues.User.Id === 'undefined'
+                || initialValues.User.Id <= 0)) {
+                $rootScope.$broadcast('anonymousUserInteracted');
+            }
 
-            return deferred.promise;
+            return manager.createEntity(entityType, initialValues);
         }
 
         function clear() {
@@ -82,6 +90,15 @@
 
         function initializeStore() {
             manager = entityManagerFactory.newManager();
+
+            // TODO Fix this in a better way
+            // angular app should start after loading the metadata;
+            // https://github.com/angular/angular.js/issues/4003
+
+            metadataReady()
+                .then(function () {
+                    metadataLoaded = true;
+                });
         }
 
         function metadataReady() {
@@ -144,10 +161,14 @@
             return metadataReady()
                 .then(function () {
 
+                    // Anonymous resource pool fix
+                    updateAnonymousResourcePools();
+
                     var count = getChangesCount();
                     var promise = null;
                     var saveBatches = prepareSaveBatches();
                     saveBatches.forEach(function (batch) {
+
                         // ignore empty batches (except 'null' which means "save everything else")
                         if (batch === null || batch.length > 0) {
 
@@ -210,8 +231,24 @@
                         * 3. Added TodoLists
                         * 4. Every other change
                         */
-                        //batches.push(manager.getEntities(['License'], [breeze.EntityState.Deleted]));
-                        //batches.push(manager.getEntities(['License'], [breeze.EntityState.Added]));
+
+                        batches.push(manager.getEntities(['UserElementCell'], [breeze.EntityState.Deleted]));
+                        batches.push(manager.getEntities(['ElementCell'], [breeze.EntityState.Deleted]));
+                        batches.push(manager.getEntities(['ElementItem'], [breeze.EntityState.Deleted]));
+                        batches.push(manager.getEntities(['UserElementField'], [breeze.EntityState.Deleted]));
+                        batches.push(manager.getEntities(['ElementField'], [breeze.EntityState.Deleted]));
+                        batches.push(manager.getEntities(['Element'], [breeze.EntityState.Deleted]));
+                        batches.push(manager.getEntities(['UserResourcePool'], [breeze.EntityState.Deleted]));
+                        batches.push(manager.getEntities(['ResourcePool'], [breeze.EntityState.Deleted]));
+
+                        batches.push(manager.getEntities(['ResourcePool'], [breeze.EntityState.Added]));
+                        batches.push(manager.getEntities(['UserResourcePool'], [breeze.EntityState.Added]));
+                        batches.push(manager.getEntities(['Element'], [breeze.EntityState.Added]));
+                        batches.push(manager.getEntities(['ElementField'], [breeze.EntityState.Added]));
+                        batches.push(manager.getEntities(['UserElementField'], [breeze.EntityState.Added]));
+                        batches.push(manager.getEntities(['ElementItem'], [breeze.EntityState.Added]));
+                        batches.push(manager.getEntities(['ElementCell'], [breeze.EntityState.Added]));
+                        batches.push(manager.getEntities(['UserElementCell'], [breeze.EntityState.Added]));
 
                         batches.push(null); // empty = save all remaining pending changes
                         return batches;
@@ -221,6 +258,91 @@
                          */
                     }
                 });
+        }
+
+        // When the user interact with the application without registering or login in,
+        // it creates an anonymous user and all entity creations done by this user
+        // This function moves all those changes to a logged in user, if the user logs in afterwards
+        function updateAnonymousChanges(newUser) {
+
+            // Validation
+            if (typeof newUser === 'undefined' || newUser === null) {
+                throw new Error('newUser cannot be undefined or null');
+            }
+
+            var changes = getChanges();
+            changes.forEach(function (change) {
+
+                // TODO Assumes that 'User' business object related properties will always use 'User' as a name
+                if (typeof change.User !== 'undefined' && change.User !== newUser) {
+
+                    // Get the anonymous user
+                    var anonymousUser = change.User;
+
+                    // Update entities' user with the new one
+                    change.User = newUser;
+
+                    // If anonymous user was already added to entityManager, remove it
+                    if (anonymousUser !== null && typeof anonymousUser.entityAspect !== 'undefined') {
+                        anonymousUser.entityAspect.rejectChanges();
+                    }
+                }
+            });
+        }
+
+        // For more info about this function, check ResourcePool.js - isAdded property
+        function updateAnonymousResourcePools() {
+            var changes = getChanges();
+            changes.forEach(function (change) {
+                if (change.entityType.shortName === 'ResourcePool') {
+                    var resourcePool = change;
+
+                    if (resourcePool.isAdded) {
+
+                        // Set isAdded flag to true, so before saving it to database,
+                        // we can replace resource pool and its child entities state back to 'isAdded'
+                        resourcePool.isAdded = false;
+
+                        // Resource pool itself
+                        resourcePool.entityAspect.setAdded();
+
+                        // User resource pools
+                        angular.forEach(resourcePool.UserResourcePoolSet, function (userResourcePool) {
+                            userResourcePool.entityAspect.setAdded();
+                        });
+
+                        // Elements
+                        angular.forEach(resourcePool.ElementSet, function (element) {
+                            element.entityAspect.setAdded();
+
+                            // Fields
+                            angular.forEach(element.ElementFieldSet, function (elementField) {
+                                elementField.entityAspect.setAdded();
+
+                                // User element fields
+                                angular.forEach(elementField.UserElementFieldSet, function (userElementField) {
+                                    userElementField.entityAspect.setAdded();
+                                });
+                            });
+
+                            // Items
+                            angular.forEach(element.ElementItemSet, function (elementItem) {
+                                elementItem.entityAspect.setAdded();
+
+                                // Cells
+                                angular.forEach(elementItem.ElementCellSet, function (elementCell) {
+                                    elementCell.entityAspect.setAdded();
+
+                                    // User cells
+                                    angular.forEach(elementCell.UserElementCellSet, function (userElementCell) {
+                                        userElementCell.entityAspect.setAdded();
+                                    });
+                                });
+                            });
+                        });
+                    }
+                }
+            });
         }
     }
 })();

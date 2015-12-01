@@ -15,7 +15,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         [Obsolete("Parameterless constructors used by OData & EF. Make them private when possible.")]
         public Element()
         {
-            ResourcePoolMainElementSubSet = new HashSet<ResourcePool>();
             ElementFieldSet = new HashSet<ElementField>();
             ElementItemSet = new HashSet<ElementItem>();
             ParentFieldSet = new HashSet<ElementField>();
@@ -29,8 +28,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects
 
             ResourcePool = resourcePool;
             Name = name;
-
-            AddField(name, ElementFieldTypes.String);
         }
 
         [DisplayOnListView(false)]
@@ -44,9 +41,12 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         [StringLength(50)]
         public string Name { get; set; }
 
+        [Display(Name = "Is Main Element")]
+        [Required]
+        public bool IsMainElement { get; set; }
+
         public virtual ResourcePool ResourcePool { get; set; }
-        [InverseProperty("MainElement")]
-        public virtual ICollection<ResourcePool> ResourcePoolMainElementSubSet { get; set; }
+
         public virtual ICollection<ElementField> ElementFieldSet { get; set; }
         public virtual ICollection<ElementItem> ElementItemSet { get; set; }
         [InverseProperty("SelectedElement")]
@@ -54,27 +54,21 @@ namespace forCrowd.WealthEconomy.BusinessObjects
 
         #region - ReadOnly Properties -
 
-        public ElementField NameField
-        {
-            // TODO Correct approach?
-            get { return ElementFieldSet.Single(item => item.SortOrder == 1); }
-        }
-
         public ElementField DirectIncomeField
         {
-            get { return ElementFieldSet.SingleOrDefault(item => item.ElementFieldType == (byte)ElementFieldTypes.DirectIncome); }
+            get { return ElementFieldSet.SingleOrDefault(item => item.DataType == (byte)ElementFieldDataType.DirectIncome); }
         }
 
         public ElementField MultiplierField
         {
-            get { return ElementFieldSet.SingleOrDefault(item => item.ElementFieldType == (byte)ElementFieldTypes.Multiplier); }
+            get { return ElementFieldSet.SingleOrDefault(item => item.DataType == (byte)ElementFieldDataType.Multiplier); }
         }
 
         #endregion
 
         #region - Methods -
 
-        public ElementField AddField(string name, ElementFieldTypes fieldType, bool? useFixedValue = null)
+        public ElementField AddField(string name, ElementFieldDataType fieldType, bool? useFixedValue = null)
         {
             var sortOrder = Convert.ToByte(ElementFieldSet.Count + 1);
             var field = new ElementField(this, name, fieldType, sortOrder, useFixedValue);

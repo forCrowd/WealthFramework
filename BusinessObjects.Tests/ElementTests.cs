@@ -23,7 +23,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Tests
                  .AddElement("Element");
 
             // Act
-            var secondField = element.AddField("Second field after default Name field", ElementFieldTypes.String);
+            var secondField = element.AddField("Second field after default Name field", ElementFieldDataType.String);
 
             // Assert
             Assert.IsTrue(secondField.SortOrder == 2);

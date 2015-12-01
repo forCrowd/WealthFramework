@@ -16,12 +16,13 @@
     ]);
 
     angular.module('main')
-        .run(['$rootScope', 'logger', mainRun]);
+        .run(['logger', mainRun]);
 
-    function mainRun($rootScope, logger) {
+    function mainRun(logger) {
 
         // Logger
         logger = logger.forSource('mainRun');
+
     }
 
 })();

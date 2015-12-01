@@ -12,8 +12,8 @@
     <link href="/Content/toastr.css?v=0.24" rel="stylesheet" />
 
     <!-- Internal CSS -->
-    <link href="/Content/site.css?v=0.30" rel="stylesheet" />
-    <link href="/App/directives/resourcePoolEditor.css?v=0.36.1" rel="stylesheet" />
+    <link href="/Content/site.css?v=0.37" rel="stylesheet" />
+    <link href="/App/directives/resourcePoolEditor/resourcePoolEditor.css?v=0.37" rel="stylesheet" />
 
     <!-- jQuery -->
     <script src="/Scripts/jquery-2.1.4.min.js"></script>
@@ -53,25 +53,25 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="dropdown hide" data-dropdown>
-                        <a href="" class="dropdown-toggle" data-dropdown-toggle>Content <b class="caret"></b></a>
+                    <li class="dropdown hide" data-uib-dropdown>
+                        <a href="" class="dropdown-toggle" data-uib-dropdown-toggle>Content <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="/content/overview">Overview</a></li>
                             <li><a href="/content/technologies">Technologies</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown hide" data-dropdown data-ng-show="vm.isAuthenticated()">
-                        <a href="" class="dropdown-toggle" data-dropdown-toggle>Manage <b class="caret"></b></a>
+                    <li class="dropdown hide" data-uib-dropdown data-ng-show="vm.isAuthenticated()">
+                        <a href="" class="dropdown-toggle" data-uib-dropdown-toggle>Manage <b class="caret"></b></a>
                         <!-- Manage Menu - Generated -->
-                        <script src="/App/includes/manageMenu.js?v=0.27"></script>
+                        <script src="/App/includes/manageMenu.js?v=0.37"></script>
                     </li>
-                    <li data-ng-show="vm.isAuthenticated()">
-                        <a href="/manage/custom/resourcePool">CMRP</a>
+                    <li>
+                        <a href="/resourcePool">CMRP</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown" data-dropdown data-ng-if="vm.isAuthenticated()">
-                        <a href="" class="dropdown-toggle" data-dropdown-toggle><span data-ng-bind="'User: ' + vm.currentUser.Email"></span><b class="caret"></b></a>
+                    <li class="dropdown" data-uib-dropdown data-ng-if="vm.isAuthenticated()">
+                        <a href="" class="dropdown-toggle" data-uib-dropdown-toggle><span data-ng-bind="'User: ' + vm.currentUser.Email"></span><b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="/account/accountEdit">Edit</a></li>
                             <li><a href="/account/changePassword">Change password</a></li>
@@ -110,7 +110,7 @@
         </footer>
     </div>
 
-    <%--<script src="/Scripts/bootstrap.min.js?v=0.35.1"></script>--%>
+    <%--<script src="/Scripts/bootstrap.min.js?v=0.37"></script>--%>
     <script src="/Scripts/respond.min.js?v=0.24"></script>
     <script src="/Scripts/datajs-1.1.3.min.js?v=0.24"></script>
     <script src="/Scripts/toastr.min.js?v=0.24"></script>
@@ -119,71 +119,77 @@
     <script src="/Scripts/angular-route.min.js?v=0.35.1"></script>
     <script src="/Scripts/angular-sanitize.min.js?v=0.35.1"></script>
 
-    <script src="/App/external/ui-bootstrap-tpls-0.13.0.min.js?v=0.30"></script>
+    <!-- Angular UI -->
+    <script src="/Scripts/angular-ui/ui-bootstrap-tpls.min.js?v=0.37"></script>
 
+    <!-- breeze -->
     <script src="/Scripts/breeze.min.js?v=0.24"></script>
     <script src="/Scripts/breeze.bridge.angular.js?v=0.24"></script>
     <script src="/Scripts/breeze.directives.js?v=0.24"></script>
 
-    <!-- Highcharts - TODO Try to find (or create) nuget package for these two -->
-    <script src="/App/external/highcharts.js?v=0.24"></script>
-    <script src="/App/external/highcharts-ng.js?v=0.24"></script>
+    <!-- Highcharts -->
+    <script src="/Scripts/highcharts/4.1.5/highcharts.js?v=0.37"></script>
+    <!-- TODO Try to find (or create) nuget package for this - or wait for ASP.NET 5 & bower? -->
+    <script src="/App/external/highcharts-ng.js?v=0.37"></script>
 
     <!-- Main -->
-    <script src="/App/main.js?v=0.32"></script>
-    <script src="/App/logger.js?v=0.29"></script>
-    <script src="/App/route.js?v=0.36.2"></script>
+    <script src="/App/main.js?v=0.37"></script>
+    <script src="/App/logger.js?v=0.38"></script>
+    <script src="/App/route.js?v=0.38"></script>
     <script src="/App/authorization.js?v=0.29"></script>
 
     <!-- Entities -->
-    <script src="/App/entities/ResourcePool.js?v=0.36.1"></script>
-    <script src="/App/entities/Element.js?v=0.35"></script>
-    <script src="/App/entities/ElementCell.js?v=0.36.1"></script>
-    <script src="/App/entities/ElementField.js?v=0.36.1"></script>
-    <script src="/App/entities/ElementItem.js?v=0.36"></script>
-    <script src="/App/entities/UserElementCell.js?v=0.35"></script>
+    <script src="/App/entities/ResourcePool.js?v=0.38"></script>
+    <script src="/App/entities/Element.js?v=0.38"></script>
+    <script src="/App/entities/ElementCell.js?v=0.38"></script>
+    <script src="/App/entities/ElementField.js?v=0.38"></script>
+    <script src="/App/entities/ElementItem.js?v=0.38"></script>
+    <script src="/App/entities/UserElementCell.js?v=0.37"></script>
+    <script src="/App/entities/Enums.js?v=0.37"></script>
+    <script src="/App/entities/LocationItem.js?v=0.38"></script>
 
     <!-- breezeJS -->
-    <script src="/App/entityManagerFactory.js?v=0.27"></script>
-    <script src="/App/dataContext.js?v=0.29.2"></script>
+    <script src="/App/entityManagerFactory.js?v=0.37"></script>
+    <script src="/App/dataContext.js?v=0.38"></script>
+    <script src="/App/factories/mainFactory.js?v=0.37"></script>
 
-    <script src="/App/services/mainService.js?v=0.22"></script>
+    <!-- Manage Scripts - Generated (Factories, Controllers) -->
+    <script src="/App/includes/manageScripts.js?v=0.37"></script>
 
-    <!-- Manage Scripts - Generated (Services, Controllers) -->
-    <script src="/App/includes/manageScripts.js?v=0.33"></script>
-
-    <!-- Service extensions -->
-    <script src="/App/services/userService.js?v=0.35"></script>
-    <script src="/App/services/resourcePoolService.js?v=0.29"></script>
+    <!-- Factory extensions -->
+    <script src="/App/factories/userFactory.js?v=0.37"></script>
+    <script src="/App/factories/resourcePoolFactory.js?v=0.38"></script>
 
     <!-- Content -->
-    <script src="/App/controllers/content/mainController.js?v=0.29"></script>
-    <script src="/App/controllers/content/introductionController.js?v=0.29"></script>
-    <script src="/App/controllers/content/basicsController.js?v=0.29"></script>
-    <script src="/App/controllers/content/sectorIndexSampleController.js?v=0.29"></script>
-    <script src="/App/controllers/content/knowledgeIndexSampleController.js?v=0.30"></script>
-    <script src="/App/controllers/content/totalCostIndexSampleController.js?v=0.29"></script>
-    <script src="/App/controllers/content/fairShareIndexSampleController.js?v=0.29"></script>
-    <script src="/App/controllers/content/indexesPieSampleController.js?v=0.29"></script>
+    <script src="/App/controllers/content/mainController.js?v=0.38"></script>
+    <script src="/App/controllers/content/introductionController.js?v=0.37"></script>
+    <script src="/App/controllers/content/basicsController.js?v=0.38"></script>
+    <script src="/App/controllers/content/sectorIndexSampleController.js?v=0.37"></script>
+    <script src="/App/controllers/content/knowledgeIndexSampleController.js?v=0.37"></script>
+    <script src="/App/controllers/content/totalCostIndexSampleController.js?v=0.37"></script>
+    <script src="/App/controllers/content/fairShareIndexSampleController.js?v=0.37"></script>
+    <script src="/App/controllers/content/indexesPieSampleController.js?v=0.37"></script>
     <script src="/App/controllers/content/resourcePoolRateSampleController.js?v=0.29"></script>
-    <script src="/App/controllers/content/closingNotesController.js?v=0.29"></script>
+    <script src="/App/controllers/content/closingNotesController.js?v=0.37"></script>
+
+    <!-- Resource Pool -->
+    <script src="/App/controllers/resourcePool/resourcePoolEditController.js?v=0.38"></script>
+    <script src="/App/controllers/resourcePool/resourcePoolListController.js?v=0.37"></script>
+    <script src="/App/controllers/resourcePool/resourcePoolViewController.js?v=0.38"></script>
 
     <!-- Account -->
-    <script src="/App/controllers/account/loginController.js?v=0.29"></script>
-    <script src="/App/controllers/account/registerController.js?v=0.29"></script>
-    <script src="/App/controllers/account/accountEditController.js?v=0.29"></script>
-    <script src="/App/controllers/account/changePasswordController.js?v=0.22"></script>
-
-    <!-- Manage Scripts - Custom -->
-    <script src="/App/controllers/manage/resourcePool/resourcePoolCustomListController.js?v=0.22"></script>
-    <script src="/App/controllers/manage/resourcePool/resourcePoolCustomViewController.js?v=0.27"></script>
+    <script src="/App/controllers/account/loginController.js?v=0.38"></script>
+    <script src="/App/controllers/account/registerController.js?v=0.38"></script>
+    <script src="/App/controllers/account/accountEditController.js?v=0.37"></script>
+    <script src="/App/controllers/account/changePasswordController.js?v=0.37"></script>
 
     <!-- Directives -->
-    <script src="/App/directives/resourcePoolEditor.js?v=0.36.1"></script>
+    <script src="/App/directives/resourcePoolEditor/resourcePoolEditor.js?v=0.38"></script>
 
     <!-- Filters -->
-    <script src="/App/filters/angular-percentage.js?v=0.22"></script>
+    <script src="/App/filters/angular-enum.js?v=0.37"></script>
     <script src="/App/filters/angular-numberSymbol.js?v=0.36.1"></script>
+    <script src="/App/filters/angular-percentage.js?v=0.22"></script>
 
 </body>
 </html>

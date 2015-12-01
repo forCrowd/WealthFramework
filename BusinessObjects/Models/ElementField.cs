@@ -20,33 +20,33 @@ namespace forCrowd.WealthEconomy.BusinessObjects
             UserElementFieldSet = new HashSet<UserElementField>();
         }
 
-        public ElementField(Element element, string name, ElementFieldTypes fieldType, byte sortOrder, bool? useFixedValue = null) : this()
+        public ElementField(Element element, string name, ElementFieldDataType fieldType, byte sortOrder, bool? useFixedValue = null) : this()
         {
             Validations.ArgumentNullOrDefault(element, "element");
             Validations.ArgumentNullOrDefault(name, "name");
             Validations.ArgumentNullOrDefault(sortOrder, "sortOrder");
 
             // fixedValue fix + validations
-            if (fieldType == ElementFieldTypes.Multiplier)
+            if (fieldType == ElementFieldDataType.Multiplier)
                 useFixedValue = false;
 
-            if ((fieldType == ElementFieldTypes.String
-                || fieldType == ElementFieldTypes.Element)
+            if ((fieldType == ElementFieldDataType.String
+                || fieldType == ElementFieldDataType.Element)
                 && useFixedValue.HasValue)
                 throw new ArgumentException(string.Format("fixedValue cannot have a value for {0} type", fieldType), "fixedValue");
 
-            if ((fieldType != ElementFieldTypes.String
-                && fieldType != ElementFieldTypes.Element)
+            if ((fieldType != ElementFieldDataType.String
+                && fieldType != ElementFieldDataType.Element)
                 && !useFixedValue.HasValue)
                 throw new ArgumentException(string.Format("fixedValue must have a value for {0} type", fieldType), "fixedValue");
 
-            if (fieldType == ElementFieldTypes.Multiplier
+            if (fieldType == ElementFieldDataType.Multiplier
                 && useFixedValue.Value)
                 throw new ArgumentException("fixedValue cannot be true for Multiplier type", "fixedValue");
 
             Element = element;
             Name = name;
-            ElementFieldType = (byte)fieldType;
+            DataType = (byte)fieldType;
             UseFixedValue = useFixedValue;
             SortOrder = sortOrder;
         }
@@ -63,8 +63,8 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         public string Name { get; set; }
 
         [Required]
-        [Display(Name = "Element Field Type")]
-        public byte ElementFieldType { get; set; }
+        [Display(Name = "Data Type")]
+        public byte DataType { get; set; }
 
         [Display(Name = "Selected Element")]
         public int? SelectedElementId { get; set; }
@@ -78,11 +78,11 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         [Display(Name = "Index Enabled")]
         public bool IndexEnabled { get; set; }
 
-        [Display(Name = "Index Type")]
-        public byte IndexType { get; set; }
+        [Display(Name = "Index Calculation Type")]
+        public byte IndexCalculationType { get; set; }
 
-        [Display(Name = "Index Rating Sort Type")]
-        public byte IndexRatingSortType { get; set; }
+        [Display(Name = "Index Sort Type")]
+        public byte IndexSortType { get; set; }
 
         [Display(Name = "Sort Order")]
         public byte SortOrder { get; set; }
@@ -115,26 +115,42 @@ namespace forCrowd.WealthEconomy.BusinessObjects
 
         public ElementField EnableIndex()
         {
+            ValidateEnableIndex();
+
             this.IndexEnabled = true;
-            this.IndexType = (byte)BusinessObjects.IndexType.Aggressive;
-            this.IndexRatingSortType = (byte)BusinessObjects.IndexRatingSortType.HighestToLowest;
+            this.IndexCalculationType = (byte)BusinessObjects.ElementFieldIndexCalculationType.Aggressive;
+            this.IndexSortType = (byte)BusinessObjects.ElementFieldIndexSortType.HighestToLowest;
             return this;
         }
 
-        public ElementField EnableIndex(IndexRatingSortType ratingSortType)
+        public ElementField EnableIndex(ElementFieldIndexSortType indexSortType)
         {
+            ValidateEnableIndex();
+
             this.IndexEnabled = true;
-            this.IndexType = (byte)BusinessObjects.IndexType.Aggressive;
-            this.IndexRatingSortType = (byte)ratingSortType;
+            this.IndexCalculationType = (byte)BusinessObjects.ElementFieldIndexCalculationType.Aggressive;
+            this.IndexSortType = (byte)indexSortType;
             return this;
         }
 
-        public ElementField EnableIndex(IndexType type, IndexRatingSortType ratingSortType)
+        public ElementField EnableIndex(ElementFieldIndexCalculationType calculationType, ElementFieldIndexSortType indexSortType)
         {
+            ValidateEnableIndex();
+
             this.IndexEnabled = true;
-            this.IndexType = (byte)type;
-            this.IndexRatingSortType = (byte)ratingSortType;
+            this.IndexCalculationType = (byte)calculationType;
+            this.IndexSortType = (byte)indexSortType;
             return this;
+        }
+
+        void ValidateEnableIndex()
+        {
+            if (DataType == (byte)ElementFieldDataType.String
+                || DataType == (byte)ElementFieldDataType.String
+                || DataType == (byte)ElementFieldDataType.String)
+            {
+                throw new InvalidOperationException(string.Format("Index cannot be enabled for this type: {0}", DataType));
+            }
         }
 
         public override string ToString()

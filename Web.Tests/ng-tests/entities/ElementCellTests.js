@@ -30,13 +30,13 @@ describe('ng Cell', function () {
         // Element
         var element = new Element();
         element.ResourcePool = resourcePool;
+        element.IsMainElement = true;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
 
         // Decimal field
         var decimalField = new ElementField();
         decimalField.Element = element;
-        decimalField.ElementFieldType = 4;
+        decimalField.DataType = 4;
         element.ElementFieldSet = [decimalField];
 
         // Item
@@ -49,7 +49,7 @@ describe('ng Cell', function () {
         if (addMultiplierField) {
             var multiplierField = new ElementField();
             multiplierField.Element = element;
-            multiplierField.ElementFieldType = 12;
+            multiplierField.DataType = 12;
             element.ElementFieldSet.push(multiplierField);
 
             var multiplierCell = new ElementCell();
@@ -120,7 +120,7 @@ describe('ng Cell', function () {
     it('userCell - Initial', function () {
 
         var resourcePool = createResourcePool();
-        var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
+        var cell = resourcePool.mainElement().ElementFieldSet[0].ElementCellSet[0];
 
         expect(cell.currentUserCell()).toBe(null);
     });
@@ -128,7 +128,7 @@ describe('ng Cell', function () {
     it('userCell - With user cell', function () {
 
         var resourcePool = createResourcePool();
-        var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
+        var cell = resourcePool.mainElement().ElementFieldSet[0].ElementCellSet[0];
 
         // Add user cell
         createUserCell(cell, 10);
@@ -142,7 +142,7 @@ describe('ng Cell', function () {
     it('currentUserNumericValue - Initial', function () {
 
         var resourcePool = createResourcePool();
-        var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
+        var cell = resourcePool.mainElement().ElementFieldSet[0].ElementCellSet[0];
 
         expect(cell.currentUserNumericValue()).toBe(50);
     });
@@ -150,7 +150,7 @@ describe('ng Cell', function () {
     it('currentUserNumericValue - With user cell', function () {
 
         var resourcePool = createResourcePool();
-        var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
+        var cell = resourcePool.mainElement().ElementFieldSet[0].ElementCellSet[0];
 
         // Add user cell
         createUserCell(cell, 10);
@@ -163,7 +163,7 @@ describe('ng Cell', function () {
     it('otherUsersNumericValueTotal - Initial', function () {
 
         var resourcePool = createResourcePool();
-        var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
+        var cell = resourcePool.mainElement().ElementFieldSet[0].ElementCellSet[0];
 
         expect(cell.otherUsersNumericValueTotal()).toBe(0);
     });
@@ -171,7 +171,7 @@ describe('ng Cell', function () {
     it('otherUsersNumericValueTotal - Without user rating', function () {
 
         var resourcePool = createResourcePool();
-        var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
+        var cell = resourcePool.mainElement().ElementFieldSet[0].ElementCellSet[0];
         cell.NumericValueTotal = 25;
 
         expect(cell.otherUsersNumericValueTotal()).toBe(25);
@@ -180,7 +180,7 @@ describe('ng Cell', function () {
     it('otherUsersNumericValueTotal - With user rating', function () {
 
         var resourcePool = createResourcePool();
-        var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
+        var cell = resourcePool.mainElement().ElementFieldSet[0].ElementCellSet[0];
         cell.NumericValueTotal = 25;
         createUserCell(cell, 10);
 
@@ -190,7 +190,7 @@ describe('ng Cell', function () {
     it('otherUsersNumericValueCount - Initial', function () {
 
         var resourcePool = createResourcePool();
-        var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
+        var cell = resourcePool.mainElement().ElementFieldSet[0].ElementCellSet[0];
 
         expect(cell.otherUsersNumericValueCount()).toBe(0);
     });
@@ -198,7 +198,7 @@ describe('ng Cell', function () {
     it('otherUsersNumericValueCount - Without user rating', function () {
 
         var resourcePool = createResourcePool();
-        var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
+        var cell = resourcePool.mainElement().ElementFieldSet[0].ElementCellSet[0];
         cell.NumericValueCount = 3;
 
         expect(cell.otherUsersNumericValueCount()).toBe(3);
@@ -207,7 +207,7 @@ describe('ng Cell', function () {
     it('otherUsersNumericValueCount - With user rating', function () {
 
         var resourcePool = createResourcePool();
-        var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
+        var cell = resourcePool.mainElement().ElementFieldSet[0].ElementCellSet[0];
         cell.NumericValueCount = 3;
         createUserCell(cell, 10);
 
@@ -217,7 +217,7 @@ describe('ng Cell', function () {
     it('numericValueTotal - Initial', function () {
 
         var resourcePool = createResourcePool();
-        var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
+        var cell = resourcePool.mainElement().ElementFieldSet[0].ElementCellSet[0];
 
         expect(cell.numericValueTotal()).toBe(50);
     });
@@ -225,7 +225,7 @@ describe('ng Cell', function () {
     it('numericValueTotal - Without user rating', function () {
 
         var resourcePool = createResourcePool();
-        var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
+        var cell = resourcePool.mainElement().ElementFieldSet[0].ElementCellSet[0];
         cell.NumericValueTotal = 25;
 
         expect(cell.numericValueTotal()).toBe(25 + 50);
@@ -234,7 +234,7 @@ describe('ng Cell', function () {
     it('numericValueTotal - Including user rating', function () {
 
         var resourcePool = createResourcePool();
-        var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
+        var cell = resourcePool.mainElement().ElementFieldSet[0].ElementCellSet[0];
         cell.NumericValueTotal = 25;
         createUserCell(cell, 10);
 
@@ -244,7 +244,7 @@ describe('ng Cell', function () {
     it('numericValueTotal - Adding user rating', function () {
 
         var resourcePool = createResourcePool();
-        var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
+        var cell = resourcePool.mainElement().ElementFieldSet[0].ElementCellSet[0];
         cell.NumericValueTotal = 25;
 
         // Since it needs to calculate the current value (without user cell), call it once
@@ -265,7 +265,7 @@ describe('ng Cell', function () {
     it('numericValueCount - Initial', function () {
 
         var resourcePool = createResourcePool();
-        var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
+        var cell = resourcePool.mainElement().ElementFieldSet[0].ElementCellSet[0];
 
         expect(cell.numericValueCount()).toBe(1);
     });
@@ -273,7 +273,7 @@ describe('ng Cell', function () {
     it('numericValueCount - Without user rating', function () {
 
         var resourcePool = createResourcePool();
-        var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
+        var cell = resourcePool.mainElement().ElementFieldSet[0].ElementCellSet[0];
         cell.NumericValueCount = 3;
 
         expect(cell.numericValueCount()).toBe(3 + 1);
@@ -282,7 +282,7 @@ describe('ng Cell', function () {
     it('numericValueCount - Including user rating', function () {
 
         var resourcePool = createResourcePool();
-        var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
+        var cell = resourcePool.mainElement().ElementFieldSet[0].ElementCellSet[0];
         cell.NumericValueCount = 3;
         createUserCell(cell, 10);
 
@@ -292,7 +292,7 @@ describe('ng Cell', function () {
     it('numericValueCount - Adding user rating', function () {
 
         var resourcePool = createResourcePool();
-        var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
+        var cell = resourcePool.mainElement().ElementFieldSet[0].ElementCellSet[0];
         cell.NumericValueCount = 3;
 
         // Since it needs to calculate the current value (without user cell), call it once
@@ -309,7 +309,7 @@ describe('ng Cell', function () {
     it('numericValueAverage', function () {
 
         var resourcePool = createResourcePool();
-        var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
+        var cell = resourcePool.mainElement().ElementFieldSet[0].ElementCellSet[0];
         cell.NumericValueTotal = 75;
         cell.NumericValueCount = 3;
 
@@ -320,7 +320,7 @@ describe('ng Cell', function () {
 
         // Arrange & act - Case 1: RatingMode 1 (Default)
         var resourcePool = createResourcePool();
-        var cell = resourcePool.MainElement.ElementFieldSet[0].ElementCellSet[0];
+        var cell = resourcePool.mainElement().ElementFieldSet[0].ElementCellSet[0];
         cell.NumericValueTotal = 75;
         cell.NumericValueCount = 3;
 
@@ -337,7 +337,7 @@ describe('ng Cell', function () {
     it('numericValueMultiplied - Without multiplierCell', function () {
 
         var resourcePool = createResourcePool();
-        var field = resourcePool.MainElement.ElementFieldSet[0];
+        var field = resourcePool.mainElement().ElementFieldSet[0];
         var cell = field.ElementCellSet[0];
 
         expect(cell.numericValueMultiplied()).toBe(50 * 1);
@@ -346,15 +346,15 @@ describe('ng Cell', function () {
     it('numericValueMultiplied - With multiplierCell', function () {
 
         var resourcePool = createResourcePool(true);
-        var field = resourcePool.MainElement.ElementFieldSet[0];
-        var item = resourcePool.MainElement.ElementItemSet[0];
+        var field = resourcePool.mainElement().ElementFieldSet[0];
+        var item = resourcePool.mainElement().ElementItemSet[0];
         var cell = field.ElementCellSet[0];
 
         expect(cell.numericValueMultiplied()).toBe(cell.numericValue() * item.multiplier());
 
         // Case 2: Cached value
         // TODO Actually this case belongs to ElementItemTests.js - setMultiplier() test?
-        var userMultiplierCell = resourcePool.MainElement.ElementFieldSet[1].ElementCellSet[0].UserElementCellSet[0];
+        var userMultiplierCell = resourcePool.mainElement().ElementFieldSet[1].ElementCellSet[0].UserElementCellSet[0];
         userMultiplierCell.DecimalValue = 5;
 
         // TODO Manually update?!
@@ -367,7 +367,7 @@ describe('ng Cell', function () {
     it('numericValueMultipliedPercentage - !IndexEnabled', function () {
 
         var resourcePool = createResourcePool();
-        var field = resourcePool.MainElement.ElementFieldSet[0];
+        var field = resourcePool.mainElement().ElementFieldSet[0];
         var cell = field.ElementCellSet[0];
 
         expect(cell.numericValueMultipliedPercentage()).toBe(0);
@@ -376,7 +376,7 @@ describe('ng Cell', function () {
     it('numericValueMultipliedPercentage - IndexEnabled, One Item', function () {
 
         var resourcePool = createResourcePool();
-        var field = resourcePool.MainElement.ElementFieldSet[0];
+        var field = resourcePool.mainElement().ElementFieldSet[0];
         field.IndexEnabled = true;
         var cell = field.ElementCellSet[0];
 
@@ -386,7 +386,7 @@ describe('ng Cell', function () {
     it('numericValueMultipliedPercentage - IndexEnabled, Two Items', function () {
 
         var resourcePool = createResourcePool();
-        var element = resourcePool.MainElement;
+        var element = resourcePool.mainElement();
 
         var field = element.ElementFieldSet[0];
         field.IndexEnabled = true;
@@ -405,7 +405,8 @@ describe('ng Cell', function () {
     it('aggressiveRating - !IndexEnabled', function () {
 
         var resourcePool = createResourcePool();
-        var field = resourcePool.MainElement.ElementFieldSet[0];
+
+        var field = resourcePool.mainElement().ElementFieldSet[0];
         var cell = field.ElementCellSet[0];
 
         expect(cell.aggressiveRating()).toBe(0);
@@ -414,8 +415,9 @@ describe('ng Cell', function () {
     it('aggressiveRating - RatingSortType 1 (Def.), One Item', function () {
 
         var resourcePool = createResourcePool();
-        var field = resourcePool.MainElement.ElementFieldSet[0];
+        var field = resourcePool.mainElement().ElementFieldSet[0];
         field.IndexEnabled = true;
+        field.IndexSortType = 2;
         var cell = field.ElementCellSet[0];
 
         expect(cell.aggressiveRating()).toBe(1);
@@ -424,10 +426,11 @@ describe('ng Cell', function () {
     it('aggressiveRating - RatingSortType 1 (Def.), Two Items', function () {
 
         var resourcePool = createResourcePool();
-        var element = resourcePool.MainElement;
+        var element = resourcePool.mainElement();
 
         var field = element.ElementFieldSet[0];
         field.IndexEnabled = true;
+        field.IndexSortType = 2;
 
         var cell1 = field.ElementCellSet[0];
         createUserCell(cell1, 55);
@@ -440,11 +443,11 @@ describe('ng Cell', function () {
         expect(cell2.aggressiveRating()).toBe(1 - (cell2.numericValueMultiplied() / field.referenceRatingMultiplied()));
     });
 
-    it('aggressiveRating - RatingSortType 2, One Item', function () {
+    it('aggressiveRating - IndexSortType 1, One Item', function () {
 
         var resourcePool = createResourcePool();
-        var field = resourcePool.MainElement.ElementFieldSet[0];
-        field.IndexRatingSortType = 2;
+        var field = resourcePool.mainElement().ElementFieldSet[0];
+        field.IndexSortType = 1;
         field.IndexEnabled = true;
         var cell = field.ElementCellSet[0];
 
@@ -452,13 +455,13 @@ describe('ng Cell', function () {
         expect(cell.aggressiveRating()).toBe(0);
     });
 
-    it('aggressiveRating - RatingSortType 2 (Def.), Two Items', function () {
+    it('aggressiveRating - IndexSortType 1, Two Items', function () {
 
         var resourcePool = createResourcePool();
-        var element = resourcePool.MainElement;
+        var element = resourcePool.mainElement();
 
         var field = element.ElementFieldSet[0];
-        field.IndexRatingSortType = 2;
+        field.IndexSortType = 1;
         field.IndexEnabled = true;
 
         var cell1 = field.ElementCellSet[0];
@@ -477,10 +480,12 @@ describe('ng Cell', function () {
     it('ratingPercentage', function () {
 
         var resourcePool = createResourcePool();
-        var element = resourcePool.MainElement;
+        var element = resourcePool.mainElement();
 
         var field = element.ElementFieldSet[0];
         field.IndexEnabled = true;
+        field.IndexCalculationType = 1;
+        field.IndexSortType = 2;
 
         var cell1 = field.ElementCellSet[0];
         createUserCell(cell1, 55);
@@ -496,10 +501,10 @@ describe('ng Cell', function () {
     it('indexIncome', function () {
 
         var resourcePool = createResourcePool();
-        var element = resourcePool.MainElement;
+        var element = resourcePool.mainElement();
 
         var field = element.ElementFieldSet[0];
-        field.ElementFieldType = 11; // DirectIncome field type
+        field.DataType = 11; // DirectIncome field type
         field.IndexEnabled = true;
 
         var cell1 = field.ElementCellSet[0];

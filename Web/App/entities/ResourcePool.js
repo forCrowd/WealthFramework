@@ -1,14 +1,14 @@
 ﻿(function () {
     'use strict';
 
-    var serviceId = 'ResourcePool';
+    var factoryId = 'ResourcePool';
     angular.module('main')
-        .factory(serviceId, ['logger', resourcePoolFactory]);
+        .factory(factoryId, ['logger', resourcePoolFactory]);
 
     function resourcePoolFactory(logger) {
 
         // Logger
-        logger = logger.forSource(serviceId);
+        logger = logger.forSource(factoryId);
 
         // Server-side properties
         Object.defineProperty(ResourcePool.prototype, 'UseFixedResourcePoolRate', {
@@ -34,17 +34,6 @@
         //});
 
         // Client-side properties
-        Object.defineProperty(ResourcePool.prototype, 'CurrentElement', {
-            enumerable: true,
-            configurable: true,
-            get: function () { return this.backingFields._currentElement; },
-            set: function (value) {
-                if (this.backingFields._currentElement !== value) {
-                    this.backingFields._currentElement = value;
-                }
-            }
-        });
-
         Object.defineProperty(ResourcePool.prototype, 'RatingMode', {
             enumerable: true,
             configurable: true,
@@ -72,7 +61,7 @@
                                     var cell = field.ElementCellSet[cellIndex];
 
                                     // Cell calculations
-                                    switch (field.ElementFieldType) {
+                                    switch (field.DataType) {
                                         case 2:
                                         case 3:
                                         case 4:
@@ -100,11 +89,25 @@
 
             var self = this;
 
+            // Server-side props
+            self.Id = 0;
+            self.UserId = 0;
+            self.Name = '';
+            self.InitialValue = 0;
+            self.ResourcePoolRateTotal = 0; // Computed value - Used in: setOtherUsersResourcePoolRateTotal
+            self.ResourcePoolRateCount = 0; // Computed value - Used in: setOtherUsersResourcePoolRateCount
+            self.RatingCount = 0; // Computed value - Used in: resourcePoolEditor.html
+            // TODO breezejs - Cannot assign a navigation property in an entity ctor
+            //self.User = null;
+            //self.ElementSet = [];
+            //self.UserResourcePoolSet = [];
+
             // Local variables
             self.backingFields = {
                 _useFixedResourcePoolRate: false,
                 _currentElement: null,
                 _ratingMode: 1, // Only my ratings vs. All users' ratings
+                _selectedElement: null,
                 _currentUserResourcePoolRate: null,
                 _otherUsersResourcePoolRateTotal: null,
                 _otherUsersResourcePoolRateCount: null,
@@ -112,7 +115,172 @@
                 _resourcePoolRatePercentage: null
             }
 
+            // Determines whether entityState is actually isAdded.
+            // Anonymous users can also add/edit resource pool.
+            // However, when an anonymous user adds a new resource pool, it actually doesn't save to database and entityState stays as isAdded().
+            // Then, when the user clicks on 'Cancel CMRP', rejectChanges() will be called, which removes the resource pool.
+            // To prevent this issue, when anon user calls saveChanges, this flag will be used (isAdded will become true) and acceptChanges will be called (still not saving to actual database).
+            // Now, calling rejectChanges will return the entities to their previous state without any problem.
+            // And if the anon user will register or login, this flag will be checked in dataContext.js and all the related entities will be converted back to isAdded() state.
+            // SH - 30 Nov. '15
+            self.isAdded = false; 
+            self.init = init; // Should be called after createEntity or retrieving it from server
+            self.mainElement = mainElement;
+            self.updateCache = updateCache;
+            self.selectedElement = selectedElement;
+
             // Public functions
+
+            function selectedElement(value) {
+
+                // Set new value
+                if (typeof value !== 'undefined' && self.backingFields._selectedElement !== value) {
+                    self.backingFields._selectedElement = value;
+                }
+
+                // If there is no existing value (initial state), use mainElement() as the selected
+                if (self.backingFields._selectedElement === null && self.mainElement()) {
+                    self.backingFields._selectedElement = self.mainElement();
+                }
+
+                return self.backingFields._selectedElement;
+            }
+
+            // TODO Most of these functions are related with userService.js - updateX functions
+            // Try to merge these two - Actually try to handle these actions within the related entity / SH - 27 Nov. '15
+            function updateCache() {
+
+                self.setCurrentUserResourcePoolRate();
+
+                // Elements
+                if (typeof self.ElementSet !== 'undefined') {
+                    for (var elementIndex = 0; elementIndex < self.ElementSet.length; elementIndex++) {
+                        var element = self.ElementSet[elementIndex];
+
+                        // TODO Review this later / SH - 24 Nov. '15
+                        element.setElementFieldIndexSet();
+
+                        // Fields
+                        if (typeof element.ElementFieldSet !== 'undefined') {
+                            for (var fieldIndex = 0; fieldIndex < element.ElementFieldSet.length; fieldIndex++) {
+
+                                var field = element.ElementFieldSet[fieldIndex];
+
+                                if (field.IndexEnabled) {
+                                    // TODO Actually index rating can't be set through resourcePoolEdit page and no need to update this cache
+                                    // But still keep it as a reminder? / SH - 29 Nov. '15
+                                    field.setCurrentUserIndexRating();
+                                }
+
+                                // Cells
+                                if (typeof field.ElementCellSet !== 'undefined') {
+                                    for (var cellIndex = 0; cellIndex < field.ElementCellSet.length; cellIndex++) {
+                                        var cell = field.ElementCellSet[cellIndex];
+
+                                        switch (cell.ElementField.DataType) {
+                                            case 1: {
+                                                // TODO Again what a mess!
+                                                // StringValue is a computed value, it should normally come from the server
+                                                // But in case resource pool was just created, then it should be directly set like this.
+                                                // Otherwise, it doesn't show its value on editor.
+                                                // And on top of it, since it changes, breeze thinks that 'cell' is modified and tries to send it server
+                                                // which results an error. So that's why modified check & acceptChanges parts were added.
+                                                // SH - 01 Dec. '15
+                                                var isModified = cell.entityAspect.entityState.isModified();
+                                                cell.StringValue = cell.UserElementCellSet[0].StringValue;
+                                                if (!isModified) { cell.entityAspect.acceptChanges(); }
+                                                break;
+                                            }
+                                            case 2:
+                                            case 3:
+                                            case 4:
+                                                // TODO DateTime?
+                                                {
+                                                    cell.setCurrentUserNumericValue();
+                                                    break;
+                                                }
+                                            case 11:
+                                                {
+                                                    // TODO DirectIncome is always calculated from NumericValueTotal
+                                                    // Which is actually not correct but till now, update it like this / SH - 29 Nov. '15
+                                                    // Also check 'What a mess' of StringValue
+                                                    var isModified = cell.entityAspect.entityState.isModified();
+                                                    cell.NumericValueTotal = cell.UserElementCellSet[0].DecimalValue;
+                                                    if (!isModified) { cell.entityAspect.acceptChanges(); }
+
+                                                    cell.setCurrentUserNumericValue();
+                                                    break;
+                                                }
+                                            case 12:
+                                                {
+                                                    cell.ElementItem.setMultiplier();
+
+                                                    if (cell.ElementField.IndexEnabled) {
+                                                        cell.setNumericValueMultiplied();
+                                                    }
+
+                                                    break;
+                                                }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            function init(calculateOtherUsersData) {
+                calculateOtherUsersData = typeof calculateOtherUsersData !== 'undefined' ? calculateOtherUsersData : false;
+
+                // Set otherUsers' data
+                if (calculateOtherUsersData) {
+                    self.setOtherUsersResourcePoolRateTotal();
+                    self.setOtherUsersResourcePoolRateCount();
+                }
+
+                // Elements
+                if (typeof self.ElementSet !== 'undefined') {
+                    for (var elementIndex = 0; elementIndex < self.ElementSet.length; elementIndex++) {
+                        var element = self.ElementSet[elementIndex];
+
+                        // Fields
+                        if (typeof element.ElementFieldSet !== 'undefined') {
+                            for (var fieldIndex = 0; fieldIndex < element.ElementFieldSet.length; fieldIndex++) {
+
+                                var field = element.ElementFieldSet[fieldIndex];
+
+                                if (calculateOtherUsersData) {
+                                    field.setOtherUsersIndexRatingTotal();
+                                    field.setOtherUsersIndexRatingCount();
+                                }
+
+                                // Cells
+                                if (typeof field.ElementCellSet !== 'undefined') {
+                                    for (var cellIndex = 0; cellIndex < field.ElementCellSet.length; cellIndex++) {
+                                        var cell = field.ElementCellSet[cellIndex];
+
+                                        if (calculateOtherUsersData) {
+                                            cell.setOtherUsersNumericValueTotal();
+                                            cell.setOtherUsersNumericValueCount();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            function mainElement() {
+                for (var i = 0; i < self.ElementSet.length; i++) {
+                    var element = self.ElementSet[i];
+                    if (element.IsMainElement) {
+                        return element;
+                    }
+                }
+                return null;
+            }
 
             // Checks whether resource pool has any item that can be rateable
             self.displayRatingMode = function () {

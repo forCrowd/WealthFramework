@@ -50,10 +50,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         [DisplayOnEditView(true)]
         public decimal InitialValue { get; set; }
 
-        [Display(Name = "Main Element")]
-        public int? MainElementId { get; set; }
-
-        [Display(Name = "Enable CMRP Addition")]
+        [Display(Name = "Use Fixed Resource Pool Rate")]
         [DisplayOnListView(false)]
         [DisplayOnEditView(true)]
         public bool UseFixedResourcePoolRate { get; set; }
@@ -78,7 +75,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         public int? RatingCount { get; private set; }
 
         public virtual User User { get; set; }
-        public virtual Element MainElement { get; set; }
         public virtual ICollection<Element> ElementSet { get; set; }
         public virtual ICollection<UserResourcePool> UserResourcePoolSet { get; set; }
 
@@ -107,27 +103,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects
             user.UserResourcePoolSet.Add(userResourcePool);
             UserResourcePoolSet.Add(userResourcePool);
             return userResourcePool;
-        }
-
-        /// <summary>
-        /// Sets the first element in its list as the main element
-        /// </summary>
-        /// <returns></returns>
-        public ResourcePool SetMainElement()
-        {
-            if (MainElement != null)
-            {
-                // TODO What if there is an existing MainElement?
-            }
-
-            var mainElement = ElementSet.FirstOrDefault();
-            if (mainElement != null)
-            {
-                MainElement = mainElement;
-                mainElement.ResourcePoolMainElementSubSet.Add(this);
-            }
-
-            return this;
         }
 
         #endregion

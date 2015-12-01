@@ -3,15 +3,15 @@
 
     var controllerId = 'basicsController';
     angular.module('main')
-        .controller(controllerId, ['resourcePoolService', 'userService', '$scope', 'logger', basicsController]);
+        .controller(controllerId, ['resourcePoolFactory', 'userFactory', '$scope', 'logger', basicsController]);
 
-    function basicsController(resourcePoolService, userService, $scope, logger) {
+    function basicsController(resourcePoolFactory, userFactory, $scope, logger) {
 
         logger = logger.forSource(controllerId);
 
         var vm = this;
-        vm.basics_ExistingModelResourcePoolId = 2;
-        vm.basics_NewModelResourcePoolId = 3;
+        vm.existingModelConfig = { resourcePoolId: 2 };
+        vm.newModelConfig = { resourcePoolId: 3 };
 
         // Listen resource pool updated event
         $scope.$on('resourcePoolEditor_elementMultiplierIncreased', updateOppositeResourcePool);
@@ -20,31 +20,33 @@
 
         function updateOppositeResourcePool(event, element) {
 
-            if (element.ResourcePool.Id === vm.basics_ExistingModelResourcePoolId
-                || element.ResourcePool.Id === vm.basics_NewModelResourcePoolId) {
+            if (element.ResourcePool.Id === vm.existingModelConfig.resourcePoolId
+                || element.ResourcePool.Id === vm.newModelConfig.resourcePoolId) {
 
-                var oppositeResourcePoolId = element.ResourcePool.Id === vm.basics_ExistingModelResourcePoolId
-                    ? vm.basics_NewModelResourcePoolId
-                    : vm.basics_ExistingModelResourcePoolId;
+                var oppositeResourcePoolId = element.ResourcePool.Id === vm.existingModelConfig.resourcePoolId
+                    ? vm.newModelConfig.resourcePoolId
+                    : vm.existingModelConfig.resourcePoolId;
 
                 // Call the service to increase the multiplier
-                resourcePoolService.getResourcePoolExpanded(oppositeResourcePoolId)
-                    .then(function (resourcePoolSet) {
+                resourcePoolFactory.getResourcePoolExpanded(oppositeResourcePoolId)
+                    .then(function (resourcePool) {
 
-                        var resourcePool = resourcePoolSet[0];
+                        if (resourcePool === null) {
+                            return;
+                        }
 
                         var result = false;
                         switch (event.name) {
-                            case 'resourcePoolEditor_elementMultiplierIncreased': { userService.updateElementMultiplier(resourcePool.MainElement, 'increase'); break; }
-                            case 'resourcePoolEditor_elementMultiplierDecreased': { userService.updateElementMultiplier(resourcePool.MainElement, 'decrease'); break; }
-                            case 'resourcePoolEditor_elementMultiplierReset': { userService.updateElementMultiplier(resourcePool.MainElement, 'reset'); break; }
+                            case 'resourcePoolEditor_elementMultiplierIncreased': { userFactory.updateElementMultiplier(resourcePool.mainElement(), 'increase'); break; }
+                            case 'resourcePoolEditor_elementMultiplierDecreased': { userFactory.updateElementMultiplier(resourcePool.mainElement(), 'decrease'); break; }
+                            case 'resourcePoolEditor_elementMultiplierReset': { userFactory.updateElementMultiplier(resourcePool.mainElement(), 'reset'); break; }
                         }
 
                         // Save changes, if there is a registered user
-                        userService.isAuthenticated()
+                        userFactory.isAuthenticated()
                             .then(function (isAuthenticated) {
                                 if (isAuthenticated) {
-                                    resourcePoolService.saveChanges(1500);
+                                    resourcePoolFactory.saveChanges(1500);
                                 }
                             });
                     });

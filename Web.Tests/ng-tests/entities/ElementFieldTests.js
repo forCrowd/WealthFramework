@@ -34,7 +34,7 @@ describe('ng ElementField', function () {
 
         var decimalField = new ElementField();
         decimalField.Element = element;
-        decimalField.ElementFieldType = 4;
+        decimalField.DataType = 4;
         element.ElementFieldSet = [decimalField];
 
         expect(decimalField.currentUserElementField()).toBe(null);
@@ -58,11 +58,11 @@ describe('ng ElementField', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         var decimalField = new ElementField();
         decimalField.Element = element;
-        decimalField.ElementFieldType = 4;
+        decimalField.DataType = 4;
         element.ElementFieldSet = [decimalField];
 
         expect(decimalField.currentUserIndexRating()).toBe(50);
@@ -93,7 +93,7 @@ describe('ng ElementField', function () {
 
         var decimalField = new ElementField();
         decimalField.Element = element;
-        decimalField.ElementFieldType = 4;
+        decimalField.DataType = 4;
         element.ElementFieldSet = [decimalField];
 
         expect(decimalField.otherUsersIndexRatingTotal()).toBe(0);
@@ -132,7 +132,7 @@ describe('ng ElementField', function () {
 
         var decimalField = new ElementField();
         decimalField.Element = element;
-        decimalField.ElementFieldType = 4;
+        decimalField.DataType = 4;
         element.ElementFieldSet = [decimalField];
 
         expect(decimalField.otherUsersIndexRatingCount()).toBe(0);
@@ -168,11 +168,11 @@ describe('ng ElementField', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         var decimalField = new ElementField();
         decimalField.Element = element;
-        decimalField.ElementFieldType = 4;
+        decimalField.DataType = 4;
         element.ElementFieldSet = [decimalField];
 
         expect(decimalField.indexRatingTotal()).toBe(50);
@@ -211,7 +211,7 @@ describe('ng ElementField', function () {
 
         var decimalField = new ElementField();
         decimalField.Element = element;
-        decimalField.ElementFieldType = 4;
+        decimalField.DataType = 4;
         element.ElementFieldSet = [decimalField];
 
         expect(decimalField.indexRatingCount()).toBe(1);
@@ -244,11 +244,11 @@ describe('ng ElementField', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         var decimalField = new ElementField();
         decimalField.Element = element;
-        decimalField.ElementFieldType = 4;
+        decimalField.DataType = 4;
         element.ElementFieldSet = [decimalField];
 
         expect(decimalField.indexRatingAverage()).toBe(50);
@@ -287,11 +287,11 @@ describe('ng ElementField', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         var decimalField = new ElementField();
         decimalField.Element = element;
-        decimalField.ElementFieldType = 4;
+        decimalField.DataType = 4;
         element.ElementFieldSet = [decimalField];
 
         expect(decimalField.indexRating()).toBe(50);
@@ -331,11 +331,11 @@ describe('ng ElementField', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         var decimalField = new ElementField();
         decimalField.Element = element;
-        decimalField.ElementFieldType = 4;
+        decimalField.DataType = 4;
         element.ElementFieldSet = [decimalField];
 
         expect(decimalField.indexRating()).toBe(50);
@@ -375,11 +375,11 @@ describe('ng ElementField', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         var decimalField1 = new ElementField();
         decimalField1.Element = element;
-        decimalField1.ElementFieldType = 4;
+        decimalField1.DataType = 4;
         decimalField1.IndexEnabled = true;
         element.ElementFieldSet = [decimalField1];
 
@@ -400,7 +400,7 @@ describe('ng ElementField', function () {
         // Case 3: Second index
         var decimalField2 = new ElementField();
         decimalField2.Element = element;
-        decimalField2.ElementFieldType = 4;
+        decimalField2.DataType = 4;
         decimalField2.IndexEnabled = true;
         element.ElementFieldSet.push(decimalField2);
 
@@ -428,11 +428,11 @@ describe('ng ElementField', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         var decimalField = new ElementField();
         decimalField.Element = element;
-        decimalField.ElementFieldType = 11;
+        decimalField.DataType = 11;
         decimalField.IndexEnabled = true;
         element.ElementFieldSet = [decimalField];
 
@@ -441,7 +441,7 @@ describe('ng ElementField', function () {
         // Case 2: Add the multiplier field and the first item
         var multiplierField = new ElementField();
         multiplierField.Element = element;
-        multiplierField.ElementFieldType = 12;
+        multiplierField.DataType = 12;
         element.ElementFieldSet.push(multiplierField);
 
         var item1 = new ElementItem();
@@ -513,12 +513,13 @@ describe('ng ElementField', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         var decimalField = new ElementField();
         decimalField.Element = element;
-        decimalField.ElementFieldType = 11;
+        decimalField.DataType = 11;
         decimalField.IndexEnabled = true;
+        decimalField.IndexSortType = 2;
         element.ElementFieldSet = [decimalField];
 
         expect(decimalField.referenceRatingMultiplied()).toBe(0);
@@ -526,7 +527,7 @@ describe('ng ElementField', function () {
         // Case 2: Add the multiplier field and the first item
         var multiplierField = new ElementField();
         multiplierField.Element = element;
-        multiplierField.ElementFieldType = 12;
+        multiplierField.DataType = 12;
         element.ElementFieldSet.push(multiplierField);
 
         var item1 = new ElementItem();
@@ -584,7 +585,7 @@ describe('ng ElementField', function () {
         expect(decimalField.referenceRatingMultiplied()).toBe(2250);
 
         // TODO Update / remove cases
-        // TODO field.IndexRatingSortType = 2 case?
+        // TODO field.IndexSortType = 1 case?
 
     });
 
@@ -597,11 +598,11 @@ describe('ng ElementField', function () {
         var element = new Element();
         element.ResourcePool = resourcePool;
         resourcePool.ElementSet = [element];
-        resourcePool.MainElement = element;
+        element.IsMainElement = true;
 
         var decimalField1 = new ElementField();
         decimalField1.Element = element;
-        decimalField1.ElementFieldType = 4;
+        decimalField1.DataType = 4;
         decimalField1.IndexEnabled = true;
         element.ElementFieldSet = [decimalField1];
 
@@ -622,7 +623,7 @@ describe('ng ElementField', function () {
         // Case 3: Second index
         var decimalField2 = new ElementField();
         decimalField2.Element = element;
-        decimalField2.ElementFieldType = 4;
+        decimalField2.DataType = 4;
         decimalField2.IndexEnabled = true;
         element.ElementFieldSet.push(decimalField2);
 

@@ -10,6 +10,5 @@
         logger = logger.forSource(controllerId);
 
         var vm = this;
-        vm.sectorIndex_SampleResourcePoolId = 4;
     };
 })();

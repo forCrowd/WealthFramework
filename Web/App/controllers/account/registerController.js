@@ -3,9 +3,9 @@
 
     var controllerId = 'registerController';
     angular.module('main')
-        .controller(controllerId, ['userService', '$location', '$rootScope', 'logger', registerController]);
+        .controller(controllerId, ['userFactory', '$location', '$rootScope', 'logger', registerController]);
 
-    function registerController(userService, $location, $rootScope, logger) {
+    function registerController(userFactory, $location, $rootScope, logger) {
 
         logger = logger.forSource(controllerId);
 
@@ -31,20 +31,20 @@
         vm.register = register;
 
         function register() {
-            userService.register(vm)
+            userFactory.register(vm)
                 .success(function () {
 
                     logger.logSuccess('You have been registered!', null, true);
 
-                    userService.getAccessToken(vm.email, vm.password, false)
+                    userFactory.getAccessToken(vm.email, vm.password)
                         .success(function () {
 
                             // Save changes
-                            userService.saveChanges()
+                            userFactory.saveChanges()
                                 .then(function () {
 
                                     // Redirect the user to the previous page, except if it's login
-                                    $location.path($rootScope.locationHistory[$rootScope.locationHistory.length - 2]);
+                                    $location.path($rootScope.locationHistory[$rootScope.locationHistory.length - 2].path());
                                 });
                         })
                         .error(function (response) {
@@ -54,8 +54,6 @@
                                 logger.logError(response, null, true);
                             }
                         });
-
-                    //$location.path('/');
                 });
         }
     };
