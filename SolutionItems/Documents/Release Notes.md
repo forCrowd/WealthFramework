@@ -1,5 +1,12 @@
 ﻿### Release Notes
 
+**0.38.2**
+
+* CMRP Edit - New element field uses resourcePoolFactory.createElementField now
+* New element cells don't get saved fix
+updateCache function was using accept changes only if the elementcell wasn't modified earlier, which was causing a problem if element cell was in isAdded state.
+Now that's changed into only if element cell was previously in unchanged state.
+
 **0.38.1**
 
 * CMRP Edit - New element field Index Enabled change doesn't set related properties fix

@@ -193,7 +193,7 @@
                                 <select id="SelectedElementId" name="SelectedElementId" data-ng-model="vm.elementField.SelectedElement" data-ng-options="element.Name disable when element === vm.elementField.Element for element in vm.resourcePool.ElementSet" class="form-control" required></select>
                             </div>
                         </div>
-                        <div class="form-group" data-ng-if="vm.elementField.DataType !== vm.ElementFieldDataType.String && vm.elementField.DataType !== vm.ElementFieldDataType.Element">
+                        <div class="form-group" data-ng-if="vm.elementField.DataType !== vm.ElementFieldDataType.String && vm.elementField.DataType !== vm.ElementFieldDataType.Element && vm.elementField.DataType !== vm.ElementFieldDataType.DirectIncome && vm.elementField.DataType !== vm.ElementFieldDataType.Multiplier">
                             <label for="UseFixedValue" class="control-label col-md-2">Use Fixed Value</label>
                             <div class="col-md-10" data-ng-class="{'has-error': elementFieldForm.UseFixedValue.$invalid && !elementFieldForm.UseFixedValue.$pristine}">
                                 <label class="radio-inline">

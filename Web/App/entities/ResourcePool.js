@@ -186,9 +186,9 @@
                                                 // And on top of it, since it changes, breeze thinks that 'cell' is modified and tries to send it server
                                                 // which results an error. So that's why modified check & acceptChanges parts were added.
                                                 // SH - 01 Dec. '15
-                                                var isModified = cell.entityAspect.entityState.isModified();
+                                                var isUnchanged = cell.entityAspect.entityState.isUnchanged();
                                                 cell.StringValue = cell.UserElementCellSet[0].StringValue;
-                                                if (!isModified) { cell.entityAspect.acceptChanges(); }
+                                                if (isUnchanged) { cell.entityAspect.acceptChanges(); }
                                                 break;
                                             }
                                             case 2:
@@ -204,9 +204,9 @@
                                                     // TODO DirectIncome is always calculated from NumericValueTotal
                                                     // Which is actually not correct but till now, update it like this / SH - 29 Nov. '15
                                                     // Also check 'What a mess' of StringValue
-                                                    var isModified = cell.entityAspect.entityState.isModified();
+                                                    var isUnchanged = cell.entityAspect.entityState.isUnchanged();
                                                     cell.NumericValueTotal = cell.UserElementCellSet[0].DecimalValue;
-                                                    if (!isModified) { cell.entityAspect.acceptChanges(); }
+                                                    if (isUnchanged) { cell.entityAspect.acceptChanges(); }
 
                                                     cell.setCurrentUserNumericValue();
                                                     break;
