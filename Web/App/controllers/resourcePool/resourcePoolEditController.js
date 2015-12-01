@@ -439,7 +439,7 @@
                 .then(function (isAuthenticated) {
                     if (isAuthenticated) {
                         vm.isSaving = true;
-                        resourcePoolFactory.saveChanges(0, vm.resourcePool)
+                        resourcePoolFactory.saveChanges()
                             .then(navigateToReturnPath)
                             // TODO catch?
                             .finally(function () {

@@ -179,8 +179,16 @@
 
                                         switch (cell.ElementField.DataType) {
                                             case 1: {
-                                                // TODO Again what a mess! / SH - 29 Nov. '15
+                                                // TODO Again what a mess!
+                                                // StringValue is a computed value, it should normally come from the server
+                                                // But in case resource pool was just created, then it should be directly set like this.
+                                                // Otherwise, it doesn't show its value on editor.
+                                                // And on top of it, since it changes, breeze thinks that 'cell' is modified and tries to send it server
+                                                // which results an error. So that's why modified check & acceptChanges parts were added.
+                                                // SH - 01 Dec. '15
+                                                var isModified = cell.entityAspect.entityState.isModified();
                                                 cell.StringValue = cell.UserElementCellSet[0].StringValue;
+                                                if (!isModified) { cell.entityAspect.acceptChanges(); }
                                                 break;
                                             }
                                             case 2:
@@ -195,7 +203,10 @@
                                                 {
                                                     // TODO DirectIncome is always calculated from NumericValueTotal
                                                     // Which is actually not correct but till now, update it like this / SH - 29 Nov. '15
+                                                    // Also check 'What a mess' of StringValue
+                                                    var isModified = cell.entityAspect.entityState.isModified();
                                                     cell.NumericValueTotal = cell.UserElementCellSet[0].DecimalValue;
+                                                    if (!isModified) { cell.entityAspect.acceptChanges(); }
 
                                                     cell.setCurrentUserNumericValue();
                                                     break;

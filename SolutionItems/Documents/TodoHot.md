@@ -1,17 +1,9 @@
-﻿anon user interacts with cmrp etc. toaster?
-
-navigate to 404 if cmrp id is not found
-http://localhost:15001/resourcePool/-2
-http://localhost:15001/resourcePool/-2/edit
-
-if this will be okay, no need to retrieve resource pool from server (and remove saved resource pool from cache)
-
-use createEntity in addX cases!
-
-db update!
+﻿db update!
 merge with master!
 
 ---
+use createEntity in addX cases!
+
 THIS REQUIRES USERID TO BE USED AS WELL?
 D:\Development\Projects\GitHub\forCrowd\WealthEconomy\Web\Controllers\OData\Generated\UserElementCellController.cs
 if (MainUnitOfWork.Exists(userElementCell.ElementCellId))
