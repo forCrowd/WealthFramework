@@ -1,5 +1,9 @@
 ﻿### Release Notes
 
+**0.38.3**
+
+* userFactory.js - updateX functions detached entity bug fix
+
 **0.38.2**
 
 * CMRP Edit - New element field uses resourcePoolFactory.createElementField now

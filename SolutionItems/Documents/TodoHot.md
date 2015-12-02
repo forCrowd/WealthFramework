@@ -1,4 +1,6 @@
-﻿move saveElementField fixes under elementfield.js datatype prop!
+﻿new cmrp + multiplier field + increase / decrease fails!
+
+move saveElementField fixes under elementfield.js datatype prop!
 
 updateAnonymous changes: if the logged in user has already those entities, it fails!
 
@@ -7,6 +9,9 @@ Alpha team review!
 javascript error log
 
 save anon user to db?
+
+since addElementField calls createElementField, it creates related cells immediately, and since the initial type is 'string'
+all related userelementcells will only have 'stringvalue' - either update the related cells based on fieldtype selection - create them in saveElementField?
 
 use createEntity in addX cases!
 
@@ -18,7 +23,7 @@ if (MainUnitOfWork.Exists(userElementCell.ElementCellId))
 // Try to merge these two - Actually try to handle these actions within the related entity / SH - 27 Nov. '15
 function updateCache() {
 
-also review init() method!
+also review init() method! - calculateOtherUsersData - isnt that the only thing at the moment? if false, no need to call?
 
 UseFixedValue doesn't work at all! fix it!
 also check resourcePool.UseFixedResourcePoolRate case!

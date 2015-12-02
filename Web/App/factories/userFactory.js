@@ -96,6 +96,72 @@
             }
         }
 
+        function getUserElementCell(user, elementCell) {
+
+            var userCell = elementCell.currentUserCell();
+
+            if (userCell === null) {
+
+                // Since there is a delay between client-side changes and actual save operation (editor.js - saveChanges(1500)), these entities might be deleted but not yet saved. 
+                // To prevent having the exception of creating an entity with the same keys twice, search 'deleted' ones and restore it back to life! / SH - 02 Dec. '15
+                var deletedUserCells = dataContext.getEntities(['UserElementCell'], [breeze.EntityState.Deleted]);
+                deletedUserCells.forEach(function (deletedUserCell) {
+                    if (deletedUserCell.UserId === user.Id && deletedUserCell.ElementCellId === elementCell.Id) {
+                        userCell = deletedUserCell;
+                        userCell.entityAspect.rejectChanges();
+                        userCell.DecimalValue = elementCell.ElementField.DataType === 12 ? 0 : 50; // TODO ?
+                        return userCell;
+                    }
+                });
+            }
+
+            return userCell;
+        }
+
+        function getUserElementField(user, elementField) {
+
+            var userField = elementField.currentUserElementField();
+
+            if (userField === null) {
+
+                // Since there is a delay between client-side changes and actual save operation (editor.js - saveChanges(1500)), these entities might be deleted but not yet saved. 
+                // To prevent having the exception of creating an entity with the same keys twice, search 'deleted' ones and restore it back to life! / SH - 02 Dec. '15
+                var deletedUserFields = dataContext.getEntities(['UserElementField'], [breeze.EntityState.Deleted]);
+                deletedUserFields.forEach(function (deletedUserField) {
+                    if (deletedUserField.UserId === user.Id && deletedUserField.ElementFieldId === elementField.Id) {
+                        userField = deletedUserField;
+                        userField.entityAspect.rejectChanges();
+                        userField.Rating = 50;
+                        return userField;
+                    }
+                });
+            }
+
+            return userField;
+        }
+
+        function getUserResourcePool(user, resourcePool) {
+
+            var userResourcePool = resourcePool.currentUserResourcePool();
+
+            if (userResourcePool === null) {
+
+                // Since there is a delay between client-side changes and actual save operation (editor.js - saveChanges(1500)), these entities might be deleted but not yet saved. 
+                // To prevent having the exception of creating an entity with the same keys twice, search 'deleted' ones and restore it back to life! / SH - 02 Dec. '15
+                var deletedUserResourcePools = dataContext.getEntities(['UserResourcePool'], [breeze.EntityState.Deleted]);
+                deletedUserResourcePools.forEach(function (deletedUserResourcePool) {
+                    if (deletedUserResourcePool.UserId === user.Id && deletedUserResourcePool.ResourcePoolId === resourcePool.Id) {
+                        userResourcePool = deletedUserResourcePool;
+                        userResourcePool.entityAspect.rejectChanges();
+                        userResourcePool.ResourcePoolRate = 10;
+                        return userResourcePool;
+                    }
+                });
+            }
+
+            return userResourcePool;
+        }
+
         function isAuthenticated() {
 
             var deferred = $q.defer();
@@ -222,53 +288,33 @@
 
         function updateElementCellMultiplier(elementCell, updateType) {
 
-            var userCell = elementCell.currentUserCell();
-
-            if (userCell !== null
-                && typeof userCell.entityAspect !== 'undefined'
-                && userCell.entityAspect.entityState.isDetached()) {
-                userCell = null;
-            }
+            var userCell = getUserElementCell(currentUser, elementCell);
 
             switch (updateType) {
-                case 'increase': {
-
-                    // If there is no item, create it
-                    if (userCell === null) {
-
-                        dataContext.createEntity('UserElementCell', {
-                            User: currentUser,
-                            ElementCell: elementCell,
-                            DecimalValue: 1
-                        });
-
-                    } else {
-
-                        // If it's marked as deleted, cancel that deletion and set it to default + 1
-                        if (userCell.entityAspect.entityState.isDeleted()) {
-                            userCell.entityAspect.rejectChanges();
-                            userCell.DecimalValue = 1;
-                        } else { // Otherwise, go ahead!
-                            userCell.DecimalValue++;
-                        }
-                    }
-
-                    break;
-                }
+                case 'increase':
                 case 'decrease': {
 
-                    // If there is an item, decrease
-                    if (userCell !== null) {
-                        userCell.DecimalValue = userCell.DecimalValue - 1 < 0 ? 0 : userCell.DecimalValue - 1;
+
+                    if (userCell === null) { // If there is no item, create it
+
+                        userCell = dataContext.createEntity('UserElementCell', {
+                            User: currentUser,
+                            ElementCell: elementCell,
+                            DecimalValue: updateType === 'increase' ? 1 : 0
+                        });
+
+                    } else { // If there is an item, update DecimalValue, but cannot be lower than zero
+
+                        userCell.DecimalValue = updateType === 'increase'
+                            ? userCell.DecimalValue + 1
+                            : userCell.DecimalValue - 1 < 0 ? 0 : userCell.DecimalValue - 1;
                     }
 
                     break;
                 }
                 case 'reset': {
 
-                    // If there is an item and not marked as deleted, delete it
-                    if (userCell !== null && !userCell.entityAspect.entityState.isDeleted()) {
-                        userCell.DecimalValue = 0;
+                    if (userCell !== null) { // If there is an item, delete it
                         userCell.entityAspect.setDeleted();
                     }
 
@@ -279,83 +325,39 @@
 
         function updateElementCellNumericValue(elementCell, updateType) {
 
-            var userCell = elementCell.currentUserCell();
-
-            if (userCell !== null
-                && typeof userCell.entityAspect !== 'undefined'
-                && userCell.entityAspect.entityState.isDetached()) {
-                userCell = null;
-            }
+            var userCell = getUserElementCell(currentUser, elementCell);
 
             switch (updateType) {
-                case 'increase': {
-
-                    // If there is no item, create it
-                    if (userCell === null) {
-
-                        dataContext.createEntity('UserElementCell', {
-                            User: currentUser,
-                            ElementCell: elementCell,
-                            DecimalValue: 55
-                        });
-
-                        // Update the cached value
-                        elementCell.setCurrentUserNumericValue();
-
-                    } else {
-
-                        // If it's marked as deleted, cancel that deletion and set it to default + 5
-                        if (typeof userCell.entityAspect != 'undefined'
-                            && userCell.entityAspect.entityState.isDeleted()) {
-                            userCell.entityAspect.rejectChanges();
-                            userCell.DecimalValue = 55;
-                        } else { // Otherwise, go ahead!
-                            userCell.DecimalValue = userCell.DecimalValue + 5 > 100
-                                ? 100
-                                : userCell.DecimalValue + 5;
-                        }
-
-                        // Update the cached value
-                        elementCell.setCurrentUserNumericValue();
-                    }
-
-                    break;
-                }
+                case 'increase':
                 case 'decrease': {
 
-                    // If there is no item, create it
-                    if (userCell === null) {
+                    if (userCell === null) { // If there is no item, create it
 
                         dataContext.createEntity('UserElementCell', {
                             User: currentUser,
                             ElementCell: elementCell,
-                            DecimalValue: 45
+                            DecimalValue: updateType === 'increase' ? 55 : 45
                         });
 
-                        // Update the cached value
-                        elementCell.setCurrentUserNumericValue();
+                    } else { // If there is an item, update DecimalValue, but cannot be smaller than zero and cannot be bigger than 100
 
-                    } else {
-
-                        // If it's marked as deleted, cancel that deletion and set it to default - 5
-                        if (userCell.entityAspect.entityState.isDeleted()) {
-                            userCell.entityAspect.rejectChanges();
-                            userCell.DecimalValue = 45;
-                        } else { // Otherwise, go ahead!
-                            userCell.DecimalValue = userCell.DecimalValue - 5 < 0 ? 0 : userCell.DecimalValue - 5;
-                        }
-
-                        // Update the cached value
-                        elementCell.setCurrentUserNumericValue();
+                        userCell.DecimalValue = updateType === 'increase'
+                            ? userCell.DecimalValue + 5 > 100
+                            ? 100
+                            : userCell.DecimalValue + 5
+                            : userCell.DecimalValue - 5 < 0
+                            ? 0
+                            : userCell.DecimalValue - 5
                     }
+
+                    // Update the cached value
+                    elementCell.setCurrentUserNumericValue();
 
                     break;
                 }
                 case 'reset': {
 
-                    // If there is an item and not marked as deleted, delete it
-                    if (userCell !== null && !userCell.entityAspect.entityState.isDeleted()) {
-                        userCell.DecimalValue = 50;
+                    if (userCell !== null) { // If there is an item, delete it
                         userCell.entityAspect.setDeleted();
 
                         // Update the cached value
@@ -369,46 +371,10 @@
 
         function updateElementFieldIndexRating(elementField, updateType) {
 
-            var userElementField = elementField.currentUserElementField();
-
-            if (userElementField !== null
-                && typeof userElementField.entityAspect !== 'undefined'
-                && userElementField.entityAspect.entityState.isDetached()) {
-                userElementField = null;
-            }
+            var userElementField = getUserElementField(currentUser, elementField);
 
             switch (updateType) {
-                case 'increase': {
-
-                    // If there is no item, create it
-                    if (userElementField === null) {
-                        userElementField = {
-                            User: currentUser,
-                            ElementField: elementField,
-                            Rating: 55
-                        };
-
-                        dataContext.createEntity('UserElementField', userElementField);
-
-                        // Update related
-                        elementField.setCurrentUserIndexRating();
-
-                    } else {
-
-                        // If it's marked as deleted, cancel that deletion and set it to default + 5
-                        if (userElementField.entityAspect.entityState.isDeleted()) {
-                            userElementField.entityAspect.rejectChanges();
-                            userElementField.Rating = 55;
-                        } else { // Otherwise, go ahead!
-                            userElementField.Rating = userElementField.Rating + 5 > 100 ? 100 : userElementField.Rating + 5;
-                        }
-
-                        // Update related
-                        elementField.setCurrentUserIndexRating();
-                    }
-
-                    break;
-                }
+                case 'increase':
                 case 'decrease': {
 
                     // If there is no item, create it
@@ -416,36 +382,34 @@
                         userElementField = {
                             User: currentUser,
                             ElementField: elementField,
-                            Rating: 45
+                            Rating: updateType === 'increase' ? 55 : 45
                         };
 
                         dataContext.createEntity('UserElementField', userElementField);
 
-                        // Update related
-                        elementField.setCurrentUserIndexRating();
+                    } else { // If there is an item, update Rating, but cannot be smaller than zero and cannot be bigger than 100
 
-                    } else {
-
-                        // If it's marked as deleted, cancel that deletion and set it to default - 5
-                        if (userElementField.entityAspect.entityState.isDeleted()) {
-                            userElementField.entityAspect.rejectChanges();
-                            userElementField.Rating = 45;
-                        } else { // Otherwise, go ahead!
-                            userElementField.Rating = userElementField.Rating - 5 < 0 ? 0 : userElementField.Rating - 5;
-                        }
-
-                        elementField.setCurrentUserIndexRating();
+                        userElementField.Rating = updateType === 'increase'
+                            ? userElementField.Rating + 5 > 100
+                            ? 100
+                            : userElementField.Rating + 5
+                            : userElementField.Rating - 5 < 0
+                            ? 0
+                            : userElementField.Rating - 5;
                     }
+
+                    // Update the cached value
+                    elementField.setCurrentUserIndexRating();
 
                     break;
                 }
                 case 'reset': {
 
-                    // If there is an item and not marked as deleted, delete it
-                    if (userElementField !== null && !userElementField.entityAspect.entityState.isDeleted()) {
-                        userElementField.Rating = 50;
+                    // If there is an item, delete it
+                    if (userElementField !== null) {
                         userElementField.entityAspect.setDeleted();
 
+                        // Update the cached value
                         elementField.setCurrentUserIndexRating();
                     }
 
@@ -456,85 +420,45 @@
 
         function updateResourcePoolRate(resourcePool, updateType) {
 
-            var userResourcePool = resourcePool.currentUserResourcePool();
-
-            if (userResourcePool !== null
-                && typeof userResourcePool.entityAspect !== 'undefined'
-                && userResourcePool.entityAspect.entityState.isDetached()) {
-                userResourcePool = null;
-            }
+            var userResourcePool = getUserResourcePool(currentUser, resourcePool);
 
             switch (updateType) {
-                case 'increase': {
+                case 'increase':
+                case 'decrease': {
 
                     // If there is no item, create it
                     if (userResourcePool === null) {
                         userResourcePool = {
                             User: currentUser,
                             ResourcePool: resourcePool,
-                            ResourcePoolRate: 15
+                            ResourcePoolRate: updateType === 'increase' ? 15 : 5
                         };
 
                         dataContext.createEntity('UserResourcePool', userResourcePool);
 
-                        // Update related
-                        resourcePool.setCurrentUserResourcePoolRate();
+                    } else { // If there is an item, update Rating, but cannot be smaller than zero and cannot be bigger than 1000
 
-                    } else {
-
-                        // If it's marked as deleted, cancel that deletion and set it to 15
-                        if (userResourcePool.entityAspect.entityState.isDeleted()) {
-                            userResourcePool.entityAspect.rejectChanges();
-                            userResourcePool.ResourcePoolRate = 15;
-                        } else { // Otherwise, go ahead!
-                            userResourcePool.ResourcePoolRate = userResourcePool.ResourcePoolRate + 5 > 1000 ? 1000 : userResourcePool.ResourcePoolRate + 5;
-                        }
-
-                        // Update related
-                        resourcePool.setCurrentUserResourcePoolRate();
+                        userResourcePool.ResourcePoolRate = updateType === 'increase'
+                            ? userResourcePool.ResourcePoolRate + 5 > 1000
+                            ? 1000
+                            : userResourcePool.ResourcePoolRate + 5
+                            : userResourcePool.ResourcePoolRate - 5 < 0
+                            ? 0
+                            : userResourcePool.ResourcePoolRate - 5;
                     }
 
-                    break;
-                }
-                case 'decrease': {
-
-                    // If there is no item, create
-                    if (userResourcePool === null) {
-                        userResourcePool = {
-                            User: currentUser,
-                            ResourcePool: resourcePool,
-                            ResourcePoolRate: 5
-                        };
-
-                        dataContext.createEntity('UserResourcePool', userResourcePool);
-
-                        // Update related
-                        resourcePool.setCurrentUserResourcePoolRate();
-
-                    } else {
-
-                        // If it's marked as deleted, cancel that deletion and set it to 5
-                        if (userResourcePool.entityAspect.entityState.isDeleted()) {
-                            userResourcePool.entityAspect.rejectChanges();
-                            userResourcePool.ResourcePoolRate = 5;
-                        } else { // Otherwise, go ahead!
-                            userResourcePool.ResourcePoolRate = userResourcePool.ResourcePoolRate - 5 < 0 ? 0 : userResourcePool.ResourcePoolRate - 5;
-                        }
-
-                        // Update related
-                        resourcePool.setCurrentUserResourcePoolRate();
-                    }
+                    // Update the cached value
+                    resourcePool.setCurrentUserResourcePoolRate();
 
                     break;
                 }
                 case 'reset': {
 
-                    // If there is an item and not marked as deleted, delete it
-                    if (userResourcePool !== null && !userResourcePool.entityAspect.entityState.isDeleted()) {
-                        userResourcePool.ResourcePoolRate = 10;
+                    // If there is an item, delete it
+                    if (userResourcePool !== null) {
                         userResourcePool.entityAspect.setDeleted();
 
-                        // Update related
+                        // Update the cached value
                         resourcePool.setCurrentUserResourcePoolRate();
                     }
 

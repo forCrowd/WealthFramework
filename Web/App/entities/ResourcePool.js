@@ -123,7 +123,7 @@
             // Now, calling rejectChanges will return the entities to their previous state without any problem.
             // And if the anon user will register or login, this flag will be checked in dataContext.js and all the related entities will be converted back to isAdded() state.
             // SH - 30 Nov. '15
-            self.isAdded = false; 
+            self.isAdded = false;
             self.init = init; // Should be called after createEntity or retrieving it from server
             self.mainElement = mainElement;
             self.updateCache = updateCache;
@@ -186,9 +186,11 @@
                                                 // And on top of it, since it changes, breeze thinks that 'cell' is modified and tries to send it server
                                                 // which results an error. So that's why modified check & acceptChanges parts were added.
                                                 // SH - 01 Dec. '15
-                                                var isUnchanged = cell.entityAspect.entityState.isUnchanged();
-                                                cell.StringValue = cell.UserElementCellSet[0].StringValue;
-                                                if (isUnchanged) { cell.entityAspect.acceptChanges(); }
+                                                if (cell.UserElementCellSet.length > 0) {
+                                                    var isUnchanged = cell.entityAspect.entityState.isUnchanged();
+                                                    cell.StringValue = cell.UserElementCellSet[0].StringValue;
+                                                    if (isUnchanged) { cell.entityAspect.acceptChanges(); }
+                                                }
                                                 break;
                                             }
                                             case 2:
@@ -202,12 +204,14 @@
                                             case 11:
                                                 {
                                                     // TODO DirectIncome is always calculated from NumericValueTotal
-                                                    // Which is actually not correct but till now, update it like this / SH - 29 Nov. '15
+                                                    // Which is actually not correct but till that its fixed, update it like this / SH - 29 Nov. '15
                                                     // Also check 'What a mess' of StringValue
-                                                    var isUnchanged = cell.entityAspect.entityState.isUnchanged();
-                                                    cell.NumericValueTotal = cell.UserElementCellSet[0].DecimalValue;
-                                                    if (isUnchanged) { cell.entityAspect.acceptChanges(); }
-
+                                                    if (cell.UserElementCellSet.length > 0) {
+                                                        var isUnchanged = cell.entityAspect.entityState.isUnchanged();
+                                                        cell.NumericValueTotal = cell.UserElementCellSet[0].DecimalValue;
+                                                        if (isUnchanged) { cell.entityAspect.acceptChanges(); }
+                                                    }
+ 
                                                     cell.setCurrentUserNumericValue();
                                                     break;
                                                 }
@@ -230,14 +234,11 @@
                 }
             }
 
-            function init(calculateOtherUsersData) {
-                calculateOtherUsersData = typeof calculateOtherUsersData !== 'undefined' ? calculateOtherUsersData : false;
+            function init() {
 
                 // Set otherUsers' data
-                if (calculateOtherUsersData) {
-                    self.setOtherUsersResourcePoolRateTotal();
-                    self.setOtherUsersResourcePoolRateCount();
-                }
+                self.setOtherUsersResourcePoolRateTotal();
+                self.setOtherUsersResourcePoolRateCount();
 
                 // Elements
                 if (typeof self.ElementSet !== 'undefined') {
@@ -250,26 +251,24 @@
 
                                 var field = element.ElementFieldSet[fieldIndex];
 
-                                if (calculateOtherUsersData) {
-                                    field.setOtherUsersIndexRatingTotal();
-                                    field.setOtherUsersIndexRatingCount();
-                                }
+                                field.setOtherUsersIndexRatingTotal();
+                                field.setOtherUsersIndexRatingCount();
 
                                 // Cells
                                 if (typeof field.ElementCellSet !== 'undefined') {
                                     for (var cellIndex = 0; cellIndex < field.ElementCellSet.length; cellIndex++) {
                                         var cell = field.ElementCellSet[cellIndex];
 
-                                        if (calculateOtherUsersData) {
-                                            cell.setOtherUsersNumericValueTotal();
-                                            cell.setOtherUsersNumericValueCount();
-                                        }
+                                        cell.setOtherUsersNumericValueTotal();
+                                        cell.setOtherUsersNumericValueCount();
                                     }
                                 }
                             }
                         }
                     }
                 }
+
+                updateCache();
             }
 
             function mainElement() {
@@ -380,6 +379,7 @@
             }
 
             self.setOtherUsersResourcePoolRateCount = function () {
+
                 self.backingFields._otherUsersResourcePoolRateCount = self.ResourcePoolRateCount;
 
                 // Exclude current user's

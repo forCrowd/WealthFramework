@@ -165,10 +165,11 @@
 
             // User element cell
             if (elementCell.ElementField.DataType !== 6) {
-                var userElementCell = dataContext.createEntity('UserElementCell', {
+
+                var userElementCell = {
                     User: elementCell.ElementField.Element.ResourcePool.User,
                     ElementCell: elementCell
-                });
+                };
 
                 switch (elementCell.ElementField.DataType) {
                     case 1: { userElementCell.StringValue = ''; break; }
@@ -179,6 +180,8 @@
                     case 11: { userElementCell.DecimalValue = 100; break; }
                     case 12: { userElementCell.DecimalValue = 0; break; }
                 }
+
+                dataContext.createEntity('UserElementCell', userElementCell);
             }
 
             return elementCell;
