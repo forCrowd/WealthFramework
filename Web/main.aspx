@@ -139,7 +139,7 @@
     <script src="/App/authorization.js?v=0.29"></script>
 
     <!-- Entities -->
-    <script src="/App/entities/ResourcePool.js?v=0.38.2"></script>
+    <script src="/App/entities/ResourcePool.js?v=0.38.3"></script>
     <script src="/App/entities/Element.js?v=0.38"></script>
     <script src="/App/entities/ElementCell.js?v=0.38"></script>
     <script src="/App/entities/ElementField.js?v=0.38"></script>
@@ -150,15 +150,15 @@
 
     <!-- breezeJS -->
     <script src="/App/entityManagerFactory.js?v=0.37"></script>
-    <script src="/App/dataContext.js?v=0.38"></script>
+    <script src="/App/dataContext.js?v=0.38.3"></script>
     <script src="/App/factories/mainFactory.js?v=0.37"></script>
 
     <!-- Manage Scripts - Generated (Factories, Controllers) -->
     <script src="/App/includes/manageScripts.js?v=0.37"></script>
 
     <!-- Factory extensions -->
-    <script src="/App/factories/userFactory.js?v=0.37"></script>
-    <script src="/App/factories/resourcePoolFactory.js?v=0.38"></script>
+    <script src="/App/factories/userFactory.js?v=0.38.3"></script>
+    <script src="/App/factories/resourcePoolFactory.js?v=0.38.3"></script>
 
     <!-- Content -->
     <script src="/App/controllers/content/mainController.js?v=0.38"></script>

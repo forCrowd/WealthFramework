@@ -32,6 +32,7 @@
             fetchEntityByKey: fetchEntityByKey,
             getChanges: getChanges,
             getChangesCount: getChangesCount,
+            getEntities: getEntities,
             hasChanges: hasChanges,
             initializeStore: initializeStore,
             metadataReady: metadataReady,
@@ -53,7 +54,6 @@
 
             // Anonymous user check
             // TODO Assumes that 'User' business object related properties will always use 'User' as a name
-            //logger.log('initialValues', initialValues);
             if (typeof initialValues !== 'undefined'
                 && typeof initialValues.User !== 'undefined'
                 && (typeof initialValues.User.Id === 'undefined'
@@ -82,6 +82,10 @@
 
         function getChangesCount() {
             return manager.getChanges().length;
+        }
+
+        function getEntities(entityTypes, entityStates) {
+            return manager.getEntities(entityTypes, entityStates);
         }
 
         function hasChanges() {
