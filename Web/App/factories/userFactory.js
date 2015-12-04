@@ -232,8 +232,8 @@
                 });
         }
 
-        function updateAnonymousChanges(newUser) {
-            dataContext.updateAnonymousChanges(newUser);
+        function updateAnonymousChanges(oldUser, newUser) {
+            return dataContext.updateAnonymousChanges(oldUser, newUser);
         }
 
         // These 'updateX' functions were defined in their related entities (user.js).

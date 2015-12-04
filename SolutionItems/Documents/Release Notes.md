@@ -1,5 +1,9 @@
 ﻿### Release Notes
 
+**0.38.4**
+
+* Updating anonymous entities to logged user, existing user case fix: Now it merges anonymous & existing user data
+
 **0.38.3**
 
 * userFactory.js - updateX functions detached entity bug fix

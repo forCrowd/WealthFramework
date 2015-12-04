@@ -12,30 +12,36 @@
         vm.getAccessToken = getAccessToken;
 
         function getAccessToken() {
-            userFactory.getAccessToken(vm.email, vm.password)
-                .success(function () {
+            userFactory.getCurrentUser()
+                .then(function (oldUser) {
 
-                    userFactory.getCurrentUser()
-                        .then(function (currentUser) {
+                    userFactory.getAccessToken(vm.email, vm.password)
+                        .success(function () {
 
-                            // Move anonymously created entities to this logged in user
-                            userFactory.updateAnonymousChanges(currentUser);
+                            userFactory.getCurrentUser()
+                                .then(function (newUser) {
 
-                            // Save changes
-                            userFactory.saveChanges()
-                                .then(function () {
+                                    // Move anonymously created entities to this logged in user
+                                    userFactory.updateAnonymousChanges(oldUser, newUser)
+                                        .then(function () {
 
-                                    // Redirect the user to the previous page, except if it's login
-                                    $location.path($rootScope.locationHistory[$rootScope.locationHistory.length - 2].path());
+                                            // Save changes
+                                            userFactory.saveChanges()
+                                                .then(function () {
+
+                                                    // Redirect the user to the previous page, except if it's login
+                                                    $location.path($rootScope.locationHistory[$rootScope.locationHistory.length - 2].path());
+                                                });
+                                        });
                                 });
+                        })
+                        .error(function (response) {
+                            if (typeof response.error_description !== 'undefined') {
+                                logger.logError(response.error_description, null, true);
+                            } else {
+                                logger.logError(response, null, true);
+                            }
                         });
-                })
-                .error(function (response) {
-                    if (typeof response.error_description !== 'undefined') {
-                        logger.logError(response.error_description, null, true);
-                    } else {
-                        logger.logError(response, null, true);
-                    }
                 });
         }
     };
