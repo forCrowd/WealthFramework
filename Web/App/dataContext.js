@@ -266,32 +266,114 @@
 
         // When the user interact with the application without registering or login in,
         // it creates an anonymous user and all entity creations done by this user
-        // This function moves all those changes to a logged in user, if the user logs in afterwards
-        function updateAnonymousChanges(newUser) {
+        // If the user has actually an account and logs in afterwards, this function moves all those changes to that logged in user
+        function updateAnonymousChanges(anonymousUser, newUser) {
 
-            // Validation
-            if (typeof newUser === 'undefined' || newUser === null) {
-                throw new Error('newUser cannot be undefined or null');
+            var deferred = $q.defer();
+
+            if (typeof anonymousUser === 'undefined' || anonymousUser === null) {
+                deferred.reject('anonymousUser parameter cannot be undefined or null');
             }
 
-            var changes = getChanges();
-            changes.forEach(function (change) {
+            if (typeof newUser === 'undefined' || newUser === null) {
+                deferred.reject('newUser parameter cannot be undefined or null');
+            }
 
-                // TODO Assumes that 'User' business object related properties will always use 'User' as a name
-                if (typeof change.User !== 'undefined' && change.User !== newUser) {
-
-                    // Get the anonymous user
-                    var anonymousUser = change.User;
-
-                    // Update entities' user with the new one
-                    change.User = newUser;
-
-                    // If anonymous user was already added to entityManager, remove it
-                    if (anonymousUser !== null && typeof anonymousUser.entityAspect !== 'undefined') {
-                        anonymousUser.entityAspect.rejectChanges();
-                    }
-                }
+            var existingEntityPromises = [];
+            anonymousUser.UserResourcePoolSet.forEach(function (userResourcePool) {
+                var keyValues = [newUser.Id, userResourcePool.ResourcePoolId];
+                var promise = fetchEntityByKey('UserResourcePool', keyValues);
+                existingEntityPromises.push(promise);
             });
+
+            anonymousUser.UserElementFieldSet.forEach(function (userElementField) {
+                var keyValues = [newUser.Id, userElementField.ElementFieldId];
+                var promise = fetchEntityByKey('UserElementField', keyValues);
+                existingEntityPromises.push(promise);
+            });
+
+            anonymousUser.UserElementCellSet.forEach(function (userElementCell) {
+                var keyValues = [newUser.Id, userElementCell.ElementCellId];
+                var promise = fetchEntityByKey('UserElementCell', keyValues);
+                existingEntityPromises.push(promise);
+            });
+
+            $q.all(existingEntityPromises).then(function () {
+
+                anonymousUser.UserResourcePoolSet.forEach(function (anonymousUserResourcePool) {
+
+                    // If existing entity, then make it modified
+                    var found = false;
+                    newUser.UserResourcePoolSet.forEach(function (existingUserResourcePool) {
+                        if (existingUserResourcePool.ResourcePoolId === anonymousUserResourcePool.ResourcePoolId) {
+                            existingUserResourcePool.ResourcePoolRate = anonymousUserResourcePool.ResourcePoolRate;
+
+                            found = true;
+
+                            // TODO Exit from forEach? with return?
+                        }
+                    });
+
+                    if (found) { // If there is an existing entity, remove the anonymous one
+                        anonymousUserResourcePool.entityAspect.rejectChanges();
+                    } else { // Otherwise update the anonymous one with the new user
+                        anonymousUserResourcePool.User = newUser;
+                    }
+                });
+
+                anonymousUser.UserElementFieldSet.forEach(function (anonymousUserElementField) {
+                    
+                    // If existing entity, then make it modified
+                    var found = false;
+                    newUser.UserElementFieldSet.forEach(function (existingUserElementField) {
+                        if (existingUserElementField.ElementFieldId === anonymousUserElementField.ElementFieldId) {
+                            existingUserElementField.Rating = anonymousUserElementField.Rating;
+
+                            found = true;
+
+                            // TODO Exit from forEach? with return?
+                        }
+                    });
+
+                    if (found) { // If there is an existing entity, remove the anonymous one
+                        anonymousUserElementField.entityAspect.rejectChanges();
+                    } else { // Otherwise update the anonymous one with the new user
+                        anonymousUserElementField.User = newUser;
+                    }
+                });
+
+                anonymousUser.UserElementCellSet.forEach(function (anonymousUserElementCell) {
+
+                    // If existing entity, then make it modified
+                    var found = false;
+                    newUser.UserElementCellSet.forEach(function (existingUserElementCell) {
+                        if (existingUserElementCell.ElementCellId === anonymousUserElementCell.ElementCellId) {
+                            existingUserElementCell.StringValue = anonymousUserElementCell.StringValue;
+                            existingUserElementCell.BooleanValue = anonymousUserElementCell.BooleanValue;
+                            existingUserElementCell.IntegerValue = anonymousUserElementCell.IntegerValue;
+                            existingUserElementCell.DecimalValue = anonymousUserElementCell.DecimalValue;
+                            existingUserElementCell.DateTimeValue = anonymousUserElementCell.DateTimeValue;
+
+                            found = true;
+
+                            // TODO Exit from forEach? with return?
+                        }
+                    });
+
+                    if (found) { // If there is an existing entity, remove the anonymous one
+                        anonymousUserElementCell.entityAspect.rejectChanges();
+                    } else { // Otherwise update the anonymous one with the new user
+                        anonymousUserElementCell.User = newUser;
+                    }
+                });
+
+                // Remove the old (anonymous) user
+                anonymousUser.entityAspect.rejectChanges();
+
+                deferred.resolve();
+            });
+
+            return deferred.promise;
         }
 
         // For more info about this function, check ResourcePool.js - isAdded property
