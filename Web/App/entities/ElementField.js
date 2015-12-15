@@ -3,14 +3,73 @@
 
     var factoryId = 'ElementField';
     angular.module('main')
-        .factory(factoryId, ['logger', elementFieldFactory]);
+        .factory(factoryId, ['$rootScope', 'logger', elementFieldFactory]);
 
-    function elementFieldFactory(logger) {
+    function elementFieldFactory($rootScope, logger) {
 
         // Logger
         logger = logger.forSource(factoryId);
 
         // Server-side properties
+        Object.defineProperty(ElementField.prototype, 'DataType', {
+            enumerable: true,
+            configurable: true,
+            get: function () { return this.backingFields._dataType; },
+            set: function (value) {
+
+                var self = this;
+                if (self.backingFields._dataType !== value) {
+
+                    // Related element cells: Clear old values and set default values if necessary
+                    self.ElementCellSet.forEach(function (elementCell) {
+
+                        elementCell.SelectedElementItemId = null;
+
+                        // Remove related user cell
+                        // TODO Similar to resourcePoolFactory.js - function removeElementCell(elementCell)
+                        var userElementCellSet = elementCell.UserElementCellSet.slice();
+                        userElementCellSet.forEach(function (userElementCell) {
+                            // TODO Should this also be done through broadcast & on dataContext.js? / SH - 14 Dec. '15
+                            userElementCell.entityAspect.setDetached();
+                        });
+
+                        // Add user element cell, if the new type is not 'Element'
+                        if (value !== 6) {
+
+                            var userElementCell = elementCell.currentUserCell();
+
+                            var isNew = userElementCell === null;
+
+                            if (isNew) {
+                                // TODO Similar to resourcePoolFactory.js - function createElementCell(elementCell)
+                                var userElementCell = {
+                                    User: self.Element.ResourcePool.User,
+                                    ElementCell: elementCell
+                                };
+                            }
+
+                            switch (value) {
+                                case 1: { userElementCell.StringValue = ''; break; }
+                                case 2: { userElementCell.BooleanValue = false; break; }
+                                case 3: { userElementCell.IntegerValue = 0; break; }
+                                case 4: { userElementCell.DecimalValue = 50; break; }
+                                    // TODO 5 (DateTime?)
+                                case 11: { userElementCell.DecimalValue = 100; break; }
+                                case 12: { userElementCell.DecimalValue = 0; break; }
+                            }
+
+                            if (isNew) {
+                                $rootScope.$broadcast('ElementField_createUserElementCell', userElementCell);
+                            }
+                        }
+                    });
+
+                    // Finally, set it
+                    self.backingFields._dataType = value;
+                }
+            }
+        });
+
         Object.defineProperty(ElementField.prototype, 'IndexEnabled', {
             enumerable: true,
             configurable: true,
@@ -64,7 +123,7 @@
             self.Id = 0;
             self.ElementId = 0;
             self.Name = '';
-            self.DataType = 1;
+            //self.DataType = 1;
             self.SelectedElementId = null;
             self.UseFixedValue = null;
             self.IndexCalculationType = 0;
@@ -80,6 +139,7 @@
 
             // Local variables
             self.backingFields = {
+                _dataType: 1,
                 _indexEnabled: false,
                 _currentUserIndexRating: null,
                 _otherUsersIndexRatingTotal: null,

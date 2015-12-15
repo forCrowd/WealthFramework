@@ -1,5 +1,10 @@
 ﻿### Release Notes
 
+**0.38.5**
+
+* ElementField.js - DataType property: When the type changes, first it removes the old values and then sets the default ones to the related cells
+* Element type will be only be shown if there are more than one element in the resource pool
+
 **0.38.4**
 
 * Updating anonymous entities to logged user, existing user case fix: Now it merges anonymous & existing user data

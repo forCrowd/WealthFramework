@@ -292,6 +292,10 @@
                     if (!exists) {
                         filtered[key] = vm.ElementFieldDataType[key];
                     }
+                } else if (key === 'Element') { // Element type can only be added if there are more than one element in the pool
+                    if (vm.elementField.Element.ResourcePool.ElementSet.length > 1) {
+                        filtered[key] = vm.ElementFieldDataType[key];
+                    }
                 } else {
                     filtered[key] = vm.ElementFieldDataType[key];
                 }

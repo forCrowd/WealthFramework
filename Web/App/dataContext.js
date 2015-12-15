@@ -26,8 +26,8 @@
 
         // Factory methods
         var factory = {
-            createEntity: createEntity,
             clear: clear,
+            createEntity: createEntity,
             executeQuery: executeQuery,
             fetchEntityByKey: fetchEntityByKey,
             getChanges: getChanges,
@@ -41,9 +41,16 @@
             updateAnonymousChanges: updateAnonymousChanges
         };
 
+        // Event handlers
+        $rootScope.$on('ElementField_createUserElementCell', createUserElementCell);
+
         return factory;
 
         /*** Implementations ***/
+
+        function clear() {
+            manager.clear();
+        }
 
         function createEntity(entityType, initialValues) {
 
@@ -64,8 +71,8 @@
             return manager.createEntity(entityType, initialValues);
         }
 
-        function clear() {
-            manager.clear();
+        function createUserElementCell(event, userElementCell) {
+            return createEntity('UserElementCell', userElementCell);
         }
 
         function executeQuery(query) {
