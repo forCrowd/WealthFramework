@@ -1,15 +1,12 @@
-﻿
-since addElementField calls createElementField, it creates related cells immediately, and since the initial type is 'string'
-all related userelementcells will only have 'stringvalue' - either update the related cells based on fieldtype selection - create them in saveElementField?
-
----
-Alpha team review!
-
-javascript error log
+﻿Alpha team review!
 
 save anon user to db?
 
 ---
+elementField.js - DataType prop uses 'broadcast' and dataContext handles this event to create the actual event
+seems nice, and it could be used in other cases.
+however it doesn't return the newly created entity to the caller, which probably is not suitable for most cases?
+
 use createEntity in addX cases!
 
 THIS REQUIRES USERID TO BE USED AS WELL?

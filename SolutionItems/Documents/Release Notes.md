@@ -1,5 +1,10 @@
 ﻿### Release Notes
 
+**0.39**
+
+* Elmah angular exception logging: angular exceptionHandler was extended to post the exception to server side
+On server side, ExceptionController was created to handle & log the incoming exception
+
 **0.38.5**
 
 * ElementField.js - DataType property: When the type changes, first it removes the old values and then sets the default ones to the related cells
