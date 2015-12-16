@@ -1,5 +1,4 @@
-﻿
-(function () {
+﻿(function () {
     'use strict';
 
     var factoryId = 'userFactory';
@@ -39,7 +38,7 @@
         /*** Implementations ***/
 
         function changePassword(changePasswordBindingModel) {
-            return $http.post(changePasswordUrl, changePasswordBindingModel)
+            return $http.post(changePasswordUrl, changePasswordBindingModel);
         }
 
         function getAccessToken(email, password, resetDataContext) {

@@ -19,10 +19,7 @@
         .run(['logger', mainRun]);
 
     function mainRun(logger) {
-
-        // Logger
         logger = logger.forSource('mainRun');
-
     }
 
 })();

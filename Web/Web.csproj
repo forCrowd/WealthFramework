@@ -257,6 +257,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\Api\AccountController.cs" />
+    <Compile Include="Controllers\Api\ExceptionController.cs" />
     <Compile Include="Controllers\Api\ApplicationController.cs" />
     <Compile Include="Controllers\Api\BaseApiController.cs" />
     <Compile Include="Controllers\Api\Test\ResultsController.cs" />
@@ -477,6 +478,7 @@
       <DependentUpon>manageScripts.tt</DependentUpon>
     </Content>
     <Content Include="App\factories\resourcePoolFactory.js" />
+    <Content Include="App\exceptionHandlerExtension.js" />
     <Content Include="App\views\content\closingNotes.html" />
     <Content Include="App\views\content\prologue.html" />
     <Content Include="App\views\content\roadmap.html" />

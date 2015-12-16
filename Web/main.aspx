@@ -133,16 +133,17 @@
     <script src="/App/external/highcharts-ng.js?v=0.37"></script>
 
     <!-- Main -->
-    <script src="/App/main.js?v=0.37"></script>
+    <script src="/App/main.js?v=0.39"></script>
     <script src="/App/logger.js?v=0.38"></script>
     <script src="/App/route.js?v=0.38.2"></script>
     <script src="/App/authorization.js?v=0.29"></script>
+    <script src="/App/exceptionHandlerExtension.js?v=0.39"></script>
 
     <!-- Entities -->
     <script src="/App/entities/ResourcePool.js?v=0.38.3"></script>
     <script src="/App/entities/Element.js?v=0.38"></script>
     <script src="/App/entities/ElementCell.js?v=0.38"></script>
-    <script src="/App/entities/ElementField.js?v=0.38"></script>
+    <script src="/App/entities/ElementField.js?v=0.38.5"></script>
     <script src="/App/entities/ElementItem.js?v=0.38"></script>
     <script src="/App/entities/UserElementCell.js?v=0.37"></script>
     <script src="/App/entities/Enums.js?v=0.37"></script>
@@ -150,14 +151,14 @@
 
     <!-- breezeJS -->
     <script src="/App/entityManagerFactory.js?v=0.37"></script>
-    <script src="/App/dataContext.js?v=0.38.4"></script>
+    <script src="/App/dataContext.js?v=0.38.5"></script>
     <script src="/App/factories/mainFactory.js?v=0.37"></script>
 
     <!-- Manage Scripts - Generated (Factories, Controllers) -->
     <script src="/App/includes/manageScripts.js?v=0.37"></script>
 
     <!-- Factory extensions -->
-    <script src="/App/factories/userFactory.js?v=0.38.4"></script>
+    <script src="/App/factories/userFactory.js?v=0.39"></script>
     <script src="/App/factories/resourcePoolFactory.js?v=0.38.3"></script>
 
     <!-- Content -->
@@ -173,7 +174,7 @@
     <script src="/App/controllers/content/closingNotesController.js?v=0.37"></script>
 
     <!-- Resource Pool -->
-    <script src="/App/controllers/resourcePool/resourcePoolEditController.js?v=0.38.2"></script>
+    <script src="/App/controllers/resourcePool/resourcePoolEditController.js?v=0.38.5"></script>
     <script src="/App/controllers/resourcePool/resourcePoolListController.js?v=0.37"></script>
     <script src="/App/controllers/resourcePool/resourcePoolViewController.js?v=0.38"></script>
 
@@ -190,6 +191,27 @@
     <script src="/App/filters/angular-enum.js?v=0.37"></script>
     <script src="/App/filters/angular-numberSymbol.js?v=0.36.1"></script>
     <script src="/App/filters/angular-percentage.js?v=0.22"></script>
+
+<%--    <script>
+        window.onerror = function (errorText, url, lineNumber) {
+            var report = {
+                errorText: errorText,
+                url: url,
+                lineNumber: lineNumber
+            };
+
+            console.log('report', report);
+
+            $.ajax({
+                type: "POST",
+                url: "/api/Error/Record",
+                dataType: 'json',
+                data: report,
+                cache: false
+            });
+        };
+
+    </script>--%>
 
 </body>
 </html>
