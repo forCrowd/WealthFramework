@@ -1,5 +1,10 @@
 ﻿### Release Notes
 
+**0.40**
+
+* Survey.docx: A simple survey about the content.
+* angular brackets "{{ }}"" were replaced with "data-ng-bind"
+
 **0.39**
 
 * Elmah angular exception logging: angular exceptionHandler was extended to post the exception to server side

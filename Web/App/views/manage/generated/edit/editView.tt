@@ -61,7 +61,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
             <div class="form-group has-error" data-ng-show="vm.entityErrors">
                 <ul>
                     <li data-ng-repeat="error in vm.entityErrors">
-                        <label class="control-label">{{ error.errorMessage }}</label>
+                        <label data-ng-bind="error.errorMessage" class="control-label"></label>
                     </li>
                 </ul>
             </div>

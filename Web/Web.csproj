@@ -550,11 +550,11 @@
     <Content Include="App\views\manage\generated\list\elementList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
-    <None Include="App\views\manage\generated\list\listView.txt">
+    <Content Include="App\views\manage\generated\list\listView.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>listView.tt</DependentUpon>
-    </None>
+    </Content>
     <Content Include="App\views\manage\generated\list\roleList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>

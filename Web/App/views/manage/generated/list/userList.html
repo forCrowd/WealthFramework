@@ -64,52 +64,52 @@
         </tr>
         <tr data-ng-repeat="user in vm.userSet">
             <td>
-                {{ user.Id }}
+                <span data-ng-bind="user.Id"></span>
             </td>
             <td>
-                {{ user.FirstName }}
+                <span data-ng-bind="user.FirstName"></span>
             </td>
             <td>
-                {{ user.MiddleName }}
+                <span data-ng-bind="user.MiddleName"></span>
             </td>
             <td>
-                {{ user.LastName }}
+                <span data-ng-bind="user.LastName"></span>
             </td>
             <td>
-                {{ user.Email }}
+                <span data-ng-bind="user.Email"></span>
             </td>
             <td>
-                {{ user.EmailConfirmed }}
+                <span data-ng-bind="user.EmailConfirmed"></span>
             </td>
             <td>
-                {{ user.PasswordHash }}
+                <span data-ng-bind="user.PasswordHash"></span>
             </td>
             <td>
-                {{ user.SecurityStamp }}
+                <span data-ng-bind="user.SecurityStamp"></span>
             </td>
             <td>
-                {{ user.PhoneNumber }}
+                <span data-ng-bind="user.PhoneNumber"></span>
             </td>
             <td>
-                {{ user.PhoneNumberConfirmed }}
+                <span data-ng-bind="user.PhoneNumberConfirmed"></span>
             </td>
             <td>
-                {{ user.TwoFactorEnabled }}
+                <span data-ng-bind="user.TwoFactorEnabled"></span>
             </td>
             <td>
-                {{ user.LockoutEndDateUtc }}
+                <span data-ng-bind="user.LockoutEndDateUtc"></span>
             </td>
             <td>
-                {{ user.LockoutEnabled }}
+                <span data-ng-bind="user.LockoutEnabled"></span>
             </td>
             <td>
-                {{ user.AccessFailedCount }}
+                <span data-ng-bind="user.AccessFailedCount"></span>
             </td>
             <td>
-                {{ user.UserName }}
+                <span data-ng-bind="user.UserName"></span>
             </td>
             <td>
-                <a href="/manage/generated/user/edit/{{ user.Id }}">Edit</a> |
+                <a data-ng-href="/manage/generated/user/edit/{{ user.Id }}">Edit</a> |
                 <a href="" data-ng-click="vm.deleteUser(user)">
                     Delete
                 </a>

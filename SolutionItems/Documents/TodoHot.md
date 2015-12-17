@@ -6,6 +6,7 @@ save anon user to db?
 elementField.js - DataType prop uses 'broadcast' and dataContext handles this event to create the actual event
 seems nice, and it could be used in other cases.
 however it doesn't return the newly created entity to the caller, which probably is not suitable for most cases?
+how about using $injector.get('dataContext') in these cases, instead of broadcast?
 
 use createEntity in addX cases!
 
@@ -53,6 +54,7 @@ currently saveChanges in datacontext (and in all factory.js) files, saves all ch
 check return conflict() blocks, there's something wrong with them!
 
 replace logger with angular.$log?
+replace angular.forEach + for (var i = 0..) with..
 
 content for editor? new content or new resourcepool - how to handle the urls?
 
@@ -62,14 +64,9 @@ content for editor? new content or new resourcepool - how to handle the urls?
 
 . field restrictions, one multiplier, one incomefield - server side validation?
 
-. add constructor to client-side entities?
-resourcePool.js -> self.ElementSet = []; ?
-
 . info tooltips hover, won't work on mobiles?
 
-. replace {{ with ng-bind?
-
-. https://material.angularjs.org/latest/
+. angular material - https://material.angularjs.org/latest/
 
 . Find a designer! Ozgur's Ali
 

@@ -21,17 +21,23 @@
             <th>
                 Element
             </th>
+            <th>
+                Is Main Element
+            </th>
             <th></th>
         </tr>
         <tr data-ng-repeat="element in vm.elementSet">
             <td>
-                {{ element.ResourcePool.Name }}
+                <span data-ng-bind="element.ResourcePool.Name"></span>
             </td>
             <td>
-                {{ element.Name }}
+                <span data-ng-bind="element.Name"></span>
             </td>
             <td>
-                <a href="/manage/generated/element/edit/{{ element.Id }}">Edit</a> |
+                <span data-ng-bind="element.IsMainElement"></span>
+            </td>
+            <td>
+                <a data-ng-href="/manage/generated/element/edit/{{ element.Id }}">Edit</a> |
                 <a href="" data-ng-click="vm.deleteElement(element)">
                     Delete
                 </a>

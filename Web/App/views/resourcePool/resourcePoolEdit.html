@@ -15,7 +15,7 @@
                     <!--<div class="form-group has-error" data-ng-show="vm.entityErrors">
                         <ul>
                             <li data-ng-repeat="error in vm.entityErrors">
-                                <label class="control-label">{{ error.errorMessage }}</label>
+                                <label data-ng-bind="error.errorMessage" class="control-label"></label>
                             </li>
                         </ul>
                     </div>-->
@@ -71,7 +71,7 @@
                         <!--<div class="form-group has-error" data-ng-show="vm.entityErrors">
                             <ul>
                                 <li data-ng-repeat="error in vm.entityErrors">
-                                    <label class="control-label">{{ error.errorMessage }}</label>
+                                    <label data-ng-bind="error.errorMessage" class="control-label"></label>
                                 </li>
                             </ul>
                         </div>-->
@@ -132,10 +132,10 @@
                     </tr>
                     <tr data-ng-repeat="element in vm.resourcePool.ElementSet">
                         <td>
-                            {{ element.Name }}
+                            <span data-ng-bind="element.Name"></span>
                         </td>
                         <td>
-                            {{ element.IsMainElement }}
+                            <span data-ng-bind="element.IsMainElement"></span>
                         </td>
                         <td>
                             <a href="" data-ng-click="vm.editElement(element)">
@@ -161,7 +161,7 @@
                         <!--<div class="form-group has-error" data-ng-show="vm.entityErrors">
                             <ul>
                                 <li data-ng-repeat="error in vm.entityErrors">
-                                    <label class="control-label">{{ error.errorMessage }}</label>
+                                    <label data-ng-bind="error.errorMessage" class="control-label"></label>
                                 </li>
                             </ul>
                         </div>-->
@@ -297,16 +297,16 @@
                     </tr>
                     <tr data-ng-repeat="elementField in vm.elementFieldSet()">
                         <td>
-                            {{ elementField.Element.Name }}
+                            <span data-ng-bind="elementField.Element.Name"></span>
                         </td>
                         <td>
-                            {{ elementField.Name }}
+                            <span data-ng-bind="elementField.Name"></span>
                         </td>
                         <td>
-                            {{ elementField.DataType | enum: 'ElementFieldDataType' }}
+                            <span data-ng-bind="elementField.DataType | enum: 'ElementFieldDataType'"></span>
                         </td>
                         <td>
-                            {{ elementField.IndexEnabled }}
+                            <span data-ng-bind="elementField.IndexEnabled"></span>
                         </td>
                         <td>
                             <a href="" data-ng-click="vm.editElementField(elementField)">
@@ -332,7 +332,7 @@
                         <!--<div class="form-group has-error" data-ng-show="vm.entityErrors">
                             <ul>
                                 <li data-ng-repeat="error in vm.entityErrors">
-                                    <label class="control-label">{{ error.errorMessage }}</label>
+                                    <label data-ng-bind="error.errorMessage" class="control-label"></label>
                                 </li>
                             </ul>
                         </div>-->
@@ -390,10 +390,10 @@
                     </tr>
                     <tr data-ng-repeat="elementItem in vm.elementItemSet()">
                         <td>
-                            {{ elementItem.Element.Name }}
+                            <span data-ng-bind="elementItem.Element.Name"></span>
                         </td>
                         <td>
-                            {{ elementItem.Name }}
+                            <span data-ng-bind="elementItem.Name"></span>
                         </td>
                         <td>
                             <a href="" data-ng-click="vm.editElementItem(elementItem)">
@@ -419,7 +419,7 @@
                         <!--<div class="form-group has-error" data-ng-show="vm.entityErrors">
                             <ul>
                                 <li data-ng-repeat="error in vm.entityErrors">
-                                    <label class="control-label">{{ error.errorMessage }}</label>
+                                    <label data-ng-bind="error.errorMessage" class="control-label"></label>
                                 </li>
                             </ul>
                         </div>-->
@@ -512,16 +512,16 @@
                     </tr>
                     <tr data-ng-repeat="elementCell in vm.elementCellSet()">
                         <td>
-                            {{ elementCell.ElementField.Element.Name }}
+                            <span data-ng-bind="elementCell.ElementField.Element.Name"></span>
                         </td>
                         <td>
-                            {{ elementCell.ElementField.Name }}
+                            <span data-ng-bind="elementCell.ElementField.Name"></span>
                         </td>
                         <td>
-                            {{ elementCell.ElementItem.Name }}
+                            <span data-ng-bind="elementCell.ElementItem.Name"></span>
                         </td>
                         <td>
-                            {{ elementCell.value() }}
+                            <span data-ng-bind="elementCell.value()"></span>
                         </td>
                         <td>
                             <a href="" data-ng-click="vm.editElementCell(elementCell)">
@@ -558,7 +558,7 @@
                 <td>
                     <span data-ng-bind="resourcePool.Name"></span>
                     <button class="btn btn-primary" type="button" ng-click="vm.copy(resourcePool)">Copy</button>
-                    <!--<a href="/resourcePool/{{ resourcePool.Id }}">{{ resourcePool.Name }}</a>-->
+                    <!--<a data-ng-bind="resourcePool.Name" data-ng-href="/resourcePool/{{ resourcePool.Id }}"></a>-->
                 </td>
             </tr>
         </table>

@@ -28,16 +28,16 @@
         </tr>
         <tr data-ng-repeat="userLogin in vm.userLoginSet">
             <td>
-                {{ userLogin.LoginProvider }}
+                <span data-ng-bind="userLogin.LoginProvider"></span>
             </td>
             <td>
-                {{ userLogin.ProviderKey }}
+                <span data-ng-bind="userLogin.ProviderKey"></span>
             </td>
             <td>
-                {{ userLogin.User.Email }}
+                <span data-ng-bind="userLogin.User.Email"></span>
             </td>
             <td>
-                <a href="/manage/generated/userLogin/edit/{{ userLogin.LoginProvider }}">Edit</a> |
+                <a data-ng-href="/manage/generated/userLogin/edit/{{ userLogin.LoginProvider }}">Edit</a> |
                 <a href="" data-ng-click="vm.deleteUserLogin(userLogin)">
                     Delete
                 </a>
