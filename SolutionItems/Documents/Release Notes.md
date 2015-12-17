@@ -3,6 +3,7 @@
 **0.40**
 
 * Survey.docx: A simple survey about the content.
+* logger.js minor improvements
 * angular brackets "{{ }}"" were replaced with "data-ng-bind"
 
 **0.39**

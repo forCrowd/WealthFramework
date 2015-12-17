@@ -53,7 +53,6 @@ currently saveChanges in datacontext (and in all factory.js) files, saves all ch
 
 check return conflict() blocks, there's something wrong with them!
 
-replace logger with angular.$log?
 replace angular.forEach + for (var i = 0..) with..
 
 content for editor? new content or new resourcepool - how to handle the urls?
@@ -66,20 +65,18 @@ content for editor? new content or new resourcepool - how to handle the urls?
 
 . info tooltips hover, won't work on mobiles?
 
-. angular material - https://material.angularjs.org/latest/
-
 . Find a designer! Ozgur's Ali
 
 . Sector index -> priority index!
 
-. asp.net 5?
-
 . social media login?
 
-. Better ratings UI
-https://angular-ui.github.io/bootstrap/#/getting_started
-
 . verification email?
+
+. asp.net 5?
+
+. Better ratings UI https://angular-ui.github.io/bootstrap/#/getting_started
+. angular material - https://material.angularjs.org/latest/
 
 . update google analytics on route changes
 
