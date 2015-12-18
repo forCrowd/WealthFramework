@@ -6,6 +6,7 @@
 * logger.js minor improvements
 * forEach, some, filter functions instead of 'for' loops for arrays
 * angular brackets "{{ }}"" were replaced with "data-ng-bind"
+* Javascript clean-up
 
 **0.39**
 

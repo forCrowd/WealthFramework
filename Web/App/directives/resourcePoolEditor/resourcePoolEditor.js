@@ -24,131 +24,47 @@
 
         function link(scope, elm, attrs) {
 
+            // Local variables
             scope.currentUser = null;
+            scope.displayIndexDetails = false;
+            scope.editResourcePool = editResourcePool;
             scope.errorMessage = '';
             scope.isSaving = false;
             scope.resourcePool = null;
             scope.resourcePoolId = null;
-            scope.editResourcePool = editResourcePool;
 
-            // Initialize the chart
-            initChart();
+            // Functions
+            scope.changeSelectedElement = changeSelectedElement;
+            scope.decreaseElementCellNumericValue = decreaseElementCellNumericValue;
+            scope.decreaseElementMultiplier = decreaseElementMultiplier;
+            scope.decreaseIndexRating = decreaseIndexRating;
+            scope.decreaseResourcePoolRate = decreaseResourcePoolRate;
+            scope.increaseElementCellNumericValue = increaseElementCellNumericValue;
+            scope.increaseElementMultiplier = increaseElementMultiplier;
+            scope.increaseIndexRating = increaseIndexRating;
+            scope.increaseResourcePoolRate = increaseResourcePoolRate;
+            scope.resetElementCellNumericValue = resetElementCellNumericValue;
+            scope.resetElementMultiplier = resetElementMultiplier;
+            scope.resetIndexRating = resetIndexRating;
+            scope.resetResourcePoolRate = resetResourcePoolRate;
+            scope.toggleIndexDetails = toggleIndexDetails;
 
-            // Config
-            scope.$watch('config', function () {
-                scope.resourcePoolId = typeof scope.config.resourcePoolId === 'undefined' ? null : Number(scope.config.resourcePoolId);
-                userFactory.getCurrentUser()
-                    .then(function (currentUser) {
-                        setCurrentUser(currentUser);
-                    });
-            }, true);
+            // Event handlers
+            scope.$watch('config', configChanged, true);
+            scope.$on('saveChangesStart', saveChangesStart);
+            scope.$on('saveChangesCompleted', saveChangesCompleted);
+            scope.$on('userLoggedIn', userLoggedIn);
+            scope.$on('userLoggedOut', userLoggedOut);
 
-            // User logged in & out
-            scope.$on('userLoggedIn', function () {
-                userFactory.getCurrentUser()
-                    .then(function (currentUser) {
-                        setCurrentUser(currentUser);
-                    });
-            });
+            // Initialize
+            _init();
 
-            scope.$on('userLoggedOut', function () {
-                setCurrentUser(null);
-            });
+            /*** Implementations ***/
 
-            scope.$on('saveChangesStart', function () {
-                scope.isSaving = true;
-            });
+            function _init() {
 
-            scope.$on('saveChangesCompleted', function () {
-                scope.isSaving = false;
-            });
-
-            scope.changeSelectedElement = function (element) {
-                scope.resourcePool.selectedElement(element);
-                loadChartData();
-            }
-
-            // Index Details
-            scope.displayIndexDetails = false;
-            scope.toggleIndexDetails = function () {
-                scope.displayIndexDetails = !scope.displayIndexDetails;
-                loadChartData();
-            }
-
-            scope.increaseElementMultiplier = function (element) {
-                userFactory.updateElementMultiplier(element, 'increase');
-                $rootScope.$broadcast('resourcePoolEditor_elementMultiplierIncreased', element);
-                saveChanges();
-            }
-
-            scope.decreaseElementMultiplier = function (element) {
-                userFactory.updateElementMultiplier(element, 'decrease');
-                $rootScope.$broadcast('resourcePoolEditor_elementMultiplierDecreased', element);
-                saveChanges();
-            }
-
-            scope.resetElementMultiplier = function (element) {
-                userFactory.updateElementMultiplier(element, 'reset');
-                $rootScope.$broadcast('resourcePoolEditor_elementMultiplierReset', element);
-                saveChanges();
-            }
-
-            scope.increaseElementCellNumericValue = function (cell) {
-                userFactory.updateElementCellNumericValue(cell, 'increase');
-                saveChanges();
-            }
-
-            scope.decreaseElementCellNumericValue = function (cell) {
-                userFactory.updateElementCellNumericValue(cell, 'decrease');
-                saveChanges();
-            }
-
-            scope.resetElementCellNumericValue = function (cell) {
-                userFactory.updateElementCellNumericValue(cell, 'reset');
-                saveChanges();
-            }
-
-            scope.increaseIndexRating = function (field) {
-                userFactory.updateElementFieldIndexRating(field, 'increase');
-                saveChanges();
-            }
-
-            scope.decreaseIndexRating = function (field) {
-                userFactory.updateElementFieldIndexRating(field, 'decrease');
-                saveChanges();
-            }
-
-            scope.resetIndexRating = function (field) {
-                userFactory.updateElementFieldIndexRating(field, 'reset');
-                saveChanges();
-            }
-
-            scope.increaseResourcePoolRate = function () {
-                userFactory.updateResourcePoolRate(scope.resourcePool, 'increase');
-                saveChanges();
-            }
-
-            scope.decreaseResourcePoolRate = function () {
-                userFactory.updateResourcePoolRate(scope.resourcePool, 'decrease');
-                saveChanges();
-            }
-
-            scope.resetResourcePoolRate = function () {
-                userFactory.updateResourcePoolRate(scope.resourcePool, 'reset');
-                saveChanges();
-            }
-
-            function setCurrentUser(currentUser) {
-                scope.currentUser = currentUser;
-                getResourcePool();
-            }
-
-            function editResourcePool() {
-                // TODO Instead of having fixed url here, broadcast an 'edit request'?
-                $location.path('/resourcePool/' + scope.resourcePoolId + '/edit');
-            }
-
-            function initChart() {
+                // Clear previous error messages
+                scope.errorMessage = '';
 
                 scope.chartConfig = {
                     credits: {
@@ -184,13 +100,49 @@
                 };
             }
 
+            function changeSelectedElement(element) {
+                scope.resourcePool.selectedElement(element);
+                loadChartData();
+            }
+
+            function configChanged() {
+                scope.resourcePoolId = typeof scope.config.resourcePoolId === 'undefined' ? null : Number(scope.config.resourcePoolId);
+                userFactory.getCurrentUser()
+                    .then(function (currentUser) {
+                        setCurrentUser(currentUser);
+                    });
+            }
+
+            function decreaseElementCellNumericValue(cell) {
+                userFactory.updateElementCellNumericValue(cell, 'decrease');
+                saveChanges();
+            }
+
+            function decreaseElementMultiplier(element) {
+                userFactory.updateElementMultiplier(element, 'decrease');
+                $rootScope.$broadcast('resourcePoolEditor_elementMultiplierDecreased', element);
+                saveChanges();
+            }
+
+            function decreaseIndexRating(field) {
+                userFactory.updateElementFieldIndexRating(field, 'decrease');
+                saveChanges();
+            }
+
+            function decreaseResourcePoolRate() {
+                userFactory.updateResourcePoolRate(scope.resourcePool, 'decrease');
+                saveChanges();
+            }
+
+            function editResourcePool() {
+                // TODO Instead of having fixed url here, broadcast an 'edit request'?
+                $location.path('/resourcePool/' + scope.resourcePoolId + '/edit');
+            }
+
             function getResourcePool() {
 
-                // Clear previous error messages
-                scope.errorMessage = '';
-
-                // Initialize the chart
-                initChart();
+                // Initialize
+                _init();
 
                 // Validate
                 if (typeof scope.resourcePoolId === null) {
@@ -237,6 +189,27 @@
                         .finally(function () {
                             scope.chartConfig.loading = false;
                         });
+            }
+
+            function increaseElementCellNumericValue(cell) {
+                userFactory.updateElementCellNumericValue(cell, 'increase');
+                saveChanges();
+            }
+
+            function increaseElementMultiplier(element) {
+                userFactory.updateElementMultiplier(element, 'increase');
+                $rootScope.$broadcast('resourcePoolEditor_elementMultiplierIncreased', element);
+                saveChanges();
+            }
+
+            function increaseIndexRating(field) {
+                userFactory.updateElementFieldIndexRating(field, 'increase');
+                saveChanges();
+            }
+
+            function increaseResourcePoolRate() {
+                userFactory.updateResourcePoolRate(scope.resourcePool, 'increase');
+                saveChanges();
             }
 
             function loadChartData() {
@@ -305,6 +278,27 @@
                 }
             }
 
+            function resetElementCellNumericValue(cell) {
+                userFactory.updateElementCellNumericValue(cell, 'reset');
+                saveChanges();
+            }
+
+            function resetElementMultiplier(element) {
+                userFactory.updateElementMultiplier(element, 'reset');
+                $rootScope.$broadcast('resourcePoolEditor_elementMultiplierReset', element);
+                saveChanges();
+            }
+
+            function resetIndexRating(field) {
+                userFactory.updateElementFieldIndexRating(field, 'reset');
+                saveChanges();
+            }
+
+            function resetResourcePoolRate() {
+                userFactory.updateResourcePoolRate(scope.resourcePool, 'reset');
+                saveChanges();
+            }
+
             function saveChanges() {
                 userFactory.isAuthenticated()
                     .then(function (isAuthenticated) {
@@ -322,24 +316,34 @@
                     });
             }
 
-            function elementFieldIndexChartItem(elementFieldIndex) {
-                var self = this;
+            function saveChangesStart() {
+                scope.isSaving = true;
+            }
 
-                Object.defineProperty(self, "name", {
-                    enumerable: true,
-                    configurable: true,
-                    get: function () { return elementFieldIndex.Name; }
-                });
+            function saveChangesCompleted() {
+                scope.isSaving = false;
+            }
 
-                Object.defineProperty(self, "y", {
-                    enumerable: true,
-                    configurable: true,
-                    get: function () {
-                        var indexRating = elementFieldIndex.indexRating();
-                        // TODO Make rounding better, instead of toFixed + number
-                        return Number(indexRating.toFixed(2));
-                    }
-                });
+            function setCurrentUser(currentUser) {
+                scope.currentUser = currentUser;
+                getResourcePool();
+            }
+
+            // Index Details
+            function toggleIndexDetails() {
+                scope.displayIndexDetails = !scope.displayIndexDetails;
+                loadChartData();
+            }
+
+            function userLoggedIn() {
+                userFactory.getCurrentUser()
+                    .then(function (currentUser) {
+                        setCurrentUser(currentUser);
+                    });
+            }
+
+            function userLoggedOut() {
+                setCurrentUser(null);
             }
 
             // TODO Store these in a better place?
@@ -360,6 +364,26 @@
                     configurable: true,
                     get: function () {
                         return [elementItem.totalIncome()];
+                    }
+                });
+            }
+
+            function elementFieldIndexChartItem(elementFieldIndex) {
+                var self = this;
+
+                Object.defineProperty(self, "name", {
+                    enumerable: true,
+                    configurable: true,
+                    get: function () { return elementFieldIndex.Name; }
+                });
+
+                Object.defineProperty(self, "y", {
+                    enumerable: true,
+                    configurable: true,
+                    get: function () {
+                        var indexRating = elementFieldIndex.indexRating();
+                        // TODO Make rounding better, instead of toFixed + number
+                        return Number(indexRating.toFixed(2));
                     }
                 });
             }
@@ -385,6 +409,7 @@
                     }
                 });
             }
+
         }
 
         return {
@@ -396,5 +421,4 @@
             link: link
         };
     };
-
 })();

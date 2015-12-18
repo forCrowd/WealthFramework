@@ -80,9 +80,11 @@
         vm.ElementFieldIndexCalculationType = Enums.ElementFieldIndexCalculationType;
         vm.ElementFieldIndexSortType = Enums.ElementFieldIndexSortType;
 
-        init();
+        _init();
 
-        function init() {
+        /*** Implementations ***/
+
+        function _init() {
             if (vm.isNew) {
                 resourcePoolFactory.createResourcePoolBasic()
                     .then(function (resourcePool) {

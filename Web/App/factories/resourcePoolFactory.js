@@ -63,14 +63,14 @@
             // Set isAdded flag to true, so before saving it to database,
             // we can replace resource pool and its child entities state back to 'isAdded'
             if (resourcePool.entityAspect.entityState.isAdded()) {
-                resourcePool.isAdded = true;
+                resourcePool.isAdded(true);
             }
 
             // Resource pool itself
             resourcePool.entityAspect.acceptChanges();
 
             // If isAdded, then make it modified, so it be retrieved when getChanges() called
-            if (resourcePool.isAdded) {
+            if (resourcePool.isAdded()) {
                 resourcePool.entityAspect.setModified();
             }
 
@@ -270,7 +270,7 @@
                         Name: 'New item 2'
                     });
 
-                    resourcePool.init(true);
+                    resourcePool._init();
 
                     return resourcePool;
                 });
@@ -420,7 +420,7 @@
                         var resourcePool = response.results[0];
 
                         // Init: If it's from server, calculate otherUsersData
-                        resourcePool.init(fromServer);
+                        resourcePool._init(fromServer);
 
                         // Add the record into fetched list
                         fetched.push(resourcePool.Id);

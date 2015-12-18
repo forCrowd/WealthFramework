@@ -363,18 +363,17 @@
             return deferred.promise;
         }
 
-        // For more info about this function, check ResourcePool.js - isAdded property
+        // For more info about this function, check ResourcePool.js - self.isAdded function
         function updateAnonymousResourcePools() {
             var changes = getChanges();
             changes.forEach(function (change) {
                 if (change.entityType.shortName === 'ResourcePool') {
                     var resourcePool = change;
 
-                    if (resourcePool.isAdded) {
+                    if (resourcePool.isAdded()) {
 
-                        // Set isAdded flag to true, so before saving it to database,
-                        // we can replace resource pool and its child entities state back to 'isAdded'
-                        resourcePool.isAdded = false;
+                        // Turn the flag off
+                        resourcePool.isAdded(false);
 
                         // Resource pool itself
                         resourcePool.entityAspect.setAdded();
