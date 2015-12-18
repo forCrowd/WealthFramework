@@ -43,11 +43,11 @@
             function getElementCellIndexSet(elementItem) {
 
                 var indexSet = [];
+                var sortedElementCellSet = elementItem.ElementCellSet.sort(function (a, b) {
+                    return a.ElementField.SortOrder - b.ElementField.SortOrder;
+                });
 
-                for (var i = 0; i < elementItem.ElementCellSet.length; i++) {
-                    var cell = elementItem.ElementCellSet.sort(function (a, b) {
-                        return a.ElementField.SortOrder - b.ElementField.SortOrder;
-                    })[i];
+                sortedElementCellSet.forEach(function (cell) {
 
                     if (cell.ElementField.IndexEnabled) {
                         indexSet.push(cell);
@@ -60,7 +60,7 @@
                             indexSet.push(cell);
                         }
                     }
-                }
+                });
 
                 return indexSet;
             }
@@ -93,12 +93,13 @@
 
                 // First, find direct income cell
                 var directIncomeCell = null;
-                for (var i = 0; i < self.ElementCellSet.length; i++) {
-                    var elementCell = self.ElementCellSet[i];
-                    if (elementCell.ElementField.DataType === 11) {
-                        directIncomeCell = elementCell;
-                        break;
-                    }
+
+                var result = self.ElementCellSet.filter(function (elementCell) {
+                    return elementCell.ElementField.DataType === 11;
+                });
+
+                if (result.length > 0) {
+                    directIncomeCell = result[0];
                 }
 
                 var value;
@@ -133,12 +134,13 @@
 
                 // First, find the multiplier cell
                 var multiplierCell = null;
-                for (var i = 0; i < self.ElementCellSet.length; i++) {
-                    var elementCell = self.ElementCellSet[i];
-                    if (elementCell.ElementField.DataType === 12) {
-                        multiplierCell = elementCell;
-                        break;
-                    }
+
+                var result = self.ElementCellSet.filter(function(elementCell) {
+                    return elementCell.ElementField.DataType === 12;
+                });
+
+                if (result.length > 0) {
+                    multiplierCell = result[0];
                 }
 
                 var value = 0;
@@ -251,21 +253,19 @@
             self.totalResourcePoolIncome = function () {
 
                 var value = 0;
-                
-                for (var i = 0; i < self.ElementCellSet.length; i++) {
-                    var cell = self.ElementCellSet[i];
+
+                self.ElementCellSet.forEach(function (cell) {
                     value += cell.indexIncome();
-                }
+                });
 
                 if (self.backingFields._totalResourcePoolIncome !== value) {
                     self.backingFields._totalResourcePoolIncome = value;
 
                     // Update related
                     // TODO Is this correct? It looks like it didn't affect anything?
-                    for (var i = 0; i < self.ParentCellSet.length; i++) {
-                        var parentCell = self.ParentCellSet[i];
+                    self.ParentCellSet.forEach(function (parentCell) {
                         parentCell.setIndexIncome();
-                    }
+                    });
                 }
 
                 return value;

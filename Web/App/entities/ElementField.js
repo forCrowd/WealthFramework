@@ -89,17 +89,15 @@
                     //this.Element.setElementFieldIndexSet();
 
                     //// b. Item(s)
-                    //for (var i = 0; i < this.ElementCellSet.length; i++) {
-                    //    var cell = this.ElementCellSet[i];
+                    //this.ElementCellSet.forEach(function(cell) {
                     //    var item = cell.ElementItem;
                     //    item.setElementCellIndexSet();
-                    //}
+                    //});
 
                     //// c. Cells
-                    //for (var i = 0; i < this.ElementCellSet.length; i++) {
-                    //    var cell = this.ElementCellSet[i];
+                    //this.ElementCellSet.forEach(function(cell) {
                     //    cell.setNumericValueMultipliedPercentage(false);
-                    //}
+                    //});
                     //this.setReferenceRatingMultiplied();
 
                     /* IndexEnabled related functions */
@@ -339,11 +337,10 @@
                 if (self.ElementCellSet.length === 0) {
                     value = 0; // ?
                 } else {
-                    for (var i = 0; i < self.ElementCellSet.length; i++) {
-                        var cell = self.ElementCellSet[i];
+                    self.ElementCellSet.forEach(function (cell) {
                         value += cell.numericValueMultiplied();
                         //logger.log(self.Name[0] + '-' + cell.ElementItem.Name[0] + ' NVMA ' + cell.numericValueMultiplied());
-                    }
+                    });
                 }
 
                 if (self.backingFields._numericValueMultiplied !== value) {
@@ -354,43 +351,37 @@
                     // Update related?
                     if (updateRelated && self.IndexEnabled) {
 
-                        for (var i = 0; i < self.ElementCellSet.length; i++) {
-                            var cell = self.ElementCellSet[i];
+                        self.ElementCellSet.forEach(function (cell) {
                             cell.setNumericValueMultipliedPercentage(false);
-                        }
+                        });
 
                         self.setPassiveRating(false);
 
-                        for (var i = 0; i < self.ElementCellSet.length; i++) {
-                            var cell = self.ElementCellSet[i];
+                        self.ElementCellSet.forEach(function (cell) {
                             cell.setPassiveRating(false);
-                        }
+                        });
 
                         self.setReferenceRatingMultiplied(false);
 
-                        for (var i = 0; i < self.ElementCellSet.length; i++) {
-                            var cell = self.ElementCellSet[i];
+                        self.ElementCellSet.forEach(function (cell) {
                             cell.setAggressiveRating(false);
-                        }
+                        });
 
-                        for (var i = 0; i < self.ElementCellSet.length; i++) {
-                            var cell = self.ElementCellSet[i];
+                        self.ElementCellSet.forEach(function (cell) {
                             cell.setRating(false);
-                        }
+                        });
 
                         self.setRating(false);
 
-                        for (var i = 0; i < self.ElementCellSet.length; i++) {
-                            var cell = self.ElementCellSet[i];
+                        self.ElementCellSet.forEach(function (cell) {
                             cell.setRatingPercentage(false);
-                        }
+                        });
 
                         //self.setIndexIncome(false);
 
-                        for (var i = 0; i < self.ElementCellSet.length; i++) {
-                            var cell = self.ElementCellSet[i];
+                        self.ElementCellSet.forEach(function (cell) {
                             cell.setIndexIncome(false);
-                        }
+                        });
                     }
                 }
             }
@@ -409,12 +400,9 @@
 
                 var value = 0;
 
-                if (self.ElementCellSet.length > 0) {
-                    for (var i = 0; i < self.ElementCellSet.length; i++) {
-                        var cell = self.ElementCellSet[i];
-                        value += 1 - cell.numericValueMultipliedPercentage();
-                    }
-                }
+                self.ElementCellSet.forEach(function (cell) {
+                    value += 1 - cell.numericValueMultipliedPercentage();
+                });
 
                 if (self.backingFields._passiveRating !== value) {
                     self.backingFields._passiveRating = value;
@@ -446,9 +434,7 @@
                     value = 0; // ?
                 } else {
 
-                    for (var i = 0; i < self.ElementCellSet.length; i++) {
-
-                        var cell = self.ElementCellSet[i];
+                    self.ElementCellSet.forEach(function (cell) {
 
                         if (value === null) {
 
@@ -491,7 +477,7 @@
                                 }
                             }
                         }
-                    }
+                    });
                 }
 
                 //logger.log(self.Name[0] + '-' + cell.ElementItem.Name[0] + ' RRMA ' + value.toFixed(2));
@@ -514,10 +500,9 @@
 
                     // TODO ?!
 
-                    for (var i = 0; i < self.ElementCellSet.length; i++) {
-                        var cell = self.ElementCellSet[i];
+                    self.ElementCellSet.forEach(function (cell) {
                         cell.setAggressiveRating(false);
-                    }
+                    });
 
                     // self.setAggressiveRating();
                 }
@@ -551,13 +536,9 @@
                 var value = 0; // Default value?
 
                 // Validate
-                if (self.ElementCellSet.length > 0) {
-
-                    for (var i = 0; i < self.ElementCellSet.length; i++) {
-                        var cell = self.ElementCellSet[i];
-                        value += cell.rating();
-                    }
-                }
+                self.ElementCellSet.forEach(function (cell) {
+                    value += cell.rating();
+                });
 
                 //logger.log(self.Name[0] + ' AR ' + value.toFixed(2));
 
@@ -569,10 +550,9 @@
                     if (updateRelated) {
 
                         // Update related
-                        for (var i = 0; i < self.ElementCellSet.length; i++) {
-                            var cell = self.ElementCellSet[i];
+                        self.ElementCellSet.forEach(function (cell) {
                             cell.setRatingPercentage(false);
-                        }
+                        });
 
                         self.setIndexIncome();
                     }
@@ -602,10 +582,9 @@
 
                     // Update related
                     if (updateRelated) {
-                        for (var i = 0; i < self.ElementCellSet.length; i++) {
-                            var cell = self.ElementCellSet[i];
+                        self.ElementCellSet.forEach(function (cell) {
                             cell.setIndexIncome();
-                        }
+                        });
                     }
                 }
             }

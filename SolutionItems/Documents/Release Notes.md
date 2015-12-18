@@ -4,6 +4,7 @@
 
 * Survey.docx: A simple survey about the content.
 * logger.js minor improvements
+* forEach, some, filter functions instead of 'for' loops for arrays
 * angular brackets "{{ }}"" were replaced with "data-ng-bind"
 
 **0.39**

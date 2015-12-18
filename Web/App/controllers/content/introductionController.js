@@ -41,11 +41,9 @@
                         return;
                     }
 
-                    for (var i = 0; i < resourcePool.ElementSet.length; i++) {
-
-                        var element = resourcePool.ElementSet[i];
+                    resourcePool.ElementSet.forEach(function (element) {
                         userFactory.updateElementMultiplier(element, 'increase');
-                    }
+                    });
                 });
 
             // Then increase recursively

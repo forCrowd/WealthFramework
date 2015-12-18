@@ -220,12 +220,11 @@
                         // RowVersion fix
                         // TODO How about Deleted state?
                         var modifiedEntities = manager.getEntities(null, breeze.EntityState.Modified);
-                        for (var i = 0; i < modifiedEntities.length; i++) {
-                            var entity = modifiedEntities[i];
+                        modifiedEntities.forEach(function (entity) {
                             var rowVersion = entity.RowVersion;
                             entity.RowVersion = '';
                             entity.RowVersion = rowVersion;
-                        }
+                        });
                         batches.push(modifiedEntities);
 
                         /* Aaargh! 
@@ -309,19 +308,12 @@
 
                 anonymousUser.UserResourcePoolSet.forEach(function (anonymousUserResourcePool) {
 
-                    // If existing entity, then make it modified
-                    var found = false;
-                    newUser.UserResourcePoolSet.forEach(function (existingUserResourcePool) {
-                        if (existingUserResourcePool.ResourcePoolId === anonymousUserResourcePool.ResourcePoolId) {
-                            existingUserResourcePool.ResourcePoolRate = anonymousUserResourcePool.ResourcePoolRate;
-
-                            found = true;
-
-                            // TODO Exit from forEach? with return?
-                        }
+                    var result = newUser.UserResourcePoolSet.filter(function (userResourcePool) {
+                        return userResourcePool.ResourcePoolId === anonymousUserResourcePool.ResourcePoolId;
                     });
 
-                    if (found) { // If there is an existing entity, remove the anonymous one
+                    if (result.length > 0) { // If there is an existing entity, update it and remove the anonymous one
+                        result[0].ResourcePoolRate = anonymousUserResourcePool.ResourcePoolRate;
                         anonymousUserResourcePool.entityAspect.rejectChanges();
                     } else { // Otherwise update the anonymous one with the new user
                         anonymousUserResourcePool.User = newUser;
@@ -331,18 +323,12 @@
                 anonymousUser.UserElementFieldSet.forEach(function (anonymousUserElementField) {
                     
                     // If existing entity, then make it modified
-                    var found = false;
-                    newUser.UserElementFieldSet.forEach(function (existingUserElementField) {
-                        if (existingUserElementField.ElementFieldId === anonymousUserElementField.ElementFieldId) {
-                            existingUserElementField.Rating = anonymousUserElementField.Rating;
-
-                            found = true;
-
-                            // TODO Exit from forEach? with return?
-                        }
+                    var result = newUser.UserElementFieldSet.filter(function (userElementField) {
+                        return userElementField.ElementFieldId === anonymousUserElementField.ElementFieldId;
                     });
 
-                    if (found) { // If there is an existing entity, remove the anonymous one
+                    if (result.length > 0) { // If there is an existing entity, update it and remove the anonymous one
+                        result[0].Rating = anonymousUserElementField.Rating;
                         anonymousUserElementField.entityAspect.rejectChanges();
                     } else { // Otherwise update the anonymous one with the new user
                         anonymousUserElementField.User = newUser;
@@ -352,22 +338,16 @@
                 anonymousUser.UserElementCellSet.forEach(function (anonymousUserElementCell) {
 
                     // If existing entity, then make it modified
-                    var found = false;
-                    newUser.UserElementCellSet.forEach(function (existingUserElementCell) {
-                        if (existingUserElementCell.ElementCellId === anonymousUserElementCell.ElementCellId) {
-                            existingUserElementCell.StringValue = anonymousUserElementCell.StringValue;
-                            existingUserElementCell.BooleanValue = anonymousUserElementCell.BooleanValue;
-                            existingUserElementCell.IntegerValue = anonymousUserElementCell.IntegerValue;
-                            existingUserElementCell.DecimalValue = anonymousUserElementCell.DecimalValue;
-                            existingUserElementCell.DateTimeValue = anonymousUserElementCell.DateTimeValue;
-
-                            found = true;
-
-                            // TODO Exit from forEach? with return?
-                        }
+                    var result = newUser.UserElementCellSet.filter(function (userElementCell) {
+                        return userElementCell.ElementCellId === anonymousUserElementCell.ElementCellId;
                     });
 
-                    if (found) { // If there is an existing entity, remove the anonymous one
+                    if (result.length > 0) { // If there is an existing entity, update it and remove the anonymous one
+                        result[0].StringValue = anonymousUserElementCell.StringValue;
+                        result[0].BooleanValue = anonymousUserElementCell.BooleanValue;
+                        result[0].IntegerValue = anonymousUserElementCell.IntegerValue;
+                        result[0].DecimalValue = anonymousUserElementCell.DecimalValue;
+                        result[0].DateTimeValue = anonymousUserElementCell.DateTimeValue;
                         anonymousUserElementCell.entityAspect.rejectChanges();
                     } else { // Otherwise update the anonymous one with the new user
                         anonymousUserElementCell.User = newUser;
@@ -400,34 +380,34 @@
                         resourcePool.entityAspect.setAdded();
 
                         // User resource pools
-                        angular.forEach(resourcePool.UserResourcePoolSet, function (userResourcePool) {
+                        resourcePool.UserResourcePoolSet.forEach(function (userResourcePool) {
                             userResourcePool.entityAspect.setAdded();
                         });
 
                         // Elements
-                        angular.forEach(resourcePool.ElementSet, function (element) {
+                        resourcePool.ElementSet.forEach(function (element) {
                             element.entityAspect.setAdded();
 
                             // Fields
-                            angular.forEach(element.ElementFieldSet, function (elementField) {
+                            element.ElementFieldSet.forEach(function (elementField) {
                                 elementField.entityAspect.setAdded();
 
                                 // User element fields
-                                angular.forEach(elementField.UserElementFieldSet, function (userElementField) {
+                                elementField.UserElementFieldSet.forEach(function (userElementField) {
                                     userElementField.entityAspect.setAdded();
                                 });
                             });
 
                             // Items
-                            angular.forEach(element.ElementItemSet, function (elementItem) {
+                            element.ElementItemSet.forEach(function (elementItem) {
                                 elementItem.entityAspect.setAdded();
 
                                 // Cells
-                                angular.forEach(elementItem.ElementCellSet, function (elementCell) {
+                                elementItem.ElementCellSet.forEach(function (elementCell) {
                                     elementCell.entityAspect.setAdded();
 
                                     // User cells
-                                    angular.forEach(elementCell.UserElementCellSet, function (userElementCell) {
+                                    elementCell.UserElementCellSet.forEach(function (userElementCell) {
                                         userElementCell.entityAspect.setAdded();
                                     });
                                 });

@@ -29,8 +29,6 @@ objects vs entities
 
 add newly created cmrps to fetchedList in cmrpfactory - and don't use newlyCreated flag
 
-resourepool.currentelement - if null, get the main element from elementset
-
 resourcepool - resourcepoolratetotal, count, ratingcount never null
 elementfiel - indexratingtotal, count never null
 elementcell - numericvaluecount never null - ONLY numericvaluetotal CAN BE NULL? which can be changed to NOT NULL!
@@ -52,8 +50,6 @@ how to handle user level data - only copy computed ones?
 currently saveChanges in datacontext (and in all factory.js) files, saves all changes, not one particular entity?!
 
 check return conflict() blocks, there's something wrong with them!
-
-replace angular.forEach + for (var i = 0..) with..
 
 content for editor? new content or new resourcepool - how to handle the urls?
 

@@ -113,10 +113,10 @@
 
         function addElement() {
             vm.element = resourcePoolFactory.createElement({
-                    ResourcePool: vm.resourcePool,
-                    Name: 'New element',
-                    IsMainElement: false
-                });
+                ResourcePool: vm.resourcePool,
+                Name: 'New element',
+                IsMainElement: false
+            });
 
             vm.isElementEdit = true;
             vm.isElementNew = true;
@@ -134,7 +134,8 @@
                 Element: element,
                 Name: 'New field',
                 DataType: 1,
-                SortOrder: sortOrder });
+                SortOrder: sortOrder
+            });
 
             vm.isElementFieldEdit = true;
             vm.isElementFieldNew = true;
@@ -255,23 +256,21 @@
             var elementItems = elementItemSet();
 
             var list = [];
-            for (var i = 0; i < elementItems.length; i++) {
-                var elementItem = elementItems[i];
-                for (var i2 = 0; i2 < elementItem.ElementCellSet.length; i2++) {
-                    list.push(elementItem.ElementCellSet[i2]);
-                }
-            }
+            elementItems.forEach(function (elementItem) {
+                elementItem.ElementCellSet.forEach(function (elementCell) {
+                    list.push(elementCell);
+                });
+            });
             return list;
         }
 
         function elementFieldSet() {
             var list = [];
-            for (var i = 0; i < vm.resourcePool.ElementSet.length; i++) {
-                var element = vm.resourcePool.ElementSet[i];
-                for (var i2 = 0; i2 < element.ElementFieldSet.length; i2++) {
-                    list.push(element.ElementFieldSet[i2]);
-                }
-            }
+            vm.resourcePool.ElementSet.forEach(function (element) {
+                element.ElementFieldSet.forEach(function (elementField) {
+                    list.push(elementField);
+                });
+            });
             return list;
         }
 
@@ -282,11 +281,8 @@
 
                 // These types can be added only once at the moment
                 if (key === 'DirectIncome' || key === 'Multiplier') {
-                    var exists = false;
-                    angular.forEach(vm.elementField.Element.ElementFieldSet, function (field) {
-                        if (field.ElementFieldDataType === vm.ElementFieldDataType[key]) {
-                            exists = true;
-                        }
+                    var exists = vm.elementField.Element.ElementFieldSet.some(function (field) {
+                        return field.ElementFieldDataType === vm.ElementFieldDataType[key];
                     });
 
                     if (!exists) {
@@ -306,12 +302,11 @@
 
         function elementItemSet() {
             var list = [];
-            for (var i = 0; i < vm.resourcePool.ElementSet.length; i++) {
-                var element = vm.resourcePool.ElementSet[i];
-                for (var i2 = 0; i2 < element.ElementItemSet.length; i2++) {
-                    list.push(element.ElementItemSet[i2]);
-                }
-            }
+            vm.resourcePool.ElementSet.forEach(function (element){
+                element.ElementItemSet.forEach(function (elementItem) {
+                    list.push(elementItem);
+                });
+            });
             return list;
         }
 

@@ -30,7 +30,7 @@
 
                     // Main element check: If there is another element that its IsMainElement flag is true, make it false
                     if (value) {
-                        angular.forEach(self.ResourcePool.ElementSet, function (element) {
+                        self.ResourcePool.ElementSet.forEach(function (element) {
                             if (element !== self && element.IsMainElement) {
                                 element.IsMainElement = false;
                             }
@@ -80,12 +80,11 @@
 
             function getElementFieldIndexSet(element) {
 
+                var sortedElementFieldSet = element.ElementFieldSet.sort(function (a, b) { return a.SortOrder - b.SortOrder; });
                 var indexSet = [];
 
                 // Validate
-                for (var i = 0; i < element.ElementFieldSet.length; i++) {
-                    var field = element.ElementFieldSet.sort(function (a, b) { return a.SortOrder - b.SortOrder; })[i];
-
+                sortedElementFieldSet.forEach(function (field) {
                     if (field.IndexEnabled) {
                         indexSet.push(field);
                     }
@@ -93,11 +92,11 @@
                     if (field.DataType === 6 && field.SelectedElement !== null) {
                         var childIndexSet = getElementFieldIndexSet(field.SelectedElement);
 
-                        for (var x = 0; x < childIndexSet.length; x++) {
-                            indexSet.push(childIndexSet[x]);
-                        }
+                        childIndexSet.forEach(function (childIndex) {
+                            indexSet.push(childIndex);
+                        });
                     }
-                }
+                });
 
                 return indexSet;
             }
@@ -176,19 +175,18 @@
                 var indexSet = self.elementFieldIndexSet();
 
                 var value = 0;
-                for (var i = 0; i < indexSet.length; i++) {
-                    value += indexSet[i].indexRating();
-                }
+                indexSet.forEach(function (index) {
+                    value += index.indexRating();
+                });
 
                 if (self.backingFields._indexRating !== value) {
                     self.backingFields._indexRating = value;
 
                     // Update related
                     if (updateRelated) {
-                        for (var i = 0; i < self.elementFieldIndexSet().length; i++) {
-                            var index = self.elementFieldIndexSet()[i];
+                        self.elementFieldIndexSet().forEach(function (index) {
                             index.setIndexRatingPercentage();
-                        }
+                        });
                     }
                 }
             }
@@ -204,12 +202,12 @@
             }
 
             self.setDirectIncomeField = function () {
-                for (var i = 0; i < self.ElementFieldSet.length; i++) {
-                    var field = self.ElementFieldSet[i];
-                    if (field.DataType === 11) {
-                        self.backingFields._directIncomeField = field;
-                        break;
-                    }
+                var result = self.ElementFieldSet.filter(function (field) {
+                    return field.DataType === 11;
+                });
+
+                if (result.length > 0) {
+                    self.backingFields._directIncomeField = result[0];
                 }
             }
 
@@ -218,10 +216,9 @@
                 // TODO Check totalIncome notes
 
                 var value = 0;
-                for (var i = 0; i < self.ElementItemSet.length; i++) {
-                    var item = self.ElementItemSet[i];
+                self.ElementItemSet.forEach(function (item) {
                     value += item.directIncome();
-                }
+                });
 
                 return value;
             }
@@ -237,12 +234,12 @@
             }
 
             self.setMultiplierField = function () {
-                for (var i = 0; i < self.ElementFieldSet.length; i++) {
-                    var field = self.ElementFieldSet[i];
-                    if (field.DataType === 12) {
-                        self.backingFields._multiplierField = field;
-                        break;
-                    }
+                var result = self.ElementFieldSet.filter(function(field) {
+                    return field.DataType === 12;
+                });
+
+                if (result.length > 0) {
+                    self.backingFields._multiplierField = result[0];
                 }
             }
 
@@ -251,10 +248,9 @@
                 // TODO Check totalIncome notes
 
                 var value = 0;
-                for (var i = 0; i < self.ElementItemSet.length; i++) {
-                    var item = self.ElementItemSet[i];
+                self.ElementItemSet.forEach(function (item) {
                     value += item.multiplier();
-                }
+                });
 
                 return value;
             }
@@ -264,10 +260,9 @@
                 // TODO Check totalIncome notes
 
                 var value = 0;
-                for (var i = 0; i < self.ElementItemSet.length; i++) {
-                    var item = self.ElementItemSet[i];
+                self.ElementItemSet.forEach(function (item) {
                     value += item.totalDirectIncome();
-                }
+                });
 
                 return value;
             }
@@ -277,10 +272,9 @@
                 // TODO Check totalIncome notes
 
                 var value = 0;
-                for (var i = 0; i < self.ElementItemSet.length; i++) {
-                    var item = self.ElementItemSet[i];
+                self.ElementItemSet.forEach(function (item) {
                     value += item.resourcePoolAmount();
-                }
+                });
 
                 return value;
             }
@@ -296,10 +290,9 @@
 
                     value = self.ResourcePool.InitialValue;
 
-                    for (var i = 0; i < self.ElementItemSet.length; i++) {
-                        var item = self.ElementItemSet[i];
+                    self.ElementItemSet.forEach(function (item) {
                         value += item.totalResourcePoolAmount();
-                    }
+                    });
 
                 } else {
                     if (self.ResourcePool.mainElement() !== null) {
@@ -314,13 +307,12 @@
 
                     //logger.log('TRPA-B ' + value.toFixed(2));
 
-                    for (var i = 0; i < self.elementFieldIndexSet().length; i++) {
-                        var field = self.elementFieldIndexSet()[i];
-
-                        // if (field.DataType === 11) { - TODO How about this check?
+                    self.elementFieldIndexSet().forEach(function (field) {
+                        // TODO How about this check?
+                        // if (field.DataType === 11) { - 
                         field.setIndexIncome();
                         // }
-                    }
+                    });
                 }
 
                 return value;
@@ -331,10 +323,9 @@
                 // TODO Check totalIncome notes
 
                 var value = 0;
-                for (var i = 0; i < self.ElementItemSet.length; i++) {
-                    var item = self.ElementItemSet[i];
+                self.ElementItemSet.forEach(function (item) {
                     value += item.directIncomeIncludingResourcePoolAmount();
-                }
+                });
 
                 return value;
             }
@@ -344,10 +335,9 @@
                 // TODO Check totalIncome notes
 
                 var value = 0;
-                for (var i = 0; i < self.ElementItemSet.length; i++) {
-                    var item = self.ElementItemSet[i];
+                self.ElementItemSet.forEach(function (item) {
                     value += item.totalDirectIncomeIncludingResourcePoolAmount();
-                }
+                });
 
                 return value;
             }
@@ -357,10 +347,9 @@
                 // TODO If elementItems could set their parent element's totalIncome when their totalIncome changes, it wouldn't be necessary to sum this result everytime?
 
                 var value = 0;
-                for (var i = 0; i < self.ElementItemSet.length; i++) {
-                    var item = self.ElementItemSet[i];
+                self.ElementItemSet.forEach(function (item) {
                     value += item.totalIncome();
-                }
+                });
 
                 return value;
             }

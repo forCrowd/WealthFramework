@@ -217,8 +217,7 @@
                             // TODO Just for test, remove later
                             //scope.increaseElementMultiplier(scope.resourcePool.mainElement());
 
-                            //for (var i = 0; i < scope.resourcePool.mainElement().ElementFieldSet.length; i++) {
-                            //    var field = scope.resourcePool.mainElement().ElementFieldSet[i];
+                            //scope.resourcePool.mainElement().ElementFieldSet.forEach(function(field) {
                             //    if (field.IndexEnabled) {
                             //        var cell1 = field.ElementCellSet[0];
                             //        scope.decreaseElementCellNumericValue(cell1);
@@ -229,7 +228,7 @@
                             //        var cell3 = field.ElementCellSet[2];
                             //        scope.decreaseElementCellNumericValue(cell3);
                             //    }
-                            //}
+                            //});
 
                         })
                         .catch(function () {
@@ -265,11 +264,10 @@
                     scope.chartConfig.options.yAxis.title = { text: '' };
 
                     var chartData = [];
-                    for (var i = 0; i < element.elementFieldIndexSet().length; i++) {
-                        var elementFieldIndex = element.elementFieldIndexSet()[i];
+                    element.elementFieldIndexSet().forEach(function (elementFieldIndex) {
                         var chartItem = new elementFieldIndexChartItem(elementFieldIndex);
                         chartData.push(chartItem);
-                    }
+                    });
                     scope.chartConfig.series = [{ data: chartData }];
 
                 } else {
@@ -283,11 +281,10 @@
                         scope.chartConfig.options.chart = { type: 'column' };
                         scope.chartConfig.options.yAxis.title = { text: 'Total Income' };
 
-                        for (var i = 0; i < element.ElementItemSet.length; i++) {
-                            var elementItem = element.ElementItemSet[i];
-                            var item = new columnChartItem(elementItem);
-                            scope.chartConfig.series.push(item);
-                        }
+                        element.ElementItemSet.forEach(function (elementItem) {
+                            var chartItem = new columnChartItem(elementItem);
+                            scope.chartConfig.series.push(chartItem);
+                        });
                     } else {
 
                         // Pie type
@@ -295,16 +292,14 @@
                         scope.chartConfig.options.yAxis.title = { text: '' };
 
                         var chartData = [];
-                        for (var i = 0; i < element.ElementItemSet.length; i++) {
-                            var elementItem = element.ElementItemSet[i];
-                            for (var x = 0; x < elementItem.ElementCellSet.length; x++) {
-                                var elementCell = elementItem.ElementCellSet[x];
+                        element.ElementItemSet.forEach(function (elementItem) {
+                            elementItem.ElementCellSet.forEach(function (elementCell) {
                                 if (elementCell.ElementField.IndexEnabled) {
                                     var chartItem = new pieChartItem(elementCell);
                                     chartData.push(chartItem);
                                 }
-                            }
-                        }
+                            });
+                        });
                         scope.chartConfig.series = [{ data: chartData }];
                     }
                 }

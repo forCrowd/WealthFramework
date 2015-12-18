@@ -25,14 +25,6 @@
             }
         });
 
-        // TODO Array property sample (without setter)
-        // However it doesn't work since it's a navigation prop and breeze somehow doesn't like it
-        //Object.defineProperty(ResourcePool.prototype, 'UserResourcePoolSet', {
-        //    enumerable: true,
-        //    configurable: true,
-        //    get: function () { return this.backingFields._UserResourcePoolSet; }
-        //});
-
         // Client-side properties
         Object.defineProperty(ResourcePool.prototype, 'RatingMode', {
             enumerable: true,
@@ -44,12 +36,9 @@
 
                     this.setResourcePoolRate();
 
-                    for (var elementIndex = 0; elementIndex < this.ElementSet.length; elementIndex++) {
-                        var element = this.ElementSet[elementIndex];
+                    this.ElementSet.forEach(function (element) {
 
-                        for (var fieldIndex = 0; fieldIndex < element.ElementFieldSet.length; fieldIndex++) {
-
-                            var field = element.ElementFieldSet[fieldIndex];
+                        element.ElementFieldSet.forEach(function (field) {
 
                             // Field calculations
                             if (field.IndexEnabled) {
@@ -57,8 +46,7 @@
                             }
 
                             if (!field.UseFixedValue) {
-                                for (var cellIndex = 0; cellIndex < field.ElementCellSet.length; cellIndex++) {
-                                    var cell = field.ElementCellSet[cellIndex];
+                                field.ElementCellSet.forEach(function (cell) {
 
                                     // Cell calculations
                                     switch (field.DataType) {
@@ -72,10 +60,10 @@
                                             break;
                                         }
                                     }
-                                }
+                                });
                             }
-                        }
-                    }
+                        });
+                    });
                 }
             }
         });
@@ -105,7 +93,6 @@
             // Local variables
             self.backingFields = {
                 _useFixedResourcePoolRate: false,
-                _currentElement: null,
                 _ratingMode: 1, // Only my ratings vs. All users' ratings
                 _selectedElement: null,
                 _currentUserResourcePoolRate: null,
@@ -154,17 +141,14 @@
 
                 // Elements
                 if (typeof self.ElementSet !== 'undefined') {
-                    for (var elementIndex = 0; elementIndex < self.ElementSet.length; elementIndex++) {
-                        var element = self.ElementSet[elementIndex];
+                    self.ElementSet.forEach(function (element) {
 
                         // TODO Review this later / SH - 24 Nov. '15
                         element.setElementFieldIndexSet();
 
                         // Fields
                         if (typeof element.ElementFieldSet !== 'undefined') {
-                            for (var fieldIndex = 0; fieldIndex < element.ElementFieldSet.length; fieldIndex++) {
-
-                                var field = element.ElementFieldSet[fieldIndex];
+                            element.ElementFieldSet.forEach(function (field) {
 
                                 if (field.IndexEnabled) {
                                     // TODO Actually index rating can't be set through resourcePoolEdit page and no need to update this cache
@@ -174,8 +158,7 @@
 
                                 // Cells
                                 if (typeof field.ElementCellSet !== 'undefined') {
-                                    for (var cellIndex = 0; cellIndex < field.ElementCellSet.length; cellIndex++) {
-                                        var cell = field.ElementCellSet[cellIndex];
+                                    field.ElementCellSet.forEach(function (cell) {
 
                                         switch (cell.ElementField.DataType) {
                                             case 1: {
@@ -211,7 +194,7 @@
                                                         cell.NumericValueTotal = cell.UserElementCellSet[0].DecimalValue;
                                                         if (isUnchanged) { cell.entityAspect.acceptChanges(); }
                                                     }
- 
+
                                                     cell.setCurrentUserNumericValue();
                                                     break;
                                                 }
@@ -226,11 +209,11 @@
                                                     break;
                                                 }
                                         }
-                                    }
+                                    });
                                 }
-                            }
+                            });
                         }
-                    }
+                    });
                 }
             }
 
@@ -242,43 +225,39 @@
 
                 // Elements
                 if (typeof self.ElementSet !== 'undefined') {
-                    for (var elementIndex = 0; elementIndex < self.ElementSet.length; elementIndex++) {
-                        var element = self.ElementSet[elementIndex];
+                    self.ElementSet.forEach(function (element) {
 
                         // Fields
                         if (typeof element.ElementFieldSet !== 'undefined') {
-                            for (var fieldIndex = 0; fieldIndex < element.ElementFieldSet.length; fieldIndex++) {
-
-                                var field = element.ElementFieldSet[fieldIndex];
+                            element.ElementFieldSet.forEach(function (field) {
 
                                 field.setOtherUsersIndexRatingTotal();
                                 field.setOtherUsersIndexRatingCount();
 
                                 // Cells
                                 if (typeof field.ElementCellSet !== 'undefined') {
-                                    for (var cellIndex = 0; cellIndex < field.ElementCellSet.length; cellIndex++) {
-                                        var cell = field.ElementCellSet[cellIndex];
+                                    field.ElementCellSet.forEach(function (cell) {
 
                                         cell.setOtherUsersNumericValueTotal();
                                         cell.setOtherUsersNumericValueCount();
-                                    }
+                                    });
                                 }
-                            }
+                            });
                         }
-                    }
+                    });
                 }
 
                 updateCache();
             }
 
             function mainElement() {
-                for (var i = 0; i < self.ElementSet.length; i++) {
-                    var element = self.ElementSet[i];
-                    if (element.IsMainElement) {
-                        return element;
-                    }
-                }
-                return null;
+                var result = self.ElementSet.filter(function(element){
+                    return element.IsMainElement;
+                });
+
+                return result.length > 0
+                    ? result[0]
+                    : null;
             }
 
             // Checks whether resource pool has any item that can be rateable
@@ -465,14 +444,12 @@
 
                     // Update related
                     if (updateRelated) {
-                        for (var elementIndex = 0; elementIndex < self.ElementSet.length; elementIndex++) {
-                            var element = self.ElementSet[elementIndex];
+                        self.ElementSet.forEach(function (element) {
 
-                            for (var itemIndex = 0; itemIndex < element.ElementItemSet.length; itemIndex++) {
-                                var item = element.ElementItemSet[itemIndex];
+                            element.ElementItemSet.forEach(function (item) {
                                 item.setResourcePoolAmount();
-                            }
-                        }
+                            });
+                        });
                     }
                 }
             }
