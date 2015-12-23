@@ -2,6 +2,7 @@
 
 **0.40**
 
+* Email confirmation has implemented
 * Survey.docx: A simple survey about the content.
 * logger.js minor improvements
 * forEach, some, filter functions instead of 'for' loops for arrays
@@ -11,7 +12,7 @@
 **0.39**
 
 * Elmah angular exception logging: angular exceptionHandler was extended to post the exception to server side
-On server side, ExceptionController was created to handle & log the incoming exception
+On server side, ExceptionController was created to handle & log the incoming exceptions
 
 **0.38.5**
 

@@ -71,9 +71,10 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown" data-uib-dropdown data-ng-if="vm.isAuthenticated()">
-                        <a href="" class="dropdown-toggle" data-uib-dropdown-toggle><span data-ng-bind="'User: ' + vm.currentUser.Email"></span><b class="caret"></b></a>
+                        <a href="" class="dropdown-toggle" data-uib-dropdown-toggle><span data-ng-bind="vm.currentUserText()"></span><b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="/account/accountEdit">Edit</a></li>
+                            <li><a href="/account/changeEmail">Change email</a></li>
                             <li><a href="/account/changePassword">Change password</a></li>
                             <li><a href="" data-ng-click="vm.logout()">Logout</a></li>
                         </ul>
@@ -135,7 +136,7 @@
     <!-- Main -->
     <script src="/App/main.js?v=0.39"></script>
     <script src="/App/logger.js?v=0.40"></script>
-    <script src="/App/route.js?v=0.38.2"></script>
+    <script src="/App/route.js?v=0.40"></script>
     <script src="/App/authorization.js?v=0.29"></script>
     <script src="/App/exceptionHandlerExtension.js?v=0.39"></script>
 
@@ -162,7 +163,7 @@
     <script src="/App/factories/resourcePoolFactory.js?v=0.40"></script>
 
     <!-- Content -->
-    <script src="/App/controllers/content/mainController.js?v=0.38"></script>
+    <script src="/App/controllers/content/mainController.js?v=0.40"></script>
     <script src="/App/controllers/content/introductionController.js?v=0.40"></script>
     <script src="/App/controllers/content/basicsController.js?v=0.38"></script>
     <script src="/App/controllers/content/sectorIndexSampleController.js?v=0.37"></script>
@@ -180,9 +181,11 @@
 
     <!-- Account -->
     <script src="/App/controllers/account/loginController.js?v=0.38.4"></script>
-    <script src="/App/controllers/account/registerController.js?v=0.38"></script>
-    <script src="/App/controllers/account/accountEditController.js?v=0.37"></script>
+    <script src="/App/controllers/account/registerController.js?v=0.40"></script>
+    <script src="/App/controllers/account/accountEditController.js?v=0.40"></script>
+    <script src="/App/controllers/account/changeEmailController.js?v=0.40"></script>
     <script src="/App/controllers/account/changePasswordController.js?v=0.37"></script>
+    <script src="/App/controllers/account/confirmEmailController.js?v=0.40"></script>
 
     <!-- Directives -->
     <script src="/App/directives/resourcePoolEditor/resourcePoolEditor.js?v=0.40"></script>

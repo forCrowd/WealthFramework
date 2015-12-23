@@ -24,10 +24,12 @@
             .when('/resourcePool/:resourcePoolId', { title: function () { return ''; }, templateUrl: '/App/views/resourcePool/resourcePoolView.html?v=0.37' })
 
             /* Account */
-            .when('/account/register', { title: function () { return 'Register'; }, templateUrl: '/App/views/account/register.html?v=0.28', controller: 'registerController as vm' })
-            .when('/account/login', { title: function () { return 'Login'; }, templateUrl: '/App/views/account/login.html?v=0.22', controller: 'loginController as vm' })
-            .when('/account/accountEdit', { title: function () { return 'Account Edit'; }, templateUrl: '/App/views/account/accountEdit.html?v=0.22', controller: 'accountEditController as vm' })
-            .when('/account/changePassword', { title: function () { return 'Change Password'; }, templateUrl: '/App/views/account/changePassword.html?v=0.22', controller: 'changePasswordController as vm' })
+            .when('/account/register', { title: function () { return 'Register'; }, templateUrl: '/App/views/account/register.html?v=0.40' })
+            .when('/account/login', { title: function () { return 'Login'; }, templateUrl: '/App/views/account/login.html?v=0.40' })
+            .when('/account/accountEdit', { title: function () { return 'Account Edit'; }, templateUrl: '/App/views/account/accountEdit.html?v=0.40' })
+            .when('/account/changeEmail', { title: function () { return 'Change Email'; }, templateUrl: '/App/views/account/changeEmail.html?v=0.40' })
+            .when('/account/changePassword', { title: function () { return 'Change Password'; }, templateUrl: '/App/views/account/changePassword.html?v=0.40' })
+            .when('/account/confirmEmail', { title: function () { return 'Confirm Email'; }, templateUrl: '/App/views/account/confirmEmail.html?v=0.40' })
 
             /* Generated List + Edit pages */
             .when('/manage/generated/:entity', { title: getManageRouteTitle, templateUrl: getManageRouteTemplateUrl })

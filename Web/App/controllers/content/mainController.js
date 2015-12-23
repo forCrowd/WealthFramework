@@ -14,6 +14,7 @@
         var vm = this;
         vm.applicationInfo = null;
         vm.currentUser = null;
+        vm.currentUserText = currentUserText;
         vm.currentDate = new Date();
         vm.isAuthenticated = isAuthenticated;
         vm.logout = logout;
@@ -39,11 +40,24 @@
         _init();
 
         function _init() {
+
             // Application info
             getApplicationInfo();
 
             // Current user
             getCurrentUser();
+        }
+
+        function currentUserText() {
+
+            var text = '';
+
+            if (vm.currentUser !== null) {
+                //text = 'User: ' + vm.currentUser.Email + ' - ' + vm.currentUser.EmailConfirmed;
+                text = 'User: ' + vm.currentUser.Email;
+            }
+
+            return text;
         }
 
         function getApplicationInfo() {

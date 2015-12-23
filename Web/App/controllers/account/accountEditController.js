@@ -33,8 +33,8 @@
         }
 
         function isSaveDisabled() {
-            return isSaving ||
-                (!userFactory.hasChanges());
+            //return isSaving || (!userFactory.hasChanges());
+            return isSaving;
         }
 
         function saveChanges() {

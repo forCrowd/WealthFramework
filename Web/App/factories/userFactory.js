@@ -11,21 +11,27 @@
         logger = logger.forSource(factoryId);
 
         var accessTokenUrl = '/api/Token';
+        var changeEmailUrl = '/api/Account/ChangeEmail';
         var changePasswordUrl = '/api/Account/ChangePassword';
+        var confirmEmailUrl = '/api/Account/ConfirmEmail';
         var logoutUrl = '/api/Account/Logout';
         var registerUrl = '/api/Account/Register';
+        var resendConfirmationEmailUrl = '/api/Account/ResendConfirmationEmail';
 
         var currentUser = null;
         var getCurrentUserPromise = null;
         var isAuthenticatedPromise = null;
 
         // Service methods
+        $delegate.changeEmail = changeEmail;
         $delegate.changePassword = changePassword;
+        $delegate.confirmEmail = confirmEmail;
         $delegate.getAccessToken = getAccessToken;
         $delegate.getCurrentUser = getCurrentUser;
         $delegate.isAuthenticated = isAuthenticated;
         $delegate.logout = logout;
         $delegate.register = register;
+        $delegate.resendConfirmationEmail = resendConfirmationEmail;
 
         $delegate.updateAnonymousChanges = updateAnonymousChanges;
         $delegate.updateElementMultiplier = updateElementMultiplier;
@@ -37,8 +43,16 @@
 
         /*** Implementations ***/
 
+        function changeEmail(changeEmailBindingModel) {
+            return $http.post(changeEmailUrl, changeEmailBindingModel);
+        }
+
         function changePassword(changePasswordBindingModel) {
             return $http.post(changePasswordUrl, changePasswordBindingModel);
+        }
+
+        function confirmEmail(confirmEmailBindingModel) {
+            return $http.post(confirmEmailUrl, confirmEmailBindingModel);
         }
 
         function getAccessToken(email, password, resetDataContext) {
@@ -204,6 +218,10 @@
                         logger.logError(data.ModelState[modelErrors], data.ModelState[modelErrors], true);
                     }
                 });
+        }
+
+        function resendConfirmationEmail(userId) {
+            return $http.post(resendConfirmationEmailUrl, { UserId: userId });
         }
 
         function logout() {

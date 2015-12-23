@@ -102,7 +102,7 @@
             }
 
             // Functions
-            self._init = _init; // Should be called after createEntity or retrieving it from server
+            self._init = _init;
             self.currentUserResourcePool = currentUserResourcePool;
             self.currentUserResourcePoolRate = currentUserResourcePoolRate;
             self.displayRatingMode = displayRatingMode;
@@ -134,6 +134,7 @@
 
             /*** Implementations ***/
 
+            // Should be called after createEntity or retrieving it from server
             function _init() {
 
                 // Set otherUsers' data

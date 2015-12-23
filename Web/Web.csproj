@@ -320,6 +320,8 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\controllers\account\changeEmailController.js" />
+    <Content Include="App\controllers\account\confirmEmailController.js" />
     <Content Include="App\controllers\content\basicsController.js" />
     <Content Include="App\controllers\content\closingNotesController.js" />
     <Content Include="App\controllers\content\resourcePoolRateSampleController.js" />
@@ -479,6 +481,8 @@
     </Content>
     <Content Include="App\factories\resourcePoolFactory.js" />
     <Content Include="App\exceptionHandlerExtension.js" />
+    <Content Include="App\views\account\changeEmail.html" />
+    <Content Include="App\views\account\confirmEmail.html" />
     <Content Include="App\views\content\closingNotes.html" />
     <Content Include="App\views\content\prologue.html" />
     <Content Include="App\views\content\roadmap.html" />

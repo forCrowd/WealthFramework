@@ -1,8 +1,8 @@
-﻿using System.Web.Mvc;
-using System.Web.Routing;
-
-namespace forCrowd.WealthEconomy.Web
+﻿namespace forCrowd.WealthEconomy.Web
 {
+    using System.Web.Mvc;
+    using System.Web.Routing;
+
     public class MvcRouteConfig
     {
         public static void RegisterRoutes(RouteCollection routes)
