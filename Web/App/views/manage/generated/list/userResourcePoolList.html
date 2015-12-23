@@ -28,16 +28,16 @@
         </tr>
         <tr data-ng-repeat="userResourcePool in vm.userResourcePoolSet">
             <td>
-                {{ userResourcePool.User.Email }}
+                <span data-ng-bind="userResourcePool.User.Email"></span>
             </td>
             <td>
-                {{ userResourcePool.ResourcePool.Name }}
+                <span data-ng-bind="userResourcePool.ResourcePool.Name"></span>
             </td>
             <td>
-                {{ userResourcePool.ResourcePoolRate }}
+                <span data-ng-bind="userResourcePool.ResourcePoolRate"></span>
             </td>
             <td>
-                <a href="/manage/generated/userResourcePool/edit/{{ userResourcePool.UserId }}">Edit</a> |
+                <a data-ng-href="/manage/generated/userResourcePool/edit/{{ userResourcePool.UserId }}">Edit</a> |
                 <a href="" data-ng-click="vm.deleteUserResourcePool(userResourcePool)">
                     Delete
                 </a>

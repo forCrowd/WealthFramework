@@ -25,13 +25,13 @@
         </tr>
         <tr data-ng-repeat="elementItem in vm.elementItemSet">
             <td>
-                {{ elementItem.Element.Name }}
+                <span data-ng-bind="elementItem.Element.Name"></span>
             </td>
             <td>
-                {{ elementItem.Name }}
+                <span data-ng-bind="elementItem.Name"></span>
             </td>
             <td>
-                <a href="/manage/generated/elementItem/edit/{{ elementItem.Id }}">Edit</a> |
+                <a data-ng-href="/manage/generated/elementItem/edit/{{ elementItem.Id }}">Edit</a> |
                 <a href="" data-ng-click="vm.deleteElementItem(elementItem)">
                     Delete
                 </a>

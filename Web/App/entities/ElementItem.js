@@ -13,8 +13,6 @@
         // Return
         return ElementItem;
 
-        /*** Implementations ***/
-
         function ElementItem() {
 
             var self = this;
@@ -39,15 +37,57 @@
                 _totalResourcePoolIncome: null
             }
 
-            // Private functions
+            // Functions
+            self.directIncome = directIncome;
+            self.directIncomeIncludingResourcePoolAmount = directIncomeIncludingResourcePoolAmount;
+            self.elementCellIndexSet = elementCellIndexSet;
+            self.incomeStatus = incomeStatus;
+            self.multiplier = multiplier;
+            self.resourcePoolAmount = resourcePoolAmount;
+            self.setDirectIncome = setDirectIncome;
+            self.setElementCellIndexSet = setElementCellIndexSet;
+            self.setMultiplier = setMultiplier;
+            self.setResourcePoolAmount = setResourcePoolAmount;
+            self.setTotalDirectIncome = setTotalDirectIncome;
+            self.setTotalResourcePoolAmount = setTotalResourcePoolAmount;
+            self.totalDirectIncome = totalDirectIncome;
+            self.totalDirectIncomeIncludingResourcePoolAmount = totalDirectIncomeIncludingResourcePoolAmount;
+            self.totalIncome = totalIncome;
+            self.totalResourcePoolAmount = totalResourcePoolAmount;
+            self.totalResourcePoolIncome = totalResourcePoolIncome;
+
+            /*** Implementations ***/
+
+            function directIncome() {
+
+                if (self.backingFields._directIncome === null) {
+                    self.setDirectIncome(false);
+                }
+
+                return self.backingFields._directIncome;
+            }
+
+            function directIncomeIncludingResourcePoolAmount() { // A.k.a Sales Price incl. VAT
+                return self.directIncome() + self.resourcePoolAmount();
+            }
+
+            function elementCellIndexSet() {
+
+                if (self.backingFields._elementCellIndexSet === null) {
+                    self.setElementCellIndexSet();
+                }
+
+                return self.backingFields._elementCellIndexSet;
+            }
+
             function getElementCellIndexSet(elementItem) {
 
                 var indexSet = [];
+                var sortedElementCellSet = elementItem.ElementCellSet.sort(function (a, b) {
+                    return a.ElementField.SortOrder - b.ElementField.SortOrder;
+                });
 
-                for (var i = 0; i < elementItem.ElementCellSet.length; i++) {
-                    var cell = elementItem.ElementCellSet.sort(function (a, b) {
-                        return a.ElementField.SortOrder - b.ElementField.SortOrder;
-                    })[i];
+                sortedElementCellSet.forEach(function (cell) {
 
                     if (cell.ElementField.IndexEnabled) {
                         indexSet.push(cell);
@@ -60,45 +100,56 @@
                             indexSet.push(cell);
                         }
                     }
-                }
+                });
 
                 return indexSet;
             }
 
-            // Public functions
-            self.elementCellIndexSet = function () {
+            function incomeStatus() {
 
-                if (self.backingFields._elementCellIndexSet === null) {
-                    self.setElementCellIndexSet();
+                var totalIncome = self.totalIncome();
+                // TODO Make rounding better, instead of toFixed + number
+                var averageIncome = Number(self.Element.totalIncomeAverage().toFixed(2));
+
+                if (totalIncome === averageIncome) {
+                    return 'average';
+                } else if (totalIncome < averageIncome) {
+                    return 'low';
+                } else if (totalIncome > averageIncome) {
+                    return 'high';
+                };
+            }
+
+            function multiplier() {
+
+                if (self.backingFields._multiplier === null) {
+                    self.setMultiplier(false);
                 }
 
-                return self.backingFields._elementCellIndexSet;
+                return self.backingFields._multiplier;
             }
 
-            self.setElementCellIndexSet = function () {
-                self.backingFields._elementCellIndexSet = getElementCellIndexSet(self);
-            }
+            function resourcePoolAmount() {
 
-            self.directIncome = function () {
-
-                if (self.backingFields._directIncome === null) {
-                    self.setDirectIncome(false);
+                if (self.backingFields._resourcePoolAmount === null) {
+                    self.setResourcePoolAmount(false);
                 }
 
-                return self.backingFields._directIncome;
+                return self.backingFields._resourcePoolAmount;
             }
 
-            self.setDirectIncome = function (updateRelated) {
+            function setDirectIncome(updateRelated) {
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 // First, find direct income cell
                 var directIncomeCell = null;
-                for (var i = 0; i < self.ElementCellSet.length; i++) {
-                    var elementCell = self.ElementCellSet[i];
-                    if (elementCell.ElementField.DataType === 11) {
-                        directIncomeCell = elementCell;
-                        break;
-                    }
+
+                var result = self.ElementCellSet.filter(function (elementCell) {
+                    return elementCell.ElementField.DataType === 11;
+                });
+
+                if (result.length > 0) {
+                    directIncomeCell = result[0];
                 }
 
                 var value;
@@ -119,26 +170,22 @@
                 }
             }
 
-            self.multiplier = function () {
-
-                if (self.backingFields._multiplier === null) {
-                    self.setMultiplier(false);
-                }
-
-                return self.backingFields._multiplier;
+            function setElementCellIndexSet() {
+                self.backingFields._elementCellIndexSet = getElementCellIndexSet(self);
             }
 
-            self.setMultiplier = function (updateRelated) {
+            function setMultiplier(updateRelated) {
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 // First, find the multiplier cell
                 var multiplierCell = null;
-                for (var i = 0; i < self.ElementCellSet.length; i++) {
-                    var elementCell = self.ElementCellSet[i];
-                    if (elementCell.ElementField.DataType === 12) {
-                        multiplierCell = elementCell;
-                        break;
-                    }
+
+                var result = self.ElementCellSet.filter(function(elementCell) {
+                    return elementCell.ElementField.DataType === 12;
+                });
+
+                if (result.length > 0) {
+                    multiplierCell = result[0];
                 }
 
                 var value = 0;
@@ -167,40 +214,7 @@
                 }
             }
 
-            self.totalDirectIncome = function () {
-
-                if (self.backingFields._totalDirectIncome === null) {
-                    self.setTotalDirectIncome(false);
-                }
-
-                return self.backingFields._totalDirectIncome;
-            }
-
-            self.setTotalDirectIncome = function (updateRelated) {
-                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
-
-                var value = self.directIncome() * self.multiplier();
-
-                if (self.backingFields._totalDirectIncome !== value) {
-                    self.backingFields._totalDirectIncome = value;
-
-                    // TODO Update related
-                    if (updateRelated) {
-
-                    }
-                }
-            }
-
-            self.resourcePoolAmount = function () {
-
-                if (self.backingFields._resourcePoolAmount === null) {
-                    self.setResourcePoolAmount(false);
-                }
-
-                return self.backingFields._resourcePoolAmount;
-            }
-
-            self.setResourcePoolAmount = function (updateRelated) {
+            function setResourcePoolAmount(updateRelated) {
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value = self.directIncome() * self.Element.ResourcePool.resourcePoolRatePercentage();
@@ -215,16 +229,22 @@
                 }
             }
 
-            self.totalResourcePoolAmount = function () {
+            function setTotalDirectIncome(updateRelated) {
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
-                if (self.backingFields._totalResourcePoolAmount === null) {
-                    self.setTotalResourcePoolAmount(false);
+                var value = self.directIncome() * self.multiplier();
+
+                if (self.backingFields._totalDirectIncome !== value) {
+                    self.backingFields._totalDirectIncome = value;
+
+                    // TODO Update related
+                    if (updateRelated) {
+
+                    }
                 }
-
-                return self.backingFields._totalResourcePoolAmount;
             }
 
-            self.setTotalResourcePoolAmount = function (updateRelated) {
+            function setTotalResourcePoolAmount(updateRelated) {
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value = self.resourcePoolAmount() * self.multiplier();
@@ -239,58 +259,56 @@
                 }
             }
 
-            self.directIncomeIncludingResourcePoolAmount = function () { // A.k.a Sales Price incl. VAT
-                return self.directIncome() + self.resourcePoolAmount();
+            function totalDirectIncome() {
+
+                if (self.backingFields._totalDirectIncome === null) {
+                    self.setTotalDirectIncome(false);
+                }
+
+                return self.backingFields._totalDirectIncome;
             }
 
-            self.totalDirectIncomeIncludingResourcePoolAmount = function () { // A.k.a Total Sales Price incl. VAT
+            function totalDirectIncomeIncludingResourcePoolAmount() { // A.k.a Total Sales Price incl. VAT
                 return self.directIncomeIncludingResourcePoolAmount() * self.multiplier();
             }
 
+            function totalIncome() {
+                var totalIncome = self.totalDirectIncome() + self.totalResourcePoolIncome();
+                // TODO Make rounding better, instead of toFixed + number
+                return Number(totalIncome.toFixed(2));
+            }
+
+            function totalResourcePoolAmount() {
+
+                if (self.backingFields._totalResourcePoolAmount === null) {
+                    self.setTotalResourcePoolAmount(false);
+                }
+
+                return self.backingFields._totalResourcePoolAmount;
+            }
+
             // TODO This is out of pattern!
-            self.totalResourcePoolIncome = function () {
+            function totalResourcePoolIncome() {
 
                 var value = 0;
-                
-                for (var i = 0; i < self.ElementCellSet.length; i++) {
-                    var cell = self.ElementCellSet[i];
+
+                self.ElementCellSet.forEach(function (cell) {
                     value += cell.indexIncome();
-                }
+                });
 
                 if (self.backingFields._totalResourcePoolIncome !== value) {
                     self.backingFields._totalResourcePoolIncome = value;
 
                     // Update related
                     // TODO Is this correct? It looks like it didn't affect anything?
-                    for (var i = 0; i < self.ParentCellSet.length; i++) {
-                        var parentCell = self.ParentCellSet[i];
+                    self.ParentCellSet.forEach(function (parentCell) {
                         parentCell.setIndexIncome();
-                    }
+                    });
                 }
 
                 return value;
             }
 
-            self.totalIncome = function () {
-                var totalIncome = self.totalDirectIncome() + self.totalResourcePoolIncome();
-                // TODO Make rounding better, instead of toFixed + number
-                return Number(totalIncome.toFixed(2));
-            }
-
-            self.incomeStatus = function () {
-
-                var totalIncome = self.totalIncome();
-                // TODO Make rounding better, instead of toFixed + number
-                var averageIncome = Number(self.Element.totalIncomeAverage().toFixed(2));
-
-                if (totalIncome === averageIncome) {
-                    return 'average';
-                } else if (totalIncome < averageIncome) {
-                    return 'low';
-                } else if (totalIncome > averageIncome) {
-                    return 'high';
-                };
-            }
         }
     }
 })();

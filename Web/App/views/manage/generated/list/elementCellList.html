@@ -16,10 +16,10 @@
     <table class="table">
         <tr>
             <th>
-                Element Item
+                Element Field
             </th>
             <th>
-                Element Field
+                Element Item
             </th>
             <th>
                 StringValue
@@ -31,19 +31,19 @@
         </tr>
         <tr data-ng-repeat="elementCell in vm.elementCellSet">
             <td>
-                {{ elementCell.ElementItem.Name }}
+                <span data-ng-bind="elementCell.ElementField.Name"></span>
             </td>
             <td>
-                {{ elementCell.ElementField.Name }}
+                <span data-ng-bind="elementCell.ElementItem.Name"></span>
             </td>
             <td>
-                {{ elementCell.StringValue }}
+                <span data-ng-bind="elementCell.StringValue"></span>
             </td>
             <td>
-                {{ elementCell.SelectedElementItemId }}
+                <span data-ng-bind="elementCell.SelectedElementItemId"></span>
             </td>
             <td>
-                <a href="/manage/generated/elementCell/edit/{{ elementCell.Id }}">Edit</a> |
+                <a data-ng-href="/manage/generated/elementCell/edit/{{ elementCell.Id }}">Edit</a> |
                 <a href="" data-ng-click="vm.deleteElementCell(elementCell)">
                     Delete
                 </a>

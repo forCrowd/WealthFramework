@@ -13,8 +13,6 @@
         // Return
         return ElementCell;
 
-        /*** Implementations ***/
-
         function ElementCell() {
 
             var self = this;
@@ -47,17 +45,54 @@
                 _ratingPercentage: null,
                 _indexIncome: null
             }
+
+            // Functions
+            self.aggressiveRating = aggressiveRating;
+            self.currentUserCell = currentUserCell;
+            self.currentUserNumericValue = currentUserNumericValue;
+            self.indexIncome = indexIncome;
+            self.numericValue = numericValue;
+            self.numericValueAverage = numericValueAverage;
+            self.numericValueCount = numericValueCount;
+            self.numericValueMultiplied = numericValueMultiplied;
+            self.numericValueMultipliedPercentage = numericValueMultipliedPercentage;
+            self.numericValueTotal = numericValueTotal;
+            self.otherUsersNumericValueCount = otherUsersNumericValueCount;
+            self.otherUsersNumericValueTotal = otherUsersNumericValueTotal;
+            self.passiveRating = passiveRating;
+            self.rating = rating;
+            self.ratingPercentage = ratingPercentage;
+            self.setAggressiveRating = setAggressiveRating;
+            self.setCurrentUserNumericValue = setCurrentUserNumericValue;
+            self.setIndexIncome = setIndexIncome;
+            self.setNumericValue = setNumericValue;
+            self.setNumericValueMultiplied = setNumericValueMultiplied;
+            self.setNumericValueMultipliedPercentage = setNumericValueMultipliedPercentage;
+            self.setOtherUsersNumericValueCount = setOtherUsersNumericValueCount;
+            self.setOtherUsersNumericValueTotal = setOtherUsersNumericValueTotal;
+            self.setPassiveRating = setPassiveRating;
+            self.setRating = setRating;
+            self.setRatingPercentage = setRatingPercentage;
             self.value = value;
 
-            // Public functions
+            /*** Implementations ***/
 
-            self.currentUserCell = function () {
+            function aggressiveRating() {
+
+                if (self.backingFields._aggressiveRating === null) {
+                    self.setAggressiveRating(false);
+                }
+
+                return self.backingFields._aggressiveRating;
+            }
+
+            function currentUserCell() {
                 return self.UserElementCellSet.length > 0
                     ? self.UserElementCellSet[0]
                     : null;
             }
 
-            self.currentUserNumericValue = function () {
+            function currentUserNumericValue() {
 
                 if (self.backingFields._currentUserNumericValue === null) {
                     self.setCurrentUserNumericValue(false);
@@ -66,7 +101,149 @@
                 return self.backingFields._currentUserNumericValue;
             }
 
-            self.setCurrentUserNumericValue = function (updateRelated) {
+            // TODO This is out of pattern!
+            function indexIncome() {
+
+                //if (self.backingFields._indexIncome === null) {
+                self.setIndexIncome();
+                //}
+
+                return self.backingFields._indexIncome;
+            }
+
+            function numericValue() {
+
+                if (self.backingFields._numericValue === null) {
+                    self.setNumericValue(false);
+                }
+
+                return self.backingFields._numericValue;
+            }
+
+            function numericValueAverage() {
+
+                if (self.numericValueCount() === null) {
+                    return null;
+                }
+
+                return self.numericValueCount() === 0
+                    ? 0
+                    : self.numericValueTotal() / self.numericValueCount();
+            }
+
+            function numericValueCount() {
+                return self.ElementField.UseFixedValue
+                    ? self.otherUsersNumericValueCount()
+                    : self.otherUsersNumericValueCount() + 1; // There is always default value, increase count by 1
+            }
+
+            function numericValueMultiplied() {
+
+                if (self.backingFields._numericValueMultiplied === null) {
+                    self.setNumericValueMultiplied(false);
+                }
+
+                return self.backingFields._numericValueMultiplied;
+            }
+
+            function numericValueMultipliedPercentage() {
+                if (self.backingFields._numericValueMultipliedPercentage === null) {
+                    self.setNumericValueMultipliedPercentage(false);
+                }
+
+                return self.backingFields._numericValueMultipliedPercentage;
+            }
+
+            function numericValueTotal() {
+                return self.ElementField.UseFixedValue
+                    ? self.otherUsersNumericValueTotal()
+                    : self.otherUsersNumericValueTotal() + self.currentUserNumericValue();
+            }
+
+            // TODO Since this is a fixed value based on NumericValueCount & current user's rate,
+            // it could be calculated on server, check it later again / SH - 03 Aug. '15
+            function otherUsersNumericValueCount() {
+
+                // Set other users' value on the initial call
+                if (self.backingFields._otherUsersNumericValueCount === null) {
+                    self.setOtherUsersNumericValueCount();
+                }
+
+                return self.backingFields._otherUsersNumericValueCount;
+            }
+
+            // TODO Since this is a fixed value based on NumericValueTotal & current user's rate,
+            // it could be calculated on server, check it later again / SH - 03 Aug. '15
+            function otherUsersNumericValueTotal() {
+
+                // Set other users' value on the initial call
+                if (self.backingFields._otherUsersNumericValueTotal === null) {
+                    self.setOtherUsersNumericValueTotal();
+                }
+
+                return self.backingFields._otherUsersNumericValueTotal;
+            }
+
+            function passiveRating() {
+                if (self.backingFields._passiveRating === null) {
+                    self.setPassiveRating(false);
+                }
+
+                return self.backingFields._passiveRating;
+            }
+
+            function rating() {
+
+                if (self.backingFields._rating === null) {
+                    self.setRating(false);
+                }
+
+                return self.backingFields._rating;
+            }
+
+            function ratingPercentage() {
+
+                if (self.backingFields._ratingPercentage === null) {
+                    self.setRatingPercentage(false);
+                }
+
+                return self.backingFields._ratingPercentage;
+            }
+
+            // TODO Currently updateRelated is always 'false'?
+            function setAggressiveRating(updateRelated) {
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
+
+                var value = 0; // Default value?
+
+                if (self.ElementField.IndexEnabled && self.ElementField.referenceRatingMultiplied() > 0) {
+                    switch (self.ElementField.IndexSortType) {
+                        case 1: { // HighestToLowest (High rating is better)
+                            value = (1 - self.numericValueMultipliedPercentage()) / self.ElementField.referenceRatingMultiplied();
+                            break;
+                        }
+                        case 2: { // LowestToHighest (Low rating is better)
+                            value = self.numericValueMultiplied() / self.ElementField.referenceRatingMultiplied();
+                            break;
+                        }
+                    }
+
+                    if (!self.ElementField.referenceRatingAllEqualFlag()) {
+                        value = 1 - value;
+                    }
+                }
+
+                if (self.backingFields._aggressiveRating !== value) {
+                    self.backingFields._aggressiveRating = value;
+
+                    // Update related values
+                    if (updateRelated) {
+                        // TODO ?
+                    }
+                }
+            }
+
+            function setCurrentUserNumericValue(updateRelated) {
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value;
@@ -96,99 +273,30 @@
                 }
             }
 
-            // TODO Since this is a fixed value based on NumericValueTotal & current user's rate,
-            // it could be calculated on server, check it later again / SH - 03 Aug. '15
-            self.otherUsersNumericValueTotal = function () {
+            function setIndexIncome(updateRelated) {
+                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
-                // Set other users' value on the initial call
-                if (self.backingFields._otherUsersNumericValueTotal === null) {
-                    self.setOtherUsersNumericValueTotal();
-                }
+                var value = 0; // Default value?
 
-                return self.backingFields._otherUsersNumericValueTotal;
-            }
-
-            self.setOtherUsersNumericValueTotal = function () {
-
-                self.backingFields._otherUsersNumericValueTotal = self.NumericValueTotal !== null
-                    ? self.NumericValueTotal
-                    : 0;
-
-                // Exclude current user's
-                if (self.UserElementCellSet.length > 0) {
-
-                    var userValue = 0;
-                    switch (self.ElementField.DataType) {
-                        // TODO Check bool to decimal conversion?
-                        case 2: { userValue = self.UserElementCellSet[0].BooleanValue; break; }
-                        case 3: { userValue = self.UserElementCellSet[0].IntegerValue; break; }
-                        case 4: { userValue = self.UserElementCellSet[0].DecimalValue; break; }
-                            // TODO 5 - DateTime?
-                        case 11: { userValue = self.UserElementCellSet[0].DecimalValue; break; }
-                            // TODO 12 - Multiplier?
-                            //default: {
-                            //    throw 'setOtherUsersNumericValueTotal - Not supported element field type: ' + self.ElementField.DataType;
-                            //}
+                if (self.ElementField.DataType === 6 && self.SelectedElementItem !== null) {
+                    // item's index income / how many times this item has been selected (used) by higher items
+                    // TODO Check whether ParentCellSet gets updated when selecting / deselecting an item
+                    value = self.SelectedElementItem.totalResourcePoolIncome() / self.SelectedElementItem.ParentCellSet.length;
+                } else {
+                    if (self.ElementField.IndexEnabled) {
+                        value = self.ElementField.indexIncome() * self.ratingPercentage();
                     }
+                }
 
-                    self.backingFields._otherUsersNumericValueTotal -= userValue;
+                if (self.backingFields._indexIncome !== value) {
+                    self.backingFields._indexIncome = value;
+
+                    // TODO Update related?
+                    // item.totalResourcePoolIncome
                 }
             }
 
-            // TODO Since this is a fixed value based on NumericValueCount & current user's rate,
-            // it could be calculated on server, check it later again / SH - 03 Aug. '15
-            self.otherUsersNumericValueCount = function () {
-
-                // Set other users' value on the initial call
-                if (self.backingFields._otherUsersNumericValueCount === null) {
-                    self.setOtherUsersNumericValueCount();
-                }
-
-                return self.backingFields._otherUsersNumericValueCount;
-            }
-
-            self.setOtherUsersNumericValueCount = function () {
-                self.backingFields._otherUsersNumericValueCount = self.NumericValueCount;
-
-                // Exclude current user's
-                if (self.UserElementCellSet.length > 0) {
-                    self.backingFields._otherUsersNumericValueCount--;
-                }
-            }
-
-            self.numericValueTotal = function () {
-                return self.ElementField.UseFixedValue
-                    ? self.otherUsersNumericValueTotal()
-                    : self.otherUsersNumericValueTotal() + self.currentUserNumericValue();
-            }
-
-            self.numericValueCount = function () {
-                return self.ElementField.UseFixedValue
-                    ? self.otherUsersNumericValueCount()
-                    : self.otherUsersNumericValueCount() + 1; // There is always default value, increase count by 1
-            }
-
-            self.numericValueAverage = function () {
-
-                if (self.numericValueCount() === null) {
-                    return null;
-                }
-
-                return self.numericValueCount() === 0
-                    ? 0
-                    : self.numericValueTotal() / self.numericValueCount();
-            }
-
-            self.numericValue = function () {
-
-                if (self.backingFields._numericValue === null) {
-                    self.setNumericValue(false);
-                }
-
-                return self.backingFields._numericValue;
-            }
-
-            self.setNumericValue = function (updateRelated) {
+            function setNumericValue(updateRelated) {
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value;
@@ -217,16 +325,7 @@
                 }
             }
 
-            self.numericValueMultiplied = function () {
-
-                if (self.backingFields._numericValueMultiplied === null) {
-                    self.setNumericValueMultiplied(false);
-                }
-
-                return self.backingFields._numericValueMultiplied;
-            }
-
-            self.setNumericValueMultiplied = function (updateRelated) {
+            function setNumericValueMultiplied(updateRelated) {
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value;
@@ -260,15 +359,7 @@
                 }
             }
 
-            self.numericValueMultipliedPercentage = function () {
-                if (self.backingFields._numericValueMultipliedPercentage === null) {
-                    self.setNumericValueMultipliedPercentage(false);
-                }
-
-                return self.backingFields._numericValueMultipliedPercentage;
-            }
-
-            self.setNumericValueMultipliedPercentage = function (updateRelated) {
+            function setNumericValueMultipliedPercentage(updateRelated) {
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value = 0;
@@ -287,15 +378,43 @@
                 }
             }
 
-            self.passiveRating = function () {
-                if (self.backingFields._passiveRating === null) {
-                    self.setPassiveRating(false);
-                }
+            function setOtherUsersNumericValueCount() {
+                self.backingFields._otherUsersNumericValueCount = self.NumericValueCount;
 
-                return self.backingFields._passiveRating;
+                // Exclude current user's
+                if (self.UserElementCellSet.length > 0) {
+                    self.backingFields._otherUsersNumericValueCount--;
+                }
             }
 
-            self.setPassiveRating = function (updateRelated) {
+            function setOtherUsersNumericValueTotal() {
+
+                self.backingFields._otherUsersNumericValueTotal = self.NumericValueTotal !== null
+                    ? self.NumericValueTotal
+                    : 0;
+
+                // Exclude current user's
+                if (self.UserElementCellSet.length > 0) {
+
+                    var userValue = 0;
+                    switch (self.ElementField.DataType) {
+                        // TODO Check bool to decimal conversion?
+                        case 2: { userValue = self.UserElementCellSet[0].BooleanValue; break; }
+                        case 3: { userValue = self.UserElementCellSet[0].IntegerValue; break; }
+                        case 4: { userValue = self.UserElementCellSet[0].DecimalValue; break; }
+                            // TODO 5 - DateTime?
+                        case 11: { userValue = self.UserElementCellSet[0].DecimalValue; break; }
+                            // TODO 12 - Multiplier?
+                            //default: {
+                            //    throw 'setOtherUsersNumericValueTotal - Not supported element field type: ' + self.ElementField.DataType;
+                            //}
+                    }
+
+                    self.backingFields._otherUsersNumericValueTotal -= userValue;
+                }
+            }
+
+            function setPassiveRating(updateRelated) {
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value = 0;
@@ -326,58 +445,7 @@
                 }
             }
 
-            self.aggressiveRating = function () {
-
-                if (self.backingFields._aggressiveRating === null) {
-                    self.setAggressiveRating(false);
-                }
-
-                return self.backingFields._aggressiveRating;
-            }
-
-            // TODO Currently updateRelated is always 'false'?
-            self.setAggressiveRating = function (updateRelated) {
-                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
-
-                var value = 0; // Default value?
-
-                if (self.ElementField.IndexEnabled && self.ElementField.referenceRatingMultiplied() > 0) {
-                    switch (self.ElementField.IndexSortType) {
-                        case 1: { // HighestToLowest (High rating is better)
-                            value = (1 - self.numericValueMultipliedPercentage()) / self.ElementField.referenceRatingMultiplied();
-                            break;
-                        }
-                        case 2: { // LowestToHighest (Low rating is better)
-                            value = self.numericValueMultiplied() / self.ElementField.referenceRatingMultiplied();
-                            break;
-                        }
-                    }
-
-                    if (!self.ElementField.referenceRatingAllEqualFlag()) {
-                        value = 1 - value;
-                    }
-                }
-
-                if (self.backingFields._aggressiveRating !== value) {
-                    self.backingFields._aggressiveRating = value;
-
-                    // Update related values
-                    if (updateRelated) {
-                        // TODO ?
-                    }
-                }
-            }
-
-            self.rating = function () {
-
-                if (self.backingFields._rating === null) {
-                    self.setRating(false);
-                }
-
-                return self.backingFields._rating;
-            }
-
-            self.setRating = function (updateRelated) {
+            function setRating(updateRelated) {
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value = 0;
@@ -410,16 +478,7 @@
                 }
             }
 
-            self.ratingPercentage = function () {
-
-                if (self.backingFields._ratingPercentage === null) {
-                    self.setRatingPercentage(false);
-                }
-
-                return self.backingFields._ratingPercentage;
-            }
-
-            self.setRatingPercentage = function (updateRelated) {
+            function setRatingPercentage(updateRelated) {
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
                 var value = 0;
@@ -435,39 +494,6 @@
                     if (updateRelated) {
                         // TODO ?
                     }
-                }
-            }
-
-            // TODO This is out of pattern!
-            self.indexIncome = function () {
-
-                //if (self.backingFields._indexIncome === null) {
-                self.setIndexIncome();
-                //}
-
-                return self.backingFields._indexIncome;
-            }
-
-            self.setIndexIncome = function (updateRelated) {
-                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
-
-                var value = 0; // Default value?
-
-                if (self.ElementField.DataType === 6 && self.SelectedElementItem !== null) {
-                    // item's index income / how many times this item has been selected (used) by higher items
-                    // TODO Check whether ParentCellSet gets updated when selecting / deselecting an item
-                    value = self.SelectedElementItem.totalResourcePoolIncome() / self.SelectedElementItem.ParentCellSet.length;
-                } else {
-                    if (self.ElementField.IndexEnabled) {
-                        value = self.ElementField.indexIncome() * self.ratingPercentage();
-                    }
-                }
-
-                if (self.backingFields._indexIncome !== value) {
-                    self.backingFields._indexIncome = value;
-
-                    // TODO Update related?
-                    // item.totalResourcePoolIncome
                 }
             }
 

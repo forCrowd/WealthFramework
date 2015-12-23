@@ -63,46 +63,46 @@
             // Set isAdded flag to true, so before saving it to database,
             // we can replace resource pool and its child entities state back to 'isAdded'
             if (resourcePool.entityAspect.entityState.isAdded()) {
-                resourcePool.isAdded = true;
+                resourcePool.isAdded(true);
             }
 
             // Resource pool itself
             resourcePool.entityAspect.acceptChanges();
 
             // If isAdded, then make it modified, so it be retrieved when getChanges() called
-            if (resourcePool.isAdded) {
+            if (resourcePool.isAdded()) {
                 resourcePool.entityAspect.setModified();
             }
 
             // User resource pools
-            angular.forEach(resourcePool.UserResourcePoolSet, function (userResourcePool) {
+            resourcePool.UserResourcePoolSet.forEach(function (userResourcePool) {
                 userResourcePool.entityAspect.acceptChanges();
             });
 
             // Elements
-            angular.forEach(resourcePool.ElementSet, function (element) {
+            resourcePool.ElementSet.forEach(function (element) {
                 element.entityAspect.acceptChanges();
 
                 // Fields
-                angular.forEach(element.ElementFieldSet, function (elementField) {
+                element.ElementFieldSet.forEach(function (elementField) {
                     elementField.entityAspect.acceptChanges();
 
                     // User element fields
-                    angular.forEach(elementField.UserElementFieldSet, function (userElementField) {
+                    elementField.UserElementFieldSet.forEach(function (userElementField) {
                         userElementField.entityAspect.acceptChanges();
                     });
                 });
 
                 // Items
-                angular.forEach(element.ElementItemSet, function (elementItem) {
+                element.ElementItemSet.forEach(function (elementItem) {
                     elementItem.entityAspect.acceptChanges();
 
                     // Cells
-                    angular.forEach(elementItem.ElementCellSet, function (elementCell) {
+                    elementItem.ElementCellSet.forEach(function (elementCell) {
                         elementCell.entityAspect.acceptChanges();
 
                         // User cells
-                        angular.forEach(elementCell.UserElementCellSet, function (userElementCell) {
+                        elementCell.UserElementCellSet.forEach(function (userElementCell) {
                             userElementCell.entityAspect.acceptChanges();
                         });
                     });
@@ -116,34 +116,34 @@
             resourcePool.entityAspect.rejectChanges();
 
             // User resource pools
-            angular.forEach(resourcePool.UserResourcePoolSet, function (userResourcePool) {
+            resourcePool.UserResourcePoolSet.forEach(function (userResourcePool) {
                 userResourcePool.entityAspect.rejectChanges();
             });
 
             // Elements
-            angular.forEach(resourcePool.ElementSet, function (element) {
+            resourcePool.ElementSet.forEach(function (element) {
                 element.entityAspect.rejectChanges();
 
                 // Fields
-                angular.forEach(element.ElementFieldSet, function (elementField) {
+                element.ElementFieldSet.forEach(function (elementField) {
                     elementField.entityAspect.rejectChanges();
 
                     // User element fields
-                    angular.forEach(elementField.UserElementFieldSet, function (userElementField) {
+                    elementField.UserElementFieldSet.forEach(function (userElementField) {
                         userElementField.entityAspect.rejectChanges();
                     });
                 });
 
                 // Items
-                angular.forEach(element.ElementItemSet, function (elementItem) {
+                element.ElementItemSet.forEach(function (elementItem) {
                     elementItem.entityAspect.rejectChanges();
 
                     // Cells
-                    angular.forEach(elementItem.ElementCellSet, function (elementCell) {
+                    elementItem.ElementCellSet.forEach(function (elementCell) {
                         elementCell.entityAspect.rejectChanges();
 
                         // User cells
-                        angular.forEach(elementCell.UserElementCellSet, function (userElementCell) {
+                        elementCell.UserElementCellSet.forEach(function (userElementCell) {
                             userElementCell.entityAspect.rejectChanges();
                         });
                     });
@@ -192,13 +192,12 @@
             elementField = dataContext.createEntity('ElementField', elementField);
 
             // Related cells
-            for (var i = 0; i < elementField.Element.ElementItemSet.length; i++) {
-                var elementItem = elementField.Element.ElementItemSet[i];
+            elementField.Element.ElementItemSet.forEach(function (elementItem) {
                 createElementCell({
                     ElementField: elementField,
                     ElementItem: elementItem
                 });
-            }
+            });
 
             return elementField;
         }
@@ -208,13 +207,12 @@
             elementItem = dataContext.createEntity('ElementItem', elementItem);
 
             // Related cells
-            for (var i = 0; i < elementItem.Element.ElementFieldSet.length; i++) {
-                var elementField = elementItem.Element.ElementFieldSet[i];
+            elementItem.Element.ElementFieldSet.forEach(function (elementField) {
                 createElementCell({
                     ElementField: elementField,
                     ElementItem: elementItem
                 });
-            }
+            });
 
             return elementItem;
         }
@@ -272,7 +270,7 @@
                         Name: 'New item 2'
                     });
 
-                    resourcePool.init(true);
+                    resourcePool._init();
 
                     return resourcePool;
                 });
@@ -379,12 +377,9 @@
 
                     // If it's not newly created, check the fetched list
                     if (!newlyCreated) {
-                        for (var i = 0; i < fetched.length; i++) {
-                            if (resourcePoolId === fetched[i]) {
-                                fetchedEarlier = true;
-                                break;
-                            }
-                        }
+                        fetchedEarlier = fetched.some(function (fetchedId) {
+                            return resourcePoolId === fetchedId;
+                        });
                     }
 
                     fromServer = !newlyCreated && !fetchedEarlier;
@@ -425,7 +420,7 @@
                         var resourcePool = response.results[0];
 
                         // Init: If it's from server, calculate otherUsersData
-                        resourcePool.init(fromServer);
+                        resourcePool._init(fromServer);
 
                         // Add the record into fetched list
                         fetched.push(resourcePool.Id);
@@ -449,13 +444,13 @@
 
             // Related items
             var elementItemSet = element.ElementItemSet.slice();
-            angular.forEach(elementItemSet, function (elementItem) {
+            elementItemSet.forEach(function (elementItem) {
                 removeElementItem(elementItem);
             });
 
             // Related fields
             var elementFieldSet = element.ElementFieldSet.slice();
-            angular.forEach(elementFieldSet, function (elementField) {
+            elementFieldSet.forEach(function (elementField) {
                 removeElementField(elementField);
             });
 
@@ -466,7 +461,7 @@
 
             // Related user cells
             var userElementCellSet = elementCell.UserElementCellSet.slice();
-            angular.forEach(userElementCellSet, function (userElementCell) {
+            userElementCellSet.forEach(function (userElementCell) {
                 userElementCell.entityAspect.setDeleted();
             });
 
@@ -477,13 +472,13 @@
 
             // Related cells
             var elementCellSet = elementField.ElementCellSet.slice();
-            angular.forEach(elementCellSet, function (elementCell) {
+            elementCellSet.forEach(function (elementCell) {
                 removeElementCell(elementCell);
             });
 
             // Related user element fields
             var userElementFieldSet = elementField.UserElementFieldSet.slice();
-            angular.forEach(userElementFieldSet, function (userElementField) {
+            userElementFieldSet.forEach(function (userElementField) {
                 userElementField.entityAspect.setDeleted();
             });
 
@@ -494,7 +489,7 @@
 
             // Related cells
             var elementCellSet = elementItem.ElementCellSet.slice();
-            angular.forEach(elementCellSet, function (elementCell) {
+            elementCellSet.forEach(function (elementCell) {
                 removeElementCell(elementCell);
             });
 
@@ -505,13 +500,13 @@
 
             // Related elements
             var elementSet = resourcePool.ElementSet.slice();
-            angular.forEach(elementSet, function (element) {
+            elementSet.forEach(function (element) {
                 removeElement(element);
             });
 
             // Related user resource pools
             var userResourcePoolSet = resourcePool.UserResourcePoolSet.slice();
-            angular.forEach(userResourcePoolSet, function (userResourcePool) {
+            userResourcePoolSet.forEach(function (userResourcePool) {
                 userResourcePool.entityAspect.setDeleted();
             });
 

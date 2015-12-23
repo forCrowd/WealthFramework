@@ -2,11 +2,11 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <p data-ng-if="errorMessage.length > 0">
-                <span class="label label-warning">{{ errorMessage }}</span>
+                <span data-ng-bind="errorMessage" class="label label-warning"></span>
             </p>
             <h3 class="panel-title">
                 <span data-ng-bind="resourcePool.Name"></span><button type="button" class="btn btn-link" data-ng-click="editResourcePool()" data-ng-if="resourcePool.User === currentUser">Edit</button>
-                <span data-ng-if="resourcePool.displayRatingMode()" data-uib-tooltip="Number of Ratings: Toggle to display the results with only your ratings or all users'" data-ng-click="resourcePool.toggleRatingMode()" class="label" data-ng-class="{ 'label-as-off-badge': resourcePool.RatingMode === 1, 'label-as-on-badge': resourcePool.RatingMode === 2 }">{{ resourcePool.RatingCount }}</span>
+                <span data-ng-bind="resourcePool.RatingCount" data-ng-if="resourcePool.displayRatingMode()" data-ng-click="resourcePool.toggleRatingMode()" data-uib-tooltip="Number of Ratings: Toggle to display the results with only your ratings or all users'" class="label" data-ng-class="{ 'label-as-off-badge': resourcePool.RatingMode === 1, 'label-as-on-badge': resourcePool.RatingMode === 2 }"></span>
             </h3>
         </div>
         <div class="panel-body" data-ng-if="resourcePool.ElementSet.length > 0">
@@ -15,10 +15,10 @@
                     <ol class="breadcrumb" data-ng-if="resourcePool.ElementSet.length > 1">
                         <li data-ng-repeat="element in resourcePool.selectedElement().familyTree()" data-ng-class="{ active: $last }">
                             <a href="" data-uib-tooltip="Switch to {{ element.Name }} view" data-ng-if="!$last" data-ng-click="changeSelectedElement(element)">
-                                {{ element.Name }}
+                                <span data-ng-bind="element.Name"></span>
                             </a>
                             <span data-ng-if="$last">
-                                {{ element.Name }}
+                                <span data-ng-bind="element.Name"></span>
                             </span>
                         </li>
                     </ol>
@@ -35,7 +35,7 @@
                                 </th>
                                 <td colspan="2">
                                     <span class="fixedWidth45Cell">
-                                        {{ resourcePool.resourcePoolRatePercentage() | percentage: 2 }}
+                                        <span data-ng-bind="resourcePool.resourcePoolRatePercentage() | percentage: 2"></span>
                                     </span>
                                     <div data-ng-if="!resourcePool.UseFixedResourcePoolRate" class="btn-group" role="group">
                                         <button data-uib-tooltip="Increase CMRP Rate" data-tooltip-append-to-body="true" type="button" data-ng-click="increaseResourcePoolRate()" data-ng-disabled="isSaving" class="btn btn-default btn-xs">+</button>
@@ -49,36 +49,36 @@
                                     CMRP Amount
                                 </th>
                                 <td>
-                                    {{ resourcePool.selectedElement().totalResourcePoolAmount() | numberSymbol: 2 }}
+                                    <span data-ng-bind="resourcePool.selectedElement().totalResourcePoolAmount() | numberSymbol: 2"></span>
                                 </td>
                             </tr>
                             <tr>
                                 <!-- Name -->
                                 <th>
-                                    {{ resourcePool.selectedElement().Name }}
+                                    <span data-ng-bind="resourcePool.selectedElement().Name"></span>
                                 </th>
                                 <!-- Fields -->
                                 <th data-ng-repeat="field in resourcePool.selectedElement().ElementFieldSet | orderBy: 'SortOrder'">
                                     <div data-ng-if="field.DataType !== 6">
-                                        {{ field.Name }}<span data-ng-if="field.IndexEnabled" data-uib-tooltip="Index" class="infoText">(I)</span>
+                                        <span data-ng-bind="field.Name"></span><span data-ng-if="field.IndexEnabled" data-uib-tooltip="Index" class="infoText">(I)</span>
                                     </div>
                                     <span data-ng-if="field.DataType === 6">
-                                        <a href="" data-uib-tooltip="Switch to {{ field.Name }} view" data-ng-click="changeSelectedElement(field.SelectedElement)">{{ field.Name }}</a>
+                                        <a href="" data-ng-bind="field.Name" data-ng-click="changeSelectedElement(field.SelectedElement)" data-uib-tooltip="Switch to {{ field.Name }} view" ></a>
                                     </span>
                                 </th>
                                 <!-- Direct Income -->
                                 <th data-ng-if="resourcePool.selectedElement().directIncomeField() && resourcePool.selectedElement().elementFieldIndexSet().length > 0">
-                                    {{ resourcePool.selectedElement().directIncomeField().Name }} Income
+                                    <span data-ng-bind="resourcePool.selectedElement().directIncomeField().Name + ' Income'"></span>
                                 </th>
                                 <!-- CMRP Income & Details -->
                                 <th data-ng-if="displayIndexDetails" data-ng-repeat="field in resourcePool.selectedElement().elementFieldIndexSet()">
-                                    {{ field.Name }} (I) Income
+                                    <span data-ng-bind="field.Name + ' (I) Income'"></span>
                                 </th>
                                 <th data-ng-if="resourcePool.selectedElement().elementFieldIndexSet().length > 1">
                                     <!-- Display 'CMRP Income' view link only if there are more than one index -->
                                     <a href="" data-uib-tooltip="Toggle between 'Indexes' & 'Elements' views" data-ng-if="resourcePool.selectedElement().elementFieldIndexSet().length > 1" data-ng-click="toggleIndexDetails()">CMRP Income</a>
                                     <!-- If there is only one index, then use that index's name -->
-                                    <span data-ng-if="resourcePool.selectedElement().elementFieldIndexSet().length === 1">{{ resourcePool.selectedElement().elementFieldIndexSet()[0].Name }} (I) Income</span>
+                                    <span data-ng-bind="resourcePool.selectedElement().elementFieldIndexSet()[0].Name + ' (I) Income'" data-ng-if="resourcePool.selectedElement().elementFieldIndexSet().length === 1"></span>
                                 </th>
                                 <!-- Total Income -->
                                 <th data-ng-if="resourcePool.InitialValue > 0 || resourcePool.selectedElement().directIncomeField()">
@@ -100,7 +100,7 @@
                                         || elementCell.ElementField.DataType === 4
                                         || elementCell.ElementField.DataType === 5">
                                         <span data-ng-class="{ 'fixedWidth35Cell': !elementCell.ElementField.UseFixedValue }">
-                                            {{ elementCell.numericValue() | numberSymbol: 2 }}
+                                            <span data-ng-bind="elementCell.numericValue() | numberSymbol: 2"></span>
                                         </span>
                                         <div class="btn-group" role="group" data-ng-if="!elementCell.ElementField.UseFixedValue && elementCell.ElementField.IndexEnabled">
                                             <button data-uib-tooltip="Increase" data-tooltip-append-to-body="true" type="button" data-ng-click="increaseElementCellNumericValue(elementCell)" data-ng-disabled="isSaving" class="btn btn-default btn-xs">+</button>
@@ -109,29 +109,29 @@
                                         </div>
                                     </div>
                                     <span data-ng-if="elementCell.ElementField.DataType === 6">
-                                        {{ elementCell.SelectedElementItem.Name }}
+                                        <span data-ng-bind="elementCell.SelectedElementItem.Name"></span>
                                     </span>
                                     <span data-ng-if="elementCell.ElementField.DataType === 11">
-                                        {{ elementItem.directIncome() | numberSymbol: 2 }}
+                                        <span data-ng-bind="elementItem.directIncome() | numberSymbol: 2"></span>
                                     </span>
                                     <span data-ng-if="elementCell.ElementField.DataType === 12">
-                                        {{ elementItem.multiplier() | numberSymbol: 2 }}
+                                        <span data-ng-bind="elementItem.multiplier() | numberSymbol: 2"></span>
                                     </span>
                                 </td>
                                 <!-- Direct Income -->
                                 <td data-ng-if="resourcePool.selectedElement().directIncomeField() && resourcePool.selectedElement().elementFieldIndexSet().length > 0">
-                                    {{ elementItem.totalDirectIncome() | numberSymbol: 2 }}
+                                    <span data-ng-bind="elementItem.totalDirectIncome() | numberSymbol: 2"></span>
                                 </td>
                                 <!-- CMRP Income & Details -->
                                 <td data-ng-if="displayIndexDetails" data-ng-repeat="cellIndex in elementItem.elementCellIndexSet()">
-                                    {{ cellIndex.indexIncome() | numberSymbol: 2 }}
+                                    <span data-ng-bind="cellIndex.indexIncome() | numberSymbol: 2"></span>
                                 </td>
                                 <td data-ng-if="resourcePool.selectedElement().elementFieldIndexSet().length > 1">
-                                    {{ elementItem.totalResourcePoolIncome() | numberSymbol: 2 }}
+                                    <span data-ng-bind="elementItem.totalResourcePoolIncome() | numberSymbol: 2"></span>
                                 </td>
                                 <!-- Total Income -->
                                 <td data-ng-if="resourcePool.InitialValue > 0 || resourcePool.selectedElement().directIncomeField()" data-ng-class="{ 'incomeStatusLow': elementItem.incomeStatus() === 'low', 'incomeStatusHigh': elementItem.incomeStatus() === 'high' }">
-                                    {{ elementItem.totalIncome() | numberSymbol: 2 }}
+                                    <span data-ng-bind="elementItem.totalIncome() | numberSymbol: 2"></span>
                                 </td>
                             </tr>
                         </tbody>
@@ -144,26 +144,26 @@
                                 <!-- Fields -->
                                 <td data-ng-repeat="field in resourcePool.selectedElement().ElementFieldSet | orderBy: 'SortOrder'">
                                     <span data-ng-if="field.DataType === 11">
-                                        {{ resourcePool.selectedElement().directIncome() | numberSymbol: 2 }}
+                                        <span data-ng-bind="resourcePool.selectedElement().directIncome() | numberSymbol: 2"></span>
                                     </span>
                                     <span data-ng-if="field.DataType === 12">
-                                        {{ resourcePool.selectedElement().multiplier() | numberSymbol: 2 }}
+                                        <span data-ng-bind="resourcePool.selectedElement().multiplier() | numberSymbol: 2"></span>
                                     </span>
                                 </td>
                                 <!-- Direct Income -->
                                 <td data-ng-if="resourcePool.selectedElement().directIncomeField() && resourcePool.selectedElement().elementFieldIndexSet().length > 0">
-                                    {{ resourcePool.selectedElement().totalDirectIncome() | numberSymbol: 2 }}
+                                    <span data-ng-bind="resourcePool.selectedElement().totalDirectIncome() | numberSymbol: 2"></span>
                                 </td>
                                 <!-- CMRP Income & Details -->
                                 <td data-ng-if="displayIndexDetails" data-ng-repeat="field in resourcePool.selectedElement().elementFieldIndexSet()">
-                                    {{ field.indexIncome() | numberSymbol: 2 }}
+                                    <span data-ng-bind="field.indexIncome() | numberSymbol: 2"></span>
                                 </td>
                                 <td data-ng-if="resourcePool.selectedElement().elementFieldIndexSet().length > 1">
-                                    {{ resourcePool.selectedElement().totalResourcePoolAmount() | numberSymbol: 2 }} <!-- Same as income -->
+                                    <span data-ng-bind="resourcePool.selectedElement().totalResourcePoolAmount() | numberSymbol: 2"></span> <!-- Same as income -->
                                 </td>
                                 <!-- Total Income -->
                                 <td data-ng-if="resourcePool.InitialValue > 0 || resourcePool.selectedElement().directIncomeField()">
-                                    {{ resourcePool.selectedElement().totalIncome() | numberSymbol: 2 }}
+                                    <span data-ng-bind="resourcePool.selectedElement().totalIncome() | numberSymbol: 2"></span>
                                 </td>
                             </tr>
                             <!-- Functions -->

@@ -1,8 +1,8 @@
-﻿using System.Web.Mvc;
-using System.Web.Routing;
-
-namespace forCrowd.WealthEconomy.Web
+﻿namespace forCrowd.WealthEconomy.Web
 {
+    using System.Web.Mvc;
+    using System.Web.Routing;
+
     public class MvcRouteConfig
     {
         public static void RegisterRoutes(RouteCollection routes)
@@ -21,7 +21,7 @@ namespace forCrowd.WealthEconomy.Web
             routes.MapPageRoute(
                 routeName: "Default",
                 routeUrl: "{*catchall}",
-                physicalFile: "~/main.aspx?v=0.39");
+                physicalFile: "~/main.aspx?v=0.40");
         }
     }
 }

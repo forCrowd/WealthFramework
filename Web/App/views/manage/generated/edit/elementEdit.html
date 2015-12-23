@@ -17,7 +17,7 @@
             <div class="form-group has-error" data-ng-show="vm.entityErrors">
                 <ul>
                     <li data-ng-repeat="error in vm.entityErrors">
-                        <label class="control-label">{{ error.errorMessage }}</label>
+                        <label data-ng-bind="error.errorMessage" class="control-label"></label>
                     </li>
                 </ul>
             </div>
@@ -31,6 +31,17 @@
                 <label for="Name" class="control-label col-md-2">Element</label>
                 <div class="col-md-10" data-ng-class="{'has-error': editForm.Name.$invalid && !editForm.Name.$pristine}">
                     <input id="Name" name="Name" type="text" data-ng-model="vm.element.Name" class="form-control" required />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="IsMainElement" class="control-label col-md-2">Is Main Element</label>
+                <div class="col-md-10" data-ng-class="{'has-error': editForm.IsMainElement.$invalid && !editForm.IsMainElement.$pristine}">
+                    <label class="radio-inline">
+                        <input id="IsMainElement_True" name="IsMainElement" type="radio" data-ng-model="vm.element.IsMainElement" data-ng-value="true"> True
+                    </label>
+                    <label class="radio-inline">
+                        <input id="IsMainElement_False" name="IsMainElement" type="radio" data-ng-model="vm.element.IsMainElement" data-ng-value="false"> False
+                    </label>
                 </div>
             </div>
             <div class="form-group">

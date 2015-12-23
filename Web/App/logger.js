@@ -19,6 +19,7 @@
             forSource: forSource,
             log: log,
             logError: logError,
+            logInfo: logInfo,
             logSuccess: logSuccess,
             logWarning: logWarning
         };
@@ -28,7 +29,6 @@
         function configureToastr() {
             toastr.options = {
                 "positionClass": "toast-bottom-right"
-                //,"preventDuplicates": true
             }
         }
 
@@ -36,41 +36,54 @@
             return {
                 log: function (m, d, s, t, o) { log(m, d, src, s, t, o); },
                 logError: function (m, d, s, t, o) { logError(m, d, src, s, t, o); },
+                logInfo: function (m, d, s, t, o) { logInfo(m, d, src, s, t, o); },
                 logSuccess: function (m, d, s, t, o) { logSuccess(m, d, src, s, t, o); },
                 logWarning: function (m, d, s, t, o) { logWarning(m, d, src, s, t, o); },
             };
         }
 
         function log(message, data, source, showToast, title, optionsOverride) {
-            logIt(message, data, source, showToast, title, optionsOverride, 'info');
-        }
-
-        function logWarning(message, data, source, showToast, title, optionsOverride) {
-            logIt(message, data, source, showToast, title, optionsOverride, 'warning');
-        }
-
-        function logSuccess(message, data, source, showToast, title, optionsOverride) {
-            logIt(message, data, source, showToast, title, optionsOverride, 'success');
+            logIt(message, data, source, showToast, title, optionsOverride, 'debug');
         }
 
         function logError(message, data, source, showToast, title, optionsOverride) {
             logIt(message, data, source, showToast, title, optionsOverride, 'error');
         }
 
+        function logInfo(message, data, source, showToast, title, optionsOverride) {
+            logIt(message, data, source, showToast, title, optionsOverride, 'info');
+        }
+
+        function logSuccess(message, data, source, showToast, title, optionsOverride) {
+            logIt(message, data, source, showToast, title, optionsOverride, 'success');
+        }
+
+        function logWarning(message, data, source, showToast, title, optionsOverride) {
+            logIt(message, data, source, showToast, title, optionsOverride, 'warning');
+        }
+
         function logIt(message, data, source, showToast, title, optionsOverride, toastType) {
             showToast = typeof showToast === 'undefined' ? false : showToast;
-            var write = (toastType === 'error') ? $log.error : $log.log;
+            var currentDateTime = new Date().getHours() + ':' +
+                new Date().getMinutes() + ':' +
+                new Date().getSeconds();
             source = source ? '[' + source + '] ' : '';
-            write(source, message, data);
+            var write;
+            switch (toastType) {
+                case 'debug': write = $log.debug; break;
+                case 'error': write = $log.error; break;
+                case 'info': write = $log.info; break;
+                case 'success': write = $log.log; break;
+                case 'warning': write = $log.warn; break;
+            }
+            write(currentDateTime, source, message, data);
             if (showToast) {
-                if (toastType === 'error') {
-                    toastr.error(message, title, optionsOverride);
-                } else if (toastType === 'warning') {
-                    toastr.warning(message, title, optionsOverride);
-                } else if (toastType === 'success') {
-                    toastr.success(message, title, optionsOverride);
-                } else {
-                    toastr.info(message, title, optionsOverride);
+                switch (toastType) {
+                    case 'debug': toastr.info(message, title, optionsOverride); break;
+                    case 'error': toastr.error(message, title, optionsOverride); break;
+                    case 'info': toastr.info(message, title, optionsOverride); break;
+                    case 'success': toastr.success(message, title, optionsOverride); break;
+                    case 'warning': toastr.warning(message, title, optionsOverride); break;
                 }
             }
         }

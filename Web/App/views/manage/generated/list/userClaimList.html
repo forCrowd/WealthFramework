@@ -31,19 +31,19 @@
         </tr>
         <tr data-ng-repeat="userClaim in vm.userClaimSet">
             <td>
-                {{ userClaim.Id }}
+                <span data-ng-bind="userClaim.Id"></span>
             </td>
             <td>
-                {{ userClaim.User.Email }}
+                <span data-ng-bind="userClaim.User.Email"></span>
             </td>
             <td>
-                {{ userClaim.ClaimType }}
+                <span data-ng-bind="userClaim.ClaimType"></span>
             </td>
             <td>
-                {{ userClaim.ClaimValue }}
+                <span data-ng-bind="userClaim.ClaimValue"></span>
             </td>
             <td>
-                <a href="/manage/generated/userClaim/edit/{{ userClaim.Id }}">Edit</a> |
+                <a data-ng-href="/manage/generated/userClaim/edit/{{ userClaim.Id }}">Edit</a> |
                 <a href="" data-ng-click="vm.deleteUserClaim(userClaim)">
                     Delete
                 </a>

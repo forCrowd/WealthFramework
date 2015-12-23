@@ -25,13 +25,13 @@
         </tr>
         <tr data-ng-repeat="userRole in vm.userRoleSet">
             <td>
-                {{ userRole.User.Email }}
+                <span data-ng-bind="userRole.User.Email"></span>
             </td>
             <td>
-                {{ userRole.RoleId }}
+                <span data-ng-bind="userRole.RoleId"></span>
             </td>
             <td>
-                <a href="/manage/generated/userRole/edit/{{ userRole.UserId }}">Edit</a> |
+                <a data-ng-href="/manage/generated/userRole/edit/{{ userRole.UserId }}">Edit</a> |
                 <a href="" data-ng-click="vm.deleteUserRole(userRole)">
                     Delete
                 </a>

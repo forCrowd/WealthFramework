@@ -25,12 +25,11 @@
         // Return
         return UserElementCell;
 
-        /*** Implementations ***/
-
         function UserElementCell() {
 
             var self = this;
 
+            // Local variables
             self.backingFields = {
                 _DecimalValue: null
             };

@@ -97,13 +97,13 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
         }
 #>
             <td>
-                {{ <#= GetPropertyPath(property, typeMapper, codeStringGenerator) #> }}
+                <span data-ng-bind="<#= GetPropertyPath(property, typeMapper, codeStringGenerator) #>"></span>
             </td>
 <#
     }
 #>
             <td>
-                <a href="/manage/generated/<#= entityVariable #>/edit/{{ <#= entityVariable #>.<#= primaryKey #> }}">Edit</a> |
+                <a data-ng-href="/manage/generated/<#= entityVariable #>/edit/{{ <#= entityVariable #>.<#= primaryKey #> }}">Edit</a> |
                 <a href="" data-ng-click="vm.<#= entityDeleteMethod #>(<#= entityVariable #>)">
                     Delete
                 </a>

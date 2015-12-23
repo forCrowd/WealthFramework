@@ -28,16 +28,16 @@
         </tr>
         <tr data-ng-repeat="userElementField in vm.userElementFieldSet">
             <td>
-                {{ userElementField.User.Email }}
+                <span data-ng-bind="userElementField.User.Email"></span>
             </td>
             <td>
-                {{ userElementField.ElementField.Name }}
+                <span data-ng-bind="userElementField.ElementField.Name"></span>
             </td>
             <td>
-                {{ userElementField.Rating }}
+                <span data-ng-bind="userElementField.Rating"></span>
             </td>
             <td>
-                <a href="/manage/generated/userElementField/edit/{{ userElementField.UserId }}">Edit</a> |
+                <a data-ng-href="/manage/generated/userElementField/edit/{{ userElementField.UserId }}">Edit</a> |
                 <a href="" data-ng-click="vm.deleteUserElementField(userElementField)">
                     Delete
                 </a>

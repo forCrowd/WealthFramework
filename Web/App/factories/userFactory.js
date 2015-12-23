@@ -11,21 +11,27 @@
         logger = logger.forSource(factoryId);
 
         var accessTokenUrl = '/api/Token';
+        var changeEmailUrl = '/api/Account/ChangeEmail';
         var changePasswordUrl = '/api/Account/ChangePassword';
+        var confirmEmailUrl = '/api/Account/ConfirmEmail';
         var logoutUrl = '/api/Account/Logout';
         var registerUrl = '/api/Account/Register';
+        var resendConfirmationEmailUrl = '/api/Account/ResendConfirmationEmail';
 
         var currentUser = null;
         var getCurrentUserPromise = null;
         var isAuthenticatedPromise = null;
 
         // Service methods
+        $delegate.changeEmail = changeEmail;
         $delegate.changePassword = changePassword;
+        $delegate.confirmEmail = confirmEmail;
         $delegate.getAccessToken = getAccessToken;
         $delegate.getCurrentUser = getCurrentUser;
         $delegate.isAuthenticated = isAuthenticated;
         $delegate.logout = logout;
         $delegate.register = register;
+        $delegate.resendConfirmationEmail = resendConfirmationEmail;
 
         $delegate.updateAnonymousChanges = updateAnonymousChanges;
         $delegate.updateElementMultiplier = updateElementMultiplier;
@@ -37,8 +43,16 @@
 
         /*** Implementations ***/
 
+        function changeEmail(changeEmailBindingModel) {
+            return $http.post(changeEmailUrl, changeEmailBindingModel);
+        }
+
         function changePassword(changePasswordBindingModel) {
             return $http.post(changePasswordUrl, changePasswordBindingModel);
+        }
+
+        function confirmEmail(confirmEmailBindingModel) {
+            return $http.post(confirmEmailUrl, confirmEmailBindingModel);
         }
 
         function getAccessToken(email, password, resetDataContext) {
@@ -104,14 +118,15 @@
                 // Since there is a delay between client-side changes and actual save operation (editor.js - saveChanges(1500)), these entities might be deleted but not yet saved. 
                 // To prevent having the exception of creating an entity with the same keys twice, search 'deleted' ones and restore it back to life! / SH - 02 Dec. '15
                 var deletedUserCells = dataContext.getEntities(['UserElementCell'], [breeze.EntityState.Deleted]);
-                deletedUserCells.forEach(function (deletedUserCell) {
-                    if (deletedUserCell.UserId === user.Id && deletedUserCell.ElementCellId === elementCell.Id) {
-                        userCell = deletedUserCell;
-                        userCell.entityAspect.rejectChanges();
-                        userCell.DecimalValue = elementCell.ElementField.DataType === 12 ? 0 : 50; // TODO ?
-                        return userCell;
-                    }
+                var userCells = deletedUserCells.filter(function (deletedUserCell) {
+                    return deletedUserCell.UserId === user.Id && deletedUserCell.ElementCellId === elementCell.Id;
                 });
+
+                if (userCells.length > 0) {
+                    userCell = userCells[0];
+                    userCell.entityAspect.rejectChanges();
+                    userCell.DecimalValue = elementCell.ElementField.DataType === 12 ? 0 : 50; // TODO ?
+                }
             }
 
             return userCell;
@@ -126,14 +141,15 @@
                 // Since there is a delay between client-side changes and actual save operation (editor.js - saveChanges(1500)), these entities might be deleted but not yet saved. 
                 // To prevent having the exception of creating an entity with the same keys twice, search 'deleted' ones and restore it back to life! / SH - 02 Dec. '15
                 var deletedUserFields = dataContext.getEntities(['UserElementField'], [breeze.EntityState.Deleted]);
-                deletedUserFields.forEach(function (deletedUserField) {
-                    if (deletedUserField.UserId === user.Id && deletedUserField.ElementFieldId === elementField.Id) {
-                        userField = deletedUserField;
-                        userField.entityAspect.rejectChanges();
-                        userField.Rating = 50;
-                        return userField;
-                    }
+                var userFields = deletedUserFields.filter(function (deletedUserField) {
+                    return deletedUserField.UserId === user.Id && deletedUserField.ElementFieldId === elementField.Id;
                 });
+
+                if (userFields.length > 0) {
+                    userField = userFields[0];
+                    userField.entityAspect.rejectChanges();
+                    userField.Rating = 50;
+                }
             }
 
             return userField;
@@ -148,14 +164,15 @@
                 // Since there is a delay between client-side changes and actual save operation (editor.js - saveChanges(1500)), these entities might be deleted but not yet saved. 
                 // To prevent having the exception of creating an entity with the same keys twice, search 'deleted' ones and restore it back to life! / SH - 02 Dec. '15
                 var deletedUserResourcePools = dataContext.getEntities(['UserResourcePool'], [breeze.EntityState.Deleted]);
-                deletedUserResourcePools.forEach(function (deletedUserResourcePool) {
-                    if (deletedUserResourcePool.UserId === user.Id && deletedUserResourcePool.ResourcePoolId === resourcePool.Id) {
-                        userResourcePool = deletedUserResourcePool;
-                        userResourcePool.entityAspect.rejectChanges();
-                        userResourcePool.ResourcePoolRate = 10;
-                        return userResourcePool;
-                    }
+                var userResourcePools = deletedUserResourcePools.filter(function (deletedUserResourcePool) {
+                    return deletedUserResourcePool.UserId === user.Id && deletedUserResourcePool.ResourcePoolId === resourcePool.Id;
                 });
+
+                if (userResourcePools.length > 0) {
+                    userResourcePool = userResourcePools[0];
+                    userResourcePool.entityAspect.rejectChanges();
+                    userResourcePool.ResourcePoolRate = 10;
+                }
             }
 
             return userResourcePool;
@@ -203,6 +220,10 @@
                 });
         }
 
+        function resendConfirmationEmail(userId) {
+            return $http.post(resendConfirmationEmailUrl, { UserId: userId });
+        }
+
         function logout() {
             return $http.post(logoutUrl)
                 .success(function () {
@@ -242,9 +263,7 @@
         function updateElementMultiplier(element, updateType) {
 
             // Find user element cell
-            for (var itemIndex = 0; itemIndex < element.ElementItemSet.length; itemIndex++) {
-
-                var item = element.ElementItemSet[itemIndex];
+            element.ElementItemSet.forEach(function (item) {
 
                 var multiplierCell;
                 for (var cellIndex = 0; cellIndex < item.ElementCellSet.length; cellIndex++) {
@@ -256,33 +275,27 @@
                 }
 
                 updateElementCellMultiplier(multiplierCell, updateType);
-            }
+            });
 
             // Update related
 
             // Update items
-            for (var i = 0; i < element.ElementItemSet.length; i++) {
-                var item = element.ElementItemSet[i];
+            element.ElementItemSet.forEach(function (item) {
                 item.setMultiplier();
-            }
+            });
 
-            for (var i = 0; i < element.ElementFieldSet.length; i++) {
-                var field = element.ElementFieldSet[i];
+            element.ElementFieldSet.forEach(function(field){
 
-                if (!field.IndexEnabled) {
-                    continue;
+                if (field.IndexEnabled) {
+                    // Update numeric value cells
+                    field.ElementCellSet.forEach(function (cell) {
+                        cell.setNumericValueMultiplied(false);
+                    });
+
+                    // Update fields
+                    field.setNumericValueMultiplied();
                 }
-
-                // Update numeric value cells
-                for (var cellIndex = 0; cellIndex < field.ElementCellSet.length; cellIndex++) {
-
-                    var cell = field.ElementCellSet[cellIndex];
-                    cell.setNumericValueMultiplied(false);
-                }
-
-                // Update fields
-                field.setNumericValueMultiplied();
-            }
+            });
         }
 
         function updateElementCellMultiplier(elementCell, updateType) {

@@ -1,16 +1,15 @@
-﻿using forCrowd.WealthEconomy.BusinessObjects;
-using Microsoft.AspNet.Identity;
-using Microsoft.Owin.Security;
-using Microsoft.Owin.Security.Cookies;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.ModelBinding;
-using forCrowd.WealthEconomy.Web.Controllers.Extensions;
-using forCrowd.WealthEconomy.Web.Models;
-
-namespace forCrowd.WealthEconomy.Web.Controllers.Api
+﻿namespace forCrowd.WealthEconomy.Web.Controllers.Api
 {
+    using BusinessObjects;
+    using Extensions;
+    using Models;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.Owin.Security;
+    using Microsoft.Owin.Security.Cookies;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+    using System.Web.Http;
+
     [RoutePrefix("api/Account")]
     public class AccountController : BaseApiController
     {
@@ -27,6 +26,27 @@ namespace forCrowd.WealthEconomy.Web.Controllers.Api
 
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
+        // POST api/Account/ChangeEmail
+        public async Task<IHttpActionResult> ChangeEmail(ChangeEmailBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Get the user
+            var currentUserId = this.GetCurrentUserId();
+            var result = await UserManager.ChangeEmailAsync(currentUserId.Value, model.Email);
+            var errorResult = GetErrorResult(result);
+
+            if (errorResult != null)
+            {
+                return errorResult;
+            }
+
+            return Ok(string.Empty);
+        }
+
         // POST api/Account/ChangePassword
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
         {
@@ -37,6 +57,27 @@ namespace forCrowd.WealthEconomy.Web.Controllers.Api
 
             var currentUserId = this.GetCurrentUserId();
             var result = await UserManager.ChangePasswordAsync(currentUserId.Value, model.CurrentPassword, model.NewPassword);
+            var errorResult = GetErrorResult(result);
+
+            if (errorResult != null)
+            {
+                return errorResult;
+            }
+
+            return Ok(string.Empty);
+        }
+
+        // POST api/Account/ConfirmEmail
+        public async Task<IHttpActionResult> ConfirmEmail(ConfirmEmailBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var currentUserId = this.GetCurrentUserId();
+
+            var result = await UserManager.ConfirmEmailAsync(currentUserId.Value, model.Token);
             var errorResult = GetErrorResult(result);
 
             if (errorResult != null)
@@ -75,6 +116,15 @@ namespace forCrowd.WealthEconomy.Web.Controllers.Api
 
             // TODO This should be Created?
             return Ok(user);
+        }
+
+        public async Task<IHttpActionResult> ResendConfirmationEmail()
+        {
+            var currentUserId = this.GetCurrentUserId();
+
+            await UserManager.SendConfirmationEmailAsync(currentUserId.Value, true);
+
+            return Ok(string.Empty);
         }
 
         protected override void Dispose(bool disposing)

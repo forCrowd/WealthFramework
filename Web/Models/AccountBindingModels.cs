@@ -4,6 +4,13 @@ namespace forCrowd.WealthEconomy.Web.Models
 {
     // Models used as parameters to AccountController actions.
 
+    public class ChangeEmailBindingModel
+    {
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        public string Email { get; set; }
+    }
+
     public class ChangePasswordBindingModel
     {
         [Required]
@@ -21,6 +28,12 @@ namespace forCrowd.WealthEconomy.Web.Models
         [Display(Name = "Confirm new password")]
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+    }
+
+    public class ConfirmEmailBindingModel
+    {
+        [Required]
+        public string Token { get; set; }
     }
 
     public class RegisterBindingModel

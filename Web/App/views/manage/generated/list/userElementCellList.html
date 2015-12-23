@@ -40,28 +40,28 @@
         </tr>
         <tr data-ng-repeat="userElementCell in vm.userElementCellSet">
             <td>
-                {{ userElementCell.User.Email }}
+                <span data-ng-bind="userElementCell.User.Email"></span>
             </td>
             <td>
-                {{ userElementCell.ElementCell.Id }}
+                <span data-ng-bind="userElementCell.ElementCell.Id"></span>
             </td>
             <td>
-                {{ userElementCell.StringValue }}
+                <span data-ng-bind="userElementCell.StringValue"></span>
             </td>
             <td>
-                {{ userElementCell.BooleanValue }}
+                <span data-ng-bind="userElementCell.BooleanValue"></span>
             </td>
             <td>
-                {{ userElementCell.IntegerValue }}
+                <span data-ng-bind="userElementCell.IntegerValue"></span>
             </td>
             <td>
-                {{ userElementCell.DecimalValue }}
+                <span data-ng-bind="userElementCell.DecimalValue"></span>
             </td>
             <td>
-                {{ userElementCell.DateTimeValue }}
+                <span data-ng-bind="userElementCell.DateTimeValue"></span>
             </td>
             <td>
-                <a href="/manage/generated/userElementCell/edit/{{ userElementCell.UserId }}">Edit</a> |
+                <a data-ng-href="/manage/generated/userElementCell/edit/{{ userElementCell.UserId }}">Edit</a> |
                 <a href="" data-ng-click="vm.deleteUserElementCell(userElementCell)">
                     Delete
                 </a>

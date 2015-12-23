@@ -49,6 +49,7 @@
     <None Include="..\.gitignore">
       <Link>GitHub\.gitignore</Link>
     </None>
+    <None Include="Documents\Survey.docx" />
     <None Include="Documents\Index Income Calculation.xlsx" />
     <None Include="Documents\Release Notes.md" />
     <None Include="Documents\TodoHot.md" />

@@ -46,34 +46,34 @@
         </tr>
         <tr data-ng-repeat="elementField in vm.elementFieldSet">
             <td>
-                {{ elementField.Element.Name }}
+                <span data-ng-bind="elementField.Element.Name"></span>
             </td>
             <td>
-                {{ elementField.Name }}
+                <span data-ng-bind="elementField.Name"></span>
             </td>
             <td>
-                {{ elementField.DataType }}
+                <span data-ng-bind="elementField.DataType"></span>
             </td>
             <td>
-                {{ elementField.SelectedElementId }}
+                <span data-ng-bind="elementField.SelectedElementId"></span>
             </td>
             <td>
-                {{ elementField.UseFixedValue }}
+                <span data-ng-bind="elementField.UseFixedValue"></span>
             </td>
             <td>
-                {{ elementField.IndexEnabled }}
+                <span data-ng-bind="elementField.IndexEnabled"></span>
             </td>
             <td>
-                {{ elementField.IndexCalculationType }}
+                <span data-ng-bind="elementField.IndexCalculationType"></span>
             </td>
             <td>
-                {{ elementField.IndexSortType }}
+                <span data-ng-bind="elementField.IndexSortType"></span>
             </td>
             <td>
-                {{ elementField.SortOrder }}
+                <span data-ng-bind="elementField.SortOrder"></span>
             </td>
             <td>
-                <a href="/manage/generated/elementField/edit/{{ elementField.Id }}">Edit</a> |
+                <a data-ng-href="/manage/generated/elementField/edit/{{ elementField.Id }}">Edit</a> |
                 <a href="" data-ng-click="vm.deleteElementField(elementField)">
                     Delete
                 </a>
