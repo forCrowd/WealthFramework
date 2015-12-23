@@ -75,6 +75,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="/account/accountEdit">Edit</a></li>
                             <li><a href="/account/changeEmail">Change email</a></li>
+                            <li><a href="/account/confirmEmail" data-ng-if="!vm.currentUser.EmailConfirmed">Confirm email</a></li>
                             <li><a href="/account/changePassword">Change password</a></li>
                             <li><a href="" data-ng-click="vm.logout()">Logout</a></li>
                         </ul>

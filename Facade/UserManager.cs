@@ -99,14 +99,17 @@
             var subject = "Confirm your email";
             if (resend) subject += " - Resend";
 
+            var user = await base.FindByIdAsync(userId);
             var token = await base.GenerateEmailConfirmationTokenAsync(userId);
             var encodedToken = System.Net.WebUtility.UrlEncode(token);
 
-            var confirmEmailUrl = string.Format("{0}/?token={1}", ConfirmEmailUrl, encodedToken);
+            var confirmEmailUrl = string.Format("{0}?token={1}", ConfirmEmailUrl, encodedToken);
 
             var sbBody = new System.Text.StringBuilder();
             sbBody.AppendLine("    <p>");
             sbBody.AppendLine("        <b>Wealth Economy - Confirm Your Email</b><br />");
+            sbBody.AppendLine("        <br />");
+            sbBody.AppendFormat("        Email: {0}<br />", user.Email);
             sbBody.AppendLine("        <br />");
             sbBody.AppendLine("        Please click the following link to confirm your email address<br />");
             sbBody.AppendFormat("        <a href='{0}'>Confirm your email address</a>", confirmEmailUrl);

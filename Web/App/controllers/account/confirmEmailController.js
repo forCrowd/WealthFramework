@@ -10,6 +10,7 @@
 
         var vm = this;
         vm.currentUser = null,
+        vm.isAuthenticated = false;
         vm.isResendDisabled = false;
         vm.resendConfirmationEmail = resendConfirmationEmail;
 
@@ -20,18 +21,18 @@
             userFactory.isAuthenticated()
                 .then(function (isAuthenticated) {
 
+                    vm.isAuthenticated = isAuthenticated;
+
                     if (!isAuthenticated) {
-                        // TODO Unauthorized!
                         return;
                     }
 
                     userFactory.getCurrentUser()
                         .then(function (currentUser) {
 
-                            vm.currentUser = currentUser;
-
                             // If there is no token, no need to continue
                             if (typeof $routeParams.token === 'undefined') {
+                                vm.currentUser = currentUser; // Set currentUser, so UI can display the correct text
                                 return;
                             }
 
@@ -39,9 +40,11 @@
                                 .success(function () {
 
                                     // Set email confirmed to true
+                                    vm.currentUser = currentUser;
                                     vm.currentUser.EmailConfirmed = true;
 
                                     // Clear search param
+                                    // TODO This actually should be done in every fail case as well? Otherwise, location.path(...) calls keeps this token?
                                     $location.search('token', null);
 
                                 })
@@ -56,7 +59,6 @@
                                     }
 
                                     logger.logError(message, null, true);
-
                                 });
                         });
                 });

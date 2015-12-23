@@ -37,6 +37,8 @@ before sending any email to user, check whether it's confirmed?
 
 confirmEmail etc. pages should be behind authorization? handle it in a generic way? the user should access these pages without logging in?
 
+try to merge userFactory.isAuth + currentUser?
+
 elementField.js - DataType prop uses 'broadcast' and dataContext handles this event to create the actual event
 seems nice, and it could be used in other cases.
 however it doesn't return the newly created entity to the caller, which probably is not suitable for most cases?
