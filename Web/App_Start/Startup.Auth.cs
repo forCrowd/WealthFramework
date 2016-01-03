@@ -5,6 +5,7 @@
     using Microsoft.AspNet.Identity;
     using Microsoft.Owin;
     using Microsoft.Owin.Security.Facebook;
+    using Microsoft.Owin.Security.MicrosoftAccount;
     using Microsoft.Owin.Security.OAuth;
     using Owin;
     using Providers;
@@ -39,22 +40,13 @@
             // Enable the application to use bearer tokens to authenticate users
             app.UseOAuthBearerTokens(OAuthServerOptions);
 
-            // Uncomment the following lines to enable logging in with third party login providers
-            //app.UseMicrosoftAccountAuthentication(
-            //    clientId: "",
-            //    clientSecret: "");
-
-            //app.UseTwitterAuthentication(
-            //    consumerKey: "",
-            //    consumerSecret: "");
-
-            // Configure Facebook External Login
+            // Configure Facebook Login
             var facebookAppId = Framework.AppSettings.FacebookAppId;
             var facebookAppSecret = Framework.AppSettings.FacebookAppSecret;
 
             if (!string.IsNullOrWhiteSpace(facebookAppId) && !string.IsNullOrWhiteSpace(facebookAppSecret))
             {
-                var FacebookAuthOptions = new FacebookAuthenticationOptions()
+                var facebookAuthOptions = new FacebookAuthenticationOptions()
                 {
                     AppId = Framework.AppSettings.FacebookAppId,
                     AppSecret = Framework.AppSettings.FacebookAppSecret,
@@ -62,8 +54,24 @@
                     BackchannelHttpHandler = new FacebookBackChannelHandler(),
                     CallbackPath = new PathString("/api/Account/ExternalLoginMiddleware") // Middleware is going to handle this, no need to implement
                 };
-                FacebookAuthOptions.Scope.Add("email");
-                app.UseFacebookAuthentication(FacebookAuthOptions);
+                facebookAuthOptions.Scope.Add("email");
+                app.UseFacebookAuthentication(facebookAuthOptions);
+            }
+
+            // Configure Microsoft Accounts Login
+            var microsoftClientId = Framework.AppSettings.MicrosoftClientId;
+            var microsoftClientSecret = Framework.AppSettings.MicrosoftClientSecret;
+
+            if (!string.IsNullOrWhiteSpace(microsoftClientId) && !string.IsNullOrWhiteSpace(microsoftClientSecret))
+            {
+                var microsoftAccountAuthOptions = new MicrosoftAccountAuthenticationOptions()
+                {
+                    ClientId = Framework.AppSettings.MicrosoftClientId,
+                    ClientSecret = Framework.AppSettings.MicrosoftClientSecret,
+                    CallbackPath = new PathString("/api/Account/ExternalLoginMiddleware") // Middleware is going to handle this, no need to implement
+                };
+                microsoftAccountAuthOptions.Scope.Add("wl.emails");
+                app.UseMicrosoftAccountAuthentication(microsoftAccountAuthOptions);
             }
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()

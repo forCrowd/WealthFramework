@@ -29,6 +29,22 @@ namespace forCrowd.WealthEconomy.Framework
         }
 
         /// <summary>
+        /// Microsoft client id
+        /// </summary>
+        public static string MicrosoftClientId
+        {
+            get { return ConfigurationManager.AppSettings["MicrosoftClientId"]; }
+        }
+
+        /// <summary>
+        /// Microsoft client secret
+        /// </summary>
+        public static string MicrosoftClientSecret
+        {
+            get { return ConfigurationManager.AppSettings["MicrosoftClientSecret"]; }
+        }
+ 
+        /// <summary>
         /// Facebook app id
         /// </summary>
         public static string FacebookAppId
