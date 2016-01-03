@@ -1,4 +1,10 @@
-﻿* apply "// Set otherUsers' properties" section in custom resourcepoolservice.js to all getResourcePool options?
+﻿* when using fb account, anonymous changes will be lost! try to implement anonymous user for all actions..
+
+* throw exception instead; logger.logError('Load metadata first!');
+
+* cookieauth was necessary to use browser to reach auth pages - elmah.axd for instance and /api/..
+
+* apply "// Set otherUsers' properties" section in custom resourcepoolservice.js to all getResourcePool options?
 
 * sales price is actually not correct in CMRP samples?
 should it show sales price including cmrp tax instead? it's not clear where the money comes from..?

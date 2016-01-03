@@ -1,12 +1,12 @@
-﻿using System;
-using System.Net;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Web.Http;
-
-namespace forCrowd.WealthEconomy.Web.Results
+﻿namespace forCrowd.WealthEconomy.Web.Results
 {
+    using System;
+    using System.Net;
+    using System.Net.Http;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using System.Web.Http;
+
     public class InternalServerErrorResult : IHttpActionResult
     {
         public InternalServerErrorResult(HttpRequestMessage request)

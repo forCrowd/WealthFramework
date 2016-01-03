@@ -1,34 +1,33 @@
-﻿using forCrowd.WealthEconomy.BusinessObjects;
-using forCrowd.WealthEconomy.Facade;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http;
-using forCrowd.WealthEconomy.Web.Controllers.Extensions;
-
-namespace forCrowd.WealthEconomy.Web.Controllers.Api
+﻿namespace forCrowd.WealthEconomy.Web.Controllers.Api
 {
-    [CustomAuthorize]
+    using BusinessObjects;
+    using Extensions;
+    using Filters;
+    using Microsoft.AspNet.Identity.Owin;
+    using System.Threading.Tasks;
+    using System.Web;
+    using System.Web.Http;
+
+    [Authorize]
+    [RequireHttps]
     public abstract class BaseApiController : ApiController
     {
-        private UserManager _userManager;
+        private UserManagerFactory _userManager;
 
         public BaseApiController()
         {
         }
 
-        public BaseApiController(UserManager userManager)
+        public BaseApiController(UserManagerFactory userManager)
         {
             UserManager = userManager;
         }
 
-        public UserManager UserManager
+        public UserManagerFactory UserManager
         {
             get
             {
-                return _userManager ?? HttpContext.Current.GetOwinContext().GetUserManager<UserManager>();
+                return _userManager ?? HttpContext.Current.GetOwinContext().GetUserManager<UserManagerFactory>();
             }
             private set
             {

@@ -61,7 +61,6 @@ foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
     var relatedProperties = typeMapper.GetRelatedNavigationProperties(entityType);
 	var hasUserId = simpleProperties.Any(property => property.Name == "UserId");
 	var businessObjectType = typeMapper.GetBusinessObjectType(entityTypeName);
-	var authorizationAttribute = typeMapper.GetAttribute<ODataControllerAuthorizationAttribute>(businessObjectType);
 	
 	var outputFileName = string.Format(@"{0}.cs", controllerName);
 
@@ -86,9 +85,6 @@ namespace forCrowd.WealthEconomy.Web.Controllers.OData
     using Web.Controllers.Extensions;
 <# } #>
 
-<# if (authorizationAttribute != null) { #>
-    [Authorize(Roles="<#= authorizationAttribute.Value #>")]
-<# } #>
     public abstract class <#= baseControllerName #> : BaseODataController
     {
         public <#= baseControllerName #>()

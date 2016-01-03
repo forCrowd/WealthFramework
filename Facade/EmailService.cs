@@ -7,15 +7,17 @@
 
     public class EmailService : IIdentityMessageService
     {
-        public bool HasValidSmtpConfiguration()
+        public bool HasValidConfiguration()
         {
-            var hasValidConfig = false;
+            var hasRegistrationEmailAddress = !string.IsNullOrWhiteSpace(Framework.AppSettings.RegistrationEmailAddress);
+
+            var hasSmtpClientConfig = false;
 
             try
             {
                 using (var smtpClient = new SmtpClient())
                 {
-                    hasValidConfig = !string.IsNullOrWhiteSpace(smtpClient.Host);
+                    hasSmtpClientConfig = !string.IsNullOrWhiteSpace(smtpClient.Host);
                 }
             }
             catch
@@ -23,28 +25,31 @@
                 // Swallow it, it's going to return 'false' as a result, which is enough
             }
 
-            return hasValidConfig;
+            return hasRegistrationEmailAddress && hasSmtpClientConfig;
         }
 
         public async Task SendAsync(IdentityMessage message)
         {
             // Validate
             // 1. Smtp configuration
-            if (!HasValidSmtpConfiguration())
+            if (!HasValidConfiguration())
                 return;
 
-            var mailMessage = new MailMessage();
-            mailMessage.From = new MailAddress("contact@forcrowd.org", "forCrowd Foundation");
+            var mailMessage = new MailMessage()
+            {
+                From = new MailAddress(Framework.AppSettings.RegistrationEmailAddress, "forCrowd Foundation")
+            };
 
 #if !DEBUG
             // To
             mailMessage.To.Add(new MailAddress(message.Destination));
 
             // Bcc
-            mailMessage.Bcc.Add(new MailAddress(forCrowd.WealthEconomy.Framework.AppSettings.AlertEmailAddress));
+            if (!string.IsNullOrWhiteSpace(Framework.AppSettings.AlertEmailAddress))
+                mailMessage.Bcc.Add(new MailAddress(Framework.AppSettings.AlertEmailAddress));
 #else
             // To
-            mailMessage.To.Add(new MailAddress(forCrowd.WealthEconomy.Framework.AppSettings.AlertEmailAddress));
+            mailMessage.To.Add(new MailAddress(Framework.AppSettings.AlertEmailAddress));
 #endif
 
             mailMessage.Subject = message.Subject;

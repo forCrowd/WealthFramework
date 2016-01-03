@@ -2,10 +2,10 @@
 {
     using BusinessObjects;
     using Extensions;
-    using Models;
     using Microsoft.AspNet.Identity;
     using Microsoft.Owin.Security;
-    using Microsoft.Owin.Security.Cookies;
+    using Models;
+    using System.Linq;
     using System.Net.Http;
     using System.Threading.Tasks;
     using System.Web.Http;
@@ -88,11 +88,105 @@
             return Ok(string.Empty);
         }
 
-        // POST api/Account/Logout
-        public IHttpActionResult Logout()
+        // GET api/Account/ExternalLogin
+        [HttpGet]
+        [AllowAnonymous]
+        public IHttpActionResult ExternalLogin(string provider)
         {
-            Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
-            return Ok(string.Empty);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Request a redirect to the external login provider
+            return new Results.ChallengeResult(Request, provider, "/api/Account/ExternalLoginCallback");
+        }
+
+        // GET api/Account/ExternalLoginCallback
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IHttpActionResult> ExternalLoginCallback(string error = null)
+        {
+            var baseUrl = Framework.AppSettings.BaseUrl;
+
+            // TODO Error check!
+            if (!string.IsNullOrWhiteSpace(error))
+            {
+                // TODO With error message?
+                return Redirect(string.Format("{0}/account/login", baseUrl));
+            }
+
+            var content = await GetLoginInfoText();
+
+            var externalLoginInfo = await Authentication.GetExternalLoginInfoAsync();
+
+            // SignOut first
+            Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
+
+            // Validate external login info
+            if (externalLoginInfo == null)
+            {
+                // TODO With error message?
+                return Redirect(string.Format("{0}/account/login", baseUrl));
+            }
+
+            // Validate email
+            var email = externalLoginInfo.Email;
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                // TODO With error message?
+                return Redirect(string.Format("{0}/account/login", baseUrl));
+            }
+
+            var tempToken = string.Empty;
+            var user = await UserManager.FindAsync(externalLoginInfo.Login);
+
+            // There is no externalLogin with these info
+            if (user == null)
+            {
+                user = await UserManager.FindByEmailAsync(externalLoginInfo.Email);
+
+                // And there is no user with this email address: New user
+                if (user == null)
+                {
+                    user = new User(email);
+
+                    var result = await UserManager.CreateAsync(user, externalLoginInfo.Login);
+
+                    var errorResult = GetErrorResult(result);
+                    if (errorResult != null)
+                    {
+                        // TODO This has to be a redirect?
+                        return errorResult;
+                    }
+                }
+                else // There is a user with this email: Link accounts
+                {
+                    var result = await UserManager.LinkLoginAsync(user, externalLoginInfo.Login);
+
+                    var errorResult = GetErrorResult(result);
+                    if (errorResult != null)
+                    {
+                        // TODO This has to be a redirect?
+                        return errorResult;
+                    }
+                }
+            }
+            else // Existing user
+            {
+                // If the email address has changed meanwhile
+                if (user.Email != email)
+                    user.Email = email;
+
+                await UserManager.AddTempTokenClaimAsync(user);
+            }
+
+            // Get the temp token
+            tempToken = user.Claims.Single(claim => claim.ClaimType == "TempToken").ClaimValue;
+
+            // Redirect
+            var location = string.Format("{0}/account/externalLogin?tempToken={1}", baseUrl, tempToken);
+            return Redirect(location);
         }
 
         // POST api/Account/Register
@@ -118,6 +212,7 @@
             return Ok(user);
         }
 
+        // POST api/Account/ResendConfirmationEmail
         public async Task<IHttpActionResult> ResendConfirmationEmail()
         {
             var currentUserId = this.GetCurrentUserId();
@@ -171,6 +266,34 @@
             }
 
             return null;
+        }
+
+        private async Task<string> GetLoginInfoText()
+        {
+            var loginInfo = await Authentication.GetExternalLoginInfoAsync();
+
+            var text = string.Empty;
+
+            if (loginInfo != null)
+            {
+                text += "loginInfo.DefaultUserName: " + loginInfo.DefaultUserName + " - ";
+                text += "loginInfo.Email: " + loginInfo.Email + " - ";
+                text += "loginInfo.ExternalIdentity.AuthenticationType: " + loginInfo.ExternalIdentity.AuthenticationType + " - ";
+                text += "loginInfo.ExternalIdentity.Claims.Count(): " + loginInfo.ExternalIdentity.Claims.Count() + " - ";
+                foreach (var claim in loginInfo.ExternalIdentity.Claims)
+                {
+                    text += "claim.Type: " + claim.Type + " - ";
+                    text += "claim.Value: " + claim.Value + " - ";
+                }
+                text += "loginInfo.ExternalIdentity.IsAuthenticated: " + loginInfo.ExternalIdentity.IsAuthenticated + " - ";
+                text += "loginInfo.ExternalIdentity.Name: " + loginInfo.ExternalIdentity.Name + " - ";
+                text += "loginInfo.ExternalIdentity.NameClaimType: " + loginInfo.ExternalIdentity.NameClaimType + " - ";
+                text += "loginInfo.ExternalIdentity.RoleClaimType: " + loginInfo.ExternalIdentity.RoleClaimType + " - ";
+                text += "loginInfo.Login.LoginProvider: " + loginInfo.Login.LoginProvider + " - ";
+                text += "loginInfo.Login.ProviderKey: " + loginInfo.Login.ProviderKey + " - ";
+            }
+
+            return text;
         }
 
         #endregion

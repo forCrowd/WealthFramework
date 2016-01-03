@@ -3,13 +3,14 @@
 
     var controllerId = 'confirmEmailController';
     angular.module('main')
-        .controller(controllerId, ['userFactory', '$rootScope', '$routeParams', '$location', 'logger', confirmEmailController]);
+        .controller(controllerId, ['userFactory', '$rootScope', '$location', 'logger', confirmEmailController]);
 
-    function confirmEmailController(userFactory, $rootScope, $routeParams, $location, logger) {
+    function confirmEmailController(userFactory, $rootScope, $location, logger) {
         logger = logger.forSource(controllerId);
 
         var vm = this;
         vm.currentUser = null,
+        vm.isAuthenticated = false;
         vm.isResendDisabled = false;
         vm.resendConfirmationEmail = resendConfirmationEmail;
 
@@ -20,25 +21,27 @@
             userFactory.isAuthenticated()
                 .then(function (isAuthenticated) {
 
+                    vm.isAuthenticated = isAuthenticated;
+
                     if (!isAuthenticated) {
-                        // TODO Unauthorized!
                         return;
                     }
 
                     userFactory.getCurrentUser()
                         .then(function (currentUser) {
 
-                            vm.currentUser = currentUser;
-
                             // If there is no token, no need to continue
-                            if (typeof $routeParams.token === 'undefined') {
+                            var token = $location.search().token;
+                            if (typeof token === 'undefined') {
+                                vm.currentUser = currentUser; // Set currentUser, so UI can display the correct text
                                 return;
                             }
 
-                            userFactory.confirmEmail({ Token: $routeParams.token })
+                            userFactory.confirmEmail({ Token: token })
                                 .success(function () {
 
                                     // Set email confirmed to true
+                                    vm.currentUser = currentUser;
                                     vm.currentUser.EmailConfirmed = true;
 
                                     // Clear search param
@@ -56,7 +59,6 @@
                                     }
 
                                     logger.logError(message, null, true);
-
                                 });
                         });
                 });

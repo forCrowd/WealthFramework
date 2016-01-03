@@ -17,7 +17,7 @@ namespace forCrowd.WealthEconomy.Web.Controllers.OData
                 return NotFound();
             }
 
-            await new UserManager().DeleteUserElementCell(userElementCell.ElementCellId);
+            await new UserManager().DeleteUserElementCellAsync(userElementCell.ElementCellId);
 
             return StatusCode(HttpStatusCode.NoContent);
         }

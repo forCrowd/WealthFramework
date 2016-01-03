@@ -73,6 +73,7 @@
     <None Include="Links\Sector List - Yahoo! Finance Industry Browser.URL" />
     <None Include="Scripts\Build\IISExpress.bat" />
     <None Include="Scripts\Build\MSBuild.bat" />
+    <None Include="Scripts\Build\RunIISExpress.ps1" />
     <None Include="Scripts\Build\WarmUp.ps1" />
     <None Include="Scripts\Database\Local_BackupDatabase.bat" />
     <None Include="Scripts\Database\Local_UpdateDatabase.bat" />

@@ -17,7 +17,7 @@ namespace forCrowd.WealthEconomy.Web.Controllers.OData
                 return NotFound();
             }
 
-            await new UserManager().DeleteUserResourcePool(userResourcePool.ResourcePoolId);
+            await new UserManager().DeleteUserResourcePoolAsync(userResourcePool.ResourcePoolId);
 
             return StatusCode(HttpStatusCode.NoContent);
         }

@@ -1,42 +1,68 @@
 ﻿<div data-ng-controller="registerController as vm">
     <h2>Register</h2>
-    <form name="registerForm">
-        <div class="form-horizontal">
-            <hr />
-            <div class="form-group">
-                <label for="Email" class="control-label col-md-2">Email</label>
-                <div class="col-md-10" data-ng-class="{'has-error': registerForm.Email.$invalid && !registerForm.Email.$pristine}">
-                    <input id="Email" name="Email" type="text" data-ng-model="vm.email" class="form-control" required />
-                </div>
-            </div>
-            <div class="col-md-10 col-md-offset-2">
-                <p class="text-danger">
-                    Password must be at least 6 characters long,<br />
-                    must have at least one lowercase ('a'-'z') and one digit ('0'-'9')
-                </p>
-            </div>
-            <div class="form-group">
-                <label for="Password" class="control-label col-md-2">Password</label>
-                <div class="col-md-10" data-ng-class="{'has-error': registerForm.Password.$invalid && !registerForm.Password.$pristine}">
-                    <input id="Password" name="Password" type="password" data-ng-model="vm.password" class="form-control" required />
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="ConfirmPassword" class="control-label col-md-2">Confirm password</label>
-                <div class="col-md-10" data-ng-class="{'has-error': registerForm.ConfirmPassword.$invalid && !registerForm.ConfirmPassword.$pristine}">
-                    <input id="ConfirmPassword" name="ConfirmPassword" type="password" data-ng-model="vm.confirmPassword" class="form-control" required />
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <button data-ng-click="vm.register()" data-ng-disabled="registerForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
-                        Register
-                    </button>
-                    <!--<button data-ng-click="vm.cancelChanges()" class="btn btn-danger">
-                        Cancel
-                    </button>-->
-                </div>
-            </div>
+    <div class="row">
+        <div class="col-md-8">
+            <section id="registerForm">
+                <form name="registerForm">
+                    <div class="form-horizontal">
+                        <h4>Create a new account.</h4>
+                        <hr />
+                        <div class="form-group">
+                            <label for="Email" class="control-label col-md-2">Email</label>
+                            <div class="col-md-10" data-ng-class="{'has-error': registerForm.Email.$invalid && !registerForm.Email.$pristine}">
+                                <input id="Email" name="Email" type="text" data-ng-model="vm.email" class="form-control" required />
+                            </div>
+                        </div>
+                        <div class="col-md-10 col-md-offset-2">
+                            <p class="text-danger">
+                                Password must be at least 6 characters long,<br />
+                                must have at least one lowercase ('a'-'z') and one digit ('0'-'9')
+                            </p>
+                        </div>
+                        <div class="form-group">
+                            <label for="Password" class="control-label col-md-2">Password</label>
+                            <div class="col-md-10" data-ng-class="{'has-error': registerForm.Password.$invalid && !registerForm.Password.$pristine}">
+                                <input id="Password" name="Password" type="password" data-ng-model="vm.password" class="form-control" required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ConfirmPassword" class="control-label col-md-2">Confirm password</label>
+                            <div class="col-md-10" data-ng-class="{'has-error': registerForm.ConfirmPassword.$invalid && !registerForm.ConfirmPassword.$pristine}">
+                                <input id="ConfirmPassword" name="ConfirmPassword" type="password" data-ng-model="vm.confirmPassword" class="form-control" required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button data-ng-click="vm.register()" data-ng-disabled="registerForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
+                                    Register
+                                </button>
+                                <!--<button data-ng-click="vm.cancelChanges()" class="btn btn-danger">
+                                    Cancel
+                                </button>-->
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </section>
         </div>
-    </form>
+        <div class="col-md-4">
+            <section id="socialLoginForm">
+                <h4>Use another service to log in.</h4>
+                <hr />
+                <div id="socialLoginList">
+                    <a href="/api/Account/ExternalLogin?provider=Facebook" target="_self" class="btn btn-block btn-social btn-facebook">
+                        <span class="fa fa-facebook"></span>
+                        Connect with Facebook
+                    </a>
+                    <a href="/api/Account/ExternalLogin?provider=Google" target="_self" class="btn btn-block btn-social btn-google">
+                        <span class="fa fa-google"></span>
+                        Connect with Google
+                    </a><a href="/api/Account/ExternalLogin?provider=Microsoft" target="_self" class="btn btn-block btn-social btn-microsoft">
+                        <span class="fa fa-windows"></span>
+                        Connect with Microsoft
+                    </a>
+                </div>
+            </section>
+        </div>
+    </div>
 </div>

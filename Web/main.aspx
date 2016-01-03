@@ -8,8 +8,10 @@
 
     <!-- External CSS -->
     <link href="/Content/bootstrap.min.css?v=0.35.1" rel="stylesheet" />
+    <link href="/Content/font-awesome.min.css?v=0.41" rel="stylesheet" />
     <link href="/Content/breeze.directives.css?v=0.24" rel="stylesheet" />
     <link href="/Content/toastr.css?v=0.24" rel="stylesheet" />
+    <link href="/Content/external/bootstrap-social.css?v=0.41" rel="stylesheet" />
 
     <!-- Internal CSS -->
     <link href="/Content/site.css?v=0.37" rel="stylesheet" />
@@ -25,7 +27,6 @@
     <!-- Google Analytics -->
     <script>
         (function (i, s, o, g, r, a, m) {
-            //return;
             i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
                 (i[r].q = i[r].q || []).push(arguments)
             }, i[r].l = 1 * new Date(); a = s.createElement(o),
@@ -47,7 +48,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a href="/" class="navbar-brand">
-                    <%--<span><img src="/Content/images/forCrowd_logo_20x20.jpg?v=0.29.2" /></span>--%>
+                    <!--<span><img src="/Content/images/forCrowd_logo_20x20.jpg?v=0.29.2" /></span>-->
                     Wealth Economy
                 </a>
             </div>
@@ -75,6 +76,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="/account/accountEdit">Edit</a></li>
                             <li><a href="/account/changeEmail">Change email</a></li>
+                            <li><a href="/account/confirmEmail" data-ng-if="!vm.currentUser.EmailConfirmed">Confirm email</a></li>
                             <li><a href="/account/changePassword">Change password</a></li>
                             <li><a href="" data-ng-click="vm.logout()">Logout</a></li>
                         </ul>
@@ -111,7 +113,7 @@
         </footer>
     </div>
 
-    <%--<script src="/Scripts/bootstrap.min.js?v=0.37"></script>--%>
+    <!--<script src="/Scripts/bootstrap.min.js?v=0.37"></script>-->
     <script src="/Scripts/respond.min.js?v=0.24"></script>
     <script src="/Scripts/datajs-1.1.3.min.js?v=0.24"></script>
     <script src="/Scripts/toastr.min.js?v=0.24"></script>
@@ -136,7 +138,7 @@
     <!-- Main -->
     <script src="/App/main.js?v=0.39"></script>
     <script src="/App/logger.js?v=0.40"></script>
-    <script src="/App/route.js?v=0.40"></script>
+    <script src="/App/route.js?v=0.41"></script>
     <script src="/App/authorization.js?v=0.29"></script>
     <script src="/App/exceptionHandlerExtension.js?v=0.39"></script>
 
@@ -152,18 +154,18 @@
 
     <!-- breezeJS -->
     <script src="/App/entityManagerFactory.js?v=0.37"></script>
-    <script src="/App/dataContext.js?v=0.40"></script>
+    <script src="/App/dataContext.js?v=0.41"></script>
     <script src="/App/factories/mainFactory.js?v=0.37"></script>
 
     <!-- Manage Scripts - Generated (Factories, Controllers) -->
     <script src="/App/includes/manageScripts.js?v=0.37"></script>
 
     <!-- Factory extensions -->
-    <script src="/App/factories/userFactory.js?v=0.40"></script>
+    <script src="/App/factories/userFactory.js?v=0.41"></script>
     <script src="/App/factories/resourcePoolFactory.js?v=0.40"></script>
 
     <!-- Content -->
-    <script src="/App/controllers/content/mainController.js?v=0.40"></script>
+    <script src="/App/controllers/content/mainController.js?v=0.41"></script>
     <script src="/App/controllers/content/introductionController.js?v=0.40"></script>
     <script src="/App/controllers/content/basicsController.js?v=0.38"></script>
     <script src="/App/controllers/content/sectorIndexSampleController.js?v=0.37"></script>
@@ -180,12 +182,13 @@
     <script src="/App/controllers/resourcePool/resourcePoolViewController.js?v=0.38"></script>
 
     <!-- Account -->
-    <script src="/App/controllers/account/loginController.js?v=0.38.4"></script>
     <script src="/App/controllers/account/registerController.js?v=0.40"></script>
+    <script src="/App/controllers/account/loginController.js?v=0.38.4"></script>
+    <script src="/App/controllers/account/externalLoginController.js?v=0.41"></script>
     <script src="/App/controllers/account/accountEditController.js?v=0.40"></script>
     <script src="/App/controllers/account/changeEmailController.js?v=0.40"></script>
     <script src="/App/controllers/account/changePasswordController.js?v=0.37"></script>
-    <script src="/App/controllers/account/confirmEmailController.js?v=0.40"></script>
+    <script src="/App/controllers/account/confirmEmailController.js?v=0.41"></script>
 
     <!-- Directives -->
     <script src="/App/directives/resourcePoolEditor/resourcePoolEditor.js?v=0.40"></script>

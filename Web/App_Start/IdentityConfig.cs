@@ -10,17 +10,17 @@
 
     // Configure the application user manager which is used in this application.
 
-    public class UserManager : Facade.UserManager
+    public class UserManagerFactory : UserManager
     {
-        public UserManager(UserStore store)
+        public UserManagerFactory(UserStore store)
             : base(store)
         {
         }
 
-        public static UserManager Create(IdentityFactoryOptions<UserManager> options,
+        public static UserManagerFactory Create(IdentityFactoryOptions<UserManagerFactory> options,
             IOwinContext context)
         {
-            var manager = new UserManager(new UserStore(context.Get<WealthEconomyContext>()));
+            var manager = new UserManagerFactory(new UserStore(context.Get<WealthEconomyContext>()));
             // Configure validation logic for usernames
             manager.UserValidator = new UserValidator<User, int>(manager)
             {

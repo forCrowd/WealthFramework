@@ -1,35 +1,34 @@
-﻿using forCrowd.WealthEconomy.BusinessObjects;
-using forCrowd.WealthEconomy.Facade;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http;
-using System.Web.Http.OData;
-using forCrowd.WealthEconomy.Web.Controllers.Extensions;
-
-namespace forCrowd.WealthEconomy.Web.Controllers.OData
+﻿namespace forCrowd.WealthEconomy.Web.Controllers.OData
 {
-    [CustomAuthorize]
+    using BusinessObjects;
+    using Extensions;
+    using Filters;
+    using Microsoft.AspNet.Identity.Owin;
+    using System.Threading.Tasks;
+    using System.Web;
+    using System.Web.Http;
+    using System.Web.Http.OData;
+
+    [Authorize]
+    [RequireHttps]
     public abstract class BaseODataController : ODataController
     {
-        private UserManager _userManager;
+        private UserManagerFactory _userManager;
 
         public BaseODataController()
         {
         }
 
-        public BaseODataController(UserManager userManager)
+        public BaseODataController(UserManagerFactory userManager)
         {
             UserManager = userManager;
         }
 
-        public UserManager UserManager
+        public UserManagerFactory UserManager
         {
             get
             {
-                return _userManager ?? HttpContext.Current.GetOwinContext().GetUserManager<UserManager>();
+                return _userManager ?? HttpContext.Current.GetOwinContext().GetUserManager<UserManagerFactory>();
             }
             private set
             {

@@ -1,27 +1,16 @@
-﻿using System.Web.Http;
-using System.Web.Http.Filters;
-
-namespace forCrowd.WealthEconomy.Web
+﻿namespace forCrowd.WealthEconomy.Web
 {
+    using System.Web.Http.Filters;
+
     public class SecurityConfig
     {
         public static void RegisterSecurityFilters(HttpFilterCollection filters)
         {
+            // TODO Can't be enabled because "/odata/$metadata" fails too (which should be anonymously accessible) and cannot be set 'AllowAnonymous'
+            // Instead both 'Base' controllers (Api & OData) use Authorize filter
+
             // Authorize required by default
-            //filters.Add(new CustomAuthorizeAttribute());
-        }
-    }
-
-    public class CustomAuthorizeAttribute : AuthorizeAttribute
-    {
-        public override void OnAuthorization(System.Web.Http.Controllers.HttpActionContext actionContext)
-        {
-            base.OnAuthorization(actionContext);
-        }
-
-        public override System.Threading.Tasks.Task OnAuthorizationAsync(System.Web.Http.Controllers.HttpActionContext actionContext, System.Threading.CancellationToken cancellationToken)
-        {
-            return base.OnAuthorizationAsync(actionContext, cancellationToken);
+            //filters.Add(new AuthorizeAttribute());
         }
     }
 }
