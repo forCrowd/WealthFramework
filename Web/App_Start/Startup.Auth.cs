@@ -49,16 +49,22 @@
             //    consumerSecret: "");
 
             // Configure Facebook External Login
-            var FacebookAuthOptions = new FacebookAuthenticationOptions()
+            var facebookAppId = Framework.AppSettings.FacebookAppId;
+            var facebookAppSecret = Framework.AppSettings.FacebookAppSecret;
+
+            if (!string.IsNullOrWhiteSpace(facebookAppId) && !string.IsNullOrWhiteSpace(facebookAppSecret))
             {
-                AppId = Framework.AppSettings.FacebookAppId,
-                AppSecret = Framework.AppSettings.FacebookAppSecret,
-                UserInformationEndpoint = "https://graph.facebook.com/v2.5/me?fields=email",
-                BackchannelHttpHandler = new FacebookBackChannelHandler(),
-                CallbackPath = new PathString("/api/Account/ExternalLoginMiddleware") // Middleware is going to handle this, no need to implement
-            };
-            FacebookAuthOptions.Scope.Add("email");
-            app.UseFacebookAuthentication(FacebookAuthOptions);
+                var FacebookAuthOptions = new FacebookAuthenticationOptions()
+                {
+                    AppId = Framework.AppSettings.FacebookAppId,
+                    AppSecret = Framework.AppSettings.FacebookAppSecret,
+                    UserInformationEndpoint = "https://graph.facebook.com/v2.5/me?fields=email",
+                    BackchannelHttpHandler = new FacebookBackChannelHandler(),
+                    CallbackPath = new PathString("/api/Account/ExternalLoginMiddleware") // Middleware is going to handle this, no need to implement
+                };
+                FacebookAuthOptions.Scope.Add("email");
+                app.UseFacebookAuthentication(FacebookAuthOptions);
+            }
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{

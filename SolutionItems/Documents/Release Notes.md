@@ -3,6 +3,8 @@
 **0.41**
 
 * Social Logins: facebook
+* Registration email address info moved to appSettings
+* Elmah settings moved to Configs folder
 
 **0.40**
 

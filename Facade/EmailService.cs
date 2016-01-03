@@ -34,7 +34,7 @@
                 return;
 
             var mailMessage = new MailMessage();
-            mailMessage.From = new MailAddress("contact@forcrowd.org", "forCrowd Foundation");
+            mailMessage.From = new MailAddress(Framework.AppSettings.RegistrationEmailAddress, "forCrowd Foundation");
 
 #if !DEBUG
             // To

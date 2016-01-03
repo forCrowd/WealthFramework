@@ -13,6 +13,14 @@ namespace forCrowd.WealthEconomy.Framework
         }
 
         /// <summary>
+        /// Registration emails will be send from this address
+        /// </summary>
+        public static string RegistrationEmailAddress
+        {
+            get { return ConfigurationManager.AppSettings["RegistrationEmailAddress"]; }
+        }
+
+        /// <summary>
         /// Alert emails will be send to this address
         /// </summary>
         public static string AlertEmailAddress

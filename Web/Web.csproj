@@ -608,6 +608,8 @@
     <Content Include="Areas\HelpPage\Views\Web.config" />
     <Content Include="Areas\HelpPage\Views\Shared\_Layout.cshtml" />
     <None Include="Configs\connectionStrings.config" />
+    <Content Include="Configs\elmah.errorLog.config" />
+    <Content Include="Configs\elmah.errorMail.config" />
     <None Include="Configs\Setup\0 Readme.txt" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -645,6 +647,8 @@
     <None Include="Configs\appSettings.config">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Configs\Setup\elmah.errorLog.config" />
+    <Content Include="Configs\Setup\elmah.errorMail.config" />
     <None Include="Configs\Setup\system.net.mailSettings.smtp.config">
       <SubType>Designer</SubType>
     </None>
