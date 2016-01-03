@@ -156,6 +156,24 @@
             return "local_" + year + month + day + "_" + hour + minute + second + "@forcrowd.org";
         }
 
+        public async Task<IdentityResult> LinkLoginAsync(User user, UserLoginInfo userLoginInfo)
+        {
+            // Email confirmed
+            user.EmailConfirmed = true;
+
+            // Temp token: Since this is an external login, create temp token; it's going to be used to retrieve the real token by the client
+            Store.AddTempTokenClaim(user);
+
+            var result = await base.AddLoginAsync(user.Id, userLoginInfo);
+
+            if (result.Succeeded)
+            {
+                await Store.SaveChangesAsync();
+            }
+
+            return result;
+        }
+
         public async Task SendConfirmationEmailAsync(int userId, bool resend = false)
         {
             var subject = "Confirm your email";

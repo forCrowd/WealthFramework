@@ -141,18 +141,35 @@
             var tempToken = string.Empty;
             var user = await UserManager.FindAsync(externalLoginInfo.Login);
 
-            // New user
+            // There is no externalLogin with these info
             if (user == null)
             {
-                user = new User(email);
+                user = await UserManager.FindByEmailAsync(externalLoginInfo.Email);
 
-                var result = await UserManager.CreateAsync(user, externalLoginInfo.Login);
-
-                var errorResult = GetErrorResult(result);
-                if (errorResult != null)
+                // And there is no user with this email address: New user
+                if (user == null)
                 {
-                    // TODO This has to be a direct?
-                    return errorResult;
+                    user = new User(email);
+
+                    var result = await UserManager.CreateAsync(user, externalLoginInfo.Login);
+
+                    var errorResult = GetErrorResult(result);
+                    if (errorResult != null)
+                    {
+                        // TODO This has to be a redirect?
+                        return errorResult;
+                    }
+                }
+                else // There is a user with this email: Link accounts
+                {
+                    var result = await UserManager.LinkLoginAsync(user, externalLoginInfo.Login);
+
+                    var errorResult = GetErrorResult(result);
+                    if (errorResult != null)
+                    {
+                        // TODO This has to be a redirect?
+                        return errorResult;
+                    }
                 }
             }
             else // Existing user
