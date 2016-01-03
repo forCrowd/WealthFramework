@@ -1,14 +1,12 @@
-﻿. confirmEmail page - isAuth true / false cases - has / has not token param cases
+﻿. other social logins
 
----
-Sector index -> priority index!
+. after doing manual updates through angular, update breeze! change email bug!
 
----
-social login;
-http://www.asp.net/mvc/overview/security/create-an-aspnet-mvc-5-app-with-facebook-and-google-oauth2-and-openid-sign-on
+. confirmEmail page - isAuth true / false cases - has / has not token param cases
 
-. ssl?
-. requireHttps?
+. Sector index -> priority index!
+
+. biotech's sample doesn't use global.asax - direclty uses startup? no mvc routing? try to convert to that sample?
 
 ---
 content for editor? new content or new resourcepool - content in a content? or page as a new entity?
@@ -17,7 +15,7 @@ url structure:
 /article/[articleId] - universal, short but unreadable?
 
 facebook - /[username]/videos/[videoid]
-twitter - /[username]/statuc/[tweetid]
+twitter - /[username]/status/[tweetid]
 linkedin - /pulse/[articlename+username]
 youtube - /?v=[videoid]
 

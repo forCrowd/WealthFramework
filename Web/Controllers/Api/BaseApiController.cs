@@ -2,12 +2,14 @@
 {
     using BusinessObjects;
     using Extensions;
+    using Filters;
     using Microsoft.AspNet.Identity.Owin;
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Http;
 
     [Authorize]
+    [RequireHttps]
     public abstract class BaseApiController : ApiController
     {
         private UserManagerFactory _userManager;

@@ -5,6 +5,8 @@
 * Social Logins: facebook
 * Registration email address info moved to appSettings
 * Elmah settings moved to Configs folder
+* RequireHttps attribute for WebApi
+* Redirect http requests to https for live
 
 **0.40**
 

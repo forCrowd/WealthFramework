@@ -2,6 +2,7 @@
 {
     using BusinessObjects;
     using Extensions;
+    using Filters;
     using Microsoft.AspNet.Identity.Owin;
     using System.Threading.Tasks;
     using System.Web;
@@ -9,6 +10,7 @@
     using System.Web.Http.OData;
 
     [Authorize]
+    [RequireHttps]
     public abstract class BaseODataController : ODataController
     {
         private UserManagerFactory _userManager;

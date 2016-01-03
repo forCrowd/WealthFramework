@@ -7,6 +7,7 @@
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            // TODO This doesn't do anything?
             filters.Add(new RequireHttpsAttribute());
         }
     }
