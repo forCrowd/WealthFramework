@@ -29,22 +29,6 @@ namespace forCrowd.WealthEconomy.Framework
         }
 
         /// <summary>
-        /// Microsoft client id
-        /// </summary>
-        public static string MicrosoftClientId
-        {
-            get { return ConfigurationManager.AppSettings["MicrosoftClientId"]; }
-        }
-
-        /// <summary>
-        /// Microsoft client secret
-        /// </summary>
-        public static string MicrosoftClientSecret
-        {
-            get { return ConfigurationManager.AppSettings["MicrosoftClientSecret"]; }
-        }
- 
-        /// <summary>
         /// Facebook app id
         /// </summary>
         public static string FacebookAppId
@@ -58,6 +42,38 @@ namespace forCrowd.WealthEconomy.Framework
         public static string FacebookAppSecret
         {
             get { return ConfigurationManager.AppSettings["FacebookAppSecret"]; }
+        }
+
+        /// <summary>
+        /// Google client id
+        /// </summary>
+        public static string GoogleClientId
+        {
+            get { return ConfigurationManager.AppSettings["GoogleClientId"]; }
+        }
+
+        /// <summary>
+        /// Google client secret
+        /// </summary>
+        public static string GoogleClientSecret
+        {
+            get { return ConfigurationManager.AppSettings["GoogleClientSecret"]; }
+        }
+
+        /// <summary>
+        /// Microsoft client id
+        /// </summary>
+        public static string MicrosoftClientId
+        {
+            get { return ConfigurationManager.AppSettings["MicrosoftClientId"]; }
+        }
+
+        /// <summary>
+        /// Microsoft client secret
+        /// </summary>
+        public static string MicrosoftClientSecret
+        {
+            get { return ConfigurationManager.AppSettings["MicrosoftClientSecret"]; }
         }
     }
 }

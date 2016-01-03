@@ -2,7 +2,7 @@
 
 **0.41**
 
-* Social Logins: Facebook, Microsoft
+* Social Logins: Facebook, Google, Microsoft
 * Registration email address info moved to appSettings
 * Elmah settings moved to Configs folder
 * RequireHttps attribute for WebApi
