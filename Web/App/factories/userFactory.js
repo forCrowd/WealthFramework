@@ -4,17 +4,16 @@
     var factoryId = 'userFactory';
     angular.module('main')
         .config(function ($provide) {
-            $provide.decorator(factoryId, ['$delegate', 'dataContext', '$http', '$q', '$rootScope', '$window', 'logger', userFactory]);
+            $provide.decorator(factoryId, ['$delegate', 'dataContext', '$http', '$q', '$rootScope', '$window', '$location', 'logger', userFactory]);
         });
 
-    function userFactory($delegate, dataContext, $http, $q, $rootScope, $window, logger) {
+    function userFactory($delegate, dataContext, $http, $q, $rootScope, $window, $location, logger) {
         logger = logger.forSource(factoryId);
 
         var accessTokenUrl = '/api/Token';
         var changeEmailUrl = '/api/Account/ChangeEmail';
         var changePasswordUrl = '/api/Account/ChangePassword';
         var confirmEmailUrl = '/api/Account/ConfirmEmail';
-        var logoutUrl = '/api/Account/Logout';
         var registerUrl = '/api/Account/Register';
         var resendConfirmationEmailUrl = '/api/Account/ResendConfirmationEmail';
 
@@ -55,10 +54,16 @@
             return $http.post(confirmEmailUrl, confirmEmailBindingModel);
         }
 
-        function getAccessToken(email, password, resetDataContext) {
+        function getAccessToken(email, password, tempToken) {
+
             var accessTokenData = 'grant_type=password&username=' + email + '&password=' + password;
 
-            return $http.post(accessTokenUrl, accessTokenData, { 'Content-Type': 'application/x-www-form-urlencoded' })
+            var tokenUrl = accessTokenUrl;
+            if (typeof tempToken !== 'undefined') {
+                tokenUrl += '?tempToken=' + tempToken;
+            }
+
+            return $http.post(tokenUrl, accessTokenData, { 'Content-Type': 'application/x-www-form-urlencoded' })
                 .success(function (data) {
 
                     // Set access token to the session
@@ -225,31 +230,19 @@
         }
 
         function logout() {
-            return $http.post(logoutUrl)
-                .success(function () {
 
-                    // Remove access token from the session
-                    $window.localStorage.removeItem('access_token');
+            // Remove access token from the session
+            $window.localStorage.removeItem('access_token');
 
-                    // Clear user promise
-                    getCurrentUserPromise = null;
-                    isAuthenticatedPromise = null;
+            // Clear user promise
+            getCurrentUserPromise = null;
+            isAuthenticatedPromise = null;
 
-                    // Clear breeze's metadata store
-                    dataContext.clear();
+            // Clear breeze's metadata store
+            dataContext.clear();
 
-                    // Raise logged out event
-                    $rootScope.$broadcast('userLoggedOut');
-                })
-                .error(function (data, status, headers, config) {
-
-                    // TODO
-                    //logger.logError('Error!', { data: data, status: status, headers: headers, config: config });
-                    if (typeof data.ModelState !== 'undefined') {
-                        var modelErrors = Object.keys(data.ModelState);
-                        logger.logError(data.ModelState[modelErrors], data.ModelState[modelErrors], true);
-                    }
-                });
+            // Raise logged out event
+            $rootScope.$broadcast('userLoggedOut');
         }
 
         function updateAnonymousChanges(oldUser, newUser) {
@@ -284,7 +277,7 @@
                 item.setMultiplier();
             });
 
-            element.ElementFieldSet.forEach(function(field){
+            element.ElementFieldSet.forEach(function (field) {
 
                 if (field.IndexEnabled) {
                     // Update numeric value cells

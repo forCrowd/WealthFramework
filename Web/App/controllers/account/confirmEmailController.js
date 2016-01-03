@@ -3,9 +3,9 @@
 
     var controllerId = 'confirmEmailController';
     angular.module('main')
-        .controller(controllerId, ['userFactory', '$rootScope', '$routeParams', '$location', 'logger', confirmEmailController]);
+        .controller(controllerId, ['userFactory', '$rootScope', '$location', 'logger', confirmEmailController]);
 
-    function confirmEmailController(userFactory, $rootScope, $routeParams, $location, logger) {
+    function confirmEmailController(userFactory, $rootScope, $location, logger) {
         logger = logger.forSource(controllerId);
 
         var vm = this;
@@ -31,12 +31,13 @@
                         .then(function (currentUser) {
 
                             // If there is no token, no need to continue
-                            if (typeof $routeParams.token === 'undefined') {
+                            var token = $location.search().token;
+                            if (typeof token === 'undefined') {
                                 vm.currentUser = currentUser; // Set currentUser, so UI can display the correct text
                                 return;
                             }
 
-                            userFactory.confirmEmail({ Token: $routeParams.token })
+                            userFactory.confirmEmail({ Token: token })
                                 .success(function () {
 
                                     // Set email confirmed to true
@@ -44,7 +45,6 @@
                                     vm.currentUser.EmailConfirmed = true;
 
                                     // Clear search param
-                                    // TODO This actually should be done in every fail case as well? Otherwise, location.path(...) calls keeps this token?
                                     $location.search('token', null);
 
                                 })

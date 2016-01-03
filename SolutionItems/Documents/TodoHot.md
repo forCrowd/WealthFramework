@@ -1,4 +1,17 @@
-﻿content for editor? new content or new resourcepool - content in a content? or page as a new entity?
+﻿. confirmEmail page - isAuth true / false cases - has / has not token param cases
+
+---
+Sector index -> priority index!
+
+---
+social login;
+http://www.asp.net/mvc/overview/security/create-an-aspnet-mvc-5-app-with-facebook-and-google-oauth2-and-openid-sign-on
+
+. ssl?
+. requireHttps?
+
+---
+content for editor? new content or new resourcepool - content in a content? or page as a new entity?
 url structure:
 /[username]/articles/[article name] - prevents duplicate article name - readable, but too long?
 /article/[articleId] - universal, short but unreadable?
@@ -18,26 +31,36 @@ how about users/ organizations/ ?
 don't forget: preserved keywords (account, resourcepool and future ones?), also "inappropriate content"
 
 ---
+vs + nuget updates
+
 Alpha team review!
 
 tests, tests, tests
 
 Find a designer! Ozgur's Ali
 
-Sector index -> priority index!
-
-social media login?
-
 save anon user to db?
 
 ---
+Identity / Account:
+
+. confirmEmail page - isAuth true / false cases - has / has not token param cases
+
+. remember me?
+
+. forgot password?
+
+. Invalidating tokens
+http://stackoverflow.com/questions/22755700/revoke-token-generated-by-usertokenprovider-in-asp-net-identity-2-0/22767286#22767286
+
+. before sending any email to user, check whether it's confirmed?
+
+. confirmEmail etc. pages should be behind authorization? handle it in a generic way? the user shouldn't access these pages without logging in?
+
+. try to merge userFactory.isAuth + currentUser?
+
+---
 angular 1.5 component?
-
-before sending any email to user, check whether it's confirmed?
-
-confirmEmail etc. pages should be behind authorization? handle it in a generic way? the user should access these pages without logging in?
-
-try to merge userFactory.isAuth + currentUser?
 
 elementField.js - DataType prop uses 'broadcast' and dataContext handles this event to create the actual event
 seems nice, and it could be used in other cases.

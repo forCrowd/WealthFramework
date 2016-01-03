@@ -1,14 +1,12 @@
-﻿using forCrowd.WealthEconomy.Facade;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.OAuth;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace forCrowd.WealthEconomy.Web.Providers
+﻿namespace forCrowd.WealthEconomy.Web.Providers
 {
+    using Microsoft.AspNet.Identity.Owin;
+    using Microsoft.Owin.Security;
+    using Microsoft.Owin.Security.OAuth;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
     public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
     {
         private readonly string _publicClientId;
@@ -25,24 +23,41 @@ namespace forCrowd.WealthEconomy.Web.Providers
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-            var userManager = context.OwinContext.GetUserManager<UserManager>();
-            var user = await userManager.FindAsync(context.UserName, context.Password);
+            var userManager = context.OwinContext.GetUserManager<UserManagerFactory>();
 
-            if (user == null)
+            var username = context.UserName;
+            var password = context.Password;
+            var tempToken = context.Request.Query.Get("tempToken");
+            BusinessObjects.User user = null;
+
+            // Special temp token case
+            if (string.IsNullOrWhiteSpace(username) && string.IsNullOrWhiteSpace(password) && !string.IsNullOrWhiteSpace(tempToken))
             {
-                context.SetError("invalid_grant", "The user name or password is incorrect.");
-                return;
+                user = await userManager.FindByTempToken(tempToken);
+
+                if (user == null)
+                {
+                    context.SetError("invalid_grant", "The temp token is incorrect.");
+                    return;
+                }
+            }
+            else
+            {
+                user = await userManager.FindAsync(context.UserName, context.Password);
+
+                if (user == null)
+                {
+                    context.SetError("invalid_grant", "The user name or password is incorrect.");
+                    return;
+                }
             }
 
             var oAuthIdentity = await userManager.CreateIdentityAsync(user,
                 context.Options.AuthenticationType);
-            var cookiesIdentity = await userManager.CreateIdentityAsync(user,
-                CookieAuthenticationDefaults.AuthenticationType);
 
             var properties = CreateProperties(user.UserName);
             var ticket = new AuthenticationTicket(oAuthIdentity, properties);
             context.Validated(ticket);
-            context.Request.Context.Authentication.SignIn(cookiesIdentity);
         }
 
         public override Task TokenEndpoint(OAuthTokenEndpointContext context)
@@ -55,7 +70,6 @@ namespace forCrowd.WealthEconomy.Web.Providers
             return Task.FromResult<object>(null);
         }
 
-        // TODO It's not clear when this method being called
         public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
             // Resource owner password credentials does not provide a client ID.

@@ -1,5 +1,9 @@
 ﻿### Release Notes
 
+**0.41**
+
+* Social Logins: facebook
+
 **0.40**
 
 * Email confirmation has implemented

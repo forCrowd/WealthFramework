@@ -6,6 +6,7 @@
     using System.Data.Entity;
     using System.Linq;
     using System.Threading.Tasks;
+    using System.Security.Claims;
 
     public class UserStore : UserStore<User, Role, int, UserLogin, UserRole, UserClaim>
     {
@@ -24,16 +25,30 @@
         private new WealthEconomyContext Context { get { return (WealthEconomyContext)base.Context; } }
 
         DbSet<ResourcePool> ResourcePoolSet { get { return Context.Set<ResourcePool>(); } }
+        DbSet<UserClaim> UserClaimSet { get { return Context.Set<UserClaim>(); } }
         DbSet<UserResourcePool> UserResourcePoolSet { get { return Context.Set<UserResourcePool>(); } }
         DbSet<UserElementField> UserElementFieldSet { get { return Context.Set<UserElementField>(); } }
         DbSet<UserElementCell> UserElementCellSet { get { return Context.Set<UserElementCell>(); } }
 
-        public async Task SaveChangesAsync()
+        public UserClaim AddTempTokenClaim(User user)
         {
-            await Context.SaveChangesAsync();
+            var tempToken = System.Guid.NewGuid().ToString();
+            var tempTokenClaim = new UserClaim() { ClaimType = "TempToken", ClaimValue = tempToken };
+            user.Claims.Add(tempTokenClaim);
+            return tempTokenClaim;
         }
 
-        public async Task DeleteUserResourcePool(int resourcePoolId)
+        public async Task DeleteUserClaimAsync(int claimId)
+        {
+            var entity = await UserClaimSet.SingleOrDefaultAsync(item => item.Id == claimId);
+
+            if (entity == null)
+                return;
+
+            UserClaimSet.Remove(entity);
+        }
+
+        public async Task DeleteUserResourcePoolAsync(int resourcePoolId)
         {
             var entity = await UserResourcePoolSet.SingleOrDefaultAsync(item => item.ResourcePoolId == resourcePoolId);
 
@@ -43,7 +58,7 @@
             UserResourcePoolSet.Remove(entity);
         }
 
-        public async Task DeleteUserElementField(int elementFieldId)
+        public async Task DeleteUserElementFieldAsync(int elementFieldId)
         {
             var entity = await UserElementFieldSet.SingleOrDefaultAsync(item => item.ElementFieldId == elementFieldId);
 
@@ -53,7 +68,7 @@
             UserElementFieldSet.Remove(entity);
         }
 
-        public async Task DeleteUserElementCell(int elementCellId)
+        public async Task DeleteUserElementCellAsync(int elementCellId)
         {
             var entity = await UserElementCellSet.SingleOrDefaultAsync(item => item.ElementCellId == elementCellId);
 
@@ -61,6 +76,11 @@
                 return;
 
             UserElementCellSet.Remove(entity);
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await Context.SaveChangesAsync();
         }
     }
 }

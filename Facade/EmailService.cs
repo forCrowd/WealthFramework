@@ -41,10 +41,10 @@
             mailMessage.To.Add(new MailAddress(message.Destination));
 
             // Bcc
-            mailMessage.Bcc.Add(new MailAddress(forCrowd.WealthEconomy.Framework.AppSettings.AlertEmailAddress));
+            mailMessage.Bcc.Add(new MailAddress(Framework.AppSettings.AlertEmailAddress));
 #else
             // To
-            mailMessage.To.Add(new MailAddress(forCrowd.WealthEconomy.Framework.AppSettings.AlertEmailAddress));
+            mailMessage.To.Add(new MailAddress(Framework.AppSettings.AlertEmailAddress));
 #endif
 
             mailMessage.Subject = message.Subject;

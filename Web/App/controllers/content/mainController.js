@@ -32,9 +32,13 @@
             }
         });
 
-        // User logged in
+        // User logged in & out
         $scope.$on('userLoggedIn', function () {
             getCurrentUser();
+        });
+
+        $scope.$on('userLoggedOut', function () {
+            vm.currentUser = null;
         });
 
         _init();
@@ -80,12 +84,17 @@
         }
 
         function logout() {
-            userFactory.logout()
-                .success(function () {
-                    // Reset current user and go back to home
-                    vm.currentUser = null;
-                    $location.path('/');
-                });
+            
+            userFactory.logout();
+
+            // Clear search params
+            var search = $location.search();
+            for (var searchKey in search) {
+                $location.search(searchKey, null);
+            }
+
+            // Return back to home page
+            $location.path('/');
         }
     };
 })();

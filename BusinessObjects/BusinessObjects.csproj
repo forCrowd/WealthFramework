@@ -80,7 +80,6 @@
     <Compile Include="UserQueryVisitor.cs" />
     <Compile Include="Models\ElementItem.cs" />
     <Compile Include="Models\Element.cs" />
-    <Compile Include="Attributes\ODataControllerAuthorizationAttribute.cs" />
     <Compile Include="Models\ResourcePool.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserResourcePool.cs" />

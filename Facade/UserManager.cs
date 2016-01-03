@@ -3,6 +3,9 @@
     using BusinessObjects;
     using DataObjects;
     using Microsoft.AspNet.Identity;
+    using System;
+    using System.Data.Entity;
+    using System.Linq;
     using System.Threading.Tasks;
 
     public class UserManager : UserManager<User, int>
@@ -17,6 +20,13 @@
         internal new UserStore Store { get { return (UserStore)base.Store; } }
 
         public string ConfirmEmailUrl { get; set; }
+
+        public async Task<UserClaim> AddTempTokenClaimAsync(User user)
+        {
+            var claim = Store.AddTempTokenClaim(user);
+            await Store.SaveChangesAsync();
+            return claim;
+        }
 
         public async Task<IdentityResult> ChangeEmailAsync(int userId, string email)
         {
@@ -72,26 +82,78 @@
                 // Send confirmation email
                 await SendConfirmationEmailAsync(user.Id);
             }
-            
+
             return result;
         }
 
-        public async Task DeleteUserResourcePool(int resourcePoolId)
+        public async Task<IdentityResult> CreateAsync(User user, UserLoginInfo userLoginInfo)
         {
-            await Store.DeleteUserResourcePool(resourcePoolId);
+            // Email confirmed
+            user.EmailConfirmed = true;
+
+            // Temp token: Since this is an external login, create temp token; it's going to be used to retrieve the real token by the client
+            Store.AddTempTokenClaim(user);
+
+            var result = await base.CreateAsync(user);
+
+            if (result.Succeeded)
+            {
+                await Store.AddLoginAsync(user, userLoginInfo);
+                await Store.SaveChangesAsync();
+            }
+
+            return result;
+        }
+
+        public async Task DeleteUserResourcePoolAsync(int resourcePoolId)
+        {
+            await Store.DeleteUserResourcePoolAsync(resourcePoolId);
             await Store.SaveChangesAsync();
         }
 
-        public async Task DeleteUserElementField(int elementFieldId)
+        public async Task DeleteUserElementFieldAsync(int elementFieldId)
         {
-            await Store.DeleteUserElementField(elementFieldId);
+            await Store.DeleteUserElementFieldAsync(elementFieldId);
             await Store.SaveChangesAsync();
         }
 
-        public async Task DeleteUserElementCell(int elementCellId)
+        public async Task DeleteUserElementCellAsync(int elementCellId)
         {
-            await Store.DeleteUserElementCell(elementCellId);
+            await Store.DeleteUserElementCellAsync(elementCellId);
             await Store.SaveChangesAsync();
+        }
+
+        public async Task<User> FindByTempToken(string tempToken)
+        {
+            // Search for the user
+            var entity = await Users.Include(user => user.Claims).SingleOrDefaultAsync(user => user.Claims.Any(claim => claim.ClaimType == "TempToken" && claim.ClaimValue == tempToken));
+
+            // Return null if there is no..
+            if (entity == null)
+                return null;
+
+            // Delete temp token
+            var tempTokenClaim = entity.Claims.Single(claim => claim.ClaimType == "TempToken");
+            await Store.DeleteUserClaimAsync(tempTokenClaim.Id);
+            await Store.SaveChangesAsync();
+
+            // Return the user
+            return entity;
+        }
+
+        /// <summary>
+        /// For testing purposes
+        /// </summary>
+        /// <returns></returns>
+        public string GetUniqueEmail()
+        {
+            var year = DateTime.Now.Year;
+            var month = DateTime.Now.Month;
+            var day = DateTime.Now.Day;
+            var hour = DateTime.Now.Hour;
+            var minute = DateTime.Now.Minute;
+            var second = DateTime.Now.Second;
+            return "local_" + year + month + day + "_" + hour + minute + second + "@forcrowd.org";
         }
 
         public async Task SendConfirmationEmailAsync(int userId, bool resend = false)

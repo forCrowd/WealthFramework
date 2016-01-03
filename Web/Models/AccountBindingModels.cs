@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace forCrowd.WealthEconomy.Web.Models
+﻿namespace forCrowd.WealthEconomy.Web.Models
 {
+    using System.ComponentModel.DataAnnotations;
+
     // Models used as parameters to AccountController actions.
 
     public class ChangeEmailBindingModel

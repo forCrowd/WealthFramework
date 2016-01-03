@@ -19,5 +19,21 @@ namespace forCrowd.WealthEconomy.Framework
         {
             get { return ConfigurationManager.AppSettings["AlertEmailAddress"]; }
         }
+
+        /// <summary>
+        /// Facebook app id
+        /// </summary>
+        public static string FacebookAppId
+        {
+            get { return ConfigurationManager.AppSettings["FacebookAppId"]; }
+        }
+
+        /// <summary>
+        /// Facebook app secret
+        /// </summary>
+        public static string FacebookAppSecret
+        {
+            get { return ConfigurationManager.AppSettings["FacebookAppSecret"]; }
+        }
     }
 }

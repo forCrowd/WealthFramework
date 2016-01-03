@@ -16,7 +16,7 @@
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44300</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -115,6 +115,10 @@
     <Reference Include="Microsoft.Owin.Security.Cookies, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.0.1\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -274,6 +278,11 @@
     <Compile Include="Controllers\OData\Generated\ElementItemController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\OData\Generated\ODataController.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ODataController.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\OData\Generated\ResourcePoolController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>
     </Compile>
@@ -309,6 +318,8 @@
     <Compile Include="Controllers\OData\UserResourcePoolController.cs" />
     <Compile Include="ExceptionHandling\ElmahExceptionLogger.cs" />
     <Compile Include="ExceptionHandling\GenericExceptionHandler.cs" />
+    <Compile Include="HttpClientHandlers\FacebookBackChannelHandler.cs" />
+    <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="RoutingConventions\CompositeKeyRoutingConvention.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
@@ -320,6 +331,8 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\controllers\account\externalLoginController.js" />
+    <Content Include="App\views\account\externalLogin.html" />
     <Content Include="App\controllers\account\changeEmailController.js" />
     <Content Include="App\controllers\account\confirmEmailController.js" />
     <Content Include="App\controllers\content\basicsController.js" />
@@ -629,7 +642,9 @@
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <None Include="Configs\Setup\connectionStrings.config" />
-    <None Include="Configs\appSettings.config" />
+    <None Include="Configs\appSettings.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Configs\Setup\system.net.mailSettings.smtp.config">
       <SubType>Designer</SubType>
     </None>
@@ -644,11 +659,6 @@
     <None Include="Configs\system.net.mailSettings.smtp.config" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <None Include="Controllers\OData\Generated\ODataController.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ODataController.tt</DependentUpon>
-    </None>
     <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -685,7 +695,7 @@
     <Content Include="App\factories\userFactory.js" />
     <Content Include="Controllers\OData\Generated\ODataController.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ODataController.txt</LastGenOutput>
+      <LastGenOutput>ODataController.cs</LastGenOutput>
     </Content>
     <Content Include="App\factories\generated\factory.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
