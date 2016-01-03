@@ -2,7 +2,7 @@
 
 **0.41**
 
-* Social Logins: Facebook, Google, Microsoft
+* Social logins: Facebook, Google, Microsoft
 ** Social Buttons for Bootstrap: http://lipis.github.io/bootstrap-social/
 ** FontAwesome: http://fortawesome.github.io/Font-Awesome/
 * Registration email address info moved to appSettings
