@@ -3,6 +3,8 @@
 **0.41**
 
 * Social Logins: Facebook, Google, Microsoft
+** Social Buttons for Bootstrap: http://lipis.github.io/bootstrap-social/
+** FontAwesome: http://fortawesome.github.io/Font-Awesome/
 * Registration email address info moved to appSettings
 * Elmah settings moved to Configs folder
 * RequireHttps attribute for WebApi

@@ -8,8 +8,10 @@
 
     <!-- External CSS -->
     <link href="/Content/bootstrap.min.css?v=0.35.1" rel="stylesheet" />
+    <link href="/Content/font-awesome.min.css?v=0.41" rel="stylesheet" />
     <link href="/Content/breeze.directives.css?v=0.24" rel="stylesheet" />
     <link href="/Content/toastr.css?v=0.24" rel="stylesheet" />
+    <link href="/Content/external/bootstrap-social.css?v=0.41" rel="stylesheet" />
 
     <!-- Internal CSS -->
     <link href="/Content/site.css?v=0.37" rel="stylesheet" />
