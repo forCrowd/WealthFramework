@@ -1,5 +1,9 @@
 ﻿### Release Notes
 
+**0.41.1**
+
+* Add password option for new social logins case
+
 **0.41**
 
 * Social logins: Facebook, Google, Microsoft

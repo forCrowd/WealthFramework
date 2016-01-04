@@ -7,6 +7,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using System.Security.Claims;
+    using System;
 
     public class UserStore : UserStore<User, Role, int, UserLogin, UserRole, UserClaim>
     {
@@ -30,9 +31,16 @@
         DbSet<UserElementField> UserElementFieldSet { get { return Context.Set<UserElementField>(); } }
         DbSet<UserElementCell> UserElementCellSet { get { return Context.Set<UserElementCell>(); } }
 
+        public UserClaim AddHasNoPasswordClaim(User user)
+        {
+            var hasNoPasswordClaim = new UserClaim() { ClaimType = "HasNoPassowrd", ClaimValue = string.Empty };
+            user.Claims.Add(hasNoPasswordClaim);
+            return hasNoPasswordClaim;
+        }
+
         public UserClaim AddTempTokenClaim(User user)
         {
-            var tempToken = System.Guid.NewGuid().ToString();
+            var tempToken = Guid.NewGuid().ToString();
             var tempTokenClaim = new UserClaim() { ClaimType = "TempToken", ClaimValue = tempToken };
             user.Claims.Add(tempTokenClaim);
             return tempTokenClaim;

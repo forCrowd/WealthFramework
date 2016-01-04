@@ -21,6 +21,27 @@
 
         public string ConfirmEmailUrl { get; set; }
 
+        public override async Task<IdentityResult> AddPasswordAsync(int userId, string password)
+        {
+            // Add password
+            var result = await base.AddPasswordAsync(userId, password);
+
+            if (result.Succeeded)
+            {
+                // Get user
+                var entity = await Users.Include(user => user.Claims).SingleAsync(user => user.Id == userId);
+
+                // Delete has no password claim
+                var hasNoPasswordClaim = entity.Claims.Single(claim => claim.ClaimType == "HasNoPassword");
+                await Store.DeleteUserClaimAsync(hasNoPasswordClaim.Id);
+
+                // Save
+                await Store.SaveChangesAsync();
+            }
+
+            return result;
+        }
+
         public async Task<UserClaim> AddTempTokenClaimAsync(User user)
         {
             var claim = Store.AddTempTokenClaim(user);
@@ -90,6 +111,9 @@
         {
             // Email confirmed
             user.EmailConfirmed = true;
+
+            // Has no password: Determines whether 'Add Password' or 'Change Password' option is available
+            Store.AddHasNoPasswordClaim(user);
 
             // Temp token: Since this is an external login, create temp token; it's going to be used to retrieve the real token by the client
             Store.AddTempTokenClaim(user);

@@ -1,4 +1,6 @@
-﻿. other social logins
+﻿. send notification email in case external login..
+
+. change password in case external login?
 
 . after doing manual updates through angular, update breeze! change email bug!
 

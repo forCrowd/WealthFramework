@@ -11,6 +11,7 @@
         logger = logger.forSource(factoryId);
 
         var accessTokenUrl = '/api/Token';
+        var addPasswordUrl = '/api/Account/AddPassword';
         var changeEmailUrl = '/api/Account/ChangeEmail';
         var changePasswordUrl = '/api/Account/ChangePassword';
         var confirmEmailUrl = '/api/Account/ConfirmEmail';
@@ -22,6 +23,7 @@
         var isAuthenticatedPromise = null;
 
         // Service methods
+        $delegate.addPassword = addPassword;
         $delegate.changeEmail = changeEmail;
         $delegate.changePassword = changePassword;
         $delegate.confirmEmail = confirmEmail;
@@ -31,8 +33,8 @@
         $delegate.logout = logout;
         $delegate.register = register;
         $delegate.resendConfirmationEmail = resendConfirmationEmail;
-
         $delegate.updateAnonymousChanges = updateAnonymousChanges;
+
         $delegate.updateElementMultiplier = updateElementMultiplier;
         $delegate.updateElementCellNumericValue = updateElementCellNumericValue;
         $delegate.updateElementFieldIndexRating = updateElementFieldIndexRating;
@@ -41,6 +43,28 @@
         return $delegate;
 
         /*** Implementations ***/
+
+        function addPassword(addPasswordBindingModel) {
+            return $http.post(addPasswordUrl, addPasswordBindingModel)
+                .success(function () {
+                    
+                    // Remove 'HasNoPassword' claim
+                    var claimIndex = null;
+                    for (var i = 0; i < currentUser.Claims.length; i++) {
+                        if (currentUser.Claims[i].ClaimType === 'HasNoPassword') {
+                            claimIndex = i;
+                            break;
+                        }
+                    };
+
+                    if (claimIndex === null) {
+                        // TODO throw error?
+                    }
+
+                    var claims = currentUser.Claims.splice(claimIndex, 1);
+                    claims[0].entityAspect.setDetached();
+                });
+        }
 
         function changeEmail(changeEmailBindingModel) {
             return $http.post(changeEmailUrl, changeEmailBindingModel);
@@ -87,6 +111,7 @@
 
                 var query = breeze.EntityQuery
                     .from('Users')
+                    .expand('Claims')
                     .using(breeze.FetchStrategy.FromServer);
 
                 dataContext.executeQuery(query)
@@ -202,6 +227,22 @@
             return isAuthenticatedPromise;
         }
 
+        function logout() {
+
+            // Remove access token from the session
+            $window.localStorage.removeItem('access_token');
+
+            // Clear user promise
+            getCurrentUserPromise = null;
+            isAuthenticatedPromise = null;
+
+            // Clear breeze's metadata store
+            dataContext.clear();
+
+            // Raise logged out event
+            $rootScope.$broadcast('userLoggedOut');
+        }
+
         function register(registerBindingModel) {
             return $http.post(registerUrl, registerBindingModel)
                 .success(function (newUser) {
@@ -227,22 +268,6 @@
 
         function resendConfirmationEmail(userId) {
             return $http.post(resendConfirmationEmailUrl, { UserId: userId });
-        }
-
-        function logout() {
-
-            // Remove access token from the session
-            $window.localStorage.removeItem('access_token');
-
-            // Clear user promise
-            getCurrentUserPromise = null;
-            isAuthenticatedPromise = null;
-
-            // Clear breeze's metadata store
-            dataContext.clear();
-
-            // Raise logged out event
-            $rootScope.$broadcast('userLoggedOut');
         }
 
         function updateAnonymousChanges(oldUser, newUser) {
