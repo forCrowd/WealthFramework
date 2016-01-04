@@ -16,6 +16,7 @@
             'ElementField',
             'ElementItem',
             'ResourcePool',
+            'User',
             'UserElementCell',
             '$rootScope',
             'logger',
@@ -27,6 +28,7 @@
         ElementField,
         ElementItem,
         ResourcePool,
+        User,
         UserElementCell,
         $rootScope,
         logger) {
@@ -86,6 +88,7 @@
             store.registerEntityTypeCtor('ElementField', ElementField);
             store.registerEntityTypeCtor('ElementItem', ElementItem);
             store.registerEntityTypeCtor('ResourcePool', ResourcePool);
+            store.registerEntityTypeCtor('User', User);
             store.registerEntityTypeCtor('UserElementCell', UserElementCell);
 
             return manager;

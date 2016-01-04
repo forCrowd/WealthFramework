@@ -1,16 +1,13 @@
 namespace forCrowd.WealthEconomy.BusinessObjects
 {
-    using forCrowd.WealthEconomy.BusinessObjects.Attributes;
-    using forCrowd.WealthEconomy.Framework;
+    using Attributes;
+    using Framework;
     using Microsoft.AspNet.Identity.EntityFramework;
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
-    using System.Security.Permissions;
-    using System.Threading.Tasks;
 
-    [forCrowd.WealthEconomy.BusinessObjects.Attributes.DefaultProperty("Email")]
+    [DefaultProperty("Email")]
     public class User : IdentityUser<int, UserLogin, UserRole, UserClaim>, IEntity
     {
         [Obsolete("Parameterless constructors used by OData & EF. Make them private when possible.")]
@@ -49,15 +46,15 @@ namespace forCrowd.WealthEconomy.BusinessObjects
 
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
-        public System.DateTime CreatedOn { get; set; }
+        public DateTime CreatedOn { get; set; }
 
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
-        public System.DateTime ModifiedOn { get; set; }
+        public DateTime ModifiedOn { get; set; }
 
         [DisplayOnListView(false)]
         [DisplayOnEditView(false)]
-        public System.DateTime? DeletedOn { get; set; }
+        public DateTime? DeletedOn { get; set; }
 
         [Timestamp]
         [DisplayOnListView(false)]

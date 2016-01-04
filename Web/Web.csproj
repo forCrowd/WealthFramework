@@ -340,7 +340,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\controllers\account\addPasswordController.js" />
     <Content Include="App\controllers\account\externalLoginController.js" />
+    <Content Include="App\entities\User.js" />
+    <Content Include="App\views\account\addPassword.html" />
     <Content Include="App\views\account\externalLogin.html" />
     <Content Include="App\controllers\account\changeEmailController.js" />
     <Content Include="App\controllers\account\confirmEmailController.js" />

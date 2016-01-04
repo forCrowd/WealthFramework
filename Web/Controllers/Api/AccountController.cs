@@ -26,6 +26,26 @@
 
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
+        // POST api/Account/AddPassword
+        public async Task<IHttpActionResult> AddPassword(AddPasswordBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var currentUserId = this.GetCurrentUserId();
+            var result = await UserManager.AddPasswordAsync(currentUserId.Value, model.Password);
+            var errorResult = GetErrorResult(result);
+
+            if (errorResult != null)
+            {
+                return errorResult;
+            }
+
+            return Ok(string.Empty);
+        }
+
         // POST api/Account/ChangeEmail
         public async Task<IHttpActionResult> ChangeEmail(ChangeEmailBindingModel model)
         {

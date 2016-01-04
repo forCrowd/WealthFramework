@@ -16,6 +16,7 @@
         vm.currentUser = null;
         vm.currentUserText = currentUserText;
         vm.currentDate = new Date();
+        vm.hasPassword = hasPassword;
         vm.isAuthenticated = isAuthenticated;
         vm.logout = logout;
         vm.displayAnonymousUserWarning = true;
@@ -77,6 +78,10 @@
                 .then(function (currentUser) {
                     vm.currentUser = currentUser;
                 });
+        }
+
+        function hasPassword() {
+            return vm.currentUser !== null && vm.currentUser.hasPassword();
         }
 
         function isAuthenticated() {

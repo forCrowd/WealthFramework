@@ -40,16 +40,33 @@
                 From = new MailAddress(Framework.AppSettings.RegistrationEmailAddress, "forCrowd Foundation")
             };
 
-#if !DEBUG
-            // To
-            mailMessage.To.Add(new MailAddress(message.Destination));
+            // TODO Get rid of this ugliness asap! / SH - 04 Jan. '16
+            // This email type is only a notification to the admin
+            var newExternalLoginNotification = message.Subject == "New external login";
 
-            // Bcc
-            if (!string.IsNullOrWhiteSpace(Framework.AppSettings.AlertEmailAddress))
-                mailMessage.Bcc.Add(new MailAddress(Framework.AppSettings.AlertEmailAddress));
+#if !DEBUG
+            if (!newExternalLoginNotification)
+            {
+                // To
+                mailMessage.To.Add(new MailAddress(message.Destination));
+
+                // Bcc
+                if (!string.IsNullOrWhiteSpace(Framework.AppSettings.NotificationEmailAddress))
+                    mailMessage.Bcc.Add(new MailAddress(Framework.AppSettings.NotificationEmailAddress));
+            }
+            else
+            {
+                if (string.IsNullOrWhiteSpace(Framework.AppSettings.NotificationEmailAddress))
+                    return;
+
+                mailMessage.To.Add(new MailAddress(Framework.AppSettings.NotificationEmailAddress));
+            }
 #else
             // To
-            mailMessage.To.Add(new MailAddress(Framework.AppSettings.AlertEmailAddress));
+            if (string.IsNullOrWhiteSpace(Framework.AppSettings.NotificationEmailAddress))
+                return;
+            
+            mailMessage.To.Add(new MailAddress(Framework.AppSettings.NotificationEmailAddress));
 #endif
 
             mailMessage.Subject = message.Subject;

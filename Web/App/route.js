@@ -30,6 +30,7 @@
             .when('/account/accountEdit', { title: function () { return 'Account Edit'; }, templateUrl: '/App/views/account/accountEdit.html?v=0.40' })
             .when('/account/changeEmail', { title: function () { return 'Change Email'; }, templateUrl: '/App/views/account/changeEmail.html?v=0.40' })
             .when('/account/changePassword', { title: function () { return 'Change Password'; }, templateUrl: '/App/views/account/changePassword.html?v=0.40' })
+            .when('/account/addPassword', { title: function () { return 'Add Password'; }, templateUrl: '/App/views/account/addPassword.html?v=0.41.1' })
             .when('/account/confirmEmail', { title: function () { return 'Confirm Email'; }, templateUrl: '/App/views/account/confirmEmail.html?v=0.40' })
 
             /* Generated List + Edit pages */
