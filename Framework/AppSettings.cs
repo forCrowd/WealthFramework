@@ -21,11 +21,11 @@ namespace forCrowd.WealthEconomy.Framework
         }
 
         /// <summary>
-        /// Alert emails will be send to this address
+        /// Notification emails will be send to this address
         /// </summary>
-        public static string AlertEmailAddress
+        public static string NotificationEmailAddress
         {
-            get { return ConfigurationManager.AppSettings["AlertEmailAddress"]; }
+            get { return ConfigurationManager.AppSettings["NotificationEmailAddress"]; }
         }
 
         /// <summary>

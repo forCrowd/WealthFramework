@@ -6,6 +6,7 @@
     using System;
     using System.Data.Entity;
     using System.Linq;
+    using System.Text;
     using System.Threading.Tasks;
 
     public class UserManager : UserManager<User, int>
@@ -29,24 +30,20 @@
             if (result.Succeeded)
             {
                 // Get user
-                var entity = await Users.Include(user => user.Claims).SingleAsync(user => user.Id == userId);
+                var user = await FindByIdAsync(userId);
 
-                // Delete has no password claim
-                var hasNoPasswordClaim = entity.Claims.Single(claim => claim.ClaimType == "HasNoPassword");
-                await Store.DeleteUserClaimAsync(hasNoPasswordClaim.Id);
-
-                // Save
+                // Remove HasNoPassword claim
+                await Store.RemoveHasNoPasswordClaim(user);
                 await Store.SaveChangesAsync();
             }
 
             return result;
         }
 
-        public async Task<UserClaim> AddTempTokenClaimAsync(User user)
+        public async Task AddTempTokenClaimAsync(User user)
         {
-            var claim = Store.AddTempTokenClaim(user);
+            await Store.AddTempTokenClaim(user);
             await Store.SaveChangesAsync();
-            return claim;
         }
 
         public async Task<IdentityResult> ChangeEmailAsync(int userId, string email)
@@ -113,10 +110,10 @@
             user.EmailConfirmed = true;
 
             // Has no password: Determines whether 'Add Password' or 'Change Password' option is available
-            Store.AddHasNoPasswordClaim(user);
+            await Store.AddHasNoPasswordClaim(user);
 
             // Temp token: Since this is an external login, create temp token; it's going to be used to retrieve the real token by the client
-            Store.AddTempTokenClaim(user);
+            await Store.AddTempTokenClaim(user);
 
             var result = await base.CreateAsync(user);
 
@@ -124,6 +121,9 @@
             {
                 await Store.AddLoginAsync(user, userLoginInfo);
                 await Store.SaveChangesAsync();
+
+                // Send notification email
+                await SendNewExternalLoginNotificationEmailAsync(user.Id);
             }
 
             return result;
@@ -156,9 +156,8 @@
             if (entity == null)
                 return null;
 
-            // Delete temp token
-            var tempTokenClaim = entity.Claims.Single(claim => claim.ClaimType == "TempToken");
-            await Store.DeleteUserClaimAsync(tempTokenClaim.Id);
+            // Remove temp token
+            await Store.RemoveTempTokenClaim(entity);
             await Store.SaveChangesAsync();
 
             // Return the user
@@ -186,7 +185,7 @@
             user.EmailConfirmed = true;
 
             // Temp token: Since this is an external login, create temp token; it's going to be used to retrieve the real token by the client
-            Store.AddTempTokenClaim(user);
+            await Store.AddTempTokenClaim(user);
 
             var result = await base.AddLoginAsync(user.Id, userLoginInfo);
 
@@ -209,7 +208,7 @@
 
             var confirmEmailUrl = string.Format("{0}?token={1}", ConfirmEmailUrl, encodedToken);
 
-            var sbBody = new System.Text.StringBuilder();
+            var sbBody = new StringBuilder();
             sbBody.AppendLine("    <p>");
             sbBody.AppendLine("        <b>Wealth Economy - Confirm Your Email</b><br />");
             sbBody.AppendLine("        <br />");
@@ -217,6 +216,26 @@
             sbBody.AppendLine("        <br />");
             sbBody.AppendLine("        Please click the following link to confirm your email address<br />");
             sbBody.AppendFormat("        <a href='{0}'>Confirm your email address</a>", confirmEmailUrl);
+            sbBody.AppendLine("    </p>");
+            sbBody.AppendLine("    <p>");
+            sbBody.AppendLine("        Thanks,<br />");
+            sbBody.AppendLine("        forCrowd Foundation");
+            sbBody.AppendLine("    </p>");
+
+            await base.SendEmailAsync(userId, subject, sbBody.ToString());
+        }
+
+        public async Task SendNewExternalLoginNotificationEmailAsync(int userId)
+        {
+            var subject = "New external login";
+            
+            var user = await base.FindByIdAsync(userId);
+
+            var sbBody = new StringBuilder();
+            sbBody.AppendLine("    <p>");
+            sbBody.AppendLine("        <b>Wealth Economy - New External Login</b><br />");
+            sbBody.AppendLine("        <br />");
+            sbBody.AppendFormat("        Email: {0}<br />", user.Email);
             sbBody.AppendLine("    </p>");
             sbBody.AppendLine("    <p>");
             sbBody.AppendLine("        Thanks,<br />");

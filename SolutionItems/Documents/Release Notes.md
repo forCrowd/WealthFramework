@@ -3,6 +3,8 @@
 **0.41.1**
 
 * Add password option for new social logins case
+* Send notification email to admin in social login case
+* Update elmah config to use existing smtp settings
 
 **0.41**
 

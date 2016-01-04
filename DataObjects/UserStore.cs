@@ -31,29 +31,17 @@
         DbSet<UserElementField> UserElementFieldSet { get { return Context.Set<UserElementField>(); } }
         DbSet<UserElementCell> UserElementCellSet { get { return Context.Set<UserElementCell>(); } }
 
-        public UserClaim AddHasNoPasswordClaim(User user)
+        public async Task AddHasNoPasswordClaim(User user)
         {
-            var hasNoPasswordClaim = new UserClaim() { ClaimType = "HasNoPassowrd", ClaimValue = string.Empty };
-            user.Claims.Add(hasNoPasswordClaim);
-            return hasNoPasswordClaim;
+            var hasNoPasswordClaim = new Claim("HasNoPassword", string.Empty);
+            await AddClaimAsync(user, hasNoPasswordClaim);
         }
 
-        public UserClaim AddTempTokenClaim(User user)
+        public async Task AddTempTokenClaim(User user)
         {
             var tempToken = Guid.NewGuid().ToString();
-            var tempTokenClaim = new UserClaim() { ClaimType = "TempToken", ClaimValue = tempToken };
-            user.Claims.Add(tempTokenClaim);
-            return tempTokenClaim;
-        }
-
-        public async Task DeleteUserClaimAsync(int claimId)
-        {
-            var entity = await UserClaimSet.SingleOrDefaultAsync(item => item.Id == claimId);
-
-            if (entity == null)
-                return;
-
-            UserClaimSet.Remove(entity);
+            var tempTokenClaim = new Claim("TempToken", tempToken);
+            await AddClaimAsync(user, tempTokenClaim);
         }
 
         public async Task DeleteUserResourcePoolAsync(int resourcePoolId)
@@ -84,6 +72,20 @@
                 return;
 
             UserElementCellSet.Remove(entity);
+        }
+
+        public async Task RemoveHasNoPasswordClaim(User user)
+        {
+            var claims = await GetClaimsAsync(user);
+            var hasNoPasswordClaim = claims.Single(claim => claim.Type == "HasNoPassword");
+            await RemoveClaimAsync(user, hasNoPasswordClaim);
+        }
+
+        public async Task RemoveTempTokenClaim(User user)
+        {
+            var claims = await GetClaimsAsync(user);
+            var tempTokenClaim = claims.Single(claim => claim.Type == "TempToken");
+            await RemoveClaimAsync(user, tempTokenClaim);
         }
 
         public async Task SaveChangesAsync()
