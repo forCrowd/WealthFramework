@@ -150,7 +150,11 @@
         public async Task<User> FindByTempToken(string tempToken)
         {
             // Search for the user
-            var entity = await Users.Include(user => user.Claims).SingleOrDefaultAsync(user => user.Claims.Any(claim => claim.ClaimType == "TempToken" && claim.ClaimValue == tempToken));
+            var entity = await Users
+                .Include(user => user.Claims)
+                .Include(user => user.Logins)
+                .Include(user => user.Roles)
+                .SingleOrDefaultAsync(user => user.Claims.Any(claim => claim.ClaimType == "TempToken" && claim.ClaimValue == tempToken));
 
             // Return null if there is no..
             if (entity == null)

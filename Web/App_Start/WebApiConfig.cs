@@ -56,6 +56,9 @@ namespace forCrowd.WealthEconomy.Web
                 routingConventions: conventions,
                 batchHandler: new BatchHandler(GlobalConfiguration.DefaultServer));
 
+            // Json formatter
+            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+
             // Exception logger
             config.Services.Add(typeof(IExceptionLogger), new ElmahExceptionLogger());
 

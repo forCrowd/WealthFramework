@@ -37,25 +37,7 @@
 
             userFactory.changeEmail(vm)
                 .success(function () {
-
-                    userFactory.getCurrentUser()
-                        .then(function (currentUser) {
-                            currentUser.EmailConfirmed = false;
-                            $location.path('/account/confirmEmail');
-                        });
-
-                })
-                .error(function (data) {
-
-                    var message = data.Message;
-
-                    if (typeof data.ModelState !== 'undefined' && typeof data.ModelState.Errors !== 'undefined') {
-                        data.ModelState.Errors.forEach(function (error) {
-                            message += '<br />' + error;
-                        });
-                    }
-
-                    logger.logError(message, null, true);
+                    $location.path('/account/confirmEmail');
                 })
                 .finally(function () {
                     vm.isChangeEmailDisabled = false;

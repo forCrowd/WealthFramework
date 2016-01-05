@@ -40,25 +40,9 @@
                             userFactory.confirmEmail({ Token: token })
                                 .success(function () {
 
-                                    // Set email confirmed to true
-                                    vm.currentUser = currentUser;
-                                    vm.currentUser.EmailConfirmed = true;
-
                                     // Clear search param
                                     $location.search('token', null);
 
-                                })
-                                .error(function (data) {
-
-                                    var message = data.Message;
-
-                                    if (typeof data.ModelState !== 'undefined' && typeof data.ModelState.Errors !== 'undefined') {
-                                        data.ModelState.Errors.forEach(function (error) {
-                                            message += '<br />' + error;
-                                        });
-                                    }
-
-                                    logger.logError(message, null, true);
                                 });
                         });
                 });

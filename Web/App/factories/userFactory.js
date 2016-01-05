@@ -46,7 +46,7 @@
 
         function addPassword(addPasswordBindingModel) {
             return $http.post(addPasswordUrl, addPasswordBindingModel)
-                .success(function () {
+                .success(function (updatedUser) {
                     
                     // Remove 'HasNoPassword' claim
                     var claimIndex = null;
@@ -63,19 +63,44 @@
 
                     var claims = currentUser.Claims.splice(claimIndex, 1);
                     claims[0].entityAspect.setDetached();
-                });
+
+                    // Sync RowVersion fields
+                    syncRowVersion(currentUser, updatedUser);
+                })
+                .error(handleErrorResult);
         }
 
         function changeEmail(changeEmailBindingModel) {
-            return $http.post(changeEmailUrl, changeEmailBindingModel);
+            return $http.post(changeEmailUrl, changeEmailBindingModel)
+                .success(function (updatedUser) {
+
+                    currentUser.EmailConfirmed = false;
+
+                    // Sync RowVersion fields
+                    syncRowVersion(currentUser, updatedUser);
+                })
+                .error(handleErrorResult);
         }
 
         function changePassword(changePasswordBindingModel) {
-            return $http.post(changePasswordUrl, changePasswordBindingModel);
+            return $http.post(changePasswordUrl, changePasswordBindingModel)
+                .success(function (updatedUser) {
+                    // Sync RowVersion fields
+                    syncRowVersion(currentUser, updatedUser);
+                })
+                .error(handleErrorResult);
         }
 
         function confirmEmail(confirmEmailBindingModel) {
-            return $http.post(confirmEmailUrl, confirmEmailBindingModel);
+            return $http.post(confirmEmailUrl, confirmEmailBindingModel)
+                .success(function (updatedUser) {
+
+                    currentUser.EmailConfirmed = true;
+
+                    // Sync RowVersion fields
+                    syncRowVersion(currentUser, updatedUser);
+                })
+                .error(handleErrorResult);
         }
 
         function getAccessToken(email, password, tempToken) {
@@ -124,6 +149,13 @@
             function success(response) {
 
                 if (response.results.length > 0) {
+
+                    // If there is an existing user (temp user), detach it
+                    // TODO Or merging them could work as well
+                    if (currentUser !== null && typeof currentUser.entityAspect !== 'undefined') {
+                        currentUser.entityAspect.setDetached();
+                    }
+
                     currentUser = response.results[0];
                     deferred.resolve(currentUser);
 
@@ -208,6 +240,27 @@
             return userResourcePool;
         }
 
+        function handleErrorResult(data, status, headers, config) {
+
+            // TODO Can this be done on a higher level?
+            var message = '';
+
+            if (typeof data.ModelState !== 'undefined') {
+                for (var key in data.ModelState) {
+                    var array = data.ModelState[key];
+                    array.forEach(function (error) {
+                        message += error + '<br />';
+                    });
+                }
+            }
+
+            if (message === '') {
+                message = data.Message;
+            }
+
+            logger.logError(message, null, true);
+        }
+
         function isAuthenticated() {
 
             var deferred = $q.defer();
@@ -255,19 +308,19 @@
                     currentUser.entityAspect.acceptChanges();
 
                 })
-                .error(function (data, status, headers, config) {
-
-                    // TODO
-                    //logger.logError('Error!', { data: data, status: status, headers: headers, config: config });
-                    if (typeof data.ModelState !== 'undefined') {
-                        var modelErrors = Object.keys(data.ModelState);
-                        logger.logError(data.ModelState[modelErrors], data.ModelState[modelErrors], true);
-                    }
-                });
+                .error(handleErrorResult);
         }
 
         function resendConfirmationEmail(userId) {
-            return $http.post(resendConfirmationEmailUrl, { UserId: userId });
+            return $http.post(resendConfirmationEmailUrl, { UserId: userId }).error(handleErrorResult);
+        }
+
+        // When an entity gets updated through angular, unlike breeze updates, it doesn't sync RowVersion automatically
+        // After each update, call this function to sync the entities RowVersion with the server's. Otherwise it'll get Conflict error
+        // SH - 05 Jan. '16
+        function syncRowVersion(oldEntity, newEntity) {
+            // TODO Validations?
+            oldEntity.RowVersion = newEntity.RowVersion;
         }
 
         function updateAnonymousChanges(oldUser, newUser) {

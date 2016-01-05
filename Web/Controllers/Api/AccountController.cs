@@ -34,8 +34,8 @@
                 return BadRequest(ModelState);
             }
 
-            var currentUserId = this.GetCurrentUserId();
-            var result = await UserManager.AddPasswordAsync(currentUserId.Value, model.Password);
+            var currentUser = await UserManager.FindByIdAsync(this.GetCurrentUserId().Value);
+            var result = await UserManager.AddPasswordAsync(currentUser.Id, model.Password);
             var errorResult = GetErrorResult(result);
 
             if (errorResult != null)
@@ -43,7 +43,7 @@
                 return errorResult;
             }
 
-            return Ok(string.Empty);
+            return Ok(currentUser);
         }
 
         // POST api/Account/ChangeEmail
@@ -55,8 +55,8 @@
             }
 
             // Get the user
-            var currentUserId = this.GetCurrentUserId();
-            var result = await UserManager.ChangeEmailAsync(currentUserId.Value, model.Email);
+            var currentUser = await UserManager.FindByIdAsync(this.GetCurrentUserId().Value);
+            var result = await UserManager.ChangeEmailAsync(currentUser.Id, model.Email);
             var errorResult = GetErrorResult(result);
 
             if (errorResult != null)
@@ -64,7 +64,7 @@
                 return errorResult;
             }
 
-            return Ok(string.Empty);
+            return Ok(currentUser);
         }
 
         // POST api/Account/ChangePassword
@@ -75,8 +75,8 @@
                 return BadRequest(ModelState);
             }
 
-            var currentUserId = this.GetCurrentUserId();
-            var result = await UserManager.ChangePasswordAsync(currentUserId.Value, model.CurrentPassword, model.NewPassword);
+            var currentUser = await UserManager.FindByIdAsync(this.GetCurrentUserId().Value);
+            var result = await UserManager.ChangePasswordAsync(currentUser.Id, model.CurrentPassword, model.NewPassword);
             var errorResult = GetErrorResult(result);
 
             if (errorResult != null)
@@ -84,7 +84,7 @@
                 return errorResult;
             }
 
-            return Ok(string.Empty);
+            return Ok(currentUser);
         }
 
         // POST api/Account/ConfirmEmail
@@ -95,9 +95,8 @@
                 return BadRequest(ModelState);
             }
 
-            var currentUserId = this.GetCurrentUserId();
-
-            var result = await UserManager.ConfirmEmailAsync(currentUserId.Value, model.Token);
+            var currentUser = await UserManager.FindByIdAsync(this.GetCurrentUserId().Value);
+            var result = await UserManager.ConfirmEmailAsync(currentUser.Id, model.Token);
             var errorResult = GetErrorResult(result);
 
             if (errorResult != null)
@@ -105,7 +104,7 @@
                 return errorResult;
             }
 
-            return Ok(string.Empty);
+            return Ok(currentUser);
         }
 
         // GET api/Account/ExternalLogin

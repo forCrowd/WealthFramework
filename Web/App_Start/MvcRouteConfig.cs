@@ -21,7 +21,7 @@
             routes.MapPageRoute(
                 routeName: "Default",
                 routeUrl: "{*catchall}",
-                physicalFile: "~/main.aspx?v=0.41.1");
+                physicalFile: "~/main.aspx?v=0.41.2");
         }
     }
 }

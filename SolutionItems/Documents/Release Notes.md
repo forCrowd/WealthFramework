@@ -1,5 +1,12 @@
 ﻿### Release Notes
 
+**0.41.2**
+
+* angular entity update - 'RowVersion field out of sync' fix
+** Json formatter reference loop handling was set to 'Ignore'
+* Social login - 'userFactory getCurrentUser leaves a temp user in the context' fix
+* Client side error handling improvements
+
 **0.41.1**
 
 * Add password option for new social logins case
