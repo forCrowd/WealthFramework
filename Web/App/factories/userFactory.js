@@ -74,6 +74,7 @@
             return $http.post(changeEmailUrl, changeEmailBindingModel)
                 .success(function (updatedUser) {
 
+                    currentUser.Email = updatedUser.Email;
                     currentUser.EmailConfirmed = false;
 
                     // Sync RowVersion fields

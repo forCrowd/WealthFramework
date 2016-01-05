@@ -1,6 +1,4 @@
-﻿. after doing manual updates through angular, update breeze! change email bug!
-
-. reset password + remember me? + setemail function in userstore?
+﻿. reset password + remember me?
 
 . confirmEmail page - isAuth true / false cases - has / has not token param cases
 

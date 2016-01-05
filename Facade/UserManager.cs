@@ -46,20 +46,18 @@
             await Store.SaveChangesAsync();
         }
 
-        public async Task<IdentityResult> ChangeEmailAsync(int userId, string email)
+        public override async Task<IdentityResult> SetEmailAsync(int userId, string email)
         {
             var user = await FindByIdAsync(userId);
-            user.Email = email;
-            user.EmailConfirmed = false;
 
-            var result = await base.UpdateAsync(user);
+            var result = await base.SetEmailAsync(userId, email);
 
             if (result.Succeeded)
             {
                 await Store.SaveChangesAsync();
 
                 // Send confirmation email
-                await SendConfirmationEmailAsync(user.Id);
+                await SendConfirmationEmailAsync(userId);
             }
 
             return result;

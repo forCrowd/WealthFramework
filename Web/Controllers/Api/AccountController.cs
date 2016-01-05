@@ -56,7 +56,7 @@
 
             // Get the user
             var currentUser = await UserManager.FindByIdAsync(this.GetCurrentUserId().Value);
-            var result = await UserManager.ChangeEmailAsync(currentUser.Id, model.Email);
+            var result = await UserManager.SetEmailAsync(currentUser.Id, model.Email);
             var errorResult = GetErrorResult(result);
 
             if (errorResult != null)
