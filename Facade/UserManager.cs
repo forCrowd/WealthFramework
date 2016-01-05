@@ -46,20 +46,18 @@
             await Store.SaveChangesAsync();
         }
 
-        public async Task<IdentityResult> ChangeEmailAsync(int userId, string email)
+        public override async Task<IdentityResult> SetEmailAsync(int userId, string email)
         {
             var user = await FindByIdAsync(userId);
-            user.Email = email;
-            user.EmailConfirmed = false;
 
-            var result = await base.UpdateAsync(user);
+            var result = await base.SetEmailAsync(userId, email);
 
             if (result.Succeeded)
             {
                 await Store.SaveChangesAsync();
 
                 // Send confirmation email
-                await SendConfirmationEmailAsync(user.Id);
+                await SendConfirmationEmailAsync(userId);
             }
 
             return result;
@@ -150,7 +148,11 @@
         public async Task<User> FindByTempToken(string tempToken)
         {
             // Search for the user
-            var entity = await Users.Include(user => user.Claims).SingleOrDefaultAsync(user => user.Claims.Any(claim => claim.ClaimType == "TempToken" && claim.ClaimValue == tempToken));
+            var entity = await Users
+                .Include(user => user.Claims)
+                .Include(user => user.Logins)
+                .Include(user => user.Roles)
+                .SingleOrDefaultAsync(user => user.Claims.Any(claim => claim.ClaimType == "TempToken" && claim.ClaimValue == tempToken));
 
             // Return null if there is no..
             if (entity == null)

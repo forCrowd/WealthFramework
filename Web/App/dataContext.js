@@ -200,10 +200,22 @@
 
                     function failed(error) {
                         if (typeof error.status !== 'undefined' && error.status === '409') {
-                            logger.logError('Save failed!<br />The record you attempted to edit was modified by another user after you got the original value. The edit operation was canceled.', error, false);
+                            logger.logError('Save failed!<br />The record you attempted to edit was modified by another user after you got the original value. The edit operation was canceled.', error, true);
+                        } else if (typeof error.entityErrors !== 'undefined') {
+
+                            var errorMessage = 'Save failed!<br />';
+
+                            for (var key in error.entityErrors) {
+                                var entityError = error.entityErrors[key];
+                                errorMessage += entityError.errorMessage + '<br />';
+                            }
+
+                            logger.logError(errorMessage, null, true);
+
                         } else {
-                            logger.logError('Save failed!', error);
+                            logger.logError('Save failed!', error, true);
                         }
+
                         return $q.reject(error); // pass error along to next handler
                     }
 

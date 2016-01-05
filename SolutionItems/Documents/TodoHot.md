@@ -1,8 +1,4 @@
-﻿. send notification email in case external login..
-
-. change password in case external login?
-
-. after doing manual updates through angular, update breeze! change email bug!
+﻿. reset password + remember me?
 
 . confirmEmail page - isAuth true / false cases - has / has not token param cases
 

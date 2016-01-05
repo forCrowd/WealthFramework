@@ -45,6 +45,7 @@
                     logger.logSuccess('Your changes has been saved!', null, true);
                 })
                 .catch(function (error) {
+
                     // Conflict (Concurrency exception)
                     if (error.status === '409') {
                         // TODO Try to recover!
