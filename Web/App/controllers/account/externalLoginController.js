@@ -17,13 +17,13 @@
 
         function _init() {
 
-            userFactory.isAuthenticated()
-                .then(function (isAuthenticated) {
+            userFactory.getCurrentUser()
+                .then(function (currentUser) {
 
-                    vm.isAuthenticated = isAuthenticated;
+                    vm.isAuthenticated = currentUser.isAuthenticated();
 
                     // No need to continue
-                    if (isAuthenticated) {
+                    if (vm.isAuthenticated) {
                         return;
                     }
                     

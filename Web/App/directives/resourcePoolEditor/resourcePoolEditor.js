@@ -300,9 +300,9 @@
             }
 
             function saveChanges() {
-                userFactory.isAuthenticated()
-                    .then(function (isAuthenticated) {
-                        if (isAuthenticated) {
+                userFactory.getCurrentUser()
+                    .then(function (currentUser) {
+                        if (currentUser.isAuthenticated()) {
                             resourcePoolFactory.saveChanges(1500)
                                 .catch(function (error) {
                                     // Conflict (Concurrency exception)

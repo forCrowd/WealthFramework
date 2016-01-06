@@ -12,6 +12,7 @@
 
         var self = this;
 
+        // Service urls
         var accessTokenUrl = '/api/Token';
         var addPasswordUrl = '/api/Account/AddPassword';
         var changeEmailUrl = '/api/Account/ChangeEmail';
@@ -21,7 +22,6 @@
         var resendConfirmationEmailUrl = '/api/Account/ResendConfirmationEmail';
 
         var getCurrentUserPromise = null;
-        var isAuthenticatedPromise = null;
 
         // Service methods
         $delegate.addPassword = addPassword;
@@ -31,7 +31,6 @@
         $delegate.currentUser = null;
         $delegate.getAccessToken = getAccessToken;
         $delegate.getCurrentUser = getCurrentUser;
-        $delegate.isAuthenticated = isAuthenticated;
         $delegate.logout = logout;
         $delegate.register = register;
         $delegate.resendConfirmationEmail = resendConfirmationEmail;
@@ -125,7 +124,6 @@
                     if (!isRegister) {
                         getCurrentUserPromise = null;
                     }
-                    isAuthenticatedPromise = null;
 
                     // If there are anonymously create entities...
                     var oldUser = null;
@@ -144,7 +142,6 @@
 
                                         // Raise logged in event
                                         $rootScope.$broadcast('userLoggedIn', newUser);
-
                                     });
 
                             } else {
@@ -298,25 +295,6 @@
             logger.logError(message, null, true);
         }
 
-        function isAuthenticated() {
-
-            var deferred = $q.defer();
-
-            if (isAuthenticatedPromise === null) {
-                isAuthenticatedPromise = deferred.promise;
-
-                getCurrentUser()
-                    .then(function (user) {
-                        deferred.resolve(user.Id > 0);
-                    })
-                    .catch(function () {
-                        deferred.reject();
-                    });
-            }
-
-            return isAuthenticatedPromise;
-        }
-
         function logout() {
 
             // Remove access token from the session
@@ -324,7 +302,6 @@
 
             // Clear user promise
             getCurrentUserPromise = null;
-            isAuthenticatedPromise = null;
 
             // Clear breeze's metadata store
             dataContext.clear();

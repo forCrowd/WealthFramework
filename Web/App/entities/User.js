@@ -42,6 +42,7 @@
 
             // Functions
             self.hasPassword = hasPassword;
+            self.isAuthenticated = isAuthenticated;
 
             /*** Implementations ***/
 
@@ -60,6 +61,9 @@
                 return true;
             }
 
+            function isAuthenticated() {
+                return self.Id > 0;
+            }
         }
     }
 })();

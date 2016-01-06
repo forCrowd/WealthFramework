@@ -5,6 +5,7 @@
 * updateAnonymousChanges fix: When rejectChanges called, the entity was getting removed from the array during the loop. slice() used to prevent it.
 * external / local login anonymous user fix: detaching anonymous user in external case login was affecting normal login case.
 Now both cases call updateAnonymousChanges method which handles this case correctly.
+* userFactory getCurrentUser + isAuthentication functions were merged
 
 **0.41.2**
 
