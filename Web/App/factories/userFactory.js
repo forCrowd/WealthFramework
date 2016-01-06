@@ -334,7 +334,6 @@
         }
 
         function register(registerBindingModel) {
-            logger.log('$delegate.currentUser', $delegate.currentUser);
             return $http.post(registerUrl, registerBindingModel)
                 .success(function (newUser) {
 
@@ -346,6 +345,7 @@
                     $delegate.currentUser.RowVersion = newUser.RowVersion;
                     $delegate.currentUser.entityAspect.acceptChanges();
 
+                    return getAccessToken(registerBindingModel.email, registerBindingModel.password, '', true);
                 })
                 .error(handleErrorResult);
         }

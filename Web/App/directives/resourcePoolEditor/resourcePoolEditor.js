@@ -335,11 +335,8 @@
                 loadChartData();
             }
 
-            function userLoggedIn() {
-                userFactory.getCurrentUser()
-                    .then(function (currentUser) {
-                        setCurrentUser(currentUser);
-                    });
+            function userLoggedIn(event, currentUser) {
+                setCurrentUser(currentUser);
             }
 
             function userLoggedOut() {

@@ -42,7 +42,6 @@
 
                                     // Clear search param
                                     $location.search('token', null);
-
                                 });
                         });
                 });

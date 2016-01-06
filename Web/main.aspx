@@ -167,7 +167,7 @@
     <script src="/App/factories/resourcePoolFactory.js?v=0.40"></script>
 
     <!-- Content -->
-    <script src="/App/controllers/content/mainController.js?v=0.41.1"></script>
+    <script src="/App/controllers/content/mainController.js?v=0.41.3"></script>
     <script src="/App/controllers/content/introductionController.js?v=0.40"></script>
     <script src="/App/controllers/content/basicsController.js?v=0.38"></script>
     <script src="/App/controllers/content/sectorIndexSampleController.js?v=0.37"></script>
@@ -191,10 +191,10 @@
     <script src="/App/controllers/account/changeEmailController.js?v=0.41.2"></script>
     <script src="/App/controllers/account/changePasswordController.js?v=0.41.2"></script>
     <script src="/App/controllers/account/addPasswordController.js?v=0.41.2"></script>
-    <script src="/App/controllers/account/confirmEmailController.js?v=0.41.2"></script>
+    <script src="/App/controllers/account/confirmEmailController.js?v=0.41.3"></script>
 
     <!-- Directives -->
-    <script src="/App/directives/resourcePoolEditor/resourcePoolEditor.js?v=0.40"></script>
+    <script src="/App/directives/resourcePoolEditor/resourcePoolEditor.js?v=0.41.3"></script>
 
     <!-- Filters -->
     <script src="/App/filters/angular-enum.js?v=0.37"></script>

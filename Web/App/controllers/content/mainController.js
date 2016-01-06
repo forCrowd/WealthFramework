@@ -34,8 +34,8 @@
         });
 
         // User logged in & out
-        $scope.$on('userLoggedIn', function () {
-            getCurrentUser();
+        $scope.$on('userLoggedIn', function (event, currentUser) {
+            vm.currentUser = currentUser;
         });
 
         $scope.$on('userLoggedOut', function () {
