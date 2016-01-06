@@ -31,7 +31,7 @@
             .when('/account/changeEmail', { title: function () { return 'Change Email'; }, templateUrl: '/App/views/account/changeEmail.html?v=0.40' })
             .when('/account/changePassword', { title: function () { return 'Change Password'; }, templateUrl: '/App/views/account/changePassword.html?v=0.40' })
             .when('/account/addPassword', { title: function () { return 'Add Password'; }, templateUrl: '/App/views/account/addPassword.html?v=0.41.1' })
-            .when('/account/confirmEmail', { title: function () { return 'Confirm Email'; }, templateUrl: '/App/views/account/confirmEmail.html?v=0.40' })
+            .when('/account/confirmEmail', { title: function () { return 'Confirm Email'; }, templateUrl: '/App/views/account/confirmEmail.html?v=0.41.3' })
 
             /* Generated List + Edit pages */
             .when('/manage/generated/:entity', { title: getManageRouteTitle, templateUrl: getManageRouteTemplateUrl })
@@ -105,9 +105,9 @@
         $rootScope.$on('$routeChangeStart', function (event, next, current) {
 
             // Navigate the authenticated user to home page, in case they try to go login or register
-            userFactory.isAuthenticated()
-                .then(function (isAuthenticated) {
-                    if (isAuthenticated && ($location.path() === '/account/login' || $location.path() === '/account/register')) {
+            userFactory.getCurrentUser()
+                .then(function (currentUser) {
+                    if (currentUser.isAuthenticated() && ($location.path() === '/account/login' || $location.path() === '/account/register')) {
                         $location.path('/');
                     }
                 });

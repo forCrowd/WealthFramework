@@ -1,7 +1,5 @@
 ﻿. reset password + remember me?
 
-. confirmEmail page - isAuth true / false cases - has / has not token param cases
-
 . Sector index -> priority index!
 
 . biotech's sample doesn't use global.asax - direclty uses startup? no mvc routing? try to convert to that sample?
@@ -40,20 +38,12 @@ save anon user to db?
 ---
 Identity / Account:
 
-. confirmEmail page - isAuth true / false cases - has / has not token param cases
-
-. remember me?
-
-. forgot password?
-
 . Invalidating tokens
 http://stackoverflow.com/questions/22755700/revoke-token-generated-by-usertokenprovider-in-asp-net-identity-2-0/22767286#22767286
 
 . before sending any email to user, check whether it's confirmed?
 
 . confirmEmail etc. pages should be behind authorization? handle it in a generic way? the user shouldn't access these pages without logging in?
-
-. try to merge userFactory.isAuth + currentUser?
 
 ---
 angular 1.5 component?

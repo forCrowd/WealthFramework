@@ -442,9 +442,9 @@
             // TODO Try to move this to a better place?
             vm.resourcePool.updateCache();
 
-            userFactory.isAuthenticated()
-                .then(function (isAuthenticated) {
-                    if (isAuthenticated) {
+            userFactory.getCurrentUser()
+                .then(function (currentUser) {
+                    if (currentUser.isAuthenticated()) {
                         vm.isSaving = true;
                         resourcePoolFactory.saveChanges()
                             .then(navigateToReturnPath)

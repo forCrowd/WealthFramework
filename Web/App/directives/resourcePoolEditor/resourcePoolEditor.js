@@ -300,9 +300,9 @@
             }
 
             function saveChanges() {
-                userFactory.isAuthenticated()
-                    .then(function (isAuthenticated) {
-                        if (isAuthenticated) {
+                userFactory.getCurrentUser()
+                    .then(function (currentUser) {
+                        if (currentUser.isAuthenticated()) {
                             resourcePoolFactory.saveChanges(1500)
                                 .catch(function (error) {
                                     // Conflict (Concurrency exception)
@@ -335,11 +335,8 @@
                 loadChartData();
             }
 
-            function userLoggedIn() {
-                userFactory.getCurrentUser()
-                    .then(function (currentUser) {
-                        setCurrentUser(currentUser);
-                    });
+            function userLoggedIn(event, currentUser) {
+                setCurrentUser(currentUser);
             }
 
             function userLoggedOut() {

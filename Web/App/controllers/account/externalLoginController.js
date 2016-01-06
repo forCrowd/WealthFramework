@@ -17,13 +17,13 @@
 
         function _init() {
 
-            userFactory.isAuthenticated()
-                .then(function (isAuthenticated) {
+            userFactory.getCurrentUser()
+                .then(function (currentUser) {
 
-                    vm.isAuthenticated = isAuthenticated;
+                    vm.isAuthenticated = currentUser.isAuthenticated();
 
                     // No need to continue
-                    if (isAuthenticated) {
+                    if (vm.isAuthenticated) {
                         return;
                     }
                     
@@ -38,10 +38,7 @@
                     userFactory.getAccessToken('', '', tempToken)
                         .success(function (tokenData) {
 
-                            // Actually this is not necessary, since search('tempToken', null) will redirect and ...
-                            vm.isAuthenticated = true;
-
-                            // Clear search param
+                            // Clear search param (& redirect to itself)
                             $location.search('tempToken', null);
                         })
                         .error(function (data) {

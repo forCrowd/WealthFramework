@@ -17,9 +17,9 @@
         vm.upoConfig = { resourcePoolId: 1 };
         vm.isAuthenticated = false;
 
-        userFactory.isAuthenticated()
-            .then(function (isAuthenticated) {
-                vm.isAuthenticated = isAuthenticated;
+        userFactory.getCurrentUser()
+            .then(function (currentUser) {
+                vm.isAuthenticated = currentUser.isAuthenticated();
             });
 
         // User logged in & out

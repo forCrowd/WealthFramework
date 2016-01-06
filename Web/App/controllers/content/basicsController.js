@@ -43,9 +43,9 @@
                         }
 
                         // Save changes, if there is a registered user
-                        userFactory.isAuthenticated()
-                            .then(function (isAuthenticated) {
-                                if (isAuthenticated) {
+                        userFactory.getCurrentUser()
+                            .then(function (currentUser) {
+                                if (currentUser.isAuthenticated()) {
                                     resourcePoolFactory.saveChanges(1500);
                                 }
                             });

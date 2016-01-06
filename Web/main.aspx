@@ -139,7 +139,7 @@
     <!-- Main -->
     <script src="/App/main.js?v=0.39"></script>
     <script src="/App/logger.js?v=0.40"></script>
-    <script src="/App/route.js?v=0.41.1"></script>
+    <script src="/App/route.js?v=0.41.3"></script>
     <script src="/App/authorization.js?v=0.29"></script>
     <script src="/App/exceptionHandlerExtension.js?v=0.39"></script>
 
@@ -149,52 +149,52 @@
     <script src="/App/entities/ElementCell.js?v=0.40"></script>
     <script src="/App/entities/ElementField.js?v=0.40"></script>
     <script src="/App/entities/ElementItem.js?v=0.40"></script>
-    <script src="/App/entities/User.js?v=0.41.1"></script>
+    <script src="/App/entities/User.js?v=0.41.3"></script>
     <script src="/App/entities/UserElementCell.js?v=0.40"></script>
     <script src="/App/entities/Enums.js?v=0.37"></script>
     <script src="/App/entities/LocationItem.js?v=0.38"></script>
 
     <!-- breezeJS -->
     <script src="/App/entityManagerFactory.js?v=0.41.1"></script>
-    <script src="/App/dataContext.js?v=0.41.2"></script>
+    <script src="/App/dataContext.js?v=0.41.3"></script>
     <script src="/App/factories/mainFactory.js?v=0.37"></script>
 
     <!-- Manage Scripts - Generated (Factories, Controllers) -->
     <script src="/App/includes/manageScripts.js?v=0.37"></script>
 
     <!-- Factory extensions -->
-    <script src="/App/factories/userFactory.js?v=0.41.2"></script>
+    <script src="/App/factories/userFactory.js?v=0.41.3"></script>
     <script src="/App/factories/resourcePoolFactory.js?v=0.40"></script>
 
     <!-- Content -->
-    <script src="/App/controllers/content/mainController.js?v=0.41.1"></script>
-    <script src="/App/controllers/content/introductionController.js?v=0.40"></script>
-    <script src="/App/controllers/content/basicsController.js?v=0.38"></script>
+    <script src="/App/controllers/content/mainController.js?v=0.41.3"></script>
+    <script src="/App/controllers/content/introductionController.js?v=0.41.3"></script>
+    <script src="/App/controllers/content/basicsController.js?v=0.41.3"></script>
     <script src="/App/controllers/content/sectorIndexSampleController.js?v=0.37"></script>
     <script src="/App/controllers/content/knowledgeIndexSampleController.js?v=0.37"></script>
     <script src="/App/controllers/content/totalCostIndexSampleController.js?v=0.37"></script>
     <script src="/App/controllers/content/fairShareIndexSampleController.js?v=0.37"></script>
     <script src="/App/controllers/content/indexesPieSampleController.js?v=0.37"></script>
     <script src="/App/controllers/content/resourcePoolRateSampleController.js?v=0.29"></script>
-    <script src="/App/controllers/content/closingNotesController.js?v=0.37"></script>
+    <script src="/App/controllers/content/closingNotesController.js?v=0.41.3"></script>
 
     <!-- Resource Pool -->
-    <script src="/App/controllers/resourcePool/resourcePoolEditController.js?v=0.40"></script>
+    <script src="/App/controllers/resourcePool/resourcePoolEditController.js?v=0.41.3"></script>
     <script src="/App/controllers/resourcePool/resourcePoolListController.js?v=0.37"></script>
     <script src="/App/controllers/resourcePool/resourcePoolViewController.js?v=0.38"></script>
 
     <!-- Account -->
-    <script src="/App/controllers/account/registerController.js?v=0.40"></script>
-    <script src="/App/controllers/account/loginController.js?v=0.38.4"></script>
-    <script src="/App/controllers/account/externalLoginController.js?v=0.41.2"></script>
+    <script src="/App/controllers/account/registerController.js?v=0.41.3"></script>
+    <script src="/App/controllers/account/loginController.js?v=0.41.3"></script>
+    <script src="/App/controllers/account/externalLoginController.js?v=0.41.3"></script>
     <script src="/App/controllers/account/accountEditController.js?v=0.41.2"></script>
     <script src="/App/controllers/account/changeEmailController.js?v=0.41.2"></script>
     <script src="/App/controllers/account/changePasswordController.js?v=0.41.2"></script>
     <script src="/App/controllers/account/addPasswordController.js?v=0.41.2"></script>
-    <script src="/App/controllers/account/confirmEmailController.js?v=0.41.2"></script>
+    <script src="/App/controllers/account/confirmEmailController.js?v=0.41.3"></script>
 
     <!-- Directives -->
-    <script src="/App/directives/resourcePoolEditor/resourcePoolEditor.js?v=0.40"></script>
+    <script src="/App/directives/resourcePoolEditor/resourcePoolEditor.js?v=0.41.3"></script>
 
     <!-- Filters -->
     <script src="/App/filters/angular-enum.js?v=0.37"></script>

@@ -10,7 +10,6 @@
 
         var vm = this;
         vm.currentUser = null,
-        vm.isAuthenticated = false;
         vm.isResendDisabled = false;
         vm.resendConfirmationEmail = resendConfirmationEmail;
 
@@ -18,32 +17,26 @@
 
         function _init() {
 
-            userFactory.isAuthenticated()
-                .then(function (isAuthenticated) {
+            userFactory.getCurrentUser()
+                .then(function (currentUser) {
 
-                    vm.isAuthenticated = isAuthenticated;
+                    vm.currentUser = currentUser;
 
-                    if (!isAuthenticated) {
+                    if (!vm.currentUser.isAuthenticated()) {
                         return;
                     }
 
-                    userFactory.getCurrentUser()
-                        .then(function (currentUser) {
+                    // If there is no token, no need to continue
+                    var token = $location.search().token;
+                    if (typeof token === 'undefined') {
+                        return;
+                    }
 
-                            // If there is no token, no need to continue
-                            var token = $location.search().token;
-                            if (typeof token === 'undefined') {
-                                vm.currentUser = currentUser; // Set currentUser, so UI can display the correct text
-                                return;
-                            }
+                    userFactory.confirmEmail({ Token: token })
+                        .success(function () {
 
-                            userFactory.confirmEmail({ Token: token })
-                                .success(function () {
-
-                                    // Clear search param
-                                    $location.search('token', null);
-
-                                });
+                            // Clear search param
+                            $location.search('token', null);
                         });
                 });
         }
