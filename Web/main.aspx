@@ -156,14 +156,14 @@
 
     <!-- breezeJS -->
     <script src="/App/entityManagerFactory.js?v=0.41.1"></script>
-    <script src="/App/dataContext.js?v=0.41.2"></script>
+    <script src="/App/dataContext.js?v=0.41.3"></script>
     <script src="/App/factories/mainFactory.js?v=0.37"></script>
 
     <!-- Manage Scripts - Generated (Factories, Controllers) -->
     <script src="/App/includes/manageScripts.js?v=0.37"></script>
 
     <!-- Factory extensions -->
-    <script src="/App/factories/userFactory.js?v=0.41.2"></script>
+    <script src="/App/factories/userFactory.js?v=0.41.3"></script>
     <script src="/App/factories/resourcePoolFactory.js?v=0.40"></script>
 
     <!-- Content -->
@@ -184,9 +184,9 @@
     <script src="/App/controllers/resourcePool/resourcePoolViewController.js?v=0.38"></script>
 
     <!-- Account -->
-    <script src="/App/controllers/account/registerController.js?v=0.40"></script>
-    <script src="/App/controllers/account/loginController.js?v=0.38.4"></script>
-    <script src="/App/controllers/account/externalLoginController.js?v=0.41.2"></script>
+    <script src="/App/controllers/account/registerController.js?v=0.41.3"></script>
+    <script src="/App/controllers/account/loginController.js?v=0.41.3"></script>
+    <script src="/App/controllers/account/externalLoginController.js?v=0.41.3"></script>
     <script src="/App/controllers/account/accountEditController.js?v=0.41.2"></script>
     <script src="/App/controllers/account/changeEmailController.js?v=0.41.2"></script>
     <script src="/App/controllers/account/changePasswordController.js?v=0.41.2"></script>

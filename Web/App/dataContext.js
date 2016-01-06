@@ -318,7 +318,8 @@
 
             $q.all(existingEntityPromises).then(function () {
 
-                anonymousUser.UserResourcePoolSet.forEach(function (anonymousUserResourcePool) {
+                var userResourcePoolSet = anonymousUser.UserResourcePoolSet.slice();
+                userResourcePoolSet.forEach(function (anonymousUserResourcePool) {
 
                     var result = newUser.UserResourcePoolSet.filter(function (userResourcePool) {
                         return userResourcePool.ResourcePoolId === anonymousUserResourcePool.ResourcePoolId;
@@ -332,7 +333,8 @@
                     }
                 });
 
-                anonymousUser.UserElementFieldSet.forEach(function (anonymousUserElementField) {
+                var userElementFieldSet = anonymousUser.UserElementFieldSet.slice();
+                userElementFieldSet.forEach(function (anonymousUserElementField) {
                     
                     // If existing entity, then make it modified
                     var result = newUser.UserElementFieldSet.filter(function (userElementField) {
@@ -347,7 +349,8 @@
                     }
                 });
 
-                anonymousUser.UserElementCellSet.forEach(function (anonymousUserElementCell) {
+                var userElementCellSet = anonymousUser.UserElementCellSet.slice();
+                userElementCellSet.forEach(function (anonymousUserElementCell) {
 
                     // If existing entity, then make it modified
                     var result = newUser.UserElementCellSet.filter(function (userElementCell) {

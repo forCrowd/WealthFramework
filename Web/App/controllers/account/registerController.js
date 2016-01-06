@@ -38,17 +38,11 @@
         function register() {
             userFactory.register(vm)
                 .success(function () {
-
-                    logger.logSuccess('You have been registered!', null, true);
-
-                    userFactory.getAccessToken(vm.email, vm.password)
+                    userFactory.getAccessToken(vm.email, vm.password, '', true)
                         .success(function () {
 
-                            // Save changes
-                            userFactory.saveChanges()
-                                .then(function () {
-                                    $location.path('/account/confirmEmail');
-                                });
+                            logger.logSuccess('You have been registered!', null, true);
+                            $location.path('/account/confirmEmail');
                         })
                         .error(function (response) {
                             if (typeof response.error_description !== 'undefined') {
