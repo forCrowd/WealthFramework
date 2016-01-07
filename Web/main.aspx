@@ -115,7 +115,9 @@
     </div>
 
     <!--<script src="/Scripts/bootstrap.min.js?v=0.37"></script>-->
+    <!-- Is this useful, since bootstrap.min.js is commented out? -->
     <script src="/Scripts/respond.min.js?v=0.24"></script>
+    
     <script src="/Scripts/datajs-1.1.3.min.js?v=0.24"></script>
     <script src="/Scripts/toastr.min.js?v=0.24"></script>
 

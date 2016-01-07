@@ -1,5 +1,10 @@
 ﻿### Release Notes
 
+**0.42**
+
+* Global.asax functional was moved to Startup.cs
+** Http to Https rule handling was moved to web.config
+
 **0.41.4**
 
 * nuget package updates were installed

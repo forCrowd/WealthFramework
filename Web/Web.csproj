@@ -331,9 +331,6 @@
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="RoutingConventions\CompositeKeyRoutingConvention.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\InternalServerErrorResult.cs" />
@@ -680,7 +677,6 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Global.asax" />
     <Content Include="404.aspx" />
     <Content Include="main.aspx" />
     <Content Include="App\controllers\account\accountEditController.js" />

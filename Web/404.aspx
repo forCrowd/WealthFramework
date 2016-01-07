@@ -4,15 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>Wealth Economy - 404</title>
-
-    <!-- External CSS -->
-    <link href="/Content/bootstrap.min.css?v=0.24" rel="stylesheet" />
-    <link href="/Content/breeze.directives.css?v=0.24" rel="stylesheet" />
-    <link href="/Content/toastr.css?v=0.24" rel="stylesheet" />
-
-    <!-- Internal CSS -->
-    <link href="/Content/site.css?v=0.22" rel="stylesheet" />
-    <link href="/App/directives/resourcePoolEditor.css?v=0.22" rel="stylesheet" />
+    <link href="/Content/bootstrap.min.css?v=0.41.4" rel="stylesheet" />
+    <link href="/Content/site.css?v=0.37" rel="stylesheet" />
 
     <script language="c#" runat="server">
     public void Page_Init(object sender, EventArgs e)
@@ -57,9 +50,5 @@
             </p>
         </footer>
     </div>
-
-    <script src="/Scripts/bootstrap.min.js?v=0.24"></script>
-    <script src="/Scripts/respond.min.js?v=0.24"></script>
-
 </body>
 </html>
