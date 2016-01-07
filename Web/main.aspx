@@ -7,7 +7,7 @@
     <base href="/" />
 
     <!-- External CSS -->
-    <link href="/Content/bootstrap.min.css?v=0.35.1" rel="stylesheet" />
+    <link href="/Content/bootstrap.min.css?v=0.41.4" rel="stylesheet" />
     <link href="/Content/font-awesome.min.css?v=0.41" rel="stylesheet" />
     <link href="/Content/breeze.directives.css?v=0.24" rel="stylesheet" />
     <link href="/Content/toastr.css?v=0.24" rel="stylesheet" />
@@ -119,9 +119,9 @@
     <script src="/Scripts/datajs-1.1.3.min.js?v=0.24"></script>
     <script src="/Scripts/toastr.min.js?v=0.24"></script>
 
-    <script src="/Scripts/angular.min.js?v=0.35.1"></script>
-    <script src="/Scripts/angular-route.min.js?v=0.35.1"></script>
-    <script src="/Scripts/angular-sanitize.min.js?v=0.35.1"></script>
+    <script src="/Scripts/angular.min.js?v=0.41.4"></script>
+    <script src="/Scripts/angular-route.min.js?v=0.41.4"></script>
+    <script src="/Scripts/angular-sanitize.min.js?v=0.41.4"></script>
 
     <!-- Angular UI -->
     <script src="/Scripts/angular-ui/ui-bootstrap-tpls.min.js?v=0.37"></script>
@@ -132,7 +132,7 @@
     <script src="/Scripts/breeze.directives.js?v=0.24"></script>
 
     <!-- Highcharts -->
-    <script src="/Scripts/highcharts/4.1.5/highcharts.js?v=0.37"></script>
+    <script src="/Scripts/highcharts/4.2.0/highcharts.js?v=0.41.4"></script>
     <!-- TODO Try to find (or create) nuget package for this - or wait for ASP.NET 5 & bower? -->
     <script src="/App/external/highcharts-ng.js?v=0.37"></script>
 

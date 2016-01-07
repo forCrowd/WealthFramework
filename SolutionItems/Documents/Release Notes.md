@@ -1,5 +1,9 @@
 ﻿### Release Notes
 
+**0.41.4**
+
+* nuget package updates were installed
+
 **0.41.3**
 
 * updateAnonymousChanges fix: When rejectChanges called, the entity was getting removed from the array during the loop. slice() used to prevent it.
