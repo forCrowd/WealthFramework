@@ -92,13 +92,13 @@
       <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Data.Edm, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.Data.Edm.5.6.4\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+    <Reference Include="Microsoft.Data.Edm, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Edm.5.7.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Data.OData, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.Data.OData.5.6.4\lib\net40\Microsoft.Data.OData.dll</HintPath>
+    <Reference Include="Microsoft.Data.OData, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.OData.5.7.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -132,9 +132,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -149,9 +149,9 @@
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
-    <Reference Include="System.Spatial, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\System.Spatial.5.6.4\lib\net40\System.Spatial.dll</HintPath>
+    <Reference Include="System.Spatial, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Spatial.5.7.0\lib\net40\System.Spatial.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -676,8 +676,6 @@
     <Content Include="Content\toastr.scss" />
     <Content Include="Content\toastr.less" />
     <None Include="Configs\system.net.mailSettings.smtp.config" />
-    <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -730,17 +728,21 @@
       <LastGenOutput>editController.txt</LastGenOutput>
     </None>
     <Content Include="robots.txt" />
-    <Content Include="Scripts\angular-mocks.js" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Properties\PublishProfiles\Wealth - Azure.pubxml" />
+    <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular-route.js" />
     <Content Include="Scripts\angular-route.min.js" />
     <Content Include="Scripts\angular-sanitize.js" />
@@ -764,42 +766,46 @@
     <Content Include="Scripts\angular-route.min.js.map" />
     <Content Include="Scripts\angular-sanitize.min.js.map" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
-    <Content Include="Scripts\highcharts\4.1.5\adapters\standalone-framework.js" />
-    <Content Include="Scripts\highcharts\4.1.5\adapters\standalone-framework.src.js" />
-    <Content Include="Scripts\highcharts\4.1.5\highcharts-3d.js" />
-    <Content Include="Scripts\highcharts\4.1.5\highcharts-3d.src.js" />
-    <Content Include="Scripts\highcharts\4.1.5\highcharts-more.js" />
-    <Content Include="Scripts\highcharts\4.1.5\highcharts-more.src.js" />
-    <Content Include="Scripts\highcharts\4.1.5\highcharts.js" />
-    <Content Include="Scripts\highcharts\4.1.5\highcharts.src.js" />
-    <Content Include="Scripts\highcharts\4.1.5\modules\broken-axis.js" />
-    <Content Include="Scripts\highcharts\4.1.5\modules\broken-axis.src.js" />
-    <Content Include="Scripts\highcharts\4.1.5\modules\canvas-tools.js" />
-    <Content Include="Scripts\highcharts\4.1.5\modules\canvas-tools.src.js" />
-    <Content Include="Scripts\highcharts\4.1.5\modules\data.js" />
-    <Content Include="Scripts\highcharts\4.1.5\modules\data.src.js" />
-    <Content Include="Scripts\highcharts\4.1.5\modules\drilldown.js" />
-    <Content Include="Scripts\highcharts\4.1.5\modules\drilldown.src.js" />
-    <Content Include="Scripts\highcharts\4.1.5\modules\exporting.js" />
-    <Content Include="Scripts\highcharts\4.1.5\modules\exporting.src.js" />
-    <Content Include="Scripts\highcharts\4.1.5\modules\funnel.js" />
-    <Content Include="Scripts\highcharts\4.1.5\modules\funnel.src.js" />
-    <Content Include="Scripts\highcharts\4.1.5\modules\heatmap.js" />
-    <Content Include="Scripts\highcharts\4.1.5\modules\heatmap.src.js" />
-    <Content Include="Scripts\highcharts\4.1.5\modules\no-data-to-display.js" />
-    <Content Include="Scripts\highcharts\4.1.5\modules\no-data-to-display.src.js" />
-    <Content Include="Scripts\highcharts\4.1.5\modules\solid-gauge.js" />
-    <Content Include="Scripts\highcharts\4.1.5\modules\solid-gauge.src.js" />
-    <Content Include="Scripts\highcharts\4.1.5\modules\treemap.js" />
-    <Content Include="Scripts\highcharts\4.1.5\modules\treemap.src.js" />
-    <Content Include="Scripts\highcharts\4.1.5\themes\dark-blue.js" />
-    <Content Include="Scripts\highcharts\4.1.5\themes\dark-green.js" />
-    <Content Include="Scripts\highcharts\4.1.5\themes\dark-unica.js" />
-    <Content Include="Scripts\highcharts\4.1.5\themes\gray.js" />
-    <Content Include="Scripts\highcharts\4.1.5\themes\grid-light.js" />
-    <Content Include="Scripts\highcharts\4.1.5\themes\grid.js" />
-    <Content Include="Scripts\highcharts\4.1.5\themes\sand-signika.js" />
-    <Content Include="Scripts\highcharts\4.1.5\themes\skies.js" />
+    <Content Include="Scripts\highcharts\4.2.0\adapters\standalone-framework.js" />
+    <Content Include="Scripts\highcharts\4.2.0\adapters\standalone-framework.src.js" />
+    <Content Include="Scripts\highcharts\4.2.0\highcharts-3d.js" />
+    <Content Include="Scripts\highcharts\4.2.0\highcharts-3d.src.js" />
+    <Content Include="Scripts\highcharts\4.2.0\highcharts-more.js" />
+    <Content Include="Scripts\highcharts\4.2.0\highcharts-more.src.js" />
+    <Content Include="Scripts\highcharts\4.2.0\highcharts.js" />
+    <Content Include="Scripts\highcharts\4.2.0\highcharts.src.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\boost.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\boost.src.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\broken-axis.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\broken-axis.src.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\canvas-tools.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\canvas-tools.src.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\data.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\data.src.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\drilldown.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\drilldown.src.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\exporting.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\exporting.src.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\funnel.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\funnel.src.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\heatmap.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\heatmap.src.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\no-data-to-display.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\no-data-to-display.src.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\offline-exporting.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\offline-exporting.src.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\solid-gauge.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\solid-gauge.src.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\treemap.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\treemap.src.js" />
+    <Content Include="Scripts\highcharts\4.2.0\themes\dark-blue.js" />
+    <Content Include="Scripts\highcharts\4.2.0\themes\dark-green.js" />
+    <Content Include="Scripts\highcharts\4.2.0\themes\dark-unica.js" />
+    <Content Include="Scripts\highcharts\4.2.0\themes\gray.js" />
+    <Content Include="Scripts\highcharts\4.2.0\themes\grid-light.js" />
+    <Content Include="Scripts\highcharts\4.2.0\themes\grid.js" />
+    <Content Include="Scripts\highcharts\4.2.0\themes\sand-signika.js" />
+    <Content Include="Scripts\highcharts\4.2.0\themes\skies.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
