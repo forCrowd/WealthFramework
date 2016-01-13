@@ -4,8 +4,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>Wealth Economy - 404</title>
-    <link href="/Content/bootstrap.min.css?v=0.41.4" rel="stylesheet" />
-    <link href="/Content/site.css?v=0.37" rel="stylesheet" />
 
     <script language="c#" runat="server">
     public void Page_Init(object sender, EventArgs e)

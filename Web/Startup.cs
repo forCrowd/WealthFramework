@@ -20,18 +20,10 @@ namespace forCrowd.WealthEconomy.Web
             // Authorization
             AuthConfig.ConfigureAuth(app);
 
-            // Areas
-            System.Web.Mvc.AreaRegistration.RegisterAllAreas();
-
-            // Web api related
+            // WebApi
             FilterConfig.RegisterFilters(GlobalConfiguration.Configuration.Filters);
             FormatterConfig.RegisterFormatters(GlobalConfiguration.Configuration.Formatters);
             GlobalConfiguration.Configure(WebApiConfig.Register);
-
-            // Mvc related
-            MvcFilterConfig.RegisterGlobalFilters(System.Web.Mvc.GlobalFilters.Filters);
-            MvcRouteConfig.RegisterRoutes(System.Web.Routing.RouteTable.Routes);
-            BundleConfig.RegisterBundles(System.Web.Optimization.BundleTable.Bundles);
 
             // Database
             DatabaseConfig.Initialize();

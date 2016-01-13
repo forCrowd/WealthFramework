@@ -2,7 +2,10 @@
 
 **0.42**
 
-* Separation of Web client (ngClient) & Web api
+* Separation of Web client (ngClient) & WebApi
+** Cors was enabled on WebApi
+** All client related files were moved to ngClient
+** Mvc & other unnecessary packages were removed
 * Global.asax functional was moved to Startup.cs
 ** Http to Https rule handling was moved to web.config
 
