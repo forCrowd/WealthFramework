@@ -40,7 +40,7 @@
             };
 
             manager.EmailService = new EmailService();
-            manager.ConfirmEmailUrl = string.Format("{0}/account/confirmEmail", AppSettings.BaseUrl);
+            manager.ConfirmEmailUrl = string.Format("{0}/account/confirmEmail", AppSettings.ClientAppUrl);
 
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)

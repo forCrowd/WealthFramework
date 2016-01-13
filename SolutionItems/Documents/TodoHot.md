@@ -2,8 +2,6 @@
 
 . Sector index -> priority index!
 
-. biotech's sample doesn't use global.asax - direclty uses startup? no mvc routing? try to convert to that sample?
-
 ---
 content for editor? new content or new resourcepool - content in a content? or page as a new entity?
 url structure:
@@ -25,8 +23,6 @@ how about users/ organizations/ ?
 don't forget: preserved keywords (account, resourcepool and future ones?), also "inappropriate content"
 
 ---
-vs + nuget updates
-
 Alpha team review!
 
 tests, tests, tests

@@ -1,4 +1,6 @@
-﻿* when using fb account, anonymous changes will be lost! try to implement anonymous user for all actions..
+﻿* html form novalidate attribute?
+
+* when using fb account, anonymous changes will be lost! try to implement anonymous user for all actions..
 
 * throw exception instead; logger.logError('Load metadata first!');
 

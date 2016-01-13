@@ -1,0 +1,57 @@
+﻿<div data-ng-controller="loginController as vm">
+    <h2>Login</h2>
+    <div class="row">
+        <div class="col-md-8">
+            <section id="registerForm">
+                <form name="loginForm">
+                    <div class="form-horizontal">
+                        <h4>Use a local account to log in.</h4>
+                        <hr />
+                        <div class="form-group">
+                            <label for="Email" class="control-label col-md-2">Email</label>
+                            <div class="col-md-10" data-ng-class="{'has-error': loginForm.Email.$invalid && !loginForm.Email.$pristine}">
+                                <input id="Email" name="Email" type="text" data-ng-model="vm.email" class="form-control" required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Password" class="control-label col-md-2">Password</label>
+                            <div class="col-md-10" data-ng-class="{'has-error': loginForm.Password.$invalid && !loginForm.Password.$pristine}">
+                                <input id="Password" name="Password" type="password" data-ng-model="vm.password" class="form-control" required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button data-ng-click="vm.getAccessToken()" data-ng-disabled="loginForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
+                                    Login
+                                </button>
+                                <!--<button data-ng-click="vm.cancelChanges()" class="btn btn-danger">
+                                    Cancel
+                                </button>-->
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+        <div class="col-md-4">
+            <section id="socialLoginForm">
+                <h4>Use another service to log in.</h4>
+                <hr />
+                <div id="socialLoginList">
+                    <a data-ng-href="{{ vm.getExternalLoginUrl('Facebook') }}" target="_self" class="btn btn-block btn-social btn-facebook">
+                        <span class="fa fa-facebook"></span>
+                        Connect with Facebook
+                    </a>
+                    <a data-ng-href="{{ vm.getExternalLoginUrl('Google') }}" target="_self" class="btn btn-block btn-social btn-google">
+                        <span class="fa fa-google"></span>
+                        Connect with Google
+                    </a>
+                    <a data-ng-href="{{ vm.getExternalLoginUrl('Microsoft') }}" target="_self" class="btn btn-block btn-social btn-microsoft">
+                        <span class="fa fa-windows"></span>
+                        Connect with Microsoft
+                    </a>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

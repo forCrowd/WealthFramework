@@ -1,0 +1,100 @@
+﻿<#@ template language="C#" debug="false" hostspecific="true"#>
+<#@ include file="$(SolutionDir)Framework\T4\EF.Utility.ttinclude"#>
+<#@ output extension=".txt"#><#
+
+// To be able to control whether it's going to be executed
+var executeMe = true;
+if (!executeMe)
+	return string.Empty;
+
+const string connectionString = @"Server=(LocalDb)\MSSQLLocalDB;Database=WealthEconomy;Integrated Security=True;MultipleActiveResultSets=True";
+
+var textTransform = DynamicTextTransformation.Create(this);
+var code = new CodeGenerationTools(this);
+var ef = new MetadataTools(this);
+var typeMapper = new TypeMapper(code, ef, textTransform.Errors);
+var codeStringGenerator = new CodeStringGenerator(code, typeMapper, ef);
+var	fileManager = EntityFrameworkTemplateFileManager.Create(this);
+var edmMetadataLoader = new EdmMetadataLoader(textTransform.Host, textTransform.Errors);
+IEnumerable<GlobalItem> itemCollection;
+using (var db = new WealthEconomyContext(connectionString))
+	itemCollection = edmMetadataLoader.CreateEdmItemCollection(db);
+
+if (!typeMapper.VerifyCaseInsensitiveTypeUniqueness(typeMapper.GetAllGlobalItems(itemCollection), connectionString))
+{
+    return string.Empty;
+}
+
+foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollection))
+{
+	// Variables
+	var entityTypeName = typeMapper.GetTypeName(entityType);
+	var entityVariable = codeStringGenerator.GetCamelCase(entityTypeName);
+	var entitySetName = string.Format("{0}Set", entityVariable);
+	var controllerId = string.Format("{0}ListController", entityVariable);
+	var factoryId = string.Format("{0}Factory", entityVariable);
+	var entitySetGetMethod = string.Format("get{0}Set", entityTypeName);
+	var entityDeleteMethod = string.Format("delete{0}", entityTypeName);
+	var primaryKey = entityType.KeyMembers[0];
+    var primaryKeyShortTypeName = typeMapper.GetTypeName(primaryKey.TypeUsage);
+    var simpleProperties = typeMapper.GetSimpleProperties(entityType);
+    var relatedProperties = typeMapper.GetRelatedNavigationProperties(entityType);
+
+	var outputFileName = string.Format(@"{0}.js", controllerId);
+
+    fileManager.StartNewFile(outputFileName);
+#>
+<#= codeStringGenerator.WriteHeader()#>
+(function () {
+    'use strict';
+
+    var controllerId = '<#= controllerId #>';
+    angular.module('main')
+        .controller(controllerId, ['<#= factoryId #>',
+            'logger',
+			<#= controllerId #>]);
+
+    function <#= controllerId #>(<#= factoryId #>,
+        logger) {
+        logger = logger.forSource(controllerId);
+
+        var vm = this;
+        vm.<#= entityDeleteMethod #> = <#= entityDeleteMethod #>;
+        vm.<#= entitySetName #> = [];
+
+        initialize();
+
+        function initialize() {
+            <#= entitySetGetMethod #>();
+        };
+
+        function <#= entityDeleteMethod #>(<#= entityVariable #>) {
+            <#= factoryId #>.<#= entityDeleteMethod #>(<#= entityVariable #>);
+
+            <#= factoryId #>.saveChanges()
+                .then(function () {
+                    vm.<#= entitySetName #>.splice(vm.<#= entitySetName #>.indexOf(<#= entityVariable #>), 1);
+                    logger.logSuccess("Hooray we saved", null, true);
+                })
+                .catch(function (error) {
+                    logger.logError("Boooo, we failed: " + error.message, null, true);
+                    // Todo: more sophisticated recovery. 
+                    // Here we just blew it all away and start over
+                    // refresh();
+                })
+        };
+
+        function <#= entitySetGetMethod #>() {
+            <#= factoryId #>.<#= entitySetGetMethod #>(false)
+			    .then(function (data) {
+                    vm.<#= entitySetName #> = data;
+                });
+        }
+    };
+})();
+<#
+}
+
+fileManager.Process();
+
+#>

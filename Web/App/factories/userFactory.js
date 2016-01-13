@@ -167,7 +167,8 @@
                                 }
                             }
                         });
-                });
+                })
+                .error(handleErrorResult);
         }
 
         function getCurrentUser() {

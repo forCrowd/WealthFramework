@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Presentation Layer", "1. Presentation Layer", "{12D45E07-BDC7-4A7B-8214-48AF7C7A570E}"
 EndProject
@@ -34,6 +34,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.Tests", "Framework.Tests\Framework.Tests.csproj", "{B7690FEE-69FC-48C1-A6CB-C541541D630A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.Tests", "Web.Tests\Web.Tests.csproj", "{D0799D73-6455-4F3C-ACFC-9A2DE3CAAC32}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ngClient", "ngClient\ngClient.csproj", "{5B7B463D-D105-479C-BAAA-1822981723EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -84,6 +86,10 @@ Global
 		{D0799D73-6455-4F3C-ACFC-9A2DE3CAAC32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0799D73-6455-4F3C-ACFC-9A2DE3CAAC32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0799D73-6455-4F3C-ACFC-9A2DE3CAAC32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B7B463D-D105-479C-BAAA-1822981723EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B7B463D-D105-479C-BAAA-1822981723EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B7B463D-D105-479C-BAAA-1822981723EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B7B463D-D105-479C-BAAA-1822981723EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -100,5 +106,6 @@ Global
 		{A19A6B9B-99C0-4EEF-8312-2272CCC428FE} = {2019F59D-3017-444E-AF01-AD9E312C2282}
 		{B7690FEE-69FC-48C1-A6CB-C541541D630A} = {2019F59D-3017-444E-AF01-AD9E312C2282}
 		{D0799D73-6455-4F3C-ACFC-9A2DE3CAAC32} = {2019F59D-3017-444E-AF01-AD9E312C2282}
+		{5B7B463D-D105-479C-BAAA-1822981723EB} = {12D45E07-BDC7-4A7B-8214-48AF7C7A570E}
 	EndGlobalSection
 EndGlobal

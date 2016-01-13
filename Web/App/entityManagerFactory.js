@@ -38,8 +38,8 @@
 
         configureBreeze();
 
-        var serviceRoot = window.location.protocol + '//' + window.location.host + '/';
-        var serviceName = serviceRoot + 'odata/';
+        var serviceRoot = window.location.protocol + '//' + window.location.host;
+        var serviceName = serviceRoot + '/odata';
         var factory = {
             newManager: newManager,
             serviceName: serviceName

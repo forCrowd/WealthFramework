@@ -120,6 +120,7 @@ Web/Properties/PublishProfiles/
 Queries/
 
 # Configs
+ngClient/App/Configs/*.js
 Web/Configs/*.config
 
 # Chutzpah

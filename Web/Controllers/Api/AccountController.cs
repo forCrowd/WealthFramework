@@ -126,13 +126,13 @@
         [AllowAnonymous]
         public async Task<IHttpActionResult> ExternalLoginCallback(string error = null)
         {
-            var baseUrl = Framework.AppSettings.BaseUrl;
+            var clientAppUrl = Framework.AppSettings.ClientAppUrl;
 
             // TODO Error check!
             if (!string.IsNullOrWhiteSpace(error))
             {
                 // TODO With error message?
-                return Redirect(string.Format("{0}/account/login", baseUrl));
+                return Redirect(string.Format("{0}/account/login", clientAppUrl));
             }
 
             var content = await GetLoginInfoText();
@@ -146,7 +146,7 @@
             if (externalLoginInfo == null)
             {
                 // TODO With error message?
-                return Redirect(string.Format("{0}/account/login", baseUrl));
+                return Redirect(string.Format("{0}/account/login", clientAppUrl));
             }
 
             // Validate email
@@ -154,7 +154,7 @@
             if (string.IsNullOrWhiteSpace(email))
             {
                 // TODO With error message?
-                return Redirect(string.Format("{0}/account/login", baseUrl));
+                return Redirect(string.Format("{0}/account/login", clientAppUrl));
             }
 
             var tempToken = string.Empty;
@@ -204,7 +204,7 @@
             tempToken = user.Claims.Single(claim => claim.ClaimType == "TempToken").ClaimValue;
 
             // Redirect
-            var location = string.Format("{0}/account/externalLogin?tempToken={1}", baseUrl, tempToken);
+            var location = string.Format("{0}/account/externalLogin?tempToken={1}", clientAppUrl, tempToken);
             return Redirect(location);
         }
 

@@ -2,6 +2,7 @@
 
 **0.42**
 
+* Separation of Web client (ngClient) & Web api
 * Global.asax functional was moved to Startup.cs
 ** Http to Https rule handling was moved to web.config
 

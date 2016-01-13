@@ -12,12 +12,12 @@
     using Providers;
     using System;
 
-    public partial class Startup
+    public class AuthConfig
     {
         public static string PublicClientId { get; private set; }
 
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
-        public void ConfigureAuth(IAppBuilder app)
+        public static void ConfigureAuth(IAppBuilder app)
         {
             // Configure the db context and user manager to use a single instance per request
             // TODO Is this correct to make DbContext accessible from Web application?
