@@ -4,7 +4,8 @@
 
 * Separation of Web client (ngClient) & WebApi
 ** Cors was enabled on WebApi
-** All client related files were moved to ngClient
+** client related files were remove from WebApi
+** bower was installed to ngClient and all client packages were installed through bower
 ** Mvc & other unnecessary packages were removed
 * Global.asax functional was moved to Startup.cs
 ** Http to Https rule handling was moved to web.config

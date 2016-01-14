@@ -128,3 +128,6 @@ _Chutzpah.*
 
 # Visual Studio 2015
 .vs/
+
+# Bower
+ngClient/bower_components
