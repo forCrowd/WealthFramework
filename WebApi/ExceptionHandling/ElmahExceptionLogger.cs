@@ -1,6 +1,7 @@
 ﻿namespace forCrowd.WealthEconomy.WebApi.ExceptionHandling
 {
     using Elmah;
+    using System;
     using System.Net.Http;
     using System.Web;
     using System.Web.Http.ExceptionHandling;
@@ -25,6 +26,15 @@
             // Send the exception to ELMAH (for logging, mailing, filtering, etc.).
             var signal = ErrorSignal.FromContext(httpContext);
             signal.Raise(exceptionToRaise, httpContext);
+        }
+
+        public void Log(Exception ex, HttpRequestMessage request, string catchBlockName)
+        {
+            var catchBlock = new ExceptionContextCatchBlock(catchBlockName, true, false);
+            var exceptionContext = new ExceptionContext(ex, catchBlock, request);
+            var exceptionLoggerContext = new ExceptionLoggerContext(exceptionContext);
+
+            Log(exceptionLoggerContext);
         }
 
         private static HttpContext GetHttpContext(HttpRequestMessage request)

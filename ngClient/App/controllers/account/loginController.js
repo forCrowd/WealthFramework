@@ -12,6 +12,19 @@
         vm.getAccessToken = getAccessToken;
         vm.getExternalLoginUrl = getExternalLoginUrl;
         
+        _init();
+
+        function _init() {
+            if (typeof $location.search().error !== 'undefined') {
+
+                var error = $location.search().error;
+                logger.logError(error, null, true);
+
+                // Clear error message
+                $location.search('error', null);
+            }
+        }
+
         function getAccessToken() {
             userFactory.getAccessToken(vm.email, vm.password)
                 .success(function () {

@@ -81,10 +81,10 @@
             await RemoveClaimAsync(user, hasNoPasswordClaim);
         }
 
-        public async Task RemoveTempTokenClaim(User user)
+        public async Task RemoveTempTokenClaim(User user, string tempToken)
         {
             var claims = await GetClaimsAsync(user);
-            var tempTokenClaim = claims.Single(claim => claim.Type == "TempToken");
+            var tempTokenClaim = claims.Single(claim => claim.Type == "TempToken" && claim.Value == tempToken);
             await RemoveClaimAsync(user, tempTokenClaim);
         }
 

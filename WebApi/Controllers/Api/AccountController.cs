@@ -5,6 +5,7 @@
     using Microsoft.AspNet.Identity;
     using Microsoft.Owin.Security;
     using Models;
+    using System;
     using System.Linq;
     using System.Net.Http;
     using System.Threading.Tasks;
@@ -127,85 +128,98 @@
         public async Task<IHttpActionResult> ExternalLoginCallback(string error = null)
         {
             var clientAppUrl = Framework.AppSettings.ClientAppUrl;
+            var location = string.Format("{0}/account/login", clientAppUrl);
 
-            // TODO Error check!
+            // Error message from the provider, pass it on
             if (!string.IsNullOrWhiteSpace(error))
             {
-                // TODO With error message?
-                return Redirect(string.Format("{0}/account/login", clientAppUrl));
+                return Redirect(string.Format("{0}?error={1}", location, error));
             }
 
-            var content = await GetLoginInfoText();
-
-            var externalLoginInfo = await Authentication.GetExternalLoginInfoAsync();
-
-            // SignOut first
-            Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-
-            // Validate external login info
-            if (externalLoginInfo == null)
+            // Since this method MUST return RedirectResult, cover the whole block with try & catch,
+            // so it always redirect the user back to ngClient and won't get stuck on WebApi
+            // SH - 16 Jan. '16
+            try
             {
-                // TODO With error message?
-                return Redirect(string.Format("{0}/account/login", clientAppUrl));
-            }
+                var content = await GetLoginInfoText();
 
-            // Validate email
-            var email = externalLoginInfo.Email;
-            if (string.IsNullOrWhiteSpace(email))
-            {
-                // TODO With error message?
-                return Redirect(string.Format("{0}/account/login", clientAppUrl));
-            }
+                var externalLoginInfo = await Authentication.GetExternalLoginInfoAsync();
 
-            var tempToken = string.Empty;
-            var user = await UserManager.FindAsync(externalLoginInfo.Login);
+                // We will switch to local account, sign out from the external
+                Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
 
-            // There is no externalLogin with these info
-            if (user == null)
-            {
-                user = await UserManager.FindByEmailAsync(externalLoginInfo.Email);
+                // Validate external login info
+                if (externalLoginInfo == null)
+                {
+                    // User canceled the operation?
+                    return Redirect(string.Format("{0}?error={1}", location, "Login failed, please try again"));
+                }
 
-                // And there is no user with this email address: New user
+                // Validate email
+                var email = externalLoginInfo.Email;
+                if (string.IsNullOrWhiteSpace(email))
+                {
+                    // User didn't give permission for email address
+                    return Redirect(string.Format("{0}?error={1}", location, "Login failed, please give permission to access your email address"));
+                }
+
+                var tempToken = string.Empty;
+                var user = await UserManager.FindAsync(externalLoginInfo.Login);
+
+                // There is no externalLogin with these info
                 if (user == null)
                 {
-                    user = new User(email);
+                    user = await UserManager.FindByEmailAsync(externalLoginInfo.Email);
 
-                    var result = await UserManager.CreateAsync(user, externalLoginInfo.Login);
-
-                    var errorResult = GetErrorResult(result);
-                    if (errorResult != null)
+                    // And there is no user with this email address: New user
+                    if (user == null)
                     {
-                        // TODO This has to be a redirect?
-                        return errorResult;
+                        user = new User(email);
+
+                        var result = await UserManager.CreateAsync(user, externalLoginInfo.Login);
+
+                        var errorMessage = GetErrorMessage(result);
+                        if (errorMessage != null)
+                        {
+                            return Redirect(string.Format("{0}?error={1}", location, errorMessage));
+                        }
+                    }
+                    else // There is a user with this email: Link accounts
+                    {
+                        var result = await UserManager.LinkLoginAsync(user, externalLoginInfo.Login);
+
+                        var errorMessage = GetErrorMessage(result);
+                        if (errorMessage != null)
+                        {
+                            return Redirect(string.Format("{0}?error={1}", location, errorMessage));
+                        }
                     }
                 }
-                else // There is a user with this email: Link accounts
+                else // Existing user
                 {
-                    var result = await UserManager.LinkLoginAsync(user, externalLoginInfo.Login);
+                    // If the email address has changed meanwhile
+                    if (user.Email != email)
+                        user.Email = email;
 
-                    var errorResult = GetErrorResult(result);
-                    if (errorResult != null)
-                    {
-                        // TODO This has to be a redirect?
-                        return errorResult;
-                    }
+                    await UserManager.AddTempTokenClaimAsync(user);
                 }
+
+                // Get the temp token
+                tempToken = user.Claims.OrderByDescending(claim => claim.CreatedOn).First(claim => claim.ClaimType == "TempToken").ClaimValue;
+
+                // Redirect
+                location = string.Format("{0}/account/externalLogin?tempToken={1}", clientAppUrl, tempToken);
+                return Redirect(location);
             }
-            else // Existing user
+            catch (Exception ex)
             {
-                // If the email address has changed meanwhile
-                if (user.Email != email)
-                    user.Email = email;
+                // Log the exception with Elmah
+                var logger = new ExceptionHandling.ElmahExceptionLogger();
+                logger.Log(ex, Request, "AccountController.ExternalLoginCallback");
 
-                await UserManager.AddTempTokenClaimAsync(user);
+                // Redirect the user back to the client
+                return Redirect(string.Format("{0}?error={1}", location, "Login failed, please try again later"));
             }
-
-            // Get the temp token
-            tempToken = user.Claims.Single(claim => claim.ClaimType == "TempToken").ClaimValue;
-
-            // Redirect
-            var location = string.Format("{0}/account/externalLogin?tempToken={1}", clientAppUrl, tempToken);
-            return Redirect(location);
         }
 
         // POST api/Account/Register
@@ -256,6 +270,33 @@
         private IAuthenticationManager Authentication
         {
             get { return Request.GetOwinContext().Authentication; }
+        }
+
+        /// <summary>
+        /// String version of GetErrorResult for ExternalLoginCallback function
+        /// </summary>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        private string GetErrorMessage(IdentityResult result)
+        {
+            if (result == null)
+            {
+                return "Internal server error";
+            }
+
+            if (!result.Succeeded)
+            {
+                if (result.Errors != null)
+                {
+                    return string.Join(" - ", result.Errors);
+                }
+                else
+                {
+                    return "Bad request";
+                }
+            }
+
+            return null;
         }
 
         private IHttpActionResult GetErrorResult(IdentityResult result)

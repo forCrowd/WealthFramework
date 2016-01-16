@@ -1,5 +1,13 @@
 ﻿### Release Notes
 
+**0.42.1**
+
+* Multiple TempToken bug fix
+* 'User get stuck on WebApi in case of an exception in AccountController - ExternalLoginCallback' fix
+* Default documents were changed to ".aspx" files again:
+In case of an update in the page, browsers automatically get the latest default.aspx file, but not default.html file
+(always serves from the cache, even with cache busting attempt in web.config / default document / default.html?v=0.42)
+
 **0.42**
 
 * Separation of Web client (ngClient) & WebApi

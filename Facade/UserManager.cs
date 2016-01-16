@@ -159,7 +159,7 @@
                 return null;
 
             // Remove temp token
-            await Store.RemoveTempTokenClaim(entity);
+            await Store.RemoveTempTokenClaim(entity, tempToken);
             await Store.SaveChangesAsync();
 
             // Return the user
