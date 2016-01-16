@@ -295,7 +295,7 @@
     <Content Include="CustomErrors\404.html" />
     <Content Include="googleanalytics.js" />
     <Content Include="favicon.ico" />
-    <Content Include="default.html" />
+    <Content Include="default.aspx" />
     <Content Include="Controllers\OData\Generated\ODataController.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ODataController.cs</LastGenOutput>

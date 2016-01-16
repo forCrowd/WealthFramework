@@ -14,6 +14,9 @@
         var vm = this;
         vm.applicationInfo = null;
         vm.currentUser = null;
+
+        logger.log('vm.currentUser 1', vm.currentUser);
+
         vm.currentUserText = currentUserText;
         vm.currentDate = new Date();
         vm.hasPassword = hasPassword;
@@ -36,10 +39,12 @@
         // User logged in & out
         $scope.$on('userLoggedIn', function (event, currentUser) {
             vm.currentUser = currentUser;
+            logger.log('vm.currentUser 2', vm.currentUser);
         });
 
         $scope.$on('userLoggedOut', function () {
             vm.currentUser = null;
+            logger.log('vm.currentUser 3', vm.currentUser);
         });
 
         _init();
@@ -77,14 +82,27 @@
             userFactory.getCurrentUser()
                 .then(function (currentUser) {
                     vm.currentUser = currentUser;
+                    logger.log('vm.currentUser 4', vm.currentUser);
                 });
         }
 
         function hasPassword() {
+
+            if (typeof vm.currentUser === 'undefined') {
+                logger.log('vm.currentUser is undefined 1');
+                vm.currentUser = null;
+            }
+
             return vm.currentUser !== null && vm.currentUser.hasPassword();
         }
 
         function isAuthenticated() {
+
+            if (typeof vm.currentUser === 'undefined') {
+                logger.log('vm.currentUser is undefined 2');
+                vm.currentUser = null;
+            }
+
             return vm.currentUser !== null && vm.currentUser.Id > 0;
         }
 

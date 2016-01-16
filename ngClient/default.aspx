@@ -140,9 +140,9 @@
     <script src="/app/main.js?v=0.39"></script>
     <script src="/app/configs/serviceAppUrl.js?v=0.42"></script>
     <script src="/app/logger.js?v=0.40"></script>
-    <script src="/app/route.js?v=0.41.3"></script>
+    <script src="/app/route.js?v=0.42"></script>
     <script src="/app/authorization.js?v=0.29"></script>
-    <script src="/app/exceptionHandlerExtension.js?v=0.39"></script>
+    <script src="/app/exceptionHandlerExtension.js?v=0.42"></script>
 
     <!-- Entities -->
     <script src="/app/entities/ResourcePool.js?v=0.40"></script>
@@ -156,19 +156,19 @@
     <script src="/app/entities/LocationItem.js?v=0.38"></script>
 
     <!-- breezeJS -->
-    <script src="/app/entityManagerFactory.js?v=0.41.1"></script>
+    <script src="/app/entityManagerFactory.js?v=0.42"></script>
     <script src="/app/dataContext.js?v=0.41.3"></script>
-    <script src="/app/factories/mainFactory.js?v=0.37"></script>
+    <script src="/app/factories/mainFactory.js?v=0.42"></script>
 
     <!-- Manage Scripts - Generated (Factories, Controllers) -->
     <script src="/app/includes/manageScripts.js?v=0.37"></script>
 
     <!-- Factory extensions -->
-    <script src="/app/factories/userFactory.js?v=0.41.3"></script>
+    <script src="/app/factories/userFactory.js?v=0.42"></script>
     <script src="/app/factories/resourcePoolFactory.js?v=0.40"></script>
 
     <!-- Content -->
-    <script src="/app/controllers/content/mainController.js?v=0.41.3"></script>
+    <script src="/app/controllers/content/mainController.js?v=0.42.1"></script>
     <script src="/app/controllers/content/introductionController.js?v=0.41.3"></script>
     <script src="/app/controllers/content/basicsController.js?v=0.41.3"></script>
     <script src="/app/controllers/content/sectorIndexSampleController.js?v=0.37"></script>
@@ -185,8 +185,8 @@
     <script src="/app/controllers/resourcePool/resourcePoolViewController.js?v=0.38"></script>
 
     <!-- Account -->
-    <script src="/app/controllers/account/registerController.js?v=0.41.3"></script>
-    <script src="/app/controllers/account/loginController.js?v=0.41.3"></script>
+    <script src="/app/controllers/account/registerController.js?v=0.42"></script>
+    <script src="/app/controllers/account/loginController.js?v=0.42.1"></script>
     <script src="/app/controllers/account/externalLoginController.js?v=0.41.3"></script>
     <script src="/app/controllers/account/accountEditController.js?v=0.41.2"></script>
     <script src="/app/controllers/account/changeEmailController.js?v=0.41.2"></script>

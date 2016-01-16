@@ -897,7 +897,7 @@
     <Content Include="images\PresentvsNew.png" />
     <Content Include="css\site.css" />
     <Content Include="favicon.ico" />
-    <Content Include="default.html" />
+    <Content Include="default.aspx" />
     <Content Include="robots.txt" />
     <Content Include="images\Old vs New.pptx" />
     <None Include="Web.config" />
