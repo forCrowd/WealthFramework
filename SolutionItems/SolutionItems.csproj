@@ -44,10 +44,10 @@
     <Content Include="Documents\Possible Indexes.txt" />
     <Content Include="Scripts\Database\Sql\Local - Restore Database.sql" />
     <None Include="..\.gitattributes">
-      <Link>GitHub\.gitattributes</Link>
+      <Link>Documents\.gitattributes</Link>
     </None>
     <None Include="..\.gitignore">
-      <Link>GitHub\.gitignore</Link>
+      <Link>Documents\.gitignore</Link>
     </None>
     <None Include="Documents\Survey.docx" />
     <None Include="Documents\Index Income Calculation.xlsx" />
@@ -61,7 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\appveyor.yml">
-      <Link>Scripts\Build\appveyor.yml</Link>
+      <Link>Documents\appveyor.yml</Link>
     </None>
     <None Include="..\LICENSE">
       <Link>Documents\LICENSE</Link>
@@ -71,10 +71,9 @@
     </None>
     <None Include="Links\Industry Browser - Yahoo! Finance - Full Industry List.URL" />
     <None Include="Links\Sector List - Yahoo! Finance Industry Browser.URL" />
-    <None Include="Scripts\Build\IISExpress.bat" />
     <None Include="Scripts\Build\MSBuild.bat" />
     <None Include="Scripts\Build\RunIISExpress.ps1" />
-    <None Include="Scripts\Build\WarmUp.ps1" />
+    <None Include="Scripts\Build\WebApiWarmUp.ps1" />
     <None Include="Scripts\Database\Local_BackupDatabase.bat" />
     <None Include="Scripts\Database\Local_UpdateDatabase.bat" />
   </ItemGroup>

@@ -1,15 +1,31 @@
-﻿using System.Configuration;
-
-namespace forCrowd.WealthEconomy.Framework
+﻿namespace forCrowd.WealthEconomy.Framework
 {
+    using System.Configuration;
+
     public static class AppSettings
     {
         /// <summary>
-        /// Base url that will be used in emails to prepare the links
+        /// Client app url: Will be used in emails to prepare the links and social login callbacks 
         /// </summary>
-        public static string BaseUrl
+        public static string ClientAppUrl
         {
-            get { return ConfigurationManager.AppSettings["BaseUrl"]; }
+            get { return ConfigurationManager.AppSettings["ClientAppUrl"]; }
+        }
+
+        /// <summary>
+        /// Service app url
+        /// </summary>
+        public static string ServiceAppUrl
+        {
+            get { return ConfigurationManager.AppSettings["ServiceAppUrl"]; }
+        }
+
+        /// <summary>
+        /// RequireHttps: Determines whether https connection required for api & odata calls
+        /// </summary>
+        public static bool RequireHttps
+        {
+            get { return bool.Parse(ConfigurationManager.AppSettings["RequireHttps"]); }
         }
 
         /// <summary>

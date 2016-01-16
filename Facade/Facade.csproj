@@ -70,6 +70,11 @@
     <Compile Include="Generated\RoleUnitOfWork.cs">
       <DependentUpon>UnitOfWork.tt</DependentUpon>
     </Compile>
+    <Compile Include="Generated\UnitOfWork.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UnitOfWork.tt</DependentUpon>
+    </Compile>
     <Compile Include="Generated\UserClaimUnitOfWork.cs">
       <DependentUpon>UnitOfWork.tt</DependentUpon>
     </Compile>
@@ -132,19 +137,12 @@
     </None>
     <None Include="Generated\UnitOfWork.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>UnitOfWork.txt</LastGenOutput>
+      <LastGenOutput>UnitOfWork.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Generated\UnitOfWork.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>UnitOfWork.tt</DependentUpon>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
