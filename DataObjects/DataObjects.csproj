@@ -76,6 +76,11 @@
     <Compile Include="..\SolutionItems\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Generated\Repository.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Repository.tt</DependentUpon>
+    </Compile>
     <Compile Include="Generated\UserElementFieldRepository.cs">
       <DependentUpon>Repository.tt</DependentUpon>
     </Compile>
@@ -139,7 +144,7 @@
     </None>
     <None Include="Generated\Repository.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Repository.txt</LastGenOutput>
+      <LastGenOutput>Repository.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -155,13 +160,6 @@
       <Project>{1f435477-27e9-405e-b061-a0a9afb63053}</Project>
       <Name>Framework</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Generated\Repository.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Repository.tt</DependentUpon>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201511271208357_Initial.resx">

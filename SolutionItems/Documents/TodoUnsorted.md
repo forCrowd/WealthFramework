@@ -206,13 +206,8 @@ if the current user has no right to enter a rating for that area, then it must u
 
 * introduction, don't allow to use multiplier functions?
 some samples don't need to be saved ?! intro + basics?
-	
-	* **social media login?**
 
-	* **Better ratings UI**
-https://angular-ui.github.io/bootstrap/#/getting_started
-
-	* **verification email?**
+	* **Better ratings UI** https://angular-ui.github.io/bootstrap/#/getting_started
 
 	* **allow cmrp rate to be changed**
 
@@ -344,10 +339,6 @@ True Healthcare (Non-profit + Sharer)
 
 ---
 refresh tokens?
-
-cors (ngclient + api separation)
-http://bitoftech.net/2014/06/09/angularjs-token-authentication-using-asp-net-web-api-2-owin-asp-net-identity/
-https://github.com/tjoudeh/AngularJSAuthentication
 
 X-InlineCount
 X-Pagination

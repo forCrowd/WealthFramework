@@ -4,11 +4,13 @@
 
 * Separation of Web client (ngClient) & WebApi
 ** Cors was enabled on WebApi
-** client related files were remove from WebApi
+** client related files were removed from WebApi
 ** bower was installed to ngClient and all client packages were installed through bower
-** Mvc & other unnecessary packages were removed
+** Mvc, Web pages and other unnecessary packages were removed
+** RequireHttps flag for WebApi
 * Global.asax functional was moved to Startup.cs
 ** Http to Https rule handling was moved to web.config
+* "test.forcrowd.org" domain was created for tests before production
 
 **0.41.4**
 

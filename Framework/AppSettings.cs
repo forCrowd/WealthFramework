@@ -21,6 +21,14 @@
         }
 
         /// <summary>
+        /// RequireHttps: Determines whether https connection required for api & odata calls
+        /// </summary>
+        public static bool RequireHttps
+        {
+            get { return bool.Parse(ConfigurationManager.AppSettings["RequireHttps"]); }
+        }
+
+        /// <summary>
         /// Registration emails will be send from this address
         /// </summary>
         public static string RegistrationEmailAddress
