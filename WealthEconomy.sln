@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.Tests", "WebApi.Tests\WebApi.Tests.csproj", "{D0799D73-6455-4F3C-ACFC-9A2DE3CAAC32}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ngClient.Tests", "ngClient.Tests\ngClient.Tests.csproj", "{397560AA-BAC9-4F9E-B6C2-5FF1F7793409}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -92,6 +94,10 @@ Global
 		{D0799D73-6455-4F3C-ACFC-9A2DE3CAAC32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0799D73-6455-4F3C-ACFC-9A2DE3CAAC32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0799D73-6455-4F3C-ACFC-9A2DE3CAAC32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{397560AA-BAC9-4F9E-B6C2-5FF1F7793409}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{397560AA-BAC9-4F9E-B6C2-5FF1F7793409}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{397560AA-BAC9-4F9E-B6C2-5FF1F7793409}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{397560AA-BAC9-4F9E-B6C2-5FF1F7793409}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -109,5 +115,6 @@ Global
 		{5B7B463D-D105-479C-BAAA-1822981723EB} = {12D45E07-BDC7-4A7B-8214-48AF7C7A570E}
 		{DC03F082-C160-4C3C-9153-5E70B45400C1} = {359E41AC-4A9B-4FE5-A578-76E503AAA2B0}
 		{D0799D73-6455-4F3C-ACFC-9A2DE3CAAC32} = {2019F59D-3017-444E-AF01-AD9E312C2282}
+		{397560AA-BAC9-4F9E-B6C2-5FF1F7793409} = {2019F59D-3017-444E-AF01-AD9E312C2282}
 	EndGlobalSection
 EndGlobal
