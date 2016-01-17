@@ -6,6 +6,9 @@
 * ngClient reference cleanup
 * ngClient tests Commons.js path fix
 * Separate ngClient.Tests project
+* Setup\elmah.errorMail.config initial values fix
+* SSLEnabled false for WebApi project
+* README.md update
 
 **0.42.1**
 
