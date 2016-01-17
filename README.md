@@ -22,7 +22,7 @@ To be able run Entity Framework related T4 files (.tt files that include "EF6.Ut
 * Paste these two files to this folder
 
 To be able display "Jasmine" tests under "WebApi.Tests\ng-test" folder in "Test Explorer" window, install the following extension:
-* [https://visualstudiogallery.msdn.microsoft.com/f8741f04-bae4-4900-81c7-7c9bfb9ed1fe](Chutzpah Test Adapter for the Test Explorer)
+* [Chutzpah Test Adapter for the Test Explorer](https://visualstudiogallery.msdn.microsoft.com/f8741f04-bae4-4900-81c7-7c9bfb9ed1fe)
 
 ---
 
