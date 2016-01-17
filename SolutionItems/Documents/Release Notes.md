@@ -1,5 +1,15 @@
 ﻿### Release Notes
 
+**0.42.2**
+
+* gitignore cleanup
+* ngClient reference cleanup
+* ngClient tests Commons.js path fix
+* Separate ngClient.Tests project
+* Setup\elmah.errorMail.config initial values fix
+* SSLEnabled false for WebApi project
+* README.md update
+
 **0.42.1**
 
 * Multiple TempToken bug fix
@@ -16,6 +26,7 @@ In case of an update in the page, browsers automatically get the latest default.
 ** bower was installed to ngClient and all client packages were installed through bower
 ** Mvc, Web pages and other unnecessary packages were removed
 ** RequireHttps flag for WebApi
+** CustomErrors for WebApi
 * Global.asax functional was moved to Startup.cs
 ** Http to Https rule handling was moved to web.config
 * "test.forcrowd.org" domain was created for tests before production
