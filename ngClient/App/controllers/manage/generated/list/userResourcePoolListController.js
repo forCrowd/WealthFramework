@@ -20,7 +20,7 @@
         logger) {
         logger = logger.forSource(controllerId);
 
-        var vm = this;
+        var vm = {};
         vm.deleteUserResourcePool = deleteUserResourcePool;
         vm.userResourcePoolSet = [];
 
@@ -28,7 +28,7 @@
 
         function initialize() {
             getUserResourcePoolSet();
-        };
+        }
 
         function deleteUserResourcePool(userResourcePool) {
             userResourcePoolFactory.deleteUserResourcePool(userResourcePool);
@@ -43,8 +43,8 @@
                     // Todo: more sophisticated recovery. 
                     // Here we just blew it all away and start over
                     // refresh();
-                })
-        };
+                });
+        }
 
         function getUserResourcePoolSet() {
             userResourcePoolFactory.getUserResourcePoolSet(false)
@@ -52,5 +52,5 @@
                     vm.userResourcePoolSet = data;
                 });
         }
-    };
+    }
 })();

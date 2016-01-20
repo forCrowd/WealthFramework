@@ -1,5 +1,9 @@
 ﻿### Release Notes
 
+**0.43**
+
+* gulp: app js files & css files were bundled & minified
+
 **0.42.2**
 
 * gitignore cleanup
@@ -37,7 +41,7 @@ In case of an update in the page, browsers automatically get the latest default.
 
 **0.41.3**
 
-* updateAnonymousChanges fix: When rejectChanges called, the entity was getting removed from the array during the loop. slice() used to prevent it.
+* updateAnonymousChanges fix: When rejectChanges is called, the entity was getting removed from the array during the loop. slice() used to prevent it.
 * external / local login anonymous user fix: detaching anonymous user in external case login was affecting normal login case.
 Now both cases call updateAnonymousChanges method which handles this case correctly.
 * userFactory getCurrentUser + isAuthentication functions were merged

@@ -1,11 +1,11 @@
 ﻿(function () {
     'use strict';
 
-    var factoryId = 'mainFactory';
+    var factoryId = 'applicationFactory';
     angular.module('main')
-        .factory(factoryId, ['$http', '$q', 'serviceAppUrl', 'logger', mainFactory]);
+        .factory(factoryId, ['$http', '$q', 'serviceAppUrl', 'logger', applicationFactory]);
 
-    function mainFactory($http, $q, serviceAppUrl, logger) {
+    function applicationFactory($http, $q, serviceAppUrl, logger) {
         logger = logger.forSource(factoryId);
 
         var applicationInfoUrl = serviceAppUrl + '/api/Application/ApplicationInfo';

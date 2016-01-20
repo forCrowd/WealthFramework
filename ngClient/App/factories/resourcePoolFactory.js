@@ -4,26 +4,13 @@
 
     var factoryId = 'resourcePoolFactory';
     angular.module('main')
-        .config(function ($provide) {
-            $provide.decorator(factoryId, [
-                '$delegate',
-                'ResourcePool',
-                'Element',
-                'userFactory',
-                'dataContext',
-                '$rootScope',
-                'logger',
-                resourcePoolFactory]);
-        });
+        .config(['$provide', extendFactory]);
 
-    function resourcePoolFactory(
-        $delegate,
-        ResourcePool,
-        Element,
-        userFactory,
-        dataContext,
-        $rootScope,
-        logger) {
+    function extendFactory($provide) {
+        $provide.decorator(factoryId, ['$delegate', 'ResourcePool', 'Element', 'userFactory', 'dataContext', '$rootScope', 'logger', resourcePoolFactory]);
+    }
+
+    function resourcePoolFactory($delegate, ResourcePool, Element, userFactory, dataContext, $rootScope, logger) {
 
         // Logger
         logger = logger.forSource(factoryId);

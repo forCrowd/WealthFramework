@@ -20,7 +20,7 @@
         logger) {
         logger = logger.forSource(controllerId);
 
-        var vm = this;
+        var vm = {};
         vm.deleteRole = deleteRole;
         vm.roleSet = [];
 
@@ -28,7 +28,7 @@
 
         function initialize() {
             getRoleSet();
-        };
+        }
 
         function deleteRole(role) {
             roleFactory.deleteRole(role);
@@ -43,8 +43,8 @@
                     // Todo: more sophisticated recovery. 
                     // Here we just blew it all away and start over
                     // refresh();
-                })
-        };
+                });
+        }
 
         function getRoleSet() {
             roleFactory.getRoleSet(false)
@@ -52,5 +52,5 @@
                     vm.roleSet = data;
                 });
         }
-    };
+    }
 })();

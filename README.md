@@ -11,7 +11,7 @@ To build and run the project:
 * Open it with Visual Studio
 * Visual Studio will restore node & bower packages
 * Build the solution and restore nuget packages
-* Optional: Update the files under "WebApi\Configs" and "ngClient\app\configs" folders with your own settings
+* Optional: Update the files under "WebApi\Configs" and "ngClient\app\settings" folders with your own settings
 * Run "WebApi" and "ngClient" projects
 * Navigate to [http://localhost:15002/](http://localhost:15002/) with your browser
 

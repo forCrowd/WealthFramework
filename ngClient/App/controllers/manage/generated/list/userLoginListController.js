@@ -20,7 +20,7 @@
         logger) {
         logger = logger.forSource(controllerId);
 
-        var vm = this;
+        var vm = {};
         vm.deleteUserLogin = deleteUserLogin;
         vm.userLoginSet = [];
 
@@ -28,7 +28,7 @@
 
         function initialize() {
             getUserLoginSet();
-        };
+        }
 
         function deleteUserLogin(userLogin) {
             userLoginFactory.deleteUserLogin(userLogin);
@@ -43,8 +43,8 @@
                     // Todo: more sophisticated recovery. 
                     // Here we just blew it all away and start over
                     // refresh();
-                })
-        };
+                });
+        }
 
         function getUserLoginSet() {
             userLoginFactory.getUserLoginSet(false)
@@ -52,5 +52,5 @@
                     vm.userLoginSet = data;
                 });
         }
-    };
+    }
 })();

@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('main')
-        .config(routeConfig);
+        .config(['$routeProvider', '$locationProvider', routeConfig]);
 
     angular.module('main')
         .run(['userFactory', 'resourcePoolFactory', 'LocationItem', '$rootScope', '$location', 'logger', routeRun]);
@@ -14,7 +14,7 @@
 
             /* Content */
             .when('/', { title: getContentRouteTitle, templateUrl: getContentTemplateUrl })
-            .when('/main.aspx', { title: getContentRouteTitle, templateUrl: getContentTemplateUrl }) // TODO Is it possible to remove 'main.aspx'
+            .when('/default.aspx', { title: getContentRouteTitle, templateUrl: getContentTemplateUrl })
             .when('/content/:key/', { title: getContentRouteTitle, templateUrl: getContentTemplateUrl })
 
             /* CMRP List + View + Edit pages */

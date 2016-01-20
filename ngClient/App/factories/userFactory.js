@@ -3,9 +3,11 @@
 
     var factoryId = 'userFactory';
     angular.module('main')
-        .config(function ($provide) {
-            $provide.decorator(factoryId, ['$delegate', 'dataContext', '$http', '$q', '$rootScope', '$window', '$location', 'serviceAppUrl', 'logger', userFactory]);
-        });
+        .config(['$provide', extendFactory]);
+
+    function extendFactory($provide) {
+        $provide.decorator(factoryId, ['$delegate', 'dataContext', '$http', '$q', '$rootScope', '$window', '$location', 'serviceAppUrl', 'logger', userFactory]);
+    };
 
     function userFactory($delegate, dataContext, $http, $q, $rootScope, $window, $location, serviceAppUrl, logger) {
         logger = logger.forSource(factoryId);

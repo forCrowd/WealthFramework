@@ -3,15 +3,15 @@
 
     var controllerId = 'mainController';
     angular.module('main')
-        .controller(controllerId, ['mainFactory', 'userFactory', '$scope', '$location', '$window', 'logger', mainController]);
+        .controller(controllerId, ['applicationFactory', 'userFactory', '$scope', '$location', '$window', 'logger', mainController]);
 
-    function mainController(mainFactory, userFactory, $scope, $location, $window, logger) {
+    function mainController(applicationFactory, userFactory, $scope, $location, $window, logger) {
 
         // Logger
         logger = logger.forSource(controllerId);
 
         // View model
-        var vm = this;
+        var vm = {};
         vm.applicationInfo = null;
         vm.currentUser = null;
 
@@ -71,7 +71,7 @@
         }
 
         function getApplicationInfo() {
-            mainFactory.getApplicationInfo()
+            applicationFactory.getApplicationInfo()
                 .then(function (applicationInfo) {
                     vm.applicationInfo = applicationInfo;
                     vm.applicationInfo.CurrentVersionText = vm.applicationInfo.CurrentVersion + ' - Alpha ~ Beta';

@@ -20,7 +20,7 @@
         logger) {
         logger = logger.forSource(controllerId);
 
-        var vm = this;
+        var vm = {};
         vm.deleteElementItem = deleteElementItem;
         vm.elementItemSet = [];
 
@@ -28,7 +28,7 @@
 
         function initialize() {
             getElementItemSet();
-        };
+        }
 
         function deleteElementItem(elementItem) {
             elementItemFactory.deleteElementItem(elementItem);
@@ -43,8 +43,8 @@
                     // Todo: more sophisticated recovery. 
                     // Here we just blew it all away and start over
                     // refresh();
-                })
-        };
+                });
+        }
 
         function getElementItemSet() {
             elementItemFactory.getElementItemSet(false)
@@ -52,5 +52,5 @@
                     vm.elementItemSet = data;
                 });
         }
-    };
+    }
 })();

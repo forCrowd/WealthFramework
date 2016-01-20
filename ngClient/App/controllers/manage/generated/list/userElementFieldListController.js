@@ -20,7 +20,7 @@
         logger) {
         logger = logger.forSource(controllerId);
 
-        var vm = this;
+        var vm = {};
         vm.deleteUserElementField = deleteUserElementField;
         vm.userElementFieldSet = [];
 
@@ -28,7 +28,7 @@
 
         function initialize() {
             getUserElementFieldSet();
-        };
+        }
 
         function deleteUserElementField(userElementField) {
             userElementFieldFactory.deleteUserElementField(userElementField);
@@ -43,8 +43,8 @@
                     // Todo: more sophisticated recovery. 
                     // Here we just blew it all away and start over
                     // refresh();
-                })
-        };
+                });
+        }
 
         function getUserElementFieldSet() {
             userElementFieldFactory.getUserElementFieldSet(false)
@@ -52,5 +52,5 @@
                     vm.userElementFieldSet = data;
                 });
         }
-    };
+    }
 })();

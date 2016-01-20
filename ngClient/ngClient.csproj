@@ -41,9 +41,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="app\configs\Setup\0 Readme.txt" />
-    <None Include="app\configs\Setup\serviceAppUrl.js" />
-    <None Include="app\configs\serviceAppUrl.js" />
+    <None Include="app\settings\Setup\0 Readme.txt" />
+    <None Include="app\settings\Setup\serviceAppUrl.js" />
+    <None Include="app\settings\serviceAppUrl.js" />
     <Content Include="app\controllers\manage\generated\edit\editController.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -100,7 +100,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\authorization.js" />
+    <Content Include="app\config\authorization.js" />
     <Content Include="app\controllers\account\accountEditController.js" />
     <Content Include="app\controllers\account\addPasswordController.js" />
     <Content Include="app\controllers\account\changeEmailController.js" />
@@ -202,7 +202,7 @@
     <Content Include="app\controllers\resourcePool\resourcePoolEditController.js" />
     <Content Include="app\controllers\resourcePool\resourcePoolListController.js" />
     <Content Include="app\controllers\resourcePool\resourcePoolViewController.js" />
-    <Content Include="app\dataContext.js" />
+    <Content Include="app\factories\dataContext.js" />
     <Content Include="app\directives\resourcePoolEditor\resourcePoolEditor.css" />
     <Content Include="app\directives\resourcePoolEditor\resourcePoolEditor.html" />
     <Content Include="app\directives\resourcePoolEditor\resourcePoolEditor.js" />
@@ -215,8 +215,8 @@
     <Content Include="app\entities\ResourcePool.js" />
     <Content Include="app\entities\User.js" />
     <Content Include="app\entities\UserElementCell.js" />
-    <Content Include="app\entityManagerFactory.js" />
-    <Content Include="app\exceptionHandlerExtension.js" />
+    <Content Include="app\factories\entityManagerFactory.js" />
+    <Content Include="app\config\exceptionHandlerExtension.js" />
     <Content Include="app\external\0 ReadMe.txt" />
     <Content Include="app\external\disqus.js" />
     <Content Include="app\external\gratipay.js" />
@@ -264,7 +264,7 @@
     <Content Include="app\factories\generated\userRoleFactory.js">
       <DependentUpon>factory.tt</DependentUpon>
     </Content>
-    <Content Include="app\factories\mainFactory.js" />
+    <Content Include="app\factories\applicationFactory.js" />
     <Content Include="app\factories\resourcePoolFactory.js" />
     <Content Include="app\factories\userFactory.js" />
     <Content Include="app\filters\angular-enum.js" />
@@ -278,9 +278,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>manageScripts.js</LastGenOutput>
     </Content>
-    <Content Include="app\logger.js" />
+    <Content Include="app\factories\logger.js" />
     <Content Include="app\main.js" />
-    <Content Include="app\route.js" />
+    <Content Include="app\config\route.js" />
     <Content Include="app\views\account\accountEdit.html" />
     <Content Include="app\views\account\addPassword.html" />
     <Content Include="app\views\account\changeEmail.html" />
@@ -386,6 +386,7 @@
     <Content Include="app\views\resourcePool\resourcePoolEdit.html" />
     <Content Include="app\views\resourcePool\resourcePoolList.html" />
     <Content Include="app\views\resourcePool\resourcePoolView.html" />
+    <Content Include="gulpfile.js" />
     <Content Include="images\forCrowd_logo_20x20.jpg" />
     <Content Include="images\forCrowd_logo_34x34.jpg" />
     <Content Include="images\NewSystem.png" />
@@ -405,6 +406,9 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="dist\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
