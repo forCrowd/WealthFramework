@@ -44,6 +44,7 @@
     <None Include="app\settings\Setup\0 Readme.txt" />
     <None Include="app\settings\Setup\serviceAppUrl.js" />
     <None Include="app\settings\serviceAppUrl.js" />
+    <Content Include="app\config\disqus.js" />
     <Content Include="app\config\googleAnalytics.js" />
     <Content Include="app\controllers\manage\generated\edit\EditController.txt">
       <AutoGen>True</AutoGen>
@@ -152,6 +153,8 @@
     <Content Include="app\main.min.js" />
     <None Include="app\settings\googleAnalytics.js" />
     <None Include="app\settings\Setup\googleAnalytics.js" />
+    <Content Include="app\settings\disqus.js" />
+    <Content Include="app\settings\Setup\disqus.js" />
     <Content Include="app\views\manage\generated\edit\EditView1.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -255,8 +258,6 @@
     <Content Include="app\entities\UserElementCell.js" />
     <Content Include="app\factories\entityManagerFactory.js" />
     <Content Include="app\config\exceptionHandlerExtension.js" />
-    <Content Include="app\external\0 ReadMe.txt" />
-    <Content Include="app\external\disqus.js" />
     <Content Include="app\factories\generated\elementCellFactory.js">
       <DependentUpon>factory.tt</DependentUpon>
     </Content>

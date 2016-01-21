@@ -2,13 +2,13 @@
     'use strict';
 
     angular.module('main')
-        .config(['AnalyticsProvider', 'AnalyticsTrackingCode', 'AnalyticsDomainName', analyticsConfig]);
+        .config(['AnalyticsProvider', 'analyticsTrackingCode', 'analyticsDomainName', analyticsConfig]);
 
     angular.module('main').run(['Analytics', function (Analytics) { }]);
 
-    function analyticsConfig(AnalyticsProvider, AnalyticsTrackingCode, AnalyticsDomainName) {
-        AnalyticsProvider.setAccount(AnalyticsTrackingCode)
-            .setDomainName(AnalyticsDomainName)
+    function analyticsConfig(AnalyticsProvider, analyticsTrackingCode, analyticsDomainName) {
+        AnalyticsProvider.setAccount(analyticsTrackingCode)
+            .setDomainName(analyticsDomainName)
             .ignoreFirstPageLoad(true);
     }
 })();

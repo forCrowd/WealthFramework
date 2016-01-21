@@ -3,7 +3,8 @@
 **0.43**
 
 * gulp: auto jshint check, bundling, minifying for js & css files
-* google analytics is now handled through "angular-google-analytics"
+* "angular-google-analytics" module for handling google analytics
+* disqus was moved under angular
 * jshint fixes
 * ResourcePoolEdit(Controller) was renamed to ResourcePoolManage(Controller) to fix the conflict with generated one
 

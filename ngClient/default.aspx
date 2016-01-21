@@ -128,6 +128,7 @@
     <!-- Settings -->
     <script src="/app/settings/serviceAppUrl.js?v=0.43"></script>
     <script src="/app/settings/googleAnalytics.js?v=0.43"></script>
+    <script src="/app/settings/disqus.js?v=0.43"></script>
 
 </body>
 </html>
