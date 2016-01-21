@@ -1,7 +1,7 @@
 ﻿(function () {
     'use strict';
 
-    var controllerId = 'ResourcePoolEditController';
+    var controllerId = 'ResourcePoolManageController';
     angular.module('main')
         .controller(controllerId, ['resourcePoolFactory',
             'userFactory',
@@ -11,9 +11,9 @@
             '$uibModal',
             'Enums',
             'logger',
-            ResourcePoolEditController]);
+            ResourcePoolManageController]);
 
-    function ResourcePoolEditController(resourcePoolFactory,
+    function ResourcePoolManageController(resourcePoolFactory,
         userFactory,
         $location,
         $routeParams,

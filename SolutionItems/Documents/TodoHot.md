@@ -8,8 +8,6 @@
 /views?
 
 ---
-resourcepooleditcontroller -> editor.. ? fix naming conflicts
-
 incremental build?
 https://github.com/gulpjs/gulp/blob/master/docs/recipes/README.md
 https://github.com/gulpjs/gulp/blob/master/docs/API.md

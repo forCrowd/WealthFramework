@@ -4,6 +4,7 @@
 
 * gulp: auto jshint check, bundling, minifying for js & css files
 * jshint fixes
+* ResourcePoolEdit(Controller) was renamed to ResourcePoolManage(Controller) to fix the conflict with generated one
 
 **0.42.2**
 

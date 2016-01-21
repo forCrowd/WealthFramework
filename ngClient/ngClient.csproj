@@ -44,7 +44,7 @@
     <None Include="app\settings\Setup\0 Readme.txt" />
     <None Include="app\settings\Setup\serviceAppUrl.js" />
     <None Include="app\settings\serviceAppUrl.js" />
-    <Content Include="app\controllers\manage\generated\edit\EditController.js">
+    <Content Include="app\controllers\manage\generated\edit\EditController.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EditController.tt</DependentUpon>
@@ -59,6 +59,9 @@
       <DependentUpon>EditController.tt</DependentUpon>
     </Content>
     <Content Include="app\controllers\manage\generated\edit\ElementItemEditController.js">
+      <DependentUpon>EditController.tt</DependentUpon>
+    </Content>
+    <Content Include="app\controllers\manage\generated\edit\ResourcePoolEditController.js">
       <DependentUpon>EditController.tt</DependentUpon>
     </Content>
     <Content Include="app\controllers\manage\generated\edit\RoleEditController.js">
@@ -225,13 +228,13 @@
     <Content Include="app\controllers\content\TotalCostIndexSampleController.js" />
     <Content Include="app\controllers\manage\generated\edit\EditController.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>EditController.js</LastGenOutput>
+      <LastGenOutput>EditController.txt</LastGenOutput>
     </Content>
     <Content Include="app\controllers\manage\generated\list\ListController.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ListController.js</LastGenOutput>
     </Content>
-    <Content Include="app\controllers\resourcePool\ResourcePoolEditController.js" />
+    <Content Include="app\controllers\resourcePool\ResourcePoolManageController.js" />
     <Content Include="app\controllers\resourcePool\ResourcePoolListController.js" />
     <Content Include="app\controllers\resourcePool\ResourcePoolViewController.js" />
     <Content Include="app\factories\dataContext.js" />
@@ -380,7 +383,7 @@
     <Content Include="app\views\manage\generated\list\userRoleList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
-    <Content Include="app\views\resourcePool\resourcePoolEdit.html" />
+    <Content Include="app\views\resourcePool\resourcePoolManage.html" />
     <Content Include="app\views\resourcePool\resourcePoolList.html" />
     <Content Include="app\views\resourcePool\resourcePoolView.html" />
     <Content Include="css\site.all.css" />
