@@ -13,7 +13,9 @@ https://github.com/gulpjs/gulp/blob/master/docs/recipes/README.md
 https://github.com/gulpjs/gulp/blob/master/docs/API.md
 live reload
 
-googleanalytics.js + disqus.js
+disqus.js
+
+search for location.path() - replace with url(/)
 
 REQUIRE JS? when "requirejs", do we need to bundle all js? or only "main.js"
 http://www.dotnetcurry.com/angularjs/1207/using-angularjs-bower-requirejs-visual-studio
@@ -53,7 +55,7 @@ grunt or gulp? auto minify + bundling
 requirejs - basic setup looks good and can be done but require some understading let's say, folder structure for instance
 aspnet 5 - can it be published to live?
 
-maincontroller -> defaultController?
+maincontroller -> defaultController? -> home + homecontroller?
 README - mention node.js? + Paste these two files to this folder - into this..
 ngclient - disqus.js from bower?
 angularjs 404 case?

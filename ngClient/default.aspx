@@ -19,22 +19,6 @@
     <!-- jQuery -->
     <script src="/bower_components/jquery/dist/jquery.min.js?v=0.42"></script>
 
-    <!-- Modernizr - TODO Not in use at the moment -->
-    <!--<script src="/Scripts/modernizr-2.8.3.js"></script>-->
-
-    <!-- Google Analytics -->
-    <script>
-        (function (i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date(); a = s.createElement(o),
-            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-
-        ga('create', 'UA-62498767-2', 'auto');
-        ga('send', 'pageview');
-
-    </script>
 </head>
 <body data-ng-app="main" data-ng-controller="MainController as vm">
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -123,13 +107,16 @@
     <script src="/bower_components/angular-route/angular-route.min.js?v=0.42"></script>
     <script src="/bower_components/angular-sanitize/angular-sanitize.min.js?v=0.42"></script>
 
-    <!-- Angular UI -->
-    <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js?v=0.42"></script>
-
     <!-- breeze -->
     <script src="/bower_components/breeze-client/build/breeze.min.js?v=0.42"></script>
     <script src="/bower_components/breeze-client/build/adapters/breeze.bridge.angular.js?v=0.42"></script>
     <script src="/bower_components/breeze-client-labs/breeze.directives.js?v=0.42"></script>
+
+    <!-- Angular Google Analytics -->
+    <script src="bower_components/angular-google-analytics/dist/angular-google-analytics.min.js?v=0.43"></script>
+
+    <!-- Angular UI -->
+    <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js?v=0.42"></script>
 
     <!-- Highcharts -->
     <script src="/bower_components/highcharts/highcharts.js?v=0.42"></script>
@@ -139,7 +126,8 @@
     <script src="/app/main.min.js?v=0.43"></script>
 
     <!-- Settings -->
-    <script src="/app/settings/serviceAppUrl.js?v=0.42"></script>
+    <script src="/app/settings/serviceAppUrl.js?v=0.43"></script>
+    <script src="/app/settings/googleAnalytics.js?v=0.43"></script>
 
 </body>
 </html>

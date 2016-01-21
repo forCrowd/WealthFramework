@@ -33,6 +33,7 @@
                             return;
                         }
 
+                        // TODO viewTitle was also set in route.js?
                         $rootScope.viewTitle = resourcePool.Name;
                     });
             }

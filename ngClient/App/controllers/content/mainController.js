@@ -3,9 +3,9 @@
 
     var controllerId = 'MainController';
     angular.module('main')
-        .controller(controllerId, ['applicationFactory', 'userFactory', '$scope', '$location', '$window', 'logger', MainController]);
+        .controller(controllerId, ['applicationFactory', 'userFactory', '$scope', '$location', 'logger', MainController]);
 
-    function MainController(applicationFactory, userFactory, $scope, $location, $window, logger) {
+    function MainController(applicationFactory, userFactory, $scope, $location, logger) {
 
         // Logger
         logger = logger.forSource(controllerId);

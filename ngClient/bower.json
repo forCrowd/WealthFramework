@@ -30,6 +30,7 @@
         "breeze-client-labs": "1.5.4",
         "bootstrap": "3.3.6",
         "respond": "1.4.2",
+        "angular-google-analytics": "1.1.5",
         "angular-bootstrap": "0.14.3",
         "highcharts": "4.2.0",
         "highcharts-ng": "0.0.11",

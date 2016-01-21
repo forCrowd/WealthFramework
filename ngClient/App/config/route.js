@@ -19,9 +19,9 @@
 
             /* CMRP List + View + Edit pages */
             .when('/resourcePool', { title: function () { return 'CMRP List'; }, templateUrl: '/App/views/resourcePool/resourcePoolList.html?v=0.43' })
-            .when('/resourcePool/new', { title: function () { return 'New CMRP'; }, templateUrl: '/App/views/resourcePool/resourcePoolEdit.html?v=0.43' })
-            .when('/resourcePool/:resourcePoolId/edit', { title: function () { return ''; }, templateUrl: '/App/views/resourcePool/resourcePoolManage.html?v=0.43' })
-            .when('/resourcePool/:resourcePoolId', { title: function () { return ''; }, templateUrl: '/App/views/resourcePool/resourcePoolView.html?v=0.43' })
+            .when('/resourcePool/new', { title: function () { return 'New CMRP'; }, templateUrl: '/App/views/resourcePool/resourcePoolManage.html?v=0.43' })
+            .when('/resourcePool/:resourcePoolId/edit', { title: function () { return 'Edit CMRP'; }, templateUrl: '/App/views/resourcePool/resourcePoolManage.html?v=0.43' })
+            .when('/resourcePool/:resourcePoolId', { title: function () { return 'View CMRP'; }, templateUrl: '/App/views/resourcePool/resourcePoolView.html?v=0.43' })
 
             /* Account */
             .when('/account/register', { title: function () { return 'Register'; }, templateUrl: '/App/views/account/register.html?v=0.43' })

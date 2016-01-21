@@ -10,8 +10,9 @@
     angular.module('main', [
         'ngRoute',
         'ngSanitize',
-        'ui.bootstrap',
         'breeze.angular',
+        'angular-google-analytics',
+        'ui.bootstrap',
         'highcharts-ng'
     ]);
 

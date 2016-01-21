@@ -92,6 +92,7 @@
                         vm.resourcePool = resourcePool;
 
                         // Title
+                        // TODO viewTitle was also set in route.js?
                         vm.title = 'New CMRP';
                         $rootScope.viewTitle = vm.title;
                     });
@@ -108,6 +109,7 @@
                         vm.resourcePool = resourcePool;
 
                         // Title
+                        // TODO viewTitle was also set in route.js?
                         vm.title = resourcePool.Name + ' - Edit';
                         $rootScope.viewTitle = vm.title;
                     });
