@@ -1,7 +1,7 @@
 ﻿(function () {
     'use strict';
 
-    var controllerId = 'resourcePoolEditController';
+    var controllerId = 'ResourcePoolEditController';
     angular.module('main')
         .controller(controllerId, ['resourcePoolFactory',
             'userFactory',
@@ -11,9 +11,9 @@
             '$uibModal',
             'Enums',
             'logger',
-            resourcePoolEditController]);
+            ResourcePoolEditController]);
 
-    function resourcePoolEditController(resourcePoolFactory,
+    function ResourcePoolEditController(resourcePoolFactory,
         userFactory,
         $location,
         $routeParams,
@@ -25,7 +25,7 @@
         // Logger
         logger = logger.forSource(controllerId);
 
-        var vm = {};
+        var vm = this;
         vm.addElement = addElement;
         vm.addElementField = addElementField;
         vm.addElementItem = addElementItem;
@@ -85,6 +85,7 @@
         /*** Implementations ***/
 
         function _init() {
+
             if (vm.isNew) {
                 resourcePoolFactory.createResourcePoolBasic()
                     .then(function (resourcePool) {
@@ -328,7 +329,7 @@
                 controllerAs: 'vm',
                 controller: function (resourcePoolFactory, $uibModalInstance) {
 
-                    var vm = {};
+                    var vm = this;
                     vm.close = close;
                     vm.copy = copy;
                     vm.resourcePoolSet = [];

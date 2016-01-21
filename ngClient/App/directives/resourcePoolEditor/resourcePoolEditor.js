@@ -239,7 +239,7 @@
 
                     chartData = [];
                     element.elementFieldIndexSet().forEach(function (elementFieldIndex) {
-                        var chartItem = new elementFieldIndexChartItem(elementFieldIndex);
+                        var chartItem = new ElementFieldIndexChartItem(elementFieldIndex);
                         chartData.push(chartItem);
                     });
                     scope.chartConfig.series = [{ data: chartData }];
@@ -256,7 +256,7 @@
                         scope.chartConfig.options.yAxis.title = { text: 'Total Income' };
 
                         element.ElementItemSet.forEach(function (elementItem) {
-                            var chartItem = new columnChartItem(elementItem);
+                            var chartItem = new ColumnChartItem(elementItem);
                             scope.chartConfig.series.push(chartItem);
                         });
                     } else {
@@ -269,7 +269,7 @@
                         element.ElementItemSet.forEach(function (elementItem) {
                             elementItem.ElementCellSet.forEach(function (elementCell) {
                                 if (elementCell.ElementField.IndexEnabled) {
-                                    var chartItem = new pieChartItem(elementCell);
+                                    var chartItem = new PieChartItem(elementCell);
                                     chartData.push(chartItem);
                                 }
                             });
@@ -344,9 +344,11 @@
                 setCurrentUser(null);
             }
 
+            /* Chart objects */
+
             // TODO Store these in a better place?
             // TODO Also test these better, by comparing it with resourcePool.selectedElement() property!
-            function columnChartItem(elementItem) {
+            function ColumnChartItem(elementItem) {
                 var self = this;
 
                 Object.defineProperty(self, "name", {
@@ -366,7 +368,7 @@
                 });
             }
 
-            function elementFieldIndexChartItem(elementFieldIndex) {
+            function ElementFieldIndexChartItem(elementFieldIndex) {
                 var self = this;
 
                 Object.defineProperty(self, "name", {
@@ -386,7 +388,7 @@
                 });
             }
 
-            function pieChartItem(elementCell) {
+            function PieChartItem(elementCell) {
                 var self = this;
 
                 Object.defineProperty(self, "name", {
@@ -407,7 +409,6 @@
                     }
                 });
             }
-
         }
 
         return {

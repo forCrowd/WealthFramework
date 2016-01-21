@@ -10,17 +10,17 @@
 (function () {
     'use strict';
 
-    var controllerId = 'userResourcePoolListController';
+    var controllerId = 'UserResourcePoolListController';
     angular.module('main')
         .controller(controllerId, ['userResourcePoolFactory',
             'logger',
-			userResourcePoolListController]);
+			UserResourcePoolListController]);
 
-    function userResourcePoolListController(userResourcePoolFactory,
+    function UserResourcePoolListController(userResourcePoolFactory,
         logger) {
         logger = logger.forSource(controllerId);
 
-        var vm = {};
+        var vm = this;
         vm.deleteUserResourcePool = deleteUserResourcePool;
         vm.userResourcePoolSet = [];
 

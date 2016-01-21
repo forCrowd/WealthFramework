@@ -1,14 +1,14 @@
 ﻿(function () {
     'use strict';
 
-    var controllerId = 'indexesPieSampleController';
+    var controllerId = 'IndexesPieSampleController';
     angular.module('main')
-        .controller(controllerId, ['logger', indexesPieSampleController]);
+        .controller(controllerId, ['logger', IndexesPieSampleController]);
 
-    function indexesPieSampleController(logger) {
+    function IndexesPieSampleController(logger) {
 
         logger = logger.forSource(controllerId);
 
-        var vm = {};
+        var vm = this;
     }
 })();

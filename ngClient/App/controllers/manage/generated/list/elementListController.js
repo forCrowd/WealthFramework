@@ -10,17 +10,17 @@
 (function () {
     'use strict';
 
-    var controllerId = 'elementListController';
+    var controllerId = 'ElementListController';
     angular.module('main')
         .controller(controllerId, ['elementFactory',
             'logger',
-			elementListController]);
+			ElementListController]);
 
-    function elementListController(elementFactory,
+    function ElementListController(elementFactory,
         logger) {
         logger = logger.forSource(controllerId);
 
-        var vm = {};
+        var vm = this;
         vm.deleteElement = deleteElement;
         vm.elementSet = [];
 

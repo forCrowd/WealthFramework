@@ -10,16 +10,16 @@
 (function () {
     'use strict';
 
-    var controllerId = 'elementEditController';
+    var controllerId = 'ElementEditController';
     angular.module('main')
         .controller(controllerId, ['elementFactory',
             'resourcePoolFactory',
             'logger',
             '$location',
             '$routeParams',
-            elementEditController]);
+            ElementEditController]);
 
-    function elementEditController(elementFactory,
+    function ElementEditController(elementFactory,
 		resourcePoolFactory,
 		logger,
 		$location,
@@ -30,7 +30,7 @@
         var isSaving = false;
 
         // Controller methods (alphabetically)
-        var vm = {};
+        var vm = this;
         vm.resourcePoolSet = [];
         vm.cancelChanges = cancelChanges;
         vm.isSaveDisabled = isSaveDisabled;

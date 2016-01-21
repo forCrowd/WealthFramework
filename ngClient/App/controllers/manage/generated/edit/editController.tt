@@ -31,7 +31,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 	var entityTypeName = typeMapper.GetTypeName(entityType);
 	var entityVariable = codeStringGenerator.GetCamelCase(entityTypeName);
 	var entitySetName = string.Format("{0}Set", entityVariable);
-	var controllerId = string.Format("{0}EditController", entityVariable);
+	var controllerId = string.Format("{0}EditController", entityTypeName);
 	var factoryId = string.Format("{0}Factory", entityVariable);
 	var primaryKey = entityType.KeyMembers[0];
     var primaryKeyShortTypeName = typeMapper.GetTypeName(primaryKey.TypeUsage);
@@ -79,7 +79,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
         var isSaving = false;
 
         // Controller methods (alphabetically)
-        var vm = {};
+        var vm = this;
 <#
 	foreach (var property in relatedProperties)
 	{

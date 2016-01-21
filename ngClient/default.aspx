@@ -14,7 +14,7 @@
     <link href="/bower_components/bootstrap-social/bootstrap-social.css?v=0.42" rel="stylesheet" />
 
     <!-- Internal CSS -->
-    <link href="/css/site.min.css?v=0.42" rel="stylesheet" />
+    <link href="/css/site.min.css?v=0.43" rel="stylesheet" />
 
     <!-- jQuery -->
     <script src="/bower_components/jquery/dist/jquery.min.js?v=0.42"></script>
@@ -36,7 +36,7 @@
 
     </script>
 </head>
-<body data-ng-app="main" data-ng-controller="mainController as vm">
+<body data-ng-app="main" data-ng-controller="MainController as vm">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -136,7 +136,7 @@
     <script src="/bower_components/highcharts-ng/dist/highcharts-ng.min.js?v=0.42"></script>
 
     <!-- App -->
-    <script src="/app/main.all.js?v=0.42"></script>
+    <script src="/app/main.min.js?v=0.43"></script>
 
     <!-- Settings -->
     <script src="/app/settings/serviceAppUrl.js?v=0.42"></script>

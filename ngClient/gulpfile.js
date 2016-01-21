@@ -1,4 +1,5 @@
-﻿'use strict';
+﻿/// <binding ProjectOpened='default' />
+'use strict';
 
 var gulp = require('gulp'),
     clean = require('gulp-clean'),
@@ -6,8 +7,7 @@ var gulp = require('gulp'),
     cssmin = require('gulp-cssmin'),
     jshint = require('gulp-jshint'),
     tap = require('gulp-tap'),
-    uglify = require('gulp-uglify'),
-    watch = require('gulp-watch');
+    uglify = require('gulp-uglify');
 
 // Js
 var appPath = './app',
@@ -25,76 +25,57 @@ var cssPath = './css',
     siteMinCssPath = cssPath + '/' + siteMinCss,
     siteCssSrc = [cssPath + '/*.css', appPath + '/directives/**/*.css', '!' + siteAllCssPath, '!' + siteMinCssPath];
 
-gulp.task('default', function () {
-});
+gulp.task('default', ['main.js', 'site.css', 'main.js_watch', 'site.css_watch']);
 
 // main.js
-gulp.task('main.js_jshint', function () {
-    return gulp.src(mainJsSrc)
-        .pipe(jshint())
-        .pipe(jshint.reporter('jshint-stylish'));
-})
-
 gulp.task(mainAllJs, function () {
 
-    // First delete the existing
-    gulp.src(mainAllJsPath)
-        .pipe(clean());
-
-    // Then put all js..
+    // Put all js into..
     return gulp.src(mainJsSrc)
-        //.pipe(jshint())
-        //.pipe(jshint.reporter('jshint-stylish'))
-        .pipe(concat(mainAllJs))
+        .pipe(jshint())
+        .pipe(jshint.reporter('jshint-stylish'))
+        .pipe(concat(mainAllJs, { newLine: '\r\n' }))
         .pipe(gulp.dest(appPath));
 });
 
 gulp.task(mainMinJs, function () {
 
-    // First delete the existing
-    gulp.src(mainMinJsPath)
-        .pipe(clean());
-
-    // Then minify all js..
+    // Minify all js into..
     return gulp.src(mainJsSrc)
-        .pipe(concat(mainMinJs))
+        .pipe(concat(mainMinJs, { newLine: '\r\n' }))
         .pipe(uglify())
         .pipe(gulp.dest(appPath));
 });
 
 gulp.task('main.js', [mainAllJs, mainMinJs]);
 
-gulp.watch(mainJsSrc, ['main.js']);
+gulp.task('main.js_watch', function () {
+    gulp.watch(mainJsSrc, ['main.js']);
+});
 
 // site.css
-gulp.task('site.all.css', function () {
+gulp.task(siteAllCss, function () {
 
-    // First delete the existing
-    gulp.src(siteAllCssPath)
-        .pipe(clean());
-
-    // Then put all css..
+    // Put all css into..
     return gulp.src(siteCssSrc)
-        .pipe(concat(siteAllCss))
+        .pipe(concat(siteAllCss, { newLine: '\r\n' }))
         .pipe(gulp.dest(cssPath));
 });
 
-gulp.task('site.min.css', function () {
+gulp.task(siteMinCss, function () {
 
-    // First delete the existing
-    gulp.src(siteMinCssPath)
-        .pipe(clean());
-
-    // Then minify all css..
+    // Minify all css into..
     return gulp.src(siteCssSrc)
-        .pipe(concat(siteMinCss))
+        .pipe(concat(siteMinCss, { newLine: '\r\n' }))
         .pipe(gulp.dest(cssPath));
 });
 
-gulp.task('site.css', ['site.all.css', 'site.min.css']);
+gulp.task('site.css', [siteAllCss, siteMinCss]);
 
-//gulp.watch(siteCssSrc, ['site.css']);
- 
+gulp.task('site.css_watch', function () {
+    gulp.watch(siteCssSrc, ['site.css']);
+});
+
 /* Samples */
 
 //gulp.task('cleanTest', function () {

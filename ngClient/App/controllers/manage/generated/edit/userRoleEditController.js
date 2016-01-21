@@ -10,7 +10,7 @@
 (function () {
     'use strict';
 
-    var controllerId = 'userRoleEditController';
+    var controllerId = 'UserRoleEditController';
     angular.module('main')
         .controller(controllerId, ['userRoleFactory',
             'roleFactory',
@@ -18,9 +18,9 @@
             'logger',
             '$location',
             '$routeParams',
-            userRoleEditController]);
+            UserRoleEditController]);
 
-    function userRoleEditController(userRoleFactory,
+    function UserRoleEditController(userRoleFactory,
 		roleFactory,
 		userFactory,
 		logger,
@@ -32,7 +32,7 @@
         var isSaving = false;
 
         // Controller methods (alphabetically)
-        var vm = {};
+        var vm = this;
         vm.roleSet = [];
         vm.userSet = [];
         vm.cancelChanges = cancelChanges;

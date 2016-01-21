@@ -1,15 +1,15 @@
 ﻿(function () {
     'use strict';
 
-    var controllerId = 'registerController';
+    var controllerId = 'RegisterController';
     angular.module('main')
-        .controller(controllerId, ['userFactory', '$location', '$rootScope', 'serviceAppUrl', 'logger', registerController]);
+        .controller(controllerId, ['userFactory', '$location', '$rootScope', 'serviceAppUrl', 'logger', RegisterController]);
 
-    function registerController(userFactory, $location, $rootScope, serviceAppUrl, logger) {
+    function RegisterController(userFactory, $location, $rootScope, serviceAppUrl, logger) {
 
         logger = logger.forSource(controllerId);
 
-        var vm = {};
+        var vm = this;
         vm.confirmPassword = '';
         vm.email = '';
         vm.getExternalLoginUrl = getExternalLoginUrl;

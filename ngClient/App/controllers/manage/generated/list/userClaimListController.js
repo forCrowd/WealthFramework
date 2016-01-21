@@ -10,17 +10,17 @@
 (function () {
     'use strict';
 
-    var controllerId = 'userClaimListController';
+    var controllerId = 'UserClaimListController';
     angular.module('main')
         .controller(controllerId, ['userClaimFactory',
             'logger',
-			userClaimListController]);
+			UserClaimListController]);
 
-    function userClaimListController(userClaimFactory,
+    function UserClaimListController(userClaimFactory,
         logger) {
         logger = logger.forSource(controllerId);
 
-        var vm = {};
+        var vm = this;
         vm.deleteUserClaim = deleteUserClaim;
         vm.userClaimSet = [];
 

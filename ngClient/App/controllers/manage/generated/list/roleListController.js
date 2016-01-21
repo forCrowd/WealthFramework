@@ -10,17 +10,17 @@
 (function () {
     'use strict';
 
-    var controllerId = 'roleListController';
+    var controllerId = 'RoleListController';
     angular.module('main')
         .controller(controllerId, ['roleFactory',
             'logger',
-			roleListController]);
+			RoleListController]);
 
-    function roleListController(roleFactory,
+    function RoleListController(roleFactory,
         logger) {
         logger = logger.forSource(controllerId);
 
-        var vm = {};
+        var vm = this;
         vm.deleteRole = deleteRole;
         vm.roleSet = [];
 

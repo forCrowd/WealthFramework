@@ -1,14 +1,14 @@
 ﻿(function () {
     'use strict';
 
-    var controllerId = 'changeEmailController';
+    var controllerId = 'ChangeEmailController';
     angular.module('main')
-        .controller(controllerId, ['userFactory', '$location', 'logger', changeEmailController]);
+        .controller(controllerId, ['userFactory', '$location', 'logger', ChangeEmailController]);
 
-    function changeEmailController(userFactory, $location, logger) {
+    function ChangeEmailController(userFactory, $location, logger) {
         logger = logger.forSource(controllerId);
 
-        var vm = {};
+        var vm = this;
         vm.isChangeEmailDisabled = false;
         vm.changeEmail = changeEmail;
 

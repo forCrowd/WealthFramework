@@ -10,17 +10,17 @@
 (function () {
     'use strict';
 
-    var controllerId = 'elementFieldListController';
+    var controllerId = 'ElementFieldListController';
     angular.module('main')
         .controller(controllerId, ['elementFieldFactory',
             'logger',
-			elementFieldListController]);
+			ElementFieldListController]);
 
-    function elementFieldListController(elementFieldFactory,
+    function ElementFieldListController(elementFieldFactory,
         logger) {
         logger = logger.forSource(controllerId);
 
-        var vm = {};
+        var vm = this;
         vm.deleteElementField = deleteElementField;
         vm.elementFieldSet = [];
 

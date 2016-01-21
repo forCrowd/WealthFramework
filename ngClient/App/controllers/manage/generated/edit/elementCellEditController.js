@@ -10,7 +10,7 @@
 (function () {
     'use strict';
 
-    var controllerId = 'elementCellEditController';
+    var controllerId = 'ElementCellEditController';
     angular.module('main')
         .controller(controllerId, ['elementCellFactory',
             'elementFieldFactory',
@@ -18,9 +18,9 @@
             'logger',
             '$location',
             '$routeParams',
-            elementCellEditController]);
+            ElementCellEditController]);
 
-    function elementCellEditController(elementCellFactory,
+    function ElementCellEditController(elementCellFactory,
 		elementFieldFactory,
 		elementItemFactory,
 		logger,
@@ -32,7 +32,7 @@
         var isSaving = false;
 
         // Controller methods (alphabetically)
-        var vm = {};
+        var vm = this;
         vm.elementFieldSet = [];
         vm.elementItemSet = [];
         vm.cancelChanges = cancelChanges;

@@ -1,15 +1,15 @@
 ﻿(function () {
     'use strict';
 
-    var controllerId = 'externalLoginController';
+    var controllerId = 'ExternalLoginController';
     angular.module('main')
-        .controller(controllerId, ['userFactory', '$location', 'logger', externalLoginController]);
+        .controller(controllerId, ['userFactory', '$location', 'logger', ExternalLoginController]);
 
-    function externalLoginController(userFactory, $location, logger) {
+    function ExternalLoginController(userFactory, $location, logger) {
 
         logger = logger.forSource(controllerId);
 
-        var vm = {};
+        var vm = this;
         vm.error = '';
         vm.isAuthenticated = false;
 

@@ -1,14 +1,14 @@
 ﻿(function () {
     'use strict';
 
-    var controllerId = 'addPasswordController';
+    var controllerId = 'AddPasswordController';
     angular.module('main')
-        .controller(controllerId, ['userFactory', '$location', 'logger', addPasswordController]);
+        .controller(controllerId, ['userFactory', '$location', 'logger', AddPasswordController]);
 
-    function addPasswordController(userFactory, $location, logger) {
+    function AddPasswordController(userFactory, $location, logger) {
         logger = logger.forSource(controllerId);
 
-        var vm = {};
+        var vm = this;
         vm.addPassword = addPassword;
 
         function addPassword() {

@@ -1,21 +1,21 @@
 ﻿(function () {
     'use strict';
 
-    var controllerId = 'resourcePoolViewController';
+    var controllerId = 'ResourcePoolViewController';
     angular.module('main')
         .controller(controllerId, ['resourcePoolFactory',
             '$location',
             '$routeParams',
             '$rootScope',
             'logger',
-            resourcePoolViewController]);
+            ResourcePoolViewController]);
 
-    function resourcePoolViewController(resourcePoolFactory, $location, $routeParams, $rootScope, logger) {
+    function ResourcePoolViewController(resourcePoolFactory, $location, $routeParams, $rootScope, logger) {
 
         // Logger
         logger = logger.forSource(controllerId);
 
-        var vm = {};
+        var vm = this;
         vm.editorConfig = getEditorConfig();
 
         init();

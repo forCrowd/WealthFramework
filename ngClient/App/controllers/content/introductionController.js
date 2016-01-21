@@ -1,11 +1,11 @@
 ﻿(function () {
     'use strict';
 
-    var controllerId = 'introductionController';
+    var controllerId = 'IntroductionController';
     angular.module('main')
-        .controller(controllerId, ['resourcePoolFactory', 'userFactory', '$scope', '$timeout', 'logger', introductionController]);
+        .controller(controllerId, ['resourcePoolFactory', 'userFactory', '$scope', '$timeout', 'logger', IntroductionController]);
 
-    function introductionController(resourcePoolFactory, userFactory, $scope, $timeout, logger) {
+    function IntroductionController(resourcePoolFactory, userFactory, $scope, $timeout, logger) {
 
         // Logger
         logger = logger.forSource(controllerId);
@@ -13,7 +13,7 @@
         // Timer
         var increaseMultiplierTimeout = $timeout(increaseMultiplier, 5000);
 
-        var vm = {};
+        var vm = this;
         vm.upoConfig = { resourcePoolId: 1 };
         vm.isAuthenticated = false;
 

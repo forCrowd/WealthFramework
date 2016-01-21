@@ -1,5 +1,4 @@
-﻿
-(function () {
+﻿(function () {
     'use strict';
 
     var factoryId = 'resourcePoolFactory';
@@ -146,9 +145,9 @@
             return dataContext.createEntity('Element', element);
         }
 
-        function createElementCell(elementCell) {
+        function createElementCell(elementCellInitial) {
 
-            var elementCell = dataContext.createEntity('ElementCell', elementCell);
+            var elementCell = dataContext.createEntity('ElementCell', elementCellInitial);
 
             // User element cell
             if (elementCell.ElementField.DataType !== 6) {

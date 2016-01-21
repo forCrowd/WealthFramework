@@ -10,15 +10,15 @@
 (function () {
     'use strict';
 
-    var controllerId = 'roleEditController';
+    var controllerId = 'RoleEditController';
     angular.module('main')
         .controller(controllerId, ['roleFactory',
             'logger',
             '$location',
             '$routeParams',
-            roleEditController]);
+            RoleEditController]);
 
-    function roleEditController(roleFactory,
+    function RoleEditController(roleFactory,
 		logger,
 		$location,
 		$routeParams) {
@@ -28,7 +28,7 @@
         var isSaving = false;
 
         // Controller methods (alphabetically)
-        var vm = {};
+        var vm = this;
         vm.cancelChanges = cancelChanges;
         vm.isSaveDisabled = isSaveDisabled;
         vm.entityErrors = [];

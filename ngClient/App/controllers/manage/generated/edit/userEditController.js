@@ -10,15 +10,15 @@
 (function () {
     'use strict';
 
-    var controllerId = 'userEditController';
+    var controllerId = 'UserEditController';
     angular.module('main')
         .controller(controllerId, ['userFactory',
             'logger',
             '$location',
             '$routeParams',
-            userEditController]);
+            UserEditController]);
 
-    function userEditController(userFactory,
+    function UserEditController(userFactory,
 		logger,
 		$location,
 		$routeParams) {
@@ -28,7 +28,7 @@
         var isSaving = false;
 
         // Controller methods (alphabetically)
-        var vm = {};
+        var vm = this;
         vm.cancelChanges = cancelChanges;
         vm.isSaveDisabled = isSaveDisabled;
         vm.entityErrors = [];

@@ -1,14 +1,14 @@
 ﻿(function () {
     'use strict';
 
-    var controllerId = 'fairShareIndexSampleController';
+    var controllerId = 'FairShareIndexSampleController';
     angular.module('main')
-        .controller(controllerId, ['userFactory', 'logger', fairShareIndexSampleController]);
+        .controller(controllerId, ['userFactory', 'logger', FairShareIndexSampleController]);
 
-    function fairShareIndexSampleController(userFactory, logger) {
+    function FairShareIndexSampleController(userFactory, logger) {
 
         logger = logger.forSource(controllerId);
 
-        var vm = {};
+        var vm = this;
     }
 })();

@@ -1,20 +1,20 @@
 ﻿(function () {
     'use strict';
 
-    var controllerId = 'accountEditController';
+    var controllerId = 'AccountEditController';
     angular.module('main')
         .controller(controllerId, ['userFactory',
             'logger',
-            accountEditController]);
+            AccountEditController]);
 
-    function accountEditController(userFactory,
+    function AccountEditController(userFactory,
 		logger) {
         logger = logger.forSource(controllerId);
 
         var isSaving = false;
 
         // Controller methods (alphabetically)
-        var vm = {};
+        var vm = this;
         vm.isSaveDisabled = isSaveDisabled;
         vm.user = null;
         vm.saveChanges = saveChanges;

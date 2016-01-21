@@ -10,16 +10,16 @@
 (function () {
     'use strict';
 
-    var controllerId = 'userClaimEditController';
+    var controllerId = 'UserClaimEditController';
     angular.module('main')
         .controller(controllerId, ['userClaimFactory',
             'userFactory',
             'logger',
             '$location',
             '$routeParams',
-            userClaimEditController]);
+            UserClaimEditController]);
 
-    function userClaimEditController(userClaimFactory,
+    function UserClaimEditController(userClaimFactory,
 		userFactory,
 		logger,
 		$location,
@@ -30,7 +30,7 @@
         var isSaving = false;
 
         // Controller methods (alphabetically)
-        var vm = {};
+        var vm = this;
         vm.userSet = [];
         vm.cancelChanges = cancelChanges;
         vm.isSaveDisabled = isSaveDisabled;

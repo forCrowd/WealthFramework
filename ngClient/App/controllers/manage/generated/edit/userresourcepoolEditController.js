@@ -10,7 +10,7 @@
 (function () {
     'use strict';
 
-    var controllerId = 'userResourcePoolEditController';
+    var controllerId = 'UserResourcePoolEditController';
     angular.module('main')
         .controller(controllerId, ['userResourcePoolFactory',
             'resourcePoolFactory',
@@ -18,9 +18,9 @@
             'logger',
             '$location',
             '$routeParams',
-            userResourcePoolEditController]);
+            UserResourcePoolEditController]);
 
-    function userResourcePoolEditController(userResourcePoolFactory,
+    function UserResourcePoolEditController(userResourcePoolFactory,
 		resourcePoolFactory,
 		userFactory,
 		logger,
@@ -32,7 +32,7 @@
         var isSaving = false;
 
         // Controller methods (alphabetically)
-        var vm = {};
+        var vm = this;
         vm.resourcePoolSet = [];
         vm.userSet = [];
         vm.cancelChanges = cancelChanges;

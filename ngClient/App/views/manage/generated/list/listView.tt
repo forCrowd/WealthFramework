@@ -35,7 +35,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 		continue;
 
 	var entityVariable = codeStringGenerator.GetCamelCase(entityTypeName);
-	var entityControllerName = string.Format("{0}ListController", entityVariable);
+	var entityControllerName = string.Format("{0}ListController", entityTypeName);
 	var entitySetName = string.Format("{0}Set", entityVariable);
 	var entityDeleteMethod = string.Format("delete{0}", entityTypeName);
 	var primaryKey = entityType.KeyMembers[0];

@@ -40,7 +40,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 	if (businessObjectDisplayAttribute != null)
 		entityTitle = businessObjectDisplayAttribute.DisplayName;
 	var entityVariable = codeStringGenerator.GetCamelCase(entityTypeName);
-	var entityControllerName = string.Format("{0}EditController", entityVariable);
+	var entityControllerName = string.Format("{0}EditController", entityTypeName);
 	var entitySetName = string.Format("{0}Set", entityVariable);
 	var entityDeleteMethod = string.Format("delete{0}", entityTypeName);
 	var primaryKey = entityType.KeyMembers[0];

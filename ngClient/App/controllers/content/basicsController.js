@@ -1,15 +1,15 @@
 ﻿(function () {
     'use strict';
 
-    var controllerId = 'basicsController';
+    var controllerId = 'BasicsController';
     angular.module('main')
-        .controller(controllerId, ['resourcePoolFactory', 'userFactory', '$scope', 'logger', basicsController]);
+        .controller(controllerId, ['resourcePoolFactory', 'userFactory', '$scope', 'logger', BasicsController]);
 
-    function basicsController(resourcePoolFactory, userFactory, $scope, logger) {
+    function BasicsController(resourcePoolFactory, userFactory, $scope, logger) {
 
         logger = logger.forSource(controllerId);
 
-        var vm = {};
+        var vm = this;
         vm.existingModelConfig = { resourcePoolId: 2 };
         vm.newModelConfig = { resourcePoolId: 3 };
 

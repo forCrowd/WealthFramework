@@ -10,7 +10,7 @@
 (function () {
     'use strict';
 
-    var controllerId = 'userElementFieldEditController';
+    var controllerId = 'UserElementFieldEditController';
     angular.module('main')
         .controller(controllerId, ['userElementFieldFactory',
             'elementFieldFactory',
@@ -18,9 +18,9 @@
             'logger',
             '$location',
             '$routeParams',
-            userElementFieldEditController]);
+            UserElementFieldEditController]);
 
-    function userElementFieldEditController(userElementFieldFactory,
+    function UserElementFieldEditController(userElementFieldFactory,
 		elementFieldFactory,
 		userFactory,
 		logger,
@@ -32,7 +32,7 @@
         var isSaving = false;
 
         // Controller methods (alphabetically)
-        var vm = {};
+        var vm = this;
         vm.elementFieldSet = [];
         vm.userSet = [];
         vm.cancelChanges = cancelChanges;

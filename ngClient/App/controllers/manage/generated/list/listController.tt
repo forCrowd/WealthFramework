@@ -31,7 +31,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 	var entityTypeName = typeMapper.GetTypeName(entityType);
 	var entityVariable = codeStringGenerator.GetCamelCase(entityTypeName);
 	var entitySetName = string.Format("{0}Set", entityVariable);
-	var controllerId = string.Format("{0}ListController", entityVariable);
+	var controllerId = string.Format("{0}ListController", entityTypeName);
 	var factoryId = string.Format("{0}Factory", entityVariable);
 	var entitySetGetMethod = string.Format("get{0}Set", entityTypeName);
 	var entityDeleteMethod = string.Format("delete{0}", entityTypeName);
@@ -58,7 +58,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
         logger) {
         logger = logger.forSource(controllerId);
 
-        var vm = {};
+        var vm = this;
         vm.<#= entityDeleteMethod #> = <#= entityDeleteMethod #>;
         vm.<#= entitySetName #> = [];
 

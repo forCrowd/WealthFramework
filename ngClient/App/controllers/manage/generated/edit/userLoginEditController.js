@@ -10,16 +10,16 @@
 (function () {
     'use strict';
 
-    var controllerId = 'userLoginEditController';
+    var controllerId = 'UserLoginEditController';
     angular.module('main')
         .controller(controllerId, ['userLoginFactory',
             'userFactory',
             'logger',
             '$location',
             '$routeParams',
-            userLoginEditController]);
+            UserLoginEditController]);
 
-    function userLoginEditController(userLoginFactory,
+    function UserLoginEditController(userLoginFactory,
 		userFactory,
 		logger,
 		$location,
@@ -30,7 +30,7 @@
         var isSaving = false;
 
         // Controller methods (alphabetically)
-        var vm = {};
+        var vm = this;
         vm.userSet = [];
         vm.cancelChanges = cancelChanges;
         vm.isSaveDisabled = isSaveDisabled;

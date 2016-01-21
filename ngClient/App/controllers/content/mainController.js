@@ -1,17 +1,17 @@
 ﻿(function () {
     'use strict';
 
-    var controllerId = 'mainController';
+    var controllerId = 'MainController';
     angular.module('main')
-        .controller(controllerId, ['applicationFactory', 'userFactory', '$scope', '$location', '$window', 'logger', mainController]);
+        .controller(controllerId, ['applicationFactory', 'userFactory', '$scope', '$location', '$window', 'logger', MainController]);
 
-    function mainController(applicationFactory, userFactory, $scope, $location, $window, logger) {
+    function MainController(applicationFactory, userFactory, $scope, $location, $window, logger) {
 
         // Logger
         logger = logger.forSource(controllerId);
 
         // View model
-        var vm = {};
+        var vm = this;
         vm.applicationInfo = null;
         vm.currentUser = null;
 

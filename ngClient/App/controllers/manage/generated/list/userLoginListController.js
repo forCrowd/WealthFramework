@@ -10,17 +10,17 @@
 (function () {
     'use strict';
 
-    var controllerId = 'userLoginListController';
+    var controllerId = 'UserLoginListController';
     angular.module('main')
         .controller(controllerId, ['userLoginFactory',
             'logger',
-			userLoginListController]);
+			UserLoginListController]);
 
-    function userLoginListController(userLoginFactory,
+    function UserLoginListController(userLoginFactory,
         logger) {
         logger = logger.forSource(controllerId);
 
-        var vm = {};
+        var vm = this;
         vm.deleteUserLogin = deleteUserLogin;
         vm.userLoginSet = [];
 

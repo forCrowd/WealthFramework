@@ -1,17 +1,17 @@
 ﻿(function () {
     'use strict';
 
-    var controllerId = 'closingNotesController';
+    var controllerId = 'ClosingNotesController';
     angular.module('main')
-        .controller(controllerId, ['userFactory', '$scope', '$sce', '$location', 'logger', closingNotesController]);
+        .controller(controllerId, ['userFactory', '$scope', '$sce', '$location', 'logger', ClosingNotesController]);
 
-    function closingNotesController(userFactory, $scope, $sce, $location, logger) {
+    function ClosingNotesController(userFactory, $scope, $sce, $location, logger) {
 
         // Logger
         logger = logger.forSource(controllerId);
 
         // View model
-        var vm = {};
+        var vm = this;
         vm.isAuthenticated = false;
         vm.isLocalhost = $location.$$host === 'localhost';
         vm.displayBankTransfer = false;

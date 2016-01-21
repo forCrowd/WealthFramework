@@ -1,14 +1,14 @@
 ﻿(function () {
     'use strict';
 
-    var controllerId = 'totalCostIndexSampleController';
+    var controllerId = 'TotalCostIndexSampleController';
     angular.module('main')
-        .controller(controllerId, ['logger', totalCostIndexSampleController]);
+        .controller(controllerId, ['logger', TotalCostIndexSampleController]);
 
-    function totalCostIndexSampleController(logger) {
+    function TotalCostIndexSampleController(logger) {
 
         logger = logger.forSource(controllerId);
 
-        var vm = {};
+        var vm = this;
     }
 })();
