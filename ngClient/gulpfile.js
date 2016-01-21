@@ -29,6 +29,12 @@ gulp.task('default', function () {
 });
 
 // main.js
+gulp.task('main.js_jshint', function () {
+    return gulp.src(mainJsSrc)
+        .pipe(jshint())
+        .pipe(jshint.reporter('jshint-stylish'));
+})
+
 gulp.task(mainAllJs, function () {
 
     // First delete the existing
@@ -37,8 +43,8 @@ gulp.task(mainAllJs, function () {
 
     // Then put all js..
     return gulp.src(mainJsSrc)
-        .pipe(jshint())
-        .pipe(jshint.reporter('jshint-stylish'))
+        //.pipe(jshint())
+        //.pipe(jshint.reporter('jshint-stylish'))
         .pipe(concat(mainAllJs))
         .pipe(gulp.dest(appPath));
 });
@@ -58,7 +64,7 @@ gulp.task(mainMinJs, function () {
 
 gulp.task('main.js', [mainAllJs, mainMinJs]);
 
-//gulp.watch(mainJsSrc, ['main.js']);
+gulp.watch(mainJsSrc, ['main.js']);
 
 // site.css
 gulp.task('site.all.css', function () {

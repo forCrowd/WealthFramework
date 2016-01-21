@@ -8,7 +8,7 @@
     function loginController(userFactory, $location, $rootScope, serviceAppUrl, logger) {
         logger = logger.forSource(controllerId);
 
-        var vm = this;
+        var vm = {};
         vm.getAccessToken = getAccessToken;
         vm.getExternalLoginUrl = getExternalLoginUrl;
         
@@ -44,5 +44,5 @@
         function getExternalLoginUrl(provider) {
             return serviceAppUrl + '/api/Account/ExternalLogin?provider=' + provider;
         }
-    };
+    }
 })();

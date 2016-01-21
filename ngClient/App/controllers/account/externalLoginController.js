@@ -9,7 +9,7 @@
 
         logger = logger.forSource(controllerId);
 
-        var vm = this;
+        var vm = {};
         vm.error = '';
         vm.isAuthenticated = false;
 
@@ -47,5 +47,5 @@
                 });
 
         }
-    };
+    }
 })();

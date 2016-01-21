@@ -8,7 +8,7 @@
     function changeEmailController(userFactory, $location, logger) {
         logger = logger.forSource(controllerId);
 
-        var vm = this;
+        var vm = {};
         vm.isChangeEmailDisabled = false;
         vm.changeEmail = changeEmail;
 
@@ -43,5 +43,5 @@
                     vm.isChangeEmailDisabled = false;
                 });
         }
-    };
+    }
 })();

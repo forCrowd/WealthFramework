@@ -44,7 +44,7 @@
                 _rating: null,
                 _ratingPercentage: null,
                 _indexIncome: null
-            }
+            };
 
             // Functions
             self.aggressiveRating = aggressiveRating;
@@ -87,9 +87,9 @@
             }
 
             function currentUserCell() {
-                return self.UserElementCellSet.length > 0
-                    ? self.UserElementCellSet[0]
-                    : null;
+                return self.UserElementCellSet.length > 0 ?
+                    self.UserElementCellSet[0] :
+                    null;
             }
 
             function currentUserNumericValue() {
@@ -126,15 +126,15 @@
                     return null;
                 }
 
-                return self.numericValueCount() === 0
-                    ? 0
-                    : self.numericValueTotal() / self.numericValueCount();
+                return self.numericValueCount() === 0 ?
+                    0 :
+                    self.numericValueTotal() / self.numericValueCount();
             }
 
             function numericValueCount() {
-                return self.ElementField.UseFixedValue
-                    ? self.otherUsersNumericValueCount()
-                    : self.otherUsersNumericValueCount() + 1; // There is always default value, increase count by 1
+                return self.ElementField.UseFixedValue ?
+                    self.otherUsersNumericValueCount() :
+                    self.otherUsersNumericValueCount() + 1; // There is always default value, increase count by 1
             }
 
             function numericValueMultiplied() {
@@ -155,9 +155,9 @@
             }
 
             function numericValueTotal() {
-                return self.ElementField.UseFixedValue
-                    ? self.otherUsersNumericValueTotal()
-                    : self.otherUsersNumericValueTotal() + self.currentUserNumericValue();
+                return self.ElementField.UseFixedValue ?
+                    self.otherUsersNumericValueTotal() :
+                    self.otherUsersNumericValueTotal() + self.currentUserNumericValue();
             }
 
             // TODO Since this is a fixed value based on NumericValueCount & current user's rate,
@@ -389,9 +389,9 @@
 
             function setOtherUsersNumericValueTotal() {
 
-                self.backingFields._otherUsersNumericValueTotal = self.NumericValueTotal !== null
-                    ? self.NumericValueTotal
-                    : 0;
+                self.backingFields._otherUsersNumericValueTotal = self.NumericValueTotal !== null ?
+                    self.NumericValueTotal :
+                    0;
 
                 // Exclude current user's
                 if (self.UserElementCellSet.length > 0) {

@@ -28,7 +28,7 @@
         var isSaving = false;
 
         // Controller methods (alphabetically)
-        var vm = this;
+        var vm = {};
         vm.cancelChanges = cancelChanges;
         vm.isSaveDisabled = isSaveDisabled;
         vm.entityErrors = [];
@@ -68,7 +68,7 @@
                         // TODO User-friendly message?
                     });
             }
-        };
+        }
 
         function isSaveDisabled() {
             return isSaving ||
@@ -98,5 +98,5 @@
                     isSaving = false;
                 });
         }
-    };
+    }
 })();

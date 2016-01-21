@@ -29,7 +29,7 @@
         function configureToastr() {
             toastr.options = {
                 "positionClass": "toast-bottom-right"
-            }
+            };
         }
 
         function forSource(src) {

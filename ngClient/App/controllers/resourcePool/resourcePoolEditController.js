@@ -25,7 +25,7 @@
         // Logger
         logger = logger.forSource(controllerId);
 
-        var vm = this;
+        var vm = {};
         vm.addElement = addElement;
         vm.addElementField = addElementField;
         vm.addElementItem = addElementItem;
@@ -219,9 +219,9 @@
 
             resourcePoolFactory.cancelResourcePool(vm.resourcePool);
 
-            var locationPath = vm.isNew
-                ? '/resourcePool'
-                : '/resourcePool/' + vm.resourcePool.Id;
+            var locationPath = vm.isNew ?
+                '/resourcePool' :
+                '/resourcePool/' + vm.resourcePool.Id;
 
             $location.path(locationPath);
         }
@@ -283,9 +283,7 @@
 
                 // These types can be added only once at the moment
                 if (key === 'DirectIncome' || key === 'Multiplier') {
-                    var exists = vm.elementField.Element.ElementFieldSet.some(function (field) {
-                        return field.ElementFieldDataType === vm.ElementFieldDataType[key];
-                    });
+                    var exists = vm.elementField.Element.ElementFieldSet.some(fieldExists);
 
                     if (!exists) {
                         filtered[key] = vm.ElementFieldDataType[key];
@@ -297,6 +295,10 @@
                 } else {
                     filtered[key] = vm.ElementFieldDataType[key];
                 }
+            }
+
+            function fieldExists(field) {
+                return vm.ElementFieldDataType[key] === field.ElementFieldDataType;
             }
 
             return filtered;
@@ -313,9 +315,9 @@
         }
 
         function isSaveEnabled() {
-            var value = !vm.isSaving
-                && typeof vm.resourcePoolForm !== 'undefined'
-                && vm.resourcePoolForm.$valid;
+            var value = !vm.isSaving &&
+                typeof vm.resourcePoolForm !== 'undefined' &&
+                vm.resourcePoolForm.$valid;
 
             return value;
         }
@@ -326,7 +328,7 @@
                 controllerAs: 'vm',
                 controller: function (resourcePoolFactory, $uibModalInstance) {
 
-                    var vm = this;
+                    var vm = {};
                     vm.close = close;
                     vm.copy = copy;
                     vm.resourcePoolSet = [];
@@ -335,18 +337,18 @@
 
                     function close() {
                         $uibModalInstance.dismiss('cancel');
-                    };
+                    }
 
                     function copy(resourcePool) {
                         $uibModalInstance.close(resourcePool);
-                    };
+                    }
 
                     function initialize() {
                         resourcePoolFactory.getResourcePoolSet(false)
                             .then(function (data) {
                                 vm.resourcePoolSet = data;
                             });
-                    };
+                    }
                 }
             });
 
@@ -361,7 +363,7 @@
                 controller: function ($scope, $uibModalInstance) {
                     $scope.cancel = function () {
                         $uibModalInstance.dismiss('cancel');
-                    }
+                    };
                     $scope.remove = function () {
                         $uibModalInstance.close();
                     };
@@ -406,8 +408,8 @@
 
             // Fixes
             // a. UseFixedValue must be null for String & Element types
-            if (vm.elementField.DataType === vm.ElementFieldDataType.String
-                || vm.elementField.DataType === vm.ElementFieldDataType.Element) {
+            if (vm.elementField.DataType === vm.ElementFieldDataType.String ||
+                vm.elementField.DataType === vm.ElementFieldDataType.Element) {
                 vm.elementField.UseFixedValue = null;
             }
 
@@ -462,6 +464,6 @@
                         $location.path(returnPath);
                     }
                 });
-        };
-    };
+        }
+    }
 })();

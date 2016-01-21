@@ -7,12 +7,12 @@
 
     function extendFactory($provide) {
         $provide.decorator(factoryId, ['$delegate', 'dataContext', '$http', '$q', '$rootScope', '$window', '$location', 'serviceAppUrl', 'logger', userFactory]);
-    };
+    }
 
     function userFactory($delegate, dataContext, $http, $q, $rootScope, $window, $location, serviceAppUrl, logger) {
         logger = logger.forSource(factoryId);
 
-        var self = this;
+        var self = {};
 
         // Service urls
         var accessTokenUrl = serviceAppUrl + '/api/Token';
@@ -57,7 +57,7 @@
                             claimIndex = i;
                             break;
                         }
-                    };
+                    }
 
                     if (claimIndex === null) {
                         // TODO throw error?
@@ -195,9 +195,9 @@
             function success(response) {
 
                 // If the response has an entity, use that, otherwise create an anonymous user
-                $delegate.currentUser = response.results.length > 0
-                    ? response.results[0]
-                    : dataContext.createEntity('User', {});
+                $delegate.currentUser = response.results.length > 0 ?
+                    response.results[0] :
+                    dataContext.createEntity('User', {});
 
                 deferred.resolve($delegate.currentUser);
             }
@@ -285,10 +285,12 @@
             if (typeof data.ModelState !== 'undefined') {
                 for (var key in data.ModelState) {
                     var array = data.ModelState[key];
-                    array.forEach(function (error) {
-                        message += error + '<br />';
-                    });
+                    array.forEach(addErrorMessage);
                 }
+            }
+
+            function addErrorMessage(error) {
+                message += error + '<br />';
             }
 
             if (message === '') {
@@ -403,9 +405,9 @@
 
                     } else { // If there is an item, update DecimalValue, but cannot be lower than zero
 
-                        userCell.DecimalValue = updateType === 'increase'
-                            ? userCell.DecimalValue + 1
-                            : userCell.DecimalValue - 1 < 0 ? 0 : userCell.DecimalValue - 1;
+                        userCell.DecimalValue = updateType === 'increase' ?
+                            userCell.DecimalValue + 1 :
+                            userCell.DecimalValue - 1 < 0 ? 0 : userCell.DecimalValue - 1;
                     }
 
                     break;
@@ -439,13 +441,9 @@
 
                     } else { // If there is an item, update DecimalValue, but cannot be smaller than zero and cannot be bigger than 100
 
-                        userCell.DecimalValue = updateType === 'increase'
-                            ? userCell.DecimalValue + 5 > 100
-                            ? 100
-                            : userCell.DecimalValue + 5
-                            : userCell.DecimalValue - 5 < 0
-                            ? 0
-                            : userCell.DecimalValue - 5
+                        userCell.DecimalValue = updateType === 'increase' ?
+                            userCell.DecimalValue + 5 > 100 ? 100 : userCell.DecimalValue + 5 :
+                            userCell.DecimalValue - 5 < 0 ? 0 : userCell.DecimalValue - 5;
                     }
 
                     // Update the cached value
@@ -487,13 +485,9 @@
 
                     } else { // If there is an item, update Rating, but cannot be smaller than zero and cannot be bigger than 100
 
-                        userElementField.Rating = updateType === 'increase'
-                            ? userElementField.Rating + 5 > 100
-                            ? 100
-                            : userElementField.Rating + 5
-                            : userElementField.Rating - 5 < 0
-                            ? 0
-                            : userElementField.Rating - 5;
+                        userElementField.Rating = updateType === 'increase' ?
+                            userElementField.Rating + 5 > 100 ? 100 : userElementField.Rating + 5 :
+                            userElementField.Rating - 5 < 0 ? 0 : userElementField.Rating - 5;
                     }
 
                     // Update the cached value
@@ -536,13 +530,9 @@
 
                     } else { // If there is an item, update Rating, but cannot be smaller than zero and cannot be bigger than 1000
 
-                        userResourcePool.ResourcePoolRate = updateType === 'increase'
-                            ? userResourcePool.ResourcePoolRate + 5 > 1000
-                            ? 1000
-                            : userResourcePool.ResourcePoolRate + 5
-                            : userResourcePool.ResourcePoolRate - 5 < 0
-                            ? 0
-                            : userResourcePool.ResourcePoolRate - 5;
+                        userResourcePool.ResourcePoolRate = updateType === 'increase' ?
+                            userResourcePool.ResourcePoolRate + 5 > 1000 ? 1000 : userResourcePool.ResourcePoolRate + 5 :
+                            userResourcePool.ResourcePoolRate - 5 < 0 ? 0 : userResourcePool.ResourcePoolRate - 5;
                     }
 
                     // Update the cached value

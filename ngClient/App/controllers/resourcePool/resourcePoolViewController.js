@@ -15,7 +15,7 @@
         // Logger
         logger = logger.forSource(controllerId);
 
-        var vm = this;
+        var vm = {};
         vm.editorConfig = getEditorConfig();
 
         init();
@@ -53,5 +53,5 @@
 
             return config;
         }
-    };
+    }
 })();

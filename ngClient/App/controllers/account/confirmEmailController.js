@@ -8,8 +8,8 @@
     function confirmEmailController(userFactory, $rootScope, $location, logger) {
         logger = logger.forSource(controllerId);
 
-        var vm = this;
-        vm.currentUser = null,
+        var vm = {};
+        vm.currentUser = null;
         vm.isResendDisabled = false;
         vm.resendConfirmationEmail = resendConfirmationEmail;
 
@@ -53,5 +53,5 @@
                     vm.isResendDisabled = false;
                 });
         }
-    };
+    }
 })();

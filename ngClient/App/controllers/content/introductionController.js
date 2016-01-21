@@ -13,7 +13,7 @@
         // Timer
         var increaseMultiplierTimeout = $timeout(increaseMultiplier, 5000);
 
-        var vm = this;
+        var vm = {};
         vm.upoConfig = { resourcePoolId: 1 };
         vm.isAuthenticated = false;
 
@@ -57,5 +57,5 @@
         $scope.$on("$destroy", function (event) {
             $timeout.cancel(increaseMultiplierTimeout);
         });
-    };
+    }
 })();

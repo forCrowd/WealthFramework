@@ -119,5 +119,5 @@
             // Return back to home page
             $location.path('/');
         }
-    };
+    }
 })();

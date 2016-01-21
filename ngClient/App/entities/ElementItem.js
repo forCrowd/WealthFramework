@@ -35,7 +35,7 @@
                 _resourcePoolAmount: null,
                 _totalResourcePoolAmount: null,
                 _totalResourcePoolIncome: null
-            }
+            };
 
             // Functions
             self.directIncome = directIncome;
@@ -117,7 +117,7 @@
                     return 'low';
                 } else if (totalIncome > averageIncome) {
                     return 'high';
-                };
+                }
             }
 
             function multiplier() {
@@ -197,8 +197,8 @@
                 } else {
 
                     // If there is a multiplier field on the element but user is not set any value, return 0 as the default value
-                    if (multiplierCell.currentUserCell() === null
-                        || multiplierCell.currentUserCell().DecimalValue === null) {
+                    if (multiplierCell.currentUserCell() === null ||
+                        multiplierCell.currentUserCell().DecimalValue === null) {
                         value = 0;
                     } else { // Else, user's
                         value = multiplierCell.currentUserCell().DecimalValue;

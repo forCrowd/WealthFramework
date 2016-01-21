@@ -14,7 +14,7 @@
         var isSaving = false;
 
         // Controller methods (alphabetically)
-        var vm = this;
+        var vm = {};
         vm.isSaveDisabled = isSaveDisabled;
         vm.user = null;
         vm.saveChanges = saveChanges;
@@ -55,5 +55,5 @@
                     isSaving = false;
                 });
         }
-    };
+    }
 })();

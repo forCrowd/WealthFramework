@@ -25,12 +25,12 @@
             self._isEdit = isEdit;
             self._resourcePool = resourcePool;
             self.path = function () {
-                return self._resourcePool !== null
-                        ? self._isEdit
-                        ? '/resourcePool/' + self._resourcePool.Id + '/edit'
-                        : '/resourcePool/' + self._resourcePool.Id
-                        : self._currentPath;
-            }
+                return self._resourcePool !== null ?
+                    self._isEdit ?
+                    '/resourcePool/' + self._resourcePool.Id + '/edit' :
+                    '/resourcePool/' + self._resourcePool.Id :
+                    self._currentPath;
+            };
         }
     }
 })();

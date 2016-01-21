@@ -9,7 +9,7 @@
 
         logger = logger.forSource(controllerId);
 
-        var vm = this;
+        var vm = {};
         vm.resourcePoolRate_SampleResourcePoolId = 12;
-    };
+    }
 })();

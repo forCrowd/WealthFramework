@@ -216,6 +216,7 @@
 
                 // Current element
                 var element = scope.resourcePool.selectedElement();
+                var chartData = null;
 
                 if (element === null) {
                     return;
@@ -236,7 +237,7 @@
                     scope.chartConfig.options.chart = { type: 'pie' };
                     scope.chartConfig.options.yAxis.title = { text: '' };
 
-                    var chartData = [];
+                    chartData = [];
                     element.elementFieldIndexSet().forEach(function (elementFieldIndex) {
                         var chartItem = new elementFieldIndexChartItem(elementFieldIndex);
                         chartData.push(chartItem);
@@ -264,7 +265,7 @@
                         scope.chartConfig.options.chart = { type: 'pie' };
                         scope.chartConfig.options.yAxis.title = { text: '' };
 
-                        var chartData = [];
+                        chartData = [];
                         element.ElementItemSet.forEach(function (elementItem) {
                             elementItem.ElementCellSet.forEach(function (elementCell) {
                                 if (elementCell.ElementField.IndexEnabled) {
@@ -417,5 +418,5 @@
             },
             link: link
         };
-    };
+    }
 })();

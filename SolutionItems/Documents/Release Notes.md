@@ -3,6 +3,7 @@
 **0.43**
 
 * gulp: app js files & css files were bundled & minified
+* jshint fixes
 
 **0.42.2**
 

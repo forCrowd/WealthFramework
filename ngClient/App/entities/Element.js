@@ -72,7 +72,7 @@
                 _directIncomeField: null,
                 _multiplierField: null,
                 _totalResourcePoolAmount: null
-            }
+            };
 
             // Functions
             self.directIncome = directIncome;
@@ -154,8 +154,7 @@
             // UI related: Determines whether the chart & element details will use full row (col-md-4 vs col-md-12 etc.)
             // TODO Obsolete for the moment!
             function fullSize() {
-                return (self.ElementFieldSet.length > 4)
-                    || self.elementFieldIndexSet().length > 2;
+                return (self.ElementFieldSet.length > 4) || self.elementFieldIndexSet().length > 2;
             }
 
             function getElementFieldIndexSet(element) {

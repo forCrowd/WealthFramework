@@ -50,9 +50,9 @@
 
             var entity = params.entity[0].toUpperCase() + params.entity.substring(1);
 
-            var action = typeof params.action !== 'undefined'
-                ? params.action[0].toUpperCase() + params.action.substring(1)
-                : 'List';
+            var action = typeof params.action !== 'undefined' ?
+                params.action[0].toUpperCase() + params.action.substring(1) :
+                'List';
 
             return entity + ' ' + action;
         }
@@ -61,9 +61,9 @@
 
             var templateUrl = '';
 
-            var action = typeof params.action !== 'undefined'
-                ? params.action
-                : 'list'; // Default action
+            var action = typeof params.action !== 'undefined' ?
+                params.action :
+                'list'; // Default action
 
             if (action === 'list')
                 templateUrl = '/App/views/manage/generated/list/' + params.entity + 'List.html?v=0.37';
@@ -77,18 +77,18 @@
 
         function getContentRouteTitle(params) {
 
-            var title = typeof params.key !== 'undefined'
-                ? params.key[0] + params.key.substring(1)
-                : 'Home'; // Default view
+            var title = typeof params.key !== 'undefined' ?
+                params.key[0] + params.key.substring(1) :
+                'Home'; // Default view
 
             return title;
         }
 
         function getContentTemplateUrl(params) {
 
-            var key = typeof params.key !== 'undefined'
-                ? params.key
-                : 'home'; // Default view
+            var key = typeof params.key !== 'undefined' ?
+                params.key :
+                'home'; // Default view
 
             return '/App/views/content/' + key + '.html?v=0.42';
         }

@@ -42,7 +42,7 @@
 
                             if (isNew) {
                                 // TODO Similar to resourcePoolFactory.js - function createElementCell(elementCell)
-                                var userElementCell = {
+                                userElementCell = {
                                     User: self.Element.ResourcePool.User,
                                     ElementCell: elementCell
                                 };
@@ -154,7 +154,7 @@
                 _aggressiveRating: null,
                 _rating: null,
                 _indexIncome: null
-            }
+            };
 
             // Functions
             self.currentUserElementField = currentUserElementField;
@@ -187,9 +187,9 @@
             /*** Implementations ***/
 
             function currentUserElementField() {
-                return self.UserElementFieldSet.length > 0
-                    ? self.UserElementFieldSet[0]
-                    : null;
+                return self.UserElementFieldSet.length > 0 ?
+                    self.UserElementFieldSet[0] :
+                    null;
             }
 
             function currentUserIndexRating() {
@@ -225,9 +225,9 @@
                     return null;
                 }
 
-                return self.indexRatingCount() === 0
-                    ? 0
-                    : self.indexRatingTotal() / self.indexRatingCount();
+                return self.indexRatingCount() === 0 ?
+                    0 :
+                    self.indexRatingTotal() / self.indexRatingCount();
             }
 
             function indexRatingCount() {
@@ -314,9 +314,9 @@
             function setCurrentUserIndexRating(updateRelated) {
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
-                var value = self.currentUserElementField() !== null
-                    ? self.currentUserElementField().Rating
-                    : 50; // If there is no rating, this is the default value?
+                var value = self.currentUserElementField() !== null ?
+                    self.currentUserElementField().Rating :
+                    50; // If there is no rating, this is the default value?
 
                 if (self.backingFields._currentUserIndexRating !== value) {
                     self.backingFields._currentUserIndexRating = value;
@@ -464,9 +464,9 @@
             }
 
             function setOtherUsersIndexRatingTotal() {
-                self.backingFields._otherUsersIndexRatingTotal = self.IndexRatingTotal !== null
-                    ? self.IndexRatingTotal
-                    : 0;
+                self.backingFields._otherUsersIndexRatingTotal = self.IndexRatingTotal !== null ?
+                    self.IndexRatingTotal :
+                    0;
 
                 // Exclude current user's
                 if (self.currentUserElementField() !== null) {

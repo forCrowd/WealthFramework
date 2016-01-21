@@ -8,7 +8,7 @@
     function changePasswordController(userFactory, $location, logger) {
         logger = logger.forSource(controllerId);
 
-        var vm = this;
+        var vm = {};
         vm.changePassword = changePassword;
 
         function changePassword() {
@@ -18,5 +18,5 @@
                     logger.logSuccess('Your password has been changed!', null, true);
                 });
         }
-    };
+    }
 })();

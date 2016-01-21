@@ -9,7 +9,7 @@
 
         logger = logger.forSource(controllerId);
 
-        var vm = this;
+        var vm = {};
         vm.existingModelConfig = { resourcePoolId: 2 };
         vm.newModelConfig = { resourcePoolId: 3 };
 
@@ -20,12 +20,12 @@
 
         function updateOppositeResourcePool(event, element) {
 
-            if (element.ResourcePool.Id === vm.existingModelConfig.resourcePoolId
-                || element.ResourcePool.Id === vm.newModelConfig.resourcePoolId) {
+            if (element.ResourcePool.Id === vm.existingModelConfig.resourcePoolId ||
+                element.ResourcePool.Id === vm.newModelConfig.resourcePoolId) {
 
-                var oppositeResourcePoolId = element.ResourcePool.Id === vm.existingModelConfig.resourcePoolId
-                    ? vm.newModelConfig.resourcePoolId
-                    : vm.existingModelConfig.resourcePoolId;
+                var oppositeResourcePoolId = element.ResourcePool.Id === vm.existingModelConfig.resourcePoolId ?
+                    vm.newModelConfig.resourcePoolId :
+                    vm.existingModelConfig.resourcePoolId;
 
                 // Call the service to increase the multiplier
                 resourcePoolFactory.getResourcePoolExpanded(oppositeResourcePoolId)
@@ -52,5 +52,5 @@
                     });
             }
         }
-    };
+    }
 })();

@@ -11,7 +11,7 @@
         logger) {
         logger = logger.forSource(controllerId);
 
-        var vm = this;
+        var vm = {};
         vm.resourcePoolSet = [];
 
         initialize();
@@ -21,6 +21,6 @@
 			    .then(function (data) {
 			        vm.resourcePoolSet = data;
 			    });
-        };
-    };
+        }
+    }
 })();

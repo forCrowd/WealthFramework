@@ -9,7 +9,7 @@
 
         logger = logger.forSource(controllerId);
 
-        var vm = this;
+        var vm = {};
         vm.oldModelChartConfig = {
             title: {
                 text: ''
@@ -91,5 +91,5 @@
         $scope.$on("$destroy", function (event) {
             $timeout.cancel(timeout);
         });
-    };
+    }
 })();

@@ -9,6 +9,6 @@
 
         logger = logger.forSource(controllerId);
 
-        var vm = this;
-    };
+        var vm = {};
+    }
 })();

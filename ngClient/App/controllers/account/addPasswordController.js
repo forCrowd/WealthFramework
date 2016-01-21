@@ -8,7 +8,7 @@
     function addPasswordController(userFactory, $location, logger) {
         logger = logger.forSource(controllerId);
 
-        var vm = this;
+        var vm = {};
         vm.addPassword = addPassword;
 
         function addPassword() {
@@ -18,5 +18,5 @@
                     logger.logSuccess('Your password has been set!', null, true);
                 });
         }
-    };
+    }
 })();
