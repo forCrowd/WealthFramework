@@ -20,7 +20,7 @@
     <script src="/bower_components/jquery/dist/jquery.min.js?v=0.42"></script>
 
 </head>
-<body data-ng-app="main" data-ng-controller="MainController as vm">
+<body data-ng-controller="MainController as vm">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -103,7 +103,7 @@
     <script src="/bower_components/datajs/datajs.min.js?v=0.42"></script>
     <script src="/bower_components/toastr/toastr.min.js?v=0.42"></script>
 
-    <script src="/bower_components/angular/angular.js?v=0.42"></script>
+    <script src="/bower_components/angular/angular.min.js?v=0.42"></script>
     <script src="/bower_components/angular-route/angular-route.min.js?v=0.42"></script>
     <script src="/bower_components/angular-sanitize/angular-sanitize.min.js?v=0.42"></script>
 

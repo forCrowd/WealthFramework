@@ -13,8 +13,6 @@ https://github.com/gulpjs/gulp/blob/master/docs/recipes/README.md
 https://github.com/gulpjs/gulp/blob/master/docs/API.md
 live reload
 
-disqus.js
-
 search for location.path() - replace with url(/)
 
 REQUIRE JS? when "requirejs", do we need to bundle all js? or only "main.js"

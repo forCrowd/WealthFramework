@@ -44,7 +44,6 @@
     <None Include="app\settings\Setup\0 Readme.txt" />
     <None Include="app\settings\Setup\serviceAppUrl.js" />
     <None Include="app\settings\serviceAppUrl.js" />
-    <Content Include="app\config\disqus.js" />
     <Content Include="app\config\googleAnalytics.js" />
     <Content Include="app\controllers\manage\generated\edit\EditController.txt">
       <AutoGen>True</AutoGen>
@@ -392,7 +391,7 @@
     <Content Include="app\views\resourcePool\resourcePoolView.html" />
     <Content Include="css\site.all.css" />
     <Content Include="css\site.min.css" />
-    <Content Include="gulpfile.js" />
+    <None Include="gulpfile.js" />
     <Content Include="images\forCrowd_logo_20x20.jpg" />
     <Content Include="images\forCrowd_logo_34x34.jpg" />
     <Content Include="images\NewSystem.png" />
