@@ -110,14 +110,8 @@
             
             userFactory.logout();
 
-            // Clear search params
-            var search = $location.search();
-            for (var searchKey in search) {
-                $location.search(searchKey, null);
-            }
-
             // Return back to home page
-            $location.path('/');
+            $location.url('/');
         }
     }
 })();

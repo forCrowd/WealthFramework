@@ -3,15 +3,20 @@
 
     var controllerId = 'ExternalLoginController';
     angular.module('main')
-        .controller(controllerId, ['userFactory', '$location', 'logger', ExternalLoginController]);
+        .controller(controllerId, ['userFactory', '$location', '$scope', 'logger', ExternalLoginController]);
 
-    function ExternalLoginController(userFactory, $location, logger) {
+    function ExternalLoginController(userFactory, $location, $scope, logger) {
 
         logger = logger.forSource(controllerId);
 
         var vm = this;
         vm.error = '';
-        vm.isAuthenticated = false;
+        vm.currentUser = null;
+
+        // User logged in & out
+        $scope.$on('userLoggedIn', function (event, currentUser) {
+            vm.currentUser = currentUser;
+        });
 
         _init();
 
@@ -20,10 +25,10 @@
             userFactory.getCurrentUser()
                 .then(function (currentUser) {
 
-                    vm.isAuthenticated = currentUser.isAuthenticated();
+                    vm.currentUser = currentUser;
 
                     // No need to continue
-                    if (vm.isAuthenticated) {
+                    if (vm.currentUser.isAuthenticated()) {
                         return;
                     }
                     
@@ -36,16 +41,10 @@
 
                     // Authenticate
                     userFactory.getAccessToken('', '', tempToken)
-                        .success(function (tokenData) {
-
-                            // Clear search param (& redirect to itself)
-                            $location.search('tempToken', null);
-                        })
                         .error(function (data) {
                             vm.error = 'Invalid token';
                         });
                 });
-
         }
     }
 })();

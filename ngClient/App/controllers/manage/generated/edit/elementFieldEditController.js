@@ -45,7 +45,7 @@
 
         function cancelChanges() {
 
-            $location.path('/manage/generated/elementField');
+            $location.url('/manage/generated/elementField');
 
             //if (elementFieldFactory.hasChanges()) {
             //    elementFieldFactory.rejectChanges();
@@ -92,7 +92,7 @@
             isSaving = true;
             elementFieldFactory.saveChanges()
                 .then(function (result) {
-                    $location.path('/manage/generated/elementField');
+                    $location.url('/manage/generated/elementField');
                 })
                 .catch(function (error) {
                     // Conflict (Concurrency exception)

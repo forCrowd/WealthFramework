@@ -42,7 +42,7 @@
 
         function cancelChanges() {
 
-            $location.path('/manage/generated/user');
+            $location.url('/manage/generated/user');
 
             //if (userFactory.hasChanges()) {
             //    userFactory.rejectChanges();
@@ -84,7 +84,7 @@
             isSaving = true;
             userFactory.saveChanges()
                 .then(function (result) {
-                    $location.path('/manage/generated/user');
+                    $location.url('/manage/generated/user');
                 })
                 .catch(function (error) {
                     // Conflict (Concurrency exception)

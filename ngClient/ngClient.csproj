@@ -136,6 +136,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>factory.tt</DependentUpon>
     </Content>
+    <Content Include="app\factories\locationHistory.js" />
     <Content Include="app\includes\manageMenu.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -247,7 +248,6 @@
     <Content Include="app\entities\ElementField.js" />
     <Content Include="app\entities\ElementItem.js" />
     <Content Include="app\entities\Enums.js" />
-    <Content Include="app\entities\LocationItem.js" />
     <Content Include="app\entities\ResourcePool.js" />
     <Content Include="app\entities\User.js" />
     <Content Include="app\entities\UserElementCell.js" />

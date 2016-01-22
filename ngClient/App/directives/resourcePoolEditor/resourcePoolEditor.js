@@ -136,7 +136,7 @@
 
             function editResourcePool() {
                 // TODO Instead of having fixed url here, broadcast an 'edit request'?
-                $location.path('/resourcePool/' + scope.resourcePoolId + '/edit');
+                $location.url('/resourcePool/' + scope.resourcePoolId + '/edit');
             }
 
             function getResourcePool() {

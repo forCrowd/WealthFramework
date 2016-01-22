@@ -32,12 +32,7 @@
                         return;
                     }
 
-                    userFactory.confirmEmail({ Token: token })
-                        .success(function () {
-
-                            // Clear search param
-                            $location.search('token', null);
-                        });
+                    userFactory.confirmEmail({ Token: token });
                 });
         }
 

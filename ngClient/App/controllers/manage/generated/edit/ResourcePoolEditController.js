@@ -45,7 +45,7 @@
 
         function cancelChanges() {
 
-            $location.path('/manage/generated/resourcePool');
+            $location.url('/manage/generated/resourcePool');
 
             //if (resourcePoolFactory.hasChanges()) {
             //    resourcePoolFactory.rejectChanges();
@@ -92,7 +92,7 @@
             isSaving = true;
             resourcePoolFactory.saveChanges()
                 .then(function (result) {
-                    $location.path('/manage/generated/resourcePool');
+                    $location.url('/manage/generated/resourcePool');
                 })
                 .catch(function (error) {
                     // Conflict (Concurrency exception)

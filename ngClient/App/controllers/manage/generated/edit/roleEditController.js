@@ -42,7 +42,7 @@
 
         function cancelChanges() {
 
-            $location.path('/manage/generated/role');
+            $location.url('/manage/generated/role');
 
             //if (roleFactory.hasChanges()) {
             //    roleFactory.rejectChanges();
@@ -84,7 +84,7 @@
             isSaving = true;
             roleFactory.saveChanges()
                 .then(function (result) {
-                    $location.path('/manage/generated/role');
+                    $location.url('/manage/generated/role');
                 })
                 .catch(function (error) {
                     // Conflict (Concurrency exception)

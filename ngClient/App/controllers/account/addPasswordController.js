@@ -14,7 +14,7 @@
         function addPassword() {
             userFactory.addPassword(vm)
                 .success(function () {
-                    $location.path('/');
+                    $location.url('/');
                     logger.logSuccess('Your password has been set!', null, true);
                 });
         }

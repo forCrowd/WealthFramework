@@ -102,7 +102,7 @@
 
                         // Not found, navigate to 404
                         if (resourcePool === null) {
-                            $location.path('/content/404');
+                            $location.url('/content/404');
                             return;
                         }
 
@@ -226,7 +226,7 @@
                 '/resourcePool' :
                 '/resourcePool/' + vm.resourcePool.Id;
 
-            $location.path(locationPath);
+            $location.url(locationPath);
         }
 
         function editElement(element) {
@@ -464,7 +464,7 @@
 
                     function navigateToReturnPath() {
                         returnPath = typeof returnPath !== 'undefined' ? returnPath : '/resourcePool/' + vm.resourcePool.Id;
-                        $location.path(returnPath);
+                        $location.url(returnPath);
                     }
                 });
         }

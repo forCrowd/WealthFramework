@@ -48,7 +48,7 @@
 
         function cancelChanges() {
 
-            $location.path('/manage/generated/elementCell');
+            $location.url('/manage/generated/elementCell');
 
             //if (elementCellFactory.hasChanges()) {
             //    elementCellFactory.rejectChanges();
@@ -100,7 +100,7 @@
             isSaving = true;
             elementCellFactory.saveChanges()
                 .then(function (result) {
-                    $location.path('/manage/generated/elementCell');
+                    $location.url('/manage/generated/elementCell');
                 })
                 .catch(function (error) {
                     // Conflict (Concurrency exception)

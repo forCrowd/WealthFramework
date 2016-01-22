@@ -1,8 +1,10 @@
 ﻿### Release Notes
 
-**0.43**
+**0.43.1**
 
 * One "settings.js" file for ngClient settings
+* locationHistory factory instead of LocationItem object
+* location.path() was replaced with location.url() in most cases to clear the search params, instead of search('x', null)
 
 **0.43**
 
