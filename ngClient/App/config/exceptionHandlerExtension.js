@@ -26,7 +26,7 @@
             var exceptionModel = {
                 Message: exception.message,
                 Cause: cause,
-                Url: $location.path(),
+                Url: $location.url(),
                 Stack: exception.stack
             };
 

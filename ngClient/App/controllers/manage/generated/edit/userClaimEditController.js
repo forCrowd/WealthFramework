@@ -45,7 +45,7 @@
 
         function cancelChanges() {
 
-            $location.path('/manage/generated/userClaim');
+            $location.url('/manage/generated/userClaim');
 
             //if (userClaimFactory.hasChanges()) {
             //    userClaimFactory.rejectChanges();
@@ -92,7 +92,7 @@
             isSaving = true;
             userClaimFactory.saveChanges()
                 .then(function (result) {
-                    $location.path('/manage/generated/userClaim');
+                    $location.url('/manage/generated/userClaim');
                 })
                 .catch(function (error) {
                     // Conflict (Concurrency exception)

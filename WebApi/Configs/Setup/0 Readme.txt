@@ -1,5 +1,3 @@
 ﻿The files under this folder are the initial configuration files.
-They will be copied to the parent folder ("Configs") on the first build of the application.
-
-Update the copies under "Configs" folder (not the ones under "Setup") with your own settings.
-Please note that these copies will not be stored in the source control.
+During the first build of the application, they will be copied to the parent ("Configs") folder to let you enter your own settings.
+Please note that the copies under "Configs" folder will be not be stored in the source control.

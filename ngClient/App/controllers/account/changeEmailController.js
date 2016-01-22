@@ -37,7 +37,7 @@
 
             userFactory.changeEmail(vm)
                 .success(function () {
-                    $location.path('/account/confirmEmail');
+                    $location.url('/account/confirmEmail');
                 })
                 .finally(function () {
                     vm.isChangeEmailDisabled = false;

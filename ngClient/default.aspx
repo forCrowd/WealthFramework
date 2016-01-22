@@ -126,12 +126,10 @@
     <script src="/bower_components/highcharts-ng/dist/highcharts-ng.min.js?v=0.42"></script>
 
     <!-- App -->
-    <script src="/app/main.min.js?v=0.43"></script>
+    <script src="/app/main.min.js?v=0.43.1"></script>
 
     <!-- Settings -->
-    <script src="/app/settings/serviceAppUrl.js?v=0.43"></script>
-    <script src="/app/settings/googleAnalytics.js?v=0.43"></script>
-    <script src="/app/settings/disqus.js?v=0.43"></script>
+    <script src="/app/settings/settings.js?v=0.43.1"></script>
 
 </body>
 </html>

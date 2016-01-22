@@ -8,15 +8,13 @@
 /views?
 
 ---
+REQUIRE JS? when "requirejs", do we need to bundle all js? or only "main.js"
+http://www.dotnetcurry.com/angularjs/1207/using-angularjs-bower-requirejs-visual-studio
+
 incremental build?
 https://github.com/gulpjs/gulp/blob/master/docs/recipes/README.md
 https://github.com/gulpjs/gulp/blob/master/docs/API.md
 live reload
-
-search for location.path() - replace with url(/)
-
-REQUIRE JS? when "requirejs", do we need to bundle all js? or only "main.js"
-http://www.dotnetcurry.com/angularjs/1207/using-angularjs-bower-requirejs-visual-studio
 
 http://vswebessentials.com/
 
@@ -113,6 +111,8 @@ Find a designer! Ozgur's Ali
 save anon user to db?
 
 ---
+userfactory - a block that doesnt return a promise?
+
 Identity / Account:
 
 . Invalidating tokens

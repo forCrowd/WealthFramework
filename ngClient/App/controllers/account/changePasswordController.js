@@ -14,7 +14,7 @@
         function changePassword() {
             userFactory.changePassword(vm)
                 .success(function () {
-                    $location.path('/');
+                    $location.url('/');
                     logger.logSuccess('Your password has been changed!', null, true);
                 });
         }

@@ -44,7 +44,7 @@
             userFactory.register(vm)
                 .success(function () {
                     logger.logSuccess('You have been registered!', null, true);
-                    $location.path('/account/confirmEmail');
+                    $location.url('/account/confirmEmail');
                 })
                 .error(function (response) {
                     if (typeof response.error_description !== 'undefined') {

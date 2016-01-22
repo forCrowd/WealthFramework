@@ -12,8 +12,6 @@
     function userFactory($delegate, dataContext, $http, $q, $rootScope, $window, $location, serviceAppUrl, logger) {
         logger = logger.forSource(factoryId);
 
-        var self = {};
-
         // Service urls
         var accessTokenUrl = serviceAppUrl + '/api/Token';
         var addPasswordUrl = serviceAppUrl + '/api/Account/AddPassword';
@@ -144,6 +142,8 @@
 
                                         // Raise logged in event
                                         $rootScope.$broadcast('userLoggedIn', newUser);
+
+                                        // TODO Try to return newUser
                                     });
 
                             } else {
@@ -160,12 +160,18 @@
 
                                                     // Raise logged in event
                                                     $rootScope.$broadcast('userLoggedIn', newUser);
+
+                                                    // TODO Try to return newUser
                                                 });
                                         });
                                 } else {
 
+                                    // TODO Other blocks return a promise, this one doesn't, correct?
+
                                     // Raise logged in event
                                     $rootScope.$broadcast('userLoggedIn', newUser);
+
+                                    // TODO Try to return newUser
                                 }
                             }
                         });

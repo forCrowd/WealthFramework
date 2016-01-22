@@ -5,7 +5,7 @@
         .config(['$routeProvider', '$locationProvider', routeConfig]);
 
     angular.module('main')
-        .run(['userFactory', 'resourcePoolFactory', 'LocationItem', '$rootScope', '$location', 'logger', routeRun]);
+        .run(['userFactory', 'resourcePoolFactory', 'locationHistory', '$rootScope', '$location', 'logger', routeRun]);
 
     function routeConfig($routeProvider, $locationProvider) {
 
@@ -26,7 +26,7 @@
             /* Account */
             .when('/account/register', { title: function () { return 'Register'; }, templateUrl: '/App/views/account/register.html?v=0.43' })
             .when('/account/login', { title: function () { return 'Login'; }, templateUrl: '/App/views/account/login.html?v=0.43' })
-            .when('/account/externalLogin', { title: function () { return 'Social Logins'; }, templateUrl: '/App/views/account/externalLogin.html?v=0.43' })
+            .when('/account/externalLogin', { title: function () { return 'Social Logins'; }, templateUrl: '/App/views/account/externalLogin.html?v=0.43.1' })
             .when('/account/accountEdit', { title: function () { return 'Account Edit'; }, templateUrl: '/App/views/account/accountEdit.html?v=0.43' })
             .when('/account/changeEmail', { title: function () { return 'Change Email'; }, templateUrl: '/App/views/account/changeEmail.html?v=0.43' })
             .when('/account/changePassword', { title: function () { return 'Change Password'; }, templateUrl: '/App/views/account/changePassword.html?v=0.43' })
@@ -94,21 +94,19 @@
         }
     }
 
-    function routeRun(userFactory, resourcePoolFactory, LocationItem, $rootScope, $location, logger) {
+    function routeRun(userFactory, resourcePoolFactory, locationHistory, $rootScope, $location, logger) {
 
         // Logger
         logger = logger.forSource('routeRun');
 
         // Default location
-        $rootScope.locationHistory = [new LocationItem('/')];
-
         $rootScope.$on('$routeChangeStart', function (event, next, current) {
 
             // Navigate the authenticated user to home page, in case they try to go login or register
             userFactory.getCurrentUser()
                 .then(function (currentUser) {
                     if (currentUser.isAuthenticated() && ($location.path() === '/account/login' || $location.path() === '/account/register')) {
-                        $location.path('/');
+                        $location.url('/');
                     }
                 });
         });
@@ -138,14 +136,7 @@
                 resourcePool = typeof resourcePool !== 'undefined' ? resourcePool : null;
 
                 // Add each location to the history
-                var locationItem = new LocationItem($location.path(), resourcePool, $location.path().substring($location.path().lastIndexOf('/') + 1) === 'edit');
-                $rootScope.locationHistory.push(locationItem);
-
-                // Only keep limited number of items
-                var locationHistoryLimit = 10;
-                if ($rootScope.locationHistory.length > locationHistoryLimit) {
-                    $rootScope.locationHistory.splice(0, $rootScope.locationHistory.length - locationHistoryLimit);
-                }
+                locationHistory.create($location.url(), resourcePool, $location.path().substring($location.path().lastIndexOf('/') + 1) === 'edit');
             }
         });
     }

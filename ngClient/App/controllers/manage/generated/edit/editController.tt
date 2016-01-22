@@ -101,7 +101,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 
         function cancelChanges() {
 
-            $location.path('/manage/generated/<#= entityVariable #>');
+            $location.url('/manage/generated/<#= entityVariable #>');
 
             //if (<#= factoryId #>.hasChanges()) {
             //    <#= factoryId #>.rejectChanges();
@@ -157,7 +157,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
             isSaving = true;
             <#= factoryId #>.saveChanges()
                 .then(function (result) {
-                    $location.path('/manage/generated/<#= entityVariable #>');
+                    $location.url('/manage/generated/<#= entityVariable #>');
                 })
                 .catch(function (error) {
                     // Conflict (Concurrency exception)

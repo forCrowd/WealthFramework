@@ -29,7 +29,7 @@
 
                         // Not found, navigate to 404
                         if (resourcePool === null) {
-                            $location.path('/content/404');
+                            $location.url('/content/404');
                             return;
                         }
 

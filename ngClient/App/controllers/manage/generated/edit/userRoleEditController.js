@@ -48,7 +48,7 @@
 
         function cancelChanges() {
 
-            $location.path('/manage/generated/userRole');
+            $location.url('/manage/generated/userRole');
 
             //if (userRoleFactory.hasChanges()) {
             //    userRoleFactory.rejectChanges();
@@ -100,7 +100,7 @@
             isSaving = true;
             userRoleFactory.saveChanges()
                 .then(function (result) {
-                    $location.path('/manage/generated/userRole');
+                    $location.url('/manage/generated/userRole');
                 })
                 .catch(function (error) {
                     // Conflict (Concurrency exception)
