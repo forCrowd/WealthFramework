@@ -103,7 +103,7 @@
     <script src="/bower_components/datajs/datajs.min.js?v=0.42"></script>
     <script src="/bower_components/toastr/toastr.min.js?v=0.42"></script>
 
-    <script src="/bower_components/angular/angular.min.js?v=0.42"></script>
+    <script src="/bower_components/angular/angular.js?v=0.42"></script>
     <script src="/bower_components/angular-route/angular-route.min.js?v=0.42"></script>
     <script src="/bower_components/angular-sanitize/angular-sanitize.min.js?v=0.42"></script>
 
@@ -114,6 +114,9 @@
 
     <!-- Angular Google Analytics -->
     <script src="bower_components/angular-google-analytics/dist/angular-google-analytics.min.js?v=0.43"></script>
+
+    <!-- Angular Disqus -->
+    <script src="bower_components/angular-utils-disqus/dirDisqus.js?v=0.43"></script>
 
     <!-- Angular UI -->
     <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js?v=0.42"></script>

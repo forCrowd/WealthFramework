@@ -153,8 +153,8 @@
     <Content Include="app\main.min.js" />
     <None Include="app\settings\googleAnalytics.js" />
     <None Include="app\settings\Setup\googleAnalytics.js" />
-    <Content Include="app\settings\disqus.js" />
-    <Content Include="app\settings\Setup\disqus.js" />
+    <None Include="app\settings\disqus.js" />
+    <None Include="app\settings\Setup\disqus.js" />
     <Content Include="app\views\manage\generated\edit\EditView1.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

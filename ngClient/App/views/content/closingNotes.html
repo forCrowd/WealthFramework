@@ -99,10 +99,10 @@
                 <a href="mailto:contact@forcrowd.org">contact@forCrowd.org</a>
             </p>-->
             <!-- Disqus -->
-            <div data-ng-if="!vm.isLocalhost">
-                <div id="disqus_thread"></div>
-                <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-            </div>
+            <dir-disqus disqus-shortname="{{ vm.disqusShortname }}"
+                        disqus-identifier="{{ vm.disqusId }}"
+                        disqus-url="{{ vm.disqusUrl }}">
+            </dir-disqus>
 
             <!-- Share? -->
             <!-- OBSOLETE PART -->
