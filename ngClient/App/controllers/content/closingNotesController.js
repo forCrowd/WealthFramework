@@ -1,11 +1,11 @@
 ﻿(function () {
     'use strict';
 
-    var controllerId = 'closingNotesController';
+    var controllerId = 'ClosingNotesController';
     angular.module('main')
-        .controller(controllerId, ['userFactory', '$scope', '$sce', '$location', 'logger', closingNotesController]);
+        .controller(controllerId, ['userFactory', '$scope', '$sce', '$location', 'disqusShortname', 'logger', ClosingNotesController]);
 
-    function closingNotesController(userFactory, $scope, $sce, $location, logger) {
+    function ClosingNotesController(userFactory, $scope, $sce, $location, disqusShortname, logger) {
 
         // Logger
         logger = logger.forSource(controllerId);
@@ -16,6 +16,10 @@
         vm.isLocalhost = $location.$$host === 'localhost';
         vm.displayBankTransfer = false;
         vm.toggleBankTransfer = toggleBankTransfer;
+
+        vm.disqusShortname = disqusShortname;
+        vm.disqusId = 'wealth_economy_11'; // ?
+        vm.disqusUrl = $location.url(); // ?
 
         _init();
 
@@ -40,5 +44,5 @@
         }
 
         //vm.flattrIFrameUrl = $sce.trustAsResourceUrl('//api.flattr.com/button/view/?uid=forCrowd&button=compact&url=' + encodeURIComponent($location.$$absUrl));
-    };
+    }
 })();

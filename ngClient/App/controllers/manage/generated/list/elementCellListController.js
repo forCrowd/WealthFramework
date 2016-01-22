@@ -10,13 +10,13 @@
 (function () {
     'use strict';
 
-    var controllerId = 'elementCellListController';
+    var controllerId = 'ElementCellListController';
     angular.module('main')
         .controller(controllerId, ['elementCellFactory',
             'logger',
-			elementCellListController]);
+			ElementCellListController]);
 
-    function elementCellListController(elementCellFactory,
+    function ElementCellListController(elementCellFactory,
         logger) {
         logger = logger.forSource(controllerId);
 
@@ -28,7 +28,7 @@
 
         function initialize() {
             getElementCellSet();
-        };
+        }
 
         function deleteElementCell(elementCell) {
             elementCellFactory.deleteElementCell(elementCell);
@@ -43,8 +43,8 @@
                     // Todo: more sophisticated recovery. 
                     // Here we just blew it all away and start over
                     // refresh();
-                })
-        };
+                });
+        }
 
         function getElementCellSet() {
             elementCellFactory.getElementCellSet(false)
@@ -52,5 +52,5 @@
                     vm.elementCellSet = data;
                 });
         }
-    };
+    }
 })();

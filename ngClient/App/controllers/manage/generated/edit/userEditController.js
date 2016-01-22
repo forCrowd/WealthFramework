@@ -10,15 +10,15 @@
 (function () {
     'use strict';
 
-    var controllerId = 'userEditController';
+    var controllerId = 'UserEditController';
     angular.module('main')
         .controller(controllerId, ['userFactory',
             'logger',
             '$location',
             '$routeParams',
-            userEditController]);
+            UserEditController]);
 
-    function userEditController(userFactory,
+    function UserEditController(userFactory,
 		logger,
 		$location,
 		$routeParams) {
@@ -68,7 +68,7 @@
                         // TODO User-friendly message?
                     });
             }
-        };
+        }
 
         function isSaveDisabled() {
             return isSaving ||
@@ -98,5 +98,5 @@
                     isSaving = false;
                 });
         }
-    };
+    }
 })();

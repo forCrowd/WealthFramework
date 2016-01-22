@@ -10,13 +10,13 @@
 (function () {
     'use strict';
 
-    var controllerId = 'userClaimListController';
+    var controllerId = 'UserClaimListController';
     angular.module('main')
         .controller(controllerId, ['userClaimFactory',
             'logger',
-			userClaimListController]);
+			UserClaimListController]);
 
-    function userClaimListController(userClaimFactory,
+    function UserClaimListController(userClaimFactory,
         logger) {
         logger = logger.forSource(controllerId);
 
@@ -28,7 +28,7 @@
 
         function initialize() {
             getUserClaimSet();
-        };
+        }
 
         function deleteUserClaim(userClaim) {
             userClaimFactory.deleteUserClaim(userClaim);
@@ -43,8 +43,8 @@
                     // Todo: more sophisticated recovery. 
                     // Here we just blew it all away and start over
                     // refresh();
-                })
-        };
+                });
+        }
 
         function getUserClaimSet() {
             userClaimFactory.getUserClaimSet(false)
@@ -52,5 +52,5 @@
                     vm.userClaimSet = data;
                 });
         }
-    };
+    }
 })();

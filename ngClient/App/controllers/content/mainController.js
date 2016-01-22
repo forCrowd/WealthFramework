@@ -1,11 +1,11 @@
 ﻿(function () {
     'use strict';
 
-    var controllerId = 'mainController';
+    var controllerId = 'MainController';
     angular.module('main')
-        .controller(controllerId, ['mainFactory', 'userFactory', '$scope', '$location', '$window', 'logger', mainController]);
+        .controller(controllerId, ['applicationFactory', 'userFactory', '$scope', '$location', 'logger', MainController]);
 
-    function mainController(mainFactory, userFactory, $scope, $location, $window, logger) {
+    function MainController(applicationFactory, userFactory, $scope, $location, logger) {
 
         // Logger
         logger = logger.forSource(controllerId);
@@ -71,7 +71,7 @@
         }
 
         function getApplicationInfo() {
-            mainFactory.getApplicationInfo()
+            applicationFactory.getApplicationInfo()
                 .then(function (applicationInfo) {
                     vm.applicationInfo = applicationInfo;
                     vm.applicationInfo.CurrentVersionText = vm.applicationInfo.CurrentVersion + ' - Alpha ~ Beta';
@@ -119,5 +119,5 @@
             // Return back to home page
             $location.path('/');
         }
-    };
+    }
 })();

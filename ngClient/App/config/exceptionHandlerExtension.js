@@ -3,9 +3,11 @@
 
     var factoryId = 'exceptionHandlerExtension';
     angular.module('main')
-        .config(function ($provide) {
-            $provide.decorator('$exceptionHandler', ['$delegate', '$injector', 'serviceAppUrl', 'logger', exceptionHandlerExtension]);
-        });
+        .config(['$provide', extendHandler]);
+
+    function extendHandler($provide) {
+        $provide.decorator('$exceptionHandler', ['$delegate', '$injector', 'serviceAppUrl', 'logger', exceptionHandlerExtension]);
+    }
 
     function exceptionHandlerExtension($delegate, $injector, serviceAppUrl, logger) {
         logger = logger.forSource(factoryId);

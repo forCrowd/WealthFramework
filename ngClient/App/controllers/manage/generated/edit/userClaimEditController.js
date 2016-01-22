@@ -10,16 +10,16 @@
 (function () {
     'use strict';
 
-    var controllerId = 'userClaimEditController';
+    var controllerId = 'UserClaimEditController';
     angular.module('main')
         .controller(controllerId, ['userClaimFactory',
             'userFactory',
             'logger',
             '$location',
             '$routeParams',
-            userClaimEditController]);
+            UserClaimEditController]);
 
-    function userClaimEditController(userClaimFactory,
+    function UserClaimEditController(userClaimFactory,
 		userFactory,
 		logger,
 		$location,
@@ -76,7 +76,7 @@
                         // TODO User-friendly message?
                     });
             }
-        };
+        }
 
         function isSaveDisabled() {
             return isSaving ||
@@ -106,5 +106,5 @@
                     isSaving = false;
                 });
         }
-    };
+    }
 })();

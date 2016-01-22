@@ -62,8 +62,9 @@
             function getRoutePrefix_Microsoft_AspNet_WebApi_OData_5_3_x(dataService) {
 
                 // Copied from breeze.debug and modified for Web API OData v.5.3.1.
+                var parser = null;
                 if (typeof document === 'object') { // browser
-                    var parser = document.createElement('a');
+                    parser = document.createElement('a');
                     parser.href = dataService.serviceName;
                 } else { // node
                     parser = url.parse(dataService.serviceName);
@@ -79,7 +80,7 @@
                 } // ensure trailing '/'
 
                 return prefix;
-            };
+            }
         }
 
         function newManager() {

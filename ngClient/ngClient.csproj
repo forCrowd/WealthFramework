@@ -41,24 +41,97 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="app\configs\Setup\0 Readme.txt" />
-    <None Include="app\configs\Setup\serviceAppUrl.js" />
-    <None Include="app\configs\serviceAppUrl.js" />
-    <Content Include="app\controllers\manage\generated\edit\editController.txt">
+    <None Include="app\settings\Setup\0 Readme.txt" />
+    <None Include="app\settings\Setup\serviceAppUrl.js" />
+    <None Include="app\settings\serviceAppUrl.js" />
+    <Content Include="app\config\googleAnalytics.js" />
+    <Content Include="app\controllers\manage\generated\edit\EditController.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>editController.tt</DependentUpon>
+      <DependentUpon>EditController.tt</DependentUpon>
     </Content>
-    <Content Include="app\controllers\manage\generated\edit\userResourcePoolEditController.js">
-      <DependentUpon>editController.tt</DependentUpon>
+    <Content Include="app\controllers\manage\generated\edit\ElementCellEditController.js">
+      <DependentUpon>EditController.tt</DependentUpon>
     </Content>
-    <Content Include="app\controllers\manage\generated\list\listController.txt">
+    <Content Include="app\controllers\manage\generated\edit\ElementEditController.js">
+      <DependentUpon>EditController.tt</DependentUpon>
+    </Content>
+    <Content Include="app\controllers\manage\generated\edit\ElementFieldEditController.js">
+      <DependentUpon>EditController.tt</DependentUpon>
+    </Content>
+    <Content Include="app\controllers\manage\generated\edit\ElementItemEditController.js">
+      <DependentUpon>EditController.tt</DependentUpon>
+    </Content>
+    <Content Include="app\controllers\manage\generated\edit\ResourcePoolEditController.js">
+      <DependentUpon>EditController.tt</DependentUpon>
+    </Content>
+    <Content Include="app\controllers\manage\generated\edit\RoleEditController.js">
+      <DependentUpon>EditController.tt</DependentUpon>
+    </Content>
+    <Content Include="app\controllers\manage\generated\edit\UserClaimEditController.js">
+      <DependentUpon>EditController.tt</DependentUpon>
+    </Content>
+    <Content Include="app\controllers\manage\generated\edit\UserEditController.js">
+      <DependentUpon>EditController.tt</DependentUpon>
+    </Content>
+    <Content Include="app\controllers\manage\generated\edit\UserElementCellEditController.js">
+      <DependentUpon>EditController.tt</DependentUpon>
+    </Content>
+    <Content Include="app\controllers\manage\generated\edit\UserElementFieldEditController.js">
+      <DependentUpon>EditController.tt</DependentUpon>
+    </Content>
+    <Content Include="app\controllers\manage\generated\edit\UserLoginEditController.js">
+      <DependentUpon>EditController.tt</DependentUpon>
+    </Content>
+    <Content Include="app\controllers\manage\generated\edit\UserResourcePoolEditController.js">
+      <DependentUpon>EditController.tt</DependentUpon>
+    </Content>
+    <Content Include="app\controllers\manage\generated\edit\UserRoleEditController.js">
+      <DependentUpon>EditController.tt</DependentUpon>
+    </Content>
+    <Content Include="app\controllers\manage\generated\list\ElementCellListController.js">
+      <DependentUpon>ListController.tt</DependentUpon>
+    </Content>
+    <Content Include="app\controllers\manage\generated\list\ElementFieldListController.js">
+      <DependentUpon>ListController.tt</DependentUpon>
+    </Content>
+    <Content Include="app\controllers\manage\generated\list\ElementItemListController.js">
+      <DependentUpon>ListController.tt</DependentUpon>
+    </Content>
+    <Content Include="app\controllers\manage\generated\list\ElementListController.js">
+      <DependentUpon>ListController.tt</DependentUpon>
+    </Content>
+    <Content Include="app\controllers\manage\generated\list\ListController.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>listController.tt</DependentUpon>
+      <DependentUpon>ListController.tt</DependentUpon>
     </Content>
-    <Content Include="app\controllers\manage\generated\list\resourcePoolListController.js">
-      <DependentUpon>listController.tt</DependentUpon>
+    <Content Include="app\controllers\manage\generated\list\ResourcePoolListController.js">
+      <DependentUpon>ListController.tt</DependentUpon>
+    </Content>
+    <Content Include="app\controllers\manage\generated\list\RoleListController.js">
+      <DependentUpon>ListController.tt</DependentUpon>
+    </Content>
+    <Content Include="app\controllers\manage\generated\list\UserClaimListController.js">
+      <DependentUpon>ListController.tt</DependentUpon>
+    </Content>
+    <Content Include="app\controllers\manage\generated\list\UserElementCellListController.js">
+      <DependentUpon>ListController.tt</DependentUpon>
+    </Content>
+    <Content Include="app\controllers\manage\generated\list\UserElementFieldListController.js">
+      <DependentUpon>ListController.tt</DependentUpon>
+    </Content>
+    <Content Include="app\controllers\manage\generated\list\UserListController.js">
+      <DependentUpon>ListController.tt</DependentUpon>
+    </Content>
+    <Content Include="app\controllers\manage\generated\list\UserLoginListController.js">
+      <DependentUpon>ListController.tt</DependentUpon>
+    </Content>
+    <Content Include="app\controllers\manage\generated\list\UserResourcePoolListController.js">
+      <DependentUpon>ListController.tt</DependentUpon>
+    </Content>
+    <Content Include="app\controllers\manage\generated\list\UserRoleListController.js">
+      <DependentUpon>ListController.tt</DependentUpon>
     </Content>
     <Content Include="app\factories\generated\factory.txt">
       <AutoGen>True</AutoGen>
@@ -75,13 +148,52 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>manageScripts.tt</DependentUpon>
     </Content>
-    <Content Include="app\views\manage\generated\edit\editView.txt">
+    <Content Include="app\main.all.js" />
+    <Content Include="app\main.min.js" />
+    <None Include="app\settings\googleAnalytics.js" />
+    <None Include="app\settings\Setup\googleAnalytics.js" />
+    <None Include="app\settings\disqus.js" />
+    <None Include="app\settings\Setup\disqus.js" />
+    <Content Include="app\views\manage\generated\edit\EditView1.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>editView.tt</DependentUpon>
+      <DependentUpon>EditView.tt</DependentUpon>
+    </Content>
+    <Content Include="app\views\manage\generated\edit\elementCellEdit.html">
+      <DependentUpon>EditView.tt</DependentUpon>
+    </Content>
+    <Content Include="app\views\manage\generated\edit\elementEdit.html">
+      <DependentUpon>EditView.tt</DependentUpon>
+    </Content>
+    <Content Include="app\views\manage\generated\edit\elementFieldEdit.html">
+      <DependentUpon>EditView.tt</DependentUpon>
+    </Content>
+    <Content Include="app\views\manage\generated\edit\elementItemEdit.html">
+      <DependentUpon>EditView.tt</DependentUpon>
+    </Content>
+    <Content Include="app\views\manage\generated\edit\roleEdit.html">
+      <DependentUpon>EditView.tt</DependentUpon>
+    </Content>
+    <Content Include="app\views\manage\generated\edit\userClaimEdit.html">
+      <DependentUpon>EditView.tt</DependentUpon>
+    </Content>
+    <Content Include="app\views\manage\generated\edit\userEdit.html">
+      <DependentUpon>EditView.tt</DependentUpon>
+    </Content>
+    <Content Include="app\views\manage\generated\edit\userElementCellEdit.html">
+      <DependentUpon>EditView.tt</DependentUpon>
+    </Content>
+    <Content Include="app\views\manage\generated\edit\userElementFieldEdit.html">
+      <DependentUpon>EditView.tt</DependentUpon>
+    </Content>
+    <Content Include="app\views\manage\generated\edit\userLoginEdit.html">
+      <DependentUpon>EditView.tt</DependentUpon>
     </Content>
     <Content Include="app\views\manage\generated\edit\userResourcePoolEdit.html">
-      <DependentUpon>editView.tt</DependentUpon>
+      <DependentUpon>EditView.tt</DependentUpon>
+    </Content>
+    <Content Include="app\views\manage\generated\edit\userRoleEdit.html">
+      <DependentUpon>EditView.tt</DependentUpon>
     </Content>
     <Content Include="app\views\manage\generated\list\listView.txt">
       <AutoGen>True</AutoGen>
@@ -100,109 +212,37 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\authorization.js" />
-    <Content Include="app\controllers\account\accountEditController.js" />
-    <Content Include="app\controllers\account\addPasswordController.js" />
-    <Content Include="app\controllers\account\changeEmailController.js" />
-    <Content Include="app\controllers\account\changePasswordController.js" />
-    <Content Include="app\controllers\account\confirmEmailController.js" />
-    <Content Include="app\controllers\account\externalLoginController.js" />
-    <Content Include="app\controllers\account\loginController.js" />
-    <Content Include="app\controllers\account\registerController.js" />
-    <Content Include="app\controllers\content\basicsController.js" />
-    <Content Include="app\controllers\content\closingNotesController.js" />
-    <Content Include="app\controllers\content\fairShareIndexSampleController.js" />
-    <Content Include="app\controllers\content\indexesPieSampleController.js" />
-    <Content Include="app\controllers\content\introductionController.js" />
-    <Content Include="app\controllers\content\knowledgeIndexSampleController.js" />
-    <Content Include="app\controllers\content\mainController.js" />
-    <Content Include="app\controllers\content\resourcePoolRateSampleController.js" />
-    <Content Include="app\controllers\content\sectorIndexSampleController.js" />
-    <Content Include="app\controllers\content\totalCostIndexSampleController.js" />
-    <Content Include="app\controllers\manage\generated\edit\editController.tt">
+    <Content Include="app\config\authorization.js" />
+    <Content Include="app\controllers\account\AccountEditController.js" />
+    <Content Include="app\controllers\account\AddPasswordController.js" />
+    <Content Include="app\controllers\account\ChangeEmailController.js" />
+    <Content Include="app\controllers\account\ChangePasswordController.js" />
+    <Content Include="app\controllers\account\ConfirmEmailController.js" />
+    <Content Include="app\controllers\account\ExternalLoginController.js" />
+    <Content Include="app\controllers\account\LoginController.js" />
+    <Content Include="app\controllers\account\RegisterController.js" />
+    <Content Include="app\controllers\content\BasicsController.js" />
+    <Content Include="app\controllers\content\ClosingNotesController.js" />
+    <Content Include="app\controllers\content\FairShareIndexSampleController.js" />
+    <Content Include="app\controllers\content\IndexesPieSampleController.js" />
+    <Content Include="app\controllers\content\IntroductionController.js" />
+    <Content Include="app\controllers\content\KnowledgeIndexSampleController.js" />
+    <Content Include="app\controllers\content\MainController.js" />
+    <Content Include="app\controllers\content\ResourcePoolRateSampleController.js" />
+    <Content Include="app\controllers\content\SectorIndexSampleController.js" />
+    <Content Include="app\controllers\content\TotalCostIndexSampleController.js" />
+    <Content Include="app\controllers\manage\generated\edit\EditController.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>editController.txt</LastGenOutput>
+      <LastGenOutput>EditController.txt</LastGenOutput>
     </Content>
-    <Content Include="app\controllers\manage\generated\edit\elementCellEditController.js">
-      <DependentUpon>editController.tt</DependentUpon>
-    </Content>
-    <Content Include="app\controllers\manage\generated\edit\elementEditController.js">
-      <DependentUpon>editController.tt</DependentUpon>
-    </Content>
-    <Content Include="app\controllers\manage\generated\edit\elementFieldEditController.js">
-      <DependentUpon>editController.tt</DependentUpon>
-    </Content>
-    <Content Include="app\controllers\manage\generated\edit\elementItemEditController.js">
-      <DependentUpon>editController.tt</DependentUpon>
-    </Content>
-    <Content Include="app\controllers\manage\generated\edit\resourcePoolEditController.js">
-      <DependentUpon>editController.tt</DependentUpon>
-    </Content>
-    <Content Include="app\controllers\manage\generated\edit\roleEditController.js">
-      <DependentUpon>editController.tt</DependentUpon>
-    </Content>
-    <Content Include="app\controllers\manage\generated\edit\userClaimEditController.js">
-      <DependentUpon>editController.tt</DependentUpon>
-    </Content>
-    <Content Include="app\controllers\manage\generated\edit\userEditController.js">
-      <DependentUpon>editController.tt</DependentUpon>
-    </Content>
-    <Content Include="app\controllers\manage\generated\edit\userElementCellEditController.js">
-      <DependentUpon>editController.tt</DependentUpon>
-    </Content>
-    <Content Include="app\controllers\manage\generated\edit\userElementFieldEditController.js">
-      <DependentUpon>editController.tt</DependentUpon>
-    </Content>
-    <Content Include="app\controllers\manage\generated\edit\userLoginEditController.js">
-      <DependentUpon>editController.tt</DependentUpon>
-    </Content>
-    <Content Include="app\controllers\manage\generated\edit\userRoleEditController.js">
-      <DependentUpon>editController.tt</DependentUpon>
-    </Content>
-    <Content Include="app\controllers\manage\generated\list\listController.tt">
+    <Content Include="app\controllers\manage\generated\list\ListController.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>listController.txt</LastGenOutput>
+      <LastGenOutput>ListController.js</LastGenOutput>
     </Content>
-    <Content Include="app\controllers\manage\generated\list\elementCellListController.js">
-      <DependentUpon>listController.tt</DependentUpon>
-    </Content>
-    <Content Include="app\controllers\manage\generated\list\elementFieldListController.js">
-      <DependentUpon>listController.tt</DependentUpon>
-    </Content>
-    <Content Include="app\controllers\manage\generated\list\elementItemListController.js">
-      <DependentUpon>listController.tt</DependentUpon>
-    </Content>
-    <Content Include="app\controllers\manage\generated\list\elementListController.js">
-      <DependentUpon>listController.tt</DependentUpon>
-    </Content>
-    <Content Include="app\controllers\manage\generated\list\roleListController.js">
-      <DependentUpon>listController.tt</DependentUpon>
-    </Content>
-    <Content Include="app\controllers\manage\generated\list\userClaimListController.js">
-      <DependentUpon>listController.tt</DependentUpon>
-    </Content>
-    <Content Include="app\controllers\manage\generated\list\userElementCellListController.js">
-      <DependentUpon>listController.tt</DependentUpon>
-    </Content>
-    <Content Include="app\controllers\manage\generated\list\userElementFieldListController.js">
-      <DependentUpon>listController.tt</DependentUpon>
-    </Content>
-    <Content Include="app\controllers\manage\generated\list\userListController.js">
-      <DependentUpon>listController.tt</DependentUpon>
-    </Content>
-    <Content Include="app\controllers\manage\generated\list\userLoginListController.js">
-      <DependentUpon>listController.tt</DependentUpon>
-    </Content>
-    <Content Include="app\controllers\manage\generated\list\userResourcePoolListController.js">
-      <DependentUpon>listController.tt</DependentUpon>
-    </Content>
-    <Content Include="app\controllers\manage\generated\list\userRoleListController.js">
-      <DependentUpon>listController.tt</DependentUpon>
-    </Content>
-    <Content Include="app\controllers\resourcePool\resourcePoolEditController.js" />
-    <Content Include="app\controllers\resourcePool\resourcePoolListController.js" />
-    <Content Include="app\controllers\resourcePool\resourcePoolViewController.js" />
-    <Content Include="app\dataContext.js" />
+    <Content Include="app\controllers\resourcePool\ResourcePoolManageController.js" />
+    <Content Include="app\controllers\resourcePool\ResourcePoolListController.js" />
+    <Content Include="app\controllers\resourcePool\ResourcePoolViewController.js" />
+    <Content Include="app\factories\dataContext.js" />
     <Content Include="app\directives\resourcePoolEditor\resourcePoolEditor.css" />
     <Content Include="app\directives\resourcePoolEditor\resourcePoolEditor.html" />
     <Content Include="app\directives\resourcePoolEditor\resourcePoolEditor.js" />
@@ -215,12 +255,8 @@
     <Content Include="app\entities\ResourcePool.js" />
     <Content Include="app\entities\User.js" />
     <Content Include="app\entities\UserElementCell.js" />
-    <Content Include="app\entityManagerFactory.js" />
-    <Content Include="app\exceptionHandlerExtension.js" />
-    <Content Include="app\external\0 ReadMe.txt" />
-    <Content Include="app\external\disqus.js" />
-    <Content Include="app\external\gratipay.js" />
-    <Content Include="app\external\twitter.js" />
+    <Content Include="app\factories\entityManagerFactory.js" />
+    <Content Include="app\config\exceptionHandlerExtension.js" />
     <Content Include="app\factories\generated\elementCellFactory.js">
       <DependentUpon>factory.tt</DependentUpon>
     </Content>
@@ -264,7 +300,7 @@
     <Content Include="app\factories\generated\userRoleFactory.js">
       <DependentUpon>factory.tt</DependentUpon>
     </Content>
-    <Content Include="app\factories\mainFactory.js" />
+    <Content Include="app\factories\applicationFactory.js" />
     <Content Include="app\factories\resourcePoolFactory.js" />
     <Content Include="app\factories\userFactory.js" />
     <Content Include="app\filters\angular-enum.js" />
@@ -278,9 +314,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>manageScripts.js</LastGenOutput>
     </Content>
-    <Content Include="app\logger.js" />
+    <Content Include="app\factories\logger.js" />
     <Content Include="app\main.js" />
-    <Content Include="app\route.js" />
+    <Content Include="app\config\route.js" />
     <Content Include="app\views\account\accountEdit.html" />
     <Content Include="app\views\account\addPassword.html" />
     <Content Include="app\views\account\changeEmail.html" />
@@ -306,42 +342,9 @@
     <Content Include="app\views\content\sectorIndexSample.html" />
     <Content Include="app\views\content\technologies.html" />
     <Content Include="app\views\content\totalCostIndexSample.html" />
-    <Content Include="app\views\manage\generated\edit\editView.tt">
+    <Content Include="app\views\manage\generated\edit\EditView.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>editView.txt</LastGenOutput>
-    </Content>
-    <Content Include="app\views\manage\generated\edit\elementCellEdit.html">
-      <DependentUpon>editView.tt</DependentUpon>
-    </Content>
-    <Content Include="app\views\manage\generated\edit\elementEdit.html">
-      <DependentUpon>editView.tt</DependentUpon>
-    </Content>
-    <Content Include="app\views\manage\generated\edit\elementFieldEdit.html">
-      <DependentUpon>editView.tt</DependentUpon>
-    </Content>
-    <Content Include="app\views\manage\generated\edit\elementItemEdit.html">
-      <DependentUpon>editView.tt</DependentUpon>
-    </Content>
-    <Content Include="app\views\manage\generated\edit\roleEdit.html">
-      <DependentUpon>editView.tt</DependentUpon>
-    </Content>
-    <Content Include="app\views\manage\generated\edit\userClaimEdit.html">
-      <DependentUpon>editView.tt</DependentUpon>
-    </Content>
-    <Content Include="app\views\manage\generated\edit\userEdit.html">
-      <DependentUpon>editView.tt</DependentUpon>
-    </Content>
-    <Content Include="app\views\manage\generated\edit\userElementCellEdit.html">
-      <DependentUpon>editView.tt</DependentUpon>
-    </Content>
-    <Content Include="app\views\manage\generated\edit\userElementFieldEdit.html">
-      <DependentUpon>editView.tt</DependentUpon>
-    </Content>
-    <Content Include="app\views\manage\generated\edit\userLoginEdit.html">
-      <DependentUpon>editView.tt</DependentUpon>
-    </Content>
-    <Content Include="app\views\manage\generated\edit\userRoleEdit.html">
-      <DependentUpon>editView.tt</DependentUpon>
+      <LastGenOutput>EditView1.txt</LastGenOutput>
     </Content>
     <Content Include="app\views\manage\generated\list\listView.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -383,9 +386,12 @@
     <Content Include="app\views\manage\generated\list\userRoleList.html">
       <DependentUpon>listView.tt</DependentUpon>
     </Content>
-    <Content Include="app\views\resourcePool\resourcePoolEdit.html" />
+    <Content Include="app\views\resourcePool\resourcePoolManage.html" />
     <Content Include="app\views\resourcePool\resourcePoolList.html" />
     <Content Include="app\views\resourcePool\resourcePoolView.html" />
+    <Content Include="css\site.all.css" />
+    <Content Include="css\site.min.css" />
+    <None Include="gulpfile.js" />
     <Content Include="images\forCrowd_logo_20x20.jpg" />
     <Content Include="images\forCrowd_logo_34x34.jpg" />
     <Content Include="images\NewSystem.png" />
@@ -406,6 +412,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

@@ -1,15 +1,15 @@
 ﻿(function () {
     'use strict';
 
-    var controllerId = 'confirmEmailController';
+    var controllerId = 'ConfirmEmailController';
     angular.module('main')
-        .controller(controllerId, ['userFactory', '$rootScope', '$location', 'logger', confirmEmailController]);
+        .controller(controllerId, ['userFactory', '$rootScope', '$location', 'logger', ConfirmEmailController]);
 
-    function confirmEmailController(userFactory, $rootScope, $location, logger) {
+    function ConfirmEmailController(userFactory, $rootScope, $location, logger) {
         logger = logger.forSource(controllerId);
 
         var vm = this;
-        vm.currentUser = null,
+        vm.currentUser = null;
         vm.isResendDisabled = false;
         vm.resendConfirmationEmail = resendConfirmationEmail;
 
@@ -53,5 +53,5 @@
                     vm.isResendDisabled = false;
                 });
         }
-    };
+    }
 })();

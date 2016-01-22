@@ -10,15 +10,15 @@
 (function () {
     'use strict';
 
-    var controllerId = 'roleEditController';
+    var controllerId = 'RoleEditController';
     angular.module('main')
         .controller(controllerId, ['roleFactory',
             'logger',
             '$location',
             '$routeParams',
-            roleEditController]);
+            RoleEditController]);
 
-    function roleEditController(roleFactory,
+    function RoleEditController(roleFactory,
 		logger,
 		$location,
 		$routeParams) {
@@ -68,7 +68,7 @@
                         // TODO User-friendly message?
                     });
             }
-        };
+        }
 
         function isSaveDisabled() {
             return isSaving ||
@@ -98,5 +98,5 @@
                     isSaving = false;
                 });
         }
-    };
+    }
 })();

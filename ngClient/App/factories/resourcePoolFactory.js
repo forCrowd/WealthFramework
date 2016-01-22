@@ -1,29 +1,15 @@
-﻿
-(function () {
+﻿(function () {
     'use strict';
 
     var factoryId = 'resourcePoolFactory';
     angular.module('main')
-        .config(function ($provide) {
-            $provide.decorator(factoryId, [
-                '$delegate',
-                'ResourcePool',
-                'Element',
-                'userFactory',
-                'dataContext',
-                '$rootScope',
-                'logger',
-                resourcePoolFactory]);
-        });
+        .config(['$provide', extendFactory]);
 
-    function resourcePoolFactory(
-        $delegate,
-        ResourcePool,
-        Element,
-        userFactory,
-        dataContext,
-        $rootScope,
-        logger) {
+    function extendFactory($provide) {
+        $provide.decorator(factoryId, ['$delegate', 'ResourcePool', 'Element', 'userFactory', 'dataContext', '$rootScope', 'logger', resourcePoolFactory]);
+    }
+
+    function resourcePoolFactory($delegate, ResourcePool, Element, userFactory, dataContext, $rootScope, logger) {
 
         // Logger
         logger = logger.forSource(factoryId);
@@ -159,9 +145,9 @@
             return dataContext.createEntity('Element', element);
         }
 
-        function createElementCell(elementCell) {
+        function createElementCell(elementCellInitial) {
 
-            var elementCell = dataContext.createEntity('ElementCell', elementCell);
+            var elementCell = dataContext.createEntity('ElementCell', elementCellInitial);
 
             // User element cell
             if (elementCell.ElementField.DataType !== 6) {

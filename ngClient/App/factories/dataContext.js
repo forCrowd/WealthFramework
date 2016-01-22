@@ -61,10 +61,10 @@
 
             // Anonymous user check
             // TODO Assumes that 'User' business object related properties will always use 'User' as a name
-            if (typeof initialValues !== 'undefined'
-                && typeof initialValues.User !== 'undefined'
-                && (typeof initialValues.User.Id === 'undefined'
-                || initialValues.User.Id <= 0)) {
+            if (typeof initialValues !== 'undefined' &&
+                typeof initialValues.User !== 'undefined' &&
+                (typeof initialValues.User.Id === 'undefined' ||
+                initialValues.User.Id <= 0)) {
                 $rootScope.$broadcast('anonymousUserInteracted');
             }
 

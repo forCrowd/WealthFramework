@@ -10,13 +10,13 @@
 (function () {
     'use strict';
 
-    var controllerId = 'userLoginListController';
+    var controllerId = 'UserLoginListController';
     angular.module('main')
         .controller(controllerId, ['userLoginFactory',
             'logger',
-			userLoginListController]);
+			UserLoginListController]);
 
-    function userLoginListController(userLoginFactory,
+    function UserLoginListController(userLoginFactory,
         logger) {
         logger = logger.forSource(controllerId);
 
@@ -28,7 +28,7 @@
 
         function initialize() {
             getUserLoginSet();
-        };
+        }
 
         function deleteUserLogin(userLogin) {
             userLoginFactory.deleteUserLogin(userLogin);
@@ -43,8 +43,8 @@
                     // Todo: more sophisticated recovery. 
                     // Here we just blew it all away and start over
                     // refresh();
-                })
-        };
+                });
+        }
 
         function getUserLoginSet() {
             userLoginFactory.getUserLoginSet(false)
@@ -52,5 +52,5 @@
                     vm.userLoginSet = data;
                 });
         }
-    };
+    }
 })();

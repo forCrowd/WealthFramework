@@ -10,7 +10,7 @@
         // Logger
         logger = logger.forSource(factoryId);
 
-        var self = this;
+        var self = {};
 
         self.ElementFieldDataType = {
 
@@ -48,7 +48,7 @@
             // Defined once per Element (at the moment, can be changed to per Resource Pool).
             // Use DecimalValue property to set its value on ElementItem level.
             'Multiplier': 12
-        }
+        };
         
         self.ElementFieldIndexCalculationType = {
             // Default type.
@@ -61,7 +61,7 @@
             // All items get an amount, including the lowest scored item.
             // Good for cases that only use 'Resource Pool - Initial Amount' feature.
             'Passive': 2
-        }
+        };
 
         self.ElementFieldIndexSortType = {
 
@@ -71,7 +71,7 @@
 
             // Low rating is better.
             'Lowest': 2
-        }
+        };
 
         self.getEnumKey = function (enumTableKey, value) {
             for (var tableKey in self) {
@@ -90,8 +90,7 @@
                     }
                 }
             }
-
-        }
+        };
 
         return self;
     }

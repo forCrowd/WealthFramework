@@ -10,13 +10,13 @@
 (function () {
     'use strict';
 
-    var controllerId = 'resourcePoolListController';
+    var controllerId = 'ResourcePoolListController';
     angular.module('main')
         .controller(controllerId, ['resourcePoolFactory',
             'logger',
-			resourcePoolListController]);
+			ResourcePoolListController]);
 
-    function resourcePoolListController(resourcePoolFactory,
+    function ResourcePoolListController(resourcePoolFactory,
         logger) {
         logger = logger.forSource(controllerId);
 
@@ -28,7 +28,7 @@
 
         function initialize() {
             getResourcePoolSet();
-        };
+        }
 
         function deleteResourcePool(resourcePool) {
             resourcePoolFactory.deleteResourcePool(resourcePool);
@@ -43,8 +43,8 @@
                     // Todo: more sophisticated recovery. 
                     // Here we just blew it all away and start over
                     // refresh();
-                })
-        };
+                });
+        }
 
         function getResourcePoolSet() {
             resourcePoolFactory.getResourcePoolSet(false)
@@ -52,5 +52,5 @@
                     vm.resourcePoolSet = data;
                 });
         }
-    };
+    }
 })();

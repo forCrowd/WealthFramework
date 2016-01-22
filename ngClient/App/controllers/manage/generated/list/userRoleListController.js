@@ -10,13 +10,13 @@
 (function () {
     'use strict';
 
-    var controllerId = 'userRoleListController';
+    var controllerId = 'UserRoleListController';
     angular.module('main')
         .controller(controllerId, ['userRoleFactory',
             'logger',
-			userRoleListController]);
+			UserRoleListController]);
 
-    function userRoleListController(userRoleFactory,
+    function UserRoleListController(userRoleFactory,
         logger) {
         logger = logger.forSource(controllerId);
 
@@ -28,7 +28,7 @@
 
         function initialize() {
             getUserRoleSet();
-        };
+        }
 
         function deleteUserRole(userRole) {
             userRoleFactory.deleteUserRole(userRole);
@@ -43,8 +43,8 @@
                     // Todo: more sophisticated recovery. 
                     // Here we just blew it all away and start over
                     // refresh();
-                })
-        };
+                });
+        }
 
         function getUserRoleSet() {
             userRoleFactory.getUserRoleSet(false)
@@ -52,5 +52,5 @@
                     vm.userRoleSet = data;
                 });
         }
-    };
+    }
 })();

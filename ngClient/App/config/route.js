@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('main')
-        .config(routeConfig);
+        .config(['$routeProvider', '$locationProvider', routeConfig]);
 
     angular.module('main')
         .run(['userFactory', 'resourcePoolFactory', 'LocationItem', '$rootScope', '$location', 'logger', routeRun]);
@@ -14,24 +14,24 @@
 
             /* Content */
             .when('/', { title: getContentRouteTitle, templateUrl: getContentTemplateUrl })
-            .when('/main.aspx', { title: getContentRouteTitle, templateUrl: getContentTemplateUrl }) // TODO Is it possible to remove 'main.aspx'
+            .when('/default.aspx', { title: getContentRouteTitle, templateUrl: getContentTemplateUrl })
             .when('/content/:key/', { title: getContentRouteTitle, templateUrl: getContentTemplateUrl })
 
             /* CMRP List + View + Edit pages */
-            .when('/resourcePool', { title: function () { return 'CMRP List'; }, templateUrl: '/App/views/resourcePool/resourcePoolList.html?v=0.38' })
-            .when('/resourcePool/new', { title: function () { return 'New CMRP'; }, templateUrl: '/App/views/resourcePool/resourcePoolEdit.html?v=0.38.2' })
-            .when('/resourcePool/:resourcePoolId/edit', { title: function () { return ''; }, templateUrl: '/App/views/resourcePool/resourcePoolEdit.html?v=0.38' })
-            .when('/resourcePool/:resourcePoolId', { title: function () { return ''; }, templateUrl: '/App/views/resourcePool/resourcePoolView.html?v=0.37' })
+            .when('/resourcePool', { title: function () { return 'CMRP List'; }, templateUrl: '/App/views/resourcePool/resourcePoolList.html?v=0.43' })
+            .when('/resourcePool/new', { title: function () { return 'New CMRP'; }, templateUrl: '/App/views/resourcePool/resourcePoolManage.html?v=0.43' })
+            .when('/resourcePool/:resourcePoolId/edit', { title: function () { return 'Edit CMRP'; }, templateUrl: '/App/views/resourcePool/resourcePoolManage.html?v=0.43' })
+            .when('/resourcePool/:resourcePoolId', { title: function () { return 'View CMRP'; }, templateUrl: '/App/views/resourcePool/resourcePoolView.html?v=0.43' })
 
             /* Account */
-            .when('/account/register', { title: function () { return 'Register'; }, templateUrl: '/App/views/account/register.html?v=0.42' })
-            .when('/account/login', { title: function () { return 'Login'; }, templateUrl: '/App/views/account/login.html?v=0.42' })
-            .when('/account/externalLogin', { title: function () { return 'Social Logins'; }, templateUrl: '/App/views/account/externalLogin.html?v=0.41' })
-            .when('/account/accountEdit', { title: function () { return 'Account Edit'; }, templateUrl: '/App/views/account/accountEdit.html?v=0.40' })
-            .when('/account/changeEmail', { title: function () { return 'Change Email'; }, templateUrl: '/App/views/account/changeEmail.html?v=0.40' })
-            .when('/account/changePassword', { title: function () { return 'Change Password'; }, templateUrl: '/App/views/account/changePassword.html?v=0.40' })
-            .when('/account/addPassword', { title: function () { return 'Add Password'; }, templateUrl: '/App/views/account/addPassword.html?v=0.41.1' })
-            .when('/account/confirmEmail', { title: function () { return 'Confirm Email'; }, templateUrl: '/App/views/account/confirmEmail.html?v=0.41.3' })
+            .when('/account/register', { title: function () { return 'Register'; }, templateUrl: '/App/views/account/register.html?v=0.43' })
+            .when('/account/login', { title: function () { return 'Login'; }, templateUrl: '/App/views/account/login.html?v=0.43' })
+            .when('/account/externalLogin', { title: function () { return 'Social Logins'; }, templateUrl: '/App/views/account/externalLogin.html?v=0.43' })
+            .when('/account/accountEdit', { title: function () { return 'Account Edit'; }, templateUrl: '/App/views/account/accountEdit.html?v=0.43' })
+            .when('/account/changeEmail', { title: function () { return 'Change Email'; }, templateUrl: '/App/views/account/changeEmail.html?v=0.43' })
+            .when('/account/changePassword', { title: function () { return 'Change Password'; }, templateUrl: '/App/views/account/changePassword.html?v=0.43' })
+            .when('/account/addPassword', { title: function () { return 'Add Password'; }, templateUrl: '/App/views/account/addPassword.html?v=0.43' })
+            .when('/account/confirmEmail', { title: function () { return 'Confirm Email'; }, templateUrl: '/App/views/account/confirmEmail.html?v=0.43' })
 
             /* Generated List + Edit pages */
             .when('/manage/generated/:entity', { title: getManageRouteTitle, templateUrl: getManageRouteTemplateUrl })
@@ -50,9 +50,9 @@
 
             var entity = params.entity[0].toUpperCase() + params.entity.substring(1);
 
-            var action = typeof params.action !== 'undefined'
-                ? params.action[0].toUpperCase() + params.action.substring(1)
-                : 'List';
+            var action = typeof params.action !== 'undefined' ?
+                params.action[0].toUpperCase() + params.action.substring(1) :
+                'List';
 
             return entity + ' ' + action;
         }
@@ -61,15 +61,15 @@
 
             var templateUrl = '';
 
-            var action = typeof params.action !== 'undefined'
-                ? params.action
-                : 'list'; // Default action
+            var action = typeof params.action !== 'undefined' ?
+                params.action :
+                'list'; // Default action
 
             if (action === 'list')
-                templateUrl = '/App/views/manage/generated/list/' + params.entity + 'List.html?v=0.37';
+                templateUrl = '/App/views/manage/generated/list/' + params.entity + 'List.html?v=0.43';
 
             if (action === 'new' || action === 'edit') {
-                templateUrl = '/App/views/manage/generated/edit/' + params.entity + 'Edit.html?v=0.37';
+                templateUrl = '/App/views/manage/generated/edit/' + params.entity + 'Edit.html?v=0.43';
             }
 
             return templateUrl;
@@ -77,20 +77,20 @@
 
         function getContentRouteTitle(params) {
 
-            var title = typeof params.key !== 'undefined'
-                ? params.key[0] + params.key.substring(1)
-                : 'Home'; // Default view
+            var title = typeof params.key !== 'undefined' ?
+                params.key[0] + params.key.substring(1) :
+                'Home'; // Default view
 
             return title;
         }
 
         function getContentTemplateUrl(params) {
 
-            var key = typeof params.key !== 'undefined'
-                ? params.key
-                : 'home'; // Default view
+            var key = typeof params.key !== 'undefined' ?
+                params.key :
+                'home'; // Default view
 
-            return '/App/views/content/' + key + '.html?v=0.42';
+            return '/App/views/content/' + key + '.html?v=0.43';
         }
     }
 

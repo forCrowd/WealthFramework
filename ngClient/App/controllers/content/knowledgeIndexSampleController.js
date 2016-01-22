@@ -1,11 +1,11 @@
 ﻿(function () {
     'use strict';
 
-    var controllerId = 'knowledgeIndexSampleController';
+    var controllerId = 'KnowledgeIndexSampleController';
     angular.module('main')
-        .controller(controllerId, ['$scope', '$timeout', 'logger', knowledgeIndexSampleController]);
+        .controller(controllerId, ['$scope', '$timeout', 'logger', KnowledgeIndexSampleController]);
 
-    function knowledgeIndexSampleController($scope, $timeout, logger) {
+    function KnowledgeIndexSampleController($scope, $timeout, logger) {
 
         logger = logger.forSource(controllerId);
 
@@ -91,5 +91,5 @@
         $scope.$on("$destroy", function (event) {
             $timeout.cancel(timeout);
         });
-    };
+    }
 })();

@@ -99,7 +99,7 @@
                 _resourcePoolRatePercentage: null,
                 _selectedElement: null,
                 _useFixedResourcePoolRate: false
-            }
+            };
 
             // Functions
             self._init = _init;
@@ -169,9 +169,9 @@
             }
 
             function currentUserResourcePool() {
-                return self.UserResourcePoolSet.length > 0
-                    ? self.UserResourcePoolSet[0]
-                    : null;
+                return self.UserResourcePoolSet.length > 0 ?
+                    self.UserResourcePoolSet[0] :
+                    null;
             }
 
             function currentUserResourcePoolRate() {
@@ -221,9 +221,7 @@
                     return element.IsMainElement;
                 });
 
-                return result.length > 0
-                    ? result[0]
-                    : null;
+                return result.length > 0 ? result[0] : null;
             }
 
             // TODO Since this is a fixed value based on ResourcePoolRateCount & current user's rate,
@@ -265,15 +263,15 @@
                     return null;
                 }
 
-                return self.resourcePoolRateCount() === 0
-                    ? 0
-                    : self.resourcePoolRateTotal() / self.resourcePoolRateCount();
+                return self.resourcePoolRateCount() === 0 ?
+                    0 :
+                    self.resourcePoolRateTotal() / self.resourcePoolRateCount();
             }
 
             function resourcePoolRateCount() {
-                return self.UseFixedResourcePoolRate
-                    ? self.otherUsersResourcePoolRateCount()
-                    : self.otherUsersResourcePoolRateCount() + 1; // There is always default value, increase count by 1
+                return self.UseFixedResourcePoolRate ?
+                    self.otherUsersResourcePoolRateCount() :
+                    self.otherUsersResourcePoolRateCount() + 1; // There is always default value, increase count by 1
             }
 
             function resourcePoolRatePercentage() {
@@ -286,9 +284,9 @@
             }
 
             function resourcePoolRateTotal() {
-                return self.UseFixedResourcePoolRate
-                    ? self.otherUsersResourcePoolRateTotal()
-                    : self.otherUsersResourcePoolRateTotal() + self.currentUserResourcePoolRate();
+                return self.UseFixedResourcePoolRate ?
+                    self.otherUsersResourcePoolRateTotal() :
+                    self.otherUsersResourcePoolRateTotal() + self.currentUserResourcePoolRate();
             }
 
             function selectedElement(value) {
@@ -309,9 +307,9 @@
             function setCurrentUserResourcePoolRate(updateRelated) {
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
-                var value = self.currentUserResourcePool() !== null
-                    ? self.currentUserResourcePool().ResourcePoolRate
-                    : 10; // Default value?
+                var value = self.currentUserResourcePool() !== null ?
+                    self.currentUserResourcePool().ResourcePoolRate :
+                    10; // Default value?
 
                 if (self.backingFields._currentUserResourcePoolRate !== value) {
                     self.backingFields._currentUserResourcePoolRate = value;
@@ -334,9 +332,9 @@
             }
 
             function setOtherUsersResourcePoolRateTotal() {
-                self.backingFields._otherUsersResourcePoolRateTotal = self.ResourcePoolRateTotal !== null
-                    ? self.ResourcePoolRateTotal
-                    : 0;
+                self.backingFields._otherUsersResourcePoolRateTotal = self.ResourcePoolRateTotal !== null ?
+                    self.ResourcePoolRateTotal :
+                    0;
 
                 // Exclude current user's
                 if (self.currentUserResourcePool() !== null) {
@@ -371,9 +369,9 @@
             function setResourcePoolRatePercentage(updateRelated) {
                 updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
 
-                var value = self.resourcePoolRate() === 0
-                    ? 0
-                    : self.resourcePoolRate() / 100;
+                var value = self.resourcePoolRate() === 0 ?
+                    0 :
+                    self.resourcePoolRate() / 100;
 
                 if (self.backingFields._resourcePoolRatePercentage !== value) {
                     self.backingFields._resourcePoolRatePercentage = value;
@@ -397,6 +395,8 @@
             // TODO Most of these functions are related with userService.js - updateX functions
             // Try to merge these two - Actually try to handle these actions within the related entity / SH - 27 Nov. '15
             function updateCache() {
+
+                var isUnchanged = false;
 
                 self.setCurrentUserResourcePoolRate();
 
@@ -431,7 +431,7 @@
                                                 // which results an error. So that's why modified check & acceptChanges parts were added.
                                                 // SH - 01 Dec. '15
                                                 if (cell.UserElementCellSet.length > 0) {
-                                                    var isUnchanged = cell.entityAspect.entityState.isUnchanged();
+                                                    isUnchanged = cell.entityAspect.entityState.isUnchanged();
                                                     cell.StringValue = cell.UserElementCellSet[0].StringValue;
                                                     if (isUnchanged) { cell.entityAspect.acceptChanges(); }
                                                 }
@@ -451,7 +451,7 @@
                                                     // Which is actually not correct but till that its fixed, update it like this / SH - 29 Nov. '15
                                                     // Also check 'What a mess' of StringValue
                                                     if (cell.UserElementCellSet.length > 0) {
-                                                        var isUnchanged = cell.entityAspect.entityState.isUnchanged();
+                                                        isUnchanged = cell.entityAspect.entityState.isUnchanged();
                                                         cell.NumericValueTotal = cell.UserElementCellSet[0].DecimalValue;
                                                         if (isUnchanged) { cell.entityAspect.acceptChanges(); }
                                                     }

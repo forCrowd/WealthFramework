@@ -1,16 +1,16 @@
 ﻿(function () {
     'use strict';
 
-    var controllerId = 'resourcePoolViewController';
+    var controllerId = 'ResourcePoolViewController';
     angular.module('main')
         .controller(controllerId, ['resourcePoolFactory',
             '$location',
             '$routeParams',
             '$rootScope',
             'logger',
-            resourcePoolViewController]);
+            ResourcePoolViewController]);
 
-    function resourcePoolViewController(resourcePoolFactory, $location, $routeParams, $rootScope, logger) {
+    function ResourcePoolViewController(resourcePoolFactory, $location, $routeParams, $rootScope, logger) {
 
         // Logger
         logger = logger.forSource(controllerId);
@@ -33,6 +33,7 @@
                             return;
                         }
 
+                        // TODO viewTitle was also set in route.js?
                         $rootScope.viewTitle = resourcePool.Name;
                     });
             }
@@ -53,5 +54,5 @@
 
             return config;
         }
-    };
+    }
 })();

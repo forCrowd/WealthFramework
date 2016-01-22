@@ -10,13 +10,13 @@
 (function () {
     'use strict';
 
-    var controllerId = 'userElementFieldListController';
+    var controllerId = 'UserElementFieldListController';
     angular.module('main')
         .controller(controllerId, ['userElementFieldFactory',
             'logger',
-			userElementFieldListController]);
+			UserElementFieldListController]);
 
-    function userElementFieldListController(userElementFieldFactory,
+    function UserElementFieldListController(userElementFieldFactory,
         logger) {
         logger = logger.forSource(controllerId);
 
@@ -28,7 +28,7 @@
 
         function initialize() {
             getUserElementFieldSet();
-        };
+        }
 
         function deleteUserElementField(userElementField) {
             userElementFieldFactory.deleteUserElementField(userElementField);
@@ -43,8 +43,8 @@
                     // Todo: more sophisticated recovery. 
                     // Here we just blew it all away and start over
                     // refresh();
-                })
-        };
+                });
+        }
 
         function getUserElementFieldSet() {
             userElementFieldFactory.getUserElementFieldSet(false)
@@ -52,5 +52,5 @@
                     vm.userElementFieldSet = data;
                 });
         }
-    };
+    }
 })();

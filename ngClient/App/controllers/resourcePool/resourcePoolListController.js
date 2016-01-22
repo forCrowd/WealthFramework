@@ -1,13 +1,13 @@
 (function () {
     'use strict';
 
-    var controllerId = 'resourcePoolListController';
+    var controllerId = 'ResourcePoolListController';
     angular.module('main')
         .controller(controllerId, ['resourcePoolFactory',
             'logger',
-			resourcePoolListController]);
+			ResourcePoolListController]);
 
-    function resourcePoolListController(resourcePoolFactory,
+    function ResourcePoolListController(resourcePoolFactory,
         logger) {
         logger = logger.forSource(controllerId);
 
@@ -21,6 +21,6 @@
 			    .then(function (data) {
 			        vm.resourcePoolSet = data;
 			    });
-        };
-    };
+        }
+    }
 })();

@@ -1,4 +1,4 @@
-﻿<div data-ng-controller="closingNotesController as vm">
+﻿<div data-ng-controller="ClosingNotesController as vm">
     <div class="row">
         <div class="col-md-12">
 
@@ -99,10 +99,10 @@
                 <a href="mailto:contact@forcrowd.org">contact@forCrowd.org</a>
             </p>-->
             <!-- Disqus -->
-            <div data-ng-if="!vm.isLocalhost">
-                <div id="disqus_thread"></div>
-                <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-            </div>
+            <dir-disqus disqus-shortname="{{ vm.disqusShortname }}"
+                        disqus-identifier="{{ vm.disqusId }}"
+                        disqus-url="{{ vm.disqusUrl }}">
+            </dir-disqus>
 
             <!-- Share? -->
             <!-- OBSOLETE PART -->
@@ -228,13 +228,13 @@
         </div>
     </div>
 
-    <!-- TODO Try to load these scripts under layoutController, or create a directive? -->
+    <!-- TODO Try to load these scripts under LayoutController, or create a directive? -->
     <!-- Gratipay -->
     <!--<script src="/App/external/gratipay.js"></script>-->
     <!--<script src="//grtp.co/v1.js"></script>-->
     <!-- Twitter -->
     <!--<script src="/App/external/twitter.js"></script>-->
     <!-- Disqus -->
-    <script src="/App/external/disqus.js"></script>
+    <!--<script src="/App/external/disqus.js"></script>-->
 
 </div>

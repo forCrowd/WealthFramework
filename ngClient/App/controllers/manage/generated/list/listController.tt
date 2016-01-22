@@ -31,7 +31,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 	var entityTypeName = typeMapper.GetTypeName(entityType);
 	var entityVariable = codeStringGenerator.GetCamelCase(entityTypeName);
 	var entitySetName = string.Format("{0}Set", entityVariable);
-	var controllerId = string.Format("{0}ListController", entityVariable);
+	var controllerId = string.Format("{0}ListController", entityTypeName);
 	var factoryId = string.Format("{0}Factory", entityVariable);
 	var entitySetGetMethod = string.Format("get{0}Set", entityTypeName);
 	var entityDeleteMethod = string.Format("delete{0}", entityTypeName);
@@ -66,7 +66,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
 
         function initialize() {
             <#= entitySetGetMethod #>();
-        };
+        }
 
         function <#= entityDeleteMethod #>(<#= entityVariable #>) {
             <#= factoryId #>.<#= entityDeleteMethod #>(<#= entityVariable #>);
@@ -81,8 +81,8 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
                     // Todo: more sophisticated recovery. 
                     // Here we just blew it all away and start over
                     // refresh();
-                })
-        };
+                });
+        }
 
         function <#= entitySetGetMethod #>() {
             <#= factoryId #>.<#= entitySetGetMethod #>(false)
@@ -90,7 +90,7 @@ foreach (var entityType in typeMapper.GetItemsToGenerate<EntityType>(itemCollect
                     vm.<#= entitySetName #> = data;
                 });
         }
-    };
+    }
 })();
 <#
 }

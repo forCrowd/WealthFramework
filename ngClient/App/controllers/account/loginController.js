@@ -1,11 +1,11 @@
 ﻿(function () {
     'use strict';
 
-    var controllerId = 'loginController';
+    var controllerId = 'LoginController';
     angular.module('main')
-        .controller(controllerId, ['userFactory', '$location', '$rootScope', 'serviceAppUrl', 'logger', loginController]);
+        .controller(controllerId, ['userFactory', '$location', '$rootScope', 'serviceAppUrl', 'logger', LoginController]);
 
-    function loginController(userFactory, $location, $rootScope, serviceAppUrl, logger) {
+    function LoginController(userFactory, $location, $rootScope, serviceAppUrl, logger) {
         logger = logger.forSource(controllerId);
 
         var vm = this;
@@ -44,5 +44,5 @@
         function getExternalLoginUrl(provider) {
             return serviceAppUrl + '/api/Account/ExternalLogin?provider=' + provider;
         }
-    };
+    }
 })();

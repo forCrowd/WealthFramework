@@ -1,5 +1,13 @@
 ﻿### Release Notes
 
+**0.43**
+
+* gulp: auto jshint check, bundling, minifying for js & css files
+* "angular-google-analytics" for google analytics
+* "angular-utils-disqus" for disqus
+* jshint fixes
+* ResourcePoolEdit(Controller) was renamed to ResourcePoolManage(Controller) to fix the conflict with generated one
+
 **0.42.2**
 
 * gitignore cleanup
@@ -37,7 +45,7 @@ In case of an update in the page, browsers automatically get the latest default.
 
 **0.41.3**
 
-* updateAnonymousChanges fix: When rejectChanges called, the entity was getting removed from the array during the loop. slice() used to prevent it.
+* updateAnonymousChanges fix: When rejectChanges is called, the entity was getting removed from the array during the loop. slice() used to prevent it.
 * external / local login anonymous user fix: detaching anonymous user in external case login was affecting normal login case.
 Now both cases call updateAnonymousChanges method which handles this case correctly.
 * userFactory getCurrentUser + isAuthentication functions were merged

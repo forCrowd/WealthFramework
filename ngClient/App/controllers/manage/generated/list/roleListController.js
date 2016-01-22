@@ -10,13 +10,13 @@
 (function () {
     'use strict';
 
-    var controllerId = 'roleListController';
+    var controllerId = 'RoleListController';
     angular.module('main')
         .controller(controllerId, ['roleFactory',
             'logger',
-			roleListController]);
+			RoleListController]);
 
-    function roleListController(roleFactory,
+    function RoleListController(roleFactory,
         logger) {
         logger = logger.forSource(controllerId);
 
@@ -28,7 +28,7 @@
 
         function initialize() {
             getRoleSet();
-        };
+        }
 
         function deleteRole(role) {
             roleFactory.deleteRole(role);
@@ -43,8 +43,8 @@
                     // Todo: more sophisticated recovery. 
                     // Here we just blew it all away and start over
                     // refresh();
-                })
-        };
+                });
+        }
 
         function getRoleSet() {
             roleFactory.getRoleSet(false)
@@ -52,5 +52,5 @@
                     vm.roleSet = data;
                 });
         }
-    };
+    }
 })();

@@ -10,8 +10,10 @@
     angular.module('main', [
         'ngRoute',
         'ngSanitize',
-        'ui.bootstrap',
         'breeze.angular',
+        'angular-google-analytics',
+        'angularUtils.directives.dirDisqus',
+        'ui.bootstrap',
         'highcharts-ng'
     ]);
 

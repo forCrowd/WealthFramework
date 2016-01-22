@@ -1,14 +1,14 @@
 ﻿(function () {
     'use strict';
 
-    var controllerId = 'sectorIndexSampleController';
+    var controllerId = 'SectorIndexSampleController';
     angular.module('main')
-        .controller(controllerId, ['logger', sectorIndexSampleController]);
+        .controller(controllerId, ['logger', SectorIndexSampleController]);
 
-    function sectorIndexSampleController(logger) {
+    function SectorIndexSampleController(logger) {
 
         logger = logger.forSource(controllerId);
 
         var vm = this;
-    };
+    }
 })();

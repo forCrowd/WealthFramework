@@ -10,13 +10,13 @@
 (function () {
     'use strict';
 
-    var controllerId = 'elementListController';
+    var controllerId = 'ElementListController';
     angular.module('main')
         .controller(controllerId, ['elementFactory',
             'logger',
-			elementListController]);
+			ElementListController]);
 
-    function elementListController(elementFactory,
+    function ElementListController(elementFactory,
         logger) {
         logger = logger.forSource(controllerId);
 
@@ -28,7 +28,7 @@
 
         function initialize() {
             getElementSet();
-        };
+        }
 
         function deleteElement(element) {
             elementFactory.deleteElement(element);
@@ -43,8 +43,8 @@
                     // Todo: more sophisticated recovery. 
                     // Here we just blew it all away and start over
                     // refresh();
-                })
-        };
+                });
+        }
 
         function getElementSet() {
             elementFactory.getElementSet(false)
@@ -52,5 +52,5 @@
                     vm.elementSet = data;
                 });
         }
-    };
+    }
 })();

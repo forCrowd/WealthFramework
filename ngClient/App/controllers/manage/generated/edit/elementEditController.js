@@ -10,16 +10,16 @@
 (function () {
     'use strict';
 
-    var controllerId = 'elementEditController';
+    var controllerId = 'ElementEditController';
     angular.module('main')
         .controller(controllerId, ['elementFactory',
             'resourcePoolFactory',
             'logger',
             '$location',
             '$routeParams',
-            elementEditController]);
+            ElementEditController]);
 
-    function elementEditController(elementFactory,
+    function ElementEditController(elementFactory,
 		resourcePoolFactory,
 		logger,
 		$location,
@@ -76,7 +76,7 @@
                         // TODO User-friendly message?
                     });
             }
-        };
+        }
 
         function isSaveDisabled() {
             return isSaving ||
@@ -106,5 +106,5 @@
                     isSaving = false;
                 });
         }
-    };
+    }
 })();

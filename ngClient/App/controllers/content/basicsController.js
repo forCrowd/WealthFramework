@@ -1,11 +1,11 @@
 ﻿(function () {
     'use strict';
 
-    var controllerId = 'basicsController';
+    var controllerId = 'BasicsController';
     angular.module('main')
-        .controller(controllerId, ['resourcePoolFactory', 'userFactory', '$scope', 'logger', basicsController]);
+        .controller(controllerId, ['resourcePoolFactory', 'userFactory', '$scope', 'logger', BasicsController]);
 
-    function basicsController(resourcePoolFactory, userFactory, $scope, logger) {
+    function BasicsController(resourcePoolFactory, userFactory, $scope, logger) {
 
         logger = logger.forSource(controllerId);
 
@@ -20,12 +20,12 @@
 
         function updateOppositeResourcePool(event, element) {
 
-            if (element.ResourcePool.Id === vm.existingModelConfig.resourcePoolId
-                || element.ResourcePool.Id === vm.newModelConfig.resourcePoolId) {
+            if (element.ResourcePool.Id === vm.existingModelConfig.resourcePoolId ||
+                element.ResourcePool.Id === vm.newModelConfig.resourcePoolId) {
 
-                var oppositeResourcePoolId = element.ResourcePool.Id === vm.existingModelConfig.resourcePoolId
-                    ? vm.newModelConfig.resourcePoolId
-                    : vm.existingModelConfig.resourcePoolId;
+                var oppositeResourcePoolId = element.ResourcePool.Id === vm.existingModelConfig.resourcePoolId ?
+                    vm.newModelConfig.resourcePoolId :
+                    vm.existingModelConfig.resourcePoolId;
 
                 // Call the service to increase the multiplier
                 resourcePoolFactory.getResourcePoolExpanded(oppositeResourcePoolId)
@@ -52,5 +52,5 @@
                     });
             }
         }
-    };
+    }
 })();

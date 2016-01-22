@@ -10,13 +10,13 @@
 (function () {
     'use strict';
 
-    var controllerId = 'elementFieldListController';
+    var controllerId = 'ElementFieldListController';
     angular.module('main')
         .controller(controllerId, ['elementFieldFactory',
             'logger',
-			elementFieldListController]);
+			ElementFieldListController]);
 
-    function elementFieldListController(elementFieldFactory,
+    function ElementFieldListController(elementFieldFactory,
         logger) {
         logger = logger.forSource(controllerId);
 
@@ -28,7 +28,7 @@
 
         function initialize() {
             getElementFieldSet();
-        };
+        }
 
         function deleteElementField(elementField) {
             elementFieldFactory.deleteElementField(elementField);
@@ -43,8 +43,8 @@
                     // Todo: more sophisticated recovery. 
                     // Here we just blew it all away and start over
                     // refresh();
-                })
-        };
+                });
+        }
 
         function getElementFieldSet() {
             elementFieldFactory.getElementFieldSet(false)
@@ -52,5 +52,5 @@
                     vm.elementFieldSet = data;
                 });
         }
-    };
+    }
 })();

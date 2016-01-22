@@ -10,7 +10,7 @@
 (function () {
     'use strict';
 
-    var controllerId = 'userResourcePoolEditController';
+    var controllerId = 'UserResourcePoolEditController';
     angular.module('main')
         .controller(controllerId, ['userResourcePoolFactory',
             'resourcePoolFactory',
@@ -18,9 +18,9 @@
             'logger',
             '$location',
             '$routeParams',
-            userResourcePoolEditController]);
+            UserResourcePoolEditController]);
 
-    function userResourcePoolEditController(userResourcePoolFactory,
+    function UserResourcePoolEditController(userResourcePoolFactory,
 		resourcePoolFactory,
 		userFactory,
 		logger,
@@ -84,7 +84,7 @@
                         // TODO User-friendly message?
                     });
             }
-        };
+        }
 
         function isSaveDisabled() {
             return isSaving ||
@@ -114,5 +114,5 @@
                     isSaving = false;
                 });
         }
-    };
+    }
 })();
