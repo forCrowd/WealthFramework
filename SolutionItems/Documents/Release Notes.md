@@ -2,6 +2,10 @@
 
 **0.43**
 
+* One "settings.js" file for ngClient settings
+
+**0.43**
+
 * gulp: auto jshint check, bundling, minifying for js & css files
 * "angular-google-analytics" for google analytics
 * "angular-utils-disqus" for disqus

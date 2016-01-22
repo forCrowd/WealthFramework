@@ -42,8 +42,6 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="app\settings\Setup\0 Readme.txt" />
-    <None Include="app\settings\Setup\serviceAppUrl.js" />
-    <None Include="app\settings\serviceAppUrl.js" />
     <Content Include="app\config\googleAnalytics.js" />
     <Content Include="app\controllers\manage\generated\edit\EditController.txt">
       <AutoGen>True</AutoGen>
@@ -150,10 +148,8 @@
     </Content>
     <Content Include="app\main.all.js" />
     <Content Include="app\main.min.js" />
-    <None Include="app\settings\googleAnalytics.js" />
-    <None Include="app\settings\Setup\googleAnalytics.js" />
-    <None Include="app\settings\disqus.js" />
-    <None Include="app\settings\Setup\disqus.js" />
+    <Content Include="app\settings\settings.js" />
+    <Content Include="app\settings\Setup\settings.js" />
     <Content Include="app\views\manage\generated\edit\EditView1.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
