@@ -149,8 +149,8 @@
     </Content>
     <Content Include="app\main.all.js" />
     <Content Include="app\main.min.js" />
-    <Content Include="app\settings\settings.js" />
-    <Content Include="app\settings\Setup\settings.js" />
+    <None Include="app\settings\settings.js" />
+    <None Include="app\settings\Setup\settings.js" />
     <Content Include="app\views\manage\generated\edit\EditView1.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
