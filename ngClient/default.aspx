@@ -6,21 +6,14 @@
     <title data-ng-bind="'Wealth Economy' + (viewTitle !== '' ? ' - ' + viewTitle : '')"></title>
     <base href="/" />
 
-    <!-- External CSS -->
-    <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css?v=0.42" rel="stylesheet" />
-    <link href="/bower_components/font-awesome/css/font-awesome.min.css?v=0.42" rel="stylesheet" />
-    <link href="/bower_components/breeze-client-labs/breeze.directives.css?v=0.42" rel="stylesheet" />
-    <link href="/bower_components/toastr/toastr.min.css?v=0.42" rel="stylesheet" />
-    <link href="/bower_components/bootstrap-social/bootstrap-social.css?v=0.42" rel="stylesheet" />
+    <!-- lib.css -->
+    <link href="/css/lib/lib.min.css?v=0.43.2" rel="stylesheet" />
 
-    <!-- Internal CSS -->
-    <link href="/css/site.min.css?v=0.43" rel="stylesheet" />
-
-    <!-- jQuery -->
-    <script src="/bower_components/jquery/dist/jquery.min.js?v=0.42"></script>
+    <!-- app.css -->
+    <link href="/css/app.min.css?v=0.43.2" rel="stylesheet" />
 
 </head>
-<body data-ng-controller="MainController as vm">
+<body data-ng-controller="DefaultController as vm">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -42,11 +35,6 @@
                             <li><a href="/content/overview">Overview</a></li>
                             <li><a href="/content/technologies">Technologies</a></li>
                         </ul>
-                    </li>
-                    <li class="dropdown hide" data-uib-dropdown data-ng-show="vm.isAuthenticated()">
-                        <a href="" class="dropdown-toggle" data-uib-dropdown-toggle>Manage <b class="caret"></b></a>
-                        <!-- Manage Menu - Generated -->
-                        <script src="/app/includes/manageMenu.js?v=0.37"></script>
                     </li>
                     <li>
                         <a href="/resourcePool">CMRP</a>
@@ -96,40 +84,14 @@
         </footer>
     </div>
 
-    <!--<script src="/Scripts/bootstrap.min.js?v=0.37"></script>-->
-    <!-- Is this useful, since bootstrap.min.js is commented out? -->
-    <script src="/bower_components/respond/dest/respond.min.js?v=0.42"></script>
-    
-    <script src="/bower_components/datajs/datajs.min.js?v=0.42"></script>
-    <script src="/bower_components/toastr/toastr.min.js?v=0.42"></script>
+    <!-- lib.js -->
+    <script src="/js/lib/lib.min.js?v=0.43.2"></script>
 
-    <script src="/bower_components/angular/angular.min.js?v=0.42"></script>
-    <script src="/bower_components/angular-route/angular-route.min.js?v=0.42"></script>
-    <script src="/bower_components/angular-sanitize/angular-sanitize.min.js?v=0.42"></script>
+    <!-- app.js -->
+    <script src="/js/app/app.min.js?v=0.43.2"></script>
 
-    <!-- breeze -->
-    <script src="/bower_components/breeze-client/build/breeze.min.js?v=0.42"></script>
-    <script src="/bower_components/breeze-client/build/adapters/breeze.bridge.angular.js?v=0.42"></script>
-    <script src="/bower_components/breeze-client-labs/breeze.directives.js?v=0.42"></script>
-
-    <!-- Angular Google Analytics -->
-    <script src="bower_components/angular-google-analytics/dist/angular-google-analytics.min.js?v=0.43"></script>
-
-    <!-- Angular Disqus -->
-    <script src="bower_components/angular-utils-disqus/dirDisqus.js?v=0.43"></script>
-
-    <!-- Angular UI -->
-    <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js?v=0.42"></script>
-
-    <!-- Highcharts -->
-    <script src="/bower_components/highcharts/highcharts.js?v=0.42"></script>
-    <script src="/bower_components/highcharts-ng/dist/highcharts-ng.min.js?v=0.42"></script>
-
-    <!-- App -->
-    <script src="/app/main.min.js?v=0.43.1"></script>
-
-    <!-- Settings -->
-    <script src="/app/settings/settings.js?v=0.43.1"></script>
+    <!-- appSettings -->
+    <script src="/js/appSettings/appSettings.js?v=0.43.2"></script>
 
 </body>
 </html>

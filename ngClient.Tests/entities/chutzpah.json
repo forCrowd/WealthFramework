@@ -1,0 +1,8 @@
+﻿{
+    "Framework": "jasmine",
+
+    "InheritFromParent": "false",
+
+    "TestFileTimeout": "30000"
+
+}

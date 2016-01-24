@@ -1,21 +1,7 @@
-﻿/// <reference path="../../ngClient/bower_components/angular/angular.min.js" />
-/// <reference path="../../ngClient/bower_components/angular-route/angular-route.min.js" />
-/// <reference path="../../ngClient/bower_components/angular-sanitize/angular-sanitize.min.js" />
+﻿/// <reference path="../../ngClient/js/lib/lib.js" />
 /// <reference path="../../ngClient/bower_components/angular-mocks/angular-mocks.js" />
-/// <reference path="../../ngClient/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js" />
-/// <reference path="../../ngClient/bower_components/breeze-client/build/breeze.min.js" />
-/// <reference path="../../ngClient/bower_components/breeze-client/build/adapters/breeze.bridge.angular.js" />
-/// <reference path="../../ngClient/bower_components/toastr/toastr.min.js" />
-/// <reference path="../../ngClient/bower_components/highcharts/highcharts.js" />
-/// <reference path="../../ngClient/bower_components/highcharts-ng/dist/highcharts-ng.min.js" />
-/// <reference path="../../ngClient/app/main.js" />
-/// <reference path="../../ngClient/app/factories/logger.js" />
-/// <reference path="../../ngClient/app/entities/Element.js" />
-/// <reference path="../../ngClient/app/entities/ElementCell.js" />
-/// <reference path="../../ngClient/app/entities/ElementField.js" />
-/// <reference path="../../ngClient/app/entities/ElementItem.js" />
-/// <reference path="../../ngClient/app/entities/ResourcePool.js" />
-/// <reference path="../../ngClient/app/entities/UserElementCell.js" />
+/// <reference path="../../ngClient/js/app/app.js" />
+/// <reference path="../../ngClient/js/appSettings/appSettings.js" />
 
 function registerPrototypes($injector) {
 

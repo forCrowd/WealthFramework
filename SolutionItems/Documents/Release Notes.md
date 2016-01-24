@@ -1,5 +1,16 @@
 ﻿### Release Notes
 
+**0.43.2**
+
+* breeze.base.debug.js + necessary adapters as main breeze setup, instead of breeze.debug.js
+** Also breeze.dataService.odata.js fix: https://github.com/Breeze/breeze.js/pull/128
+* External libraries minified & bundled as well: lib.js, lib.min.js, lib.css, lib.min.css
+* .tt files and most of the generated files were remove from ngClient
+* ngClient folder structure update
+* ngClient.Tests project was updated
+* Renames: main.all.js -> app.js, main.min.js -> app.min.js, site.all.css -> app.css, site.min.css -> app.min.css, MainController -> DefaultController
+* app.min.css fix
+
 **0.43.1**
 
 * One "settings.js" file for ngClient settings

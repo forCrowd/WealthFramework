@@ -1,59 +1,8 @@
-﻿/js
-/js/app
-/js/includes
-/js/lib
-/js/external?
-/css
-/images
-/views?
+﻿aspnet 5 - can it be published to live?
 
----
-REQUIRE JS? when "requirejs", do we need to bundle all js? or only "main.js"
-http://www.dotnetcurry.com/angularjs/1207/using-angularjs-bower-requirejs-visual-studio
-
-incremental build?
-https://github.com/gulpjs/gulp/blob/master/docs/recipes/README.md
-https://github.com/gulpjs/gulp/blob/master/docs/API.md
-live reload
-
-http://vswebessentials.com/
-
----
-remove debug+min aspx from route.js
-test web.config ""
-
-be careful about what's changed
-also webapi sslenabled came back?
-how to make this thingy faster?
-
-leave cdn & fallback cases to requirejs
-
-http://www.hanselman.com/blog/CDNsFailButYourScriptsDontHaveToFallbackFromCDNToLocalJQuery.aspx
-
----
-SMARTER ASP.NET MAPPED DOMAIN NAME MOVE TO ANOTHER HOSTING OPTION ?!
-click here to move it to another Hosting Account.
-
-smarter asp.net visitor stats + default doc + custom errors + url redirect options?
-
----
-CONTINUE WITH GULP!
-minify js files
-how to handle angular? sort order is important or not? attemp #1 failed?
-but then how to say use 'real' in dev + use 'min' in production?
-same goes for .css
-and then html?
-
-BOWER_COMPONENTS FOLDER CAN BE RENAMED TO LIB OR SOMETHING WITH A SPECIAL BOWER FILE?
-.bowerrc { "directory": "wwwroot/lib" }
-
-grunt or gulp? auto minify + bundling
-requirejs - basic setup looks good and can be done but require some understading let's say, folder structure for instance
-aspnet 5 - can it be published to live?
-
-maincontroller -> defaultController? -> home + homecontroller?
 README - mention node.js? + Paste these two files to this folder - into this..
-ngclient - disqus.js from bower?
+also jasmine-core@2.3.4 was installed earlier but uninstalling it didn't change anything on chutzpah..? was it necessary for karma?
+
 angularjs 404 case?
 do we need <web> block in webapi config file? ngclient has only one section, it can be just like that?
 test email account! + social logins test callbacks? + test database? + test facebook (google should be okay) + local & test microsoft?
@@ -61,15 +10,14 @@ microsoft login doesn't work? - doesnt work on local & test, since its configure
 delete resource pool error?
 remember me - forgot pass
 save your changes timeout?
-remove http: parts?
 redirect www.forcrowd.org to wealth.forcrowd.org?
-gitignore googleanalytics.js so anyone can enter their own? also don't run it on local + test?
-ngclient - use their own version for ?v= pattern for external libs?
-jasmine-core@2.3.4 was installed earlier but uninstalling it didn't change anything on chutzpah..? was it necessary for karma?
 karma.conf.js?
 RELEASE NOTES - CHANGELOG?
 
 errors at the bottom of todohot.md
+
+---
+RowVersion property of the entity cannot be null - an async issue?
 
 ---
 https://mva.microsoft.com/en-US/training-courses/angular-applications-with-typescript-14330?l=C9DsEeLgB_7404668937

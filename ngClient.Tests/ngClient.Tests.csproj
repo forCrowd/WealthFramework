@@ -43,6 +43,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="entities\chutzpah.json" />
     <Content Include="entities\Commons.js" />
     <Content Include="entities\ElementCellTests.js" />
     <Content Include="entities\ElementFieldTests.js" />
