@@ -30,7 +30,7 @@
             scope.editResourcePool = editResourcePool;
             scope.errorMessage = '';
             scope.isSaving = false;
-            scope.resourcePool = null;
+            scope.resourcePool = { Name: 'Loading...' };
             scope.resourcePoolId = null;
 
             // Functions

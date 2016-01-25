@@ -28,7 +28,9 @@ WebApi/Configs/*.config
 # Gulp generated files
 ngClient/js/app/app.js
 ngClient/js/app/app.min.js
+ngClient/js/app/app.min.js.map
 ngClient/js/lib/*.js
+ngClient/js/lib/*.map
 ngClient/css/app.css
 ngClient/css/app.min.css
 ngClient/css/lib/*.css

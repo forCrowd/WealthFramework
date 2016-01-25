@@ -1,6 +1,5 @@
 ﻿/*
  * Authorization interceptors for angular & OData
- * TODO Could be shorter?
  */
 
 (function () {

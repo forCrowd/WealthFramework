@@ -2,13 +2,19 @@
 
 **0.43.2**
 
+* Sourcemap generation was added to gulp minifying
+* angular exceptionHandling was modified to handle sourcemapped stacktrace
 * breeze.base.debug.js + necessary adapters as main breeze setup, instead of breeze.debug.js
 ** Also breeze.dataService.odata.js fix: https://github.com/Breeze/breeze.js/pull/128
 * External libraries minified & bundled as well: lib.js, lib.min.js, lib.css, lib.min.css
 * .tt files and most of the generated files were remove from ngClient
+* gulpfile errorHandler was added for uglify
 * ngClient folder structure update
+* bower packages were updated
 * ngClient.Tests project was updated
 * Renames: main.all.js -> app.js, main.min.js -> app.min.js, site.all.css -> app.css, site.min.css -> app.min.css, MainController -> DefaultController
+* "Loading..." text for initial load of resource pool editor
+* lib.css was missing bootstrap-social package fix
 * app.min.css fix
 
 **0.43.1**

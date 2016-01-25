@@ -1,18 +1,23 @@
-﻿aspnet 5 - can it be published to live?
+﻿http://vswebessentials.com/
 
-README - mention node.js? + Paste these two files to this folder - into this..
-also jasmine-core@2.3.4 was installed earlier but uninstalling it didn't change anything on chutzpah..? was it necessary for karma?
+aspnet 5 - can it be published to live?
 
+http://localhost:15001/js/ - HTTP Error 403.14 - Forbidden - Better error page?
+
+remember me - forgot pass
+Sector index -> priority index!
 angularjs 404 case?
 do we need <web> block in webapi config file? ngclient has only one section, it can be just like that?
 test email account! + social logins test callbacks? + test database? + test facebook (google should be okay) + local & test microsoft?
 microsoft login doesn't work? - doesnt work on local & test, since its configured for live domain?
 delete resource pool error?
-remember me - forgot pass
 save your changes timeout?
 redirect www.forcrowd.org to wealth.forcrowd.org?
-karma.conf.js?
 RELEASE NOTES - CHANGELOG?
+check this out; http://breeze.github.io/doc-breeze-labs/directives-validation.html
+check this out: https://github.com/mmanela/chutzpah/wiki/Chutzpah.json-Settings-File
+
+throw exception instead; logger.logError('Load metadata first!');
 
 errors at the bottom of todohot.md
 
@@ -23,11 +28,6 @@ RowVersion property of the entity cannot be null - an async issue?
 https://mva.microsoft.com/en-US/training-courses/angular-applications-with-typescript-14330?l=C9DsEeLgB_7404668937
 http://www.codelord.net/2016/01/07/adding-the-first-angular-2-service-to-your-angular-1-app/
 https://channel9.msdn.com/Events/Seth-on-the-Road/DevIntersection-2015/Making-Sense-of-the-JavaScript-Client-Side-with-Ward-Bell
-
----
-. reset password + remember me?
-
-. Sector index -> priority index!
 
 ---
 content for editor? new content or new resourcepool - content in a content? or page as a new entity?
@@ -122,17 +122,16 @@ check return conflict() blocks, there's something wrong with them!
 
 . info tooltips hover, won't work on mobiles?
 
-. asp.net 5?
-
 . Better ratings UI https://angular-ui.github.io/bootstrap/#/getting_started
 . angular material - https://material.angularjs.org/latest/
-
-. update google analytics on route changes
 
 CONTENT
 . antidote of capitalism?
 . all in one?
 . create new content based on TED talks?
+
+. toastr has a jquery dependency - without it, jquery can be removed?
+. source-map - original position name & column props are null
 
 . google index? it's too slow at the moment?
 
@@ -144,10 +143,6 @@ Desktop 65/100
 
 compression for dynamic content
 https://wealth.forcrowd.org/odata/ResourcePool?$filter=Id%20eq%209&amp;$expand=ElementSet%2FElementFieldSet%2CElementSet%2FElementItemSet%2FElementCellSet
-
-async or defer js? which ones?
-optimize css? with which tool?
-bundling?
 
 ---
 RowVersion property of the entity cannot be null&#xD;&#xA;   at forCrowd.WealthEconomy.WebApi.Controllers.OData.BaseUserElementCellController.&lt;Patch&gt;d__9.MoveNext() in D:\Development\Projects\GitHub\forCrowd\WealthEconomy\WebApi\Controllers\OData\Generated\UserElementCellController.cs:line 133

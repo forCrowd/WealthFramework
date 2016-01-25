@@ -401,7 +401,6 @@
                 case 'increase':
                 case 'decrease': {
 
-
                     if (userCell === null) { // If there is no item, create it
 
                         userCell = dataContext.createEntity('UserElementCell', {

@@ -106,8 +106,10 @@
     <Content Include="js\app\filters\angular-numberSymbol.js" />
     <Content Include="js\app\filters\angular-percentage.js" />
     <Content Include="js\app\main.js" />
+    <Content Include="js\app\app.min.js.map" />
     <None Include="js\lib\breeze-client\build\adapters\breeze.dataService.odata.js" />
     <None Include="bower.json" />
+    <Content Include="js\lib\lib.min.js.map" />
     <None Include="package.json" />
     <None Include="Properties\PublishProfiles\wealth.pubxml" />
     <None Include="Properties\PublishProfiles\wealth.test.pubxml" />
