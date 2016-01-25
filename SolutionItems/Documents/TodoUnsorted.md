@@ -2,10 +2,6 @@
 
 * when using fb account, anonymous changes will be lost! try to implement anonymous user for all actions..
 
-* throw exception instead; logger.logError('Load metadata first!');
-
-* cookieauth was necessary to use browser to reach auth pages - elmah.axd for instance and /api/..
-
 * apply "// Set otherUsers' properties" section in custom resourcepoolservice.js to all getResourcePool options?
 
 * sales price is actually not correct in CMRP samples?
@@ -29,8 +25,7 @@ field.numericValueMultiplied
 . cell.aggressiveRatingPercentage
 . cell.indexIncome
 
-* token binding protocol?
-HTTP/2 Support?
+* token binding protocol? HTTP/2 Support?
 
 * was there any problem of calculating otherusersresourcepoolratetotal - because of it was retrieving all the users (related with multitenancy?)
 try to do it again? otherwise, after loading the data from the server, it should calculate this on the client-side only once?
@@ -40,10 +35,11 @@ TEST RELATED
 * create a generic cmrp function in commons.js to replace most of the test preparation code?
 * Check and try to remove these; // TODO Manually update?!
 In most cases, it should only call cell.numericValue() etc. (most basic one) and then the rest should be done like a domino
-* karma ff console! angular etc. errors! bit problematic?
 * Unit testing for controllers + unitofwork etc.?
 
 ---
+* Remark: cookieauth was necessary to use browser to reach auth pages - elmah.axd for instance and /api/..
+
 * check validation cases - null is okay but how about Id check - Id > 0?
 
 * check whether unit of work classes (and also Controllers) need merging  
@@ -60,15 +56,9 @@ according to this, normal user may not use post action for instance? check these
 * implement soft delete
 * exists should work with find or alllive.any() or all.any()?  
 * find vs deleted records? - findlive? or don't retrieve dead records at all?
-* loading animation? both for breeze + angular  
-[nprogress](http://ricostacruz.com/nprogress/) ?
 * enum data type didnt work with odata? or api?
 * using texbox to update chart data didn't work, it breaks the chart?
-* about MVC, only routing is left, if that could be replaced MVC could be gone forever?
-Check this; modules runAllManagedModulesForAllRequests="true"
-* http://localhost:15001/content/ - 403 - Forbidden: Access is denied error?
 * automate .tt scripts with afterbuild?
-* try to have a standard for css usage + html layout formats + also js script conventions
 * enable auto test for appveyor - currently it fails probably because it can't create the db?
 * __migrationhistory createdon field error - it seems there is not much to do, it also might be about glimpse?
 * code contracts?
@@ -76,8 +66,6 @@ Check this; modules runAllManagedModulesForAllRequests="true"
 * http://www.hanselman.com/blog/crossbrowserdebuggingintegratedintovisualstudiowithbrowserstack.aspx
 * https://www.runscope.com/signup
 * html minifier: https://github.com/deanhume/html-minifier
-* /help works, improve and use it?
-And how about Install-Package Microsoft.AspNet.WebApi.HelpPage ? same?
 * web api throttling!
 * request validation -> html agility pack?
 * coded ui test or canopy or ..? web iu testers?
@@ -91,18 +79,15 @@ And how about Install-Package Microsoft.AspNet.WebApi.HelpPage ? same?
 * calling saveChanges in dispose of unitofwork?
 * extend dbcontext validation errors - check spaanjaars sample and use them in webapp with modelstate blocks?
 * result of datetime (ticks) index is bit useless? need reference a start or end date as a reference?
-* remove scripts folder from github? - it's not possible for today / 11 Mar. '15
 * how about disabling proxy classes? what will be the difference exactly?
 * elmah for glimpse. necessary?
 * automapper - useful library, do we need it?
 * Convert batch files to PowerShell scripts - to get used to Powershell
 * ElementField SortOrder field validations - Check various scenarios, it shouldn't contain duplicate values for instance, what should happen then? Create test cases
 
-* jetbrains vs tools open source promotion;
-https://www.jetbrains.com/
+* jetbrains vs tools open source promotion; https://www.jetbrains.com/
 
-* angularjs conventions;
-https://github.com/mgechev/angularjs-style-guide
+* angularjs conventions; https://github.com/mgechev/angularjs-style-guide
 
 * breeze save queuing - is this useful?
 http://www.getbreezenow.com/documentation/concurrent-saves
@@ -111,7 +96,7 @@ tried this but should be improved. Before calling saveChanges function, we set e
 * unified approach for controller validations;
 SequenceEqual check is only in Patch method, in on Post & Put
 DbUpdateConcurrencyException is only in Post & Put, in on Patch
-Delete does't have any Concurrency check?
+Delete doesn't have any Concurrency check?
 
 * Handling concurrency can be improved;
 Load the new record from the server and let the user update it's record accordingly
@@ -138,9 +123,6 @@ http://products.office.com/en-us/microsoft-software-license-agreement
 http://www.microsoft.com/en-us/legal/intellectualproperty/useterms/default.aspx
 http://download.microsoft.com/Documents/UseTerms/Windows_8.1_English_468d3103-64a4-44fa-8f73-23490ee17ea5.pdf
 
-* angular interceptor for error handling?
-http://www.codeproject.com/Articles/857594/MVC-Thorough-Error-Handling		
-
 * Content related;
 dynamic pricing - low price is good but can't be zero because then it's not sustainable as well?
 Answer to this question: It's not just zero but any income lower than the cost wouldn't be sustainable (income >= cost). The question is how to ensure that the organization is going to get more income in case if they're making their products accessible to all by not asking any money (which we would like to encourage). Probably the organization should say we're going to get our income from the pool, not by selling it. Which means it will be totally controlled and funded by the pool.
@@ -157,12 +139,7 @@ what are the dependencies? work on separation of concerns.
 where to create memorydbcontext? on dbobjects or business objects? also do we need IoC framework? ninject looks quite easy but is it necessary?
 instead of dataobjects, it should be dataobjects.EF?
 
-* check todo items
-
-* check error handling again, it was handling api errors as well? - IS THIS OBSOLETE?
-
----
-http://www.asp.net/web-api/overview/testing-and-debugging/mocking-entity-framework-when-unit-testing-aspnet-web-api-2
+* http://www.asp.net/web-api/overview/testing-and-debugging/mocking-entity-framework-when-unit-testing-aspnet-web-api-2
 
 ---
 . addfield method should create new elementcells for this new field for the existing items!
@@ -207,11 +184,7 @@ if the current user has no right to enter a rating for that area, then it must u
 * introduction, don't allow to use multiplier functions?
 some samples don't need to be saved ?! intro + basics?
 
-	* **Better ratings UI** https://angular-ui.github.io/bootstrap/#/getting_started
-
 	* **allow cmrp rate to be changed**
-
-	* **update google analytics on route changes**
 
 * current vs existing vs present vs old?
 
@@ -219,18 +192,11 @@ some samples don't need to be saved ?! intro + basics?
 
 * cleanup social media stuff!
 
-* accountController.js doesn't handle the error the server well, it only says "Invalid request" or something. Check modelState error?
-
 * how breeze react in case of querying expanded + expandedwithuser from local..? does it say it's there or not?
 
 * creative commons?
 
-* social media
-skype
-pinterest
-instagram
-others?
-http://namevine.com/#/forcrowd
+* social media - skype, pinterest, instagram, others? http://namevine.com/#/forcrowd
 
 . wording;
 facebook	log in		sign up
@@ -241,13 +207,7 @@ microsoft	sign in		sign up
 
 * should samples details need to be mentioned? all organizations are equal except the indexes, they all have to have same number of sales etc.
 
-. sendgrid;
-https://sendgrid.com/windowsazure.html - 25K free emails for Azure account
-http://azure.microsoft.com/en-in/documentation/articles/sendgrid-dotnet-how-to-send-email/ - uses SendGrid library to send the emails
-
-https://sendgrid.com/blog/tips-tricks-stay-spam-folder-qa/
-https://sendgrid.com/docs/User_Guide/warming_up.html
-http://www.mail-tester.com/
+* Nice tool: http://www.mail-tester.com/
 
 wealth is interested in the following questions;
 . how the society allocates its resources?
@@ -270,6 +230,26 @@ we should also be able to mention which actions are allowed
 userresourcepool + userx is okay, but resourcepool will also be under user now but other users can retrieve it this time, while other actions are still not permitted
 
 * element cell - user element cell - user cleanup
+
+* refresh tokens?
+
+* X-InlineCount - X-Pagination
+
+* anti forgery: AntiForgery.GetTokens
+
+* scroll directive (scrollToItem - requires jQuery);
+http://stackoverflow.com/questions/17284005/scrollto-function-in-angularjs
+moving menu (fixed to top of the screen)
+selecting the current item in the menu / updating url?
+navigating to the current item on initial load?
+prevent re-render
+update editor size accordingly (with menu, it doesn't fit to screen)
+check, use anchorScrollTest project?
+
+* // TODO With just Ok(), it return the response with no content-type.
+// Apparetnly Firefox default for no content-type is xml and logs 'no element found' message on console.
+// return Ok();
+return Ok(string.Empty);
 
 * check old sample org names
 
@@ -336,25 +316,6 @@ True Healthcare (Profit + Keeper)
 True Healthcare (Non-profit + Keeper)
 True Healthcare (Profit + Sharer)
 True Healthcare (Non-profit + Sharer)
-
----
-refresh tokens?
-
-X-InlineCount
-X-Pagination
-
----
-scroll directive (scrollToItem - requires jQuery);
-http://stackoverflow.com/questions/17284005/scrollto-function-in-angularjs
-moving menu (fixed to top of the screen)
-selecting the current item in the menu / updating url?
-navigating to the current item on initial load?
-prevent re-render
-update editor size accordingly (with menu, it doesn't fit to screen)
-check, use anchorScrollTest project?
-
----
-anti forgery: AntiForgery.GetTokens
 
 ---
 public class CountryController : Controller
@@ -441,9 +402,3 @@ datetime - indexable (fixed / user (only current - rating average))
 element - n/a
 resource - ~decimal
 multiplier - n/a
-
----
-// TODO With just Ok(), it return the response with no content-type.
-// Apparetnly Firefox default for no content-type is xml and logs 'no element found' message on console.
-// return Ok();
-return Ok(string.Empty);

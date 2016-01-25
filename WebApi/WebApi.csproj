@@ -294,7 +294,7 @@
     <Content Include="CustomErrors\403.html" />
     <Content Include="CustomErrors\500.html" />
     <Content Include="CustomErrors\404.html" />
-    <Content Include="googleanalytics.js" />
+    <None Include="googleanalytics.js" />
     <Content Include="favicon.ico" />
     <Content Include="default.aspx" />
     <Content Include="Controllers\OData\Generated\ODataController.tt">
@@ -376,11 +376,11 @@
   </Target> -->
   <Target Name="BeforeBuild">
     <CreateItem Include="$(ProjectDir)Configs\*.config">
-      <Output TaskParameter="Include" ItemName="ExistingConfigFiles" />
+      <Output TaskParameter="Include" ItemName="ExistingFiles" />
     </CreateItem>
-    <CreateItem Include="$(ProjectDir)Configs\Setup\*.config" Exclude="@(ExistingConfigFiles -> '$(ProjectDir)Configs\Setup\%(FileName)%(Extension)')">
-      <Output TaskParameter="Include" ItemName="ConfigFiles" />
+    <CreateItem Include="$(ProjectDir)Configs\Setup\*.config" Exclude="@(ExistingFiles -> '$(ProjectDir)Configs\Setup\%(FileName)%(Extension)')">
+      <Output TaskParameter="Include" ItemName="NewFiles" />
     </CreateItem>
-    <Copy SourceFiles="@(ConfigFiles)" DestinationFolder="$(ProjectDir)\Configs" />
+    <Copy SourceFiles="@(NewFiles)" DestinationFolder="$(ProjectDir)Configs" />
   </Target>
 </Project>
