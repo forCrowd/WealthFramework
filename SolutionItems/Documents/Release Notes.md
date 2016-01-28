@@ -1,5 +1,10 @@
 ﻿### Release Notes
 
+**0.43.4**
+
+* ResourcePoolManageController - remove resource pool fix:
+Controllers in openRemoveResourcePoolModal, openCopyModal functions were not using array syntax for their dependencies.
+
 **0.43.3**
 
 * Compression was enabled on WebApi / OData responses by using this package: https://www.nuget.org/packages/Microsoft.AspNet.WebApi.MessageHandlers.Compression/

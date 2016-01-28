@@ -88,7 +88,7 @@
     <script src="/js/lib/lib.min.js?v=0.43.2"></script>
 
     <!-- app.js -->
-    <script src="/js/app/app.min.js?v=0.43.2"></script>
+    <script src="/js/app/app.min.js?v=0.43.4"></script>
 
     <!-- appSettings -->
     <script src="/js/appSettings/appSettings.js?v=0.43.2"></script>

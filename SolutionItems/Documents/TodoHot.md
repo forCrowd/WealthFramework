@@ -1,16 +1,8 @@
-﻿http://vswebessentials.com/
-
-aspnet 5 - can it be published to live?
-
-http://localhost:15001/js/ - HTTP Error 403.14 - Forbidden - Better error page?
-
-remember me - forgot pass
+﻿remember me - forgot pass
 Sector index -> priority index!
-angularjs 404 case?
 do we need <web> block in webapi config file? ngclient has only one section, it can be just like that?
 test email account! + social logins test callbacks? + test database? + test facebook (google should be okay) + local & test microsoft?
 microsoft login doesn't work? - doesnt work on local & test, since its configured for live domain?
-delete resource pool error?
 save your changes timeout?
 redirect www.forcrowd.org to wealth.forcrowd.org?
 RELEASE NOTES - CHANGELOG?
@@ -54,11 +46,13 @@ Alpha team review!
 
 tests, tests, tests
 
-Find a designer! Ozgur's Ali
+Find a designer! Ozgur's Ali | http://foundry.mediumra.re/variant/builder.html
 
 save anon user to db?
 
 ---
+https://www.npmjs.com/package/gulp-minify-html
+
 userfactory - a block that doesnt return a promise?
 
 Identity / Account:
