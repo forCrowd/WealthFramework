@@ -23,6 +23,7 @@ namespace forCrowd.WealthEconomy.WebApi
             // WebApi
             FilterConfig.RegisterFilters(GlobalConfiguration.Configuration.Filters);
             FormatterConfig.RegisterFormatters(GlobalConfiguration.Configuration.Formatters);
+            MessageHandlerConfig.RegisterMessageHandlerConfig(GlobalConfiguration.Configuration.MessageHandlers);
             GlobalConfiguration.Configure(WebApiConfig.Register);
 
             // Database
