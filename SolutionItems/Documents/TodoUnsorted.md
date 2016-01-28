@@ -51,6 +51,7 @@ either work with Ids, or try to work on merging unitofwork classes
 any user should be able to access them but only the owners and admins can update them?  
 according to this, normal user may not use post action for instance? check these rules later on  
 
+* angularjs 404 case? https://prerender.io/documentation/best-practices
 * glimpse webapi (trace for instance) doesn't work for the moment - check it again later
 * glimpse on remote server? http://blog.getglimpse.com/2013/12/09/protect-glimpse-axd-with-your-custom-runtime-policy/
 * implement soft delete
@@ -85,7 +86,11 @@ according to this, normal user may not use post action for instance? check these
 * Convert batch files to PowerShell scripts - to get used to Powershell
 * ElementField SortOrder field validations - Check various scenarios, it shouldn't contain duplicate values for instance, what should happen then? Create test cases
 
+* aspnet 5 - it seems it's not ready or at least easy to publish at the moment / coni2k - 28 Jan. '16
+
 * jetbrains vs tools open source promotion; https://www.jetbrains.com/
+
+* google analytics filters - apparently ignoring localhost + test only works for future visits?
 
 * angularjs conventions; https://github.com/mgechev/angularjs-style-guide
 
