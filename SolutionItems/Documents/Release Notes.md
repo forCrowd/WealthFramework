@@ -1,5 +1,9 @@
 ﻿### Release Notes
 
+**0.43.3**
+
+* Compression was enabled on WebApi / OData responses by using this package: https://www.nuget.org/packages/Microsoft.AspNet.WebApi.MessageHandlers.Compression/
+
 **0.43.2**
 
 * Sourcemap generation was added to gulp minifying
