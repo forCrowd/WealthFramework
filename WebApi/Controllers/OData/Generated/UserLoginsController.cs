@@ -71,13 +71,13 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MainUnitOfWork.Exists(providerKey))
+                if (await MainUnitOfWork.All.AnyAsync(item => item.ProviderKey == userLogin.ProviderKey))
                 {
-                    return NotFound();
+                    return Conflict();
                 }
                 else
                 {
-                    return Conflict();
+                    return NotFound();
                 }
             }
 
@@ -98,7 +98,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             }
             catch (DbUpdateException)
             {
-                if (MainUnitOfWork.Exists(userLogin.ProviderKey))
+                if (await MainUnitOfWork.All.AnyAsync(item => item.ProviderKey == userLogin.ProviderKey))
                 {
                     return Conflict();
                 }

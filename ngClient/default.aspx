@@ -7,10 +7,10 @@
     <base href="/" />
 
     <!-- lib.css -->
-    <link href="/css/lib/lib.min.css?v=0.43.2" rel="stylesheet" />
+    <link href="/css/lib/lib.min.css?v=0.43.5" rel="stylesheet" />
 
     <!-- app.css -->
-    <link href="/css/app.min.css?v=0.43.2" rel="stylesheet" />
+    <link href="/css/app.min.css?v=0.43.5" rel="stylesheet" />
 
 </head>
 <body data-ng-controller="DefaultController as vm">
@@ -85,10 +85,10 @@
     </div>
 
     <!-- lib.js -->
-    <script src="/js/lib/lib.min.js?v=0.43.2"></script>
+    <script src="/js/lib/lib.min.js?v=0.43.5"></script>
 
     <!-- app.js -->
-    <script src="/js/app/app.min.js?v=0.43.4"></script>
+    <script src="/js/app/app.min.js?v=0.43.5"></script>
 
     <!-- appSettings -->
     <script src="/js/appSettings/appSettings.js?v=0.43.2"></script>

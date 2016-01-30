@@ -12,21 +12,17 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify');
 
 // app.js variables
-var appJsRoot = './js/app',
+var appMinJs = 'app.min.js',
+    appJs = appMinJs.replace('.min', ''),
+    appJsRoot = './js/app',
     appJsSourceMapRoot = appJsRoot.substring(1),
-    appJs = 'app.js',
-    appJsPath = appJsRoot + '/' + appJs,
-    appMinJs = 'app.min.js',
-    appMinJsPath = appJsRoot + '/' + appMinJs,
-    appJsSrc = [appJsRoot + '/**/*.js', '!' + appJsPath, '!' + appMinJsPath];
+    appJsSrc = [appJsRoot + '/**/*.js', '!' + appJsRoot + '/' + appJs, '!' + appJsRoot + '/' + appMinJs];
 
 // app.css variables
-var appCssRoot = './css',
-    appCss = 'app.css',
-    appCssPath = appCssRoot + '/' + appCss,
-    appMinCss = 'app.min.css',
-    appMinCssPath = appCssRoot + '/' + appMinCss,
-    appCssSrc = [appCssRoot + '/*.css', appJsRoot + '/directives/**/*.css', '!' + appCssPath, '!' + appMinCssPath];
+var appMinCss = 'app.min.css',
+    appCss = appMinCss.replace('.min', ''),
+    appCssRoot = './css',
+    appCssSrc = [appCssRoot + '/*.css', appJsRoot + '/directives/**/*.css', '!' + appCssRoot + '/' + appCss, '!' + appCssRoot + '/' + appMinCss];
 
 // lib variables
 var libJsSrcRoot = './bower_components',
@@ -61,27 +57,25 @@ var libJsSrcRoot = './bower_components',
     breezeDirectivesCss = libJsSrcRoot + '/breeze-client-labs/breeze.directives.css',
     toastrCss = libJsSrcRoot + '/toastr/toastr.css',
 
-    // Fonts (Font Awesome)
-    fontAwesomeFonts = libJsSrcRoot + '/font-awesome/fonts/*',
-    fontAwesomeFontsDest = './css/fonts';
+    // Fonts
+    bootstrapFonts = libJsSrcRoot + '/bootstrap/fonts/*', // Bootstrap
+    fontAwesomeFonts = libJsSrcRoot + '/font-awesome/fonts/*', // Font Awesome
+    fontsSrc = [bootstrapFonts, fontAwesomeFonts],
+    fontsDest = './css/fonts';
 
 // lib.js variables
-var libJsRoot = './js/lib',
-    libJs = 'lib.js',
-    libJsPath = libJsRoot + '/' + libJs,
-    libMinJs = 'lib.min.js',
-    libMinJsPath = libJsRoot + '/' + libMinJs,
+var libMinJs = 'lib.min.js',
+    libJs = libMinJs.replace('.min', ''),
     libJsSrc = [jquery, angular, angularRoute, angularSanitize, datajs, breeze, breezeAjaxAngular, breezeDataServiceOData,
         breezeModelLibraryBackingStore, breezeUriBuilderOData, breezeBridgeAngular, breezeDirectives, googleAnalyticsAngular,
-        disqusAngular, respond, bootstrapAngular, highcharts, highchartsAngular, toastr, sourceMap];
+        disqusAngular, respond, bootstrapAngular, highcharts, highchartsAngular, toastr, sourceMap],
+    libJsDest = './js/lib';
 
 // lib.css variables
-var libCssRoot = './css/lib',
-    libCss = 'lib.css',
-    libCssPath = libCssRoot + '/' + libCss,
-    libMinCss = 'lib.min.css',
-    libMinCssPath = libCssRoot + '/' + libMinCss,
-    libCssSrc = [bootstrap, fontAwesome, bootstrapSocial, breezeDirectivesCss, toastrCss];
+var libMinCss = 'lib.min.css',
+    libCss = libMinCss.replace('.min', ''),
+    libCssSrc = [bootstrap, fontAwesome, bootstrapSocial, breezeDirectivesCss, toastrCss],
+    libCssDest = './css/lib';
 
 // default
 gulp.task('default', [appJs, appCss, libJs, libCss, 'watch']);
@@ -119,27 +113,28 @@ gulp.task(libJs, function () {
     return gulp.src(libJsSrc)
         .pipe(sourcemaps.init())
         .pipe(concat(libJs, { newLine: '\r\n' }))
-        .pipe(gulp.dest(libJsRoot))
+        .pipe(gulp.dest(libJsDest))
         .pipe(rename(libMinJs))
         .pipe(uglify())
         .on('error', errorHandler)
         .pipe(sourcemaps.write('./', { sourceRoot: libJsSourceMapRoot }))
-        .pipe(gulp.dest(libJsRoot))
+        .pipe(gulp.dest(libJsDest))
     ;
 });
 
 // lib.css: copy font awesome fonts + concat all into lib.css + minify all into lib.min.css
 gulp.task(libCss, function () {
 
-    gulp.src(fontAwesomeFonts)
-        .pipe(gulp.dest(fontAwesomeFontsDest));
+    // Fonts
+    gulp.src(fontsSrc)
+        .pipe(gulp.dest(fontsDest));
 
     return gulp.src(libCssSrc)
         .pipe(concat(libCss, { newLine: '\r\n' }))
-        .pipe(gulp.dest(libCssRoot))
+        .pipe(gulp.dest(libCssDest))
         .pipe(rename(libMinCss))
         .pipe(cssmin())
-        .pipe(gulp.dest(libCssRoot));
+        .pipe(gulp.dest(libCssDest));
 });
 
 // watch

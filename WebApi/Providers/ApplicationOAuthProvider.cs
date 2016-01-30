@@ -1,5 +1,6 @@
 ﻿namespace forCrowd.WealthEconomy.WebApi.Providers
 {
+    using Facade;
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin.Security;
     using Microsoft.Owin.Security.OAuth;
@@ -23,7 +24,7 @@
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-            var userManager = context.OwinContext.GetUserManager<UserManagerFactory>();
+            var userManager = context.OwinContext.GetUserManager<UserManager>();
 
             var username = context.UserName;
             var password = context.Password;

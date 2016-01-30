@@ -1,5 +1,19 @@
 ﻿### Release Notes
 
+**0.43.5**
+
+* 'Retrieving data from user level tables are failing with "Unauthenticated access" exception' fix
+Exact cause is unknown but registering Compression message handler after than 'config.SuppressDefaultHostAuthentication' fixed the issue
+* User level controller's 'Exists function fails due to multiple keys' fix
+Exists parts were replaced with SingleOrDefault()
+* 'Missing glyphicons fonts' fix
+* ngClient - LoginController - returnUrl fix for newly loaded app
+* WealthEconomyContext - Don't add deleted items addition
+* WebApi - Startup.cs + WebApiConfig merge
+* WebApi - default.aspx version text was added
+* gulpfile updates
+* Package updates
+
 **0.43.4**
 
 * ResourcePoolManageController - remove resource pool fix:
@@ -7,7 +21,8 @@ Controllers in openRemoveResourcePoolModal, openCopyModal functions were not usi
 
 **0.43.3**
 
-* Compression was enabled on WebApi / OData responses by using this package: https://www.nuget.org/packages/Microsoft.AspNet.WebApi.MessageHandlers.Compression/
+* Compression was enabled on WebApi / OData responses by using 'Microsoft.AspNet.WebApi.MessageHandlers.Compression'
+https://www.nuget.org/packages/Microsoft.AspNet.WebApi.MessageHandlers.Compression/
 
 **0.43.2**
 

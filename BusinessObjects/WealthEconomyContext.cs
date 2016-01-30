@@ -139,7 +139,12 @@
                 if (changedOrAddedItem != null)
                 {
                     if (item.State == EntityState.Added)
+                    {
                         changedOrAddedItem.CreatedOn = DateTime.UtcNow;
+
+                        // Don't add deleted items
+                        changedOrAddedItem.DeletedOn = null;
+                    }
                     changedOrAddedItem.ModifiedOn = DateTime.UtcNow;
                 }
             }
