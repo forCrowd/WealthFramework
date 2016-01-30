@@ -1,8 +1,12 @@
 ﻿namespace forCrowd.WealthEconomy.WebApi
 {
     using BusinessObjects;
+    using DataObjects;
+    using Facade;
+    using Framework;
     using HttpClientHandlers;
     using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin;
     using Microsoft.Owin.Security.Facebook;
     using Microsoft.Owin.Security.Google;
@@ -22,7 +26,7 @@
             // Configure the db context and user manager to use a single instance per request
             // TODO Is this correct to make DbContext accessible from Web application?
             app.CreatePerOwinContext(WealthEconomyContext.Create);
-            app.CreatePerOwinContext<UserManagerFactory>(UserManagerFactory.Create);
+            app.CreatePerOwinContext<UserManager>(CreateUserManager);
 
             // Use a cookie to temporarily store information about a user logging in with a third party login provider
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
@@ -42,15 +46,15 @@
             app.UseOAuthBearerTokens(OAuthServerOptions);
 
             // Configure Facebook login
-            var facebookAppId = Framework.AppSettings.FacebookAppId;
-            var facebookAppSecret = Framework.AppSettings.FacebookAppSecret;
+            var facebookAppId = AppSettings.FacebookAppId;
+            var facebookAppSecret = AppSettings.FacebookAppSecret;
 
             if (!string.IsNullOrWhiteSpace(facebookAppId) && !string.IsNullOrWhiteSpace(facebookAppSecret))
             {
                 var facebookAuthOptions = new FacebookAuthenticationOptions()
                 {
-                    AppId = Framework.AppSettings.FacebookAppId,
-                    AppSecret = Framework.AppSettings.FacebookAppSecret,
+                    AppId = AppSettings.FacebookAppId,
+                    AppSecret = AppSettings.FacebookAppSecret,
                     UserInformationEndpoint = "https://graph.facebook.com/v2.5/me?fields=email",
                     BackchannelHttpHandler = new FacebookBackChannelHandler(),
                     CallbackPath = new PathString("/api/Account/ExternalLoginFacebook") // Middleware is going to handle this, no need to implement
@@ -60,8 +64,8 @@
             }
 
             // Configure Google login
-            var googleClientId = Framework.AppSettings.GoogleClientId;
-            var googleClientSecret = Framework.AppSettings.GoogleClientSecret;
+            var googleClientId = AppSettings.GoogleClientId;
+            var googleClientSecret = AppSettings.GoogleClientSecret;
 
             if (!string.IsNullOrWhiteSpace(googleClientId) && !string.IsNullOrWhiteSpace(googleClientSecret))
             {
@@ -75,20 +79,54 @@
             }
 
             // Configure Microsoft Accounts login
-            var microsoftClientId = Framework.AppSettings.MicrosoftClientId;
-            var microsoftClientSecret = Framework.AppSettings.MicrosoftClientSecret;
+            var microsoftClientId = AppSettings.MicrosoftClientId;
+            var microsoftClientSecret = AppSettings.MicrosoftClientSecret;
 
             if (!string.IsNullOrWhiteSpace(microsoftClientId) && !string.IsNullOrWhiteSpace(microsoftClientSecret))
             {
                 var microsoftAccountAuthOptions = new MicrosoftAccountAuthenticationOptions()
                 {
-                    ClientId = Framework.AppSettings.MicrosoftClientId,
-                    ClientSecret = Framework.AppSettings.MicrosoftClientSecret,
+                    ClientId = AppSettings.MicrosoftClientId,
+                    ClientSecret = AppSettings.MicrosoftClientSecret,
                     CallbackPath = new PathString("/api/Account/ExternalLoginMicrosoft") // Middleware is going to handle this, no need to implement
                 };
                 microsoftAccountAuthOptions.Scope.Add("wl.emails");
                 app.UseMicrosoftAccountAuthentication(microsoftAccountAuthOptions);
             }
+        }
+
+        public static UserManager CreateUserManager(IdentityFactoryOptions<UserManager> options, IOwinContext context)
+        {
+            var manager = new UserManager(new UserStore(context.Get<WealthEconomyContext>()));
+            // Configure validation logic for usernames
+            manager.UserValidator = new UserValidator<User, int>(manager)
+            {
+                AllowOnlyAlphanumericUserNames = false,
+                RequireUniqueEmail = true
+            };
+
+            // Configure validation logic for passwords
+            // TODO Review this!
+            manager.PasswordValidator = new PasswordValidator
+            {
+                RequiredLength = 6,
+                //RequireNonLetterOrDigit = true,
+                RequireDigit = true,
+                RequireLowercase = true,
+                //RequireUppercase = true,
+            };
+
+            manager.EmailService = new EmailService();
+            manager.ConfirmEmailUrl = string.Format("{0}/account/confirmEmail", AppSettings.ClientAppUrl);
+
+            var dataProtectionProvider = options.DataProtectionProvider;
+            if (dataProtectionProvider != null)
+            {
+                manager.UserTokenProvider =
+                    new DataProtectorTokenProvider<User, int>(dataProtectionProvider.Create("ASP.NET Identity"));
+            }
+
+            return manager;
         }
     }
 }

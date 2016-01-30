@@ -2,6 +2,7 @@
 {
     using BusinessObjects;
     using Extensions;
+    using Facade;
     using Filters;
     using Microsoft.AspNet.Identity.Owin;
     using System.Threading.Tasks;
@@ -12,22 +13,22 @@
     [RequireHttps]
     public abstract class BaseApiController : ApiController
     {
-        private UserManagerFactory _userManager;
+        private UserManager _userManager;
 
         public BaseApiController()
         {
         }
 
-        public BaseApiController(UserManagerFactory userManager)
+        public BaseApiController(UserManager userManager)
         {
             UserManager = userManager;
         }
 
-        public UserManagerFactory UserManager
+        public UserManager UserManager
         {
             get
             {
-                return _userManager ?? HttpContext.Current.GetOwinContext().GetUserManager<UserManagerFactory>();
+                return _userManager ?? HttpContext.Current.GetOwinContext().GetUserManager<UserManager>();
             }
             private set
             {

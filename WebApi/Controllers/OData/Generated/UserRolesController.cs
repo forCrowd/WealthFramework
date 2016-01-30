@@ -71,13 +71,13 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MainUnitOfWork.Exists(roleId))
+                if (await MainUnitOfWork.All.AnyAsync(item => item.RoleId == userRole.RoleId))
                 {
-                    return NotFound();
+                    return Conflict();
                 }
                 else
                 {
-                    return Conflict();
+                    return NotFound();
                 }
             }
 
@@ -98,7 +98,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             }
             catch (DbUpdateException)
             {
-                if (MainUnitOfWork.Exists(userRole.RoleId))
+                if (await MainUnitOfWork.All.AnyAsync(item => item.RoleId == userRole.RoleId))
                 {
                     return Conflict();
                 }

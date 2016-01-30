@@ -28,8 +28,12 @@
         function getAccessToken() {
             userFactory.getAccessToken(vm.email, vm.password)
                 .success(function () {
+                    var returnUrl = '/';
                     var locationItem = locationHistory.get(locationHistory.getHistory().length - 2);
-                    $location.url(locationItem.url());
+                    if (locationItem !== null) {
+                        returnUrl = locationItem.url();
+                    }
+                    $location.url(returnUrl);
                 })
                 .error(function (response) {
                     if (typeof response.error_description !== 'undefined') {

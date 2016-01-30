@@ -7,8 +7,7 @@
 </head>
 <body>
     <header>
-        <h1>
-            Wealth Economy API
+        <h1>Wealth Economy API
         </h1>
     </header>
     <p>
@@ -16,7 +15,11 @@
     </p>
     <footer>
         <p>
-            forCrowd Foundation<br />
+            <span><%= Reflection.Assembly.GetAssembly(New forCrowd.WealthEconomy.WebApi.Controllers.Api.ApplicationInfo().GetType()).GetName().Version %></span>
+        </p>
+        <p>
+            <a href="http://forcrowd.org" target="_blank">forCrowd Foundation
+            </a>
         </p>
     </footer>
 </body>

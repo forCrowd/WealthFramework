@@ -449,15 +449,6 @@
         };
     }
 
-    function RemoveResourcePoolModalController($scope, $uibModalInstance) {
-        $scope.cancel = function () {
-            $uibModalInstance.dismiss('cancel');
-        };
-        $scope.remove = function () {
-            $uibModalInstance.close();
-        };
-    }
-
     function CopyResourcePoolModalController(resourcePoolFactory, $uibModalInstance) {
 
         var vm = this;

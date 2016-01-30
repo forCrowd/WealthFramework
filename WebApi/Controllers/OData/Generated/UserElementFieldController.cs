@@ -71,13 +71,13 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MainUnitOfWork.Exists(elementFieldId))
+                if (await MainUnitOfWork.All.AnyAsync(item => item.ElementFieldId == userElementField.ElementFieldId))
                 {
-                    return NotFound();
+                    return Conflict();
                 }
                 else
                 {
-                    return Conflict();
+                    return NotFound();
                 }
             }
 
@@ -98,7 +98,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             }
             catch (DbUpdateException)
             {
-                if (MainUnitOfWork.Exists(userElementField.ElementFieldId))
+                if (await MainUnitOfWork.All.AnyAsync(item => item.ElementFieldId == userElementField.ElementFieldId))
                 {
                     return Conflict();
                 }

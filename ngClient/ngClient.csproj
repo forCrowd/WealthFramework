@@ -48,10 +48,15 @@
     <Content Include="css\fonts\fontawesome-webfont.woff" />
     <Content Include="css\fonts\fontawesome-webfont.woff2" />
     <Content Include="css\fonts\FontAwesome.otf" />
+    <Content Include="css\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="css\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="css\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="css\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="js\appSettings\Setup\0 Readme.txt" />
     <None Include="js\appSettings\appSettings.js" />
     <None Include="js\appSettings\Setup\appSettings.js" />
     <Content Include="css\fonts\fontawesome-webfont.svg" />
+    <Content Include="css\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="css\lib\lib.css" />
     <Content Include="css\lib\lib.min.css" />
     <Content Include="js\app\app.js" />
@@ -61,27 +66,27 @@
     <Content Include="js\app\config\exceptionHandlerExtension.js" />
     <Content Include="js\app\config\googleAnalytics.js" />
     <Content Include="js\app\config\route.js" />
-    <Content Include="js\app\controllers\account\accountEditController.js" />
-    <Content Include="js\app\controllers\account\addPasswordController.js" />
-    <Content Include="js\app\controllers\account\changeEmailController.js" />
-    <Content Include="js\app\controllers\account\changePasswordController.js" />
-    <Content Include="js\app\controllers\account\confirmEmailController.js" />
-    <Content Include="js\app\controllers\account\externalLoginController.js" />
-    <Content Include="js\app\controllers\account\loginController.js" />
-    <Content Include="js\app\controllers\account\registerController.js" />
-    <Content Include="js\app\controllers\content\basicsController.js" />
-    <Content Include="js\app\controllers\content\closingNotesController.js" />
+    <Content Include="js\app\controllers\account\AccountEditController.js" />
+    <Content Include="js\app\controllers\account\AddPasswordController.js" />
+    <Content Include="js\app\controllers\account\ChangeEmailController.js" />
+    <Content Include="js\app\controllers\account\ChangePasswordController.js" />
+    <Content Include="js\app\controllers\account\ConfirmEmailController.js" />
+    <Content Include="js\app\controllers\account\ExternalLoginController.js" />
+    <Content Include="js\app\controllers\account\LoginController.js" />
+    <Content Include="js\app\controllers\account\RegisterController.js" />
+    <Content Include="js\app\controllers\content\BasicsController.js" />
+    <Content Include="js\app\controllers\content\ClosingNotesController.js" />
     <Content Include="js\app\controllers\content\DefaultController.js" />
-    <Content Include="js\app\controllers\content\fairShareIndexSampleController.js" />
-    <Content Include="js\app\controllers\content\indexesPieSampleController.js" />
-    <Content Include="js\app\controllers\content\introductionController.js" />
-    <Content Include="js\app\controllers\content\knowledgeIndexSampleController.js" />
-    <Content Include="js\app\controllers\content\resourcePoolRateSampleController.js" />
-    <Content Include="js\app\controllers\content\sectorIndexSampleController.js" />
-    <Content Include="js\app\controllers\content\totalCostIndexSampleController.js" />
-    <Content Include="js\app\controllers\resourcePool\resourcePoolListController.js" />
+    <Content Include="js\app\controllers\content\FairShareIndexSampleController.js" />
+    <Content Include="js\app\controllers\content\IndexesPieSampleController.js" />
+    <Content Include="js\app\controllers\content\IntroductionController.js" />
+    <Content Include="js\app\controllers\content\KnowledgeIndexSampleController.js" />
+    <Content Include="js\app\controllers\content\ResourcePoolRateSampleController.js" />
+    <Content Include="js\app\controllers\content\SectorIndexSampleController.js" />
+    <Content Include="js\app\controllers\content\TotalCostIndexSampleController.js" />
+    <Content Include="js\app\controllers\resourcePool\ResourcePoolListController.js" />
     <Content Include="js\app\controllers\resourcePool\ResourcePoolManageController.js" />
-    <Content Include="js\app\controllers\resourcePool\resourcePoolViewController.js" />
+    <Content Include="js\app\controllers\resourcePool\ResourcePoolViewController.js" />
     <Content Include="js\app\directives\resourcePoolEditor\resourcePoolEditor.css" />
     <Content Include="js\app\directives\resourcePoolEditor\resourcePoolEditor.html" />
     <Content Include="js\app\directives\resourcePoolEditor\resourcePoolEditor.js" />
@@ -174,6 +179,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

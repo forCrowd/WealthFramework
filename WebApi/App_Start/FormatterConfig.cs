@@ -1,5 +1,6 @@
 ﻿namespace forCrowd.WealthEconomy.WebApi
 {
+    using Newtonsoft.Json;
     using System.Net.Http.Formatting;
 
     public class FormatterConfig
@@ -10,11 +11,10 @@
             formatters.Remove(formatters.XmlFormatter);
 
             // Json formatter
-            //formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             //formatters.JsonFormatter.Indent = true; ?
             //formatters.JsonFormatter.SerializerSettings.Converters.Add(new StringEnumConverter());
             //formatters.JsonFormatter.MaxDepth = 1;
-            //formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
         }
     }
 }
