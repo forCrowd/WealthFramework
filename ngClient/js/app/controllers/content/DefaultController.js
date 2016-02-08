@@ -10,59 +10,40 @@
         // Logger
         logger = logger.forSource(controllerId);
 
+        // Local variables
+        var anonymousUserWarning = null;
+
         // View model
         var vm = this;
         vm.applicationInfo = null;
-        vm.currentUser = null;
-
-        logger.log('vm.currentUser 1', vm.currentUser);
-
-        vm.currentUserText = currentUserText;
+        vm.currentUser = { Email: '', isAuthenticated: function () { return false; }, hasPassword: function () { return false; } };
         vm.currentDate = new Date();
-        vm.hasPassword = hasPassword;
-        vm.isAuthenticated = isAuthenticated;
         vm.logout = logout;
-        vm.displayAnonymousUserWarning = true;
 
         // Events
+        $scope.$on('$routeChangeSuccess', routeChangeSuccess);
         $scope.$on('anonymousUserInteracted', anonymousUserInteracted); // Anonymous user warning
-        $scope.$on('userLoggedIn', userLoggedIn); // User logged in & out
-        $scope.$on('userLoggedOut', userLoggedOut);
+        $scope.$on('userFactory_currentUserChanged', currentUserChanged);
 
         _init();
 
         /*** Implementations ***/
 
         function _init() {
-
-            // Application info
             getApplicationInfo();
-
-            // Current user
-            getCurrentUser();
         }
 
         function anonymousUserInteracted() {
-            if (vm.displayAnonymousUserWarning) {
-                logger.logWarning('To prevent losing your changes, you can register for free or if you have an existing account, please login first.',
-                    null,
-                    true,
-                    'Save your changes?',
-                    { extendedTimeOut: 0, timeOut: 0 });
-                vm.displayAnonymousUserWarning = false;
+            if (anonymousUserWarning === null) {
+                var warningText = 'To prevent losing your changes, you can register for free or if you have an existing account, please login first.';
+                var warningTitle = 'Save your changes?';
+                var loggerOptions = { extendedTimeOut: 0, timeOut: 0 };
+                anonymousUserWarning = logger.logWarning(warningText, null, true, warningTitle, loggerOptions);
             }
         }
 
-        function currentUserText() {
-
-            var text = '';
-
-            if (vm.currentUser !== null) {
-                //text = 'User: ' + vm.currentUser.Email + ' - ' + vm.currentUser.EmailConfirmed;
-                text = 'User: ' + vm.currentUser.Email;
-            }
-
-            return text;
+        function currentUserChanged(event, newUser) {
+            vm.currentUser = newUser;
         }
 
         function getApplicationInfo() {
@@ -73,50 +54,21 @@
                 });
         }
 
-        function getCurrentUser() {
-            userFactory.getCurrentUser()
-                .then(function (currentUser) {
-                    vm.currentUser = currentUser;
-                    logger.log('vm.currentUser 4', vm.currentUser);
+        function logout() {
+            userFactory.logout()
+                .then(function () {
+                    $location.url('/');
                 });
         }
 
-        function hasPassword() {
-
-            if (typeof vm.currentUser === 'undefined') {
-                logger.log('vm.currentUser is undefined 1');
-                vm.currentUser = null;
+        // Remove anonymousUserWarning toastr in register & login pages, if there is
+        function routeChangeSuccess(event, next, current) {
+            var path = next.$$route.originalPath;
+            if (path === '/account/register' || path === 'account/login') {
+                if (anonymousUserWarning !== null) {
+                    anonymousUserWarning.remove();
+                }
             }
-
-            return vm.currentUser !== null && vm.currentUser.hasPassword();
-        }
-
-        function isAuthenticated() {
-
-            if (typeof vm.currentUser === 'undefined') {
-                logger.log('vm.currentUser is undefined 2');
-                vm.currentUser = null;
-            }
-
-            return vm.currentUser !== null && vm.currentUser.Id > 0;
-        }
-
-        function logout() {
-            
-            userFactory.logout();
-
-            // Return back to home page
-            $location.url('/');
-        }
-
-        function userLoggedIn(event, currentUser) {
-            vm.currentUser = currentUser;
-            logger.log('vm.currentUser 2', vm.currentUser);
-        }
-
-        function userLoggedOut() {
-            vm.currentUser = null;
-            logger.log('vm.currentUser 3', vm.currentUser);
         }
     }
 })();

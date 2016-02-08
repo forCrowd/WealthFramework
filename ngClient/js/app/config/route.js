@@ -5,7 +5,7 @@
         .config(['$routeProvider', '$locationProvider', routeConfig]);
 
     angular.module('main')
-        .run(['userFactory', 'resourcePoolFactory', 'locationHistory', '$rootScope', '$location', 'logger', routeRun]);
+        .run(['$rootScope', '$location', 'locationHistory', 'logger', routeRun]);
 
     function routeConfig($routeProvider, $locationProvider) {
 
@@ -13,25 +13,25 @@
         $routeProvider
 
             /* Content */
-            .when('/', { title: getContentRouteTitle, templateUrl: getContentTemplateUrl })
-            .when('/default.aspx', { title: getContentRouteTitle, templateUrl: getContentTemplateUrl })
-            .when('/content/:key/', { title: getContentRouteTitle, templateUrl: getContentTemplateUrl })
+            .when('/', { title: getContentRouteTitle, templateUrl: getContentTemplateUrl, resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
+            .when('/default.aspx', { title: getContentRouteTitle, templateUrl: getContentTemplateUrl, resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
+            .when('/content/:key/', { title: getContentRouteTitle, templateUrl: getContentTemplateUrl, resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
 
             /* CMRP List + View + Edit pages */
-            .when('/resourcePool', { title: function () { return 'CMRP List'; }, templateUrl: '/views/resourcePool/resourcePoolList.html?v=0.43.2' })
-            .when('/resourcePool/new', { title: function () { return 'New CMRP'; }, templateUrl: '/views/resourcePool/resourcePoolManage.html?v=0.43.2' })
-            .when('/resourcePool/:resourcePoolId/edit', { title: function () { return 'Edit CMRP'; }, templateUrl: '/views/resourcePool/resourcePoolManage.html?v=0.43.2' })
-            .when('/resourcePool/:resourcePoolId', { title: function () { return 'View CMRP'; }, templateUrl: '/views/resourcePool/resourcePoolView.html?v=0.43.2' })
+            .when('/resourcePool', { title: function () { return 'CMRP List'; }, templateUrl: '/views/resourcePool/resourcePoolList.html?v=0.43.2', resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
+            .when('/resourcePool/new', { title: function () { return 'New CMRP'; }, templateUrl: '/views/resourcePool/resourcePoolManage.html?v=0.43.2', resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
+            .when('/resourcePool/:resourcePoolId/edit', { title: function () { return 'Edit CMRP'; }, templateUrl: '/views/resourcePool/resourcePoolManage.html?v=0.43.2', resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
+            .when('/resourcePool/:resourcePoolId', { title: function () { return 'View CMRP'; }, templateUrl: '/views/resourcePool/resourcePoolView.html?v=0.43.2', resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
 
             /* Account */
-            .when('/account/register', { title: function () { return 'Register'; }, templateUrl: '/views/account/register.html?v=0.43.2' })
-            .when('/account/login', { title: function () { return 'Login'; }, templateUrl: '/views/account/login.html?v=0.43.2' })
-            .when('/account/externalLogin', { title: function () { return 'Social Logins'; }, templateUrl: '/views/account/externalLogin.html?v=0.43.2' })
-            .when('/account/accountEdit', { title: function () { return 'Account Edit'; }, templateUrl: '/views/account/accountEdit.html?v=0.43.2' })
-            .when('/account/changeEmail', { title: function () { return 'Change Email'; }, templateUrl: '/views/account/changeEmail.html?v=0.43.2' })
-            .when('/account/changePassword', { title: function () { return 'Change Password'; }, templateUrl: '/views/account/changePassword.html?v=0.43.2' })
-            .when('/account/addPassword', { title: function () { return 'Add Password'; }, templateUrl: '/views/account/addPassword.html?v=0.43.2' })
-            .when('/account/confirmEmail', { title: function () { return 'Confirm Email'; }, templateUrl: '/views/account/confirmEmail.html?v=0.43.2' })
+            .when('/account/accountEdit', { title: function () { return 'Account Edit'; }, templateUrl: '/views/account/accountEdit.html?v=0.43.2', accessType: 'authenticatedRequired', resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
+            .when('/account/accountEdit', { title: function () { return 'Account Edit'; }, templateUrl: '/views/account/accountEdit.html?v=0.43.2', accessType: 'authenticatedRequired', resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
+            .when('/account/addPassword', { title: function () { return 'Add Password'; }, templateUrl: '/views/account/addPassword.html?v=0.43.2', accessType: 'authenticatedRequired', resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
+            .when('/account/changeEmail', { title: function () { return 'Change Email'; }, templateUrl: '/views/account/changeEmail.html?v=0.43.2', accessType: 'authenticatedRequired', resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
+            .when('/account/changePassword', { title: function () { return 'Change Password'; }, templateUrl: '/views/account/changePassword.html?v=0.43.2', accessType: 'authenticatedRequired', resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
+            .when('/account/confirmEmail', { title: function () { return 'Confirm Email'; }, templateUrl: '/views/account/confirmEmail.html?v=0.44', accessType: 'authenticatedRequired', resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
+            .when('/account/login', { title: function () { return 'Login'; }, templateUrl: '/views/account/login.html?v=0.44', accessType: 'unauthenticatedRequired', resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
+            .when('/account/register', { title: function () { return 'Register'; }, templateUrl: '/views/account/register.html?v=0.44', accessType: 'unauthenticatedRequired', resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
 
             /* Otherwise */
             .otherwise({ redirectTo: '/content/404' }); // TODO Is it possible to return Response.StatusCode = 404; ?
@@ -67,54 +67,65 @@
                 params.key :
                 'home'; // Default view
 
-            return '/views/content/' + key + '.html?v=0.43.2';
+            return '/views/content/' + key + '.html?v=0.44';
+        }
+
+        function validateAccess(userFactory, $route, $q, locationHistory, $location, logger) {
+
+            logger = logger.forSource('validateAccess');
+
+            var deferred = $q.defer();
+
+            locationHistory.createItem($location, $route.current)
+                .then(function () {
+                    userFactory.getCurrentUser()
+                        .then(function (currentUser) {
+                            if ($route.current.accessType !== 'undefined') {
+
+                                // Invalid access cases
+                                if (($route.current.accessType === 'unauthenticatedRequired' && currentUser.isAuthenticated()) ||
+                                    ($route.current.accessType === 'authenticatedRequired' && !currentUser.isAuthenticated())) {
+                                    deferred.reject({ accessType: $route.current.accessType });
+                                }
+                            }
+
+                            deferred.resolve();
+                        })
+                        .catch(function () {
+                            deferred.reject(); // TODO Handle?
+                        });
+                });
+
+            return deferred.promise;
         }
     }
 
-    function routeRun(userFactory, resourcePoolFactory, locationHistory, $rootScope, $location, logger) {
+    function routeRun($rootScope, $location, locationHistory, logger) {
 
         // Logger
         logger = logger.forSource('routeRun');
 
-        // Default location
-        $rootScope.$on('$routeChangeStart', function (event, next, current) {
+        $rootScope.$on('$routeChangeSuccess', routeChangeSuccess);
+        $rootScope.$on('$routeChangeError', routeChangeError);
 
-            // Navigate the authenticated user to home page, in case they try to go login or register
-            userFactory.getCurrentUser()
-                .then(function (currentUser) {
-                    if (currentUser.isAuthenticated() && ($location.path() === '/account/login' || $location.path() === '/account/register')) {
-                        $location.url('/');
-                    }
-                });
-        });
+        // Navigate to correct page in 'Invalid access' cases
+        function routeChangeError(event, current, previous, eventObj) {
+            if (eventObj.accessType === 'unauthenticatedRequired') {
+                $location.url(locationHistory.previousItem('unauthenticatedRequired').url());
+            } else if (eventObj.accessType === 'authenticatedRequired') {
+                $location.url('/account/login?error=To be able to continue, please login first');
+            }
+        }
 
-        $rootScope.$on('$routeChangeSuccess', function (event, next, current) {
+        function routeChangeSuccess(event, current, previous) {
 
             // View title
             var viewTitle = '';
-            if (typeof next.$$route !== 'undefined' && typeof next.$$route.title !== 'undefined') {
+            if (typeof current.title !== 'undefined') {
                 // TODO Is this correct?
-                viewTitle = next.$$route.title(next.params);
+                viewTitle = current.title(current.params);
             }
             $rootScope.viewTitle = viewTitle;
-
-            // Newly added resource pool fix
-            if (typeof next.params.resourcePoolId !== 'undefined') {
-                var resourcePoolId = next.params.resourcePoolId;
-                resourcePoolFactory.getResourcePool(resourcePoolId)
-                    .then(function (resourcePool) {
-                        createLocationHistory(resourcePool);
-                    });
-            } else {
-                createLocationHistory();
-            }
-
-            function createLocationHistory(resourcePool) {
-                resourcePool = typeof resourcePool !== 'undefined' ? resourcePool : null;
-
-                // Add each location to the history
-                locationHistory.create($location.url(), resourcePool, $location.path().substring($location.path().lastIndexOf('/') + 1) === 'edit');
-            }
-        });
+        }
     }
 })();

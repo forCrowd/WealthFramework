@@ -111,7 +111,7 @@
         // GET api/Account/ExternalLogin
         [HttpGet]
         [AllowAnonymous]
-        public IHttpActionResult ExternalLogin(string provider)
+        public IHttpActionResult ExternalLogin(string provider, string clientReturnUrl)
         {
             if (!ModelState.IsValid)
             {
@@ -119,21 +119,22 @@
             }
 
             // Request a redirect to the external login provider
-            return new Results.ChallengeResult(Request, provider, "/api/Account/ExternalLoginCallback");
+            var callBackUrl = string.Format("/api/Account/ExternalLoginCallback?clientReturnUrl={0}", clientReturnUrl);
+            return new Results.ChallengeResult(Request, provider, callBackUrl);
         }
 
         // GET api/Account/ExternalLoginCallback
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IHttpActionResult> ExternalLoginCallback(string error = null)
+        public async Task<IHttpActionResult> ExternalLoginCallback(string clientReturnUrl, string error = null)
         {
             var clientAppUrl = Framework.AppSettings.ClientAppUrl;
-            var location = string.Format("{0}/account/login", clientAppUrl);
+            var location = string.Format("{0}/account/login?clientReturnUrl={1}", clientAppUrl, clientReturnUrl);
 
             // Error message from the provider, pass it on
             if (!string.IsNullOrWhiteSpace(error))
             {
-                return Redirect(string.Format("{0}?error={1}", location, error));
+                return Redirect(string.Format("{0}&error={1}", location, error));
             }
 
             // Since this method MUST return RedirectResult, cover the whole block with try & catch,
@@ -152,7 +153,7 @@
                 if (externalLoginInfo == null)
                 {
                     // User canceled the operation?
-                    return Redirect(string.Format("{0}?error={1}", location, "Login failed, please try again"));
+                    return Redirect(string.Format("{0}&error={1}", location, "Login failed, please try again"));
                 }
 
                 // Validate email
@@ -160,7 +161,7 @@
                 if (string.IsNullOrWhiteSpace(email))
                 {
                     // User didn't give permission for email address
-                    return Redirect(string.Format("{0}?error={1}", location, "Login failed, please give permission to access your email address"));
+                    return Redirect(string.Format("{0}&error={1}", location, "Login failed, please give permission to access your email address"));
                 }
 
                 var tempToken = string.Empty;
@@ -181,7 +182,7 @@
                         var errorMessage = GetErrorMessage(result);
                         if (errorMessage != null)
                         {
-                            return Redirect(string.Format("{0}?error={1}", location, errorMessage));
+                            return Redirect(string.Format("{0}&error={1}", location, errorMessage));
                         }
                     }
                     else // There is a user with this email: Link accounts
@@ -191,7 +192,7 @@
                         var errorMessage = GetErrorMessage(result);
                         if (errorMessage != null)
                         {
-                            return Redirect(string.Format("{0}?error={1}", location, errorMessage));
+                            return Redirect(string.Format("{0}&error={1}", location, errorMessage));
                         }
                     }
                 }
@@ -208,8 +209,7 @@
                 tempToken = user.Claims.OrderByDescending(claim => claim.CreatedOn).First(claim => claim.ClaimType == "TempToken").ClaimValue;
 
                 // Redirect
-                location = string.Format("{0}/account/externalLogin?tempToken={1}", clientAppUrl, tempToken);
-                return Redirect(location);
+                return Redirect(string.Format("{0}&tempToken={1}", location, tempToken));
             }
             catch (Exception ex)
             {
@@ -218,7 +218,7 @@
                 logger.Log(ex, Request, "AccountController.ExternalLoginCallback");
 
                 // Redirect the user back to the client
-                return Redirect(string.Format("{0}?error={1}", location, "Login failed, please try again later"));
+                return Redirect(string.Format("{0}&error={1}", location, "Login failed, please try again later"));
             }
         }
 

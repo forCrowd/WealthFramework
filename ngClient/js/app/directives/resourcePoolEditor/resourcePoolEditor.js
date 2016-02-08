@@ -53,52 +53,9 @@
             scope.$watch('config', configChanged, true);
             scope.$on('saveChangesStart', saveChangesStart);
             scope.$on('saveChangesCompleted', saveChangesCompleted);
-            scope.$on('userLoggedIn', userLoggedIn);
-            scope.$on('userLoggedOut', userLoggedOut);
-
-            // Initialize
-            _init();
+            scope.$on('userFactory_currentUserChanged', currentUserChanged);
 
             /*** Implementations ***/
-
-            function _init() {
-
-                // Clear previous error messages
-                scope.errorMessage = '';
-
-                scope.chartConfig = {
-                    credits: {
-                        enabled: false
-                    },
-                    loading: true,
-                    options: {
-                        plotOptions: {
-                            column: {
-                                allowPointSelect: true,
-                                pointWidth: 15
-                            },
-                            pie: {
-                                allowPointSelect: true,
-                                cursor: 'pointer',
-                                dataLabels: {
-                                    enabled: false
-                                },
-                                showInLegend: true
-                            }
-                        },
-                        tooltip: {
-                            headerFormat: ''
-                        },
-                        xAxis: { categories: [''] },
-                        yAxis: {
-                            allowDecimals: false,
-                            min: 0
-                        }
-                    },
-                    size: {},
-                    title: { text: '' }
-                };
-            }
 
             function changeSelectedElement(element) {
                 scope.resourcePool.selectedElement(element);
@@ -106,10 +63,10 @@
             }
 
             function configChanged() {
-                scope.resourcePoolId = typeof scope.config.resourcePoolId === 'undefined' ? null : Number(scope.config.resourcePoolId);
+                var resourcePoolId = typeof scope.config.resourcePoolId === 'undefined' ? null : Number(scope.config.resourcePoolId);
                 userFactory.getCurrentUser()
                     .then(function (currentUser) {
-                        setCurrentUser(currentUser);
+                        initialize(currentUser, resourcePoolId);
                     });
             }
 
@@ -139,58 +96,6 @@
                 $location.url('/resourcePool/' + scope.resourcePoolId + '/edit');
             }
 
-            function getResourcePool() {
-
-                // Initialize
-                _init();
-
-                // Validate
-                if (typeof scope.resourcePoolId === null) {
-                    scope.errorMessage = 'CMRP Id cannot be null';
-                    scope.chartConfig.loading = false;
-                    return;
-                }
-
-                resourcePoolFactory.getResourcePoolExpanded(scope.resourcePoolId)
-                        .then(function (resourcePool) {
-
-                            if (resourcePool === null) {
-                                scope.errorMessage = 'Invalid CMRP Id';
-                                return;
-                            }
-
-                            // It returns an array, set the first item in the list
-                            scope.resourcePool = resourcePool;
-
-                            if (scope.resourcePool.selectedElement() !== null) {
-                                loadChartData();
-                            }
-
-                            // TODO Just for test, remove later
-                            //scope.increaseElementMultiplier(scope.resourcePool.mainElement());
-
-                            //scope.resourcePool.mainElement().ElementFieldSet.forEach(function(field) {
-                            //    if (field.IndexEnabled) {
-                            //        var cell1 = field.ElementCellSet[0];
-                            //        scope.decreaseElementCellNumericValue(cell1);
-
-                            //        var cell2 = field.ElementCellSet[1];
-                            //        scope.decreaseElementCellNumericValue(cell2);
-
-                            //        var cell3 = field.ElementCellSet[2];
-                            //        scope.decreaseElementCellNumericValue(cell3);
-                            //    }
-                            //});
-
-                        })
-                        .catch(function () {
-                            // TODO scope.errorMessage ?
-                        })
-                        .finally(function () {
-                            scope.chartConfig.loading = false;
-                        });
-            }
-
             function increaseElementCellNumericValue(cell) {
                 userFactory.updateElementCellNumericValue(cell, 'increase');
                 saveChanges();
@@ -210,6 +115,80 @@
             function increaseResourcePoolRate() {
                 userFactory.updateResourcePoolRate(scope.resourcePool, 'increase');
                 saveChanges();
+            }
+
+            function initialize(user, resourcePoolId) {
+
+                if (scope.currentUser !== user || scope.resourcePoolId !== resourcePoolId) {
+                    scope.currentUser = user;
+                    scope.resourcePoolId = resourcePoolId;
+
+                    // Clear previous error messages
+                    scope.errorMessage = '';
+
+                    scope.chartConfig = {
+                        credits: {
+                            enabled: false
+                        },
+                        loading: true,
+                        options: {
+                            plotOptions: {
+                                column: {
+                                    allowPointSelect: true,
+                                    pointWidth: 15
+                                },
+                                pie: {
+                                    allowPointSelect: true,
+                                    cursor: 'pointer',
+                                    dataLabels: {
+                                        enabled: false
+                                    },
+                                    showInLegend: true
+                                }
+                            },
+                            tooltip: {
+                                headerFormat: ''
+                            },
+                            xAxis: { categories: [''] },
+                            yAxis: {
+                                allowDecimals: false,
+                                min: 0
+                            }
+                        },
+                        size: {},
+                        title: { text: '' }
+                    };
+
+                    // Validate
+                    if (scope.resourcePoolId === null) {
+                        scope.errorMessage = 'CMRP Id cannot be null';
+                        scope.chartConfig.loading = false;
+                        return;
+                    }
+
+                    // Get resource pool
+                    resourcePoolFactory.getResourcePoolExpanded(scope.resourcePoolId)
+                            .then(function (resourcePool) {
+
+                                if (resourcePool === null) {
+                                    scope.errorMessage = 'Invalid CMRP Id';
+                                    return;
+                                }
+
+                                // It returns an array, set the first item in the list
+                                scope.resourcePool = resourcePool;
+
+                                if (scope.resourcePool.selectedElement() !== null) {
+                                    loadChartData();
+                                }
+                            })
+                            .catch(function () {
+                                // TODO scope.errorMessage ?
+                            })
+                            .finally(function () {
+                                scope.chartConfig.loading = false;
+                            });
+                }
             }
 
             function loadChartData() {
@@ -301,18 +280,13 @@
             }
 
             function saveChanges() {
-                userFactory.getCurrentUser()
-                    .then(function (currentUser) {
-                        if (currentUser.isAuthenticated()) {
-                            resourcePoolFactory.saveChanges(1500)
-                                .catch(function (error) {
-                                    // Conflict (Concurrency exception)
-                                    if (typeof error.status !== 'undefined' && error.status === '409') {
-                                        // TODO Try to recover!
-                                    } else if (typeof error.entityErrors !== 'undefined') {
-                                        // vm.entityErrors = error.entityErrors;
-                                    }
-                                });
+                resourcePoolFactory.saveChanges(1500)
+                    .catch(function (error) {
+                        // Conflict (Concurrency exception)
+                        if (typeof error.status !== 'undefined' && error.status === '409') {
+                            // TODO Try to recover!
+                        } else if (typeof error.entityErrors !== 'undefined') {
+                            // config.entityErrors = error.entityErrors;
                         }
                     });
             }
@@ -325,23 +299,14 @@
                 scope.isSaving = false;
             }
 
-            function setCurrentUser(currentUser) {
-                scope.currentUser = currentUser;
-                getResourcePool();
-            }
-
             // Index Details
             function toggleIndexDetails() {
                 scope.displayIndexDetails = !scope.displayIndexDetails;
                 loadChartData();
             }
 
-            function userLoggedIn(event, currentUser) {
-                setCurrentUser(currentUser);
-            }
-
-            function userLoggedOut() {
-                setCurrentUser(null);
+            function currentUserChanged(event, newUser) {
+                initialize(newUser, scope.resourcePoolId);
             }
 
             /* Chart objects */

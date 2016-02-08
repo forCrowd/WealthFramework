@@ -18,7 +18,7 @@
                 version.Major,
                 version.Minor,
                 version.Build);
-                
+
             return new ApplicationInfo()
             {
                 //Organization = organization,

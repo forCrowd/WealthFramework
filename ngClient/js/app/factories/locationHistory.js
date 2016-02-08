@@ -3,22 +3,22 @@
 
     var factoryId = 'locationHistory';
     angular.module('main')
-        .factory(factoryId, ['logger', locationHistory]);
+        .factory(factoryId, ['resourcePoolFactory', '$q', 'logger', locationHistory]);
 
-    function locationHistory(logger) {
+    function locationHistory(resourcePoolFactory, $q, logger) {
 
         // Logger
         logger = logger.forSource(factoryId);
 
         var self = {
-            history: [],
+            history: [new LocationItem('/')],
             historyLimit: 10
         };
 
         var factory = {
-            create: create,
+            createItem: createItem,
             getHistory: getHistory,
-            get: get
+            previousItem: previousItem
         };
 
         // Return
@@ -26,41 +26,73 @@
 
         /*** Implementations ***/
 
-        function create(itemUrl, resourcePool, isEdit) {
+        function createItem($location, $routeCurrent) {
 
-            var item = new LocationItem(itemUrl, resourcePool, isEdit);
-            self.history.push(item);
+            var deferred = $q.defer();
 
-            // Only keep limited number of items
-            if (self.history.length > self.historyLimit) {
-                self.history.splice(0, self.history.length - self.historyLimit);
+            // TODO Try to use only routeCurrent?
+            var itemUrl = $location.url();
+            var accessType = $routeCurrent.accessType;
+            var resourcePoolId = $routeCurrent.params.resourcePoolId;
+            var isEdit = $location.path().substring($location.path().lastIndexOf('/') + 1) === 'edit';
+
+            if (typeof resourcePoolId !== 'undefined') {
+                resourcePoolFactory.getResourcePool(resourcePoolId).then(createItemInternal);
+            } else {
+                createItemInternal();
             }
+
+            function createItemInternal(resourcePool) {
+                var item = new LocationItem(itemUrl, accessType, resourcePool, isEdit);
+                self.history.push(item);
+
+                // Only keep limited number of items
+                if (self.history.length > self.historyLimit) {
+                    self.history.splice(0, self.history.length - self.historyLimit);
+                }
+
+                deferred.resolve();
+            }
+
+            return deferred.promise;
         }
 
         function getHistory() {
             return self.history.slice();
         }
 
-        function get(index) {
-            return self.history[index];
+        function previousItem(excludeAccessType) {
+            excludeAccessType = typeof excludeAccessType !== 'undefined' ? excludeAccessType : '';
+
+            for (var i = self.history.length - 2; i >= 0; i--) {
+                var item = self.history[i];
+
+                if (excludeAccessType === '' || excludeAccessType !== item.accessType) {
+                    return item;
+                }
+            }
         }
 
-        function LocationItem(itemUrl, resourcePool, isEdit) {
+        function LocationItem(itemUrl, accessType, resourcePool, isEdit) {
             itemUrl = typeof itemUrl !== 'undefined' ? itemUrl : '';
+            accessType = typeof accessType !== 'undefined' ? accessType : 'undefined';
             resourcePool = typeof resourcePool !== 'undefined' ? resourcePool : null;
             isEdit = typeof isEdit !== 'undefined' ? isEdit : false;
 
             var self = this;
-            self._itemUrl = itemUrl;
-            self._isEdit = isEdit;
-            self._resourcePool = resourcePool;
-            self.url = function () {
-                return self._resourcePool !== null ?
-                    self._isEdit ?
-                    '/resourcePool/' + self._resourcePool.Id + '/edit' :
-                    '/resourcePool/' + self._resourcePool.Id :
-                    self._itemUrl;
-            };
+            self.itemUrl = itemUrl;
+            self.accessType = accessType;
+            self.resourcePool = resourcePool;
+            self.isEdit = isEdit;
+            self.url = url;
+
+            function url() {
+                return self.resourcePool !== null ?
+                    self.isEdit ?
+                    '/resourcePool/' + self.resourcePool.Id + '/edit' :
+                    '/resourcePool/' + self.resourcePool.Id :
+                    self.itemUrl;
+            }
         }
     }
 })();

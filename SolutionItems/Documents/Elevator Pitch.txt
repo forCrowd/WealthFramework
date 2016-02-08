@@ -1,0 +1,22 @@
+﻿Hi,
+This is Serkan Holat, I'm a software developer.
+For more than a year, I'm working on an open source and a non-profit project called Wealth Economy.
+
+Wealth Economy is a project that aims to calculate (measure) the organizations' total (social) benefit (utility?) to the society,
+and create a model that the organizations with more benefits can get more income, based on the results.
+
+We are trying to get to Beta stage at the moment.
+We would be appreciated if you could give us your feedback (technical and/or content).
+
+---
+
+Merhaba,
+İsmim Serkan Holat, yazılım uzmanıyım.
+Yaklaşık 1 yıldır kar amacı gütmeyen ve açık kaynak bir proje olan Wealth Economy üzerinde çalışıyorum.
+
+Wealth Economy, firmaların topluma sağladıkları faydayı (ya da toplam / sosyal faydayı) ölçmeye çalışan
+ve ortaya çıkan sonuçlara göre gelir elde edilmesini hedefleyen,
+yani ne kadar fayda, o kadar gelir modelini oluşturmaya çalışan bir projedir.
+
+Şu anda Beta aşamasına geçmeye çalışıyoruz.
+İçerik ve teknik anlamda görüşlerinizi paylaşabilirseniz sevinirim.

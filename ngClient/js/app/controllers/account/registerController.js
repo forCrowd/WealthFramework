@@ -3,9 +3,9 @@
 
     var controllerId = 'RegisterController';
     angular.module('main')
-        .controller(controllerId, ['userFactory', '$location', '$rootScope', 'serviceAppUrl', 'logger', RegisterController]);
+        .controller(controllerId, ['userFactory', '$location', 'locationHistory', 'serviceAppUrl', 'logger', RegisterController]);
 
-    function RegisterController(userFactory, $location, $rootScope, serviceAppUrl, logger) {
+    function RegisterController(userFactory, $location, locationHistory, serviceAppUrl, logger) {
 
         logger = logger.forSource(controllerId);
 
@@ -37,7 +37,8 @@
         }
 
         function getExternalLoginUrl(provider) {
-            return serviceAppUrl + '/api/Account/ExternalLogin?provider=' + provider;
+            var returnUrl = locationHistory.previousItem().url();
+            return serviceAppUrl + '/api/Account/ExternalLogin?provider=' + provider + '&clientReturnUrl=' + returnUrl;
         }
 
         function register() {

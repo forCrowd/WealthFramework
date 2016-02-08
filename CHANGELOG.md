@@ -1,4 +1,24 @@
-﻿### Release Notes
+### Changelog
+
+**0.44**
+
+* Local, Test, Live environment types in AppSettings
+* Exclude *.min files so they won't show up in "Find" operations in VS
+* Add excluded *.min files into deploy package through .pubxml file
+http://www.asp.net/mvc/overview/deployment/visual-studio-web-deployment/deploying-extra-files
+* Exclude unnecessary *.js & *.css files from deploy package
+* Return url for external login case
+* login & externalLogin pages merge
+* Anonymous user + New CMRP + Login with an existing account bug fix
+* route.js - Authenticated & Unauthenticated user cases through route - resolve: If the user not logged in, can't access to 'authentication required' page and vice versa
+* LocationHistory.js - previousItem() function with excludeAccessType parameter: To avoid login page return to 'unauthenticated required' type, accessType parameter will be used
+* userFactory - currentUserChanged event instead of userLoggedIn & userLoggedOut events
+* userFactory - getCurrentUser usage improvements
+* Better implementation for 'anonymous user warning': Instead of creating a new entity, it displays it when dataContext.saveChanges() called
+* generic error message for exceptions
+* Login fail case double error toastr fix
+* Email address & database for test server
+* Release Notes.md was moved & renamed to CHANGELOG.md
 
 **0.43.5**
 

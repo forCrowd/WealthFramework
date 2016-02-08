@@ -18,11 +18,10 @@
         logger = logger.forSource(factoryId);
 
         // Manager
+        var currentUser = { isAuthenticated: function () { return false; } };
         var manager = null;
+        var metadataReadyPromise = null;
         var saveTimer = null;
-        var metadataLoaded = false;
-
-        initializeStore();
 
         // Factory methods
         var factory = {
@@ -34,7 +33,6 @@
             getChangesCount: getChangesCount,
             getEntities: getEntities,
             hasChanges: hasChanges,
-            initializeStore: initializeStore,
             metadataReady: metadataReady,
             rejectChanges: rejectChanges,
             saveChanges: saveChanges,
@@ -43,36 +41,32 @@
 
         // Event handlers
         $rootScope.$on('ElementField_createUserElementCell', createUserElementCell);
+        $rootScope.$on('userFactory_currentUserChanged', currentUserChanged);
+
+        _init();
 
         return factory;
 
         /*** Implementations ***/
+
+        function _init() {
+            manager = entityManagerFactory.newManager();
+        }
 
         function clear() {
             manager.clear();
         }
 
         function createEntity(entityType, initialValues) {
-
-            if (!metadataLoaded) {
-                logger.logError('Load metadata first!');
-                return;
-            }
-
-            // Anonymous user check
-            // TODO Assumes that 'User' business object related properties will always use 'User' as a name
-            if (typeof initialValues !== 'undefined' &&
-                typeof initialValues.User !== 'undefined' &&
-                (typeof initialValues.User.Id === 'undefined' ||
-                initialValues.User.Id <= 0)) {
-                $rootScope.$broadcast('anonymousUserInteracted');
-            }
-
             return manager.createEntity(entityType, initialValues);
         }
 
         function createUserElementCell(event, userElementCell) {
             return createEntity('UserElementCell', userElementCell);
+        }
+
+        function currentUserChanged(event, newUser) {
+            currentUser = newUser;
         }
 
         function executeQuery(query) {
@@ -99,36 +93,28 @@
             return manager.hasChanges();
         }
 
-        function initializeStore() {
-            manager = entityManagerFactory.newManager();
-
-            // TODO Fix this in a better way
-            // angular app should start after loading the metadata;
-            // https://github.com/angular/angular.js/issues/4003
-
-            metadataReady()
-                .then(function () {
-                    metadataLoaded = true;
-                });
-        }
-
         function metadataReady() {
 
-            var deferred = $q.defer();
+            if (metadataReadyPromise === null) {
 
-            if (manager.metadataStore.isEmpty()) {
-                manager.fetchMetadata()
-                    .then(function () {
-                        deferred.resolve();
-                    },
-                    function (error) {
-                        deferred.reject(error);
-                    });
-            } else {
-                deferred.resolve();
+                var deferred = $q.defer();
+
+                metadataReadyPromise = deferred.promise;
+
+                if (manager.metadataStore.isEmpty()) {
+                    manager.fetchMetadata()
+                        .then(function () {
+                            deferred.resolve();
+                        },
+                        function (error) {
+                            deferred.reject(error);
+                        });
+                } else {
+                    deferred.resolve();
+                }
             }
 
-            return deferred.promise;
+            return metadataReadyPromise;
         }
 
         function rejectChanges() {
@@ -136,10 +122,12 @@
         }
 
         function saveChanges(delay) {
+            delay = typeof delay !== 'undefined' ? delay : 0;
 
-            // Set the default value for delay in case 'undefined'
-            if (typeof delay === 'undefined') {
-                delay = 0;
+            // Anonymous user check
+            if (!currentUser.isAuthenticated()) {
+                $rootScope.$broadcast('anonymousUserInteracted');
+                return $q.reject({});
             }
 
             // Cancel existing timers (delay the save)
@@ -169,117 +157,113 @@
 
         function saveChangesInternal() {
 
-            return metadataReady()
-                .then(function () {
+            // Anonymous resource pool fix
+            updateAnonymousResourcePools();
 
-                    // Anonymous resource pool fix
-                    updateAnonymousResourcePools();
+            var count = getChangesCount();
+            var promise = null;
+            var saveBatches = prepareSaveBatches();
+            saveBatches.forEach(function (batch) {
 
-                    var count = getChangesCount();
-                    var promise = null;
-                    var saveBatches = prepareSaveBatches();
-                    saveBatches.forEach(function (batch) {
+                // ignore empty batches (except 'null' which means "save everything else")
+                if (batch === null || batch.length > 0) {
 
-                        // ignore empty batches (except 'null' which means "save everything else")
-                        if (batch === null || batch.length > 0) {
+                    // Broadcast, so UI can block
+                    $rootScope.$broadcast('saveChangesStart');
 
-                            // Broadcast, so UI can block
-                            $rootScope.$broadcast('saveChangesStart');
+                    promise = promise ?
+                        promise.then(function () { return manager.saveChanges(batch); }) :
+                        manager.saveChanges(batch);
+                }
+            });
+            return promise.then(success).catch(failed).finally(completed);
 
-                            promise = promise ?
-                                promise.then(function () { return manager.saveChanges(batch); }) :
-                                manager.saveChanges(batch);
-                        }
-                    });
-                    return promise.then(success).catch(failed).finally(completed);
+            function success(result) {
+                logger.logSuccess('Saved ' + count + ' change(s)');
+                return result;
+            }
 
-                    function success(result) {
-                        logger.logSuccess('Saved ' + count + ' change(s)');
-                        return result;
+            function failed(error) {
+                if (typeof error.status !== 'undefined' && error.status === '409') {
+                    logger.logError('Save failed!<br />The record you attempted to edit was modified by another user after you got the original value. The edit operation was canceled.', error, true);
+                } else if (typeof error.entityErrors !== 'undefined') {
+
+                    var errorMessage = 'Save failed!<br />';
+
+                    for (var key in error.entityErrors) {
+                        var entityError = error.entityErrors[key];
+                        errorMessage += entityError.errorMessage + '<br />';
                     }
 
-                    function failed(error) {
-                        if (typeof error.status !== 'undefined' && error.status === '409') {
-                            logger.logError('Save failed!<br />The record you attempted to edit was modified by another user after you got the original value. The edit operation was canceled.', error, true);
-                        } else if (typeof error.entityErrors !== 'undefined') {
+                    logger.logError(errorMessage, null, true);
 
-                            var errorMessage = 'Save failed!<br />';
+                } else {
+                    logger.logError('Save failed!', error, true);
+                }
 
-                            for (var key in error.entityErrors) {
-                                var entityError = error.entityErrors[key];
-                                errorMessage += entityError.errorMessage + '<br />';
-                            }
+                return $q.reject(error); // pass error along to next handler
+            }
 
-                            logger.logError(errorMessage, null, true);
+            function completed() {
 
-                        } else {
-                            logger.logError('Save failed!', error, true);
-                        }
+                // Broadcast, so UI can unblock
+                $rootScope.$broadcast('saveChangesCompleted');
+            }
 
-                        return $q.reject(error); // pass error along to next handler
-                    }
+            function prepareSaveBatches() {
 
-                    function completed() {
+                var batches = [];
 
-                        // Broadcast, so UI can unblock
-                        $rootScope.$broadcast('saveChangesCompleted');
-                    }
-
-                    function prepareSaveBatches() {
-
-                        var batches = [];
-
-                        // RowVersion fix
-                        // TODO How about Deleted state?
-                        var modifiedEntities = manager.getEntities(null, breeze.EntityState.Modified);
-                        modifiedEntities.forEach(function (entity) {
-                            var rowVersion = entity.RowVersion;
-                            entity.RowVersion = '';
-                            entity.RowVersion = rowVersion;
-                        });
-                        batches.push(modifiedEntities);
-
-                        /* Aaargh! 
-                        * Web API OData doesn't calculate the proper save order
-                        * which means, if we aren't careful on the client,
-                        * we could save a new TodoItem before we saved its parent new TodoList
-                        * or delete the parent TodoList before saving its deleted child TodoItems.
-                        * OData says it is up to the client to save entities in the order
-                        * required by referential constraints of the database.
-                        * While we could save each time you make a change, that sucks.
-                        * So we'll divvy up the pending changes into 4 batches
-                        * 1. Deleted Todos
-                        * 2. Deleted TodoLists
-                        * 3. Added TodoLists
-                        * 4. Every other change
-                        */
-
-                        batches.push(manager.getEntities(['UserElementCell'], [breeze.EntityState.Deleted]));
-                        batches.push(manager.getEntities(['ElementCell'], [breeze.EntityState.Deleted]));
-                        batches.push(manager.getEntities(['ElementItem'], [breeze.EntityState.Deleted]));
-                        batches.push(manager.getEntities(['UserElementField'], [breeze.EntityState.Deleted]));
-                        batches.push(manager.getEntities(['ElementField'], [breeze.EntityState.Deleted]));
-                        batches.push(manager.getEntities(['Element'], [breeze.EntityState.Deleted]));
-                        batches.push(manager.getEntities(['UserResourcePool'], [breeze.EntityState.Deleted]));
-                        batches.push(manager.getEntities(['ResourcePool'], [breeze.EntityState.Deleted]));
-
-                        batches.push(manager.getEntities(['ResourcePool'], [breeze.EntityState.Added]));
-                        batches.push(manager.getEntities(['UserResourcePool'], [breeze.EntityState.Added]));
-                        batches.push(manager.getEntities(['Element'], [breeze.EntityState.Added]));
-                        batches.push(manager.getEntities(['ElementField'], [breeze.EntityState.Added]));
-                        batches.push(manager.getEntities(['UserElementField'], [breeze.EntityState.Added]));
-                        batches.push(manager.getEntities(['ElementItem'], [breeze.EntityState.Added]));
-                        batches.push(manager.getEntities(['ElementCell'], [breeze.EntityState.Added]));
-                        batches.push(manager.getEntities(['UserElementCell'], [breeze.EntityState.Added]));
-
-                        batches.push(null); // empty = save all remaining pending changes
-                        return batches;
-                        /*
-                         *  No we can't flatten into one request because Web API OData reorders
-                         *  arbitrarily, causing the database failure we're trying to avoid.
-                         */
-                    }
+                // RowVersion fix
+                // TODO How about Deleted state?
+                var modifiedEntities = manager.getEntities(null, breeze.EntityState.Modified);
+                modifiedEntities.forEach(function (entity) {
+                    var rowVersion = entity.RowVersion;
+                    entity.RowVersion = '';
+                    entity.RowVersion = rowVersion;
                 });
+                batches.push(modifiedEntities);
+
+                /* Aaargh! 
+                * Web API OData doesn't calculate the proper save order
+                * which means, if we aren't careful on the client,
+                * we could save a new TodoItem before we saved its parent new TodoList
+                * or delete the parent TodoList before saving its deleted child TodoItems.
+                * OData says it is up to the client to save entities in the order
+                * required by referential constraints of the database.
+                * While we could save each time you make a change, that sucks.
+                * So we'll divvy up the pending changes into 4 batches
+                * 1. Deleted Todos
+                * 2. Deleted TodoLists
+                * 3. Added TodoLists
+                * 4. Every other change
+                */
+
+                batches.push(manager.getEntities(['UserElementCell'], [breeze.EntityState.Deleted]));
+                batches.push(manager.getEntities(['ElementCell'], [breeze.EntityState.Deleted]));
+                batches.push(manager.getEntities(['ElementItem'], [breeze.EntityState.Deleted]));
+                batches.push(manager.getEntities(['UserElementField'], [breeze.EntityState.Deleted]));
+                batches.push(manager.getEntities(['ElementField'], [breeze.EntityState.Deleted]));
+                batches.push(manager.getEntities(['Element'], [breeze.EntityState.Deleted]));
+                batches.push(manager.getEntities(['UserResourcePool'], [breeze.EntityState.Deleted]));
+                batches.push(manager.getEntities(['ResourcePool'], [breeze.EntityState.Deleted]));
+
+                batches.push(manager.getEntities(['ResourcePool'], [breeze.EntityState.Added]));
+                batches.push(manager.getEntities(['UserResourcePool'], [breeze.EntityState.Added]));
+                batches.push(manager.getEntities(['Element'], [breeze.EntityState.Added]));
+                batches.push(manager.getEntities(['ElementField'], [breeze.EntityState.Added]));
+                batches.push(manager.getEntities(['UserElementField'], [breeze.EntityState.Added]));
+                batches.push(manager.getEntities(['ElementItem'], [breeze.EntityState.Added]));
+                batches.push(manager.getEntities(['ElementCell'], [breeze.EntityState.Added]));
+                batches.push(manager.getEntities(['UserElementCell'], [breeze.EntityState.Added]));
+
+                batches.push(null); // empty = save all remaining pending changes
+                return batches;
+                /*
+                 *  No we can't flatten into one request because Web API OData reorders
+                 *  arbitrarily, causing the database failure we're trying to avoid.
+                 */
+            }
         }
 
         // When the user interact with the application without registering or login in,
@@ -318,6 +302,12 @@
 
             $q.all(existingEntityPromises).then(function () {
 
+                // Resource pools
+                anonymousUser.ResourcePoolSet.forEach(function (anonymousResourcePool) {
+                    anonymousResourcePool.User = newUser;
+                });
+
+                // User resource pools
                 var userResourcePoolSet = anonymousUser.UserResourcePoolSet.slice();
                 userResourcePoolSet.forEach(function (anonymousUserResourcePool) {
 
@@ -333,9 +323,10 @@
                     }
                 });
 
+                // User element fields
                 var userElementFieldSet = anonymousUser.UserElementFieldSet.slice();
                 userElementFieldSet.forEach(function (anonymousUserElementField) {
-                    
+
                     // If existing entity, then make it modified
                     var result = newUser.UserElementFieldSet.filter(function (userElementField) {
                         return userElementField.ElementFieldId === anonymousUserElementField.ElementFieldId;
@@ -349,6 +340,7 @@
                     }
                 });
 
+                // User element cells
                 var userElementCellSet = anonymousUser.UserElementCellSet.slice();
                 userElementCellSet.forEach(function (anonymousUserElementCell) {
 

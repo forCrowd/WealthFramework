@@ -19,6 +19,9 @@
             // No need to call the base, will be logged here
             // $delegate(exception, cause);
 
+            // Show a generic error to the user
+            logger.logError('Something went wrong, please try again later!', null, true);
+
             getSourceMappedStackTrace(exception)
                 .then(function (sourceMappedStack) {
 

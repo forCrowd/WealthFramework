@@ -1,11 +1,28 @@
 ﻿namespace forCrowd.WealthEconomy.Framework
 {
+    using System;
     using System.Configuration;
+
+    public enum EnvironmentType
+    {
+        Local,
+        Test,
+        Live
+    }
 
     public static class AppSettings
     {
         /// <summary>
-        /// Client app url: Will be used in emails to prepare the links and social login callbacks 
+        /// Email service etc. settings vary on based on environment type
+        /// Local | Test | Live
+        /// </summary>
+        public static EnvironmentType EnvironmentType
+        {
+            get { return (EnvironmentType)Enum.Parse(typeof(EnvironmentType), ConfigurationManager.AppSettings["Environment"]); }
+        }
+
+        /// <summary>
+        /// Will be used in CORS policy & in emails to prepare the links and social login callbacks 
         /// </summary>
         public static string ClientAppUrl
         {
@@ -13,19 +30,11 @@
         }
 
         /// <summary>
-        /// Service app url
+        /// Determines whether SSL connection required for api & odata calls & email service
         /// </summary>
-        public static string ServiceAppUrl
+        public static bool EnableSsl
         {
-            get { return ConfigurationManager.AppSettings["ServiceAppUrl"]; }
-        }
-
-        /// <summary>
-        /// RequireHttps: Determines whether https connection required for api & odata calls
-        /// </summary>
-        public static bool RequireHttps
-        {
-            get { return bool.Parse(ConfigurationManager.AppSettings["RequireHttps"]); }
+            get { return bool.Parse(ConfigurationManager.AppSettings["EnableSsl"]); }
         }
 
         /// <summary>

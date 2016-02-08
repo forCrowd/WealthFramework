@@ -41,18 +41,18 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown" data-uib-dropdown data-ng-if="vm.isAuthenticated()">
-                        <a href="" class="dropdown-toggle" data-uib-dropdown-toggle><span data-ng-bind="vm.currentUserText()"></span><b class="caret"></b></a>
+                    <li class="dropdown" data-uib-dropdown data-ng-if="vm.currentUser.isAuthenticated()">
+                        <a href="" class="dropdown-toggle" data-uib-dropdown-toggle><span data-ng-bind="'User: ' + vm.currentUser.Email"></span><b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="/account/accountEdit">Edit</a></li>
                             <li><a href="/account/changeEmail">Change email</a></li>
                             <li><a href="/account/confirmEmail" data-ng-if="!vm.currentUser.EmailConfirmed">Confirm email</a></li>
-                            <li data-ng-if="vm.hasPassword()"><a href="/account/changePassword">Change password</a></li>
-                            <li data-ng-if="!vm.hasPassword()"><a href="/account/addPassword">Add password</a></li>
+                            <li data-ng-if="vm.currentUser.hasPassword()"><a href="/account/changePassword">Change password</a></li>
+                            <li data-ng-if="!vm.currentUser.hasPassword()"><a href="/account/addPassword">Add password</a></li>
                             <li><a href="" data-ng-click="vm.logout()">Logout</a></li>
                         </ul>
                     </li>
-                    <li data-ng-if="!vm.isAuthenticated()">
+                    <li data-ng-if="!vm.currentUser.isAuthenticated()">
                         <div class="navbar-text nofloat">
                             <a href="/account/register">Register</a>
                             &nbsp;
@@ -85,12 +85,12 @@
     </div>
 
     <!-- lib.js -->
-    <script src="/js/lib/lib.min.js?v=0.43.5"></script>
+    <script src="/js/lib/lib.min.js?v=0.44"></script>
 
     <!-- app.js -->
-    <script src="/js/app/app.min.js?v=0.43.5"></script>
+    <script src="/js/app/app.min.js?v=0.44"></script>
 
-    <!-- appSettings -->
+    <!-- appSettings.js -->
     <script src="/js/appSettings/appSettings.js?v=0.43.2"></script>
 
 </body>

@@ -8,8 +8,8 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.Api.Test
     /// A dummy controller to test IHttpAction results 
     /// </summary>
     [AllowAnonymous]
-    [RoutePrefix("api/Results")]
-    public class ResultsController : BaseApiController
+    [RoutePrefix("api/Test")]
+    public class TestController : BaseApiController
     {
         [Route("OkResult")]
         [HttpGet]

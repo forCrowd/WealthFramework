@@ -18,17 +18,16 @@
         var changeEmailUrl = serviceAppUrl + '/api/Account/ChangeEmail';
         var changePasswordUrl = serviceAppUrl + '/api/Account/ChangePassword';
         var confirmEmailUrl = serviceAppUrl + '/api/Account/ConfirmEmail';
+        var currentUser = null;
+        var getCurrentUserPromise = null;
         var registerUrl = serviceAppUrl + '/api/Account/Register';
         var resendConfirmationEmailUrl = serviceAppUrl + '/api/Account/ResendConfirmationEmail';
-
-        var getCurrentUserPromise = null;
 
         // Service methods
         $delegate.addPassword = addPassword;
         $delegate.changeEmail = changeEmail;
         $delegate.changePassword = changePassword;
         $delegate.confirmEmail = confirmEmail;
-        $delegate.currentUser = null;
         $delegate.getAccessToken = getAccessToken;
         $delegate.getCurrentUser = getCurrentUser;
         $delegate.logout = logout;
@@ -40,6 +39,15 @@
         $delegate.updateElementFieldIndexRating = updateElementFieldIndexRating;
         $delegate.updateResourcePoolRate = updateResourcePoolRate;
 
+        _init();
+
+        function _init() {
+            getCurrentUser()
+                .then(function () {
+                    broadcastUserChanged();
+                });
+        }
+
         return $delegate;
 
         /*** Implementations ***/
@@ -50,8 +58,8 @@
 
                     // Remove 'HasNoPassword' claim
                     var claimIndex = null;
-                    for (var i = 0; i < $delegate.currentUser.Claims.length; i++) {
-                        if ($delegate.currentUser.Claims[i].ClaimType === 'HasNoPassword') {
+                    for (var i = 0; i < currentUser.Claims.length; i++) {
+                        if (currentUser.Claims[i].ClaimType === 'HasNoPassword') {
                             claimIndex = i;
                             break;
                         }
@@ -61,11 +69,11 @@
                         // TODO throw error?
                     }
 
-                    var claims = $delegate.currentUser.Claims.splice(claimIndex, 1);
+                    var claims = currentUser.Claims.splice(claimIndex, 1);
                     claims[0].entityAspect.setDetached();
 
                     // Sync RowVersion fields
-                    syncRowVersion($delegate.currentUser, updatedUser);
+                    syncRowVersion(currentUser, updatedUser);
                 })
                 .error(handleErrorResult);
         }
@@ -74,11 +82,11 @@
             return $http.post(changeEmailUrl, changeEmailBindingModel)
                 .success(function (updatedUser) {
 
-                    $delegate.currentUser.Email = updatedUser.Email;
-                    $delegate.currentUser.EmailConfirmed = false;
+                    currentUser.Email = updatedUser.Email;
+                    currentUser.EmailConfirmed = false;
 
                     // Sync RowVersion fields
-                    syncRowVersion($delegate.currentUser, updatedUser);
+                    syncRowVersion(currentUser, updatedUser);
                 })
                 .error(handleErrorResult);
         }
@@ -87,7 +95,7 @@
             return $http.post(changePasswordUrl, changePasswordBindingModel)
                 .success(function (updatedUser) {
                     // Sync RowVersion fields
-                    syncRowVersion($delegate.currentUser, updatedUser);
+                    syncRowVersion(currentUser, updatedUser);
                 })
                 .error(handleErrorResult);
         }
@@ -96,16 +104,18 @@
             return $http.post(confirmEmailUrl, confirmEmailBindingModel)
                 .success(function (updatedUser) {
 
-                    $delegate.currentUser.EmailConfirmed = true;
+                    currentUser.EmailConfirmed = true;
 
                     // Sync RowVersion fields
-                    syncRowVersion($delegate.currentUser, updatedUser);
+                    syncRowVersion(currentUser, updatedUser);
                 })
                 .error(handleErrorResult);
         }
 
         function getAccessToken(email, password, tempToken, isRegister) {
             isRegister = typeof isRegister === 'undefined' ? false : isRegister;
+
+            var deferred = $q.defer();
 
             var accessTokenData = 'grant_type=password&username=' + email + '&password=' + password;
 
@@ -114,86 +124,86 @@
                 tokenUrl += '?tempToken=' + tempToken;
             }
 
-            return $http.post(tokenUrl, accessTokenData, { 'Content-Type': 'application/x-www-form-urlencoded' })
+            $http.post(tokenUrl, accessTokenData, { 'Content-Type': 'application/x-www-form-urlencoded' })
                 .success(function (data) {
 
                     // Set access token to the session
                     $window.localStorage.setItem('access_token', data.access_token);
 
-                    // Clear user promise
-                    if (!isRegister) {
-                        getCurrentUserPromise = null;
-                    }
+                    // Set currentUser as the old one.
+                    // In case if this is coming from login page, anonymous changes will be merged/copied into logged in user
+                    var oldUser = currentUser;
 
-                    // If there are anonymously create entities...
-                    var oldUser = null;
-                    if (!isRegister) {
-                        oldUser = $delegate.currentUser;
-                    }
-
-                    return getCurrentUser()
-                        .then(function (newUser) {
+                    getCurrentUser(!isRegister)
+                        .then(function () {
 
                             if (isRegister) {
 
+                                // Raise logged in event
+                                broadcastUserChanged();
+
                                 // Save the changes that's been done before the registration
-                                return dataContext.saveChanges()
+                                dataContext.saveChanges()
                                     .then(function () {
-
-                                        // Raise logged in event
-                                        $rootScope.$broadcast('userLoggedIn', newUser);
-
-                                        // TODO Try to return newUser
+                                        deferred.resolve();
                                     });
-
                             } else {
 
-                                if (oldUser !== null) {
+                                // Raise logged in event
+                                broadcastUserChanged();
 
-                                    // Move anonymously created entities to this logged in user
-                                    return dataContext.updateAnonymousChanges(oldUser, newUser)
-                                        .then(function () {
+                                // Move anonymously created entities to this logged in user
+                                dataContext.updateAnonymousChanges(oldUser, currentUser)
+                                    .then(function () {
 
-                                            // Save changes
-                                            return dataContext.saveChanges()
-                                                .then(function () {
-
-                                                    // Raise logged in event
-                                                    $rootScope.$broadcast('userLoggedIn', newUser);
-
-                                                    // TODO Try to return newUser
-                                                });
-                                        });
-                                } else {
-
-                                    // TODO Other blocks return a promise, this one doesn't, correct?
-
-                                    // Raise logged in event
-                                    $rootScope.$broadcast('userLoggedIn', newUser);
-
-                                    // TODO Try to return newUser
-                                }
+                                        // Save changes
+                                        dataContext.saveChanges()
+                                            .then(function () {
+                                                deferred.resolve();
+                                            });
+                                    });
                             }
                         });
                 })
-                .error(handleErrorResult);
+                .error(function (data, status, headers, config) {
+                    handleErrorResult(data, status, headers, config);
+                    deferred.reject(data);
+                });
+
+            return deferred.promise;
         }
 
-        function getCurrentUser() {
+        // Returns either anonymous (not authenticated) or logged in user
+        function getCurrentUser(resetPromise) {
+            resetPromise = typeof resetPromise !== 'undefined' ? resetPromise : false;
 
-            var deferred = $q.defer();
+            if (getCurrentUserPromise === null || resetPromise) {
 
-            if (getCurrentUserPromise === null) {
+                var deferred = $q.defer();
                 getCurrentUserPromise = deferred.promise;
 
-                var query = breeze.EntityQuery
-                    .from('Users')
-                    .expand('Claims')
-                    .using(breeze.FetchStrategy.FromServer);
+                if (localStorage.getItem('access_token') === null) {
 
-                dataContext.executeQuery(query)
-                    .then(success)
-                    .catch(failed);
+                    dataContext.metadataReady()
+                        .then(function () {
+                            var user = dataContext.createEntity('User', {});
+                            currentUser = user;
+                            deferred.resolve(user);
+                        })
+                        .catch(function () {
+                            // TODO Handle?
+                        });
+
+                } else {
+                    var query = breeze.EntityQuery
+                        .from('Users')
+                        .expand('Claims')
+                        .using(breeze.FetchStrategy.FromServer);
+
+                    dataContext.executeQuery(query)
+                        .then(success)
+                        .catch(failed);
+                }
             }
 
             return getCurrentUserPromise;
@@ -201,17 +211,19 @@
             function success(response) {
 
                 // If the response has an entity, use that, otherwise create an anonymous user
-                $delegate.currentUser = response.results.length > 0 ?
+                var user = response.results.length > 0 ?
                     response.results[0] :
                     dataContext.createEntity('User', {});
 
-                deferred.resolve($delegate.currentUser);
+                currentUser = user;
+                deferred.resolve(user);
             }
 
             function failed(error) {
                 var message = error.message || 'User query failed';
-                logger.log(message);
+                // TODO Handle this case better!
                 deferred.reject(message);
+                throw new Error(message);
             }
         }
 
@@ -300,8 +312,12 @@
                 message += error + '<br />';
             }
 
-            if (message === '') {
+            if (message === '' && typeof data.Message !== 'undefined') {
                 message = data.Message;
+            }
+
+            if (message === '' && typeof data.error_description !== 'undefined') {
+                message = data.error_description;
             }
 
             logger.logError(message, null, true);
@@ -312,14 +328,18 @@
             // Remove access token from the session
             $window.localStorage.removeItem('access_token');
 
-            // Clear user promise
-            getCurrentUserPromise = null;
-
             // Clear breeze's metadata store
             dataContext.clear();
 
             // Raise logged out event
-            $rootScope.$broadcast('userLoggedOut');
+            return getCurrentUser(true)
+                .then(function () {
+                    broadcastUserChanged();
+                });
+        }
+
+        function broadcastUserChanged() {
+            $rootScope.$broadcast('userFactory_currentUserChanged', currentUser);
         }
 
         function register(registerBindingModel) {
@@ -328,11 +348,11 @@
 
                     // breeze context user entity fix-up!
                     // TODO Try to make this part better, use OData method?
-                    $delegate.currentUser.Id = newUser.Id;
-                    $delegate.currentUser.Email = newUser.Email;
-                    $delegate.currentUser.UserName = newUser.UserName;
-                    $delegate.currentUser.RowVersion = newUser.RowVersion;
-                    $delegate.currentUser.entityAspect.acceptChanges();
+                    currentUser.Id = newUser.Id;
+                    currentUser.Email = newUser.Email;
+                    currentUser.UserName = newUser.UserName;
+                    currentUser.RowVersion = newUser.RowVersion;
+                    currentUser.entityAspect.acceptChanges();
 
                     return getAccessToken(registerBindingModel.email, registerBindingModel.password, '', true);
                 })
@@ -395,7 +415,7 @@
 
         function updateElementCellMultiplier(elementCell, updateType) {
 
-            var userCell = getUserElementCell($delegate.currentUser, elementCell);
+            var userCell = getUserElementCell(currentUser, elementCell);
 
             switch (updateType) {
                 case 'increase':
@@ -404,7 +424,7 @@
                     if (userCell === null) { // If there is no item, create it
 
                         userCell = dataContext.createEntity('UserElementCell', {
-                            User: $delegate.currentUser,
+                            User: currentUser,
                             ElementCell: elementCell,
                             DecimalValue: updateType === 'increase' ? 1 : 0
                         });
@@ -431,7 +451,7 @@
 
         function updateElementCellNumericValue(elementCell, updateType) {
 
-            var userCell = getUserElementCell($delegate.currentUser, elementCell);
+            var userCell = getUserElementCell(currentUser, elementCell);
 
             switch (updateType) {
                 case 'increase':
@@ -440,7 +460,7 @@
                     if (userCell === null) { // If there is no item, create it
 
                         dataContext.createEntity('UserElementCell', {
-                            User: $delegate.currentUser,
+                            User: currentUser,
                             ElementCell: elementCell,
                             DecimalValue: updateType === 'increase' ? 55 : 45
                         });
@@ -473,7 +493,7 @@
 
         function updateElementFieldIndexRating(elementField, updateType) {
 
-            var userElementField = getUserElementField($delegate.currentUser, elementField);
+            var userElementField = getUserElementField(currentUser, elementField);
 
             switch (updateType) {
                 case 'increase':
@@ -482,7 +502,7 @@
                     // If there is no item, create it
                     if (userElementField === null) {
                         userElementField = {
-                            User: $delegate.currentUser,
+                            User: currentUser,
                             ElementField: elementField,
                             Rating: updateType === 'increase' ? 55 : 45
                         };
@@ -518,7 +538,7 @@
 
         function updateResourcePoolRate(resourcePool, updateType) {
 
-            var userResourcePool = getUserResourcePool($delegate.currentUser, resourcePool);
+            var userResourcePool = getUserResourcePool(currentUser, resourcePool);
 
             switch (updateType) {
                 case 'increase':
@@ -527,7 +547,7 @@
                     // If there is no item, create it
                     if (userResourcePool === null) {
                         userResourcePool = {
-                            User: $delegate.currentUser,
+                            User: currentUser,
                             ResourcePool: resourcePool,
                             ResourcePoolRate: updateType === 'increase' ? 15 : 5
                         };
