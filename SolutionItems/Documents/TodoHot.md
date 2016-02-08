@@ -1,22 +1,9 @@
-﻿remember me - forgot pass
-Sector index -> priority index!
-do we need <web> block in webapi config file? ngclient has only one section, it can be just like that?
-test email account! + social logins test callbacks? + test database? + test facebook (google should be okay) + local & test microsoft?
-microsoft login doesn't work? - doesnt work on local & test, since its configured for live domain?
-save your changes timeout?
-redirect www.forcrowd.org to wealth.forcrowd.org?
-RELEASE NOTES - CHANGELOG?
+﻿Sector index -> priority index!
+
 check this out; http://breeze.github.io/doc-breeze-labs/directives-validation.html
 check this out: https://github.com/mmanela/chutzpah/wiki/Chutzpah.json-Settings-File
+remember me - forgot pass
 
-throw exception instead; logger.logError('Load metadata first!');
-
-errors at the bottom of todohot.md
-
----
-RowVersion property of the entity cannot be null - an async issue?
-
----
 https://mva.microsoft.com/en-US/training-courses/angular-applications-with-typescript-14330?l=C9DsEeLgB_7404668937
 http://www.codelord.net/2016/01/07/adding-the-first-angular-2-service-to-your-angular-1-app/
 https://channel9.msdn.com/Events/Seth-on-the-Road/DevIntersection-2015/Making-Sense-of-the-JavaScript-Client-Side-with-Ward-Bell
@@ -50,10 +37,10 @@ Find a designer! Ozgur's Ali | http://foundry.mediumra.re/variant/builder.html
 
 save anon user to db?
 
+redirect www.forcrowd.org to wealth.forcrowd.org?
+
 ---
 https://www.npmjs.com/package/gulp-minify-html
-
-userfactory - a block that doesnt return a promise?
 
 Identity / Account:
 
@@ -61,8 +48,6 @@ Identity / Account:
 http://stackoverflow.com/questions/22755700/revoke-token-generated-by-usertokenprovider-in-asp-net-identity-2-0/22767286#22767286
 
 . before sending any email to user, check whether it's confirmed?
-
-. confirmEmail etc. pages should be behind authorization? handle it in a generic way? the user shouldn't access these pages without logging in?
 
 ---
 angular 1.5 component?
@@ -73,10 +58,6 @@ however it doesn't return the newly created entity to the caller, which probably
 how about using $injector.get('dataContext') in these cases, instead of broadcast?
 
 use createEntity in addX cases!
-
-THIS REQUIRES USERID TO BE USED AS WELL?
-D:\Development\Projects\GitHub\forCrowd\WealthEconomy\Web\Controllers\OData\Generated\UserElementCellController.cs
-if (MainUnitOfWork.Exists(userElementCell.ElementCellId))
 
 // TODO Most of these functions are related with userService.js - updateX functions
 // Try to merge these two - Actually try to handle these actions within the related entity / SH - 27 Nov. '15
@@ -127,18 +108,8 @@ CONTENT
 . toastr has a jquery dependency - without it, jquery can be removed?
 . source-map - original position name & column props are null
 
-. google index? it's too slow at the moment?
-
-Page Insights
-https://developers.google.com/speed/pagespeed/insights/?hl=en&utm_source=wmx&utm_campaign=wmx_otherlinks&url=https%3A%2F%2Fwealth.forcrowd.org%2F&tab=mobile
-
-Mobile 53/100
-Desktop 65/100
-
-compression for dynamic content
-https://wealth.forcrowd.org/odata/ResourcePool?$filter=Id%20eq%209&amp;$expand=ElementSet%2FElementFieldSet%2CElementSet%2FElementItemSet%2FElementCellSet
-
 ---
+an async issue?
 RowVersion property of the entity cannot be null&#xD;&#xA;   at forCrowd.WealthEconomy.WebApi.Controllers.OData.BaseUserElementCellController.&lt;Patch&gt;d__9.MoveNext() in D:\Development\Projects\GitHub\forCrowd\WealthEconomy\WebApi\Controllers\OData\Generated\UserElementCellController.cs:line 133
 
 ---

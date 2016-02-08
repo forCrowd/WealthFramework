@@ -1,5 +1,6 @@
 ﻿namespace forCrowd.WealthEconomy.Facade
 {
+    using Framework;
     using Microsoft.AspNet.Identity;
     using System.Net.Mail;
     using System.Net.Mime;
@@ -9,7 +10,7 @@
     {
         public bool HasValidConfiguration()
         {
-            var hasRegistrationEmailAddress = !string.IsNullOrWhiteSpace(Framework.AppSettings.RegistrationEmailAddress);
+            var hasRegistrationEmailAddress = !string.IsNullOrWhiteSpace(AppSettings.RegistrationEmailAddress);
 
             var hasSmtpClientConfig = false;
 
@@ -37,42 +38,49 @@
 
             var mailMessage = new MailMessage()
             {
-                From = new MailAddress(Framework.AppSettings.RegistrationEmailAddress, "forCrowd Foundation")
+                From = new MailAddress(AppSettings.RegistrationEmailAddress, "forCrowd Foundation")
             };
 
-            // TODO Get rid of this ugliness asap! / SH - 04 Jan. '16
-            // This email type is only a notification to the admin
-            var newExternalLoginNotification = message.Subject == "New external login";
+            var hasNotificationAddress = !string.IsNullOrWhiteSpace(AppSettings.NotificationEmailAddress);
 
-#if !DEBUG
-            if (!newExternalLoginNotification)
+            switch (AppSettings.EnvironmentType)
             {
-                // To
-                mailMessage.To.Add(new MailAddress(message.Destination));
+                case EnvironmentType.Local:
+                case EnvironmentType.Test:
+                    {
+                        // In local & test, always send to notification address
+                        if (hasNotificationAddress)
+                            mailMessage.To.Add(new MailAddress(AppSettings.NotificationEmailAddress));
+                        break;
+                    }
+                case EnvironmentType.Live:
+                    {
+                        // TODO Get rid of this ugliness asap! / SH - 04 Jan. '16
+                        // This email type is only a notification to the admin
+                        var newExternalLoginNotification = message.Subject == "New external login";
 
-                // Bcc
-                if (!string.IsNullOrWhiteSpace(Framework.AppSettings.NotificationEmailAddress))
-                    mailMessage.Bcc.Add(new MailAddress(Framework.AppSettings.NotificationEmailAddress));
-            }
-            else
-            {
-                if (string.IsNullOrWhiteSpace(Framework.AppSettings.NotificationEmailAddress))
-                    return;
+                        if (!newExternalLoginNotification)
+                        {
+                            // To
+                            mailMessage.To.Add(new MailAddress(message.Destination));
 
-                mailMessage.To.Add(new MailAddress(Framework.AppSettings.NotificationEmailAddress));
+                            // Bcc
+                            if (hasNotificationAddress)
+                                mailMessage.Bcc.Add(new MailAddress(AppSettings.NotificationEmailAddress));
+                        }
+                        else
+                        {
+                            // External login email will only be send to notification address
+                            if (hasNotificationAddress)
+                                mailMessage.To.Add(new MailAddress(AppSettings.NotificationEmailAddress));
+                        }
+
+                        break;
+                    }
             }
-#else
-            // To
-            if (string.IsNullOrWhiteSpace(Framework.AppSettings.NotificationEmailAddress))
-                return;
-            
-            mailMessage.To.Add(new MailAddress(Framework.AppSettings.NotificationEmailAddress));
-#endif
 
             mailMessage.Subject = message.Subject;
 
-            //var text = "A new member has been joined to our guid - Email: " + user.Email;
-            //var html = @"<p>Good days sir,<br /><br />A new member has been joined to our guild.<br />Email: " + user.Email + ".<br /><br />Kind Regards,<br />forCrowd Foundation</p>";
             var text = message.Body;
             var html = message.Body;
 
@@ -81,7 +89,13 @@
 
             using (var smtpClient = new SmtpClient())
             {
-                //smtpClient.EnableSsl = true;
+                // TODO How to use SSL?
+                // EnableSSL true doesn't work at the moment, tried all ports (25, 465, 587, 8889) but no luck.
+                // api.forcrowd.org SSL cert. also covers mail.forcrowd.org, but does it even necessary, or how to configure it?
+                // And/or is it about hosting?
+                // coni2k - 08 Feb. '16
+                //smtpClient.EnableSsl = AppSettings.EnableSsl;
+                smtpClient.EnableSsl = false;
                 await smtpClient.SendMailAsync(mailMessage);
             }
         }

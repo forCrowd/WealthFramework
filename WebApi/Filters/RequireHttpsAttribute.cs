@@ -10,11 +10,11 @@
     {
         public override void OnAuthorization(HttpActionContext actionContext)
         {
-            if (Framework.AppSettings.RequireHttps && actionContext.Request.RequestUri.Scheme != Uri.UriSchemeHttps)
+            if (Framework.AppSettings.EnableSsl && actionContext.Request.RequestUri.Scheme != Uri.UriSchemeHttps)
             {
                 actionContext.Response = new HttpResponseMessage(HttpStatusCode.Forbidden)
                 {
-                    ReasonPhrase = "HTTPS Required"
+                    ReasonPhrase = "HTTPS connection required"
                 };
             }
             else

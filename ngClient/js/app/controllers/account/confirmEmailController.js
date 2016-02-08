@@ -9,7 +9,7 @@
         logger = logger.forSource(controllerId);
 
         var vm = this;
-        vm.currentUser = null;
+        vm.currentUser = { EmailConfirmed: false, isAuthenticated: function () { return false; } };
         vm.isResendDisabled = false;
         vm.resendConfirmationEmail = resendConfirmationEmail;
 

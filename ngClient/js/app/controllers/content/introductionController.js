@@ -15,21 +15,6 @@
 
         var vm = this;
         vm.upoConfig = { resourcePoolId: 1 };
-        vm.isAuthenticated = false;
-
-        userFactory.getCurrentUser()
-            .then(function (currentUser) {
-                vm.isAuthenticated = currentUser.isAuthenticated();
-            });
-
-        // User logged in & out
-        $scope.$on('userLoggedIn', function () {
-            vm.isAuthenticated = true;
-        });
-
-        $scope.$on('userLoggedOut', function () {
-            vm.isAuthenticated = false;
-        });
 
         function increaseMultiplier() {
 

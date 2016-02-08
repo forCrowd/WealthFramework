@@ -42,13 +42,7 @@
                             case 'resourcePoolEditor_elementMultiplierReset': { userFactory.updateElementMultiplier(resourcePool.mainElement(), 'reset'); break; }
                         }
 
-                        // Save changes, if there is a registered user
-                        userFactory.getCurrentUser()
-                            .then(function (currentUser) {
-                                if (currentUser.isAuthenticated()) {
-                                    resourcePoolFactory.saveChanges(1500);
-                                }
-                            });
+                        resourcePoolFactory.saveChanges(1500);
                     });
             }
         }

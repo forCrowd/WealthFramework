@@ -9,43 +9,55 @@
         logger = logger.forSource(controllerId);
 
         var vm = this;
+        vm.Email = '';
         vm.getAccessToken = getAccessToken;
         vm.getExternalLoginUrl = getExternalLoginUrl;
-        
+        vm.Password = '';
+
         _init();
 
         function _init() {
-            if (typeof $location.search().error !== 'undefined') {
 
-                var error = $location.search().error;
+            // Error
+            var error = $location.search().error;
+            if (typeof error !== 'undefined') {
                 logger.logError(error, null, true);
-
-                // Clear error message
-                $location.search('error', null);
+                return;
             }
+
+            getAccessToken();
         }
 
         function getAccessToken() {
-            userFactory.getAccessToken(vm.email, vm.password)
-                .success(function () {
-                    var returnUrl = '/';
-                    var locationItem = locationHistory.get(locationHistory.getHistory().length - 2);
-                    if (locationItem !== null) {
-                        returnUrl = locationItem.url();
-                    }
-                    $location.url(returnUrl);
-                })
-                .error(function (response) {
-                    if (typeof response.error_description !== 'undefined') {
-                        logger.logError(response.error_description, null, true);
-                    } else {
-                        logger.logError(response, null, true);
-                    }
-                });
+
+            // External (temp token) login
+            var tempToken = $location.search().tempToken;
+            if (typeof tempToken !== 'undefined') {
+                userFactory.getAccessToken('', '', tempToken).then(success).catch(failedExternal);
+            } else { // Internal login
+                if (vm.Email !== '' && vm.Password !== '') {
+                    userFactory.getAccessToken(vm.Email, vm.Password).then(success);
+                }
+            }
+
+            function success() {
+                logger.logSuccess('You have been logged in!', null, true);
+                $location.url(getReturnUrl());
+            }
+
+            function failedExternal() {
+                logger.logError('Invalid token', null, true);
+            }
         }
 
         function getExternalLoginUrl(provider) {
-            return serviceAppUrl + '/api/Account/ExternalLogin?provider=' + provider;
+            return serviceAppUrl + '/api/Account/ExternalLogin?provider=' + provider + '&clientReturnUrl=' + getReturnUrl();
+        }
+
+        function getReturnUrl() {
+            // If login pages called after a result from server, it will have "clientReturnUrl" param, which will have a higher priority than locationHistory
+            var clientReturnUrl = $location.search().clientReturnUrl;
+            return typeof clientReturnUrl !== 'undefined' ? clientReturnUrl : locationHistory.previousItem().url();
         }
     }
 })();

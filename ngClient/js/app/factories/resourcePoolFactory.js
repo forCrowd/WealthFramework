@@ -33,10 +33,7 @@
         $delegate.removeResourcePool = removeResourcePool;
 
         // User logged out
-        $rootScope.$on('userLoggedIn', function () {
-            fetched = [];
-        });
-        $rootScope.$on('userLoggedOut', function () {
+        $rootScope.$on('userFactory_currentUserChanged', function () {
             fetched = [];
         });
 
@@ -357,21 +354,21 @@
 
                     // Prepare the query
                     var query = null;
-                    var newlyCreated = resourcePoolId <= 0; // Determines whether this is just created by this user, or an existing resource pool
+                    var isNewResourcePool = resourcePoolId <= 0; // Determines whether this is just created by this user, or an existing resource pool
                     var fetchedEarlier = false;
                     var fromServer = false;
 
                     // If it's not newly created, check the fetched list
-                    if (!newlyCreated) {
+                    if (!isNewResourcePool) {
                         fetchedEarlier = fetched.some(function (fetchedId) {
                             return resourcePoolId === fetchedId;
                         });
                     }
 
-                    fromServer = !newlyCreated && !fetchedEarlier;
+                    fromServer = !isNewResourcePool && !fetchedEarlier;
 
                     // Is authorized? No, then get only the public data, yes, then get include user's own records
-                    if (currentUser.Id > 0 || newlyCreated) {
+                    if (currentUser.isAuthenticated() || isNewResourcePool) {
                         query = breeze.EntityQuery
                             .from('ResourcePool')
                             .expand('UserResourcePoolSet, ElementSet.ElementFieldSet.UserElementFieldSet, ElementSet.ElementItemSet.ElementCellSet.UserElementCellSet')

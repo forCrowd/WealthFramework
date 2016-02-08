@@ -36,6 +36,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="Documents\Elevator Pitch.txt" />
     <Content Include="GitHub\Issues\31\V3_EF.xml" />
     <Content Include="GitHub\Issues\31\V3_OData.xml" />
     <Content Include="GitHub\Issues\31\v4_EF.xml" />
@@ -49,9 +50,11 @@
     <None Include="..\.gitignore">
       <Link>Documents\.gitignore</Link>
     </None>
+    <None Include="..\CHANGELOG.md">
+      <Link>Documents\CHANGELOG.md</Link>
+    </None>
     <None Include="Documents\Survey.docx" />
     <None Include="Documents\Index Income Calculation.xlsx" />
-    <None Include="Documents\Release Notes.md" />
     <None Include="Documents\TodoHot.md" />
     <None Include="Documents\TodoUnsorted.md" />
     <Content Include="Documents\Troubleshoot.txt" />

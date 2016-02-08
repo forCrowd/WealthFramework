@@ -1,4 +1,40 @@
-﻿Chapters
+﻿# Header
+
+An experimental resource management system that aims to provide a more sustainable and productive economic model
+
+Benefit | Utility?
+
+"More benefit, more income" | "Maximizing the benefit | potential" - cheesy?
+Crowd Managed Fund?
+"Maximizing the benefit"
+
+Wealth Economy is a project that aims to calculate (measure) the organizations' total (social) benefit (utility?) to the society,
+and create a model that the organizations with more benefits can get more income, based on the results.
+
+# Prologue
+
+Cosmetics: Curing baldness	
+Education: Reducing illiteracy	
+Entertainment: Improving augmented reality in video games	
+Poverty: Clean water for everyone	
+
+Cosmetics: Curing baldness	
+Education: Reducing illiteracy	
+Entertainment: Improving augmented reality in video games	
+Healthcare: Curing cancer
+Hunger: Clean water for everyone	
+Poverty: Reducing infant mortality rates
+
+# Introduction
+
+# Basics
+
+# ...
+
+---
+OLD
+
+Chapters
 
 #1 - Profit Oriented Economy
 Current Formula: Lower the cost, Maximize the Sales Price, Multiply it with Number of Sales

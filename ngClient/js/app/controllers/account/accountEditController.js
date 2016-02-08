@@ -3,12 +3,9 @@
 
     var controllerId = 'AccountEditController';
     angular.module('main')
-        .controller(controllerId, ['userFactory',
-            'logger',
-            AccountEditController]);
+        .controller(controllerId, ['userFactory', 'logger', AccountEditController]);
 
-    function AccountEditController(userFactory,
-		logger) {
+    function AccountEditController(userFactory, logger) {
         logger = logger.forSource(controllerId);
 
         var isSaving = false;
@@ -42,7 +39,7 @@
             isSaving = true;
             userFactory.saveChanges()
                 .then(function (result) {
-                    logger.logSuccess('Your changes has been saved!', null, true);
+                    logger.logSuccess('Your changes have been saved!', null, true);
                 })
                 .catch(function (error) {
 

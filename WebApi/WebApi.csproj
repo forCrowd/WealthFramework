@@ -233,7 +233,7 @@
     <Compile Include="Controllers\Api\ExceptionController.cs" />
     <Compile Include="Controllers\Api\ApplicationController.cs" />
     <Compile Include="Controllers\Api\BaseApiController.cs" />
-    <Compile Include="Controllers\Api\Test\ResultsController.cs" />
+    <Compile Include="Controllers\Api\Test\TestController.cs" />
     <Compile Include="Controllers\Extensions\ControllerExtensions.cs" />
     <Compile Include="Controllers\OData\Generated\ElementCellController.cs">
       <DependentUpon>ODataController.tt</DependentUpon>

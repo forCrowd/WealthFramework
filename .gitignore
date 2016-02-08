@@ -37,7 +37,7 @@ ngClient/css/lib/*.css
 ngClient/css/fonts/
 
 # Elmah log folder
-WebApi/App_Data/*.*
+WebApi/App_Data/
 
 # Personal database queries (no need to save)
 SolutionItems/Scripts/Database/Personal/

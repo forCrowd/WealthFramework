@@ -27,4 +27,4 @@ To be able add "Jasmine" tests under "ngClient.Tests" folder into "Test Explorer
 
 ---
 
-#### [Release Notes](/SolutionItems/Documents/Release Notes.md)
+#### [Changelog](/CHANGELOG.md)

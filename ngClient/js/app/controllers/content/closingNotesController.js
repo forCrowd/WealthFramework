@@ -12,7 +12,7 @@
 
         // View model
         var vm = this;
-        vm.isAuthenticated = false;
+        vm.currentUser = { isAuthenticated: function () { return false; } };
         vm.isLocalhost = $location.$$host === 'localhost';
         vm.displayBankTransfer = false;
         vm.toggleBankTransfer = toggleBankTransfer;
@@ -21,21 +21,16 @@
         vm.disqusId = 'wealth_economy_11'; // ?
         vm.disqusUrl = $location.url(); // ?
 
+        $scope.$on('userFactory_currentUserChanged', function (event, newUser) {
+            vm.currentUser = newUser;
+        });
+
         _init();
-
-        // User logged in & out
-        $scope.$on('userLoggedIn', function () {
-            vm.isAuthenticated = true;
-        });
-
-        $scope.$on('userLoggedOut', function () {
-            vm.isAuthenticated = false;
-        });
 
         function _init() {
             userFactory.getCurrentUser()
                 .then(function (currentUser) {
-                    vm.isAuthenticated = currentUser.isAuthenticated();
+                    vm.currentUser = currentUser;
                 });
         }
 
