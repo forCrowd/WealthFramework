@@ -3,10 +3,10 @@
 **0.45**
 
 * Content updates
-** Sector Index was renamed to Priority
-** Fair share sample was removed
-** All in One was added
-** Total Cost Index, Implementation, Reason, Closing Notes updates
+ * Sector Index was renamed to Priority
+ * Fair share sample was removed
+ * All in One was added
+ * Total Cost Index, Implementation, Reason, Closing Notes updates
 
 **0.44**
 
@@ -57,7 +57,7 @@ https://www.nuget.org/packages/Microsoft.AspNet.WebApi.MessageHandlers.Compressi
 * Sourcemap generation was added to gulp minifying
 * angular exceptionHandling was modified to handle sourcemapped stacktrace
 * breeze.base.debug.js + necessary adapters as main breeze setup, instead of breeze.debug.js
-** Also breeze.dataService.odata.js fix: https://github.com/Breeze/breeze.js/pull/128
+ * Also breeze.dataService.odata.js fix: https://github.com/Breeze/breeze.js/pull/128
 * External libraries minified & bundled as well: lib.js, lib.min.js, lib.css, lib.min.css
 * .tt files and most of the generated files were remove from ngClient
 * gulpfile errorHandler was added for uglify
@@ -104,14 +104,14 @@ In case of an update in the page, browsers automatically get the latest default.
 **0.42**
 
 * Separation of Web client (ngClient) & WebApi
-** Cors was enabled on WebApi
-** client related files were removed from WebApi
-** bower was installed to ngClient and all client packages were installed through bower
-** Mvc, Web pages and other unnecessary packages were removed
-** RequireHttps flag for WebApi
-** CustomErrors for WebApi
+ * Cors was enabled on WebApi
+ * client related files were removed from WebApi
+ * bower was installed to ngClient and all client packages were installed through bower
+ * Mvc, Web pages and other unnecessary packages were removed
+ * RequireHttps flag for WebApi
+ * CustomErrors for WebApi
 * Global.asax functional was moved to Startup.cs
-** Http to Https rule handling was moved to web.config
+ * Http to Https rule handling was moved to web.config
 * "test.forcrowd.org" domain was created for tests before production
 
 **0.41.4**
@@ -128,7 +128,7 @@ Now both cases call updateAnonymousChanges method which handles this case correc
 **0.41.2**
 
 * angular entity update - 'RowVersion field out of sync' fix
-** Json formatter reference loop handling was set to 'Ignore'
+ * Json formatter reference loop handling was set to 'Ignore'
 * Social login - 'userFactory getCurrentUser leaves a temp user in the context' fix
 * UserManager ChangeEmailAsync function was replaced with existing SetEmailAsync
 * Client side error handling improvements
@@ -142,8 +142,8 @@ Now both cases call updateAnonymousChanges method which handles this case correc
 **0.41**
 
 * Social logins: Facebook, Google, Microsoft
-** Social Buttons for Bootstrap: http://lipis.github.io/bootstrap-social/
-** FontAwesome: http://fortawesome.github.io/Font-Awesome/
+ * Social Buttons for Bootstrap: http://lipis.github.io/bootstrap-social/
+ * FontAwesome: http://fortawesome.github.io/Font-Awesome/
 * Registration email address info moved to appSettings
 * Elmah settings moved to Configs folder
 * RequireHttps attribute for WebApi
@@ -512,8 +512,8 @@ Related issue with 'Total Cost Index - New Model' sample was fixed
 * Azure websites is back again; http://wealth.azurewebsites.net
 * Register for error messages fix
 * editView.tt 
-** Both nullable and non-nullable boolean type will be rendered as radio input
-** 'Cancel' type was changed to 'button' type instead of 'submit' and service.cancelChanges() method was removed
+ * Both nullable and non-nullable boolean type will be rendered as radio input
+ * 'Cancel' type was changed to 'button' type instead of 'submit' and service.cancelChanges() method was removed
 * LazyLoading was disabled
 * breeze RowVersion property issue was fixed
 * Extending the breeze's entities, instead of DTOs from WebApi, WebApi DTOs were removed
@@ -667,7 +667,7 @@ http://xabikos.com/multitenant/application%20design/software%20as%20a%20service/
 **0.11.10**
 
 * Replace metadata.xml with EdmBuilder CodeFirst output
-** WealthEconomyContext moved under BusinessObjects
+ * WealthEconomyContext moved under BusinessObjects
 * IsSample field to ResourcePool object, SampleUserId to Web\web.config and UserUnitOfWork now uses these parameters to copy the sample data
 
 **0.11.9**
