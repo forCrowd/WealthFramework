@@ -43,6 +43,7 @@
     <Content Include="GitHub\Issues\31\v4_OData.xml" />
     <Content Include="Documents\Content Notes.txt" />
     <Content Include="Documents\Possible Indexes.txt" />
+    <Content Include="Scripts\Database\Sql\User_Insert.sql" />
     <Content Include="Scripts\Database\Sql\Local - Restore Database.sql" />
     <None Include="..\.gitattributes">
       <Link>Documents\.gitattributes</Link>

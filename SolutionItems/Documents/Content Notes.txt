@@ -1,4 +1,12 @@
-﻿# Header
+﻿# forCrowd.org
+For the first time in history, individuals from various places get in touch in an instant. This will affect everything..
+It was never been this easier for individuals
+
+The new boss: crowd
+crowd: individuals that work on a certain subject..
+
+---
+# Header
 
 An experimental resource management system that aims to provide a more sustainable and productive economic model
 
@@ -11,42 +19,76 @@ Crowd Managed Fund?
 Wealth Economy is a project that aims to calculate (measure) the organizations' total (social) benefit (utility?) to the society,
 and create a model that the organizations with more benefits can get more income, based on the results.
 
-# Prologue
-
-Cosmetics: Curing baldness	
-Education: Reducing illiteracy	
-Entertainment: Improving augmented reality in video games	
-Poverty: Clean water for everyone	
-
-Cosmetics: Curing baldness	
-Education: Reducing illiteracy	
-Entertainment: Improving augmented reality in video games	
-Healthcare: Curing cancer
-Hunger: Clean water for everyone	
-Poverty: Reducing infant mortality rates
-
-# Introduction
-
-# Basics
-
-# ...
+# Footer
+gratipay - is it possible to use? apply for a new team?
+flattr icon is missing?
 
 ---
-OLD
+differences between current & new
+. short term - big picture
+. dependency - independency
+. profits - benefits
+. owner oriented, contribution oriented
 
-Chapters
+. additional indexes?
 
-#1 - Profit Oriented Economy
+. antidote of capitalism?
+
+. create new content based on TED talks?
+
+---
+* should samples details need to be mentioned? all organizations are equal except the indexes, they all have to have same number of sales etc.
+
+* dynamic pricing - low price is good but can't be zero because then it's not sustainable as well?
+Answer to this question: It's not just zero but any income lower than the cost wouldn't be sustainable (income >= cost). The question is how to ensure that the organization is going to get more income in case if they're making their products accessible to all by not asking any money (which we would like to encourage). Probably the organization should say we're going to get our income from the pool, not by selling it. Which means it will be totally controlled and funded by the pool.
+
+* wealth is interested in the following questions;
+. how the society allocates its resources?
+. what type of organizations get more resources?
+. room for improvement? - yes
+. what would happen if the people could control and allocate the resources directly?
+
+* software licenses;
+https://www.blackducksoftware.com/resources/data/top-20-open-source-licenses			
+http://opensource.org/licenses/category
+http://products.office.com/en-us/microsoft-software-license-agreement
+http://www.microsoft.com/en-us/legal/intellectualproperty/useterms/default.aspx
+http://download.microsoft.com/Documents/UseTerms/Windows_8.1_English_468d3103-64a4-44fa-8f73-23490ee17ea5.pdf
+
+---
+. wording;
+facebook	log in		sign up
+twitter		log in		sign up for Twitter
+google		sign in		create a new account (sign up)
+linkedin	sign in		join now
+microsoft	sign in		sign up
+
+---
+* check old sample org names
+
+---
+Additional Indexes
+. Employee Satisfaction
+This index aims to put more responsibility to the organizations towards to their employees and increase employee satisfaction. The organizations could be rated about various items; complying with safety standards of that sector, having proper insurance coverage.
+Under the right circumstances, even the employee could rate their organization whether they're happy with the organization or working conditions are good enough.
+As a result, the organizations that have a higher rating will get more resources from the system.
+. Customer Satisfaction
+Does the organization please its customers enough? How good are the previous customers experience with the organization / product? Does the organization have a proper customer services? How long does it take to solve the customer's issues in case of an error?
+Customer Satisfaction Index aims to rate the organization based on these questions and distribute the resources between the organizations according to their performances.
+. Quality
+Although 'Quality' subject has lot of measurable parameters under it, none of them has a direct impact on the income of the organizations. If the organization has a better quality product, this might increase their sales, therefore they can have more resources. However, the connection between high quality - more resources is not that tight.
+Quality Index allows us the rate quality of the products / services as a separate parameter in the system and distributes the resources based on the outcome.
+. Distance
+. Environment friendliness?
+
+# Profit Oriented Economy
 Current Formula: Lower the cost, Maximize the Sales Price, Multiply it with Number of Sales
 try to make the visual of the formula (lowering cost - maximizing sales price * number of sales) and it needs to be extended
 
-#2 - Burden of the Consumer
+# Burden of the Consumer
 [A game that the user tries to find the correct organization - Shows the benefits of the organizations for a limited time, hide them and ask the user to find the best one?]
 
-#6 - Total Cost Index: Profit Nonprofit Paradox
-High Coast vs. Most Effect
-
-#7 - Quality?
+# Quality?
 The consumers will vote for the importance of the parameter(s). The experts should measure the parameters and enter their results to the system. The system should make the distribution based on these inputs.
 
 Check Overview page + Wealth Economy docs in google docs

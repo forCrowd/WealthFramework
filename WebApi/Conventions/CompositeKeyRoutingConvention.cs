@@ -1,5 +1,5 @@
 ﻿/*
- * This file has been copied from the following sample;
+ * This file has been copied from the following example;
  * http://aspnet.codeplex.com/SourceControl/changeset/view/9cb7243bd9fe3b2df484bf2409af943f39533588#Samples/WebApi/ODataCompositeKeySample/ReadMe.txt
  * */
 namespace forCrowd.WealthEconomy.WebApi.RoutingConventions

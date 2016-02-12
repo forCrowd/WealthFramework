@@ -1,12 +1,7 @@
-﻿Sector index -> priority index!
-
-check this out; http://breeze.github.io/doc-breeze-labs/directives-validation.html
+﻿check this out; http://breeze.github.io/doc-breeze-labs/directives-validation.html
 check this out: https://github.com/mmanela/chutzpah/wiki/Chutzpah.json-Settings-File
-remember me - forgot pass
 
-https://mva.microsoft.com/en-US/training-courses/angular-applications-with-typescript-14330?l=C9DsEeLgB_7404668937
-http://www.codelord.net/2016/01/07/adding-the-first-angular-2-service-to-your-angular-1-app/
-https://channel9.msdn.com/Events/Seth-on-the-Road/DevIntersection-2015/Making-Sense-of-the-JavaScript-Client-Side-with-Ward-Bell
+remember me - forgot pass
 
 ---
 content for editor? new content or new resourcepool - content in a content? or page as a new entity?
@@ -40,13 +35,8 @@ save anon user to db?
 redirect www.forcrowd.org to wealth.forcrowd.org?
 
 ---
-https://www.npmjs.com/package/gulp-minify-html
-
 Identity / Account:
-
-. Invalidating tokens
-http://stackoverflow.com/questions/22755700/revoke-token-generated-by-usertokenprovider-in-asp-net-identity-2-0/22767286#22767286
-
+. Invalidating tokens http://stackoverflow.com/questions/22755700/revoke-token-generated-by-usertokenprovider-in-asp-net-identity-2-0/22767286#22767286
 . before sending any email to user, check whether it's confirmed?
 
 ---
@@ -99,11 +89,6 @@ check return conflict() blocks, there's something wrong with them!
 
 . Better ratings UI https://angular-ui.github.io/bootstrap/#/getting_started
 . angular material - https://material.angularjs.org/latest/
-
-CONTENT
-. antidote of capitalism?
-. all in one?
-. create new content based on TED talks?
 
 . toastr has a jquery dependency - without it, jquery can be removed?
 . source-map - original position name & column props are null

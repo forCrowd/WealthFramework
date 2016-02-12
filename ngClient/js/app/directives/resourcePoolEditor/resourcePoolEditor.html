@@ -29,27 +29,31 @@
                 <div class="col-md-12">
                     <table class="resourcePoolTable table-striped" border="0">
                         <thead>
-                            <tr data-ng-if="resourcePool.selectedElement().directIncomeField() && resourcePool.selectedElement().elementFieldIndexSet().length > 0">
+                            <tr>
                                 <th>
-                                    CMRP Rate
+                                    <span data-ng-if="resourcePool.selectedElement().directIncomeField() && resourcePool.selectedElement().elementFieldIndexSet().length > 0">CMRP Rate</span>
+                                    &nbsp;
                                 </th>
                                 <td colspan="2">
-                                    <span class="fixedWidth45Cell">
-                                        <span data-ng-bind="resourcePool.resourcePoolRatePercentage() | percentage: 2"></span>
-                                    </span>
-                                    <div data-ng-if="!resourcePool.UseFixedResourcePoolRate" class="btn-group" role="group">
-                                        <button data-uib-tooltip="Increase CMRP Rate" data-tooltip-append-to-body="true" type="button" data-ng-click="increaseResourcePoolRate()" data-ng-disabled="isSaving" class="btn btn-default btn-xs">+</button>
-                                        <button data-uib-tooltip="Decrease CMRP Rate" data-tooltip-append-to-body="true" type="button" data-ng-click="decreaseResourcePoolRate()" data-ng-disabled="isSaving" class="btn btn-default btn-xs">-</button>
-                                        <button data-uib-tooltip="Reset CMRP Rate" data-tooltip-append-to-body="true" type="button" data-ng-click="resetResourcePoolRate()" data-ng-disabled="isSaving" class="btn btn-default btn-xs">0</button>
+                                    <div data-ng-if="resourcePool.selectedElement().directIncomeField() && resourcePool.selectedElement().elementFieldIndexSet().length > 0">
+                                        <span class="fixedWidth45Cell">
+                                            <span data-ng-bind="resourcePool.resourcePoolRatePercentage() | percentage: 2"></span>
+                                        </span>
+                                        <div data-ng-if="!resourcePool.UseFixedResourcePoolRate" class="btn-group" role="group">
+                                            <button data-uib-tooltip="Increase CMRP Rate" data-tooltip-append-to-body="true" type="button" data-ng-click="increaseResourcePoolRate()" data-ng-disabled="isSaving" class="btn btn-default btn-xs">+</button>
+                                            <button data-uib-tooltip="Decrease CMRP Rate" data-tooltip-append-to-body="true" type="button" data-ng-click="decreaseResourcePoolRate()" data-ng-disabled="isSaving" class="btn btn-default btn-xs">-</button>
+                                            <button data-uib-tooltip="Reset CMRP Rate" data-tooltip-append-to-body="true" type="button" data-ng-click="resetResourcePoolRate()" data-ng-disabled="isSaving" class="btn btn-default btn-xs">0</button>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
-                            <tr data-ng-if="resourcePool.InitialValue > 0 || (resourcePool.selectedElement().directIncomeField() && resourcePool.selectedElement().elementFieldIndexSet().length > 0)">
+                            <tr>
                                 <th>
-                                    CMRP Amount
+                                    <span data-ng-if="resourcePool.InitialValue > 0 || (resourcePool.selectedElement().directIncomeField() && resourcePool.selectedElement().elementFieldIndexSet().length > 0)">CMRP Amount</span>
+                                    &nbsp;
                                 </th>
-                                <td>
-                                    <span data-ng-bind="resourcePool.selectedElement().totalResourcePoolAmount() | numberSymbol: 2"></span>
+                                <td colspan="2">
+                                    <span data-ng-if="resourcePool.InitialValue > 0 || (resourcePool.selectedElement().directIncomeField() && resourcePool.selectedElement().elementFieldIndexSet().length > 0)" data-ng-bind="resourcePool.selectedElement().totalResourcePoolAmount() | numberSymbol: 2"></span>
                                 </td>
                             </tr>
                             <tr>
