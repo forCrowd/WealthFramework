@@ -14,7 +14,7 @@
         var increaseMultiplierTimeout = $timeout(increaseMultiplier, 5000);
 
         var vm = this;
-        vm.upoConfig = { resourcePoolId: 1 };
+        vm.upoConfig = { resourcePoolId: 2 };
 
         function increaseMultiplier() {
 

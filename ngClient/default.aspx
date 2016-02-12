@@ -23,7 +23,6 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a href="/" class="navbar-brand">
-                    <!--<span><img src="/images/forCrowd_logo_20x20.jpg?v=0.29.2" /></span>-->
                     Wealth Economy
                 </a>
             </div>
@@ -37,7 +36,10 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="/resourcePool">CMRP</a>
+                        <a href="/resourcePool/new">Create CMRP (New)</a>
+                    </li>
+                    <li>
+                        <a href="/resourcePool">CMRP List</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -85,10 +87,10 @@
     </div>
 
     <!-- lib.js -->
-    <script src="/js/lib/lib.min.js?v=0.44"></script>
+    <script src="/js/lib/lib.min.js?v=0.44.0"></script>
 
     <!-- app.js -->
-    <script src="/js/app/app.min.js?v=0.44"></script>
+    <script src="/js/app/app.min.js?v=0.45.0"></script>
 
     <!-- appSettings.js -->
     <script src="/js/appSettings/appSettings.js?v=0.43.2"></script>

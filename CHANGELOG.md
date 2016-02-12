@@ -1,5 +1,13 @@
 ### Changelog
 
+**0.45**
+
+* Content updates
+** Sector Index was renamed to Priority
+** Fair share sample was removed
+** All in One was added
+** Total Cost Index, Implementation, Reason, Closing Notes updates
+
 **0.44**
 
 * Local, Test, Live environment types in AppSettings

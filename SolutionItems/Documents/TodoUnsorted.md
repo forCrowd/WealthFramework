@@ -66,7 +66,7 @@ according to this, normal user may not use post action for instance? check these
 * Install-Package DynamicQuery?
 * http://www.hanselman.com/blog/crossbrowserdebuggingintegratedintovisualstudiowithbrowserstack.aspx
 * https://www.runscope.com/signup
-* html minifier: https://github.com/deanhume/html-minifier
+* html minifier: https://github.com/deanhume/html-minifier | https://www.npmjs.com/package/gulp-minify-html
 * web api throttling!
 * request validation -> html agility pack?
 * coded ui test or canopy or ..? web iu testers?
@@ -87,6 +87,8 @@ according to this, normal user may not use post action for instance? check these
 * ElementField SortOrder field validations - Check various scenarios, it shouldn't contain duplicate values for instance, what should happen then? Create test cases
 
 * aspnet 5 - it seems it's not ready or at least easy to publish at the moment / coni2k - 28 Jan. '16
+
+* currentUser could be passed as a parameter through route.resolve?
 
 * jetbrains vs tools open source promotion; https://www.jetbrains.com/
 
@@ -121,17 +123,6 @@ var queryAttribute = new QueryableAttribute() { AllowedQueryOptions = AllowedQue
 config.EnableQuerySupport(queryAttribute);  
 
 ---
-* software licenses;
-https://www.blackducksoftware.com/resources/data/top-20-open-source-licenses			
-http://opensource.org/licenses/category
-http://products.office.com/en-us/microsoft-software-license-agreement
-http://www.microsoft.com/en-us/legal/intellectualproperty/useterms/default.aspx
-http://download.microsoft.com/Documents/UseTerms/Windows_8.1_English_468d3103-64a4-44fa-8f73-23490ee17ea5.pdf
-
-* Content related;
-dynamic pricing - low price is good but can't be zero because then it's not sustainable as well?
-Answer to this question: It's not just zero but any income lower than the cost wouldn't be sustainable (income >= cost). The question is how to ensure that the organization is going to get more income in case if they're making their products accessible to all by not asking any money (which we would like to encourage). Probably the organization should say we're going to get our income from the pool, not by selling it. Which means it will be totally controlled and funded by the pool.
-
 * keep dataContext.js in localStorage?
 
 * elementfield - selectedelement validations + test?
@@ -164,8 +155,6 @@ test - userqueryvisitor with filter!
 
 . complete security.permissions on business objects
 
-. _manual contains static 18,2 for decimal
-
 . ? http://blogs.msdn.com/b/webdev/archive/2015/02/11/improve-performance-by-optimizing-queries-for-asp-net-identity-and-other-membership-providers.aspx
 
 . What to test on BL?
@@ -183,15 +172,13 @@ if the current user has no right to enter a rating for that area, then it must u
 1. try to handle all the actions by using authenticated user, shouldn't be necessary to pass user variable
 2. in case you need to set UserId explicitly, do these actions under methods that can only be called by Admins!
 3. when the user logs out, how to clear existing related data from context?
-								
+
 * users should choose the ideal rate/ratings - it shouldn't be experimental? especially license ratings, index ratings, cmrp rate!
 
 * introduction, don't allow to use multiplier functions?
 some samples don't need to be saved ?! intro + basics?
 
 	* **allow cmrp rate to be changed**
-
-* current vs existing vs present vs old?
 
 * sitemaps for google search console
 
@@ -203,30 +190,11 @@ some samples don't need to be saved ?! intro + basics?
 
 * social media - skype, pinterest, instagram, others? http://namevine.com/#/forcrowd
 
-. wording;
-facebook	log in		sign up
-twitter		log in		sign up for Twitter
-google		sign in		create a new account (sign up)
-linkedin	sign in		join now
-microsoft	sign in		sign up
-
-* should samples details need to be mentioned? all organizations are equal except the indexes, they all have to have same number of sales etc.
-
 * Nice tool: http://www.mail-tester.com/
-
-wealth is interested in the following questions;
-. how the society allocates its resources?
-. what type of organizations get more resources?
-. room for improvement? - yes
-. what would happen if the people could control and allocate the resources directly?
 
 * users, user metadata check!
 
 * improve password validation https://docs.angularjs.org/guide/forms
-
-* disqus errors - https://github.com/Q42/q42.nl/issues/17
-https://github.com/michaelbromley/angularUtils/tree/master/src/directives/disqus
-nuget package?
 
 * permissions - instead of enableresourcepooladdition field to control whether user can enter userresourcepoolrate, handle it with permissions - if the user has a right to enter or not? same goes for FieldIndex ratings
 
@@ -255,72 +223,6 @@ check, use anchorScrollTest project?
 // Apparetnly Firefox default for no content-type is xml and logs 'no element found' message on console.
 // return Ok();
 return Ok(string.Empty);
-
-* check old sample org names
-
-sector index - 4 org - 4 sector
-knowle index - 2 org - 2 license
-total  index - 3 prices
-fair s index - 2 org - 2 options
-
-32 ~ 48
-
-sector1+lic1+prof+keeper
-sector2+lic2+nonprof+sharer
-sector3+lic1+prof+keeper
-sector4+lic2+nonprof+sharer
-sector1+lic2+prof+sharer
-sector2+lic1+nonprof+keeper
-sector3+lic2+prof+sharer
-sector4+lic1+nonprof+keeper
-
-cosmetics Queen's Favorites
-education School of Arcana
-entertainment Band of Bards
-heathcare Cleric's Touch
-
-hidden knowledge / blackbox
-true source
-
-profit nonprofit
-
-keeper sharer
-
-Hidden Cosmetics (Profit + Keeper)
-Hidden Cosmetics (Non-profit + Keeper)
-Hidden Cosmetics (Profit + Sharer)
-Hidden Cosmetics (Non-profit + Sharer)
-True Cosmetics (Profit + Keeper)
-True Cosmetics (Non-profit + Keeper)
-True Cosmetics (Profit + Sharer)
-True Cosmetics (Non-profit + Sharer)
-
-Hidden Education (Profit + Keeper)
-Hidden Education (Non-profit + Keeper)
-Hidden Education (Profit + Sharer)
-Hidden Education (Non-profit + Sharer)
-True Education (Profit + Keeper)
-True Education (Non-profit + Keeper)
-True Education (Profit + Sharer)
-True Education (Non-profit + Sharer)
-
-Hidden Entertainment (Profit + Keeper)
-Hidden Entertainment (Non-profit + Keeper)
-Hidden Entertainment (Profit + Sharer)
-Hidden Entertainment (Non-profit + Sharer)
-True Entertainment (Profit + Keeper)
-True Entertainment (Non-profit + Keeper)
-True Entertainment (Profit + Sharer)
-True Entertainment (Non-profit + Sharer)
-
-Hidden Healthcare (Profit + Keeper)
-Hidden Healthcare (Non-profit + Keeper)
-Hidden Healthcare (Profit + Sharer)
-Hidden Healthcare (Non-profit + Sharer)
-True Healthcare (Profit + Keeper)
-True Healthcare (Non-profit + Keeper)
-True Healthcare (Profit + Sharer)
-True Healthcare (Non-profit + Sharer)
 
 ---
 public class CountryController : Controller

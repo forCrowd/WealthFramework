@@ -50,8 +50,6 @@
                 .error(function (response) {
                     if (typeof response.error_description !== 'undefined') {
                         logger.logError(response.error_description, null, true);
-                    } else {
-                        logger.logError(response, null, true);
                     }
                 });
         }

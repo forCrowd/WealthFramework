@@ -31,7 +31,7 @@
             .when('/account/changePassword', { title: function () { return 'Change Password'; }, templateUrl: '/views/account/changePassword.html?v=0.43.2', accessType: 'authenticatedRequired', resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
             .when('/account/confirmEmail', { title: function () { return 'Confirm Email'; }, templateUrl: '/views/account/confirmEmail.html?v=0.44', accessType: 'authenticatedRequired', resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
             .when('/account/login', { title: function () { return 'Login'; }, templateUrl: '/views/account/login.html?v=0.44', accessType: 'unauthenticatedRequired', resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
-            .when('/account/register', { title: function () { return 'Register'; }, templateUrl: '/views/account/register.html?v=0.44', accessType: 'unauthenticatedRequired', resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
+            .when('/account/register', { title: function () { return 'Register'; }, templateUrl: '/views/account/register.html?v=0.45', accessType: 'unauthenticatedRequired', resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
 
             /* Otherwise */
             .otherwise({ redirectTo: '/content/404' }); // TODO Is it possible to return Response.StatusCode = 404; ?
@@ -67,7 +67,7 @@
                 params.key :
                 'home'; // Default view
 
-            return '/views/content/' + key + '.html?v=0.44';
+            return '/views/content/' + key + '.html?v=0.45.0';
         }
 
         function validateAccess(userFactory, $route, $q, locationHistory, $location, logger) {

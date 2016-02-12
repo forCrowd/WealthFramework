@@ -109,56 +109,41 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             forCrowd.WealthEconomy.Framework.Security.LoginAs(sampleUser.Id);
 
             // Sample resource pools
+            var billionDollarQuestion = resourcePoolRepository.CreateBillionDollarQuestion(sampleUser);
             var upoSample = resourcePoolRepository.CreateUPOSample(sampleUser);
             var basicsExistingSystemSample = resourcePoolRepository.CreateBasicsExistingSystemSample(sampleUser);
             var basicsNewSystemSample = resourcePoolRepository.CreateBasicsNewSystemSample(sampleUser);
-            var sectorIndexSample = resourcePoolRepository.CreateSectorIndexSample(sampleUser);
+            var priorityIndexSample = resourcePoolRepository.CreatePriorityIndexSample(sampleUser);
             var knowledgeIndexSample = resourcePoolRepository.CreateKnowledgeIndexSample(sampleUser);
             var knowledgeIndexPopularSoftwareLicenseSample = resourcePoolRepository.CreateKnowledgeIndexPopularSoftwareLicenseSample(sampleUser);
             var totalCostIndexExistingSystemSample = resourcePoolRepository.CreateTotalCostIndexExistingSystemSample(sampleUser);
             var totalCostIndexNewSystemSample = resourcePoolRepository.CreateTotalCostIndexNewSystemSample(sampleUser);
-            var totalCostIndexNewSystemAftermathSample = resourcePoolRepository.CreateTotalCostIndexNewSystemAftermathSample(sampleUser);
-            var fairShareSample = resourcePoolRepository.CreateFairShareSample(sampleUser);
-            var indexesPieSample = resourcePoolRepository.CreateIndexesPieSample(sampleUser);
-            var resourcePoolRateSample = resourcePoolRepository.CreateResourcePoolRateSample(sampleUser);
             var allInOneSample = resourcePoolRepository.CreateAllInOneSample(sampleUser);
-
-            var billionDollarQuestion = resourcePoolRepository.CreateBillionDollarQuestion(sampleUser);
 
             // Set Id fields explicitly, since strangely EF doesn't save them in the order that they've been added to ResourcePoolSet.
             // And they're referred with these Ids on front-end samples
-            upoSample.Id = 1;
-            basicsExistingSystemSample.Id = 2;
-            basicsNewSystemSample.Id = 3;
-            sectorIndexSample.Id = 4;
-            knowledgeIndexSample.Id = 5;
-            knowledgeIndexPopularSoftwareLicenseSample.Id = 6;
-            totalCostIndexExistingSystemSample.Id = 7;
-            totalCostIndexNewSystemSample.Id = 8;
-            totalCostIndexNewSystemAftermathSample.Id = 9;
-            fairShareSample.Id = 10;
-            indexesPieSample.Id = 11;
-            resourcePoolRateSample.Id = 12;
-            allInOneSample.Id = 13;
+            billionDollarQuestion.Id = 1;
+            upoSample.Id = 2;
+            basicsExistingSystemSample.Id = 3;
+            basicsNewSystemSample.Id = 4;
+            priorityIndexSample.Id = 5;
+            knowledgeIndexSample.Id = 6;
+            knowledgeIndexPopularSoftwareLicenseSample.Id = 7;
+            totalCostIndexExistingSystemSample.Id = 8;
+            totalCostIndexNewSystemSample.Id = 9;
+            allInOneSample.Id = 10;
 
-            billionDollarQuestion.Id = 14;
-            
             // Insert
+            resourcePoolRepository.Insert(billionDollarQuestion);
             resourcePoolRepository.Insert(upoSample);
             resourcePoolRepository.Insert(basicsExistingSystemSample);
             resourcePoolRepository.Insert(basicsNewSystemSample);
-            resourcePoolRepository.Insert(sectorIndexSample);
+            resourcePoolRepository.Insert(priorityIndexSample);
             resourcePoolRepository.Insert(knowledgeIndexSample);
             resourcePoolRepository.Insert(knowledgeIndexPopularSoftwareLicenseSample);
             resourcePoolRepository.Insert(totalCostIndexExistingSystemSample);
             resourcePoolRepository.Insert(totalCostIndexNewSystemSample);
-            resourcePoolRepository.Insert(totalCostIndexNewSystemAftermathSample);
-            resourcePoolRepository.Insert(fairShareSample);
-            resourcePoolRepository.Insert(indexesPieSample);
-            resourcePoolRepository.Insert(resourcePoolRateSample);
             resourcePoolRepository.Insert(allInOneSample);
-
-            resourcePoolRepository.Insert(billionDollarQuestion);
 
             // First save
             context.SaveChanges();
