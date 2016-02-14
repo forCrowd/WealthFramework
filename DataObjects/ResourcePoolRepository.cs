@@ -15,7 +15,7 @@
 
             // Resource pool
             var resourcePool = CreateDefaultResourcePool(user: user,
-                resourcePoolName: "Billion Dollar Question",
+                resourcePoolName: "Prologue - Billion Dollar Question",
                 useFixedResourcePoolRate: true,
                 mainElementName: "Issues",
                 addDirectIncomeField: false,

@@ -28,7 +28,6 @@
         "breeze-client": "1.5.4",
         "breeze-client-labs": "1.5.8",
         "angular-google-analytics": "1.1.5",
-        "angular-utils-disqus": "0.4.0",
         "respond": "1.4.2",
         "angular-bootstrap": "1.1.1",
         "highcharts": "4.2.1",

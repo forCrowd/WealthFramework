@@ -3,9 +3,9 @@
 
     var controllerId = 'DefaultController';
     angular.module('main')
-        .controller(controllerId, ['applicationFactory', 'userFactory', '$scope', '$location', 'logger', DefaultController]);
+        .controller(controllerId, ['applicationFactory', 'userFactory', '$scope', '$location', 'disqusShortname', 'logger', DefaultController]);
 
-    function DefaultController(applicationFactory, userFactory, $scope, $location, logger) {
+    function DefaultController(applicationFactory, userFactory, $scope, $location, disqusShortname, logger) {
 
         // Logger
         logger = logger.forSource(controllerId);
@@ -18,7 +18,14 @@
         vm.applicationInfo = null;
         vm.currentUser = { Email: '', isAuthenticated: function () { return false; }, hasPassword: function () { return false; } };
         vm.currentDate = new Date();
+        vm.displayBankTransfer = false;
+        vm.displayFooterIcons = false;
+        vm.disqusShortname = disqusShortname;
+        vm.disqusId = '';
+        vm.disqusUrl = '';
+        vm.disqusLoadedOn = null;
         vm.logout = logout;
+        vm.toggleBankTransfer = toggleBankTransfer;
 
         // Events
         $scope.$on('$routeChangeSuccess', routeChangeSuccess);
@@ -61,14 +68,31 @@
                 });
         }
 
-        // Remove anonymousUserWarning toastr in register & login pages, if there is
-        function routeChangeSuccess(event, next, current) {
-            var path = next.$$route.originalPath;
+        function routeChangeSuccess(event, current, previous) {
+
+            // Footer icons
+            vm.displayFooterIcons = $location.path() === '/';
+
+            // Load related disqus
+            if (typeof current.enableDisqus !== 'undefined' && current.enableDisqus) {
+                vm.disqusId = disqusShortname + $location.path().replace(/\//g, '_');
+                vm.disqusUrl = $location.absUrl().substring(0, $location.absUrl().length - $location.url().length + $location.path().length);
+                vm.disqusLoadedOn = new Date();
+            } else {
+                vm.disqusLoadedOn = null;
+            }
+
+            // Remove anonymousUserWarning toastr in register & login pages, if there is
+            var path = current.$$route.originalPath;
             if (path === '/account/register' || path === 'account/login') {
                 if (anonymousUserWarning !== null) {
                     anonymousUserWarning.remove();
                 }
             }
+        }
+
+        function toggleBankTransfer() {
+            vm.displayBankTransfer = !vm.displayBankTransfer;
         }
     }
 })();

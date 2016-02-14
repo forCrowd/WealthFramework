@@ -13,15 +13,17 @@
         $routeProvider
 
             /* Content */
-            .when('/', { title: getContentRouteTitle, templateUrl: getContentTemplateUrl, resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
-            .when('/default.aspx', { title: getContentRouteTitle, templateUrl: getContentTemplateUrl, resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
-            .when('/content/:key/', { title: getContentRouteTitle, templateUrl: getContentTemplateUrl, resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
+            .when('/', { title: getContentRouteTitle, templateUrl: getContentTemplateUrl, enableDisqus: true, resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
+            .when('/default.aspx', { title: getContentRouteTitle, templateUrl: getContentTemplateUrl, enableDisqus: true, resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
+            // Different than normal content, enableDisqus: false
+            .when('/content/404/', { title: function () { return '404'; }, templateUrl: '/views/content/404.html?v=0.46.0', enableDisqus: false, resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
+            .when('/content/:key/', { title: getContentRouteTitle, templateUrl: getContentTemplateUrl, enableDisqus: true, resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
 
             /* CMRP List + View + Edit pages */
             .when('/resourcePool', { title: function () { return 'CMRP List'; }, templateUrl: '/views/resourcePool/resourcePoolList.html?v=0.43.2', resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
             .when('/resourcePool/new', { title: function () { return 'New CMRP'; }, templateUrl: '/views/resourcePool/resourcePoolManage.html?v=0.43.2', resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
             .when('/resourcePool/:resourcePoolId/edit', { title: function () { return 'Edit CMRP'; }, templateUrl: '/views/resourcePool/resourcePoolManage.html?v=0.43.2', resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
-            .when('/resourcePool/:resourcePoolId', { title: function () { return 'View CMRP'; }, templateUrl: '/views/resourcePool/resourcePoolView.html?v=0.43.2', resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
+            .when('/resourcePool/:resourcePoolId', { title: function () { return 'View CMRP'; }, templateUrl: '/views/resourcePool/resourcePoolView.html?v=0.43.2', enableDisqus: true, resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
 
             /* Account */
             .when('/account/accountEdit', { title: function () { return 'Account Edit'; }, templateUrl: '/views/account/accountEdit.html?v=0.43.2', accessType: 'authenticatedRequired', resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
@@ -67,7 +69,7 @@
                 params.key :
                 'home'; // Default view
 
-            return '/views/content/' + key + '.html?v=0.45.0';
+            return '/views/content/' + key + '.html?v=0.46.0';
         }
 
         function validateAccess(userFactory, $route, $q, locationHistory, $location, logger) {

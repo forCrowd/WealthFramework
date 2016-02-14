@@ -2,17 +2,14 @@
 For the first time in history, individuals from various places get in touch in an instant. This will affect everything..
 It was never been this easier for individuals
 
-The new boss: crowd
 crowd: individuals that work on a certain subject..
 
 ---
 # Header
 
-An experimental resource management system that aims to provide a more sustainable and productive economic model
-
 Benefit | Utility?
 
-"More benefit, more income" | "Maximizing the benefit | potential" - cheesy?
+"Maximizing the benefit | potential" - cheesy?
 Crowd Managed Fund?
 "Maximizing the benefit"
 
@@ -29,8 +26,6 @@ differences between current & new
 . dependency - independency
 . profits - benefits
 . owner oriented, contribution oriented
-
-. additional indexes?
 
 . antidote of capitalism?
 
