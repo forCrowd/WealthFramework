@@ -68,7 +68,6 @@
     <None Include="js\app\controllers\account\LoginController.js" />
     <None Include="js\app\controllers\account\RegisterController.js" />
     <None Include="js\app\controllers\content\BasicsController.js" />
-    <None Include="js\app\controllers\content\ClosingNotesController.js" />
     <None Include="js\app\controllers\content\DefaultController.js" />
     <None Include="js\app\controllers\content\FairShareIndexSampleController.js" />
     <None Include="js\app\controllers\content\IndexesPieSampleController.js" />
@@ -126,7 +125,6 @@
     <Content Include="views\content\404.html" />
     <Content Include="views\content\allInOneSample.html" />
     <Content Include="views\content\basics.html" />
-    <Content Include="views\content\closingNotes.html" />
     <Content Include="views\content\obsolete\closingNotes.html" />
     <Content Include="views\content\reason.html" />
     <Content Include="views\content\obsolete\conclusion.html" />

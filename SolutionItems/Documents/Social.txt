@@ -1,0 +1,76 @@
+﻿nadia
+alpha team
+gitter - other gitter channels? ((open source) project review, startup)
+personal dev network
+https://www.facebook.com/lists/10151319136553665
+social network - Emin Pamucak
+freenode?
+hackernews - https://news.ycombinator.com/
+reply to twitter 
+https://twitter.com/sethjuarez/status/692784256670498816
+https://twitter.com/martinwoodward/status/692832558447353857
+globalsign makale
+https://www.globalsign.com/en/blog/open-source-ssl-pinittome/?utm_source=twitter&utm_medium=social%20media&utm_campaign=blog
+
+---
+Hello everyone!
+I've been working on a open source project for a while.
+There is still a lot to do but would be great if I could get some feedback for the current state, both for content and/or if possible technical.
+https://github.com/forCrowd/WealthEconomy
+https://wealth.forcrowd.org
+Quick summary: Aims to measure organizations benefit to society and then create an income model based on their overall score;
+like what type of license they are using (open source, proprietary etc.), how important their products/services are for us, or how much they are profit oriented etc.
+At the moment, sort of a simulation tool for a crowd (public) fund.
+
+---
+Nadia hi,
+Following your tweets about funding OSS. I've been working on a project related with this issue.
+There is still lot to do but since it's a hot topic for you, maybe you can check it and give a feedback.
+https://wealth.forcrowd.org
+Especially "Knowledge Index" part. Quick summary would be:
+1. Create a public (crowd) fund
+2. Give a rating to all (popular) licenses based on how beneficial they are for us (society)
+3. Every organization/project has already linked to one of these licenses, which they get a score based on their preference (better license, higher score)
+4. Periodically distribute the money in the fund to the organizations based on their score
+One of the things that I'd like to do is to create an example with this approach by using total amount that we spent on operating systems since the beginning (last 30 years) - basically Linux + GPL vs. Microsoft + EULA
+
+Thanks in advance, and good luck to you as well!
+
+---
+Elevator Pitch - EN
+
+Hi,
+This is Serkan Holat, I'm a software developer.
+For more than a year, I'm working on an open source and a non-profit project called Wealth Economy.
+
+Wealth Economy is a project that aims to measure the organizations' total benefit to society,
+and create a model that the organizations with more benefits can get more income, based on the results.
+
+We are trying to get to Beta stage at the moment.
+We would be appreciated if you could give us your feedback (technical and/or content).
+
+---
+v2
+
+I'm working on a open source project for almost a year (not a python one though);
+https://github.com/forCrowd/WealthEconomy
+
+At the moment, it's a sort of a simulation tool for a crowd (public) fund.
+It's an attempt to measure organizations benefit to society and then create an income model based on this;
+like what type of license they're using (open source, proprietary etc.), how important their products/services for us, or how much are the profit oriented etc.
+
+Actually would be great if I could get some feedback, both for content and/or technical.
+
+---
+TR
+
+Merhaba,
+İsmim Serkan Holat, yazılım uzmanıyım.
+Yaklaşık 1 yıldır kar amacı gütmeyen ve açık kaynak bir proje olan Wealth Economy üzerinde çalışıyorum.
+
+Wealth Economy, firmaların topluma sağladıkları faydayı (ya da toplam / sosyal faydayı) ölçmeye çalışan
+ve ortaya çıkan sonuçlara göre gelir elde edilmesini hedefleyen,
+yani ne kadar fayda, o kadar gelir modelini oluşturmaya çalışan bir projedir.
+
+Şu anda Beta aşamasına geçmeye çalışıyoruz.
+İçerik ve teknik anlamda görüşlerinizi paylaşabilirseniz sevinirim.

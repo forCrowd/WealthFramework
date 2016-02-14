@@ -1,5 +1,12 @@
 ### Changelog
 
+**0.46**
+
+* Disqus was enabled on all routes that has 'enableDisqus: true'
+ * Original angular-utils-disqus wasn't loading the related disqus comments on route changes. Forked, fixed & replaced
+* Total Cost Index Sample - Bot CMRPs update each other sales number
+* Closing Notes was removed & icons section was moved to default page, only visible on home
+
 **0.45**
 
 * Content updates

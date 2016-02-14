@@ -20,26 +20,32 @@
 
         function updateOppositeResourcePool(event, element) {
 
-            if (element.ResourcePool.Id === vm.existingModelConfig.resourcePoolId ||
-                element.ResourcePool.Id === vm.newModelConfig.resourcePoolId) {
+            var oppositeResourcePoolId = 0;
 
-                var oppositeResourcePoolId = element.ResourcePool.Id === vm.existingModelConfig.resourcePoolId ?
-                    vm.newModelConfig.resourcePoolId :
-                    vm.existingModelConfig.resourcePoolId;
+            if (element.ResourcePool.Id === vm.existingModelConfig.resourcePoolId) {
+                oppositeResourcePoolId = vm.newModelConfig.resourcePoolId;
+            } else if (element.ResourcePool.Id === vm.newModelConfig.resourcePoolId) {
+                oppositeResourcePoolId = vm.existingModelConfig.resourcePoolId;
+            }
 
-                // Call the service to increase the multiplier
+            // Call the service to increase the multiplier
+            if (oppositeResourcePoolId > 0) {
                 resourcePoolFactory.getResourcePoolExpanded(oppositeResourcePoolId)
                     .then(function (resourcePool) {
 
-                        if (resourcePool === null) {
-                            return;
-                        }
-
-                        var result = false;
                         switch (event.name) {
-                            case 'resourcePoolEditor_elementMultiplierIncreased': { userFactory.updateElementMultiplier(resourcePool.mainElement(), 'increase'); break; }
-                            case 'resourcePoolEditor_elementMultiplierDecreased': { userFactory.updateElementMultiplier(resourcePool.mainElement(), 'decrease'); break; }
-                            case 'resourcePoolEditor_elementMultiplierReset': { userFactory.updateElementMultiplier(resourcePool.mainElement(), 'reset'); break; }
+                            case 'resourcePoolEditor_elementMultiplierIncreased': {
+                                userFactory.updateElementMultiplier(resourcePool.mainElement(), 'increase');
+                                break;
+                            }
+                            case 'resourcePoolEditor_elementMultiplierDecreased': {
+                                userFactory.updateElementMultiplier(resourcePool.mainElement(), 'decrease');
+                                break;
+                            }
+                            case 'resourcePoolEditor_elementMultiplierReset': {
+                                userFactory.updateElementMultiplier(resourcePool.mainElement(), 'reset');
+                                break;
+                            }
                         }
 
                         resourcePoolFactory.saveChanges(1500);

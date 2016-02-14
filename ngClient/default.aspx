@@ -22,19 +22,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="/" class="navbar-brand">
-                    Wealth Economy
+                <a href="/" class="navbar-brand">Wealth Economy
                 </a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="dropdown hide" data-uib-dropdown>
-                        <a href="" class="dropdown-toggle" data-uib-dropdown-toggle>Content <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/content/overview">Overview</a></li>
-                            <li><a href="/content/technologies">Technologies</a></li>
-                        </ul>
-                    </li>
                     <li>
                         <a href="/resourcePool/new">Create CMRP (New)</a>
                     </li>
@@ -69,28 +61,94 @@
 
         <div data-ng-view></div>
 
-        <hr />
         <footer>
-            <p class="small">
-                <span data-ng-bind="vm.applicationInfo.CurrentVersionText"></span>
-            </p>
-            <p class="brandLink">
-                <a href="http://forcrowd.org" target="_blank">
-                    <img src="/images/forCrowd_logo_34x34.jpg?v=0.29.2" class="brandLinkImage" />
-                    <span class="brandLinkText">
-                        <span class="brandLinkPrimary">forCrowd</span><br />
-                        <span class="brandLinkSecondary">FOUNDATION</span>
-                    </span>
-                </a>
-            </p>
+            <div class="row top-buffer" data-ng-if="vm.displayFooterIcons">
+                <div class="col-md-12"></div>
+                <hr />
+                <div class="row">
+                    <div class="col-md-4">
+                        <a class="btn btn-block btn-default" role="button" href="https://twitter.com/forCrowd" target="_blank">
+                            <span class="fa fa-twitter fa-lg"></span>
+                            Follow us on Twitter
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a class="btn btn-block btn-default" role="button" href="https://gitter.im/forCrowd/WealthEconomy" target="_blank">
+                            <span class="fa fa-git fa-lg"></span>
+                            Chat with us on Gitter
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a class="btn btn-block btn-default" role="button" href="mailto:contact@forcrowd.org" target="_blank">
+                            <span class="fa fa-envelope fa-lg"></span>
+                            Contact us by contact@forcrowd.org
+                        </a>
+                    </div>
+                </div>
+                <div class="row top-buffer">
+                    <div class="col-md-4">
+                        <a class="btn btn-block btn-default" role="button" href="https://github.com/forCrowd/WealthEconomy" target="_blank">
+                            <span class="fa fa-github fa-lg"></span>
+                            View project on Github
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a class="btn btn-block btn-default" role="button" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YPBCBJ3ANDL4Q" target="_blank">
+                            <span class="fa fa-paypal fa-lg"></span>
+                            Invest in us with Paypal
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a class="btn btn-block btn-default" role="button" href="" data-ng-click="vm.toggleBankTransfer()">
+                            <span class="fa fa-bank fa-lg"></span>
+                            Or with bank transfer
+                        </a>
+                        <div class="bs-callout bs-callout-info" data-ng-show="vm.displayBankTransfer">
+                            <h4>Bank Transfer - Euro</h4>
+                            <p>
+                                Bank: Triodos Bank NV, Netherlands<br />
+                                IBAN: NL20 TRIO 0254 4012 87
+                            </p>
+                        </div>
+                    </div>
+
+                    <!--<a class="btn btn-primary" href="https://flattr.com/profile/forCrowd" role="button" target="_blank">Flattr</a>-->
+                    <!--<a class="btn btn-primary" href="https://gratipay.com/forCrowd/" role="button" target="_blank">Gratipay</a>-->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div data-ng-show="vm.disqusLoadedOn">
+                        <hr />
+                        <dir-disqus disqus-shortname="{{ vm.disqusShortname }}"
+                            disqus-identifier="{{ vm.disqusId }}"
+                            disqus-url="{{ vm.disqusUrl }}"
+                            ready-to-bind="{{ vm.disqusLoadedOn }}">
+                        </dir-disqus>
+                    </div>
+                    <hr />
+                    <p class="small">
+                        <span data-ng-bind="vm.applicationInfo.CurrentVersionText"></span>
+                    </p>
+                    <p class="brandLink">
+                        <a href="http://forcrowd.org" target="_blank">
+                            <img src="/images/forCrowd_logo_34x34.jpg?v=0.29.2" class="brandLinkImage" />
+                            <span class="brandLinkText">
+                                <span class="brandLinkPrimary">forCrowd</span><br />
+                                <span class="brandLinkSecondary">FOUNDATION</span>
+                            </span>
+                        </a>
+                    </p>
+                </div>
+            </div>
         </footer>
     </div>
 
     <!-- lib.js -->
-    <script src="/js/lib/lib.min.js?v=0.44.0"></script>
+    <script src="/js/lib/lib.min.js?v=0.46.0"></script>
 
     <!-- app.js -->
-    <script src="/js/app/app.min.js?v=0.45.0"></script>
+    <script src="/js/app/app.min.js?v=0.46.0"></script>
 
     <!-- appSettings.js -->
     <script src="/js/appSettings/appSettings.js?v=0.43.2"></script>
