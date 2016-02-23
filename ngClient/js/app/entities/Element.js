@@ -10,7 +10,7 @@
         // Logger
         logger = logger.forSource(factoryId);
 
-        // Server-side properties
+        // Server-side
         Object.defineProperty(Element.prototype, 'IsMainElement', {
             enumerable: true,
             configurable: true,
@@ -50,7 +50,7 @@
 
             var self = this;
 
-            // Server-side props
+            // Server-side
             self.Id = 0;
             self.Name = '';
             // TODO breezejs - Cannot assign a navigation property in an entity ctor
@@ -73,6 +73,7 @@
                 _multiplierField: null,
                 _totalResourcePoolAmount: null
             };
+            self.isEditing = false;
 
             // Functions
             self.directIncome = directIncome;

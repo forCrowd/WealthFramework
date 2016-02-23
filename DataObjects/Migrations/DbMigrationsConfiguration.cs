@@ -110,9 +110,6 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
 
             // Sample resource pools
             var billionDollarQuestion = resourcePoolRepository.CreateBillionDollarQuestion(sampleUser);
-            var upoSample = resourcePoolRepository.CreateUPOSample(sampleUser);
-            var basicsExistingSystemSample = resourcePoolRepository.CreateBasicsExistingSystemSample(sampleUser);
-            var basicsNewSystemSample = resourcePoolRepository.CreateBasicsNewSystemSample(sampleUser);
             var priorityIndexSample = resourcePoolRepository.CreatePriorityIndexSample(sampleUser);
             var knowledgeIndexSample = resourcePoolRepository.CreateKnowledgeIndexSample(sampleUser);
             var knowledgeIndexPopularSoftwareLicenseSample = resourcePoolRepository.CreateKnowledgeIndexPopularSoftwareLicenseSample(sampleUser);
@@ -123,21 +120,15 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             // Set Id fields explicitly, since strangely EF doesn't save them in the order that they've been added to ResourcePoolSet.
             // And they're referred with these Ids on front-end samples
             billionDollarQuestion.Id = 1;
-            upoSample.Id = 2;
-            basicsExistingSystemSample.Id = 3;
-            basicsNewSystemSample.Id = 4;
-            priorityIndexSample.Id = 5;
-            knowledgeIndexSample.Id = 6;
-            knowledgeIndexPopularSoftwareLicenseSample.Id = 7;
-            totalCostIndexExistingSystemSample.Id = 8;
-            totalCostIndexNewSystemSample.Id = 9;
-            allInOneSample.Id = 10;
+            priorityIndexSample.Id = 2;
+            knowledgeIndexSample.Id = 3;
+            knowledgeIndexPopularSoftwareLicenseSample.Id = 4;
+            totalCostIndexExistingSystemSample.Id = 5;
+            totalCostIndexNewSystemSample.Id = 6;
+            allInOneSample.Id = 7;
 
             // Insert
             resourcePoolRepository.Insert(billionDollarQuestion);
-            resourcePoolRepository.Insert(upoSample);
-            resourcePoolRepository.Insert(basicsExistingSystemSample);
-            resourcePoolRepository.Insert(basicsNewSystemSample);
             resourcePoolRepository.Insert(priorityIndexSample);
             resourcePoolRepository.Insert(knowledgeIndexSample);
             resourcePoolRepository.Insert(knowledgeIndexPopularSoftwareLicenseSample);

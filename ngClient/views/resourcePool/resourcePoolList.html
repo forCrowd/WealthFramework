@@ -11,7 +11,7 @@
         </tr>
         <tr data-ng-repeat="resourcePool in vm.resourcePoolSet | orderBy: Id">
             <td>
-                <a data-ng-bind="resourcePool.Name" data-ng-href="/resourcePool/{{ resourcePool.Id }}"></a>
+                <a data-ng-bind="resourcePool.name()" data-ng-href="/resourcePool/{{ resourcePool.Id }}"></a>
             </td>
         </tr>
     </table>

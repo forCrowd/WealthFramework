@@ -17,7 +17,7 @@
 
             var self = this;
 
-            // Server-side props
+            // Server-side
             self.Id = 0;
             self.ElementId = 0;
             self.Name = '';
@@ -36,6 +36,7 @@
                 _totalResourcePoolAmount: null,
                 _totalResourcePoolIncome: null
             };
+            self.isEditing = false;
 
             // Functions
             self.directIncome = directIncome;

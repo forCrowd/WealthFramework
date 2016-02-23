@@ -1,5 +1,5 @@
 ﻿<div data-ng-controller="ResourcePoolManageController as vm">
-    <h2 data-ng-bind="vm.title"></h2>
+    <h2 data-ng-bind="vm.resourcePool.Name"></h2>
     <p data-ng-if="vm.isNew" class="hide">
         <button type="button" data-ng-click="vm.openCopyModal()" class="btn btn-primary">
             Copy from an existing CMRP
@@ -9,10 +9,10 @@
         <uib-tab heading="Resource Pool">
             <form name="vm.resourcePoolForm">
                 <div class="form-horizontal">
-                    <div class="top-buffer">
+                    <div class="buffer-top">
                         &nbsp;
                     </div>
-                    <!--<div class="form-group has-error" data-ng-show="vm.entityErrors">
+                    <!--<div class="form-group has-error" data-ng-if="vm.entityErrors">
                         <ul>
                             <li data-ng-repeat="error in vm.entityErrors">
                                 <label data-ng-bind="error.errorMessage" class="control-label"></label>
@@ -65,10 +65,10 @@
             <div data-ng-if="vm.isElementEdit">
                 <form name="elementForm">
                     <div class="form-horizontal">
-                        <div class="top-buffer">
+                        <div class="buffer-top">
                             &nbsp;
                         </div>
-                        <!--<div class="form-group has-error" data-ng-show="vm.entityErrors">
+                        <!--<div class="form-group has-error" data-ng-if="vm.entityErrors">
                             <ul>
                                 <li data-ng-repeat="error in vm.entityErrors">
                                     <label data-ng-bind="error.errorMessage" class="control-label"></label>
@@ -115,7 +115,7 @@
 
             <!-- Element list -->
             <div data-ng-if="!vm.isElementEdit">
-                <p class="top-buffer">
+                <p class="buffer-top">
                     <a href="" data-ng-click="vm.addElement()">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create New
                     </a>
@@ -155,10 +155,10 @@
             <div data-ng-if="vm.isElementFieldEdit">
                 <form name="elementFieldForm">
                     <div class="form-horizontal">
-                        <div class="top-buffer">
+                        <div class="buffer-top">
                             &nbsp;
                         </div>
-                        <!--<div class="form-group has-error" data-ng-show="vm.entityErrors">
+                        <!--<div class="form-group has-error" data-ng-if="vm.entityErrors">
                             <ul>
                                 <li data-ng-repeat="error in vm.entityErrors">
                                     <label data-ng-bind="error.errorMessage" class="control-label"></label>
@@ -274,7 +274,7 @@
 
             <!-- Element field list -->
             <div data-ng-if="!vm.isElementFieldEdit">
-                <p class="top-buffer">
+                <p class="buffer-top">
                     <a href="" data-ng-click="vm.addElementField()">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create New
                     </a>
@@ -326,10 +326,10 @@
             <div data-ng-if="vm.isElementItemEdit">
                 <form name="elementItemForm">
                     <div class="form-horizontal">
-                        <div class="top-buffer">
+                        <div class="buffer-top">
                             &nbsp;
                         </div>
-                        <!--<div class="form-group has-error" data-ng-show="vm.entityErrors">
+                        <!--<div class="form-group has-error" data-ng-if="vm.entityErrors">
                             <ul>
                                 <li data-ng-repeat="error in vm.entityErrors">
                                     <label data-ng-bind="error.errorMessage" class="control-label"></label>
@@ -373,7 +373,7 @@
 
             <!-- Element item list -->
             <div data-ng-if="!vm.isElementItemEdit">
-                <p class="top-buffer">
+                <p class="buffer-top">
                     <a href="" data-ng-click="vm.addElementItem()">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create New
                     </a>
@@ -413,10 +413,10 @@
             <div data-ng-if="vm.isElementCellEdit">
                 <form name="elementCellForm">
                     <div class="form-horizontal">
-                        <div class="top-buffer">
+                        <div class="buffer-top">
                             &nbsp;
                         </div>
-                        <!--<div class="form-group has-error" data-ng-show="vm.entityErrors">
+                        <!--<div class="form-group has-error" data-ng-if="vm.entityErrors">
                             <ul>
                                 <li data-ng-repeat="error in vm.entityErrors">
                                     <label data-ng-bind="error.errorMessage" class="control-label"></label>
@@ -491,7 +491,7 @@
 
             <!-- Element cell list -->
             <div data-ng-if="!vm.isElementCellEdit">
-                <p class="top-buffer">
+                <p class="buffer-top">
                     &nbsp;
                 </p>
                 <table class="table">
@@ -556,7 +556,7 @@
             </tr>
             <tr data-ng-repeat="resourcePool in vm.resourcePoolSet | orderBy: Id">
                 <td>
-                    <span data-ng-bind="resourcePool.Name"></span>
+                    <span data-ng-bind="resourcePool.name()"></span>
                     <button class="btn btn-primary" type="button" ng-click="vm.copy(resourcePool)">Copy</button>
                     <!--<a data-ng-bind="resourcePool.Name" data-ng-href="/resourcePool/{{ resourcePool.Id }}"></a>-->
                 </td>

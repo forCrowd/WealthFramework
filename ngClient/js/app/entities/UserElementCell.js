@@ -29,10 +29,20 @@
 
             var self = this;
 
+            // Server-side
+            self.UserId = 0;
+            self.ElementCellId = 0;
+            self.StringValue = null;
+            self.BooleanValue = null;
+            self.IntegerValue = null;
+            // 
+            self.DateTimeValue = null;
+
             // Local variables
             self.backingFields = {
                 _DecimalValue: null
             };
+            self.isEditing = false;
         }
     }
 })();

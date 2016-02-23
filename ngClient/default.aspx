@@ -10,7 +10,7 @@
     <link href="/css/lib/lib.min.css?v=0.43.5" rel="stylesheet" />
 
     <!-- app.css -->
-    <link href="/css/app.min.css?v=0.43.5" rel="stylesheet" />
+    <link href="/css/app.min.css?v=0.47.0" rel="stylesheet" />
 
 </head>
 <body data-ng-controller="DefaultController as vm">
@@ -62,7 +62,7 @@
         <div data-ng-view></div>
 
         <footer>
-            <div class="row top-buffer" data-ng-if="vm.displayFooterIcons">
+            <div class="row buffer-top" data-ng-if="vm.displayFooterIcons">
                 <div class="col-md-12"></div>
                 <hr />
                 <div class="row">
@@ -85,7 +85,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="row top-buffer">
+                <div class="row buffer-top">
                     <div class="col-md-4">
                         <a class="btn btn-block btn-default" role="button" href="https://github.com/forCrowd/WealthEconomy" target="_blank">
                             <span class="fa fa-github fa-lg"></span>
@@ -103,7 +103,7 @@
                             <span class="fa fa-bank fa-lg"></span>
                             Or with bank transfer
                         </a>
-                        <div class="bs-callout bs-callout-info" data-ng-show="vm.displayBankTransfer">
+                        <div class="bs-callout bs-callout-info" data-ng-if="vm.displayBankTransfer">
                             <h4>Bank Transfer - Euro</h4>
                             <p>
                                 Bank: Triodos Bank NV, Netherlands<br />
@@ -118,7 +118,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <div data-ng-show="vm.disqusLoadedOn">
+                    <div data-ng-if="vm.disqusLoadedOn">
                         <hr />
                         <dir-disqus disqus-shortname="{{ vm.disqusShortname }}"
                             disqus-identifier="{{ vm.disqusId }}"
@@ -148,7 +148,7 @@
     <script src="/js/lib/lib.min.js?v=0.46.0"></script>
 
     <!-- app.js -->
-    <script src="/js/app/app.min.js?v=0.46.0"></script>
+    <script src="/js/app/app.min.js?v=0.47.0"></script>
 
     <!-- appSettings.js -->
     <script src="/js/appSettings/appSettings.js?v=0.43.2"></script>

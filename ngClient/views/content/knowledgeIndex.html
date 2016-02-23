@@ -1,4 +1,4 @@
-﻿<div data-ng-controller="KnowledgeIndexSampleController as vm">
+﻿<div data-ng-controller="KnowledgeIndexController as vm">
     <div class="row">
         <div class="col-md-12">
             <h3>
@@ -67,14 +67,14 @@
                     Go back to initial view to see the difference in Total Income.
                 </li>
             </ul>
-            <resource-pool-editor data-config="{ resourcePoolId: 6 }"></resource-pool-editor>
+            <resource-pool-editor data-config="vm.knowledgeIndexConfig"></resource-pool-editor>
             <p>
-                In the sample below, we list some popular software licenses.
+                In example below, we list some popular software licenses.
                 As an optional step, we would like to encourage you to rate these licenses.
                 This would allow us to see which licenses we think are more beneficial and let us simulate the impact of 'Knowledge Index' in real life.
                 You can read the details of each license by clicking its name.
             </p>
-            <resource-pool-editor data-config="{ resourcePoolId: 7 }"></resource-pool-editor>
+            <resource-pool-editor data-config="{ resourcePoolId: 4 }"></resource-pool-editor>
         </div>
     </div>
 </div>

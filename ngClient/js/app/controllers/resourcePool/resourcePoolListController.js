@@ -14,9 +14,9 @@
         var vm = this;
         vm.resourcePoolSet = [];
 
-        initialize();
+        _init();
 
-        function initialize() {
+        function _init() {
             resourcePoolFactory.getResourcePoolSet(false)
 			    .then(function (data) {
 			        vm.resourcePoolSet = data;

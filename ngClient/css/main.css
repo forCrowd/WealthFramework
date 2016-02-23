@@ -140,6 +140,16 @@ input[type="checkbox"].input-validation-error {
 }
 
 /* Project level custom helpers / SH 24 Jan. '14 */
-.top-buffer {
-    margin-top: 10px;
+.buffer-top {
+    margin-top: 15px;
+}
+
+.buffer-left {
+    margin-left: 15px;
+}
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
 }

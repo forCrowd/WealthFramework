@@ -69,13 +69,13 @@
     <None Include="js\app\controllers\account\RegisterController.js" />
     <None Include="js\app\controllers\content\BasicsController.js" />
     <None Include="js\app\controllers\content\DefaultController.js" />
-    <None Include="js\app\controllers\content\FairShareIndexSampleController.js" />
-    <None Include="js\app\controllers\content\IndexesPieSampleController.js" />
+    <None Include="js\app\controllers\content\obsolete\FairShareIndexSampleController.js" />
+    <Content Include="js\app\controllers\content\AllInOneController.js" />
     <None Include="js\app\controllers\content\IntroductionController.js" />
-    <None Include="js\app\controllers\content\KnowledgeIndexSampleController.js" />
-    <None Include="js\app\controllers\content\ResourcePoolRateSampleController.js" />
-    <None Include="js\app\controllers\content\PriorityIndexSampleController.js" />
-    <None Include="js\app\controllers\content\TotalCostIndexSampleController.js" />
+    <None Include="js\app\controllers\content\KnowledgeIndexController.js" />
+    <None Include="js\app\controllers\content\obsolete\ResourcePoolRateSampleController.js" />
+    <None Include="js\app\controllers\content\PriorityIndexController.js" />
+    <None Include="js\app\controllers\content\TotalCostIndexController.js" />
     <None Include="js\app\controllers\resourcePool\ResourcePoolListController.js" />
     <None Include="js\app\controllers\resourcePool\ResourcePoolManageController.js" />
     <None Include="js\app\controllers\resourcePool\ResourcePoolViewController.js" />
@@ -115,6 +115,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="js\app\entities\UserResourcePool.js" />
+    <Content Include="js\app\entities\UserElementField.js" />
     <Content Include="views\account\accountEdit.html" />
     <Content Include="views\account\addPassword.html" />
     <Content Include="views\account\changeEmail.html" />
@@ -123,7 +125,7 @@
     <Content Include="views\account\login.html" />
     <Content Include="views\account\register.html" />
     <Content Include="views\content\404.html" />
-    <Content Include="views\content\allInOneSample.html" />
+    <Content Include="views\content\allInOne.html" />
     <Content Include="views\content\basics.html" />
     <Content Include="views\content\obsolete\closingNotes.html" />
     <Content Include="views\content\reason.html" />
@@ -132,15 +134,15 @@
     <Content Include="views\content\home.html" />
     <Content Include="views\content\obsolete\indexesPieSample.html" />
     <Content Include="views\content\introduction.html" />
-    <Content Include="views\content\knowledgeIndexSample.html" />
+    <Content Include="views\content\knowledgeIndex.html" />
     <Content Include="views\content\obsolete\overview.html" />
     <Content Include="views\content\prologue.html" />
     <Content Include="views\content\implementation.html" />
     <Content Include="views\content\obsolete\resourcePoolRateSample.html" />
     <Content Include="views\content\obsolete\roadmap.html" />
-    <Content Include="views\content\priorityIndexSample.html" />
+    <Content Include="views\content\priorityIndex.html" />
     <Content Include="views\content\obsolete\technologies.html" />
-    <Content Include="views\content\totalCostIndexSample.html" />
+    <Content Include="views\content\totalCostIndex.html" />
     <Content Include="views\resourcePool\resourcePoolManage.html" />
     <Content Include="views\resourcePool\resourcePoolList.html" />
     <Content Include="views\resourcePool\resourcePoolView.html" />

@@ -33,7 +33,8 @@
             getUser: getUser,
             hasChanges: hasChanges,
             rejectChanges: rejectChanges,
-            saveChanges: saveChanges
+            saveChanges: saveChanges,
+            saveChangesAlt: saveChangesAlt
         };
 
         // User logged out
@@ -126,6 +127,17 @@
 
         function saveChanges(delay) {
             return dataContext.saveChanges(delay);
+        }
+
+        function saveChangesAlt(user, delay) {
+
+            var entities = [user];
+
+            // TODO This approach is not good, controller should directly pass 'entities', otherwise factory cannot know whether it should only pass 'parent entity' or with its 'children'?'
+            // Compare this with resourcePoolFactory saveChanges, use same approach
+            // coni2k - 15 Feb. '16
+
+            return dataContext.saveChangesAlt(entities, delay);
         }
     }
 })();

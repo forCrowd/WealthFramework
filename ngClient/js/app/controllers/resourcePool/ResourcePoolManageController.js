@@ -73,7 +73,6 @@
         vm.saveElementCell = saveElementCell;
         vm.saveElementField = saveElementField;
         vm.saveElementItem = saveElementItem;
-        vm.title = '';
 
         // Enums
         vm.ElementFieldDataType = Enums.ElementFieldDataType;
@@ -90,11 +89,11 @@
                 resourcePoolFactory.createResourcePoolBasic()
                     .then(function (resourcePool) {
                         vm.resourcePool = resourcePool;
+                        vm.resourcePool.isEditing = true;
 
                         // Title
                         // TODO viewTitle was also set in route.js?
-                        vm.title = 'New CMRP';
-                        $rootScope.viewTitle = vm.title;
+                        $rootScope.viewTitle = vm.resourcePool.Name;
                     });
             } else {
                 resourcePoolFactory.getResourcePoolExpanded(vm.resourcePoolId)
@@ -107,11 +106,11 @@
                         }
 
                         vm.resourcePool = resourcePool;
+                        vm.resourcePool.isEditing = true;
 
                         // Title
                         // TODO viewTitle was also set in route.js?
-                        vm.title = resourcePool.Name + ' - Edit';
-                        $rootScope.viewTitle = vm.title;
+                        $rootScope.viewTitle = vm.resourcePool.Name;
                     });
             }
         }
@@ -309,7 +308,7 @@
 
         function elementItemSet() {
             var list = [];
-            vm.resourcePool.ElementSet.forEach(function (element){
+            vm.resourcePool.ElementSet.forEach(function (element) {
                 element.ElementItemSet.forEach(function (elementItem) {
                     list.push(elementItem);
                 });
@@ -361,8 +360,25 @@
         }
 
         function removeResourcePool() {
+            vm.isSaving = true;
+
             resourcePoolFactory.removeResourcePool(vm.resourcePool);
-            saveResourcePool('/resourcePool');
+
+            userFactory.getCurrentUser()
+                .then(function (currentUser) {
+                    if (currentUser.isAuthenticated()) {
+                        resourcePoolFactory.saveChanges()
+                            .then(function () {
+                                $location.url('/resourcePool');
+                            })
+                            .finally(function () {
+                                vm.isSaving = false;
+                            });
+                    } else {
+                        $location.url('/resourcePool');
+                        vm.isSaving = false;
+                    }
+                });
         }
 
         function saveElement() {
@@ -412,29 +428,68 @@
             vm.elementItemMaster = null;
         }
 
-        function saveResourcePool(returnPath) {
+        function saveResourcePool() {
+
+            vm.isSaving = true;
 
             // TODO Try to move this to a better place?
             vm.resourcePool.updateCache();
 
             userFactory.getCurrentUser()
                 .then(function (currentUser) {
+
+                    /* Update isEditing state */
+                    // Resource pool
+                    vm.resourcePool.isEditing = false;
+
+                    // User resource pools
+                    vm.resourcePool.UserResourcePoolSet.forEach(function (userResourcePool) {
+                        userResourcePool.isEditing = false;
+                    });
+
+                    // Elements
+                    vm.resourcePool.ElementSet.forEach(function (element) {
+                        element.isEditing = false;
+
+                        // Fields
+                        element.ElementFieldSet.forEach(function (elementField) {
+                            elementField.isEditing = false;
+
+                            // User element fields
+                            elementField.UserElementFieldSet.forEach(function (userElementField) {
+                                userElementField.isEditing = false;
+                            });
+                        });
+
+                        // Items
+                        element.ElementItemSet.forEach(function (elementItem) {
+                            elementItem.isEditing = false;
+
+                            // Cells
+                            elementItem.ElementCellSet.forEach(function (elementCell) {
+                                elementCell.isEditing = false;
+
+                                // User cells
+                                elementCell.UserElementCellSet.forEach(function (userElementCell) {
+                                    userElementCell.isEditing = false;
+                                });
+                            });
+                        });
+                    });
+                    /* Update isEditing state end */
+
                     if (currentUser.isAuthenticated()) {
-                        vm.isSaving = true;
                         resourcePoolFactory.saveChanges()
-                            .then(navigateToReturnPath)
-                            // TODO catch?
+                            .then(function () {
+                                $location.url('/resourcePool/' + vm.resourcePool.Id);
+                            })
                             .finally(function () {
                                 vm.isSaving = false;
                             });
                     } else {
                         resourcePoolFactory.acceptChanges(vm.resourcePool);
-                        navigateToReturnPath();
-                    }
-
-                    function navigateToReturnPath() {
-                        returnPath = typeof returnPath !== 'undefined' ? returnPath : '/resourcePool/' + vm.resourcePool.Id;
-                        $location.url(returnPath);
+                        vm.isSaving = false;
+                        $location.url('/resourcePool/' + vm.resourcePool.Id);
                     }
                 });
         }
