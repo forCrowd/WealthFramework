@@ -60,6 +60,33 @@ Identity / Account:
 . before sending any email to user, check whether it's confirmed?
 
 ---
+Fatih's
+1. Rating UI							- Important, bit later
+4. Anon user save						- Important, bit later
+9. Explain formulas						- Important, bit later - requires new menu items, content structure
+10. Total Cost Index confusion?			- Improve presentation, can be merged with 'explain formulas'
+6. 2 records rating + income dist		- Improve presentation, can be merged with 'explain formulas'
+2. "Total Income" field customization	- Later (maybe with custom formulas)
+8. Priority, highly influential?		- Check with other testers
+7. all in one income error?				- wealth.api/app_Data - not clear how the error occured?
+3. Prio + Knowledge - All in One sync	- OK
+5. all users/yours switch				- OK
+
+---
+IMPORTANT BUT LATER!
+do we correctly update RatingCount (probably yes..)?
+but do we update other computed values (resourcepooltotal, count, numericvaluetotal, count, fieldratingtotal, count) correctly?
+in case the owner edits them?
+after save it only calls update cache.. shouldn't be enough?
+
+try to use pure entities, instead of breeze versions? then demo resource pools wouldn't need isTemp?
+
+Navigate away confirmation in isEditing
+
+---
+ng-show / if: if it will be on/off frequently (and takes time to render), use show
+if it will be drawn once based on a certain condition and probably it will not change its state, use if?
+
 elementField.js - DataType prop uses 'broadcast' and dataContext handles this event to create the actual event
 seems nice, and it could be used in other cases.
 however it doesn't return the newly created entity to the caller, which probably is not suitable for most cases?
@@ -94,8 +121,6 @@ move enums to their related class?
 
 copy from an existing cmrp / template?
 how to handle user level data - only copy computed ones?
-
-currently saveChanges in datacontext (and in all factory.js) files, saves all changes, not one particular entity?!
 
 check return conflict() blocks, there's something wrong with them!
 

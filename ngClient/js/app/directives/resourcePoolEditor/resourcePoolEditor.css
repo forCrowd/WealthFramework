@@ -5,6 +5,11 @@
     padding: 1.5em 0;
 }
 
+.resourcePoolEditor .panel-title {
+    font-size: 18px;
+    line-height: 2em;
+}
+
 .resourcePoolTable {
     /*table-layout: fixed;*/
 }
@@ -17,6 +22,7 @@
     .resourcePoolTable > thead > tr > td,
     .resourcePoolTable > tbody > tr > td,
     .resourcePoolTable > tfoot > tr > td {
+        line-height: 2em;
         min-width: 85px;
         overflow: hidden; /* Hide text outside the cell */
         padding: 3px;

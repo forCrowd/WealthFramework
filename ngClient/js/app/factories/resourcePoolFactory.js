@@ -200,7 +200,8 @@
             return elementItem;
         }
 
-        function createResourcePoolBasic() {
+        function createResourcePoolBasic(initializeResourcePool) {
+            initializeResourcePool = typeof initializeResourcePool !== 'undefined' ? initializeResourcePool : false;
 
             return userFactory.getCurrentUser()
                 .then(function (currentUser) {
@@ -211,10 +212,7 @@
                         User: currentUser,
                         Name: 'New CMRP',
                         InitialValue: 100,
-                        ResourcePoolRateTotal: resourcePoolRate,
-                        ResourcePoolRateCount: 1,
-                        RatingCount: 1,
-                        UseFixedResourcePoolRate: false
+                        UseFixedResourcePoolRate: true
                     });
 
                     dataContext.createEntity('UserResourcePool', {
@@ -223,7 +221,7 @@
                         ResourcePoolRate: resourcePoolRate
                     });
 
-                    var element = dataContext.createEntity('Element', {
+                    var element = createElement({
                         ResourcePool: resourcePool,
                         Name: 'New element'
                     });
@@ -253,13 +251,17 @@
                         Name: 'New item 2'
                     });
 
-                    resourcePool._init();
+                    // Initialize
+                    if (initializeResourcePool) {
+                        resourcePool._init(true);
+                    }
 
                     return resourcePool;
                 });
         }
 
-        function createResourcePoolDirectIncomeAndMultiplier() {
+        function createResourcePoolDirectIncomeAndMultiplier(initializeResourcePool) {
+            initializeResourcePool = typeof initializeResourcePool !== 'undefined' ? initializeResourcePool : false;
 
             return createResourcePoolBasic()
                 .then(function (resourcePool) {
@@ -269,17 +271,13 @@
                     salesPriceField.Name = 'Sales Price';
                     salesPriceField.DataType = 11;
                     salesPriceField.UseFixedValue = true;
-                    salesPriceField.IndexCalculationType = 1;
-                    salesPriceField.IndexSortType = 2;
+                    salesPriceField.IndexEnabled = false;
+                    salesPriceField.IndexCalculationType = 0;
+                    salesPriceField.IndexSortType = 0;
 
                     // Update Sales Price field cells
                     var cell1 = salesPriceField.ElementCellSet[0];
-                    cell1.NumericValueTotal = 100;
-                    cell1.UserElementCellSet[0].DecimalValue = 100;
-
                     var cell2 = salesPriceField.ElementCellSet[1];
-                    cell2.NumericValueTotal = 110;
-                    cell2.UserElementCellSet[0].DecimalValue = 110;
 
                     // Number of Sales field
                     var numberOfSalesField = createElementField({
@@ -290,11 +288,16 @@
                         SortOrder: 2
                     });
 
+                    if (initializeResourcePool) {
+                        resourcePool._init(true);
+                    }
+
                     return resourcePool;
                 });
         }
 
-        function createResourcePoolTwoElements() {
+        function createResourcePoolTwoElements(initializeResourcePool) {
+            initializeResourcePool = typeof initializeResourcePool !== 'undefined' ? initializeResourcePool : false;
 
             return createResourcePoolBasic()
                 .then(function (resourcePool) {
@@ -307,7 +310,7 @@
                     var element2Item2 = element2.ElementItemSet[1];
 
                     // Element 1
-                    var element1 = dataContext.createEntity('Element', {
+                    var element1 = createElement({
                         ResourcePool: resourcePool,
                         Name: 'Parent'
                     });
@@ -340,6 +343,10 @@
 
                     // Item 2 Cell
                     item2.ElementCellSet[0].SelectedElementItem = element2Item2;
+
+                    if (initializeResourcePool) {
+                        resourcePool._init(true);
+                    }
 
                     return resourcePool;
                 });
@@ -402,8 +409,10 @@
                         // ResourcePool
                         var resourcePool = response.results[0];
 
-                        // Init: If it's from server, calculate otherUsersData
-                        resourcePool._init(fromServer);
+                        // Init
+                        if (fromServer) {
+                            resourcePool._init();
+                        }
 
                         // Add the record into fetched list
                         fetched.push(resourcePool.Id);

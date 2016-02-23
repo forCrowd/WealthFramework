@@ -1,4 +1,4 @@
-﻿<div data-ng-controller="IndexesPieSampleController as vm">
+﻿<div data-ng-controller="AllInOneController as vm">
     <div class="row">
         <div class="col-md-12">
             <h3>
@@ -6,7 +6,8 @@
             </h3>
             <p>
                 In the following example, you can see all items in one place.
-                Please set ratings in for all indexes, which will allow us to compare the results with the current system.
+                Your ratings from previous examples have already been copied to this example.
+                Please set your final ratings for each index, which will allow us to compare the results with the current system.
             </p>
             <p>
                 As an addition, since this time there are three indexes, their priority within the pool also need to be set.
@@ -45,7 +46,7 @@
                     Click to <code>CMRP Income</code> link again to switch back to initial view.
                 </li>
             </ul>
-            <resource-pool-editor data-config="{ resourcePoolId: 10 }"></resource-pool-editor>
+            <resource-pool-editor data-config="vm.allInOneConfig"></resource-pool-editor>
         </div>
     </div>
 </div>

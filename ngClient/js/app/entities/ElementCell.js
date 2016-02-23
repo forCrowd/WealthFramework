@@ -17,7 +17,7 @@
 
             var self = this;
 
-            // Server-side props
+            // Server-side
             self.Id = 0;
             self.ElementFieldId = 0;
             self.ElementItemId = 0;
@@ -45,6 +45,7 @@
                 _ratingPercentage: null,
                 _indexIncome: null
             };
+            self.isEditing = false;
 
             // Functions
             self.aggressiveRating = aggressiveRating;
@@ -133,6 +134,8 @@
 
             function numericValueCount() {
                 return self.ElementField.UseFixedValue ?
+                    self.currentUserCell() !== null && self.currentUserCell().UserId === self.ElementField.Element.ResourcePool.UserId ? // If it belongs to current user
+                    1 :
                     self.otherUsersNumericValueCount() :
                     self.otherUsersNumericValueCount() + 1; // There is always default value, increase count by 1
             }
@@ -156,6 +159,8 @@
 
             function numericValueTotal() {
                 return self.ElementField.UseFixedValue ?
+                    self.currentUserCell() !== null && self.currentUserCell().UserId === self.ElementField.Element.ResourcePool.UserId ? // If it belongs to current user
+                    self.currentUserNumericValue() :
                     self.otherUsersNumericValueTotal() :
                     self.otherUsersNumericValueTotal() + self.currentUserNumericValue();
             }

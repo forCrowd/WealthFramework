@@ -142,6 +142,11 @@
                                 // Raise logged in event
                                 broadcastUserChanged();
 
+                                // Update anonymous entities
+                                currentUser.ResourcePoolSet.forEach(function (resourcePool) {
+                                    resourcePool.updateAnonymousEntities();
+                                });
+
                                 // Save the changes that's been done before the registration
                                 dataContext.saveChanges()
                                     .then(function () {
@@ -155,6 +160,11 @@
                                 // Move anonymously created entities to this logged in user
                                 dataContext.updateAnonymousChanges(oldUser, currentUser)
                                     .then(function () {
+
+                                        // Update anonymous entities
+                                        currentUser.ResourcePoolSet.forEach(function (resourcePool) {
+                                            resourcePool.updateAnonymousEntities();
+                                        });
 
                                         // Save changes
                                         dataContext.saveChanges()
@@ -186,7 +196,7 @@
 
                     dataContext.metadataReady()
                         .then(function () {
-                            var user = dataContext.createEntity('User', {});
+                            var user = dataContext.createEntity('User', { isEditing: false });
                             currentUser = user;
                             deferred.resolve(user);
                         })
@@ -213,7 +223,7 @@
                 // If the response has an entity, use that, otherwise create an anonymous user
                 var user = response.results.length > 0 ?
                     response.results[0] :
-                    dataContext.createEntity('User', {});
+                    dataContext.createEntity('User', { isEditing: false });
 
                 currentUser = user;
                 deferred.resolve(user);
@@ -426,7 +436,8 @@
                         userCell = dataContext.createEntity('UserElementCell', {
                             User: currentUser,
                             ElementCell: elementCell,
-                            DecimalValue: updateType === 'increase' ? 1 : 0
+                            DecimalValue: updateType === 'increase' ? 1 : 0,
+                            isEditing: false
                         });
 
                     } else { // If there is an item, update DecimalValue, but cannot be lower than zero
@@ -462,7 +473,8 @@
                         dataContext.createEntity('UserElementCell', {
                             User: currentUser,
                             ElementCell: elementCell,
-                            DecimalValue: updateType === 'increase' ? 55 : 45
+                            DecimalValue: updateType === 'increase' ? 55 : 45,
+                            isEditing: false
                         });
 
                     } else { // If there is an item, update DecimalValue, but cannot be smaller than zero and cannot be bigger than 100
@@ -504,7 +516,8 @@
                         userElementField = {
                             User: currentUser,
                             ElementField: elementField,
-                            Rating: updateType === 'increase' ? 55 : 45
+                            Rating: updateType === 'increase' ? 55 : 45,
+                            isEditing: false
                         };
 
                         dataContext.createEntity('UserElementField', userElementField);
@@ -549,7 +562,8 @@
                         userResourcePool = {
                             User: currentUser,
                             ResourcePool: resourcePool,
-                            ResourcePoolRate: updateType === 'increase' ? 15 : 5
+                            ResourcePoolRate: updateType === 'increase' ? 15 : 5,
+                            isEditing: false
                         };
 
                         dataContext.createEntity('UserResourcePool', userResourcePool);

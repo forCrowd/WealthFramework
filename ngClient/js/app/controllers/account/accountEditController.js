@@ -12,21 +12,22 @@
 
         // Controller methods (alphabetically)
         var vm = this;
+        vm.cancelChanges = cancelChanges;
         vm.isSaveDisabled = isSaveDisabled;
         vm.user = null;
         vm.saveChanges = saveChanges;
-        vm.hasChanges = hasChanges;
 
         // Get current user
         userFactory.getCurrentUser()
             .then(function (currentUser) {
                 vm.user = currentUser;
+                vm.user.isEditing = true;
             });
 
         /*** Implementations ***/
 
-        function hasChanges() {
-            return userFactory.hasChanges();
+        function cancelChanges() {
+            // TODO
         }
 
         function isSaveDisabled() {
@@ -37,6 +38,7 @@
         function saveChanges() {
 
             isSaving = true;
+            vm.user.isEditing = false;
             userFactory.saveChanges()
                 .then(function (result) {
                     logger.logSuccess('Your changes have been saved!', null, true);

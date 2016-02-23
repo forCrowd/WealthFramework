@@ -1,11 +1,11 @@
 ﻿(function () {
     'use strict';
 
-    var controllerId = 'TotalCostIndexSampleController';
+    var controllerId = 'TotalCostIndexController';
     angular.module('main')
-        .controller(controllerId, ['resourcePoolFactory', 'userFactory', '$scope', 'logger', TotalCostIndexSampleController]);
+        .controller(controllerId, ['resourcePoolFactory', 'userFactory', '$scope', 'logger', TotalCostIndexController]);
 
-    function TotalCostIndexSampleController(resourcePoolFactory, userFactory, $scope, logger) {
+    function TotalCostIndexController(resourcePoolFactory, userFactory, $scope, logger) {
 
         logger = logger.forSource(controllerId);
 

@@ -75,7 +75,7 @@
 
             var self = this;
 
-            // Server-side props
+            // Server-side
             self.Id = 0;
             self.UserId = 0;
             self.Name = '';
@@ -100,12 +100,18 @@
                 _selectedElement: null,
                 _useFixedResourcePoolRate: false
             };
+            self.isEditing = false; // Determines whether the object is being edited or not
+            self.isTemp = false; // Determines whether object was created for demo purposes or not
+            // TODO Move this to field.js?
+            self.displayMultiplierFunctions = true; // In some cases, it's not necessary for the user to change multiplier
 
             // Functions
             self._init = _init;
             self.currentUserResourcePool = currentUserResourcePool;
             self.currentUserResourcePoolRate = currentUserResourcePoolRate;
+            self.displayResourcePoolDetails = displayResourcePoolDetails;
             self.displayRatingMode = displayRatingMode;
+            self.getEntities = getEntities;
             // Determines whether entityState is actually isAdded.
             // Anonymous users can also add/edit resource pool.
             // However, when an anonymous user adds a new resource pool, it actually doesn't save to database and entityState stays as isAdded().
@@ -116,6 +122,7 @@
             // SH - 30 Nov. '15
             self.isAdded = isAdded;
             self.mainElement = mainElement;
+            self.name = name;
             self.otherUsersResourcePoolRateCount = otherUsersResourcePoolRateCount;
             self.otherUsersResourcePoolRateTotal = otherUsersResourcePoolRateTotal;
             self.resourcePoolRate = resourcePoolRate;
@@ -130,12 +137,62 @@
             self.setResourcePoolRate = setResourcePoolRate;
             self.setResourcePoolRatePercentage = setResourcePoolRatePercentage;
             self.toggleRatingMode = toggleRatingMode;
+            self.updateAnonymousEntities = updateAnonymousEntities;
             self.updateCache = updateCache;
 
             /*** Implementations ***/
 
             // Should be called after createEntity or retrieving it from server
-            function _init() {
+            function _init(setComputedFields) {
+                setComputedFields = typeof setComputedFields !== 'undefined' ? setComputedFields : false;
+
+                // Set initial values of computed fields
+                if (setComputedFields) {
+
+                    var userRatings = [];
+
+                    // ResourcePool
+                    self.UserResourcePoolSet.forEach(function (userResourcePool) {
+                        self.ResourcePoolRateTotal += userResourcePool.ResourcePoolRate;
+                        self.ResourcePoolRateCount += 1;
+
+                        if (userRatings.indexOf(userResourcePool.UserId) === -1) {
+                            userRatings.push(userResourcePool.UserId);
+                        }
+                    });
+
+                    // Fields
+                    self.ElementSet.forEach(function (element) {
+                        element.ElementFieldSet.forEach(function (elementField) {
+                            elementField.UserElementFieldSet.forEach(function (userElementField) {
+                                elementField.IndexRatingTotal += userElementField.IndexRating;
+                                elementField.IndexRatingCount += 1;
+
+                                if (userRatings.indexOf(userElementField.UserId) === -1) {
+                                    userRatings.push(userElementField.UserId);
+                                }
+                            });
+
+                            // Cells
+                            elementField.ElementCellSet.forEach(function (elementCell) {
+                                elementCell.UserElementCellSet.forEach(function (userElementCell) {
+                                    elementCell.StringValue = ''; // TODO ?
+                                    elementCell.NumericValueTotal += userElementCell.DecimalValue; // TODO Correct approach?
+                                    elementCell.NumericValueCount += 1;
+
+                                    if (elementField.IndexEnabled) {
+                                        if (userRatings.indexOf(userElementCell.UserId) === -1) {
+                                            userRatings.push(userElementCell.UserId);
+                                        }
+                                    }
+                                });
+                            });
+                        });
+                    });
+
+                    // Rating count
+                    self.RatingCount = userRatings.length;
+                }
 
                 // Set otherUsers' data
                 self.setOtherUsersResourcePoolRateTotal();
@@ -183,7 +240,13 @@
                 return self.backingFields._currentUserResourcePoolRate;
             }
 
+            function displayResourcePoolDetails() {
+                return self.selectedElement().directIncomeField() !== null &&
+                    self.selectedElement().elementFieldIndexSet().length > 0;
+            }
+
             // Checks whether resource pool has any item that can be rateable
+            // Obsolete: Replaced with RatingCount > 0 / coni2k - 21 Feb. '16
             function displayRatingMode() {
 
                 // Check resource pool level first
@@ -209,6 +272,56 @@
                 return false;
             }
 
+            function getEntities() {
+
+                var entities = [];
+
+                // No need to continue
+                if (self.isTemp) {
+                    return entities;
+                }
+
+                // Resource pool
+                entities.push(self);
+
+                // User resource pools
+                self.UserResourcePoolSet.forEach(function (userResourcePool) {
+                    entities.push(userResourcePool);
+                });
+
+                // Elements
+                self.ElementSet.forEach(function (element) {
+                    entities.push(element);
+
+                    // Fields
+                    element.ElementFieldSet.forEach(function (elementField) {
+                        entities.push(elementField);
+
+                        // User element fields
+                        elementField.UserElementFieldSet.forEach(function (userElementField) {
+                            entities.push(userElementField);
+                        });
+                    });
+
+                    // Items
+                    element.ElementItemSet.forEach(function (elementItem) {
+                        entities.push(elementItem);
+
+                        // Cells
+                        elementItem.ElementCellSet.forEach(function (elementCell) {
+                            entities.push(elementCell);
+
+                            // User cells
+                            elementCell.UserElementCellSet.forEach(function (userElementCell) {
+                                entities.push(userElementCell);
+                            });
+                        });
+                    });
+                });
+
+                return entities;
+            }
+
             function isAdded(value) {
                 if (typeof value !== 'undefined') {
                     self.backingFields._isAdded = value;
@@ -217,11 +330,17 @@
             }
 
             function mainElement() {
-                var result = self.ElementSet.filter(function(element){
+                var result = self.ElementSet.filter(function (element) {
                     return element.IsMainElement;
                 });
 
                 return result.length > 0 ? result[0] : null;
+            }
+
+            function name() {
+                var name = self.Name;
+                name += self.isEditing ? ' - Editing' : '';
+                return name;
             }
 
             // TODO Since this is a fixed value based on ResourcePoolRateCount & current user's rate,
@@ -270,6 +389,8 @@
 
             function resourcePoolRateCount() {
                 return self.UseFixedResourcePoolRate ?
+                    self.currentUserResourcePool() !== null && self.currentUserResourcePool().UserId === self.UserId ? // If it belongs to current user
+                    1 :
                     self.otherUsersResourcePoolRateCount() :
                     self.otherUsersResourcePoolRateCount() + 1; // There is always default value, increase count by 1
             }
@@ -285,6 +406,8 @@
 
             function resourcePoolRateTotal() {
                 return self.UseFixedResourcePoolRate ?
+                    self.currentUserResourcePool() !== null && self.currentUserResourcePool().UserId === self.UserId ? // If it belongs to current user
+                    self.currentUserResourcePoolRate() :
                     self.otherUsersResourcePoolRateTotal() :
                     self.otherUsersResourcePoolRateTotal() + self.currentUserResourcePoolRate();
             }
@@ -390,6 +513,55 @@
 
             function toggleRatingMode() {
                 self.RatingMode = self.RatingMode === 1 ? 2 : 1;
+            }
+
+            // TOOD Should be obsolete if we could start using "auto save anonymous user"
+            function updateAnonymousEntities() {
+
+                if (!self.isAdded()) {
+                    return;
+                }
+
+                // Turn the flag off
+                self.isAdded(false);
+
+                // Resource pool itself
+                self.entityAspect.setAdded();
+
+                // User resource pools
+                self.UserResourcePoolSet.forEach(function (userResourcePool) {
+                    userResourcePool.entityAspect.setAdded();
+                });
+
+                // Elements
+                self.ElementSet.forEach(function (element) {
+                    element.entityAspect.setAdded();
+
+                    // Fields
+                    element.ElementFieldSet.forEach(function (elementField) {
+                        elementField.entityAspect.setAdded();
+
+                        // User element fields
+                        elementField.UserElementFieldSet.forEach(function (userElementField) {
+                            userElementField.entityAspect.setAdded();
+                        });
+                    });
+
+                    // Items
+                    element.ElementItemSet.forEach(function (elementItem) {
+                        elementItem.entityAspect.setAdded();
+
+                        // Cells
+                        elementItem.ElementCellSet.forEach(function (elementCell) {
+                            elementCell.entityAspect.setAdded();
+
+                            // User cells
+                            elementCell.UserElementCellSet.forEach(function (userElementCell) {
+                                userElementCell.entityAspect.setAdded();
+                            });
+                        });
+                    });
+                });
             }
 
             // TODO Most of these functions are related with userService.js - updateX functions

@@ -13,6 +13,11 @@ globalsign makale
 https://www.globalsign.com/en/blog/open-source-ssl-pinittome/?utm_source=twitter&utm_medium=social%20media&utm_campaign=blog
 
 ---
+https://gratipay.com/new
+https://www.braintreepayments.com/features/marketplace
+https://www.citizensbank.com/
+
+---
 Hello everyone!
 I've been working on a open source project for a while.
 There is still a lot to do but would be great if I could get some feedback for the current state, both for content and/or if possible technical.
@@ -24,15 +29,21 @@ At the moment, sort of a simulation tool for a crowd (public) fund.
 
 ---
 Nadia hi,
+
 Following your tweets about funding OSS. I've been working on a project related with this issue.
-There is still lot to do but since it's a hot topic for you, maybe you can check it and give a feedback.
 https://wealth.forcrowd.org
-Especially "Knowledge Index" part. Quick summary would be:
-1. Create a public (crowd) fund
+It's an ongoing project but since it's a hot topic for you, wanted to share it.
+"Knowledge Index" part is especially related with open source.
+
+Quick summary would be:
+1. Create a crowd (public) fund
 2. Give a rating to all (popular) licenses based on how beneficial they are for us (society)
-3. Every organization/project has already linked to one of these licenses, which they get a score based on their preference (better license, higher score)
-4. Periodically distribute the money in the fund to the organizations based on their score
-One of the things that I'd like to do is to create an example with this approach by using total amount that we spent on operating systems since the beginning (last 30 years) - basically Linux + GPL vs. Microsoft + EULA
+3. Organizations/projects choose which license they would like to use, which they will get a score based on their preference (higher rated license, higher score)
+4. Periodically distribute the money in the fund to the organizations based on their overall score
+
+One example that I'd like to work on that might have an interesting result;
+distribute total amount of money that we spent on operating systems since the beginning (last 30 years) by using this approach
+basically Linux + GPL vs. Microsoft + EULA
 
 Thanks in advance, and good luck to you as well!
 

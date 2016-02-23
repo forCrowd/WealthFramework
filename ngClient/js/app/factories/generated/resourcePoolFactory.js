@@ -15,9 +15,9 @@
         .factory(factoryId, ['dataContext', '$rootScope', 'logger', resourcePoolFactory]);
 
     function resourcePoolFactory(dataContext, $rootScope, logger) {
-        
-		// Logger
-		logger = logger.forSource(factoryId);
+
+        // Logger
+        logger = logger.forSource(factoryId);
 
         // To determine whether the data will be fetched from server or local
         var minimumDate = new Date(0);
@@ -33,7 +33,8 @@
             getResourcePool: getResourcePool,
             hasChanges: hasChanges,
             rejectChanges: rejectChanges,
-            saveChanges: saveChanges
+            saveChanges: saveChanges,
+            saveChangesAlt: saveChangesAlt
         };
 
         // User logged out
@@ -94,7 +95,16 @@
             function success(response) {
                 count = response.results.length;
                 //logger.logSuccess('Got ' + count + ' resourcePool(s)', response);
-                return response.results;
+
+                // Filter out 'temp' resource pools
+                var data = [];
+                response.results.forEach(function (item) {
+                    if (!item.isTemp) {
+                        data.push(item);
+                    }
+                });
+
+                return data;
             }
 
             function failed(error) {
@@ -127,6 +137,10 @@
 
         function saveChanges(delay) {
             return dataContext.saveChanges(delay);
+        }
+
+        function saveChangesAlt(resourcePool, delay) {
+            return dataContext.saveChangesAlt(resourcePool.getEntities(), delay);
         }
     }
 })();

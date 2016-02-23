@@ -2,7 +2,7 @@
 
 [![Join the chat at https://gitter.im/forCrowd/WealthEconomy](https://badges.gitter.im/forCrowd/WealthEconomy.svg)](https://gitter.im/forCrowd/WealthEconomy?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-An experimental resource management system that aims to provide a more sustainable and productive economic model
+An open source crowd investment platform
 
 ---
 

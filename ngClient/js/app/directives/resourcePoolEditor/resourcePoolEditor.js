@@ -72,6 +72,7 @@
 
             function decreaseElementCellNumericValue(cell) {
                 userFactory.updateElementCellNumericValue(cell, 'decrease');
+                $rootScope.$broadcast('resourcePoolEditor_elementCellNumericValueDecreased', cell);
                 saveChanges();
             }
 
@@ -97,6 +98,7 @@
             }
 
             function increaseElementCellNumericValue(cell) {
+                $rootScope.$broadcast('resourcePoolEditor_elementCellNumericValueIncreased', cell);
                 userFactory.updateElementCellNumericValue(cell, 'increase');
                 saveChanges();
             }
@@ -260,6 +262,7 @@
 
             function resetElementCellNumericValue(cell) {
                 userFactory.updateElementCellNumericValue(cell, 'reset');
+                $rootScope.$broadcast('resourcePoolEditor_elementCellNumericValueReset', element);
                 saveChanges();
             }
 
@@ -378,7 +381,7 @@
 
         return {
             restrict: 'E',
-            templateUrl: '/js/app/directives/resourcePoolEditor/resourcePoolEditor.html?v=0.45',
+            templateUrl: '/js/app/directives/resourcePoolEditor/resourcePoolEditor.html?v=0.47.0',
             scope: {
                 config: '='
             },

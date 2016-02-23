@@ -18,6 +18,8 @@
             'ResourcePool',
             'User',
             'UserElementCell',
+            'UserElementField',
+            'UserResourcePool',
             '$rootScope',
             'serviceAppUrl',
             'logger',
@@ -31,6 +33,8 @@
         ResourcePool,
         User,
         UserElementCell,
+        UserElementField,
+        UserResourcePool,
         $rootScope,
         serviceAppUrl,
         logger) {
@@ -59,6 +63,8 @@
             store.registerEntityTypeCtor('ResourcePool', ResourcePool);
             store.registerEntityTypeCtor('User', User);
             store.registerEntityTypeCtor('UserElementCell', UserElementCell);
+            store.registerEntityTypeCtor('UserElementField', UserElementField);
+            store.registerEntityTypeCtor('UserResourcePool', UserResourcePool);
 
             return manager;
         }

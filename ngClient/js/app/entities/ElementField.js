@@ -10,7 +10,7 @@
         // Logger
         logger = logger.forSource(factoryId);
 
-        // Server-side properties
+        // Server-side
         Object.defineProperty(ElementField.prototype, 'DataType', {
             enumerable: true,
             configurable: true,
@@ -115,7 +115,7 @@
 
             var self = this;
 
-            // Server-side props
+            // Server-side
             self.Id = 0;
             self.ElementId = 0;
             self.Name = '';
@@ -155,6 +155,7 @@
                 _rating: null,
                 _indexIncome: null
             };
+            self.isEditing = false;
 
             // Functions
             self.currentUserElementField = currentUserElementField;

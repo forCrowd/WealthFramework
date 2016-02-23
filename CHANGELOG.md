@@ -1,21 +1,35 @@
 ### Changelog
 
-**0.46**
+**0.47.0**
+
+* isEditing property was added to all entities: dataContext.createEntity return the object in isEditing state by default and In edit pages, until operation entity stays in isEditing state.
+dataContext.saveChanges function ignores entities that are in isEditing state
+* Data from Priority & Knowledge Index examples will be copied to 'All in One' until the user starts playing with that example
+* UPO & Basics CMRPs were moved from server-side to client-side
+* RatingCount instead of displayRatingMode() for handling Rating switch
+* ResourcePool _init function was extended with setComputedFields block
+* ResourcePool + ElementCell bug fix:
+Even if resource pool belongs to current user, resourcePoolRateCount, resourcePoolRateTotal, numericValueCount, numericValueTotal functions were still using other users' data in FixedValue cases
+* ResourcePoolEditor layout updates (text to right etc.)
+* Content updates
+
+**0.46.0**
 
 * Disqus was enabled on all routes that has 'enableDisqus: true'
  * Original angular-utils-disqus wasn't loading the related disqus comments on route changes. Forked, fixed & replaced
-* Total Cost Index Sample - Bot CMRPs update each other sales number
+ * https://github.com/michaelbromley/angularUtils/pull/296
+* Total Cost Index - Both CMRPs update each other sales number
 * Closing Notes was removed & icons section was moved to default page, only visible on home
 
-**0.45**
+**0.45.0**
 
 * Content updates
  * Sector Index was renamed to Priority
- * Fair share sample was removed
+ * Fair Share was removed
  * All in One was added
  * Total Cost Index, Implementation, Reason, Closing Notes updates
 
-**0.44**
+**0.44.0**
 
 * Local, Test, Live environment types in AppSettings
 * Exclude *.min files so they won't show up in "Find" operations in VS
@@ -82,7 +96,7 @@ https://www.nuget.org/packages/Microsoft.AspNet.WebApi.MessageHandlers.Compressi
 * locationHistory factory instead of LocationItem object
 * location.path() was replaced with location.url() in most cases to clear the search params, instead of search('x', null)
 
-**0.43**
+**0.43.0**
 
 * gulp: auto jshint check, bundling, minifying for js & css files
 * "angular-google-analytics" for google analytics
@@ -108,7 +122,7 @@ https://www.nuget.org/packages/Microsoft.AspNet.WebApi.MessageHandlers.Compressi
 In case of an update in the page, browsers automatically get the latest default.aspx file, but not default.html file
 (always serves from the cache, even with cache busting attempt in web.config / default document / default.html?v=0.42)
 
-**0.42**
+**0.42.0**
 
 * Separation of Web client (ngClient) & WebApi
  * Cors was enabled on WebApi
@@ -146,7 +160,7 @@ Now both cases call updateAnonymousChanges method which handles this case correc
 * Send notification email to admin in social login case
 * Update elmah config to use existing smtp settings
 
-**0.41**
+**0.41.0**
 
 * Social logins: Facebook, Google, Microsoft
  * Social Buttons for Bootstrap: http://lipis.github.io/bootstrap-social/
@@ -156,7 +170,7 @@ Now both cases call updateAnonymousChanges method which handles this case correc
 * RequireHttps attribute for WebApi
 * Redirect http requests to https for live
 
-**0.40**
+**0.40.0**
 
 * Email confirmation has implemented
 * Survey.docx: A simple survey about the content.
@@ -165,7 +179,7 @@ Now both cases call updateAnonymousChanges method which handles this case correc
 * angular brackets "{{ }}"" were replaced with "data-ng-bind"
 * Javascript clean-up
 
-**0.39**
+**0.39.0**
 
 * Elmah angular exception logging: angular exceptionHandler was extended to post the exception to server side
 On server side, ExceptionController was created to handle & log the incoming exceptions
@@ -196,7 +210,7 @@ Now that's changed into only if element cell was previously in unchanged state.
 * CMRP Edit - New element field DirectIncome data type will always be UseFixedValue true
 * CMRP Edit - New element field Multiplier data type will always be UseFixedValue false (fixed)
 
-**0.38**
+**0.38.0**
 
 * Anonymous CMRP create / edit
 LocationItem object was created to hold the newly created resource pools, so it can navigate back to correct Id that's been retrieved from the server
@@ -206,7 +220,7 @@ If the user logs in after interacting as an 'anonymous user', changes will be sa
 * ResourcePool.CurrentElement property was replaced with selectedElement function
 * Server-side properties were added to javascript objects, except Navigation Properties (due to breezejs error)
 
-**0.37**
+**0.37.0**
 
 * Resource Pool create / edit feature was added
 * ElementField - ElementFieldType was renamed to DataType, IndexType was renamed to IndexCalculationType, IndexRatingSortType was renamed to IndexSortType
@@ -214,7 +228,7 @@ If the user logs in after interacting as an 'anonymous user', changes will be sa
 * enumKey angular filter was added: Probably this enum operations can be done in a better way
 but right now this is the easiest way to save the day.
 * dataContext.js createEntity() was updated to a synchronous function again
-Creating sample entities was too difficult & complex with async. function
+Creating entities was too difficult & complex with async. function
 metadataReady() function is now called under initializeStore() and it doesn't wait for the result.
 To fix this issue permanently;
 https://github.com/angular/angular.js/issues/4003
@@ -235,7 +249,7 @@ https://github.com/angular/angular.js/issues/4003
 * OtherUsers' values calculation bug fix
 * Content updates
 
-**0.36**
+**0.36.0**
 
 * Billion Dollar Question
 * ElementField - IndexType property was added
@@ -255,11 +269,11 @@ Passive case covers CMRPs that only use Initial value (like Billion Dollar Quest
 * ResourcePoolEditor - label as badge toggle color fix
 * Setup instructions were updated
 
-**0.35**
+**0.35.0**
 
 * Performance Update: Most of the calculations (numericValue, passiveRating, aggressiveRating, indexIncome etc. functions) are cached
 and they only calculated when there is an actually change in one of the related values.
-All in One sample increase multiplier action was reduced under a second from 7 seconds.
+All in One example increase multiplier action was reduced under a second from 7 seconds.
 * Further with javascript tests & entities cleanup
 * resourcePool, elementField, elementCell - other users' average properties were merged with other users' total
 * element.js - parents() was renamed to familyTree() & parent() returns null if there is no actual parent (instead of self)
@@ -273,29 +287,29 @@ All in One sample increase multiplier action was reduced under a second from 7 s
 * ResourcePoolRate calculation fix
 * Minor updates
 
-**0.34**
+**0.34.0**
 
 * Hosting plan upgrade
 * New javascript tests
 
-**0.33**
+**0.33.0**
 
 * Cache breaker value update (033 -> 0.33)
 * Other users' properties calculation fixes (again)
 
-**0.32**
+**0.32.0**
 
 * angular unit testing: Node.js, Chutzpah, Jasmine
 * Other users' properties calculation fixes
 * BusinessObjects cleanup
 
-**0.31**
+**0.31.0**
 
 * https://github.com/forCrowd/WealthEconomy/issues/50
 * https://github.com/forCrowd/WealthEconomy/issues/25
 * Label as on / off badge was created
 
-**0.30**
+**0.30.0**
 
 * Tooltips for resource pool editor
 * ResourcePool EnableResourcePoolAddition was renamed to UseFixedResourcePoolRate
@@ -312,7 +326,7 @@ All in One sample increase multiplier action was reduced under a second from 7 s
 
 * Minor content updates
 
-**0.29**
+**0.29.0**
 
 * https://github.com/forCrowd/WealthEconomy/issues/15
 * https://github.com/forCrowd/WealthEconomy/issues/48
@@ -320,7 +334,7 @@ All in One sample increase multiplier action was reduced under a second from 7 s
 * https://github.com/forCrowd/WealthEconomy/issues/12
 * https://github.com/forCrowd/WealthEconomy/issues/14
 
-**0.28**
+**0.28.0**
 
 * https://github.com/forCrowd/WealthEconomy/issues/27
 
@@ -329,7 +343,7 @@ All in One sample increase multiplier action was reduced under a second from 7 s
 * https://github.com/forCrowd/WealthEconomy/issues/46
 * https://github.com/forCrowd/WealthEconomy/issues/47
 
-**0.27**
+**0.27.0**
 
 * https://github.com/forCrowd/WealthEconomy/issues/40
 * https://github.com/forCrowd/WealthEconomy/issues/26
@@ -342,25 +356,25 @@ All in One sample increase multiplier action was reduced under a second from 7 s
 * https://github.com/forCrowd/WealthEconomy/issues/45
 * https://github.com/forCrowd/WealthEconomy/issues/6
 
-**0.26**
+**0.26.0**
 
 * https://github.com/forCrowd/WealthEconomy/issues/37
 * https://github.com/forCrowd/WealthEconomy/issues/38
 
-**0.25**
+**0.25.0**
 
 * https://github.com/forCrowd/WealthEconomy/issues/34
 * https://github.com/forCrowd/WealthEconomy/issues/35
 * https://github.com/forCrowd/WealthEconomy/issues/36
 
-**0.24**
+**0.24.0**
 
 * Reset cases of user level data was improved
 * Composite keys were used in User level tables, Id fields were removed
 * Initial_Manual migration drop function fix
 * Package updates
 
-**0.23**
+**0.23.0**
 
 * ResourcePool MainElement instead of Element.IsMainElement
 * All projects were upgraded to .NET 4.5.1
@@ -379,26 +393,26 @@ All in One sample increase multiplier action was reduced under a second from 7 s
 
 * introductionController increaseMultiplier timer definition before resourcePool fix
 
-**0.22**
+**0.22.0**
 
 * Registration alert email
 * AppSettings.cs to Framework
 
-**0.21**
+**0.21.0**
 
 * Invalid CMRP Id case
 
-**0.20**
+**0.20.0**
 
 * MVC clean-up
 * Improvements for Error, 404 cases
 
 **0.19.1**
 
-* finally block was used in getUserInfo() method of sample controllers to prevent loading resource pools before determining whether there is a user or not
+* finally block was used in getUserInfo() method of controllers to prevent loading resource pools before determining whether there is a user or not
 * Social media etc. cleanup
 
-**0.19**
+**0.19.0**
 
 * Cache breaking attempt
 * BundleConfig.cs scripts, styles were moved to layout.cshtml
@@ -410,7 +424,7 @@ All in One sample increase multiplier action was reduced under a second from 7 s
 * basicsController timer fix
 * Other timer adjustments
 
-**0.18**
+**0.18.0**
 
 * Delayed save feature was added. resourcePoolEditor actions will be saved after a second.
 * Web - External components (gratipay, flattr, twitter etc.) was moved to js files and also disabled in case of localhost
@@ -427,7 +441,7 @@ All in One sample increase multiplier action was reduced under a second from 7 s
 
 * Multitenancy: "Sequence contains more than one element" temporary fix for User level tables
 
-**0.17**
+**0.17.0**
 
 * ResourcePoolEditor isAuthenticated check for buttons
 * routeRun() & locationHistory array was added to remember and navigate back after register & login operations
@@ -435,18 +449,18 @@ All in One sample increase multiplier action was reduced under a second from 7 s
 **0.16.1**
 
 * IsAuthenticated fix for ResourcePool - UserResourcePool property
-* Total Cost Index sample Id fix
+* Total Cost Index Id fix
 * elementItem multiplierValue default value 0 doesn't work for Index Income field, which is an issue but will be fixed later. For now default value is 1 again
 * Hid "Save failed" log messages
 
-**0.16**
+**0.16.0**
 
-* ResourcePool samples could be retrieved without authorization now
+* ResourcePool examples could be retrieved without authorization now
 * CopySampleDataAsync in UserStore also copies sample field index values
 * createEntity cases implemented for userResourcePool, userElementCell and userElementFieldIndex entities
 * Paypal logo update
 
-**0.15**
+**0.15.0**
 
 * Twitter, Facebook, GitHub, LinkedIn, Google Plus, Youtube Channel, Disqus, Flattr, Gratipay accounts were created
 * MIT License was added
@@ -479,17 +493,17 @@ All in One sample increase multiplier action was reduced under a second from 7 s
 **0.14.13**
 
 * Index income calculation fixes
-* Text and sample updates
+* Text and example updates
 * ResourcePoolEditor currentElement fullSize property to determine the place of chart (on top or left side of the items)
 
 **0.14.12**
 
 * CMRP Rate is back
-* CMRP Rate sample was added
+* CMRP Rate example was added
 * Aggressive Rating method was introduced; now the organizations with the lowest rating don't get any share from the pool.
-Related issue with 'Total Cost Index - New Model' sample was fixed
-* Knowledge Index sample charts fix
-* Samples minor updates
+Related issue with 'Total Cost Index - New Model' example was fixed
+* Knowledge Index charts fix
+* Examples minor updates
 * chapter0 content blocks are now separate html files and called from home.html by using ng-include. chapter0 was removed.
 * highcharts scripts were copied to local
 * resourcePoolEditor layout updates
@@ -537,7 +551,7 @@ http://xabikos.com/multitenant/application%20design/software%20as%20a%20service/
 * Framework.Tests project was created - TypeExtensionsTests & ValidationTests classes were added
 * More fluent interface
 * Business Objects, constructors with parameters
-* TotalCostIndex sample fix
+* TotalCostIndex example fix
 
 **0.14.7**
 
@@ -587,7 +601,7 @@ http://xabikos.com/multitenant/application%20design/software%20as%20a%20service/
 
 * Clean-up
 
-**0.14**
+**0.14.0**
 
 * Elements feature was added
 * Knowledge Index & License combo was replaced with Element & ElementItem & DynamicElementIndex
@@ -631,7 +645,7 @@ http://xabikos.com/multitenant/application%20design/software%20as%20a%20service/
 * Chapter4 + Chapter5 fixes
 * login error fix
 
-**0.13**
+**0.13.0**
 
 * Introduction to Dynamic Indexes
 * DistanceIndex was removed in from calculations, field will be removed later on
@@ -657,7 +671,7 @@ http://xabikos.com/multitenant/application%20design/software%20as%20a%20service/
 * BusinessObjects revisions
 * UserResourcePool ResourcePoolType was removed
 
-**0.12**
+**0.12.0**
 
 * Chapters - Since it's not good enough, it's hidden in the menu
 * TotalCostIndex calculation is now based on Sales Price again, instead of Profit
@@ -680,9 +694,9 @@ http://xabikos.com/multitenant/application%20design/software%20as%20a%20service/
 **0.11.9**
 
 * TotalCostIndex calculation is now based on Profit, instead of Sales Price
-* Sample data values were updated (.25 vs .75)
-* All in One sample was re-enabled
-* Sample user was created and sample data moved under this account
+* Values of examples were updated (.25 vs .75)
+* All in One was re-enabled
+* Sample user was created and sample data moved to this account
 * UserResourcePool pages subtotals were fixed
 * ODataController.tt fine-tuning
 * User - AspNetUserId required
@@ -727,7 +741,7 @@ http://xabikos.com/multitenant/application%20design/software%20as%20a%20service/
 
 * README.md and Release Notes.txt files merged
 
-**0.11**
+**0.11.0**
 
 * HighCharts implementation: SectorChart page
 
@@ -800,7 +814,7 @@ were replaced with Entity Framework 6.1 versions.
 
 * BusinessObjects - StringLength attributes
 
-**0.9**
+**0.9.0**
 
 * Application
  * Converted to Code First approach from Database First
@@ -813,13 +827,13 @@ were replaced with Entity Framework 6.1 versions.
 
 * Web - Cleaning up the old mvc controllers + views etc.
 
-**0.8**
+**0.8.0**
 
 * Database
  * ResourcePool table became the main container for Organization, License and Sector tables
  * UserResourcePoolOrganization was dropped and UserOrganization was introduced
 
-**0.7**
+**0.7.0**
 
 * SPA with OData + AngularJS + Breeze.js + toastr.js
 * Database - Sector table Id field switched to smallint from byte
@@ -838,13 +852,13 @@ were replaced with Entity Framework 6.1 versions.
 
 * BusinessObjects - Required attribute for Dto classes
 
-**0.6**
+**0.6.0**
 
 * Facade - UnitOfWork fine-tuning
 * General - Password for User table + basic authentication
 * Web - Controller.tt was created
 
-**0.5**
+**0.5.0**
 
 * SolutionItems - Local_UpdateDatabase.sql was updated to remove doktrosizlar db items
 * Business + DataObjects
@@ -867,7 +881,7 @@ were replaced with Entity Framework 6.1 versions.
 
 * General - Release Notes.txt was updated
 
-**0.4**
+**0.4.0**
 
 * DataObjects
  * Utility.ttinclude: Common code blocks from t4 files were moved to this file
@@ -882,7 +896,7 @@ were replaced with Entity Framework 6.1 versions.
  * config files connectionstrings were updated
  * github repository reset
 
-**0.3**
+**0.3.0**
 
 * BusinessObjects
  * OrganizationGroupType was renamed to UserResourcePoolType
@@ -895,7 +909,7 @@ were replaced with Entity Framework 6.1 versions.
 * Database + General
  * UserResourcePool table ResourcePoolRate field percentage update - values were divided to 100
 
-**0.2**
+**0.2.0**
 
 * Database + General
  * ResourcePool + ResourcePoolOrganization + UserResourcePool + UserResourcePoolOrganization tables were added

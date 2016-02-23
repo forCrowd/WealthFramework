@@ -20,7 +20,7 @@
             .when('/content/:key/', { title: getContentRouteTitle, templateUrl: getContentTemplateUrl, enableDisqus: true, resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
 
             /* CMRP List + View + Edit pages */
-            .when('/resourcePool', { title: function () { return 'CMRP List'; }, templateUrl: '/views/resourcePool/resourcePoolList.html?v=0.43.2', resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
+            .when('/resourcePool', { title: function () { return 'CMRP List'; }, templateUrl: '/views/resourcePool/resourcePoolList.html?v=0.47.0', resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
             .when('/resourcePool/new', { title: function () { return 'New CMRP'; }, templateUrl: '/views/resourcePool/resourcePoolManage.html?v=0.43.2', resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
             .when('/resourcePool/:resourcePoolId/edit', { title: function () { return 'Edit CMRP'; }, templateUrl: '/views/resourcePool/resourcePoolManage.html?v=0.43.2', resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
             .when('/resourcePool/:resourcePoolId', { title: function () { return 'View CMRP'; }, templateUrl: '/views/resourcePool/resourcePoolView.html?v=0.43.2', enableDisqus: true, resolve: { validateAccess: ['userFactory', '$route', '$q', 'locationHistory', '$location', 'logger', validateAccess] } })
@@ -69,7 +69,7 @@
                 params.key :
                 'home'; // Default view
 
-            return '/views/content/' + key + '.html?v=0.46.0';
+            return '/views/content/' + key + '.html?v=0.47.0';
         }
 
         function validateAccess(userFactory, $route, $q, locationHistory, $location, logger) {
