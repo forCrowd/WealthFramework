@@ -142,7 +142,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             sbOutput.AppendLine("    	JOIN ElementField T3 ON T2.ElementFieldId = T3.Id");
             sbOutput.AppendLine("    	JOIN Element T4 ON T3.ElementId = T4.Id");
             sbOutput.AppendLine("    	WHERE T4.ResourcePoolId = @ResourcePoolId");
-            sbOutput.AppendLine("    		AND T3.UseFixedValue = 0");
+            sbOutput.AppendLine("    		AND T3.IndexEnabled = 1");
             sbOutput.AppendLine("    		AND T1.DeletedOn IS NULL");
             sbOutput.AppendLine("    UNION ALL");
             sbOutput.AppendLine("    SELECT T1.UserId");

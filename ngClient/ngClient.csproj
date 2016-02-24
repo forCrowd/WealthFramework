@@ -70,7 +70,7 @@
     <None Include="js\app\controllers\content\BasicsController.js" />
     <None Include="js\app\controllers\content\DefaultController.js" />
     <None Include="js\app\controllers\content\obsolete\FairShareIndexSampleController.js" />
-    <Content Include="js\app\controllers\content\AllInOneController.js" />
+    <None Include="js\app\controllers\content\AllInOneController.js" />
     <None Include="js\app\controllers\content\IntroductionController.js" />
     <None Include="js\app\controllers\content\KnowledgeIndexController.js" />
     <None Include="js\app\controllers\content\obsolete\ResourcePoolRateSampleController.js" />
@@ -115,8 +115,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="js\app\entities\UserResourcePool.js" />
-    <Content Include="js\app\entities\UserElementField.js" />
+    <None Include="js\app\entities\UserResourcePool.js" />
+    <None Include="js\app\entities\UserElementField.js" />
     <Content Include="views\account\accountEdit.html" />
     <Content Include="views\account\addPassword.html" />
     <Content Include="views\account\changeEmail.html" />

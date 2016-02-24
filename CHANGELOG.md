@@ -2,6 +2,13 @@
 
 **0.47.0**
 
+* Total Cost Index example cmrp id fix
+* Sql - getResourcePoolRatingCount function fix
+* Description update
+* Database scripts update
+
+**0.47.0**
+
 * isEditing property was added to all entities: dataContext.createEntity return the object in isEditing state by default and In edit pages, until operation entity stays in isEditing state.
 dataContext.saveChanges function ignores entities that are in isEditing state
 * Data from Priority & Knowledge Index examples will be copied to 'All in One' until the user starts playing with that example
