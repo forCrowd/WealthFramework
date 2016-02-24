@@ -10,8 +10,8 @@
         logger = logger.forSource(controllerId);
 
         var vm = this;
-        vm.existingModelConfig = { resourcePoolId: 8 };
-        vm.newModelConfig = { resourcePoolId: 9 };
+        vm.existingModelConfig = { resourcePoolId: 5 };
+        vm.newModelConfig = { resourcePoolId: 6 };
 
         // Listen resource pool updated event
         $scope.$on('resourcePoolEditor_elementMultiplierIncreased', updateOppositeResourcePool);

@@ -69,7 +69,7 @@
                 params.key :
                 'home'; // Default view
 
-            return '/views/content/' + key + '.html?v=0.47.0';
+            return '/views/content/' + key + '.html?v=0.47.1';
         }
 
         function validateAccess(userFactory, $route, $q, locationHistory, $location, logger) {

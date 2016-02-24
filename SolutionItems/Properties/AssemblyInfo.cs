@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Wealth Economy")]
-[assembly: AssemblyDescription("An open source crowd investment platform")]
+[assembly: AssemblyDescription("An experimental, open source crowd investment platform")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("forCrowd Foundation")]
 [assembly: AssemblyProduct("Wealth Economy")]
@@ -30,5 +30,5 @@ using System.Runtime.InteropServices;
 //
 // AssemblyFileVersion is not in use for the moment
 //
-[assembly: AssemblyVersion("0.47.0")]
+[assembly: AssemblyVersion("0.47.1")]
 [assembly: AssemblyFileVersion("1.0.0.0")]

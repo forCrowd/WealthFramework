@@ -5,6 +5,10 @@ It was never been this easier for individuals
 crowd: individuals that work on a certain subject..
 
 ---
+# Description
+New: An experimental, open source crowd investment platform
+Old: An experimental resource management system that aims to provide a more sustainable and productive economic model
+
 # Header
 
 Benefit | Utility?

@@ -43,8 +43,8 @@
     <Content Include="GitHub\Issues\31\v4_OData.xml" />
     <Content Include="Documents\Content Notes.txt" />
     <Content Include="Documents\Possible Indexes.txt" />
-    <Content Include="Scripts\Database\Sql\User_Insert.sql" />
-    <Content Include="Scripts\Database\Sql\Local - Restore Database.sql" />
+    <Content Include="Scripts\Database\Sql\Backup Database.sql" />
+    <Content Include="Scripts\Database\Sql\User Insert.sql" />
     <None Include="..\.gitattributes">
       <Link>Documents\.gitattributes</Link>
     </None>
@@ -59,9 +59,6 @@
     <None Include="Documents\TodoHot.md" />
     <None Include="Documents\TodoUnsorted.md" />
     <Content Include="Documents\Troubleshoot.txt" />
-    <Content Include="Scripts\Database\Sql\Local - Backup Database.sql" />
-    <Content Include="Scripts\Database\Sql\Local - Create Login + User.sql" />
-    <Content Include="Scripts\Database\Sql\Local - Update Database.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\appveyor.yml">
@@ -79,7 +76,6 @@
     <None Include="Scripts\Build\RunIISExpress.ps1" />
     <None Include="Scripts\Build\WebApiWarmUp.ps1" />
     <None Include="Scripts\Database\Local_BackupDatabase.bat" />
-    <None Include="Scripts\Database\Local_UpdateDatabase.bat" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
