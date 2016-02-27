@@ -72,6 +72,9 @@ Fatih's
 3. Prio + Knowledge - All in One sync	- OK
 5. all users/yours switch				- OK
 
+Kaan's
+. Rating UI
+
 ---
 IMPORTANT BUT LATER!
 do we correctly update RatingCount (probably yes..)?

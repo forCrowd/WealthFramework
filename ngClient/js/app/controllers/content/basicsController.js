@@ -52,10 +52,10 @@
                                 resourcePool.Id = newModelSampleId;
                                 resourcePool.Name = 'Basics - New Model';
 
-                                // Importance field (index)
-                                var importanceField = resourcePoolFactory.createElementField({
+                                // Employee Satisfaction field (index)
+                                var employeeSatisfactionField = resourcePoolFactory.createElementField({
                                     Element: resourcePool.mainElement(),
-                                    Name: 'Importance',
+                                    Name: 'Employee Satisfaction',
                                     DataType: 4,
                                     UseFixedValue: false,
                                     IndexEnabled: true,
@@ -68,7 +68,7 @@
                                 // TODO Use factories instead of dataContext?
                                 var fakeUser = dataContext.createEntity('User', {});
 
-                                importanceField.ElementCellSet.forEach(function (elementCell) {
+                                employeeSatisfactionField.ElementCellSet.forEach(function (elementCell) {
                                     var userElementCell = {
                                         User: fakeUser,
                                         ElementCell: elementCell,
