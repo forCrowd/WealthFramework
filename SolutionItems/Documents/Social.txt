@@ -1,8 +1,6 @@
-﻿nadia
-alpha team
-gitter - other gitter channels? ((open source) project review, startup)
-personal dev network
-https://www.facebook.com/lists/10151319136553665
+﻿alpha team - sencer, ceren, cucu?
+gitter
+personal dev network https://www.facebook.com/lists/10151319136553665
 social network - Emin Pamucak
 freenode?
 hackernews - https://news.ycombinator.com/
@@ -26,26 +24,6 @@ https://wealth.forcrowd.org
 Quick summary: Aims to measure organizations benefit to society and then create an income model based on their overall score;
 like what type of license they are using (open source, proprietary etc.), how important their products/services are for us, or how much they are profit oriented etc.
 At the moment, sort of a simulation tool for a crowd (public) fund.
-
----
-Nadia hi,
-
-Following your tweets about funding OSS. I've been working on a project related with this issue.
-https://wealth.forcrowd.org
-It's an ongoing project but since it's a hot topic for you, wanted to share it.
-"Knowledge Index" part is especially related with open source.
-
-Quick summary would be:
-1. Create a crowd (public) fund
-2. Give a rating to all (popular) licenses based on how beneficial they are for us (society)
-3. Organizations/projects choose which license they would like to use, which they will get a score based on their preference (higher rated license, higher score)
-4. Periodically distribute the money in the fund to the organizations based on their overall score
-
-One example that I'd like to work on that might have an interesting result;
-distribute total amount of money that we spent on operating systems since the beginning (last 30 years) by using this approach
-basically Linux + GPL vs. Microsoft + EULA
-
-Thanks in advance, and good luck to you as well!
 
 ---
 Elevator Pitch - EN

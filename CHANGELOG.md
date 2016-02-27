@@ -1,6 +1,10 @@
 ### Changelog
 
-**0.47.0**
+**0.47.2**
+
+* Basics New Model 'Importance' index was renamed to 'Employee Satisfaction'
+
+**0.47.1**
 
 * Total Cost Index example cmrp id fix
 * Sql - getResourcePoolRatingCount function fix

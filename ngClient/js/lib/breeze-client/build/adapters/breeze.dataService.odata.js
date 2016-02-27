@@ -1,5 +1,4 @@
-/* Fixed version of origianal breeze.dataService.odata.js (1.5.4) adapter
-Q & DataType are not defined
+/* Fixed version of breeze.dataService.odata.js (1.5.4) adapter
 https://github.com/Breeze/breeze.js/pull/128
 SH - 24 Jan. '16
 */

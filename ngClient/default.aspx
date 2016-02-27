@@ -148,7 +148,7 @@
     <script src="/js/lib/lib.min.js?v=0.46.0"></script>
 
     <!-- app.js -->
-    <script src="/js/app/app.min.js?v=0.47.0"></script>
+    <script src="/js/app/app.min.js?v=0.47.2"></script>
 
     <!-- appSettings.js -->
     <script src="/js/appSettings/appSettings.js?v=0.43.2"></script>
