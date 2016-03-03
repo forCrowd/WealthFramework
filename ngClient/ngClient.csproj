@@ -41,69 +41,95 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="css\fonts\fontawesome-webfont.eot" />
-    <Content Include="css\fonts\fontawesome-webfont.ttf" />
-    <Content Include="css\fonts\fontawesome-webfont.woff" />
-    <Content Include="css\fonts\fontawesome-webfont.woff2" />
-    <Content Include="css\fonts\FontAwesome.otf" />
-    <Content Include="css\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="css\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="css\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="css\fonts\glyphicons-halflings-regular.woff2" />
-    <None Include="js\appSettings\Setup\0 Readme.txt" />
-    <None Include="js\appSettings\appSettings.js" />
-    <None Include="js\appSettings\Setup\appSettings.js" />
-    <Content Include="css\fonts\fontawesome-webfont.svg" />
-    <Content Include="css\fonts\glyphicons-halflings-regular.svg" />
-    <None Include="js\app\config\authorization.js" />
-    <None Include="js\app\config\breeze.js" />
-    <None Include="js\app\config\exceptionHandlerExtension.js" />
-    <None Include="js\app\config\googleAnalytics.js" />
-    <None Include="js\app\config\route.js" />
-    <None Include="js\app\controllers\account\AccountEditController.js" />
-    <None Include="js\app\controllers\account\AddPasswordController.js" />
-    <None Include="js\app\controllers\account\ChangeEmailController.js" />
-    <None Include="js\app\controllers\account\ChangePasswordController.js" />
-    <None Include="js\app\controllers\account\ConfirmEmailController.js" />
-    <None Include="js\app\controllers\account\LoginController.js" />
-    <None Include="js\app\controllers\account\RegisterController.js" />
-    <None Include="js\app\controllers\content\BasicsController.js" />
-    <None Include="js\app\controllers\content\DefaultController.js" />
-    <None Include="js\app\controllers\content\obsolete\FairShareIndexSampleController.js" />
-    <None Include="js\app\controllers\content\AllInOneController.js" />
-    <None Include="js\app\controllers\content\IntroductionController.js" />
-    <None Include="js\app\controllers\content\KnowledgeIndexController.js" />
-    <None Include="js\app\controllers\content\obsolete\ResourcePoolRateSampleController.js" />
-    <None Include="js\app\controllers\content\PriorityIndexController.js" />
-    <None Include="js\app\controllers\content\TotalCostIndexController.js" />
-    <None Include="js\app\controllers\resourcePool\ResourcePoolListController.js" />
-    <None Include="js\app\controllers\resourcePool\ResourcePoolManageController.js" />
-    <None Include="js\app\controllers\resourcePool\ResourcePoolViewController.js" />
-    <None Include="js\app\directives\resourcePoolEditor\resourcePoolEditor.css" />
-    <Content Include="js\app\controllers\account\ResetPasswordController.js" />
-    <Content Include="js\app\directives\resourcePoolEditor\resourcePoolEditor.html" />
-    <None Include="js\app\directives\resourcePoolEditor\resourcePoolEditor.js" />
-    <None Include="js\app\entities\Element.js" />
-    <None Include="js\app\entities\ElementCell.js" />
-    <None Include="js\app\entities\ElementField.js" />
-    <None Include="js\app\entities\ElementItem.js" />
-    <None Include="js\app\entities\Enums.js" />
-    <None Include="js\app\entities\ResourcePool.js" />
-    <None Include="js\app\entities\User.js" />
-    <None Include="js\app\entities\UserElementCell.js" />
-    <None Include="js\app\factories\applicationFactory.js" />
-    <None Include="js\app\factories\generated\resourcePoolFactory.js" />
-    <None Include="js\app\factories\generated\userFactory.js" />
-    <None Include="js\app\factories\dataContext.js" />
-    <None Include="js\app\factories\entityManagerFactory.js" />
-    <None Include="js\app\factories\locationHistory.js" />
-    <None Include="js\app\factories\logger.js" />
-    <None Include="js\app\factories\resourcePoolFactory.js" />
-    <None Include="js\app\factories\userFactory.js" />
-    <None Include="js\app\filters\angular-enum.js" />
-    <None Include="js\app\filters\angular-numberSymbol.js" />
-    <None Include="js\app\filters\angular-percentage.js" />
-    <None Include="js\app\main.js" />
+    <Content Include="_system\css\fonts\fontawesome-webfont.svg" />
+    <Content Include="_system\css\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="_system\images\forCrowd_logo_34x34.jpg" />
+    <Content Include="_system\images\PresentvsNew.png" />
+    <None Include="_system\js\appSettings\appSettings.js" />
+    <None Include="_system\js\appSettings\Setup\0 Readme.txt" />
+    <None Include="_system\js\appSettings\Setup\appSettings.js" />
+    <None Include="_system\js\app\config\authorization.js" />
+    <None Include="_system\js\app\config\breeze.js" />
+    <None Include="_system\js\app\config\exceptionHandlerExtension.js" />
+    <None Include="_system\js\app\config\googleAnalytics.js" />
+    <None Include="_system\js\app\config\route.js" />
+    <None Include="_system\js\app\controllers\account\AccountEditController.js" />
+    <None Include="_system\js\app\controllers\account\AddPasswordController.js" />
+    <None Include="_system\js\app\controllers\account\ChangeEmailController.js" />
+    <None Include="_system\js\app\controllers\account\ChangePasswordController.js" />
+    <None Include="_system\js\app\controllers\account\ConfirmEmailController.js" />
+    <None Include="_system\js\app\controllers\account\LoginController.js" />
+    <None Include="_system\js\app\controllers\account\RegisterController.js" />
+    <None Include="_system\js\app\controllers\account\ResetPasswordController.js" />
+    <None Include="_system\js\app\controllers\content\AllInOneController.js" />
+    <None Include="_system\js\app\controllers\content\BasicsController.js" />
+    <None Include="_system\js\app\controllers\content\DefaultController.js" />
+    <None Include="_system\js\app\controllers\content\IntroductionController.js" />
+    <None Include="_system\js\app\controllers\content\KnowledgeIndexController.js" />
+    <None Include="_system\js\app\controllers\content\obsolete\FairShareIndexSampleController.js" />
+    <None Include="_system\js\app\controllers\content\obsolete\ResourcePoolRateSampleController.js" />
+    <None Include="_system\js\app\controllers\content\PriorityIndexController.js" />
+    <None Include="_system\js\app\controllers\content\TotalCostIndexController.js" />
+    <None Include="_system\js\app\controllers\resourcePool\ResourcePoolListController.js" />
+    <None Include="_system\js\app\controllers\resourcePool\ResourcePoolManageController.js" />
+    <None Include="_system\js\app\controllers\resourcePool\ResourcePoolViewController.js" />
+    <None Include="_system\js\app\directives\resourcePoolEditor\resourcePoolEditor.css" />
+    <Content Include="_system\js\app\directives\resourcePoolEditor\resourcePoolEditor.html" />
+    <None Include="_system\js\app\directives\resourcePoolEditor\resourcePoolEditor.js" />
+    <None Include="_system\js\app\entities\Element.js" />
+    <None Include="_system\js\app\entities\ElementCell.js" />
+    <None Include="_system\js\app\entities\ElementField.js" />
+    <None Include="_system\js\app\entities\ElementItem.js" />
+    <None Include="_system\js\app\entities\Enums.js" />
+    <None Include="_system\js\app\entities\ResourcePool.js" />
+    <None Include="_system\js\app\entities\User.js" />
+    <None Include="_system\js\app\entities\UserElementCell.js" />
+    <None Include="_system\js\app\entities\UserElementField.js" />
+    <None Include="_system\js\app\entities\UserResourcePool.js" />
+    <None Include="_system\js\app\factories\applicationFactory.js" />
+    <None Include="_system\js\app\factories\dataContext.js" />
+    <None Include="_system\js\app\factories\entityManagerFactory.js" />
+    <None Include="_system\js\app\factories\generated\resourcePoolFactory.js" />
+    <None Include="_system\js\app\factories\generated\userFactory.js" />
+    <None Include="_system\js\app\factories\locationHistory.js" />
+    <None Include="_system\js\app\factories\logger.js" />
+    <None Include="_system\js\app\factories\resourcePoolFactory.js" />
+    <None Include="_system\js\app\factories\userFactory.js" />
+    <None Include="_system\js\app\filters\angular-enum.js" />
+    <None Include="_system\js\app\filters\angular-numberSymbol.js" />
+    <None Include="_system\js\app\filters\angular-percentage.js" />
+    <None Include="_system\js\app\main.js" />
+    <Content Include="_system\views\account\accountEdit.html" />
+    <Content Include="_system\views\account\addPassword.html" />
+    <Content Include="_system\views\account\changeEmail.html" />
+    <Content Include="_system\views\account\changePassword.html" />
+    <Content Include="_system\views\account\confirmEmail.html" />
+    <Content Include="_system\views\account\login.html" />
+    <Content Include="_system\views\account\register.html" />
+    <Content Include="_system\views\account\resetPassword.html" />
+    <Content Include="_system\views\content\404.html" />
+    <Content Include="_system\views\content\allInOne.html" />
+    <Content Include="_system\views\content\basics.html" />
+    <Content Include="_system\views\content\home.html" />
+    <Content Include="_system\views\content\implementation.html" />
+    <Content Include="_system\views\content\introduction.html" />
+    <Content Include="_system\views\content\knowledgeIndex.html" />
+    <None Include="_system\views\content\obsolete\closingNotes.html" />
+    <None Include="_system\views\content\obsolete\conclusion.html" />
+    <None Include="_system\views\content\obsolete\fairShareIndexSample.html" />
+    <None Include="_system\views\content\obsolete\indexesPieSample.html" />
+    <None Include="_system\views\content\obsolete\overview.html" />
+    <None Include="_system\views\content\obsolete\resourcePoolRateSample.html" />
+    <None Include="_system\views\content\obsolete\roadmap.html" />
+    <None Include="_system\views\content\obsolete\technologies.html" />
+    <Content Include="_system\views\content\priorityIndex.html" />
+    <Content Include="_system\views\content\prologue.html" />
+    <Content Include="_system\views\content\reason.html" />
+    <Content Include="_system\views\content\totalCostIndex.html" />
+    <Content Include="_system\views\resourcePool\resourcePoolList.html" />
+    <Content Include="_system\views\resourcePool\resourcePoolManage.html" />
+    <Content Include="_system\views\resourcePool\resourcePoolView.html" />
+    <None Include="_system\css\main.css" />
     <None Include="bower.json" />
     <None Include="package.json" />
     <None Include="Properties\PublishProfiles\wealth.pubxml" />
@@ -114,55 +140,21 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <Content Include="_system\css\fonts\fontawesome-webfont.eot" />
+    <Content Include="_system\css\fonts\fontawesome-webfont.ttf" />
+    <Content Include="_system\css\fonts\fontawesome-webfont.woff" />
+    <Content Include="_system\css\fonts\fontawesome-webfont.woff2" />
+    <Content Include="_system\css\fonts\FontAwesome.otf" />
+    <Content Include="_system\css\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="_system\css\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="_system\css\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="_system\css\fonts\glyphicons-halflings-regular.woff2" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="js\app\entities\UserResourcePool.js" />
-    <None Include="js\app\entities\UserElementField.js" />
-    <Content Include="views\account\accountEdit.html" />
-    <Content Include="views\account\addPassword.html" />
-    <Content Include="views\account\changeEmail.html" />
-    <Content Include="views\account\resetPassword.html" />
-    <Content Include="views\account\changePassword.html" />
-    <Content Include="views\account\confirmEmail.html" />
-    <Content Include="views\account\login.html" />
-    <Content Include="views\account\register.html" />
-    <Content Include="views\content\404.html" />
-    <Content Include="views\content\allInOne.html" />
-    <Content Include="views\content\basics.html" />
-    <Content Include="views\content\obsolete\closingNotes.html" />
-    <Content Include="views\content\reason.html" />
-    <Content Include="views\content\obsolete\conclusion.html" />
-    <Content Include="views\content\obsolete\fairShareIndexSample.html" />
-    <Content Include="views\content\home.html" />
-    <Content Include="views\content\obsolete\indexesPieSample.html" />
-    <Content Include="views\content\introduction.html" />
-    <Content Include="views\content\knowledgeIndex.html" />
-    <Content Include="views\content\obsolete\overview.html" />
-    <Content Include="views\content\prologue.html" />
-    <Content Include="views\content\implementation.html" />
-    <Content Include="views\content\obsolete\resourcePoolRateSample.html" />
-    <Content Include="views\content\obsolete\roadmap.html" />
-    <Content Include="views\content\priorityIndex.html" />
-    <Content Include="views\content\obsolete\technologies.html" />
-    <Content Include="views\content\totalCostIndex.html" />
-    <Content Include="views\resourcePool\resourcePoolManage.html" />
-    <Content Include="views\resourcePool\resourcePoolList.html" />
-    <Content Include="views\resourcePool\resourcePoolView.html" />
     <None Include="gulpfile.js" />
-    <Content Include="images\obsolete\forCrowd_logo_20x20.jpg" />
-    <Content Include="images\forCrowd_logo_34x34.jpg" />
-    <Content Include="images\obsolete\NewSystem.png" />
-    <Content Include="images\obsolete\OldSystem.png" />
-    <Content Include="images\obsolete\paypal_donate.jpg" />
-    <Content Include="images\obsolete\PP_logo_h_100x26.png" />
-    <Content Include="images\obsolete\PP_logo_h_150x38.png" />
-    <Content Include="images\obsolete\PP_logo_h_200x51.png" />
-    <Content Include="images\PresentvsNew.png" />
-    <None Include="css\main.css" />
     <Content Include="favicon.ico" />
     <Content Include="default.aspx" />
     <Content Include="robots.txt" />
-    <Content Include="images\obsolete\Old vs New.pptx" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>
@@ -205,12 +197,12 @@
   </Target>
   -->
   <Target Name="BeforeBuild">
-    <CreateItem Include="$(ProjectDir)js\appSettings\*.js">
+    <CreateItem Include="$(ProjectDir)_system\js\appSettings\*.js">
       <Output TaskParameter="Include" ItemName="ExistingFiles" />
     </CreateItem>
-    <CreateItem Include="$(ProjectDir)js\appSettings\Setup\*.js" Exclude="@(ExistingFiles -> '$(ProjectDir)js\appSettings\Setup\%(FileName)%(Extension)')">
+    <CreateItem Include="$(ProjectDir)_system\js\appSettings\Setup\*.js" Exclude="@(ExistingFiles -> '$(ProjectDir)_system\js\appSettings\Setup\%(FileName)%(Extension)')">
       <Output TaskParameter="Include" ItemName="NewFiles" />
     </CreateItem>
-    <Copy SourceFiles="@(NewFiles)" DestinationFolder="$(ProjectDir)js\appSettings" />
+    <Copy SourceFiles="@(NewFiles)" DestinationFolder="$(ProjectDir)_system\js\appSettings" />
   </Target>
 </Project>

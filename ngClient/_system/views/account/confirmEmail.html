@@ -1,0 +1,23 @@
+﻿<div data-ng-controller="ConfirmEmailController as vm">
+    <h2>Confirm Email</h2>
+    <div data-ng-if="!vm.currentUser.EmailConfirmed">
+        <p>
+            A confirmation email has been sent to your email address.<br />
+            Please use the link in the email to confirm your email address.
+        </p>
+        <hr />
+        <p>
+            If you didn't receive a confirmation email, please send it again.<br />
+        </p>
+        <p>
+            <button data-ng-click="vm.resendConfirmationEmail()" data-ng-disabled="vm.isResendDisabled" class="btn btn-primary">
+                Resend Confirmation Email
+            </button>
+        </p>
+    </div>
+    <div data-ng-if="vm.currentUser.EmailConfirmed">
+        <p>
+            Your email address has been confirmed.
+        </p>
+    </div>
+</div>

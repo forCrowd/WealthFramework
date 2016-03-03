@@ -7,10 +7,10 @@
     <base href="/" />
 
     <!-- lib.css -->
-    <link href="/css/lib/lib.min.css?v=0.43.5" rel="stylesheet" />
+    <link href="/_system/css/lib/lib.min.css?v=0.49.0" rel="stylesheet" />
 
     <!-- app.css -->
-    <link href="/css/app.min.css?v=0.47.0" rel="stylesheet" />
+    <link href="/_system/css/app.min.css?v=0.49.0" rel="stylesheet" />
 
 </head>
 <body data-ng-controller="DefaultController as vm">
@@ -28,29 +28,29 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="/resourcePool/new">Create CMRP (New)</a>
+                        <a href="/_system/resourcePool/new">Create CMRP (New)</a>
                     </li>
                     <li>
-                        <a href="/resourcePool">CMRP List</a>
+                        <a href="/_system/resourcePool">CMRP List</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown" data-uib-dropdown data-ng-if="vm.currentUser.isAuthenticated()">
                         <a href="" class="dropdown-toggle" data-uib-dropdown-toggle><span data-ng-bind="'User: ' + vm.currentUser.Email"></span><b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/account/accountEdit">Edit</a></li>
-                            <li><a href="/account/changeEmail">Change email</a></li>
-                            <li><a href="/account/confirmEmail" data-ng-if="!vm.currentUser.EmailConfirmed">Confirm email</a></li>
-                            <li data-ng-if="vm.currentUser.hasPassword()"><a href="/account/changePassword">Change password</a></li>
-                            <li data-ng-if="!vm.currentUser.hasPassword()"><a href="/account/addPassword">Add password</a></li>
+                            <li><a href="/_system/account/accountEdit">Edit</a></li>
+                            <li><a href="/_system/account/changeEmail">Change email</a></li>
+                            <li><a href="/_system/account/confirmEmail" data-ng-if="!vm.currentUser.EmailConfirmed">Confirm email</a></li>
+                            <li data-ng-if="vm.currentUser.hasPassword()"><a href="/_system/account/changePassword">Change password</a></li>
+                            <li data-ng-if="!vm.currentUser.hasPassword()"><a href="/_system/account/addPassword">Add password</a></li>
                             <li><a href="" data-ng-click="vm.logout()">Logout</a></li>
                         </ul>
                     </li>
                     <li data-ng-if="!vm.currentUser.isAuthenticated()">
                         <div class="navbar-text nofloat">
-                            <a href="/account/register">Register</a>
+                            <a href="/_system/account/register">Register</a>
                             &nbsp;
-                            <a href="/account/login">Login</a>
+                            <a href="/_system/account/login">Login</a>
                         </div>
                     </li>
                 </ul>
@@ -128,7 +128,7 @@
                     </p>
                     <p class="brandLink">
                         <a href="http://forcrowd.org" target="_blank">
-                            <img src="/images/forCrowd_logo_34x34.jpg?v=0.29.2" class="brandLinkImage" />
+                            <img src="/_system/images/forCrowd_logo_34x34.jpg?v=0.49.0" class="brandLinkImage" />
                             <span class="brandLinkText">
                                 <span class="brandLinkPrimary">forCrowd</span><br />
                                 <span class="brandLinkSecondary">FOUNDATION</span>
@@ -141,13 +141,13 @@
     </div>
 
     <!-- lib.js -->
-    <script src="/js/lib/lib.min.js?v=0.48.0"></script>
+    <script src="/_system/js/lib/lib.min.js?v=0.49.0"></script>
 
     <!-- app.js -->
-    <script src="/js/app/app.min.js?v=0.48.0"></script>
+    <script src="/_system/js/app/app.min.js?v=0.49.0"></script>
 
     <!-- appSettings.js -->
-    <script src="/js/appSettings/appSettings.js?v=0.43.2"></script>
+    <script src="/_system/js/appSettings/appSettings.js?v=0.49.0"></script>
 
 </body>
 </html>

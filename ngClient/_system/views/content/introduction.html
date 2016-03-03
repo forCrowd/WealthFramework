@@ -1,0 +1,52 @@
+﻿<div data-ng-controller="IntroductionController as vm">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>
+                Introduction
+            </h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-info">
+                <h4>
+                    Can we distribute our monetary resources to organizations by measuring their benefits to society?
+                </h4>
+            </div>
+            <p>
+                <!--An experimental resource management system that aims to provide a more sustainable and productive economic model-->
+                <!--Wealth Economy is an attempt to create a collaborative, customizable system to allow the society manage its monetary resources.-->
+                <!--It aims to improve the system by empowering the organizations that are more beneficial to the society.-->
+                Wealth Economy is an attempt to create a crowd investment platform to allow society manage its monetary resources.
+                It aims to provide a more sustainable and productive economic system by empowering the organizations that are more beneficial to the society.
+            </p>
+            <p>
+                Key elements of the system:
+                <ul>
+                    <li>
+                        <strong>CMRP (Crowd Managed Resource Pool):</strong>
+                        A pool, fund that holds certain monetary amount to be distributed.
+                    </li>
+                    <li>
+                        <strong>Indexes:</strong>
+                        Various parameters, categories for the organizations that are indicators for 'benefit to society'.
+                    </li>
+                    <li>
+                        <strong>Ratings:</strong>
+                        User, citizen ratings or pre-measured values that will be entered on these 'Indexes' for each organization.
+                    </li>
+                    <li>
+                        <strong>Income:</strong>
+                        An amount that each organization will receive based on their overall performance on these 'Indexes'.
+                    </li>
+                </ul>
+            </p>
+        </div>
+        <div class="col-md-6">
+            <resource-pool-editor data-config="vm.upoConfig"></resource-pool-editor>
+            <p class="small">
+                <i>An unidentified profiting object. It gets more resources regardless of how and what sort of product or service it is providing to the society.</i>
+            </p>
+        </div>
+    </div>
+</div>

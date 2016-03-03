@@ -14,14 +14,14 @@ var gulp = require('gulp'),
 // app.js variables
 var appMinJs = 'app.min.js',
     appJs = appMinJs.replace('.min', ''),
-    appJsRoot = './js/app',
+    appJsRoot = './_system/js/app',
     appJsSourceMapRoot = appJsRoot.substring(1),
     appJsSrc = [appJsRoot + '/**/*.js', '!' + appJsRoot + '/' + appJs, '!' + appJsRoot + '/' + appMinJs];
 
 // app.css variables
 var appMinCss = 'app.min.css',
     appCss = appMinCss.replace('.min', ''),
-    appCssRoot = './css',
+    appCssRoot = './_system/css',
     appCssSrc = [appCssRoot + '/*.css', appJsRoot + '/directives/**/*.css', '!' + appCssRoot + '/' + appCss, '!' + appCssRoot + '/' + appMinCss];
 
 // lib variables
@@ -36,7 +36,7 @@ var libJsSrcRoot = './bower_components',
     datajs = libJsSrcRoot + '/datajs/datajs.js',
     breeze = libJsSrcRoot + '/breeze-client/build/breeze.base.debug.js',
     breezeAjaxAngular = libJsSrcRoot + '/breeze-client/build/adapters/breeze.ajax.angular.js',
-    breezeDataServiceOData = './js/lib/breeze-client/build/adapters/breeze.dataService.odata.js', // Fixed forCrowd version
+    breezeDataServiceOData = './_system/js/lib/breeze-client/build/adapters/breeze.dataService.odata.js', // Fixed forCrowd version
     breezeModelLibraryBackingStore = libJsSrcRoot + '/breeze-client/build/adapters/breeze.modelLibrary.backingStore.js',
     breezeUriBuilderOData = libJsSrcRoot + '/breeze-client/build/adapters/breeze.uriBuilder.odata.js',
     breezeBridgeAngular = libJsSrcRoot + '/breeze-client/build/adapters/breeze.bridge.angular.js',
@@ -61,7 +61,7 @@ var libJsSrcRoot = './bower_components',
     bootstrapFonts = libJsSrcRoot + '/bootstrap/fonts/*', // Bootstrap
     fontAwesomeFonts = libJsSrcRoot + '/font-awesome/fonts/*', // Font Awesome
     fontsSrc = [bootstrapFonts, fontAwesomeFonts],
-    fontsDest = './css/fonts';
+    fontsDest = './_system/css/fonts';
 
 // lib.js variables
 var libMinJs = 'lib.min.js',
@@ -69,13 +69,13 @@ var libMinJs = 'lib.min.js',
     libJsSrc = [jquery, angular, angularRoute, angularSanitize, datajs, breeze, breezeAjaxAngular, breezeDataServiceOData,
         breezeModelLibraryBackingStore, breezeUriBuilderOData, breezeBridgeAngular, breezeDirectives, googleAnalyticsAngular,
         disqusAngular, respond, bootstrapAngular, highcharts, highchartsAngular, toastr, sourceMap],
-    libJsDest = './js/lib';
+    libJsDest = './_system/js/lib';
 
 // lib.css variables
 var libMinCss = 'lib.min.css',
     libCss = libMinCss.replace('.min', ''),
     libCssSrc = [bootstrap, fontAwesome, bootstrapSocial, breezeDirectivesCss, toastrCss],
-    libCssDest = './css/lib';
+    libCssDest = './_system/css/lib';
 
 // default
 gulp.task('default', [appJs, appCss, libJs, libCss, 'watch']);

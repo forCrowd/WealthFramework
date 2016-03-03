@@ -1,10 +1,7 @@
 ﻿*** HOT ***
 
-users can enter what they want, except..
-reserved ones will start with "_" ?
-or "_system" | "sys" | "_sys" ?
+send exception to server in 404 case?
 
----
 design for forcrowd? http://osfund.co/
 Find a designer! Ozgur's Ali | http://foundry.mediumra.re/variant/builder.html
 
@@ -88,6 +85,8 @@ Nadia's
 . From F18 slides: check the grants
 
 ---
+rating UI: Current ratings are from 0 to 100, could to 5, 10 or 1000 as well?
+
 IMPORTANT BUT LATER!
 do we correctly update RatingCount (probably yes..)?
 but do we update other computed values (resourcepooltotal, count, numericvaluetotal, count, fieldratingtotal, count) correctly?
@@ -121,6 +120,8 @@ also check resourcePool.UseFixedResourcePoolRate case!
 objects vs entities
 
 add newly created cmrps to fetchedList in cmrpfactory - and don't use newlyCreated flag
+
+
 
 resourcepool - resourcepoolratetotal, count, ratingcount never null
 elementfiel - indexratingtotal, count never null

@@ -1,5 +1,10 @@
 ### Changelog
 
+**0.49.0**
+
+* ngClient - _system folder
+https://github.com/forCrowd/WealthEconomy/issues/18
+
 **0.48.0**
 
 * Reset / Forgot Password
