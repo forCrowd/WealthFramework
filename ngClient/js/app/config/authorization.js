@@ -29,8 +29,8 @@
         var newClient = {
             request: function (request, success, error) {
                 request.headers = request.headers || {};
-                var access_token = $window.localStorage.getItem('access_token');
-                request.headers.Authorization = access_token !== null ? 'Bearer ' + access_token : '';
+                var token = angular.fromJson($window.localStorage.getItem('token'));
+                request.headers.Authorization = token !== null ? 'Bearer ' + token.access_token : '';
                 return oldClient.request(request, success, error);
             }
         };
@@ -46,8 +46,8 @@
         return {
             request: function (config) {
                 config.headers = config.headers || {};
-                var access_token = $window.localStorage.getItem('access_token');
-                config.headers.Authorization = access_token !== null ? 'Bearer ' + access_token : '';
+                var token = angular.fromJson($window.localStorage.getItem('token'));
+                config.headers.Authorization = token !== null ? 'Bearer ' + token.access_token : '';
                 return config;
             },
             response: function (response) {

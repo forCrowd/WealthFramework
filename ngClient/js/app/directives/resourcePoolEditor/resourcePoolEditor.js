@@ -37,14 +37,17 @@
             scope.changeSelectedElement = changeSelectedElement;
             scope.decreaseElementCellNumericValue = decreaseElementCellNumericValue;
             scope.decreaseElementMultiplier = decreaseElementMultiplier;
+            scope.decreaseElementCellMultiplier = decreaseElementCellMultiplier;
             scope.decreaseIndexRating = decreaseIndexRating;
             scope.decreaseResourcePoolRate = decreaseResourcePoolRate;
             scope.increaseElementCellNumericValue = increaseElementCellNumericValue;
             scope.increaseElementMultiplier = increaseElementMultiplier;
+            scope.increaseElementCellMultiplier = increaseElementCellMultiplier;
             scope.increaseIndexRating = increaseIndexRating;
             scope.increaseResourcePoolRate = increaseResourcePoolRate;
             scope.resetElementCellNumericValue = resetElementCellNumericValue;
             scope.resetElementMultiplier = resetElementMultiplier;
+            scope.resetElementCellMultiplier = resetElementCellMultiplier;
             scope.resetIndexRating = resetIndexRating;
             scope.resetResourcePoolRate = resetResourcePoolRate;
             scope.toggleIndexDetails = toggleIndexDetails;
@@ -82,6 +85,12 @@
                 saveChanges();
             }
 
+            function decreaseElementCellMultiplier(elementCell) {
+                userFactory.updateElementCellMultiplier(elementCell, 'decrease');
+                $rootScope.$broadcast('resourcePoolEditor_elementCellMultiplierDecreased', element);
+                saveChanges();
+            }
+
             function decreaseIndexRating(field) {
                 userFactory.updateElementFieldIndexRating(field, 'decrease');
                 saveChanges();
@@ -106,6 +115,12 @@
             function increaseElementMultiplier(element) {
                 userFactory.updateElementMultiplier(element, 'increase');
                 $rootScope.$broadcast('resourcePoolEditor_elementMultiplierIncreased', element);
+                saveChanges();
+            }
+
+            function increaseElementCellMultiplier(elementCell) {
+                userFactory.updateElementCellMultiplier(elementCell, 'increase');
+                $rootScope.$broadcast('resourcePoolEditor_elementCellMultiplierIncreased', element);
                 saveChanges();
             }
 
@@ -272,6 +287,12 @@
                 saveChanges();
             }
 
+            function resetElementCellMultiplier(elementCell) {
+                userFactory.updateElementCellMultiplier(elementCell, 'reset');
+                $rootScope.$broadcast('resourcePoolEditor_elementCellMultiplierReset', element);
+                saveChanges();
+            }
+
             function resetIndexRating(field) {
                 userFactory.updateElementFieldIndexRating(field, 'reset');
                 saveChanges();
@@ -381,7 +402,7 @@
 
         return {
             restrict: 'E',
-            templateUrl: '/js/app/directives/resourcePoolEditor/resourcePoolEditor.html?v=0.47.0',
+            templateUrl: '/js/app/directives/resourcePoolEditor/resourcePoolEditor.html?v=0.48.0',
             scope: {
                 config: '='
             },

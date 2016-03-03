@@ -1,5 +1,12 @@
 ### Changelog
 
+**0.48.0**
+
+* Closes #5, #7, #13, #17
+* 'Anonymous user warning remove' login page fix
+* Update element cell multiplier buttons / functions (but hidden for now)
+* Package updates
+
 **0.47.2**
 
 * Basics New Model 'Importance' index was renamed to 'Employee Satisfaction'

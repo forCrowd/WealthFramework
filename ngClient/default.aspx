@@ -118,13 +118,9 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <div data-ng-if="vm.disqusLoadedOn">
+                    <div data-ng-show="vm.disqusConfig.disqus_identifier !== ''">
                         <hr />
-                        <dir-disqus disqus-shortname="{{ vm.disqusShortname }}"
-                            disqus-identifier="{{ vm.disqusId }}"
-                            disqus-url="{{ vm.disqusUrl }}"
-                            ready-to-bind="{{ vm.disqusLoadedOn }}">
-                        </dir-disqus>
+                        <dir-disqus config="vm.disqusConfig"></dir-disqus>
                     </div>
                     <hr />
                     <p class="small">
@@ -145,10 +141,10 @@
     </div>
 
     <!-- lib.js -->
-    <script src="/js/lib/lib.min.js?v=0.46.0"></script>
+    <script src="/js/lib/lib.min.js?v=0.48.0"></script>
 
     <!-- app.js -->
-    <script src="/js/app/app.min.js?v=0.47.2"></script>
+    <script src="/js/app/app.min.js?v=0.48.0"></script>
 
     <!-- appSettings.js -->
     <script src="/js/appSettings/appSettings.js?v=0.43.2"></script>

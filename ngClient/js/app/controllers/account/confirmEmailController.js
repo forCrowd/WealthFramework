@@ -15,6 +15,8 @@
 
         _init();
 
+        /*** Implementations ***/
+
         function _init() {
 
             userFactory.getCurrentUser()

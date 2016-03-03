@@ -2,29 +2,41 @@
     <h2>Login</h2>
     <div class="row">
         <div class="col-md-8">
-            <section id="registerForm">
-                <form name="loginForm">
-                    <div class="form-horizontal">
-                        <h4>Use a local account to log in.</h4>
-                        <hr />
-                        <div class="form-group">
-                            <label for="Email" class="control-label col-md-2">Email</label>
-                            <div class="col-md-10" data-ng-class="{'has-error': loginForm.Email.$invalid && !loginForm.Email.$pristine}">
-                                <input id="Email" name="Email" type="text" data-ng-model="vm.Email" class="form-control" required />
+            <section id="loginForm">
+                <form name="loginForm" class="form-horizontal">
+                    <h4>Use a local account to log in.</h4>
+                    <hr />
+                    <div class="form-group">
+                        <label for="Email" class="control-label col-md-2">Email</label>
+                        <div class="col-md-10" data-ng-class="{'has-error': loginForm.Email.$invalid && !loginForm.Email.$pristine}">
+                            <input id="Email" name="Email" type="text" data-ng-model="vm.email" class="form-control" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Password" class="control-label col-md-2">Password</label>
+                        <div class="col-md-10" data-ng-class="{'has-error': loginForm.Password.$invalid && !loginForm.Password.$pristine}">
+                            <input id="Password" name="Password" type="password" data-ng-model="vm.password" class="form-control" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <div class="checkbox">
+                                <label>
+                                    <input id="RememberMe" name="RememberMe" type="checkbox" data-ng-model="vm.rememberMe"> Remember me
+                                </label>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="Password" class="control-label col-md-2">Password</label>
-                            <div class="col-md-10" data-ng-class="{'has-error': loginForm.Password.$invalid && !loginForm.Password.$pristine}">
-                                <input id="Password" name="Password" type="password" data-ng-model="vm.Password" class="form-control" required />
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button data-ng-click="vm.login()" data-ng-disabled="loginForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
+                                Login
+                            </button>
                         </div>
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <button data-ng-click="vm.getAccessToken()" data-ng-disabled="loginForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
-                                    Login
-                                </button>
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <a href="/account/resetPassword">Forgot your password?</a>
                         </div>
                     </div>
                 </form>

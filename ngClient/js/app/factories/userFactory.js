@@ -13,7 +13,6 @@
         logger = logger.forSource(factoryId);
 
         // Service urls
-        var accessTokenUrl = serviceAppUrl + '/api/Token';
         var addPasswordUrl = serviceAppUrl + '/api/Account/AddPassword';
         var changeEmailUrl = serviceAppUrl + '/api/Account/ChangeEmail';
         var changePasswordUrl = serviceAppUrl + '/api/Account/ChangePassword';
@@ -22,19 +21,25 @@
         var getCurrentUserPromise = null;
         var registerUrl = serviceAppUrl + '/api/Account/Register';
         var resendConfirmationEmailUrl = serviceAppUrl + '/api/Account/ResendConfirmationEmail';
+        var resetPasswordUrl = serviceAppUrl + '/api/Account/ResetPassword';
+        var resetPasswordRequestUrl = serviceAppUrl + '/api/Account/ResetPasswordRequest';
+        var tokenUrl = serviceAppUrl + '/api/Token';
 
         // Service methods
         $delegate.addPassword = addPassword;
         $delegate.changeEmail = changeEmail;
         $delegate.changePassword = changePassword;
         $delegate.confirmEmail = confirmEmail;
-        $delegate.getAccessToken = getAccessToken;
         $delegate.getCurrentUser = getCurrentUser;
+        $delegate.getToken = getToken;
         $delegate.logout = logout;
         $delegate.register = register;
         $delegate.resendConfirmationEmail = resendConfirmationEmail;
+        $delegate.resetPassword = resetPassword;
+        $delegate.resetPasswordRequest = resetPasswordRequest;
 
         $delegate.updateElementMultiplier = updateElementMultiplier;
+        $delegate.updateElementCellMultiplier = updateElementCellMultiplier;
         $delegate.updateElementCellNumericValue = updateElementCellNumericValue;
         $delegate.updateElementFieldIndexRating = updateElementFieldIndexRating;
         $delegate.updateResourcePoolRate = updateResourcePoolRate;
@@ -112,23 +117,22 @@
                 .error(handleErrorResult);
         }
 
-        function getAccessToken(email, password, tempToken, isRegister) {
+        function getToken(email, password, rememberMe, tempToken, isRegister) {
             isRegister = typeof isRegister === 'undefined' ? false : isRegister;
 
             var deferred = $q.defer();
 
-            var accessTokenData = 'grant_type=password&username=' + email + '&password=' + password;
+            var tokenData = 'grant_type=password' +
+                '&username=' + email +
+                '&password=' + password +
+                '&rememberMe=' + rememberMe +
+                '&tempToken=' + (typeof tempToken !== 'undefined' ? tempToken : '');
 
-            var tokenUrl = accessTokenUrl;
-            if (typeof tempToken !== 'undefined') {
-                tokenUrl += '?tempToken=' + tempToken;
-            }
+            $http.post(tokenUrl, tokenData, { 'Content-Type': 'application/x-www-form-urlencoded' })
+                .success(function (token) {
 
-            $http.post(tokenUrl, accessTokenData, { 'Content-Type': 'application/x-www-form-urlencoded' })
-                .success(function (data) {
-
-                    // Set access token to the session
-                    $window.localStorage.setItem('access_token', data.access_token);
+                    // Set token to the session
+                    $window.localStorage.setItem('token', angular.toJson(token));
 
                     // Set currentUser as the old one.
                     // In case if this is coming from login page, anonymous changes will be merged/copied into logged in user
@@ -192,7 +196,7 @@
                 var deferred = $q.defer();
                 getCurrentUserPromise = deferred.promise;
 
-                if (localStorage.getItem('access_token') === null) {
+                if (localStorage.getItem('token') === null) {
 
                     dataContext.metadataReady()
                         .then(function () {
@@ -335,8 +339,8 @@
 
         function logout() {
 
-            // Remove access token from the session
-            $window.localStorage.removeItem('access_token');
+            // Remove token from the session
+            $window.localStorage.removeItem('token');
 
             // Clear breeze's metadata store
             dataContext.clear();
@@ -364,13 +368,26 @@
                     currentUser.RowVersion = newUser.RowVersion;
                     currentUser.entityAspect.acceptChanges();
 
-                    return getAccessToken(registerBindingModel.email, registerBindingModel.password, '', true);
+                    return getToken(registerBindingModel.email, registerBindingModel.password, false, true);
                 })
                 .error(handleErrorResult);
         }
 
-        function resendConfirmationEmail(userId) {
-            return $http.post(resendConfirmationEmailUrl, { UserId: userId }).error(handleErrorResult);
+        function resendConfirmationEmail() {
+            return $http.post(resendConfirmationEmailUrl).error(handleErrorResult);
+        }
+
+        function resetPassword(resetPasswordBindingModel) {
+            return $http.post(resetPasswordUrl, resetPasswordBindingModel)
+                .success(function (updatedUser) {
+                    // Sync RowVersion fields
+                    syncRowVersion(currentUser, updatedUser);
+                })
+                .error(handleErrorResult);
+        }
+
+        function resetPasswordRequest(resetPasswordRequestBindingModel) {
+            return $http.post(resetPasswordRequestUrl, resetPasswordRequestBindingModel).error(handleErrorResult);
         }
 
         // When an entity gets updated through angular, unlike breeze updates, it doesn't sync RowVersion automatically
@@ -399,7 +416,7 @@
                     }
                 }
 
-                updateElementCellMultiplier(multiplierCell, updateType);
+                updateElementCellMultiplierInternal(multiplierCell, updateType);
             });
 
             // Update related
@@ -424,6 +441,26 @@
         }
 
         function updateElementCellMultiplier(elementCell, updateType) {
+
+            updateElementCellMultiplierInternal(elementCell, updateType);
+
+            // Update items
+            elementCell.ElementField.Element.ElementItemSet.forEach(function (item) {
+                item.setMultiplier();
+            });
+
+            if (elementCell.ElementField.IndexEnabled) {
+                // Update numeric value cells
+                elementCell.ElementField.ElementCellSet.forEach(function (cell) {
+                    cell.setNumericValueMultiplied(false);
+                });
+
+                // Update fields
+                elementCell.ElementField.setNumericValueMultiplied();
+            }
+        }
+
+        function updateElementCellMultiplierInternal(elementCell, updateType) {
 
             var userCell = getUserElementCell(currentUser, elementCell);
 

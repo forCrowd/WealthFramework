@@ -20,10 +20,11 @@
         vm.currentDate = new Date();
         vm.displayBankTransfer = false;
         vm.displayFooterIcons = false;
-        vm.disqusShortname = disqusShortname;
-        vm.disqusId = '';
-        vm.disqusUrl = '';
-        vm.disqusLoadedOn = null;
+        vm.disqusConfig = {
+            disqus_shortname: disqusShortname,
+            disqus_identifier: '',
+            disqus_url: ''
+        };
         vm.logout = logout;
         vm.toggleBankTransfer = toggleBankTransfer;
 
@@ -75,19 +76,17 @@
 
             // Load related disqus
             if (typeof current.enableDisqus !== 'undefined' && current.enableDisqus) {
-                vm.disqusId = disqusShortname + $location.path().replace(/\//g, '_');
-                vm.disqusUrl = $location.absUrl().substring(0, $location.absUrl().length - $location.url().length + $location.path().length);
-                vm.disqusLoadedOn = new Date();
+                vm.disqusConfig.disqus_identifier = disqusShortname + $location.path().replace(/\//g, '_');
+                vm.disqusConfig.disqus_url = $location.absUrl().substring(0, $location.absUrl().length - $location.url().length + $location.path().length);
             } else {
-                vm.disqusLoadedOn = null;
+                vm.disqusConfig.disqus_identifier = '';
             }
 
             // Remove anonymousUserWarning toastr in register & login pages, if there is
-            var path = current.$$route.originalPath;
-            if (path === '/account/register' || path === 'account/login') {
-                if (anonymousUserWarning !== null) {
-                    anonymousUserWarning.remove();
-                }
+            if (($location.path() === '/account/register' ||
+                $location.path() === '/account/login') &&
+                anonymousUserWarning !== null) {
+                anonymousUserWarning.remove();
             }
         }
 
