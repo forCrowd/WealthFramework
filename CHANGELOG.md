@@ -2,7 +2,14 @@
 
 **0.48.0**
 
-* Closes #5, #7, #13, #17
+* Reset / Forgot Password
+https://github.com/forCrowd/WealthEconomy/issues/5
+* Remember me
+https://github.com/forCrowd/WealthEconomy/issues/7
+* Use Request.Form to send custom data to web api token endpoint
+https://github.com/forCrowd/WealthEconomy/issues/17
+* Store web api token itself in localStorage
+https://github.com/forCrowd/WealthEconomy/issues/13
 * 'Anonymous user warning remove' login page fix
 * Update element cell multiplier buttons / functions (but hidden for now)
 * Package updates
