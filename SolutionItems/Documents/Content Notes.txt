@@ -6,14 +6,15 @@ crowd: individuals that work on a certain subject..
 
 ---
 # Articles
+. formula calculation
 . capitalism is dead but why can't we get rid of it?
 . organization.json
-. formula calculation
 . Difficulty of lying - Blue polar bear
 . TEDs
 http://www.ted.com/talks/audrey_choi_how_to_make_a_profit_while_making_a_difference - not very strong but..
 
 # Description
+Alt: Measuring the goodness
 New: An experimental, open source crowd investment platform
 Old: An experimental resource management system that aims to provide a more sustainable and productive economic model
 
