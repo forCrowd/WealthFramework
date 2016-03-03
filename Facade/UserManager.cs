@@ -2,6 +2,7 @@
 {
     using BusinessObjects;
     using DataObjects;
+    using Framework;
     using Microsoft.AspNet.Identity;
     using System;
     using System.Data.Entity;
@@ -19,8 +20,6 @@
         }
 
         internal new UserStore Store { get { return (UserStore)base.Store; } }
-
-        public string ConfirmEmailUrl { get; set; }
 
         public override async Task<IdentityResult> AddPasswordAsync(int userId, string password)
         {
@@ -199,16 +198,28 @@
             return result;
         }
 
+        public override async Task<IdentityResult> ResetPasswordAsync(int userId, string token, string newPassword)
+        {
+            var result = await base.ResetPasswordAsync(userId, token, newPassword);
+
+            if (result.Succeeded)
+            {
+                await Store.SaveChangesAsync();
+            }
+
+            return result;
+        }
+
         public async Task SendConfirmationEmailAsync(int userId, bool resend = false)
         {
-            var subject = "Confirm your email";
-            if (resend) subject += " - Resend";
-
             var user = await base.FindByIdAsync(userId);
+
             var token = await base.GenerateEmailConfirmationTokenAsync(userId);
             var encodedToken = System.Net.WebUtility.UrlEncode(token);
+            var confirmEmailUrl = string.Format("{0}/account/confirmEmail?token={1}", AppSettings.ClientAppUrl, encodedToken);
 
-            var confirmEmailUrl = string.Format("{0}?token={1}", ConfirmEmailUrl, encodedToken);
+            var subject = "Confirm your email";
+            if (resend) subject += " - Resend";
 
             var sbBody = new StringBuilder();
             sbBody.AppendLine("    <p>");
@@ -218,6 +229,40 @@
             sbBody.AppendLine("        <br />");
             sbBody.AppendLine("        Please click the following link to confirm your email address<br />");
             sbBody.AppendFormat("        <a href='{0}'>Confirm your email address</a>", confirmEmailUrl);
+            sbBody.AppendLine("    </p>");
+            sbBody.AppendLine("    <p>");
+            sbBody.AppendLine("        Thanks,<br />");
+            sbBody.AppendLine("        forCrowd Foundation");
+            sbBody.AppendLine("    </p>");
+
+            await base.SendEmailAsync(userId, subject, sbBody.ToString());
+        }
+
+        public async Task SendResetPasswordEmailAsync(int userId)
+        {
+            // TODO Validation email
+
+            var user = await base.FindByIdAsync(userId);
+
+            // TODO Validation user
+
+            var token = await base.GeneratePasswordResetTokenAsync(userId);
+            var encodedToken = System.Net.WebUtility.UrlEncode(token);
+            var resetPasswordUrl = string.Format("{0}/account/resetPassword?email={1}&token={2}",
+                AppSettings.ClientAppUrl,
+                user.Email,
+                encodedToken);
+
+            var subject = "Reset your password";
+
+            var sbBody = new StringBuilder();
+            sbBody.AppendLine("    <p>");
+            sbBody.AppendLine("        <b>Wealth Economy - Reset Your Password</b><br />");
+            sbBody.AppendLine("        <br />");
+            sbBody.AppendFormat("        Email: {0}<br />", user.Email);
+            sbBody.AppendLine("        <br />");
+            sbBody.AppendLine("        Please click the following link to reset your email password<br />");
+            sbBody.AppendFormat("        <a href='{0}'>Reset your password</a>", resetPasswordUrl);
             sbBody.AppendLine("    </p>");
             sbBody.AppendLine("    <p>");
             sbBody.AppendLine("        Thanks,<br />");

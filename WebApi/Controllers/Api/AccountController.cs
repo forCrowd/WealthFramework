@@ -200,7 +200,9 @@
                 {
                     // If the email address has changed meanwhile
                     if (user.Email != email)
+                    {
                         user.Email = email;
+                    }
 
                     await UserManager.AddTempTokenClaimAsync(user);
                 }
@@ -251,6 +253,40 @@
             var currentUserId = this.GetCurrentUserId();
 
             await UserManager.SendConfirmationEmailAsync(currentUserId.Value, true);
+
+            return Ok(string.Empty);
+        }
+
+        [AllowAnonymous]
+        public async Task<IHttpActionResult> ResetPassword(ResetPasswordBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var currentUser = await UserManager.FindByEmailAsync(model.Email);
+            var result = await UserManager.ResetPasswordAsync(currentUser.Id, model.Token, model.NewPassword);
+            var errorResult = GetErrorResult(result);
+
+            if (errorResult != null)
+            {
+                return errorResult;
+            }
+
+            return Ok(currentUser);
+        }
+
+        [AllowAnonymous]
+        public async Task<IHttpActionResult> ResetPasswordRequest(ResetPasswordRequestBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var currentUser = await UserManager.FindByEmailAsync(model.Email);
+            await UserManager.SendResetPasswordEmailAsync(currentUser.Id);
 
             return Ok(string.Empty);
         }

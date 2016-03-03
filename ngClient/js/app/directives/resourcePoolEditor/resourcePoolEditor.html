@@ -127,15 +127,22 @@
                                             <button data-uib-tooltip="Reset" data-tooltip-append-to-body="true" type="button" data-ng-click="resetElementCellNumericValue(elementCell)" data-ng-disabled="isSaving" class="btn btn-default btn-xs hide">0</button>
                                         </div>
                                     </div>
-                                    <span data-ng-if="elementCell.ElementField.DataType === 6">
+                                    <div data-ng-if="elementCell.ElementField.DataType === 6">
                                         <span data-ng-bind="elementCell.SelectedElementItem.Name"></span>
-                                    </span>
-                                    <span data-ng-if="elementCell.ElementField.DataType === 11">
+                                    </div>
+                                    <div data-ng-if="elementCell.ElementField.DataType === 11">
                                         <span data-ng-bind="elementItem.directIncome() | numberSymbol: 2"></span>
-                                    </span>
-                                    <span data-ng-if="elementCell.ElementField.DataType === 12">
+                                    </div>
+                                    <div data-ng-if="elementCell.ElementField.DataType === 12">
                                         <span data-ng-bind="elementItem.multiplier() | numberSymbol: 2"></span>
-                                    </span>
+                                        <div class="hide" data-ng-if="elementCell.ElementField.DataType === 12 && resourcePool.displayMultiplierFunctions">
+                                            <div class="btn-group" role="group">
+                                                <button data-uib-tooltip="Increase {{ resourcePool.selectedElement().multiplierField().Name }}" data-tooltip-append-to-body="true" data-ng-disabled="isSaving" data-ng-click="increaseElementCellMultiplier(elementCell)" class="btn btn-default btn-xs">+</button>
+                                                <button data-uib-tooltip="Decrease {{ resourcePool.selectedElement().multiplierField().Name }}" data-tooltip-append-to-body="true" type="button" data-ng-disabled="isSaving" data-ng-click="decreaseElementCellMultiplier(elementCell)" class="btn btn-default btn-xs">-</button>
+                                                <button data-uib-tooltip="Reset {{ resourcePool.selectedElement().multiplierField().Name }}" data-tooltip-append-to-body="true" type="button" data-ng-disabled="isSaving" data-ng-click="resetElementCellMultiplier(elementCell)" class="btn btn-default btn-xs">0</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                                 <!-- Direct Income -->
                                 <td data-ng-if="resourcePool.selectedElement().directIncomeField() && resourcePool.selectedElement().elementFieldIndexSet().length > 0" class="text-right">

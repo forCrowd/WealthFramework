@@ -20,7 +20,7 @@
 
         function _init() {
             // Generate test data if localhost
-            if ($location.$$host === 'localhost') {
+            if ($location.host() === 'localhost') {
                 var now = new Date();
                 var year = now.getFullYear();
                 var month = now.getMonth() + 1;

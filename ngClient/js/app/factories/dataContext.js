@@ -191,8 +191,6 @@
                 // ignore empty batches (except 'null' which means "save everything else")
                 if (batch === null || batch.length > 0) {
 
-                    logger.log('batch', batch);
-
                     // Broadcast, so UI can block
                     $rootScope.$broadcast('saveChangesStart');
 

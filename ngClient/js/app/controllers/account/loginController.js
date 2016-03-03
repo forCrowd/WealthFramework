@@ -9,10 +9,11 @@
         logger = logger.forSource(controllerId);
 
         var vm = this;
-        vm.Email = '';
-        vm.getAccessToken = getAccessToken;
+        vm.email = '';
+        vm.login = login;
         vm.getExternalLoginUrl = getExternalLoginUrl;
-        vm.Password = '';
+        vm.password = '';
+        vm.rememberMe = false;
 
         _init();
 
@@ -25,18 +26,18 @@
                 return;
             }
 
-            getAccessToken();
+            login();
         }
 
-        function getAccessToken() {
+        function login() {
 
             // External (temp token) login
             var tempToken = $location.search().tempToken;
             if (typeof tempToken !== 'undefined') {
-                userFactory.getAccessToken('', '', tempToken).then(success).catch(failedExternal);
+                userFactory.getToken('', '', vm.rememberMe, tempToken).then(success).catch(failedExternal);
             } else { // Internal login
-                if (vm.Email !== '' && vm.Password !== '') {
-                    userFactory.getAccessToken(vm.Email, vm.Password).then(success);
+                if (vm.email !== '' && vm.password !== '') {
+                    userFactory.getToken(vm.email, vm.password, vm.rememberMe).then(success);
                 }
             }
 

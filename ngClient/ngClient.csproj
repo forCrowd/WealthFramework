@@ -80,6 +80,7 @@
     <None Include="js\app\controllers\resourcePool\ResourcePoolManageController.js" />
     <None Include="js\app\controllers\resourcePool\ResourcePoolViewController.js" />
     <None Include="js\app\directives\resourcePoolEditor\resourcePoolEditor.css" />
+    <Content Include="js\app\controllers\account\ResetPasswordController.js" />
     <Content Include="js\app\directives\resourcePoolEditor\resourcePoolEditor.html" />
     <None Include="js\app\directives\resourcePoolEditor\resourcePoolEditor.js" />
     <None Include="js\app\entities\Element.js" />
@@ -120,6 +121,7 @@
     <Content Include="views\account\accountEdit.html" />
     <Content Include="views\account\addPassword.html" />
     <Content Include="views\account\changeEmail.html" />
+    <Content Include="views\account\resetPassword.html" />
     <Content Include="views\account\changePassword.html" />
     <Content Include="views\account\confirmEmail.html" />
     <Content Include="views\account\login.html" />

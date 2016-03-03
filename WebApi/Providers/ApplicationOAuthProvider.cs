@@ -1,5 +1,6 @@
 ﻿namespace forCrowd.WealthEconomy.WebApi.Providers
 {
+    using BusinessObjects;
     using Facade;
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin.Security;
@@ -25,12 +26,13 @@
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
             var userManager = context.OwinContext.GetUserManager<UserManager>();
+            var form = await context.Request.ReadFormAsync();
 
             var username = context.UserName;
             var password = context.Password;
-            var tempToken = context.Request.Query.Get("tempToken");
-            BusinessObjects.User user = null;
-
+            var tempToken = form.Get("tempToken");
+            User user = null;
+            
             // Special temp token case
             if (string.IsNullOrWhiteSpace(username) && string.IsNullOrWhiteSpace(password) && !string.IsNullOrWhiteSpace(tempToken))
             {
@@ -61,14 +63,21 @@
             context.Validated(ticket);
         }
 
-        public override Task TokenEndpoint(OAuthTokenEndpointContext context)
+        public override async Task TokenEndpoint(OAuthTokenEndpointContext context)
         {
+            // Remember me
+            var form = await context.Request.ReadFormAsync();
+            var rememberMe = false;
+            bool.TryParse(form.Get("rememberMe"), out rememberMe);
+            if (rememberMe)
+            {
+                context.Properties.ExpiresUtc = DateTime.UtcNow.AddYears(1);
+            }
+            
             foreach (var property in context.Properties.Dictionary)
             {
                 context.AdditionalResponseParameters.Add(property.Key, property.Value);
             }
-
-            return Task.FromResult<object>(null);
         }
 
         public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)

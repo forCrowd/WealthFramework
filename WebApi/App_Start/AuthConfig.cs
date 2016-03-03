@@ -38,8 +38,8 @@
                 TokenEndpointPath = new PathString("/api/Token"),
                 Provider = new ApplicationOAuthProvider(PublicClientId),
                 //AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"), // TODO ?
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
-                AllowInsecureHttp = true
+                AccessTokenExpireTimeSpan = TimeSpan.FromHours(3),
+                AllowInsecureHttp = AppSettings.EnvironmentType != EnvironmentType.Live
             };
 
             // Enable the application to use bearer tokens to authenticate users
@@ -117,7 +117,6 @@
             };
 
             manager.EmailService = new EmailService();
-            manager.ConfirmEmailUrl = string.Format("{0}/account/confirmEmail", AppSettings.ClientAppUrl);
 
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
