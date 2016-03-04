@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.49.1**
+
+* .gitignore _system folder fix
+
 **0.49.0**
 
 * ngClient - _system folder
