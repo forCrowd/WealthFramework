@@ -3,6 +3,8 @@
 **0.49.1**
 
 * .gitignore _system folder fix
+* 404 for fontawesome-webfont.woff2
+https://github.com/forCrowd/WealthEconomy/issues/21
 
 **0.49.0**
 

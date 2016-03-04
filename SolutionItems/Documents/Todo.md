@@ -309,6 +309,8 @@ And do we need it?
 
 * http://www.asp.net/web-api/overview/testing-and-debugging/mocking-entity-framework-when-unit-testing-aspnet-web-api-2
 
+* Check EF conventions for possible use; rowversion, datetime, id etc?
+
 ---
 . addfield method should create new elementcells for this new field for the existing items! - ALREADY OK?
 
