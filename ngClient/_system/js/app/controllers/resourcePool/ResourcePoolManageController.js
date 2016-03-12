@@ -4,7 +4,7 @@
     var controllerId = 'ResourcePoolManageController';
     angular.module('main')
         .controller(controllerId, ['resourcePoolFactory',
-            'userFactory',
+            'dataContext',
             '$location',
             '$routeParams',
             '$rootScope',
@@ -14,7 +14,7 @@
             ResourcePoolManageController]);
 
     function ResourcePoolManageController(resourcePoolFactory,
-        userFactory,
+        dataContext,
         $location,
         $routeParams,
         $rootScope,
@@ -339,6 +339,7 @@
         function openRemoveResourcePoolModal() {
             var modalInstance = $uibModal.open({
                 templateUrl: 'removeResourcePoolModal.html',
+                controllerAs: 'vm',
                 controller: ['$scope', '$uibModalInstance', RemoveResourcePoolModalController]
             });
 
@@ -364,20 +365,15 @@
 
             resourcePoolFactory.removeResourcePool(vm.resourcePool);
 
-            userFactory.getCurrentUser()
+            dataContext.getCurrentUser()
                 .then(function (currentUser) {
-                    if (currentUser.isAuthenticated()) {
-                        resourcePoolFactory.saveChanges()
-                            .then(function () {
-                                $location.url('/_system/resourcePool');
-                            })
-                            .finally(function () {
-                                vm.isSaving = false;
-                            });
-                    } else {
-                        $location.url('/_system/resourcePool');
-                        vm.isSaving = false;
-                    }
+                    resourcePoolFactory.saveChanges()
+                        .then(function () {
+                            $location.url('/_system/resourcePool');
+                        })
+                        .finally(function () {
+                            vm.isSaving = false;
+                        });
                 });
         }
 
@@ -435,7 +431,7 @@
             // TODO Try to move this to a better place?
             vm.resourcePool.updateCache();
 
-            userFactory.getCurrentUser()
+            dataContext.getCurrentUser()
                 .then(function (currentUser) {
 
                     /* Update isEditing state */
@@ -478,30 +474,30 @@
                     });
                     /* Update isEditing state end */
 
-                    if (currentUser.isAuthenticated()) {
-                        resourcePoolFactory.saveChanges()
-                            .then(function () {
-                                $location.url('/_system/resourcePool/' + vm.resourcePool.Id);
-                            })
-                            .finally(function () {
-                                vm.isSaving = false;
-                            });
-                    } else {
-                        resourcePoolFactory.acceptChanges(vm.resourcePool);
-                        vm.isSaving = false;
-                        $location.url('/_system/resourcePool/' + vm.resourcePool.Id);
-                    }
+                    dataContext.saveChanges()
+                        .then(function () {
+                            $location.url('/_system/resourcePool/' + vm.resourcePool.Id);
+                        })
+                        .finally(function () {
+                            vm.isSaving = false;
+                        });
                 });
         }
     }
 
     function RemoveResourcePoolModalController($scope, $uibModalInstance) {
-        $scope.cancel = function () {
+
+        var vm = this;
+        vm.cancel = cancel;
+        vm.remove = remove;
+
+        function cancel() {
             $uibModalInstance.dismiss('cancel');
-        };
-        $scope.remove = function () {
+        }
+
+        function remove() {
             $uibModalInstance.close();
-        };
+        }
     }
 
     function CopyResourcePoolModalController(resourcePoolFactory, $uibModalInstance) {

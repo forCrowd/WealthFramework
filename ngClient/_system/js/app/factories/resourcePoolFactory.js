@@ -6,10 +6,10 @@
         .config(['$provide', extendFactory]);
 
     function extendFactory($provide) {
-        $provide.decorator(factoryId, ['$delegate', 'ResourcePool', 'Element', 'userFactory', 'dataContext', '$rootScope', 'logger', resourcePoolFactory]);
+        $provide.decorator(factoryId, ['$delegate', 'ResourcePool', 'Element', 'dataContext', '$rootScope', 'logger', resourcePoolFactory]);
     }
 
-    function resourcePoolFactory($delegate, ResourcePool, Element, userFactory, dataContext, $rootScope, logger) {
+    function resourcePoolFactory($delegate, ResourcePool, Element, dataContext, $rootScope, logger) {
 
         // Logger
         logger = logger.forSource(factoryId);
@@ -17,7 +17,6 @@
         var fetched = [];
 
         // Factory methods
-        $delegate.acceptChanges = acceptChanges;
         $delegate.cancelResourcePool = cancelResourcePool;
         $delegate.copyResourcePool = copyResourcePool;
         $delegate.createElement = createElement;
@@ -33,65 +32,13 @@
         $delegate.removeResourcePool = removeResourcePool;
 
         // User logged out
-        $rootScope.$on('userFactory_currentUserChanged', function () {
+        $rootScope.$on('dataContext_currentUserChanged', function () {
             fetched = [];
         });
 
         return $delegate;
 
         /*** Implementations ***/
-
-        function acceptChanges(resourcePool) {
-
-            // Set isAdded flag to true, so before saving it to database,
-            // we can replace resource pool and its child entities state back to 'isAdded'
-            if (resourcePool.entityAspect.entityState.isAdded()) {
-                resourcePool.isAdded(true);
-            }
-
-            // Resource pool itself
-            resourcePool.entityAspect.acceptChanges();
-
-            // If isAdded, then make it modified, so it be retrieved when getChanges() called
-            if (resourcePool.isAdded()) {
-                resourcePool.entityAspect.setModified();
-            }
-
-            // User resource pools
-            resourcePool.UserResourcePoolSet.forEach(function (userResourcePool) {
-                userResourcePool.entityAspect.acceptChanges();
-            });
-
-            // Elements
-            resourcePool.ElementSet.forEach(function (element) {
-                element.entityAspect.acceptChanges();
-
-                // Fields
-                element.ElementFieldSet.forEach(function (elementField) {
-                    elementField.entityAspect.acceptChanges();
-
-                    // User element fields
-                    elementField.UserElementFieldSet.forEach(function (userElementField) {
-                        userElementField.entityAspect.acceptChanges();
-                    });
-                });
-
-                // Items
-                element.ElementItemSet.forEach(function (elementItem) {
-                    elementItem.entityAspect.acceptChanges();
-
-                    // Cells
-                    elementItem.ElementCellSet.forEach(function (elementCell) {
-                        elementCell.entityAspect.acceptChanges();
-
-                        // User cells
-                        elementCell.UserElementCellSet.forEach(function (userElementCell) {
-                            userElementCell.entityAspect.acceptChanges();
-                        });
-                    });
-                });
-            });
-        }
 
         function cancelResourcePool(resourcePool) {
 
@@ -203,7 +150,7 @@
         function createResourcePoolBasic(initializeResourcePool) {
             initializeResourcePool = typeof initializeResourcePool !== 'undefined' ? initializeResourcePool : false;
 
-            return userFactory.getCurrentUser()
+            return dataContext.getCurrentUser()
                 .then(function (currentUser) {
 
                     var resourcePoolRate = 10;
@@ -356,7 +303,7 @@
             // TODO Other validations?
             resourcePoolId = Number(resourcePoolId);
 
-            return userFactory.getCurrentUser()
+            return dataContext.getCurrentUser()
                 .then(function (currentUser) {
 
                     // Prepare the query

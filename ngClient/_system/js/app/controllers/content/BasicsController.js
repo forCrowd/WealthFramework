@@ -3,9 +3,9 @@
 
     var controllerId = 'BasicsController';
     angular.module('main')
-        .controller(controllerId, ['resourcePoolFactory', 'userFactory', 'dataContext', '$scope', 'logger', BasicsController]);
+        .controller(controllerId, ['resourcePoolFactory', 'dataContext', '$scope', 'logger', BasicsController]);
 
-    function BasicsController(resourcePoolFactory, userFactory, dataContext, $scope, logger) {
+    function BasicsController(resourcePoolFactory, dataContext, $scope, logger) {
 
         logger = logger.forSource(controllerId);
 
@@ -32,12 +32,16 @@
                     if (resourcePool === null) {
                         getBasicsSample()
                             .then(function (resourcePool) {
+                                dataContext.createEntitySuppressAuthValidation(true);
+
                                 resourcePool.Id = existingModelSampleId;
                                 resourcePool.Name = 'Basics - Existing Model';
                                 resourcePool.UserResourcePoolSet[0].entityAspect.setDeleted(); // Remove resource pool rate
                                 resourcePool._init(true);
 
                                 vm.existingModelConfig.resourcePoolId = resourcePool.Id;
+
+                                dataContext.createEntitySuppressAuthValidation(false);
                             });
                     } else {
                         vm.existingModelConfig.resourcePoolId = resourcePool.Id;
@@ -49,6 +53,8 @@
                     if (resourcePool === null) {
                         getBasicsSample()
                             .then(function (resourcePool) {
+                                dataContext.createEntitySuppressAuthValidation(true);
+
                                 resourcePool.Id = newModelSampleId;
                                 resourcePool.Name = 'Basics - New Model';
 
@@ -81,6 +87,8 @@
                                 resourcePool._init(true);
 
                                 vm.newModelConfig.resourcePoolId = resourcePool.Id;
+
+                                dataContext.createEntitySuppressAuthValidation(false);
                             });
                     } else {
                         vm.newModelConfig.resourcePoolId = resourcePool.Id;
@@ -89,8 +97,13 @@
         }
 
         function getBasicsSample() {
+
+            dataContext.createEntitySuppressAuthValidation(true);
+
             return resourcePoolFactory.createResourcePoolDirectIncomeAndMultiplier()
                 .then(function (resourcePool) {
+                    dataContext.createEntitySuppressAuthValidation(true);
+
                     resourcePool.InitialValue = 0;
                     resourcePool.isTemp = true;
 
@@ -108,7 +121,12 @@
                         Name: 'Delta'
                     });
 
+                    dataContext.createEntitySuppressAuthValidation(false);
+
                     return resourcePool;
+                })
+                .finally(function () {
+                    dataContext.createEntitySuppressAuthValidation(false);
                 });
         }
 
@@ -128,15 +146,15 @@
                     .then(function (resourcePool) {
                         switch (event.name) {
                             case 'resourcePoolEditor_elementMultiplierIncreased': {
-                                userFactory.updateElementMultiplier(resourcePool.mainElement(), 'increase');
+                                dataContext.updateElementMultiplier(resourcePool.mainElement(), 'increase');
                                 break;
                             }
                             case 'resourcePoolEditor_elementMultiplierDecreased': {
-                                userFactory.updateElementMultiplier(resourcePool.mainElement(), 'decrease');
+                                dataContext.updateElementMultiplier(resourcePool.mainElement(), 'decrease');
                                 break;
                             }
                             case 'resourcePoolEditor_elementMultiplierReset': {
-                                userFactory.updateElementMultiplier(resourcePool.mainElement(), 'reset');
+                                dataContext.updateElementMultiplier(resourcePool.mainElement(), 'reset');
                                 break;
                             }
                         }

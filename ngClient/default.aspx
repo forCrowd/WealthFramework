@@ -35,23 +35,22 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown" data-uib-dropdown data-ng-if="vm.currentUser.isAuthenticated()">
-                        <a href="" class="dropdown-toggle" data-uib-dropdown-toggle><span data-ng-bind="'User: ' + vm.currentUser.Email"></span><b class="caret"></b></a>
+                    <li data-ng-show="!vm.currentUser.isAuthenticated()">
+                        <div class="navbar-text nofloat">
+                            <a href="/_system/account/register">Register</a>
+                            <a href="/_system/account/login" class="buffer-left">Login</a>
+                        </div>
+                    </li>
+                    <li data-ng-show="vm.currentUser.isAuthenticated()" class="dropdown" data-uib-dropdown>
+                        <a href="" class="dropdown-toggle" data-uib-dropdown-toggle><span data-ng-bind="'User: ' + vm.currentUserText()"></span><b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="/_system/account/accountEdit">Edit</a></li>
                             <li><a href="/_system/account/changeEmail">Change email</a></li>
-                            <li><a href="/_system/account/confirmEmail" data-ng-if="!vm.currentUser.EmailConfirmed">Confirm email</a></li>
-                            <li data-ng-if="vm.currentUser.hasPassword()"><a href="/_system/account/changePassword">Change password</a></li>
-                            <li data-ng-if="!vm.currentUser.hasPassword()"><a href="/_system/account/addPassword">Add password</a></li>
+                            <li data-ng-show="!vm.currentUser.IsAnonymous && !vm.currentUser.EmailConfirmed"><a href="/_system/account/confirmEmail">Confirm email</a></li>
+                            <li data-ng-show="vm.currentUser.HasPassword === null"><a href="/_system/account/changePassword">Change password</a></li>
+                            <li data-ng-show="vm.currentUser.HasPassword === false"><a href="/_system/account/addPassword">Add password</a></li>
                             <li><a href="" data-ng-click="vm.logout()">Logout</a></li>
                         </ul>
-                    </li>
-                    <li data-ng-if="!vm.currentUser.isAuthenticated()">
-                        <div class="navbar-text nofloat">
-                            <a href="/_system/account/register">Register</a>
-                            &nbsp;
-                            <a href="/_system/account/login">Login</a>
-                        </div>
                     </li>
                 </ul>
             </div>
@@ -62,7 +61,7 @@
         <div data-ng-view></div>
 
         <footer>
-            <div class="row buffer-top" data-ng-if="vm.displayFooterIcons">
+            <div class="row buffer-top" data-ng-show="vm.displayFooterIcons">
                 <div class="col-md-12"></div>
                 <hr />
                 <div class="row">
@@ -103,7 +102,7 @@
                             <span class="fa fa-bank fa-lg"></span>
                             Or with bank transfer
                         </a>
-                        <div class="bs-callout bs-callout-info" data-ng-if="vm.displayBankTransfer">
+                        <div class="bs-callout bs-callout-info" data-ng-show="vm.displayBankTransfer">
                             <h4>Bank Transfer - Euro</h4>
                             <p>
                                 Bank: Triodos Bank NV, Netherlands<br />
@@ -141,10 +140,10 @@
     </div>
 
     <!-- lib.js -->
-    <script src="/_system/js/lib/lib.min.js?v=0.49.0"></script>
+    <script src="/_system/js/lib/lib.min.js?v=0.50.0"></script>
 
     <!-- app.js -->
-    <script src="/_system/js/app/app.min.js?v=0.49.0"></script>
+    <script src="/_system/js/app/app.min.js?v=0.50.0"></script>
 
     <!-- appSettings.js -->
     <script src="/_system/js/appSettings/appSettings.js?v=0.49.0"></script>

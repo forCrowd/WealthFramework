@@ -25,9 +25,20 @@ namespace forCrowd.WealthEconomy.BusinessObjects
             Validations.ArgumentNullOrDefault(email, "email");
             // TODO Email address validation?
 
+            // Email & userName are same at the moment
             Email = email;
             UserName = email;
         }
+
+        public bool IsAnonymous { get; set; }
+
+        /// <summary>
+        /// Determines whether user has a password or not.
+        /// Since in most cases the user will have a password, keep only false value, 'null' will be treated as true.
+        /// </summary>
+        public bool? HasPassword { get; set; }
+
+        public string SingleUseToken { get; set; }
 
         [StringLength(50)]
         [Display(Name = "First Name")]

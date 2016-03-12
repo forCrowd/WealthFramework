@@ -129,7 +129,7 @@
         public async Task<IHttpActionResult> ExternalLoginCallback(string clientReturnUrl, string error = null)
         {
             var clientAppUrl = Framework.AppSettings.ClientAppUrl;
-            var location = string.Format("{0}/account/login?clientReturnUrl={1}", clientAppUrl, clientReturnUrl);
+            var location = string.Format("{0}/_system/account/login?clientReturnUrl={1}", clientAppUrl, clientReturnUrl);
 
             // Error message from the provider, pass it on
             if (!string.IsNullOrWhiteSpace(error))
@@ -164,7 +164,6 @@
                     return Redirect(string.Format("{0}&error={1}", location, "Login failed, please give permission to access your email address"));
                 }
 
-                var tempToken = string.Empty;
                 var user = await UserManager.FindAsync(externalLoginInfo.Login);
 
                 // There is no externalLogin with these info
@@ -204,14 +203,11 @@
                         user.Email = email;
                     }
 
-                    await UserManager.AddTempTokenClaimAsync(user);
+                    await UserManager.AddSingleUseTokenAsync(user);
                 }
 
-                // Get the temp token
-                tempToken = user.Claims.OrderByDescending(claim => claim.CreatedOn).First(claim => claim.ClaimType == "TempToken").ClaimValue;
-
                 // Redirect
-                return Redirect(string.Format("{0}&tempToken={1}", location, tempToken));
+                return Redirect(string.Format("{0}&token={1}", location, user.SingleUseToken));
             }
             catch (Exception ex)
             {
@@ -233,9 +229,38 @@
                 return BadRequest(ModelState);
             }
 
-            var user = new User(model.Email);
+            var user = new User(model.Email)
+            {
+                IsAnonymous = false
+            };
 
             var result = await UserManager.CreateAsync(user, model.Password);
+            var errorResult = GetErrorResult(result);
+
+            if (errorResult != null)
+            {
+                return errorResult;
+            }
+
+            // TODO This should be Created?
+            return Ok(user);
+        }
+
+        // POST api/Account/RegisterAnonymous
+        [AllowAnonymous]
+        public async Task<IHttpActionResult> RegisterAnonymous(RegisterAnonymousBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = new User(model.Email)
+            {
+                IsAnonymous = true
+            };
+
+            var result = await UserManager.CreateAsync(user);
             var errorResult = GetErrorResult(result);
 
             if (errorResult != null)

@@ -22,19 +22,19 @@ ngClient/bower_components
 *.pubxml
 
 # Configs
-ngClient/js/appSettings/*.js
+ngClient/_system/js/appSettings/*.js
 WebApi/Configs/*.config
 
 # Gulp generated files
-ngClient/js/app/app.js
-ngClient/js/app/app.min.js
-ngClient/js/app/app.min.js.map
-ngClient/js/lib/*.js
-ngClient/js/lib/*.map
-ngClient/css/app.css
-ngClient/css/app.min.css
-ngClient/css/lib/*.css
-ngClient/css/fonts/
+ngClient/_system/js/app/app.js
+ngClient/_system/js/app/app.min.js
+ngClient/_system/js/app/app.min.js.map
+ngClient/_system/js/lib/*.js
+ngClient/_system/js/lib/*.map
+ngClient/_system/css/app.css
+ngClient/_system/css/app.min.css
+ngClient/_system/css/lib/*.css
+ngClient/_system/css/fonts/
 
 # Elmah log folder
 WebApi/App_Data/

@@ -2,6 +2,10 @@
 
 send exception to server in 404 case?
 
+viewModel - bindingModel - namingConvention fix
+
+angular dependency order alphabetically
+
 design for forcrowd? http://osfund.co/
 Find a designer! Ozgur's Ali | http://foundry.mediumra.re/variant/builder.html
 
@@ -35,7 +39,11 @@ tests, tests, tests
 save anon user to db?
 * when using fb account, anonymous changes will be lost! try to implement anonymous user for all actions..
 
+item.numberOfSales / element.numberOfSales
+
 redirect www.forcrowd.org to wealth.forcrowd.org?
+
+Check the grants from Nadia's F18 slides
 
 ---
 Total Cost Index
@@ -56,33 +64,6 @@ Identity / Account:
 . Two factor auth.
 . Account lockout
 . rememberMe - register user auto login: false - external login vm.rememberMe?
-
----
-Kasim's
-. Value proposition
-
-Fatih's
-1. Rating UI							- Important, bit later
-4. Anon user save						- Important, bit later
-9. Explain formulas						- Important, bit later - requires new menu items, content structure
-10. Total Cost Index confusion?			- Improve presentation, can be merged with 'explain formulas'
-6. 2 records rating + income dist		- Improve presentation, can be merged with 'explain formulas'
-2. "Total Income" field customization	- Later (maybe with custom formulas)
-8. Priority, highly influential?		- Check with other testers
-7. all in one income error?				- wealth.api/app_Data - not clear how the error occured?
-3. Prio + Knowledge - All in One sync	- OK
-5. all users/yours switch				- OK
-
-Kaan's
-. Rating UI
-
-Sencer's
-. Value proposition
-
-Nadia's
-. Value proposition
-. Gaming the system
-. From F18 slides: check the grants
 
 ---
 rating UI: Current ratings are from 0 to 100, could to 5, 10 or 1000 as well?
@@ -156,6 +137,17 @@ User rating will only be created if he/she interacts with it?
 
 . toastr has a jquery dependency - without it, jquery can be removed?
 . source-map - original position name & column props are null
+
+---
+blank project (User / Environment Ignorant)
+Try to remove static configurations from the application, so the users can use the application with their own settings.
+
+The list of projects & files that have static connectionStrings;
+All .tt files
+Facade.Tests
+Dataobjects.Tests
+Dataobjects
+Local_db command scripts
 
 ---
 an async issue?
@@ -247,6 +239,7 @@ according to this, normal user may not use post action for instance? check these
 * validateantiforgerytoken + bind attributes in odata controller?
 * template pattern for elementfield + fieldtype classes!
 * calling saveChanges in dispose of unitofwork?
+* Learn when and how to use IDisposable. Currently are there any object that should implement and/or call Dispose, repository + unitofwork + context + controllers?
 * extend dbcontext validation errors - check spaanjaars sample and use them in webapp with modelstate blocks?
 * result of datetime (ticks) index is bit useless? need reference a start or end date as a reference?
 * how about disabling proxy classes? what will be the difference exactly?
@@ -268,6 +261,8 @@ according to this, normal user may not use post action for instance? check these
 * breeze save queuing - is this useful?
 http://www.getbreezenow.com/documentation/concurrent-saves
 tried this but should be improved. Before calling saveChanges function, we set each modified entities' RowVersion property in prepareSaveBatches function in dataContext.js. And this function is getting called before queuing operation, which means it stores outdated (invalid RowVersion) entities (normally after save operation it was updating local entity with RowVersion that comes from the server) and in the second call it returns 'Conflict' error message.
+
+* dataContext - What to do these lines; batches.push(manager.getEntities(['License'], [breeze.EntityState.Deleted]));
 
 * unified approach for controller validations;
 SequenceEqual check is only in Patch method, in on Post & Put
@@ -308,6 +303,8 @@ Autofac, Ninject, Unity or ? Check their websites - Check Asp.Net Identity as a 
 And do we need it?
 
 * http://www.asp.net/web-api/overview/testing-and-debugging/mocking-entity-framework-when-unit-testing-aspnet-web-api-2
+
+* Check EF conventions for possible use; rowversion, datetime, id etc?
 
 ---
 . addfield method should create new elementcells for this new field for the existing items! - ALREADY OK?

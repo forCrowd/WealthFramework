@@ -3,9 +3,9 @@
 
     var controllerId = 'AccountEditController';
     angular.module('main')
-        .controller(controllerId, ['userFactory', 'logger', AccountEditController]);
+        .controller(controllerId, ['dataContext', 'logger', AccountEditController]);
 
-    function AccountEditController(userFactory, logger) {
+    function AccountEditController(dataContext, logger) {
         logger = logger.forSource(controllerId);
 
         var isSaving = false;
@@ -18,7 +18,7 @@
         vm.saveChanges = saveChanges;
 
         // Get current user
-        userFactory.getCurrentUser()
+        dataContext.getCurrentUser()
             .then(function (currentUser) {
                 vm.user = currentUser;
                 vm.user.isEditing = true;
@@ -31,7 +31,7 @@
         }
 
         function isSaveDisabled() {
-            //return isSaving || (!userFactory.hasChanges());
+            //return isSaving || (!dataContext.hasChanges());
             return isSaving;
         }
 
@@ -39,7 +39,7 @@
 
             isSaving = true;
             vm.user.isEditing = false;
-            userFactory.saveChanges()
+            dataContext.saveChanges()
                 .then(function (result) {
                     logger.logSuccess('Your changes have been saved!', null, true);
                 })

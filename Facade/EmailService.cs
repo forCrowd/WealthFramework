@@ -57,9 +57,10 @@
                     {
                         // TODO Get rid of this ugliness asap! / SH - 04 Jan. '16
                         // This email type is only a notification to the admin
-                        var newExternalLoginNotification = message.Subject == "New external login";
+                        var notificationToAdmin = message.Subject == "New external login" ||
+                            message.Subject == "New anonymous login";
 
-                        if (!newExternalLoginNotification)
+                        if (!notificationToAdmin)
                         {
                             // To
                             mailMessage.To.Add(new MailAddress(message.Destination));
@@ -70,7 +71,7 @@
                         }
                         else
                         {
-                            // External login email will only be send to notification address
+                            // Login emails will only be send to notification address
                             if (hasNotificationAddress)
                                 mailMessage.To.Add(new MailAddress(AppSettings.NotificationEmailAddress));
                         }

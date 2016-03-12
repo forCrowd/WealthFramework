@@ -56,6 +56,7 @@
     </None>
     <None Include="Documents\Survey.docx" />
     <None Include="Documents\Index Income Calculation.xlsx" />
+    <None Include="Documents\Feedback.md" />
     <None Include="Documents\Todo.md" />
     <Content Include="Documents\Troubleshoot.txt" />
   </ItemGroup>

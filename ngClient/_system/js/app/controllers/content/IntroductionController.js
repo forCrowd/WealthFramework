@@ -3,9 +3,9 @@
 
     var controllerId = 'IntroductionController';
     angular.module('main')
-        .controller(controllerId, ['resourcePoolFactory', 'userFactory', '$scope', '$timeout', 'logger', IntroductionController]);
+        .controller(controllerId, ['resourcePoolFactory', 'dataContext', '$scope', '$timeout', 'logger', IntroductionController]);
 
-    function IntroductionController(resourcePoolFactory, userFactory, $scope, $timeout, logger) {
+    function IntroductionController(resourcePoolFactory, dataContext, $scope, $timeout, logger) {
 
         // Logger
         logger = logger.forSource(controllerId);
@@ -25,8 +25,12 @@
                 .then(function (resourcePool) {
                     if (resourcePool === null) {
 
+                        dataContext.createEntitySuppressAuthValidation(true);
+
                         resourcePoolFactory.createResourcePoolDirectIncomeAndMultiplier()
                             .then(function (resourcePool) {
+                                dataContext.createEntitySuppressAuthValidation(true);
+
                                 resourcePool.Id = upoId;
                                 resourcePool.Name = 'Unidentified Profiting Object (UPO)';
                                 resourcePool.InitialValue = 0;
@@ -43,6 +47,11 @@
                                 resourcePool._init(true);
 
                                 initResourcePool(resourcePool);
+
+                                dataContext.createEntitySuppressAuthValidation(false);
+                            })
+                            .finally(function () {
+                                dataContext.createEntitySuppressAuthValidation(false);
                             });
                     } else {
                         initResourcePool(resourcePool);
@@ -64,7 +73,7 @@
                                     }
 
                                     resourcePool.ElementSet.forEach(function (element) {
-                                        userFactory.updateElementMultiplier(element, 'increase');
+                                        dataContext.updateElementMultiplier(element, 'increase');
                                     });
                                 });
 

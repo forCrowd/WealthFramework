@@ -3,9 +3,9 @@
 
     var controllerId = 'FairShareIndexSampleController';
     angular.module('main')
-        .controller(controllerId, ['userFactory', 'logger', FairShareIndexSampleController]);
+        .controller(controllerId, ['logger', FairShareIndexSampleController]);
 
-    function FairShareIndexSampleController(userFactory, logger) {
+    function FairShareIndexSampleController(logger) {
 
         logger = logger.forSource(controllerId);
 

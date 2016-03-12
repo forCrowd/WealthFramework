@@ -3,9 +3,9 @@
 
     var controllerId = 'KnowledgeIndexController';
     angular.module('main')
-        .controller(controllerId, ['resourcePoolFactory', 'userFactory', '$scope', '$timeout', 'logger', KnowledgeIndexController]);
+        .controller(controllerId, ['resourcePoolFactory', 'dataContext', '$scope', '$timeout', 'logger', KnowledgeIndexController]);
 
-    function KnowledgeIndexController(resourcePoolFactory, userFactory, $scope, $timeout, logger) {
+    function KnowledgeIndexController(resourcePoolFactory, dataContext, $scope, $timeout, logger) {
 
         logger = logger.forSource(controllerId);
 
@@ -131,15 +131,15 @@
                                         if (elementCell.ElementItem.Name === cell.ElementItem.Name) {
                                             switch (event.name) {
                                                 case 'resourcePoolEditor_elementCellNumericValueIncreased': {
-                                                    userFactory.updateElementCellNumericValue(elementCell, 'increase');
+                                                    dataContext.updateElementCellNumericValue(elementCell, 'increase');
                                                     break;
                                                 }
                                                 case 'resourcePoolEditor_elementCellNumericValueDecreased': {
-                                                    userFactory.updateElementCellNumericValue(elementCell, 'decrease');
+                                                    dataContext.updateElementCellNumericValue(elementCell, 'decrease');
                                                     break;
                                                 }
                                                 case 'resourcePoolEditor_elementCellNumericValueReset': {
-                                                    userFactory.updateElementCellNumericValue(elementCell, 'reset');
+                                                    dataContext.updateElementCellNumericValue(elementCell, 'reset');
                                                     break;
                                                 }
                                             }

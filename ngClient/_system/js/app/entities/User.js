@@ -21,7 +21,10 @@
             self.Id = 0;
             self.Email = '';
             self.EmailConfirmed = false;
+            self.IsAnonymous = false;
             self.UserName = '';
+            self.SingleUseToken = null;
+            self.HasPassword = false;
             self.FirstName = '';
             self.MiddleName = '';
             self.LastName = '';
@@ -45,7 +48,6 @@
 
             // Functions
             self.getEntities = getEntities;
-            self.hasPassword = hasPassword;
             self.isAuthenticated = isAuthenticated;
 
             /*** Implementations ***/
@@ -66,21 +68,6 @@
                 // TODO Other user related entities?
 
                 return entities;
-            }
-
-            function hasPassword() {
-                if (typeof self.Claims === 'undefined') {
-                    throw new Error('Invalid operation: Claims is undefined');
-                }
-
-                for (var i = 0; i < self.Claims.length; i++) {
-                    var claim = self.Claims[i];
-                    if (claim.ClaimType === 'HasNoPassword') {
-                        return false;
-                    }
-                }
-
-                return true;
             }
 
             function isAuthenticated() {

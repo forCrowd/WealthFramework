@@ -3,9 +3,9 @@
 
     var controllerId = 'ConfirmEmailController';
     angular.module('main')
-        .controller(controllerId, ['userFactory', '$rootScope', '$location', 'logger', ConfirmEmailController]);
+        .controller(controllerId, ['dataContext', '$rootScope', '$location', 'logger', ConfirmEmailController]);
 
-    function ConfirmEmailController(userFactory, $rootScope, $location, logger) {
+    function ConfirmEmailController(dataContext, $rootScope, $location, logger) {
         logger = logger.forSource(controllerId);
 
         var vm = this;
@@ -19,7 +19,7 @@
 
         function _init() {
 
-            userFactory.getCurrentUser()
+            dataContext.getCurrentUser()
                 .then(function (currentUser) {
 
                     vm.currentUser = currentUser;
@@ -34,7 +34,7 @@
                         return;
                     }
 
-                    userFactory.confirmEmail({ Token: token });
+                    dataContext.confirmEmail({ Token: token });
                 });
         }
 
@@ -42,7 +42,7 @@
 
             vm.isResendDisabled = true;
 
-            userFactory.resendConfirmationEmail()
+            dataContext.resendConfirmationEmail()
                 .then(function () {
                     logger.logSuccess('Confirmation email has been resent to your email address!', null, true);
                 })

@@ -3,16 +3,16 @@
 
     var controllerId = 'ChangePasswordController';
     angular.module('main')
-        .controller(controllerId, ['userFactory', '$location', 'logger', ChangePasswordController]);
+        .controller(controllerId, ['dataContext', '$location', 'logger', ChangePasswordController]);
 
-    function ChangePasswordController(userFactory, $location, logger) {
+    function ChangePasswordController(dataContext, $location, logger) {
         logger = logger.forSource(controllerId);
 
         var vm = this;
         vm.changePassword = changePassword;
 
         function changePassword() {
-            userFactory.changePassword(vm)
+            dataContext.changePassword(vm)
                 .success(function () {
                     $location.url('/');
                     logger.logSuccess('Your password has been changed!', null, true);

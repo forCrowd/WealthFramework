@@ -45,7 +45,15 @@
     <Content Include="_system\css\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="_system\images\forCrowd_logo_34x34.jpg" />
     <Content Include="_system\images\PresentvsNew.png" />
-    <None Include="_system\js\appSettings\appSettings.js" />
+    <Content Include="_system\css\fonts\fontawesome-webfont.eot" />
+    <Content Include="_system\css\fonts\fontawesome-webfont.ttf" />
+    <Content Include="_system\css\fonts\fontawesome-webfont.woff" />
+    <Content Include="_system\css\fonts\fontawesome-webfont.woff2" />
+    <Content Include="_system\css\fonts\FontAwesome.otf" />
+    <Content Include="_system\css\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="_system\css\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="_system\css\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="_system\css\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="_system\js\appSettings\Setup\0 Readme.txt" />
     <None Include="_system\js\appSettings\Setup\appSettings.js" />
     <None Include="_system\js\app\config\authorization.js" />
@@ -74,6 +82,8 @@
     <None Include="_system\js\app\controllers\resourcePool\ResourcePoolManageController.js" />
     <None Include="_system\js\app\controllers\resourcePool\ResourcePoolViewController.js" />
     <None Include="_system\js\app\directives\resourcePoolEditor\resourcePoolEditor.css" />
+    <None Include="_system\js\appSettings\appSettings.js" />
+    <None Include="_system\js\app\controllers\account\SocialLoginsController.js" />
     <Content Include="_system\js\app\directives\resourcePoolEditor\resourcePoolEditor.html" />
     <None Include="_system\js\app\directives\resourcePoolEditor\resourcePoolEditor.js" />
     <None Include="_system\js\app\entities\Element.js" />
@@ -90,11 +100,9 @@
     <None Include="_system\js\app\factories\dataContext.js" />
     <None Include="_system\js\app\factories\entityManagerFactory.js" />
     <None Include="_system\js\app\factories\generated\resourcePoolFactory.js" />
-    <None Include="_system\js\app\factories\generated\userFactory.js" />
     <None Include="_system\js\app\factories\locationHistory.js" />
     <None Include="_system\js\app\factories\logger.js" />
     <None Include="_system\js\app\factories\resourcePoolFactory.js" />
-    <None Include="_system\js\app\factories\userFactory.js" />
     <None Include="_system\js\app\filters\angular-enum.js" />
     <None Include="_system\js\app\filters\angular-numberSymbol.js" />
     <None Include="_system\js\app\filters\angular-percentage.js" />
@@ -105,6 +113,8 @@
     <Content Include="_system\views\account\changePassword.html" />
     <Content Include="_system\views\account\confirmEmail.html" />
     <Content Include="_system\views\account\login.html" />
+    <Content Include="_system\views\account\socialLogins.html" />
+    <Content Include="_system\views\account\registerLogin.html" />
     <Content Include="_system\views\account\register.html" />
     <Content Include="_system\views\account\resetPassword.html" />
     <Content Include="_system\views\content\404.html" />
@@ -140,15 +150,6 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-    <Content Include="_system\css\fonts\fontawesome-webfont.eot" />
-    <Content Include="_system\css\fonts\fontawesome-webfont.ttf" />
-    <Content Include="_system\css\fonts\fontawesome-webfont.woff" />
-    <Content Include="_system\css\fonts\fontawesome-webfont.woff2" />
-    <Content Include="_system\css\fonts\FontAwesome.otf" />
-    <Content Include="_system\css\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="_system\css\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="_system\css\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="_system\css\fonts\glyphicons-halflings-regular.woff2" />
   </ItemGroup>
   <ItemGroup>
     <None Include="gulpfile.js" />
