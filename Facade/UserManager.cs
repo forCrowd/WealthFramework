@@ -31,24 +31,33 @@
                 // Get user
                 var user = await FindByIdAsync(userId);
 
-                // Remove HasNoPassword claim
-                await Store.RemoveHasNoPasswordClaim(user);
+                user.HasPassword = null;
+
                 await Store.SaveChangesAsync();
             }
 
             return result;
         }
 
-        public async Task AddTempTokenClaimAsync(User user)
+        public async Task AddSingleUseTokenAsync(User user)
         {
-            await Store.AddTempTokenClaim(user);
+            Store.AddSingleUseToken(user);
             await Store.SaveChangesAsync();
         }
+
+        //public async Task AddTempTokenClaimAsync(User user)
+        //{
+        //    await Store.AddTempTokenClaim(user);
+        //    await Store.SaveChangesAsync();
+        //}
 
         public override async Task<IdentityResult> SetEmailAsync(int userId, string email)
         {
             var user = await FindByIdAsync(userId);
 
+            // Email & userName are same at the moment
+            user.UserName = email;
+            user.IsAnonymous = false;
             var result = await base.SetEmailAsync(userId, email);
 
             if (result.Succeeded)
@@ -86,8 +95,43 @@
             return result;
         }
 
+        /// <summary>
+        /// Creates an local anonymous account with auto generated email address and without a password
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public override async Task<IdentityResult> CreateAsync(User user)
+        {
+            // Has password: Determines whether 'Add Password' or 'Change Password' option is available
+            user.HasPassword = false;
+
+            // Single use token: Since this is an external login, create single use token;
+            // it's going to be used to retrieve the bearer token by the client
+            Store.AddSingleUseToken(user);
+
+            var result = await base.CreateAsync(user);
+
+            if (result.Succeeded)
+            {
+                await Store.SaveChangesAsync();
+
+                // Send notification email
+                await SendAnonymousLoginNotificationEmailAsync(user.Id);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Creates a regular local account
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public override async Task<IdentityResult> CreateAsync(User user, string password)
         {
+            user.HasPassword = null;
+
             var result = await base.CreateAsync(user, password);
 
             if (result.Succeeded)
@@ -101,16 +145,23 @@
             return result;
         }
 
+        /// <summary>
+        /// Creates an account with external login and no password
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="userLoginInfo"></param>
+        /// <returns></returns>
         public async Task<IdentityResult> CreateAsync(User user, UserLoginInfo userLoginInfo)
         {
             // Email confirmed
             user.EmailConfirmed = true;
 
-            // Has no password: Determines whether 'Add Password' or 'Change Password' option is available
-            await Store.AddHasNoPasswordClaim(user);
+            // Has password: Determines whether 'Add Password' or 'Change Password' option is available
+            user.HasPassword = false;
 
-            // Temp token: Since this is an external login, create temp token; it's going to be used to retrieve the real token by the client
-            await Store.AddTempTokenClaim(user);
+            // Single use token: Since this is an external login, create single use token;
+            // it's going to be used to retrieve the bearer token by the client
+            user.SingleUseToken = Guid.NewGuid().ToString();
 
             var result = await base.CreateAsync(user);
 
@@ -144,26 +195,43 @@
             await Store.SaveChangesAsync();
         }
 
-        public async Task<User> FindByTempToken(string tempToken)
+        public async Task<User> FindBySingleUseToken(string token)
         {
             // Search for the user
-            var entity = await Users
-                .Include(user => user.Claims)
-                .Include(user => user.Logins)
-                .Include(user => user.Roles)
-                .SingleOrDefaultAsync(user => user.Claims.Any(claim => claim.ClaimType == "TempToken" && claim.ClaimValue == tempToken));
+            var entity = await Users.SingleOrDefaultAsync(user => user.SingleUseToken == token);
 
             // Return null if there is no..
             if (entity == null)
                 return null;
 
-            // Remove temp token
-            await Store.RemoveTempTokenClaim(entity, tempToken);
+            // Remove token
+            entity.SingleUseToken = null;
             await Store.SaveChangesAsync();
 
             // Return the user
             return entity;
         }
+
+        //public async Task<User> FindByTempToken(string tempToken)
+        //{
+        //    // Search for the user
+        //    var entity = await Users
+        //        .Include(user => user.Claims)
+        //        .Include(user => user.Logins)
+        //        .Include(user => user.Roles)
+        //        .SingleOrDefaultAsync(user => user.Claims.Any(claim => claim.ClaimType == "TempToken" && claim.ClaimValue == tempToken));
+
+        //    // Return null if there is no..
+        //    if (entity == null)
+        //        return null;
+
+        //    // Remove temp token
+        //    await Store.RemoveTempTokenClaim(entity, tempToken);
+        //    await Store.SaveChangesAsync();
+
+        //    // Return the user
+        //    return entity;
+        //}
 
         /// <summary>
         /// For testing purposes
@@ -177,7 +245,7 @@
             var hour = DateTime.Now.Hour;
             var minute = DateTime.Now.Minute;
             var second = DateTime.Now.Second;
-            return "local_" + year + month + day + "_" + hour + minute + second + "@forcrowd.org";
+            return "user_" + year + month + day + "_" + hour + minute + second + "@forcrowd.org";
         }
 
         public async Task<IdentityResult> LinkLoginAsync(User user, UserLoginInfo userLoginInfo)
@@ -185,8 +253,9 @@
             // Email confirmed
             user.EmailConfirmed = true;
 
-            // Temp token: Since this is an external login, create temp token; it's going to be used to retrieve the real token by the client
-            await Store.AddTempTokenClaim(user);
+            // Single use token: Since this is an external login, create single use token;
+            // it's going to be used to retrieve the bearer token by the client
+            user.SingleUseToken = Guid.NewGuid().ToString();
 
             var result = await base.AddLoginAsync(user.Id, userLoginInfo);
 
@@ -216,7 +285,7 @@
 
             var token = await base.GenerateEmailConfirmationTokenAsync(userId);
             var encodedToken = System.Net.WebUtility.UrlEncode(token);
-            var confirmEmailUrl = string.Format("{0}/account/confirmEmail?token={1}", AppSettings.ClientAppUrl, encodedToken);
+            var confirmEmailUrl = string.Format("{0}/_system/account/confirmEmail?token={1}", AppSettings.ClientAppUrl, encodedToken);
 
             var subject = "Confirm your email";
             if (resend) subject += " - Resend";
@@ -248,7 +317,7 @@
 
             var token = await base.GeneratePasswordResetTokenAsync(userId);
             var encodedToken = System.Net.WebUtility.UrlEncode(token);
-            var resetPasswordUrl = string.Format("{0}/account/resetPassword?email={1}&token={2}",
+            var resetPasswordUrl = string.Format("{0}/_system/account/resetPassword?email={1}&token={2}",
                 AppSettings.ClientAppUrl,
                 user.Email,
                 encodedToken);
@@ -272,10 +341,30 @@
             await base.SendEmailAsync(userId, subject, sbBody.ToString());
         }
 
+        public async Task SendAnonymousLoginNotificationEmailAsync(int userId)
+        {
+            var subject = "New anonymous login";
+
+            var user = await base.FindByIdAsync(userId);
+
+            var sbBody = new StringBuilder();
+            sbBody.AppendLine("    <p>");
+            sbBody.AppendLine("        <b>Wealth Economy - New Anonymous Login</b><br />");
+            sbBody.AppendLine("        <br />");
+            sbBody.AppendFormat("        Email: {0}<br />", user.Email);
+            sbBody.AppendLine("    </p>");
+            sbBody.AppendLine("    <p>");
+            sbBody.AppendLine("        Thanks,<br />");
+            sbBody.AppendLine("        forCrowd Foundation");
+            sbBody.AppendLine("    </p>");
+
+            await base.SendEmailAsync(userId, subject, sbBody.ToString());
+        }
+
         public async Task SendNewExternalLoginNotificationEmailAsync(int userId)
         {
             var subject = "New external login";
-            
+
             var user = await base.FindByIdAsync(userId);
 
             var sbBody = new StringBuilder();

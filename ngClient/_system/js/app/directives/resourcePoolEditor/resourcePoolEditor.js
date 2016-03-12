@@ -5,7 +5,7 @@
 
     angular.module('main')
         .directive(directiveId, ['resourcePoolFactory',
-            'userFactory',
+            'dataContext',
             'Enums',
             '$location',
             '$rootScope',
@@ -13,7 +13,7 @@
             resourcePoolEditor]);
 
     function resourcePoolEditor(resourcePoolFactory,
-        userFactory,
+        dataContext,
         Enums,
         $location,
         $rootScope,
@@ -56,7 +56,7 @@
             scope.$watch('config', configChanged, true);
             scope.$on('saveChangesStart', saveChangesStart);
             scope.$on('saveChangesCompleted', saveChangesCompleted);
-            scope.$on('userFactory_currentUserChanged', currentUserChanged);
+            scope.$on('dataContext_currentUserChanged', currentUserChanged);
 
             /*** Implementations ***/
 
@@ -67,37 +67,37 @@
 
             function configChanged() {
                 var resourcePoolId = typeof scope.config.resourcePoolId === 'undefined' ? null : Number(scope.config.resourcePoolId);
-                userFactory.getCurrentUser()
+                dataContext.getCurrentUser()
                     .then(function (currentUser) {
                         initialize(currentUser, resourcePoolId);
                     });
             }
 
             function decreaseElementCellNumericValue(cell) {
-                userFactory.updateElementCellNumericValue(cell, 'decrease');
+                dataContext.updateElementCellNumericValue(cell, 'decrease');
                 $rootScope.$broadcast('resourcePoolEditor_elementCellNumericValueDecreased', cell);
                 saveChanges();
             }
 
             function decreaseElementMultiplier(element) {
-                userFactory.updateElementMultiplier(element, 'decrease');
+                dataContext.updateElementMultiplier(element, 'decrease');
                 $rootScope.$broadcast('resourcePoolEditor_elementMultiplierDecreased', element);
                 saveChanges();
             }
 
             function decreaseElementCellMultiplier(elementCell) {
-                userFactory.updateElementCellMultiplier(elementCell, 'decrease');
+                dataContext.updateElementCellMultiplier(elementCell, 'decrease');
                 $rootScope.$broadcast('resourcePoolEditor_elementCellMultiplierDecreased', element);
                 saveChanges();
             }
 
             function decreaseIndexRating(field) {
-                userFactory.updateElementFieldIndexRating(field, 'decrease');
+                dataContext.updateElementFieldIndexRating(field, 'decrease');
                 saveChanges();
             }
 
             function decreaseResourcePoolRate() {
-                userFactory.updateResourcePoolRate(scope.resourcePool, 'decrease');
+                dataContext.updateResourcePoolRate(scope.resourcePool, 'decrease');
                 saveChanges();
             }
 
@@ -107,30 +107,30 @@
             }
 
             function increaseElementCellNumericValue(cell) {
+                dataContext.updateElementCellNumericValue(cell, 'increase');
                 $rootScope.$broadcast('resourcePoolEditor_elementCellNumericValueIncreased', cell);
-                userFactory.updateElementCellNumericValue(cell, 'increase');
                 saveChanges();
             }
 
             function increaseElementMultiplier(element) {
-                userFactory.updateElementMultiplier(element, 'increase');
+                dataContext.updateElementMultiplier(element, 'increase');
                 $rootScope.$broadcast('resourcePoolEditor_elementMultiplierIncreased', element);
                 saveChanges();
             }
 
             function increaseElementCellMultiplier(elementCell) {
-                userFactory.updateElementCellMultiplier(elementCell, 'increase');
+                dataContext.updateElementCellMultiplier(elementCell, 'increase');
                 $rootScope.$broadcast('resourcePoolEditor_elementCellMultiplierIncreased', element);
                 saveChanges();
             }
 
             function increaseIndexRating(field) {
-                userFactory.updateElementFieldIndexRating(field, 'increase');
+                dataContext.updateElementFieldIndexRating(field, 'increase');
                 saveChanges();
             }
 
             function increaseResourcePoolRate() {
-                userFactory.updateResourcePoolRate(scope.resourcePool, 'increase');
+                dataContext.updateResourcePoolRate(scope.resourcePool, 'increase');
                 saveChanges();
             }
 
@@ -276,30 +276,30 @@
             }
 
             function resetElementCellNumericValue(cell) {
-                userFactory.updateElementCellNumericValue(cell, 'reset');
+                dataContext.updateElementCellNumericValue(cell, 'reset');
                 $rootScope.$broadcast('resourcePoolEditor_elementCellNumericValueReset', element);
                 saveChanges();
             }
 
             function resetElementMultiplier(element) {
-                userFactory.updateElementMultiplier(element, 'reset');
+                dataContext.updateElementMultiplier(element, 'reset');
                 $rootScope.$broadcast('resourcePoolEditor_elementMultiplierReset', element);
                 saveChanges();
             }
 
             function resetElementCellMultiplier(elementCell) {
-                userFactory.updateElementCellMultiplier(elementCell, 'reset');
+                dataContext.updateElementCellMultiplier(elementCell, 'reset');
                 $rootScope.$broadcast('resourcePoolEditor_elementCellMultiplierReset', element);
                 saveChanges();
             }
 
             function resetIndexRating(field) {
-                userFactory.updateElementFieldIndexRating(field, 'reset');
+                dataContext.updateElementFieldIndexRating(field, 'reset');
                 saveChanges();
             }
 
             function resetResourcePoolRate() {
-                userFactory.updateResourcePoolRate(scope.resourcePool, 'reset');
+                dataContext.updateResourcePoolRate(scope.resourcePool, 'reset');
                 saveChanges();
             }
 

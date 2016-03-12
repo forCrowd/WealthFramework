@@ -18,9 +18,9 @@
         var vm = this;
         vm.editorConfig = getEditorConfig();
 
-        init();
+        _init();
 
-        function init() {
+        function _init() {
 
             // Title
             if (!vm.editorConfig.isNew) {

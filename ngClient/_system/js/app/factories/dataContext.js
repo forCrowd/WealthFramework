@@ -10,39 +10,77 @@
 
     var factoryId = 'dataContext';
     angular.module('main')
-        .factory(factoryId, ['entityManagerFactory', '$q', '$rootScope', '$timeout', 'logger', dataContext]);
+        .factory(factoryId, ['entityManagerFactory', 'serviceAppUrl', '$http', '$q', '$rootScope', '$timeout', '$window', 'logger', dataContext]);
 
-    function dataContext(entityManagerFactory, $q, $rootScope, $timeout, logger) {
+    function dataContext(entityManagerFactory, serviceAppUrl, $http, $q, $rootScope, $timeout, $window, logger) {
 
         // Logger
         logger = logger.forSource(factoryId);
 
-        // Manager
-        var currentUser = { isAuthenticated: function () { return false; } };
+        // Service urls
+        var addPasswordUrl = serviceAppUrl + '/api/Account/AddPassword';
+        var changeEmailUrl = serviceAppUrl + '/api/Account/ChangeEmail';
+        var changePasswordUrl = serviceAppUrl + '/api/Account/ChangePassword';
+        var confirmEmailUrl = serviceAppUrl + '/api/Account/ConfirmEmail';
+        var registerUrl = serviceAppUrl + '/api/Account/Register';
+        var registerAnonymousUrl = serviceAppUrl + '/api/Account/RegisterAnonymous';
+        var resendConfirmationEmailUrl = serviceAppUrl + '/api/Account/ResendConfirmationEmail';
+        var resetPasswordUrl = serviceAppUrl + '/api/Account/ResetPassword';
+        var resetPasswordRequestUrl = serviceAppUrl + '/api/Account/ResetPasswordRequest';
+        var tokenUrl = serviceAppUrl + '/api/Token';
+
+        // In create entity function, it checks whether the user is authenticated or not.
+        // If not, then broadcasts it, so we can force user to register or login.
+        // However, there are some entities that the application has to create for the user (currentUser, sample resourcepools etc.)
+        // In those cases, it should stop doing this check, so this flag will be used.
+        // SH - 10 Mar. '16
+        var _createEntitySuppressAuthValidation = false; 
+        //var currentUser = { isAuthenticated: function () { return false; } };
+        //var currentUser = getAnonymousUser();
+        var currentUser = null;
+        var getCurrentUserPromise = null;
         var manager = null;
         var metadataReadyPromise = null;
         var saveTimer = null;
 
         // Factory methods
         var factory = {
-            clear: clear,
+            addPassword: addPassword,
+            changeEmail: changeEmail,
+            changePassword: changePassword,
+            confirmEmail: confirmEmail,
             createEntity: createEntity,
+            createEntitySuppressAuthValidation: createEntitySuppressAuthValidation,
             executeQuery: executeQuery,
             fetchEntityByKey: fetchEntityByKey,
             getChanges: getChanges,
             getChangesCount: getChangesCount,
+            getCurrentUser: getCurrentUser,
             getEntities: getEntities,
+            getToken: getToken,
+            getUniqueUserEmail: getUniqueUserEmail,
             hasChanges: hasChanges,
+            login: login,
+            logout: logout,
             metadataReady: metadataReady,
+            register: register,
+            registerAnonymous: registerAnonymous,
             rejectChanges: rejectChanges,
+            resendConfirmationEmail: resendConfirmationEmail,
+            resetPassword: resetPassword,
+            resetPasswordRequest: resetPasswordRequest,
             saveChanges: saveChanges,
             saveChangesAlt: saveChangesAlt,
-            updateAnonymousChanges: updateAnonymousChanges
+            updateElementMultiplier: updateElementMultiplier,
+            updateElementCellMultiplier: updateElementCellMultiplier,
+            updateElementCellNumericValue: updateElementCellNumericValue,
+            updateElementFieldIndexRating: updateElementFieldIndexRating,
+            updateResourcePoolRate: updateResourcePoolRate
         };
 
         // Event handlers
         $rootScope.$on('ElementField_createUserElementCell', createUserElementCell);
-        $rootScope.$on('userFactory_currentUserChanged', currentUserChanged);
+        $rootScope.$on('dataContext_currentUserChanged', currentUserChanged);
 
         _init();
 
@@ -54,8 +92,56 @@
             manager = entityManagerFactory.newManager();
         }
 
-        function clear() {
-            manager.clear();
+        function addPassword(addPasswordBindingModel) {
+            return $http.post(addPasswordUrl, addPasswordBindingModel)
+                .success(function (updatedUser) {
+
+                    currentUser.HasPassword = null;
+
+                    // Sync RowVersion fields
+                    syncRowVersion(currentUser, updatedUser);
+                })
+                .error(handleErrorResult);
+        }
+
+        function changeEmail(changeEmailBindingModel) {
+            return $http.post(changeEmailUrl, changeEmailBindingModel)
+                .success(function (updatedUser) {
+
+                    currentUser.Email = updatedUser.Email;
+                    currentUser.EmailConfirmed = false;
+                    currentUser.IsAnonymous = false;
+                    currentUser.UserName = updatedUser;
+
+                    // Sync RowVersion fields
+                    syncRowVersion(currentUser, updatedUser);
+                })
+                .error(handleErrorResult);
+        }
+
+        function changePassword(changePasswordBindingModel) {
+            return $http.post(changePasswordUrl, changePasswordBindingModel)
+                .success(function (updatedUser) {
+                    // Sync RowVersion fields
+                    syncRowVersion(currentUser, updatedUser);
+                })
+                .error(handleErrorResult);
+        }
+
+        function confirmEmail(confirmEmailBindingModel) {
+            return $http.post(confirmEmailUrl, confirmEmailBindingModel)
+                .success(function (updatedUser) {
+
+                    currentUser.EmailConfirmed = true;
+
+                    // Sync RowVersion fields
+                    syncRowVersion(currentUser, updatedUser);
+                })
+                .error(handleErrorResult);
+        }
+
+        function createEntitySuppressAuthValidation(value) {
+            _createEntitySuppressAuthValidation = value;
         }
 
         function createEntity(entityType, initialValues) {
@@ -63,6 +149,11 @@
             // All entities will be created in isEditing state by default
             if (typeof initialValues.isEditing === 'undefined') {
                 initialValues.isEditing = true;
+            }
+
+            // Broadcast if unauthorized user creates a new entity (interact with the system)
+            if (!_createEntitySuppressAuthValidation && !currentUser.isAuthenticated()) {
+                $rootScope.$broadcast('dataContext_unauthenticatedUserInteracted');
             }
 
             return manager.createEntity(entityType, initialValues);
@@ -113,8 +204,238 @@
             return manager.getEntities(entityTypes, entityStates);
         }
 
+        // Returns either unauthenticated or logged in user
+        function getCurrentUser(resetPromise) {
+            resetPromise = typeof resetPromise !== 'undefined' ? resetPromise : false;
+
+            if (getCurrentUserPromise === null || resetPromise) {
+
+                var deferred = $q.defer();
+                getCurrentUserPromise = deferred.promise;
+
+                if ($window.localStorage.getItem('token') === null) {
+
+                    metadataReady()
+                        .then(function () {
+                            currentUser = getAnonymousUser();
+                            $rootScope.$broadcast('dataContext_currentUserChanged', currentUser);
+                            deferred.resolve(currentUser);
+                        })
+                        .catch(function () {
+                            // TODO Handle?
+                            deferred.reject();
+                        });
+
+                } else {
+                    var query = breeze.EntityQuery
+                        .from('Users')
+                        .using(breeze.FetchStrategy.FromServer);
+
+                    executeQuery(query)
+                        .then(success)
+                        .catch(failed);
+                }
+            }
+
+            return getCurrentUserPromise;
+
+            function success(response) {
+
+                // If the response has an entity, use that, otherwise create an anonymous user
+                if (response.results.length > 0) {
+                    currentUser = response.results[0];
+                } else {
+                    $window.localStorage.removeItem('token'); // TODO Invalid token, expired?
+
+                    if (currentUser === null) {
+                        currentUser = getAnonymousUser();
+                    }
+                }
+
+                $rootScope.$broadcast('dataContext_currentUserChanged', currentUser);
+
+                deferred.resolve(currentUser);
+            }
+
+            function failed(error) {
+                var message = error.message || 'User query failed';
+                // TODO Handle this case better!
+                deferred.reject(message);
+                throw new Error(message);
+            }
+        }
+
+        function getToken(email, password, rememberMe, singleUseToken) {
+
+            var deferred = $q.defer();
+
+            var tokenData = 'grant_type=password' +
+                '&username=' + email +
+                '&password=' + password +
+                '&rememberMe=' + rememberMe +
+                '&singleUseToken=' + singleUseToken;
+
+            $http.post(tokenUrl, tokenData, { 'Content-Type': 'application/x-www-form-urlencoded' })
+                .success(function (token) {
+
+                    // Set token to the session
+                    $window.localStorage.setItem('token', angular.toJson(token));
+                    deferred.resolve();
+                })
+                .error(function (data, status, headers, config) {
+                    handleErrorResult(data, status, headers, config);
+                    deferred.reject(data);
+                });
+
+            return deferred.promise;
+        }
+
+        function getAnonymousUser() {
+            _createEntitySuppressAuthValidation = true;
+            var user = createEntity('User', {
+                Email: getUniqueUserEmail(),
+                IsAnonymous: true,
+                isEditing: false
+            });
+            _createEntitySuppressAuthValidation = false;
+            return user;
+        }
+
+        function getUniqueUserEmail() {
+
+            var now = new Date();
+            var year = now.getFullYear();
+            var month = now.getMonth() + 1;
+            var day = now.getDate();
+            var hour = now.getHours();
+            var minute = now.getMinutes();
+            var second = now.getSeconds();
+
+            return 'user_' + year + month + day + '_' + hour + minute + second + '@forcrowd.org';
+        }
+
+        function getUserElementCell(user, elementCell) {
+
+            var userCell = elementCell.currentUserCell();
+
+            if (userCell === null) {
+
+                // Since there is a delay between client-side changes and actual save operation (editor.js - saveChanges(1500)), these entities might be deleted but not yet saved. 
+                // To prevent having the exception of creating an entity with the same keys twice, search 'deleted' ones and restore it back to life! / SH - 02 Dec. '15
+                var deletedUserCells = getEntities(['UserElementCell'], [breeze.EntityState.Deleted]);
+                var userCells = deletedUserCells.filter(function (deletedUserCell) {
+                    return deletedUserCell.UserId === user.Id && deletedUserCell.ElementCellId === elementCell.Id;
+                });
+
+                if (userCells.length > 0) {
+                    userCell = userCells[0];
+                    userCell.entityAspect.rejectChanges();
+                    userCell.DecimalValue = elementCell.ElementField.DataType === 12 ? 0 : 50; // TODO ?
+                }
+            }
+
+            return userCell;
+        }
+
+        function getUserElementField(user, elementField) {
+
+            var userField = elementField.currentUserElementField();
+
+            if (userField === null) {
+
+                // Since there is a delay between client-side changes and actual save operation (editor.js - saveChanges(1500)), these entities might be deleted but not yet saved. 
+                // To prevent having the exception of creating an entity with the same keys twice, search 'deleted' ones and restore it back to life! / SH - 02 Dec. '15
+                var deletedUserFields = getEntities(['UserElementField'], [breeze.EntityState.Deleted]);
+                var userFields = deletedUserFields.filter(function (deletedUserField) {
+                    return deletedUserField.UserId === user.Id && deletedUserField.ElementFieldId === elementField.Id;
+                });
+
+                if (userFields.length > 0) {
+                    userField = userFields[0];
+                    userField.entityAspect.rejectChanges();
+                    userField.Rating = 50;
+                }
+            }
+
+            return userField;
+        }
+
+        function getUserResourcePool(user, resourcePool) {
+
+            var userResourcePool = resourcePool.currentUserResourcePool();
+
+            if (userResourcePool === null) {
+
+                // Since there is a delay between client-side changes and actual save operation (editor.js - saveChanges(1500)), these entities might be deleted but not yet saved. 
+                // To prevent having the exception of creating an entity with the same keys twice, search 'deleted' ones and restore it back to life! / SH - 02 Dec. '15
+                var deletedUserResourcePools = getEntities(['UserResourcePool'], [breeze.EntityState.Deleted]);
+                var userResourcePools = deletedUserResourcePools.filter(function (deletedUserResourcePool) {
+                    return deletedUserResourcePool.UserId === user.Id && deletedUserResourcePool.ResourcePoolId === resourcePool.Id;
+                });
+
+                if (userResourcePools.length > 0) {
+                    userResourcePool = userResourcePools[0];
+                    userResourcePool.entityAspect.rejectChanges();
+                    userResourcePool.ResourcePoolRate = 10;
+                }
+            }
+
+            return userResourcePool;
+        }
+
+        function handleErrorResult(data, status, headers, config) {
+
+            // TODO Can this be done on a higher level?
+            var message = '';
+
+            if (typeof data.ModelState !== 'undefined') {
+                for (var key in data.ModelState) {
+                    var array = data.ModelState[key];
+                    array.forEach(addErrorMessage);
+                }
+            }
+
+            function addErrorMessage(error) {
+                message += error + '<br />';
+            }
+
+            if (message === '' && typeof data.Message !== 'undefined') {
+                message = data.Message;
+            }
+
+            if (message === '' && typeof data.error_description !== 'undefined') {
+                message = data.error_description;
+            }
+
+            logger.logError(message, null, true);
+        }
+
         function hasChanges() {
             return manager.hasChanges();
+        }
+
+        function login(email, password, rememberMe, singleUseToken) {
+
+            return getToken(email, password, rememberMe, singleUseToken)
+                .then(function () {
+
+                    // Clear breeze's metadata store
+                    manager.clear();
+
+                    return getCurrentUser(true);
+                });
+        }
+
+        function logout() {
+
+            // Remove token from the session
+            $window.localStorage.removeItem('token');
+
+            // Clear breeze's metadata store
+            manager.clear();
+
+            // Raise logged out event
+            return getCurrentUser(true);
         }
 
         function metadataReady() {
@@ -141,16 +462,115 @@
             return metadataReadyPromise;
         }
 
+        function register(registerBindingModel, rememberMe) {
+
+            var deferred = $q.defer();
+
+            $http.post(registerUrl, registerBindingModel, rememberMe)
+                .success(function (updatedUser) {
+
+                    // breeze context user entity fix-up!
+                    // TODO Try to make this part better, use OData method?
+                    currentUser.Id = updatedUser.Id;
+                    currentUser.Email = updatedUser.Email;
+                    currentUser.UserName = updatedUser.UserName;
+                    currentUser.IsAnonymous = updatedUser.IsAnonymous;
+                    currentUser.HasPassword = updatedUser.HasPassword;
+                    currentUser.SingleUseToken = updatedUser.SingleUseToken;
+                    currentUser.RowVersion = updatedUser.RowVersion;
+                    currentUser.entityAspect.acceptChanges();
+
+                    getToken(registerBindingModel.Email, registerBindingModel.Password, rememberMe)
+                        .then(function () {
+
+                            // Save the changes that's been done before the registration
+                            saveChanges()
+                                .then(function () {
+                                    deferred.resolve();
+                                })
+                                .catch(function () {
+                                    deferred.reject();
+                                });
+                        })
+                        .catch(function () {
+                            deferred.reject();
+                        });
+                })
+                .error(function (data, status, headers, config) {
+                    handleErrorResult(data, status, headers, config);
+                    deferred.reject(data);
+                });
+
+            return deferred.promise;
+        }
+
+        function registerAnonymous(registerAnonymousBindingModel, rememberMe) {
+
+            var deferred = $q.defer();
+
+            $http.post(registerAnonymousUrl, registerAnonymousBindingModel)
+                .success(function (updatedUser) {
+
+                    // breeze context user entity fix-up!
+                    // TODO Try to make this part better, use OData method?
+                    currentUser.Id = updatedUser.Id;
+                    currentUser.Email = updatedUser.Email;
+                    currentUser.UserName = updatedUser.UserName;
+                    currentUser.IsAnonymous = updatedUser.IsAnonymous;
+                    currentUser.HasPassword = updatedUser.HasPassword;
+                    currentUser.SingleUseToken = updatedUser.SingleUseToken;
+                    currentUser.RowVersion = updatedUser.RowVersion;
+                    currentUser.entityAspect.acceptChanges();
+
+                    getToken('', '', rememberMe, updatedUser.SingleUseToken)
+                        .then(function () {
+
+                            // Save the changes that's been done before the registration
+                            saveChanges()
+                                .then(function () {
+                                    deferred.resolve();
+                                })
+                                .catch(function () {
+                                    deferred.reject();
+                                });
+                        })
+                        .catch(function () {
+                            deferred.reject();
+                        });
+                })
+                .error(function (data, status, headers, config) {
+                    handleErrorResult(data, status, headers, config);
+                    deferred.reject(data);
+                });
+
+            return deferred.promise;
+        }
+
         function rejectChanges() {
             manager.rejectChanges();
+        }
+
+        function resendConfirmationEmail() {
+            return $http.post(resendConfirmationEmailUrl).error(handleErrorResult);
+        }
+
+        function resetPassword(resetPasswordBindingModel) {
+            return $http.post(resetPasswordUrl, resetPasswordBindingModel)
+                .success(function (updatedUser) {
+                    // Sync RowVersion fields
+                    syncRowVersion(currentUser, updatedUser);
+                })
+                .error(handleErrorResult);
+        }
+
+        function resetPasswordRequest(resetPasswordRequestBindingModel) {
+            return $http.post(resetPasswordRequestUrl, resetPasswordRequestBindingModel).error(handleErrorResult);
         }
 
         function saveChanges(delay) {
             delay = typeof delay !== 'undefined' ? delay : 0;
 
-            // Anonymous user check
             if (!currentUser.isAuthenticated()) {
-                $rootScope.$broadcast('anonymousUserInteracted');
                 return $q.reject({});
             }
 
@@ -301,7 +721,7 @@
 
             // Anonymous user check
             if (!currentUser.isAuthenticated()) {
-                $rootScope.$broadcast('anonymousUserInteracted');
+                $rootScope.$broadcast('dataContext_anonymousUserInteracted');
                 return $q.reject({});
             }
 
@@ -456,108 +876,245 @@
             }
         }
 
-        // When the user interact with the application without registering or login in,
-        // it creates an anonymous user and all entity creations done by this user
-        // If the user has actually an account and logs in afterwards, this function moves all those changes to that logged in user
-        function updateAnonymousChanges(anonymousUser, newUser) {
+        // When an entity gets updated through angular, unlike breeze updates, it doesn't sync RowVersion automatically
+        // After each update, call this function to sync the entities RowVersion with the server's. Otherwise it'll get Conflict error
+        // SH - 05 Jan. '16
+        function syncRowVersion(oldEntity, newEntity) {
+            // TODO Validations?
+            oldEntity.RowVersion = newEntity.RowVersion;
+        }
 
-            var deferred = $q.defer();
+        // These 'updateX' functions were defined in their related entities (user.js).
+        // Only because they had to use createEntity() on dataContext, it was moved to this service.
+        // Try do handle them in a better way, maybe by using broadcast?
+        function updateElementCellMultiplier(elementCell, updateType) {
 
-            if (typeof anonymousUser === 'undefined' || anonymousUser === null) {
-                deferred.reject('anonymousUser parameter cannot be undefined or null');
+            updateElementCellMultiplierInternal(elementCell, updateType);
+
+            // Update items
+            elementCell.ElementField.Element.ElementItemSet.forEach(function (item) {
+                item.setMultiplier();
+            });
+
+            if (elementCell.ElementField.IndexEnabled) {
+                // Update numeric value cells
+                elementCell.ElementField.ElementCellSet.forEach(function (cell) {
+                    cell.setNumericValueMultiplied(false);
+                });
+
+                // Update fields
+                elementCell.ElementField.setNumericValueMultiplied();
             }
+        }
 
-            if (typeof newUser === 'undefined' || newUser === null) {
-                deferred.reject('newUser parameter cannot be undefined or null');
+        function updateElementCellMultiplierInternal(elementCell, updateType) {
+
+            var userCell = getUserElementCell(currentUser, elementCell);
+
+            switch (updateType) {
+                case 'increase':
+                case 'decrease': {
+
+                    if (userCell === null) { // If there is no item, create it
+
+                        userCell = createEntity('UserElementCell', {
+                            User: currentUser,
+                            ElementCell: elementCell,
+                            DecimalValue: updateType === 'increase' ? 1 : 0,
+                            isEditing: false
+                        });
+
+                    } else { // If there is an item, update DecimalValue, but cannot be lower than zero
+
+                        userCell.DecimalValue = updateType === 'increase' ?
+                            userCell.DecimalValue + 1 :
+                            userCell.DecimalValue - 1 < 0 ? 0 : userCell.DecimalValue - 1;
+                    }
+
+                    break;
+                }
+                case 'reset': {
+
+                    if (userCell !== null) { // If there is an item, delete it
+                        userCell.entityAspect.setDeleted();
+                    }
+
+                    break;
+                }
             }
+        }
 
-            var existingEntityPromises = [];
-            anonymousUser.UserResourcePoolSet.forEach(function (userResourcePool) {
-                var keyValues = [newUser.Id, userResourcePool.ResourcePoolId];
-                var promise = fetchEntityByKey('UserResourcePool', keyValues);
-                existingEntityPromises.push(promise);
+        function updateElementCellNumericValue(elementCell, updateType) {
+
+            var userCell = getUserElementCell(currentUser, elementCell);
+
+            switch (updateType) {
+                case 'increase':
+                case 'decrease': {
+
+                    if (userCell === null) { // If there is no item, create it
+
+                        createEntity('UserElementCell', {
+                            User: currentUser,
+                            ElementCell: elementCell,
+                            DecimalValue: updateType === 'increase' ? 55 : 45,
+                            isEditing: false
+                        });
+
+                    } else { // If there is an item, update DecimalValue, but cannot be smaller than zero and cannot be bigger than 100
+
+                        userCell.DecimalValue = updateType === 'increase' ?
+                            userCell.DecimalValue + 5 > 100 ? 100 : userCell.DecimalValue + 5 :
+                            userCell.DecimalValue - 5 < 0 ? 0 : userCell.DecimalValue - 5;
+                    }
+
+                    // Update the cached value
+                    elementCell.setCurrentUserNumericValue();
+
+                    break;
+                }
+                case 'reset': {
+
+                    if (userCell !== null) { // If there is an item, delete it
+                        userCell.entityAspect.setDeleted();
+
+                        // Update the cached value
+                        elementCell.setCurrentUserNumericValue();
+                    }
+
+                    break;
+                }
+            }
+        }
+
+        function updateElementFieldIndexRating(elementField, updateType) {
+
+            var userElementField = getUserElementField(currentUser, elementField);
+
+            switch (updateType) {
+                case 'increase':
+                case 'decrease': {
+
+                    // If there is no item, create it
+                    if (userElementField === null) {
+                        userElementField = {
+                            User: currentUser,
+                            ElementField: elementField,
+                            Rating: updateType === 'increase' ? 55 : 45,
+                            isEditing: false
+                        };
+
+                        createEntity('UserElementField', userElementField);
+
+                    } else { // If there is an item, update Rating, but cannot be smaller than zero and cannot be bigger than 100
+
+                        userElementField.Rating = updateType === 'increase' ?
+                            userElementField.Rating + 5 > 100 ? 100 : userElementField.Rating + 5 :
+                            userElementField.Rating - 5 < 0 ? 0 : userElementField.Rating - 5;
+                    }
+
+                    // Update the cached value
+                    elementField.setCurrentUserIndexRating();
+
+                    break;
+                }
+                case 'reset': {
+
+                    // If there is an item, delete it
+                    if (userElementField !== null) {
+                        userElementField.entityAspect.setDeleted();
+
+                        // Update the cached value
+                        elementField.setCurrentUserIndexRating();
+                    }
+
+                    break;
+                }
+            }
+        }
+
+        function updateElementMultiplier(element, updateType) {
+
+            // Find user element cell
+            element.ElementItemSet.forEach(function (item) {
+
+                var multiplierCell;
+                for (var cellIndex = 0; cellIndex < item.ElementCellSet.length; cellIndex++) {
+                    var elementCell = item.ElementCellSet[cellIndex];
+                    if (elementCell.ElementField.DataType === 12) {
+                        multiplierCell = elementCell;
+                        break;
+                    }
+                }
+
+                updateElementCellMultiplierInternal(multiplierCell, updateType);
             });
 
-            anonymousUser.UserElementFieldSet.forEach(function (userElementField) {
-                var keyValues = [newUser.Id, userElementField.ElementFieldId];
-                var promise = fetchEntityByKey('UserElementField', keyValues);
-                existingEntityPromises.push(promise);
+            // Update related
+
+            // Update items
+            element.ElementItemSet.forEach(function (item) {
+                item.setMultiplier();
             });
 
-            anonymousUser.UserElementCellSet.forEach(function (userElementCell) {
-                var keyValues = [newUser.Id, userElementCell.ElementCellId];
-                var promise = fetchEntityByKey('UserElementCell', keyValues);
-                existingEntityPromises.push(promise);
-            });
+            element.ElementFieldSet.forEach(function (field) {
 
-            $q.all(existingEntityPromises).then(function () {
-
-                // Resource pools
-                anonymousUser.ResourcePoolSet.forEach(function (anonymousResourcePool) {
-                    anonymousResourcePool.User = newUser;
-                });
-
-                // User resource pools
-                var userResourcePoolSet = anonymousUser.UserResourcePoolSet.slice();
-                userResourcePoolSet.forEach(function (anonymousUserResourcePool) {
-
-                    var result = newUser.UserResourcePoolSet.filter(function (userResourcePool) {
-                        return userResourcePool.ResourcePoolId === anonymousUserResourcePool.ResourcePoolId;
+                if (field.IndexEnabled) {
+                    // Update numeric value cells
+                    field.ElementCellSet.forEach(function (cell) {
+                        cell.setNumericValueMultiplied(false);
                     });
 
-                    if (result.length > 0) { // If there is an existing entity, update it and remove the anonymous one
-                        result[0].ResourcePoolRate = anonymousUserResourcePool.ResourcePoolRate;
-                        anonymousUserResourcePool.entityAspect.rejectChanges();
-                    } else { // Otherwise update the anonymous one with the new user
-                        anonymousUserResourcePool.User = newUser;
-                    }
-                });
-
-                // User element fields
-                var userElementFieldSet = anonymousUser.UserElementFieldSet.slice();
-                userElementFieldSet.forEach(function (anonymousUserElementField) {
-
-                    // If existing entity, then make it modified
-                    var result = newUser.UserElementFieldSet.filter(function (userElementField) {
-                        return userElementField.ElementFieldId === anonymousUserElementField.ElementFieldId;
-                    });
-
-                    if (result.length > 0) { // If there is an existing entity, update it and remove the anonymous one
-                        result[0].Rating = anonymousUserElementField.Rating;
-                        anonymousUserElementField.entityAspect.rejectChanges();
-                    } else { // Otherwise update the anonymous one with the new user
-                        anonymousUserElementField.User = newUser;
-                    }
-                });
-
-                // User element cells
-                var userElementCellSet = anonymousUser.UserElementCellSet.slice();
-                userElementCellSet.forEach(function (anonymousUserElementCell) {
-
-                    // If existing entity, then make it modified
-                    var result = newUser.UserElementCellSet.filter(function (userElementCell) {
-                        return userElementCell.ElementCellId === anonymousUserElementCell.ElementCellId;
-                    });
-
-                    if (result.length > 0) { // If there is an existing entity, update it and remove the anonymous one
-                        result[0].StringValue = anonymousUserElementCell.StringValue;
-                        result[0].BooleanValue = anonymousUserElementCell.BooleanValue;
-                        result[0].IntegerValue = anonymousUserElementCell.IntegerValue;
-                        result[0].DecimalValue = anonymousUserElementCell.DecimalValue;
-                        result[0].DateTimeValue = anonymousUserElementCell.DateTimeValue;
-                        anonymousUserElementCell.entityAspect.rejectChanges();
-                    } else { // Otherwise update the anonymous one with the new user
-                        anonymousUserElementCell.User = newUser;
-                    }
-                });
-
-                // Remove the old (anonymous) user
-                anonymousUser.entityAspect.rejectChanges();
-
-                deferred.resolve();
+                    // Update fields
+                    field.setNumericValueMultiplied();
+                }
             });
+        }
 
-            return deferred.promise;
+        function updateResourcePoolRate(resourcePool, updateType) {
+
+            var userResourcePool = getUserResourcePool(currentUser, resourcePool);
+
+            switch (updateType) {
+                case 'increase':
+                case 'decrease': {
+
+                    // If there is no item, create it
+                    if (userResourcePool === null) {
+                        userResourcePool = {
+                            User: currentUser,
+                            ResourcePool: resourcePool,
+                            ResourcePoolRate: updateType === 'increase' ? 15 : 5,
+                            isEditing: false
+                        };
+
+                        createEntity('UserResourcePool', userResourcePool);
+
+                    } else { // If there is an item, update Rating, but cannot be smaller than zero and cannot be bigger than 1000
+
+                        userResourcePool.ResourcePoolRate = updateType === 'increase' ?
+                            userResourcePool.ResourcePoolRate + 5 > 1000 ? 1000 : userResourcePool.ResourcePoolRate + 5 :
+                            userResourcePool.ResourcePoolRate - 5 < 0 ? 0 : userResourcePool.ResourcePoolRate - 5;
+                    }
+
+                    // Update the cached value
+                    resourcePool.setCurrentUserResourcePoolRate();
+
+                    break;
+                }
+                case 'reset': {
+
+                    // If there is an item, delete it
+                    if (userResourcePool !== null) {
+                        userResourcePool.entityAspect.setDeleted();
+
+                        // Update the cached value
+                        resourcePool.setCurrentUserResourcePoolRate();
+                    }
+
+                    break;
+                }
+            }
         }
     }
 })();

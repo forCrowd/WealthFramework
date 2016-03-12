@@ -112,15 +112,6 @@
             self.displayResourcePoolDetails = displayResourcePoolDetails;
             self.displayRatingMode = displayRatingMode;
             self.getEntities = getEntities;
-            // Determines whether entityState is actually isAdded.
-            // Anonymous users can also add/edit resource pool.
-            // However, when an anonymous user adds a new resource pool, it actually doesn't save to database and entityState stays as isAdded().
-            // Then, when the user clicks on 'Cancel CMRP', rejectChanges() will be called, which removes the resource pool.
-            // To prevent this issue, when anon user calls saveChanges, this flag will be used (isAdded will become true) and acceptChanges will be called (still not saving to actual database).
-            // Now, calling rejectChanges will return the entities to their previous state without any problem.
-            // And if the anon user will register or login, this flag will be checked in dataContext.js and all the related entities will be converted back to isAdded() state.
-            // SH - 30 Nov. '15
-            self.isAdded = isAdded;
             self.mainElement = mainElement;
             self.name = name;
             self.otherUsersResourcePoolRateCount = otherUsersResourcePoolRateCount;
@@ -137,7 +128,6 @@
             self.setResourcePoolRate = setResourcePoolRate;
             self.setResourcePoolRatePercentage = setResourcePoolRatePercentage;
             self.toggleRatingMode = toggleRatingMode;
-            self.updateAnonymousEntities = updateAnonymousEntities;
             self.updateCache = updateCache;
 
             /*** Implementations ***/
@@ -320,13 +310,6 @@
                 });
 
                 return entities;
-            }
-
-            function isAdded(value) {
-                if (typeof value !== 'undefined') {
-                    self.backingFields._isAdded = value;
-                }
-                return self.backingFields._isAdded;
             }
 
             function mainElement() {
@@ -513,55 +496,6 @@
 
             function toggleRatingMode() {
                 self.RatingMode = self.RatingMode === 1 ? 2 : 1;
-            }
-
-            // TOOD Should be obsolete if we could start using "auto save anonymous user"
-            function updateAnonymousEntities() {
-
-                if (!self.isAdded()) {
-                    return;
-                }
-
-                // Turn the flag off
-                self.isAdded(false);
-
-                // Resource pool itself
-                self.entityAspect.setAdded();
-
-                // User resource pools
-                self.UserResourcePoolSet.forEach(function (userResourcePool) {
-                    userResourcePool.entityAspect.setAdded();
-                });
-
-                // Elements
-                self.ElementSet.forEach(function (element) {
-                    element.entityAspect.setAdded();
-
-                    // Fields
-                    element.ElementFieldSet.forEach(function (elementField) {
-                        elementField.entityAspect.setAdded();
-
-                        // User element fields
-                        elementField.UserElementFieldSet.forEach(function (userElementField) {
-                            userElementField.entityAspect.setAdded();
-                        });
-                    });
-
-                    // Items
-                    element.ElementItemSet.forEach(function (elementItem) {
-                        elementItem.entityAspect.setAdded();
-
-                        // Cells
-                        elementItem.ElementCellSet.forEach(function (elementCell) {
-                            elementCell.entityAspect.setAdded();
-
-                            // User cells
-                            elementCell.UserElementCellSet.forEach(function (userElementCell) {
-                                userElementCell.entityAspect.setAdded();
-                            });
-                        });
-                    });
-                });
             }
 
             // TODO Most of these functions are related with userService.js - updateX functions

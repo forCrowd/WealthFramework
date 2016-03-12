@@ -1,5 +1,14 @@
 ### Changelog
 
+**0.50.0**
+
+* Anonymous account
+https://github.com/forCrowd/WealthEconomy/issues/24
+* Reset password & external login callback links fix
+https://github.com/forCrowd/WealthEconomy/issues/23
+* TempToken was renamed to SingleUseToken
+* SimpleUseToken and HasPassword were moved from Claims to User table
+
 **0.49.1**
 
 * .gitignore _system folder fix

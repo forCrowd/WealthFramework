@@ -3,9 +3,9 @@
 
     var controllerId = 'PriorityIndexController';
     angular.module('main')
-        .controller(controllerId, ['resourcePoolFactory', 'userFactory', '$scope', 'logger', PriorityIndexController]);
+        .controller(controllerId, ['resourcePoolFactory', 'dataContext', '$scope', 'logger', PriorityIndexController]);
 
-    function PriorityIndexController(resourcePoolFactory, userFactory, $scope, logger) {
+    function PriorityIndexController(resourcePoolFactory, dataContext, $scope, logger) {
 
         logger = logger.forSource(controllerId);
 
@@ -48,15 +48,15 @@
                                         if (elementCell.ElementItem.Name === cell.ElementItem.Name) {
                                             switch (event.name) {
                                                 case 'resourcePoolEditor_elementCellNumericValueIncreased': {
-                                                    userFactory.updateElementCellNumericValue(elementCell, 'increase');
+                                                    dataContext.updateElementCellNumericValue(elementCell, 'increase');
                                                     break;
                                                 }
                                                 case 'resourcePoolEditor_elementCellNumericValueDecreased': {
-                                                    userFactory.updateElementCellNumericValue(elementCell, 'decrease');
+                                                    dataContext.updateElementCellNumericValue(elementCell, 'decrease');
                                                     break;
                                                 }
                                                 case 'resourcePoolEditor_elementCellNumericValueReset': {
-                                                    userFactory.updateElementCellNumericValue(elementCell, 'reset');
+                                                    dataContext.updateElementCellNumericValue(elementCell, 'reset');
                                                     break;
                                                 }
                                             }

@@ -3,55 +3,50 @@
 
     var controllerId = 'RegisterController';
     angular.module('main')
-        .controller(controllerId, ['userFactory', '$location', 'locationHistory', 'serviceAppUrl', 'logger', RegisterController]);
+        .controller(controllerId, ['dataContext', 'locationHistory', 'serviceAppUrl', 'logger', '$location', '$scope', RegisterController]);
 
-    function RegisterController(userFactory, $location, locationHistory, serviceAppUrl, logger) {
+    function RegisterController(dataContext, locationHistory, serviceAppUrl, logger, $location, $scope) {
 
+        // Logger
         logger = logger.forSource(controllerId);
 
         var vm = this;
-        vm.confirmPassword = '';
-        vm.email = '';
-        vm.getExternalLoginUrl = getExternalLoginUrl;
-        vm.password = '';
+        vm.ConfirmPassword = '';
+        vm.Email = '';
+        vm.IsAnonymous = false;
+        vm.IsAnonymousChanged = IsAnonymousChanged;
+        vm.Password = '';
         vm.register = register;
+        vm.rememberMe = true;
+        vm.showHeader = typeof $scope.showHeader !== 'undefined' ? $scope.showHeader : true;
 
-        _init();
+        function register() {
 
-        function _init() {
-            // Generate test data if localhost
-            if ($location.host() === 'localhost') {
-                var now = new Date();
-                var year = now.getFullYear();
-                var month = now.getMonth() + 1;
-                var day = now.getDate();
-                var hour = now.getHours();
-                var minute = now.getMinutes();
-                var second = now.getSeconds();
-                var email = 'local_' + year + month + day + '_' + hour + minute + second + '@forcrowd.org';
+            if (vm.IsAnonymous) {
+                dataContext.registerAnonymous(vm, vm.rememberMe)
+                    .then(function () {
+                        logger.logSuccess('You have been registered!', null, true);
+                        // TODO ?
+                    })
+                    .catch(failed);
+            } else {
+                dataContext.register(vm, vm.rememberMe)
+                    .then(function () {
+                        logger.logSuccess('You have been registered!', null, true);
+                        $location.url('/_system/account/confirmEmail');
+                    })
+                    .catch(failed);
+            }
 
-                vm.email = email;
-                vm.password = 'q1w2e3';
-                vm.confirmPassword = 'q1w2e3';
+            function failed(response) {
+                if (typeof response.error_description !== 'undefined') {
+                    logger.logError(response.error_description, null, true);
+                }
             }
         }
 
-        function getExternalLoginUrl(provider) {
-            var returnUrl = locationHistory.previousItem().url();
-            return serviceAppUrl + '/api/Account/ExternalLogin?provider=' + provider + '&clientReturnUrl=' + returnUrl;
-        }
-
-        function register() {
-            userFactory.register(vm)
-                .success(function () {
-                    logger.logSuccess('You have been registered!', null, true);
-                    $location.url('/_system/account/confirmEmail');
-                })
-                .error(function (response) {
-                    if (typeof response.error_description !== 'undefined') {
-                        logger.logError(response.error_description, null, true);
-                    }
-                });
+        function IsAnonymousChanged() {
+            vm.Email = vm.IsAnonymous ? dataContext.getUniqueUserEmail() : '';
         }
     }
 })();

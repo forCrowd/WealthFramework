@@ -3,9 +3,9 @@
 
     var controllerId = 'TotalCostIndexController';
     angular.module('main')
-        .controller(controllerId, ['resourcePoolFactory', 'userFactory', '$scope', 'logger', TotalCostIndexController]);
+        .controller(controllerId, ['resourcePoolFactory', 'dataContext', '$scope', 'logger', TotalCostIndexController]);
 
-    function TotalCostIndexController(resourcePoolFactory, userFactory, $scope, logger) {
+    function TotalCostIndexController(resourcePoolFactory, dataContext, $scope, logger) {
 
         logger = logger.forSource(controllerId);
 
@@ -35,15 +35,15 @@
 
                         switch (event.name) {
                             case 'resourcePoolEditor_elementMultiplierIncreased': {
-                                userFactory.updateElementMultiplier(resourcePool.mainElement(), 'increase');
+                                dataContext.updateElementMultiplier(resourcePool.mainElement(), 'increase');
                                 break;
                             }
                             case 'resourcePoolEditor_elementMultiplierDecreased': {
-                                userFactory.updateElementMultiplier(resourcePool.mainElement(), 'decrease');
+                                dataContext.updateElementMultiplier(resourcePool.mainElement(), 'decrease');
                                 break;
                             }
                             case 'resourcePoolEditor_elementMultiplierReset': {
-                                userFactory.updateElementMultiplier(resourcePool.mainElement(), 'reset');
+                                dataContext.updateElementMultiplier(resourcePool.mainElement(), 'reset');
                                 break;
                             }
                         }

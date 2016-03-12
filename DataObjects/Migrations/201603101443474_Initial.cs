@@ -123,6 +123,9 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
+                        IsAnonymous = c.Boolean(nullable: false),
+                        HasPassword = c.Boolean(),
+                        SingleUseToken = c.String(),
                         FirstName = c.String(maxLength: 50),
                         MiddleName = c.String(maxLength: 50),
                         LastName = c.String(maxLength: 50),

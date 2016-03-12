@@ -25,22 +25,22 @@
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-            var userManager = context.OwinContext.GetUserManager<UserManager>();
             var form = await context.Request.ReadFormAsync();
-
             var username = context.UserName;
             var password = context.Password;
-            var tempToken = form.Get("tempToken");
+            var singleUseToken = form.Get("singleUseToken");
+
             User user = null;
-            
-            // Special temp token case
-            if (string.IsNullOrWhiteSpace(username) && string.IsNullOrWhiteSpace(password) && !string.IsNullOrWhiteSpace(tempToken))
+            var userManager = context.OwinContext.GetUserManager<UserManager>();
+
+            // Single use token case
+            if (string.IsNullOrWhiteSpace(username) && string.IsNullOrWhiteSpace(password) && !string.IsNullOrWhiteSpace(singleUseToken))
             {
-                user = await userManager.FindByTempToken(tempToken);
+                user = await userManager.FindBySingleUseToken(singleUseToken);
 
                 if (user == null)
                 {
-                    context.SetError("invalid_grant", "The temp token is incorrect.");
+                    context.SetError("invalid_grant", "Single use token is incorrect.");
                     return;
                 }
             }
@@ -55,9 +55,8 @@
                 }
             }
 
-            var oAuthIdentity = await userManager.CreateIdentityAsync(user,
-                context.Options.AuthenticationType);
-
+            // Ticket
+            var oAuthIdentity = await userManager.CreateIdentityAsync(user, context.Options.AuthenticationType);
             var properties = CreateProperties(user.UserName);
             var ticket = new AuthenticationTicket(oAuthIdentity, properties);
             context.Validated(ticket);

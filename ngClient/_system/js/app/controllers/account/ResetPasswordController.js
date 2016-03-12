@@ -3,9 +3,9 @@
 
     var controllerId = 'ResetPasswordController';
     angular.module('main')
-        .controller(controllerId, ['userFactory', '$location', 'logger', ResetPasswordController]);
+        .controller(controllerId, ['dataContext', '$location', 'logger', ResetPasswordController]);
 
-    function ResetPasswordController(userFactory, $location, logger) {
+    function ResetPasswordController(dataContext, $location, logger) {
         logger = logger.forSource(controllerId);
 
         var vm = this;
@@ -22,7 +22,7 @@
         function resetPassword() {
             // var resetPasswordBindingModel = { Token: vm.token, NewPassword: vm.newPassword, ConfirmPassword: vm.confirmPassword };
             var resetPasswordBindingModel = vm;
-            userFactory.resetPassword(resetPasswordBindingModel)
+            dataContext.resetPassword(resetPasswordBindingModel)
                 .success(function () {
                     $location.url('/_system/account/login');
                     logger.logSuccess('Your password has been reset!', null, true);
@@ -31,7 +31,7 @@
 
         function resetPasswordRequest() {
             var resetPasswordRequestBindingModel = vm;
-            userFactory.resetPasswordRequest(resetPasswordRequestBindingModel)
+            dataContext.resetPasswordRequest(resetPasswordRequestBindingModel)
                 .success(function () {
                     vm.viewMode = 'sent';
                 });

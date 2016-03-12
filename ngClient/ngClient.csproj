@@ -83,6 +83,7 @@
     <None Include="_system\js\app\controllers\resourcePool\ResourcePoolViewController.js" />
     <None Include="_system\js\app\directives\resourcePoolEditor\resourcePoolEditor.css" />
     <None Include="_system\js\appSettings\appSettings.js" />
+    <None Include="_system\js\app\controllers\account\SocialLoginsController.js" />
     <Content Include="_system\js\app\directives\resourcePoolEditor\resourcePoolEditor.html" />
     <None Include="_system\js\app\directives\resourcePoolEditor\resourcePoolEditor.js" />
     <None Include="_system\js\app\entities\Element.js" />
@@ -99,11 +100,9 @@
     <None Include="_system\js\app\factories\dataContext.js" />
     <None Include="_system\js\app\factories\entityManagerFactory.js" />
     <None Include="_system\js\app\factories\generated\resourcePoolFactory.js" />
-    <None Include="_system\js\app\factories\generated\userFactory.js" />
     <None Include="_system\js\app\factories\locationHistory.js" />
     <None Include="_system\js\app\factories\logger.js" />
     <None Include="_system\js\app\factories\resourcePoolFactory.js" />
-    <None Include="_system\js\app\factories\userFactory.js" />
     <None Include="_system\js\app\filters\angular-enum.js" />
     <None Include="_system\js\app\filters\angular-numberSymbol.js" />
     <None Include="_system\js\app\filters\angular-percentage.js" />
@@ -114,6 +113,8 @@
     <Content Include="_system\views\account\changePassword.html" />
     <Content Include="_system\views\account\confirmEmail.html" />
     <Content Include="_system\views\account\login.html" />
+    <Content Include="_system\views\account\socialLogins.html" />
+    <Content Include="_system\views\account\registerLogin.html" />
     <Content Include="_system\views\account\register.html" />
     <Content Include="_system\views\account\resetPassword.html" />
     <Content Include="_system\views\content\404.html" />

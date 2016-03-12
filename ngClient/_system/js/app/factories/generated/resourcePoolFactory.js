@@ -38,7 +38,7 @@
         };
 
         // User logged out
-        $rootScope.$on('userFactory_currentUserChanged', function () {
+        $rootScope.$on('dataContext_currentUserChanged', function () {
             fetchedOn = minimumDate;
         });
 
