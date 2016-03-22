@@ -71,7 +71,8 @@
                 { name: 'Global Knowledge Database', data: [0] }
             ]
         };
-        vm.knowledgeIndexConfig = { resourcePoolId: 3 };
+        vm.knowledgeIndexConfig = { userName: 'sample', resourcePoolKey: 'Knowledge-Index-Sample' };
+        vm.popularSoftwareLicensesConfig = { userName: 'sample', resourcePoolKey: 'Knowledge-Index-Popular-Software-Licenses' };
 
         // Event listeners
         $scope.$on('resourcePoolEditor_elementCellNumericValueIncreased', updateAllInOne);
@@ -103,13 +104,13 @@
         // Sync this example's values with 'All in One'
         function updateAllInOne(event, cell) {
 
-            var allInOneId = 7;
-
-            if (cell.ElementField.Element.ResourcePoolId !== vm.knowledgeIndexConfig.resourcePoolId) {
+            if (cell.ElementField.Element.ResourcePool.User.UserName !== vm.knowledgeIndexConfig.userName &&
+                cell.ElementField.Element.ResourcePool.Key !== vm.knowledgeIndexConfig.resourcePoolKey) {
                 return;
             }
 
-            resourcePoolFactory.getResourcePoolExpanded(allInOneId)
+            var allInOneUniqueKey = { userName: 'sample', resourcePoolKey: 'All-in-One' };
+            resourcePoolFactory.getResourcePoolExpanded(allInOneUniqueKey)
                 .then(function (resourcePool) {
 
                     // If the current user already interacted with 'All in One', stop copying ratings
@@ -145,7 +146,7 @@
                                             }
 
                                             // Save changes
-                                            resourcePoolFactory.saveChanges(1500);
+                                            dataContext.saveChanges(1500);
                                             break;
                                         }
                                     }

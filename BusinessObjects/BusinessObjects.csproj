@@ -83,9 +83,6 @@
     <Compile Include="Models\ResourcePool.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserResourcePool.cs" />
-    <Compile Include="Attributes\DefaultPropertyAttribute.cs" />
-    <Compile Include="Attributes\DisplayOnEditViewAttribute.cs" />
-    <Compile Include="Attributes\DisplayOnListViewAttribute.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="WealthEconomyContext.cs" />
   </ItemGroup>

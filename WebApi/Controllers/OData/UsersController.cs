@@ -7,7 +7,6 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
     using System.Web.Http;
     using System.Web.Http.OData;
     using forCrowd.WealthEconomy.WebApi.Controllers.Extensions;
-    using System.Collections.Generic;
 
     public partial class UsersController
     {
@@ -15,81 +14,52 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
         [AllowAnonymous]
         public override IQueryable<User> Get()
         {
-            IQueryable<User> list = new HashSet<User>().AsQueryable();
-
+            var list = base.Get();
+            var isAdmin = this.GetCurrentUserIsAdmin();
             var userId = this.GetCurrentUserId();
-            if (userId.HasValue) {
-                
-                list = base.Get();
 
-                // Only admin can get all
-                var isAdmin = this.GetCurrentUserIsAdmin();
-                if (!isAdmin)
-                    list = list.Where(item => item.Id == userId.Value);
+            // Only admin can get all
+            if (!isAdmin)
+            {
+                foreach (var item in list)
+                {
+                    // If it's the current (logged in) user's
+                    if (userId.HasValue && item.Id == userId.Value)
+                        continue;
+
+                    // Hides most of the properties that shouldn't be visible to other users
+                    item.ResetValues();
+                }
             }
-            
+
             return list;
         }
 
-        //// GET odata/User(5)
-        //[EnableQuery]
-        //public override async SingleResult<User> Get([FromODataUri] int key)
-        //{
-        //    var currentUser = await GetCurrentUserAsync();
-        //    var isAdmin = this.GetCurrentUserIsAdmin();
-        //    if (key != currentUser.Id && !isAdmin)
-        //        throw new HttpResponseException(HttpStatusCode.Unauthorized);
-
-        //    return base.Get(key);
-        //}
-
-        public new async Task<SingleResult<User>> Get(int key)
+        public new async Task<SingleResult<User>> Get(int id)
         {
             var currentUser = await GetCurrentUserAsync();
             var isAdmin = this.GetCurrentUserIsAdmin();
-            if (key != currentUser.Id && !isAdmin)
+            if (id != currentUser.Id && !isAdmin)
                 throw new HttpResponseException(HttpStatusCode.Unauthorized);
-            return base.Get(key);
+            return base.Get(id);
         }
 
         // PUT odata/User(5)
-        public override async Task<IHttpActionResult> Put([FromODataUri] int key, User user)
+        public override async Task<IHttpActionResult> Put([FromODataUri] int id, User user)
         {
             var currentUser = await GetCurrentUserAsync();
             var isAdmin = this.GetCurrentUserIsAdmin();
             if (user.Id != currentUser.Id && !isAdmin)
                 return Unauthorized();
 
-            return await base.Put(key, user);
+            return await base.Put(id, user);
         }
 
         // POST odata/User
         public override Task<IHttpActionResult> Post(User user)
         {
             // TODO Will not be implemented / should not be available at all
-            throw new System.Web.Http.HttpResponseException(HttpStatusCode.Unused);
+            throw new HttpResponseException(HttpStatusCode.Unused);
         }
-
-        // PATCH odata/User(5)
-        //public override async Task<IHttpActionResult> Patch([FromODataUri] string key, Delta<User> patch)
-        //{
-        //    throw new System.NotImplementedException("yet");
-
-        //    //if (key != ApplicationUser.Id && !IsAdmin)
-        //    //    return Unauthorized();
-
-        //    //return await base.Patch(key, patch);
-        //}
-
-        //// DELETE odata/User(5)
-        //public override async Task<IHttpActionResult> Delete([FromODataUri] string key)
-        //{
-        //    throw new System.NotImplementedException("yet");
-
-        //    //if (key != ApplicationUser.Id && !IsAdmin)
-        //    //    return Unauthorized();
-
-        //    //return await base.Delete(key);
-        //}
-	}
+    }
 }

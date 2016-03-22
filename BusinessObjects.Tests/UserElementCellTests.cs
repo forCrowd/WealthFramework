@@ -9,7 +9,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Tests
         [TestMethod]
         public void NewUserElementCell_ShouldCreate()
         {
-            var newUser = new User("Email");
+            var newUser = new User("User", "user@email.com");
 
             var newElement = new ResourcePool(newUser, "CMRP")
                 .AddElement("Element");

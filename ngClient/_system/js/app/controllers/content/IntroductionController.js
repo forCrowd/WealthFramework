@@ -3,9 +3,9 @@
 
     var controllerId = 'IntroductionController';
     angular.module('main')
-        .controller(controllerId, ['resourcePoolFactory', 'dataContext', '$scope', '$timeout', 'logger', IntroductionController]);
+        .controller(controllerId, ['dataContext', 'logger', 'resourcePoolFactory', '$scope', '$timeout', IntroductionController]);
 
-    function IntroductionController(resourcePoolFactory, dataContext, $scope, $timeout, logger) {
+    function IntroductionController(dataContext, logger, resourcePoolFactory, $scope, $timeout) {
 
         // Logger
         logger = logger.forSource(controllerId);
@@ -19,78 +19,72 @@
 
         function _init() {
 
-            var upoId = -101;
+            dataContext.getCurrentUser()
+                .then(function (currentUser) {
 
-            resourcePoolFactory.getResourcePoolExpanded(upoId)
-                .then(function (resourcePool) {
-                    if (resourcePool === null) {
+                    vm.upoConfig = { userName: currentUser.UserName, resourcePoolKey: 'Unidentified-Profiting-Object' };
 
-                        dataContext.createEntitySuppressAuthValidation(true);
+                    resourcePoolFactory.getResourcePoolExpanded(vm.upoConfig)
+                        .then(function (resourcePool) {
+                            if (resourcePool === null) {
 
-                        resourcePoolFactory.createResourcePoolDirectIncomeAndMultiplier()
-                            .then(function (resourcePool) {
                                 dataContext.createEntitySuppressAuthValidation(true);
 
-                                resourcePool.Id = upoId;
-                                resourcePool.Name = 'Unidentified Profiting Object (UPO)';
-                                resourcePool.InitialValue = 0;
-                                resourcePool.isTemp = true;
-                                resourcePool.displayMultiplierFunctions = false;
-                                resourcePool.UserResourcePoolSet[0].entityAspect.setDeleted(); // Remove resource pool rate
+                                resourcePoolFactory.createResourcePoolDirectIncomeAndMultiplier()
+                                    .then(function (resourcePool) {
+                                        dataContext.createEntitySuppressAuthValidation(true);
 
-                                var mainElement = resourcePool.mainElement();
-                                mainElement.Name = 'Organization';
+                                        resourcePool.Name = 'Unidentified Profiting Object (UPO)';
+                                        resourcePool.Key = vm.upoConfig.resourcePoolKey;
+                                        resourcePool.InitialValue = 0;
+                                        resourcePool.isTemp = true;
+                                        resourcePool.displayMultiplierFunctions = false;
+                                        resourcePool.UserResourcePoolSet[0].entityAspect.setDeleted(); // Remove resource pool rate
 
-                                mainElement.ElementItemSet[0].Name = 'UPO';
-                                resourcePoolFactory.removeElementItem(mainElement.ElementItemSet[1]);
+                                        var mainElement = resourcePool.mainElement();
+                                        mainElement.Name = 'Organization';
 
-                                resourcePool._init(true);
+                                        mainElement.ElementItemSet[0].Name = 'UPO';
+                                        resourcePoolFactory.removeElementItem(mainElement.ElementItemSet[1]);
 
+                                        resourcePool._init(true);
+
+                                        initResourcePool(resourcePool);
+
+                                        dataContext.createEntitySuppressAuthValidation(false);
+                                    })
+                                    .finally(function () {
+                                        dataContext.createEntitySuppressAuthValidation(false);
+                                    });
+                            } else {
                                 initResourcePool(resourcePool);
+                            }
 
-                                dataContext.createEntitySuppressAuthValidation(false);
-                            })
-                            .finally(function () {
-                                dataContext.createEntitySuppressAuthValidation(false);
-                            });
-                    } else {
-                        initResourcePool(resourcePool);
-                    }
+                            function initResourcePool(resourcePool) {
 
-                    function initResourcePool(resourcePool) {
-                        vm.upoConfig.resourcePoolId = resourcePool.Id;
+                                var increaseMultiplierTimeout = $timeout(increaseMultiplier, 5000);
 
-                        var increaseMultiplierTimeout = $timeout(increaseMultiplier, 5000);
+                                function increaseMultiplier() {
 
-                        function increaseMultiplier() {
-
-                            // Call the service to increase the multiplier
-                            resourcePoolFactory.getResourcePoolExpanded(vm.upoConfig.resourcePoolId)
-                                .then(function (resourcePool) {
-
-                                    if (resourcePool === null) {
-                                        return;
-                                    }
-
+                                    // Increase the multiplier
                                     resourcePool.ElementSet.forEach(function (element) {
                                         dataContext.updateElementMultiplier(element, 'increase');
                                     });
+
+                                    // Then increase recursively
+                                    increaseMultiplierTimeout = $timeout(increaseMultiplier, 2500);
+                                }
+
+                                // When the DOM element is removed from the page,
+                                // AngularJS will trigger the $destroy event on
+                                // the scope. This gives us a chance to cancel any
+                                // pending timer that we may have.
+                                $scope.$on("$destroy", function (event) {
+                                    $timeout.cancel(increaseMultiplierTimeout);
                                 });
-
-                            // Then increase recursively
-                            increaseMultiplierTimeout = $timeout(increaseMultiplier, 2500);
-                        }
-
-                        // When the DOM element is removed from the page,
-                        // AngularJS will trigger the $destroy event on
-                        // the scope. This gives us a chance to cancel any
-                        // pending timer that we may have.
-                        $scope.$on("$destroy", function (event) {
-                            $timeout.cancel(increaseMultiplierTimeout);
+                            }
                         });
-                    }
                 });
         }
-
     }
 })();

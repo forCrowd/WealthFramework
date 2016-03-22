@@ -10,6 +10,7 @@
     angular.module('main', [
         'ngRoute',
         'ngSanitize',
+        'angularMoment',
         'breeze.angular',
         'angular-google-analytics',
         'angularUtils.directives.dirDisqus',

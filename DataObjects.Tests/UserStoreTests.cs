@@ -71,7 +71,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Tests
             }
             catch (Exception ex)
             {
-                var entityException = (DbEntityValidationException) ex.InnerException;
+                var entityException = (DbEntityValidationException)ex.InnerException;
                 var errors = entityException.EntityValidationErrors;
                 var error = errors.First();
                 var validationError = error.ValidationErrors.First();
@@ -152,8 +152,9 @@ namespace forCrowd.WealthEconomy.DataObjects.Tests
 
         User GenerateUser()
         {
+            var userName = string.Format("user_{0:yyyyMMdd_HHmmssfff}", DateTime.Now);
             var email = string.Format("user_{0:yyyyMMdd_HHmmssfff}@forcrowd.org", DateTime.Now);
-            return new User(email);
+            return new User(userName, email);
         }
 
         async Task<User> CreateUserAsync()

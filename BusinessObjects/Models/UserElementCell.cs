@@ -1,30 +1,22 @@
 namespace forCrowd.WealthEconomy.BusinessObjects
 {
-    using forCrowd.WealthEconomy.BusinessObjects.Attributes;
     using forCrowd.WealthEconomy.Framework;
     using System;
-    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
     [UserAware("UserId")]
-    [DisplayName("User Element Cell")]
     public class UserElementCell : BaseEntity
     {
         [Obsolete("Parameterless constructors used by OData & EF. Make them private when possible.")]
         public UserElementCell()
         { }
 
-        //public UserElementCell(User user, ElementCell elementCell, decimal rating)
-        //public UserElementCell(User user, ElementCell elementCell) : this()
         public UserElementCell(ElementCell elementCell) : this()
         {
-            //Validations.ArgumentNullOrDefault(user, "user");
             Validations.ArgumentNullOrDefault(elementCell, "elementCell");
 
-            //User = user;
             ElementCell = elementCell;
-            //Rating = rating;
         }
 
         string stringValue = null;
@@ -33,21 +25,14 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         decimal? decimalValue = null;
         DateTime? dateTimeValue = null;
 
-        //[DisplayOnListView(false)]
-        //[DisplayOnEditView(false)]
-        //public int Id { get; set; }
-
-        //[Index("IX_UserIdElementCellId", 1, IsUnique = true)]
         [Key]
         [Column(Order = 1)]
         public int UserId { get; set; }
 
-        //[Index("IX_UserIdElementCellId", 2, IsUnique = true)]
         [Key]
         [Column(Order = 2)]
         public int ElementCellId { get; set; }
 
-        [Display(Name = "String Value")]
         public string StringValue
         {
             get { return stringValue; }
@@ -61,7 +46,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects
             }
         }
 
-        [Display(Name = "Boolean Value")]
         public bool? BooleanValue
         {
             get { return booleanValue; }
@@ -75,7 +59,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects
             }
         }
 
-        [Display(Name = "Integer Value")]
         public int? IntegerValue
         {
             get { return integerValue; }
@@ -89,7 +72,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects
             }
         }
 
-        [Display(Name = "Decimal Value")]
         public decimal? DecimalValue
         {
             get { return decimalValue; }
@@ -103,7 +85,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects
             }
         }
 
-        [Display(Name = "Date Time Value")]
         public DateTime? DateTimeValue
         {
             get { return dateTimeValue; }

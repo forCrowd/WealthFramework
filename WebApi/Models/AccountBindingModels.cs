@@ -1,6 +1,7 @@
 ﻿namespace forCrowd.WealthEconomy.WebApi.Models
 {
     using System.ComponentModel.DataAnnotations;
+    using Validation;
 
     // Models used as parameters to AccountController actions.
 
@@ -19,6 +20,7 @@
     {
         [Required]
         [DataType(DataType.EmailAddress)]
+        [EmailUniqueValidator]
         public string Email { get; set; }
     }
 
@@ -38,17 +40,21 @@
         public string ConfirmPassword { get; set; }
     }
 
+    public class ChangeUserNameBindingModel
+    {
+        [Required]
+        [UserNameUniqueValidator]
+        public string UserName { get; set; }
+    }
+
     public class ConfirmEmailBindingModel
     {
         [Required]
         public string Token { get; set; }
     }
 
-    public class RegisterBindingModel
+    public class RegisterBindingModel : RegisterAnonymousBindingModel
     {
-        [Required]
-        public string Email { get; set; }
-
         [Required]
         [DataType(DataType.Password)]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
@@ -62,6 +68,12 @@
     public class RegisterAnonymousBindingModel
     {
         [Required]
+        [UserNameUniqueValidator]
+        public string UserName { get; set; }
+
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [EmailUniqueValidator]
         public string Email { get; set; }
     }
 

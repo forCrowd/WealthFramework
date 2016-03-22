@@ -26,6 +26,14 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="Key" class="control-label col-md-2">Key</label>
+                        <div class="col-md-10" data-ng-class="{'has-error': resourcePoolForm.Key.$invalid && !resourcePoolForm.Key.$pristine}">
+                            <input id="Key" name="Key" type="text" data-ng-model="vm.resourcePool.Key" class="form-control" aria-describedby="KeyHelp" required />
+                            <span id="KeyHelp" class="help-block">Title that will be used in the url.<br />
+                            No special characters allowed, except dash "-" and underscore "_".</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="InitialValue" class="control-label col-md-2">Initial Amount</label>
                         <div class="col-md-10" data-ng-class="{'has-error': resourcePoolForm.InitialValue.$invalid && !resourcePoolForm.InitialValue.$pristine}">
                             <input id="InitialValue" name="InitialValue" type="text" data-ng-model="vm.resourcePool.InitialValue" class="form-control" aria-describedby="InitialValueHelp" required />
@@ -558,7 +566,6 @@
                 <td>
                     <span data-ng-bind="resourcePool.name()"></span>
                     <button class="btn btn-primary" type="button" ng-click="vm.copy(resourcePool)">Copy</button>
-                    <!--<a data-ng-bind="resourcePool.Name" data-ng-href="/_system/resourcePool/{{ resourcePool.Id }}"></a>-->
                 </td>
             </tr>
         </table>

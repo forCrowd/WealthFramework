@@ -1,16 +1,11 @@
 namespace forCrowd.WealthEconomy.BusinessObjects
 {
-    using forCrowd.WealthEconomy.BusinessObjects.Attributes;
     using forCrowd.WealthEconomy.Framework;
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    [DisplayName("Element Cell")]
-    [forCrowd.WealthEconomy.BusinessObjects.Attributes.DefaultProperty("Id")]
     // [ODataControllerAuthorization("Administrator")]
     public class ElementCell : BaseEntity
     {
@@ -30,15 +25,12 @@ namespace forCrowd.WealthEconomy.BusinessObjects
             ElementItem = item;
         }
 
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
-        [Display(Name = "Element Cell Id")]
         public int Id { get; set; }
 
-        [Index("IX_ElementCellId", 1, IsUnique = true)]
+        [Index("UX_ElementCell_ElementFieldId_ElementItemId", 1, IsUnique = true)]
         public int ElementFieldId { get; set; }
 
-        [Index("IX_ElementCellId", 2, IsUnique = true)]
+        [Index("UX_ElementCell_ElementFieldId_ElementItemId", 2, IsUnique = true)]
         public int ElementItemId { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
@@ -46,15 +38,11 @@ namespace forCrowd.WealthEconomy.BusinessObjects
 
         // TODO Doesn't have to be nullable but it requires a default value then which needs to be done
         // by manually editing migration file which is not necessary at the moment / SH - 03 Aug. '15
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public decimal? NumericValueTotal { get; private set; }
 
         // TODO Doesn't have to be nullable but it requires a default value then which needs to be done
         // by manually editing migration file which is not necessary at the moment / SH - 03 Aug. '15
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public int? NumericValueCount { get; private set; }
 
@@ -62,7 +50,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         /// In case this cell's field type is Element, this is the selected item for this cell.
         /// Other values are stored on UserElementCell, but since this one has FK, it's directly set on ElementCell.
         /// </summary>
-        [Display(Name = "Selected Element Item")]
         public int? SelectedElementItemId { get; set; }
 
         public virtual ElementItem ElementItem { get; set; }

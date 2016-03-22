@@ -11,6 +11,43 @@
         logger = logger.forSource(factoryId);
 
         // Server-side properties
+        Object.defineProperty(ResourcePool.prototype, 'Name', {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                return this.backingFields._name;
+            },
+            set: function (value) {
+
+                var oldStripped = this.stripInvalidChars(this.backingFields._name);
+
+                if (this.backingFields._name !== value) {
+                    this.backingFields._name = value;
+
+                    // If 'Key' is not a custom value (generated through Name), then keep updating it
+                    if (this.Key === oldStripped) {
+                        this.Key = value;
+                    }
+                }
+            }
+        });
+
+        Object.defineProperty(ResourcePool.prototype, 'Key', {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                return this.backingFields._key;
+            },
+            set: function (value) {
+
+                var newValue = this.stripInvalidChars(value);
+
+                if (this.backingFields._key !== newValue) {
+                    this.backingFields._key = newValue;
+                }
+            }
+        });
+
         Object.defineProperty(ResourcePool.prototype, 'UseFixedResourcePoolRate', {
             enumerable: true,
             configurable: true,
@@ -78,7 +115,6 @@
             // Server-side
             self.Id = 0;
             self.UserId = 0;
-            self.Name = '';
             self.InitialValue = 0;
             self.ResourcePoolRateTotal = 0; // Computed value - Used in: setOtherUsersResourcePoolRateTotal
             self.ResourcePoolRateCount = 0; // Computed value - Used in: setOtherUsersResourcePoolRateCount
@@ -92,6 +128,8 @@
             self.backingFields = {
                 _currentUserResourcePoolRate: null,
                 _isAdded: false,
+                _name: '',
+                _key: '',
                 _otherUsersResourcePoolRateTotal: null,
                 _otherUsersResourcePoolRateCount: null,
                 _ratingMode: 1, // Only my ratings vs. All users' ratings
@@ -111,7 +149,6 @@
             self.currentUserResourcePoolRate = currentUserResourcePoolRate;
             self.displayResourcePoolDetails = displayResourcePoolDetails;
             self.displayRatingMode = displayRatingMode;
-            self.getEntities = getEntities;
             self.mainElement = mainElement;
             self.name = name;
             self.otherUsersResourcePoolRateCount = otherUsersResourcePoolRateCount;
@@ -127,8 +164,11 @@
             self.setOtherUsersResourcePoolRateTotal = setOtherUsersResourcePoolRateTotal;
             self.setResourcePoolRate = setResourcePoolRate;
             self.setResourcePoolRatePercentage = setResourcePoolRatePercentage;
+            self.stripInvalidChars = stripInvalidChars;
             self.toggleRatingMode = toggleRatingMode;
             self.updateCache = updateCache;
+            self.urlEdit = urlEdit;
+            self.urlView = urlView;
 
             /*** Implementations ***/
 
@@ -260,56 +300,6 @@
                 }
 
                 return false;
-            }
-
-            function getEntities() {
-
-                var entities = [];
-
-                // No need to continue
-                if (self.isTemp) {
-                    return entities;
-                }
-
-                // Resource pool
-                entities.push(self);
-
-                // User resource pools
-                self.UserResourcePoolSet.forEach(function (userResourcePool) {
-                    entities.push(userResourcePool);
-                });
-
-                // Elements
-                self.ElementSet.forEach(function (element) {
-                    entities.push(element);
-
-                    // Fields
-                    element.ElementFieldSet.forEach(function (elementField) {
-                        entities.push(elementField);
-
-                        // User element fields
-                        elementField.UserElementFieldSet.forEach(function (userElementField) {
-                            entities.push(userElementField);
-                        });
-                    });
-
-                    // Items
-                    element.ElementItemSet.forEach(function (elementItem) {
-                        entities.push(elementItem);
-
-                        // Cells
-                        elementItem.ElementCellSet.forEach(function (elementCell) {
-                            entities.push(elementCell);
-
-                            // User cells
-                            elementCell.UserElementCellSet.forEach(function (userElementCell) {
-                                entities.push(userElementCell);
-                            });
-                        });
-                    });
-                });
-
-                return entities;
             }
 
             function mainElement() {
@@ -494,6 +484,18 @@
                 }
             }
 
+            function stripInvalidChars(value) {
+
+                // Trim, remove special chars and replace space with dash
+                if (value !== null) {
+                    value = value.trim()
+                        .replace(/[^-\w\s]/gi, '')
+                        .replace(/\s+/g, '-');
+                }
+
+                return value;
+            }
+
             function toggleRatingMode() {
                 self.RatingMode = self.RatingMode === 1 ? 2 : 1;
             }
@@ -582,6 +584,14 @@
                         }
                     });
                 }
+            }
+
+            function urlEdit() {
+                return self.urlView() + '/edit';
+            }
+
+            function urlView() {
+                return '/' + self.User.UserName + '/' + self.Key;
             }
         }
     }

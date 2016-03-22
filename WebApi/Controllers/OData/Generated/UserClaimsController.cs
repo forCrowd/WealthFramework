@@ -11,7 +11,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 {
     using forCrowd.WealthEconomy.BusinessObjects;
     using forCrowd.WealthEconomy.Facade;
-    using Microsoft.AspNet.Identity;
+    using Results;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
@@ -19,7 +19,6 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
     using System.Net;
     using System.Threading.Tasks;
     using System.Web.Http;
-    using System.Web.Http.ModelBinding;
     using System.Web.Http.OData;
     using WebApi.Controllers.Extensions;
 
@@ -47,20 +46,20 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
         // GET odata/UserClaim(5)
         //[Queryable]
-        public virtual SingleResult<UserClaim> Get([FromODataUri] int key)
+        public virtual SingleResult<UserClaim> Get([FromODataUri] int id)
         {
-            return SingleResult.Create(MainUnitOfWork.AllLive.Where(userClaim => userClaim.Id == key));
+            return SingleResult.Create(MainUnitOfWork.AllLive.Where(userClaim => userClaim.Id == id));
         }
 
         // PUT odata/UserClaim(5)
-        public virtual async Task<IHttpActionResult> Put([FromODataUri] int key, UserClaim userClaim)
+        public virtual async Task<IHttpActionResult> Put([FromODataUri] int id, UserClaim userClaim)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (key != userClaim.Id)
+            if (id != userClaim.Id)
             {
                 return BadRequest();
             }
@@ -100,12 +99,9 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             {
                 if (await MainUnitOfWork.All.AnyAsync(item => item.Id == userClaim.Id))
                 {
-                    return Conflict();
+					return new UniqueKeyConflictResult(Request, "Id", userClaim.Id.ToString());
                 }
-                else
-                {
-                    throw;
-                }
+                else throw;
             }
 
             return Created(userClaim);
@@ -113,14 +109,14 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
         // PATCH odata/UserClaim(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<UserClaim> patch)
+        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int id, Delta<UserClaim> patch)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var userClaim = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == key);
+            var userClaim = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == id);
             if (userClaim == null)
             {
                 return NotFound();
@@ -138,15 +134,34 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             }
 
             patch.Patch(userClaim);
-            await MainUnitOfWork.UpdateAsync(userClaim);
+
+            try
+            {
+                await MainUnitOfWork.UpdateAsync(userClaim);
+            }
+            catch (DbUpdateException)
+            {
+                if (patch.GetChangedPropertyNames().Any(item => item == "Id"))
+                {
+                    object idObject = null;
+                    patch.TryGetPropertyValue("Id", out idObject);
+
+                    if (idObject != null && await MainUnitOfWork.All.AnyAsync(item => item.Id == (int)idObject))
+                    {
+                        return new UniqueKeyConflictResult(Request, "Id", idObject.ToString());
+                    }
+                    else throw;
+                }
+                else throw;
+            }
 
             return Ok(userClaim);
         }
 
         // DELETE odata/UserClaim(5)
-        public virtual async Task<IHttpActionResult> Delete([FromODataUri] int key)
+        public virtual async Task<IHttpActionResult> Delete([FromODataUri] int id)
         {
-            var userClaim = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == key);
+            var userClaim = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == id);
             if (userClaim == null)
             {
                 return NotFound();

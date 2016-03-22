@@ -58,11 +58,6 @@
             return await dbSet.FindAsync(keyValues);
         }
 
-        public bool Exists(params object[] keyValues)
-        {
-            return Find(keyValues) != null;
-        }
-
         public void Insert(TEntityType entity)
         {
             dbSet.Add(entity);

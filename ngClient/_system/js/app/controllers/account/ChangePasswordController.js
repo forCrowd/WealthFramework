@@ -9,13 +9,18 @@
         logger = logger.forSource(controllerId);
 
         var vm = this;
+        vm.cancel = cancel;
         vm.changePassword = changePassword;
+
+        function cancel() {
+            $location.url('/_system/account');
+        }
 
         function changePassword() {
             dataContext.changePassword(vm)
                 .success(function () {
-                    $location.url('/');
                     logger.logSuccess('Your password has been changed!', null, true);
+                    $location.url('/' + vm.userName);
                 });
         }
     }

@@ -26,56 +26,55 @@ var appMinCss = 'app.min.css',
 
 // lib variables
 var libJsSrcRoot = './bower_components',
-    libJsSourceMapRoot = libJsSrcRoot.substring(1),
-
-    // Js
-    jquery = libJsSrcRoot + '/jquery/dist/jquery.js',
-    angular = libJsSrcRoot + '/angular/angular.js',
-    angularRoute = libJsSrcRoot + '/angular-route/angular-route.js',
-    angularSanitize = libJsSrcRoot + '/angular-sanitize/angular-sanitize.js',
-    datajs = libJsSrcRoot + '/datajs/datajs.js',
-    breeze = libJsSrcRoot + '/breeze-client/build/breeze.base.debug.js',
-    breezeAjaxAngular = libJsSrcRoot + '/breeze-client/build/adapters/breeze.ajax.angular.js',
-    breezeDataServiceOData = './_system/js/lib/breeze-client/build/adapters/breeze.dataService.odata.js', // Fixed forCrowd version
-    breezeModelLibraryBackingStore = libJsSrcRoot + '/breeze-client/build/adapters/breeze.modelLibrary.backingStore.js',
-    breezeUriBuilderOData = libJsSrcRoot + '/breeze-client/build/adapters/breeze.uriBuilder.odata.js',
-    breezeBridgeAngular = libJsSrcRoot + '/breeze-client/build/adapters/breeze.bridge.angular.js',
-    breezeDirectives = libJsSrcRoot + '/breeze-client-labs/breeze.directives.js',
-    googleAnalyticsAngular = libJsSrcRoot + '/angular-google-analytics/dist/angular-google-analytics.js',
-    disqusAngular = libJsSrcRoot + '/angular-utils-disqus/dirDisqus.js',
-    respond = libJsSrcRoot + '/respond/dest/respond.js',
-    bootstrapAngular = libJsSrcRoot + '/angular-bootstrap/ui-bootstrap-tpls.js',
-    highcharts = libJsSrcRoot + '/highcharts/highcharts.src.js',
-    highchartsAngular = libJsSrcRoot + '/highcharts-ng/dist/highcharts-ng.js',
-    toastr = libJsSrcRoot + '/toastr/toastr.js',
-    sourceMap = libJsSrcRoot + '/source-map/dist/source-map.js',
-
-    // Css
-    bootstrap = libJsSrcRoot + '/bootstrap/dist/css/bootstrap.css',
-    fontAwesome = libJsSrcRoot + '/font-awesome/css/font-awesome.css',
-    bootstrapSocial = libJsSrcRoot + '/bootstrap-social/bootstrap-social.css',
-    breezeDirectivesCss = libJsSrcRoot + '/breeze-client-labs/breeze.directives.css',
-    toastrCss = libJsSrcRoot + '/toastr/toastr.css',
-
-    // Fonts
-    bootstrapFonts = libJsSrcRoot + '/bootstrap/fonts/*', // Bootstrap
-    fontAwesomeFonts = libJsSrcRoot + '/font-awesome/fonts/*', // Font Awesome
-    fontsSrc = [bootstrapFonts, fontAwesomeFonts],
-    fontsDest = './_system/css/fonts';
+    libJsSourceMapRoot = libJsSrcRoot.substring(1);
 
 // lib.js variables
 var libMinJs = 'lib.min.js',
     libJs = libMinJs.replace('.min', ''),
-    libJsSrc = [jquery, angular, angularRoute, angularSanitize, datajs, breeze, breezeAjaxAngular, breezeDataServiceOData,
-        breezeModelLibraryBackingStore, breezeUriBuilderOData, breezeBridgeAngular, breezeDirectives, googleAnalyticsAngular,
-        disqusAngular, respond, bootstrapAngular, highcharts, highchartsAngular, toastr, sourceMap],
+    libJsSrc = [
+    libJsSrcRoot + '/jquery/dist/jquery.js', // jquery
+    libJsSrcRoot + '/moment/moment.js', // moment
+    libJsSrcRoot + '/angular/angular.js', // angular
+    libJsSrcRoot + '/angular-route/angular-route.js', // angularRoute
+    libJsSrcRoot + '/angular-sanitize/angular-sanitize.js', // angularSanitize
+    libJsSrcRoot + '/angular-moment/angular-moment.js', // angularMoment
+    libJsSrcRoot + '/datajs/datajs.js', // datajs
+    libJsSrcRoot + '/breeze-client/build/breeze.base.debug.js', // breeze
+    libJsSrcRoot + '/breeze-client/build/adapters/breeze.ajax.angular.js', // breezeAjaxAngular
+    './_system/js/lib/breeze-client/build/adapters/breeze.dataService.odata.js', // breezeDataServiceOData - Fixed forCrowd version
+    libJsSrcRoot + '/breeze-client/build/adapters/breeze.modelLibrary.backingStore.js', // breezeModelLibraryBackingStore
+    libJsSrcRoot + '/breeze-client/build/adapters/breeze.uriBuilder.odata.js', // breezeUriBuilderOData
+    libJsSrcRoot + '/breeze-client/build/adapters/breeze.bridge.angular.js', // breezeBridgeAngular
+    libJsSrcRoot + '/breeze-client-labs/breeze.directives.js', // breezeDirectives
+    libJsSrcRoot + '/angular-google-analytics/dist/angular-google-analytics.js', // googleAnalyticsAngular
+    libJsSrcRoot + '/angular-utils-disqus/dirDisqus.js', // disqusAngular
+    libJsSrcRoot + '/respond/dest/respond.js', // respond
+    libJsSrcRoot + '/angular-bootstrap/ui-bootstrap-tpls.js', // bootstrapAngular
+    libJsSrcRoot + '/highcharts/highcharts.src.js', // highcharts
+    libJsSrcRoot + '/highcharts-ng/dist/highcharts-ng.js', // highchartsAngular
+    libJsSrcRoot + '/toastr/toastr.js', // toastr
+    libJsSrcRoot + '/source-map/dist/source-map.js' // sourceMap
+    ],
     libJsDest = './_system/js/lib';
 
 // lib.css variables
 var libMinCss = 'lib.min.css',
     libCss = libMinCss.replace('.min', ''),
-    libCssSrc = [bootstrap, fontAwesome, bootstrapSocial, breezeDirectivesCss, toastrCss],
+    libCssSrc = [
+    libJsSrcRoot + '/bootstrap/dist/css/bootstrap.css', // bootstrap
+    libJsSrcRoot + '/font-awesome/css/font-awesome.css', // fontAwesome
+    libJsSrcRoot + '/bootstrap-social/bootstrap-social.css', // bootstrapSocial
+    libJsSrcRoot + '/breeze-client-labs/breeze.directives.css', // breezeDirectivesCss
+    libJsSrcRoot + '/toastr/toastr.css', // toastrCss
+    ],
     libCssDest = './_system/css/lib';
+
+// Fonts
+var fontsSrc = [
+    libJsSrcRoot + '/bootstrap/fonts/*', // Bootstrap
+    libJsSrcRoot + '/font-awesome/fonts/*', // Font Awesome
+],
+    fontsDest = './_system/css/fonts';
 
 // default
 gulp.task('default', [appJs, appCss, libJs, libCss, 'watch']);

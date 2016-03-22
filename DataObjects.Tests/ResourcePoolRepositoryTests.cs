@@ -53,7 +53,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Tests
         public async Task InsertNewResourcePool_IdShouldBeBiggerThanZero()
         {
             // Arrange
-            var user = new User("User");
+            var user = new User("User", "user@email.com");
             var resourcePool = new ResourcePool(user, "ResourcePool");
             
             // Act
@@ -71,7 +71,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Tests
             var userStore = new UserStore(Context);
             userStore.AutoSaveChanges = false;
 
-            var user = new User("User");
+            var user = new User("User", "user@email.com");
 
             await userStore.CreateAsync(user);
             await Context.SaveChangesAsync();
@@ -99,8 +99,8 @@ namespace forCrowd.WealthEconomy.DataObjects.Tests
             var userStore = new UserStore(Context);
             userStore.AutoSaveChanges = false;
 
-            var user1 = new User("User 1");
-            var user2 = new User("User 2");
+            var user1 = new User("User 1", "user@email.com");
+            var user2 = new User("User 2", "user@email.com");
 
             await userStore.CreateAsync(user1);
             await userStore.CreateAsync(user2);
@@ -138,8 +138,8 @@ namespace forCrowd.WealthEconomy.DataObjects.Tests
             var userStore = new UserStore(Context);
             userStore.AutoSaveChanges = false;
 
-            var user1 = new User("User 1");
-            var user2 = new User("User 2");
+            var user1 = new User("User 1", "user@email.com");
+            var user2 = new User("User 2", "user@email.com");
 
             await userStore.CreateAsync(user1);
             await userStore.CreateAsync(user2);

@@ -26,7 +26,7 @@
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
             var form = await context.Request.ReadFormAsync();
-            var username = context.UserName;
+            var userName = context.UserName;
             var password = context.Password;
             var singleUseToken = form.Get("singleUseToken");
 
@@ -34,9 +34,9 @@
             var userManager = context.OwinContext.GetUserManager<UserManager>();
 
             // Single use token case
-            if (string.IsNullOrWhiteSpace(username) && string.IsNullOrWhiteSpace(password) && !string.IsNullOrWhiteSpace(singleUseToken))
+            if (string.IsNullOrWhiteSpace(userName) && string.IsNullOrWhiteSpace(password) && !string.IsNullOrWhiteSpace(singleUseToken))
             {
-                user = await userManager.FindBySingleUseToken(singleUseToken);
+                user = await userManager.FindBySingleUseTokenAsync(singleUseToken);
 
                 if (user == null)
                 {

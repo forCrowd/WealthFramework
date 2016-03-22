@@ -11,7 +11,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 {
     using forCrowd.WealthEconomy.BusinessObjects;
     using forCrowd.WealthEconomy.Facade;
-    using Microsoft.AspNet.Identity;
+    using Results;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
@@ -19,7 +19,6 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
     using System.Net;
     using System.Threading.Tasks;
     using System.Web.Http;
-    using System.Web.Http.ModelBinding;
     using System.Web.Http.OData;
     using WebApi.Controllers.Extensions;
 
@@ -100,12 +99,9 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             {
                 if (await MainUnitOfWork.All.AnyAsync(item => item.ElementFieldId == userElementField.ElementFieldId))
                 {
-                    return Conflict();
+					return new UniqueKeyConflictResult(Request, "ElementFieldId", userElementField.ElementFieldId.ToString());
                 }
-                else
-                {
-                    throw;
-                }
+                else throw;
             }
 
             return Created(userElementField);
@@ -138,7 +134,26 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             }
 
             patch.Patch(userElementField);
-            await MainUnitOfWork.UpdateAsync(userElementField);
+
+            try
+            {
+                await MainUnitOfWork.UpdateAsync(userElementField);
+            }
+            catch (DbUpdateException)
+            {
+                if (patch.GetChangedPropertyNames().Any(item => item == "ElementFieldId"))
+                {
+                    object elementFieldIdObject = null;
+                    patch.TryGetPropertyValue("ElementFieldId", out elementFieldIdObject);
+
+                    if (elementFieldIdObject != null && await MainUnitOfWork.All.AnyAsync(item => item.ElementFieldId == (int)elementFieldIdObject))
+                    {
+                        return new UniqueKeyConflictResult(Request, "ElementFieldId", elementFieldIdObject.ToString());
+                    }
+                    else throw;
+                }
+                else throw;
+            }
 
             return Ok(userElementField);
         }

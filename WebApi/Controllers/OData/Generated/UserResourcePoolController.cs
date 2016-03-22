@@ -11,7 +11,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 {
     using forCrowd.WealthEconomy.BusinessObjects;
     using forCrowd.WealthEconomy.Facade;
-    using Microsoft.AspNet.Identity;
+    using Results;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
@@ -19,7 +19,6 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
     using System.Net;
     using System.Threading.Tasks;
     using System.Web.Http;
-    using System.Web.Http.ModelBinding;
     using System.Web.Http.OData;
     using WebApi.Controllers.Extensions;
 
@@ -100,12 +99,9 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             {
                 if (await MainUnitOfWork.All.AnyAsync(item => item.ResourcePoolId == userResourcePool.ResourcePoolId))
                 {
-                    return Conflict();
+					return new UniqueKeyConflictResult(Request, "ResourcePoolId", userResourcePool.ResourcePoolId.ToString());
                 }
-                else
-                {
-                    throw;
-                }
+                else throw;
             }
 
             return Created(userResourcePool);
@@ -138,7 +134,26 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             }
 
             patch.Patch(userResourcePool);
-            await MainUnitOfWork.UpdateAsync(userResourcePool);
+
+            try
+            {
+                await MainUnitOfWork.UpdateAsync(userResourcePool);
+            }
+            catch (DbUpdateException)
+            {
+                if (patch.GetChangedPropertyNames().Any(item => item == "ResourcePoolId"))
+                {
+                    object resourcePoolIdObject = null;
+                    patch.TryGetPropertyValue("ResourcePoolId", out resourcePoolIdObject);
+
+                    if (resourcePoolIdObject != null && await MainUnitOfWork.All.AnyAsync(item => item.ResourcePoolId == (int)resourcePoolIdObject))
+                    {
+                        return new UniqueKeyConflictResult(Request, "ResourcePoolId", resourcePoolIdObject.ToString());
+                    }
+                    else throw;
+                }
+                else throw;
+            }
 
             return Ok(userResourcePool);
         }

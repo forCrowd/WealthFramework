@@ -17,6 +17,9 @@ Nadia - 02 Mar. '16
 . Value proposition
 . Gaming the system
 
+Cuneyt Kizilelma - 16 Mar. '16
+. 
+
 Kaan
 . Rating UI
 ?
@@ -27,3 +30,31 @@ Nihan
 Sencer
 . Value proposition
 ?
+
+---
+Ceren Şenel
+Andaç Özikiz
+Ahu Türidi
+
+Cihan Karagül
+Bahadır Çambel
+Ekaterina Staykova
+
+Akın Civelek
+Pınar Civelek
+
+İlkay
+Tarık Türkay
+Noyan Cimcim
+Pınar Yılmaz
+Fırat Sengelli
+Pakize Kaya
+
+Emin Pamucak & BTF?
+APM?
+Triodor?
+
+Ceyda Holat
+Vedat Holat
+
+Deniz Onur

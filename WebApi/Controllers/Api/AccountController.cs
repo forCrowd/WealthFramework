@@ -5,6 +5,7 @@
     using Microsoft.AspNet.Identity;
     using Microsoft.Owin.Security;
     using Models;
+    using Results;
     using System;
     using System.Linq;
     using System.Net.Http;
@@ -88,6 +89,27 @@
             return Ok(currentUser);
         }
 
+        // POST api/Account/ChangeUserName
+        public async Task<IHttpActionResult> ChangeUserName(ChangeUserNameBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Get the user
+            var currentUser = await UserManager.FindByIdAsync(this.GetCurrentUserId().Value);
+            var result = await UserManager.ChangeUserName(currentUser.Id, model.UserName);
+            var errorResult = GetErrorResult(result);
+
+            if (errorResult != null)
+            {
+                return errorResult;
+            }
+
+            return Ok(currentUser);
+        }
+
         // POST api/Account/ConfirmEmail
         public async Task<IHttpActionResult> ConfirmEmail(ConfirmEmailBindingModel model)
         {
@@ -120,7 +142,7 @@
 
             // Request a redirect to the external login provider
             var callBackUrl = string.Format("/api/Account/ExternalLoginCallback?clientReturnUrl={0}", clientReturnUrl);
-            return new Results.ChallengeResult(Request, provider, callBackUrl);
+            return new ChallengeResult(Request, provider, callBackUrl);
         }
 
         // GET api/Account/ExternalLoginCallback
@@ -138,7 +160,7 @@
             }
 
             // Since this method MUST return RedirectResult, cover the whole block with try & catch,
-            // so it always redirect the user back to ngClient and won't get stuck on WebApi
+            // so it always redirect the user back to ngClient and won't get stuck on WebApi in case of an error
             // SH - 16 Jan. '16
             try
             {
@@ -174,7 +196,8 @@
                     // And there is no user with this email address: New user
                     if (user == null)
                     {
-                        user = new User(email);
+                        var userName = await UserManager.GetUniqueUserNameFromEmail(email);
+                        user = new User(userName, email);
 
                         var result = await UserManager.CreateAsync(user, externalLoginInfo.Login);
 
@@ -183,6 +206,9 @@
                         {
                             return Redirect(string.Format("{0}&error={1}", location, errorMessage));
                         }
+
+                        // init=true: to let the client knows that this account is newly created (first login from this external login)
+                        location = string.Format("{0}&init=true", location);
                     }
                     else // There is a user with this email: Link accounts
                     {
@@ -229,7 +255,7 @@
                 return BadRequest(ModelState);
             }
 
-            var user = new User(model.Email)
+            var user = new User(model.UserName, model.Email)
             {
                 IsAnonymous = false
             };
@@ -255,12 +281,12 @@
                 return BadRequest(ModelState);
             }
 
-            var user = new User(model.Email)
+            var user = new User(model.UserName, model.Email)
             {
                 IsAnonymous = true
             };
 
-            var result = await UserManager.CreateAsync(user);
+            var result = await UserManager.CreateAnonymousAsync(user);
             var errorResult = GetErrorResult(result);
 
             if (errorResult != null)

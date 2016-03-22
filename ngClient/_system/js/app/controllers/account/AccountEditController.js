@@ -3,31 +3,33 @@
 
     var controllerId = 'AccountEditController';
     angular.module('main')
-        .controller(controllerId, ['dataContext', 'logger', AccountEditController]);
+        .controller(controllerId, ['dataContext', 'logger', '$location', AccountEditController]);
 
-    function AccountEditController(dataContext, logger) {
+    function AccountEditController(dataContext, logger, $location) {
         logger = logger.forSource(controllerId);
 
         var isSaving = false;
 
         // Controller methods (alphabetically)
         var vm = this;
-        vm.cancelChanges = cancelChanges;
+        vm.cancel = cancel;
         vm.isSaveDisabled = isSaveDisabled;
-        vm.user = null;
+        vm.currentUser = null;
         vm.saveChanges = saveChanges;
 
         // Get current user
         dataContext.getCurrentUser()
             .then(function (currentUser) {
-                vm.user = currentUser;
-                vm.user.isEditing = true;
+                vm.currentUser = currentUser;
+                vm.currentUser.isEditing = true;
             });
 
         /*** Implementations ***/
 
-        function cancelChanges() {
-            // TODO
+        function cancel() {
+            vm.currentUser.entityAspect.rejectChanges();
+            vm.currentUser.isEditing = false;
+            $location.url('/_system/account');
         }
 
         function isSaveDisabled() {
@@ -38,10 +40,11 @@
         function saveChanges() {
 
             isSaving = true;
-            vm.user.isEditing = false;
+            vm.currentUser.isEditing = false; // TODO What happens in fail case?
             dataContext.saveChanges()
                 .then(function (result) {
                     logger.logSuccess('Your changes have been saved!', null, true);
+                    $location.url('/_system/account');
                 })
                 .catch(function (error) {
 

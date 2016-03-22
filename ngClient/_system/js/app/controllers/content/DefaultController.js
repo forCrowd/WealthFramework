@@ -3,9 +3,9 @@
 
     var controllerId = 'DefaultController';
     angular.module('main')
-        .controller(controllerId, ['applicationFactory', 'dataContext', '$scope', '$location', 'disqusShortname', '$uibModal', 'logger', DefaultController]);
+        .controller(controllerId, ['applicationFactory', 'dataContext', 'disqusShortname', 'logger', '$location', '$rootScope', '$scope', '$uibModal', DefaultController]);
 
-    function DefaultController(applicationFactory, dataContext, $scope, $location, disqusShortname, $uibModal, logger) {
+    function DefaultController(applicationFactory, dataContext, disqusShortname, logger, $location, $rootScope, $scope, $uibModal) {
 
         // Logger
         logger = logger.forSource(controllerId);
@@ -13,6 +13,7 @@
         // View model
         var vm = this;
         vm.applicationInfo = null;
+        vm.createNew = createNew;
         vm.currentUser = { Email: '', isAuthenticated: function () { return false; }, HasPassword: false };
         vm.currentDate = new Date();
         vm.currentUserText = currentUserText;
@@ -28,8 +29,8 @@
         var isModalOpen = false;
 
         // Events
-        $scope.$on('dataContext_unauthenticatedUserInteracted', openRegisterLoginModal);
         $scope.$on('dataContext_currentUserChanged', currentUserChanged);
+        $scope.$on('unauthenticatedUserInteracted', openRegisterLoginModal);
         $scope.$on('$routeChangeSuccess', routeChangeSuccess);
 
         _init();
@@ -40,12 +41,20 @@
             getApplicationInfo();
         }
 
+        function createNew() {
+            if (vm.currentUser.isAuthenticated()) {
+                $location.url('/' + vm.currentUser.UserName + '/new');
+            } else {
+                $rootScope.$broadcast('unauthenticatedUserInteracted', true);
+            }
+        }
+
         function currentUserChanged(event, newUser) {
             vm.currentUser = newUser;
         }
 
         function currentUserText() {
-            var userText = vm.currentUser.Email;
+            var userText = vm.currentUser.UserName;
 
             if (vm.currentUser.IsAnonymous) {
                 userText += ' (Anonymous)';
@@ -69,28 +78,35 @@
                 });
         }
 
-        function openRegisterLoginModal() {
-            if (!isModalOpen) {
+        function openRegisterLoginModal(event, forceOpen) {
+            forceOpen = typeof forceOpen !== 'undefined' ? forceOpen : false;
+
+            if (!isModalOpen || forceOpen) {
+
                 isModalOpen = true;
 
                 var modalInstance = $uibModal.open({
-                    backdrop: 'static',
+                    //backdrop: 'static',
                     controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
                         $scope.$on('dataContext_currentUserChanged', closeModal);
                         $scope.$on('LoginController_redirected', closeModal);
+                        $scope.$on('RegisterController_userRegistered', closeModal);
 
                         function closeModal() {
                             $uibModalInstance.close();
                         }
                     }],
-                    keyboard: false,
+                    //keyboard: false,
                     size: 'lg',
-                    templateUrl: '/_system/views/account/registerLogin.html?v=0.50.0'
+                    templateUrl: '/_system/views/account/registerLogin.html?v=0.51.0'
                 });
 
-                modalInstance.result.then(function () {
-                    isModalOpen = false;
-                });
+                modalInstance.result
+                    .then(function () {
+                        //isModalOpen = false;
+                    }, function () {
+                        //isModalOpen = false;
+                    });
             }
         }
 

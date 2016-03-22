@@ -6,7 +6,7 @@
     {
         DateTime CreatedOn { get; set; }
         DateTime ModifiedOn { get; set; }
-        Nullable<DateTime> DeletedOn { get; set; }
+        DateTime? DeletedOn { get; set; }
         byte[] RowVersion { get; set; }
     }
 }

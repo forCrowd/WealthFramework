@@ -24,7 +24,7 @@
         public Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
         {
             var properties = new AuthenticationProperties {
-                RedirectUri = RedirectUri // Without this prop, facebook return to the page that it came from (in the current case /api/Account/ExternalLogin / SH - 29 Dec' 15)
+                RedirectUri = RedirectUri // Without this prop, external provider returns to the page that it came from (in the current case /api/Account/ExternalLogin / SH - 29 Dec' 15)
             };
 
             Request.GetOwinContext().Authentication.Challenge(properties, LoginProvider);

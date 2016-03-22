@@ -1,10 +1,15 @@
 namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 {
     using forCrowd.WealthEconomy.BusinessObjects;
+    using Results;
+    using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     using System.Linq;
+    using System.Net;
     using System.Threading.Tasks;
     using System.Web.Http;
+    using System.Web.Http.OData;
+    using WebApi.Controllers.Extensions;
 
     public partial class ResourcePoolController
     {
@@ -16,38 +21,58 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
         }
 
         [AllowAnonymous]
-        public override SingleResult<ResourcePool> Get(int key)
+        public override SingleResult<ResourcePool> Get(int id)
         {
-            var result = base.Get(key);
+            var result = base.Get(id);
             return result;
         }
 
-        // POST odata/ResourcePool
         public override async Task<IHttpActionResult> Post(ResourcePool resourcePool)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             try
             {
-                var currentUser = await GetCurrentUserAsync();
-                await MainUnitOfWork.InsertAsync(resourcePool);
+                return await base.Post(resourcePool);
             }
             catch (DbUpdateException)
             {
-                if (MainUnitOfWork.Exists(resourcePool.Id))
+                // Unique key exception
+                if (await MainUnitOfWork.All.AnyAsync(item => item.UserId == resourcePool.UserId && item.Key == resourcePool.Key))
                 {
-                    return Conflict();
+                    return new UniqueKeyConflictResult(Request, "Key", resourcePool.Key);
                 }
                 else
                 {
                     throw;
                 }
             }
+        }
 
-            return Created(resourcePool);
+        public override async Task<IHttpActionResult> Patch([FromODataUri] int id, Delta<ResourcePool> patch)
+        {
+            try
+            {
+                return await base.Patch(id, patch);
+            }
+            catch (DbUpdateException)
+            {
+                // Unique key exception
+                if (patch.GetChangedPropertyNames().Any(item => item == "Key"))
+                {
+                    object resourcePoolKey = null;
+                    patch.TryGetPropertyValue("Key", out resourcePoolKey);
+
+                    var userId = this.GetCurrentUserId();
+                    if (!userId.HasValue)
+                        throw new HttpResponseException(HttpStatusCode.Unauthorized);
+
+                    if (resourcePoolKey != null && await MainUnitOfWork.All.AnyAsync(item => item.UserId == userId.Value && item.Key == resourcePoolKey.ToString()))
+                    {
+                        return new UniqueKeyConflictResult(Request, "Key", resourcePoolKey.ToString());
+                    }
+                    else throw;
+                }
+                else throw;
+            }
         }
     }
 }

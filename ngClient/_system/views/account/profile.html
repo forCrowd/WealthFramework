@@ -1,0 +1,33 @@
+﻿<div data-ng-controller="ProfileController as vm">
+    <h2>Profile</h2>
+    <h4 data-ng-bind="vm.user.UserName"></h4>
+    <p data-ng-show="vm.user.Id === vm.currentUser.Id">
+        <a data-ng-href="/{{ vm.currentUser.UserName }}/new">Create New</a>
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                Resource Pool
+            </th>
+            <th>
+                Created
+            </th>
+        </tr>
+        <tr data-ng-show="results.length === 0">
+            <td colspan="2">
+                Nothing to display
+            </td>
+        </tr>
+        <tr data-ng-show="results.length > 0" data-ng-repeat="resourcePool in vm.user.ResourcePoolSet | orderBy: 'Name' | filter: { isTemp: false } as results">
+            <td>
+                <a data-ng-bind="resourcePool.name()" data-ng-href="{{ resourcePool.urlView() }}"></a>
+                <span data-ng-show="vm.user.Id === vm.currentUser.Id">
+                    - <a data-ng-href="{{ resourcePool.urlEdit() }}">Edit</a>
+                </span>
+            </td>
+            <td>
+                <span am-time-ago="resourcePool.CreatedOn"></span>
+            </td>
+        </tr>
+    </table>
+</div>

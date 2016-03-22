@@ -1,11 +1,9 @@
 namespace forCrowd.WealthEconomy.BusinessObjects
 {
-    using forCrowd.WealthEconomy.BusinessObjects.Attributes;
     using Microsoft.AspNet.Identity.EntityFramework;
-    using System.ComponentModel;
+    using System;
     using System.ComponentModel.DataAnnotations;
 
-    [DisplayName("User Role")]
     public class UserRole : IdentityUserRole<int>, IEntity
     {
         // Todo Constructors?
@@ -13,21 +11,13 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         public virtual User User { get; set; }
         public virtual Role Role { get; set; }
 
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
-        public System.DateTime CreatedOn { get; set; }
+        public DateTime CreatedOn { get; set; }
 
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
-        public System.DateTime ModifiedOn { get; set; }
+        public DateTime ModifiedOn { get; set; }
 
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
-        public System.DateTime? DeletedOn { get; set; }
+        public DateTime? DeletedOn { get; set; }
 
         [Timestamp]
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
         public byte[] RowVersion { get; set; }
     }
 }

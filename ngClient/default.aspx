@@ -28,7 +28,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="/_system/resourcePool/new">Create CMRP (New)</a>
+                        <a href="" data-ng-click="vm.createNew()">Create CMRP (New)</a>
                     </li>
                     <li>
                         <a href="/_system/resourcePool">CMRP List</a>
@@ -41,7 +41,7 @@
                             <a href="/_system/account/login" class="buffer-left">Login</a>
                         </div>
                     </li>
-                    <li data-ng-show="vm.currentUser.isAuthenticated()" class="dropdown" data-uib-dropdown>
+                    <li data-ng-show="vm.currentUser.isAuthenticated()" class="dropdown hide" data-uib-dropdown>
                         <a href="" class="dropdown-toggle" data-uib-dropdown-toggle><span data-ng-bind="'User: ' + vm.currentUserText()"></span><b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="/_system/account/accountEdit">Edit</a></li>
@@ -49,6 +49,14 @@
                             <li data-ng-show="!vm.currentUser.IsAnonymous && !vm.currentUser.EmailConfirmed"><a href="/_system/account/confirmEmail">Confirm email</a></li>
                             <li data-ng-show="vm.currentUser.HasPassword === null"><a href="/_system/account/changePassword">Change password</a></li>
                             <li data-ng-show="vm.currentUser.HasPassword === false"><a href="/_system/account/addPassword">Add password</a></li>
+                            <li><a href="" data-ng-click="vm.logout()">Logout</a></li>
+                        </ul>
+                    </li>
+                    <li data-ng-show="vm.currentUser.isAuthenticated()" class="dropdown" data-uib-dropdown>
+                        <a href="" class="dropdown-toggle" data-uib-dropdown-toggle><span data-ng-bind="'User: ' + vm.currentUserText()"></span><b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a data-ng-href="{{ '/' + vm.currentUser.UserName }}">Profile</a></li>
+                            <li><a href="/_system/account">Account</a></li>
                             <li><a href="" data-ng-click="vm.logout()">Logout</a></li>
                         </ul>
                     </li>
@@ -140,10 +148,10 @@
     </div>
 
     <!-- lib.js -->
-    <script src="/_system/js/lib/lib.min.js?v=0.50.0"></script>
+    <script src="/_system/js/lib/lib.min.js?v=0.51.0"></script>
 
     <!-- app.js -->
-    <script src="/_system/js/app/app.min.js?v=0.50.0"></script>
+    <script src="/_system/js/app/app.min.js?v=0.51.0"></script>
 
     <!-- appSettings.js -->
     <script src="/_system/js/appSettings/appSettings.js?v=0.49.0"></script>

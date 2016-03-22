@@ -21,8 +21,6 @@
 
         Task<TEntityType> FindAsync(params object[] keyValues);
 
-        bool Exists(object[] keyValues);
-
         void Insert(TEntityType entity);
 
         void Update(TEntityType entity);

@@ -1,5 +1,15 @@
 ### Changelog
 
+**0.51.0**
+
+* Add username to account
+https://github.com/forCrowd/WealthEconomy/issues/20
+* New regular account shows 'Add password' instead of 'Change password'
+https://github.com/forCrowd/WealthEconomy/issues/22
+* moment + angular moment.js libs were added
+* Twitter badge on README
+* BusinessObjects clean-up: Display(Name), DisplayOnEditView, DisplayOnListView etc.
+
 **0.50.0**
 
 * Anonymous account

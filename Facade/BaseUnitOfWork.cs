@@ -43,11 +43,6 @@
             return await MainRepository.FindAsync(keyValues);
         }
 
-        public bool Exists(params object[] keyValues)
-        {
-            return MainRepository.Exists(keyValues);
-        }
-
         public virtual async Task<int> InsertAsync(TEntityType entity)
         {
             MainRepository.Insert(entity);

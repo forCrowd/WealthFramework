@@ -10,7 +10,7 @@
         logger = logger.forSource(controllerId);
 
         var vm = this;
-        vm.priorityIndexConfig = { resourcePoolId: 2 };
+        vm.priorityIndexConfig = { userName: 'sample', resourcePoolKey: 'Priority-Index-Sample' };
 
         // Event listeners
         $scope.$on('resourcePoolEditor_elementCellNumericValueIncreased', updateAllInOne);
@@ -20,13 +20,13 @@
         // Sync this example's values with 'All in One'
         function updateAllInOne(event, cell) {
 
-            var allInOneId = 7;
-
-            if (cell.ElementField.Element.ResourcePoolId !== vm.priorityIndexConfig.resourcePoolId) {
+            if (cell.ElementField.Element.ResourcePool.User.UserName !== vm.priorityIndexConfig.userName &&
+                cell.ElementField.Element.ResourcePool.Key !== vm.priorityIndexConfig.resourcePoolKey) {
                 return;
             }
 
-            resourcePoolFactory.getResourcePoolExpanded(allInOneId)
+            var allInOneUniqueKey = { userName: 'sample', resourcePoolKey: 'All-in-One' };
+            resourcePoolFactory.getResourcePoolExpanded(allInOneUniqueKey)
                 .then(function (resourcePool) {
 
                     // If the current user already interacted with 'All in One', stop copying ratings
@@ -62,7 +62,7 @@
                                             }
 
                                             // Save changes
-                                            resourcePoolFactory.saveChanges(1500);
+                                            dataContext.saveChanges(1500);
                                             break;
                                         }
                                     }

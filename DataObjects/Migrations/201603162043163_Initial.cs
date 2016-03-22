@@ -73,7 +73,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
                 .ForeignKey("dbo.ElementField", t => t.ElementFieldId)
                 .ForeignKey("dbo.ElementItem", t => t.ElementItemId, cascadeDelete: true)
                 .ForeignKey("dbo.ElementItem", t => t.SelectedElementItemId)
-                .Index(t => new { t.ElementFieldId, t.ElementItemId }, unique: true, name: "IX_ElementCellId")
+                .Index(t => new { t.ElementFieldId, t.ElementItemId }, unique: true, name: "UX_ElementCell_ElementFieldId_ElementItemId")
                 .Index(t => t.SelectedElementItemId);
             
             CreateTable(
@@ -188,7 +188,8 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         UserId = c.Int(nullable: false),
-                        Name = c.String(nullable: false, maxLength: 50),
+                        Key = c.String(maxLength: 250),
+                        Name = c.String(nullable: false, maxLength: 250),
                         InitialValue = c.Decimal(nullable: false, precision: 18, scale: 2),
                         UseFixedResourcePoolRate = c.Boolean(nullable: false),
                         ResourcePoolRateTotal = c.Decimal(precision: 18, scale: 2),
@@ -201,7 +202,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.User", t => t.UserId, cascadeDelete: true)
-                .Index(t => t.UserId);
+                .Index(t => new { t.UserId, t.Key }, unique: true, name: "UX_ResourcePool_UserId_Key");
             
             CreateTable(
                 "dbo.UserResourcePool",
@@ -307,7 +308,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             DropIndex("dbo.UserRole", new[] { "UserId" });
             DropIndex("dbo.UserResourcePool", new[] { "ResourcePoolId" });
             DropIndex("dbo.UserResourcePool", new[] { "UserId" });
-            DropIndex("dbo.ResourcePool", new[] { "UserId" });
+            DropIndex("dbo.ResourcePool", "UX_ResourcePool_UserId_Key");
             DropIndex("dbo.UserLogin", new[] { "UserId" });
             DropIndex("dbo.UserClaim", new[] { "UserId" });
             DropIndex("dbo.User", "UserNameIndex");
@@ -315,7 +316,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             DropIndex("dbo.UserElementCell", new[] { "UserId" });
             DropIndex("dbo.ElementItem", new[] { "ElementId" });
             DropIndex("dbo.ElementCell", new[] { "SelectedElementItemId" });
-            DropIndex("dbo.ElementCell", "IX_ElementCellId");
+            DropIndex("dbo.ElementCell", "UX_ElementCell_ElementFieldId_ElementItemId");
             DropIndex("dbo.ElementField", new[] { "SelectedElementId" });
             DropIndex("dbo.ElementField", new[] { "ElementId" });
             DropIndex("dbo.Element", new[] { "ResourcePoolId" });

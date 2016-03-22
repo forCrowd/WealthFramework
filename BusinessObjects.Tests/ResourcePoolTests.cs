@@ -10,7 +10,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Tests
         public void NewResourcePool_ShouldCreate()
         {
             // Arrange + act
-            var user = new User("User");
+            var user = new User("User", "user@email.com");
             new ResourcePool(user, "Default");
         }
     }

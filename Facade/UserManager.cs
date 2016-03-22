@@ -6,7 +6,6 @@
     using Microsoft.AspNet.Identity;
     using System;
     using System.Data.Entity;
-    using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
 
@@ -45,32 +44,6 @@
             await Store.SaveChangesAsync();
         }
 
-        //public async Task AddTempTokenClaimAsync(User user)
-        //{
-        //    await Store.AddTempTokenClaim(user);
-        //    await Store.SaveChangesAsync();
-        //}
-
-        public override async Task<IdentityResult> SetEmailAsync(int userId, string email)
-        {
-            var user = await FindByIdAsync(userId);
-
-            // Email & userName are same at the moment
-            user.UserName = email;
-            user.IsAnonymous = false;
-            var result = await base.SetEmailAsync(userId, email);
-
-            if (result.Succeeded)
-            {
-                await Store.SaveChangesAsync();
-
-                // Send confirmation email
-                await SendConfirmationEmailAsync(userId);
-            }
-
-            return result;
-        }
-
         public override async Task<IdentityResult> ChangePasswordAsync(int userId, string currentPassword, string newPassword)
         {
             var result = await base.ChangePasswordAsync(userId, currentPassword, newPassword);
@@ -83,6 +56,16 @@
             return result;
         }
 
+        public async Task<IdentityResult> ChangeUserName(int userId, string userName)
+        {
+            var user = await base.FindByIdAsync(userId);
+
+            user.UserName = userName;
+            await Store.SaveChangesAsync();
+
+            return IdentityResult.Success;
+        }
+
         public override async Task<IdentityResult> ConfirmEmailAsync(int userId, string token)
         {
             var result = await base.ConfirmEmailAsync(userId, token);
@@ -90,33 +73,6 @@
             if (result.Succeeded)
             {
                 await Store.SaveChangesAsync();
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Creates an local anonymous account with auto generated email address and without a password
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        public override async Task<IdentityResult> CreateAsync(User user)
-        {
-            // Has password: Determines whether 'Add Password' or 'Change Password' option is available
-            user.HasPassword = false;
-
-            // Single use token: Since this is an external login, create single use token;
-            // it's going to be used to retrieve the bearer token by the client
-            Store.AddSingleUseToken(user);
-
-            var result = await base.CreateAsync(user);
-
-            if (result.Succeeded)
-            {
-                await Store.SaveChangesAsync();
-
-                // Send notification email
-                await SendAnonymousLoginNotificationEmailAsync(user.Id);
             }
 
             return result;
@@ -177,6 +133,33 @@
             return result;
         }
 
+        /// <summary>
+        /// Creates an local anonymous account with auto generated email address and without a password
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public async Task<IdentityResult> CreateAnonymousAsync(User user)
+        {
+            // Has password: Determines whether 'Add Password' or 'Change Password' option is available
+            user.HasPassword = false;
+
+            // Single use token: Since this is an external login, create single use token;
+            // it's going to be used to retrieve the bearer token by the client
+            Store.AddSingleUseToken(user);
+
+            var result = await base.CreateAsync(user);
+
+            if (result.Succeeded)
+            {
+                await Store.SaveChangesAsync();
+
+                // Send notification email
+                await SendAnonymousLoginNotificationEmailAsync(user.Id);
+            }
+
+            return result;
+        }
+
         public async Task DeleteUserResourcePoolAsync(int resourcePoolId)
         {
             await Store.DeleteUserResourcePoolAsync(resourcePoolId);
@@ -195,7 +178,7 @@
             await Store.SaveChangesAsync();
         }
 
-        public async Task<User> FindBySingleUseToken(string token)
+        public async Task<User> FindBySingleUseTokenAsync(string token)
         {
             // Search for the user
             var entity = await Users.SingleOrDefaultAsync(user => user.SingleUseToken == token);
@@ -212,27 +195,6 @@
             return entity;
         }
 
-        //public async Task<User> FindByTempToken(string tempToken)
-        //{
-        //    // Search for the user
-        //    var entity = await Users
-        //        .Include(user => user.Claims)
-        //        .Include(user => user.Logins)
-        //        .Include(user => user.Roles)
-        //        .SingleOrDefaultAsync(user => user.Claims.Any(claim => claim.ClaimType == "TempToken" && claim.ClaimValue == tempToken));
-
-        //    // Return null if there is no..
-        //    if (entity == null)
-        //        return null;
-
-        //    // Remove temp token
-        //    await Store.RemoveTempTokenClaim(entity, tempToken);
-        //    await Store.SaveChangesAsync();
-
-        //    // Return the user
-        //    return entity;
-        //}
-
         /// <summary>
         /// For testing purposes
         /// </summary>
@@ -246,6 +208,23 @@
             var minute = DateTime.Now.Minute;
             var second = DateTime.Now.Second;
             return "user_" + year + month + day + "_" + hour + minute + second + "@forcrowd.org";
+        }
+
+        public async Task<string> GetUniqueUserNameFromEmail(string email)
+        {
+            var emailUsername = email.Substring(0, email.IndexOf("@"));
+            var userName = emailUsername;
+            var count = 0;
+
+            User user = null;
+            do
+            {
+                if (count > 0) userName = emailUsername + count.ToString();
+                user = await Store.FindByNameAsync(userName);
+                count++;
+            } while (user != null);
+
+            return userName;
         }
 
         public async Task<IdentityResult> LinkLoginAsync(User user, UserLoginInfo userLoginInfo)
@@ -379,6 +358,24 @@
             sbBody.AppendLine("    </p>");
 
             await base.SendEmailAsync(userId, subject, sbBody.ToString());
+        }
+
+        public override async Task<IdentityResult> SetEmailAsync(int userId, string email)
+        {
+            var user = await FindByIdAsync(userId);
+
+            user.IsAnonymous = false;
+            var result = await base.SetEmailAsync(userId, email);
+
+            if (result.Succeeded)
+            {
+                await Store.SaveChangesAsync();
+
+                // Send confirmation email
+                await SendConfirmationEmailAsync(userId);
+            }
+
+            return result;
         }
     }
 }
