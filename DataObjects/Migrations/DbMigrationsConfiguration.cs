@@ -70,11 +70,12 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             }
 
             // Admin user
-            var adminUserName = "admin@forcrowd.org";
-            var adminUser = userManager.FindByName(adminUserName);
+            var adminUserName = "admin";
+            var adminEmail = "admin@forcrowd.org";
+            var adminUser = userManager.FindByEmail(adminEmail);
             if (adminUser == null)
             {
-                adminUser = new User(adminUserName);
+                adminUser = new User(adminUserName, adminEmail);
                 var adminUserPassword = DateTime.Now.ToString("yyyyMMdd");
                 userManager.Create(adminUser, adminUserPassword);
                 userManager.AddToRole(adminUser.Id, "Administrator");
@@ -93,11 +94,12 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             var resourcePoolRepository = new ResourcePoolRepository(context);
 
             // Sample user
-            var sampleUserName = "sample@forcrowd.org";
-            var sampleUser = userManager.FindByName(sampleUserName);
+            var sampleUserName = "sample";
+            var sampleEmail = "sample@forcrowd.org";
+            var sampleUser = userManager.FindByEmail(sampleEmail);
             if (sampleUser == null)
             {
-                sampleUser = new User(sampleUserName);
+                sampleUser = new User(sampleUserName, sampleEmail);
                 var sampleUserPassword = DateTime.Now.ToString("yyyyMMdd");
                 userManager.Create(sampleUser, sampleUserPassword);
             }

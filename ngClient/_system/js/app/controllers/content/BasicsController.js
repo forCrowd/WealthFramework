@@ -7,6 +7,7 @@
 
     function BasicsController(resourcePoolFactory, dataContext, $scope, logger) {
 
+        // Logger
         logger = logger.forSource(controllerId);
 
         var vm = this;
@@ -24,75 +25,65 @@
 
         function _init() {
 
-            var existingModelSampleId = -102;
-            var newModelSampleId = -103;
+            dataContext.getCurrentUser()
+                .then(function (currentUser) {
+                    vm.existingModelConfig = { userName: currentUser.UserName, resourcePoolKey: 'Basics-Existing-Model' };
+                    vm.newModelConfig = { userName: currentUser.UserName, resourcePoolKey: 'Basics-New-Model' };
 
-            resourcePoolFactory.getResourcePoolExpanded(existingModelSampleId)
-                .then(function (resourcePool) {
-                    if (resourcePool === null) {
-                        getBasicsSample()
-                            .then(function (resourcePool) {
-                                dataContext.createEntitySuppressAuthValidation(true);
+                    resourcePoolFactory.getResourcePoolExpanded(vm.existingModelConfig)
+                        .then(function (resourcePool) {
+                            if (resourcePool === null) {
+                                getBasicsSample()
+                                    .then(function (resourcePool) {
+                                        dataContext.createEntitySuppressAuthValidation(true);
 
-                                resourcePool.Id = existingModelSampleId;
-                                resourcePool.Name = 'Basics - Existing Model';
-                                resourcePool.UserResourcePoolSet[0].entityAspect.setDeleted(); // Remove resource pool rate
-                                resourcePool._init(true);
+                                        resourcePool.Name = 'Basics - Existing Model';
+                                        resourcePool.Key = vm.existingModelConfig.resourcePoolKey;
+                                        resourcePool.UserResourcePoolSet[0].entityAspect.setDeleted(); // Remove resource pool rate
+                                        resourcePool._init(true);
 
-                                vm.existingModelConfig.resourcePoolId = resourcePool.Id;
+                                        dataContext.createEntitySuppressAuthValidation(false);
+                                    });
+                            }
+                        });
 
-                                dataContext.createEntitySuppressAuthValidation(false);
-                            });
-                    } else {
-                        vm.existingModelConfig.resourcePoolId = resourcePool.Id;
-                    }
-                });
+                    resourcePoolFactory.getResourcePoolExpanded(vm.newModelConfig)
+                        .then(function (resourcePool) {
+                            if (resourcePool === null) {
+                                getBasicsSample()
+                                    .then(function (resourcePool) {
+                                        dataContext.createEntitySuppressAuthValidation(true);
 
-            resourcePoolFactory.getResourcePoolExpanded(newModelSampleId)
-                .then(function (resourcePool) {
-                    if (resourcePool === null) {
-                        getBasicsSample()
-                            .then(function (resourcePool) {
-                                dataContext.createEntitySuppressAuthValidation(true);
+                                        resourcePool.Name = 'Basics - New Model';
+                                        resourcePool.Key = vm.newModelConfig.resourcePoolKey;
 
-                                resourcePool.Id = newModelSampleId;
-                                resourcePool.Name = 'Basics - New Model';
+                                        // Employee Satisfaction field (index)
+                                        var employeeSatisfactionField = resourcePoolFactory.createElementField({
+                                            Element: resourcePool.mainElement(),
+                                            Name: 'Employee Satisfaction',
+                                            DataType: 4,
+                                            UseFixedValue: false,
+                                            IndexEnabled: true,
+                                            IndexCalculationType: 1,
+                                            IndexSortType: 1,
+                                            SortOrder: 2
+                                        });
 
-                                // Employee Satisfaction field (index)
-                                var employeeSatisfactionField = resourcePoolFactory.createElementField({
-                                    Element: resourcePool.mainElement(),
-                                    Name: 'Employee Satisfaction',
-                                    DataType: 4,
-                                    UseFixedValue: false,
-                                    IndexEnabled: true,
-                                    IndexCalculationType: 1,
-                                    IndexSortType: 1,
-                                    SortOrder: 2
-                                });
+                                        employeeSatisfactionField.ElementCellSet.forEach(function (elementCell) {
+                                            var userElementCell = {
+                                                ElementCell: elementCell,
+                                                DecimalValue: Math.floor((Math.random() * 100) + 1)
+                                            };
 
-                                // A fake user & ratings
-                                // TODO Use factories instead of dataContext?
-                                var fakeUser = dataContext.createEntity('User', {});
+                                            dataContext.createEntity('UserElementCell', userElementCell);
+                                        });
 
-                                employeeSatisfactionField.ElementCellSet.forEach(function (elementCell) {
-                                    var userElementCell = {
-                                        User: fakeUser,
-                                        ElementCell: elementCell,
-                                        DecimalValue: Math.floor((Math.random() * 100) + 1)
-                                    };
+                                        resourcePool._init(true);
 
-                                    dataContext.createEntity('UserElementCell', userElementCell);
-                                });
-
-                                resourcePool._init(true);
-
-                                vm.newModelConfig.resourcePoolId = resourcePool.Id;
-
-                                dataContext.createEntitySuppressAuthValidation(false);
-                            });
-                    } else {
-                        vm.newModelConfig.resourcePoolId = resourcePool.Id;
-                    }
+                                        dataContext.createEntitySuppressAuthValidation(false);
+                                    });
+                            }
+                        });
                 });
         }
 
@@ -132,33 +123,33 @@
 
         function updateOppositeResourcePool(event, element) {
 
-            var oppositeResourcePoolId = 0;
+            var oppositeKey = null;
 
-            if (element.ResourcePool.Id === vm.existingModelConfig.resourcePoolId) {
-                oppositeResourcePoolId = vm.newModelConfig.resourcePoolId;
-            } else if (element.ResourcePool.Id === vm.newModelConfig.resourcePoolId) {
-                oppositeResourcePoolId = vm.existingModelConfig.resourcePoolId;
+            if (element.ResourcePool.User.UserName === vm.existingModelConfig.userName && element.ResourcePool.Key === vm.existingModelConfig.resourcePoolKey) {
+                oppositeKey = vm.newModelConfig;
+            } else if (element.ResourcePool.User.UserName === vm.newModelConfig.userName && element.ResourcePool.Key === vm.newModelConfig.resourcePoolKey) {
+                oppositeKey = vm.existingModelConfig;
             }
 
             // Call the service to increase the multiplier
-            if (oppositeResourcePoolId !== 0) {
-                resourcePoolFactory.getResourcePoolExpanded(oppositeResourcePoolId)
-                    .then(function (resourcePool) {
-                        switch (event.name) {
-                            case 'resourcePoolEditor_elementMultiplierIncreased': {
-                                dataContext.updateElementMultiplier(resourcePool.mainElement(), 'increase');
-                                break;
-                            }
-                            case 'resourcePoolEditor_elementMultiplierDecreased': {
-                                dataContext.updateElementMultiplier(resourcePool.mainElement(), 'decrease');
-                                break;
-                            }
-                            case 'resourcePoolEditor_elementMultiplierReset': {
-                                dataContext.updateElementMultiplier(resourcePool.mainElement(), 'reset');
-                                break;
-                            }
+            if (oppositeKey !== null) {
+                resourcePoolFactory.getResourcePoolExpanded(oppositeKey)
+                .then(function (resourcePool) {
+                    switch (event.name) {
+                        case 'resourcePoolEditor_elementMultiplierIncreased': {
+                            dataContext.updateElementMultiplier(resourcePool.mainElement(), 'increase');
+                            break;
                         }
-                    });
+                        case 'resourcePoolEditor_elementMultiplierDecreased': {
+                            dataContext.updateElementMultiplier(resourcePool.mainElement(), 'decrease');
+                            break;
+                        }
+                        case 'resourcePoolEditor_elementMultiplierReset': {
+                            dataContext.updateElementMultiplier(resourcePool.mainElement(), 'reset');
+                            break;
+                        }
+                    }
+                });
             }
         }
     }

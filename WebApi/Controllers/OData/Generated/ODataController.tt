@@ -34,9 +34,7 @@ foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
 	var entityVariable = codeStringGenerator.GetCamelCase(entityTypeName);
 	var controllerName = string.Format("{0}Controller", entitySetName);
 	var baseControllerName = string.Format("Base{0}", controllerName);
-    var unitOfWorkName = string.Format("{0}UnitOfWork", entityTypeName);	
-	//var primaryKey = entityType.KeyMembers[0];
-    //var primaryKeyShortTypeName = typeMapper.GetTypeName(primaryKey.TypeUsage);
+    var unitOfWorkName = string.Format("{0}UnitOfWork", entityTypeName);
 
 	EdmMember primaryKey = null;
 	if (entityType.KeyMembers.Count == 1)
@@ -52,7 +50,8 @@ foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
 		}
 	}
 
-	var primaryKeyVariable = entityType.KeyMembers.Count == 1 ? "key" : codeStringGenerator.GetCamelCase(primaryKey.Name);
+	var primaryKeyVariable = codeStringGenerator.GetCamelCase(primaryKey.Name);
+	var primaryKeyObjectVariable = string.Format("{0}Object", primaryKeyVariable);
 	var primaryKeyTypeName = typeMapper.GetTypeName(primaryKey.TypeUsage);
 
 	var routePrefix = string.Format("odata/{0}", entityTypeName);
@@ -70,7 +69,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 {
     using forCrowd.WealthEconomy.BusinessObjects;
     using forCrowd.WealthEconomy.Facade;
-    using Microsoft.AspNet.Identity;
+    using Results;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
@@ -78,7 +77,6 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
     using System.Net;
     using System.Threading.Tasks;
     using System.Web.Http;
-    using System.Web.Http.ModelBinding;
     using System.Web.Http.OData;
 <# if (hasUserId) { #>
     using WebApi.Controllers.Extensions;
@@ -165,12 +163,9 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             {
                 if (await MainUnitOfWork.All.AnyAsync(item => item.<#= primaryKey #> == <#= entityVariable #>.<#= primaryKey #>))
                 {
-                    return Conflict();
+					return new UniqueKeyConflictResult(Request, "<#= primaryKey #>", <#= entityVariable #>.<#= primaryKey #>.ToString());
                 }
-                else
-                {
-                    throw;
-                }
+                else throw;
             }
 
             return Created(<#= entityVariable #>);
@@ -203,7 +198,26 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             }
 
             patch.Patch(<#= entityVariable #>);
-            await MainUnitOfWork.UpdateAsync(<#= entityVariable #>);
+
+            try
+            {
+                await MainUnitOfWork.UpdateAsync(<#= entityVariable #>);
+            }
+            catch (DbUpdateException)
+            {
+                if (patch.GetChangedPropertyNames().Any(item => item == "<#= primaryKey #>"))
+                {
+                    object <#= primaryKeyObjectVariable #> = null;
+                    patch.TryGetPropertyValue("<#= primaryKey #>", out <#= primaryKeyObjectVariable #>);
+
+                    if (<#= primaryKeyObjectVariable #> != null && await MainUnitOfWork.All.AnyAsync(item => item.<#= primaryKey #> == (<#= primaryKeyTypeName #>)<#= primaryKeyObjectVariable #>))
+                    {
+                        return new UniqueKeyConflictResult(Request, "<#= primaryKey #>", <#= primaryKeyObjectVariable #>.ToString());
+                    }
+                    else throw;
+                }
+                else throw;
+            }
 
             return Ok(<#= entityVariable #>);
         }

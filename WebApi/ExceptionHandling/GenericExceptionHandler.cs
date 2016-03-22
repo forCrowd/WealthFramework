@@ -1,7 +1,7 @@
 ﻿namespace forCrowd.WealthEconomy.WebApi.ExceptionHandling
 {
     using System.Web.Http.ExceptionHandling;
-    using forCrowd.WealthEconomy.WebApi.Results;
+    using System.Web.Http.Results;
 
     public class GenericExceptionHandler : ExceptionHandler
     {

@@ -9,7 +9,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Tests
         [TestMethod]
         public void NewUser_ShouldCreate()
         {
-            new User("a valid email address?");
+            new User("A valid username?", "A valid email address?");
         }
     }
 }

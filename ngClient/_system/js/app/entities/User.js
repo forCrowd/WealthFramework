@@ -47,28 +47,9 @@
             self.isEditing = false;
 
             // Functions
-            self.getEntities = getEntities;
             self.isAuthenticated = isAuthenticated;
 
             /*** Implementations ***/
-
-            function getEntities() {
-
-                var entities = [];
-
-                entities.push(self);
-
-                self.ResourcePoolSet.forEach(function (resourcePool) {
-                    var resourcePoolEntities = resourcePool.getEntities(); // TODO Probably there is an easier way to do this?
-                    resourcePoolEntities.forEach(function (entity) {
-                        entities.push(entity);
-                    });
-                });
-
-                // TODO Other user related entities?
-
-                return entities;
-            }
 
             function isAuthenticated() {
                 return self.Id > 0;

@@ -1,6 +1,5 @@
 namespace forCrowd.WealthEconomy.BusinessObjects
 {
-    using forCrowd.WealthEconomy.BusinessObjects.Attributes;
     using forCrowd.WealthEconomy.Framework;
     using System;
     using System.Collections.Generic;
@@ -8,7 +7,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    [forCrowd.WealthEconomy.BusinessObjects.Attributes.DefaultProperty("Name")]
     // [ODataControllerAuthorization("Administrator")]
     public class Element : BaseEntity
     {
@@ -30,18 +28,14 @@ namespace forCrowd.WealthEconomy.BusinessObjects
             Name = name;
         }
 
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
         public int Id { get; set; }
 
         public int ResourcePoolId { get; set; }
 
-        [Display(Name = "Element")]
         [Required]
         [StringLength(50)]
         public string Name { get; set; }
 
-        [Display(Name = "Is Main Element")]
         [Required]
         public bool IsMainElement { get; set; }
 

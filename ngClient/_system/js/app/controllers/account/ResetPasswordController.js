@@ -24,8 +24,8 @@
             var resetPasswordBindingModel = vm;
             dataContext.resetPassword(resetPasswordBindingModel)
                 .success(function () {
-                    $location.url('/_system/account/login');
                     logger.logSuccess('Your password has been reset!', null, true);
+                    $location.url('/_system/account/login');
                 });
         }
 

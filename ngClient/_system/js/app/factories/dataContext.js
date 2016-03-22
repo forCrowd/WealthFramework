@@ -21,6 +21,7 @@
         var addPasswordUrl = serviceAppUrl + '/api/Account/AddPassword';
         var changeEmailUrl = serviceAppUrl + '/api/Account/ChangeEmail';
         var changePasswordUrl = serviceAppUrl + '/api/Account/ChangePassword';
+        var changeUserNameUrl = serviceAppUrl + '/api/Account/ChangeUserName';
         var confirmEmailUrl = serviceAppUrl + '/api/Account/ConfirmEmail';
         var registerUrl = serviceAppUrl + '/api/Account/Register';
         var registerAnonymousUrl = serviceAppUrl + '/api/Account/RegisterAnonymous';
@@ -34,10 +35,9 @@
         // However, there are some entities that the application has to create for the user (currentUser, sample resourcepools etc.)
         // In those cases, it should stop doing this check, so this flag will be used.
         // SH - 10 Mar. '16
-        var _createEntitySuppressAuthValidation = false; 
-        //var currentUser = { isAuthenticated: function () { return false; } };
-        //var currentUser = getAnonymousUser();
+        var _createEntitySuppressAuthValidation = false;
         var currentUser = null;
+        var fetchedUsers = [];
         var getCurrentUserPromise = null;
         var manager = null;
         var metadataReadyPromise = null;
@@ -48,6 +48,7 @@
             addPassword: addPassword,
             changeEmail: changeEmail,
             changePassword: changePassword,
+            changeUserName: changeUserName,
             confirmEmail: confirmEmail,
             createEntity: createEntity,
             createEntitySuppressAuthValidation: createEntitySuppressAuthValidation,
@@ -58,7 +59,9 @@
             getCurrentUser: getCurrentUser,
             getEntities: getEntities,
             getToken: getToken,
-            getUniqueUserEmail: getUniqueUserEmail,
+            getUniqueEmail: getUniqueEmail,
+            getUniqueUserName: getUniqueUserName,
+            getUser: getUser,
             hasChanges: hasChanges,
             login: login,
             logout: logout,
@@ -70,7 +73,6 @@
             resetPassword: resetPassword,
             resetPasswordRequest: resetPasswordRequest,
             saveChanges: saveChanges,
-            saveChangesAlt: saveChangesAlt,
             updateElementMultiplier: updateElementMultiplier,
             updateElementCellMultiplier: updateElementCellMultiplier,
             updateElementCellNumericValue: updateElementCellNumericValue,
@@ -80,7 +82,6 @@
 
         // Event handlers
         $rootScope.$on('ElementField_createUserElementCell', createUserElementCell);
-        $rootScope.$on('dataContext_currentUserChanged', currentUserChanged);
 
         _init();
 
@@ -111,7 +112,7 @@
                     currentUser.Email = updatedUser.Email;
                     currentUser.EmailConfirmed = false;
                     currentUser.IsAnonymous = false;
-                    currentUser.UserName = updatedUser;
+                    currentUser.UserName = updatedUser.UserName;
 
                     // Sync RowVersion fields
                     syncRowVersion(currentUser, updatedUser);
@@ -122,6 +123,23 @@
         function changePassword(changePasswordBindingModel) {
             return $http.post(changePasswordUrl, changePasswordBindingModel)
                 .success(function (updatedUser) {
+                    // Sync RowVersion fields
+                    syncRowVersion(currentUser, updatedUser);
+                })
+                .error(handleErrorResult);
+        }
+
+        function changeUserName(changeUserNameBindingModel) {
+            return $http.post(changeUserNameUrl, changeUserNameBindingModel)
+                .success(function (updatedUser) {
+
+                    currentUser.UserName = updatedUser.UserName;
+
+                    // Update token as well
+                    var token = angular.fromJson($window.localStorage.getItem('token'));
+                    token.userName = updatedUser.UserName;
+                    $window.localStorage.setItem('token', angular.toJson(token));
+
                     // Sync RowVersion fields
                     syncRowVersion(currentUser, updatedUser);
                 })
@@ -153,7 +171,7 @@
 
             // Broadcast if unauthorized user creates a new entity (interact with the system)
             if (!_createEntitySuppressAuthValidation && !currentUser.isAuthenticated()) {
-                $rootScope.$broadcast('dataContext_unauthenticatedUserInteracted');
+                $rootScope.$broadcast('unauthenticatedUserInteracted');
             }
 
             return manager.createEntity(entityType, initialValues);
@@ -161,10 +179,6 @@
 
         function createUserElementCell(event, userElementCell) {
             return createEntity('UserElementCell', userElementCell);
-        }
-
-        function currentUserChanged(event, newUser) {
-            currentUser = newUser;
         }
 
         function executeQuery(query) {
@@ -227,8 +241,13 @@
                         });
 
                 } else {
+
+                    var token = angular.fromJson($window.localStorage.getItem('token'));
+                    var userName = token.userName;
                     var query = breeze.EntityQuery
                         .from('Users')
+                        .expand('ResourcePoolSet')
+                        .where('UserName', 'eq', userName)
                         .using(breeze.FetchStrategy.FromServer);
 
                     executeQuery(query)
@@ -253,7 +272,6 @@
                 }
 
                 $rootScope.$broadcast('dataContext_currentUserChanged', currentUser);
-
                 deferred.resolve(currentUser);
             }
 
@@ -265,12 +283,12 @@
             }
         }
 
-        function getToken(email, password, rememberMe, singleUseToken) {
+        function getToken(userName, password, rememberMe, singleUseToken) {
 
             var deferred = $q.defer();
 
             var tokenData = 'grant_type=password' +
-                '&username=' + email +
+                '&username=' + userName +
                 '&password=' + password +
                 '&rememberMe=' + rememberMe +
                 '&singleUseToken=' + singleUseToken;
@@ -293,7 +311,11 @@
         function getAnonymousUser() {
             _createEntitySuppressAuthValidation = true;
             var user = createEntity('User', {
-                Email: getUniqueUserEmail(),
+                Email: getUniqueEmail(),
+                UserName: getUniqueUserName(),
+                FirstName: '',
+                MiddleName: '',
+                LastName: '',
                 IsAnonymous: true,
                 isEditing: false
             });
@@ -301,7 +323,7 @@
             return user;
         }
 
-        function getUniqueUserEmail() {
+        function getUniqueEmail() {
 
             var now = new Date();
             var year = now.getFullYear();
@@ -312,6 +334,63 @@
             var second = now.getSeconds();
 
             return 'user_' + year + month + day + '_' + hour + minute + second + '@forcrowd.org';
+        }
+
+        function getUniqueUserName() {
+
+            var now = new Date();
+            var year = now.getFullYear();
+            var month = now.getMonth() + 1;
+            var day = now.getDate();
+            var hour = now.getHours();
+            var minute = now.getMinutes();
+            var second = now.getSeconds();
+
+            return 'user_' + year + month + day + '_' + hour + minute + second;
+        }
+
+        function getUser(userName) {
+
+            // Already fetched, then query locally
+            var alreadyFetched = fetchedUsers.some(function (fetched) {
+                return userName === fetched;
+            });
+
+            var query = breeze.EntityQuery
+                .from('Users')
+                .expand('ResourcePoolSet')
+                .where('UserName', 'eq', userName);
+
+            // From server or local?
+            if (alreadyFetched) {
+                query = query.using(breeze.FetchStrategy.FromLocalCache);
+            } else {
+                query = query.using(breeze.FetchStrategy.FromServer);
+            }
+
+            return executeQuery(query)
+                .then(success)
+                .catch(failed);
+
+            function success(response) {
+
+                // If there is no result
+                if (response.results.length === 0) {
+                    return null;
+                }
+
+                var user = response.results[0];
+
+                // Add to fetched list
+                fetchedUsers.push(user.UserName);
+
+                return user;
+            }
+
+            function failed(error) {
+                var message = error.message || 'ResourcePool query failed';
+                logger.logError(message, error, true);
+            }
         }
 
         function getUserElementCell(user, elementCell) {
@@ -414,13 +493,14 @@
             return manager.hasChanges();
         }
 
-        function login(email, password, rememberMe, singleUseToken) {
+        function login(userName, password, rememberMe, singleUseToken) {
 
-            return getToken(email, password, rememberMe, singleUseToken)
+            return getToken(userName, password, rememberMe, singleUseToken)
                 .then(function () {
 
-                    // Clear breeze's metadata store
+                    // Clear breeze's metadata store etc.
                     manager.clear();
+                    fetchedUsers = [];
 
                     return getCurrentUser(true);
                 });
@@ -433,6 +513,7 @@
 
             // Clear breeze's metadata store
             manager.clear();
+            fetchedUsers = [];
 
             // Raise logged out event
             return getCurrentUser(true);
@@ -472,15 +553,15 @@
                     // breeze context user entity fix-up!
                     // TODO Try to make this part better, use OData method?
                     currentUser.Id = updatedUser.Id;
-                    currentUser.Email = updatedUser.Email;
                     currentUser.UserName = updatedUser.UserName;
+                    currentUser.Email = updatedUser.Email;
                     currentUser.IsAnonymous = updatedUser.IsAnonymous;
                     currentUser.HasPassword = updatedUser.HasPassword;
                     currentUser.SingleUseToken = updatedUser.SingleUseToken;
                     currentUser.RowVersion = updatedUser.RowVersion;
                     currentUser.entityAspect.acceptChanges();
 
-                    getToken(registerBindingModel.Email, registerBindingModel.Password, rememberMe)
+                    getToken(registerBindingModel.UserName, registerBindingModel.Password, rememberMe)
                         .then(function () {
 
                             // Save the changes that's been done before the registration
@@ -632,12 +713,24 @@
                 return result;
             }
 
-            function failed(error) {
+            function failed(error, status, headers, config) {
+
+                //console.log('error', error);
+                //for (var keyx in error) {
+                //    console.log(keyx + ': ' + error[keyx]);
+                //}
+
+                var errorMessage = '';
+
                 if (typeof error.status !== 'undefined' && error.status === '409') {
-                    logger.logError('Save failed!<br />The record you attempted to edit was modified by another user after you got the original value. The edit operation was canceled.', error, true);
+                    errorMessage = typeof error.body !== 'undefined' ?
+                        'Save failed!<br />' + error.body :
+                        'Save failed!<br />The record you attempted to edit was modified by another user after you got the original value. The edit operation was canceled.';
+
+                    logger.logError(errorMessage, error, true);
                 } else if (typeof error.entityErrors !== 'undefined') {
 
-                    var errorMessage = 'Save failed!<br />';
+                    errorMessage = 'Save failed!<br />';
 
                     for (var key in error.entityErrors) {
                         var entityError = error.entityErrors[key];
@@ -705,166 +798,6 @@
                 batches.push(getChanges('ElementItem', breeze.EntityState.Added));
                 batches.push(getChanges('ElementCell', breeze.EntityState.Added));
                 batches.push(getChanges('UserElementCell', breeze.EntityState.Added));
-
-                // batches.push(null); // empty = save all remaining pending changes
-
-                return batches;
-                /*
-                 *  No we can't flatten into one request because Web API OData reorders
-                 *  arbitrarily, causing the database failure we're trying to avoid.
-                 */
-            }
-        }
-
-        function saveChangesAlt(entities, delay) {
-            delay = typeof delay !== 'undefined' ? delay : 0;
-
-            // Anonymous user check
-            if (!currentUser.isAuthenticated()) {
-                $rootScope.$broadcast('dataContext_anonymousUserInteracted');
-                return $q.reject({});
-            }
-
-            // Cancel existing timers (delay the save)
-            if (saveTimer !== null) {
-                $timeout.cancel(saveTimer);
-            }
-
-            // Save immediately or wait based on delay
-            if (delay === 0) {
-                return saveChangesInternalAlt(entities);
-            } else {
-                saveTimer = $timeout(function () {
-                    saveChangesInternalAlt(entities);
-                }, delay);
-                return saveTimer;
-            }
-
-            // TODO Is it necessary to cancel the timer at the end of the service, like this ?
-
-            //// When the DOM element is removed from the page,
-            //// AngularJS will trigger the $destroy event on
-            //// the scope. This gives us a chance to cancel any
-            //// pending timer that we may have.
-            //$scope.$on("$destroy", function (event) {
-            //    $timeout.cancel(increaseMultiplierTimeoutInitial);
-            //    $timeout.cancel(increaseMultiplierTimeoutRecursive);
-            //});
-        }
-
-        function saveChangesInternalAlt(entities) {
-
-            var count = entities.length; // getChangesCount();
-            var promise = null;
-            var saveBatches = prepareSaveBatches(entities);
-            saveBatches.forEach(function (batch) {
-
-                // ignore empty batches (except 'null' which means "save everything else")
-                if (batch === null || batch.length > 0) {
-
-                    // Broadcast, so UI can block
-                    $rootScope.$broadcast('saveChangesStart');
-
-                    promise = promise ?
-                        promise.then(function () { return manager.saveChanges(batch); }) :
-                        manager.saveChanges(batch);
-                }
-            });
-            return promise.then(success).catch(failed).finally(completed);
-
-            function success(result) {
-                logger.logSuccess('Saved ' + count + ' change(s)');
-                return result;
-            }
-
-            function failed(error) {
-                if (typeof error.status !== 'undefined' && error.status === '409') {
-                    logger.logError('Save failed!<br />The record you attempted to edit was modified by another user after you got the original value. The edit operation was canceled.', error, true);
-                } else if (typeof error.entityErrors !== 'undefined') {
-
-                    var errorMessage = 'Save failed!<br />';
-
-                    for (var key in error.entityErrors) {
-                        var entityError = error.entityErrors[key];
-                        errorMessage += entityError.errorMessage + '<br />';
-                    }
-
-                    logger.logError(errorMessage, null, true);
-
-                } else {
-                    logger.logError('Save failed!', error, true);
-                }
-
-                return $q.reject(error); // pass error along to next handler
-            }
-
-            function completed() {
-
-                // Broadcast, so UI can unblock
-                $rootScope.$broadcast('saveChangesCompleted');
-            }
-
-            function prepareSaveBatches(entities) {
-
-                var batches = [];
-
-                // RowVersion fix
-                // TODO How about Deleted state?
-                var modifiedEntities = [];
-                entities.forEach(function (entity) {
-                    if (entity.entityAspect.entityState.isModified()) {
-                        var rowVersion = entity.RowVersion;
-                        entity.RowVersion = '';
-                        entity.RowVersion = rowVersion;
-                        modifiedEntities.push(entity);
-                    }
-                });
-                batches.push(modifiedEntities);
-
-                /* Aaargh! 
-                * Web API OData doesn't calculate the proper save order
-                * which means, if we aren't careful on the client,
-                * we could save a new TodoItem before we saved its parent new TodoList
-                * or delete the parent TodoList before saving its deleted child TodoItems.
-                * OData says it is up to the client to save entities in the order
-                * required by referential constraints of the database.
-                * While we could save each time you make a change, that sucks.
-                * So we'll divvy up the pending changes into 4 batches
-                * 1. Deleted Todos
-                * 2. Deleted TodoLists
-                * 3. Added TodoLists
-                * 4. Every other change
-                */
-
-                batches.push(getEntities(entities, 'UserElementCell', breeze.EntityState.Deleted));
-                batches.push(getEntities(entities, 'ElementCell', breeze.EntityState.Deleted));
-                batches.push(getEntities(entities, 'ElementItem', breeze.EntityState.Deleted));
-                batches.push(getEntities(entities, 'UserElementField', breeze.EntityState.Deleted));
-                batches.push(getEntities(entities, 'ElementField', breeze.EntityState.Deleted));
-                batches.push(getEntities(entities, 'Element', breeze.EntityState.Deleted));
-                batches.push(getEntities(entities, 'UserResourcePool', breeze.EntityState.Deleted));
-                batches.push(getEntities(entities, 'ResourcePool', breeze.EntityState.Deleted));
-
-                batches.push(getEntities(entities, 'ResourcePool', breeze.EntityState.Added));
-                batches.push(getEntities(entities, 'UserResourcePool', breeze.EntityState.Added));
-                batches.push(getEntities(entities, 'Element', breeze.EntityState.Added));
-                batches.push(getEntities(entities, 'ElementField', breeze.EntityState.Added));
-                batches.push(getEntities(entities, 'UserElementField', breeze.EntityState.Added));
-                batches.push(getEntities(entities, 'ElementItem', breeze.EntityState.Added));
-                batches.push(getEntities(entities, 'ElementCell', breeze.EntityState.Added));
-                batches.push(getEntities(entities, 'UserElementCell', breeze.EntityState.Added));
-
-                function getEntities(entities, typeName, entityState) {
-                    var result = [];
-
-                    entities.forEach(function (entity) {
-                        if (entity.entityType.shortName === typeName && entity.entityAspect.entityState === entityState) {
-                            result.push(entity);
-                        }
-                    });
-
-                    return result;
-                }
 
                 // batches.push(null); // empty = save all remaining pending changes
 

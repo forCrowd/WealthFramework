@@ -9,7 +9,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Tests
         [TestMethod]
         public void NewElementField_ShouldCreate()
         {
-            var user = new User("User");
+            var user = new User("User", "user@email.com");
             new ResourcePool(user, "CMRP")
                 .AddElement("Element")
                 .AddField("Field", ElementFieldDataType.String);
@@ -19,7 +19,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Tests
         [ExpectedException(typeof(ArgumentException))]
         public void NewElementWithInvalidConstructor_Exception()
         {
-            var user = new User("User");
+            var user = new User("User", "user@email.com");
             new ResourcePool(user, "CMRP")
             .AddElement("Element")
             .AddField("Field", ElementFieldDataType.Boolean);

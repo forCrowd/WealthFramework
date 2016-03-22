@@ -10,7 +10,7 @@
         logger = logger.forSource(controllerId);
 
         var vm = this;
-        vm.allInOneConfig = { resourcePoolId: 7 };
+        vm.allInOneConfig = { userName: 'sample', resourcePoolKey: 'All-in-One' };
 
         // Event listeners
         $scope.$on('resourcePoolEditor_elementCellNumericValueIncreased', processNewInteraction);
@@ -27,7 +27,7 @@
         function processExistingInteraction() {
             // Priority & Knowledge Index examples copy their ratings to this one
             // However if the user starts directly playing ..
-            resourcePoolFactory.getResourcePoolExpanded(vm.allInOneConfig.resourcePoolId)
+            resourcePoolFactory.getResourcePoolExpanded(vm.allInOneConfig)
                 .then(function (resourcePool) {
                     // Elements
                     for (var elementIndex = 0; elementIndex < resourcePool.ElementSet.length; elementIndex++) {
@@ -51,7 +51,7 @@
 
         // Processes whether the user is currently interacting with this example
         function processNewInteraction(event, cell) {
-            if (cell.ElementField.Element.ResourcePoolId === vm.allInOneConfig.resourcePoolId) {
+            if (cell.ElementField.Element.ResourcePool.User.UserName === vm.allInOneConfig.userName && cell.ElementField.Element.ResourcePool.Key === vm.allInOneConfig.resourcePoolKey) {
                 cell.ElementField.Element.ResourcePool.userInteracted = true;
                 return;
             }

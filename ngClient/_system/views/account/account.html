@@ -1,0 +1,49 @@
+﻿<div data-ng-controller="AccountController as vm">
+    <h2>Account</h2>
+    <div class="form-horizontal">
+        <h4>User</h4>
+        <hr />
+        <!--<div class="form-group">
+            <label class="control-label col-md-2">Name</label>
+            <div class="col-md-10">
+                <p class="form-control-static">
+                    <span data-ng-bind="vm.currentUser.FirstName"></span>
+                    | <a href="/_system/account/accountEdit" class="">Update</a>
+                </p>
+            </div>
+        </div>-->
+        <div class="form-group">
+            <label class="control-label col-md-2">Email</label>
+            <div class="col-md-10">
+                <p class="form-control-static">
+                    <span data-ng-bind="vm.currentUser.Email"></span>
+                    <span data-ng-show="!vm.currentUser.IsAnonymous && !vm.currentUser.EmailConfirmed">
+                        (Unconfirmed)
+                    </span>
+                    <span data-ng-show="!vm.currentUser.IsAnonymous && !vm.currentUser.EmailConfirmed">
+                        | <a href="/_system/account/confirmEmail">Confirm</a>
+                    </span>
+                    | <a href="/_system/account/changeEmail" class="">Update</a>
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Username</label>
+            <div class="col-md-10">
+                <p class="form-control-static">
+                    <span data-ng-bind="vm.currentUser.UserName"></span>
+                    | <a href="/_system/account/changeUserName" class="">Update</a>
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Password</label>
+            <div class="col-md-10">
+                <p class="form-control-static">
+                    <a data-ng-show="vm.currentUser.HasPassword === null" href="/_system/account/changePassword">Change password</a>
+                    <a data-ng-show="vm.currentUser.HasPassword === false" href="/_system/account/addPassword">Add password</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

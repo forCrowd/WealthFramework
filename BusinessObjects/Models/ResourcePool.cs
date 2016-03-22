@@ -1,17 +1,11 @@
 namespace forCrowd.WealthEconomy.BusinessObjects
 {
-    using forCrowd.WealthEconomy.BusinessObjects.Attributes;
     using forCrowd.WealthEconomy.Framework;
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Linq;
-    using System.Security.Permissions;
 
-    [DisplayName("CMRP")]
-    [forCrowd.WealthEconomy.BusinessObjects.Attributes.DefaultProperty("Name")]
     // [ODataControllerAuthorization("Administrator")]
     public class ResourcePool : BaseEntity
     {
@@ -20,57 +14,58 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         {
             ElementSet = new HashSet<Element>();
             UserResourcePoolSet = new HashSet<UserResourcePool>();
-
-            //FilterSettings = new ResourcePoolFilterSettings();
         }
 
         public ResourcePool(User user, string name)
+            : this(user, name, name)
+        {
+        }
+
+        public ResourcePool(User user, string name, string key)
             : this()
         {
             Validations.ArgumentNullOrDefault(user, "user");
             Validations.ArgumentNullOrDefault(name, "name");
+            Validations.ArgumentNullOrDefault(key, "key");
 
             User = user;
             Name = name;
+            Key = key;
         }
 
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
+        string _key = string.Empty;
+
         public int Id { get; set; }
 
+        [Index("UX_ResourcePool_UserId_Key", 1, IsUnique = true)]
         public int UserId { get; set; }
 
+        [StringLength(250)]
+        [Index("UX_ResourcePool_UserId_Key", 2, IsUnique = true)]
+        public string Key
+        {
+            get { return _key; }
+            set { _key = value.Replace(" ", "-"); }
+        }
+
         [Required]
-        [StringLength(50)]
-        [Display(Name = "Resource Pool")]
+        [StringLength(250)]
         public string Name { get; set; }
 
-        [Display(Name = "Initial Value")]
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(true)]
         public decimal InitialValue { get; set; }
 
-        [Display(Name = "Use Fixed Resource Pool Rate")]
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(true)]
         public bool UseFixedResourcePoolRate { get; set; }
 
         // TODO Doesn't have to be nullable but it requires a default value then which needs to be done
         // by manually editing migration file which is not necessary at the moment / SH - 03 Aug. '15
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public decimal? ResourcePoolRateTotal { get; private set; }
 
         // TODO Doesn't have to be nullable but it requires a default value then which needs to be done
         // by manually editing migration file which is not necessary at the moment / SH - 03 Aug. '15
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public int? ResourcePoolRateCount { get; private set; }
 
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public int? RatingCount { get; private set; }
 

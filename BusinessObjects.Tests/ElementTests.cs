@@ -9,7 +9,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Tests
         [TestMethod]
         public void NewElement_ShouldCreate()
         {
-            var user = new User("User");
+            var user = new User("User", "user@email.com");
             new ResourcePool(user, "CMRP")
                 .AddElement("Element");
         }
@@ -18,7 +18,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Tests
         public void AddField_SortOrder_ShouldCalculate()
         {
             // Arrange
-            var user = new User("User");
+            var user = new User("User", "user@email.com");
             var element = new ResourcePool(user, "CMRP")
                  .AddElement("Element");
 

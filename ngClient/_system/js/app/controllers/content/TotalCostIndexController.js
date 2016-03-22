@@ -10,8 +10,8 @@
         logger = logger.forSource(controllerId);
 
         var vm = this;
-        vm.existingModelConfig = { resourcePoolId: 5 };
-        vm.newModelConfig = { resourcePoolId: 6 };
+        vm.existingModelConfig = { userName: 'sample', resourcePoolKey: 'Total-Cost-Index-Existing-Model' };
+        vm.newModelConfig = { userName: 'sample', resourcePoolKey: 'Total-Cost-Index-New-Model' };
 
         // Listen resource pool updated event
         $scope.$on('resourcePoolEditor_elementMultiplierIncreased', updateOppositeResourcePool);
@@ -20,17 +20,17 @@
 
         function updateOppositeResourcePool(event, element) {
 
-            var oppositeResourcePoolId = 0;
+            var oppositeKey = null;
 
-            if (element.ResourcePool.Id === vm.existingModelConfig.resourcePoolId) {
-                oppositeResourcePoolId = vm.newModelConfig.resourcePoolId;
-            } else if (element.ResourcePool.Id === vm.newModelConfig.resourcePoolId) {
-                oppositeResourcePoolId = vm.existingModelConfig.resourcePoolId;
+            if (element.ResourcePool.User.UserName === vm.existingModelConfig.userName && element.ResourcePool.Key === vm.existingModelConfig.resourcePoolKey) {
+                oppositeKey = vm.newModelConfig;
+            } else if (element.ResourcePool.User.UserName === vm.existingModelConfig.userName && element.ResourcePool.Key === vm.newModelConfig.resourcePoolKey) {
+                oppositeKey = vm.existingModelConfig;
             }
 
             // Call the service to increase the multiplier
-            if (oppositeResourcePoolId > 0) {
-                resourcePoolFactory.getResourcePoolExpanded(oppositeResourcePoolId)
+            if (oppositeKey !== null) {
+                resourcePoolFactory.getResourcePoolExpanded(oppositeKey)
                     .then(function (resourcePool) {
 
                         switch (event.name) {
@@ -48,7 +48,7 @@
                             }
                         }
 
-                        resourcePoolFactory.saveChanges(1500);
+                        dataContext.saveChanges(1500);
                     });
             }
         }

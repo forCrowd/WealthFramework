@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Web.Http;
-using forCrowd.WealthEconomy.WebApi.Results;
 
 namespace forCrowd.WealthEconomy.WebApi.Controllers.Api.Test
 {
@@ -23,13 +22,6 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.Api.Test
         public IHttpActionResult UnauthorizedResult()
         {
             return Unauthorized();
-        }
-
-        [Route("InternalServerErrorResult")]
-        [HttpGet]
-        public IHttpActionResult InternalServerErrorResult()
-        {
-            return new InternalServerErrorResult(Request);
         }
 
         [Route("SomeException")]

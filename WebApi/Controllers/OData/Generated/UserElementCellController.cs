@@ -11,7 +11,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 {
     using forCrowd.WealthEconomy.BusinessObjects;
     using forCrowd.WealthEconomy.Facade;
-    using Microsoft.AspNet.Identity;
+    using Results;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
@@ -19,7 +19,6 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
     using System.Net;
     using System.Threading.Tasks;
     using System.Web.Http;
-    using System.Web.Http.ModelBinding;
     using System.Web.Http.OData;
     using WebApi.Controllers.Extensions;
 
@@ -100,12 +99,9 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             {
                 if (await MainUnitOfWork.All.AnyAsync(item => item.ElementCellId == userElementCell.ElementCellId))
                 {
-                    return Conflict();
+					return new UniqueKeyConflictResult(Request, "ElementCellId", userElementCell.ElementCellId.ToString());
                 }
-                else
-                {
-                    throw;
-                }
+                else throw;
             }
 
             return Created(userElementCell);
@@ -138,7 +134,26 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             }
 
             patch.Patch(userElementCell);
-            await MainUnitOfWork.UpdateAsync(userElementCell);
+
+            try
+            {
+                await MainUnitOfWork.UpdateAsync(userElementCell);
+            }
+            catch (DbUpdateException)
+            {
+                if (patch.GetChangedPropertyNames().Any(item => item == "ElementCellId"))
+                {
+                    object elementCellIdObject = null;
+                    patch.TryGetPropertyValue("ElementCellId", out elementCellIdObject);
+
+                    if (elementCellIdObject != null && await MainUnitOfWork.All.AnyAsync(item => item.ElementCellId == (int)elementCellIdObject))
+                    {
+                        return new UniqueKeyConflictResult(Request, "ElementCellId", elementCellIdObject.ToString());
+                    }
+                    else throw;
+                }
+                else throw;
+            }
 
             return Ok(userElementCell);
         }

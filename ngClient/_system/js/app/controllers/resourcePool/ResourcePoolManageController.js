@@ -57,7 +57,7 @@
         vm.isElementFieldNew = true;
         vm.isElementItemEdit = false;
         vm.isElementItemNew = true;
-        vm.isNew = $location.path() === '/_system/resourcePool/new';
+        vm.isNew = $location.path().substring($location.path().lastIndexOf('/') + 1) === 'new';
         vm.isSaveEnabled = isSaveEnabled;
         vm.isSaving = false;
         vm.openCopyModal = openCopyModal;
@@ -67,12 +67,13 @@
         vm.removeElementItem = removeElementItem;
         vm.removeResourcePool = removeResourcePool;
         vm.resourcePool = { ElementSet: [] };
-        vm.resourcePoolId = $routeParams.resourcePoolId;
+        vm.resourcePoolKey = $routeParams.resourcePoolKey;
         vm.saveResourcePool = saveResourcePool;
         vm.saveElement = saveElement;
         vm.saveElementCell = saveElementCell;
         vm.saveElementField = saveElementField;
         vm.saveElementItem = saveElementItem;
+        vm.userName = $routeParams.userName;
 
         // Enums
         vm.ElementFieldDataType = Enums.ElementFieldDataType;
@@ -96,7 +97,13 @@
                         $rootScope.viewTitle = vm.resourcePool.Name;
                     });
             } else {
-                resourcePoolFactory.getResourcePoolExpanded(vm.resourcePoolId)
+
+                logger.log('vm.userName', vm.userName);
+                logger.log('vm.resourcePoolKey', vm.resourcePoolKey);
+
+                var resourcePoolUniqueKey = { userName: vm.userName, resourcePoolKey: vm.resourcePoolKey };
+
+                resourcePoolFactory.getResourcePoolExpanded(resourcePoolUniqueKey)
                     .then(function (resourcePool) {
 
                         // Not found, navigate to 404
@@ -221,11 +228,14 @@
 
             resourcePoolFactory.cancelResourcePool(vm.resourcePool);
 
-            var locationPath = vm.isNew ?
-                '/_system/resourcePool' :
-                '/_system/resourcePool/' + vm.resourcePool.Id;
+            dataContext.getCurrentUser()
+                .then(function (currentUser) {
+                    var locationPath = vm.isNew ?
+                        '/' + currentUser.UserName :
+                        vm.resourcePool.urlView();
 
-            $location.url(locationPath);
+                    $location.url(locationPath);
+                });
         }
 
         function editElement(element) {
@@ -367,9 +377,9 @@
 
             dataContext.getCurrentUser()
                 .then(function (currentUser) {
-                    resourcePoolFactory.saveChanges()
+                    dataContext.saveChanges()
                         .then(function () {
-                            $location.url('/_system/resourcePool');
+                            $location.url('/' + currentUser.UserName);
                         })
                         .finally(function () {
                             vm.isSaving = false;
@@ -476,7 +486,7 @@
 
                     dataContext.saveChanges()
                         .then(function () {
-                            $location.url('/_system/resourcePool/' + vm.resourcePool.Id);
+                            $location.url(vm.resourcePool.urlView());
                         })
                         .finally(function () {
                             vm.isSaving = false;
@@ -510,7 +520,7 @@
         _init();
 
         function _init() {
-            resourcePoolFactory.getResourcePoolSet(false)
+            resourcePoolFactory.getResourcePoolSet()
                 .then(function (data) {
                     vm.resourcePoolSet = data;
                 });

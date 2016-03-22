@@ -31,7 +31,8 @@
             scope.errorMessage = '';
             scope.isSaving = false;
             scope.resourcePool = { Name: 'Loading...' };
-            scope.resourcePoolId = null;
+            scope.resourcePoolKey = '';
+            scope.userName = '';
 
             // Functions
             scope.changeSelectedElement = changeSelectedElement;
@@ -66,10 +67,12 @@
             }
 
             function configChanged() {
-                var resourcePoolId = typeof scope.config.resourcePoolId === 'undefined' ? null : Number(scope.config.resourcePoolId);
+                var userName = typeof scope.config.userName === 'undefined' ? '' : scope.config.userName;
+                var resourcePoolKey = typeof scope.config.resourcePoolKey === 'undefined' ? '' : scope.config.resourcePoolKey;
+
                 dataContext.getCurrentUser()
                     .then(function (currentUser) {
-                        initialize(currentUser, resourcePoolId);
+                        initialize(currentUser, userName, resourcePoolKey);
                     });
             }
 
@@ -103,7 +106,7 @@
 
             function editResourcePool() {
                 // TODO Instead of having fixed url here, broadcast an 'edit request'?
-                $location.url('/_system/resourcePool/' + scope.resourcePoolId + '/edit');
+                $location.url(scope.resourcePool.urlEdit());
             }
 
             function increaseElementCellNumericValue(cell) {
@@ -134,11 +137,12 @@
                 saveChanges();
             }
 
-            function initialize(user, resourcePoolId) {
+            function initialize(user, userName, resourcePoolKey) {
 
-                if (scope.currentUser !== user || scope.resourcePoolId !== resourcePoolId) {
+                if (scope.currentUser !== user || scope.userName !== userName || scope.resourcePoolKey !== resourcePoolKey) {
                     scope.currentUser = user;
-                    scope.resourcePoolId = resourcePoolId;
+                    scope.userName = userName;
+                    scope.resourcePoolKey = resourcePoolKey;
 
                     // Clear previous error messages
                     scope.errorMessage = '';
@@ -177,18 +181,20 @@
                     };
 
                     // Validate
-                    if (scope.resourcePoolId === null) {
+                    if (scope.userName === '' || scope.resourcePoolKey === '') {
                         scope.errorMessage = 'CMRP Id cannot be null';
                         scope.chartConfig.loading = false;
                         return;
                     }
 
+                    var resourcePoolUniqueKey = { userName: scope.userName, resourcePoolKey: scope.resourcePoolKey };
+
                     // Get resource pool
-                    resourcePoolFactory.getResourcePoolExpanded(scope.resourcePoolId)
+                    resourcePoolFactory.getResourcePoolExpanded(resourcePoolUniqueKey)
                             .then(function (resourcePool) {
 
                                 if (resourcePool === null) {
-                                    scope.errorMessage = 'Invalid CMRP Id';
+                                    scope.errorMessage = 'Invalid CMRP';
                                     return;
                                 }
 
@@ -304,7 +310,7 @@
             }
 
             function saveChanges() {
-                resourcePoolFactory.saveChanges(1500)
+                dataContext.saveChanges(1500)
                     .catch(function (error) {
                         // Conflict (Concurrency exception)
                         if (typeof error.status !== 'undefined' && error.status === '409') {
@@ -330,7 +336,7 @@
             }
 
             function currentUserChanged(event, newUser) {
-                initialize(newUser, scope.resourcePoolId);
+                initialize(newUser, scope.userName, scope.resourcePoolKey);
             }
 
             /* Chart objects */
@@ -402,7 +408,7 @@
 
         return {
             restrict: 'E',
-            templateUrl: '/_system/js/app/directives/resourcePoolEditor/resourcePoolEditor.html?v=0.49.0',
+            templateUrl: '/_system/js/app/directives/resourcePoolEditor/resourcePoolEditor.html?v=0.51.0',
             scope: {
                 config: '='
             },

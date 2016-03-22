@@ -1,0 +1,30 @@
+﻿<div data-ng-controller="ChangeUserNameController as vm">
+    <h2>Change Username</h2>
+
+    <form name="changeUserNameForm">
+        <div class="form-horizontal">
+            <h4>Set your username</h4>
+            <p data-ng-show="vm.externalLoginInit">
+                Almost there; your account was created and we set a username by using your email address.<br />
+                If you wish to change it, you can do it here now or you can always come back through 'Account - Change Username'.
+            </p>
+            <hr />
+            <div class="form-group">
+                <label for="UserName" class="control-label col-md-2">Username</label>
+                <div class="col-md-10" data-ng-class="{'has-error': changeUserNameForm.UserName.$invalid && !changeUserNameForm.UserName.$pristine}">
+                    <input id="UserName" name="UserName" type="text" data-ng-model="vm.userName" class="form-control" required />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button data-ng-click="vm.changeUserName()" data-ng-disabled="changeUserNameForm.$invalid || vm.isSaveDisabled()" class="btn btn-primary">
+                        Save
+                    </button>
+                    <button data-ng-click="vm.cancel()" class="btn btn-default">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

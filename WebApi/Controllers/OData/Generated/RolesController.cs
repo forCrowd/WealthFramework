@@ -11,7 +11,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 {
     using forCrowd.WealthEconomy.BusinessObjects;
     using forCrowd.WealthEconomy.Facade;
-    using Microsoft.AspNet.Identity;
+    using Results;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
@@ -19,7 +19,6 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
     using System.Net;
     using System.Threading.Tasks;
     using System.Web.Http;
-    using System.Web.Http.ModelBinding;
     using System.Web.Http.OData;
 
     public abstract class BaseRolesController : BaseODataController
@@ -41,20 +40,20 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
         // GET odata/Role(5)
         //[Queryable]
-        public virtual SingleResult<Role> Get([FromODataUri] int key)
+        public virtual SingleResult<Role> Get([FromODataUri] int id)
         {
-            return SingleResult.Create(MainUnitOfWork.AllLive.Where(role => role.Id == key));
+            return SingleResult.Create(MainUnitOfWork.AllLive.Where(role => role.Id == id));
         }
 
         // PUT odata/Role(5)
-        public virtual async Task<IHttpActionResult> Put([FromODataUri] int key, Role role)
+        public virtual async Task<IHttpActionResult> Put([FromODataUri] int id, Role role)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (key != role.Id)
+            if (id != role.Id)
             {
                 return BadRequest();
             }
@@ -94,12 +93,9 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             {
                 if (await MainUnitOfWork.All.AnyAsync(item => item.Id == role.Id))
                 {
-                    return Conflict();
+					return new UniqueKeyConflictResult(Request, "Id", role.Id.ToString());
                 }
-                else
-                {
-                    throw;
-                }
+                else throw;
             }
 
             return Created(role);
@@ -107,14 +103,14 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
         // PATCH odata/Role(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<Role> patch)
+        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int id, Delta<Role> patch)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var role = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == key);
+            var role = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == id);
             if (role == null)
             {
                 return NotFound();
@@ -132,15 +128,34 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             }
 
             patch.Patch(role);
-            await MainUnitOfWork.UpdateAsync(role);
+
+            try
+            {
+                await MainUnitOfWork.UpdateAsync(role);
+            }
+            catch (DbUpdateException)
+            {
+                if (patch.GetChangedPropertyNames().Any(item => item == "Id"))
+                {
+                    object idObject = null;
+                    patch.TryGetPropertyValue("Id", out idObject);
+
+                    if (idObject != null && await MainUnitOfWork.All.AnyAsync(item => item.Id == (int)idObject))
+                    {
+                        return new UniqueKeyConflictResult(Request, "Id", idObject.ToString());
+                    }
+                    else throw;
+                }
+                else throw;
+            }
 
             return Ok(role);
         }
 
         // DELETE odata/Role(5)
-        public virtual async Task<IHttpActionResult> Delete([FromODataUri] int key)
+        public virtual async Task<IHttpActionResult> Delete([FromODataUri] int id)
         {
-            var role = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == key);
+            var role = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == id);
             if (role == null)
             {
                 return NotFound();

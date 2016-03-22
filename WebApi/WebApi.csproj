@@ -290,12 +290,13 @@
     <Compile Include="Filters\DataServiceVersionHeaderAttribute.cs" />
     <Compile Include="Filters\RequireHttpsAttribute.cs" />
     <Compile Include="HttpClientHandlers\FacebookBackChannelHandler.cs" />
+    <Compile Include="Models\ValidationAttributes.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Conventions\CompositeKeyRoutingConvention.cs" />
     <Compile Include="Glimpse\GlimpseSecurityPolicy.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
-    <Compile Include="Results\InternalServerErrorResult.cs" />
+    <Compile Include="Results\UniqueKeyConflictResult.cs" />
     <Compile Include="App_Start\Startup.cs" />
   </ItemGroup>
   <ItemGroup>

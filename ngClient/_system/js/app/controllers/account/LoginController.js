@@ -9,12 +9,12 @@
         logger = logger.forSource(controllerId);
 
         var vm = this;
-        vm.email = '';
         vm.login = login;
         vm.navigateToResetPassword = navigateToResetPassword;
         vm.password = '';
         vm.rememberMe = true;
         vm.showHeader = typeof $scope.showHeader !== 'undefined' ? $scope.showHeader : true;
+        vm.userName = '';
 
         _init();
 
@@ -40,27 +40,43 @@
 
             // External (single use token) login
             var singleUseToken = $location.search().token;
+            var init = $location.search().init;
             if (typeof singleUseToken !== 'undefined') {
-                dataContext.login('', '', vm.rememberMe, singleUseToken).then(success).catch(failedExternal);
+                dataContext.login('', '', vm.rememberMe, singleUseToken).then(successExternal).catch(failedExternal);
             } else { // Internal login
-                if (vm.email !== '' && vm.password !== '') {
-                    dataContext.login(vm.email, vm.password, vm.rememberMe).then(success);
+                if (vm.userName !== '' && vm.password !== '') {
+                    dataContext.login(vm.userName, vm.password, vm.rememberMe).then(successInternal);
                 }
-            }
-
-            function success() {
-                logger.logSuccess('You have been logged in!', null, true);
-                $location.url(getReturnUrl());
             }
 
             function failedExternal() {
                 logger.logError('Invalid token', null, true);
             }
+
+            function successExternal() {
+                logger.logSuccess('You have been logged in!', null, true);
+
+                // First time
+                if (typeof init !== 'undefined' && init) {
+                    var url = '/_system/account/changeUserName?init=true&clientReturnUrl=' + getReturnUrl();
+                    $location.url(url);
+                } else {
+                    $location.url(getReturnUrl());
+                }
+            }
+
+            function successInternal() {
+                logger.logSuccess('You have been logged in!', null, true);
+
+                if ($location.path() === '/_system/account/login') {
+                    $location.url(getReturnUrl());
+                }
+            }
         }
 
         function navigateToResetPassword() {
             $rootScope.$broadcast('LoginController_redirected');
-            $location.path('/_system/account/resetPassword');
+            $location.url('/_system/account/resetPassword');
         }
     }
 })();

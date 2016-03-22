@@ -3,9 +3,9 @@
 
     var controllerId = 'RegisterController';
     angular.module('main')
-        .controller(controllerId, ['dataContext', 'locationHistory', 'serviceAppUrl', 'logger', '$location', '$scope', RegisterController]);
+        .controller(controllerId, ['dataContext', 'locationHistory', 'serviceAppUrl', 'logger', '$location', '$rootScope', '$scope', RegisterController]);
 
-    function RegisterController(dataContext, locationHistory, serviceAppUrl, logger, $location, $scope) {
+    function RegisterController(dataContext, locationHistory, serviceAppUrl, logger, $location, $rootScope, $scope) {
 
         // Logger
         logger = logger.forSource(controllerId);
@@ -19,6 +19,7 @@
         vm.register = register;
         vm.rememberMe = true;
         vm.showHeader = typeof $scope.showHeader !== 'undefined' ? $scope.showHeader : true;
+        vm.UserName = '';
 
         function register() {
 
@@ -26,13 +27,17 @@
                 dataContext.registerAnonymous(vm, vm.rememberMe)
                     .then(function () {
                         logger.logSuccess('You have been registered!', null, true);
-                        // TODO ?
+                        $rootScope.$broadcast('RegisterController_userRegistered');
+                        if ($location.path() === '/_system/account/register') {
+                            $location.url(locationHistory.previousItem().url());
+                        }
                     })
                     .catch(failed);
             } else {
                 dataContext.register(vm, vm.rememberMe)
                     .then(function () {
                         logger.logSuccess('You have been registered!', null, true);
+                        $rootScope.$broadcast('RegisterController_userRegistered');
                         $location.url('/_system/account/confirmEmail');
                     })
                     .catch(failed);
@@ -46,7 +51,8 @@
         }
 
         function IsAnonymousChanged() {
-            vm.Email = vm.IsAnonymous ? dataContext.getUniqueUserEmail() : '';
+            vm.UserName = vm.IsAnonymous ? dataContext.getUniqueUserName() : '';
+            vm.Email = vm.IsAnonymous ? dataContext.getUniqueEmail() : '';
         }
     }
 })();

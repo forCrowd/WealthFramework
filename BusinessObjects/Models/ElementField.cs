@@ -1,15 +1,11 @@
 namespace forCrowd.WealthEconomy.BusinessObjects
 {
-    using forCrowd.WealthEconomy.BusinessObjects.Attributes;
     using forCrowd.WealthEconomy.Framework;
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    [DisplayName("Element Field")]
-    [forCrowd.WealthEconomy.BusinessObjects.Attributes.DefaultProperty("Name")]
     // [ODataControllerAuthorization("Administrator")]
     public class ElementField : BaseEntity
     {
@@ -51,49 +47,35 @@ namespace forCrowd.WealthEconomy.BusinessObjects
             SortOrder = sortOrder;
         }
 
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
         public int Id { get; set; }
 
         public int ElementId { get; set; }
 
-        [Display(Name = "Element Field")]
         [Required]
         [StringLength(50)]
         public string Name { get; set; }
 
         [Required]
-        [Display(Name = "Data Type")]
         public byte DataType { get; set; }
 
-        [Display(Name = "Selected Element")]
         public int? SelectedElementId { get; set; }
 
         /// <summary>
         /// Determines whether this field will use a fixed value from the CMRP owner or it will have user rateable values
         /// </summary>
-        [Display(Name = "Use Fixed Value")]
         public bool? UseFixedValue { get; set; }
 
-        [Display(Name = "Index Enabled")]
         public bool IndexEnabled { get; set; }
 
-        [Display(Name = "Index Calculation Type")]
         public byte IndexCalculationType { get; set; }
 
-        [Display(Name = "Index Sort Type")]
         public byte IndexSortType { get; set; }
 
-        [Display(Name = "Sort Order")]
         public byte SortOrder { get; set; }
 
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public decimal? IndexRatingTotal { get; private set; }
         
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public int? IndexRatingCount { get; private set; }
 
@@ -117,9 +99,9 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         {
             ValidateEnableIndex();
 
-            this.IndexEnabled = true;
-            this.IndexCalculationType = (byte)BusinessObjects.ElementFieldIndexCalculationType.Aggressive;
-            this.IndexSortType = (byte)BusinessObjects.ElementFieldIndexSortType.HighestToLowest;
+            IndexEnabled = true;
+            IndexCalculationType = (byte)ElementFieldIndexCalculationType.Aggressive;
+            IndexSortType = (byte)ElementFieldIndexSortType.HighestToLowest;
             return this;
         }
 
@@ -127,9 +109,9 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         {
             ValidateEnableIndex();
 
-            this.IndexEnabled = true;
-            this.IndexCalculationType = (byte)BusinessObjects.ElementFieldIndexCalculationType.Aggressive;
-            this.IndexSortType = (byte)indexSortType;
+            IndexEnabled = true;
+            IndexCalculationType = (byte)ElementFieldIndexCalculationType.Aggressive;
+            IndexSortType = (byte)indexSortType;
             return this;
         }
 
@@ -137,9 +119,9 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         {
             ValidateEnableIndex();
 
-            this.IndexEnabled = true;
-            this.IndexCalculationType = (byte)calculationType;
-            this.IndexSortType = (byte)indexSortType;
+            IndexEnabled = true;
+            IndexCalculationType = (byte)calculationType;
+            IndexSortType = (byte)indexSortType;
             return this;
         }
 

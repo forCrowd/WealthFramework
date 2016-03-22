@@ -15,7 +15,7 @@
 
             // Resource pool
             var resourcePool = CreateDefaultResourcePool(user: user,
-                resourcePoolName: "Prologue - Billion Dollar Question",
+                resourcePoolName: "Billion Dollar Question",
                 useFixedResourcePoolRate: true,
                 mainElementName: "Issues",
                 addDirectIncomeField: false,
@@ -178,6 +178,8 @@
                 addImportanceIndex: false,
                 numberOfItems: numberOfItems);
 
+            resourcePool.Key = "Knowledge Index Popular Software Licenses";
+
             // Main element
             var mainElement = resourcePool.ElementSet.First();
 
@@ -233,6 +235,8 @@
                 addImportanceIndex: false,
                 numberOfItems: numberOfItems);
 
+            resourcePool.Key = "Total Cost Index Existing Model";
+
             // Main element
             var mainElement = resourcePool.ElementSet.First();
 
@@ -263,6 +267,8 @@
                addMultiplierField: true,
                addImportanceIndex: false,
                numberOfItems: numberOfItems);
+
+            resourcePool.Key = "Total Cost Index New Model";
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();

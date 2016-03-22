@@ -3,7 +3,6 @@
 <#@ assembly name="$(SolutionDir)DataObjects\bin\Debug\forCrowd.WealthEconomy.DataObjects.dll"#>
 <#@ import namespace="System.ComponentModel.DataAnnotations"#>
 <#@ import namespace="forCrowd.WealthEconomy.BusinessObjects"#>
-<#@ import namespace="forCrowd.WealthEconomy.BusinessObjects.Attributes"#>
 <#@ import namespace="forCrowd.WealthEconomy.DataObjects"#>
 <#@ include file="EF6.Utility.ttinclude"#>
 <#+
@@ -224,73 +223,6 @@ public class CodeStringGenerator
 		return string.Format("{0}{1}",
 			input[0].ToString().ToLowerInvariant(),
 			input.Substring(1));
-	}
-
-	/* New functions to support Code First / 25 Apr. '14 */
-
-	public string GetPropertyTitle(EdmProperty property)
-	{
-		// Variables
-		var propertyTitle = property.Name; // 1. Property name itself is the default one
-		var declaringType = (EntityType)((EdmMember)property).DeclaringType;
-		var declaringTypeName = _typeMapper.GetTypeName(declaringType);
-		var navigationProperties = _typeMapper.GetRelatedNavigationProperties(declaringType);
-
-		// Is navigation property?
-		var navigationProperty = navigationProperties.SingleOrDefault(related => ((AssociationType)related.RelationshipType)
-			.Constraint
-			.ToProperties
-			.Any(constraint => constraint.Name == property.Name));
-		
-		if (navigationProperty == null)
-		{
-			var businessObjectProperties = _typeMapper.GetBusinessObjectProperties(declaringTypeName);
-			var businessObjectProperty = businessObjectProperties.SingleOrDefault(p => p.Name == property.Name);
-
-			if (businessObjectProperty != null)
-			{
-				var displayAttribute = _typeMapper.GetAttribute<System.ComponentModel.DataAnnotations.DisplayAttribute>(businessObjectProperty);
-				if (displayAttribute != null && !string.IsNullOrWhiteSpace(displayAttribute.Name))
-				{
-					// 2. Use the value of Display attribute of the business object class
-					propertyTitle = displayAttribute.Name;
-				}
-			}
-        }
-		else
-		{
-			var relatedEntityType = (EntityType)((RefType)navigationProperty.ToEndMember.TypeUsage.EdmType).ElementType;
-			var relatedEntityTypeName = _typeMapper.GetTypeName(relatedEntityType);
-		
-			// 3. Again related entity name is the default
-			propertyTitle = relatedEntityTypeName;
-
-			// Check DefaultProperty attribute of the related entity
-			var relatedEntityBusinessObjectType = _typeMapper.GetBusinessObjectType(relatedEntityTypeName);
-			var relatedEntityBusinessObjectProperties = _typeMapper.GetBusinessObjectProperties(relatedEntityTypeName);
-
-			var defaultPropertyAttribute = _typeMapper.GetAttribute<DefaultPropertyAttribute>(relatedEntityBusinessObjectType);
-
-			if (defaultPropertyAttribute != null)
-			{
-				// 4. Use the value of DefaultProperty attribute of the related entity
-				propertyTitle = defaultPropertyAttribute.Value;
-
-				// Check Display attribute of the DefaultProperty
-				var defaultProperty = relatedEntityBusinessObjectProperties.SingleOrDefault(p => p.Name == defaultPropertyAttribute.Value);
-
-				if (defaultProperty != null)
-				{
-					var defaultPropertyDisplayAttribute = _typeMapper.GetAttribute<DisplayAttribute>(defaultProperty);
-
-					// 5. Use the value of Display attribute of the DefaultProperty
-					if (defaultPropertyDisplayAttribute!= null)
-						propertyTitle = defaultPropertyDisplayAttribute.Name;
-				}
-			}
-		}
-
-		return propertyTitle;
 	}
 }
 

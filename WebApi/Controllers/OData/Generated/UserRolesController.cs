@@ -11,7 +11,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 {
     using forCrowd.WealthEconomy.BusinessObjects;
     using forCrowd.WealthEconomy.Facade;
-    using Microsoft.AspNet.Identity;
+    using Results;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
@@ -19,7 +19,6 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
     using System.Net;
     using System.Threading.Tasks;
     using System.Web.Http;
-    using System.Web.Http.ModelBinding;
     using System.Web.Http.OData;
     using WebApi.Controllers.Extensions;
 
@@ -100,12 +99,9 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             {
                 if (await MainUnitOfWork.All.AnyAsync(item => item.RoleId == userRole.RoleId))
                 {
-                    return Conflict();
+					return new UniqueKeyConflictResult(Request, "RoleId", userRole.RoleId.ToString());
                 }
-                else
-                {
-                    throw;
-                }
+                else throw;
             }
 
             return Created(userRole);
@@ -138,7 +134,26 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             }
 
             patch.Patch(userRole);
-            await MainUnitOfWork.UpdateAsync(userRole);
+
+            try
+            {
+                await MainUnitOfWork.UpdateAsync(userRole);
+            }
+            catch (DbUpdateException)
+            {
+                if (patch.GetChangedPropertyNames().Any(item => item == "RoleId"))
+                {
+                    object roleIdObject = null;
+                    patch.TryGetPropertyValue("RoleId", out roleIdObject);
+
+                    if (roleIdObject != null && await MainUnitOfWork.All.AnyAsync(item => item.RoleId == (int)roleIdObject))
+                    {
+                        return new UniqueKeyConflictResult(Request, "RoleId", roleIdObject.ToString());
+                    }
+                    else throw;
+                }
+                else throw;
+            }
 
             return Ok(userRole);
         }

@@ -98,7 +98,7 @@
         public static UserManager CreateUserManager(IdentityFactoryOptions<UserManager> options, IOwinContext context)
         {
             var manager = new UserManager(new UserStore(context.Get<WealthEconomyContext>()));
-            // Configure validation logic for usernames
+            // Configure validation logic for userNames
             manager.UserValidator = new UserValidator<User, int>(manager)
             {
                 AllowOnlyAlphanumericUserNames = false,

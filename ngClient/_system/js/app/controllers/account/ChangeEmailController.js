@@ -9,8 +9,9 @@
         logger = logger.forSource(controllerId);
 
         var vm = this;
-        vm.isChangeEmailDisabled = false;
+        vm.cancel = cancel;
         vm.changeEmail = changeEmail;
+        vm.isChangeEmailDisabled = false;
 
         _init();
 
@@ -18,8 +19,12 @@
 
             // Generate test data if localhost
             if ($location.host() === 'localhost') {
-                vm.email = dataContext.getUniqueUserEmail();
+                vm.email = dataContext.getUniqueEmail();
             }
+        }
+
+        function cancel() {
+            $location.url('/_system/account');
         }
 
         function changeEmail() {

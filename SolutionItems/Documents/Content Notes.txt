@@ -8,15 +8,20 @@ crowd: individuals that work on a certain subject..
 # Articles
 . formula calculation
 . capitalism is dead but why can't we get rid of it?
+. Antidote of capitalism?
+. Machine readable licenses
 . organization.json
 . Difficulty of lying - Blue polar bear
+. Utopia: Students pick a github 'up-for-grabs' issue of facebook for in their lessons - link that goes to ... and donation message
 . TEDs
 http://www.ted.com/talks/audrey_choi_how_to_make_a_profit_while_making_a_difference - not very strong but..
+. Review google docs
 
 # Description
 Alt: Measuring the goodness
 New: An experimental, open source crowd investment platform
 Old: An experimental resource management system that aims to provide a more sustainable and productive economic model
+Alt: An oss app based on experimental thoughts about how could we improve how the economy works
 
 # Header
 
@@ -40,10 +45,6 @@ differences between current & new
 . dependency - independency
 . profits - benefits
 . owner oriented, contribution oriented
-
-. antidote of capitalism?
-
-. create new content based on TED talks?
 
 ---
 * should samples details need to be mentioned? all organizations are equal except the indexes, they all have to have same number of sales etc.
@@ -101,3 +102,25 @@ try to make the visual of the formula (lowering cost - maximizing sales price * 
 The consumers will vote for the importance of the parameter(s). The experts should measure the parameters and enter their results to the system. The system should make the distribution based on these inputs.
 
 Check Overview page + Wealth Economy docs in google docs
+
+---
+Useful links
+Wealth Inequality in America http://www.youtube.com/watch?v=QPKKQnijnsM#t=3
+Left wing book publishers; https://www.google.com.tr/search?q=left+wing+book+publisher&ie=utf-8&oe=utf-8&rls=org.mozilla:en-US:official&client=firefox-a&gws_rd=cr&ei=dtCmUqPOJ4mR4ASM5IHQAw
+Infographic sample; http://well-spent.com/wp-content/uploads/2012/01/Everlane_IG_1.jpg
+Price Theory - David Friedman http://www.daviddfriedman.com/Academic/Price_Theory/PThy_ToC.html
+Animated gif zen; http://robindavey.co.uk/?utm_source=WeTransfer&utm_medium=Wallpaper&utm_campaign=WeTransfer
+
+---
+Articles - Young lady;
+- young lady, forgot your purse!
+She was excited because...
+A sensitive comp science teach
+Inexp but ent about app - got into prog
+Younglady@...
+Medium.com
+Something like "for the ppl"
+
+Thinks for reading our story
+Wish we had but we don't any rival
+We are like the young lady inexp but ent

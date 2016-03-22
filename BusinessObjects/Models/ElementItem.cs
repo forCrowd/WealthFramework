@@ -1,16 +1,12 @@
 namespace forCrowd.WealthEconomy.BusinessObjects
 {
-    using forCrowd.WealthEconomy.BusinessObjects.Attributes;
     using forCrowd.WealthEconomy.Framework;
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    [DisplayName("Element Item")]
-    [forCrowd.WealthEconomy.BusinessObjects.Attributes.DefaultProperty("Name")]
     // [ODataControllerAuthorization("Administrator")]
     public class ElementItem : BaseEntity
     {
@@ -32,13 +28,10 @@ namespace forCrowd.WealthEconomy.BusinessObjects
             Name = name;
         }
 
-        [DisplayOnListView(false)]
-        [DisplayOnEditView(false)]
         public int Id { get; set; }
 
         public int ElementId { get; set; }
 
-        [Display(Name = "Element Item")]
         [Required]
         [StringLength(250)]
         public string Name { get; set; }

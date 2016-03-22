@@ -34,7 +34,11 @@
                         return;
                     }
 
-                    dataContext.confirmEmail({ Token: token });
+                    dataContext.confirmEmail({ Token: token })
+                        .then(function () {
+                            logger.logSuccess('Your email address has been confirmed!', null, true);
+                            $location.url('/' + vm.userName);
+                        });
                 });
         }
 

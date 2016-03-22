@@ -3,40 +3,40 @@
 
     var factoryId = 'resourcePoolFactory';
     angular.module('main')
-        .config(['$provide', extendFactory]);
+        .factory(factoryId, ['dataContext', 'logger', 'Element', 'ResourcePool', '$rootScope', resourcePoolFactory]);
 
-    function extendFactory($provide) {
-        $provide.decorator(factoryId, ['$delegate', 'ResourcePool', 'Element', 'dataContext', '$rootScope', 'logger', resourcePoolFactory]);
-    }
-
-    function resourcePoolFactory($delegate, ResourcePool, Element, dataContext, $rootScope, logger) {
+    function resourcePoolFactory(dataContext, logger, Element, ResourcePool, $rootScope) {
 
         // Logger
         logger = logger.forSource(factoryId);
 
-        var fetched = [];
+        // Factory methods (alphabetically)
+        var factory = {
+            cancelResourcePool: cancelResourcePool,
+            copyResourcePool: copyResourcePool,
+            createElement: createElement,
+            createElementField: createElementField,
+            createElementItem: createElementItem,
+            createResourcePoolBasic: createResourcePoolBasic,
+            createResourcePoolDirectIncomeAndMultiplier: createResourcePoolDirectIncomeAndMultiplier,
+            createResourcePoolTwoElements: createResourcePoolTwoElements,
+            getResourcePoolExpanded: getResourcePoolExpanded,
+            getResourcePoolSet: getResourcePoolSet,
+            removeElement: removeElement,
+            removeElementField: removeElementField,
+            removeElementItem: removeElementItem,
+            removeResourcePool: removeResourcePool
+        };
+        var fetchedList = [];
+        var fetchFromServer = true;
 
-        // Factory methods
-        $delegate.cancelResourcePool = cancelResourcePool;
-        $delegate.copyResourcePool = copyResourcePool;
-        $delegate.createElement = createElement;
-        $delegate.createElementField = createElementField;
-        $delegate.createElementItem = createElementItem;
-        $delegate.createResourcePoolBasic = createResourcePoolBasic;
-        $delegate.createResourcePoolDirectIncomeAndMultiplier = createResourcePoolDirectIncomeAndMultiplier;
-        $delegate.createResourcePoolTwoElements = createResourcePoolTwoElements;
-        $delegate.getResourcePoolExpanded = getResourcePoolExpanded;
-        $delegate.removeElement = removeElement;
-        $delegate.removeElementField = removeElementField;
-        $delegate.removeElementItem = removeElementItem;
-        $delegate.removeResourcePool = removeResourcePool;
-
-        // User logged out
+        // Events
         $rootScope.$on('dataContext_currentUserChanged', function () {
-            fetched = [];
+            fetchedList = [];
+            fetchFromServer = true;
         });
 
-        return $delegate;
+        return factory;
 
         /*** Implementations ***/
 
@@ -158,6 +158,7 @@
                     var resourcePool = dataContext.createEntity('ResourcePool', {
                         User: currentUser,
                         Name: 'New CMRP',
+                        Key: 'New-CMRP',
                         InitialValue: 100,
                         UseFixedResourcePoolRate: true
                     });
@@ -299,46 +300,53 @@
                 });
         }
 
-        function getResourcePoolExpanded(resourcePoolId) {
-            // TODO Other validations?
-            resourcePoolId = Number(resourcePoolId);
+        function getResourcePoolExpanded(resourcePoolUniqueKey) {
+
+            // TODO Validations?
 
             return dataContext.getCurrentUser()
                 .then(function (currentUser) {
 
-                    // Prepare the query
-                    var query = null;
-                    var isNewResourcePool = resourcePoolId <= 0; // Determines whether this is just created by this user, or an existing resource pool
                     var fetchedEarlier = false;
                     var fromServer = false;
 
                     // If it's not newly created, check the fetched list
-                    if (!isNewResourcePool) {
-                        fetchedEarlier = fetched.some(function (fetchedId) {
-                            return resourcePoolId === fetchedId;
-                        });
-                    }
+                    fetchedEarlier = fetchedList.some(function (fetched) {
+                        return resourcePoolUniqueKey === fetched;
+                    });
 
-                    fromServer = !isNewResourcePool && !fetchedEarlier;
+                    // Locally created CMRPs (isTemp) - TODO !
+                    var existing1 = { userName: currentUser.UserName, resourcePoolKey: 'Unidentified-Profiting-Object' };
+                    var existing2 = { userName: currentUser.UserName, resourcePoolKey: 'Basics-Existing-Model' };
+                    var existing3 = { userName: currentUser.UserName, resourcePoolKey: 'Basics-New-Model' };
+
+                    fromServer = !fetchedEarlier &&
+                        !((resourcePoolUniqueKey.userName === existing1.userName &&
+                        resourcePoolUniqueKey.resourcePoolKey === existing1.resourcePoolKey) ||
+                        (resourcePoolUniqueKey.userName === existing2.userName &&
+                        resourcePoolUniqueKey.resourcePoolKey === existing2.resourcePoolKey) ||
+                        (resourcePoolUniqueKey.userName === existing3.userName &&
+                        resourcePoolUniqueKey.resourcePoolKey === existing3.resourcePoolKey));
+
+                    // Prepare the query
+                    var query = breeze.EntityQuery.from('ResourcePool');
 
                     // Is authorized? No, then get only the public data, yes, then get include user's own records
-                    if (currentUser.isAuthenticated() || isNewResourcePool) {
-                        query = breeze.EntityQuery
-                            .from('ResourcePool')
-                            .expand('UserResourcePoolSet, ElementSet.ElementFieldSet.UserElementFieldSet, ElementSet.ElementItemSet.ElementCellSet.UserElementCellSet')
-                            .where('Id', 'eq', resourcePoolId);
+                    if (currentUser.isAuthenticated()) {
+                        query = query.expand('User, UserResourcePoolSet, ElementSet.ElementFieldSet.UserElementFieldSet, ElementSet.ElementItemSet.ElementCellSet.UserElementCellSet');
                     } else {
-                        query = breeze.EntityQuery
-                            .from('ResourcePool')
-                            .expand('ElementSet.ElementFieldSet, ElementSet.ElementItemSet.ElementCellSet')
-                            .where('Id', 'eq', resourcePoolId);
+                        query = query.expand('User, ElementSet.ElementFieldSet, ElementSet.ElementItemSet.ElementCellSet');
                     }
+
+                    var userNamePredicate = new breeze.Predicate('User.UserName', 'eq', resourcePoolUniqueKey.userName);
+                    var resourcePoolKeyPredicate = new breeze.Predicate('Key', 'eq', resourcePoolUniqueKey.resourcePoolKey);
+                    
+                    query = query.where(userNamePredicate.and(resourcePoolKeyPredicate));
 
                     // From server or local?
                     if (fromServer) {
                         query = query.using(breeze.FetchStrategy.FromServer);
-                    }
-                    else {
+                    } else {
                         query = query.using(breeze.FetchStrategy.FromLocalCache);
                     }
 
@@ -362,7 +370,7 @@
                         }
 
                         // Add the record into fetched list
-                        fetched.push(resourcePool.Id);
+                        fetchedList.push(resourcePool.Id);
 
                         return resourcePool;
                     }
@@ -372,6 +380,34 @@
                         logger.logError(message, error, true);
                     }
                 });
+        }
+
+        function getResourcePoolSet() {
+
+            var query = breeze.EntityQuery
+				.from('ResourcePool')
+				.expand(['User']);
+
+            // Prepare the query
+            if (fetchFromServer) { // From remote
+                query = query.using(breeze.FetchStrategy.FromServer);
+                fetchFromServer = false; // Do it only once per user
+            }
+            else { // From local
+                query = query.using(breeze.FetchStrategy.FromLocalCache);
+            }
+
+            return dataContext.executeQuery(query)
+                .then(success).catch(failed);
+
+            function success(response) {
+                return response.results;
+            }
+
+            function failed(error) {
+                var message = error.message || 'ResourcePool query failed';
+                logger.logError(message, error, true);
+            }
         }
 
         function removeElement(element) {

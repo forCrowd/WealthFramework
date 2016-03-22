@@ -2,48 +2,26 @@
 
 send exception to server in 404 case?
 
-viewModel - bindingModel - namingConvention fix
+viewModel - bindingModel - namingConvention fix (send correct objects to server - not vm from controller?)
 
 angular dependency order alphabetically
 
-design for forcrowd? http://osfund.co/
-Find a designer! Ozgur's Ali | http://foundry.mediumra.re/variant/builder.html
-
----
 check this out; http://breeze.github.io/doc-breeze-labs/directives-validation.html
 check this out: https://github.com/mmanela/chutzpah/wiki/Chutzpah.json-Settings-File
 
----
 content for editor? new content or new resourcepool - content in a content? or page as a new entity?
-url structure:
-/[username]/articles/[article name] - prevents duplicate article name - readable, but too long?
-/article/[articleId] - universal, short but unreadable?
 
-facebook - /[username]/videos/[videoid]
-twitter - /[username]/status/[tweetid]
-linkedin - /pulse/[articlename+username]
-youtube - /?v=[videoid]
-
-current?
-1. resourcePool /[id] -> resourcePool id
-2. content /content(or /c)/[id] -> content id
-3. account /account/xxx
-4. generateds /generated/[entity]/[action]/[id] -> ...
-how about users/ organizations/ ?
-
-don't forget: preserved keywords (account, resourcepool and future ones?), also "inappropriate content"
-
----
-tests, tests, tests
-
-save anon user to db?
-* when using fb account, anonymous changes will be lost! try to implement anonymous user for all actions..
+cmrp list? -> search?
 
 item.numberOfSales / element.numberOfSales
 
 redirect www.forcrowd.org to wealth.forcrowd.org?
 
 Check the grants from Nadia's F18 slides
+
+how to use modals! is there any resolve? controllers + views into separate files?
+
+samples with sample user? (to prevent edit link)
 
 ---
 Total Cost Index
@@ -66,6 +44,24 @@ Identity / Account:
 . rememberMe - register user auto login: false - external login vm.rememberMe?
 
 ---
+check the routes again!
+/_system/account ?
+/_system/content/about ... ?
+/_system/articles/?
+/_system/register
+/_system/login
+_sys|_|~|.|-|.sys|.s|.i|_int|
+ALPHA / DIGIT / "-" / "." / "_" / "~"
+
+expand('User' - brings all user info ?!?!?
+http://stackoverflow.com/questions/10781309/asp-net-mvc-4-webapi-manually-handle-odata-queries
+http://stackoverflow.com/questions/33126251/webapi-odata-pre-filtering-expand-queries
+
+odata validation
+https://blogs.msdn.microsoft.com/webdev/2013/02/06/protect-your-queryable-api-with-the-validation-feature-in-asp-net-web-api-odata/
+
+fix these; basics - new model - update elementcellnumericvalue? - NOT CLEAR?
+
 rating UI: Current ratings are from 0 to 100, could to 5, 10 or 1000 as well?
 
 IMPORTANT BUT LATER!
@@ -77,6 +73,11 @@ after save it only calls update cache.. shouldn't be enough?
 try to use pure entities, instead of breeze versions? then demo resource pools wouldn't need isTemp?
 
 Navigate away confirmation in isEditing
+
+review odatacontroller;
+userId check, rowVersion check, try catch blocks, unique key checks - before or after, validation or exception, 400 or 409?
+resourcepoolcontroller patch (and others?) is missing userId check?
+put methdods need to be updated based on 'post' & 'patch'
 
 ---
 ng-show / if: if it will be on/off frequently (and takes time to render), use show
@@ -102,7 +103,7 @@ objects vs entities
 
 add newly created cmrps to fetchedList in cmrpfactory - and don't use newlyCreated flag
 
-
+resourcePoolFactory.js - // Locally created CMRPs (isTemp) - TODO !
 
 resourcepool - resourcepoolratetotal, count, ratingcount never null
 elementfiel - indexratingtotal, count never null
@@ -129,6 +130,7 @@ User rating will only be created if he/she interacts with it?
 . elementfield - indexcalculationtype + indexsortype should have null value?
 
 . field restrictions, one multiplier, one incomefield - server side validation?
+Currently direct income & multiplier field types can only be added once per element (or resource pool)? If this is true, apply validations & tests
 
 . info tooltips hover, won't work on mobiles?
 
@@ -152,6 +154,7 @@ Local_db command scripts
 ---
 an async issue?
 RowVersion property of the entity cannot be null&#xD;&#xA;   at forCrowd.WealthEconomy.WebApi.Controllers.OData.BaseUserElementCellController.&lt;Patch&gt;d__9.MoveNext() in D:\Development\Projects\GitHub\forCrowd\WealthEconomy\WebApi\Controllers\OData\Generated\UserElementCellController.cs:line 133
+throw new InvalidOperationException("RowVersion property of the entity cannot be null");
 
 * naming updates
 referenceRatingMultiplied -> aggressiveRatingBase ?
@@ -213,10 +216,10 @@ any user should be able to access them but only the owners and admins can update
 according to this, normal user may not use post action for instance? check these rules later on  
 
 * angularjs 404 case? https://prerender.io/documentation/best-practices
+* object level validation IValidatableObject
 * glimpse webapi (trace for instance) doesn't work for the moment - check it again later
 * glimpse on remote server? http://blog.getglimpse.com/2013/12/09/protect-glimpse-axd-with-your-custom-runtime-policy/
 * implement soft delete
-* exists should work with find or alllive.any() or all.any()?  
 * find vs deleted records? - findlive? or don't retrieve dead records at all?
 * enum data type didnt work with odata? or api?
 * using texbox to update chart data didn't work, it breaks the chart?
@@ -231,7 +234,6 @@ according to this, normal user may not use post action for instance? check these
 * web api throttling!
 * request validation -> html agility pack?
 * coded ui test or canopy or ..? web iu testers?
-* object level validation IValidatableObject
 * http://www.postsharp.net/aspects#examples
 * elastic search?
 * https://github.com/hazzik/DelegateDecompiler
@@ -250,10 +252,6 @@ according to this, normal user may not use post action for instance? check these
 
 * aspnet 5 - it seems it's not ready or at least easy to publish at the moment / coni2k - 28 Jan. '16
 
-* currentUser could be passed as a parameter through route.resolve?
-
-* jetbrains vs tools open source promotion; https://www.jetbrains.com/
-
 * google analytics filters - apparently ignoring localhost + test only works for future visits?
 
 * angularjs conventions; https://github.com/mgechev/angularjs-style-guide
@@ -261,6 +259,8 @@ according to this, normal user may not use post action for instance? check these
 * breeze save queuing - is this useful?
 http://www.getbreezenow.com/documentation/concurrent-saves
 tried this but should be improved. Before calling saveChanges function, we set each modified entities' RowVersion property in prepareSaveBatches function in dataContext.js. And this function is getting called before queuing operation, which means it stores outdated (invalid RowVersion) entities (normally after save operation it was updating local entity with RowVersion that comes from the server) and in the second call it returns 'Conflict' error message.
+
+* breeze remark: fetchEntityByKey 'User' - EntityQuery.from 'Users'
 
 * dataContext - What to do these lines; batches.push(manager.getEntities(['License'], [breeze.EntityState.Deleted]));
 
@@ -346,7 +346,9 @@ if the current user has no right to enter a rating for that area, then it must u
 
 * creative commons?
 
-* social media - skype, pinterest, instagram, others? http://namevine.com/#/forcrowd
+* http://namevine.com/#/forcrowd
+
+* shields.io for badges
 
 * Nice tool: http://www.mail-tester.com/
 

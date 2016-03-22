@@ -1,17 +1,37 @@
 <div data-ng-controller="ResourcePoolListController as vm">
     <h2>List</h2>
     <p>
-        <a href="/_system/resourcePool/new">Create New</a>
+        <a href="" data-ng-click="vm.createNew()">Create New</a>
     </p>
     <table class="table">
         <tr>
             <th>
                 Resource Pool
             </th>
+            <th>
+                User
+            </th>
+            <th>
+                Created
+            </th>
         </tr>
-        <tr data-ng-repeat="resourcePool in vm.resourcePoolSet | orderBy: Id">
+        <tr data-ng-show="results.length === 0">
+            <td colspan="3">
+                Nothing to display
+            </td>
+        </tr>
+        <tr data-ng-show="results.length > 0" data-ng-repeat="resourcePool in vm.resourcePoolSet | orderBy: 'Name' | filter: { isTemp: false } as results">
             <td>
-                <a data-ng-bind="resourcePool.name()" data-ng-href="/_system/resourcePool/{{ resourcePool.Id }}"></a>
+                <a data-ng-bind="resourcePool.name()" data-ng-href="{{ resourcePool.urlView() }}"></a>
+                <span data-ng-show="resourcePool.UserId === vm.currentUser.Id">
+                    - <a data-ng-href="{{ resourcePool.urlEdit() }}">Edit</a>
+                </span>
+            </td>
+            <td>
+                <a data-ng-bind="resourcePool.User.UserName" data-ng-href="/{{ resourcePool.User.UserName }}"></a>
+            </td>
+            <td>
+                <span am-time-ago="resourcePool.CreatedOn"></span>
             </td>
         </tr>
     </table>
