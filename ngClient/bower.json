@@ -40,5 +40,9 @@
         "bootstrap": "^3.3.6",
         "font-awesome": "^4.5.0",
         "bootstrap-social": "^4.12.0"
+    },
+    "resolutions": {
+        "angular": ">=1.4.0",
+        "moment": "^2.12.0"
     }
 }

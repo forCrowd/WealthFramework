@@ -10,8 +10,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects
     // [ODataControllerAuthorization("Administrator")]
     public class ElementItem : BaseEntity
     {
-        string _name;
-
         [Obsolete("Parameterless constructors used by OData & EF. Make them private when possible.")]
         public ElementItem()
         {

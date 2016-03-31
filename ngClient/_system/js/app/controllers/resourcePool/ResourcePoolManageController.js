@@ -98,9 +98,6 @@
                     });
             } else {
 
-                logger.log('vm.userName', vm.userName);
-                logger.log('vm.resourcePoolKey', vm.resourcePoolKey);
-
                 var resourcePoolUniqueKey = { userName: vm.userName, resourcePoolKey: vm.resourcePoolKey };
 
                 resourcePoolFactory.getResourcePoolExpanded(resourcePoolUniqueKey)

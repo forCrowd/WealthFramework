@@ -21,9 +21,9 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
         }
 
         [AllowAnonymous]
-        public override SingleResult<ResourcePool> Get(int id)
+        public override SingleResult<ResourcePool> Get(int key)
         {
-            var result = base.Get(id);
+            var result = base.Get(key);
             return result;
         }
 
@@ -47,11 +47,11 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             }
         }
 
-        public override async Task<IHttpActionResult> Patch([FromODataUri] int id, Delta<ResourcePool> patch)
+        public override async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<ResourcePool> patch)
         {
             try
             {
-                return await base.Patch(id, patch);
+                return await base.Patch(key, patch);
             }
             catch (DbUpdateException)
             {
