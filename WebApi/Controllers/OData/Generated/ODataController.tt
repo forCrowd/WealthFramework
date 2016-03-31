@@ -50,7 +50,7 @@ foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
 		}
 	}
 
-	var primaryKeyVariable = codeStringGenerator.GetCamelCase(primaryKey.Name);
+	var primaryKeyVariable = entityType.KeyMembers.Count == 1 ? "key" : codeStringGenerator.GetCamelCase(primaryKey.Name);
 	var primaryKeyObjectVariable = string.Format("{0}Object", primaryKeyVariable);
 	var primaryKeyTypeName = typeMapper.GetTypeName(primaryKey.TypeUsage);
 

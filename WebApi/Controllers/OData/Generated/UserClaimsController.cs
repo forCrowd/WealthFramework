@@ -46,20 +46,20 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
         // GET odata/UserClaim(5)
         //[Queryable]
-        public virtual SingleResult<UserClaim> Get([FromODataUri] int id)
+        public virtual SingleResult<UserClaim> Get([FromODataUri] int key)
         {
-            return SingleResult.Create(MainUnitOfWork.AllLive.Where(userClaim => userClaim.Id == id));
+            return SingleResult.Create(MainUnitOfWork.AllLive.Where(userClaim => userClaim.Id == key));
         }
 
         // PUT odata/UserClaim(5)
-        public virtual async Task<IHttpActionResult> Put([FromODataUri] int id, UserClaim userClaim)
+        public virtual async Task<IHttpActionResult> Put([FromODataUri] int key, UserClaim userClaim)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != userClaim.Id)
+            if (key != userClaim.Id)
             {
                 return BadRequest();
             }
@@ -109,14 +109,14 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
         // PATCH odata/UserClaim(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int id, Delta<UserClaim> patch)
+        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<UserClaim> patch)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var userClaim = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == id);
+            var userClaim = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == key);
             if (userClaim == null)
             {
                 return NotFound();
@@ -143,12 +143,12 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             {
                 if (patch.GetChangedPropertyNames().Any(item => item == "Id"))
                 {
-                    object idObject = null;
-                    patch.TryGetPropertyValue("Id", out idObject);
+                    object keyObject = null;
+                    patch.TryGetPropertyValue("Id", out keyObject);
 
-                    if (idObject != null && await MainUnitOfWork.All.AnyAsync(item => item.Id == (int)idObject))
+                    if (keyObject != null && await MainUnitOfWork.All.AnyAsync(item => item.Id == (int)keyObject))
                     {
-                        return new UniqueKeyConflictResult(Request, "Id", idObject.ToString());
+                        return new UniqueKeyConflictResult(Request, "Id", keyObject.ToString());
                     }
                     else throw;
                 }
@@ -159,9 +159,9 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
         }
 
         // DELETE odata/UserClaim(5)
-        public virtual async Task<IHttpActionResult> Delete([FromODataUri] int id)
+        public virtual async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            var userClaim = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == id);
+            var userClaim = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == key);
             if (userClaim == null)
             {
                 return NotFound();

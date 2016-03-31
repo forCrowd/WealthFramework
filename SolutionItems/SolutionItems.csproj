@@ -54,6 +54,7 @@
     <None Include="..\CHANGELOG.md">
       <Link>Documents\CHANGELOG.md</Link>
     </None>
+    <None Include="Documents\Skecthes.pptx" />
     <None Include="Documents\Survey.docx" />
     <None Include="Documents\Index Income Calculation.xlsx" />
     <None Include="Documents\Feedback.md" />

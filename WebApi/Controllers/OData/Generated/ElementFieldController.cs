@@ -40,20 +40,20 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
         // GET odata/ElementField(5)
         //[Queryable]
-        public virtual SingleResult<ElementField> Get([FromODataUri] int id)
+        public virtual SingleResult<ElementField> Get([FromODataUri] int key)
         {
-            return SingleResult.Create(MainUnitOfWork.AllLive.Where(elementField => elementField.Id == id));
+            return SingleResult.Create(MainUnitOfWork.AllLive.Where(elementField => elementField.Id == key));
         }
 
         // PUT odata/ElementField(5)
-        public virtual async Task<IHttpActionResult> Put([FromODataUri] int id, ElementField elementField)
+        public virtual async Task<IHttpActionResult> Put([FromODataUri] int key, ElementField elementField)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != elementField.Id)
+            if (key != elementField.Id)
             {
                 return BadRequest();
             }
@@ -103,14 +103,14 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
         // PATCH odata/ElementField(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int id, Delta<ElementField> patch)
+        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<ElementField> patch)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var elementField = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == id);
+            var elementField = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == key);
             if (elementField == null)
             {
                 return NotFound();
@@ -137,12 +137,12 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             {
                 if (patch.GetChangedPropertyNames().Any(item => item == "Id"))
                 {
-                    object idObject = null;
-                    patch.TryGetPropertyValue("Id", out idObject);
+                    object keyObject = null;
+                    patch.TryGetPropertyValue("Id", out keyObject);
 
-                    if (idObject != null && await MainUnitOfWork.All.AnyAsync(item => item.Id == (int)idObject))
+                    if (keyObject != null && await MainUnitOfWork.All.AnyAsync(item => item.Id == (int)keyObject))
                     {
-                        return new UniqueKeyConflictResult(Request, "Id", idObject.ToString());
+                        return new UniqueKeyConflictResult(Request, "Id", keyObject.ToString());
                     }
                     else throw;
                 }
@@ -153,9 +153,9 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
         }
 
         // DELETE odata/ElementField(5)
-        public virtual async Task<IHttpActionResult> Delete([FromODataUri] int id)
+        public virtual async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            var elementField = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == id);
+            var elementField = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == key);
             if (elementField == null)
             {
                 return NotFound();
