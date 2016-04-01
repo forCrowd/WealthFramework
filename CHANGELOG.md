@@ -1,5 +1,10 @@
 ### Changelog
 
+**0.51.2**
+
+* ResourcePoolListController.js - $location is not defined
+https://github.com/forCrowd/WealthEconomy/issues/57
+
 **0.51.1**
 
 * OData controller error - No HTTP resource was found that matches the request URI
