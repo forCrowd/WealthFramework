@@ -1,5 +1,8 @@
 ﻿*** HOT ***
 
+Therion - get backup of pubxml files (app.min.js addition to publish) and other files in gitignore + unsynced
+
+---
 send exception to server in 404 case?
 
 viewModel - bindingModel - namingConvention fix (send correct objects to server - not vm from controller?)

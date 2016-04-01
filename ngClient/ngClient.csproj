@@ -86,7 +86,7 @@
     <None Include="_system\js\app\controllers\account\SocialLoginsController.js" />
     <None Include="_system\js\app\controllers\account\AccountController.js" />
     <None Include="_system\js\app\controllers\account\ChangeUserNameController.js" />
-    <Content Include="_system\js\app\controllers\account\ProfileController.js" />
+    <None Include="_system\js\app\controllers\account\ProfileController.js" />
     <None Include="_system\js\app\controllers\content\obsolete\ClosingNotesController.js" />
     <Content Include="_system\js\app\directives\resourcePoolEditor\resourcePoolEditor.html" />
     <None Include="_system\js\app\directives\resourcePoolEditor\resourcePoolEditor.js" />
