@@ -14,6 +14,9 @@
 
             // DataServiceVersion header
             filters.Add(new Filters.DataServiceVersionHeaderAttribute());
+
+            // ValidateModel filter
+            filters.Add(new Filters.ValidateModelAttribute());
         }
     }
 }

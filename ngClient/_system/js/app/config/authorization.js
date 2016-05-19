@@ -9,17 +9,17 @@
         .config(['$httpProvider', authorizationConfig]);
 
     angular.module('main')
-        .run(['$window', 'logger', authorizationRun]);
+        .run(['logger', '$window', authorizationRun]);
 
     var interceptorId = 'angularInterceptor';
     angular.module('main')
-        .factory(interceptorId, ['$q', '$window', 'logger', angularInterceptor]);
+        .factory(interceptorId, ['logger', '$q', '$window', angularInterceptor]);
 
     function authorizationConfig($httpProvider) {
         $httpProvider.interceptors.push(interceptorId);
     }
 
-    function authorizationRun($window, logger) {
+    function authorizationRun(logger, $window) {
 
         // Logger
         logger = logger.forSource('authorizationRun');
@@ -38,7 +38,7 @@
     }
 
     // angular
-    function angularInterceptor($q, $window, logger) {
+    function angularInterceptor(logger, $q, $window) {
 
         // Logger
         logger = logger.forSource(interceptorId);

@@ -3,9 +3,9 @@
 
     var factoryId = 'resourcePoolFactory';
     angular.module('main')
-        .factory(factoryId, ['dataContext', 'logger', 'Element', 'ResourcePool', '$rootScope', resourcePoolFactory]);
+        .factory(factoryId, ['dataContext', 'Element', 'logger', 'ResourcePool', '$rootScope', resourcePoolFactory]);
 
-    function resourcePoolFactory(dataContext, logger, Element, ResourcePool, $rootScope) {
+    function resourcePoolFactory(dataContext, Element, logger, ResourcePool, $rootScope) {
 
         // Logger
         logger = logger.forSource(factoryId);

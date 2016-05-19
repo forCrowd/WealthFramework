@@ -40,20 +40,15 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
         // GET odata/User(5)
         //[Queryable]
-        public virtual SingleResult<User> Get([FromODataUri] int id)
+        public virtual SingleResult<User> Get([FromODataUri] int key)
         {
-            return SingleResult.Create(MainUnitOfWork.AllLive.Where(user => user.Id == id));
+            return SingleResult.Create(MainUnitOfWork.AllLive.Where(user => user.Id == key));
         }
 
         // PUT odata/User(5)
-        public virtual async Task<IHttpActionResult> Put([FromODataUri] int id, User user)
+        public virtual async Task<IHttpActionResult> Put([FromODataUri] int key, User user)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != user.Id)
+            if (key != user.Id)
             {
                 return BadRequest();
             }
@@ -80,11 +75,6 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
         // POST odata/User
         public virtual async Task<IHttpActionResult> Post(User user)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             try
             {
                 await MainUnitOfWork.InsertAsync(user);
@@ -103,14 +93,9 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
         // PATCH odata/User(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int id, Delta<User> patch)
+        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<User> patch)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var user = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == id);
+            var user = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == key);
             if (user == null)
             {
                 return NotFound();
@@ -118,9 +103,10 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
             var patchEntity = patch.GetEntity();
 
-            // TODO How is passed ModelState.IsValid?
             if (patchEntity.RowVersion == null)
+			{
                 throw new InvalidOperationException("RowVersion property of the entity cannot be null");
+			}
 
             if (!user.RowVersion.SequenceEqual(patchEntity.RowVersion))
             {
@@ -137,12 +123,12 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             {
                 if (patch.GetChangedPropertyNames().Any(item => item == "Id"))
                 {
-                    object idObject = null;
-                    patch.TryGetPropertyValue("Id", out idObject);
+                    object keyObject = null;
+                    patch.TryGetPropertyValue("Id", out keyObject);
 
-                    if (idObject != null && await MainUnitOfWork.All.AnyAsync(item => item.Id == (int)idObject))
+                    if (keyObject != null && await MainUnitOfWork.All.AnyAsync(item => item.Id == (int)keyObject))
                     {
-                        return new UniqueKeyConflictResult(Request, "Id", idObject.ToString());
+                        return new UniqueKeyConflictResult(Request, "Id", keyObject.ToString());
                     }
                     else throw;
                 }
@@ -153,9 +139,9 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
         }
 
         // DELETE odata/User(5)
-        public virtual async Task<IHttpActionResult> Delete([FromODataUri] int id)
+        public virtual async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            var user = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == id);
+            var user = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == key);
             if (user == null)
             {
                 return NotFound();

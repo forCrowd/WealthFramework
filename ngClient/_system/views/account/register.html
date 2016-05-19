@@ -22,19 +22,19 @@
                         <div class="form-group">
                             <label for="UserName" class="control-label col-md-2">Username</label>
                             <div class="col-md-10" data-ng-class="{'has-error': registerForm.UserName.$invalid && !registerForm.UserName.$pristine}">
-                                <input id="UserName" name="UserName" type="text" data-ng-model="vm.UserName" class="form-control" required />
+                                <input id="UserName" name="UserName" type="text" data-ng-model="vm.bindingModel.UserName" class="form-control" required />
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="Email" class="control-label col-md-2">Email</label>
                             <div class="col-md-10" data-ng-class="{'has-error': registerForm.Email.$invalid && !registerForm.Email.$pristine}">
-                                <input id="Email" name="Email" type="text" data-ng-model="vm.Email" class="form-control" required />
+                                <input id="Email" name="Email" type="text" data-ng-model="vm.bindingModel.Email" class="form-control" required />
                             </div>
                         </div>
                         <div class="form-group" data-ng-if="!vm.IsAnonymous">
                             <label for="Password" class="control-label col-md-2">Password</label>
                             <div class="col-md-10" data-ng-class="{'has-error': registerForm.Password.$invalid && !registerForm.Password.$pristine}">
-                                <input id="Password" name="Password" type="password" data-ng-model="vm.Password" class="form-control" required aria-describedby="PasswordHelp" />
+                                <input id="Password" name="Password" type="password" data-ng-model="vm.bindingModel.Password" class="form-control" required aria-describedby="PasswordHelp" />
                                 <span id="PasswordHelp" class="help-block">
                                     Password must be at least 6 characters long,<br />
                                     must have at least one lowercase ('a'-'z') and one digit ('0'-'9')
@@ -44,7 +44,7 @@
                         <div class="form-group" data-ng-if="!vm.IsAnonymous">
                             <label for="ConfirmPassword" class="control-label col-md-2">Confirm</label>
                             <div class="col-md-10" data-ng-class="{'has-error': registerForm.ConfirmPassword.$invalid && !registerForm.ConfirmPassword.$pristine}">
-                                <input id="ConfirmPassword" name="ConfirmPassword" type="password" data-ng-model="vm.ConfirmPassword" class="form-control" required />
+                                <input id="ConfirmPassword" name="ConfirmPassword" type="password" data-ng-model="vm.bindingModel.ConfirmPassword" class="form-control" required />
                             </div>
                         </div>
                         <div class="form-group">

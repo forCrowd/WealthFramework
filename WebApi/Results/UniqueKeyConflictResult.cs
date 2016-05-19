@@ -31,10 +31,9 @@
 
         public HttpResponseMessage Execute()
         {
-            var response = new HttpResponseMessage(HttpStatusCode.Conflict);
+            var response = Request.CreateResponse(HttpStatusCode.Conflict);
             var message = string.Format("{0} '{1}' already exists", Field, Value);
             response.Content = new StringContent(message);
-            response.RequestMessage = Request;
             return response;
         }
     }

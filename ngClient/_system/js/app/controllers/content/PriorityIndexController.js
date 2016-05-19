@@ -3,9 +3,9 @@
 
     var controllerId = 'PriorityIndexController';
     angular.module('main')
-        .controller(controllerId, ['resourcePoolFactory', 'dataContext', '$scope', 'logger', PriorityIndexController]);
+        .controller(controllerId, ['dataContext', 'logger', 'resourcePoolFactory', '$scope', PriorityIndexController]);
 
-    function PriorityIndexController(resourcePoolFactory, dataContext, $scope, logger) {
+    function PriorityIndexController(dataContext, logger, resourcePoolFactory, $scope) {
 
         logger = logger.forSource(controllerId);
 

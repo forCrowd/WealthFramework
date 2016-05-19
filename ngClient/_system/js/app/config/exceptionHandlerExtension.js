@@ -6,10 +6,10 @@
         .config(['$provide', extendHandler]);
 
     function extendHandler($provide) {
-        $provide.decorator('$exceptionHandler', ['$delegate', '$injector', '$window', 'serviceAppUrl', 'logger', exceptionHandlerExtension]);
+        $provide.decorator('$exceptionHandler', ['logger', 'serviceAppUrl', '$delegate', '$injector', '$window', exceptionHandlerExtension]);
     }
 
-    function exceptionHandlerExtension($delegate, $injector, $window, serviceAppUrl, logger) {
+    function exceptionHandlerExtension(logger, serviceAppUrl, $delegate, $injector, $window) {
         logger = logger.forSource(factoryId);
 
         var exceptionUrl = serviceAppUrl + '/api/Exception/Record';
@@ -19,16 +19,16 @@
             // No need to call the base, will be logged here
             // $delegate(exception, cause);
 
-            // Show a generic error to the user
-            logger.logError('Something went wrong, please try again later!', null, true);
+            // Show a generic error to the user, except for 'not found'
+            var $location = $injector.get('$location');
+            if ($location.path().substring($location.path().lastIndexOf('/') + 1) !== 'notFound') {
+                logger.logError('Something went wrong, please try again later!', null, true);
+            }
 
             getSourceMappedStackTrace(exception)
                 .then(function (sourceMappedStack) {
 
                     // Send the exception to the server
-                    var $location = $injector.get('$location');
-                    var $http = $injector.get('$http');
-
                     var exceptionModel = {
                         Message: exception.message,
                         Cause: cause,
@@ -36,6 +36,7 @@
                         Stack: sourceMappedStack
                     };
 
+                    var $http = $injector.get('$http');
                     $http.post(exceptionUrl, exceptionModel);
 
                     // Rethrow the exception

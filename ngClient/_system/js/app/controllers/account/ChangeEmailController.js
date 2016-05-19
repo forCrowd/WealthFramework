@@ -3,15 +3,19 @@
 
     var controllerId = 'ChangeEmailController';
     angular.module('main')
-        .controller(controllerId, ['dataContext', '$location', 'logger', ChangeEmailController]);
+        .controller(controllerId, ['dataContext', 'logger', '$location', ChangeEmailController]);
 
-    function ChangeEmailController(dataContext, $location, logger) {
+    function ChangeEmailController(dataContext, logger, $location) {
         logger = logger.forSource(controllerId);
 
         var vm = this;
+        vm.bindingModel = {
+            Email: ''
+        };
         vm.cancel = cancel;
         vm.changeEmail = changeEmail;
-        vm.isChangeEmailDisabled = false;
+        vm.isSaving = false;
+        vm.isSaveDisabled = isSaveDisabled;
 
         _init();
 
@@ -19,7 +23,7 @@
 
             // Generate test data if localhost
             if ($location.host() === 'localhost') {
-                vm.email = dataContext.getUniqueEmail();
+                vm.bindingModel.Email = dataContext.getUniqueEmail();
             }
         }
 
@@ -29,15 +33,19 @@
 
         function changeEmail() {
 
-            vm.isChangeEmailDisabled = true;
+            vm.isSaving = true;
 
-            dataContext.changeEmail(vm)
+            dataContext.changeEmail(vm.bindingModel)
                 .success(function () {
                     $location.url('/_system/account/confirmEmail');
                 })
                 .finally(function () {
-                    vm.isChangeEmailDisabled = false;
+                    vm.isSaving = false;
                 });
+        }
+
+        function isSaveDisabled() {
+            return vm.isSaving;
         }
     }
 })();

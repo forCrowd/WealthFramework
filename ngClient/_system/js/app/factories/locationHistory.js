@@ -49,18 +49,6 @@
             }
         }
 
-        //function previousItem(excludeAccessType) {
-        //    excludeAccessType = typeof excludeAccessType !== 'undefined' ? excludeAccessType : '';
-
-        //    for (var i = self.history.length - 2; i >= 0; i--) {
-        //        var item = self.history[i];
-
-        //        if (excludeAccessType === '' || excludeAccessType !== item.accessType) {
-        //            return item;
-        //        }
-        //    }
-        //}
-
         function LocationItem(itemUrl, accessType) {
             itemUrl = typeof itemUrl !== 'undefined' ? itemUrl : '';
             accessType = typeof accessType !== 'undefined' ? accessType : 'undefined';

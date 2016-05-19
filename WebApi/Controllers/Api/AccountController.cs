@@ -31,11 +31,6 @@
         // POST api/Account/AddPassword
         public async Task<IHttpActionResult> AddPassword(AddPasswordBindingModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var currentUser = await UserManager.FindByIdAsync(this.GetCurrentUserId().Value);
             var result = await UserManager.AddPasswordAsync(currentUser.Id, model.Password);
             var errorResult = GetErrorResult(result);
@@ -51,11 +46,6 @@
         // POST api/Account/ChangeEmail
         public async Task<IHttpActionResult> ChangeEmail(ChangeEmailBindingModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             // Get the user
             var currentUser = await UserManager.FindByIdAsync(this.GetCurrentUserId().Value);
             var result = await UserManager.SetEmailAsync(currentUser.Id, model.Email);
@@ -72,11 +62,6 @@
         // POST api/Account/ChangePassword
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var currentUser = await UserManager.FindByIdAsync(this.GetCurrentUserId().Value);
             var result = await UserManager.ChangePasswordAsync(currentUser.Id, model.CurrentPassword, model.NewPassword);
             var errorResult = GetErrorResult(result);
@@ -92,11 +77,6 @@
         // POST api/Account/ChangeUserName
         public async Task<IHttpActionResult> ChangeUserName(ChangeUserNameBindingModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             // Get the user
             var currentUser = await UserManager.FindByIdAsync(this.GetCurrentUserId().Value);
             var result = await UserManager.ChangeUserName(currentUser.Id, model.UserName);
@@ -113,11 +93,6 @@
         // POST api/Account/ConfirmEmail
         public async Task<IHttpActionResult> ConfirmEmail(ConfirmEmailBindingModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var currentUser = await UserManager.FindByIdAsync(this.GetCurrentUserId().Value);
             var result = await UserManager.ConfirmEmailAsync(currentUser.Id, model.Token);
             var errorResult = GetErrorResult(result);
@@ -135,11 +110,6 @@
         [AllowAnonymous]
         public IHttpActionResult ExternalLogin(string provider, string clientReturnUrl)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             // Request a redirect to the external login provider
             var callBackUrl = string.Format("/api/Account/ExternalLoginCallback?clientReturnUrl={0}", clientReturnUrl);
             return new ChallengeResult(Request, provider, callBackUrl);
@@ -250,11 +220,6 @@
         [AllowAnonymous]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var user = new User(model.UserName, model.Email)
             {
                 IsAnonymous = false
@@ -276,11 +241,6 @@
         [AllowAnonymous]
         public async Task<IHttpActionResult> RegisterAnonymous(RegisterAnonymousBindingModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var user = new User(model.UserName, model.Email)
             {
                 IsAnonymous = true
@@ -311,11 +271,6 @@
         [AllowAnonymous]
         public async Task<IHttpActionResult> ResetPassword(ResetPasswordBindingModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var currentUser = await UserManager.FindByEmailAsync(model.Email);
             var result = await UserManager.ResetPasswordAsync(currentUser.Id, model.Token, model.NewPassword);
             var errorResult = GetErrorResult(result);
@@ -331,11 +286,6 @@
         [AllowAnonymous]
         public async Task<IHttpActionResult> ResetPasswordRequest(ResetPasswordRequestBindingModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var currentUser = await UserManager.FindByEmailAsync(model.Email);
             await UserManager.SendResetPasswordEmailAsync(currentUser.Id);
 

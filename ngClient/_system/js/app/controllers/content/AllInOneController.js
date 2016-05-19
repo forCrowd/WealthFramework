@@ -3,9 +3,9 @@
 
     var controllerId = 'AllInOneController';
     angular.module('main')
-        .controller(controllerId, ['resourcePoolFactory', '$scope', 'logger', AllInOneController]);
+        .controller(controllerId, ['logger', 'resourcePoolFactory', '$scope', AllInOneController]);
 
-    function AllInOneController(resourcePoolFactory, $scope, logger) {
+    function AllInOneController(logger, resourcePoolFactory, $scope) {
 
         logger = logger.forSource(controllerId);
 

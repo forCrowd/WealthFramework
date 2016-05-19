@@ -10,9 +10,9 @@
 
     var factoryId = 'dataContext';
     angular.module('main')
-        .factory(factoryId, ['entityManagerFactory', 'serviceAppUrl', '$http', '$q', '$rootScope', '$timeout', '$window', 'logger', dataContext]);
+        .factory(factoryId, ['entityManagerFactory', 'logger', 'serviceAppUrl', '$http', '$q', '$rootScope', '$timeout', '$window', dataContext]);
 
-    function dataContext(entityManagerFactory, serviceAppUrl, $http, $q, $rootScope, $timeout, $window, logger) {
+    function dataContext(entityManagerFactory, logger, serviceAppUrl, $http, $q, $rootScope, $timeout, $window) {
 
         // Logger
         logger = logger.forSource(factoryId);

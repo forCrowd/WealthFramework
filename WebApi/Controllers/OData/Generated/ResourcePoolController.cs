@@ -46,20 +46,15 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
         // GET odata/ResourcePool(5)
         //[Queryable]
-        public virtual SingleResult<ResourcePool> Get([FromODataUri] int id)
+        public virtual SingleResult<ResourcePool> Get([FromODataUri] int key)
         {
-            return SingleResult.Create(MainUnitOfWork.AllLive.Where(resourcePool => resourcePool.Id == id));
+            return SingleResult.Create(MainUnitOfWork.AllLive.Where(resourcePool => resourcePool.Id == key));
         }
 
         // PUT odata/ResourcePool(5)
-        public virtual async Task<IHttpActionResult> Put([FromODataUri] int id, ResourcePool resourcePool)
+        public virtual async Task<IHttpActionResult> Put([FromODataUri] int key, ResourcePool resourcePool)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != resourcePool.Id)
+            if (key != resourcePool.Id)
             {
                 return BadRequest();
             }
@@ -86,11 +81,6 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
         // POST odata/ResourcePool
         public virtual async Task<IHttpActionResult> Post(ResourcePool resourcePool)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             try
             {
                 await MainUnitOfWork.InsertAsync(resourcePool);
@@ -109,14 +99,9 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
         // PATCH odata/ResourcePool(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int id, Delta<ResourcePool> patch)
+        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<ResourcePool> patch)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var resourcePool = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == id);
+            var resourcePool = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == key);
             if (resourcePool == null)
             {
                 return NotFound();
@@ -124,9 +109,10 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
             var patchEntity = patch.GetEntity();
 
-            // TODO How is passed ModelState.IsValid?
             if (patchEntity.RowVersion == null)
+			{
                 throw new InvalidOperationException("RowVersion property of the entity cannot be null");
+			}
 
             if (!resourcePool.RowVersion.SequenceEqual(patchEntity.RowVersion))
             {
@@ -143,12 +129,12 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             {
                 if (patch.GetChangedPropertyNames().Any(item => item == "Id"))
                 {
-                    object idObject = null;
-                    patch.TryGetPropertyValue("Id", out idObject);
+                    object keyObject = null;
+                    patch.TryGetPropertyValue("Id", out keyObject);
 
-                    if (idObject != null && await MainUnitOfWork.All.AnyAsync(item => item.Id == (int)idObject))
+                    if (keyObject != null && await MainUnitOfWork.All.AnyAsync(item => item.Id == (int)keyObject))
                     {
-                        return new UniqueKeyConflictResult(Request, "Id", idObject.ToString());
+                        return new UniqueKeyConflictResult(Request, "Id", keyObject.ToString());
                     }
                     else throw;
                 }
@@ -159,9 +145,9 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
         }
 
         // DELETE odata/ResourcePool(5)
-        public virtual async Task<IHttpActionResult> Delete([FromODataUri] int id)
+        public virtual async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            var resourcePool = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == id);
+            var resourcePool = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == key);
             if (resourcePool == null)
             {
                 return NotFound();

@@ -40,20 +40,15 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
         // GET odata/ElementItem(5)
         //[Queryable]
-        public virtual SingleResult<ElementItem> Get([FromODataUri] int id)
+        public virtual SingleResult<ElementItem> Get([FromODataUri] int key)
         {
-            return SingleResult.Create(MainUnitOfWork.AllLive.Where(elementItem => elementItem.Id == id));
+            return SingleResult.Create(MainUnitOfWork.AllLive.Where(elementItem => elementItem.Id == key));
         }
 
         // PUT odata/ElementItem(5)
-        public virtual async Task<IHttpActionResult> Put([FromODataUri] int id, ElementItem elementItem)
+        public virtual async Task<IHttpActionResult> Put([FromODataUri] int key, ElementItem elementItem)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != elementItem.Id)
+            if (key != elementItem.Id)
             {
                 return BadRequest();
             }
@@ -80,11 +75,6 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
         // POST odata/ElementItem
         public virtual async Task<IHttpActionResult> Post(ElementItem elementItem)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             try
             {
                 await MainUnitOfWork.InsertAsync(elementItem);
@@ -103,14 +93,9 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
         // PATCH odata/ElementItem(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int id, Delta<ElementItem> patch)
+        public virtual async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<ElementItem> patch)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var elementItem = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == id);
+            var elementItem = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == key);
             if (elementItem == null)
             {
                 return NotFound();
@@ -118,9 +103,10 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
             var patchEntity = patch.GetEntity();
 
-            // TODO How is passed ModelState.IsValid?
             if (patchEntity.RowVersion == null)
+			{
                 throw new InvalidOperationException("RowVersion property of the entity cannot be null");
+			}
 
             if (!elementItem.RowVersion.SequenceEqual(patchEntity.RowVersion))
             {
@@ -137,12 +123,12 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             {
                 if (patch.GetChangedPropertyNames().Any(item => item == "Id"))
                 {
-                    object idObject = null;
-                    patch.TryGetPropertyValue("Id", out idObject);
+                    object keyObject = null;
+                    patch.TryGetPropertyValue("Id", out keyObject);
 
-                    if (idObject != null && await MainUnitOfWork.All.AnyAsync(item => item.Id == (int)idObject))
+                    if (keyObject != null && await MainUnitOfWork.All.AnyAsync(item => item.Id == (int)keyObject))
                     {
-                        return new UniqueKeyConflictResult(Request, "Id", idObject.ToString());
+                        return new UniqueKeyConflictResult(Request, "Id", keyObject.ToString());
                     }
                     else throw;
                 }
@@ -153,9 +139,9 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
         }
 
         // DELETE odata/ElementItem(5)
-        public virtual async Task<IHttpActionResult> Delete([FromODataUri] int id)
+        public virtual async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            var elementItem = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == id);
+            var elementItem = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == key);
             if (elementItem == null)
             {
                 return NotFound();

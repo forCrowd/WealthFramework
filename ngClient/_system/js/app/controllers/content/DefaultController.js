@@ -26,7 +26,7 @@
         };
         vm.logout = logout;
         vm.toggleBankTransfer = toggleBankTransfer;
-        var isModalOpen = false;
+        var isRegisterLoginModalOpened = false;
 
         // Events
         $scope.$on('dataContext_currentUserChanged', currentUserChanged);
@@ -81,9 +81,9 @@
         function openRegisterLoginModal(event, forceOpen) {
             forceOpen = typeof forceOpen !== 'undefined' ? forceOpen : false;
 
-            if (!isModalOpen || forceOpen) {
+            if (!isRegisterLoginModalOpened || forceOpen) {
 
-                isModalOpen = true;
+                isRegisterLoginModalOpened = true;
 
                 var modalInstance = $uibModal.open({
                     //backdrop: 'static',
@@ -103,9 +103,9 @@
 
                 modalInstance.result
                     .then(function () {
-                        //isModalOpen = false;
+                        //isRegisterLoginModalOpened = false;
                     }, function () {
-                        //isModalOpen = false;
+                        //isRegisterLoginModalOpened = false;
                     });
             }
         }

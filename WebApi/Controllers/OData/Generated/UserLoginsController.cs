@@ -54,11 +54,6 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
         // PUT odata/UserLogin(5)
         public virtual async Task<IHttpActionResult> Put([FromODataUri] string providerKey, UserLogin userLogin)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             if (providerKey != userLogin.ProviderKey)
             {
                 return BadRequest();
@@ -86,11 +81,6 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
         // POST odata/UserLogin
         public virtual async Task<IHttpActionResult> Post(UserLogin userLogin)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             try
             {
                 await MainUnitOfWork.InsertAsync(userLogin);
@@ -111,11 +101,6 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
         [AcceptVerbs("PATCH", "MERGE")]
         public virtual async Task<IHttpActionResult> Patch([FromODataUri] string providerKey, Delta<UserLogin> patch)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var userLogin = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.ProviderKey == providerKey);
             if (userLogin == null)
             {
@@ -124,9 +109,10 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
             var patchEntity = patch.GetEntity();
 
-            // TODO How is passed ModelState.IsValid?
             if (patchEntity.RowVersion == null)
+			{
                 throw new InvalidOperationException("RowVersion property of the entity cannot be null");
+			}
 
             if (!userLogin.RowVersion.SequenceEqual(patchEntity.RowVersion))
             {

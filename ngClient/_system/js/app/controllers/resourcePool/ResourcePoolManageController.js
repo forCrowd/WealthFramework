@@ -3,24 +3,9 @@
 
     var controllerId = 'ResourcePoolManageController';
     angular.module('main')
-        .controller(controllerId, ['resourcePoolFactory',
-            'dataContext',
-            '$location',
-            '$routeParams',
-            '$rootScope',
-            '$uibModal',
-            'Enums',
-            'logger',
-            ResourcePoolManageController]);
+        .controller(controllerId, ['dataContext', 'Enums', 'logger', 'resourcePoolFactory', '$location', '$rootScope', '$routeParams', '$uibModal', ResourcePoolManageController]);
 
-    function ResourcePoolManageController(resourcePoolFactory,
-        dataContext,
-        $location,
-        $routeParams,
-        $rootScope,
-        $uibModal,
-        Enums,
-        logger) {
+    function ResourcePoolManageController(dataContext, Enums, logger, resourcePoolFactory, $location, $rootScope, $routeParams, $uibModal) {
 
         // Logger
         logger = logger.forSource(controllerId);
@@ -50,7 +35,6 @@
         vm.elementItem = null;
         vm.elementItemMaster = null;
         vm.elementItemSet = elementItemSet;
-        vm.entityErrors = [];
         vm.isElementEdit = false;
         vm.isElementNew = true;
         vm.isElementFieldEdit = false;
@@ -60,7 +44,6 @@
         vm.isNew = $location.path().substring($location.path().lastIndexOf('/') + 1) === 'new';
         vm.isSaveEnabled = isSaveEnabled;
         vm.isSaving = false;
-        vm.openCopyModal = openCopyModal;
         vm.openRemoveResourcePoolModal = openRemoveResourcePoolModal;
         vm.removeElement = removeElement;
         vm.removeElementField = removeElementField;
@@ -98,9 +81,6 @@
                     });
             } else {
 
-                logger.log('vm.userName', vm.userName);
-                logger.log('vm.resourcePoolKey', vm.resourcePoolKey);
-
                 var resourcePoolUniqueKey = { userName: vm.userName, resourcePoolKey: vm.resourcePoolKey };
 
                 resourcePoolFactory.getResourcePoolExpanded(resourcePoolUniqueKey)
@@ -108,7 +88,8 @@
 
                         // Not found, navigate to 404
                         if (resourcePool === null) {
-                            $location.url('/_system/content/404');
+                            var invalidUrl = '/' + vm.userName + '/' + vm.resourcePoolKey;
+                            $location.url('/_system/content/notFound?url=' + invalidUrl);
                             return;
                         }
 
@@ -153,7 +134,10 @@
         }
 
         function addElementItem() {
-            vm.elementItem = { Element: vm.resourcePool.ElementSet[0], Name: 'New item' };
+            vm.elementItem = resourcePoolFactory.createElementItem({
+                Element: vm.resourcePool.ElementSet[0],
+                Name: 'New item'
+            });
             vm.isElementItemEdit = true;
             vm.isElementItemNew = true;
         }
@@ -334,23 +318,11 @@
             return value;
         }
 
-        function openCopyModal() {
-            var modalInstance = $uibModal.open({
-                templateUrl: 'copyResourcePoolModal.html',
-                controllerAs: 'vm',
-                controller: ['resourcePoolFactory', '$uibModalInstance', CopyResourcePoolModalController]
-            });
-
-            modalInstance.result.then(function (resourcePool) {
-                vm.resourcePool = resourcePool;
-            });
-        }
-
         function openRemoveResourcePoolModal() {
             var modalInstance = $uibModal.open({
-                templateUrl: 'removeResourcePoolModal.html',
+                controller: ['$scope', '$uibModalInstance', ResourcePoolRemoveController],
                 controllerAs: 'vm',
-                controller: ['$scope', '$uibModalInstance', RemoveResourcePoolModalController]
+                templateUrl: '/_system/views/resourcePool/resourcePoolRemove.html?v=0.52.0'
             });
 
             modalInstance.result.then(function () {
@@ -375,15 +347,15 @@
 
             resourcePoolFactory.removeResourcePool(vm.resourcePool);
 
-            dataContext.getCurrentUser()
-                .then(function (currentUser) {
-                    dataContext.saveChanges()
-                        .then(function () {
+            dataContext.saveChanges()
+                .then(function () {
+                    dataContext.getCurrentUser()
+                        .then(function (currentUser) {
                             $location.url('/' + currentUser.UserName);
-                        })
-                        .finally(function () {
-                            vm.isSaving = false;
                         });
+                })
+                .finally(function () {
+                    vm.isSaving = false;
                 });
         }
 
@@ -495,7 +467,7 @@
         }
     }
 
-    function RemoveResourcePoolModalController($scope, $uibModalInstance) {
+    function ResourcePoolRemoveController($scope, $uibModalInstance) {
 
         var vm = this;
         vm.cancel = cancel;
@@ -507,31 +479,6 @@
 
         function remove() {
             $uibModalInstance.close();
-        }
-    }
-
-    function CopyResourcePoolModalController(resourcePoolFactory, $uibModalInstance) {
-
-        var vm = this;
-        vm.close = close;
-        vm.copy = copy;
-        vm.resourcePoolSet = [];
-
-        _init();
-
-        function _init() {
-            resourcePoolFactory.getResourcePoolSet()
-                .then(function (data) {
-                    vm.resourcePoolSet = data;
-                });
-        }
-
-        function close() {
-            $uibModalInstance.dismiss('cancel');
-        }
-
-        function copy(resourcePool) {
-            $uibModalInstance.close(resourcePool);
         }
     }
 

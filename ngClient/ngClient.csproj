@@ -86,8 +86,9 @@
     <None Include="_system\js\app\controllers\account\SocialLoginsController.js" />
     <None Include="_system\js\app\controllers\account\AccountController.js" />
     <None Include="_system\js\app\controllers\account\ChangeUserNameController.js" />
-    <Content Include="_system\js\app\controllers\account\ProfileController.js" />
+    <None Include="_system\js\app\controllers\account\ProfileController.js" />
     <None Include="_system\js\app\controllers\content\obsolete\ClosingNotesController.js" />
+    <None Include="_system\js\app\controllers\content\NotFoundController.js" />
     <Content Include="_system\js\app\directives\resourcePoolEditor\resourcePoolEditor.html" />
     <None Include="_system\js\app\directives\resourcePoolEditor\resourcePoolEditor.js" />
     <None Include="_system\js\app\entities\Element.js" />
@@ -106,9 +107,9 @@
     <None Include="_system\js\app\factories\locationHistory.js" />
     <None Include="_system\js\app\factories\logger.js" />
     <None Include="_system\js\app\factories\resourcePoolFactory.js" />
-    <None Include="_system\js\app\filters\angular-enum.js" />
-    <None Include="_system\js\app\filters\angular-numberSymbol.js" />
-    <None Include="_system\js\app\filters\angular-percentage.js" />
+    <None Include="_system\js\app\filters\ngEnum.js" />
+    <None Include="_system\js\app\filters\numberSymbol.js" />
+    <None Include="_system\js\app\filters\percentage.js" />
     <None Include="_system\js\app\main.js" />
     <Content Include="_system\views\account\profile.html" />
     <Content Include="_system\views\account\account.html" />
@@ -123,7 +124,7 @@
     <Content Include="_system\views\account\registerLogin.html" />
     <Content Include="_system\views\account\register.html" />
     <Content Include="_system\views\account\resetPassword.html" />
-    <Content Include="_system\views\content\404.html" />
+    <Content Include="_system\views\content\notFound.html" />
     <Content Include="_system\views\content\allInOne.html" />
     <Content Include="_system\views\content\basics.html" />
     <Content Include="_system\views\content\home.html" />
@@ -143,6 +144,7 @@
     <Content Include="_system\views\content\reason.html" />
     <Content Include="_system\views\content\totalCostIndex.html" />
     <Content Include="_system\views\resourcePool\resourcePoolList.html" />
+    <Content Include="_system\views\resourcePool\resourcePoolRemove.html" />
     <Content Include="_system\views\resourcePool\resourcePoolManage.html" />
     <Content Include="_system\views\resourcePool\resourcePoolView.html" />
     <None Include="_system\css\main.css" />

@@ -3,28 +3,44 @@
 
     var controllerId = 'RegisterController';
     angular.module('main')
-        .controller(controllerId, ['dataContext', 'locationHistory', 'serviceAppUrl', 'logger', '$location', '$rootScope', '$scope', RegisterController]);
+        .controller(controllerId, ['dataContext', 'locationHistory', 'logger', 'serviceAppUrl', '$location', '$rootScope', '$scope', RegisterController]);
 
-    function RegisterController(dataContext, locationHistory, serviceAppUrl, logger, $location, $rootScope, $scope) {
+    function RegisterController(dataContext, locationHistory, logger, serviceAppUrl, $location, $rootScope, $scope) {
 
         // Logger
         logger = logger.forSource(controllerId);
 
         var vm = this;
-        vm.ConfirmPassword = '';
-        vm.Email = '';
+        vm.bindingModel = {
+            UserName: '',
+            Email: '',
+            Password: '',
+            ConfirmPassword: ''
+        };
         vm.IsAnonymous = false;
         vm.IsAnonymousChanged = IsAnonymousChanged;
-        vm.Password = '';
+        vm.isSaving = false;
+        vm.isSaveDisabled = isSaveDisabled;
         vm.register = register;
         vm.rememberMe = true;
         vm.showHeader = typeof $scope.showHeader !== 'undefined' ? $scope.showHeader : true;
-        vm.UserName = '';
+
+        function IsAnonymousChanged() {
+            vm.bindingModel.UserName = vm.IsAnonymous ? dataContext.getUniqueUserName() : '';
+            vm.bindingModel.Email = vm.IsAnonymous ? dataContext.getUniqueEmail() : '';
+        }
+
+        function isSaveDisabled() {
+            return vm.isSaving;
+        }
 
         function register() {
 
             if (vm.IsAnonymous) {
-                dataContext.registerAnonymous(vm, vm.rememberMe)
+
+                vm.isSaving = true;
+
+                dataContext.registerAnonymous(vm.bindingModel, vm.rememberMe)
                     .then(function () {
                         logger.logSuccess('You have been registered!', null, true);
                         $rootScope.$broadcast('RegisterController_userRegistered');
@@ -32,15 +48,24 @@
                             $location.url(locationHistory.previousItem().url());
                         }
                     })
-                    .catch(failed);
+                    .catch(failed)
+                    .finally(function () {
+                        vm.isSaving = false;
+                    });
             } else {
-                dataContext.register(vm, vm.rememberMe)
+
+                vm.isSaving = true;
+
+                dataContext.register(vm.bindingModel, vm.rememberMe)
                     .then(function () {
                         logger.logSuccess('You have been registered!', null, true);
                         $rootScope.$broadcast('RegisterController_userRegistered');
                         $location.url('/_system/account/confirmEmail');
                     })
-                    .catch(failed);
+                    .catch(failed)
+                    .finally(function () {
+                        vm.isSaving = false;
+                    });
             }
 
             function failed(response) {
@@ -48,11 +73,6 @@
                     logger.logError(response.error_description, null, true);
                 }
             }
-        }
-
-        function IsAnonymousChanged() {
-            vm.UserName = vm.IsAnonymous ? dataContext.getUniqueUserName() : '';
-            vm.Email = vm.IsAnonymous ? dataContext.getUniqueEmail() : '';
         }
     }
 })();

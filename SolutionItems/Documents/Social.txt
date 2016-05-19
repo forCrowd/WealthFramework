@@ -1,4 +1,4 @@
-﻿alpha team - ceren, cucu?
+﻿alpha team
 gitter
 personal dev network https://www.facebook.com/lists/10151319136553665
 social network - Emin Pamucak
@@ -17,6 +17,14 @@ https://gratipay.com/new
 https://www.braintreepayments.com/features/marketplace
 https://www.citizensbank.com/
 live broadcast? younow? haai? https://www.livecoding.tv/
+
+---
+grants
+https://www.coreinfrastructure.org/programs/census-project
+https://wiki.mozilla.org/MOSS
+http://www.numfocus.org/
+https://www.google.com.tr/search?q=eu+grants+open+source&ie=utf-8&oe=utf-8&gws_rd=cr&ei=f6X2Vt-iK-rB6AS8x7PwBQ
+https://stripe.com/blog/open-source-retreat-2016-grantees
 
 ---
 Hello everyone!

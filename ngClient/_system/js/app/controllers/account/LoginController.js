@@ -3,12 +3,14 @@
 
     var controllerId = 'LoginController';
     angular.module('main')
-        .controller(controllerId, ['dataContext', 'locationHistory', 'serviceAppUrl', 'logger', '$location', '$rootScope', '$scope', LoginController]);
+        .controller(controllerId, ['dataContext', 'locationHistory', 'logger', 'serviceAppUrl', '$location', '$rootScope', '$scope', LoginController]);
 
-    function LoginController(dataContext, locationHistory, serviceAppUrl, logger, $location, $rootScope, $scope) {
+    function LoginController(dataContext, locationHistory, logger, serviceAppUrl, $location, $rootScope, $scope) {
         logger = logger.forSource(controllerId);
 
         var vm = this;
+        vm.isSaving = false;
+        vm.isSaveDisabled = isSaveDisabled;
         vm.login = login;
         vm.navigateToResetPassword = navigateToResetPassword;
         vm.password = '';
@@ -36,16 +38,26 @@
             return typeof clientReturnUrl !== 'undefined' ? clientReturnUrl : locationHistory.previousItem().url();
         }
 
+        function isSaveDisabled() {
+            return vm.isSaving;
+        }
+
         function login() {
 
             // External (single use token) login
             var singleUseToken = $location.search().token;
             var init = $location.search().init;
             if (typeof singleUseToken !== 'undefined') {
-                dataContext.login('', '', vm.rememberMe, singleUseToken).then(successExternal).catch(failedExternal);
+                vm.isSaving = true;
+                dataContext.login('', '', vm.rememberMe, singleUseToken).then(successExternal).catch(failedExternal).finally(function () {
+                    vm.isSaving = false;
+                });
             } else { // Internal login
                 if (vm.userName !== '' && vm.password !== '') {
-                    dataContext.login(vm.userName, vm.password, vm.rememberMe).then(successInternal);
+                    vm.isSaving = true;
+                    dataContext.login(vm.userName, vm.password, vm.rememberMe).then(successInternal).finally(function () {
+                        vm.isSaving = false;
+                    });
                 }
             }
 

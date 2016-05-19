@@ -26,7 +26,8 @@
 
                     // Not found, navigate to 404
                     if (user === null) {
-                        $location.url('/_system/content/404');
+                        var invalidUrl = '/' + userName;
+                        $location.url('/_system/content/notFound?url=' + invalidUrl);
                         return;
                     }
 

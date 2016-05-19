@@ -3,9 +3,9 @@
 
     var controllerId = 'TotalCostIndexController';
     angular.module('main')
-        .controller(controllerId, ['resourcePoolFactory', 'dataContext', '$scope', 'logger', TotalCostIndexController]);
+        .controller(controllerId, ['dataContext', 'logger', 'resourcePoolFactory', '$scope', TotalCostIndexController]);
 
-    function TotalCostIndexController(resourcePoolFactory, dataContext, $scope, logger) {
+    function TotalCostIndexController(dataContext, logger, resourcePoolFactory, $scope) {
 
         logger = logger.forSource(controllerId);
 

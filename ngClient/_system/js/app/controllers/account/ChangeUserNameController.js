@@ -3,21 +3,23 @@
 
     var controllerId = 'ChangeUserNameController';
     angular.module('main')
-        .controller(controllerId, ['dataContext', '$location', 'logger', ChangeUserNameController]);
+        .controller(controllerId, ['dataContext', 'logger', '$location', ChangeUserNameController]);
 
-    function ChangeUserNameController(dataContext, $location, logger) {
+    function ChangeUserNameController(dataContext, logger, $location) {
 
         // Logger
         logger = logger.forSource(controllerId);
 
         var vm = this;
+        vm.bindingModel = {
+            UserName: ''
+        };
         vm.cancel = cancel;
         vm.changeUserName = changeUserName;
         vm.currentUser =  { UserName: '' };
         vm.externalLoginInit = $location.search().init; // For external login's
-        vm.isChangeUserNameDisabled = false;
+        vm.isSaving = false;
         vm.isSaveDisabled = isSaveDisabled;
-        vm.userName = '';
 
         _init();
 
@@ -26,11 +28,11 @@
             dataContext.getCurrentUser()
                 .then(function (currentUser) {
                     vm.currentUser = currentUser;
-                    vm.userName = currentUser.UserName;
+                    vm.bindingModel.UserName = currentUser.UserName;
 
                     // Generate test data if localhost
                     if ($location.host() === 'localhost') {
-                        vm.userName = dataContext.getUniqueUserName();
+                        vm.bindingModel.UserName = dataContext.getUniqueUserName();
                     }
                 });
         }
@@ -41,15 +43,15 @@
 
         function changeUserName() {
 
-            vm.isChangeUserNameDisabled = true;
+            vm.isSaving = true;
 
-            dataContext.changeUserName({ UserName: vm.userName })
+            dataContext.changeUserName(vm.bindingModel)
                 .success(function () {
                     logger.logSuccess('Your username has been changed!', null, true);
                     $location.url(getReturnUrl());
                 })
                 .finally(function () {
-                    vm.isChangeUserNameDisabled = false;
+                    vm.isSaving = false;
                 });
         }
 
@@ -61,7 +63,7 @@
         }
 
         function isSaveDisabled() {
-            return vm.userName === vm.currentUser.UserName || vm.isChangeUserNameDisabled;
+            return vm.bindingModel.UserName === vm.currentUser.UserName || vm.isSaving;
         }
     }
 })();

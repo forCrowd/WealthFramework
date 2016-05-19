@@ -1,5 +1,36 @@
 ### Changelog
 
+**0.52.0**
+
+* Send an exception to server in 404 case
+https://github.com/forCrowd/WealthEconomy/issues/53
+* Post correct binding models to server
+https://github.com/forCrowd/WealthEconomy/issues/54
+* Use breeze's z-validate directive for entity validation errors
+https://github.com/forCrowd/WealthEconomy/issues/55
+* OData controller error - No HTTP resource was found that matches the request URI
+https://github.com/forCrowd/WealthEconomy/issues/56
+* Create validate model filter
+https://github.com/forCrowd/WealthEconomy/issues/58
+* Improve OData validation
+https://github.com/forCrowd/WealthEconomy/issues/59
+* angular dependencies alphabetical order
+* Todo.md cleanup
+
+**0.51.2**
+
+* ResourcePoolListController.js - $location is not defined
+https://github.com/forCrowd/WealthEconomy/issues/57
+
+**0.51.1**
+
+* OData controller error - No HTTP resource was found that matches the request URI
+https://github.com/forCrowd/WealthEconomy/issues/56
+* Fixes for initial setup
+ * -ExecutionPolicy Unrestricted was added for WebApiWarmup.ps1 call in post build
+ * WebApi targets path fix
+* Sketch.pptx file
+
 **0.51.0**
 
 * Add username to account

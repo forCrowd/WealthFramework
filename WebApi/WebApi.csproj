@@ -287,6 +287,7 @@
     <Compile Include="Controllers\OData\UserResourcePoolController.cs" />
     <Compile Include="ExceptionHandling\ElmahExceptionLogger.cs" />
     <Compile Include="ExceptionHandling\GenericExceptionHandler.cs" />
+    <Compile Include="Filters\ValidateModelAttribute.cs" />
     <Compile Include="Filters\DataServiceVersionHeaderAttribute.cs" />
     <Compile Include="Filters\RequireHttpsAttribute.cs" />
     <Compile Include="HttpClientHandlers\FacebookBackChannelHandler.cs" />
@@ -300,7 +301,9 @@
     <Compile Include="App_Start\Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Configs\connectionStrings.config" />
+    <None Include="Configs\connectionStrings.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Configs\elmah.errorLog.config" />
     <None Include="Configs\elmah.errorMail.config" />
     <None Include="Configs\Setup\0 Readme.txt" />
@@ -316,7 +319,9 @@
     <None Include="Configs\Setup\appSettings.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Configs\system.net.mailSettings.smtp.config" />
+    <None Include="Configs\system.net.mailSettings.smtp.config">
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="CustomErrors\403.html" />
     <Content Include="CustomErrors\500.html" />
     <Content Include="CustomErrors\404.html" />
@@ -370,7 +375,7 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" /> -->
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v12.0\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v14.0\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
     <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
@@ -394,7 +399,7 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>powershell.exe -file "$(SolutionDir)SolutionItems\Scripts\Build\WebApiWarmUp.ps1"</PostBuildEvent>
+    <PostBuildEvent>powershell.exe -ExecutionPolicy Unrestricted -file "$(SolutionDir)SolutionItems\Scripts\Build\WebApiWarmUp.ps1"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

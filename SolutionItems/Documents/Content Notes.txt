@@ -16,6 +16,8 @@ crowd: individuals that work on a certain subject..
 . TEDs
 http://www.ted.com/talks/audrey_choi_how_to_make_a_profit_while_making_a_difference - not very strong but..
 . Review google docs
+. Candy crush revenue
+. Non profit ironing (and many others) service
 
 # Description
 Alt: Measuring the goodness
@@ -47,6 +49,10 @@ differences between current & new
 . owner oriented, contribution oriented
 
 ---
+* sales price is actually not correct in CMRP samples?
+should it show sales price including cmrp tax instead? it's not clear where the money comes from..?
+or it doesn't matter at the moment? at least mention it in CMRP Rate: The Fountain section?
+
 * should samples details need to be mentioned? all organizations are equal except the indexes, they all have to have same number of sales etc.
 
 * dynamic pricing - low price is good but can't be zero because then it's not sustainable as well?

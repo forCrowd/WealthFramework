@@ -35,24 +35,24 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             return list;
         }
 
-        public new async Task<SingleResult<User>> Get(int id)
+        public new async Task<SingleResult<User>> Get([FromODataUri] int key)
         {
             var currentUser = await GetCurrentUserAsync();
             var isAdmin = this.GetCurrentUserIsAdmin();
-            if (id != currentUser.Id && !isAdmin)
+            if (key != currentUser.Id && !isAdmin)
                 throw new HttpResponseException(HttpStatusCode.Unauthorized);
-            return base.Get(id);
+            return base.Get(key);
         }
 
         // PUT odata/User(5)
-        public override async Task<IHttpActionResult> Put([FromODataUri] int id, User user)
+        public override async Task<IHttpActionResult> Put([FromODataUri] int key, User user)
         {
             var currentUser = await GetCurrentUserAsync();
             var isAdmin = this.GetCurrentUserIsAdmin();
             if (user.Id != currentUser.Id && !isAdmin)
                 return Unauthorized();
 
-            return await base.Put(id, user);
+            return await base.Put(key, user);
         }
 
         // POST odata/User

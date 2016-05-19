@@ -64,24 +64,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects
 
         #region - Methods -
 
-        public ElementCell ClearValue()
-        {
-            return ClearValue(null);
-        }
-
-        public ElementCell ClearValue(User user)
-        {
-            FixedValueValidation(user);
-
-            var fixedValue = ElementField.UseFixedValue.GetValueOrDefault(true);
-            if (fixedValue)
-                ClearFixedValues();
-            else
-                RemoveUserCell(user);
-
-            return this;
-        }
-
         public ElementCell SetValue(string value)
         {
             SetValueHelper(ElementFieldDataType.String, null);
@@ -171,9 +153,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects
 
         UserElementCell AddUserCell()
         {
-            // Validations.ArgumentNullOrDefault(user, "user");
-
-            //if (UserElementCellSet.Any(item => item.User == user))
             if (UserElementCell != null)
                 throw new Exception("An element cell can't have more than one user element cell for the same user.");
 
@@ -181,41 +160,13 @@ namespace forCrowd.WealthEconomy.BusinessObjects
 
             if (userCell.User != null)
                 userCell.User.UserElementCellSet.Add(userCell);
-            //user.UserElementCellSet.Add(userCell);
             UserElementCellSet.Add(userCell);
+
             return userCell;
-        }
-
-        ElementCell RemoveUserCell(User user)
-        {
-            Validations.ArgumentNullOrDefault(user, "user");
-
-            var userCell = UserElementCellSet.SingleOrDefault(item => item.User == user);
-            if (userCell != null)
-            {
-                user.UserElementCellSet.Remove(userCell);
-                UserElementCellSet.Remove(userCell);
-            }
-            return this;
         }
 
         UserElementCell GetUserCell()
         {
-            // Validations.ArgumentNullOrDefault(user, "user");
-
-            // var userCell = UserElementCellSet.SingleOrDefault(item => item.User == user);
-            var userCell = UserElementCell;
-            if (userCell == null)
-                userCell = AddUserCell();
-
-            return userCell;
-        }
-
-        UserElementCell GetUserCell(User user)
-        {
-            Validations.ArgumentNullOrDefault(user, "user");
-
-            // var userCell = UserElementCellSet.SingleOrDefault(item => item.User == user);
             var userCell = UserElementCell;
             if (userCell == null)
                 userCell = AddUserCell();

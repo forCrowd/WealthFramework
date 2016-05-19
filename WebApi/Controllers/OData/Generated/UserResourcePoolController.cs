@@ -54,11 +54,6 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
         // PUT odata/UserResourcePool(5)
         public virtual async Task<IHttpActionResult> Put([FromODataUri] int resourcePoolId, UserResourcePool userResourcePool)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             if (resourcePoolId != userResourcePool.ResourcePoolId)
             {
                 return BadRequest();
@@ -86,11 +81,6 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
         // POST odata/UserResourcePool
         public virtual async Task<IHttpActionResult> Post(UserResourcePool userResourcePool)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             try
             {
                 await MainUnitOfWork.InsertAsync(userResourcePool);
@@ -111,11 +101,6 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
         [AcceptVerbs("PATCH", "MERGE")]
         public virtual async Task<IHttpActionResult> Patch([FromODataUri] int resourcePoolId, Delta<UserResourcePool> patch)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var userResourcePool = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.ResourcePoolId == resourcePoolId);
             if (userResourcePool == null)
             {
@@ -124,9 +109,10 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
             var patchEntity = patch.GetEntity();
 
-            // TODO How is passed ModelState.IsValid?
             if (patchEntity.RowVersion == null)
+			{
                 throw new InvalidOperationException("RowVersion property of the entity cannot be null");
+			}
 
             if (!userResourcePool.RowVersion.SequenceEqual(patchEntity.RowVersion))
             {

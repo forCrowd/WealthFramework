@@ -188,7 +188,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         UserId = c.Int(nullable: false),
-                        Key = c.String(maxLength: 250),
+                        Key = c.String(nullable: false, maxLength: 250),
                         Name = c.String(nullable: false, maxLength: 250),
                         InitialValue = c.Decimal(nullable: false, precision: 18, scale: 2),
                         UseFixedResourcePoolRate = c.Boolean(nullable: false),
