@@ -3,9 +3,9 @@
 
     var controllerId = 'BasicsController';
     angular.module('main')
-        .controller(controllerId, ['resourcePoolFactory', 'dataContext', '$scope', 'logger', BasicsController]);
+        .controller(controllerId, ['dataContext', 'logger', 'resourcePoolFactory', '$scope', BasicsController]);
 
-    function BasicsController(resourcePoolFactory, dataContext, $scope, logger) {
+    function BasicsController(dataContext, logger, resourcePoolFactory, $scope) {
 
         // Logger
         logger = logger.forSource(controllerId);

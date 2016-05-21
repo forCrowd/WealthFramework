@@ -29,8 +29,7 @@
 
             Request.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
 
-            var response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
-            response.RequestMessage = Request;
+            var response = Request.CreateResponse(HttpStatusCode.Unauthorized);
             return Task.FromResult(response);
         }
     }

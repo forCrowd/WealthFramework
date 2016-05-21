@@ -287,6 +287,7 @@
     <Compile Include="Controllers\OData\UserResourcePoolController.cs" />
     <Compile Include="ExceptionHandling\ElmahExceptionLogger.cs" />
     <Compile Include="ExceptionHandling\GenericExceptionHandler.cs" />
+    <Compile Include="Filters\ValidateModelAttribute.cs" />
     <Compile Include="Filters\DataServiceVersionHeaderAttribute.cs" />
     <Compile Include="Filters\RequireHttpsAttribute.cs" />
     <Compile Include="HttpClientHandlers\FacebookBackChannelHandler.cs" />

@@ -15,14 +15,14 @@
             'ElementCell',
             'ElementField',
             'ElementItem',
+            'logger',
             'ResourcePool',
+            'serviceAppUrl',
             'User',
             'UserElementCell',
             'UserElementField',
             'UserResourcePool',
             '$rootScope',
-            'serviceAppUrl',
-            'logger',
             entityManagerFactory]);
 
     function entityManagerFactory(breeze,
@@ -30,14 +30,14 @@
         ElementCell,
         ElementField,
         ElementItem,
+        logger,
         ResourcePool,
+        serviceAppUrl,
         User,
         UserElementCell,
         UserElementField,
         UserResourcePool,
-        $rootScope,
-        serviceAppUrl,
-        logger) {
+        $rootScope) {
 
         // Logger
         logger = logger.forSource(factoryId);

@@ -3,14 +3,23 @@
 
     var controllerId = 'ResetPasswordController';
     angular.module('main')
-        .controller(controllerId, ['dataContext', '$location', 'logger', ResetPasswordController]);
+        .controller(controllerId, ['dataContext', 'logger', '$location', ResetPasswordController]);
 
-    function ResetPasswordController(dataContext, $location, logger) {
+    function ResetPasswordController(dataContext, logger, $location) {
         logger = logger.forSource(controllerId);
 
         var vm = this;
-        vm.email = $location.search().email;
-        vm.token = $location.search().token;
+        vm.bindingModel = {
+            Email: $location.search().email,
+            Token: $location.search().token,
+            NewPassword: '',
+            ConfirmPassword: ''
+        };
+        vm.isSaving = false;
+        vm.isSaveDisabled = isSaveDisabled;
+        vm.requestBindingModel = {
+            Email: ''
+        };
         vm.resetPassword = resetPassword;
         vm.resetPasswordRequest = resetPasswordRequest;
         vm.viewMode = typeof $location.search().email === 'undefined' || typeof $location.search().token === 'undefined' ?
@@ -19,21 +28,29 @@
 
         /*** Implementations ***/
 
+        function isSaveDisabled() {
+            return vm.isSaving;
+        }
+
         function resetPassword() {
-            // var resetPasswordBindingModel = { Token: vm.token, NewPassword: vm.newPassword, ConfirmPassword: vm.confirmPassword };
-            var resetPasswordBindingModel = vm;
-            dataContext.resetPassword(resetPasswordBindingModel)
+            vm.isSaving = true;
+            dataContext.resetPassword(vm.bindingModel)
                 .success(function () {
                     logger.logSuccess('Your password has been reset!', null, true);
                     $location.url('/_system/account/login');
+                })
+                .finally(function () {
+                    vm.isSaving = true;
                 });
         }
 
         function resetPasswordRequest() {
-            var resetPasswordRequestBindingModel = vm;
-            dataContext.resetPasswordRequest(resetPasswordRequestBindingModel)
+            dataContext.resetPasswordRequest(vm.requestBindingModel)
                 .success(function () {
                     vm.viewMode = 'sent';
+                })
+                .finally(function () {
+                    vm.isSaving = true;
                 });
         }
     }

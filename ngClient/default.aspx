@@ -151,7 +151,7 @@
     <script src="/_system/js/lib/lib.min.js?v=0.51.0"></script>
 
     <!-- app.js -->
-    <script src="/_system/js/app/app.min.js?v=0.51.2"></script>
+    <script src="/_system/js/app/app.min.js?v=0.52.0"></script>
 
     <!-- appSettings.js -->
     <script src="/_system/js/appSettings/appSettings.js?v=0.49.0"></script>

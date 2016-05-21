@@ -98,41 +98,9 @@ namespace forCrowd.WealthEconomy.BusinessObjects
             }
         }
 
-        //public decimal Rating { get; set; }
-
         public virtual User User { get; set; }
 
         public virtual ElementCell ElementCell { get; set; }
-
-        //public decimal Value
-        //{
-        //    get
-        //    {
-        //        var fieldType = (ElementFieldDataType)ElementCell.ElementField.DataType;
-
-        //        switch (fieldType)
-        //        {
-        //            case ElementFieldDataType.Boolean:
-        //                return Convert.ToDecimal(BooleanValue.GetValueOrDefault());
-        //            case ElementFieldDataType.Integer:
-        //                return Convert.ToDecimal(IntegerValue.GetValueOrDefault());
-        //            case ElementFieldDataType.Decimal:
-        //            // TODO This calculation is the same as Decimal type? Are we using the types in a wrong way?
-        //            case ElementFieldDataType.ResourcePool:
-        //            case ElementFieldDataType.Multiplier:
-        //                return DecimalValue.GetValueOrDefault();
-        //            case ElementFieldDataType.DateTime:
-        //                // TODO Check GetValueOrDefault() method for this type
-        //                return Convert.ToDecimal(DateTimeValue.GetValueOrDefault());
-        //            case ElementFieldDataType.String:
-        //            case ElementFieldDataType.Element:
-        //                // TODO At least for now
-        //                throw new InvalidOperationException("Value property is not available for this field type");
-        //            default:
-        //                throw new ArgumentOutOfRangeException();
-        //        }
-        //    }
-        //}
 
         #region - Methods -
 

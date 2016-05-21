@@ -307,6 +307,7 @@
             sbBody.AppendLine("    <p>");
             sbBody.AppendLine("        <b>Wealth Economy - Reset Your Password</b><br />");
             sbBody.AppendLine("        <br />");
+            sbBody.AppendFormat("        Username: {0}<br />", user.UserName);
             sbBody.AppendFormat("        Email: {0}<br />", user.Email);
             sbBody.AppendLine("        <br />");
             sbBody.AppendLine("        Please click the following link to reset your email password<br />");

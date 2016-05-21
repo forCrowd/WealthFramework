@@ -8,14 +8,15 @@
     'use strict';
 
     angular.module('main', [
+        'angularMoment',
+        'angularUtils.directives.dirDisqus',
+        'angular-google-analytics',
+        'breeze.angular',
+        'breeze.directives',
+        'highcharts-ng',
         'ngRoute',
         'ngSanitize',
-        'angularMoment',
-        'breeze.angular',
-        'angular-google-analytics',
-        'angularUtils.directives.dirDisqus',
-        'ui.bootstrap',
-        'highcharts-ng'
+        'ui.bootstrap'
     ]);
 
     angular.module('main')

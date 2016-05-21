@@ -21,7 +21,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
         }
 
         [AllowAnonymous]
-        public override SingleResult<ResourcePool> Get(int key)
+        public override SingleResult<ResourcePool> Get([FromODataUri] int key)
         {
             var result = base.Get(key);
             return result;

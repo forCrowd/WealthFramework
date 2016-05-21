@@ -3,9 +3,9 @@
 
     var factoryId = 'Element';
     angular.module('main')
-        .factory(factoryId, ['$rootScope', 'logger', elementFactory]);
+        .factory(factoryId, ['logger', '$rootScope', elementFactory]);
 
-    function elementFactory($rootScope, logger) {
+    function elementFactory(logger, $rootScope) {
 
         // Logger
         logger = logger.forSource(factoryId);

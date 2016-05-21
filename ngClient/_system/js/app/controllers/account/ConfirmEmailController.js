@@ -3,9 +3,11 @@
 
     var controllerId = 'ConfirmEmailController';
     angular.module('main')
-        .controller(controllerId, ['dataContext', '$rootScope', '$location', 'logger', ConfirmEmailController]);
+        .controller(controllerId, ['dataContext', 'logger', '$location', '$rootScope', ConfirmEmailController]);
 
-    function ConfirmEmailController(dataContext, $rootScope, $location, logger) {
+    function ConfirmEmailController(dataContext, logger, $location, $rootScope) {
+
+        // Logger
         logger = logger.forSource(controllerId);
 
         var vm = this;
@@ -37,7 +39,7 @@
                     dataContext.confirmEmail({ Token: token })
                         .then(function () {
                             logger.logSuccess('Your email address has been confirmed!', null, true);
-                            $location.url('/' + vm.userName);
+                            $location.url('/_system/account');
                         });
                 });
         }

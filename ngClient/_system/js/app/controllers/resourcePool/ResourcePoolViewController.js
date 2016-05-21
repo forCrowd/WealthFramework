@@ -26,7 +26,8 @@
 
                     // Not found, navigate to 404
                     if (resourcePool === null) {
-                        $location.url('/_system/content/404');
+                        var invalidUrl = '/' + vm.editorConfig.userName + '/' + vm.editorConfig.resourcePoolKey;
+                        $location.url('/_system/content/notFound?url=' + invalidUrl);
                         return;
                     }
 

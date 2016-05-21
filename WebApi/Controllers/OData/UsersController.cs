@@ -35,7 +35,7 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
             return list;
         }
 
-        public new async Task<SingleResult<User>> Get(int key)
+        public new async Task<SingleResult<User>> Get([FromODataUri] int key)
         {
             var currentUser = await GetCurrentUserAsync();
             var isAdmin = this.GetCurrentUserIsAdmin();

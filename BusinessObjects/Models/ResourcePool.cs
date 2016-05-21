@@ -40,6 +40,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         [Index("UX_ResourcePool_UserId_Key", 1, IsUnique = true)]
         public int UserId { get; set; }
 
+        [Required]
         [StringLength(250)]
         [Index("UX_ResourcePool_UserId_Key", 2, IsUnique = true)]
         public string Key

@@ -118,11 +118,6 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
         // PUT <#= routePrefix #>(5)
         public virtual async Task<IHttpActionResult> Put([FromODataUri] <#= primaryKeyTypeName #> <#= primaryKeyVariable #>, <#= entityTypeName #> <#= entityVariable #>)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             if (<#= primaryKeyVariable #> != <#= entityVariable #>.<#= primaryKey #>)
             {
                 return BadRequest();
@@ -150,11 +145,6 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
         // POST <#= routePrefix #>
         public virtual async Task<IHttpActionResult> Post(<#= entityTypeName #> <#= entityVariable #>)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             try
             {
                 await MainUnitOfWork.InsertAsync(<#= entityVariable #>);
@@ -175,11 +165,6 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
         [AcceptVerbs("PATCH", "MERGE")]
         public virtual async Task<IHttpActionResult> Patch([FromODataUri] <#= primaryKeyTypeName #> <#= primaryKeyVariable #>, Delta<<#= entityTypeName #>> patch)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var <#= entityVariable #> = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.<#= primaryKey #> == <#= primaryKeyVariable #>);
             if (<#= entityVariable #> == null)
             {
@@ -188,9 +173,10 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 
             var patchEntity = patch.GetEntity();
 
-            // TODO How is passed ModelState.IsValid?
             if (patchEntity.RowVersion == null)
+			{
                 throw new InvalidOperationException("RowVersion property of the entity cannot be null");
+			}
 
             if (!<#= entityVariable #>.RowVersion.SequenceEqual(patchEntity.RowVersion))
             {

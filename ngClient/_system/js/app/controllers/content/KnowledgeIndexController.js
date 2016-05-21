@@ -3,9 +3,9 @@
 
     var controllerId = 'KnowledgeIndexController';
     angular.module('main')
-        .controller(controllerId, ['resourcePoolFactory', 'dataContext', '$scope', '$timeout', 'logger', KnowledgeIndexController]);
+        .controller(controllerId, ['dataContext', 'logger', 'resourcePoolFactory', '$scope', '$timeout', KnowledgeIndexController]);
 
-    function KnowledgeIndexController(resourcePoolFactory, dataContext, $scope, $timeout, logger) {
+    function KnowledgeIndexController(dataContext, logger, resourcePoolFactory, $scope, $timeout) {
 
         logger = logger.forSource(controllerId);
 

@@ -2,7 +2,8 @@
     'use strict';
 
     angular.module('main')
-        .config(['breezeProvider', breezeConfig]);
+        .config(['breezeProvider', breezeConfig])
+        .config(['zDirectivesConfigProvider', breezeConfigDirective]);
 
     function breezeConfig(breezeProvider) {
 
@@ -38,4 +39,14 @@
             return prefix;
         }
     }
+
+    // Configure the Breeze Validation Directive for bootstrap
+    function breezeConfigDirective(config) {
+
+        // Custom template with warning icon before the error message
+        config.zRequiredTemplate = '';
+        config.zValidateTemplate = '<span class="help-block">%error%!</span>';
+
+    }
+
 })();

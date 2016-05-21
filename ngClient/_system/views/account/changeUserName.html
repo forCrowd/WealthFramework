@@ -12,7 +12,7 @@
             <div class="form-group">
                 <label for="UserName" class="control-label col-md-2">Username</label>
                 <div class="col-md-10" data-ng-class="{'has-error': changeUserNameForm.UserName.$invalid && !changeUserNameForm.UserName.$pristine}">
-                    <input id="UserName" name="UserName" type="text" data-ng-model="vm.userName" class="form-control" required />
+                    <input id="UserName" name="UserName" type="text" data-ng-model="vm.bindingModel.UserName" class="form-control" required />
                 </div>
             </div>
             <div class="form-group">

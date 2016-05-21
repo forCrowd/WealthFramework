@@ -3,9 +3,9 @@
 
     var factoryId = 'applicationFactory';
     angular.module('main')
-        .factory(factoryId, ['$http', '$q', 'serviceAppUrl', 'logger', applicationFactory]);
+        .factory(factoryId, ['logger', 'serviceAppUrl', '$http', '$q', applicationFactory]);
 
-    function applicationFactory($http, $q, serviceAppUrl, logger) {
+    function applicationFactory(logger, serviceAppUrl, $http, $q) {
         logger = logger.forSource(factoryId);
 
         var applicationInfoUrl = serviceAppUrl + '/api/Application/ApplicationInfo';

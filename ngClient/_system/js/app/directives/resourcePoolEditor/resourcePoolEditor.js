@@ -4,20 +4,9 @@
     var directiveId = 'resourcePoolEditor';
 
     angular.module('main')
-        .directive(directiveId, ['resourcePoolFactory',
-            'dataContext',
-            'Enums',
-            '$location',
-            '$rootScope',
-            'logger',
-            resourcePoolEditor]);
+        .directive(directiveId, ['dataContext', 'Enums', 'logger', 'resourcePoolFactory', '$location', '$rootScope', resourcePoolEditor]);
 
-    function resourcePoolEditor(resourcePoolFactory,
-        dataContext,
-        Enums,
-        $location,
-        $rootScope,
-        logger) {
+    function resourcePoolEditor(dataContext, Enums, logger, resourcePoolFactory, $location, $rootScope) {
 
         // Logger
         logger = logger.forSource(directiveId);
@@ -310,15 +299,7 @@
             }
 
             function saveChanges() {
-                dataContext.saveChanges(1500)
-                    .catch(function (error) {
-                        // Conflict (Concurrency exception)
-                        if (typeof error.status !== 'undefined' && error.status === '409') {
-                            // TODO Try to recover!
-                        } else if (typeof error.entityErrors !== 'undefined') {
-                            // config.entityErrors = error.entityErrors;
-                        }
-                    });
+                dataContext.saveChanges(1500);
             }
 
             function saveChangesStart() {
@@ -408,7 +389,7 @@
 
         return {
             restrict: 'E',
-            templateUrl: '/_system/js/app/directives/resourcePoolEditor/resourcePoolEditor.html?v=0.51.0',
+            templateUrl: '/_system/js/app/directives/resourcePoolEditor/resourcePoolEditor.html?v=0.52.0',
             scope: {
                 config: '='
             },

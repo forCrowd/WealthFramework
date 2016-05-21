@@ -17,8 +17,9 @@ Nadia - 02 Mar. '16
 . Value proposition
 . Gaming the system
 
-Cuneyt Kizilelma - 16 Mar. '16
-. 
+Cuneyt Kizilelma - 16 Mar. '16 - 15 May '16
+. Also Susan & Prof.
+. Lack of clarification: what to do and target audience?
 
 Kaan
 . Rating UI
