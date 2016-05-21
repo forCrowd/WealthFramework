@@ -3,6 +3,7 @@ gitter
 personal dev network https://www.facebook.com/lists/10151319136553665
 social network - Emin Pamucak
 freenode? stackoverflow?
+yourfirstpr (pull request)
 hackernews - https://news.ycombinator.com/
 reply to twitter 
 https://twitter.com/sethjuarez/status/692784256670498816
@@ -10,6 +11,13 @@ https://twitter.com/martinwoodward/status/692832558447353857
 globalsign makale
 https://www.globalsign.com/en/blog/open-source-ssl-pinittome/?utm_source=twitter&utm_medium=social%20media&utm_campaign=blog
 https://opensource.com/how-submit-article
+https://opensource.com/participate?sc_cid=701600000011jJVAAY
+
+upforgrabs - first timer only
+https://github.com/formly-js/angular-formly/blob/master/CONTRIBUTING.md
+https://github.com/nayafia/contributing-template/blob/master/CONTRIBUTING-template.md
+https://github.com/blog/1184-contributing-guidelines
+http://up-for-grabs.net/#/
 
 ---
 https://www.patreon.com/

@@ -1,5 +1,11 @@
 ﻿*** HOT ***
 
+* Globalsign - 24 May, confirmation email for new ssl certificate
+
+* smarterasp.net static ip + hosting
+
+* smarterasp.net facebook api
+
 * dataContext.create new cmrp - always check existing ones and don't create duplicate; New-CMRP
 Save failed!<br />Key 'New-CMRP' already exists Error: Conflict
 * field - rating edit in manage.html?
