@@ -138,8 +138,6 @@
                 _selectedElement: null,
                 _useFixedResourcePoolRate: false
             };
-            self.isEditing = false; // Determines whether the object is being edited or not
-            self.isTemp = false; // Determines whether object was created for demo purposes or not
             // TODO Move this to field.js?
             self.displayMultiplierFunctions = true; // In some cases, it's not necessary for the user to change multiplier
 
@@ -312,7 +310,6 @@
 
             function name() {
                 var name = self.Name;
-                name += self.isEditing ? ' - Editing' : '';
                 return name;
             }
 

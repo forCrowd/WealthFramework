@@ -3,6 +3,7 @@ gitter
 personal dev network https://www.facebook.com/lists/10151319136553665
 social network - Emin Pamucak
 freenode? stackoverflow?
+yourfirstpr (pull request)
 hackernews - https://news.ycombinator.com/
 reply to twitter 
 https://twitter.com/sethjuarez/status/692784256670498816
@@ -10,6 +11,31 @@ https://twitter.com/martinwoodward/status/692832558447353857
 globalsign makale
 https://www.globalsign.com/en/blog/open-source-ssl-pinittome/?utm_source=twitter&utm_medium=social%20media&utm_campaign=blog
 https://opensource.com/how-submit-article
+https://opensource.com/participate?sc_cid=701600000011jJVAAY
+https://appear.in/
+
+upforgrabs - first timer only http://up-for-grabs.net/#/
+
+contributing
+https://github.com/formly-js/angular-formly/blob/master/CONTRIBUTING.md
+https://github.com/nayafia/contributing-template/blob/master/CONTRIBUTING-template.md
+https://github.com/blog/1184-contributing-guidelines
+http://www.defmacro.org/2013/04/03/issue-etiquette.html
+https://github.com/mdn/webextensions-examples/commit/ab55344cfca2334c40c89f08b01447f23a8ed467
+
+code of conduct
+http://contributor-covenant.org/
+http://www.ashedryden.com/blog/codes-of-conduct-101-faq
+
+My perfect README contains the following:
+    Project Title
+    Short description of project, including link to Code of Conduct
+    How to install the project
+    Link to tutorials and code examples
+    Frequently asked questions
+    Where to ask questions, i.e file an issue
+    Link to any issues that the project needs help on, like upcoming features.
+    How to get in touch with project maintainers, including more private communication
 
 ---
 https://www.patreon.com/
@@ -17,6 +43,7 @@ https://gratipay.com/new
 https://www.braintreepayments.com/features/marketplace
 https://www.citizensbank.com/
 live broadcast? younow? haai? https://www.livecoding.tv/
+https://opencollective.com/yeoman
 
 ---
 grants
@@ -25,6 +52,8 @@ https://wiki.mozilla.org/MOSS
 http://www.numfocus.org/
 https://www.google.com.tr/search?q=eu+grants+open+source&ie=utf-8&oe=utf-8&gws_rd=cr&ei=f6X2Vt-iK-rB6AS8x7PwBQ
 https://stripe.com/blog/open-source-retreat-2016-grantees
+Mozilla Grant https://blog.mozilla.org/blog/2016/05/11/mozilla-open-source-support-moss-now-open-to-all-projects/
+https://jeremy.linuxquestions.org/2016/05/25/are-you-involved-with-an-open-source-project-thats-in-need-of-funding-i-may-be-able-to-help/
 
 ---
 Hello everyone!

@@ -24,7 +24,7 @@
 
             if (element.ResourcePool.User.UserName === vm.existingModelConfig.userName && element.ResourcePool.Key === vm.existingModelConfig.resourcePoolKey) {
                 oppositeKey = vm.newModelConfig;
-            } else if (element.ResourcePool.User.UserName === vm.existingModelConfig.userName && element.ResourcePool.Key === vm.newModelConfig.resourcePoolKey) {
+            } else if (element.ResourcePool.User.UserName === vm.newModelConfig.userName && element.ResourcePool.Key === vm.newModelConfig.resourcePoolKey) {
                 oppositeKey = vm.existingModelConfig;
             }
 

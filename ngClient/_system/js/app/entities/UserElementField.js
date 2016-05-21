@@ -21,9 +21,6 @@
             self.UserId = 0;
             self.ElementFieldId = 0;
             self.Rating = 0;
-
-            // Local variables
-            self.isEditing = false;
         }
     }
 })();

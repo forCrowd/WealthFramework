@@ -1,4 +1,24 @@
-﻿/* Brand styling - Probably css class names can be better, parent child structure? */
+﻿body {
+    font-size: 15px;
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.versionText {
+    border-top: 1px solid #333;
+    font-size: 90%;
+    margin-top: 20px;
+    padding: 20px 0;
+}
+
+/* Brand styling - Probably css class names can be better, parent child structure? */
 .brandLink,
 .brandLink > a,
 .brandLink > a:focus,
@@ -28,23 +48,10 @@
     font-size: 11px;
 }
 
-body {
-    font-size: 15px;
-    padding-top: 50px;
-    padding-bottom: 20px;
-}
-
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
-}
-
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
 }
 
 .bg-info {

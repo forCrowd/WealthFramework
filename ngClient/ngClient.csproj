@@ -43,7 +43,7 @@
   <ItemGroup>
     <Content Include="_system\css\fonts\fontawesome-webfont.svg" />
     <Content Include="_system\css\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="_system\images\forCrowd_logo_34x34.jpg" />
+    <Content Include="_system\images\forCrowd_Logo_189x40.jpg" />
     <Content Include="_system\images\PresentvsNew.png" />
     <Content Include="_system\css\fonts\fontawesome-webfont.eot" />
     <Content Include="_system\css\fonts\fontawesome-webfont.ttf" />
@@ -111,6 +111,7 @@
     <None Include="_system\js\app\filters\numberSymbol.js" />
     <None Include="_system\js\app\filters\percentage.js" />
     <None Include="_system\js\app\main.js" />
+    <Content Include="_system\views\account\confirmNavigateAway.html" />
     <Content Include="_system\views\account\profile.html" />
     <Content Include="_system\views\account\account.html" />
     <Content Include="_system\views\account\accountEdit.html" />

@@ -49,8 +49,11 @@
                 case EnvironmentType.Test:
                     {
                         // In local & test, always send to notification address
-                        if (hasNotificationAddress)
-                            mailMessage.To.Add(new MailAddress(AppSettings.NotificationEmailAddress));
+                        if (!hasNotificationAddress)
+                            return;
+
+                        mailMessage.To.Add(new MailAddress(AppSettings.NotificationEmailAddress));
+
                         break;
                     }
                 case EnvironmentType.Live:
@@ -72,8 +75,10 @@
                         else
                         {
                             // Login emails will only be send to notification address
-                            if (hasNotificationAddress)
-                                mailMessage.To.Add(new MailAddress(AppSettings.NotificationEmailAddress));
+                            if (!hasNotificationAddress)
+                                return;
+
+                            mailMessage.To.Add(new MailAddress(AppSettings.NotificationEmailAddress));
                         }
 
                         break;
