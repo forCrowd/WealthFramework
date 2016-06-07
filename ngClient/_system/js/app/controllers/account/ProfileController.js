@@ -21,21 +21,29 @@
         _init();
 
         function _init() {
-            dataContext.getUser(userName)
-                .then(function (user) {
 
-                    // Not found, navigate to 404
-                    if (user === null) {
-                        var invalidUrl = '/' + userName;
-                        $location.url('/_system/content/notFound?url=' + invalidUrl);
-                        return;
+            dataContext.getCurrentUser()
+                .then(function (currentUser) {
+                    vm.currentUser = currentUser;
+
+                    // If userName equals to current user
+                    if (userName === currentUser.UserName) {
+                        vm.user = currentUser;
+                    } else {
+
+                        // If not, then check it against remote
+                        dataContext.getUser(userName)
+                            .then(function (user) {
+
+                                // Not found, navigate to 404
+                                if (user === null) {
+                                    $location.url('/_system/content/notFound?url=' + $location.url());
+                                    return;
+                                }
+
+                                vm.user = user;
+                            });
                     }
-
-                    vm.user = user;
-                    dataContext.getCurrentUser()
-                        .then(function (currentUser) {
-                            vm.currentUser = currentUser;
-                        });
                 });
         }
 

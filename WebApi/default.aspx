@@ -1,8 +1,10 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
     <title>Wealth Economy API</title>
+    <meta charset="utf-8" />
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="favicon.ico?v=0.55.0" />
     <script src="googleanalytics.js"></script>
 </head>
 <body>

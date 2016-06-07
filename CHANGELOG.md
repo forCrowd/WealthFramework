@@ -1,5 +1,18 @@
 ### Changelog
 
+**0.55.0**
+
+* Auto register with guest account
+https://github.com/forCrowd/WealthEconomy/issues/61
+ * login.html & register.html was updated accordingly
+ * registerLogin.html was removed
+* Allow login with email address
+https://github.com/forCrowd/WealthEconomy/issues/62
+* Both Profile (/[username]) and New CMRP (/[username]/new) routes now correctly check 'username' for both against local (currentUser) & remote
+* README.md updates
+* favicon.ico update
+* New css definitions
+
 **0.54.0**
 
 * Ignore 'anonymous users' in 'Reset Password' case

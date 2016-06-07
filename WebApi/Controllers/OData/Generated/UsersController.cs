@@ -9,8 +9,8 @@
 
 namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 {
-    using forCrowd.WealthEconomy.BusinessObjects;
-    using forCrowd.WealthEconomy.Facade;
+    using BusinessObjects;
+    using Facade;
     using Results;
     using System;
     using System.Data.Entity;

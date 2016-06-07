@@ -389,7 +389,7 @@
 
         return {
             restrict: 'E',
-            templateUrl: '/_system/js/app/directives/resourcePoolEditor/resourcePoolEditor.html?v=0.52.0',
+            templateUrl: '/_system/js/app/directives/resourcePoolEditor/resourcePoolEditor.html?v=0.55.0',
             scope: {
                 config: '='
             },

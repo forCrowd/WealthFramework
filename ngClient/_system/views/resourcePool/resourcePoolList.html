@@ -1,7 +1,7 @@
 <div data-ng-controller="ResourcePoolListController as vm">
     <h2>List</h2>
     <p>
-        <a href="" data-ng-click="vm.createNew()">Create New</a>
+        <a data-ng-href="/{{ vm.currentUser.UserName }}/new">Create New</a>
     </p>
     <table class="table">
         <tr>

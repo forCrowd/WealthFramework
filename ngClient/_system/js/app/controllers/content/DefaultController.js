@@ -13,7 +13,6 @@
         // View model
         var vm = this;
         vm.applicationInfo = null;
-        vm.createNew = createNew;
         vm.currentUser = { Email: '', isAuthenticated: function () { return false; }, HasPassword: false };
         vm.currentDate = new Date();
         vm.currentUserText = currentUserText;
@@ -24,13 +23,15 @@
             disqus_identifier: '',
             disqus_url: ''
         };
+        vm.guestAccountInfoVisible = false;
         vm.logout = logout;
+        vm.openGuestAccountInfo = openGuestAccountInfo;
         vm.toggleBankTransfer = toggleBankTransfer;
-        var isRegisterLoginModalOpened = false;
 
         // Events
         $scope.$on('dataContext_currentUserChanged', currentUserChanged);
-        $scope.$on('unauthenticatedUserInteracted', openRegisterLoginModal);
+        $scope.$on('dataContext_currentUserEmailAddressChanged', currentUserEmailAddressChanged);
+        $scope.$on('guestAccountCreated', guestAccountCreated);
         $scope.$on('$locationChangeStart', locationChangeStart);
         $scope.$on('$routeChangeSuccess', routeChangeSuccess);
 
@@ -42,27 +43,23 @@
             getApplicationInfo();
         }
 
-        function createNew() {
-            if (vm.currentUser.isAuthenticated()) {
-                $location.url('/' + vm.currentUser.UserName + '/new');
-            } else {
-                $rootScope.$broadcast('unauthenticatedUserInteracted', true);
-            }
-        }
-
         function currentUserChanged(event, newUser) {
             vm.currentUser = newUser;
-            isRegisterLoginModalOpened = false;
+            vm.guestAccountInfoVisible = newUser.isAuthenticated() && newUser.IsAnonymous;
         }
 
         function currentUserText() {
             var userText = vm.currentUser.UserName;
 
             if (vm.currentUser.IsAnonymous) {
-                userText += ' (Anonymous)';
+                userText += ' (Guest)';
             }
 
             return userText;
+        }
+
+        function currentUserEmailAddressChanged() {
+            vm.guestAccountInfoVisible = false;
         }
 
         function getApplicationInfo() {
@@ -73,43 +70,15 @@
                 });
         }
 
+        function guestAccountCreated() {
+            vm.guestAccountInfoVisible = true;
+        }
+
         function logout() {
             dataContext.logout()
                 .then(function () {
                     $location.url('/');
                 });
-        }
-
-        function openRegisterLoginModal(event, forceOpen) {
-            forceOpen = typeof forceOpen !== 'undefined' ? forceOpen : false;
-
-            if (!isRegisterLoginModalOpened || forceOpen) {
-
-                isRegisterLoginModalOpened = true;
-
-                var modalInstance = $uibModal.open({
-                    backdrop: 'static',
-                    controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
-                        $scope.$on('dataContext_currentUserChanged', closeModal);
-                        $scope.$on('LoginController_redirected', closeModal);
-                        $scope.$on('RegisterController_userRegistered', closeModal);
-
-                        function closeModal() {
-                            $uibModalInstance.close();
-                        }
-                    }],
-                    keyboard: false,
-                    size: 'lg',
-                    templateUrl: '/_system/views/account/registerLogin.html?v=0.51.0'
-                });
-
-                modalInstance.result
-                    .then(function () {
-                        //isRegisterLoginModalOpened = false;
-                    }, function () {
-                        //isRegisterLoginModalOpened = false;
-                    });
-            }
         }
 
         function locationChangeStart(event, newUrl, oldUrl) {
@@ -147,6 +116,25 @@
                 event.preventDefault();
                 return;
             }
+        }
+
+        function openGuestAccountInfo() {
+
+            var modalInstance = $uibModal.open({
+                controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+
+                    var vm = this;
+                    vm.close = closeModal;
+
+                    $scope.$on('dataContext_currentUserChanged', closeModal);
+
+                    function closeModal() {
+                        $uibModalInstance.close();
+                    }
+                }],
+                controllerAs: 'vm',
+                templateUrl: '/_system/views/account/guestAccountInfo.html?v=0.55.0'
+            });
         }
 
         function routeChangeSuccess(event, current, previous) {

@@ -46,12 +46,28 @@
             }
             else
             {
-                user = await userManager.FindAsync(context.UserName, context.Password);
+                user = await userManager.FindAsync(userName, password);
 
                 if (user == null)
                 {
-                    context.SetError("invalid_grant", "The username or password is incorrect.");
-                    return;
+                    // User can also login with email address
+                    user = await userManager.FindByEmailAsync(userName);
+
+                    if (user == null)
+                    {
+                        context.SetError("invalid_grant", "The username or password is incorrect.");
+                        return;
+                    }
+                    else
+                    {
+                        var result = await userManager.CheckPasswordAsync(user, password);
+
+                        if (!result)
+                        {
+                            context.SetError("invalid_grant", "The username or password is incorrect.");
+                            return;
+                        }
+                    }
                 }
             }
 
@@ -72,7 +88,7 @@
             {
                 context.Properties.ExpiresUtc = DateTime.UtcNow.AddYears(1);
             }
-            
+
             foreach (var property in context.Properties.Dictionary)
             {
                 context.AdditionalResponseParameters.Add(property.Key, property.Value);
