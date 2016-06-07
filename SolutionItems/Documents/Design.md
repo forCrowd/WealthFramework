@@ -1,4 +1,4 @@
-﻿ng2 admin
+ng2 admin
 http://akveo.com/ng2-admin/
 
 http://foundry.mediumra.re/variant/builder.html
