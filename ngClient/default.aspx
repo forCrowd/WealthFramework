@@ -86,9 +86,9 @@
                         </a>
                     </div>
                     <div class="col-md-4">
-                        <a class="btn btn-block btn-default" role="button" href="mailto:contact@forcrowd.org" target="_blank">
+                        <a class="btn btn-block btn-default" role="button" href="mailto:contact.wealth@forcrowd.org" target="_blank">
                             <span class="fa fa-envelope fa-lg"></span>
-                            Contact us by contact@forcrowd.org
+                            Contact us by contact.wealth@forcrowd.org
                         </a>
                     </div>
                 </div>
@@ -146,7 +146,7 @@
     <script src="/_system/js/lib/lib.min.js?v=0.51.0"></script>
 
     <!-- app.js -->
-    <script src="/_system/js/app/app.min.js?v=0.53.0"></script>
+    <script src="/_system/js/app/app.min.js?v=0.54.0"></script>
 
     <!-- appSettings.js -->
     <script src="/_system/js/appSettings/appSettings.js?v=0.49.0"></script>

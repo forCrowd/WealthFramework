@@ -49,13 +49,14 @@
 
             // Resource pool
             var resourcePool = CreateDefaultResourcePool(user: user,
-                resourcePoolName: "UPO",
+                resourcePoolName: "Unidentified Profiting Object (UPO)",
                 useFixedResourcePoolRate: true,
                 mainElementName: "Organization",
                 addDirectIncomeField: true,
                 addMultiplierField: true,
                 addImportanceIndex: false,
                 numberOfItems: numberOfItems);
+            resourcePool.Key = "Unidentified Profiting Object";
 
             // Main element
             var mainElement = resourcePool.ElementSet.First();
@@ -83,7 +84,6 @@
                 addMultiplierField: true,
                 addImportanceIndex: false,
                 numberOfItems: numberOfItems);
-
             resourcePool.Key = "Basics Existing Model";
 
             // Main element
@@ -114,7 +114,6 @@
                 addMultiplierField: true,
                 addImportanceIndex: true,
                 numberOfItems: numberOfItems);
-
             resourcePool.Key = "Basics New Model";
 
             // Main element
@@ -270,7 +269,6 @@
                 addMultiplierField: false,
                 addImportanceIndex: false,
                 numberOfItems: numberOfItems);
-
             resourcePool.Key = "Knowledge Index Popular Software Licenses";
 
             // Main element
@@ -327,7 +325,6 @@
                 addMultiplierField: true,
                 addImportanceIndex: false,
                 numberOfItems: numberOfItems);
-
             resourcePool.Key = "Total Cost Index Existing Model";
 
             // Main element
@@ -360,7 +357,6 @@
                addMultiplierField: true,
                addImportanceIndex: false,
                numberOfItems: numberOfItems);
-
             resourcePool.Key = "Total Cost Index New Model";
 
             // Main element

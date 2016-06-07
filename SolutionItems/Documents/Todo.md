@@ -1,5 +1,8 @@
 ﻿*** HOT ***
 
+* try auto register again
+* anonymous -> guest
+* deployment details?
 * field - rating edit in manage.html?
 * warmup script for live?!
 * cmrp list? -> search page

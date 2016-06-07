@@ -38,11 +38,16 @@
         }
 
         /// <summary>
-        /// Registration emails will be send from this address
+        /// User related emails will be from this address
         /// </summary>
-        public static string RegistrationEmailAddress
+        public static string FromEmailAddress
         {
-            get { return ConfigurationManager.AppSettings["RegistrationEmailAddress"]; }
+            get { return ConfigurationManager.AppSettings["FromEmailAddress"]; }
+        }
+
+        public static string FromEmailAddressDisplayName
+        {
+            get { return ConfigurationManager.AppSettings["FromEmailAddressDisplayName"]; }
         }
 
         /// <summary>
