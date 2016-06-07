@@ -10,7 +10,7 @@
     {
         public bool HasValidConfiguration()
         {
-            var hasRegistrationEmailAddress = !string.IsNullOrWhiteSpace(AppSettings.RegistrationEmailAddress);
+            var hasFromEmailAddress = !string.IsNullOrWhiteSpace(AppSettings.FromEmailAddress);
 
             var hasSmtpClientConfig = false;
 
@@ -26,7 +26,7 @@
                 // Swallow it, it's going to return 'false' as a result, which is enough
             }
 
-            return hasRegistrationEmailAddress && hasSmtpClientConfig;
+            return hasFromEmailAddress && hasSmtpClientConfig;
         }
 
         public async Task SendAsync(IdentityMessage message)
@@ -38,7 +38,7 @@
 
             var mailMessage = new MailMessage()
             {
-                From = new MailAddress(AppSettings.RegistrationEmailAddress, "forCrowd Foundation")
+                From = new MailAddress(AppSettings.FromEmailAddress, AppSettings.FromEmailAddressDisplayName)
             };
 
             var hasNotificationAddress = !string.IsNullOrWhiteSpace(AppSettings.NotificationEmailAddress);

@@ -1,5 +1,10 @@
 ### Changelog
 
+**0.54.0**
+
+* Ignore 'anonymous users' in 'Reset Password' case
+* Email address updates
+
 **0.53.0**
 
 * Navigate away confirmation in 'Unsaved changes' case
