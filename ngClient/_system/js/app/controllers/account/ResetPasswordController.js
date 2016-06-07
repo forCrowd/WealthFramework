@@ -33,24 +33,29 @@
         }
 
         function resetPassword() {
+
             vm.isSaving = true;
+
             dataContext.resetPassword(vm.bindingModel)
                 .success(function () {
                     logger.logSuccess('Your password has been reset!', null, true);
                     $location.url('/_system/account/login');
                 })
                 .finally(function () {
-                    vm.isSaving = true;
+                    vm.isSaving = false;
                 });
         }
 
         function resetPasswordRequest() {
+
+            vm.isSaving = true;
+
             dataContext.resetPasswordRequest(vm.requestBindingModel)
                 .success(function () {
                     vm.viewMode = 'sent';
                 })
                 .finally(function () {
-                    vm.isSaving = true;
+                    vm.isSaving = false;
                 });
         }
     }

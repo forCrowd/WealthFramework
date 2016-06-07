@@ -71,7 +71,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
 
             // Admin user
             var adminUserName = "admin";
-            var adminEmail = "admin@forcrowd.org";
+            var adminEmail = "admin.wealth@forcrowd.org";
             var adminUser = userManager.FindByEmail(adminEmail);
             if (adminUser == null)
             {
@@ -95,7 +95,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
 
             // Sample user
             var sampleUserName = "sample";
-            var sampleEmail = "sample@forcrowd.org";
+            var sampleEmail = "sample.wealth@forcrowd.org";
             var sampleUser = userManager.FindByEmail(sampleEmail);
             if (sampleUser == null)
             {

@@ -341,6 +341,7 @@
         }
 
         function removeResourcePool() {
+
             vm.isSaving = true;
 
             resourcePoolFactory.removeResourcePool(vm.resourcePool);

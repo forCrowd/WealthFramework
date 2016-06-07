@@ -287,6 +287,12 @@
         public async Task<IHttpActionResult> ResetPasswordRequest(ResetPasswordRequestBindingModel model)
         {
             var currentUser = await UserManager.FindByEmailAsync(model.Email);
+
+            if (currentUser == null || currentUser.IsAnonymous)
+            {
+                return BadRequest("The username is incorrect.");
+            }
+
             await UserManager.SendResetPasswordEmailAsync(currentUser.Id);
 
             return Ok(string.Empty);
