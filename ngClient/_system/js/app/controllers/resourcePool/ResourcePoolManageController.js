@@ -73,7 +73,6 @@
                 resourcePoolFactory.createResourcePoolBasic()
                     .then(function (resourcePool) {
                         vm.resourcePool = resourcePool;
-                        vm.resourcePool.isEditing = true;
 
                         // Title
                         // TODO viewTitle was also set in route.js?
@@ -94,7 +93,6 @@
                         }
 
                         vm.resourcePool = resourcePool;
-                        vm.resourcePool.isEditing = true;
 
                         // Title
                         // TODO viewTitle was also set in route.js?
@@ -210,7 +208,7 @@
 
         function cancelResourcePool() {
 
-            resourcePoolFactory.cancelResourcePool(vm.resourcePool);
+            dataContext.rejectChanges();
 
             dataContext.getCurrentUser()
                 .then(function (currentUser) {
@@ -322,7 +320,7 @@
             var modalInstance = $uibModal.open({
                 controller: ['$scope', '$uibModalInstance', ResourcePoolRemoveController],
                 controllerAs: 'vm',
-                templateUrl: '/_system/views/resourcePool/resourcePoolRemove.html?v=0.52.0'
+                templateUrl: '/_system/views/resourcePool/resourcePoolRemove.html?v=0.53.0'
             });
 
             modalInstance.result.then(function () {
@@ -415,47 +413,6 @@
 
             dataContext.getCurrentUser()
                 .then(function (currentUser) {
-
-                    /* Update isEditing state */
-                    // Resource pool
-                    vm.resourcePool.isEditing = false;
-
-                    // User resource pools
-                    vm.resourcePool.UserResourcePoolSet.forEach(function (userResourcePool) {
-                        userResourcePool.isEditing = false;
-                    });
-
-                    // Elements
-                    vm.resourcePool.ElementSet.forEach(function (element) {
-                        element.isEditing = false;
-
-                        // Fields
-                        element.ElementFieldSet.forEach(function (elementField) {
-                            elementField.isEditing = false;
-
-                            // User element fields
-                            elementField.UserElementFieldSet.forEach(function (userElementField) {
-                                userElementField.isEditing = false;
-                            });
-                        });
-
-                        // Items
-                        element.ElementItemSet.forEach(function (elementItem) {
-                            elementItem.isEditing = false;
-
-                            // Cells
-                            elementItem.ElementCellSet.forEach(function (elementCell) {
-                                elementCell.isEditing = false;
-
-                                // User cells
-                                elementCell.UserElementCellSet.forEach(function (userElementCell) {
-                                    userElementCell.isEditing = false;
-                                });
-                            });
-                        });
-                    });
-                    /* Update isEditing state end */
-
                     dataContext.saveChanges()
                         .then(function () {
                             $location.url(vm.resourcePool.urlView());

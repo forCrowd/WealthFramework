@@ -36,7 +36,6 @@
                 _totalResourcePoolAmount: null,
                 _totalResourcePoolIncome: null
             };
-            self.isEditing = false;
 
             // Functions
             self.directIncome = directIncome;

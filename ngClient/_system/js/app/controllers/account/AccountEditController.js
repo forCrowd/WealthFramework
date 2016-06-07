@@ -21,14 +21,12 @@
         dataContext.getCurrentUser()
             .then(function (currentUser) {
                 vm.currentUser = currentUser;
-                vm.currentUser.isEditing = true;
             });
 
         /*** Implementations ***/
 
         function cancel() {
             vm.currentUser.entityAspect.rejectChanges();
-            vm.currentUser.isEditing = false;
             $location.url('/_system/account');
         }
 
@@ -40,7 +38,6 @@
         function saveChanges() {
 
             isSaving = true;
-            vm.currentUser.isEditing = false; // TODO What happens in fail case?
             dataContext.saveChanges()
                 .then(function (result) {
                     logger.logSuccess('Your changes have been saved!', null, true);

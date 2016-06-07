@@ -42,7 +42,6 @@
             self.backingFields = {
                 _DecimalValue: null
             };
-            self.isEditing = false;
         }
     }
 })();

@@ -31,6 +31,7 @@
         // Events
         $scope.$on('dataContext_currentUserChanged', currentUserChanged);
         $scope.$on('unauthenticatedUserInteracted', openRegisterLoginModal);
+        $scope.$on('$locationChangeStart', locationChangeStart);
         $scope.$on('$routeChangeSuccess', routeChangeSuccess);
 
         _init();
@@ -51,6 +52,7 @@
 
         function currentUserChanged(event, newUser) {
             vm.currentUser = newUser;
+            isRegisterLoginModalOpened = false;
         }
 
         function currentUserText() {
@@ -86,7 +88,7 @@
                 isRegisterLoginModalOpened = true;
 
                 var modalInstance = $uibModal.open({
-                    //backdrop: 'static',
+                    backdrop: 'static',
                     controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
                         $scope.$on('dataContext_currentUserChanged', closeModal);
                         $scope.$on('LoginController_redirected', closeModal);
@@ -96,7 +98,7 @@
                             $uibModalInstance.close();
                         }
                     }],
-                    //keyboard: false,
+                    keyboard: false,
                     size: 'lg',
                     templateUrl: '/_system/views/account/registerLogin.html?v=0.51.0'
                 });
@@ -107,6 +109,43 @@
                     }, function () {
                         //isRegisterLoginModalOpened = false;
                     });
+            }
+        }
+
+        function locationChangeStart(event, newUrl, oldUrl) {
+
+            if (dataContext.hasChanges()) {
+
+                var modalInstance = $uibModal.open({
+                    controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+
+                        var vm = this;
+                        vm.cancel = cancel;
+                        vm.leave = leave;
+
+                        function cancel() {
+                            $uibModalInstance.dismiss('cancel');
+                        }
+
+                        function leave() {
+                            $uibModalInstance.close();
+                        }
+                    }],
+                    controllerAs: 'vm',
+                    templateUrl: '/_system/views/account/confirmNavigateAway.html?v=0.53.0'
+                });
+
+                modalInstance.result.then(function () {
+
+                    // User choose to cancel the changes & navigate away
+                    dataContext.rejectChanges();
+                    $location.path(newUrl.substring($location.absUrl().length - $location.url().length));
+
+                });
+
+                // Always cancel route changes
+                event.preventDefault();
+                return;
             }
         }
 

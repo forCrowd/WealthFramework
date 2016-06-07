@@ -12,7 +12,6 @@
 
         // Factory methods (alphabetically)
         var factory = {
-            cancelResourcePool: cancelResourcePool,
             copyResourcePool: copyResourcePool,
             createElement: createElement,
             createElementField: createElementField,
@@ -39,47 +38,6 @@
         return factory;
 
         /*** Implementations ***/
-
-        function cancelResourcePool(resourcePool) {
-
-            // Resource pool itself
-            resourcePool.entityAspect.rejectChanges();
-
-            // User resource pools
-            resourcePool.UserResourcePoolSet.forEach(function (userResourcePool) {
-                userResourcePool.entityAspect.rejectChanges();
-            });
-
-            // Elements
-            resourcePool.ElementSet.forEach(function (element) {
-                element.entityAspect.rejectChanges();
-
-                // Fields
-                element.ElementFieldSet.forEach(function (elementField) {
-                    elementField.entityAspect.rejectChanges();
-
-                    // User element fields
-                    elementField.UserElementFieldSet.forEach(function (userElementField) {
-                        userElementField.entityAspect.rejectChanges();
-                    });
-                });
-
-                // Items
-                element.ElementItemSet.forEach(function (elementItem) {
-                    elementItem.entityAspect.rejectChanges();
-
-                    // Cells
-                    elementItem.ElementCellSet.forEach(function (elementCell) {
-                        elementCell.entityAspect.rejectChanges();
-
-                        // User cells
-                        elementCell.UserElementCellSet.forEach(function (userElementCell) {
-                            userElementCell.entityAspect.rejectChanges();
-                        });
-                    });
-                });
-            });
-        }
 
         function copyResourcePool(resourcePoolSource) {
             // TODO
@@ -308,25 +266,11 @@
                 .then(function (currentUser) {
 
                     var fetchedEarlier = false;
-                    var fromServer = false;
 
                     // If it's not newly created, check the fetched list
                     fetchedEarlier = fetchedList.some(function (fetched) {
                         return resourcePoolUniqueKey === fetched;
                     });
-
-                    // Locally created CMRPs (isTemp) - TODO !
-                    var existing1 = { userName: currentUser.UserName, resourcePoolKey: 'Unidentified-Profiting-Object' };
-                    var existing2 = { userName: currentUser.UserName, resourcePoolKey: 'Basics-Existing-Model' };
-                    var existing3 = { userName: currentUser.UserName, resourcePoolKey: 'Basics-New-Model' };
-
-                    fromServer = !fetchedEarlier &&
-                        !((resourcePoolUniqueKey.userName === existing1.userName &&
-                        resourcePoolUniqueKey.resourcePoolKey === existing1.resourcePoolKey) ||
-                        (resourcePoolUniqueKey.userName === existing2.userName &&
-                        resourcePoolUniqueKey.resourcePoolKey === existing2.resourcePoolKey) ||
-                        (resourcePoolUniqueKey.userName === existing3.userName &&
-                        resourcePoolUniqueKey.resourcePoolKey === existing3.resourcePoolKey));
 
                     // Prepare the query
                     var query = breeze.EntityQuery.from('ResourcePool');
@@ -344,7 +288,7 @@
                     query = query.where(userNamePredicate.and(resourcePoolKeyPredicate));
 
                     // From server or local?
-                    if (fromServer) {
+                    if (!fetchedEarlier) {
                         query = query.using(breeze.FetchStrategy.FromServer);
                     } else {
                         query = query.using(breeze.FetchStrategy.FromLocalCache);
@@ -365,7 +309,7 @@
                         var resourcePool = response.results[0];
 
                         // Init
-                        if (fromServer) {
+                        if (!fetchedEarlier) {
                             resourcePool._init();
                         }
 

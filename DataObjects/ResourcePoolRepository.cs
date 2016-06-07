@@ -43,6 +43,99 @@
             return resourcePool;
         }
 
+        public ResourcePool CreateUPOSample(User user)
+        {
+            const int numberOfItems = 1;
+
+            // Resource pool
+            var resourcePool = CreateDefaultResourcePool(user: user,
+                resourcePoolName: "UPO",
+                useFixedResourcePoolRate: true,
+                mainElementName: "Organization",
+                addDirectIncomeField: true,
+                addMultiplierField: true,
+                addImportanceIndex: false,
+                numberOfItems: numberOfItems);
+
+            // Main element
+            var mainElement = resourcePool.ElementSet.First();
+            mainElement.DirectIncomeField.Name = "Sales Price"; // TODO It does not fit! Update this after having Initial Amount on RP!
+            mainElement.MultiplierField.Name = "Number of Sales";
+
+            // Items, cell, user cells
+            // TODO How about ToList()[0]?
+            mainElement.ElementItemSet.First().Name = "UPO";
+
+            // Return
+            return resourcePool;
+        }
+
+        public ResourcePool CreateBasicsExistingSystemSample(User user)
+        {
+            const int numberOfItems = 4;
+
+            // Resource pool
+            var resourcePool = CreateDefaultResourcePool(user: user,
+                resourcePoolName: "Basics - Existing Model",
+                useFixedResourcePoolRate: true,
+                mainElementName: "Organization",
+                addDirectIncomeField: true,
+                addMultiplierField: true,
+                addImportanceIndex: false,
+                numberOfItems: numberOfItems);
+
+            resourcePool.Key = "Basics Existing Model";
+
+            // Main element
+            var mainElement = resourcePool.ElementSet.First();
+            mainElement.DirectIncomeField.Name = "Sales Price";
+            mainElement.MultiplierField.Name = "Number of Sales";
+
+            // Items, cell, user cells
+            mainElement.ElementItemSet.Skip(0).First().Name = "Alpha";
+            mainElement.ElementItemSet.Skip(1).First().Name = "Beta";
+            mainElement.ElementItemSet.Skip(2).First().Name = "Charlie";
+            mainElement.ElementItemSet.Skip(3).First().Name = "Delta";
+
+            // Return
+            return resourcePool;
+        }
+
+        public ResourcePool CreateBasicsNewSystemSample(User user)
+        {
+            const int numberOfItems = 4;
+
+            // Resource pool
+            var resourcePool = CreateDefaultResourcePool(user: user,
+                resourcePoolName: "Basics - New Model",
+                useFixedResourcePoolRate: true,
+                mainElementName: "Organization",
+                addDirectIncomeField: true,
+                addMultiplierField: true,
+                addImportanceIndex: true,
+                numberOfItems: numberOfItems);
+
+            resourcePool.Key = "Basics New Model";
+
+            // Main element
+            var mainElement = resourcePool.ElementSet.First();
+
+            // Fields
+            mainElement.DirectIncomeField.Name = "Sales Price";
+            mainElement.MultiplierField.Name = "Number of Sales";
+
+            mainElement.ElementFieldSet.Single(item => item.IndexEnabled).Name = "Employee Satisfaction";
+
+            // Items, cell, user cells
+            mainElement.ElementItemSet.Skip(0).First().Name = "Alpha";
+            mainElement.ElementItemSet.Skip(1).First().Name = "Beta";
+            mainElement.ElementItemSet.Skip(2).First().Name = "Charlie";
+            mainElement.ElementItemSet.Skip(3).First().Name = "Delta";
+
+            // Return
+            return resourcePool;
+        }
+
         public ResourcePool CreatePriorityIndexSample(User user)
         {
             const int numberOfItems = 4;

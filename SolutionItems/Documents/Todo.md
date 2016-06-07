@@ -1,21 +1,10 @@
 ﻿*** HOT ***
 
-* Globalsign - 24 May, confirmation email for new ssl certificate
-
-* smarterasp.net static ip + hosting
-
-* smarterasp.net facebook api
-
-* dataContext.create new cmrp - always check existing ones and don't create duplicate; New-CMRP
-Save failed!<br />Key 'New-CMRP' already exists Error: Conflict
 * field - rating edit in manage.html?
 * warmup script for live?!
-* content for forcrowd - story + team
-* content for wealth - articles
 * cmrp list? -> search page
 * content for editor? new content or new resourcepool - content in a content? or page as a new entity?
 * route update (_system/)
-* samples with sample user? (to prevent edit link)
 
 * expand('User' - brings all user info ?!?!?
 http://stackoverflow.com/questions/10781309/asp-net-mvc-4-webapi-manually-handle-odata-queries
@@ -36,8 +25,6 @@ still Org1 gets the most?
 After Therion
 get backup of pubxml files (app.min.js addition to publish) and other files in gitignore + unsynced
 gpg keys? https://help.github.com/articles/checking-for-existing-gpg-keys/
-remove forCrowd/breeze.js repository?
-check this item - fix these; basics - new model - update elementcellnumericvalue? - probably this about 'keep displaying login/register modal on each click?'
 
 ---
 * Busines Rules
@@ -55,8 +42,6 @@ Currently direct income & multiplier field types can only be added once per elem
 seems nice, and it could be used in other cases.
 however it doesn't return the newly created entity to the caller, which probably is not suitable for most cases?
 how about using $injector.get('dataContext') in these cases, instead of broadcast?
- * try to use pure entities, instead of breeze versions? then demo resource pools wouldn't need isTemp?
-resourcePoolFactory.js - // Locally created CMRPs (isTemp) - TODO !
  * use createEntity in addX cases!
  * // TODO Most of these functions are related with userService.js - updateX functions
 // Try to merge these two - Actually try to handle these actions within the related entity / SH - 27 Nov. '15
@@ -147,7 +132,6 @@ With UserAware, should we also mention which actions are allowed?
 
 * ngClient - UI
  * my ratings / show all users' ratings should be applied each section separately (cmrp rate, field rating, element cell value)
- * Navigate away confirmation in isEditing
  * angular material - https://material.angularjs.org/latest/
  * blur admin https://github.com/akveo/blur-admin?utm_content=buffera7574&utm_medium=twitter&utm_source=changelog&utm_campaign=buffer
  * Better ratings UI https://angular-ui.github.io/bootstrap/#/getting_started

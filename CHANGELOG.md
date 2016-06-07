@@ -1,5 +1,18 @@
 ### Changelog
 
+**0.53.0**
+
+* Navigate away confirmation in 'Unsaved changes' case
+https://github.com/forCrowd/WealthEconomy/issues/60
+ * isEditing property was removed
+ * ResourcePool.isTemp property was removed
+ * dataContext - _createEntitySuppressAuthValidation variable was removed
+ * UPO & Basics CMRPs were moved from client-side to server-side (again)
+* Register - Username and email inputs were disabled for anonymous user case
+* 'Register / login modal is not displayed when a new anonymous user interacts after logout' bug fix
+* Logo update
+* appSettings minor update
+
 **0.52.0**
 
 * Send an exception to server in 404 case

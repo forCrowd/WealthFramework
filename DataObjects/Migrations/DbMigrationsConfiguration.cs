@@ -112,6 +112,9 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
 
             // Sample resource pools
             var billionDollarQuestion = resourcePoolRepository.CreateBillionDollarQuestion(sampleUser);
+            var upoSample = resourcePoolRepository.CreateUPOSample(sampleUser);
+            var basicsExistingSystemSample = resourcePoolRepository.CreateBasicsExistingSystemSample(sampleUser);
+            var basicsNewSystemSample = resourcePoolRepository.CreateBasicsNewSystemSample(sampleUser);
             var priorityIndexSample = resourcePoolRepository.CreatePriorityIndexSample(sampleUser);
             var knowledgeIndexSample = resourcePoolRepository.CreateKnowledgeIndexSample(sampleUser);
             var knowledgeIndexPopularSoftwareLicenseSample = resourcePoolRepository.CreateKnowledgeIndexPopularSoftwareLicenseSample(sampleUser);
@@ -122,6 +125,9 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             // Set Id fields explicitly, since strangely EF doesn't save them in the order that they've been added to ResourcePoolSet.
             // And they're referred with these Ids on front-end samples
             billionDollarQuestion.Id = 1;
+            upoSample.Id = 8;
+            basicsExistingSystemSample.Id = 9;
+            basicsNewSystemSample.Id = 10;
             priorityIndexSample.Id = 2;
             knowledgeIndexSample.Id = 3;
             knowledgeIndexPopularSoftwareLicenseSample.Id = 4;
@@ -131,6 +137,9 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
 
             // Insert
             resourcePoolRepository.Insert(billionDollarQuestion);
+            resourcePoolRepository.Insert(upoSample);
+            resourcePoolRepository.Insert(basicsExistingSystemSample);
+            resourcePoolRepository.Insert(basicsNewSystemSample);
             resourcePoolRepository.Insert(priorityIndexSample);
             resourcePoolRepository.Insert(knowledgeIndexSample);
             resourcePoolRepository.Insert(knowledgeIndexPopularSoftwareLicenseSample);

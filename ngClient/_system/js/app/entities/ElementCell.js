@@ -45,7 +45,6 @@
                 _ratingPercentage: null,
                 _indexIncome: null
             };
-            self.isEditing = false;
 
             // Functions
             self.aggressiveRating = aggressiveRating;

@@ -15,12 +15,12 @@
                 Created
             </th>
         </tr>
-        <tr data-ng-show="results.length === 0">
+        <tr data-ng-show="vm.resourcePoolSet.length === 0">
             <td colspan="3">
                 Nothing to display
             </td>
         </tr>
-        <tr data-ng-show="results.length > 0" data-ng-repeat="resourcePool in vm.resourcePoolSet | orderBy: 'Name' | filter: { isTemp: false } as results">
+        <tr data-ng-show="vm.resourcePoolSet.length > 0" data-ng-repeat="resourcePool in vm.resourcePoolSet | orderBy: 'Name'">
             <td>
                 <a data-ng-bind="resourcePool.name()" data-ng-href="{{ resourcePool.urlView() }}"></a>
                 <span data-ng-show="resourcePool.UserId === vm.currentUser.Id">

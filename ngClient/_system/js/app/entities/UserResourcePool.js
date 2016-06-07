@@ -21,9 +21,6 @@
             self.UserId = 0;
             self.ResourcePoolId = 0;
             self.ResourcePoolRate = 0;
-
-            // Local variables
-            self.isEditing = false;
         }
     }
 })();

@@ -43,9 +43,6 @@
             //self.Logins = [];
             //self.Roles = [];
 
-            // Client-side
-            self.isEditing = false;
-
             // Functions
             self.isAuthenticated = isAuthenticated;
 

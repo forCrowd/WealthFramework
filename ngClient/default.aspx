@@ -10,7 +10,7 @@
     <link href="/_system/css/lib/lib.min.css?v=0.49.0" rel="stylesheet" />
 
     <!-- app.css -->
-    <link href="/_system/css/app.min.css?v=0.49.0" rel="stylesheet" />
+    <link href="/_system/css/app.min.css?v=0.53.0" rel="stylesheet" />
 
 </head>
 <body data-ng-controller="DefaultController as vm">
@@ -28,7 +28,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="" data-ng-click="vm.createNew()">Create CMRP (New)</a>
+                        <a href="" data-ng-click="vm.createNew()">Create CMRP</a>
                     </li>
                     <li>
                         <a href="/_system/resourcePool">CMRP List</a>
@@ -129,19 +129,14 @@
                         <hr />
                         <dir-disqus config="vm.disqusConfig"></dir-disqus>
                     </div>
-                    <hr />
-                    <p class="small">
+                    <div class="versionText">
                         <span data-ng-bind="vm.applicationInfo.CurrentVersionText"></span>
-                    </p>
-                    <p class="brandLink">
+                    </div>
+                    <div class="brandLink">
                         <a href="http://forcrowd.org" target="_blank">
-                            <img src="/_system/images/forCrowd_logo_34x34.jpg?v=0.49.0" class="brandLinkImage" />
-                            <span class="brandLinkText">
-                                <span class="brandLinkPrimary">forCrowd</span><br />
-                                <span class="brandLinkSecondary">FOUNDATION</span>
-                            </span>
+                            <img src="/_system/images/forCrowd_Logo_189x40.jpg?v=0.53.0" alt="Logo" />
                         </a>
-                    </p>
+                    </div>
                 </div>
             </div>
         </footer>
@@ -151,7 +146,7 @@
     <script src="/_system/js/lib/lib.min.js?v=0.51.0"></script>
 
     <!-- app.js -->
-    <script src="/_system/js/app/app.min.js?v=0.52.0"></script>
+    <script src="/_system/js/app/app.min.js?v=0.53.0"></script>
 
     <!-- appSettings.js -->
     <script src="/_system/js/appSettings/appSettings.js?v=0.49.0"></script>

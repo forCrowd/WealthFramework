@@ -155,7 +155,6 @@
                 _rating: null,
                 _indexIncome: null
             };
-            self.isEditing = false;
 
             // Functions
             self.currentUserElementField = currentUserElementField;

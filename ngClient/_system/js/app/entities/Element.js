@@ -73,7 +73,6 @@
                 _multiplierField: null,
                 _totalResourcePoolAmount: null
             };
-            self.isEditing = false;
 
             // Functions
             self.directIncome = directIncome;

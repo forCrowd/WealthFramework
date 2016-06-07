@@ -29,13 +29,6 @@
         var resetPasswordUrl = serviceAppUrl + '/api/Account/ResetPassword';
         var resetPasswordRequestUrl = serviceAppUrl + '/api/Account/ResetPasswordRequest';
         var tokenUrl = serviceAppUrl + '/api/Token';
-
-        // In create entity function, it checks whether the user is authenticated or not.
-        // If not, then broadcasts it, so we can force user to register or login.
-        // However, there are some entities that the application has to create for the user (currentUser, sample resourcepools etc.)
-        // In those cases, it should stop doing this check, so this flag will be used.
-        // SH - 10 Mar. '16
-        var _createEntitySuppressAuthValidation = false;
         var currentUser = null;
         var fetchedUsers = [];
         var getCurrentUserPromise = null;
@@ -51,7 +44,6 @@
             changeUserName: changeUserName,
             confirmEmail: confirmEmail,
             createEntity: createEntity,
-            createEntitySuppressAuthValidation: createEntitySuppressAuthValidation,
             executeQuery: executeQuery,
             fetchEntityByKey: fetchEntityByKey,
             getChanges: getChanges,
@@ -101,6 +93,8 @@
 
                     // Sync RowVersion fields
                     syncRowVersion(currentUser, updatedUser);
+
+                    currentUser.entityAspect.acceptChanges();
                 })
                 .error(handleErrorResult);
         }
@@ -116,6 +110,8 @@
 
                     // Sync RowVersion fields
                     syncRowVersion(currentUser, updatedUser);
+
+                    currentUser.entityAspect.acceptChanges();
                 })
                 .error(handleErrorResult);
         }
@@ -123,8 +119,11 @@
         function changePassword(changePasswordBindingModel) {
             return $http.post(changePasswordUrl, changePasswordBindingModel)
                 .success(function (updatedUser) {
+
                     // Sync RowVersion fields
                     syncRowVersion(currentUser, updatedUser);
+
+                    currentUser.entityAspect.acceptChanges();
                 })
                 .error(handleErrorResult);
         }
@@ -142,6 +141,8 @@
 
                     // Sync RowVersion fields
                     syncRowVersion(currentUser, updatedUser);
+
+                    currentUser.entityAspect.acceptChanges();
                 })
                 .error(handleErrorResult);
         }
@@ -154,23 +155,16 @@
 
                     // Sync RowVersion fields
                     syncRowVersion(currentUser, updatedUser);
+
+                    currentUser.entityAspect.acceptChanges();
                 })
                 .error(handleErrorResult);
         }
 
-        function createEntitySuppressAuthValidation(value) {
-            _createEntitySuppressAuthValidation = value;
-        }
-
         function createEntity(entityType, initialValues) {
 
-            // All entities will be created in isEditing state by default
-            if (typeof initialValues.isEditing === 'undefined') {
-                initialValues.isEditing = true;
-            }
-
             // Broadcast if unauthorized user creates a new entity (interact with the system)
-            if (!_createEntitySuppressAuthValidation && !currentUser.isAuthenticated()) {
+            if (currentUser !== null && !currentUser.isAuthenticated()) {
                 $rootScope.$broadcast('unauthenticatedUserInteracted');
             }
 
@@ -198,8 +192,7 @@
 
             // Filters
             all.forEach(function (change) {
-                if (!change.isEditing &&
-                    (entityTypeName === null || change.entityType.shortName === entityTypeName) &&
+                if ((entityTypeName === null || change.entityType.shortName === entityTypeName) &&
                     (entityState === null || change.entityAspect.entityState === entityState)) {
                     changes.push(change);
                 }
@@ -309,31 +302,20 @@
         }
 
         function getAnonymousUser() {
-            _createEntitySuppressAuthValidation = true;
             var user = createEntity('User', {
                 Email: getUniqueEmail(),
                 UserName: getUniqueUserName(),
                 FirstName: '',
                 MiddleName: '',
                 LastName: '',
-                IsAnonymous: true,
-                isEditing: false
+                IsAnonymous: true
             });
-            _createEntitySuppressAuthValidation = false;
+            user.entityAspect.acceptChanges();
             return user;
         }
 
         function getUniqueEmail() {
-
-            var now = new Date();
-            var year = now.getFullYear();
-            var month = now.getMonth() + 1;
-            var day = now.getDate();
-            var hour = now.getHours();
-            var minute = now.getMinutes();
-            var second = now.getSeconds();
-
-            return 'user_' + year + month + day + '_' + hour + minute + second + '@forcrowd.org';
+            return getUniqueUserName() + '@forcrowd.org';
         }
 
         function getUniqueUserName() {
@@ -490,7 +472,8 @@
         }
 
         function hasChanges() {
-            return manager.hasChanges();
+            return getChanges().length > 0;
+            //return manager.hasChanges();
         }
 
         function login(userName, password, rememberMe, singleUseToken) {
@@ -558,7 +541,10 @@
                     currentUser.IsAnonymous = updatedUser.IsAnonymous;
                     currentUser.HasPassword = updatedUser.HasPassword;
                     currentUser.SingleUseToken = updatedUser.SingleUseToken;
-                    currentUser.RowVersion = updatedUser.RowVersion;
+
+                    // Sync RowVersion fields
+                    syncRowVersion(currentUser, updatedUser);
+
                     currentUser.entityAspect.acceptChanges();
 
                     getToken(registerBindingModel.UserName, registerBindingModel.Password, rememberMe)
@@ -600,7 +586,10 @@
                     currentUser.IsAnonymous = updatedUser.IsAnonymous;
                     currentUser.HasPassword = updatedUser.HasPassword;
                     currentUser.SingleUseToken = updatedUser.SingleUseToken;
-                    currentUser.RowVersion = updatedUser.RowVersion;
+
+                    // Sync RowVersion fields
+                    syncRowVersion(currentUser, updatedUser);
+
                     currentUser.entityAspect.acceptChanges();
 
                     getToken('', '', rememberMe, updatedUser.SingleUseToken)
@@ -638,8 +627,11 @@
         function resetPassword(resetPasswordBindingModel) {
             return $http.post(resetPasswordUrl, resetPasswordBindingModel)
                 .success(function (updatedUser) {
+
                     // Sync RowVersion fields
                     syncRowVersion(currentUser, updatedUser);
+
+                    currentUser.entityAspect.acceptChanges();
                 })
                 .error(handleErrorResult);
         }
@@ -853,8 +845,7 @@
                         userCell = createEntity('UserElementCell', {
                             User: currentUser,
                             ElementCell: elementCell,
-                            DecimalValue: updateType === 'increase' ? 1 : 0,
-                            isEditing: false
+                            DecimalValue: updateType === 'increase' ? 1 : 0
                         });
 
                     } else { // If there is an item, update DecimalValue, but cannot be lower than zero
@@ -890,8 +881,7 @@
                         createEntity('UserElementCell', {
                             User: currentUser,
                             ElementCell: elementCell,
-                            DecimalValue: updateType === 'increase' ? 55 : 45,
-                            isEditing: false
+                            DecimalValue: updateType === 'increase' ? 55 : 45
                         });
 
                     } else { // If there is an item, update DecimalValue, but cannot be smaller than zero and cannot be bigger than 100
@@ -933,8 +923,7 @@
                         userElementField = {
                             User: currentUser,
                             ElementField: elementField,
-                            Rating: updateType === 'increase' ? 55 : 45,
-                            isEditing: false
+                            Rating: updateType === 'increase' ? 55 : 45
                         };
 
                         createEntity('UserElementField', userElementField);
@@ -1017,8 +1006,7 @@
                         userResourcePool = {
                             User: currentUser,
                             ResourcePool: resourcePool,
-                            ResourcePoolRate: updateType === 'increase' ? 15 : 5,
-                            isEditing: false
+                            ResourcePoolRate: updateType === 'increase' ? 15 : 5
                         };
 
                         createEntity('UserResourcePool', userResourcePool);
