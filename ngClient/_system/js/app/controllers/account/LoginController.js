@@ -12,7 +12,6 @@
         vm.isSaving = false;
         vm.isSaveDisabled = isSaveDisabled;
         vm.login = login;
-        vm.navigateToResetPassword = navigateToResetPassword;
         vm.password = '';
         vm.rememberMe = true;
         vm.showHeader = typeof $scope.showHeader !== 'undefined' ? $scope.showHeader : true;
@@ -84,11 +83,6 @@
                     $location.url(getReturnUrl());
                 }
             }
-        }
-
-        function navigateToResetPassword() {
-            $rootScope.$broadcast('LoginController_redirected');
-            $location.url('/_system/account/resetPassword');
         }
     }
 })();

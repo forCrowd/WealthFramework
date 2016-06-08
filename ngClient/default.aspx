@@ -1,17 +1,16 @@
 ﻿<!DOCTYPE html>
 <html data-ng-app="main">
 <head>
+    <title data-ng-bind="'Wealth Economy' + (viewTitle !== '' ? ' - ' + viewTitle : '')"></title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title data-ng-bind="'Wealth Economy' + (viewTitle !== '' ? ' - ' + viewTitle : '')"></title>
     <base href="/" />
-
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="favicon.ico?v=0.55.0" />
     <!-- lib.css -->
     <link href="/_system/css/lib/lib.min.css?v=0.49.0" rel="stylesheet" />
-
     <!-- app.css -->
-    <link href="/_system/css/app.min.css?v=0.53.0" rel="stylesheet" />
-
+    <link href="/_system/css/app.min.css?v=0.55.0" rel="stylesheet" />
 </head>
 <body data-ng-controller="DefaultController as vm">
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -28,7 +27,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="" data-ng-click="vm.createNew()">Create CMRP</a>
+                        <a data-ng-href="/{{ vm.currentUser.UserName }}/new">Create New</a>
                     </li>
                     <li>
                         <a href="/_system/resourcePool">CMRP List</a>
@@ -38,24 +37,16 @@
                     <li data-ng-show="!vm.currentUser.isAuthenticated()">
                         <div class="navbar-text nofloat">
                             <a href="/_system/account/register">Register</a>
-                            <a href="/_system/account/login" class="buffer-left">Login</a>
+                            <a href="/_system/account/login" class="g-ml-20">Login</a>
                         </div>
                     </li>
-                    <li data-ng-show="vm.currentUser.isAuthenticated()" class="dropdown hide" data-uib-dropdown>
-                        <a href="" class="dropdown-toggle" data-uib-dropdown-toggle><span data-ng-bind="'User: ' + vm.currentUserText()"></span><b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/_system/account/accountEdit">Edit</a></li>
-                            <li><a href="/_system/account/changeEmail">Change email</a></li>
-                            <li data-ng-show="!vm.currentUser.IsAnonymous && !vm.currentUser.EmailConfirmed"><a href="/_system/account/confirmEmail">Confirm email</a></li>
-                            <li data-ng-show="vm.currentUser.HasPassword === null"><a href="/_system/account/changePassword">Change password</a></li>
-                            <li data-ng-show="vm.currentUser.HasPassword === false"><a href="/_system/account/addPassword">Add password</a></li>
-                            <li><a href="" data-ng-click="vm.logout()">Logout</a></li>
-                        </ul>
+                    <li data-ng-show="vm.guestAccountInfoVisible">
+                        <a href="" data-ng-click="vm.openGuestAccountInfo()"><span class="fa fa-info-circle fa-lg"></span></a>
                     </li>
                     <li data-ng-show="vm.currentUser.isAuthenticated()" class="dropdown" data-uib-dropdown>
                         <a href="" class="dropdown-toggle" data-uib-dropdown-toggle><span data-ng-bind="'User: ' + vm.currentUserText()"></span><b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a data-ng-href="{{ '/' + vm.currentUser.UserName }}">Profile</a></li>
+                            <li><a data-ng-href="/{{ vm.currentUser.UserName }}">Profile</a></li>
                             <li><a href="/_system/account">Account</a></li>
                             <li><a href="" data-ng-click="vm.logout()">Logout</a></li>
                         </ul>
@@ -69,7 +60,7 @@
         <div data-ng-view></div>
 
         <footer>
-            <div class="row buffer-top" data-ng-show="vm.displayFooterIcons">
+            <div class="row g-mt-20" data-ng-show="vm.displayFooterIcons">
                 <div class="col-md-12"></div>
                 <hr />
                 <div class="row">
@@ -92,7 +83,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="row buffer-top">
+                <div class="row g-mt-20">
                     <div class="col-md-4">
                         <a class="btn btn-block btn-default" role="button" href="https://github.com/forCrowd/WealthEconomy" target="_blank">
                             <span class="fa fa-github fa-lg"></span>
@@ -146,7 +137,7 @@
     <script src="/_system/js/lib/lib.min.js?v=0.51.0"></script>
 
     <!-- app.js -->
-    <script src="/_system/js/app/app.min.js?v=0.54.0"></script>
+    <script src="/_system/js/app/app.min.js?v=0.55.0"></script>
 
     <!-- appSettings.js -->
     <script src="/_system/js/appSettings/appSettings.js?v=0.49.0"></script>

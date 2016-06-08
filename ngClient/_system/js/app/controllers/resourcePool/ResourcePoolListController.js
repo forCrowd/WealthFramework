@@ -11,7 +11,6 @@
         logger = logger.forSource(controllerId);
 
         var vm = this;
-        vm.createNew = createNew;
         vm.currentUser = { Id: 0 };
         vm.resourcePoolSet = [];
 
@@ -31,14 +30,6 @@
                             vm.resourcePoolSet = data;
                         });
                 });
-        }
-
-        function createNew() {
-            if (vm.currentUser.isAuthenticated()) {
-                $location.url('/' + vm.currentUser.UserName + '/new');
-            } else {
-                $rootScope.$broadcast('unauthenticatedUserInteracted', true);
-            }
         }
 
         function currentUserChanged(event, newUser) {

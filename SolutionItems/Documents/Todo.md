@@ -1,13 +1,11 @@
 ﻿*** HOT ***
 
-* try auto register again
-* anonymous -> guest
-* deployment details?
 * field - rating edit in manage.html?
 * warmup script for live?!
 * cmrp list? -> search page
 * content for editor? new content or new resourcepool - content in a content? or page as a new entity?
 * route update (_system/)
+* application manager - allows admin to update appSettings & restarts the app?
 
 * expand('User' - brings all user info ?!?!?
 http://stackoverflow.com/questions/10781309/asp-net-mvc-4-webapi-manually-handle-odata-queries
@@ -165,6 +163,7 @@ Or in some cases, it should do it automatically (like in resourcePoolEditor samp
 * New Features
 
 * Misc
+ * isAnonymous -> add as a guest role
  * permissions - instead of enableresourcepooladdition field to control whether user can enter userresourcepoolrate, handle it with permissions - if the user has a right to enter or not? same goes for FieldIndex ratings
  * Database performance: Suggests to create a separate username field with index http://blogs.msdn.com/b/webdev/archive/2015/02/11/improve-performance-by-optimizing-queries-for-asp-net-identity-and-other-membership-providers.aspx
  * __migrationhistory createdon field error - it seems there is not much to do, it also might be about glimpse?

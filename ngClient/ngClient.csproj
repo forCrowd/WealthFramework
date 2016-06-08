@@ -121,8 +121,8 @@
     <Content Include="_system\views\account\changePassword.html" />
     <Content Include="_system\views\account\confirmEmail.html" />
     <Content Include="_system\views\account\login.html" />
+    <Content Include="_system\views\account\guestAccountInfo.html" />
     <Content Include="_system\views\account\socialLogins.html" />
-    <Content Include="_system\views\account\registerLogin.html" />
     <Content Include="_system\views\account\register.html" />
     <Content Include="_system\views\account\resetPassword.html" />
     <Content Include="_system\views\content\notFound.html" />

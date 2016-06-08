@@ -4,7 +4,7 @@
         <uib-tab heading="Resource Pool">
             <form name="vm.resourcePoolForm">
                 <div class="form-horizontal">
-                    <div class="buffer-top">
+                    <div class="g-mt-20">
                         &nbsp;
                     </div>
                     <div class="form-group" data-ng-class="{ 'has-error': vm.resourcePool.entityAspect.getValidationErrors('Name').length > 0 }">
@@ -63,7 +63,7 @@
             <div data-ng-if="vm.isElementEdit">
                 <form name="elementForm">
                     <div class="form-horizontal">
-                        <div class="buffer-top">
+                        <div class="g-mt-20">
                             &nbsp;
                         </div>
                         <div class="form-group" data-ng-class="{ 'has-error': vm.element.entityAspect.getValidationErrors('Name').length > 0 }">
@@ -106,7 +106,7 @@
 
             <!-- Element list -->
             <div data-ng-if="!vm.isElementEdit">
-                <p class="buffer-top">
+                <p class="g-mt-20">
                     <a href="" data-ng-click="vm.addElement()">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create New
                     </a>
@@ -146,7 +146,7 @@
             <div data-ng-if="vm.isElementFieldEdit">
                 <form name="elementFieldForm">
                     <div class="form-horizontal">
-                        <div class="buffer-top">
+                        <div class="g-mt-20">
                             &nbsp;
                         </div>
                         <div class="form-group" data-ng-if="vm.isElementFieldNew" data-ng-class="{ 'has-error': vm.elementField.entityAspect.getValidationErrors('Element').length > 0 }">
@@ -258,7 +258,7 @@
 
             <!-- Element field list -->
             <div data-ng-if="!vm.isElementFieldEdit">
-                <p class="buffer-top">
+                <p class="g-mt-20">
                     <a href="" data-ng-click="vm.addElementField()">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create New
                     </a>
@@ -310,7 +310,7 @@
             <div data-ng-if="vm.isElementItemEdit">
                 <form name="elementItemForm">
                     <div class="form-horizontal">
-                        <div class="buffer-top">
+                        <div class="g-mt-20">
                             &nbsp;
                         </div>
                         <div class="form-group" data-ng-if="vm.isElementItemNew" data-ng-class="{ 'has-error': vm.elementItem.entityAspect.getValidationErrors('Element').length > 0 }">
@@ -350,7 +350,7 @@
 
             <!-- Element item list -->
             <div data-ng-if="!vm.isElementItemEdit">
-                <p class="buffer-top">
+                <p class="g-mt-20">
                     <a href="" data-ng-click="vm.addElementItem()">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create New
                     </a>
@@ -390,7 +390,7 @@
             <div data-ng-if="vm.isElementCellEdit">
                 <form name="elementCellForm">
                     <div class="form-horizontal">
-                        <div class="buffer-top">
+                        <div class="g-mt-20">
                             &nbsp;
                         </div>
                         <div class="form-group">
@@ -461,7 +461,7 @@
 
             <!-- Element cell list -->
             <div data-ng-if="!vm.isElementCellEdit">
-                <p class="buffer-top">
+                <p class="g-mt-20">
                     &nbsp;
                 </p>
                 <table class="table">

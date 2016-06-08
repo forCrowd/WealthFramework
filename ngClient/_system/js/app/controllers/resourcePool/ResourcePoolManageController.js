@@ -70,14 +70,30 @@
         function _init() {
 
             if (vm.isNew) {
-                resourcePoolFactory.createResourcePoolBasic()
-                    .then(function (resourcePool) {
-                        vm.resourcePool = resourcePool;
 
-                        // Title
-                        // TODO viewTitle was also set in route.js?
-                        $rootScope.viewTitle = vm.resourcePool.Name;
+                dataContext.getCurrentUser()
+                    .then(function (currentUser) {
+                        vm.currentUser = currentUser;
+
+                        // If userName equals to current user
+                        if (vm.userName === currentUser.UserName) {
+                            vm.user = currentUser;
+
+                            resourcePoolFactory.createResourcePoolBasic()
+                                .then(function (resourcePool) {
+                                    vm.resourcePool = resourcePool;
+
+                                    // Title
+                                    // TODO viewTitle was also set in route.js?
+                                    $rootScope.viewTitle = vm.resourcePool.Name;
+                                });
+
+                        } else {
+                            $location.url('/_system/content/notFound?url=' + $location.url());
+                            return;
+                        }
                     });
+
             } else {
 
                 var resourcePoolUniqueKey = { userName: vm.userName, resourcePoolKey: vm.resourcePoolKey };
@@ -87,8 +103,7 @@
 
                         // Not found, navigate to 404
                         if (resourcePool === null) {
-                            var invalidUrl = '/' + vm.userName + '/' + vm.resourcePoolKey;
-                            $location.url('/_system/content/notFound?url=' + invalidUrl);
+                            $location.url('/_system/content/notFound?url=' + $location.url());
                             return;
                         }
 

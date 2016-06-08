@@ -9,7 +9,7 @@
                     <span class="panel-title vcenter">
                         <span data-ng-bind="resourcePool.Name"></span>
                     </span>
-                    <div data-ng-if="resourcePool.RatingCount > 0" class="btn-group buffer-left" role="group" aria-label="Rating Options">
+                    <div data-ng-if="resourcePool.RatingCount > 0" class="btn-group g-ml-20" role="group" aria-label="Rating Options">
                         <button data-ng-click="resourcePool.toggleRatingMode()" type="button" class="btn btn-default" data-ng-class="{ 'active': resourcePool.RatingMode === 1 }">Your Ratings</button>
                         <button data-ng-click="resourcePool.toggleRatingMode()" type="button" class="btn btn-default" data-ng-class="{ 'active': resourcePool.RatingMode === 2 }">
                             All Users &nbsp;

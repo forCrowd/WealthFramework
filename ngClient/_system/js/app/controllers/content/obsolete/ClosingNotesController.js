@@ -12,7 +12,6 @@
 
         // View model
         var vm = this;
-        vm.createNew = createNew;
         vm.currentUser = { isAuthenticated: function () { return false; } };
 
         $scope.$on('dataContext_currentUserChanged', currentUserChanged);
@@ -28,14 +27,6 @@
                 .then(function (currentUser) {
                     vm.currentUser = currentUser;
                 });
-        }
-
-        function createNew() {
-            if (vm.currentUser.isAuthenticated()) {
-                $location.url('/' + vm.currentUser.UserName + '/new');
-            } else {
-                $rootScope.$broadcast('unauthenticatedUserInteracted', true);
-            }
         }
 
         function currentUserChanged(event, newUser) {
