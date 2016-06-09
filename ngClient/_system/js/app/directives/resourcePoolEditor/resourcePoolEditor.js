@@ -182,7 +182,7 @@
                     resourcePoolFactory.getResourcePoolExpanded(resourcePoolUniqueKey)
                             .then(function (resourcePool) {
 
-                                if (resourcePool === null) {
+                                if (typeof resourcePool === 'undefined' || resourcePool === null) {
                                     scope.errorMessage = 'Invalid CMRP';
                                     return;
                                 }
