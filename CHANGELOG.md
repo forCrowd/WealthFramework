@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.55.1**
+
+* resourcePoolEditor.js - getResourcePoolExpanded - resourcePool undefined check was added
+
 **0.55.0**
 
 * Auto register with guest account

@@ -1,7 +1,6 @@
 ﻿*** HOT ***
 
 * field - rating edit in manage.html?
-* warmup script for live?!
 * cmrp list? -> search page
 * content for editor? new content or new resourcepool - content in a content? or page as a new entity?
 * route update (_system/)
