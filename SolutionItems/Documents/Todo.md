@@ -1,10 +1,10 @@
 ﻿*** HOT ***
 
-* field - rating edit in manage.html?
 * cmrp list? -> search page
 * content for editor? new content or new resourcepool - content in a content? or page as a new entity?
 * route update (_system/)
 * application manager - allows admin to update appSettings & restarts the app?
+* 360 reasons to destroy - https://t.co/BHdHwjfSfR
 
 * expand('User' - brings all user info ?!?!?
 http://stackoverflow.com/questions/10781309/asp-net-mvc-4-webapi-manually-handle-odata-queries

@@ -16,7 +16,7 @@
         };
         vm.cancel = cancel;
         vm.changeUserName = changeUserName;
-        vm.currentUser =  { UserName: '' };
+        vm.currentUser = { UserName: '' };
         vm.externalLoginInit = $location.search().init; // For external login's
         vm.isSaving = false;
         vm.isSaveDisabled = isSaveDisabled;
@@ -25,16 +25,13 @@
 
         function _init() {
 
-            dataContext.getCurrentUser()
-                .then(function (currentUser) {
-                    vm.currentUser = currentUser;
-                    vm.bindingModel.UserName = currentUser.UserName;
+            vm.currentUser = dataContext.getCurrentUser();
+            vm.bindingModel.UserName = vm.currentUser.UserName;
 
-                    // Generate test data if localhost
-                    if ($location.host() === 'localhost') {
-                        vm.bindingModel.UserName = dataContext.getUniqueUserName();
-                    }
-                });
+            // Generate test data if localhost
+            if ($location.host() === 'localhost') {
+                vm.bindingModel.UserName = dataContext.getUniqueUserName();
+            }
         }
 
         function cancel() {

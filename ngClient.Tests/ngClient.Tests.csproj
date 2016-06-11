@@ -50,7 +50,8 @@
     <Content Include="entities\ElementItemTests.js" />
     <Content Include="entities\ElementTests.js" />
     <Content Include="entities\ResourcePoolTests.js" />
-    <Content Include="entities\SanityTests.js" />
+    <Content Include="entities\Sanity.js" />
+    <Content Include="entities\SanityEntities.js" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">

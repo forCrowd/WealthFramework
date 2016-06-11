@@ -86,33 +86,23 @@ namespace forCrowd.WealthEconomy.BusinessObjects
 
         #region - Methods -
 
-        public UserElementField AddUserRating(User user, decimal rating)
+        public UserElementField AddUserRating(decimal rating)
         {
             // TODO Validation?
-            var userRating = new UserElementField(user, this, rating);
-            user.UserElementFieldSet.Add(userRating);
+
+            var userRating = new UserElementField(this, rating);
             UserElementFieldSet.Add(userRating);
             return userRating;
         }
 
         public ElementField EnableIndex()
         {
-            ValidateEnableIndex();
-
-            IndexEnabled = true;
-            IndexCalculationType = (byte)ElementFieldIndexCalculationType.Aggressive;
-            IndexSortType = (byte)ElementFieldIndexSortType.HighestToLowest;
-            return this;
+            return EnableIndex(ElementFieldIndexCalculationType.Aggressive, ElementFieldIndexSortType.HighestToLowest);
         }
 
         public ElementField EnableIndex(ElementFieldIndexSortType indexSortType)
         {
-            ValidateEnableIndex();
-
-            IndexEnabled = true;
-            IndexCalculationType = (byte)ElementFieldIndexCalculationType.Aggressive;
-            IndexSortType = (byte)indexSortType;
-            return this;
+            return EnableIndex(ElementFieldIndexCalculationType.Aggressive, indexSortType);
         }
 
         public ElementField EnableIndex(ElementFieldIndexCalculationType calculationType, ElementFieldIndexSortType indexSortType)
@@ -122,8 +112,13 @@ namespace forCrowd.WealthEconomy.BusinessObjects
             IndexEnabled = true;
             IndexCalculationType = (byte)calculationType;
             IndexSortType = (byte)indexSortType;
+
+            AddUserRating(50);
+
             return this;
         }
+
+        // TODO Where is DisableIndex my dear?! / SH - 11 Jun. '16
 
         void ValidateEnableIndex()
         {

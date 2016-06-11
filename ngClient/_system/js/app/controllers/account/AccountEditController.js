@@ -14,14 +14,8 @@
         var vm = this;
         vm.cancel = cancel;
         vm.isSaveDisabled = isSaveDisabled;
-        vm.currentUser = null;
+        vm.currentUser = dataContext.getCurrentUser();
         vm.saveChanges = saveChanges;
-
-        // Get current user
-        dataContext.getCurrentUser()
-            .then(function (currentUser) {
-                vm.currentUser = currentUser;
-            });
 
         /*** Implementations ***/
 

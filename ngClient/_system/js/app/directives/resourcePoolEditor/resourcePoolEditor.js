@@ -59,37 +59,34 @@
                 var userName = typeof scope.config.userName === 'undefined' ? '' : scope.config.userName;
                 var resourcePoolKey = typeof scope.config.resourcePoolKey === 'undefined' ? '' : scope.config.resourcePoolKey;
 
-                dataContext.getCurrentUser()
-                    .then(function (currentUser) {
-                        initialize(currentUser, userName, resourcePoolKey);
-                    });
+                initialize(dataContext.getCurrentUser(), userName, resourcePoolKey);
             }
 
             function decreaseElementCellNumericValue(cell) {
-                dataContext.updateElementCellNumericValue(cell, 'decrease');
+                resourcePoolFactory.updateElementCellDecimalValue(cell, 'decrease');
                 $rootScope.$broadcast('resourcePoolEditor_elementCellNumericValueDecreased', cell);
                 saveChanges();
             }
 
             function decreaseElementMultiplier(element) {
-                dataContext.updateElementMultiplier(element, 'decrease');
+                resourcePoolFactory.updateElementMultiplier(element, 'decrease');
                 $rootScope.$broadcast('resourcePoolEditor_elementMultiplierDecreased', element);
                 saveChanges();
             }
 
             function decreaseElementCellMultiplier(elementCell) {
-                dataContext.updateElementCellMultiplier(elementCell, 'decrease');
+                resourcePoolFactory.updateElementCellMultiplier(elementCell, 'decrease');
                 $rootScope.$broadcast('resourcePoolEditor_elementCellMultiplierDecreased', element);
                 saveChanges();
             }
 
             function decreaseIndexRating(field) {
-                dataContext.updateElementFieldIndexRating(field, 'decrease');
+                resourcePoolFactory.updateElementFieldIndexRating(field, 'decrease');
                 saveChanges();
             }
 
             function decreaseResourcePoolRate() {
-                dataContext.updateResourcePoolRate(scope.resourcePool, 'decrease');
+                resourcePoolFactory.updateResourcePoolRate(scope.resourcePool, 'decrease');
                 saveChanges();
             }
 
@@ -99,30 +96,30 @@
             }
 
             function increaseElementCellNumericValue(cell) {
-                dataContext.updateElementCellNumericValue(cell, 'increase');
+                resourcePoolFactory.updateElementCellDecimalValue(cell, 'increase');
                 $rootScope.$broadcast('resourcePoolEditor_elementCellNumericValueIncreased', cell);
                 saveChanges();
             }
 
             function increaseElementMultiplier(element) {
-                dataContext.updateElementMultiplier(element, 'increase');
+                resourcePoolFactory.updateElementMultiplier(element, 'increase');
                 $rootScope.$broadcast('resourcePoolEditor_elementMultiplierIncreased', element);
                 saveChanges();
             }
 
             function increaseElementCellMultiplier(elementCell) {
-                dataContext.updateElementCellMultiplier(elementCell, 'increase');
+                resourcePoolFactory.updateElementCellMultiplier(elementCell, 'increase');
                 $rootScope.$broadcast('resourcePoolEditor_elementCellMultiplierIncreased', element);
                 saveChanges();
             }
 
             function increaseIndexRating(field) {
-                dataContext.updateElementFieldIndexRating(field, 'increase');
+                resourcePoolFactory.updateElementFieldIndexRating(field, 'increase');
                 saveChanges();
             }
 
             function increaseResourcePoolRate() {
-                dataContext.updateResourcePoolRate(scope.resourcePool, 'increase');
+                resourcePoolFactory.updateResourcePoolRate(scope.resourcePool, 'increase');
                 saveChanges();
             }
 
@@ -271,30 +268,30 @@
             }
 
             function resetElementCellNumericValue(cell) {
-                dataContext.updateElementCellNumericValue(cell, 'reset');
+                resourcePoolFactory.updateElementCellDecimalValue(cell, 'reset');
                 $rootScope.$broadcast('resourcePoolEditor_elementCellNumericValueReset', element);
                 saveChanges();
             }
 
             function resetElementMultiplier(element) {
-                dataContext.updateElementMultiplier(element, 'reset');
+                resourcePoolFactory.updateElementMultiplier(element, 'reset');
                 $rootScope.$broadcast('resourcePoolEditor_elementMultiplierReset', element);
                 saveChanges();
             }
 
             function resetElementCellMultiplier(elementCell) {
-                dataContext.updateElementCellMultiplier(elementCell, 'reset');
+                resourcePoolFactory.updateElementCellMultiplier(elementCell, 'reset');
                 $rootScope.$broadcast('resourcePoolEditor_elementCellMultiplierReset', element);
                 saveChanges();
             }
 
             function resetIndexRating(field) {
-                dataContext.updateElementFieldIndexRating(field, 'reset');
+                resourcePoolFactory.updateElementFieldIndexRating(field, 'reset');
                 saveChanges();
             }
 
             function resetResourcePoolRate() {
-                dataContext.updateResourcePoolRate(scope.resourcePool, 'reset');
+                resourcePoolFactory.updateResourcePoolRate(scope.resourcePool, 'reset');
                 saveChanges();
             }
 

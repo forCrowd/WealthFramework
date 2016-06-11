@@ -1,6 +1,6 @@
 ﻿/// <reference path="Commons.js" />
 
-describe('ng Sanity Checks', function () {
+describe('ng Sanity Entities', function () {
 
     var ResourcePool, Element, ElementField, ElementItem, ElementCell;
 
@@ -19,21 +19,6 @@ describe('ng Sanity Checks', function () {
             registerPrototypes($injector);
 
         });
-    });
-
-    it('Pure sanity', function () {
-
-        expect(0).toBe(0);
-
-    });
-
-    it('Experimental', function () {
-
-        // Just experimental
-        var number = 1000000000000000000000000000000000;
-        var total = number * number;
-        expect(total).toBe(total);
-
     });
 
     it('Entities', function () {

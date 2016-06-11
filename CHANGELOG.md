@@ -1,5 +1,12 @@
 ### Changelog
 
+**0.56.0**
+
+* resourcePoolManage - Field rating edit
+https://github.com/forCrowd/WealthEconomy/issues/64
+* Find keep alive service
+https://github.com/forCrowd/WealthEconomy/issues/63
+
 **0.55.1**
 
 * resourcePoolEditor.js - getResourcePoolExpanded - resourcePool undefined check was added

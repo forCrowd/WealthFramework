@@ -132,15 +132,15 @@
                                         if (elementCell.ElementItem.Name === cell.ElementItem.Name) {
                                             switch (event.name) {
                                                 case 'resourcePoolEditor_elementCellNumericValueIncreased': {
-                                                    dataContext.updateElementCellNumericValue(elementCell, 'increase');
+                                                    resourcePoolFactory.updateElementCellDecimalValue(elementCell, 'increase');
                                                     break;
                                                 }
                                                 case 'resourcePoolEditor_elementCellNumericValueDecreased': {
-                                                    dataContext.updateElementCellNumericValue(elementCell, 'decrease');
+                                                    resourcePoolFactory.updateElementCellDecimalValue(elementCell, 'decrease');
                                                     break;
                                                 }
                                                 case 'resourcePoolEditor_elementCellNumericValueReset': {
-                                                    dataContext.updateElementCellNumericValue(elementCell, 'reset');
+                                                    resourcePoolFactory.updateElementCellDecimalValue(elementCell, 'reset');
                                                     break;
                                                 }
                                             }

@@ -35,15 +35,15 @@
 
                         switch (event.name) {
                             case 'resourcePoolEditor_elementMultiplierIncreased': {
-                                dataContext.updateElementMultiplier(resourcePool.mainElement(), 'increase');
+                                resourcePoolFactory.updateElementMultiplier(resourcePool.mainElement(), 'increase');
                                 break;
                             }
                             case 'resourcePoolEditor_elementMultiplierDecreased': {
-                                dataContext.updateElementMultiplier(resourcePool.mainElement(), 'decrease');
+                                resourcePoolFactory.updateElementMultiplier(resourcePool.mainElement(), 'decrease');
                                 break;
                             }
                             case 'resourcePoolEditor_elementMultiplierReset': {
-                                dataContext.updateElementMultiplier(resourcePool.mainElement(), 'reset');
+                                resourcePoolFactory.updateElementMultiplier(resourcePool.mainElement(), 'reset');
                                 break;
                             }
                         }

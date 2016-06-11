@@ -22,29 +22,26 @@
 
         function _init() {
 
-            dataContext.getCurrentUser()
-                .then(function (currentUser) {
-                    vm.currentUser = currentUser;
+            vm.currentUser = dataContext.getCurrentUser();
 
-                    // If userName equals to current user
-                    if (userName === currentUser.UserName) {
-                        vm.user = currentUser;
-                    } else {
+            // If userName equals to current user
+            if (userName === vm.currentUser.UserName) {
+                vm.user = vm.currentUser;
+            } else {
 
-                        // If not, then check it against remote
-                        dataContext.getUser(userName)
-                            .then(function (user) {
+                // If not, then check it against remote
+                dataContext.getUser(userName)
+                    .then(function (user) {
 
-                                // Not found, navigate to 404
-                                if (user === null) {
-                                    $location.url('/_system/content/notFound?url=' + $location.url());
-                                    return;
-                                }
+                        // Not found, navigate to 404
+                        if (user === null) {
+                            $location.url('/_system/content/notFound?url=' + $location.url());
+                            return;
+                        }
 
-                                vm.user = user;
-                            });
-                    }
-                });
+                        vm.user = user;
+                    });
+            }
         }
 
         function currentUserChanged(event, newUser) {
