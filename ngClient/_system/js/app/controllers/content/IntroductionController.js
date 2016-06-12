@@ -29,7 +29,7 @@
 
                         // Increase the multiplier
                         resourcePool.ElementSet.forEach(function (element) {
-                            dataContext.updateElementMultiplier(element, 'increase');
+                            resourcePoolFactory.updateElementMultiplier(element, 'increase');
                         });
 
                         // Then increase recursively

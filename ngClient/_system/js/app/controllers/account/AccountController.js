@@ -11,7 +11,7 @@
         logger = logger.forSource(controllerId);
 
         var vm = this;
-        vm.currentUser = { Email: '', UserName: '' };
+        vm.currentUser = dataContext.getCurrentUser();
 
         // Events
         $scope.$on('dataContext_currentUserChanged', currentUserChanged);
@@ -19,10 +19,6 @@
         _init();
 
         function _init() {
-            dataContext.getCurrentUser()
-                .then(function (currentUser) {
-                    vm.currentUser = currentUser;
-                });
         }
 
         function currentUserChanged(event, newUser) {

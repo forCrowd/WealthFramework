@@ -21,14 +21,11 @@
 
         function _init() {
 
-            dataContext.getCurrentUser()
-                .then(function (currentUser) {
-                    vm.currentUser = currentUser;
+            vm.currentUser = dataContext.getCurrentUser();
 
-                    resourcePoolFactory.getResourcePoolSet()
-                        .then(function (data) {
-                            vm.resourcePoolSet = data;
-                        });
+            resourcePoolFactory.getResourcePoolSet()
+                .then(function (data) {
+                    vm.resourcePoolSet = data;
                 });
         }
 

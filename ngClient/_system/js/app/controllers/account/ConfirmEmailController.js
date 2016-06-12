@@ -21,26 +21,22 @@
 
         function _init() {
 
-            dataContext.getCurrentUser()
-                .then(function (currentUser) {
+            vm.currentUser = dataContext.getCurrentUser();
 
-                    vm.currentUser = currentUser;
+            if (!vm.currentUser.isAuthenticated()) {
+                return;
+            }
 
-                    if (!vm.currentUser.isAuthenticated()) {
-                        return;
-                    }
+            // If there is no token, no need to continue
+            var token = $location.search().token;
+            if (typeof token === 'undefined') {
+                return;
+            }
 
-                    // If there is no token, no need to continue
-                    var token = $location.search().token;
-                    if (typeof token === 'undefined') {
-                        return;
-                    }
-
-                    dataContext.confirmEmail({ Token: token })
-                        .then(function () {
-                            logger.logSuccess('Your email address has been confirmed!', null, true);
-                            $location.url('/_system/account');
-                        });
+            dataContext.confirmEmail({ Token: token })
+                .then(function () {
+                    logger.logSuccess('Your email address has been confirmed!', null, true);
+                    $location.url('/_system/account');
                 });
         }
 

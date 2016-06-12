@@ -45,8 +45,8 @@
 
             /* User */
             .when('/:userName', { title: 'Profile', templateUrl: '/_system/views/account/profile.html?v=0.51.0', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/:userName/new', { title: 'New CMRP', templateUrl: '/_system/views/resourcePool/resourcePoolManage.html?v=0.55.0', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/:userName/:resourcePoolKey/edit', { title: 'Edit CMRP', templateUrl: '/_system/views/resourcePool/resourcePoolManage.html?v=0.55.0', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
+            .when('/:userName/new', { title: 'New CMRP', templateUrl: '/_system/views/resourcePool/resourcePoolManage.html?v=0.56.0', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
+            .when('/:userName/:resourcePoolKey/edit', { title: 'Edit CMRP', templateUrl: '/_system/views/resourcePool/resourcePoolManage.html?v=0.56.0', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
             .when('/:userName/:resourcePoolKey', { title: 'View CMRP', templateUrl: '/_system/views/resourcePool/resourcePoolView.html?v=0.49.0', enableDisqus: true, resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
 
             /* Otherwise */
@@ -78,7 +78,7 @@
 
             locationHistory.createItem($location, $route.current);
 
-            dataContext.getCurrentUser()
+            dataContext.initializeCurrentUser()
                 .then(function (currentUser) {
                     if ($route.current.accessType !== 'undefined') {
 

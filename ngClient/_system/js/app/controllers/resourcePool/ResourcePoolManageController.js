@@ -71,28 +71,22 @@
 
             if (vm.isNew) {
 
-                dataContext.getCurrentUser()
-                    .then(function (currentUser) {
-                        vm.currentUser = currentUser;
+                var currentUser = dataContext.getCurrentUser();
 
-                        // If userName equals to current user
-                        if (vm.userName === currentUser.UserName) {
-                            vm.user = currentUser;
+                // If userName equals to current user
+                if (vm.userName === currentUser.UserName) {
+                    vm.user = currentUser;
 
-                            resourcePoolFactory.createResourcePoolBasic()
-                                .then(function (resourcePool) {
-                                    vm.resourcePool = resourcePool;
+                    vm.resourcePool = resourcePoolFactory.createResourcePoolBasic();
 
-                                    // Title
-                                    // TODO viewTitle was also set in route.js?
-                                    $rootScope.viewTitle = vm.resourcePool.Name;
-                                });
+                    // Title
+                    // TODO viewTitle was also set in route.js?
+                    $rootScope.viewTitle = vm.resourcePool.Name;
 
-                        } else {
-                            $location.url('/_system/content/notFound?url=' + $location.url());
-                            return;
-                        }
-                    });
+                } else {
+                    $location.url('/_system/content/notFound?url=' + $location.url());
+                    return;
+                }
 
             } else {
 
@@ -225,14 +219,11 @@
 
             dataContext.rejectChanges();
 
-            dataContext.getCurrentUser()
-                .then(function (currentUser) {
-                    var locationPath = vm.isNew ?
-                        '/' + currentUser.UserName :
-                        vm.resourcePool.urlView();
+            var locationPath = vm.isNew ?
+                '/' + dataContext.getCurrentUser().UserName :
+                vm.resourcePool.urlView();
 
-                    $location.url(locationPath);
-                });
+            $location.url(locationPath);
         }
 
         function editElement(element) {
@@ -363,10 +354,7 @@
 
             dataContext.saveChanges()
                 .then(function () {
-                    dataContext.getCurrentUser()
-                        .then(function (currentUser) {
-                            $location.url('/' + currentUser.UserName);
-                        });
+                    $location.url('/' + dataContext.getCurrentUser().UserName);
                 })
                 .finally(function () {
                     vm.isSaving = false;
@@ -427,15 +415,12 @@
             // TODO Try to move this to a better place?
             vm.resourcePool.updateCache();
 
-            dataContext.getCurrentUser()
-                .then(function (currentUser) {
-                    dataContext.saveChanges()
-                        .then(function () {
-                            $location.url(vm.resourcePool.urlView());
-                        })
-                        .finally(function () {
-                            vm.isSaving = false;
-                        });
+            dataContext.saveChanges()
+                .then(function () {
+                    $location.url(vm.resourcePool.urlView());
+                })
+                .finally(function () {
+                    vm.isSaving = false;
                 });
         }
     }

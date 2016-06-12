@@ -90,17 +90,6 @@ namespace forCrowd.WealthEconomy.BusinessObjects
             return userResourcePool;
         }
 
-        [Obsolete("Try to switch to the method without user variable")]
-        public UserResourcePool AddUserResourcePool(User user, decimal rate)
-        {
-            // Todo Validation?
-            // var userResourcePool = new UserResourcePool(user, this, rate);
-            var userResourcePool = new UserResourcePool(this, rate);
-            user.UserResourcePoolSet.Add(userResourcePool);
-            UserResourcePoolSet.Add(userResourcePool);
-            return userResourcePool;
-        }
-
         #endregion
     }
 }

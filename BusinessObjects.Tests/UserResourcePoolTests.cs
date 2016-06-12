@@ -11,7 +11,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Tests
         {
             var user = new User("User", "user@email.com");
             var resourcePool = new ResourcePool(user, "CMRP")
-                .AddUserResourcePool(user, 0);
+                .AddUserResourcePool(0);
         }
     }
 }

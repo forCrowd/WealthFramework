@@ -12,13 +12,11 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         public UserElementField()
         { }
 
-        public UserElementField(User user, ElementField elementField, decimal rating)
+        public UserElementField(ElementField elementField, decimal rating)
             : this()
         {
-            Validations.ArgumentNullOrDefault(user, "user");
             Validations.ArgumentNullOrDefault(elementField, "elementField");
 
-            User = user;
             ElementField = elementField;
             Rating = rating;
         }

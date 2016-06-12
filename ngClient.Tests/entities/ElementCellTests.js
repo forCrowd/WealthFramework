@@ -255,7 +255,7 @@ describe('ng Cell', function () {
         createUserCell(cell, 10);
 
         // This has to be called manually in order to update the cached value
-        // In the application, this is done by updateElementCellNumericValue method under userService.js
+        // In the application, this is done by updateElementCellDecimalValue method under userService.js
         cell.setCurrentUserNumericValue();
 
         // Assert

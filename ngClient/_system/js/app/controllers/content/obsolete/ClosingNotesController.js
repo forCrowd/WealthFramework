@@ -21,12 +21,7 @@
         /*** Implementations ***/
 
         function _init() {
-            getApplicationInfo();
-
-            dataContext.getCurrentUser()
-                .then(function (currentUser) {
-                    vm.currentUser = currentUser;
-                });
+            vm.currentUser = dataContext.getCurrentUser();
         }
 
         function currentUserChanged(event, newUser) {

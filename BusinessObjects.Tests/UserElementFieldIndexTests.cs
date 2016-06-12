@@ -17,7 +17,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects.Tests
                 .AddElement("Element")
                 .AddField("Field", ElementFieldDataType.Boolean, true)
                 .EnableIndex(ElementFieldIndexSortType.HighestToLowest)
-                .AddUserRating(user, 0);
+                .AddUserRating(0);
         }
     }
 }
