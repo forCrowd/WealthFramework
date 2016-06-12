@@ -1,6 +1,6 @@
 ﻿*** HOT ***
 
-* cmrp list? -> search page
+* short description for cmrp
 * content for editor? new content or new resourcepool - content in a content? or page as a new entity?
 * route update (_system/)
 * application manager - allows admin to update appSettings & restarts the app?

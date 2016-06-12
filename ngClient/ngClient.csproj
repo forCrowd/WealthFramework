@@ -78,7 +78,6 @@
     <None Include="_system\js\app\controllers\content\obsolete\ResourcePoolRateSampleController.js" />
     <None Include="_system\js\app\controllers\content\PriorityIndexController.js" />
     <None Include="_system\js\app\controllers\content\TotalCostIndexController.js" />
-    <None Include="_system\js\app\controllers\resourcePool\ResourcePoolListController.js" />
     <None Include="_system\js\app\controllers\resourcePool\ResourcePoolManageController.js" />
     <None Include="_system\js\app\controllers\resourcePool\ResourcePoolViewController.js" />
     <None Include="_system\js\app\directives\resourcePoolEditor\resourcePoolEditor.css" />
@@ -89,6 +88,7 @@
     <None Include="_system\js\app\controllers\account\ProfileController.js" />
     <None Include="_system\js\app\controllers\content\obsolete\ClosingNotesController.js" />
     <None Include="_system\js\app\controllers\content\NotFoundController.js" />
+    <None Include="_system\js\app\controllers\resourcePool\ResourcePoolSearchController.js" />
     <Content Include="_system\js\app\directives\resourcePoolEditor\resourcePoolEditor.html" />
     <None Include="_system\js\app\directives\resourcePoolEditor\resourcePoolEditor.js" />
     <None Include="_system\js\app\entities\Element.js" />
@@ -144,7 +144,7 @@
     <Content Include="_system\views\content\prologue.html" />
     <Content Include="_system\views\content\reason.html" />
     <Content Include="_system\views\content\totalCostIndex.html" />
-    <Content Include="_system\views\resourcePool\resourcePoolList.html" />
+    <Content Include="_system\views\resourcePool\resourcePoolSearch.html" />
     <Content Include="_system\views\resourcePool\resourcePoolRemove.html" />
     <Content Include="_system\views\resourcePool\resourcePoolManage.html" />
     <Content Include="_system\views\resourcePool\resourcePoolView.html" />
