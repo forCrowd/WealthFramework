@@ -1,11 +1,21 @@
 ### Changelog
 
+**0.57.0**
+
+* Search page instead of list
+https://github.com/forCrowd/WealthEconomy/issues/65
+* Fix mobile navigation menu
+https://github.com/forCrowd/WealthEconomy/issues/66
+* glyphicon icons were replaced with font awesome
+
 **0.56.0**
 
 * resourcePoolManage - Field rating edit
 https://github.com/forCrowd/WealthEconomy/issues/64
 * Find keep alive service
 https://github.com/forCrowd/WealthEconomy/issues/63
+* Async action was removed from dataContext.js currentUser(): it was already keeping it as a local variable, now its returns that, which makes this function much easier to use.
+* resourcePool and its child entities related functions were moved from dataContext.js to resourcePoolFactory.js
 
 **0.55.1**
 

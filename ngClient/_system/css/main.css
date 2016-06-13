@@ -616,3 +616,96 @@ input[type="checkbox"].input-validation-error {
     vertical-align: middle;
     float: none;
 }
+
+/*Table Search
+------------------------------------*/
+.table-search {
+	border-left: none;
+}
+
+.table-search .btn-group .btn-u {
+	top: 4px;
+	padding: 0 6px;
+	position: relative;
+}
+
+.table-search .btn-u.dropdown-toggle {
+	border-left: none;
+}
+
+.table-search thead {
+	border-bottom: solid 1px #ddd;
+}
+
+.table-search td {
+	vertical-align: middle !important;
+}
+
+.table-search td img {
+	width: 70px;
+	height: 70px;
+	margin: 0 auto;
+	display: block;
+}
+
+.table-search .user-names span,
+.table-search .user-names small {
+	display: block;
+	text-align: center;
+}
+
+.table-search .user-names span {
+	color: #555;
+	font-size: 16px;
+	position: relative;
+}
+
+.table-search .user-names small {
+	color: #999;
+	font-size: 13px;
+}
+
+.table-search td h3 {
+	font-size: 16px;
+	margin: 0 0 2px;
+}
+
+.table-search td a {
+	color: #555;
+}
+
+.table-search td p {
+	margin-bottom: 0;
+}
+
+.table-search td span {
+	display: block;
+}
+
+.table-search td small {
+	font-style: italic;
+}
+
+.table-search .s-icons {
+	margin-bottom: 0;
+}
+
+.table-search .s-icons li {
+	padding: 2px;
+}
+
+.table-search .table-buttons {
+	margin: 0;
+}
+
+.table-search .table-buttons li {
+	padding: 0;
+}
+
+.table-search .table-buttons .btn-u-sm {
+	padding: 3px 6px;
+}
+
+.table-search .td-width {
+	width: 55%;
+}

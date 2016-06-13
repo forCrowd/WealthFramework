@@ -10,7 +10,7 @@
     <!-- lib.css -->
     <link href="/_system/css/lib/lib.min.css?v=0.49.0" rel="stylesheet" />
     <!-- app.css -->
-    <link href="/_system/css/app.min.css?v=0.55.0" rel="stylesheet" />
+    <link href="/_system/css/app.min.css?v=0.57.0" rel="stylesheet" />
 </head>
 <body data-ng-controller="DefaultController as vm">
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -27,10 +27,10 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a data-ng-href="/{{ vm.currentUser.UserName }}/new">Create New</a>
+                        <a data-ng-href="/{{ vm.currentUser.UserName }}/new"><span class="fa fa-plus fa-lg" aria-hidden="true"></span> Create New</a>
                     </li>
                     <li>
-                        <a href="/_system/resourcePool">CMRP List</a>
+                        <a href="/_system/resourcePool/search"><span class="fa fa-search fa-lg" aria-hidden="true"></span> Search</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -64,7 +64,7 @@
                 <div class="col-md-12"></div>
                 <hr />
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-4 col-md-offset-2">
                         <a class="btn btn-block btn-default" role="button" href="https://twitter.com/forCrowd" target="_blank">
                             <span class="fa fa-twitter fa-lg"></span>
                             Follow us on Twitter
@@ -76,21 +76,21 @@
                             Chat with us on Gitter
                         </a>
                     </div>
-                    <div class="col-md-4">
-                        <a class="btn btn-block btn-default" role="button" href="mailto:contact.wealth@forcrowd.org" target="_blank">
-                            <span class="fa fa-envelope fa-lg"></span>
-                            Contact us by contact.wealth@forcrowd.org
-                        </a>
-                    </div>
                 </div>
                 <div class="row g-mt-20">
-                    <div class="col-md-4">
+                    <div class="col-md-4 col-md-offset-2">
                         <a class="btn btn-block btn-default" role="button" href="https://github.com/forCrowd/WealthEconomy" target="_blank">
                             <span class="fa fa-github fa-lg"></span>
                             View project on Github
                         </a>
                     </div>
                     <div class="col-md-4">
+                        <a class="btn btn-block btn-default" role="button" href="mailto:contact.wealth@forcrowd.org" target="_blank">
+                            <span class="fa fa-envelope fa-lg"></span>
+                            Send us an email
+                        </a>
+                    </div>
+<%--                    <div class="col-md-4">
                         <a class="btn btn-block btn-default" role="button" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YPBCBJ3ANDL4Q" target="_blank">
                             <span class="fa fa-paypal fa-lg"></span>
                             Invest in us with Paypal
@@ -108,7 +108,7 @@
                                 IBAN: NL20 TRIO 0254 4012 87
                             </p>
                         </div>
-                    </div>
+                    </div>--%>
 
                     <!--<a class="btn btn-primary" href="https://flattr.com/profile/forCrowd" role="button" target="_blank">Flattr</a>-->
                     <!--<a class="btn btn-primary" href="https://gratipay.com/forCrowd/" role="button" target="_blank">Gratipay</a>-->
@@ -134,7 +134,7 @@
     </div>
 
     <!-- lib.js -->
-    <script src="/_system/js/lib/lib.min.js?v=0.51.0"></script>
+    <script src="/_system/js/lib/lib.min.js?v=0.57.0"></script>
 
     <!-- app.js -->
     <script src="/_system/js/app/app.min.js?v=0.56.0"></script>

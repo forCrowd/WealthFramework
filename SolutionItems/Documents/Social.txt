@@ -2,9 +2,11 @@
 gitter
 personal dev network https://www.facebook.com/lists/10151319136553665
 social network - Emin Pamucak
-freenode? stackoverflow?
+stackoverflow?
 yourfirstpr (pull request)
-hackernews - https://news.ycombinator.com/
+https://webchat.freenode.net/
+https://news.ycombinator.com/
+https://www.reddit.com/
 reply to twitter 
 https://twitter.com/sethjuarez/status/692784256670498816
 https://twitter.com/martinwoodward/status/692832558447353857
@@ -13,6 +15,8 @@ https://www.globalsign.com/en/blog/open-source-ssl-pinittome/?utm_source=twitter
 https://opensource.com/how-submit-article
 https://opensource.com/participate?sc_cid=701600000011jJVAAY
 https://appear.in/
+
+opensourceway, freecodecamp, nadia eghbal. microsoft open source.
 
 upforgrabs - first timer only http://up-for-grabs.net/#/
 

@@ -133,7 +133,7 @@
                     }
                 }],
                 controllerAs: 'vm',
-                templateUrl: '/_system/views/account/guestAccountInfo.html?v=0.55.0'
+                templateUrl: '/_system/views/account/guestAccountInfo.html?v=0.57.0'
             });
         }
 

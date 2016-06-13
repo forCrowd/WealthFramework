@@ -17,7 +17,7 @@
             // Query support
             var odataFilter = new EnableQueryAttribute() {
                 AllowedArithmeticOperators = AllowedArithmeticOperators.None,
-                AllowedFunctions = AllowedFunctions.None,
+                AllowedFunctions = AllowedFunctions.SubstringOf,
                 AllowedLogicalOperators = AllowedLogicalOperators.And |
                     AllowedLogicalOperators.Equal |
                     AllowedLogicalOperators.Or,

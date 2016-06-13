@@ -48,6 +48,7 @@ var libMinJs = 'lib.min.js',
     libJsSrcRoot + '/breeze-client-labs/breeze.directives.js', // breezeDirectives
     libJsSrcRoot + '/angular-google-analytics/dist/angular-google-analytics.js', // googleAnalyticsAngular
     libJsSrcRoot + '/angular-utils-disqus/dirDisqus.js', // disqusAngular
+    libJsSrcRoot + '/bootstrap/dist/js/bootstrap.js', // bootstrap
     libJsSrcRoot + '/respond/dest/respond.js', // respond
     libJsSrcRoot + '/angular-bootstrap/ui-bootstrap-tpls.js', // bootstrapAngular
     libJsSrcRoot + '/highcharts/highcharts.src.js', // highcharts

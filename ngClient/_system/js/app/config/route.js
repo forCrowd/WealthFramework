@@ -28,9 +28,6 @@
             .when('/_system/content/reason', { title: 'Reason', templateUrl: '/_system/views/content/reason.html?v=0.49.0', enableDisqus: true, resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
             .when('/_system/content/totalCostIndex', { title: 'Total Cost Index', templateUrl: '/_system/views/content/totalCostIndex.html?v=0.49.0', enableDisqus: true, resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
 
-            /* CMRP List */
-            .when('/_system/resourcePool', { title: 'CMRP List', templateUrl: '/_system/views/resourcePool/resourcePoolList.html?v=0.55.0', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-
             /* Account */
             .when('/_system/account', { title: 'Account', templateUrl: '/_system/views/account/account.html?v=0.55.0', accessType: 'authenticatedRequired', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
             .when('/_system/account/accountEdit', { title: 'Account Edit', templateUrl: '/_system/views/account/accountEdit.html?v=0.55.0', accessType: 'authenticatedRequired', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
@@ -43,11 +40,14 @@
             .when('/_system/account/register', { title: 'Register', templateUrl: '/_system/views/account/register.html?v=0.55.0', accessType: 'unauthenticatedRequired', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
             .when('/_system/account/resetPassword', { title: 'Reset Password', templateUrl: '/_system/views/account/resetPassword.html?v=0.55.0', accessType: 'unauthenticatedRequired', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
 
+            /* CMRP Search */
+            .when('/_system/resourcePool/search', { title: 'CMRP Search', templateUrl: '/_system/views/resourcePool/resourcePoolSearch.html?v=0.57.0', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
+
             /* User */
-            .when('/:userName', { title: 'Profile', templateUrl: '/_system/views/account/profile.html?v=0.51.0', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/:userName/new', { title: 'New CMRP', templateUrl: '/_system/views/resourcePool/resourcePoolManage.html?v=0.56.0', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/:userName/:resourcePoolKey/edit', { title: 'Edit CMRP', templateUrl: '/_system/views/resourcePool/resourcePoolManage.html?v=0.56.0', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/:userName/:resourcePoolKey', { title: 'View CMRP', templateUrl: '/_system/views/resourcePool/resourcePoolView.html?v=0.49.0', enableDisqus: true, resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
+            .when('/:userName', { title: 'Profile', templateUrl: '/_system/views/account/profile.html?v=0.57.0', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
+            .when('/:userName/new', { title: 'New CMRP', templateUrl: '/_system/views/resourcePool/resourcePoolManage.html?v=0.57.0', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
+            .when('/:userName/:resourcePoolKey/edit', { title: 'Edit CMRP', templateUrl: '/_system/views/resourcePool/resourcePoolManage.html?v=0.57.0', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
+            .when('/:userName/:resourcePoolKey', { title: 'View CMRP', templateUrl: '/_system/views/resourcePool/resourcePoolView.html?v=0.57.0', enableDisqus: true, resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
 
             /* Otherwise */
             .otherwise({ redirectTo: getNotFound })

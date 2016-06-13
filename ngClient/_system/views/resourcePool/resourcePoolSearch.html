@@ -1,0 +1,50 @@
+<div data-ng-controller="ResourcePoolSearchController as vm">
+    <h2>Search</h2>
+    <form name="vm.searchForm">
+        <div class="form-horizontal g-mt-40">
+            <div class="form-group">
+                <label for="Name" class="control-label col-md-3">Enter your keywords</label>
+                <div class="col-md-9">
+                    <input id="SearchKey" name="SearchKey" type="text" ng-model="vm.searchKey" ng-change="vm.searchKeyChanged()" class="form-control" data-z-validate />
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="table-search">
+        <div class="table-responsive" data-ng-show="vm.showResults">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Resource Pool</th>
+                        <th>User</th>
+                        <th># Ratings</th>
+                        <th>Created On</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-show="vm.resourcePoolSet.length === 0">
+                        <td colspan="4">
+                            Nothing to display
+                        </td>
+                    </tr>
+                    <tr data-ng-show="vm.resourcePoolSet.length > 0" data-ng-repeat="resourcePool in vm.resourcePoolSet | orderBy: 'Name'">
+                        <td>
+                            <h3><a data-ng-bind="resourcePool.Name" data-ng-href="{{ resourcePool.urlView() }}"></a></h3>
+                        </td>
+                        <td>
+                            <div>
+                                <a data-ng-bind="resourcePool.User.UserName" data-ng-href="/{{ resourcePool.User.UserName }}"></a>
+                            </div>
+                        </td>
+                        <td>
+                            <span data-ng-bind="resourcePool.RatingCount"></span>
+                        </td>
+                        <td>
+                            <span am-time-ago="resourcePool.CreatedOn"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

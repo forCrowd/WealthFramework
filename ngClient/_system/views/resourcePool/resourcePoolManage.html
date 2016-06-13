@@ -3,10 +3,7 @@
     <uib-tabset>
         <uib-tab heading="Resource Pool">
             <form name="vm.resourcePoolForm">
-                <div class="form-horizontal">
-                    <div class="g-mt-20">
-                        &nbsp;
-                    </div>
+                <div class="form-horizontal g-mt-40">
                     <div class="form-group" data-ng-class="{ 'has-error': vm.resourcePool.entityAspect.getValidationErrors('Name').length > 0 }">
                         <label for="Name" class="control-label col-md-2">Name</label>
                         <div class="col-md-10">
@@ -62,10 +59,7 @@
             <!-- Element add/edit -->
             <div data-ng-if="vm.isElementEdit">
                 <form name="elementForm">
-                    <div class="form-horizontal">
-                        <div class="g-mt-20">
-                            &nbsp;
-                        </div>
+                    <div class="form-horizontal g-mt-40">
                         <div class="form-group" data-ng-class="{ 'has-error': vm.element.entityAspect.getValidationErrors('Name').length > 0 }">
                             <label for="Name" class="control-label col-md-2">Element</label>
                             <div class="col-md-10">
@@ -108,7 +102,7 @@
             <div data-ng-if="!vm.isElementEdit">
                 <p class="g-mt-20">
                     <a href="" data-ng-click="vm.addElement()">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create New
+                        <span class="fa fa-plus" aria-hidden="true"></span> Create New
                     </a>
                 </p>
                 <table class="table">
@@ -130,10 +124,10 @@
                         </td>
                         <td>
                             <a href="" data-ng-click="vm.editElement(element)">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
+                                <span class="fa fa-pencil" aria-hidden="true"></span> Edit
                             </a>
                             <a href="" data-ng-click="vm.removeElement(element)" data-ng-if="!element.IsMainElement">
-                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove
+                                <span class="fa fa-times" aria-hidden="true"></span> Remove
                             </a>
                         </td>
                     </tr>
@@ -145,10 +139,7 @@
             <!-- Element field add/edit -->
             <div data-ng-if="vm.isElementFieldEdit">
                 <form name="elementFieldForm">
-                    <div class="form-horizontal">
-                        <div class="g-mt-20">
-                            &nbsp;
-                        </div>
+                    <div class="form-horizontal g-mt-40">
                         <div class="form-group" data-ng-if="vm.isElementFieldNew" data-ng-class="{ 'has-error': vm.elementField.entityAspect.getValidationErrors('Element').length > 0 }">
                             <label for="ElementId" class="control-label col-md-2">Element</label>
                             <div class="col-md-10">
@@ -266,7 +257,7 @@
             <div data-ng-if="!vm.isElementFieldEdit">
                 <p class="g-mt-20">
                     <a href="" data-ng-click="vm.addElementField()">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create New
+                        <span class="fa fa-plus" aria-hidden="true"></span> Create New
                     </a>
                 </p>
                 <table class="table">
@@ -300,10 +291,10 @@
                         </td>
                         <td>
                             <a href="" data-ng-click="vm.editElementField(elementField)">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
+                                <span class="fa fa-pencil" aria-hidden="true"></span> Edit
                             </a>
                             <a href="" data-ng-click="vm.removeElementField(elementField)">
-                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove
+                                <span class="fa fa-times" aria-hidden="true"></span> Remove
                             </a>
                         </td>
                     </tr>
@@ -315,10 +306,7 @@
             <!-- Element item add/edit -->
             <div data-ng-if="vm.isElementItemEdit">
                 <form name="elementItemForm">
-                    <div class="form-horizontal">
-                        <div class="g-mt-20">
-                            &nbsp;
-                        </div>
+                    <div class="form-horizontal g-mt-40">
                         <div class="form-group" data-ng-if="vm.isElementItemNew" data-ng-class="{ 'has-error': vm.elementItem.entityAspect.getValidationErrors('Element').length > 0 }">
                             <label for="ElementId" class="control-label col-md-2">Element</label>
                             <div class="col-md-10">
@@ -358,7 +346,7 @@
             <div data-ng-if="!vm.isElementItemEdit">
                 <p class="g-mt-20">
                     <a href="" data-ng-click="vm.addElementItem()">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create New
+                        <span class="fa fa-plus" aria-hidden="true"></span> Create New
                     </a>
                 </p>
                 <table class="table">
@@ -380,10 +368,10 @@
                         </td>
                         <td>
                             <a href="" data-ng-click="vm.editElementItem(elementItem)">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
+                                <span class="fa fa-pencil" aria-hidden="true"></span> Edit
                             </a>
                             <a href="" data-ng-click="vm.removeElementItem(elementItem)">
-                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove
+                                <span class="fa fa-times" aria-hidden="true"></span> Remove
                             </a>
                         </td>
                     </tr>
@@ -395,10 +383,7 @@
             <!-- Element cell add/edit -->
             <div data-ng-if="vm.isElementCellEdit">
                 <form name="elementCellForm">
-                    <div class="form-horizontal">
-                        <div class="g-mt-20">
-                            &nbsp;
-                        </div>
+                    <div class="form-horizontal g-mt-40">
                         <div class="form-group">
                             <label class="control-label col-md-2">Element</label>
                             <p data-ng-bind="vm.elementCell.ElementField.Element.Name" class="form-control-static col-md-10"></p>
@@ -501,7 +486,7 @@
                         </td>
                         <td>
                             <a href="" data-ng-click="vm.editElementCell(elementCell)">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
+                                <span class="fa fa-pencil" aria-hidden="true"></span> Edit
                             </a>
                         </td>
                     </tr>

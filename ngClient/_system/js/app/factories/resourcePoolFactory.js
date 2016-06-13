@@ -459,20 +459,27 @@
             }
         }
 
-        function getResourcePoolSet() {
+        function getResourcePoolSet(searchKey) {
+            searchKey = typeof searchKey !== 'undefined' ? searchKey : '';
 
             var query = breeze.EntityQuery
 				.from('ResourcePool')
 				.expand(['User']);
 
+            if (searchKey !== '') {
+                var resourcePoolNamePredicate = new breeze.Predicate('Name', 'contains', searchKey);
+                var userNamePredicate = new breeze.Predicate('User.UserName', 'contains', searchKey);
+                query = query.where(resourcePoolNamePredicate.or(userNamePredicate));
+            }
+
             // Prepare the query
-            if (fetchFromServer) { // From remote
+            //if (fetchFromServer) { // From remote
                 query = query.using(breeze.FetchStrategy.FromServer);
-                fetchFromServer = false; // Do it only once per user
-            }
-            else { // From local
-                query = query.using(breeze.FetchStrategy.FromLocalCache);
-            }
+            //    fetchFromServer = false; // Do it only once per user
+            //}
+            //else { // From local
+                //query = query.using(breeze.FetchStrategy.FromLocalCache);
+            //}
 
             return dataContext.executeQuery(query)
                 .then(success).catch(failed);
