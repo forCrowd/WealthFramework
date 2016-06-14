@@ -41,7 +41,7 @@ var libMinJs = 'lib.min.js',
     libJsSrcRoot + '/datajs/datajs.js', // datajs
     libJsSrcRoot + '/breeze-client/build/breeze.base.debug.js', // breeze
     libJsSrcRoot + '/breeze-client/build/adapters/breeze.ajax.angular.js', // breezeAjaxAngular
-    './_system/js/lib/breeze-client/build/adapters/breeze.dataService.odata.js', // breezeDataServiceOData - Fixed forCrowd version
+    libJsSrcRoot + '/breeze-client/build/adapters/breeze.dataService.odata.js', // breezeDataServiceOData
     libJsSrcRoot + '/breeze-client/build/adapters/breeze.modelLibrary.backingStore.js', // breezeModelLibraryBackingStore
     libJsSrcRoot + '/breeze-client/build/adapters/breeze.uriBuilder.odata.js', // breezeUriBuilderOData
     libJsSrcRoot + '/breeze-client/build/adapters/breeze.bridge.angular.js', // breezeBridgeAngular
@@ -64,7 +64,6 @@ var libMinCss = 'lib.min.css',
     libCssSrc = [
     libJsSrcRoot + '/bootstrap/dist/css/bootstrap.css', // bootstrap
     libJsSrcRoot + '/font-awesome/css/font-awesome.css', // fontAwesome
-    libJsSrcRoot + '/bootstrap-social/bootstrap-social.css', // bootstrapSocial
     libJsSrcRoot + '/breeze-client-labs/breeze.directives.css', // breezeDirectivesCss
     libJsSrcRoot + '/toastr/toastr.css', // toastrCss
     ],

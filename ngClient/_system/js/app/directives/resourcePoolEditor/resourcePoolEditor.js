@@ -13,10 +13,10 @@
 
         function link(scope, elm, attrs) {
 
-            // Local variables
+            // Scope variables
             scope.currentUser = null;
+            scope.displayDescription = true;
             scope.displayIndexDetails = false;
-            scope.editResourcePool = editResourcePool;
             scope.errorMessage = '';
             scope.isSaving = false;
             scope.resourcePool = { Name: 'Loading...' };
@@ -30,6 +30,7 @@
             scope.decreaseElementCellMultiplier = decreaseElementCellMultiplier;
             scope.decreaseIndexRating = decreaseIndexRating;
             scope.decreaseResourcePoolRate = decreaseResourcePoolRate;
+            scope.editResourcePool = editResourcePool;
             scope.increaseElementCellNumericValue = increaseElementCellNumericValue;
             scope.increaseElementMultiplier = increaseElementMultiplier;
             scope.increaseElementCellMultiplier = increaseElementCellMultiplier;
@@ -40,6 +41,7 @@
             scope.resetElementCellMultiplier = resetElementCellMultiplier;
             scope.resetIndexRating = resetIndexRating;
             scope.resetResourcePoolRate = resetResourcePoolRate;
+            scope.toggleDescription = toggleDescription;
             scope.toggleIndexDetails = toggleIndexDetails;
 
             // Event handlers
@@ -307,6 +309,10 @@
                 scope.isSaving = false;
             }
 
+            function toggleDescription() {
+                scope.displayDescription = !scope.displayDescription;
+            }
+
             // Index Details
             function toggleIndexDetails() {
                 scope.displayIndexDetails = !scope.displayIndexDetails;
@@ -386,7 +392,7 @@
 
         return {
             restrict: 'E',
-            templateUrl: '/_system/js/app/directives/resourcePoolEditor/resourcePoolEditor.html?v=0.55.0',
+            templateUrl: '/_system/js/app/directives/resourcePoolEditor/resourcePoolEditor.html?v=0.58.0b',
             scope: {
                 config: '='
             },

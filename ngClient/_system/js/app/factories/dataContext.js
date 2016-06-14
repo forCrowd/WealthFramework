@@ -628,8 +628,6 @@
             return ensureAuthenticatedUser()
                 .then(function () {
 
-
-
                     var promise = null;
                     var count = getChangesCount();
                     var saveBatches = prepareSaveBatches();
@@ -753,7 +751,6 @@
                          *  arbitrarily, causing the database failure we're trying to avoid.
                          */
                     }
-
                 });
         }
 

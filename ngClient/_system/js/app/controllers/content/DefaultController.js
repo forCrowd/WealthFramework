@@ -110,7 +110,7 @@
                     dataContext.rejectChanges();
                     $location.path(newUrl.substring($location.absUrl().length - $location.url().length));
 
-                });
+                }, function () { });
 
                 // Always cancel route changes
                 event.preventDefault();
@@ -133,8 +133,11 @@
                     }
                 }],
                 controllerAs: 'vm',
-                templateUrl: '/_system/views/account/guestAccountInfo.html?v=0.57.0'
+                templateUrl: '/_system/views/account/guestAccountInfo.html?v=0.58.0'
             });
+
+            modalInstance.result.then(function () { },
+                function () { });
         }
 
         function routeChangeSuccess(event, current, previous) {
