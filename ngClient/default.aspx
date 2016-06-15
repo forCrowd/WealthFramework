@@ -8,9 +8,9 @@
     <!-- Favicon -->
     <link rel="shortcut icon" href="favicon.ico?v=0.55.0" />
     <!-- lib.css -->
-    <link href="/_system/css/lib/lib.min.css?v=0.49.0" rel="stylesheet" />
+    <link href="/_system/css/lib/lib.min.css?v=0.58.0" rel="stylesheet" />
     <!-- app.css -->
-    <link href="/_system/css/app.min.css?v=0.57.0" rel="stylesheet" />
+    <link href="/_system/css/app.min.css?v=0.58.0" rel="stylesheet" />
 </head>
 <body data-ng-controller="DefaultController as vm">
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -41,7 +41,7 @@
                         </div>
                     </li>
                     <li data-ng-show="vm.guestAccountInfoVisible">
-                        <a href="" data-ng-click="vm.openGuestAccountInfo()"><span class="fa fa-info-circle fa-lg"></span></a>
+                        <a href="" data-ng-click="vm.openGuestAccountInfo()"><span class="fa fa-info-circle fa-lg" aria-hidden="true"></span></a>
                     </li>
                     <li data-ng-show="vm.currentUser.isAuthenticated()" class="dropdown" data-uib-dropdown>
                         <a href="" class="dropdown-toggle" data-uib-dropdown-toggle><span data-ng-bind="'User: ' + vm.currentUserText()"></span><b class="caret"></b></a>
@@ -66,13 +66,13 @@
                 <div class="row">
                     <div class="col-md-4 col-md-offset-2">
                         <a class="btn btn-block btn-default" role="button" href="https://twitter.com/forCrowd" target="_blank">
-                            <span class="fa fa-twitter fa-lg"></span>
+                            <span class="fa fa-twitter fa-lg" aria-hidden="true"></span>
                             Follow us on Twitter
                         </a>
                     </div>
                     <div class="col-md-4">
                         <a class="btn btn-block btn-default" role="button" href="https://gitter.im/forCrowd/WealthEconomy" target="_blank">
-                            <span class="fa fa-git fa-lg"></span>
+                            <span class="fa fa-git fa-lg" aria-hidden="true"></span>
                             Chat with us on Gitter
                         </a>
                     </div>
@@ -80,25 +80,25 @@
                 <div class="row g-mt-20">
                     <div class="col-md-4 col-md-offset-2">
                         <a class="btn btn-block btn-default" role="button" href="https://github.com/forCrowd/WealthEconomy" target="_blank">
-                            <span class="fa fa-github fa-lg"></span>
+                            <span class="fa fa-github fa-lg" aria-hidden="true"></span>
                             View project on Github
                         </a>
                     </div>
                     <div class="col-md-4">
                         <a class="btn btn-block btn-default" role="button" href="mailto:contact.wealth@forcrowd.org" target="_blank">
-                            <span class="fa fa-envelope fa-lg"></span>
+                            <span class="fa fa-envelope fa-lg" aria-hidden="true"></span>
                             Send us an email
                         </a>
                     </div>
 <%--                    <div class="col-md-4">
                         <a class="btn btn-block btn-default" role="button" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YPBCBJ3ANDL4Q" target="_blank">
-                            <span class="fa fa-paypal fa-lg"></span>
+                            <span class="fa fa-paypal fa-lg" aria-hidden="true"></span>
                             Invest in us with Paypal
                         </a>
                     </div>
                     <div class="col-md-4">
                         <a class="btn btn-block btn-default" role="button" href="" data-ng-click="vm.toggleBankTransfer()">
-                            <span class="fa fa-bank fa-lg"></span>
+                            <span class="fa fa-bank fa-lg" aria-hidden="true"></span>
                             Or with bank transfer
                         </a>
                         <div class="bs-callout bs-callout-info" data-ng-show="vm.displayBankTransfer">
@@ -134,10 +134,10 @@
     </div>
 
     <!-- lib.js -->
-    <script src="/_system/js/lib/lib.min.js?v=0.57.0"></script>
+    <script src="/_system/js/lib/lib.min.js?v=0.58.0"></script>
 
     <!-- app.js -->
-    <script src="/_system/js/app/app.min.js?v=0.56.0"></script>
+    <script src="/_system/js/app/app.min.js?v=0.58.0"></script>
 
     <!-- appSettings.js -->
     <script src="/_system/js/appSettings/appSettings.js?v=0.49.0"></script>

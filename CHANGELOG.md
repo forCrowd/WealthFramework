@@ -1,5 +1,19 @@
 ### Changelog
 
+**0.58.0**
+
+* Description field for resource pool
+https://github.com/forCrowd/WealthEconomy/issues/68
+* Is Main Element bug fix
+https://github.com/forCrowd/WealthEconomy/issues/67
+* Project notes were moved to wiki page
+https://github.com/forCrowd/WealthEconomy/wiki
+* package updates
+ * breezejs was updated to 1.5.7 and odata adapter's manually fixed version was removed
+ * angular was replaced with fixed 1.5.4: there is a problem with 1.5.5+ packages, it installs 1.5.7 instead
+ * jquery was replaced with fixed 2.2.2: there is a problem with 2.2.3+ packages, it installs 3.0.0 instead
+ * bootstrap-social package was removed
+
 **0.57.0**
 
 * Search page instead of list

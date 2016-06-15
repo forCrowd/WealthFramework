@@ -112,6 +112,7 @@
                 User: currentUser,
                 Name: 'New CMRP',
                 Key: 'New-CMRP',
+                Description: 'Description for CMRP',
                 InitialValue: 100,
                 UseFixedResourcePoolRate: true
             });

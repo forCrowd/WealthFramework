@@ -82,7 +82,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         ElementId = c.Int(nullable: false),
-                        Name = c.String(nullable: false, maxLength: 250),
+                        Name = c.String(nullable: false, maxLength: 150),
                         CreatedOn = c.DateTime(nullable: false),
                         ModifiedOn = c.DateTime(nullable: false),
                         DeletedOn = c.DateTime(),
@@ -189,7 +189,8 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         UserId = c.Int(nullable: false),
                         Key = c.String(nullable: false, maxLength: 250),
-                        Name = c.String(nullable: false, maxLength: 250),
+                        Name = c.String(nullable: false, maxLength: 50),
+                        Description = c.String(),
                         InitialValue = c.Decimal(nullable: false, precision: 18, scale: 2),
                         UseFixedResourcePoolRate = c.Boolean(nullable: false),
                         ResourcePoolRateTotal = c.Decimal(precision: 18, scale: 2),

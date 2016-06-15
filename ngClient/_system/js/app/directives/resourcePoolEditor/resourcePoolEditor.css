@@ -1,17 +1,46 @@
 ﻿.resourcePoolEditor {
     font-family: Tahoma;
     /*font-family: Verdana, Geneva, Tahoma, sans-serif;*/
-    font-size: 10px;
+    font-size: 11px;
     padding: 1.5em 0;
 }
 
-.resourcePoolEditor .panel-title {
-    font-size: 18px;
-    line-height: 2em;
-}
+    .resourcePoolEditor .heading {
+        padding: 15px;
+    }
+
+    .resourcePoolEditor .title {
+        font-size: 18px;
+        line-height: 2em;
+    }
+
+    .resourcePoolEditor hr {
+        margin: 10px 0 20px 0;
+        border-color: #ddd;
+    }
+
+    .resourcePoolEditor .description {
+        padding: 30px 15px;
+        font-size: 14px;
+        line-height: 1.5em;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .resourcePoolEditor .settings,
+    .resourcePoolEditor .details {
+        min-height: 3em;
+    }
+
+    .resourcePoolEditor .details label, .resourcePoolEditor .details span {
+        border-bottom: 1px solid #ddd;
+        display: inline-block;
+        line-height: 2em;
+        margin-bottom: 0;
+        min-width: 125px;
+        padding: 5px;
+    }
 
 .resourcePoolTable {
-    /*table-layout: fixed;*/
 }
 
     .resourcePoolTable > thead > tr > th {
@@ -28,16 +57,6 @@
         padding: 3px;
     }
 
-    .resourcePoolTable .fixedWidth35Cell {
-        display: inline-block;
-        width: 35px;
-    }
-
-    .resourcePoolTable .fixedWidth45Cell {
-        display: inline-block;
-        width: 45px;
-    }
-
     .resourcePoolTable .infoText {
         margin-left: 2px;
     }
@@ -52,6 +71,10 @@
 
     .resourcePoolTable .incomeStatusHigh {
         color: #3c763d;
+    }
+
+    .resourcePoolTable .noborder {
+        border: 0;
     }
 
 .label-as-on-badge {

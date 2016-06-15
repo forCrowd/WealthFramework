@@ -20,6 +20,13 @@
                             </span>
                         </div>
                     </div>
+                    <div class="form-group" data-ng-class="{ 'has-error': vm.resourcePool.entityAspect.getValidationErrors('Description').length > 0 }">
+                        <label for="Description" class="control-label col-md-2">Description</label>
+                        <div class="col-md-10">
+                            <textarea id="Description" name="Description" data-ng-model="vm.resourcePool.Description" class="form-control" rows="3" data-z-validate></textarea>
+                            <!--<input id="Description" name="Description" type="text" data-ng-model="vm.resourcePool.Description" class="form-control" data-z-validate />-->
+                        </div>
+                    </div>
                     <div class="form-group" data-ng-class="{ 'has-error': vm.resourcePool.entityAspect.getValidationErrors('InitialValue').length > 0 }">
                         <label for="InitialValue" class="control-label col-md-2">Initial Amount</label>
                         <div class="col-md-10">
@@ -67,19 +74,6 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="IsMainElement" class="control-label col-md-2">Is Main Element?</label>
-                            <div class="col-md-10">
-                                <p class="form-control-static">
-                                    <span data-ng-bind="vm.element.IsMainElement"></span>
-                                    <a href="" data-ng-click="vm.element.IsMainElement = true" data-ng-if="!vm.element.IsMainElement">Set as main element</a>
-                                </p>
-                                <span id="IsMainElementHelp" class="help-block">
-                                    Determines whether CMRP Editor will start with this item or not.
-                                    Only one element can be 'Main Element' and it cannot be deleted.
-                                </span>
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <div class="col-md-10">
                                 <input id="RowVersion" name="RowVersion" data-ng-model="vm.element.RowVersion" type="hidden">
                             </div>
@@ -100,10 +94,10 @@
 
             <!-- Element list -->
             <div data-ng-if="!vm.isElementEdit">
-                <p class="g-mt-20">
-                    <a href="" data-ng-click="vm.addElement()">
-                        <span class="fa fa-plus" aria-hidden="true"></span> Create New
-                    </a>
+                <p class="g-mt-10">
+                    <button type="button" class="btn btn-link" data-ng-click="vm.addElement()">
+                        <i class="fa fa-plus" aria-hidden="true"></i> Create New
+                    </button>
                 </p>
                 <table class="table">
                     <tr>
@@ -123,12 +117,16 @@
                             <span data-ng-bind="element.IsMainElement"></span>
                         </td>
                         <td>
-                            <a href="" data-ng-click="vm.editElement(element)">
-                                <span class="fa fa-pencil" aria-hidden="true"></span> Edit
-                            </a>
-                            <a href="" data-ng-click="vm.removeElement(element)" data-ng-if="!element.IsMainElement">
-                                <span class="fa fa-times" aria-hidden="true"></span> Remove
-                            </a>
+                            <button type="button" class="btn btn-link" data-ng-click="vm.editElement(element)">
+                                <i class="fa fa-pencil" aria-hidden="true"></i> Edit
+                            </button>
+                            <button type="button" class="btn btn-link" href="" data-ng-click="element.IsMainElement = true" data-ng-show="!element.IsMainElement" data-uib-tooltip="Determines whether CMRP Editor will start with this item or not.
+                                    Only one element can be 'Main Element' and it cannot be deleted.">
+                                <i class="fa fa-check" aria-hidden="true" ></i> Set as main element
+                            </button>
+                            <button type="button" class="btn btn-link" href="" data-ng-click="vm.removeElement(element)" data-ng-if="!element.IsMainElement">
+                                <i class="fa fa-times" aria-hidden="true"></i> Remove
+                            </button>
                         </td>
                     </tr>
                 </table>
@@ -255,10 +253,10 @@
 
             <!-- Element field list -->
             <div data-ng-if="!vm.isElementFieldEdit">
-                <p class="g-mt-20">
-                    <a href="" data-ng-click="vm.addElementField()">
-                        <span class="fa fa-plus" aria-hidden="true"></span> Create New
-                    </a>
+                <p class="g-mt-10">
+                    <button type="button" class="btn btn-link" data-ng-click="vm.addElementField()">
+                        <i class="fa fa-plus" aria-hidden="true"></i> Create New
+                    </button>
                 </p>
                 <table class="table">
                     <tr>
@@ -290,12 +288,12 @@
                             <span data-ng-bind="elementField.IndexEnabled"></span>
                         </td>
                         <td>
-                            <a href="" data-ng-click="vm.editElementField(elementField)">
-                                <span class="fa fa-pencil" aria-hidden="true"></span> Edit
-                            </a>
-                            <a href="" data-ng-click="vm.removeElementField(elementField)">
-                                <span class="fa fa-times" aria-hidden="true"></span> Remove
-                            </a>
+                            <button type="button" class="btn btn-link" data-ng-click="vm.editElementField(elementField)">
+                                <i class="fa fa-pencil" aria-hidden="true"></i> Edit
+                            </button>
+                            <button type="button" class="btn btn-link" data-ng-click="vm.removeElementField(elementField)">
+                                <i class="fa fa-times" aria-hidden="true"></i> Remove
+                            </button>
                         </td>
                     </tr>
                 </table>
@@ -344,10 +342,10 @@
 
             <!-- Element item list -->
             <div data-ng-if="!vm.isElementItemEdit">
-                <p class="g-mt-20">
-                    <a href="" data-ng-click="vm.addElementItem()">
-                        <span class="fa fa-plus" aria-hidden="true"></span> Create New
-                    </a>
+                <p class="g-mt-10">
+                    <button type="button" class="btn btn-link" data-ng-click="vm.addElementItem()">
+                        <i class="fa fa-plus" aria-hidden="true"></i> Create New
+                    </button>
                 </p>
                 <table class="table">
                     <tr>
@@ -367,12 +365,12 @@
                             <span data-ng-bind="elementItem.Name"></span>
                         </td>
                         <td>
-                            <a href="" data-ng-click="vm.editElementItem(elementItem)">
-                                <span class="fa fa-pencil" aria-hidden="true"></span> Edit
-                            </a>
-                            <a href="" data-ng-click="vm.removeElementItem(elementItem)">
-                                <span class="fa fa-times" aria-hidden="true"></span> Remove
-                            </a>
+                            <button type="button" class="btn btn-link" data-ng-click="vm.editElementItem(elementItem)">
+                                <i class="fa fa-pencil" aria-hidden="true"></i> Edit
+                            </button>
+                            <button type="button" class="btn btn-link" data-ng-click="vm.removeElementItem(elementItem)">
+                                <i class="fa fa-times" aria-hidden="true"></i> Remove
+                            </button>
                         </td>
                     </tr>
                 </table>
@@ -452,8 +450,10 @@
 
             <!-- Element cell list -->
             <div data-ng-if="!vm.isElementCellEdit">
-                <p class="g-mt-20">
-                    &nbsp;
+                <p class="g-mt-10">
+                    <button type="button" class="btn btn-link invisible">
+                        &nbsp; <!--Just to align with other tabs-->
+                    </button>
                 </p>
                 <table class="table">
                     <tr>
@@ -485,9 +485,9 @@
                             <span data-ng-bind="elementCell.value()"></span>
                         </td>
                         <td>
-                            <a href="" data-ng-click="vm.editElementCell(elementCell)">
-                                <span class="fa fa-pencil" aria-hidden="true"></span> Edit
-                            </a>
+                            <button type="button" class="btn btn-link" data-ng-click="vm.editElementCell(elementCell)">
+                                <i class="fa fa-pencil" aria-hidden="true"></i> Edit
+                            </button>
                         </td>
                     </tr>
                 </table>

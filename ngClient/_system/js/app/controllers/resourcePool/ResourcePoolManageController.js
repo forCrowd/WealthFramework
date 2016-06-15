@@ -326,12 +326,13 @@
             var modalInstance = $uibModal.open({
                 controller: ['$scope', '$uibModalInstance', ResourcePoolRemoveController],
                 controllerAs: 'vm',
+                keyboard: false,
                 templateUrl: '/_system/views/resourcePool/resourcePoolRemove.html?v=0.53.0'
             });
 
             modalInstance.result.then(function () {
                 removeResourcePool();
-            });
+            }, function () { });
         }
 
         function removeElement(element) {

@@ -11,6 +11,49 @@ textarea {
     max-width: 280px;
 }
 
+.btn-link:hover,
+.btn-link:focus {
+    text-decoration: none;
+}
+/* #region - Social Logins - */
+
+.btn-social > i {
+    float: left;
+    padding: 3px 0 0;
+}
+
+.btn-facebook {
+    color: #fff;
+    background-color: #3b5998;
+}
+
+    .btn-facebook:focus, .btn-facebook.focus, .btn-facebook:hover, .btn-facebook:active, .btn-facebook.active {
+        color: #fff;
+        background-color: #2d4373;
+    }
+
+.btn-microsoft {
+    color: #fff;
+    background-color: #2672ec;
+}
+
+    .btn-microsoft:focus, .btn-microsoft.focus, .btn-microsoft:hover, .btn-microsoft:active, .btn-microsoft.active {
+        color: #fff;
+        background-color: #125acd;
+    }
+
+.btn-google {
+    color: #fff;
+    background-color: #dd4b39;
+}
+
+    .btn-google:focus, .btn-google.focus, .btn-google:hover, .btn-google:active, .btn-google.active {
+        color: #fff;
+        background-color: #c23321;
+    }
+
+/* #endregion */
+
 .versionText {
     border-top: 1px solid #333;
     font-size: 90%;
@@ -68,7 +111,7 @@ ul.bg-info {
     width: 18px;
 }
 
-/* Callout Begin */
+/* #region - Callout Begin - */
 
 .bs-callout {
     padding: 20px;
@@ -119,7 +162,7 @@ ul.bg-info {
         color: #5bc0de;
     }
 
-/* Callout End */
+/* #endregion */
 
 /* styles for validation helpers */
 .field-validation-error {
@@ -148,11 +191,12 @@ input[type="checkbox"].input-validation-error {
 
 /* Project level custom helpers / SH 24 Jan. '14 */
 
-/* Spaces
-------------------------------------*/
+/* #region - Spaces - */
+
 .g-no-mb {
     margin-bottom: 0;
 }
+
 
 .g-no-padding {
     padding: 0;
@@ -609,7 +653,9 @@ input[type="checkbox"].input-validation-error {
     margin-right: 100px;
 }
 
-/* Misc */
+/*#endregion */
+
+/* #region - Misc - */
 
 .vcenter {
     display: inline-block;
@@ -617,95 +663,99 @@ input[type="checkbox"].input-validation-error {
     float: none;
 }
 
-/*Table Search
-------------------------------------*/
+/* #endregion */
+
+/* #region - Table Search - */
+
 .table-search {
-	border-left: none;
+    border-left: none;
 }
 
-.table-search .btn-group .btn-u {
-	top: 4px;
-	padding: 0 6px;
-	position: relative;
-}
+    .table-search .btn-group .btn-u {
+        top: 4px;
+        padding: 0 6px;
+        position: relative;
+    }
 
-.table-search .btn-u.dropdown-toggle {
-	border-left: none;
-}
+    .table-search .btn-u.dropdown-toggle {
+        border-left: none;
+    }
 
-.table-search thead {
-	border-bottom: solid 1px #ddd;
-}
+    .table-search thead {
+        border-bottom: solid 1px #ddd;
+    }
 
-.table-search td {
-	vertical-align: middle !important;
-}
+    .table-search td {
+        vertical-align: middle !important;
+    }
 
-.table-search td img {
-	width: 70px;
-	height: 70px;
-	margin: 0 auto;
-	display: block;
-}
+        .table-search td img {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto;
+            display: block;
+        }
 
-.table-search .user-names span,
-.table-search .user-names small {
-	display: block;
-	text-align: center;
-}
+    .table-search .user-names span,
+    .table-search .user-names small {
+        display: block;
+        text-align: center;
+    }
 
-.table-search .user-names span {
-	color: #555;
-	font-size: 16px;
-	position: relative;
-}
+    .table-search .user-names span {
+        color: #555;
+        font-size: 16px;
+        position: relative;
+    }
 
-.table-search .user-names small {
-	color: #999;
-	font-size: 13px;
-}
+    .table-search .user-names small {
+        color: #999;
+        font-size: 13px;
+    }
 
-.table-search td h3 {
-	font-size: 16px;
-	margin: 0 0 2px;
-}
+    .table-search td h3 {
+        font-size: 16px;
+        margin: 0 0 2px;
+    }
 
-.table-search td a {
-	color: #555;
-}
+    .table-search td a {
+        color: #555;
+    }
 
-.table-search td p {
-	margin-bottom: 0;
-}
+    .table-search td p {
+        margin-bottom: 0;
+    }
 
-.table-search td span {
-	display: block;
-}
+    .table-search td span {
+        display: block;
+    }
 
-.table-search td small {
-	font-style: italic;
-}
+    .table-search td small {
+        font-style: italic;
+    }
 
-.table-search .s-icons {
-	margin-bottom: 0;
-}
+    .table-search .s-icons {
+        margin-bottom: 0;
+    }
 
-.table-search .s-icons li {
-	padding: 2px;
-}
+        .table-search .s-icons li {
+            padding: 2px;
+        }
 
-.table-search .table-buttons {
-	margin: 0;
-}
+    .table-search .table-buttons {
+        margin: 0;
+    }
 
-.table-search .table-buttons li {
-	padding: 0;
-}
+        .table-search .table-buttons li {
+            padding: 0;
+        }
 
-.table-search .table-buttons .btn-u-sm {
-	padding: 3px 6px;
-}
+        .table-search .table-buttons .btn-u-sm {
+            padding: 3px 6px;
+        }
 
-.table-search .td-width {
-	width: 55%;
-}
+    .table-search .td-width {
+        width: 55%;
+    }
+
+/* #endregion */

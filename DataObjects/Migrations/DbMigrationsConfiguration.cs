@@ -1,7 +1,8 @@
 namespace forCrowd.WealthEconomy.DataObjects.Migrations
 {
-    using forCrowd.WealthEconomy.BusinessObjects;
-    using forCrowd.WealthEconomy.DataObjects;
+    using BusinessObjects;
+    using DataObjects;
+    using Framework;
     using Microsoft.AspNet.Identity;
     using System;
     using System.Collections.Generic;
@@ -108,7 +109,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             context.SaveChanges();
 
             // Login as (required in order to save the rest of the items)
-            forCrowd.WealthEconomy.Framework.Security.LoginAs(sampleUser.Id);
+            Security.LoginAs(sampleUser.Id);
 
             // Sample resource pools
             var billionDollarQuestion = resourcePoolRepository.CreateBillionDollarQuestion(sampleUser);

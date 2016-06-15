@@ -24,7 +24,7 @@
 
                     // TODO When this prop set in constructor, ResourcePool is null, in such case, ignore
                     // However, it would be better to always have a ResourcePool? / SH - 29 Nov. '15
-                    if (typeof self.ResoucePool === 'undefined') {
+                    if (typeof self.ResourcePool === 'undefined' || self.ResourcePool === null) {
                         return;
                     }
 

@@ -36,14 +36,10 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="Documents\General Notes.txt" />
-    <Content Include="Documents\Social.txt" />
     <Content Include="GitHub\Issues\31\V3_EF.xml" />
     <Content Include="GitHub\Issues\31\V3_OData.xml" />
     <Content Include="GitHub\Issues\31\v4_EF.xml" />
     <Content Include="GitHub\Issues\31\v4_OData.xml" />
-    <Content Include="Documents\Content Notes.txt" />
-    <Content Include="Documents\Possible Indexes.txt" />
     <Content Include="Scripts\Database\Sql\Backup Database.sql" />
     <Content Include="Scripts\Database\Sql\User Insert.sql" />
     <None Include="..\.gitattributes">
@@ -55,14 +51,10 @@
     <None Include="..\CHANGELOG.md">
       <Link>Documents\CHANGELOG.md</Link>
     </None>
-    <None Include="Documents\Design.md" />
     <None Include="Documents\Skecthes.pptx" />
     <None Include="Documents\Survey.docx" />
     <None Include="Documents\Index Income Calculation.xlsx" />
     <None Include="Documents\Feedback.md" />
-    <None Include="Documents\Remarks.md" />
-    <None Include="Documents\Todo.md" />
-    <Content Include="Documents\Troubleshoot.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\appveyor.yml">

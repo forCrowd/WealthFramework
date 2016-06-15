@@ -25,7 +25,7 @@
             .when('/_system/content/knowledgeIndex', { title: 'Knowledge Index', templateUrl: '/_system/views/content/knowledgeIndex.html?v=0.51.0', enableDisqus: true, resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
             .when('/_system/content/priorityIndex', { title: 'Priority Index', templateUrl: '/_system/views/content/priorityIndex.html?v=0.49.0', enableDisqus: true, resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
             .when('/_system/content/prologue', { title: 'Prologue', templateUrl: '/_system/views/content/prologue.html?v=0.51.0', enableDisqus: true, resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/_system/content/reason', { title: 'Reason', templateUrl: '/_system/views/content/reason.html?v=0.49.0', enableDisqus: true, resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
+            .when('/_system/content/reason', { title: 'Reason', templateUrl: '/_system/views/content/reason.html?v=0.58.0', enableDisqus: true, resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
             .when('/_system/content/totalCostIndex', { title: 'Total Cost Index', templateUrl: '/_system/views/content/totalCostIndex.html?v=0.49.0', enableDisqus: true, resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
 
             /* Account */
@@ -36,8 +36,8 @@
             .when('/_system/account/changePassword', { title: 'Change Password', templateUrl: '/_system/views/account/changePassword.html?v=0.55.0', accessType: 'authenticatedRequired', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
             .when('/_system/account/changeUserName', { title: 'Change Username', templateUrl: '/_system/views/account/changeUsername.html?v=0.55.0', accessType: 'authenticatedRequired', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
             .when('/_system/account/confirmEmail', { title: 'Confirm Email', templateUrl: '/_system/views/account/confirmEmail.html?v=0.51.0', accessType: 'authenticatedRequired', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/_system/account/login', { title: 'Login', templateUrl: '/_system/views/account/login.html?v=0.55.0', accessType: 'unauthenticatedRequired', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/_system/account/register', { title: 'Register', templateUrl: '/_system/views/account/register.html?v=0.55.0', accessType: 'unauthenticatedRequired', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
+            .when('/_system/account/login', { title: 'Login', templateUrl: '/_system/views/account/login.html?v=0.58.0', accessType: 'unauthenticatedRequired', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
+            .when('/_system/account/register', { title: 'Register', templateUrl: '/_system/views/account/register.html?v=0.58.0', accessType: 'unauthenticatedRequired', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
             .when('/_system/account/resetPassword', { title: 'Reset Password', templateUrl: '/_system/views/account/resetPassword.html?v=0.55.0', accessType: 'unauthenticatedRequired', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
 
             /* CMRP Search */
@@ -45,8 +45,8 @@
 
             /* User */
             .when('/:userName', { title: 'Profile', templateUrl: '/_system/views/account/profile.html?v=0.57.0', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/:userName/new', { title: 'New CMRP', templateUrl: '/_system/views/resourcePool/resourcePoolManage.html?v=0.57.0', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/:userName/:resourcePoolKey/edit', { title: 'Edit CMRP', templateUrl: '/_system/views/resourcePool/resourcePoolManage.html?v=0.57.0', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
+            .when('/:userName/new', { title: 'New CMRP', templateUrl: '/_system/views/resourcePool/resourcePoolManage.html?v=0.58.0', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
+            .when('/:userName/:resourcePoolKey/edit', { title: 'Edit CMRP', templateUrl: '/_system/views/resourcePool/resourcePoolManage.html?v=0.58.0', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
             .when('/:userName/:resourcePoolKey', { title: 'View CMRP', templateUrl: '/_system/views/resourcePool/resourcePoolView.html?v=0.57.0', enableDisqus: true, resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
 
             /* Otherwise */
