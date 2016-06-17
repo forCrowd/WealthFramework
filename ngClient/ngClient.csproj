@@ -43,6 +43,7 @@
   <ItemGroup>
     <Content Include="_system\css\fonts\fontawesome-webfont.svg" />
     <Content Include="_system\css\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="_system\images\forCrowd_Logo_142x30.jpg" />
     <Content Include="_system\images\forCrowd_Logo_189x40.jpg" />
     <Content Include="_system\images\PresentvsNew.png" />
     <Content Include="_system\css\fonts\fontawesome-webfont.eot" />
@@ -89,6 +90,7 @@
     <None Include="_system\js\app\controllers\content\obsolete\ClosingNotesController.js" />
     <None Include="_system\js\app\controllers\content\NotFoundController.js" />
     <None Include="_system\js\app\controllers\resourcePool\ResourcePoolSearchController.js" />
+    <Content Include="_system\js\app\controllers\content\ContributorsController.js" />
     <Content Include="_system\js\app\directives\resourcePoolEditor\resourcePoolEditor.html" />
     <None Include="_system\js\app\directives\resourcePoolEditor\resourcePoolEditor.js" />
     <None Include="_system\js\app\entities\Element.js" />
@@ -125,6 +127,7 @@
     <Content Include="_system\views\account\socialLogins.html" />
     <Content Include="_system\views\account\register.html" />
     <Content Include="_system\views\account\resetPassword.html" />
+    <Content Include="_system\views\content\contributors.html" />
     <Content Include="_system\views\content\notFound.html" />
     <Content Include="_system\views\content\allInOne.html" />
     <Content Include="_system\views\content\basics.html" />

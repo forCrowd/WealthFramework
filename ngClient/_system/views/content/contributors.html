@@ -1,0 +1,101 @@
+﻿<div data-ng-controller="ContributorsController as vm">
+    <!--
+
+    This page has been created to let you make your first pull request to our project.
+    To read more about it, please visit: https://github.com/forCrowd/WealthEconomy/wiki/Your-first-pull-request
+
+    <tr>
+        <td>
+            <span>[Your name]</span>
+            <span class="nickname">[Your nickname]</span>
+        </td>
+        <td>[Profession (Optional): In case you would like to contribute, in which way you could contribute to our project? Coder, designer, tester, documentation, support, social media?]</td>
+        <td>[Skills (Optional): What would be your skills (max 5)?]</td>
+        <td>[Years of Experience (Optional): Years of experience in your area?]</td>
+        <td>
+            <ul class="list-inline">
+                <li>
+                    <a href="[Link to your website]" target="_blank"><span class="fa fa-[related Font Awesome icon] fa-lg" aria-hidden="true"></span></a>
+                </li>
+            </ul>
+        </td>
+        <td>
+            <span am-time-ago="{{ vm.getDate([day], [month], [year]) }}"></span>
+        </td>
+    </tr>
+
+    -->
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>
+                Contributors
+            </h2>
+            <p class="bg-info g-mb-30">
+                This is a fun attempt on welcoming new contributors. For details, <a href="" target="_blank">click here</a>.<br />
+                If you have a question or an issue, please feel free to contact us on <a href="https://twitter.com/forCrowd" target="_blank">twitter</a> or send an email to <a href="mailto:contact@forcrowd.org">contact@forcrowd.org</a>.
+            </p>
+            <p class="g-mb-30">
+                Here is the list of contributors to this project.
+            </p>
+            <div class="table-contributors">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Profession
+                                </th>
+                                <th>
+                                    Skills
+                                </th>
+                                <th>
+                                    Years of Experience
+                                </th>
+                                <th>
+                                    Contacts
+                                </th>
+                                <th>
+                                    Joined on
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span>Serkan Holat</span>
+                                    <span class="nickname">coni2k</span>
+                                </td>
+                                <td>Software Developer</td>
+                                <td>C#, ASP.NET, MS SQL, angularjs</td>
+                                <td>15+</td>
+                                <td>
+                                    <ul class="list-inline">
+                                        <li>
+                                            <a href="https://twitter.com/coni2k" target="_blank"><span class="fa fa-twitter fa-lg" aria-hidden="true"></span></a>
+                                        </li>
+                                        <li>
+                                            <a href="https://www.linkedin.com/in/serkanholat" target="_blank"><span class="fa fa-linkedin fa-lg" aria-hidden="true"></span></a>
+                                        </li>
+                                        <li>
+                                            <a href="mailto:serkan.holat@forcrowd.org" target="_blank"><span class="fa fa-envelope fa-lg" aria-hidden="true"></span></a>
+                                        </li>
+                                        <li>
+                                            <a href="http://forcrowd.org" target="_blank"><span class="fa fa-globe fa-lg" aria-hidden="true"></span></a>
+                                        </li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <span am-time-ago="{{ vm.getDate(16, 6, 2016) }}"></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
