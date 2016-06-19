@@ -1,5 +1,16 @@
 ### Changelog
 
+**0.59.0**
+
+* Contributors page
+https://github.com/forCrowd/WealthEconomy/issues/69
+* Sticky footer
+* Disqus minor fix
+* Menu minor layout fix
+* npm jshint package missing fix
+* Smtp settings initial port value fix
+* DatabaseConfig InitializeDatabase fix
+
 **0.58.0**
 
 * Description field for resource pool

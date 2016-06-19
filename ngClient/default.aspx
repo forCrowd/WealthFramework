@@ -13,7 +13,7 @@
     <link href="/_system/css/app.min.css?v=0.58.0" rel="stylesheet" />
 </head>
 <body data-ng-controller="DefaultController as vm">
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -27,10 +27,10 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a data-ng-href="/{{ vm.currentUser.UserName }}/new"><span class="fa fa-plus fa-lg" aria-hidden="true"></span> Create New</a>
+                        <a data-ng-href="/{{ vm.currentUser.UserName }}/new"><span class="fa fa-plus fa-lg g-mr-5" aria-hidden="true"></span>Create New</a>
                     </li>
                     <li>
-                        <a href="/_system/resourcePool/search"><span class="fa fa-search fa-lg" aria-hidden="true"></span> Search</a>
+                        <a href="/_system/resourcePool/search"><span class="fa fa-search fa-lg g-mr-5" aria-hidden="true"></span>Search</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -54,43 +54,47 @@
                 </ul>
             </div>
         </div>
-    </div>
+    </nav>
     <div class="container body-content">
-
         <div data-ng-view></div>
 
-        <footer>
-            <div class="row g-mt-20" data-ng-show="vm.displayFooterIcons">
-                <div class="col-md-12"></div>
-                <hr />
-                <div class="row">
-                    <div class="col-md-4 col-md-offset-2">
-                        <a class="btn btn-block btn-default" role="button" href="https://twitter.com/forCrowd" target="_blank">
-                            <span class="fa fa-twitter fa-lg" aria-hidden="true"></span>
-                            Follow us on Twitter
-                        </a>
-                    </div>
-                    <div class="col-md-4">
-                        <a class="btn btn-block btn-default" role="button" href="https://gitter.im/forCrowd/WealthEconomy" target="_blank">
-                            <span class="fa fa-git fa-lg" aria-hidden="true"></span>
-                            Chat with us on Gitter
-                        </a>
-                    </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div data-ng-show="vm.disqusConfig.disqus_identifier !== ''">
+                    <hr />
+                    <dir-disqus config="vm.disqusConfig"></dir-disqus>
                 </div>
-                <div class="row g-mt-20">
-                    <div class="col-md-4 col-md-offset-2">
-                        <a class="btn btn-block btn-default" role="button" href="https://github.com/forCrowd/WealthEconomy" target="_blank">
-                            <span class="fa fa-github fa-lg" aria-hidden="true"></span>
-                            View project on Github
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <hr />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="contacts pull-left">
+                        <a href="http://forcrowd.org" target="_blank">
+                            <img src="/_system/images/forCrowd_Logo_142x30.jpg?v=0.59.0" alt="Logo" />
                         </a>
-                    </div>
-                    <div class="col-md-4">
-                        <a class="btn btn-block btn-default" role="button" href="mailto:contact.wealth@forcrowd.org" target="_blank">
-                            <span class="fa fa-envelope fa-lg" aria-hidden="true"></span>
-                            Send us an email
+                        <a href="https://twitter.com/forCrowd" target="_blank" class="g-ml-40">
+                            <i class="fa fa-twitter fa-lg" aria-hidden="true"></i>
                         </a>
-                    </div>
-<%--                    <div class="col-md-4">
+                        <a href="https://github.com/forCrowd/WealthEconomy" target="_blank" class="g-ml-20">
+                            <i class="fa fa-github fa-lg" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://gitter.im/forCrowd/WealthEconomy" target="_blank" class="g-ml-20">
+                            <i class="fa fa-git fa-lg" aria-hidden="true"></i>
+                        </a>
+                        <a href="mailto:contact.wealth@forcrowd.org" target="_blank" class="g-ml-20">
+                            <i class="fa fa-envelope fa-lg" aria-hidden="true"></i>
+                        </a>
+
+                        <%--<div class="col-md-4">
                         <a class="btn btn-block btn-default" role="button" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YPBCBJ3ANDL4Q" target="_blank">
                             <span class="fa fa-paypal fa-lg" aria-hidden="true"></span>
                             Invest in us with Paypal
@@ -109,29 +113,17 @@
                             </p>
                         </div>
                     </div>--%>
-
-                    <!--<a class="btn btn-primary" href="https://flattr.com/profile/forCrowd" role="button" target="_blank">Flattr</a>-->
-                    <!--<a class="btn btn-primary" href="https://gratipay.com/forCrowd/" role="button" target="_blank">Gratipay</a>-->
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div data-ng-show="vm.disqusConfig.disqus_identifier !== ''">
-                        <hr />
-                        <dir-disqus config="vm.disqusConfig"></dir-disqus>
+                        <%--<a class="btn btn-primary" href="https://flattr.com/profile/forCrowd" role="button" target="_blank">Flattr</a>--%>
+                        <%--<a class="btn btn-primary" href="https://gratipay.com/forCrowd/" role="button" target="_blank">Gratipay</a>--%>
                     </div>
-                    <div class="versionText">
-                        <span data-ng-bind="vm.applicationInfo.CurrentVersionText"></span>
-                    </div>
-                    <div class="brandLink">
-                        <a href="http://forcrowd.org" target="_blank">
-                            <img src="/_system/images/forCrowd_Logo_189x40.jpg?v=0.53.0" alt="Logo" />
-                        </a>
+                    <div class="pull-right">
+                        <a href="/_system/content/contributors">Contributors</a>
+                        - <small>Version: <span data-ng-bind="vm.applicationInfo.CurrentVersionText"></span></small>
                     </div>
                 </div>
             </div>
-        </footer>
-    </div>
+        </div>
+    </footer>
 
     <!-- lib.js -->
     <script src="/_system/js/lib/lib.min.js?v=0.58.0"></script>
