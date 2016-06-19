@@ -6,7 +6,7 @@ namespace forCrowd.WealthEconomy.WebApi
     {
         public static void Initialize()
         {
-            //DbUtility.InitializeDatabase();
+            DbUtility.InitializeDatabase();
         }
     }
 }

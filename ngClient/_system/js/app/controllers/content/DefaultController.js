@@ -146,8 +146,8 @@
             vm.displayFooterIcons = $location.path() === '/';
 
             // Load related disqus
-            if (typeof current.enableDisqus !== 'undefined' && current.enableDisqus) {
-                vm.disqusConfig.disqus_identifier = disqusShortname + $location.path().replace(/\//g, '_');
+            if (typeof current.enableDisqus !== 'undefined' && current.enableDisqus && vm.disqusConfig.disqus_shortname !== '') {
+                vm.disqusConfig.disqus_identifier = vm.disqusConfig.disqus_shortname + $location.path().replace(/\//g, '_');
                 vm.disqusConfig.disqus_url = $location.absUrl().substring(0, $location.absUrl().length - $location.url().length + $location.path().length);
             } else {
                 vm.disqusConfig.disqus_identifier = '';

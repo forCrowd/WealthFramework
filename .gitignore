@@ -13,6 +13,7 @@
 packages
 
 # NPM packages
+ngClient/npm-debug.log
 ngClient/node_modules
 
 # Bower packages
