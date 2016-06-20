@@ -3,6 +3,7 @@
 **0.60.0**
 
 * New contributor: coni2k
+* New contributor: ianthine
 
 **0.59.0**
 
