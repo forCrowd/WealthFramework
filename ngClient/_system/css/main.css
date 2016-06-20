@@ -1,5 +1,11 @@
-﻿body {
-    font-size: 15px;
+﻿html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 90px;
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -9,6 +15,23 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+hr {
+    border-color: #ddd;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 90px;
+}
+
+.footer .contacts a:hover,
+.footer .contacts a:focus {
+    text-decoration: none;
 }
 
 .btn-link:hover,
@@ -54,47 +77,9 @@ textarea {
 
 /* #endregion */
 
-.versionText {
-    border-top: 1px solid #333;
-    font-size: 90%;
-    margin-top: 20px;
-    padding: 20px 0;
-}
-
-/* Brand styling - Probably css class names can be better, parent child structure? */
-.brandLink,
-.brandLink > a,
-.brandLink > a:focus,
-.brandLink > a:hover {
-    text-decoration: none;
-    line-height: 1em;
-}
-
-.brandLinkImage {
-    margin-right: 10px;
-    float: left;
-}
-
-.brandLinkText {
-    font-family: 'Century Gothic';
-    text-decoration: none;
-    line-height: 1em;
-}
-
-.brandLinkPrimary {
-    color: #b08b5f;
-    font-size: 16px;
-}
-
-.brandLinkSecondary {
-    color: #2B2A28;
-    font-size: 11px;
-}
-
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding: 20px 15px;
 }
 
 .bg-info {
@@ -458,6 +443,10 @@ input[type="checkbox"].input-validation-error {
 
 /* Margin Spaces */
 .g-mt-10 {
+    margin-top: 5px;
+}
+
+.g-mt-10 {
     margin-top: 10px;
 }
 
@@ -495,6 +484,10 @@ input[type="checkbox"].input-validation-error {
 
 .g-mt-100 {
     margin-top: 100px;
+}
+
+.g-mb-10 {
+    margin-bottom: 5px;
 }
 
 .g-mb-10 {
@@ -573,6 +566,10 @@ input[type="checkbox"].input-validation-error {
     margin-bottom: 100px;
 }
 
+.g-ml-5 {
+    margin-left: 5px;
+}
+
 .g-ml-10 {
     margin-left: 10px;
 }
@@ -611,6 +608,10 @@ input[type="checkbox"].input-validation-error {
 
 .g-ml-100 {
     margin-left: 100px;
+}
+
+.g-mr-5 {
+    margin-right: 5px;
 }
 
 .g-mr-10 {
@@ -756,6 +757,47 @@ input[type="checkbox"].input-validation-error {
 
     .table-search .td-width {
         width: 55%;
+    }
+
+/* #endregion */
+
+/* #region table-contributors */
+
+.table-contributors {
+    border-left: none;
+}
+
+    .table-contributors thead {
+        border-bottom: solid 1px #ddd;
+    }
+
+    .table-contributors tbody tr {
+        height: 6em;
+    }
+
+    .table-contributors td {
+        vertical-align: middle !important;
+    }
+
+    .table-contributors td span {
+        display: block;
+    }
+
+    .table-contributors .nickname {
+        font-style: italic;
+    }
+
+    .table-contributors ul {
+        margin: 0;
+    }
+
+    .table-contributors a:active,
+    .table-contributors a:hover {
+        text-decoration: none;
+    }
+
+    .table-contributors td small {
+        font-style: italic;
     }
 
 /* #endregion */
