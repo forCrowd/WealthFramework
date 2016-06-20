@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.60.1**
+
+* Contributors page fixes
+
 **0.60.0**
 
 * New contributor: coni2k
