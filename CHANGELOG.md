@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.61.0**
+
+* New contributor: eliza
+
 **0.60.0**
 
 * New contributor: coni2k
