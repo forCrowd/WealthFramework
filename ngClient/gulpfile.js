@@ -25,7 +25,7 @@ var appMinCss = 'app.min.css',
     appCssSrc = [appCssRoot + '/*.css', appJsRoot + '/directives/**/*.css', '!' + appCssRoot + '/' + appCss, '!' + appCssRoot + '/' + appMinCss];
 
 // lib variables
-var libJsSrcRoot = './bower_components',
+var libJsSrcRoot = './node_modules',
     libJsSourceMapRoot = libJsSrcRoot.substring(1);
 
 // lib.js variables
@@ -38,7 +38,7 @@ var libMinJs = 'lib.min.js',
     libJsSrcRoot + '/angular-route/angular-route.js', // angularRoute
     libJsSrcRoot + '/angular-sanitize/angular-sanitize.js', // angularSanitize
     libJsSrcRoot + '/angular-moment/angular-moment.js', // angularMoment
-    libJsSrcRoot + '/datajs/datajs.js', // datajs
+    libJsSrcRoot + '/datajs/lib/datajs.js', // datajs
     libJsSrcRoot + '/breeze-client/build/breeze.base.debug.js', // breeze
     libJsSrcRoot + '/breeze-client/build/adapters/breeze.ajax.angular.js', // breezeAjaxAngular
     libJsSrcRoot + '/breeze-client/build/adapters/breeze.dataService.odata.js', // breezeDataServiceOData
@@ -49,8 +49,8 @@ var libMinJs = 'lib.min.js',
     libJsSrcRoot + '/angular-google-analytics/dist/angular-google-analytics.js', // googleAnalyticsAngular
     libJsSrcRoot + '/angular-utils-disqus/dirDisqus.js', // disqusAngular
     libJsSrcRoot + '/bootstrap/dist/js/bootstrap.js', // bootstrap
-    libJsSrcRoot + '/respond/dest/respond.js', // respond
-    libJsSrcRoot + '/angular-bootstrap/ui-bootstrap-tpls.js', // bootstrapAngular
+    libJsSrcRoot + '/respond.js/dest/respond.js', // respond
+    libJsSrcRoot + '/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js', // bootstrapAngular
     libJsSrcRoot + '/highcharts/highcharts.src.js', // highcharts
     libJsSrcRoot + '/highcharts-ng/dist/highcharts-ng.js', // highchartsAngular
     libJsSrcRoot + '/toastr/toastr.js', // toastr
@@ -65,7 +65,7 @@ var libMinCss = 'lib.min.css',
     libJsSrcRoot + '/bootstrap/dist/css/bootstrap.css', // bootstrap
     libJsSrcRoot + '/font-awesome/css/font-awesome.css', // fontAwesome
     libJsSrcRoot + '/breeze-client-labs/breeze.directives.css', // breezeDirectivesCss
-    libJsSrcRoot + '/toastr/toastr.css', // toastrCss
+    libJsSrcRoot + '/toastr/build/toastr.css', // toastrCss
     ],
     libCssDest = './_system/css/lib';
 

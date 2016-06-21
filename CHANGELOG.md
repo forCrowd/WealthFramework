@@ -1,5 +1,10 @@
 ### Changelog
 
+**0.61.0**
+
+* bower was replaced with npm
+https://github.com/forCrowd/WealthEconomy/issues/76
+
 **0.60.1**
 
 * Contributors page fixes
