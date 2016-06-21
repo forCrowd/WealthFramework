@@ -152,7 +152,6 @@
     <Content Include="_system\views\resourcePool\resourcePoolManage.html" />
     <Content Include="_system\views\resourcePool\resourcePoolView.html" />
     <None Include="_system\css\main.css" />
-    <None Include="bower.json" />
     <None Include="package.json" />
     <None Include="Properties\PublishProfiles\wealth.pubxml" />
     <None Include="Properties\PublishProfiles\wealth.test.pubxml" />
