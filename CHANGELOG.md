@@ -4,6 +4,7 @@
 
 * Contributors page fix
 * Readme update
+* New contributor: osengelli
 
 **0.61.0**
 
