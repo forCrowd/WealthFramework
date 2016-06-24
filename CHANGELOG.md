@@ -1,5 +1,10 @@
 ### Changelog
 
+**0.61.2**
+
+* ngClient - appSettings.js doesn't get copied from 'Setup' folder bug fix
+https://github.com/forCrowd/WealthEconomy/issues/79
+
 **0.61.1**
 
 * Contributors page fix

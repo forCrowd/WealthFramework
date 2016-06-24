@@ -5,6 +5,7 @@ var gulp = require('gulp'),
     clean = require('gulp-clean'),
     concat = require('gulp-concat'),
     cssmin = require('gulp-cssmin'),
+    fs = require('fs'),
     jshint = require('gulp-jshint'),
     rename = require('gulp-rename'),
     sourcemaps = require('gulp-sourcemaps'),
@@ -16,13 +17,21 @@ var appMinJs = 'app.min.js',
     appJs = appMinJs.replace('.min', ''),
     appJsRoot = './_system/js/app',
     appJsSourceMapRoot = appJsRoot.substring(1),
-    appJsSrc = [appJsRoot + '/**/*.js', '!' + appJsRoot + '/' + appJs, '!' + appJsRoot + '/' + appMinJs];
+    appJsSrc = [appJsRoot + '/**/*.js',
+        '!' + appJsRoot + '/' + appJs,
+        '!' + appJsRoot + '/' + appMinJs];
 
 // app.css variables
 var appMinCss = 'app.min.css',
     appCss = appMinCss.replace('.min', ''),
     appCssRoot = './_system/css',
-    appCssSrc = [appCssRoot + '/*.css', appJsRoot + '/directives/**/*.css', '!' + appCssRoot + '/' + appCss, '!' + appCssRoot + '/' + appMinCss];
+    appCssSrc = [appCssRoot + '/*.css',
+        appJsRoot + '/directives/**/*.css',
+        '!' + appCssRoot + '/' + appCss,
+        '!' + appCssRoot + '/' + appMinCss];
+
+// appSettings.js variables
+var appSettingsJs = 'appSettings.js';
 
 // lib variables
 var libJsSrcRoot = './node_modules',
@@ -77,7 +86,7 @@ var fontsSrc = [
     fontsDest = './_system/css/fonts';
 
 // default
-gulp.task('default', [appJs, appCss, libJs, libCss, 'watch']);
+gulp.task('default', [appJs, appCss, appSettingsJs, libJs, libCss, 'watch']);
 
 // app.js: jshhint + concat all into app.js + minify all into app.min.js
 gulp.task(appJs, function () {
@@ -106,6 +115,24 @@ gulp.task(appCss, function () {
         .pipe(gulp.dest(appCssRoot));
 });
 
+// appSettings.js: if it doesn't exist, copy '/appSettings/Setup/appSettings.js' file to '/appSettings' folder
+gulp.task(appSettingsJs, function () {
+
+    var appSettingsRoot = './_system/js/appSettings';
+
+    fs.stat(appSettingsRoot + '/' + appSettingsJs, function (err, stat) {
+
+        // If there is no error, it means file is already there. No need to copy from setup, move along!
+        if (err === null) {
+            return;
+        }
+
+        return gulp.src(appSettingsRoot + '/Setup/' + appSettingsJs)
+                .pipe(gulp.dest(appSettingsRoot));
+    });
+
+});
+
 // lib.js: jshhint + concat all into lib.js + minify all into lib.min.js
 gulp.task(libJs, function () {
 
@@ -117,8 +144,7 @@ gulp.task(libJs, function () {
         .pipe(uglify())
         .on('error', errorHandler)
         .pipe(sourcemaps.write('./', { sourceRoot: libJsSourceMapRoot }))
-        .pipe(gulp.dest(libJsDest))
-    ;
+        .pipe(gulp.dest(libJsDest));
 });
 
 // lib.css: copy font awesome fonts + concat all into lib.css + minify all into lib.min.css

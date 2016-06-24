@@ -208,13 +208,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <Target Name="BeforeBuild">
-    <CreateItem Include="$(ProjectDir)_system\js\appSettings\*.js">
-      <Output TaskParameter="Include" ItemName="ExistingFiles" />
-    </CreateItem>
-    <CreateItem Include="$(ProjectDir)_system\js\appSettings\Setup\*.js" Exclude="@(ExistingFiles -> '$(ProjectDir)_system\js\appSettings\Setup\%(FileName)%(Extension)')">
-      <Output TaskParameter="Include" ItemName="NewFiles" />
-    </CreateItem>
-    <Copy SourceFiles="@(NewFiles)" DestinationFolder="$(ProjectDir)_system\js\appSettings" />
-  </Target>
 </Project>
