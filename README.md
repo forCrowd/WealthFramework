@@ -3,18 +3,18 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/forCrowd.svg?style=social)](https://twitter.com/forCrowd)
 [![Join the chat at https://gitter.im/forCrowd/WealthEconomy](https://badges.gitter.im/forCrowd/WealthEconomy.svg)](https://gitter.im/forCrowd/WealthEconomy?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-An experimental, open source crowd investment platform
+Experimental ideas on improving how the economy works
 
 ## Setup
 
-### Build and run
+### Getting Started
+[Getting Started](https://github.com/forcrowd/WealthEconomy/wiki/Getting-Started)
 
-* If you don't already have it installed, download and install [node.js](https://nodejs.org/)
-* Open the solution with Visual Studio, it will restore node & bower packages
-* Build the solution and restore nuget packages
-* Optional: Update the files under "WebApi\Configs" and "ngClient\\_system\js\appSettings" folders with your own settings
-* Run both "WebApi" and "ngClient" projects
-* Navigate to [http://localhost:15002/](http://localhost:15002/) with your browser
+### First Mission: Contributors Page
+This is an experimental attempt to help you to get familiar with our project and make your first pull request.
+
+Follow this tutorial to get started:
+[First Mission](https://github.com/forCrowd/WealthEconomy/wiki/First-Mission)
 
 ### Deployment
 
