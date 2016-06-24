@@ -58,7 +58,7 @@
                     }
                 case EnvironmentType.Live:
                     {
-                        // TODO Get rid of this ugliness asap! / SH - 04 Jan. '16
+                        // TODO Get rid of this ugliness asap! / coni2k - 04 Jan. '16
                         // This email type is only a notification to the admin
                         var notificationToAdmin = message.Subject == "New external login" ||
                             message.Subject == "New anonymous login";

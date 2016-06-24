@@ -777,7 +777,7 @@ describe('ng Element', function () {
         // TODO Manually update?!
         directIncomeField.setIndexIncome();
 
-        // TODO Doesn't work at the moment, fix it later / SH - 27 Oct. '15
+        // TODO Doesn't work at the moment, fix it later / coni2k - 27 Oct. '15
         //expect(element.totalIncome()).toBe(2750);
 
         // TODO Update / remove
@@ -862,7 +862,7 @@ describe('ng Element', function () {
         // TODO Manually update?!
         directIncomeField.setIndexIncome();
 
-        // TODO Doesn't work at the moment, fix it later / SH - 27 Oct. '15
+        // TODO Doesn't work at the moment, fix it later / coni2k - 27 Oct. '15
         //expect(element.totalIncomeAverage()).toBe(2750 / 2);
 
         // TODO Update / remove
