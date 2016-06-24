@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.62.0**
+
+* New contributor: osengelli
+
 **0.61.0**
 
 * bower was replaced with npm
