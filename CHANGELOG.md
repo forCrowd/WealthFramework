@@ -1,5 +1,10 @@
 ### Changelog
 
+**0.61.1**
+
+* Contributors page fix
+* Readme update
+
 **0.61.0**
 
 * bower was replaced with npm
