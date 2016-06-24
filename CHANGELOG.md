@@ -9,6 +9,7 @@ https://github.com/forCrowd/WealthEconomy/issues/79
 
 * Contributors page fix
 * Readme update
+* New contributor: osengelli
 
 **0.61.0**
 
