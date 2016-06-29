@@ -129,7 +129,7 @@
     <script src="/_system/js/lib/lib.min.js?v=0.58.0"></script>
 
     <!-- app.js -->
-    <script src="/_system/js/app/app.min.js?v=0.60.1"></script>
+    <script src="/_system/js/app/app.min.js?v=0.62.0"></script>
 
     <!-- appSettings.js -->
     <script src="/_system/js/appSettings/appSettings.js?v=0.49.0"></script>

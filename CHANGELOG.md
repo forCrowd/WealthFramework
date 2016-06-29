@@ -1,5 +1,13 @@
 ### Changelog
 
+**0.62.0**
+
+* Typescript
+https://github.com/forCrowd/WealthEconomy/issues/88
+* Resharper
+https://github.com/forCrowd/WealthEconomy/issues/89
+* Comments signature update - coni2k
+
 **0.61.3**
 
 * New contributor: mrjsykes
@@ -365,7 +373,7 @@ Now both cases call updateAnonymousChanges method which handles this case correc
 
 **0.40.0**
 
-* Email confirmation has implemented
+* Email confirmation was implemented
 * Survey.docx: A simple survey about the content.
 * logger.js minor improvements
 * forEach, some, filter functions instead of 'for' loops for arrays

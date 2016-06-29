@@ -11,7 +11,7 @@ namespace forCrowd.WealthEconomy.WebApi
         // Configuration order is important
         // 1a. CorsConfig - 1b. ConfigureAuth
         // 2a. config.SuppressDefaultHostAuthentication() - 2b. MessageHandlers + ServerCompressionHandler
-        // TODO There should be more (maybe routing?) - Try to make the rest clear as well / SH - 13 Jan. '16
+        // TODO There should be more (maybe routing?) - Try to make the rest clear as well / coni2k - 13 Jan. '16
         // More info on Cors part; http://stackoverflow.com/a/25758949/1087768
         public void Configuration(IAppBuilder app)
         {
