@@ -2,35 +2,37 @@
 'use strict';
 
 var gulp = require('gulp'),
-    clean = require('gulp-clean'),
     concat = require('gulp-concat'),
     cssmin = require('gulp-cssmin'),
     fs = require('fs'),
-    jshint = require('gulp-jshint'),
+    jshint = require('gulp-jshint'), // Obsolete?
     rename = require('gulp-rename'),
     sourcemaps = require('gulp-sourcemaps'),
-    tap = require('gulp-tap'),
+    ts = require("gulp-typescript"),
     uglify = require('gulp-uglify');
 
+// Common
+var jsRoot = "./_system/js";
+
 // app.js variables
-var appMinJs = 'app.min.js',
+var appJsConfig = jsRoot + "/tsconfig.json",
+    appMinJs = 'app.min.js',
     appJs = appMinJs.replace('.min', ''),
-    appJsRoot = './_system/js/app',
+    appJsRoot = jsRoot + '/app',
     appJsSourceMapRoot = appJsRoot.substring(1),
-    appJsSrc = [appJsRoot + '/**/*.js',
-        '!' + appJsRoot + '/' + appJs,
-        '!' + appJsRoot + '/' + appMinJs];
+    appJsSrc = [appJsRoot + '/**/*.ts'];
 
 // app.css variables
 var appMinCss = 'app.min.css',
     appCss = appMinCss.replace('.min', ''),
     appCssRoot = './_system/css',
     appCssSrc = [appCssRoot + '/*.css',
-        appJsRoot + '/directives/**/*.css',
+        appJsRoot + '/directives/**/*.css', // Angular directives
         '!' + appCssRoot + '/' + appCss,
         '!' + appCssRoot + '/' + appMinCss];
 
 // appSettings.js variables
+var appSettingsRoot = jsRoot + '/appSettings';
 var appSettingsJs = 'appSettings.js';
 
 // lib variables
@@ -65,7 +67,7 @@ var libMinJs = 'lib.min.js',
     libJsSrcRoot + '/toastr/toastr.js', // toastr
     libJsSrcRoot + '/source-map/dist/source-map.js' // sourceMap
     ],
-    libJsDest = './_system/js/lib';
+    libJsDest = jsRoot + "/lib";
 
 // lib.css variables
 var libMinCss = 'lib.min.css',
@@ -91,11 +93,11 @@ gulp.task('default', [appJs, appCss, appSettingsJs, libJs, libCss, 'watch']);
 // app.js: jshhint + concat all into app.js + minify all into app.min.js
 gulp.task(appJs, function () {
 
-    return gulp.src(appJsSrc)
-        .pipe(jshint())
-        .pipe(jshint.reporter('jshint-stylish'))
+    var tsProject = ts.createProject(appJsConfig, { outFile: appJs });
+
+    return tsProject.src()
         .pipe(sourcemaps.init())
-        .pipe(concat(appJs, { newLine: '\r\n' }))
+        .pipe(ts(tsProject)).js
         .pipe(gulp.dest(appJsRoot))
         .pipe(rename(appMinJs))
         .pipe(uglify())
@@ -103,6 +105,22 @@ gulp.task(appJs, function () {
         .pipe(sourcemaps.write('./', { sourceRoot: appJsSourceMapRoot }))
         .pipe(gulp.dest(appJsRoot));
 });
+
+// Old app.js, before typescript - Obsolete
+//// app.js: jshhint + concat all into app.js + minify all into app.min.js
+//gulp.task(appJs, function () {
+//    return gulp.src(appJsSrc)
+//        .pipe(jshint())
+//        .pipe(jshint.reporter('jshint-stylish'))
+//        .pipe(sourcemaps.init())
+//        .pipe(concat(appJs, { newLine: '\r\n' }))
+//        .pipe(gulp.dest(appJsRoot))
+//        .pipe(rename(appMinJs))
+//        .pipe(uglify())
+//        .on('error', errorHandler)
+//        .pipe(sourcemaps.write('./', { sourceRoot: appJsSourceMapRoot }))
+//        .pipe(gulp.dest(appJsRoot));
+//});
 
 // app.css: concat all into app.css + minify all into app.min.css
 gulp.task(appCss, function () {
@@ -118,13 +136,11 @@ gulp.task(appCss, function () {
 // appSettings.js: if it doesn't exist, copy '/appSettings/Setup/appSettings.js' file to '/appSettings' folder
 gulp.task(appSettingsJs, function () {
 
-    var appSettingsRoot = './_system/js/appSettings';
-
     fs.stat(appSettingsRoot + '/' + appSettingsJs, function (err, stat) {
 
         // If there is no error, it means file is already there. No need to copy from setup, move along!
         if (err === null) {
-            return;
+            return null;
         }
 
         return gulp.src(appSettingsRoot + '/Setup/' + appSettingsJs)

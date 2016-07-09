@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -22,6 +23,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -55,64 +57,64 @@
     <Content Include="_system\css\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="_system\css\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="_system\css\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="_system\js\app\config\authorization.ts" />
+    <None Include="_system\js\app\config\breeze.ts" />
+    <None Include="_system\js\app\config\exceptionHandlerExtension.ts" />
+    <None Include="_system\js\app\config\googleAnalytics.ts" />
+    <None Include="_system\js\app\config\route.ts" />
+    <None Include="_system\js\app\controllers\account\AccountController.ts" />
+    <None Include="_system\js\app\controllers\account\AccountEditController.ts" />
+    <None Include="_system\js\app\controllers\account\AddPasswordController.ts" />
+    <None Include="_system\js\app\controllers\account\ChangeEmailController.ts" />
+    <None Include="_system\js\app\controllers\account\ChangePasswordController.ts" />
+    <None Include="_system\js\app\controllers\account\ChangeUserNameController.ts" />
+    <None Include="_system\js\app\controllers\account\ConfirmEmailController.ts" />
+    <None Include="_system\js\app\controllers\account\LoginController.ts" />
+    <None Include="_system\js\app\controllers\account\ProfileController.ts" />
+    <None Include="_system\js\app\controllers\account\RegisterController.ts" />
+    <None Include="_system\js\app\controllers\account\ResetPasswordController.ts" />
+    <None Include="_system\js\app\controllers\account\SocialLoginsController.ts" />
+    <None Include="_system\js\app\controllers\content\AllInOneController.ts" />
+    <None Include="_system\js\app\controllers\content\BasicsController.ts" />
+    <None Include="_system\js\app\controllers\content\ContributorsController.ts" />
+    <None Include="_system\js\app\controllers\content\DefaultController.ts" />
+    <None Include="_system\js\app\controllers\content\IntroductionController.ts" />
+    <None Include="_system\js\app\controllers\content\KnowledgeIndexController.ts" />
+    <None Include="_system\js\app\controllers\content\NotFoundController.ts" />
+    <None Include="_system\js\app\controllers\content\obsolete\ClosingNotesController.ts" />
+    <None Include="_system\js\app\controllers\content\obsolete\FairShareIndexSampleController.ts" />
+    <None Include="_system\js\app\controllers\content\obsolete\ResourcePoolRateSampleController.ts" />
+    <None Include="_system\js\app\controllers\content\PriorityIndexController.ts" />
+    <None Include="_system\js\app\controllers\content\TotalCostIndexController.ts" />
+    <None Include="_system\js\app\controllers\resourcePool\ResourcePoolManageController.ts" />
+    <None Include="_system\js\app\controllers\resourcePool\ResourcePoolSearchController.ts" />
+    <None Include="_system\js\app\controllers\resourcePool\ResourcePoolViewController.ts" />
+    <None Include="_system\js\app\directives\resourcePoolEditor\resourcePoolEditor.ts" />
+    <None Include="_system\js\app\entities\Element.ts" />
+    <None Include="_system\js\app\entities\ElementCell.ts" />
+    <None Include="_system\js\app\entities\ElementField.ts" />
+    <None Include="_system\js\app\entities\ElementItem.ts" />
+    <None Include="_system\js\app\entities\Enums.ts" />
+    <None Include="_system\js\app\entities\ResourcePool.ts" />
+    <None Include="_system\js\app\entities\User.ts" />
+    <None Include="_system\js\app\entities\UserElementCell.ts" />
+    <None Include="_system\js\app\entities\UserElementField.ts" />
+    <None Include="_system\js\app\entities\UserResourcePool.ts" />
+    <None Include="_system\js\app\factories\applicationFactory.ts" />
+    <None Include="_system\js\app\factories\dataContext.ts" />
+    <None Include="_system\js\app\factories\entityManagerFactory.ts" />
+    <None Include="_system\js\app\factories\locationHistory.ts" />
+    <None Include="_system\js\app\factories\logger.ts" />
+    <None Include="_system\js\app\factories\resourcePoolFactory.ts" />
+    <None Include="_system\js\app\filters\enumConverter.ts" />
+    <None Include="_system\js\app\filters\numberSymbol.ts" />
+    <None Include="_system\js\app\filters\percentage.ts" />
+    <None Include="_system\js\app\main.ts" />
+    <None Include="_system\js\appSettings\appSettings.js" />
     <None Include="_system\js\appSettings\Setup\0 Readme.txt" />
     <None Include="_system\js\appSettings\Setup\appSettings.js" />
-    <None Include="_system\js\app\config\authorization.js" />
-    <None Include="_system\js\app\config\breeze.js" />
-    <None Include="_system\js\app\config\exceptionHandlerExtension.js" />
-    <None Include="_system\js\app\config\googleAnalytics.js" />
-    <None Include="_system\js\app\config\route.js" />
-    <None Include="_system\js\app\controllers\account\AccountEditController.js" />
-    <None Include="_system\js\app\controllers\account\AddPasswordController.js" />
-    <None Include="_system\js\app\controllers\account\ChangeEmailController.js" />
-    <None Include="_system\js\app\controllers\account\ChangePasswordController.js" />
-    <None Include="_system\js\app\controllers\account\ConfirmEmailController.js" />
-    <None Include="_system\js\app\controllers\account\LoginController.js" />
-    <None Include="_system\js\app\controllers\account\RegisterController.js" />
-    <None Include="_system\js\app\controllers\account\ResetPasswordController.js" />
-    <None Include="_system\js\app\controllers\content\AllInOneController.js" />
-    <None Include="_system\js\app\controllers\content\BasicsController.js" />
-    <None Include="_system\js\app\controllers\content\DefaultController.js" />
-    <None Include="_system\js\app\controllers\content\IntroductionController.js" />
-    <None Include="_system\js\app\controllers\content\KnowledgeIndexController.js" />
-    <None Include="_system\js\app\controllers\content\obsolete\FairShareIndexSampleController.js" />
-    <None Include="_system\js\app\controllers\content\obsolete\ResourcePoolRateSampleController.js" />
-    <None Include="_system\js\app\controllers\content\PriorityIndexController.js" />
-    <None Include="_system\js\app\controllers\content\TotalCostIndexController.js" />
-    <None Include="_system\js\app\controllers\resourcePool\ResourcePoolManageController.js" />
-    <None Include="_system\js\app\controllers\resourcePool\ResourcePoolViewController.js" />
     <None Include="_system\js\app\directives\resourcePoolEditor\resourcePoolEditor.css" />
-    <None Include="_system\js\appSettings\appSettings.js" />
-    <None Include="_system\js\app\controllers\account\SocialLoginsController.js" />
-    <None Include="_system\js\app\controllers\account\AccountController.js" />
-    <None Include="_system\js\app\controllers\account\ChangeUserNameController.js" />
-    <None Include="_system\js\app\controllers\account\ProfileController.js" />
-    <None Include="_system\js\app\controllers\content\obsolete\ClosingNotesController.js" />
-    <None Include="_system\js\app\controllers\content\NotFoundController.js" />
-    <None Include="_system\js\app\controllers\resourcePool\ResourcePoolSearchController.js" />
-    <Content Include="_system\js\app\controllers\content\ContributorsController.js" />
     <Content Include="_system\js\app\directives\resourcePoolEditor\resourcePoolEditor.html" />
-    <None Include="_system\js\app\directives\resourcePoolEditor\resourcePoolEditor.js" />
-    <None Include="_system\js\app\entities\Element.js" />
-    <None Include="_system\js\app\entities\ElementCell.js" />
-    <None Include="_system\js\app\entities\ElementField.js" />
-    <None Include="_system\js\app\entities\ElementItem.js" />
-    <None Include="_system\js\app\entities\Enums.js" />
-    <None Include="_system\js\app\entities\ResourcePool.js" />
-    <None Include="_system\js\app\entities\User.js" />
-    <None Include="_system\js\app\entities\UserElementCell.js" />
-    <None Include="_system\js\app\entities\UserElementField.js" />
-    <None Include="_system\js\app\entities\UserResourcePool.js" />
-    <None Include="_system\js\app\factories\applicationFactory.js" />
-    <None Include="_system\js\app\factories\dataContext.js" />
-    <None Include="_system\js\app\factories\entityManagerFactory.js" />
-    <None Include="_system\js\app\factories\locationHistory.js" />
-    <None Include="_system\js\app\factories\logger.js" />
-    <None Include="_system\js\app\factories\resourcePoolFactory.js" />
-    <None Include="_system\js\app\filters\ngEnum.js" />
-    <None Include="_system\js\app\filters\numberSymbol.js" />
-    <None Include="_system\js\app\filters\percentage.js" />
-    <None Include="_system\js\app\main.js" />
     <Content Include="_system\views\account\confirmNavigateAway.html" />
     <Content Include="_system\views\account\profile.html" />
     <Content Include="_system\views\account\account.html" />
@@ -135,6 +137,7 @@
     <Content Include="_system\views\content\implementation.html" />
     <Content Include="_system\views\content\introduction.html" />
     <Content Include="_system\views\content\knowledgeIndex.html" />
+    <None Include="_system\js\tsconfig.json" />
     <None Include="_system\views\content\obsolete\closingNotes.html" />
     <None Include="_system\views\content\obsolete\conclusion.html" />
     <None Include="_system\views\content\obsolete\fairShareIndexSample.html" />
@@ -161,6 +164,10 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <None Include="_system\js\lib\angularjs\angular.d.ts" />
+    <None Include="_system\js\lib\breeze\breeze.d.ts" />
+    <None Include="_system\js\lib\jquery\jquery.d.ts" />
+    <None Include="_system\js\lib\toastr\toastr.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <None Include="gulpfile.js" />
@@ -172,6 +179,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
@@ -181,6 +189,22 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <TypeScriptTarget>Unknown</TypeScriptTarget>
+    <TypeScriptJSXEmit>-1</TypeScriptJSXEmit>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
+    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>False</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <ProjectExtensions>
