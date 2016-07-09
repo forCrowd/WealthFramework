@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.62.0**
+
+* New contributor: Shai Aharoni
+
 **0.61.2**
 
 * ngClient - appSettings.js doesn't get copied from 'Setup' folder bug fix
