@@ -131,7 +131,7 @@
 
             // Since this method MUST return RedirectResult, cover the whole block with try & catch,
             // so it always redirect the user back to ngClient and won't get stuck on WebApi in case of an error
-            // SH - 16 Jan. '16
+            // coni2k - 16 Jan. '16
             try
             {
                 var content = await GetLoginInfoText();

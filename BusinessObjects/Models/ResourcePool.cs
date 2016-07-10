@@ -61,12 +61,12 @@ namespace forCrowd.WealthEconomy.BusinessObjects
         public bool UseFixedResourcePoolRate { get; set; }
 
         // TODO Doesn't have to be nullable but it requires a default value then which needs to be done
-        // by manually editing migration file which is not necessary at the moment / SH - 03 Aug. '15
+        // by manually editing migration file which is not necessary at the moment / coni2k - 03 Aug. '15
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public decimal? ResourcePoolRateTotal { get; private set; }
 
         // TODO Doesn't have to be nullable but it requires a default value then which needs to be done
-        // by manually editing migration file which is not necessary at the moment / SH - 03 Aug. '15
+        // by manually editing migration file which is not necessary at the moment / coni2k - 03 Aug. '15
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public int? ResourcePoolRateCount { get; private set; }
 

@@ -118,7 +118,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects
             return this;
         }
 
-        // TODO Where is DisableIndex my dear?! / SH - 11 Jun. '16
+        // TODO Where is DisableIndex my dear?! / coni2k - 11 Jun. '16
 
         void ValidateEnableIndex()
         {
