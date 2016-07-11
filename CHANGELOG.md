@@ -1,6 +1,6 @@
 ### Changelog
 
-**0.61.4**
+**0.62.0**
 
 * New contributor: Shai Aharoni
 
