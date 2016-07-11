@@ -1,14 +1,15 @@
 ﻿/// <binding ProjectOpened='default' />
 'use strict';
 
-var gulp = require('gulp'),
-    concat = require('gulp-concat'),
+var concat = require('gulp-concat'),
     cssmin = require('gulp-cssmin'),
     fs = require('fs'),
+    gulp = require('gulp'),
+    gutil = require('gutil'),
     jshint = require('gulp-jshint'), // Obsolete?
     rename = require('gulp-rename'),
     sourcemaps = require('gulp-sourcemaps'),
-    ts = require("gulp-typescript"),
+    typescript = require("gulp-typescript"),
     uglify = require('gulp-uglify');
 
 // Common
@@ -93,11 +94,11 @@ gulp.task('default', [appJs, appCss, appSettingsJs, libJs, libCss, 'watch']);
 // app.js: jshhint + concat all into app.js + minify all into app.min.js
 gulp.task(appJs, function () {
 
-    var tsProject = ts.createProject(appJsConfig, { outFile: appJs });
+    var project = typescript.createProject(appJsConfig, { outFile: appJs });
 
-    return tsProject.src()
+    return project.src()
         .pipe(sourcemaps.init())
-        .pipe(ts(tsProject)).js
+        .pipe(typescript(project, undefined, visualStudioReporter())).js
         .pipe(gulp.dest(appJsRoot))
         .pipe(rename(appMinJs))
         .pipe(uglify())
@@ -190,4 +191,14 @@ gulp.task('watch', function () {
 function errorHandler(error) {
     console.log(error);
     this.emit('end');
+}
+
+/* Visual Studio Reporter for gulp-typescript */
+function visualStudioReporter() {
+    return {
+        error: function (error) {
+            gutil.log("Typescript: error", error.message);
+        },
+        finish: typescript.reporter.defaultReporter().finish
+    };
 }
