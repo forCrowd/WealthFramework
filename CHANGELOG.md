@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.62.3**
+
+* New contributor: Shai Aharoni
+
 **0.62.2**
 
 * breeze.angular dependency is missing after new project setup
