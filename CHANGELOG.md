@@ -1,5 +1,10 @@
 ### Changelog
 
+**0.62.1**
+
+* gulp doesn't display typescript error messages
+https://github.com/forCrowd/WealthEconomy/issues/91
+
 **0.62.0**
 
 * Typescript
