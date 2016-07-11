@@ -1,5 +1,11 @@
 ### Changelog
 
+**0.62.2**
+
+* breeze.angular dependency is missing after new project setup
+https://github.com/forCrowd/WealthEconomy/issues/94
+* Some obsolete blocks were removed
+
 **0.62.1**
 
 * gulp doesn't display typescript error messages

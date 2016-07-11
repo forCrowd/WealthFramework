@@ -6,7 +6,6 @@ var concat = require('gulp-concat'),
     fs = require('fs'),
     gulp = require('gulp'),
     gutil = require('gutil'),
-    jshint = require('gulp-jshint'), // Obsolete?
     rename = require('gulp-rename'),
     sourcemaps = require('gulp-sourcemaps'),
     typescript = require("gulp-typescript"),
@@ -91,7 +90,7 @@ var fontsSrc = [
 // default
 gulp.task('default', [appJs, appCss, appSettingsJs, libJs, libCss, 'watch']);
 
-// app.js: jshhint + concat all into app.js + minify all into app.min.js
+// app.js: convert and bundle ts files into app.js + minify into app.min.js
 gulp.task(appJs, function () {
 
     var project = typescript.createProject(appJsConfig, { outFile: appJs });
@@ -106,22 +105,6 @@ gulp.task(appJs, function () {
         .pipe(sourcemaps.write('./', { sourceRoot: appJsSourceMapRoot }))
         .pipe(gulp.dest(appJsRoot));
 });
-
-// Old app.js, before typescript - Obsolete
-//// app.js: jshhint + concat all into app.js + minify all into app.min.js
-//gulp.task(appJs, function () {
-//    return gulp.src(appJsSrc)
-//        .pipe(jshint())
-//        .pipe(jshint.reporter('jshint-stylish'))
-//        .pipe(sourcemaps.init())
-//        .pipe(concat(appJs, { newLine: '\r\n' }))
-//        .pipe(gulp.dest(appJsRoot))
-//        .pipe(rename(appMinJs))
-//        .pipe(uglify())
-//        .on('error', errorHandler)
-//        .pipe(sourcemaps.write('./', { sourceRoot: appJsSourceMapRoot }))
-//        .pipe(gulp.dest(appJsRoot));
-//});
 
 // app.css: concat all into app.css + minify all into app.min.css
 gulp.task(appCss, function () {
