@@ -16,14 +16,15 @@ packages
 ngClient/npm-debug.log
 ngClient/node_modules
 
-# Bower packages
-ngClient/bower_components
+# Typings
+ngClient/typings
 
 # Publish profiles
 *.pubxml
 
 # Configs
-ngClient/_system/js/appSettings/*.js
+ngClient/_system/js/app/settings/*.js
+ngClient/_system/js/app/settings/*.ts
 WebApi/Configs/*.config
 
 # Gulp generated files

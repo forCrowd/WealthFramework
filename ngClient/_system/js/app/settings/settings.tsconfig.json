@@ -5,8 +5,7 @@
         "removeComments": true,
         "target": "es5"
     },
-    "exclude": [
-        "./appSettings",
-        "./lib"
+    "files": [
+        "settings.ts"
     ]
 }

@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "noImplicitAny": false,
+        "noEmitOnError": true,
+        "removeComments": true,
+        "target": "es5"
+    },
+    "exclude": [
+        "settings"
+    ]
+}

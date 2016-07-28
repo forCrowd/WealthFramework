@@ -1,5 +1,11 @@
 ### Changelog
 
+**0.63.0**
+
+* typings
+https://github.com/forCrowd/WealthEconomy/issues/97
+* appSettings.js was converted to .ts file, renamed and moved under: "/app/settings/settings.ts"
+
 **0.62.3**
 
 * New contributor: Shai Aharoni

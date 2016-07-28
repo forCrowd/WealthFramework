@@ -24,7 +24,7 @@ When deploying the project, update following configuration files with your own s
 * WebApi\Web.config
 * WebApi\Configs\\*.config
 * ngClient\Web.config
-* ngClient\\_system\js\appSettings\appSettings.js
+* ngClient\\_system\js\settings\settings.js
 
 ### Jasmine tests
 

@@ -131,8 +131,8 @@
     <!-- app.js -->
     <script src="/_system/js/app/app.min.js?v=0.62.0"></script>
 
-    <!-- appSettings.js -->
-    <script src="/_system/js/appSettings/appSettings.js?v=0.49.0"></script>
+    <!-- settings.js -->
+    <script src="/_system/js/app/settings/settings.js?v=0.63.0"></script>
 
 </body>
 </html>
