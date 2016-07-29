@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/9dd59e8b12a5455719c1596fd18b62892834eb85/breeze/breeze.d.ts",
+    "raw": "registry:dt/breeze#1.5.0+20160629200629",
+    "typings": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/9dd59e8b12a5455719c1596fd18b62892834eb85/breeze/breeze.d.ts"
+  }
+}

@@ -57,6 +57,8 @@
     <Content Include="_system\css\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="_system\css\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="_system\css\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="typings.json" />
+    <None Include="_system\js\app\settings\settings.tsconfig.json" />
     <None Include="_system\js\app\config\authorization.ts" />
     <None Include="_system\js\app\config\breeze.ts" />
     <None Include="_system\js\app\config\exceptionHandlerExtension.ts" />
@@ -110,11 +112,10 @@
     <None Include="_system\js\app\filters\numberSymbol.ts" />
     <None Include="_system\js\app\filters\percentage.ts" />
     <None Include="_system\js\app\main.ts" />
-    <None Include="_system\js\appSettings\appSettings.js" />
-    <None Include="_system\js\appSettings\Setup\0 Readme.txt" />
-    <None Include="_system\js\appSettings\Setup\appSettings.js" />
     <None Include="_system\js\app\directives\resourcePoolEditor\resourcePoolEditor.css" />
     <Content Include="_system\js\app\directives\resourcePoolEditor\resourcePoolEditor.html" />
+    <None Include="_system\js\app\settings\Setup\0 Readme.txt" />
+    <None Include="_system\js\app\settings\Setup\settings.ts" />
     <Content Include="_system\views\account\confirmNavigateAway.html" />
     <Content Include="_system\views\account\profile.html" />
     <Content Include="_system\views\account\account.html" />
@@ -137,7 +138,8 @@
     <Content Include="_system\views\content\implementation.html" />
     <Content Include="_system\views\content\introduction.html" />
     <Content Include="_system\views\content\knowledgeIndex.html" />
-    <None Include="_system\js\tsconfig.json" />
+    <None Include="_system\js\app\app.tsconfig.json" />
+    <None Include="_system\js\lib\breeze\typings.json" />
     <None Include="_system\views\content\obsolete\closingNotes.html" />
     <None Include="_system\views\content\obsolete\conclusion.html" />
     <None Include="_system\views\content\obsolete\fairShareIndexSample.html" />
@@ -164,10 +166,6 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-    <None Include="_system\js\lib\angularjs\angular.d.ts" />
-    <None Include="_system\js\lib\breeze\breeze.d.ts" />
-    <None Include="_system\js\lib\jquery\jquery.d.ts" />
-    <None Include="_system\js\lib\toastr\toastr.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <None Include="gulpfile.js" />
@@ -183,7 +181,12 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="_system\js\app\settings\settings.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_system\js\lib\breeze\index.d.ts" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
