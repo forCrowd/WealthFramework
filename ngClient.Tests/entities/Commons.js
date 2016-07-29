@@ -1,7 +1,7 @@
 ﻿/// <reference path="../../ngClient/_system/js/lib/lib.min.js" />
 /// <reference path="../../ngClient/bower_components/angular-mocks/angular-mocks.js" />
 /// <reference path="../../ngClient/_system/js/app/app.min.js" />
-/// <reference path="../../ngClient/_system/js/appSettings/appSettings.js" />
+/// <reference path="../../ngClient/_system/js/app/settings/settings.js" />
 
 function registerPrototypes($injector) {
 

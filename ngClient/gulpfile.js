@@ -9,18 +9,30 @@ var concat = require('gulp-concat'),
     rename = require('gulp-rename'),
     sourcemaps = require('gulp-sourcemaps'),
     typescript = require("gulp-typescript"),
+    typings = require("gulp-typings"),
     uglify = require('gulp-uglify');
 
-// Common
+// common
 var jsRoot = "./_system/js";
+
+// settings.js variables
+var settingsJsRoot = jsRoot + '/app/settings',
+    settingsJsSrc = [settingsJsRoot + "/settings.ts"],
+    settingsTsConfig = settingsJsRoot + "/settings.tsconfig.json",
+    settingsJs = 'settings.js',
+    settingsTs = "settings.ts";
 
 // app.js variables
 var appJsConfig = jsRoot + "/tsconfig.json",
-    appMinJs = 'app.min.js',
-    appJs = appMinJs.replace('.min', ''),
     appJsRoot = jsRoot + '/app',
+    appTsConfig = appJsRoot + "/app.tsconfig.json",
     appJsSourceMapRoot = appJsRoot.substring(1),
-    appJsSrc = [appJsRoot + '/**/*.ts'];
+    appJsSrc = [appJsRoot + '/**/*.ts'],
+    appMinJs = 'app.min.js',
+    appJs = appMinJs.replace('.min', '');
+
+// typings
+var typingsConfig = "./typings.json";
 
 // app.css variables
 var appMinCss = 'app.min.css',
@@ -30,10 +42,6 @@ var appMinCss = 'app.min.css',
         appJsRoot + '/directives/**/*.css', // Angular directives
         '!' + appCssRoot + '/' + appCss,
         '!' + appCssRoot + '/' + appMinCss];
-
-// appSettings.js variables
-var appSettingsRoot = jsRoot + '/appSettings';
-var appSettingsJs = 'appSettings.js';
 
 // lib variables
 var libJsSrcRoot = './node_modules',
@@ -76,24 +84,52 @@ var libMinCss = 'lib.min.css',
     libJsSrcRoot + '/bootstrap/dist/css/bootstrap.css', // bootstrap
     libJsSrcRoot + '/font-awesome/css/font-awesome.css', // fontAwesome
     libJsSrcRoot + '/breeze-client-labs/breeze.directives.css', // breezeDirectivesCss
-    libJsSrcRoot + '/toastr/build/toastr.css', // toastrCss
+    libJsSrcRoot + '/toastr/build/toastr.css' // toastrCss
     ],
     libCssDest = './_system/css/lib';
 
-// Fonts
+// fonts
 var fontsSrc = [
     libJsSrcRoot + '/bootstrap/fonts/*', // Bootstrap
-    libJsSrcRoot + '/font-awesome/fonts/*', // Font Awesome
+    libJsSrcRoot + '/font-awesome/fonts/*' // Font Awesome
 ],
     fontsDest = './_system/css/fonts';
 
 // default
-gulp.task('default', [appJs, appCss, appSettingsJs, libJs, libCss, 'watch']);
+gulp.task('default', [settingsJs, appJs, appCss, libJs, libCss, 'watch']);
+
+// settings.js_setup: if it doesn't exist, copy '/app/settings/Setup/settings.ts' file to its parent folder
+gulp.task(settingsJs + "_setup", function (callback) {
+
+    return fs.stat(settingsJsRoot + '/' + settingsTs, function (err, stat) {
+
+        // If there is no error, it means file is already there. No need to copy from setup, move along!
+        if (err === null) {
+            return callback(null);
+        }
+
+        var setupSettingsPath = settingsJsRoot + "/Setup/" + settingsTs;
+
+        return gulp.src(setupSettingsPath)
+            .pipe(gulp.dest(settingsJsRoot))
+            .on("end", callback);
+    });
+});
+
+// settings.js: convert settings.ts file into settings.js
+gulp.task(settingsJs, [settingsJs + "_setup"], function () {
+
+    var project = typescript.createProject(settingsTsConfig, { outFile: settingsJs });
+
+    return project.src()
+        .pipe(typescript(project, undefined, visualStudioReporter())).js
+        .pipe(gulp.dest(settingsJsRoot));
+});
 
 // app.js: convert and bundle ts files into app.js + minify into app.min.js
-gulp.task(appJs, function () {
+gulp.task(appJs, ["typings"], function () {
 
-    var project = typescript.createProject(appJsConfig, { outFile: appJs });
+    var project = typescript.createProject(appTsConfig, { outFile: appJs });
 
     return project.src()
         .pipe(sourcemaps.init())
@@ -106,6 +142,12 @@ gulp.task(appJs, function () {
         .pipe(gulp.dest(appJsRoot));
 });
 
+gulp.task("typings", function () {
+
+    return gulp.src(typingsConfig)
+        .pipe(typings());
+});
+
 // app.css: concat all into app.css + minify all into app.min.css
 gulp.task(appCss, function () {
 
@@ -115,22 +157,6 @@ gulp.task(appCss, function () {
         .pipe(rename(appMinCss))
         .pipe(cssmin())
         .pipe(gulp.dest(appCssRoot));
-});
-
-// appSettings.js: if it doesn't exist, copy '/appSettings/Setup/appSettings.js' file to '/appSettings' folder
-gulp.task(appSettingsJs, function () {
-
-    fs.stat(appSettingsRoot + '/' + appSettingsJs, function (err, stat) {
-
-        // If there is no error, it means file is already there. No need to copy from setup, move along!
-        if (err === null) {
-            return null;
-        }
-
-        return gulp.src(appSettingsRoot + '/Setup/' + appSettingsJs)
-                .pipe(gulp.dest(appSettingsRoot));
-    });
-
 });
 
 // lib.js: jshhint + concat all into lib.js + minify all into lib.min.js
@@ -147,12 +173,15 @@ gulp.task(libJs, function () {
         .pipe(gulp.dest(libJsDest));
 });
 
-// lib.css: copy font awesome fonts + concat all into lib.css + minify all into lib.min.css
-gulp.task(libCss, function () {
-
-    // Fonts
-    gulp.src(fontsSrc)
+// fonts
+gulp.task("fonts", function() {
+    
+    return gulp.src(fontsSrc)
         .pipe(gulp.dest(fontsDest));
+});
+
+// lib.css: copy font awesome fonts + concat all into lib.css + minify all into lib.min.css
+gulp.task(libCss, ["fonts"], function () {
 
     return gulp.src(libCssSrc)
         .pipe(concat(libCss, { newLine: '\r\n' }))
@@ -164,6 +193,7 @@ gulp.task(libCss, function () {
 
 // watch
 gulp.task('watch', function () {
+    gulp.watch(settingsJsSrc, [settingsJs]);
     gulp.watch(appJsSrc, [appJs]);
     gulp.watch(appCssSrc, [appCss]);
     gulp.watch(libJsSrc, [libJs]);
