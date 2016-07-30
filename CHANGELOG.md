@@ -1,12 +1,13 @@
 ### Changelog
 
-**0.64.0**
+**0.63.1**
 
 * New contributor: Caroline Ho
+* Contributors page getDate function month calculation fix
 
 **0.63.0**
 
-* typings
+* typings  
 https://github.com/forCrowd/WealthEconomy/issues/97
 * appSettings.js was converted to .ts file, renamed and moved under: "/app/settings/settings.ts"
 
@@ -16,20 +17,20 @@ https://github.com/forCrowd/WealthEconomy/issues/97
 
 **0.62.2**
 
-* breeze.angular dependency is missing after new project setup
+* breeze.angular dependency is missing after new project setup  
 https://github.com/forCrowd/WealthEconomy/issues/94
 * Some obsolete blocks were removed
 
 **0.62.1**
 
-* gulp doesn't display typescript error messages
+* gulp doesn't display typescript error messages  
 https://github.com/forCrowd/WealthEconomy/issues/91
 
 **0.62.0**
 
-* Typescript
+* Typescript  
 https://github.com/forCrowd/WealthEconomy/issues/88
-* Resharper
+* Resharper  
 https://github.com/forCrowd/WealthEconomy/issues/89
 * Comments signature update - coni2k
 
@@ -40,7 +41,7 @@ https://github.com/forCrowd/WealthEconomy/issues/89
 
 **0.61.2**
 
-* ngClient - appSettings.js doesn't get copied from 'Setup' folder bug fix
+* ngClient - appSettings.js doesn't get copied from 'Setup' folder bug fix  
 https://github.com/forCrowd/WealthEconomy/issues/79
 
 **0.61.1**
@@ -51,7 +52,7 @@ https://github.com/forCrowd/WealthEconomy/issues/79
 
 **0.61.0**
 
-* bower was replaced with npm
+* bower was replaced with npm  
 https://github.com/forCrowd/WealthEconomy/issues/76
 
 **0.60.1**
@@ -65,7 +66,7 @@ https://github.com/forCrowd/WealthEconomy/issues/76
 
 **0.59.0**
 
-* Contributors page
+* Contributors page  
 https://github.com/forCrowd/WealthEconomy/issues/69
 * Sticky footer
 * Disqus minor fix
@@ -76,11 +77,11 @@ https://github.com/forCrowd/WealthEconomy/issues/69
 
 **0.58.0**
 
-* Description field for resource pool
+* Description field for resource pool  
 https://github.com/forCrowd/WealthEconomy/issues/68
-* Is Main Element bug fix
+* Is Main Element bug fix  
 https://github.com/forCrowd/WealthEconomy/issues/67
-* Project notes were moved to wiki page
+* Project notes were moved to wiki page  
 https://github.com/forCrowd/WealthEconomy/wiki
 * package updates
  * breezejs was updated to 1.5.7 and odata adapter's manually fixed version was removed
@@ -90,17 +91,17 @@ https://github.com/forCrowd/WealthEconomy/wiki
 
 **0.57.0**
 
-* Search page instead of list
+* Search page instead of list  
 https://github.com/forCrowd/WealthEconomy/issues/65
-* Fix mobile navigation menu
+* Fix mobile navigation menu  
 https://github.com/forCrowd/WealthEconomy/issues/66
 * glyphicon icons were replaced with font awesome
 
 **0.56.0**
 
-* resourcePoolManage - Field rating edit
+* resourcePoolManage - Field rating edit  
 https://github.com/forCrowd/WealthEconomy/issues/64
-* Find keep alive service
+* Find keep alive service  
 https://github.com/forCrowd/WealthEconomy/issues/63
 * Async action was removed from dataContext.js currentUser(): it was already keeping it as a local variable, now its returns that, which makes this function much easier to use.
 * resourcePool and its child entities related functions were moved from dataContext.js to resourcePoolFactory.js
@@ -111,11 +112,11 @@ https://github.com/forCrowd/WealthEconomy/issues/63
 
 **0.55.0**
 
-* Auto register with guest account
+* Auto register with guest account  
 https://github.com/forCrowd/WealthEconomy/issues/61
  * login.html & register.html was updated accordingly
  * registerLogin.html was removed
-* Allow login with email address
+* Allow login with email address  
 https://github.com/forCrowd/WealthEconomy/issues/62
 * Both Profile (/[username]) and New CMRP (/[username]/new) routes now correctly check 'username' for both against local (currentUser) & remote
 * README.md updates
@@ -129,7 +130,7 @@ https://github.com/forCrowd/WealthEconomy/issues/62
 
 **0.53.0**
 
-* Navigate away confirmation in 'Unsaved changes' case
+* Navigate away confirmation in 'Unsaved changes' case  
 https://github.com/forCrowd/WealthEconomy/issues/60
  * isEditing property was removed
  * ResourcePool.isTemp property was removed
@@ -142,29 +143,29 @@ https://github.com/forCrowd/WealthEconomy/issues/60
 
 **0.52.0**
 
-* Send an exception to server in 404 case
+* Send an exception to server in 404 case  
 https://github.com/forCrowd/WealthEconomy/issues/53
-* Post correct binding models to server
+* Post correct binding models to server  
 https://github.com/forCrowd/WealthEconomy/issues/54
-* Use breeze's z-validate directive for entity validation errors
+* Use breeze's z-validate directive for entity validation errors  
 https://github.com/forCrowd/WealthEconomy/issues/55
-* OData controller error - No HTTP resource was found that matches the request URI
+* OData controller error - No HTTP resource was found that matches the request URI  
 https://github.com/forCrowd/WealthEconomy/issues/56
-* Create validate model filter
+* Create validate model filter  
 https://github.com/forCrowd/WealthEconomy/issues/58
-* Improve OData validation
+* Improve OData validation  
 https://github.com/forCrowd/WealthEconomy/issues/59
 * angular dependencies alphabetical order
 * Todo.md cleanup
 
 **0.51.2**
 
-* ResourcePoolListController.js - $location is not defined
+* ResourcePoolListController.js - $location is not defined  
 https://github.com/forCrowd/WealthEconomy/issues/57
 
 **0.51.1**
 
-* OData controller error - No HTTP resource was found that matches the request URI
+* OData controller error - No HTTP resource was found that matches the request URI  
 https://github.com/forCrowd/WealthEconomy/issues/56
 * Fixes for initial setup
  * -ExecutionPolicy Unrestricted was added for WebApiWarmup.ps1 call in post build
@@ -173,9 +174,9 @@ https://github.com/forCrowd/WealthEconomy/issues/56
 
 **0.51.0**
 
-* Add username to account
+* Add username to account  
 https://github.com/forCrowd/WealthEconomy/issues/20
-* New regular account shows 'Add password' instead of 'Change password'
+* New regular account shows 'Add password' instead of 'Change password'  
 https://github.com/forCrowd/WealthEconomy/issues/22
 * moment + angular moment.js libs were added
 * Twitter badge on README
@@ -183,9 +184,9 @@ https://github.com/forCrowd/WealthEconomy/issues/22
 
 **0.50.0**
 
-* Anonymous account
+* Anonymous account  
 https://github.com/forCrowd/WealthEconomy/issues/24
-* Reset password & external login callback links fix
+* Reset password & external login callback links fix  
 https://github.com/forCrowd/WealthEconomy/issues/23
 * TempToken was renamed to SingleUseToken
 * SimpleUseToken and HasPassword were moved from Claims to User table
@@ -193,23 +194,23 @@ https://github.com/forCrowd/WealthEconomy/issues/23
 **0.49.1**
 
 * .gitignore _system folder fix
-* 404 for fontawesome-webfont.woff2
+* 404 for fontawesome-webfont.woff2  
 https://github.com/forCrowd/WealthEconomy/issues/21
 
 **0.49.0**
 
-* ngClient - _system folder
+* ngClient - _system folder  
 https://github.com/forCrowd/WealthEconomy/issues/18
 
 **0.48.0**
 
-* Reset / Forgot Password
+* Reset / Forgot Password  
 https://github.com/forCrowd/WealthEconomy/issues/5
-* Remember me
+* Remember me  
 https://github.com/forCrowd/WealthEconomy/issues/7
-* Use Request.Form to send custom data to web api token endpoint
+* Use Request.Form to send custom data to web api token endpoint  
 https://github.com/forCrowd/WealthEconomy/issues/17
-* Store web api token itself in localStorage
+* Store web api token itself in localStorage  
 https://github.com/forCrowd/WealthEconomy/issues/13
 * 'Anonymous user warning remove' login page fix
 * Update element cell multiplier buttons / functions (but hidden for now)
@@ -242,7 +243,7 @@ Even if resource pool belongs to current user, resourcePoolRateCount, resourcePo
 **0.46.0**
 
 * Disqus was enabled on all routes that has 'enableDisqus: true'
- * Original angular-utils-disqus wasn't loading the related disqus comments on route changes. Forked, fixed & replaced
+ * Original angular-utils-disqus wasn't loading the related disqus comments on route changes. Forked, fixed & replaced  
  * https://github.com/michaelbromley/angularUtils/pull/296
 * Total Cost Index - Both CMRPs update each other sales number
 * Closing Notes was removed & icons section was moved to default page, only visible on home
@@ -259,7 +260,7 @@ Even if resource pool belongs to current user, resourcePoolRateCount, resourcePo
 
 * Local, Test, Live environment types in AppSettings
 * Exclude *.min files so they won't show up in "Find" operations in VS
-* Add excluded *.min files into deploy package through .pubxml file
+* Add excluded *.min files into deploy package through .pubxml file  
 http://www.asp.net/mvc/overview/deployment/visual-studio-web-deployment/deploying-extra-files
 * Exclude unnecessary *.js & *.css files from deploy package
 * Return url for external login case
@@ -296,7 +297,7 @@ Controllers in openRemoveResourcePoolModal, openCopyModal functions were not usi
 
 **0.43.3**
 
-* Compression was enabled on WebApi / OData responses by using 'Microsoft.AspNet.WebApi.MessageHandlers.Compression'
+* Compression was enabled on WebApi / OData responses by using 'Microsoft.AspNet.WebApi.MessageHandlers.Compression'  
 https://www.nuget.org/packages/Microsoft.AspNet.WebApi.MessageHandlers.Compression/
 
 **0.43.2**
