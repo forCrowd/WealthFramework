@@ -16,7 +16,7 @@ module Main.Controller {
             vm.getDate = getDate;
 
             function getDate(day: any, month: any, year: any) {
-                return new Date(year, month - 2, day);
+                return new Date(year, month - 1, day);
             }
         }
     }

@@ -126,10 +126,10 @@
     </footer>
 
     <!-- lib.js -->
-    <script src="/_system/js/lib/lib.min.js?v=0.58.0"></script>
+    <script src="/_system/js/lib/lib.min.js?v=0.63.0"></script>
 
     <!-- app.js -->
-    <script src="/_system/js/app/app.min.js?v=0.62.0"></script>
+    <script src="/_system/js/app/app.min.js?v=0.63.1"></script>
 
     <!-- settings.js -->
     <script src="/_system/js/app/settings/settings.js?v=0.63.0"></script>
