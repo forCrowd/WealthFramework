@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.64.0**
+
+* New contributor: Caroline Ho
+
 **0.63.0**
 
 * typings
