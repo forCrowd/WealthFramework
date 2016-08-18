@@ -1,5 +1,8 @@
 ### Changelog
 
+**0.64.0**
+* New contributor: Ifeanyi Okadigbo
+
 **0.63.1**
 
 * New contributor: Caroline Ho
