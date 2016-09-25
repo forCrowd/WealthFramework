@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.63.3**
+
+* New contributor: Simon Foster
+
 **0.63.2**
 
 * New contributor: Ifeanyi Okadigbo
