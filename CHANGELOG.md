@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.64.0**
+
+* New contributor: Robert Axelsen
+
 **0.63.2**
 
 * New contributor: Ifeanyi Okadigbo
