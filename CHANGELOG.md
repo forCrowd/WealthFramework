@@ -2,6 +2,7 @@
 
 **0.63.3**
 
+* New contributor: Robert Axelsen
 * New contributor: Simon Foster
 
 **0.63.2**
