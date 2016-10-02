@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.64.0**
+
+* New contributor: Sandra Dudley
+
 **0.63.2**
 
 * New contributor: Ifeanyi Okadigbo
