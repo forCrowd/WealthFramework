@@ -1,9 +1,5 @@
 ### Changelog
 
-**0.63.4**
-
-* New contributor: Sandra Dudley
-
 **0.63.3**
 
 * New contributor: Robert Axelsen
