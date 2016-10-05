@@ -2,6 +2,7 @@
 
 **0.63.4**
 
+* New contributor: Todd Cullum
 * New contributor: Sandra Dudley
 
 **0.63.3**
