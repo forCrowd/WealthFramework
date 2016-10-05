@@ -1,5 +1,14 @@
 ### Changelog
 
+**0.63.4**
+
+* New contributor: Sandra Dudley
+
+**0.63.3**
+
+* New contributor: Robert Axelsen
+* New contributor: Simon Foster
+
 **0.63.2**
 
 * New contributor: Ifeanyi Okadigbo
