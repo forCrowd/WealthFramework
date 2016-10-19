@@ -1,8 +1,16 @@
-import '../zone';
-import {patchTimer} from '../common/timers';
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
 
+import '../zone';
 import './events';
 import './fs';
+
+import {patchTimer} from '../common/timers';
 
 const set = 'set';
 const clear = 'clear';
@@ -27,7 +35,8 @@ if (shouldPatchGlobalTimers) {
 let crypto;
 try {
   crypto = require('crypto');
-} catch (err) {}
+} catch (err) {
+}
 
 // TODO(gdi2290): implement a better way to patch these methods
 if (crypto) {
@@ -60,7 +69,8 @@ if (crypto) {
 let httpClient;
 try {
   httpClient = require('_http_client');
-} catch (err) {}
+} catch (err) {
+}
 
 if (httpClient && httpClient.ClientRequest) {
   let ClientRequest = httpClient.ClientRequest.bind(httpClient);
@@ -71,5 +81,5 @@ if (httpClient && httpClient.ClientRequest) {
       let zone = Zone.current;
       return new ClientRequest(options, zone.wrap(callback, 'http.ClientRequest'));
     }
-  }
+  };
 }

@@ -1,3 +1,11 @@
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+
 import {makeZoneAwareAddListener, makeZoneAwareListeners, makeZoneAwareRemoveListener, patchMethod} from '../common/utils';
 
 
@@ -9,8 +17,10 @@ const EE_LISTENERS = 'listeners';
 const EE_ON = 'on';
 
 
-const zoneAwareAddListener = makeZoneAwareAddListener(EE_ADD_LISTENER, EE_REMOVE_LISTENER, false, true);
-const zoneAwarePrependListener = makeZoneAwareAddListener(EE_PREPEND_LISTENER, EE_REMOVE_LISTENER, false, true);
+const zoneAwareAddListener =
+    makeZoneAwareAddListener(EE_ADD_LISTENER, EE_REMOVE_LISTENER, false, true);
+const zoneAwarePrependListener =
+    makeZoneAwareAddListener(EE_PREPEND_LISTENER, EE_REMOVE_LISTENER, false, true);
 const zoneAwareRemoveListener = makeZoneAwareRemoveListener(EE_REMOVE_LISTENER, false);
 const zoneAwareListeners = makeZoneAwareListeners(EE_LISTENERS);
 
@@ -31,7 +41,8 @@ export function patchEventEmitterMethods(obj: any): boolean {
 let events;
 try {
   events = require('events');
-} catch (err) {}
+} catch (err) {
+}
 
 if (events && events.EventEmitter) {
   patchEventEmitterMethods(events.EventEmitter.prototype);
