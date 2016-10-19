@@ -32,7 +32,8 @@ var appJsConfig = jsRoot + "/tsconfig.json",
     appJs = appMinJs.replace('.min', '');
 
 // typings
-var typingsConfig = "./typings.json";
+var typingsConfig = "./typings.json",
+    typingsInstalled = false;
 
 // app.css variables
 var appMinCss = 'app.min.css',
@@ -93,7 +94,8 @@ var fontsSrc = [
     libJsSrcRoot + '/bootstrap/fonts/*', // Bootstrap
     libJsSrcRoot + '/font-awesome/fonts/*' // Font Awesome
 ],
-    fontsDest = './_system/css/fonts';
+    fontsDest = './_system/css/fonts',
+    fontsInstalled = false;
 
 // default
 gulp.task('default', [settingsJs, appJs, appCss, libJs, libCss, 'watch']);
@@ -142,10 +144,17 @@ gulp.task(appJs, ["typings"], function () {
         .pipe(gulp.dest(appJsRoot));
 });
 
+// typings: Install definitions, but only once
 gulp.task("typings", function () {
 
-    return gulp.src(typingsConfig)
-        .pipe(typings());
+    if (typingsInstalled) {
+        return null;
+    } else {
+        typingsInstalled = true;
+
+        return gulp.src(typingsConfig)
+            .pipe(typings());
+    }
 });
 
 // app.css: concat all into app.css + minify all into app.min.css
@@ -173,11 +182,16 @@ gulp.task(libJs, function () {
         .pipe(gulp.dest(libJsDest));
 });
 
-// fonts
+// fonts: Install fonts, but only once
 gulp.task("fonts", function() {
     
-    return gulp.src(fontsSrc)
-        .pipe(gulp.dest(fontsDest));
+    if (fontsInstalled) {
+        return null;
+    } else {
+        fontsInstalled = true;
+        return gulp.src(fontsSrc)
+            .pipe(gulp.dest(fontsDest));
+    }
 });
 
 // lib.css: copy font awesome fonts + concat all into lib.css + minify all into lib.min.css
