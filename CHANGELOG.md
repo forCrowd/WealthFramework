@@ -1,8 +1,15 @@
 ### Changelog
 
+**0.64.0**
+
+* contributors page - Order of contributors was reversed, and experience years function was added, instead of static texts - coni2k
+* gulpfile.js - typingsInstalled and fontsInstalled flags to install these only once per "watch" execution - coni2k
+* package.json - scripts section to install typings - coni2k
+* breeze typings update - coni2k
+
 **0.63.5**
 
-*New contributor: Angel Rodriguez
+* New contributor: Angel Rodriguez
 
 **0.63.4**
 

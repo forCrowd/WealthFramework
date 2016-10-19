@@ -12,10 +12,16 @@ module Main.Controller {
             // Logger
             logger = logger.forSource(controllerId);
 
-            var vm:any = this;
-            vm.getDate = getDate;
+            var vm: any = this;
+            vm.getExperienceYears = getExperienceYears;
+            vm.getJoinedOnDate = getJoinedOnDate;
 
-            function getDate(day: any, month: any, year: any) {
+            function getExperienceYears(year: number): string {
+                var totalYears: number = new Date().getUTCFullYear() - year;
+                return totalYears.toString() + "+";
+            }
+
+            function getJoinedOnDate(day: any, month: any, year: any): Date {
                 return new Date(year, month - 1, day);
             }
         }

@@ -36,5 +36,8 @@
         "respond.js": "1.4.2",
         "source-map": "0.5.2",
         "toastr": "2.1.2"
+    },
+    "scripts": {
+        "postinstall": "typings install"
     }
 }

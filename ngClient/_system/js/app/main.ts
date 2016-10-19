@@ -1,5 +1,5 @@
 ﻿/// <reference path="../../../typings/globals/angular/index.d.ts" />
-/// <reference path="../lib/breeze/index.d.ts" />
+/// <reference path="../../../typings/globals/breeze/index.d.ts" />
 /// <reference path="../../../typings/globals/jquery/index.d.ts" />
 /// <reference path="../../../typings/globals/toastr/index.d.ts" />
 

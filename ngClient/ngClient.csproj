@@ -139,7 +139,6 @@
     <Content Include="_system\views\content\introduction.html" />
     <Content Include="_system\views\content\knowledgeIndex.html" />
     <None Include="_system\js\app\app.tsconfig.json" />
-    <None Include="_system\js\lib\breeze\typings.json" />
     <None Include="_system\views\content\obsolete\closingNotes.html" />
     <None Include="_system\views\content\obsolete\conclusion.html" />
     <None Include="_system\views\content\obsolete\fairShareIndexSample.html" />
@@ -185,7 +184,7 @@
     <None Include="_system\js\app\settings\settings.ts" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="_system\js\lib\breeze\index.d.ts" />
+    <Folder Include="_system\js\lib\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
