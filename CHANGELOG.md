@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.65.0**
+
+* New contributor: Carolyn Langton
+
 **0.64.0**
 
 * contributors page - Order of contributors was reversed, and experience years function was added, instead of static texts - coni2k
