@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.64.2**
+
+* Fixing old PRs: seannam - coni2k
+
 **0.64.1**
 
 * New contributor: Carolyn Langton
