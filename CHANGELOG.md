@@ -1,8 +1,9 @@
 ### Changelog
 
-**0.65.0**
+**0.64.1**
 
 * New contributor: Carolyn Langton
+* New contributor: Emily Cassandra
 
 **0.64.0**
 

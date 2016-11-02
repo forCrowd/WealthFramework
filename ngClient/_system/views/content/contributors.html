@@ -71,6 +71,38 @@
                             </tr>
                         </thead>
                         <tbody>
+
+                            <tr>
+                                <td>
+                                    <span>Emily Cassandra</span>
+                                    <span class="nickname">ecmeeker</span>
+                                </td>
+                                <td>Coder</td>
+                                <td>C#, ASP.NET, SQL, MVC, JavaScript</td>
+                                <td>
+                                    <span data-ng-bind="vm.getExperienceYears(2014)"></span>
+                                </td>
+                                <td>
+                                    <ul class="list-inline">
+                                        <li>
+                                            <a href="http://emilycassandra.com/" target="_blank"><span class="fa fa-globe fa-lg" aria-hidden="true"></span></a>
+                                        </li>
+                                        <li>
+                                            <a href="https://twitter.com/emicassandram" target="_blank"><span class="fa fa-twitter fa-lg" aria-hidden="true"></span></a>
+                                        </li>
+                                        <li>
+                                            <a href="https://www.linkedin.com/in/emily-cassandra-meeker-4662a099" target="_blank"><span class="fa fa-linkedin fa-lg" aria-hidden="true"></span></a>
+                                        </li>
+                                        <li>
+                                            <a href="mailto:emilycassandra@emilycassandra.com" target="_blank"><span class="fa fa-envelope fa-lg" aria-hidden="true"></span></a>
+                                        </li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <span am-time-ago="{{ vm.getJoinedOnDate(30, 10, 2016) }}"></span>
+                                </td>
+                            </tr>
+
                             <tr>
                                 <td>
                                     <span>Carolyn Langton</span>
