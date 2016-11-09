@@ -28,7 +28,7 @@
             .when('/_system/content/prologue', { title: 'Prologue', templateUrl: '/_system/views/content/prologue.html?v=0.51.0', enableDisqus: true, resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
             .when('/_system/content/reason', { title: 'Reason', templateUrl: '/_system/views/content/reason.html?v=0.58.0', enableDisqus: true, resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
             .when('/_system/content/totalCostIndex', { title: 'Total Cost Index', templateUrl: '/_system/views/content/totalCostIndex.html?v=0.49.0', enableDisqus: true, resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/_system/content/contributors', { title: 'Contributors', templateUrl: '/_system/views/content/contributors.html?v=0.64.0', enableDisqus: true, resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
+            .when('/_system/content/contributors', { title: 'Contributors', templateUrl: '/_system/views/content/contributors.html?v=0.64.3', enableDisqus: true, resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
 
             /* Account */
             .when('/_system/account', { title: 'Account', templateUrl: '/_system/views/account/account.html?v=0.55.0', accessType: 'authenticatedRequired', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
