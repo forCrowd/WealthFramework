@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.65.0**
+
+* New contributor: Daniel Gomez
+
 **0.64.2**
 
 * Fixing old PRs: seannam, internetbird - coni2k
