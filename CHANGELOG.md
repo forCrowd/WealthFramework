@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.64.4**
+
+* New contributor: Mégane Vilain
+
 **0.64.3**
 
 * New contributor: Daniel Gomez
