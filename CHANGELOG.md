@@ -1,8 +1,12 @@
 ### Changelog
 
+**0.64.5**
+
+* New contributor: Shilpa AB
+
 **0.64.4**
 
-* New contributor: Mégane Vilain
+* New contributor: MÃ©gane Vilain
 
 **0.64.3**
 
