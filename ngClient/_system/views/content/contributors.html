@@ -73,6 +73,28 @@
                         <tbody>
 
                             <tr>
+                              <td>
+                                <span>Carmen Pomana</span>
+                                <span class="nickname">carmenne</span>
+                              </td>
+                              <td>Software Developer</td>
+                              <td>C#, SQL, ASP.NET MVC, JavaScript</td>
+                              <td>
+                                <span data-ng-bind="vm.getExperienceYears([2013])"></span>
+                              </td>
+                              <td>
+                                <ul class="list-inline">
+                                  <li>
+                                    <a href="https://github.com/carmenne" target="_blank"><span class="fa fa-github fa-lg" aria-hidden="true"></span></a>
+                                  </li>
+                                </ul>
+                              </td>
+                              <td>
+                                <span am-time-ago="{{ vm.getJoinedOnDate(3, 12, 2016) }}"></span>
+                              </td>
+                            </tr>
+
+                            <tr>
                                 <td>
                                     <span>Shilpa AB</span>
                                     <span class="nickname">Shilps</span>
