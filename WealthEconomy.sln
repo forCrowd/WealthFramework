@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Presentation Layer", "1. Presentation Layer", "{12D45E07-BDC7-4A7B-8214-48AF7C7A570E}"
 EndProject
@@ -40,6 +40,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.Tests", "WebApi.Tests\WebApi.Tests.csproj", "{D0799D73-6455-4F3C-ACFC-9A2DE3CAAC32}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ngClient.Tests", "ngClient.Tests\ngClient.Tests.csproj", "{397560AA-BAC9-4F9E-B6C2-5FF1F7793409}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ng2Client", "ng2Client\ng2Client.csproj", "{BD70ABE8-D6D9-4E50-AE84-3F7D4C0F7670}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,6 +97,10 @@ Global
 		{397560AA-BAC9-4F9E-B6C2-5FF1F7793409}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{397560AA-BAC9-4F9E-B6C2-5FF1F7793409}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{397560AA-BAC9-4F9E-B6C2-5FF1F7793409}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD70ABE8-D6D9-4E50-AE84-3F7D4C0F7670}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD70ABE8-D6D9-4E50-AE84-3F7D4C0F7670}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD70ABE8-D6D9-4E50-AE84-3F7D4C0F7670}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD70ABE8-D6D9-4E50-AE84-3F7D4C0F7670}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -113,5 +119,6 @@ Global
 		{DC03F082-C160-4C3C-9153-5E70B45400C1} = {359E41AC-4A9B-4FE5-A578-76E503AAA2B0}
 		{D0799D73-6455-4F3C-ACFC-9A2DE3CAAC32} = {2019F59D-3017-444E-AF01-AD9E312C2282}
 		{397560AA-BAC9-4F9E-B6C2-5FF1F7793409} = {2019F59D-3017-444E-AF01-AD9E312C2282}
+		{BD70ABE8-D6D9-4E50-AE84-3F7D4C0F7670} = {12D45E07-BDC7-4A7B-8214-48AF7C7A570E}
 	EndGlobalSection
 EndGlobal
