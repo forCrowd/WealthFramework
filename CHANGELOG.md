@@ -34,6 +34,31 @@ ClientAppUrl setting in appSettings was renamed to AllowedDomains and only used 
 * ngClient - npm package updates - coni2k
 * ngClient - ' char replaced with " in all ts files - coni2k
 
+**0.64.6**
+
+* New contributor: Carmen Pomana
+
+**0.64.5**
+
+* New contributor: Shilpa AB
+
+**0.64.4**
+
+* New contributor: Mégane Vilain
+
+**0.64.3**
+
+* New contributor: Daniel Gomez
+
+**0.64.2**
+
+* Fixing old PRs: seannam, internetbird - coni2k
+
+**0.64.1**
+
+* New contributor: Carolyn Langton
+* New contributor: Emily Cassandra
+
 **0.64.0**
 
 * contributors page - Order of contributors was reversed, and experience years function was added, instead of static texts - coni2k
