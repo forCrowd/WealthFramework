@@ -15,9 +15,12 @@ packages
 # NPM packages
 ngClient/npm-debug.log
 ngClient/node_modules
+ng2Client/npm-debug.log
+ng2Client/node_modules
 
 # Typings
 ngClient/typings
+ng2Client/typings
 
 # Publish profiles
 *.pubxml
