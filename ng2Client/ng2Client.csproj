@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{02FDA1F5-4D76-4FF6-8775-0C0CE9A59CD9}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>forCrowd.WealthEconomy.ng2Client</RootNamespace>
+    <AssemblyName>forCrowd.WealthEconomy.ng2Client</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>2.1</TypeScriptToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="app\components\account\account-edit.component.html" />
+    <Content Include="app\components\account\account-overview.component.html" />
+    <Content Include="app\components\account\add-password.component.html" />
+    <Content Include="app\components\account\change-email.component.html" />
+    <Content Include="app\components\account\change-password.component.html" />
+    <Content Include="app\components\account\change-username.component.html" />
+    <Content Include="app\components\account\confirm-email.component.html" />
+    <Content Include="app\components\account\login.component.html" />
+    <Content Include="app\components\account\register.component.html" />
+    <Content Include="app\components\account\reset-password.component.html" />
+    <Content Include="app\components\account\social-logins.component.html" />
+    <Content Include="app\components\app.component.html" />
+    <Content Include="app\components\common\contributors.component.html" />
+    <Content Include="app\components\common\home.component.html" />
+    <Content Include="app\components\common\not-found.component.html" />
+    <Content Include="app\components\common\search.component.html" />
+    <Content Include="app\components\content\allInOne.html" />
+    <Content Include="app\components\content\basics.html" />
+    <Content Include="app\components\content\implementation.html" />
+    <Content Include="app\components\content\introduction.html" />
+    <Content Include="app\components\content\knowledgeIndex.html" />
+    <Content Include="app\components\content\obsolete\closingNotes.html" />
+    <Content Include="app\components\content\obsolete\conclusion.html" />
+    <Content Include="app\components\content\obsolete\fairShareIndexSample.html" />
+    <Content Include="app\components\content\obsolete\indexesPieSample.html" />
+    <Content Include="app\components\content\obsolete\overview.html" />
+    <Content Include="app\components\content\obsolete\resourcePoolRateSample.html" />
+    <Content Include="app\components\content\obsolete\roadmap.html" />
+    <Content Include="app\components\content\obsolete\technologies.html" />
+    <Content Include="app\components\content\priorityIndex.html" />
+    <Content Include="app\components\content\prologue.html" />
+    <Content Include="app\components\content\reason.html" />
+    <Content Include="app\components\content\totalCostIndex.html" />
+    <Content Include="app\components\user\profile.component.html" />
+    <Content Include="app\components\user\resource-pool\element-manager.component.html" />
+    <Content Include="app\components\user\resource-pool\resource-pool-editor.component.css" />
+    <Content Include="app\components\user\resource-pool\resource-pool-editor.component.html" />
+    <Content Include="app\components\user\resource-pool\resource-pool-manager.component.html" />
+    <Content Include="app\components\user\resource-pool\resource-pool-viewer.component.html" />
+    <Content Include="app\css\main.css" />
+    <Content Include="app\images\forCrowd_Logo_142x30.jpg" />
+    <Content Include="app\images\PresentvsNew.png" />
+    <Content Include="app\lib\breeze.dataService.odata.js" />
+    <Content Include="app\modules\ng-chart\ng-chart.component.css" />
+    <Content Include="app\modules\ng-chart\ng-chart.component.html" />
+    <None Include="app\settings\setup\0 Readme.txt" />
+    <Content Include="app\views\confirmNavigateAway.html" />
+    <Content Include="app\views\guestAccountInfo.html" />
+    <Content Include="favicon.ico" />
+    <None Include="package.json" />
+    <Content Include="gulpfile.js" />
+    <Content Include="robots.txt" />
+    <Content Include="tsconfig.json" />
+    <None Include="Properties\PublishProfiles\wealth.pubxml" />
+    <None Include="Properties\PublishProfiles\wealth.test.pubxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="default.aspx" />
+    <Content Include="systemjs.config.js" />
+    <None Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="app\modules\app-routing.module.ts" />
+    <TypeScriptCompile Include="app\app.module.ts" />
+    <TypeScriptCompile Include="app\components\account\account-edit.component.ts" />
+    <TypeScriptCompile Include="app\components\account\account-overview.component.ts" />
+    <TypeScriptCompile Include="app\components\account\add-password.component.ts" />
+    <TypeScriptCompile Include="app\components\account\change-email.component.ts" />
+    <TypeScriptCompile Include="app\components\account\change-password.component.ts" />
+    <TypeScriptCompile Include="app\components\account\change-username.component.ts" />
+    <TypeScriptCompile Include="app\components\account\confirm-email.component.ts" />
+    <TypeScriptCompile Include="app\components\account\login.component.ts" />
+    <TypeScriptCompile Include="app\components\account\register.component.ts" />
+    <TypeScriptCompile Include="app\components\account\reset-password.component.ts" />
+    <TypeScriptCompile Include="app\components\account\social-logins.component.ts" />
+    <TypeScriptCompile Include="app\components\app.component.ts" />
+    <TypeScriptCompile Include="app\components\common\contributors.component.ts" />
+    <TypeScriptCompile Include="app\components\common\home.component.ts" />
+    <TypeScriptCompile Include="app\components\common\not-found.component.ts" />
+    <TypeScriptCompile Include="app\components\common\search.component.ts" />
+    <TypeScriptCompile Include="app\components\content\allInOne.ts" />
+    <TypeScriptCompile Include="app\components\content\basics.ts" />
+    <TypeScriptCompile Include="app\components\content\implementation.ts" />
+    <TypeScriptCompile Include="app\components\content\introduction.ts" />
+    <TypeScriptCompile Include="app\components\content\knowledgeIndex.ts" />
+    <TypeScriptCompile Include="app\components\content\priorityIndex.ts" />
+    <TypeScriptCompile Include="app\components\content\prologue.ts" />
+    <TypeScriptCompile Include="app\components\content\reason.ts" />
+    <TypeScriptCompile Include="app\components\content\totalCostIndex.ts" />
+    <TypeScriptCompile Include="app\components\user\profile.component.ts" />
+    <TypeScriptCompile Include="app\components\user\resource-pool\element-manager.component.ts" />
+    <TypeScriptCompile Include="app\components\user\resource-pool\resource-pool-editor.component.ts" />
+    <TypeScriptCompile Include="app\components\user\resource-pool\resource-pool-manager.component.ts" />
+    <TypeScriptCompile Include="app\components\user\resource-pool\resource-pool-viewer.component.ts" />
+    <TypeScriptCompile Include="app\entities\Element.ts" />
+    <TypeScriptCompile Include="app\entities\ElementCell.ts" />
+    <TypeScriptCompile Include="app\entities\ElementField.ts" />
+    <TypeScriptCompile Include="app\entities\ElementItem.ts" />
+    <TypeScriptCompile Include="app\entities\enums.ts" />
+    <TypeScriptCompile Include="app\entities\ResourcePool.ts" />
+    <TypeScriptCompile Include="app\entities\User.ts" />
+    <TypeScriptCompile Include="app\entities\UserElementCell.ts" />
+    <TypeScriptCompile Include="app\entities\UserElementField.ts" />
+    <TypeScriptCompile Include="app\entities\UserResourcePool.ts" />
+    <TypeScriptCompile Include="app\main.ts" />
+    <TypeScriptCompile Include="app\modules\custom-error-handler\custom-error-handler.module.ts" />
+    <TypeScriptCompile Include="app\modules\custom-error-handler\custom-error-handler.ts" />
+    <TypeScriptCompile Include="app\modules\custom-http.module.ts" />
+    <TypeScriptCompile Include="app\modules\ng-chart\chart-config.ts" />
+    <TypeScriptCompile Include="app\modules\ng-chart\chart-data-item.ts" />
+    <TypeScriptCompile Include="app\modules\ng-chart\ng-chart.component.ts" />
+    <TypeScriptCompile Include="app\modules\ng-chart\ng-chart.module.ts" />
+    <TypeScriptCompile Include="app\pipes\symbolic.pipe.ts" />
+    <TypeScriptCompile Include="app\rxjs-extensions.ts" />
+    <TypeScriptCompile Include="app\services\auth-guard.service.ts" />
+    <TypeScriptCompile Include="app\services\can-deactivate-guard.service.ts" />
+    <TypeScriptCompile Include="app\services\current-user-resolve.service.ts" />
+    <TypeScriptCompile Include="app\services\custom-entity-manager.service.ts" />
+    <TypeScriptCompile Include="app\services\data.service.ts" />
+    <TypeScriptCompile Include="app\services\dynamic-title-resolve.service.ts" />
+    <TypeScriptCompile Include="app\services\google-analytics.service.ts" />
+    <TypeScriptCompile Include="app\services\logger.service.ts" />
+    <TypeScriptCompile Include="app\services\resource-pool-service.ts" />
+    <TypeScriptCompile Include="app\settings\fixed-settings.ts" />
+    <TypeScriptCompile Include="app\settings\app-settings.ts" />
+    <TypeScriptCompile Include="app\settings\test-settings.ts" />
+    <TypeScriptCompile Include="app\settings\dev-settings.ts" />
+    <TypeScriptCompile Include="app\settings\prod-settings.ts" />
+    <TypeScriptCompile Include="app\settings\setup\environment-settings.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\SolutionItems\Properties\AssemblyInfo.cs">
+      <Link>Properties\AssemblyInfo.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup />
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>52538</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:15003/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

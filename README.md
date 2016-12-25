@@ -23,8 +23,8 @@ When deploying the project, update following configuration files with your own s
 * WebApi\googleanalytics.js
 * WebApi\Web.config
 * WebApi\Configs\\*.config
-* ngClient\Web.config
-* ngClient\\_system\js\settings\settings.js
+* ngClient2\Web.config
+* ngClient2\\app\settings\settings.js
 
 ### Jasmine tests
 

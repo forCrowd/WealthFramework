@@ -231,7 +231,7 @@
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="Controllers\Api\AccountController.cs" />
     <Compile Include="Controllers\Api\ExceptionController.cs" />
-    <Compile Include="Controllers\Api\ApplicationController.cs" />
+    <Compile Include="Controllers\Api\WebApiController.cs" />
     <Compile Include="Controllers\Api\BaseApiController.cs" />
     <Compile Include="Controllers\Api\Test\TestController.cs" />
     <Compile Include="Controllers\Extensions\ControllerExtensions.cs" />

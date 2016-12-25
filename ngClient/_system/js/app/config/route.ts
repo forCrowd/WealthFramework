@@ -1,129 +1,116 @@
-﻿module Main.Config {
-    'use strict';
+﻿//import { LoggerService } from "../ng2/services/logger";
 
-    angular.module('main')
-        .config(['$locationProvider', '$routeProvider', routeConfig]);
+export function routeConfig($locationProvider: any, $routeProvider: any) {
 
-    angular.module('main')
-        .run(['locationHistory', 'logger', '$location', '$rootScope', routeRun]);
+    // Routes
+    $routeProvider
 
-    function routeConfig($locationProvider: any, $routeProvider: any) {
+        /* Content */
+        .when("/", { title: "Home", template: "<home></home>", enableDisqus: true, resolve: { validateAccess: ["dataContext", "locationHistory", "logger", "$location", "$q", "$route", validateAccess] } })
+        .when("/default.aspx", { title: "Home", template: "<home></home>", enableDisqus: true, resolve: { validateAccess: ["dataContext", "locationHistory", "logger", "$location", "$q", "$route", validateAccess] } })
+        // Different than other content pages, enableDisqus: false
+        .when("/_system/content/notFound", { title: "Not Found", template: "<not-found></not-found>", resolve: { validateAccess: ["dataContext", "locationHistory", "logger", "$location", "$q", "$route", validateAccess] } })
 
-        // Routes
-        $routeProvider
+        .when("/_system/content/allInOne", { title: "All in One", template: "<all-in-one></all-in-one>", enableDisqus: true, resolve: { validateAccess: ["dataContext", "locationHistory", "logger", "$location", "$q", "$route", validateAccess] } })
+        .when("/_system/content/basics", { title: "Basics", template: "<basics></basics>", enableDisqus: true, resolve: { validateAccess: ["dataContext", "locationHistory", "logger", "$location", "$q", "$route", validateAccess] } })
+        .when("/_system/content/home", { title: "Home", template: "<home></home>", enableDisqus: true, resolve: { validateAccess: ["dataContext", "locationHistory", "logger", "$location", "$q", "$route", validateAccess] } })
+        .when("/_system/content/implementation", { title: "Implementation", template: "<implementation></implementation>", enableDisqus: true, resolve: { validateAccess: ["dataContext", "locationHistory", "logger", "$location", "$q", "$route", validateAccess] } })
+        .when("/_system/content/introduction", { title: "Introduction", template: "<introduction></introduction>", enableDisqus: true, resolve: { validateAccess: ["dataContext", "locationHistory", "logger", "$location", "$q", "$route", validateAccess] } })
+        .when("/_system/content/knowledgeIndex", { title: "Knowledge Index", template: "<knowledge-index></knowledge-index>", enableDisqus: true, resolve: { validateAccess: ["dataContext", "locationHistory", "logger", "$location", "$q", "$route", validateAccess] } })
+        .when("/_system/content/priorityIndex", { title: "Priority Index", template: "<priority-index></priority-index>", enableDisqus: true, resolve: { validateAccess: ["dataContext", "locationHistory", "logger", "$location", "$q", "$route", validateAccess] } })
+        .when("/_system/content/prologue", { title: "Prologue", template: "<prologue></prologue>", enableDisqus: true, resolve: { validateAccess: ["dataContext", "locationHistory", "logger", "$location", "$q", "$route", validateAccess] } })
+        .when("/_system/content/reason", { title: "Reason", template: "<reason></reason>", enableDisqus: true, resolve: { validateAccess: ["dataContext", "locationHistory", "logger", "$location", "$q", "$route", validateAccess] } })
+        .when("/_system/content/totalCostIndex", { title: "Total Cost Index", template: "<total-cost-index></total-cost-index>", enableDisqus: true, resolve: { validateAccess: ["dataContext", "locationHistory", "logger", "$location", "$q", "$route", validateAccess] } })
+        .when("/_system/content/contributors", { title: "Contributors", template: "<contributors></contributors>", enableDisqus: true, resolve: { validateAccess: ["dataContext", "locationHistory", "logger", "$location", "$q", "$route", validateAccess] } })
 
-            /* Content */
-            .when('/', { title: 'Home', templateUrl: '/_system/views/content/home.html?v=0.53.0', enableDisqus: true, resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/default.aspx', { title: 'Home', templateUrl: '/_system/views/content/home.html?v=0.53.0', enableDisqus: true, resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            // Different than other content pages, enableDisqus: false
-            .when('/_system/content/notFound', { title: 'Not Found', templateUrl: '/_system/views/content/notFound.html?v=0.52.0', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
+        /* Account */
+        .when("/_system/account", { title: "Account Overview", template: "<account-overview></account-overview>", accessType: "authenticatedRequired", resolve: { validateAccess: ["dataContext", "locationHistory", "logger", "$location", "$q", "$route", validateAccess] } })
+        .when("/_system/account/accountEdit", { title: "Account Edit", template: "<account-edit></account-edit>", accessType: "authenticatedRequired", resolve: { validateAccess: ["dataContext", "locationHistory", "logger", "$location", "$q", "$route", validateAccess] } })
+        .when("/_system/account/addPassword", { title: "Add Password", template: "<add-password></add-password>", accessType: "authenticatedRequired", resolve: { validateAccess: ["dataContext", "locationHistory", "logger", "$location", "$q", "$route", validateAccess] } })
+        .when("/_system/account/changeEmail", { title: "Change Email", template: "<change-email></change-email>", accessType: "authenticatedRequired", resolve: { validateAccess: ["dataContext", "locationHistory", "logger", "$location", "$q", "$route", validateAccess] } })
+        .when("/_system/account/changePassword", { title: "Change Password", template: "<change-password></change-password>", accessType: "authenticatedRequired", resolve: { validateAccess: ["dataContext", "locationHistory", "logger", "$location", "$q", "$route", validateAccess] } })
+        .when("/_system/account/changeUserName", { title: "Change Username", template: "<change-user-name></change-user-name>", accessType: "authenticatedRequired", resolve: { validateAccess: ["dataContext", "locationHistory", "logger", "$location", "$q", "$route", validateAccess] } })
+        .when("/_system/account/confirmEmail", { title: "Confirm Email", template: "<confirm-email></confirm-email>", accessType: "authenticatedRequired", resolve: { validateAccess: ["dataContext", "locationHistory", "logger", "$location", "$q", "$route", validateAccess] } })
+        .when("/_system/account/login", { title: "Login", template: "<login></login>", accessType: "unauthenticatedRequired", resolve: { validateAccess: ["dataContext", "locationHistory", "logger", "$location", "$q", "$route", validateAccess] } })
+        .when("/_system/account/register", { title: "Register", template: "<register></register>", accessType: "unauthenticatedRequired", resolve: { validateAccess: ["dataContext", "locationHistory", "logger", "$location", "$q", "$route", validateAccess] } })
+        .when("/_system/account/resetPassword", { title: "Reset Password", template: "<reset-password></reset-password>", accessType: "unauthenticatedRequired", resolve: { validateAccess: ["dataContext", "locationHistory", "logger", "$location", "$q", "$route", validateAccess] } })
 
-            .when('/_system/content/allInOne', { title: 'All in One', templateUrl: '/_system/views/content/allInOne.html?v=0.49.0', enableDisqus: true, resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/_system/content/basics', { title: 'Basics', templateUrl: '/_system/views/content/basics.html?v=0.53.0', enableDisqus: true, resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/_system/content/home', { title: 'Home', templateUrl: '/_system/views/content/home.html?v=0.53.0', enableDisqus: true, resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/_system/content/implementation', { title: 'Implementation', templateUrl: '/_system/views/content/implementation.html?v=0.49.0', enableDisqus: true, resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/_system/content/introduction', { title: 'Introduction', templateUrl: '/_system/views/content/introduction.html?v=0.53.0', enableDisqus: true, resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/_system/content/knowledgeIndex', { title: 'Knowledge Index', templateUrl: '/_system/views/content/knowledgeIndex.html?v=0.51.0', enableDisqus: true, resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/_system/content/priorityIndex', { title: 'Priority Index', templateUrl: '/_system/views/content/priorityIndex.html?v=0.49.0', enableDisqus: true, resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/_system/content/prologue', { title: 'Prologue', templateUrl: '/_system/views/content/prologue.html?v=0.51.0', enableDisqus: true, resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/_system/content/reason', { title: 'Reason', templateUrl: '/_system/views/content/reason.html?v=0.58.0', enableDisqus: true, resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/_system/content/totalCostIndex', { title: 'Total Cost Index', templateUrl: '/_system/views/content/totalCostIndex.html?v=0.49.0', enableDisqus: true, resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/_system/content/contributors', { title: 'Contributors', templateUrl: '/_system/views/content/contributors.html?v=0.64.0', enableDisqus: true, resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
+        /* CMRP Search */
+        .when("/_system/resourcePool/search", { title: "CMRP Search", template: "<resource-pool-search></resource-pool-search>", resolve: { validateAccess: ["dataContext", "locationHistory", "logger", "$location", "$q", "$route", validateAccess] } })
 
-            /* Account */
-            .when('/_system/account', { title: 'Account', templateUrl: '/_system/views/account/account.html?v=0.55.0', accessType: 'authenticatedRequired', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/_system/account/accountEdit', { title: 'Account Edit', templateUrl: '/_system/views/account/accountEdit.html?v=0.55.0', accessType: 'authenticatedRequired', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/_system/account/addPassword', { title: 'Add Password', templateUrl: '/_system/views/account/addPassword.html?v=0.55.0', accessType: 'authenticatedRequired', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/_system/account/changeEmail', { title: 'Change Email', templateUrl: '/_system/views/account/changeEmail.html?v=0.55.0', accessType: 'authenticatedRequired', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/_system/account/changePassword', { title: 'Change Password', templateUrl: '/_system/views/account/changePassword.html?v=0.55.0', accessType: 'authenticatedRequired', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/_system/account/changeUserName', { title: 'Change Username', templateUrl: '/_system/views/account/changeUsername.html?v=0.55.0', accessType: 'authenticatedRequired', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/_system/account/confirmEmail', { title: 'Confirm Email', templateUrl: '/_system/views/account/confirmEmail.html?v=0.51.0', accessType: 'authenticatedRequired', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/_system/account/login', { title: 'Login', templateUrl: '/_system/views/account/login.html?v=0.58.0', accessType: 'unauthenticatedRequired', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/_system/account/register', { title: 'Register', templateUrl: '/_system/views/account/register.html?v=0.58.0', accessType: 'unauthenticatedRequired', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/_system/account/resetPassword', { title: 'Reset Password', templateUrl: '/_system/views/account/resetPassword.html?v=0.55.0', accessType: 'unauthenticatedRequired', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
+        /* User */
+        .when("/:userName", { title: "Profile", template: "<profile></profile>", resolve: { validateAccess: ["dataContext", "locationHistory", "logger", "$location", "$q", "$route", validateAccess] } })
+        .when("/:userName/new", { title: "New CMRP", template: "<resource-pool-manage></resource-pool-manage>", resolve: { validateAccess: ["dataContext", "locationHistory", "logger", "$location", "$q", "$route", validateAccess] } })
+        .when("/:userName/:resourcePoolKey/edit", { title: "Edit CMRP", template: "<resource-pool-manage></resource-pool-manage>", resolve: { validateAccess: ["dataContext", "locationHistory", "logger", "$location", "$q", "$route", validateAccess] } })
+        .when("/:userName/:resourcePoolKey", { title: "View CMRP", template: "<resource-pool-view></resource-pool-view>", enableDisqus: true, resolve: { validateAccess: ["dataContext", "locationHistory", "logger", "$location", "$q", "$route", validateAccess] } })
 
-            /* CMRP Search */
-            .when('/_system/resourcePool/search', { title: 'CMRP Search', templateUrl: '/_system/views/resourcePool/resourcePoolSearch.html?v=0.57.0', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
+        /* Otherwise */
+        .otherwise({ redirectTo: getNotFound })
+        ;
 
-            /* User */
-            .when('/:userName', { title: 'Profile', templateUrl: '/_system/views/account/profile.html?v=0.57.0', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/:userName/new', { title: 'New CMRP', templateUrl: '/_system/views/resourcePool/resourcePoolManage.html?v=0.58.0', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/:userName/:resourcePoolKey/edit', { title: 'Edit CMRP', templateUrl: '/_system/views/resourcePool/resourcePoolManage.html?v=0.58.0', resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
-            .when('/:userName/:resourcePoolKey', { title: 'View CMRP', templateUrl: '/_system/views/resourcePool/resourcePoolView.html?v=0.57.0', enableDisqus: true, resolve: { validateAccess: ['dataContext', 'locationHistory', 'logger', '$location', '$q', '$route', validateAccess] } })
+    // Html5Mode is on, if supported (# will not be used)
+    if (window.history && window.history.pushState) {
+        $locationProvider.html5Mode({ enabled: true });
+    }
 
-            /* Otherwise */
-            .otherwise({ redirectTo: getNotFound })
-            ;
+    function getNotFound(routeParams: any, path: any, search: any) {
 
-        // Html5Mode is on, if supported (# will not be used)
-        if (window.history && window.history.pushState) {
-            $locationProvider.html5Mode({ enabled: true });
+        var invalidUrl = path;
+        var keys = Object.keys(search);
+        for (var i = 0; i < keys.length; i++) {
+            var key = keys[i];
+            invalidUrl += (i === 0 ? "?" : "&") + key + "=" + search[key];
         }
 
-        function getNotFound(routeParams: any, path: any, search: any) {
+        return "/_system/content/notFound?url=" + invalidUrl;
+    }
 
-            var invalidUrl = path;
-            var keys = Object.keys(search);
-            for (var i = 0; i < keys.length; i++) {
-                var key = keys[i];
-                invalidUrl += (i === 0 ? '?' : '&') + key + '=' + search[key];
-            }
+    function validateAccess(dataContext: any, locationHistory: any, logger: any, $location: any, $q: any, $route: any) {
 
-            return '/_system/content/notFound?url=' + invalidUrl;
-        }
+        var deferred = $q.defer();
 
-        function validateAccess(dataContext: any, locationHistory: any, logger: any, $location: any, $q: any, $route: any) {
+        locationHistory.createItem($location, $route.current);
 
-            logger = logger.forSource('validateAccess');
+        dataContext.initializeCurrentUser()
+            .then(currentUser => {
+                if ($route.current.accessType !== "undefined") {
 
-            var deferred = $q.defer();
-
-            locationHistory.createItem($location, $route.current);
-
-            dataContext.initializeCurrentUser()
-                .then(currentUser => {
-                    if ($route.current.accessType !== 'undefined') {
-
-                        // Invalid access cases
-                        if (($route.current.accessType === 'unauthenticatedRequired' && currentUser.isAuthenticated() && !currentUser.IsAnonymous) ||
-                            ($route.current.accessType === 'authenticatedRequired' && !currentUser.isAuthenticated())) {
-                            deferred.reject({ accessType: $route.current.accessType });
-                        }
+                    // Invalid access cases
+                    if (($route.current.accessType === "unauthenticatedRequired" && currentUser.isAuthenticated() && !currentUser.IsAnonymous) ||
+                        ($route.current.accessType === "authenticatedRequired" && !currentUser.isAuthenticated())) {
+                        deferred.reject({ accessType: $route.current.accessType });
                     }
+                }
 
-                    deferred.resolve();
-                })
-                .catch(() => {
-                    deferred.reject(); // TODO Handle?
-                });
+                deferred.resolve();
+            })
+            .catch(() => {
+                deferred.reject(); // TODO Handle?
+            });
 
-            return deferred.promise;
+        return deferred.promise;
+    }
+}
+
+export function routeRun(logger: any, $location: any, $rootScope: any) {
+
+    $rootScope.$on("$routeChangeError", routeChangeError);
+    $rootScope.$on("$routeChangeSuccess", routeChangeSuccess);
+
+    // Navigate to correct page in "Invalid access" cases
+    function routeChangeError(event: any, current: any, previous: any, eventObj: any);
+    function routeChangeError(event, current, previous, eventObj) {
+        if (eventObj.accessType === "unauthenticatedRequired") {
+            $location.url("/");
+        } else if (eventObj.accessType === "authenticatedRequired") {
+            $location.url("/_system/account/login?error=To be able to continue, please login first");
         }
     }
 
-    function routeRun(locationHistory: any, logger: any, $location: any, $rootScope: any) {
+    function routeChangeSuccess(event: any, current: any, previous: any);
+    function routeChangeSuccess(event, current, previous) {
 
-        // Logger
-        logger = logger.forSource('routeRun');
-
-        $rootScope.$on('$routeChangeError', routeChangeError);
-        $rootScope.$on('$routeChangeSuccess', routeChangeSuccess);
-
-        // Navigate to correct page in 'Invalid access' cases
-        function routeChangeError(event: any, current: any, previous: any, eventObj: any);
-        function routeChangeError(event, current, previous, eventObj) {
-            if (eventObj.accessType === 'unauthenticatedRequired') {
-                $location.url('/');
-            } else if (eventObj.accessType === 'authenticatedRequired') {
-                $location.url('/_system/account/login?error=To be able to continue, please login first');
-            }
-        }
-
-        function routeChangeSuccess(event: any, current: any, previous: any);
-        function routeChangeSuccess(event, current, previous) {
-
-            // View title
-            $rootScope.viewTitle = typeof current.title !== 'undefined' ? current.title : '';
-        }
+        // View title
+        $rootScope.viewTitle = typeof current.title !== "undefined" ? current.title : "";
     }
 }

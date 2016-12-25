@@ -48,7 +48,7 @@
         {
             // Get the user
             var currentUser = await UserManager.FindByIdAsync(this.GetCurrentUserId().Value);
-            var result = await UserManager.SetEmailAsync(currentUser.Id, model.Email);
+            var result = await UserManager.SetEmailAsync(currentUser.Id, model.Email, model.ClientAppUrl);
             var errorResult = GetErrorResult(result);
 
             if (errorResult != null)
@@ -120,13 +120,10 @@
         [AllowAnonymous]
         public async Task<IHttpActionResult> ExternalLoginCallback(string clientReturnUrl, string error = null)
         {
-            var clientAppUrl = Framework.AppSettings.ClientAppUrl;
-            var location = string.Format("{0}/_system/account/login?clientReturnUrl={1}", clientAppUrl, clientReturnUrl);
-
             // Error message from the provider, pass it on
             if (!string.IsNullOrWhiteSpace(error))
             {
-                return Redirect(string.Format("{0}&error={1}", location, error));
+                return Redirect(string.Format("{0};error={1}", clientReturnUrl, error));
             }
 
             // Since this method MUST return RedirectResult, cover the whole block with try & catch,
@@ -145,7 +142,7 @@
                 if (externalLoginInfo == null)
                 {
                     // User canceled the operation?
-                    return Redirect(string.Format("{0}&error={1}", location, "Login failed, please try again"));
+                    return Redirect(string.Format("{0};error={1}", clientReturnUrl, "Login failed, please try again"));
                 }
 
                 // Validate email
@@ -153,7 +150,7 @@
                 if (string.IsNullOrWhiteSpace(email))
                 {
                     // User didn't give permission for email address
-                    return Redirect(string.Format("{0}&error={1}", location, "Login failed, please give permission to access your email address"));
+                    return Redirect(string.Format("{0};error={1}", clientReturnUrl, "Login failed, please give permission to access your email address"));
                 }
 
                 var user = await UserManager.FindAsync(externalLoginInfo.Login);
@@ -174,11 +171,11 @@
                         var errorMessage = GetErrorMessage(result);
                         if (errorMessage != null)
                         {
-                            return Redirect(string.Format("{0}&error={1}", location, errorMessage));
+                            return Redirect(string.Format("{0};error={1}", clientReturnUrl, errorMessage));
                         }
 
                         // init=true: to let the client knows that this account is newly created (first login from this external login)
-                        location = string.Format("{0}&init=true", location);
+                        clientReturnUrl = string.Format("{0};init=true", clientReturnUrl);
                     }
                     else // There is a user with this email: Link accounts
                     {
@@ -187,7 +184,7 @@
                         var errorMessage = GetErrorMessage(result);
                         if (errorMessage != null)
                         {
-                            return Redirect(string.Format("{0}&error={1}", location, errorMessage));
+                            return Redirect(string.Format("{0};error={1}", clientReturnUrl, errorMessage));
                         }
                     }
                 }
@@ -203,7 +200,7 @@
                 }
 
                 // Redirect
-                return Redirect(string.Format("{0}&token={1}", location, user.SingleUseToken));
+                return Redirect(string.Format("{0};token={1}", clientReturnUrl, user.SingleUseToken));
             }
             catch (Exception ex)
             {
@@ -212,7 +209,7 @@
                 logger.Log(ex, Request, "AccountController.ExternalLoginCallback");
 
                 // Redirect the user back to the client
-                return Redirect(string.Format("{0}&error={1}", location, "Login failed, please try again later"));
+                return Redirect(string.Format("{0};error={1}", clientReturnUrl, "Login failed, please try again later"));
             }
         }
 
@@ -225,7 +222,7 @@
                 IsAnonymous = false
             };
 
-            var result = await UserManager.CreateAsync(user, model.Password);
+            var result = await UserManager.CreateAsync(user, model.Password, model.ClientAppUrl);
             var errorResult = GetErrorResult(result);
 
             if (errorResult != null)
@@ -259,11 +256,11 @@
         }
 
         // POST api/Account/ResendConfirmationEmail
-        public async Task<IHttpActionResult> ResendConfirmationEmail()
+        public async Task<IHttpActionResult> ResendConfirmationEmail(ResendConfirmationEmailBindingModel model)
         {
             var currentUserId = this.GetCurrentUserId();
 
-            await UserManager.SendConfirmationEmailAsync(currentUserId.Value, true);
+            await UserManager.SendConfirmationEmailAsync(currentUserId.Value, model.ClientAppUrl, true);
 
             return Ok(string.Empty);
         }
@@ -290,10 +287,10 @@
 
             if (currentUser == null || currentUser.IsAnonymous)
             {
-                return BadRequest("The username is incorrect.");
+                return BadRequest("Incorrect email");
             }
 
-            await UserManager.SendResetPasswordEmailAsync(currentUser.Id);
+            await UserManager.SendResetPasswordEmailAsync(currentUser.Id, model.ClientAppUrl);
 
             return Ok(string.Empty);
         }
