@@ -16,15 +16,23 @@ This is an experimental attempt to help you to get familiar with our project and
 Follow this tutorial to get started:
 [First Mission](https://github.com/forCrowd/WealthEconomy/wiki/First-Mission)
 
-### Deployment
+### WebApi Deployment
 
 Configuration files are excluded from deploy (Build Action: 'None').  
 When deploying the project, update following configuration files with your own settings and manually copy them:
 * WebApi\googleanalytics.js
 * WebApi\Web.config
 * WebApi\Configs\\*.config
-* ngClient\Web.config
-* ngClient\\_system\js\settings\settings.js
+
+### ng2Client Deployment
+
+ng2Client project has three different environment; development, test, production.  
+Each environment has its own settings under "/app/settings/" folder (i.e. "prod.settings")  
+Update these files anyway you like.  
+  
+To deploy the application, execute the necessary task in gulpfile (i.e. "publish.prod").  
+This task generates an output in "publish" folder in the root of ng2Client project.  
+Simply copy the output to your server.
 
 ### Jasmine tests
 

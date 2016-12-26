@@ -3,7 +3,6 @@
 <head>
     <title>Wealth Economy API</title>
     <meta charset="utf-8" />
-    <!-- Favicon -->
     <link rel="shortcut icon" href="favicon.ico?v=0.55.0" />
     <script src="googleanalytics.js"></script>
 </head>
@@ -17,7 +16,7 @@
     </p>
     <footer>
         <p>
-            <span><%= Reflection.Assembly.GetAssembly(New forCrowd.WealthEconomy.WebApi.Controllers.Api.ApplicationInfo().GetType()).GetName().Version %></span>
+            <span><%= Reflection.Assembly.GetAssembly(New forCrowd.WealthEconomy.WebApi.Controllers.Api.WebApiInfo().GetType()).GetName().Version %></span>
         </p>
         <p>
             <a href="http://forcrowd.org" target="_blank">forCrowd Foundation

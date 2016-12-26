@@ -23,7 +23,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TypeScriptToolsVersion>2.0</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>2.1</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -43,6 +43,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="systemjs.config.js" />
     <Content Include="_system\css\fonts\fontawesome-webfont.svg" />
     <Content Include="_system\css\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="_system\images\forCrowd_Logo_142x30.jpg" />
@@ -57,41 +58,22 @@
     <Content Include="_system\css\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="_system\css\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="_system\css\fonts\glyphicons-halflings-regular.woff2" />
-    <None Include="typings.json" />
     <None Include="_system\js\app\settings\settings.tsconfig.json" />
     <None Include="_system\js\app\config\authorization.ts" />
     <None Include="_system\js\app\config\breeze.ts" />
     <None Include="_system\js\app\config\exceptionHandlerExtension.ts" />
     <None Include="_system\js\app\config\googleAnalytics.ts" />
     <None Include="_system\js\app\config\route.ts" />
-    <None Include="_system\js\app\controllers\account\AccountController.ts" />
-    <None Include="_system\js\app\controllers\account\AccountEditController.ts" />
-    <None Include="_system\js\app\controllers\account\AddPasswordController.ts" />
-    <None Include="_system\js\app\controllers\account\ChangeEmailController.ts" />
-    <None Include="_system\js\app\controllers\account\ChangePasswordController.ts" />
-    <None Include="_system\js\app\controllers\account\ChangeUserNameController.ts" />
-    <None Include="_system\js\app\controllers\account\ConfirmEmailController.ts" />
-    <None Include="_system\js\app\controllers\account\LoginController.ts" />
-    <None Include="_system\js\app\controllers\account\ProfileController.ts" />
-    <None Include="_system\js\app\controllers\account\RegisterController.ts" />
-    <None Include="_system\js\app\controllers\account\ResetPasswordController.ts" />
-    <None Include="_system\js\app\controllers\account\SocialLoginsController.ts" />
-    <None Include="_system\js\app\controllers\content\AllInOneController.ts" />
-    <None Include="_system\js\app\controllers\content\BasicsController.ts" />
-    <None Include="_system\js\app\controllers\content\ContributorsController.ts" />
-    <None Include="_system\js\app\controllers\content\DefaultController.ts" />
-    <None Include="_system\js\app\controllers\content\IntroductionController.ts" />
-    <None Include="_system\js\app\controllers\content\KnowledgeIndexController.ts" />
-    <None Include="_system\js\app\controllers\content\NotFoundController.ts" />
-    <None Include="_system\js\app\controllers\content\obsolete\ClosingNotesController.ts" />
-    <None Include="_system\js\app\controllers\content\obsolete\FairShareIndexSampleController.ts" />
-    <None Include="_system\js\app\controllers\content\obsolete\ResourcePoolRateSampleController.ts" />
-    <None Include="_system\js\app\controllers\content\PriorityIndexController.ts" />
-    <None Include="_system\js\app\controllers\content\TotalCostIndexController.ts" />
-    <None Include="_system\js\app\controllers\resourcePool\ResourcePoolManageController.ts" />
-    <None Include="_system\js\app\controllers\resourcePool\ResourcePoolSearchController.ts" />
-    <None Include="_system\js\app\controllers\resourcePool\ResourcePoolViewController.ts" />
-    <None Include="_system\js\app\directives\resourcePoolEditor\resourcePoolEditor.ts" />
+    <None Include="_system\js\app\components\account\changeEmail\changeEmail.ts" />
+    <None Include="_system\js\app\components\account\changePassword\changePassword.ts" />
+    <None Include="_system\js\app\components\account\changeUserName\changeUserName.ts" />
+    <None Include="_system\js\app\components\account\confirmEmail\confirmEmail.ts" />
+    <None Include="_system\js\app\components\account\login\login.ts" />
+    <None Include="_system\js\app\components\account\profile\profile.ts" />
+    <None Include="_system\js\app\components\account\register\register.ts" />
+    <None Include="_system\js\app\components\account\resetPassword\resetPassword.ts" />
+    <None Include="_system\js\app\components\account\socialLogins\socialLogins.ts" />
+    <None Include="_system\js\app\components\resourcePoolEditor\resourcePoolEditor.ts" />
     <None Include="_system\js\app\entities\Element.ts" />
     <None Include="_system\js\app\entities\ElementCell.ts" />
     <None Include="_system\js\app\entities\ElementField.ts" />
@@ -102,7 +84,6 @@
     <None Include="_system\js\app\entities\UserElementCell.ts" />
     <None Include="_system\js\app\entities\UserElementField.ts" />
     <None Include="_system\js\app\entities\UserResourcePool.ts" />
-    <None Include="_system\js\app\factories\applicationFactory.ts" />
     <None Include="_system\js\app\factories\dataContext.ts" />
     <None Include="_system\js\app\factories\entityManagerFactory.ts" />
     <None Include="_system\js\app\factories\locationHistory.ts" />
@@ -111,50 +92,51 @@
     <None Include="_system\js\app\filters\enumConverter.ts" />
     <None Include="_system\js\app\filters\numberSymbol.ts" />
     <None Include="_system\js\app\filters\percentage.ts" />
-    <None Include="_system\js\app\main.ts" />
-    <None Include="_system\js\app\directives\resourcePoolEditor\resourcePoolEditor.css" />
-    <Content Include="_system\js\app\directives\resourcePoolEditor\resourcePoolEditor.html" />
+    <None Include="_system\js\app\app.ts" />
+    <None Include="_system\js\app\components\resourcePoolEditor\resourcePoolEditor.css" />
+    <Content Include="_system\js\app\components\account\accountEdit\accountEdit.html" />
+    <Content Include="_system\js\app\components\account\accountOverview\accountOverview.html" />
+    <Content Include="_system\js\app\components\account\addPassword\addPassword.html" />
+    <None Include="_system\js\app\components\content\obsolete\closingNotes.html" />
+    <None Include="_system\js\app\components\content\obsolete\conclusion.html" />
+    <Content Include="_system\js\app\components\content\obsolete\fairShareIndexSample.html" />
+    <None Include="_system\js\app\components\content\obsolete\indexesPieSample.html" />
+    <None Include="_system\js\app\components\content\obsolete\overview.html" />
+    <None Include="_system\js\app\components\content\obsolete\resourcePoolRateSample.html" />
+    <None Include="_system\js\app\components\content\obsolete\roadmap.html" />
+    <None Include="_system\js\app\components\content\obsolete\technologies.html" />
+    <Content Include="_system\js\app\components\content\allInOne.html" />
+    <Content Include="_system\js\app\components\content\basics.html" />
+    <Content Include="_system\js\app\components\content\contributors.html" />
+    <Content Include="_system\js\app\components\content\home.html" />
+    <Content Include="_system\js\app\components\content\implementation.html" />
+    <Content Include="_system\js\app\components\content\introduction.html" />
+    <Content Include="_system\js\app\components\content\knowledgeIndex.html" />
+    <Content Include="_system\js\app\components\content\notFound.html" />
+    <Content Include="_system\js\app\components\content\priorityIndex.html" />
+    <Content Include="_system\js\app\components\content\prologue.html" />
+    <Content Include="_system\js\app\components\content\reason.html" />
+    <Content Include="_system\js\app\components\content\totalCostIndex.html" />
+    <Content Include="_system\js\app\components\resourcePoolEditor\resourcePoolEditor.html" />
     <None Include="_system\js\app\settings\Setup\0 Readme.txt" />
     <None Include="_system\js\app\settings\Setup\settings.ts" />
+    <Content Include="_system\js\app\components\resourcePool\resourcePoolManage.html" />
+    <Content Include="_system\js\app\components\resourcePool\resourcePoolRemove.html" />
+    <Content Include="_system\js\app\components\resourcePool\resourcePoolSearch.html" />
+    <Content Include="_system\js\app\components\resourcePool\resourcePoolView.html" />
+    <Content Include="_system\js\lib\breeze-client\breeze.dataService.odata.js" />
     <Content Include="_system\views\account\confirmNavigateAway.html" />
-    <Content Include="_system\views\account\profile.html" />
-    <Content Include="_system\views\account\account.html" />
-    <Content Include="_system\views\account\accountEdit.html" />
-    <Content Include="_system\views\account\addPassword.html" />
-    <Content Include="_system\views\account\changeUserName.html" />
-    <Content Include="_system\views\account\changeEmail.html" />
-    <Content Include="_system\views\account\changePassword.html" />
-    <Content Include="_system\views\account\confirmEmail.html" />
-    <Content Include="_system\views\account\login.html" />
+    <Content Include="_system\js\app\components\account\profile\profile.html" />
+    <Content Include="_system\js\app\components\account\changeUserName\changeUserName.html" />
+    <Content Include="_system\js\app\components\account\changeEmail\changeEmail.html" />
+    <Content Include="_system\js\app\components\account\changePassword\changePassword.html" />
+    <Content Include="_system\js\app\components\account\confirmEmail\confirmEmail.html" />
+    <Content Include="_system\js\app\components\account\login\login.html" />
     <Content Include="_system\views\account\guestAccountInfo.html" />
-    <Content Include="_system\views\account\socialLogins.html" />
-    <Content Include="_system\views\account\register.html" />
-    <Content Include="_system\views\account\resetPassword.html" />
-    <Content Include="_system\views\content\contributors.html" />
-    <Content Include="_system\views\content\notFound.html" />
-    <Content Include="_system\views\content\allInOne.html" />
-    <Content Include="_system\views\content\basics.html" />
-    <Content Include="_system\views\content\home.html" />
-    <Content Include="_system\views\content\implementation.html" />
-    <Content Include="_system\views\content\introduction.html" />
-    <Content Include="_system\views\content\knowledgeIndex.html" />
+    <Content Include="_system\js\app\components\account\socialLogins\socialLogins.html" />
+    <Content Include="_system\js\app\components\account\register\register.html" />
+    <Content Include="_system\js\app\components\account\resetPassword\resetPassword.html" />
     <None Include="_system\js\app\app.tsconfig.json" />
-    <None Include="_system\views\content\obsolete\closingNotes.html" />
-    <None Include="_system\views\content\obsolete\conclusion.html" />
-    <None Include="_system\views\content\obsolete\fairShareIndexSample.html" />
-    <None Include="_system\views\content\obsolete\indexesPieSample.html" />
-    <None Include="_system\views\content\obsolete\overview.html" />
-    <None Include="_system\views\content\obsolete\resourcePoolRateSample.html" />
-    <None Include="_system\views\content\obsolete\roadmap.html" />
-    <None Include="_system\views\content\obsolete\technologies.html" />
-    <Content Include="_system\views\content\priorityIndex.html" />
-    <Content Include="_system\views\content\prologue.html" />
-    <Content Include="_system\views\content\reason.html" />
-    <Content Include="_system\views\content\totalCostIndex.html" />
-    <Content Include="_system\views\resourcePool\resourcePoolSearch.html" />
-    <Content Include="_system\views\resourcePool\resourcePoolRemove.html" />
-    <Content Include="_system\views\resourcePool\resourcePoolManage.html" />
-    <Content Include="_system\views\resourcePool\resourcePoolView.html" />
     <None Include="_system\css\main.css" />
     <None Include="package.json" />
     <None Include="Properties\PublishProfiles\wealth.pubxml" />
@@ -184,7 +166,78 @@
     <None Include="_system\js\app\settings\settings.ts" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="_system\js\lib\" />
+    <None Include="_system\js\app\factories\applicationFactory.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_system\js\app\components\account\accountOverview\accountOverview.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_system\js\app\components\account\accountEdit\accountEdit.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_system\js\app\components\account\addPassword\addPassword.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_system\js\app\components\resourcePool\resourcePoolManage.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_system\js\app\components\resourcePool\resourcePoolSearch.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_system\js\app\components\resourcePool\resourcePoolView.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_system\js\app\components\content\allInOne.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_system\js\app\components\content\basics.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_system\js\app\components\content\contributors.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_system\js\app\controllers\default.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_system\js\app\components\content\introduction.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_system\js\app\components\content\knowledgeIndex.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_system\js\app\components\content\notFound.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_system\js\app\components\content\obsolete\closingNotes.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_system\js\app\components\content\obsolete\fairShareIndexSample.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_system\js\app\components\content\obsolete\resourcePoolRateSample.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_system\js\app\components\content\priorityIndex.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_system\js\app\components\content\totalCostIndex.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_system\js\app\components\content\home.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_system\js\app\components\content\implementation.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_system\js\app\components\content\prologue.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_system\js\app\components\content\reason.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\SolutionItems\Properties\AssemblyInfo.cs">
+      <Link>Properties\AssemblyInfo.cs</Link>
+    </Compile>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

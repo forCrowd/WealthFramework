@@ -1,7 +1,9 @@
 ﻿namespace forCrowd.WealthEconomy.Framework
 {
     using System;
+    using System.Collections.Generic;
     using System.Configuration;
+    using System.Linq;
 
     public enum EnvironmentType
     {
@@ -22,11 +24,17 @@
         }
 
         /// <summary>
-        /// Will be used in CORS policy & in emails to prepare the links and social login callbacks 
+        /// Allowed domains in CORS policy
         /// </summary>
-        public static string ClientAppUrl
+        public static IEnumerable<string> AllowedDomains
         {
-            get { return ConfigurationManager.AppSettings["ClientAppUrl"]; }
+            get
+            {
+                return ConfigurationManager.AppSettings["AllowedDomains"]
+                    .Split(';')
+                    .Select(item => item.Trim())
+                    .Where(item => item != string.Empty);
+            }
         }
 
         /// <summary>

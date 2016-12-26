@@ -1,38 +1,62 @@
-# Visual Studio 2015
-.vs/
+## General rules
 
 # Build folders
 [Bb]in/
 [Oo]bj/
 
-# User-specific files
-*.suo
-*.user
+# Chutzpah (necessary?)
+_Chutzpah.*
+
+# NPM packages
+npm-debug.log
+node_modules
 
 # NuGet packages
 packages
 
-# NPM packages
-ngClient/npm-debug.log
-ngClient/node_modules
-ng2Client/npm-debug.log
-ng2Client/node_modules
-
-# Typings
-ngClient/typings
-ng2Client/typings
+# Personal database queries (no need to save)
+SolutionItems/Scripts/Database/Personal/
 
 # Publish profiles
 *.pubxml
 
-# Configs
+# User-specific files
+*.suo
+*.user
+
+# Visual Studio
+.vs/
+
+# WebApiWarmUp script result file
+SolutionItems/Scripts/Build/WebApiWarmUpResult.txt
+
+# Others
+~$*
+Thumbs.db
+
+## Project specific rules
+
+# ng2Client
+ng2Client/app/**/*.js
+ng2Client/app/**/*.map
+
+ng2Client/app/css/**/*
+!ng2Client/app/css/main.css
+
+# ng2Client - lib: Contains fixed versions of external .js files (breeze.odata etc.)
+!ng2Client/app/lib/*.js
+
+ng2Client/app/settings/dev-settings.ts
+ng2Client/app/settings/test-settings.ts
+ng2Client/app/settings/prod-settings.ts
+
+ng2Client/publish
+
+# ngClient
 ngClient/_system/js/app/settings/*.js
 ngClient/_system/js/app/settings/*.ts
-WebApi/Configs/*.config
-
-# Gulp generated files
-ngClient/_system/js/app/*.js
-ngClient/_system/js/app/*.map
+ngClient/_system/js/app/**/*.js
+ngClient/_system/js/app/**/*.map
 ngClient/_system/js/lib/*.js
 ngClient/_system/js/lib/*.map
 ngClient/_system/css/app.css
@@ -40,18 +64,6 @@ ngClient/_system/css/app.min.css
 ngClient/_system/css/lib/*.css
 ngClient/_system/css/fonts/
 
-# Elmah log folder
+# WebApi
 WebApi/App_Data/
-
-# Personal database queries (no need to save)
-SolutionItems/Scripts/Database/Personal/
-
-# WebApiWarmUp script result file
-SolutionItems/Scripts/Build/WebApiWarmUpResult.txt
-
-# Chutzpah (necessary?)
-_Chutzpah.*
-
-# Others
-~$*
-Thumbs.db
+WebApi/Configs/*.config

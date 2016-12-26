@@ -1,4 +1,4 @@
-﻿/// <binding ProjectOpened='default' />
+﻿// <binding ProjectOpened='default' />
 'use strict';
 
 var concat = require('gulp-concat'),
@@ -9,7 +9,6 @@ var concat = require('gulp-concat'),
     rename = require('gulp-rename'),
     sourcemaps = require('gulp-sourcemaps'),
     typescript = require("gulp-typescript"),
-    typings = require("gulp-typings"),
     uglify = require('gulp-uglify');
 
 // common
@@ -23,24 +22,19 @@ var settingsJsRoot = jsRoot + '/app/settings',
     settingsTs = "settings.ts";
 
 // app.js variables
-var appJsConfig = jsRoot + "/tsconfig.json",
-    appJsRoot = jsRoot + '/app',
+var appJsRoot = jsRoot + '/app',
     appTsConfig = appJsRoot + "/app.tsconfig.json",
     appJsSourceMapRoot = appJsRoot.substring(1),
     appJsSrc = [appJsRoot + '/**/*.ts'],
     appMinJs = 'app.min.js',
     appJs = appMinJs.replace('.min', '');
 
-// typings
-var typingsConfig = "./typings.json",
-    typingsInstalled = false;
-
 // app.css variables
 var appMinCss = 'app.min.css',
     appCss = appMinCss.replace('.min', ''),
     appCssRoot = './_system/css',
     appCssSrc = [appCssRoot + '/*.css',
-        appJsRoot + '/directives/**/*.css', // Angular directives
+        appJsRoot + '/components/**/*.css', // Angular directives
         '!' + appCssRoot + '/' + appCss,
         '!' + appCssRoot + '/' + appMinCss];
 
@@ -48,7 +42,7 @@ var appMinCss = 'app.min.css',
 var libJsSrcRoot = './node_modules',
     libJsSourceMapRoot = libJsSrcRoot.substring(1);
 
-// lib.js variables
+// lib.js variables - Obsolete
 var libMinJs = 'lib.min.js',
     libJs = libMinJs.replace('.min', ''),
     libJsSrc = [
@@ -69,7 +63,7 @@ var libMinJs = 'lib.min.js',
     libJsSrcRoot + '/angular-google-analytics/dist/angular-google-analytics.js', // googleAnalyticsAngular
     libJsSrcRoot + '/angular-utils-disqus/dirDisqus.js', // disqusAngular
     libJsSrcRoot + '/bootstrap/dist/js/bootstrap.js', // bootstrap
-    libJsSrcRoot + '/respond.js/dest/respond.js', // respond
+    libJsSrcRoot + '/respond.js/dest/respond.src.js', // respond
     libJsSrcRoot + '/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js', // bootstrapAngular
     libJsSrcRoot + '/highcharts/highcharts.src.js', // highcharts
     libJsSrcRoot + '/highcharts-ng/dist/highcharts-ng.js', // highchartsAngular
@@ -98,7 +92,8 @@ var fontsSrc = [
     fontsInstalled = false;
 
 // default
-gulp.task('default', [settingsJs, appJs, appCss, libJs, libCss, 'watch']);
+// gulp.task('default', [settingsJs, appJs, appCss, libJs, libCss, 'watch']);
+gulp.task('default', [settingsJs, appJs, appCss, libCss, 'watch']);
 
 // settings.js_setup: if it doesn't exist, copy '/app/settings/Setup/settings.ts' file to its parent folder
 gulp.task(settingsJs + "_setup", function (callback) {
@@ -121,22 +116,22 @@ gulp.task(settingsJs + "_setup", function (callback) {
 // settings.js: convert settings.ts file into settings.js
 gulp.task(settingsJs, [settingsJs + "_setup"], function () {
 
-    var project = typescript.createProject(settingsTsConfig, { outFile: settingsJs });
+    var project = typescript.createProject(settingsTsConfig);
 
     return project.src()
-        .pipe(typescript(project, undefined, visualStudioReporter())).js
+        .pipe(project(visualStudioReporter())).js
         .pipe(gulp.dest(settingsJsRoot));
 });
 
 // app.js: convert and bundle ts files into app.js + minify into app.min.js
-gulp.task(appJs, ["typings"], function () {
+gulp.task(appJs + '_old', function () {
 
     var project = typescript.createProject(appTsConfig, { outFile: appJs });
 
     return project.src()
         .pipe(sourcemaps.init())
-        .pipe(typescript(project, undefined, visualStudioReporter())).js
-        .pipe(gulp.dest(appJsRoot))
+        .pipe(project(visualStudioReporter())).js
+        .pipe(gulp.dest('./'))
         .pipe(rename(appMinJs))
         .pipe(uglify())
         .on('error', errorHandler)
@@ -144,17 +139,14 @@ gulp.task(appJs, ["typings"], function () {
         .pipe(gulp.dest(appJsRoot));
 });
 
-// typings: Install definitions, but only once
-gulp.task("typings", function () {
+gulp.task(appJs, function () {
 
-    if (typingsInstalled) {
-        return null;
-    } else {
-        typingsInstalled = true;
+    var project = typescript.createProject(appTsConfig);
 
-        return gulp.src(typingsConfig)
-            .pipe(typings());
-    }
+    return project.src()
+        .pipe(project(visualStudioReporter())).js
+        .pipe(gulp.dest(appJsRoot))
+        .on('error', errorHandler);
 });
 
 // app.css: concat all into app.css + minify all into app.min.css
@@ -168,7 +160,7 @@ gulp.task(appCss, function () {
         .pipe(gulp.dest(appCssRoot));
 });
 
-// lib.js: jshhint + concat all into lib.js + minify all into lib.min.js
+// lib.js: jshhint + concat all into lib.js + minify all into lib.min.js - Obsolete
 gulp.task(libJs, function () {
 
     return gulp.src(libJsSrc)
@@ -210,7 +202,7 @@ gulp.task('watch', function () {
     gulp.watch(settingsJsSrc, [settingsJs]);
     gulp.watch(appJsSrc, [appJs]);
     gulp.watch(appCssSrc, [appCss]);
-    gulp.watch(libJsSrc, [libJs]);
+    //gulp.watch(libJsSrc, [libJs]);
     gulp.watch(libCssSrc, [libCss]);
 
 });

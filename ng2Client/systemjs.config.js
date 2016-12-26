@@ -1,46 +1,57 @@
-/**
- * System configuration for Angular samples
- * Adjust as necessary for your application needs.
- */
 (function (global) {
-  System.config({
-    paths: {
-      // paths serve as alias
-      'npm:': 'node_modules/'
-    },
-    // map tells the System loader where to look for things
-    map: {
-      // our app is within the app folder
-      app: 'app',
+    "use strict";
 
-      // angular bundles
-      '@angular/core': 'npm:@angular/core/bundles/core.umd.js',
-      '@angular/common': 'npm:@angular/common/bundles/common.umd.js',
-      '@angular/compiler': 'npm:@angular/compiler/bundles/compiler.umd.js',
-      '@angular/platform-browser': 'npm:@angular/platform-browser/bundles/platform-browser.umd.js',
-      '@angular/platform-browser-dynamic': 'npm:@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js',
-      '@angular/http': 'npm:@angular/http/bundles/http.umd.js',
-      '@angular/router': 'npm:@angular/router/bundles/router.umd.js',
-      '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
-      '@angular/upgrade': 'npm:@angular/upgrade/bundles/upgrade.umd.js',
+    var config = {
+        defaultJSExtensions: true,
+        paths: {
+            "npm:": "node_modules/"
+        },
+        map: {
 
-      // other libraries
-      'rxjs':                      'npm:rxjs',
-      'angular-in-memory-web-api': 'npm:angular-in-memory-web-api',
-    },
-    // packages tells the System loader how to load when no filename and/or no extension
-    packages: {
-      app: {
-        main: './main.js',
-        defaultExtension: 'js'
-      },
-      rxjs: {
-        defaultExtension: 'js'
-      },
-      'angular-in-memory-web-api': {
-        main: './index.js',
-        defaultExtension: 'js'
-      }
-    }
-  });
+            // app
+            "app": "app/main",
+
+            // environment-settings: App level settings file for each environment
+            "environment-settings": "app/settings/dev-settings",
+
+            // @angular
+            "@angular/core": "npm:@angular/core/bundles/core.umd",
+            "@angular/common": "npm:@angular/common/bundles/common.umd",
+            "@angular/compiler": "npm:@angular/compiler/bundles/compiler.umd",
+            "@angular/platform-browser": "npm:@angular/platform-browser/bundles/platform-browser.umd",
+            "@angular/platform-browser-dynamic": "npm:@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd",
+            "@angular/http": "npm:@angular/http/bundles/http.umd",
+            "@angular/router": "npm:@angular/router/bundles/router.umd",
+            "@angular/forms": "npm:@angular/forms/bundles/forms.umd",
+            "@angular/upgrade": "npm:@angular/upgrade/bundles/upgrade.umd",
+
+            // rxjs
+            "rxjs": "npm:rxjs",
+
+            // breeze
+            "datajs": "npm:datajs/index",
+            "breeze-client": "npm:breeze-client",
+            "breeze-bridge-angular2": "npm:breeze-bridge-angular2/index",
+
+            // highcharts
+            "highcharts": "npm:highcharts/highcharts.src",
+            "angular2-highcharts": "npm:angular2-highcharts/index",
+
+            // moment
+            "moment": "npm:moment/moment",
+            "angular2-moment": "npm:angular2-moment/index",
+
+            // angulartics
+            "angulartics2": "npm:angulartics2/dist/index",
+
+            // toaster
+            "angular2-toaster": "npm:angular2-toaster/angular2-toaster"
+        },
+        packages: {
+            "breeze-client": { main: "breeze.base.debug" },
+        }
+    };
+
+    System.config(config);
+
 })(this);

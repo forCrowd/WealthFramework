@@ -1,0 +1,98 @@
+﻿.resource-pool-editor {
+    font-family: Tahoma;
+    /*font-family: Verdana, Geneva, Tahoma, sans-serif;*/
+    font-size: 11px;
+    padding: 1.5em 0;
+}
+
+    .resource-pool-editor button.btn-link {
+        border: 0;
+        font-weight: inherit;
+        padding: 0;
+    }
+
+    .resource-pool-editor .heading {
+        padding: 15px;
+    }
+
+    .resource-pool-editor .title {
+        font-size: 18px;
+        line-height: 2em;
+    }
+
+    .resource-pool-editor hr {
+        margin: 10px 0 20px 0;
+        border-color: #ddd;
+    }
+
+    .resource-pool-editor .description {
+        padding: 30px 15px;
+        font-size: 14px;
+        line-height: 1.5em;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .resource-pool-editor .settings,
+    .resource-pool-editor .details {
+        min-height: 3em;
+    }
+
+    .resource-pool-editor .details label, .resource-pool-editor .details span {
+        border-bottom: 1px solid #ddd;
+        display: inline-block;
+        line-height: 2em;
+        margin-bottom: 0;
+        min-width: 125px;
+        padding: 5px;
+    }
+
+.resource-pool-table {
+}
+
+    .resource-pool-table > thead > tr > th {
+        vertical-align: top;
+    }
+
+    .resource-pool-table > thead > tr > th,
+    .resource-pool-table > thead > tr > td,
+    .resource-pool-table > tbody > tr > td,
+    .resource-pool-table > tfoot > tr > td {
+        line-height: 2em;
+        min-width: 85px;
+        overflow: hidden; /* Hide text outside the cell */
+        padding: 3px;
+    }
+
+    .resource-pool-table .infoText {
+        margin-left: 2px;
+    }
+
+    .resource-pool-table .incomeStatusLow {
+        color: #a94442;
+    }
+
+    .resource-pool-table .incomeStatusAverage {
+        /* color: ? */
+    }
+
+    .resource-pool-table .incomeStatusHigh {
+        color: #3c763d;
+    }
+
+    .resource-pool-table .noborder {
+        border: 0;
+    }
+
+.label-as-on-badge {
+    border-radius: 1em;
+    background-color: #3c763d;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.label-as-off-badge {
+    border-radius: 1em;
+    background-color: #a94442;
+    cursor: pointer;
+    margin-left: 5px;
+}

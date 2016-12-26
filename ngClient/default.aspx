@@ -1,18 +1,37 @@
 ﻿<!DOCTYPE html>
-<html data-ng-app="main">
+<html>
 <head>
     <title data-ng-bind="'Wealth Economy' + (viewTitle !== '' ? ' - ' + viewTitle : '')"></title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <base href="/" />
+
     <!-- Favicon -->
-    <link rel="shortcut icon" href="favicon.ico?v=0.55.0" />
+    <link rel="shortcut icon" href="/favicon.ico?v=0.65.0" />
     <!-- lib.css -->
-    <link href="/_system/css/lib/lib.min.css?v=0.58.0" rel="stylesheet" />
+    <link href="/_system/css/lib/lib.min.css?v=0.65.0" rel="stylesheet" />
     <!-- app.css -->
-    <link href="/_system/css/app.min.css?v=0.58.0" rel="stylesheet" />
+    <link href="/_system/css/app.min.css?v=0.65.0" rel="stylesheet" />
+
+    <!-- externals -->
+    <script src="/node_modules/core-js/client/shim.min.js"></script>
+    <script src="/node_modules/zone.js/dist/zone.js"></script>
+    <script src="/node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="/node_modules/systemjs/dist/system.src.js"></script>
+
+    <script src="/node_modules/highcharts/highcharts.src.js"></script>
+    <script src="/node_modules/respond.js/dest/respond.src.js"></script>
+    <script src="/node_modules/source-map/dist/source-map.js"></script>
+
+    <script src="/systemjs.config.js"></script>
+    <script>
+        System.import('app')
+            .catch(function (err) {
+                console.error(err);
+            });
+    </script>
 </head>
-<body data-ng-controller="DefaultController as vm">
+<body data-ng-controller="defaultController as vm">
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -79,7 +98,7 @@
                 <div class="col-md-12">
                     <div class="contacts pull-left">
                         <a href="http://forcrowd.org" target="_blank">
-                            <img src="/_system/images/forCrowd_Logo_142x30.jpg?v=0.59.0" alt="Logo" />
+                            <img src="/_system/images/forCrowd_Logo_142x30.jpg?v=0.65.0" alt="Logo" />
                         </a>
                         <a href="https://twitter.com/forCrowd" target="_blank" class="g-ml-40">
                             <i class="fa fa-twitter fa-lg" aria-hidden="true"></i>
@@ -93,46 +112,14 @@
                         <a href="mailto:contact.wealth@forcrowd.org" target="_blank" class="g-ml-20">
                             <i class="fa fa-envelope fa-lg" aria-hidden="true"></i>
                         </a>
-
-                        <%--<div class="col-md-4">
-                        <a class="btn btn-block btn-default" role="button" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YPBCBJ3ANDL4Q" target="_blank">
-                            <span class="fa fa-paypal fa-lg" aria-hidden="true"></span>
-                            Invest in us with Paypal
-                        </a>
-                    </div>
-                    <div class="col-md-4">
-                        <a class="btn btn-block btn-default" role="button" href="" data-ng-click="vm.toggleBankTransfer()">
-                            <span class="fa fa-bank fa-lg" aria-hidden="true"></span>
-                            Or with bank transfer
-                        </a>
-                        <div class="bs-callout bs-callout-info" data-ng-show="vm.displayBankTransfer">
-                            <h4>Bank Transfer - Euro</h4>
-                            <p>
-                                Bank: Triodos Bank NV, Netherlands<br />
-                                IBAN: NL20 TRIO 0254 4012 87
-                            </p>
-                        </div>
-                    </div>--%>
-                        <%--<a class="btn btn-primary" href="https://flattr.com/profile/forCrowd" role="button" target="_blank">Flattr</a>--%>
-                        <%--<a class="btn btn-primary" href="https://gratipay.com/forCrowd/" role="button" target="_blank">Gratipay</a>--%>
                     </div>
                     <div class="pull-right">
-                        <a href="/_system/content/contributors">Contributors</a>
-                        - <small>Version: <span data-ng-bind="vm.applicationInfo.CurrentVersionText"></span></small>
+                        <a href="/_system/content/contributors">Contributors</a><br />
+                        <small>Version: <span data-ng-bind="vm.applicationInfo.CurrentVersion"></span>- Alpha ~ Beta</small>
                     </div>
                 </div>
             </div>
         </div>
     </footer>
-
-    <!-- lib.js -->
-    <script src="/_system/js/lib/lib.min.js?v=0.63.0"></script>
-
-    <!-- app.js -->
-    <script src="/_system/js/app/app.min.js?v=0.64.6"></script>
-
-    <!-- settings.js -->
-    <script src="/_system/js/app/settings/settings.js?v=0.63.0"></script>
-
 </body>
 </html>

@@ -1,69 +1,58 @@
-﻿module Main.Factories {
-    'use strict';
+﻿export function locationHistory(logger: any) {
 
-    var factoryId = 'locationHistory';
+    var self = {
+        history: [new LocationItem("/")],
+        historyLimit: 10
+    };
 
-    angular.module('main').factory(factoryId, ['logger', locationHistory]);
+    var factory = {
+        createItem: createItem,
+        getHistory: getHistory,
+        previousItem: previousItem
+    };
 
-    export function locationHistory(logger: any) {
+    // Return
+    return factory;
 
-        // Logger
-        logger = logger.forSource(factoryId);
+    /*** Implementations ***/
 
-        var self = {
-            history: [new LocationItem('/')],
-            historyLimit: 10
-        };
+    function createItem($location: any, $routeCurrent: any) {
 
-        var factory = {
-            createItem: createItem,
-            getHistory: getHistory,
-            previousItem: previousItem
-        };
+        var itemUrl = $location.url();
+        var accessType = $routeCurrent.accessType;
+        var item = new LocationItem(itemUrl, accessType);
+        self.history.push(item);
 
-        // Return
-        return factory;
-
-        /*** Implementations ***/
-
-        function createItem($location: any, $routeCurrent: any) {
-
-            var itemUrl = $location.url();
-            var accessType = $routeCurrent.accessType;
-            var item = new LocationItem(itemUrl, accessType);
-            self.history.push(item);
-
-            // Only keep limited number of items
-            if (self.history.length > self.historyLimit) {
-                self.history.splice(0, self.history.length - self.historyLimit);
-            }
-        }
-
-        function getHistory() {
-            return self.history.slice();
-        }
-
-        function previousItem() {
-            for (var i = self.history.length - 2; i >= 0; i--) {
-                return self.history[i];
-            }
-
-            return null;
+        // Only keep limited number of items
+        if (self.history.length > self.historyLimit) {
+            self.history.splice(0, self.history.length - self.historyLimit);
         }
     }
 
-    class LocationItem {
+    function getHistory() {
+        return self.history.slice();
+    }
 
-        itemUrl: string;
-        accessType: any;
-
-        constructor(itemUrl: any, accessType?: any) {
-            this.itemUrl = typeof itemUrl !== 'undefined' ? itemUrl : '';
-            this.accessType = typeof accessType !== 'undefined' ? accessType : 'undefined';
+    function previousItem() {
+        for (var i = self.history.length - 2; i >= 0; i--) {
+            return self.history[i];
         }
 
-        url() {
-            return this.itemUrl;
-        }
+        return null;
+    }
+}
+
+class LocationItem {
+
+    itemUrl: string;
+    accessType: any;
+
+    constructor(itemUrl: any, accessType?: any) {
+        this.itemUrl = typeof itemUrl !== "undefined" ? itemUrl : "";
+        this.accessType = typeof accessType !== "undefined" ? accessType : "undefined";
+    }
+
+    url() {
+        return this.itemUrl;
     }
 }

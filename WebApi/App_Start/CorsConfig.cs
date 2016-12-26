@@ -15,7 +15,11 @@
                 AllowAnyMethod = true,
                 SupportsCredentials = true
             };
-            policy.Origins.Add(Framework.AppSettings.ClientAppUrl);
+
+            foreach (var allowedDomain in Framework.AppSettings.AllowedDomains)
+            {
+                policy.Origins.Add(allowedDomain);
+            }
 
             app.UseCors(new CorsOptions
             {
