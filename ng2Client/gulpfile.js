@@ -252,6 +252,7 @@ function publishCopy(environment) {
         "./app/css/fonts/*",
         "./app/css/lib/*",
         "./app/css/app.min.css",
+        "./app/images/**/*",
         "./app/modules/**/*.html",
         "./app/modules/**/*.css",
         "./app/app.min.js",
@@ -277,11 +278,19 @@ function publishCopy(environment) {
             var htmlreplace = require("gulp-html-replace");
 
             return gulp.src(publishSrc, { base: "./" })
-                .pipe(htmlreplace({
-                    "publish-default-aspx": "/app/app.min.js?v=" + version,
-                    "publish-web-config-prod": getWebConfigHttpsBlock(environment)
-                }))
-                .pipe(gulp.dest(publishDest));
+                .pipe(gulp.dest(publishDest))
+                .on("end", function () {
+
+                    var defaultAspx = publishDest + "/default.aspx";
+                    var webConfig = publishDest + "/Web.config";
+
+                    gulp.src([defaultAspx, webConfig])
+                        .pipe(htmlreplace({
+                            "publish-default-aspx": "/app/app.min.js?v=" + version,
+                            "publish-web-config-prod": getWebConfigHttpsBlock(environment)
+                        }))
+                        .pipe(gulp.dest(publishDest));;
+                });
         });
 }
 

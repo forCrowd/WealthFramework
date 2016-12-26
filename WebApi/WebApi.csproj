@@ -301,9 +301,9 @@
     <Compile Include="App_Start\Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Configs\appSettings.config">
+    <None Include="Configs\appSettings.config">
       <SubType>Designer</SubType>
-    </Content>
+    </None>
     <None Include="Configs\connectionStrings.config">
       <SubType>Designer</SubType>
     </None>

@@ -83,6 +83,9 @@ const appRoutes: Routes = [
     { path: ":username/:resourcePoolKey/edit", component: ResourcePoolManagerComponent, canDeactivate: [CanDeactivateGuard], resolve: { currentUser: CurrentUserResolve, title: DynamicTitleResolve } },
     { path: ":username/:resourcePoolKey", component: ResourcePoolViewerComponent, resolve: { currentUser: CurrentUserResolve, title: DynamicTitleResolve } },
 
+    /* Backward compatibility */
+    { path: "_system/content/contributors", redirectTo: "app/contributors", pathMatch: "full" },
+
     /* Not found */
     { path: "**", component: NotFoundComponent, data: { title: "Not Found" }, resolve: { currentUser: CurrentUserResolve } }
 ];
