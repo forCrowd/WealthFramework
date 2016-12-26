@@ -1,5 +1,39 @@
 ### Changelog
 
+**0.65.0**
+
+* ng2Client project
+ * Initial ng2Client project and files - angelfeliz
+ * All angular controllers and directives were converted to components - coni2k
+ * typescript and gulp-typescript packages were updated to latest, typings related items were removed - coni2k
+ * systemjs module loader was introduced: No more app.min.js & lib.min.js (at least for the moment) - coni2k
+ * angular2-moment instead of angular-moment - coni2k
+ * rxjs & observables instead of promises - coni2k
+ * angular2-highcharts instead of highcharts-ng - coni2k
+ * breeze z-validate doesn't seem to be working with angular2, removed for now - coni2k
+ * angulartics2 instead of angular-google-analytics - coni2k
+ * Disqus was removed for now - coni2k
+ * "symbolic" pipe instead of numberSymbol, "enumConverter" was removed, "percentage" pipe was replaced with built-in one - coni2k
+ * Page title implementation was done through titleService, routing and new DynamicTitleResolve service - coni2k
+ * enableProdMode settings was added to settings & all settings are now static - coni2k
+ * ApplicationInfo service was merged with data-context service - coni2k
+ * Separate ngChart module & component - coni2k
+ * _system folder was renamed to app - coni2k
+ * Naming conventions: https://angular.io/styleguide - coni2k
+ * LocationHistory was removed - coni2k
+ * loginReturnUrl is now stored in localStorage - coni2k
+ * systemjs builder and new bundling method with gulpfile.js - coni2k
+ * gulpfile.js improvements - coni2k
+ * Settings for three different environments ("dev", "test", "prod"), and client has its own version field now - coni2k
+ * Cache busting through AppSettings version field - coni2k
+* Multi client support: WebApi doesn't construct client urls anymore, gets the related urls from the client itself.
+ClientAppUrl setting in appSettings was renamed to AllowedDomains and only used in CorsConfig for determining clients.
+* ngClient - Radio buttons in manage forms were replaced with dropdowns
+* ngClient - single settings constant was stored instead of individual settings - coni2k
+* ngClient - git channel icon changed - coni2k
+* ngClient - npm package updates - coni2k
+* ngClient - ' char replaced with " in all ts files - coni2k
+
 **0.64.6**
 
 * New contributor: Carmen Pomana

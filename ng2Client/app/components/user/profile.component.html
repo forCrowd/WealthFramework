@@ -1,0 +1,37 @@
+﻿<div *ngIf="user" class="g-mb-40">
+    <h2>{{ user.UserName }}</h2>
+    <p [hidden]="!isUserEqualsToCurrentUser">
+        <a routerLink="/{{ user.UserName }}/new">Create New</a>
+    </p>
+</div>
+<div *ngIf="user" class="table-search">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Resource Pool</th>
+                    <th># Ratings</th>
+                    <th>Created On</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr [hidden]="user.ResourcePoolSet.length > 0">
+                    <td colspan="4">
+                        Nothing to display
+                    </td>
+                </tr>
+                <tr [hidden]="user.ResourcePoolSet.length === 0" *ngFor="let resourcePool of user.getResourcePoolSetSorted()">
+                    <td>
+                        <h3><a routerLink="{{ '/' + resourcePool.User.UserName + '/' + resourcePool.Key }}">{{ resourcePool.Name }}</a></h3>
+                    </td>
+                    <td>
+                        {{ resourcePool.RatingCount }}
+                    </td>
+                    <td>
+                        {{ resourcePool.CreatedOn | amTimeAgo }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

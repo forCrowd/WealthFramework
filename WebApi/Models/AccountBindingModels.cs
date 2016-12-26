@@ -22,6 +22,8 @@
         [DataType(DataType.EmailAddress)]
         [EmailUniqueValidator]
         public string Email { get; set; }
+
+        public string ClientAppUrl { get; set; }
     }
 
     public class ChangePasswordBindingModel
@@ -63,6 +65,8 @@
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public string ClientAppUrl { get; set; }
     }
 
     public class RegisterAnonymousBindingModel
@@ -75,6 +79,12 @@
         [DataType(DataType.EmailAddress)]
         [EmailUniqueValidator]
         public string Email { get; set; }
+    }
+
+    public class ResendConfirmationEmailBindingModel
+    {
+        [Required]
+        public string ClientAppUrl { get; set; }
     }
 
     public class ResetPasswordBindingModel
@@ -101,5 +111,8 @@
         [Required]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
+
+        [Required]
+        public string ClientAppUrl { get; set; }
     }
 }

@@ -1,583 +1,572 @@
-﻿module Main.Entities {
-    'use strict';
+﻿//import { LoggerService } from "../ng2/services/logger";
 
-    var factoryId = 'ElementField';
+export function elementFieldFactory(logger: any, $rootScope: any) {
 
-    function elementFieldFactory(logger: any, $rootScope: any) {
-
-        // Logger
-        logger = logger.forSource(factoryId);
-
-        // Server-side
-        Object.defineProperty(ElementField.prototype, 'DataType', {
-            enumerable: true,
-            configurable: true,
-            get() { return this.backingFields._dataType; },
-            set(value) {
-
-                var self = this;
-                if (self.backingFields._dataType !== value) {
-
-                    // Finally, set it
-                    self.backingFields._dataType = value;
-
-                    $rootScope.$broadcast('ElementField_DataTypeChanged', this);
-                }
-            }
-        });
-
-        Object.defineProperty(ElementField.prototype, 'IndexEnabled', {
-            enumerable: true,
-            configurable: true,
-            get() { return this.backingFields._indexEnabled; },
-            set(value) {
-
-                if (this.backingFields._indexEnabled !== value) {
-                    this.backingFields._indexEnabled = value;
-
-                    this.IndexCalculationType = value ? 1 : 0;
-                    this.IndexSortType = value ? 1 : 0;
-
-                    $rootScope.$broadcast('ElementField_IndexEnabledChanged', this);
-
-                    // TODO Complete this block!
-
-                    //// Update related
-                    //// a. Element
-                    //this.Element.setElementFieldIndexSet();
-
-                    //// b. Item(s)
-                    //this.ElementCellSet.forEach(function(cell) {
-                    //    var item = cell.ElementItem;
-                    //    item.setElementCellIndexSet();
-                    //});
-
-                    //// c. Cells
-                    //this.ElementCellSet.forEach(function(cell) {
-                    //    cell.setNumericValueMultipliedPercentage(false);
-                    //});
-                    //this.setReferenceRatingMultiplied();
-
-                    /* IndexEnabled related functions */
-                    //cell.setAggressiveRating();
-                    //cell.setratingPercentage();
-                    //cell.setIndexIncome();
-                }
-            }
-        });
-
-        // Return
-        return ElementField;
-
-        function ElementField() {
+    // Server-side
+    Object.defineProperty(ElementField.prototype, "DataType", {
+        enumerable: true,
+        configurable: true,
+        get() { return this.backingFields._dataType; },
+        set(value) {
 
             var self = this;
+            if (self.backingFields._dataType !== value) {
 
-            // Server-side
-            self.Id = 0;
-            self.ElementId = 0;
-            self.Name = '';
-            //self.DataType = 1;
-            self.SelectedElementId = null;
-            self.UseFixedValue = null;
-            self.IndexCalculationType = 0;
-            self.IndexSortType = 0;
-            self.SortOrder = 0;
-            self.IndexRatingTotal = 0; // Computed value - Used in: setOtherUsersIndexRatingTotal
-            self.IndexRatingCount = 0; // Computed value - Used in: setOtherUsersIndexRatingCount
-            // TODO breezejs - Cannot assign a navigation property in an entity ctor
-            //self.Element = null;
-            //self.SelectedElement = null;
-            //self.ElementCellSet = [];
-            //self.UserElementFieldSet = [];
+                // Finally, set it
+                self.backingFields._dataType = value;
 
-            // Local variables
-            self.backingFields = {
-                _dataType: 1,
-                _indexEnabled: false,
-                _currentUserIndexRating: null,
-                _otherUsersIndexRatingTotal: null,
-                _otherUsersIndexRatingCount: null,
-                _indexRating: null,
-                _indexRatingPercentage: null,
-                _numericValueMultiplied: null,
-                _passiveRating: null,
-                _referenceRatingMultiplied: null,
-                // Aggressive rating formula prevents the organizations with the worst rating to get any income.
-                // However, in case all ratings are equal, then no one can get any income from the pool.
-                // This flag is used to determine this special case and let all organizations get a same share from the pool.
-                // See the usage in aggressiveRating() in elementCell.js
-                // TODO Usage of this field is correct?
-                _referenceRatingAllEqualFlag: true,
-                _aggressiveRating: null,
-                _rating: null,
-                _indexIncome: null
-            };
+                $rootScope.$broadcast("ElementField_DataTypeChanged", this);
+            }
+        }
+    });
 
-            // Functions
-            self.currentUserElementField = currentUserElementField;
-            self.currentUserIndexRating = currentUserIndexRating;
-            self.indexIncome = indexIncome;
-            self.indexRating = indexRating;
-            self.indexRatingAverage = indexRatingAverage;
-            self.indexRatingCount = indexRatingCount;
-            self.indexRatingPercentage = indexRatingPercentage;
-            self.indexRatingTotal = indexRatingTotal;
-            self.numericValueMultiplied = numericValueMultiplied;
-            self.otherUsersIndexRatingCount = otherUsersIndexRatingCount;
-            self.otherUsersIndexRatingTotal = otherUsersIndexRatingTotal;
-            self.passiveRating = passiveRating;
-            self.rating = rating;
-            self.referenceRatingAllEqualFlag = referenceRatingAllEqualFlag;
-            self.referenceRatingMultiplied = referenceRatingMultiplied;
-            self.setCurrentUserIndexRating = setCurrentUserIndexRating;
-            self.setIndexIncome = setIndexIncome;
-            self.setIndexRating = setIndexRating;
-            self.setIndexRatingPercentage = setIndexRatingPercentage;
-            self.setNumericValueMultiplied = setNumericValueMultiplied;
-            self.setOtherUsersIndexRatingCount = setOtherUsersIndexRatingCount;
-            self.setOtherUsersIndexRatingTotal = setOtherUsersIndexRatingTotal;
-            self.setPassiveRating = setPassiveRating;
-            self.setRating = setRating;
-            self.setReferenceRatingAllEqualFlag = setReferenceRatingAllEqualFlag;
-            self.setReferenceRatingMultiplied = setReferenceRatingMultiplied;
+    Object.defineProperty(ElementField.prototype, "IndexEnabled", {
+        enumerable: true,
+        configurable: true,
+        get() { return this.backingFields._indexEnabled; },
+        set(value) {
 
-            /*** Implementations ***/
+            if (this.backingFields._indexEnabled !== value) {
+                this.backingFields._indexEnabled = value;
 
-            function currentUserElementField() {
-                return self.UserElementFieldSet.length > 0 ?
-                    self.UserElementFieldSet[0] :
-                    null;
+                this.IndexCalculationType = value ? 1 : 0;
+                this.IndexSortType = value ? 1 : 0;
+
+                $rootScope.$broadcast("ElementField_IndexEnabledChanged", this);
+
+                // TODO Complete this block!
+
+                //// Update related
+                //// a. Element
+                //this.Element.setElementFieldIndexSet();
+
+                //// b. Item(s)
+                //this.ElementCellSet.forEach(function(cell) {
+                //    var item = cell.ElementItem;
+                //    item.setElementCellIndexSet();
+                //});
+
+                //// c. Cells
+                //this.ElementCellSet.forEach(function(cell) {
+                //    cell.setNumericValueMultipliedPercentage(false);
+                //});
+                //this.setReferenceRatingMultiplied();
+
+                /* IndexEnabled related functions */
+                //cell.setAggressiveRating();
+                //cell.setratingPercentage();
+                //cell.setIndexIncome();
+            }
+        }
+    });
+
+    // Return
+    return ElementField;
+
+    function ElementField() {
+
+        var self = this;
+
+        // Server-side
+        self.Id = 0;
+        self.ElementId = 0;
+        self.Name = "";
+        //self.DataType = 1;
+        self.SelectedElementId = null;
+        self.UseFixedValue = null;
+        self.IndexCalculationType = 0;
+        self.IndexSortType = 0;
+        self.SortOrder = 0;
+        self.IndexRatingTotal = 0; // Computed value - Used in: setOtherUsersIndexRatingTotal
+        self.IndexRatingCount = 0; // Computed value - Used in: setOtherUsersIndexRatingCount
+        // TODO breezejs - Cannot assign a navigation property in an entity ctor
+        //self.Element = null;
+        //self.SelectedElement = null;
+        //self.ElementCellSet = [];
+        //self.UserElementFieldSet = [];
+
+        // Local variables
+        self.backingFields = {
+            _dataType: 1,
+            _indexEnabled: false,
+            _currentUserIndexRating: null,
+            _otherUsersIndexRatingTotal: null,
+            _otherUsersIndexRatingCount: null,
+            _indexRating: null,
+            _indexRatingPercentage: null,
+            _numericValueMultiplied: null,
+            _passiveRating: null,
+            _referenceRatingMultiplied: null,
+            // Aggressive rating formula prevents the organizations with the worst rating to get any income.
+            // However, in case all ratings are equal, then no one can get any income from the pool.
+            // This flag is used to determine this special case and let all organizations get a same share from the pool.
+            // See the usage in aggressiveRating() in elementCell.js
+            // TODO Usage of this field is correct?
+            _referenceRatingAllEqualFlag: true,
+            _aggressiveRating: null,
+            _rating: null,
+            _indexIncome: null
+        };
+
+        // Functions
+        self.currentUserElementField = currentUserElementField;
+        self.currentUserIndexRating = currentUserIndexRating;
+        self.indexIncome = indexIncome;
+        self.indexRating = indexRating;
+        self.indexRatingAverage = indexRatingAverage;
+        self.indexRatingCount = indexRatingCount;
+        self.indexRatingPercentage = indexRatingPercentage;
+        self.indexRatingTotal = indexRatingTotal;
+        self.numericValueMultiplied = numericValueMultiplied;
+        self.otherUsersIndexRatingCount = otherUsersIndexRatingCount;
+        self.otherUsersIndexRatingTotal = otherUsersIndexRatingTotal;
+        self.passiveRating = passiveRating;
+        self.rating = rating;
+        self.referenceRatingAllEqualFlag = referenceRatingAllEqualFlag;
+        self.referenceRatingMultiplied = referenceRatingMultiplied;
+        self.setCurrentUserIndexRating = setCurrentUserIndexRating;
+        self.setIndexIncome = setIndexIncome;
+        self.setIndexRating = setIndexRating;
+        self.setIndexRatingPercentage = setIndexRatingPercentage;
+        self.setNumericValueMultiplied = setNumericValueMultiplied;
+        self.setOtherUsersIndexRatingCount = setOtherUsersIndexRatingCount;
+        self.setOtherUsersIndexRatingTotal = setOtherUsersIndexRatingTotal;
+        self.setPassiveRating = setPassiveRating;
+        self.setRating = setRating;
+        self.setReferenceRatingAllEqualFlag = setReferenceRatingAllEqualFlag;
+        self.setReferenceRatingMultiplied = setReferenceRatingMultiplied;
+
+        /*** Implementations ***/
+
+        function currentUserElementField() {
+            return self.UserElementFieldSet.length > 0 ?
+                self.UserElementFieldSet[0] :
+                null;
+        }
+
+        function currentUserIndexRating() {
+
+            if (self.backingFields._currentUserIndexRating === null) {
+                self.setCurrentUserIndexRating(false);
             }
 
-            function currentUserIndexRating() {
+            return self.backingFields._currentUserIndexRating;
+        }
 
-                if (self.backingFields._currentUserIndexRating === null) {
-                    self.setCurrentUserIndexRating(false);
-                }
+        function indexIncome() {
 
-                return self.backingFields._currentUserIndexRating;
+            if (self.backingFields._indexIncome === null) {
+                self.setIndexIncome(false);
             }
 
-            function indexIncome() {
+            return self.backingFields._indexIncome;
+        }
 
-                if (self.backingFields._indexIncome === null) {
-                    self.setIndexIncome(false);
-                }
+        function indexRating() {
 
-                return self.backingFields._indexIncome;
+            if (self.backingFields._indexRating === null) {
+                self.setIndexRating(false);
             }
 
-            function indexRating() {
+            return self.backingFields._indexRating;
+        }
 
-                if (self.backingFields._indexRating === null) {
-                    self.setIndexRating(false);
-                }
+        function indexRatingAverage() {
 
-                return self.backingFields._indexRating;
+            if (self.indexRatingCount() === null) {
+                return null;
             }
 
-            function indexRatingAverage() {
+            return self.indexRatingCount() === 0 ?
+                0 :
+                self.indexRatingTotal() / self.indexRatingCount();
+        }
 
-                if (self.indexRatingCount() === null) {
-                    return null;
-                }
+        function indexRatingCount() {
+            return self.otherUsersIndexRatingCount() + 1;
+        }
 
-                return self.indexRatingCount() === 0 ?
-                    0 :
-                    self.indexRatingTotal() / self.indexRatingCount();
+        function indexRatingPercentage() {
+
+            if (self.backingFields._indexRatingPercentage === null) {
+                self.setIndexRatingPercentage(false);
             }
 
-            function indexRatingCount() {
-                return self.otherUsersIndexRatingCount() + 1;
+            return self.backingFields._indexRatingPercentage;
+        }
+
+        function indexRatingTotal() {
+            return self.otherUsersIndexRatingTotal() + self.currentUserIndexRating();
+        }
+
+        function numericValueMultiplied() {
+
+            if (self.backingFields._numericValueMultiplied === null) {
+                self.setNumericValueMultiplied(false);
             }
 
-            function indexRatingPercentage() {
+            return self.backingFields._numericValueMultiplied;
+        }
 
-                if (self.backingFields._indexRatingPercentage === null) {
-                    self.setIndexRatingPercentage(false);
-                }
+        // TODO Since this is a fixed value based on IndexRatingCount & current user"s rate,
+        // it could be calculated on server, check it later again / coni2k - 03 Aug. "15
+        function otherUsersIndexRatingCount() {
 
-                return self.backingFields._indexRatingPercentage;
+            // Set other users" value on the initial call
+            if (self.backingFields._otherUsersIndexRatingCount === null) {
+                self.setOtherUsersIndexRatingCount();
             }
 
-            function indexRatingTotal() {
-                return self.otherUsersIndexRatingTotal() + self.currentUserIndexRating();
+            return self.backingFields._otherUsersIndexRatingCount;
+        }
+
+        // TODO Since this is a fixed value based on IndexRatingTotal & current user"s rate,
+        // it could be calculated on server, check it later again / coni2k - 03 Aug. "15
+        function otherUsersIndexRatingTotal() {
+
+            // Set other users" value on the initial call
+            if (self.backingFields._otherUsersIndexRatingTotal === null) {
+                self.setOtherUsersIndexRatingTotal();
             }
 
-            function numericValueMultiplied() {
+            return self.backingFields._otherUsersIndexRatingTotal;
+        }
 
-                if (self.backingFields._numericValueMultiplied === null) {
-                    self.setNumericValueMultiplied(false);
-                }
-
-                return self.backingFields._numericValueMultiplied;
+        // Helper function for Index Rating Type 1 case (low rating is better)
+        function passiveRating() {
+            if (self.backingFields._passiveRating === null) {
+                self.setPassiveRating(false);
             }
 
-            // TODO Since this is a fixed value based on IndexRatingCount & current user's rate,
-            // it could be calculated on server, check it later again / coni2k - 03 Aug. '15
-            function otherUsersIndexRatingCount() {
+            return self.backingFields._passiveRating;
+        }
 
-                // Set other users' value on the initial call
-                if (self.backingFields._otherUsersIndexRatingCount === null) {
-                    self.setOtherUsersIndexRatingCount();
-                }
+        function rating() {
 
-                return self.backingFields._otherUsersIndexRatingCount;
+            if (self.backingFields._rating === null) {
+                self.setRating(false);
             }
 
-            // TODO Since this is a fixed value based on IndexRatingTotal & current user's rate,
-            // it could be calculated on server, check it later again / coni2k - 03 Aug. '15
-            function otherUsersIndexRatingTotal() {
+            return self.backingFields._rating;
+        }
 
-                // Set other users' value on the initial call
-                if (self.backingFields._otherUsersIndexRatingTotal === null) {
-                    self.setOtherUsersIndexRatingTotal();
-                }
+        function referenceRatingAllEqualFlag(value: any) {
+            return self.backingFields._referenceRatingAllEqualFlag;
+        }
 
-                return self.backingFields._otherUsersIndexRatingTotal;
+        function referenceRatingMultiplied() {
+
+            if (self.backingFields._referenceRatingMultiplied === null) {
+                self.setReferenceRatingMultiplied(false);
             }
 
-            // Helper function for Index Rating Type 1 case (low rating is better)
-            function passiveRating() {
-                if (self.backingFields._passiveRating === null) {
-                    self.setPassiveRating(false);
-                }
+            return self.backingFields._referenceRatingMultiplied;
+        }
 
-                return self.backingFields._passiveRating;
-            }
+        function setCurrentUserIndexRating(updateRelated: any) {
+            updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
 
-            function rating() {
+            var value = self.currentUserElementField() !== null ?
+                self.currentUserElementField().Rating :
+                50; // If there is no rating, this is the default value?
 
-                if (self.backingFields._rating === null) {
-                    self.setRating(false);
-                }
-
-                return self.backingFields._rating;
-            }
-
-            function referenceRatingAllEqualFlag(value: any) {
-                return self.backingFields._referenceRatingAllEqualFlag;
-            }
-
-            function referenceRatingMultiplied() {
-
-                if (self.backingFields._referenceRatingMultiplied === null) {
-                    self.setReferenceRatingMultiplied(false);
-                }
-
-                return self.backingFields._referenceRatingMultiplied;
-            }
-
-            function setCurrentUserIndexRating(updateRelated: any) {
-                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
-
-                var value = self.currentUserElementField() !== null ?
-                    self.currentUserElementField().Rating :
-                    50; // If there is no rating, this is the default value?
-
-                if (self.backingFields._currentUserIndexRating !== value) {
-                    self.backingFields._currentUserIndexRating = value;
-
-                    // Update related
-                    if (updateRelated) {
-                        self.setIndexRating();
-                    }
-                }
-            }
-
-            function setIndexIncome(updateRelated: any) {
-                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
-
-                var value = self.Element.totalResourcePoolAmount() * self.indexRatingPercentage();
-
-                //if (self.IndexEnabled) {
-                //logger.log(self.Name[0] + ' II ' + value.toFixed(2));
-                //}
-
-                if (self.backingFields._indexIncome !== value) {
-                    self.backingFields._indexIncome = value;
-
-                    // Update related
-                    if (updateRelated) {
-                        self.ElementCellSet.forEach(cell => {
-                            cell.setIndexIncome();
-                        });
-                    }
-                }
-            }
-
-            function setIndexRating(updateRelated: any) {
-                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
-
-                var value = 0; // Default value?
-
-                switch (self.Element.ResourcePool.RatingMode) {
-                case 1: { value = self.currentUserIndexRating(); break; } // Current user's
-                case 2: { value = self.indexRatingAverage(); break; } // All
-                }
-
-                //logger.log(self.Name[0] + ' IR ' + value.toFixed(2));
-
-                if (self.backingFields._indexRating !== value) {
-                    self.backingFields._indexRating = value;
-
-                    // TODO Update related
-                    if (updateRelated) {
-                        self.Element.ResourcePool.mainElement().setIndexRating();
-                    }
-                }
-            }
-
-            function setIndexRatingPercentage(updateRelated: any) {
-                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
-
-                var value = 0; // Default value?
-
-                var elementIndexRating = self.Element.ResourcePool.mainElement().indexRating();
-
-                if (elementIndexRating === 0) {
-                    value = 0;
-                } else {
-                    value = self.indexRating() / elementIndexRating;
-                }
-
-                //logger.log(self.Name[0] + ' IRP ' + value.toFixed(2));
-
-                if (self.backingFields._indexRatingPercentage !== value) {
-                    self.backingFields._indexRatingPercentage = value;
-
-                    // Update related
-                    if (updateRelated) {
-                        self.setIndexIncome();
-                    }
-                }
-            }
-
-            function setNumericValueMultiplied(updateRelated: any) {
-                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
-
-                var value = 0; // Default value?
-
-                // Validate
-                if (self.ElementCellSet.length === 0) {
-                    value = 0; // ?
-                } else {
-                    self.ElementCellSet.forEach(cell => {
-                        value += cell.numericValueMultiplied();
-                        //logger.log(self.Name[0] + '-' + cell.ElementItem.Name[0] + ' NVMA ' + cell.numericValueMultiplied());
-                    });
-                }
-
-                if (self.backingFields._numericValueMultiplied !== value) {
-                    self.backingFields._numericValueMultiplied = value;
-
-                    //logger.log(self.Name[0] + ' NVMB ' + value.toFixed(2));
-
-                    // Update related?
-                    if (updateRelated && self.IndexEnabled) {
-
-                        self.ElementCellSet.forEach(cell => {
-                            cell.setNumericValueMultipliedPercentage(false);
-                        });
-
-                        self.setPassiveRating(false);
-
-                        self.ElementCellSet.forEach(cell => {
-                            cell.setPassiveRating(false);
-                        });
-
-                        self.setReferenceRatingMultiplied(false);
-
-                        self.ElementCellSet.forEach(cell => {
-                            cell.setAggressiveRating(false);
-                        });
-
-                        self.ElementCellSet.forEach(cell => {
-                            cell.setRating(false);
-                        });
-
-                        self.setRating(false);
-
-                        self.ElementCellSet.forEach(cell => {
-                            cell.setRatingPercentage(false);
-                        });
-
-                        //self.setIndexIncome(false);
-
-                        self.ElementCellSet.forEach(cell => {
-                            cell.setIndexIncome(false);
-                        });
-                    }
-                }
-            }
-
-            function setOtherUsersIndexRatingCount() {
-                self.backingFields._otherUsersIndexRatingCount = self.IndexRatingCount;
-
-                // Exclude current user's
-                if (self.currentUserElementField() !== null) {
-                    self.backingFields._otherUsersIndexRatingCount--;
-                }
-            }
-
-            function setOtherUsersIndexRatingTotal() {
-                self.backingFields._otherUsersIndexRatingTotal = self.IndexRatingTotal !== null ?
-                    self.IndexRatingTotal :
-                    0;
-
-                // Exclude current user's
-                if (self.currentUserElementField() !== null) {
-                    self.backingFields._otherUsersIndexRatingTotal -= self.currentUserElementField().Rating;
-                }
-            }
-
-            function setPassiveRating(updateRelated: any) {
-                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
-
-                var value = 0;
-
-                self.ElementCellSet.forEach(cell => {
-                    value += 1 - cell.numericValueMultipliedPercentage();
-                });
-
-                if (self.backingFields._passiveRating !== value) {
-                    self.backingFields._passiveRating = value;
-
-                    if (updateRelated) {
-                        // TODO ?
-                    }
-                }
-            }
-
-            function setRating(updateRelated: any) {
-                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
-
-                var value = 0; // Default value?
-
-                // Validate
-                self.ElementCellSet.forEach(cell => {
-                    value += cell.rating();
-                });
-
-                //logger.log(self.Name[0] + ' AR ' + value.toFixed(2));
-
-                if (self.backingFields._rating !== value) {
-                    self.backingFields._rating = value;
-
-                    //logger.log(self.Name[0] + ' AR OK');
-
-                    if (updateRelated) {
-
-                        // Update related
-                        self.ElementCellSet.forEach(cell => {
-                            cell.setRatingPercentage(false);
-                        });
-
-                        self.setIndexIncome();
-                    }
-                }
-            }
-
-            function setReferenceRatingAllEqualFlag(value: any) {
-
-                if (self.backingFields._referenceRatingAllEqualFlag !== value) {
-                    self.backingFields._referenceRatingAllEqualFlag = value;
-                    return true;
-                }
-                return false;
-            }
-
-            // TODO Currently updateRelated is always 'false'?
-            function setReferenceRatingMultiplied(updateRelated: any) {
-                updateRelated = typeof updateRelated === 'undefined' ? true : updateRelated;
-
-                var value = null;
-                var allEqualFlag = true;
-
-                // Validate
-                if (self.ElementCellSet.length === 0) {
-                    value = 0; // ?
-                } else {
-
-                    self.ElementCellSet.forEach(cell => {
-
-                        if (value === null) {
-
-                            switch (self.IndexSortType) {
-                            case 1: { // HighestToLowest (High number is better)
-                                value = (1 - cell.numericValueMultipliedPercentage());
-                                break;
-                            }
-                            case 2: { // LowestToHighest (Low number is better)
-                                value = cell.numericValueMultiplied();
-                                break;
-                            }
-                            }
-
-                        } else {
-
-                            switch (self.IndexSortType) {
-                            case 1: { // HighestToLowest (High number is better)
-
-                                if (1 - cell.numericValueMultipliedPercentage() !== value) {
-                                    allEqualFlag = false;
-                                }
-
-                                if (1 - cell.numericValueMultipliedPercentage() > value) {
-                                    value = 1 - cell.numericValueMultipliedPercentage();
-                                }
-                                break;
-                            }
-                            case 2: { // LowestToHighest (Low number is better)
-
-                                if (cell.numericValueMultiplied() !== value) {
-                                    allEqualFlag = false;
-                                }
-
-                                if (cell.numericValueMultiplied() > value) {
-                                    value = cell.numericValueMultiplied();
-                                }
-
-                                break;
-                            }
-                            }
-                        }
-                    });
-                }
-
-                //logger.log(self.Name[0] + '-' + cell.ElementItem.Name[0] + ' RRMA ' + value.toFixed(2));
-
-                // Set all equal flag
-                var flagUpdated = self.setReferenceRatingAllEqualFlag(allEqualFlag);
-                var ratingUpdated = false;
-
-                // Only if it's different..
-                if (self.backingFields._referenceRatingMultiplied !== value) {
-                    self.backingFields._referenceRatingMultiplied = value;
-
-                    ratingUpdated = true;
-
-                    //logger.log(self.Name[0] + ' RRMB ' + value.toFixed(2));
-                }
+            if (self.backingFields._currentUserIndexRating !== value) {
+                self.backingFields._currentUserIndexRating = value;
 
                 // Update related
-                if ((flagUpdated || ratingUpdated) && updateRelated) {
+                if (updateRelated) {
+                    self.setIndexRating();
+                }
+            }
+        }
 
-                    // TODO ?!
+        function setIndexIncome(updateRelated: any) {
+            updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
+
+            var value = self.Element.totalResourcePoolAmount() * self.indexRatingPercentage();
+
+            //if (self.IndexEnabled) {
+            //logger.log(self.Name[0] + " II " + value.toFixed(2));
+            //}
+
+            if (self.backingFields._indexIncome !== value) {
+                self.backingFields._indexIncome = value;
+
+                // Update related
+                if (updateRelated) {
+                    self.ElementCellSet.forEach(cell => {
+                        cell.setIndexIncome();
+                    });
+                }
+            }
+        }
+
+        function setIndexRating(updateRelated: any) {
+            updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
+
+            var value = 0; // Default value?
+
+            switch (self.Element.ResourcePool.RatingMode) {
+            case 1: { value = self.currentUserIndexRating(); break; } // Current user"s
+            case 2: { value = self.indexRatingAverage(); break; } // All
+            }
+
+            //logger.log(self.Name[0] + " IR " + value.toFixed(2));
+
+            if (self.backingFields._indexRating !== value) {
+                self.backingFields._indexRating = value;
+
+                // TODO Update related
+                if (updateRelated) {
+                    self.Element.ResourcePool.mainElement().setIndexRating();
+                }
+            }
+        }
+
+        function setIndexRatingPercentage(updateRelated: any) {
+            updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
+
+            var value = 0; // Default value?
+
+            var elementIndexRating = self.Element.ResourcePool.mainElement().indexRating();
+
+            if (elementIndexRating === 0) {
+                value = 0;
+            } else {
+                value = self.indexRating() / elementIndexRating;
+            }
+
+            //logger.log(self.Name[0] + " IRP " + value.toFixed(2));
+
+            if (self.backingFields._indexRatingPercentage !== value) {
+                self.backingFields._indexRatingPercentage = value;
+
+                // Update related
+                if (updateRelated) {
+                    self.setIndexIncome();
+                }
+            }
+        }
+
+        function setNumericValueMultiplied(updateRelated: any) {
+            updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
+
+            var value = 0; // Default value?
+
+            // Validate
+            if (self.ElementCellSet.length === 0) {
+                value = 0; // ?
+            } else {
+                self.ElementCellSet.forEach(cell => {
+                    value += cell.numericValueMultiplied();
+                    //logger.log(self.Name[0] + "-" + cell.ElementItem.Name[0] + " NVMA " + cell.numericValueMultiplied());
+                });
+            }
+
+            if (self.backingFields._numericValueMultiplied !== value) {
+                self.backingFields._numericValueMultiplied = value;
+
+                //logger.log(self.Name[0] + " NVMB " + value.toFixed(2));
+
+                // Update related?
+                if (updateRelated && self.IndexEnabled) {
+
+                    self.ElementCellSet.forEach(cell => {
+                        cell.setNumericValueMultipliedPercentage(false);
+                    });
+
+                    self.setPassiveRating(false);
+
+                    self.ElementCellSet.forEach(cell => {
+                        cell.setPassiveRating(false);
+                    });
+
+                    self.setReferenceRatingMultiplied(false);
 
                     self.ElementCellSet.forEach(cell => {
                         cell.setAggressiveRating(false);
                     });
 
-                    // self.setAggressiveRating();
+                    self.ElementCellSet.forEach(cell => {
+                        cell.setRating(false);
+                    });
+
+                    self.setRating(false);
+
+                    self.ElementCellSet.forEach(cell => {
+                        cell.setRatingPercentage(false);
+                    });
+
+                    //self.setIndexIncome(false);
+
+                    self.ElementCellSet.forEach(cell => {
+                        cell.setIndexIncome(false);
+                    });
                 }
             }
-
         }
+
+        function setOtherUsersIndexRatingCount() {
+            self.backingFields._otherUsersIndexRatingCount = self.IndexRatingCount;
+
+            // Exclude current user"s
+            if (self.currentUserElementField() !== null) {
+                self.backingFields._otherUsersIndexRatingCount--;
+            }
+        }
+
+        function setOtherUsersIndexRatingTotal() {
+            self.backingFields._otherUsersIndexRatingTotal = self.IndexRatingTotal !== null ?
+                self.IndexRatingTotal :
+                0;
+
+            // Exclude current user"s
+            if (self.currentUserElementField() !== null) {
+                self.backingFields._otherUsersIndexRatingTotal -= self.currentUserElementField().Rating;
+            }
+        }
+
+        function setPassiveRating(updateRelated: any) {
+            updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
+
+            var value = 0;
+
+            self.ElementCellSet.forEach(cell => {
+                value += 1 - cell.numericValueMultipliedPercentage();
+            });
+
+            if (self.backingFields._passiveRating !== value) {
+                self.backingFields._passiveRating = value;
+
+                if (updateRelated) {
+                    // TODO ?
+                }
+            }
+        }
+
+        function setRating(updateRelated: any) {
+            updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
+
+            var value = 0; // Default value?
+
+            // Validate
+            self.ElementCellSet.forEach(cell => {
+                value += cell.rating();
+            });
+
+            //logger.log(self.Name[0] + " AR " + value.toFixed(2));
+
+            if (self.backingFields._rating !== value) {
+                self.backingFields._rating = value;
+
+                //logger.log(self.Name[0] + " AR OK");
+
+                if (updateRelated) {
+
+                    // Update related
+                    self.ElementCellSet.forEach(cell => {
+                        cell.setRatingPercentage(false);
+                    });
+
+                    self.setIndexIncome();
+                }
+            }
+        }
+
+        function setReferenceRatingAllEqualFlag(value: any) {
+
+            if (self.backingFields._referenceRatingAllEqualFlag !== value) {
+                self.backingFields._referenceRatingAllEqualFlag = value;
+                return true;
+            }
+            return false;
+        }
+
+        // TODO Currently updateRelated is always "false"?
+        function setReferenceRatingMultiplied(updateRelated: any) {
+            updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
+
+            var value = null;
+            var allEqualFlag = true;
+
+            // Validate
+            if (self.ElementCellSet.length === 0) {
+                value = 0; // ?
+            } else {
+
+                self.ElementCellSet.forEach(cell => {
+
+                    if (value === null) {
+
+                        switch (self.IndexSortType) {
+                        case 1: { // HighestToLowest (High number is better)
+                            value = (1 - cell.numericValueMultipliedPercentage());
+                            break;
+                        }
+                        case 2: { // LowestToHighest (Low number is better)
+                            value = cell.numericValueMultiplied();
+                            break;
+                        }
+                        }
+
+                    } else {
+
+                        switch (self.IndexSortType) {
+                        case 1: { // HighestToLowest (High number is better)
+
+                            if (1 - cell.numericValueMultipliedPercentage() !== value) {
+                                allEqualFlag = false;
+                            }
+
+                            if (1 - cell.numericValueMultipliedPercentage() > value) {
+                                value = 1 - cell.numericValueMultipliedPercentage();
+                            }
+                            break;
+                        }
+                        case 2: { // LowestToHighest (Low number is better)
+
+                            if (cell.numericValueMultiplied() !== value) {
+                                allEqualFlag = false;
+                            }
+
+                            if (cell.numericValueMultiplied() > value) {
+                                value = cell.numericValueMultiplied();
+                            }
+
+                            break;
+                        }
+                        }
+                    }
+                });
+            }
+
+            //logger.log(self.Name[0] + "-" + cell.ElementItem.Name[0] + " RRMA " + value.toFixed(2));
+
+            // Set all equal flag
+            var flagUpdated = self.setReferenceRatingAllEqualFlag(allEqualFlag);
+            var ratingUpdated = false;
+
+            // Only if it"s different..
+            if (self.backingFields._referenceRatingMultiplied !== value) {
+                self.backingFields._referenceRatingMultiplied = value;
+
+                ratingUpdated = true;
+
+                //logger.log(self.Name[0] + " RRMB " + value.toFixed(2));
+            }
+
+            // Update related
+            if ((flagUpdated || ratingUpdated) && updateRelated) {
+
+                // TODO ?!
+
+                self.ElementCellSet.forEach(cell => {
+                    cell.setAggressiveRating(false);
+                });
+
+                // self.setAggressiveRating();
+            }
+        }
+
     }
-
-    elementFieldFactory.$inject = ['logger', '$rootScope'];
-
-    angular.module('main').factory(factoryId, elementFieldFactory);
 }

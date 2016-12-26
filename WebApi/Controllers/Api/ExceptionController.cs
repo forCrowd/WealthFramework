@@ -29,21 +29,18 @@
     public class AngularExceptionModel
     {
         public string Message { get; set; }
-        public string Cause { get; set; }
         public string Url { get; set; }
         public string Stack { get; set; }
 
         public override string ToString()
         {
-            return string.Format("{0}{4}" +
-                "Caused by: {1}{4}" +
-                "Url: {2}{4}" +
-                "Stack: {3}",
+            return string.Format("{0}{3}" +
+                "Url: {1}{3}" +
+                "Stack: {2}",
                 Message,
-                Cause != null ? Cause : "N/A",
                 Url,
                 Stack,
-                Environment.NewLine);
+                "\r\n");
         }
     }
 

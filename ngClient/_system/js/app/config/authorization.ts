@@ -1,57 +1,38 @@
-﻿/*
- * Authorization interceptors for angular & OData
- */
+﻿import * as angular from "angular";
 
-module Main.Config {
-    'use strict';
+export function authorizationConfig($httpProvider: ng.IHttpProvider) {
+    $httpProvider.interceptors.push("angularInterceptor");
+}
 
-    var angularInterceptorId = 'AngularInterceptor';
+export function authorizationRun(logger: any, $window: any) {
 
-    angular.module('main')
-        .config(['$httpProvider', authorizationConfig])
-        .run(['logger', '$window', authorizationRun])
-        .factory(angularInterceptorId, ['logger', '$q', '$window', angularInterceptor]);
+    // OData interceptor
+    var oldClient = $window.OData.defaultHttpClient;
+    var newClient = {
+        request(request, success, error) {
+            request.headers = request.headers || {};
+            var token = angular.fromJson($window.localStorage.getItem("token"));
+            request.headers.Authorization = token !== null ? "Bearer " + token.access_token : "";
+            return oldClient.request(request, success, error);
+        }
+    };
+    $window.OData.defaultHttpClient = newClient;
+}
 
-    function authorizationConfig($httpProvider: ng.IHttpProvider) {
-        $httpProvider.interceptors.push(angularInterceptorId);
-    }
+export function angularInterceptor(logger: any, $q: any, $window: any) {
 
-    function authorizationRun(logger, $window) {
-
-        // Logger
-        logger = logger.forSource('authorizationRun');
-
-        // OData interceptor
-        var oldClient = $window.OData.defaultHttpClient;
-        var newClient = {
-            request(request, success, error) {
-                request.headers = request.headers || {};
-                var token = angular.fromJson($window.localStorage.getItem('token'));
-                request.headers.Authorization = token !== null ? 'Bearer ' + token.access_token : '';
-                return oldClient.request(request, success, error);
+    return {
+        request(config) {
+            config.headers = config.headers || {};
+            var token = angular.fromJson($window.localStorage.getItem("token"));
+            config.headers.Authorization = token !== null ? "Bearer " + token.access_token : "";
+            return config;
+        },
+        response(response) {
+            if (response.status === 401) {
+                // handle the case where the user is not authenticated
             }
-        };
-        $window.OData.defaultHttpClient = newClient;
-    }
-
-    function angularInterceptor(logger, $q, $window) {
-
-        // Logger
-        logger = logger.forSource(angularInterceptorId);
-
-        return {
-            request(config) {
-                config.headers = config.headers || {};
-                var token = angular.fromJson($window.localStorage.getItem('token'));
-                config.headers.Authorization = token !== null ? 'Bearer ' + token.access_token : '';
-                return config;
-            },
-            response(response) {
-                if (response.status === 401) {
-                    // handle the case where the user is not authenticated
-                }
-                return response || $q.when(response);
-            }
-        };
-    }
+            return response || $q.when(response);
+        }
+    };
 }

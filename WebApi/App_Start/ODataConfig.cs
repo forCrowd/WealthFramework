@@ -23,6 +23,7 @@
                     AllowedLogicalOperators.Or,
                 AllowedQueryOptions = AllowedQueryOptions.Expand |
                     AllowedQueryOptions.Filter |
+                    AllowedQueryOptions.OrderBy |
                     AllowedQueryOptions.Skip |
                     AllowedQueryOptions.Top,
                 MaxExpansionDepth = 4,

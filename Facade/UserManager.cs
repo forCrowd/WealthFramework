@@ -78,13 +78,20 @@
             return result;
         }
 
+        [Obsolete("Use CreateUser function with string clientAppUrl signature")]
+        public override Task<IdentityResult> CreateAsync(User user, string password)
+        {
+            return base.CreateAsync(user, password);
+        }
+
         /// <summary>
         /// Creates a regular local account
         /// </summary>
         /// <param name="user"></param>
         /// <param name="password"></param>
+        /// <param name="clientAppUrl"></param>
         /// <returns></returns>
-        public override async Task<IdentityResult> CreateAsync(User user, string password)
+        public async Task<IdentityResult> CreateAsync(User user, string password, string clientAppUrl)
         {
             user.HasPassword = null;
 
@@ -95,7 +102,7 @@
                 await Store.SaveChangesAsync();
 
                 // Send confirmation email
-                await SendConfirmationEmailAsync(user.Id);
+                await SendConfirmationEmailAsync(user.Id, clientAppUrl);
             }
 
             return result;
@@ -258,13 +265,13 @@
             return result;
         }
 
-        public async Task SendConfirmationEmailAsync(int userId, bool resend = false)
+        public async Task SendConfirmationEmailAsync(int userId, string clientAppUrl, bool resend = false)
         {
             var user = await base.FindByIdAsync(userId);
 
             var token = await base.GenerateEmailConfirmationTokenAsync(userId);
             var encodedToken = System.Net.WebUtility.UrlEncode(token);
-            var confirmEmailUrl = string.Format("{0}/_system/account/confirmEmail?token={1}", AppSettings.ClientAppUrl, encodedToken);
+            var confirmEmailUrl = string.Format("{0}/app/account/confirm-email;token={1}", clientAppUrl, encodedToken);
 
             var subject = "Confirm your email";
             if (resend) subject += " - Resend";
@@ -286,7 +293,7 @@
             await base.SendEmailAsync(userId, subject, sbBody.ToString());
         }
 
-        public async Task SendResetPasswordEmailAsync(int userId)
+        public async Task SendResetPasswordEmailAsync(int userId, string clientAppUrl)
         {
             // TODO Validation email
 
@@ -296,8 +303,8 @@
 
             var token = await base.GeneratePasswordResetTokenAsync(userId);
             var encodedToken = System.Net.WebUtility.UrlEncode(token);
-            var resetPasswordUrl = string.Format("{0}/_system/account/resetPassword?email={1}&token={2}",
-                AppSettings.ClientAppUrl,
+            var resetPasswordUrl = string.Format("{0}/app/account/reset-password;email={1};token={2}",
+                clientAppUrl,
                 user.Email,
                 encodedToken);
 
@@ -361,7 +368,13 @@
             await base.SendEmailAsync(userId, subject, sbBody.ToString());
         }
 
-        public override async Task<IdentityResult> SetEmailAsync(int userId, string email)
+        [Obsolete("Use SetEmailAsync function with string clientAppUrl signature")]
+        public override Task<IdentityResult> SetEmailAsync(int userId, string email)
+        {
+            return base.SetEmailAsync(userId, email);
+        }
+
+        public async Task<IdentityResult> SetEmailAsync(int userId, string email, string clientAppUrl)
         {
             var user = await FindByIdAsync(userId);
 
@@ -373,7 +386,7 @@
                 await Store.SaveChangesAsync();
 
                 // Send confirmation email
-                await SendConfirmationEmailAsync(userId);
+                await SendConfirmationEmailAsync(userId, clientAppUrl);
             }
 
             return result;

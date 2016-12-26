@@ -231,7 +231,7 @@
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="Controllers\Api\AccountController.cs" />
     <Compile Include="Controllers\Api\ExceptionController.cs" />
-    <Compile Include="Controllers\Api\ApplicationController.cs" />
+    <Compile Include="Controllers\Api\WebApiController.cs" />
     <Compile Include="Controllers\Api\BaseApiController.cs" />
     <Compile Include="Controllers\Api\Test\TestController.cs" />
     <Compile Include="Controllers\Extensions\ControllerExtensions.cs" />
@@ -301,6 +301,9 @@
     <Compile Include="App_Start\Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Configs\appSettings.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Configs\connectionStrings.config">
       <SubType>Designer</SubType>
     </None>
@@ -308,9 +311,6 @@
     <None Include="Configs\elmah.errorMail.config" />
     <None Include="Configs\Setup\0 Readme.txt" />
     <None Include="Configs\Setup\connectionStrings.config" />
-    <None Include="Configs\appSettings.config">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Configs\Setup\elmah.errorLog.config" />
     <None Include="Configs\Setup\elmah.errorMail.config" />
     <None Include="Configs\Setup\system.net.mailSettings.smtp.config">
