@@ -66,8 +66,6 @@
     <None Include="..\README.md">
       <Link>Documents\README.md</Link>
     </None>
-    <None Include="Links\Industry Browser - Yahoo! Finance - Full Industry List.URL" />
-    <None Include="Links\Sector List - Yahoo! Finance Industry Browser.URL" />
     <None Include="Scripts\Build\MSBuild.bat" />
     <None Include="Scripts\Build\RunIISExpress.ps1" />
     <None Include="Scripts\Build\WebApiWarmUp.ps1" />
