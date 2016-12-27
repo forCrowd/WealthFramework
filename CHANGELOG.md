@@ -2,9 +2,9 @@
 
 **0.65.1**
 
-* ng2Client - "images folder is missing in publish package" fix - coni2k
-* ng2Client - default.aspx, systemjs.config.js case was restored - coni2k
 * ng2Client - app-routing.module - Backward compatibility was added, to handle visits from old links (contributors page) - coni2k
+* ng2Client - "images folder is missing in publish package" fix - coni2k
+* ng2Client - default.aspx has "app.min.js", not "systemjs.config.js" & "System.import" fix - coni2k
 * ng2Client - "Font Awesome fonts don't get loaded" fix - coni2k
 https://github.com/forCrowd/WealthEconomy/issues/118
 * WebApi - "appSettings.config is getting published to test/live" fix: Build Action was set to 'None' - coni2k
