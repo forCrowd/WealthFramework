@@ -5,13 +5,13 @@ import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
 
 import { ChartConfig, ChartDataItem } from "./ng-chart.module";
-import { AppSettings } from "../../settings/app-settings";
+import { Settings } from "settings";
 
 @Component({
     moduleId: module.id,
     selector: "ngChart",
-    styleUrls: ["ng-chart.component.css?v=" + AppSettings.version],
-    templateUrl: "ng-chart.component.html?v=" + AppSettings.version
+    styleUrls: ["ng-chart.component.css?v=" + Settings.version],
+    templateUrl: "ng-chart.component.html?v=" + Settings.version
 })
 export class NgChartComponent implements OnInit {
 

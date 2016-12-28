@@ -2,6 +2,8 @@
 
 import { CustomErrorHandler } from "./custom-error-handler";
 
+export { CustomErrorHandler }
+
 @NgModule({
     providers: [
         {
@@ -9,4 +11,3 @@ import { CustomErrorHandler } from "./custom-error-handler";
         }]
 })
 export class CustomErrorHandlerModule { }
-export { CustomErrorHandler }

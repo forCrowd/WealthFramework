@@ -35,11 +35,15 @@ Follow this tutorial to get started:
 
 ### WebApi Deployment
 
-Configuration files are excluded from deploy (Build Action: 'None').  
+You can deploy WebApi appliation through Visual Studio publish.  
+
+Only remark is, configuration files are excluded from deploy (Build Action: 'None').  
 When deploying the project, update following configuration files with your own settings and manually copy them:
 * WebApi\googleanalytics.js
 * WebApi\Web.config
 * WebApi\Configs\\*.config
+
+If you would like to make the application offline during the deployment, you can use **app_offline.htm_**.
 
 ### ng2Client Deployment
 
@@ -50,6 +54,8 @@ Update these files anyway you like.
 To deploy the application, execute the necessary task in gulpfile (i.e. "publish.prod").  
 This task generates an output in "publish" folder in the root of ng2Client project.  
 Simply copy the output to your server.
+
+If you would like to make the application offline during the deployment, you can use **app_offline.htm_**.
 
 ### Jasmine tests
 

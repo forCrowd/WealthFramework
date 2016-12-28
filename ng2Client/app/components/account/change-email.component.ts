@@ -3,12 +3,12 @@ import { Router } from "@angular/router";
 
 import { DataService } from "../../services/data.service";
 import { Logger } from "../../services/logger.service";
-import { AppSettings } from "../../settings/app-settings";
+import { Settings } from "settings";
 
 @Component({
     moduleId: module.id,
     selector: "change-email",
-    templateUrl: "change-email.component.html?v=" + AppSettings.version
+    templateUrl: "change-email.component.html?v=" + Settings.version
 })
 export class ChangeEmailComponent implements OnInit {
 

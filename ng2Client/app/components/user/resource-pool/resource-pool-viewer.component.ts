@@ -4,12 +4,12 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { DataService } from "../../../services/data.service";
 import { Logger } from "../../../services/logger.service";
 import { ResourcePoolService } from "../../../services/resource-pool-service";
-import { AppSettings } from "../../../settings/app-settings";
+import { Settings } from "settings";
 
 @Component({
     moduleId: module.id,
     selector: "resource-pool-viewer",
-    templateUrl: "resource-pool-viewer.component.html?v=" + AppSettings.version
+    templateUrl: "resource-pool-viewer.component.html?v=" + Settings.version
 })
 export class ResourcePoolViewerComponent implements OnInit {
 

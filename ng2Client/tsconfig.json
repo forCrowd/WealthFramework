@@ -1,13 +1,17 @@
 {
     "compileOnSave": true,
     "compilerOptions": {
+        "baseUrl": ".",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "module": "commonjs",
         "moduleResolution": "node",
         "noImplicitAny": true,
-        "removeComments": false,
-        "sourceMap": true,
+        "paths": {
+            "settings": [ "app/settings/dev-settings" ]
+        },
+        "removeComments": true,
+        "sourceMap": false,
         "suppressImplicitAnyIndexErrors": true,
         "target": "es5"
     }

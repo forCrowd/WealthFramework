@@ -2,23 +2,20 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { Title } from "@angular/platform-browser";
 
-import { Angulartics2GoogleAnalytics } from "angulartics2";
-import { ToasterConfig } from "angular2-toaster";
-
 import { User } from "../entities/user";
 import { DataService } from "../services/data.service";
-import { GoogleAnalyticsService } from "../services/google-analytics.service";
-import { Logger } from "../services/logger.service";
-import { AppSettings } from "../settings/app-settings";
+import { Angulartics2GoogleAnalytics, GoogleAnalyticsService } from "../services/google-analytics.service";
+import { Logger, ToasterConfig } from "../services/logger.service";
+import { Settings } from "settings";
 
 @Component({
     moduleId: module.id,
     selector: "app",
-    templateUrl: "app.component.html?v=" + AppSettings.version
+    templateUrl: "app.component.html?v=" + Settings.version
 })
 export class AppComponent implements OnDestroy, OnInit {
 
-    applicationInfo: { Version: string } = { Version: AppSettings.version };
+    applicationInfo: { Version: string } = { Version: Settings.version };
     currentUser: User = null;
     hideAnonymousAccountInfoBox: boolean = true;
     subscriptions: any[] = [];
@@ -94,7 +91,7 @@ export class AppComponent implements OnDestroy, OnInit {
             });
 
         // Setup google analytics
-        this.googleAnalyticsService.configureTrackingCode(AppSettings.analyticsTrackingCode, AppSettings.analyticsDomainName);
+        this.googleAnalyticsService.configureTrackingCode(Settings.analyticsTrackingCode, Settings.analyticsDomainName);
 
         // Current user
         this.subscriptions.push(

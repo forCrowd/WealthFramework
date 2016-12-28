@@ -6,13 +6,13 @@ import { ChartConfig, ChartDataItem } from "../../../modules/ng-chart/ng-chart.m
 import { DataService } from "../../../services/data.service";
 import { Logger } from "../../../services/logger.service";
 import { ResourcePoolService } from "../../../services/resource-pool-service";
-import { AppSettings } from "../../../settings/app-settings";
+import { Settings } from "settings";
 
 @Component({
     moduleId: module.id,
     selector: "resource-pool-editor",
-    styleUrls: ["resource-pool-editor.component.css?v=" + AppSettings.version],
-    templateUrl: "resource-pool-editor.component.html?v=" + AppSettings.version
+    styleUrls: ["resource-pool-editor.component.css?v=" + Settings.version],
+    templateUrl: "resource-pool-editor.component.html?v=" + Settings.version
 })
 export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
 

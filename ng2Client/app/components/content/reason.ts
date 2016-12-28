@@ -1,10 +1,10 @@
 ﻿import { Component } from "@angular/core";
 
-import { AppSettings } from "../../settings/app-settings";
+import { Settings } from "settings";
 
 @Component({
     moduleId: module.id,
     selector: "reason",
-    templateUrl: "reason.html?v=" + AppSettings.version
+    templateUrl: "reason.html?v=" + Settings.version
 })
 export class ReasonComponent { }

@@ -301,6 +301,7 @@
     <Compile Include="App_Start\Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app_offline.htm_" />
     <None Include="Configs\appSettings.config">
       <SubType>Designer</SubType>
     </None>
@@ -309,10 +310,10 @@
     </None>
     <None Include="Configs\elmah.errorLog.config" />
     <None Include="Configs\elmah.errorMail.config" />
-    <None Include="Configs\Setup\0 Readme.txt" />
     <None Include="Configs\Setup\connectionStrings.config" />
     <None Include="Configs\Setup\elmah.errorLog.config" />
     <None Include="Configs\Setup\elmah.errorMail.config" />
+    <Content Include="Configs\Setup\Readme.md" />
     <None Include="Configs\Setup\system.net.mailSettings.smtp.config">
       <SubType>Designer</SubType>
     </None>

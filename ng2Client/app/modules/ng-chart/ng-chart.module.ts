@@ -6,6 +6,8 @@ import { ChartConfig } from "./chart-config";
 import { ChartDataItem } from "./chart-data-item";
 import { NgChartComponent } from "./ng-chart.component";
 
+export { ChartConfig, ChartDataItem }
+
 @NgModule({
     imports: [
         ChartModule,
@@ -20,4 +22,4 @@ import { NgChartComponent } from "./ng-chart.component";
     ]
 })
 export class NgChartModule { }
-export { ChartConfig, ChartDataItem }
+

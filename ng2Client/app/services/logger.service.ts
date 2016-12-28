@@ -1,14 +1,18 @@
 ﻿import { Injectable } from "@angular/core";
+import { BodyOutputType, ToasterConfig, ToasterModule, ToasterService } from "angular2-toaster";
 
-import { BodyOutputType, ToasterConfig, ToasterService } from "angular2-toaster";
+export { ToasterConfig, ToasterModule }
 
 @Injectable()
 export class Logger {
+
+    toasterConfigured = false;
 
     constructor(private toasterService: ToasterService) {
     }
 
     getToasterConfig(): ToasterConfig {
+        this.toasterConfigured = true;
         return new ToasterConfig({
             bodyOutputType: BodyOutputType.TrustedHtml,
             positionClass: "toast-bottom-right"
@@ -58,8 +62,7 @@ export class Logger {
             write("ng2", currentDateTime, message, { data });
         }
 
-        if (showToast) {
-
+        if (showToast && this.toasterConfigured) {
             switch (toastType) {
                 case "debug": this.toasterService.pop("info", "", message); break;
                 case "error": this.toasterService.pop("error", "", message); break;

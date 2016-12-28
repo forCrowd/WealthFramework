@@ -2,12 +2,12 @@
 
 import { Logger } from "../../services/logger.service";
 import { ResourcePoolService } from "../../services/resource-pool-service";
-import { AppSettings } from "../../settings/app-settings";
+import { Settings } from "settings";
 
 @Component({
     moduleId: module.id,
     selector: "all-in-one",
-    templateUrl: "allInOne.html?v=" + AppSettings.version
+    templateUrl: "allInOne.html?v=" + Settings.version
 })
 export class AllInOneComponent {
 

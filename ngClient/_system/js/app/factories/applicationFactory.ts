@@ -2,7 +2,7 @@
 
 export function applicationFactory(logger: any, settings: any, $http: any, $q: any) {
 
-    var applicationInfoUrl = settings.serviceAppUrl + "/api/Application/ApplicationInfo";
+    var applicationInfoUrl = settings.serviceAppUrl + "/api/WebApi/WebApiInfo";
     var applicationInfo = null;
 
     // Factory methods

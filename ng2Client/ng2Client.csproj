@@ -88,9 +88,10 @@
     <Content Include="app\lib\breeze.dataService.odata.js" />
     <Content Include="app\modules\ng-chart\ng-chart.component.css" />
     <Content Include="app\modules\ng-chart\ng-chart.component.html" />
-    <None Include="app\settings\setup\0 Readme.txt" />
+    <None Include="app\settings\setup\Readme.md" />
     <Content Include="app\views\confirmNavigateAway.html" />
     <Content Include="app\views\guestAccountInfo.html" />
+    <None Include="app_offline.htm_" />
     <Content Include="favicon.ico" />
     <None Include="package.json" />
     <Content Include="gulpfile.js" />
@@ -105,6 +106,7 @@
     <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="app\app-dev.module.ts" />
     <TypeScriptCompile Include="app\modules\app-routing.module.ts" />
     <TypeScriptCompile Include="app\app.module.ts" />
     <TypeScriptCompile Include="app\components\account\account-edit.component.ts" />
@@ -166,12 +168,10 @@
     <TypeScriptCompile Include="app\services\google-analytics.service.ts" />
     <TypeScriptCompile Include="app\services\logger.service.ts" />
     <TypeScriptCompile Include="app\services\resource-pool-service.ts" />
-    <TypeScriptCompile Include="app\settings\fixed-settings.ts" />
-    <TypeScriptCompile Include="app\settings\app-settings.ts" />
     <TypeScriptCompile Include="app\settings\test-settings.ts" />
     <TypeScriptCompile Include="app\settings\dev-settings.ts" />
     <TypeScriptCompile Include="app\settings\prod-settings.ts" />
-    <TypeScriptCompile Include="app\settings\setup\environment-settings.ts" />
+    <TypeScriptCompile Include="app\settings\setup\settings.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

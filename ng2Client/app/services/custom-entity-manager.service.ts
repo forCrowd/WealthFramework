@@ -3,7 +3,7 @@ import { config, EntityManager } from "breeze-client";
 
 import "datajs";
 import "breeze-client/breeze.ajax.angular";
-import "../lib/breeze.dataService.odata"; // Original one has an issue with __extend function, this is the fixed version / coni2k - 25 Dec. '16
+import "breeze-client/breeze.dataService.odata";
 import "breeze-client/breeze.modelLibrary.backingStore";
 import "breeze-client/breeze.uriBuilder.odata";
 
@@ -17,14 +17,14 @@ import { UserElementCell } from "../entities/UserElementCell";
 import { UserElementField } from "../entities/UserElementField";
 import { UserResourcePool } from "../entities/UserResourcePool";
 import { Logger } from "./logger.service";
-import { AppSettings } from "../settings/app-settings";
+import { Settings } from "settings";
 
 @Injectable()
 export class CustomEntityManager extends EntityManager {
 
     constructor(private logger: Logger) {
         super({
-            serviceName: AppSettings.serviceAppUrl + "/odata"
+            serviceName: Settings.serviceAppUrl + "/odata"
         });
 
         config.initializeAdapterInstance("uriBuilder", "odata");

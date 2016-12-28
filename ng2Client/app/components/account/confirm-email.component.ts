@@ -3,12 +3,12 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 import { DataService } from "../../services/data.service";
 import { Logger } from "../../services/logger.service";
-import { AppSettings } from "../../settings/app-settings";
+import { Settings } from "settings";
 
 @Component({
     moduleId: module.id,
     selector: "confirm-email",
-    templateUrl: "confirm-email.component.html?v=" + AppSettings.version
+    templateUrl: "confirm-email.component.html?v=" + Settings.version
 })
 export class ConfirmEmailComponent implements OnInit {
 

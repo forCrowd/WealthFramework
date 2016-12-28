@@ -59,7 +59,7 @@ gulp.task(appCss, function () {
 });
 
 // compileTs
-gulp.task("compileTs", ["environment-settings"], function (callback) {
+gulp.task("compileTs", ["settings"], function (callback) {
     var project = typescript.createProject("./tsconfig.json");
 
     return project.src()
@@ -68,11 +68,11 @@ gulp.task("compileTs", ["environment-settings"], function (callback) {
         .on('error', errorHandler);
 });
 
-// environment-settings: Copy '/app/settings/setup/environment-settings.ts' file to its parent folder for each environment
-gulp.task("environment-settings", function (callback) {
+// settings: Copy '/app/settings/setup/settings.ts' file to its parent folder for each environment
+gulp.task("settings", function (callback) {
 
     var settingsRoot = appRoot + "/settings",
-        setupSettings = "environment-settings.ts",
+        setupSettings = "settings.ts",
         devSettings = "dev-settings.ts",
         testSettings = "test-settings.ts",
         prodSettings = "prod-settings.ts";
@@ -160,18 +160,18 @@ gulp.task("fonts", function (callback) {
 });
 
 // Publish with development settings
-gulp.task("publish.dev", ["compileTs", appCss, libJs, libCss], function () {
-    return publish("dev");
+gulp.task("build-dev", ["compileTs", appCss, libJs, libCss], function () {
+    return build("dev", false);
 });
 
 // Publish with production settings
-gulp.task("publish.prod", ["compileTs", appCss, libJs, libCss], function () {
-    return publish("prod");
+gulp.task("build-prod", ["compileTs", appCss, libJs, libCss], function () {
+    return build("prod", true);
 });
 
 // Publish with test settings
-gulp.task("publish.test", ["compileTs", appCss, libJs, libCss], function () {
-    return publish("test");
+gulp.task("build-test", ["compileTs", appCss, libJs, libCss], function () {
+    return build("test", true);
 });
 
 // watch
@@ -200,7 +200,7 @@ function getEnvironmentConfig(environment) {
     if (path === "") {
         return null;
     } else {
-        return { "map": { "environment-settings": path } };
+        return { "map": { "settings": path } };
     }
 }
 
@@ -218,7 +218,7 @@ function getWebConfigHttpsBlock(environment) {
         + "                </rule>";
 }
 
-function publish(environment) {
+function build(environment, runPublish) {
 
     // Bundle js files
     var Builder = require("systemjs-builder");
@@ -234,16 +234,16 @@ function publish(environment) {
 
     return builder.buildStatic("app", appJsDest, { encodeNames: false, minify: true, sourceMaps: true })
         .then(function () {
-            return publishCopy(environment);
+            return runPublish ? publish(environment) : null;
         })
     .catch(function (error) {
         console.log("error", error);
     });
 }
 
-function publishCopy(environment) {
+// Copy publish files to "publish" folder
+function publish(environment) {
 
-    // Copy publish files to "publish" folder
     var publishDest = "./publish";
 
     var publishSrc = [
@@ -265,14 +265,13 @@ function publishCopy(environment) {
         "./Web.config"
     ];
 
-    // del
+    // delete existing
     var del = require("del");
-
     return del([publishDest])
         .then(function () {
 
             // Get application version
-            var version = require("./app/settings/fixed-settings").FixedSettings.version;
+            var version = require("./app/settings/dev-settings").Settings.version;
 
             // html-replace
             var htmlreplace = require("gulp-html-replace");

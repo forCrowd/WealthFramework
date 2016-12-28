@@ -5,12 +5,12 @@ import { EntityState } from "breeze-client";
 
 import { DataService } from "../../services/data.service";
 import { Logger } from "../../services/logger.service";
-import { AppSettings } from "../../settings/app-settings";
+import { Settings } from "settings";
 
 @Component({
     moduleId: module.id,
     selector: "account-edit",
-    templateUrl: "account-edit.component.html?v=" + AppSettings.version
+    templateUrl: "account-edit.component.html?v=" + Settings.version
 })
 export class AccountEditComponent implements OnInit {
 

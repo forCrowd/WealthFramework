@@ -2,12 +2,12 @@
 
 import { Logger } from "../../../services/logger.service";
 import { ResourcePoolService } from "../../../services/resource-pool-service";
-import { AppSettings } from "../../../settings/app-settings";
+import { Settings } from "settings";
 
 @Component({
     moduleId: module.id,
     selector: "element-manager",
-    templateUrl: "element-manager.component.html?v=" + AppSettings.version
+    templateUrl: "element-manager.component.html?v=" + Settings.version
 })
 export class ElementManagerComponent implements OnInit {
 

@@ -2,10 +2,10 @@ import { enableProdMode } from "@angular/core";
 import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
 
 import { AppModule } from "./app.module";
-import { AppSettings } from "./settings/app-settings";
+import { Settings } from "settings";
 
 // Enable production mode
-if (AppSettings.enableProdMode) {
+if (Settings.enableProdMode) {
     enableProdMode();
 }
 
