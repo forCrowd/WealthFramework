@@ -6,5 +6,5 @@ export class FixedSettings {
     /**
      * Version number
      */
-    static get version(): string { return "0.65.1"; }
+    static get version(): string { return "0.65.3"; }
 }

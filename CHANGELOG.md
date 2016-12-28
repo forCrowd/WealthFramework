@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.65.3**
+
+* README.md - Current stack was added
+
 **0.65.2**
 
 * ng2Client - Contributors page, code example fix - coni2k

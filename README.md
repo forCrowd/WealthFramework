@@ -5,6 +5,23 @@
 
 Experimental ideas on improving how the economy works
 
+## Current Stack
+
+### Client
+
+* angular 2
+* typescript
+* breezejs
+* systemjs
+* gulp
+
+### Server
+
+* .NET Framework 4.6
+* ASP.NET Web API 2 & OData v3
+* Entity Framework 6
+* SQL Server 2014
+
 ## Setup
 
 ### Getting Started
