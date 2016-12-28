@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.65.2**
+
+* ng2Client - Contributors page, code example fix - coni2k
+
 **0.65.1**
 
 * ng2Client - app-routing.module - Backward compatibility was added, to handle visits from old links (contributors page) - coni2k
