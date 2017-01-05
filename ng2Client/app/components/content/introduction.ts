@@ -3,12 +3,12 @@
 import { DataService } from "../../services/data.service";
 import { Logger } from "../../services/logger.service";
 import { ResourcePoolService } from "../../services/resource-pool-service";
-import { AppSettings } from "../../settings/app-settings";
+import { Settings } from "settings";
 
 @Component({
     moduleId: module.id,
     selector: "introduction",
-    templateUrl: "introduction.html?v=" + AppSettings.version
+    templateUrl: "introduction.html?v=" + Settings.version
 })
 export class IntroductionComponent implements OnDestroy, OnInit {
 

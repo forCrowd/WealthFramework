@@ -1,4 +1,7 @@
 ﻿import { Injectable } from "@angular/core";
+import { Angulartics2GoogleAnalytics, Angulartics2Module } from "angulartics2";
+
+export { Angulartics2GoogleAnalytics, Angulartics2Module }
 
 @Injectable()
 export class GoogleAnalyticsService {

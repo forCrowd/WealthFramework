@@ -5,12 +5,12 @@ import { ChartConfig, ChartDataItem } from "../../modules/ng-chart/ng-chart.modu
 import { DataService } from "../../services/data.service";
 import { Logger } from "../../services/logger.service";
 import { ResourcePoolService } from "../../services/resource-pool-service";
-import { AppSettings } from "../../settings/app-settings";
+import { Settings } from "settings";
 
 @Component({
     moduleId: module.id,
     selector: "knowledge-index",
-    templateUrl: "knowledgeIndex.html?v=" + AppSettings.version
+    templateUrl: "knowledgeIndex.html?v=" + Settings.version
 })
 export class KnowledgeIndexComponent implements OnDestroy, OnInit {
 

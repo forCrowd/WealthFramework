@@ -3,12 +3,12 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 import { DataService } from "../../services/data.service";
 import { Logger } from "../../services/logger.service";
-import { AppSettings } from "../../settings/app-settings";
+import { Settings } from "settings";
 
 @Component({
     moduleId: module.id,
     selector: "change-username",
-    templateUrl: "change-username.component.html?v=" + AppSettings.version
+    templateUrl: "change-username.component.html?v=" + Settings.version
 })
 export class ChangeUserNameComponent implements OnInit {
 

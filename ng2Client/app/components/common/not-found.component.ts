@@ -3,12 +3,12 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 import { Logger } from "../../services/logger.service";
 import { CustomErrorHandler } from "../../modules/custom-error-handler/custom-error-handler.module";
-import { AppSettings } from "../../settings/app-settings";
+import { Settings } from "settings";
 
 @Component({
     moduleId: module.id,
     selector: "not-found",
-    templateUrl: "not-found.component.html?v=" + AppSettings.version
+    templateUrl: "not-found.component.html?v=" + Settings.version
 })
 export class NotFoundComponent implements OnInit {
 

@@ -2,12 +2,12 @@
 
 import { DataService } from "../../services/data.service";
 import { Logger } from "../../services/logger.service";
-import { AppSettings } from "../../settings/app-settings";
+import { Settings } from "settings";
 
 @Component({
     moduleId: module.id,
     selector: "social-logins",
-    templateUrl: "social-logins.component.html?v=" + AppSettings.version
+    templateUrl: "social-logins.component.html?v=" + Settings.version
 })
 export class SocialLoginsComponent {
 

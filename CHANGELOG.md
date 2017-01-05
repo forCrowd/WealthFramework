@@ -1,5 +1,19 @@
 ### Changelog
 
+**0.66.0**
+
+* ng2Client + WebApi - app_offline.htm was added - coni2k
+* ng2Client + WebApi - Readme.md for "settings" folders, instead of "0 Readme.txt" - coni2k
+* ng2Client - Sourcemaps: CustomErrorHandle can parse sourcemaps and send the output to server. Also a limitation was added to sending error messages to server (10 errors for every 5 minutes) - coni2k
+* ng2Client - "settings" path map in tsconfig.json: Since typescript can resolve the correct file now, app-settings, fixed-settings and environment-settings files were merged into one. - coni2k
+* ng2Client - external modules that are used in local services exported through those services to prevent unnecessary spilling - coni2k
+* ng2Client - resource-pool-manager.component - canDeactivate function was enabled, since related issue in angular router has been fixed - coni2k
+https://github.com/angular/angular/issues/12851
+* ng2Client - toasterConfigured flag for logger.service, to prevent "No Toaster Containers have been initialized to receive toasts" case - coni2k
+* ng2Client - error handler: Ignore 500 error cases while reporting to server (already logged on server-side) - coni2k
+* ng2Client - gulpfile "publish" tasks were renamed to "build"
+* ngClient - ApplicationInfo service url fix - coni2k
+
 **0.65.3**
 
 * README.md - Current stack was added

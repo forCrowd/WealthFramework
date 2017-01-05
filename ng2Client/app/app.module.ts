@@ -6,9 +6,7 @@ import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 import { BrowserModule, Title } from "@angular/platform-browser";
-
 import { MomentModule } from "angular2-moment";
-import { ToasterModule } from "angular2-toaster";
 import { BreezeBridgeAngular2Module } from "breeze-bridge-angular2";
 
 // Components
@@ -64,7 +62,7 @@ import { SymbolicPipe } from "./pipes/symbolic.pipe";
 import { DataService } from "./services/data.service";
 import { CustomEntityManager } from "./services/custom-entity-manager.service";
 import { GoogleAnalyticsService } from "./services/google-analytics.service";
-import { Logger } from "./services/logger.service";
+import { Logger, ToasterModule } from "./services/logger.service";
 import { ResourcePoolService } from "./services/resource-pool-service";
 
 @NgModule({

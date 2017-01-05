@@ -1,12 +1,12 @@
 import { Component } from "@angular/core";
 
 import { Logger } from "../../services/logger.service";
-import { AppSettings } from "../../settings/app-settings";
+import { Settings } from "settings";
 
 @Component({
     moduleId: module.id,
     selector: "contributors",
-    templateUrl: "contributors.component.html?v=" + AppSettings.version
+    templateUrl: "contributors.component.html?v=" + Settings.version
 })
 export class ContributorsComponent {
 

@@ -3,12 +3,12 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 import { DataService } from "../../services/data.service";
 import { Logger } from "../../services/logger.service";
-import { AppSettings } from "../../settings/app-settings";
+import { Settings } from "settings";
 
 @Component({
     moduleId: module.id,
     selector: "profile",
-    templateUrl: "profile.component.html?v=" + AppSettings.version
+    templateUrl: "profile.component.html?v=" + Settings.version
 })
 export class ProfileComponent implements OnInit {
 

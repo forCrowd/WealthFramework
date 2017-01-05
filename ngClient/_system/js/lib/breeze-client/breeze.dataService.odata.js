@@ -1,3 +1,11 @@
+/* 
+
+__extend function is missing in the original file.
+In this file, related parts were modified.
+On the other hand, ng2Client is handling this better, but since this whole project is becoming obsolete, no need to update it.
+
+*/
+
 (function (factory) {
   if (typeof breeze === "object") {
     factory(breeze);

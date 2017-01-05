@@ -5,12 +5,12 @@ import { DataService } from "../../../services/data.service";
 import { Logger } from "../../../services/logger.service";
 import { ResourcePoolService } from "../../../services/resource-pool-service";
 import { ElementFieldDataType, ElementFieldIndexCalculationType, ElementFieldIndexSortType } from "../../../entities/enums";
-import { AppSettings } from "../../../settings/app-settings";
+import { Settings } from "settings";
 
 @Component({
     moduleId: module.id,
     selector: "resource-pool-manager",
-    templateUrl: "resource-pool-manager.component.html?v=" + AppSettings.version,
+    templateUrl: "resource-pool-manager.component.html?v=" + Settings.version,
 })
 export class ResourcePoolManagerComponent implements OnInit {
 
@@ -159,20 +159,16 @@ export class ResourcePoolManagerComponent implements OnInit {
 
     canDeactivate() {
 
-        // Todo ng2 - wait for ng2 fix
-        // https://github.com/angular/angular/issues/12851
-        return true;
+        if (!this.dataService.hasChanges()) {
+            return true;
+        }
 
-        //if (!this.dataService.hasChanges()) {
-        //    return true;
-        //}
-
-        //if (confirm("Discard changes?")) {
-        //    this.dataService.rejectChanges();
-        //    return true;
-        //} else {
-        //    return false;
-        //}
+        if (confirm("Discard changes?")) {
+            this.dataService.rejectChanges();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     displayRemoveResourcePoolModal() {

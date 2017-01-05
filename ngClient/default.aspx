@@ -115,7 +115,7 @@
                     </div>
                     <div class="pull-right">
                         <a href="/_system/content/contributors">Contributors</a><br />
-                        <small>Version: <span data-ng-bind="vm.applicationInfo.CurrentVersion"></span>- Alpha ~ Beta</small>
+                        <small>Version: <span data-ng-bind="vm.applicationInfo.Version"></span>- Alpha ~ Beta</small>
                     </div>
                 </div>
             </div>

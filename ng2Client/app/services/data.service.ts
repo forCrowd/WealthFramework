@@ -6,7 +6,7 @@ import { Observable, ObservableInput } from "rxjs/Observable";
 import { User } from "../entities/user";
 import { CustomEntityManager } from "./custom-entity-manager.service";
 import { Logger } from "./logger.service";
-import { AppSettings } from "../settings/app-settings";
+import { Settings } from "settings";
 
 @Injectable()
 export class DataService {
@@ -45,19 +45,19 @@ export class DataService {
         private logger: Logger) {
 
         // Service urls
-        this.addPasswordUrl = AppSettings.serviceAppUrl + "/api/Account/AddPassword";
-        this.changeEmailUrl = AppSettings.serviceAppUrl + "/api/Account/ChangeEmail";
-        this.changePasswordUrl = AppSettings.serviceAppUrl + "/api/Account/ChangePassword";
-        this.changeUserNameUrl = AppSettings.serviceAppUrl + "/api/Account/ChangeUserName";
-        this.confirmEmailUrl = AppSettings.serviceAppUrl + "/api/Account/ConfirmEmail";
-        this.externalLoginUrl = AppSettings.serviceAppUrl + "/api/Account/ExternalLogin";
-        this.registerUrl = AppSettings.serviceAppUrl + "/api/Account/Register";
-        this.registerAnonymousUrl = AppSettings.serviceAppUrl + "/api/Account/RegisterAnonymous";
-        this.resendConfirmationEmailUrl = AppSettings.serviceAppUrl + "/api/Account/ResendConfirmationEmail";
-        this.resetPasswordUrl = AppSettings.serviceAppUrl + "/api/Account/ResetPassword";
-        this.resetPasswordRequestUrl = AppSettings.serviceAppUrl + "/api/Account/ResetPasswordRequest";
-        this.tokenUrl = AppSettings.serviceAppUrl + "/api/Token";
-        this.webApiInfoUrl = AppSettings.serviceAppUrl + "/api/WebApi/WebApiInfo";
+        this.addPasswordUrl = Settings.serviceAppUrl + "/api/Account/AddPassword";
+        this.changeEmailUrl = Settings.serviceAppUrl + "/api/Account/ChangeEmail";
+        this.changePasswordUrl = Settings.serviceAppUrl + "/api/Account/ChangePassword";
+        this.changeUserNameUrl = Settings.serviceAppUrl + "/api/Account/ChangeUserName";
+        this.confirmEmailUrl = Settings.serviceAppUrl + "/api/Account/ConfirmEmail";
+        this.externalLoginUrl = Settings.serviceAppUrl + "/api/Account/ExternalLogin";
+        this.registerUrl = Settings.serviceAppUrl + "/api/Account/Register";
+        this.registerAnonymousUrl = Settings.serviceAppUrl + "/api/Account/RegisterAnonymous";
+        this.resendConfirmationEmailUrl = Settings.serviceAppUrl + "/api/Account/ResendConfirmationEmail";
+        this.resetPasswordUrl = Settings.serviceAppUrl + "/api/Account/ResetPassword";
+        this.resetPasswordRequestUrl = Settings.serviceAppUrl + "/api/Account/ResetPasswordRequest";
+        this.tokenUrl = Settings.serviceAppUrl + "/api/Token";
+        this.webApiInfoUrl = Settings.serviceAppUrl + "/api/WebApi/WebApiInfo";
 
         this.init();
     }

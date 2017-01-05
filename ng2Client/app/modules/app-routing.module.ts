@@ -1,8 +1,6 @@
 ﻿import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
-import { Angulartics2Module, Angulartics2GoogleAnalytics } from "angulartics2";
-
 // Components - Account
 import { AccountEditComponent } from "../components/account/account-edit.component";
 import { AccountOverviewComponent } from "../components/account/account-overview.component";
@@ -37,10 +35,12 @@ import { ProfileComponent } from "../components/user/profile.component";
 import { ResourcePoolManagerComponent } from "../components/user/resource-pool/resource-pool-manager.component";
 import { ResourcePoolViewerComponent } from "../components/user/resource-pool/resource-pool-viewer.component";
 
+// Services
 import { AuthGuard } from "../services/auth-guard.service";
 import { CanDeactivateGuard } from "../services/can-deactivate-guard.service";
 import { CurrentUserResolve } from "../services/current-user-resolve.service";
 import { DynamicTitleResolve } from "../services/dynamic-title-resolve.service";
+import { Angulartics2GoogleAnalytics, Angulartics2Module } from "../services/google-analytics.service";
 
 const appRoutes: Routes = [
 
