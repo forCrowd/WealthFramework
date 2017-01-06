@@ -49,7 +49,12 @@ export class ChartConfig {
         this.options.plotOptions.pie.dataLabels.enabled = this.options.plotOptions.pie.dataLabels.enabled || false;
         this.options.plotOptions.pie.showInLegend = this.options.plotOptions.pie.showInLegend || true;
         this.options.tooltip = this.options.tooltip || {};
-        this.options.tooltip.headerFormat = this.options.tooltip.headerFormat || "";
+        if (!this.options.tooltip.headerFormat && this.options.chart.type === "column") {
+            this.options.tooltip.headerFormat = "";
+        }
+        if (!this.options.tooltip.pointFormat && this.options.chart.type === "pie") {
+            this.options.tooltip.pointFormat = "";
+        }
         this.options.xAxis = this.options.xAxis || {};
         (this.options.xAxis as Highcharts.AxisOptions).categories = (this.options.xAxis as Highcharts.AxisOptions).categories || [""];
         this.options.yAxis = this.options.yAxis || {};
