@@ -47,7 +47,7 @@ var libCss = "lib.min.css",
 /* Tasks */
 
 // default
-gulp.task("default", ["compileTs", appCss, libJs, libCss, "watch"]);
+gulp.task("default", ["compile-typescript", appCss, libJs, libCss, "watch"]);
 
 // appCss: concat all into app.css + minify all into app.min.css
 gulp.task(appCss, function () {
@@ -58,8 +58,8 @@ gulp.task(appCss, function () {
         .pipe(gulp.dest(appCssRoot));
 });
 
-// compileTs
-gulp.task("compileTs", ["settings"], function (callback) {
+// compile-typescript
+gulp.task("compile-typescript", ["environment-settings"], function (callback) {
     var project = typescript.createProject("./tsconfig.json");
 
     return project.src()
@@ -68,17 +68,17 @@ gulp.task("compileTs", ["settings"], function (callback) {
         .on('error', errorHandler);
 });
 
-// settings: Copy '/app/settings/setup/settings.ts' file to its parent folder for each environment
-gulp.task("settings", function (callback) {
+// settings: Copy '/app/settings/setup/environment-settings.ts' file to its parent folder for each environment
+gulp.task("environment-settings", function (callback) {
 
     var settingsRoot = appRoot + "/settings",
-        setupSettings = "settings.ts",
-        devSettings = "dev-settings.ts",
+        setupSettings = "environment-settings.ts",
+        developmentSettings = "local-settings.ts",
         testSettings = "test-settings.ts",
-        prodSettings = "prod-settings.ts";
+        productionSettings = "production-settings.ts";
 
     // Checks whether the file(s) already being copied
-    return fs.stat(settingsRoot + "/" + devSettings, function (err) {
+    return fs.stat(settingsRoot + "/" + developmentSettings, function (err) {
 
         // If there is no error, it means file is already there. No need to copy from setup, move along!
         if (err === null) {
@@ -88,11 +88,11 @@ gulp.task("settings", function (callback) {
         var setupSettingsPath = settingsRoot + "/setup/" + setupSettings;
 
         return gulp.src(setupSettingsPath)
-            .pipe(rename(devSettings))
+            .pipe(rename(developmentSettings))
             .pipe(gulp.dest(settingsRoot))
             .pipe(rename(testSettings))
             .pipe(gulp.dest(settingsRoot))
-            .pipe(rename(prodSettings))
+            .pipe(rename(productionSettings))
             .pipe(gulp.dest(settingsRoot))
             .on("end", callback);
     });
@@ -159,18 +159,18 @@ gulp.task("fonts", function (callback) {
     });
 });
 
-// Publish with development settings
-gulp.task("build-dev", ["compileTs", appCss, libJs, libCss], function () {
-    return build("dev", false);
+// Build with local settings
+gulp.task("build-local", ["compile-typescript", appCss, libJs, libCss], function () {
+    return build("local", false);
 });
 
-// Publish with production settings
-gulp.task("build-prod", ["compileTs", appCss, libJs, libCss], function () {
-    return build("prod", true);
+// Build with production settings
+gulp.task("build-production", ["compile-typescript", appCss, libJs, libCss], function () {
+    return build("production", true);
 });
 
-// Publish with test settings
-gulp.task("build-test", ["compileTs", appCss, libJs, libCss], function () {
+// Build with test settings
+gulp.task("build-test", ["compile-typescript", appCss, libJs, libCss], function () {
     return build("test", true);
 });
 
@@ -194,13 +194,13 @@ function getEnvironmentConfig(environment) {
 
     switch (environment) {
         case "test": { path = "app/settings/test-settings"; break; }
-        case "prod": { path = "app/settings/prod-settings"; break; }
+        case "production": { path = "app/settings/production-settings"; break; }
     }
 
     if (path === "") {
         return null;
     } else {
-        return { "map": { "settings": path } };
+        return { "map": { "environment-settings": path } };
     }
 }
 
@@ -271,7 +271,7 @@ function publish(environment) {
         .then(function () {
 
             // Get application version
-            var version = require("./app/settings/dev-settings").Settings.version;
+            var version = require("./app/settings/settings").Settings.version;
 
             // html-replace
             var htmlreplace = require("gulp-html-replace");

@@ -47,28 +47,15 @@ If you would like to make the application offline during the deployment, you can
 
 ### ng2Client Deployment
 
-ng2Client project has three different environment; development, test, production.  
-Each environment has its own settings under "/app/settings/" folder (i.e. "prod.settings")  
+ng2Client project has three different environment; local, test, production.  
+Each environment has its own settings under "/app/settings/" folder (i.e. "production-settings")  
 Update these files anyway you like.  
   
-To deploy the application, execute the necessary task in gulpfile (i.e. "publish.prod").  
+To deploy the application, execute the necessary task in gulpfile (i.e. "build-production").  
 This task generates an output in "publish" folder in the root of ng2Client project.  
 Simply copy the output to your server.
 
 If you would like to make the application offline during the deployment, you can use **app_offline.htm_**.
-
-### Jasmine tests
-
-To be able add "Jasmine" tests under "ngClient.Tests" folder into "Test Explorer" window, install the following extension:
-* [Chutzpah Test Adapter for the Test Explorer](https://visualstudiogallery.msdn.microsoft.com/f8741f04-bae4-4900-81c7-7c9bfb9ed1fe)
-
-### T4 files
-
-To be able run Entity Framework related T4 files (.tt files that include "EF6.Utility.ttinclude" file):
-* After restoring nuget packages, find and copy "EntityFramework.dll" and "EntityFramework.SqlServer.dll" files under "[Solution Folder]\packages" folder
-* Go to "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE" folder
-* Optional: Take a backup of the existing files
-* Paste these two files into this folder
 
 ## Changelog
 

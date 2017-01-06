@@ -313,7 +313,7 @@
     <None Include="Configs\Setup\connectionStrings.config" />
     <None Include="Configs\Setup\elmah.errorLog.config" />
     <None Include="Configs\Setup\elmah.errorMail.config" />
-    <Content Include="Configs\Setup\Readme.md" />
+    <None Include="Configs\Setup\Readme.md" />
     <None Include="Configs\Setup\system.net.mailSettings.smtp.config">
       <SubType>Designer</SubType>
     </None>
