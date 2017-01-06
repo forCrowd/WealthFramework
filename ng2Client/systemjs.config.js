@@ -10,13 +10,6 @@
 
             // app
             "app": "app/main",
-
-            /* environment-settings: App level settings file for each environment.
-            * By default, for local local, it maps to "local-settings" file.
-            * "build" tasks in "gulpfile.js" file, modify this map for the selected environment:
-            * build-test -> test-settings.ts
-            * build-production -> production-settings.ts
-            */
             "environment-settings": "app/settings/local-settings",
 
             // @angular
@@ -45,16 +38,36 @@
 
             // breeze
             "breeze-client": "npm:breeze-client",
-            "breeze-client/breeze.dataService.odata": "app/lib/breeze.dataService.odata", // Original one has an issue with __extend function, this is the fixed version / coni2k - 25 Dec. '16
+            "breeze.ajax.angular": "npm:breeze-client/breeze.ajax.angular",
             "breeze-bridge-angular2": "npm:breeze-bridge-angular2/index",
+            "breeze.dataService.odata": "npm:breeze-client/breeze.dataService.odata",
+            "breeze.modelLibrary.backingStore": "npm:breeze-client/breeze.modelLibrary.backingStore",
+            "breeze.uriBuilder.odata": "npm:breeze-client/breeze.uriBuilder.odata",
             "datajs": "npm:datajs/index",
 
             // rxjs
             "rxjs": "npm:rxjs",
 
             // source-map
-            "source-map": "npm:source-map/source-map"
+            "source-map": "npm:source-map/source-map",
+
+            // Traceur (for ES6, which is not there yet)
+            "plugin-traceur": "npm:systemjs-plugin-traceur/plugin-traceur.js",
+            "traceur": "npm:systemjs-plugin-traceur/node_modules/traceur/bin/traceur.js",
+            "traceur-runtime": "npm:systemjs-plugin-traceur/node_modules/traceur/bin/traceur-runtime.js"
         },
+        meta: {
+            "traceur": {
+                format: "global",
+                exports: "traceur"
+            },
+            "traceur-runtime": {
+                format: "global",
+                exports: "$traceurRuntime"
+            }
+        },
+        transpiler: "plugin-traceur",
+        transpilerRuntime: false,
         packages: {
             "breeze-client": { main: "breeze.base.debug" },
         }

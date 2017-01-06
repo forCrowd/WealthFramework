@@ -5,10 +5,12 @@ import { DataService } from "../../services/data.service";
 import { Logger } from "../../services/logger.service";
 import { Settings } from "../../settings/settings";
 
+//declare const __moduleName: string;
+
 @Component({
     moduleId: module.id,
     selector: "confirm-email",
-    templateUrl: "confirm-email.component.html?v=" + Settings.version
+    templateUrl: "confirm-email.component.html"
 })
 export class ConfirmEmailComponent implements OnInit {
 

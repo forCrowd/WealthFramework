@@ -4,10 +4,12 @@ import { Logger } from "../../services/logger.service";
 import { ResourcePoolService } from "../../services/resource-pool-service";
 import { Settings } from "../../settings/settings";
 
+//declare const __moduleName: string;
+
 @Component({
     moduleId: module.id,
     selector: "all-in-one",
-    templateUrl: "allInOne.html?v=" + Settings.version
+    templateUrl: "allInOne.html"
 })
 export class AllInOneComponent {
 

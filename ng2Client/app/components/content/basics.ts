@@ -5,10 +5,12 @@ import { Logger } from "../../services/logger.service";
 import { ResourcePoolService } from "../../services/resource-pool-service";
 import { Settings } from "../../settings/settings";
 
+//declare const __moduleName: string;
+
 @Component({
     moduleId: module.id,
     selector: "basics",
-    templateUrl: "basics.html?v=" + Settings.version
+    templateUrl: "basics.html"
 })
 export class BasicsComponent implements OnDestroy, OnInit {
 

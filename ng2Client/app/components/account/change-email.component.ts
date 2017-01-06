@@ -5,10 +5,12 @@ import { DataService } from "../../services/data.service";
 import { Logger } from "../../services/logger.service";
 import { Settings } from "../../settings/settings";
 
+//declare const __moduleName: string;
+
 @Component({
     moduleId: module.id,
     selector: "change-email",
-    templateUrl: "change-email.component.html?v=" + Settings.version
+    templateUrl: "change-email.component.html"
 })
 export class ChangeEmailComponent implements OnInit {
 
