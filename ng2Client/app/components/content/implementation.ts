@@ -1,6 +1,6 @@
 ﻿import { Component } from "@angular/core";
 
-import { Settings } from "settings";
+import { Settings } from "../../settings/settings";
 
 @Component({
     moduleId: module.id,

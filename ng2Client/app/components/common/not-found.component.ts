@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 import { Logger } from "../../services/logger.service";
 import { CustomErrorHandler } from "../../modules/custom-error-handler/custom-error-handler.module";
-import { Settings } from "settings";
+import { Settings } from "../../settings/settings";
 
 @Component({
     moduleId: module.id,

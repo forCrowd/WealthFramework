@@ -4,7 +4,7 @@ import { Observable } from "rxjs/Observable";
 import { SourceMapConsumer } from "source-map";
 
 import { Logger } from "../../services/logger.service";
-import { Settings } from "settings";
+import { Settings } from "../../settings/settings";
 
 @Injectable()
 export class CustomErrorHandler implements ErrorHandler {
@@ -93,6 +93,11 @@ export class CustomErrorHandler implements ErrorHandler {
         }
     }
 
+    /**
+     * Gets stack trace by downloading and parsing .map files
+     * Original solutions: http://stackoverflow.com/questions/19420604/angularjs-stack-trace-ignoring-source-map
+     * @param exception
+     */
     private getSourceMappedStackTrace(exception: any) {
 
         if (exception.stack) { // not all browsers support stack traces

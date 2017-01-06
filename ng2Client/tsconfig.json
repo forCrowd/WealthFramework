@@ -8,7 +8,7 @@
         "moduleResolution": "node",
         "noImplicitAny": true,
         "paths": {
-            "settings": [ "app/settings/dev-settings" ]
+            "environment-settings": [ "app/settings/setup/environment-settings" ]
         },
         "removeComments": true,
         "sourceMap": false,

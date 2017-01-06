@@ -6,7 +6,7 @@ import { Observable, ObservableInput } from "rxjs/Observable";
 import { User } from "../entities/user";
 import { CustomEntityManager } from "./custom-entity-manager.service";
 import { Logger } from "./logger.service";
-import { Settings } from "settings";
+import { Settings } from "../settings/settings";
 
 @Injectable()
 export class DataService {

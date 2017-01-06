@@ -5,7 +5,7 @@ import { EntityState } from "breeze-client";
 
 import { DataService } from "../../services/data.service";
 import { Logger } from "../../services/logger.service";
-import { Settings } from "settings";
+import { Settings } from "../../settings/settings";
 
 @Component({
     moduleId: module.id,

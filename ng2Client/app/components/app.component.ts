@@ -6,7 +6,7 @@ import { User } from "../entities/user";
 import { DataService } from "../services/data.service";
 import { Angulartics2GoogleAnalytics, GoogleAnalyticsService } from "../services/google-analytics.service";
 import { Logger, ToasterConfig } from "../services/logger.service";
-import { Settings } from "settings";
+import { Settings } from "../settings/settings";
 
 @Component({
     moduleId: module.id,

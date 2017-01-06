@@ -1,7 +1,7 @@
 ﻿import { Component } from "@angular/core";
 
 import { Logger } from "../../services/logger.service";
-import { Settings } from "settings";
+import { Settings } from "../../settings/settings";
 
 @Component({
     moduleId: module.id,

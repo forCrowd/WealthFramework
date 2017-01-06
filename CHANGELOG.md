@@ -1,5 +1,12 @@
 ### Changelog
 
+**0.66.1**
+
+* ng2Client - settings/settings.ts was introduced again, to prevent entering `version` into three different environment settings file - coni2k
+* ng2Client - Naming changes: dev & prod were renamed to local & production - coni2k
+* ng2Client - Readme.md fixes - coni2k
+* WebApi - Configs/Setup/Readme.md build action set to None - coni2k
+
 **0.66.0**
 
 * ng2Client + WebApi - app_offline.htm was added - coni2k
@@ -1120,7 +1127,7 @@ were replaced with Entity Framework 6.1 versions.
 
 **0.10.4**
 
-* glimpse nuget package - only for development environment for now
+* glimpse nuget package - only for local environment for now
 * Thanks to glimpse, <clear /> line was added to connectionstrings section in config files
 
 **0.10.3**
