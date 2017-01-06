@@ -1,5 +1,10 @@
 ### Changelog
 
+**0.66.2**
+
+* ng2Client - ng-chart "invalid chart item is getting updated in pie chart type" bug fix - coni2k
+* ng2Client - ng-chart tooltip fix - coni2k
+
 **0.66.1**
 
 * ng2Client - settings/settings.ts was introduced again, to prevent entering `version` into three different environment settings file - coni2k

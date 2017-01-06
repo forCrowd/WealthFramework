@@ -141,6 +141,7 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
         if (!this.displayIndexDetails) {
 
             // TODO Check this rule?
+
             if (element === element.ResourcePool.mainElement() &&
                 (element.totalIncome() > 0 || element.directIncomeField() !== null)) {
 

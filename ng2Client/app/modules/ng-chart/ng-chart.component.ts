@@ -118,7 +118,7 @@ class Container implements OnDestroy {
 
             this._config.data.forEach((dataItem) => {
 
-                const pieChartItem = new PieChartItem(dataItem.name, dataItem.value, +this._config.options.series.length);
+                const pieChartItem = new PieChartItem(dataItem.name, dataItem.value, +this._config.options.series[0].data.length);
                 (this._config.options.series[0].data as Object[]).push(pieChartItem.chartItem);
 
                 // Event handlers
