@@ -1,4 +1,4 @@
-﻿export class Settings {
+﻿export class EnvironmentSettings {
 
     /**
      * Google Analytics domain name
@@ -21,9 +21,4 @@
      * Service application (WebApi) url
      */
     static get serviceAppUrl(): string { return "http://localhost:15001"; }
-
-    /**
-     * Version number
-     */
-    static get version(): string { return "0.1.0"; }
 }

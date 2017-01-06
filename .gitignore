@@ -46,9 +46,9 @@ ng2Client/app/css/**/*
 # ng2Client - lib: Contains fixed versions of external .js files (breeze.odata etc.)
 !ng2Client/app/lib/*.js
 
-ng2Client/app/settings/dev-settings.ts
+ng2Client/app/settings/local-settings.ts
 ng2Client/app/settings/test-settings.ts
-ng2Client/app/settings/prod-settings.ts
+ng2Client/app/settings/production-settings.ts
 
 ng2Client/publish
 

@@ -17,7 +17,7 @@ import { UserElementCell } from "../entities/UserElementCell";
 import { UserElementField } from "../entities/UserElementField";
 import { UserResourcePool } from "../entities/UserResourcePool";
 import { Logger } from "./logger.service";
-import { Settings } from "settings";
+import { Settings } from "../settings/settings";
 
 @Injectable()
 export class CustomEntityManager extends EntityManager {

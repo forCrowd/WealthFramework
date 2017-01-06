@@ -17,8 +17,8 @@
 
     <script src="/app/lib.min.js?v=0.65.0"></script>
     <!-- build:publish-default-aspx -->
-    <!-- This block will be replaced during "publish" tasks in gulpfile with "app.min.js" script -->
-    <%--<script src="/app/app.min.js?v=0.66.0"></script>--%>
+    <!-- This block will be replaced with "app.min.js" script during "publish" tasks in gulpfile -->
+    <%--<script src="/app/app.min.js?v=0.66.1"></script>--%>
     <script src="/systemjs.config.js?v=0.66.0"></script>
     <script>
         System.import("app")

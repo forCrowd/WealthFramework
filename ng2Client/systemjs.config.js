@@ -11,13 +11,13 @@
             // app
             "app": "app/main",
 
-            /* settings: App level settings file for each environment.
-            * By default, for local development, it maps to "dev-settings" file.
+            /* environment-settings: App level settings file for each environment.
+            * By default, for local local, it maps to "local-settings" file.
             * "build" tasks in "gulpfile.js" file, modify this map for the selected environment:
             * build-test -> test-settings.ts
-            * build-prod -> prod-settings.ts
+            * build-production -> production-settings.ts
             */
-            "settings": "app/settings/dev-settings",
+            "environment-settings": "app/settings/local-settings",
 
             // @angular
             "@angular/core": "npm:@angular/core/bundles/core.umd",

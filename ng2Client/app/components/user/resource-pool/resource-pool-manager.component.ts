@@ -5,7 +5,7 @@ import { DataService } from "../../../services/data.service";
 import { Logger } from "../../../services/logger.service";
 import { ResourcePoolService } from "../../../services/resource-pool-service";
 import { ElementFieldDataType, ElementFieldIndexCalculationType, ElementFieldIndexSortType } from "../../../entities/enums";
-import { Settings } from "settings";
+import { Settings } from "../../../settings/settings";
 
 @Component({
     moduleId: module.id,

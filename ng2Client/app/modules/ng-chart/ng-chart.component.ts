@@ -5,7 +5,7 @@ import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
 
 import { ChartConfig, ChartDataItem } from "./ng-chart.module";
-import { Settings } from "settings";
+import { Settings } from "../../settings/settings";
 
 @Component({
     moduleId: module.id,

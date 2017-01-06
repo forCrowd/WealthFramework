@@ -168,10 +168,11 @@
     <TypeScriptCompile Include="app\services\google-analytics.service.ts" />
     <TypeScriptCompile Include="app\services\logger.service.ts" />
     <TypeScriptCompile Include="app\services\resource-pool-service.ts" />
+    <TypeScriptCompile Include="app\settings\settings.ts" />
     <TypeScriptCompile Include="app\settings\test-settings.ts" />
-    <TypeScriptCompile Include="app\settings\dev-settings.ts" />
-    <TypeScriptCompile Include="app\settings\prod-settings.ts" />
-    <TypeScriptCompile Include="app\settings\setup\settings.ts" />
+    <TypeScriptCompile Include="app\settings\local-settings.ts" />
+    <TypeScriptCompile Include="app\settings\production-settings.ts" />
+    <TypeScriptCompile Include="app\settings\setup\environment-settings.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
