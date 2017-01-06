@@ -2,17 +2,20 @@
 import { Router } from "@angular/router";
 import { Subject } from "rxjs/Subject";
 
-import { ChartConfig, ChartDataItem } from "../../../modules/ng-chart/ng-chart.module";
+import { ChartConfig } from "../../../modules/ng-chart/chart-config";
+import { ChartDataItem } from "../../../modules/ng-chart/chart-data-item";
 import { DataService } from "../../../services/data.service";
 import { Logger } from "../../../services/logger.service";
 import { ResourcePoolService } from "../../../services/resource-pool-service";
 import { Settings } from "../../../settings/settings";
 
+//declare const __moduleName: string;
+
 @Component({
     moduleId: module.id,
     selector: "resource-pool-editor",
-    styleUrls: ["resource-pool-editor.component.css?v=" + Settings.version],
-    templateUrl: "resource-pool-editor.component.html?v=" + Settings.version
+    styleUrls: ["resource-pool-editor.component.css"],
+    templateUrl: "resource-pool-editor.component.html"
 })
 export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
 

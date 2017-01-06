@@ -7,10 +7,12 @@ import { DataService } from "../../services/data.service";
 import { Logger } from "../../services/logger.service";
 import { Settings } from "../../settings/settings";
 
+//declare const __moduleName: string;
+
 @Component({
     moduleId: module.id,
     selector: "account-edit",
-    templateUrl: "account-edit.component.html?v=" + Settings.version
+    templateUrl: "account-edit.component.html"
 })
 export class AccountEditComponent implements OnInit {
 

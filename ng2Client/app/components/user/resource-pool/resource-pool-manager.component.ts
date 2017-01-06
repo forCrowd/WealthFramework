@@ -7,10 +7,12 @@ import { ResourcePoolService } from "../../../services/resource-pool-service";
 import { ElementFieldDataType, ElementFieldIndexCalculationType, ElementFieldIndexSortType } from "../../../entities/enums";
 import { Settings } from "../../../settings/settings";
 
+//declare const __moduleName: string;
+
 @Component({
     moduleId: module.id,
     selector: "resource-pool-manager",
-    templateUrl: "resource-pool-manager.component.html?v=" + Settings.version,
+    templateUrl: "resource-pool-manager.component.html",
 })
 export class ResourcePoolManagerComponent implements OnInit {
 

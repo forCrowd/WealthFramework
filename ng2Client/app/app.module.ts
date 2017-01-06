@@ -129,8 +129,8 @@ import { ResourcePoolService } from "./services/resource-pool-service";
         SymbolicPipe
     ],
     providers: [
-        DataService,
         CustomEntityManager,
+        DataService,
         GoogleAnalyticsService,
         Logger,
         ResourcePoolService,

@@ -1,5 +1,15 @@
 ### Changelog
 
+**0.67.0**
+
+* ng2Client - Ahead of Time (AOT) compilation and Tree Shaking - coni2k
+* ng2Client - Development module: A lightweight version of app-module, to make quick sanity checks. - coni2k
+* ng2Client - Package updates & breeze-client\breeze.dataService.odata.js is now fixed, the one under app\lib was removed. - coni2k
+* ng2Client - gulpfile - `require("./app/settings/settings").Settings.version` can't resolve `environment-settings` error was fixed - coni2k
+* ng2Client - traceur.js was added, since systemjs is keep asking for it (for es6 modules?) - coni2k
+* ng2Client - Initially only `local-settings.ts` file will be copied from `settings/setup` folder. - coni2k  
+`test-settings.ts` and `production-settings.ts` files must be created by the user, to prevent having invalid settings for `test` and `production` environments.
+
 **0.66.2**
 
 * ng2Client - ng-chart "invalid chart item is getting updated in pie chart type" bug fix - coni2k

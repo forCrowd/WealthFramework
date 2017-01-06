@@ -3,10 +3,12 @@ import { Component } from "@angular/core";
 import { Logger } from "../../services/logger.service";
 import { Settings } from "../../settings/settings";
 
+//declare const __moduleName: string;
+
 @Component({
     moduleId: module.id,
     selector: "contributors",
-    templateUrl: "contributors.component.html?v=" + Settings.version
+    templateUrl: "contributors.component.html"
 })
 export class ContributorsComponent {
 
