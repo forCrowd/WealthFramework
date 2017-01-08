@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.66.3**
+
+* ng2Client - Contributers page - dpoehls
+
 **0.66.2**
 
 * ng2Client - ng-chart "invalid chart item is getting updated in pie chart type" bug fix - coni2k
