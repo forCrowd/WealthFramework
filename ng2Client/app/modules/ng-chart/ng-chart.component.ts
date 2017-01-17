@@ -4,14 +4,17 @@ import { ChartModule } from "angular2-highcharts";
 import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
 
-import { ChartConfig, ChartDataItem } from "./ng-chart.module";
+import { ChartConfig } from "./chart-config";
+import { ChartDataItem } from "./chart-data-item";
 import { Settings } from "../../settings/settings";
+
+//declare const __moduleName: string;
 
 @Component({
     moduleId: module.id,
     selector: "ngChart",
-    styleUrls: ["ng-chart.component.css?v=" + Settings.version],
-    templateUrl: "ng-chart.component.html?v=" + Settings.version
+    styleUrls: ["ng-chart.component.css"],
+    templateUrl: "ng-chart.component.html"
 })
 export class NgChartComponent implements OnInit {
 

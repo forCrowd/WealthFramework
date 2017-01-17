@@ -1,4 +1,4 @@
-﻿import { ChartDataItem } from "./ng-chart.module";
+﻿import { ChartDataItem } from "./chart-data-item";
 
 export class ChartConfig {
 

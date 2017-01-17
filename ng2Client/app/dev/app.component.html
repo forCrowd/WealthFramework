@@ -1,0 +1,69 @@
+<div class="container body-content">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>
+                Dev Component
+            </h3>
+            <p>
+                A lightweight version of app-module to make quick sanity checks.<br />
+                v:15
+            </p>
+            <hr />
+            <p>
+                <button type='button' (click)='consoleLog()'>console log</button>
+                <button type='button' (click)='toasterLog()'>toaster log</button>
+                <button type='button' (click)='error()'>error</button>
+                <button type='button' (click)='rxjsTest()'>rxjs test</button>
+                <button type='button' (click)='getWebApiInfo()'>web api info</button>
+                <button type='button' (click)='toggleChart()'>toggle chart</button>
+            </p>
+            <p>
+                Moment: {{ getNewDate() | amTimeAgo }}
+            </p>
+            <div [hidden]="!displayChart">
+                <hr />
+                <ngChart [config]="chartConfig"></ngChart>
+            </div>
+        </div>
+    </div>
+
+    <!--<router-outlet></router-outlet>-->
+
+    <toaster-container [toasterconfig]="toasterConfig"></toaster-container>
+
+</div>
+
+<footer class="footer">
+    <!--<div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <hr />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="contacts pull-left">
+                    <a href="http://forcrowd.org" target="_blank">
+                        <img src="/app/images/forCrowd_Logo_142x30.jpg?v=0.65.0" alt="Logo" />
+                    </a>
+                    <a href="https://twitter.com/forCrowd" target="_blank" class="g-ml-40">
+                        <i class="fa fa-twitter fa-lg" aria-hidden="true"></i>
+                    </a>
+                    <a href="https://github.com/forCrowd/WealthEconomy" target="_blank" class="g-ml-20">
+                        <i class="fa fa-github fa-lg" aria-hidden="true"></i>
+                    </a>
+                    <a href="https://gitter.im/forCrowd/WealthEconomy" target="_blank" class="g-ml-20">
+                        <i class="fa fa-comments fa-lg" aria-hidden="true"></i>
+                    </a>
+                    <a href="mailto:contact.wealth@forcrowd.org" target="_blank" class="g-ml-20">
+                        <i class="fa fa-envelope fa-lg" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div class="pull-right">
+                    <a routerLink="/app/contributors">Contributors</a><br />
+                    <small>Version: {{ applicationInfo.Version }}</small>
+                </div>
+            </div>
+        </div>
+    </div>-->
+</footer>

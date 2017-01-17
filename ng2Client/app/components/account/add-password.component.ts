@@ -5,10 +5,12 @@ import { DataService } from "../../services/data.service";
 import { Logger } from "../../services/logger.service";
 import { Settings } from "../../settings/settings";
 
+//declare const __moduleName: string;
+
 @Component({
     moduleId: module.id,
     selector: "add-password",
-    templateUrl: "add-password.component.html?v=" + Settings.version
+    templateUrl: "add-password.component.html"
 })
 export class AddPasswordComponent {
 

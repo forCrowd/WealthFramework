@@ -3,10 +3,12 @@
 import { Logger } from "../../services/logger.service";
 import { Settings } from "../../settings/settings";
 
+//declare const __moduleName: string;
+
 @Component({
     moduleId: module.id,
     selector: "home",
-    templateUrl: "home.component.html?v=" + Settings.version
+    templateUrl: "home.component.html"
 })
 export class HomeComponent {
 

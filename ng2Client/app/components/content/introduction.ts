@@ -5,10 +5,12 @@ import { Logger } from "../../services/logger.service";
 import { ResourcePoolService } from "../../services/resource-pool-service";
 import { Settings } from "../../settings/settings";
 
+//declare const __moduleName: string;
+
 @Component({
     moduleId: module.id,
     selector: "introduction",
-    templateUrl: "introduction.html?v=" + Settings.version
+    templateUrl: "introduction.html"
 })
 export class IntroductionComponent implements OnDestroy, OnInit {
 

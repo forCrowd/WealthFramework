@@ -5,10 +5,12 @@ import { DataService } from "../../services/data.service";
 import { Logger } from "../../services/logger.service";
 import { Settings } from "../../settings/settings";
 
+//declare const __moduleName: string;
+
 @Component({
     moduleId: module.id,
     selector: "profile",
-    templateUrl: "profile.component.html?v=" + Settings.version
+    templateUrl: "profile.component.html"
 })
 export class ProfileComponent implements OnInit {
 
