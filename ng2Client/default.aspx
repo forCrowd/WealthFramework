@@ -7,7 +7,7 @@
     <base href="/" />
 
     <link rel="shortcut icon" href="/favicon.ico?v=0.65.0" />
-    <link href="/app/css/app.min.css?v=0.67.0" rel="stylesheet" />
+    <link href="/app/css/app.min.css?v=0.67.1" rel="stylesheet" />
 </head>
 <body>
     <app>
