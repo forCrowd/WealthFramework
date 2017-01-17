@@ -205,12 +205,6 @@ export class DataService {
     }
 
     // ok
-    getChangesCount() {
-        return this.getChanges().length;
-        // return this.entityManager.getChanges().length;
-    }
-
-    // ok
     getEntities(entityTypes: any, entityStates: any) {
         return this.entityManager.getEntities(entityTypes, entityStates);
     }
@@ -453,7 +447,7 @@ export class DataService {
                 this.saveChangesStarted$.emit();
 
                 var promise: any = null;
-                var count = this.getChangesCount();
+                var count = this.getChanges().length;
                 var saveBatches = this.prepareSaveBatches();
 
                 saveBatches.forEach((batch: any) => {

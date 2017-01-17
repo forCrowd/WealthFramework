@@ -2,4 +2,5 @@
 
 A lightweight version of app-module to make quick sanity checks.
 
-Just modify main.ts file to point to this module.
+* For local development, only modify `main.ts` file,
+* To use it AOT build, modify both `main-aot.ts` and `tsconfig-build-aot.json` to use this module.

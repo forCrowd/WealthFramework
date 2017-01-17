@@ -5,7 +5,6 @@ import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
 
 import { ChartConfig } from "./chart-config";
-import { ChartDataItem } from "./chart-data-item";
 import { Settings } from "../../settings/settings";
 
 //declare const __moduleName: string;

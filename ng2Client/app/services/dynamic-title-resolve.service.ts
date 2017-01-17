@@ -4,7 +4,7 @@ import { Observable } from "rxjs/Observable";
 
 import { DataService } from "./data.service";
 import { Logger } from "./logger.service";
-import { ResourcePoolService } from "./resource-pool-service";
+import { ResourcePoolService } from "./resource-pool.service";
 
 @Injectable()
 export class DynamicTitleResolve implements Resolve<string> {

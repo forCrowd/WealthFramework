@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 import { DataService } from "../../../services/data.service";
 import { Logger } from "../../../services/logger.service";
-import { ResourcePoolService } from "../../../services/resource-pool-service";
+import { ResourcePoolService } from "../../../services/resource-pool.service";
 import { ElementFieldDataType, ElementFieldIndexCalculationType, ElementFieldIndexSortType } from "../../../entities/enums";
 import { Settings } from "../../../settings/settings";
 
