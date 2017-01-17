@@ -10,6 +10,10 @@
 * ng2Client - Initially only `local-settings.ts` file will be copied from `settings/setup` folder. - coni2k  
 `test-settings.ts` and `production-settings.ts` files must be created by the user, to prevent having invalid settings for `test` and `production` environments.
 
+**0.66.3**
+
+* ng2Client - Contributers page - dpoehls
+
 **0.66.2**
 
 * ng2Client - ng-chart "invalid chart item is getting updated in pie chart type" bug fix - coni2k
