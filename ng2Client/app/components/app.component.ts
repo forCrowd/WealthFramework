@@ -8,10 +8,12 @@ import { Angulartics2GoogleAnalytics, GoogleAnalyticsService } from "../services
 import { Logger, ToasterConfig } from "../services/logger.service";
 import { Settings } from "../settings/settings";
 
+//declare const __moduleName: string;
+
 @Component({
     moduleId: module.id,
     selector: "app",
-    templateUrl: "app.component.html?v=" + Settings.version
+    templateUrl: "app.component.html"
 })
 export class AppComponent implements OnDestroy, OnInit {
 

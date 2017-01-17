@@ -76,18 +76,20 @@
     <Content Include="app\components\content\prologue.html" />
     <Content Include="app\components\content\reason.html" />
     <Content Include="app\components\content\totalCostIndex.html" />
+    <Content Include="app\css\app.css" />
     <Content Include="app\components\user\profile.component.html" />
     <Content Include="app\components\user\resource-pool\element-manager.component.html" />
     <Content Include="app\components\user\resource-pool\resource-pool-editor.component.css" />
     <Content Include="app\components\user\resource-pool\resource-pool-editor.component.html" />
     <Content Include="app\components\user\resource-pool\resource-pool-manager.component.html" />
     <Content Include="app\components\user\resource-pool\resource-pool-viewer.component.html" />
-    <Content Include="app\css\main.css" />
+    <Content Include="app\dev\app.component.css" />
+    <Content Include="app\dev\app.component.html" />
     <Content Include="app\images\forCrowd_Logo_142x30.jpg" />
     <Content Include="app\images\PresentvsNew.png" />
-    <Content Include="app\lib\breeze.dataService.odata.js" />
     <Content Include="app\modules\ng-chart\ng-chart.component.css" />
     <Content Include="app\modules\ng-chart\ng-chart.component.html" />
+    <Content Include="app\dev\Readme.md" />
     <None Include="app\settings\setup\Readme.md" />
     <Content Include="app\views\confirmNavigateAway.html" />
     <Content Include="app\views\guestAccountInfo.html" />
@@ -103,10 +105,15 @@
   <ItemGroup>
     <Content Include="default.aspx" />
     <Content Include="systemjs.config.js" />
+    <Content Include="tsconfig-build-aot.json" />
+    <Content Include="tsconfig-compile-aot.json" />
     <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="app\app-dev.module.ts" />
+    <TypeScriptCompile Include="app\dev\app-routing.module.ts" />
+    <TypeScriptCompile Include="app\dev\app.component.ts" />
+    <TypeScriptCompile Include="app\dev\app.module.ts" />
+    <TypeScriptCompile Include="app\main-aot.ts" />
     <TypeScriptCompile Include="app\modules\app-routing.module.ts" />
     <TypeScriptCompile Include="app\app.module.ts" />
     <TypeScriptCompile Include="app\components\account\account-edit.component.ts" />
@@ -182,6 +189,7 @@
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

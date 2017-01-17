@@ -5,10 +5,12 @@ import { Logger } from "../../services/logger.service";
 import { ResourcePoolService } from "../../services/resource-pool-service";
 import { Settings } from "../../settings/settings";
 
+//declare const __moduleName: string;
+
 @Component({
     moduleId: module.id,
     selector: "priority-index",
-    templateUrl: "priorityIndex.html?v=" + Settings.version
+    templateUrl: "priorityIndex.html"
 })
 export class PriorityIndexComponent {
 

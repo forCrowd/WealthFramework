@@ -7,19 +7,21 @@
     <base href="/" />
 
     <link rel="shortcut icon" href="/favicon.ico?v=0.65.0" />
-    <link href="/app/css/lib/lib.min.css?v=0.65.1" rel="stylesheet" />
-    <link href="/app/css/app.min.css?v=0.65.0" rel="stylesheet" />
+    <link href="/app/css/app.min.css?v=0.67.0" rel="stylesheet" />
 </head>
 <body>
     <app>
         
     </app>
 
-    <script src="/app/lib.min.js?v=0.65.0"></script>
+    <script>window.module = "aot";</script>
     <!-- build:publish-default-aspx -->
-    <!-- This block will be replaced with "app.min.js" script during "publish" tasks in gulpfile -->
-    <%--<script src="/app/app.min.js?v=0.66.1"></script>--%>
-    <script src="/systemjs.config.js?v=0.66.0"></script>
+    <!-- This block will be replaced with "app.min.js" script during "build" tasks in gulpfile -->
+    <%--<script src="/app/app.min.js"></script>--%>
+    <script src="/app/lib.js"></script>
+    <script src="/node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="/node_modules/systemjs/dist/system.src.js"></script>
+    <script src="/systemjs.config.js"></script>
     <script>
         System.import("app")
             .catch(function (error) {

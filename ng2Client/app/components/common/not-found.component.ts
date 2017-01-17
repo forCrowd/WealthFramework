@@ -5,10 +5,12 @@ import { Logger } from "../../services/logger.service";
 import { CustomErrorHandler } from "../../modules/custom-error-handler/custom-error-handler.module";
 import { Settings } from "../../settings/settings";
 
+//declare const __moduleName: string;
+
 @Component({
     moduleId: module.id,
     selector: "not-found",
-    templateUrl: "not-found.component.html?v=" + Settings.version
+    templateUrl: "not-found.component.html"
 })
 export class NotFoundComponent implements OnInit {
 

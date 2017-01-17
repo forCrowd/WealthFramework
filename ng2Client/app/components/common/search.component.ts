@@ -6,10 +6,12 @@ import { Logger } from "../../services/logger.service";
 import { ResourcePoolService } from "../../services/resource-pool-service";
 import { Settings } from "../../settings/settings";
 
+//declare const __moduleName: string;
+
 @Component({
     moduleId: module.id,
     selector: "search",
-    templateUrl: "search.component.html?v=" + Settings.version
+    templateUrl: "search.component.html"
 })
 export class SearchComponent {
 

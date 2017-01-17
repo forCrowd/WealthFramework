@@ -1,16 +1,19 @@
 ﻿import { Component, EventEmitter, OnDestroy, OnInit } from "@angular/core";
 import { Observable } from "rxjs/Observable";
 
-import { ChartConfig, ChartDataItem } from "../../modules/ng-chart/ng-chart.module";
+import { ChartConfig } from "../../modules/ng-chart/chart-config";
+import { ChartDataItem } from "../../modules/ng-chart/chart-data-item";
 import { DataService } from "../../services/data.service";
 import { Logger } from "../../services/logger.service";
 import { ResourcePoolService } from "../../services/resource-pool-service";
 import { Settings } from "../../settings/settings";
 
+//declare const __moduleName: string;
+
 @Component({
     moduleId: module.id,
     selector: "knowledge-index",
-    templateUrl: "knowledgeIndex.html?v=" + Settings.version
+    templateUrl: "knowledgeIndex.html"
 })
 export class KnowledgeIndexComponent implements OnDestroy, OnInit {
 

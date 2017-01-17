@@ -32,12 +32,15 @@ class CustomHttp extends Http {
     }
 }
 
+export function createCustomHttp(backend: XHRBackend, defaultOptions: RequestOptions) {
+    return new CustomHttp(backend, defaultOptions);
+}
+
 @NgModule({
     providers: [
         {
             provide: Http,
-            useFactory: (backend: XHRBackend, defaultOptions: RequestOptions) =>
-                new CustomHttp(backend, defaultOptions),
+            useFactory: createCustomHttp,
             deps: [XHRBackend, RequestOptions]
         }]
 })

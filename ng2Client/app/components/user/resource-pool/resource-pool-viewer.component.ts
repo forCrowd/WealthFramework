@@ -6,10 +6,12 @@ import { Logger } from "../../../services/logger.service";
 import { ResourcePoolService } from "../../../services/resource-pool-service";
 import { Settings } from "../../../settings/settings";
 
+//declare const __moduleName: string;
+
 @Component({
     moduleId: module.id,
     selector: "resource-pool-viewer",
-    templateUrl: "resource-pool-viewer.component.html?v=" + Settings.version
+    templateUrl: "resource-pool-viewer.component.html"
 })
 export class ResourcePoolViewerComponent implements OnInit {
 

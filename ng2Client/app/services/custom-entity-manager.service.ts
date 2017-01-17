@@ -1,11 +1,11 @@
 ﻿import { Injectable } from "@angular/core";
 import { config, EntityManager } from "breeze-client";
 
+import "breeze.ajax.angular";
+import "breeze.dataService.odata";
+import "breeze.modelLibrary.backingStore";
+import "breeze.uriBuilder.odata";
 import "datajs";
-import "breeze-client/breeze.ajax.angular";
-import "breeze-client/breeze.dataService.odata";
-import "breeze-client/breeze.modelLibrary.backingStore";
-import "breeze-client/breeze.uriBuilder.odata";
 
 import { Element } from "../entities/Element";
 import { ElementCell } from "../entities/ElementCell";
