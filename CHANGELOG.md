@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.67.1**
+
+* ng2Client - Footer css fix
+
 **0.67.0**
 
 * ng2Client - Ahead of Time (AOT) compilation and Tree Shaking - coni2k
