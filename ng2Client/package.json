@@ -1,13 +1,17 @@
 {
     "name": "forcrowd-wealtheconomy-ng2client",
-    "version": "0.1.0",
-    "private": true,
-    "licenses": [
-        {
-            "type": "MIT",
-            "url": "https://github.com/forCrowd/WealthEconomy/blob/master/LICENSE"
-        }
-    ],
+    "version": "0.67.2",
+    "description": "Experimental ideas on improving how the economy works",
+    "main": "default.aspx",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/forCrowd/WealthEconomy"
+    },
+    "author": "forCrowd Foundation",
+    "license": "MIT",
     "dependencies": {
         "@angular/common": "2.4.2",
         "@angular/core": "2.4.2",
@@ -22,8 +26,7 @@
         "angulartics2": "1.6.3",
         "bootstrap": "3.3.7",
         "breeze-bridge-angular2": "0.3.6",
-        "breeze-client": "1.6.1",
-        "breeze-client-labs": "1.5.12",
+        "breeze-client": "1.6.2",
         "core-js": "2.4.1",
         "datajs": "1.0.3",
         "font-awesome": "4.7.0",
@@ -59,9 +62,7 @@
         "rollup-plugin-commonjs": "7.0.0",
         "rollup-plugin-node-resolve": "2.0.0",
         "systemjs": "0.19.41",
-        "systemjs-builder": "0.15.34",
         "systemjs-plugin-traceur": "0.0.3",
-        "tslint": "4.3.1",
         "typescript": "2.1.4"
     }
 }

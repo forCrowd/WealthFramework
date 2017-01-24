@@ -149,7 +149,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="gulpfile.js" />
+    <Content Include="_gulpfile.js" />
     <Content Include="favicon.ico" />
     <Content Include="default.aspx" />
     <Content Include="robots.txt" />

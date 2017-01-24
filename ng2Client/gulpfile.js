@@ -7,7 +7,7 @@ require("app-module-path").addPath("./app/settings/setup");
 /* Varibles */
 
 var concat = require("gulp-concat"),
-    exec = require('child_process').exec,
+    exec = require("child_process").exec,
     fs = require("fs"),
     gulp = require("gulp"),
     path = require("path"),
@@ -130,7 +130,7 @@ function build(environment, runPublish) {
 
         return compileAheadOfTime().then(function () {
             return bundle(environment).then(function () {
-                return minify(environment).then(function () {
+                return minify().then(function () {
                     if (runPublish) {
                         return publish(environment).then(function () {
                             return compileTypescript(typeScriptDefaultProject); // *
@@ -197,7 +197,7 @@ function bundle(environment) {
 
 function compileAheadOfTime() {
     return new Promise(function (resolve, reject) {
-        return exec('node_modules\\.bin\\ngc -p tsconfig-build-aot.json', function (err, stdout, stderr) {
+        return exec("node_modules\\.bin\\ngc -p tsconfig-build-aot.json", function (err, stdout, stderr) {
 
             console.log(stdout);
             console.log(stderr);
@@ -212,7 +212,7 @@ function compileAheadOfTime() {
 
 function compileTypescript(projectFile) {
     return new Promise(function (resolve, reject) {
-        return exec('node_modules\\.bin\\tsc -p ' + projectFile, function (err, stdout, stderr) {
+        return exec("node_modules\\.bin\\tsc -p " + projectFile, function (err, stdout, stderr) {
             console.log(stdout);
             console.log(stderr);
             resolve();
@@ -268,17 +268,17 @@ function getWebConfigHttpsBlock(environment) {
         + "                </rule>";
 }
 
-function minify(environment) {
+function minify() {
 
     return new Promise(function (resolve, reject) {
 
         var sourcemaps = require("gulp-sourcemaps"),
             uglify = require("gulp-uglify"),
-            appMinJsSrc = libJsSrc.slice();
+            appJsSrc = libJsSrc.slice();
 
-        appMinJsSrc.push(appJsPath);
+        appJsSrc.push(appJsPath);
 
-        gulp.src(appMinJsSrc)
+        gulp.src(appJsSrc)
                 .pipe(sourcemaps.init())
                 .pipe(concat("app.min.js", { newLine: "\r\n" }))
                 .pipe(uglify())

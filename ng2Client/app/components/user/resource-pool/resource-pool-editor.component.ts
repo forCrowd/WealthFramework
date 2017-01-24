@@ -2,11 +2,10 @@
 import { Router } from "@angular/router";
 import { Subject } from "rxjs/Subject";
 
-import { ChartConfig } from "../../../modules/ng-chart/chart-config";
-import { ChartDataItem } from "../../../modules/ng-chart/chart-data-item";
+import { ChartConfig, ChartDataItem } from "../../../modules/ng-chart/ng-chart.module";
 import { DataService } from "../../../services/data.service";
 import { Logger } from "../../../services/logger.service";
-import { ResourcePoolService } from "../../../services/resource-pool-service";
+import { ResourcePoolService } from "../../../services/resource-pool.service";
 import { Settings } from "../../../settings/settings";
 
 //declare const __moduleName: string;

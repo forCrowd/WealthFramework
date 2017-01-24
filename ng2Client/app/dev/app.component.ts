@@ -4,8 +4,7 @@ import { Observable } from "rxjs/Observable";
 // Angular & External
 import { Component, OnInit } from "@angular/core";
 
-import { ChartConfig } from "../modules/ng-chart/chart-config";
-import { ChartDataItem } from "../modules/ng-chart/chart-data-item";
+import { ChartConfig, ChartDataItem } from "../modules/ng-chart/ng-chart.module";
 
 // Services
 import { CustomEntityManager } from "../services/custom-entity-manager.service";

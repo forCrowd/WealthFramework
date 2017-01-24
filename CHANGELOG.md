@@ -1,5 +1,11 @@
 ### Changelog
 
+**0.67.2**
+
+* ng2Client - breeze-client critical bug fix (1.6.2): http://breeze.github.io/doc-js/release-notes.html
+* ng2Client - Resource pool service - getResourcePoolExpanded function - fetchedEarlier fix
+* ng2Client - Minor
+
 **0.67.1**
 
 * ng2Client - Footer css fix

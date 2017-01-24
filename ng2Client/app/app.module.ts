@@ -63,7 +63,7 @@ import { DataService } from "./services/data.service";
 import { CustomEntityManager } from "./services/custom-entity-manager.service";
 import { GoogleAnalyticsService } from "./services/google-analytics.service";
 import { Logger, ToasterModule } from "./services/logger.service";
-import { ResourcePoolService } from "./services/resource-pool-service";
+import { ResourcePoolService } from "./services/resource-pool.service";
 
 @NgModule({
     imports: [

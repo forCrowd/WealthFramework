@@ -374,7 +374,8 @@ export class ResourcePoolService {
         var fetchedEarlier = false;
 
         // If it's not newly created, check the fetched list
-        fetchedEarlier = this.fetchedList.some((fetched: any) => (resourcePoolUniqueKey === fetched));
+        fetchedEarlier = this.fetchedList.some((item: any) => (resourcePoolUniqueKey.username === item.username
+            && resourcePoolUniqueKey.resourcePoolKey === item.resourcePoolKey));
 
         // Prepare the query
         var query = EntityQuery.from("ResourcePool");
@@ -409,13 +410,14 @@ export class ResourcePoolService {
                 // ResourcePool
                 var resourcePool = response.results[0];
 
-                // Init
                 if (!fetchedEarlier) {
-                    resourcePool._init();
-                }
 
-                // Add the record into fetched list
-                this.fetchedList.push(resourcePool.Id);
+                    // Init
+                    resourcePool._init();
+
+                    // Add the record into fetched list
+                    this.fetchedList.push(resourcePoolUniqueKey);
+                }
 
                 return resourcePool;
             });
