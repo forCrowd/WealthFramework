@@ -67,7 +67,7 @@
             }
         },
         transpiler: "plugin-traceur",
-        transpilerRuntime: false,
+        transpilerRuntime: false
     };
 
     System.config(config);

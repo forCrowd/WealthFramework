@@ -6,7 +6,7 @@ During the first build of the application, it will be copied to the parent folde
 
 `settings.ts file` import these settings by using `environment-settings` map, which is defined in `systemjs.config.js` file and changes based on the environment.  
 
-By default, for local environment, `default.aspx` uses `systemjs.config.js` file without any modification and maps to `local-settings` file.  
+By default, for local environment, `app.html` uses `systemjs.config.js` file without any modification and maps to `local-settings` file.  
 
 "build" tasks in `gulpfile.js` file, this path changes based on the environment:
 

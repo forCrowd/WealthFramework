@@ -52,7 +52,7 @@ const appRoutes: Routes = [
 
     /* Common - Home alternatives */
     { path: "app/home", redirectTo: "", pathMatch: "full" },
-    { path: "default.aspx", redirectTo: "", pathMatch: "full" },
+    { path: "app.html", redirectTo: "", pathMatch: "full" },
 
     /* Content */
     { path: "app/allInOne", component: AllInOneComponent, data: { title: "All in One" }, resolve: { currentUser: CurrentUserResolve } },

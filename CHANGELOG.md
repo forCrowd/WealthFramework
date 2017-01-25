@@ -1,5 +1,11 @@
 ### Changelog
 
+**0.67.3**
+
+* ng2Client - `async` tag for `app.min.js` and bit better `loading...`
+* ng2Client - `default.aspx` was renamed to `app.html`
+* ng2Client - gulpfile, publish method improvement: Doesn't copy unchanged files by comparing source and destination with `gulp-changed` plugin.
+
 **0.67.2**
 
 * ng2Client - breeze-client critical bug fix (1.6.2): http://breeze.github.io/doc-js/release-notes.html

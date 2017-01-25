@@ -184,7 +184,7 @@ function bundle(environment) {
               }
           }),
           nodeResolve({ jsnext: true, module: true })
-        ],
+        ]
     })
       .then(function (bundle) {
           return bundle.write({
@@ -193,7 +193,7 @@ function bundle(environment) {
               dest: appJsPath
           });
       });
-};
+}
 
 function compileAheadOfTime() {
     return new Promise(function (resolve, reject) {
@@ -287,7 +287,7 @@ function minify() {
                 .pipe(gulp.dest(appRoot))
                 .on("end", resolve);
     });
-};
+}
 
 function pathExists(path) {
     return new Promise(function (resolve, reject) {
@@ -307,47 +307,42 @@ function publish(environment) {
 
     return new Promise(function (resolve, reject) {
 
-        var publishDest = "./publish";
-
-        var publishSrc = [
+        var changed = require("gulp-changed"),
+            publishDest = "./publish",
+            publishSrc = [
             "./app/fonts/**/*",
             "./app/css/app.min.css",
             "./app/images/**/*",
             "./app/app.min.js",
             "./app/app.min.js.map",
+            "./app.html",
             "./app_offline.htm_",
             "./favicon.ico",
             "./robots.txt",
-            "./default.aspx",
             "./Web.config"
         ];
 
-        // delete existing
-        var del = require("del");
-        return del([publishDest])
-            .then(function () {
+        return gulp.src(publishSrc, { base: "./" })
+            .on("error", promiseErrorHandler)
+            .pipe(changed(publishDest))
+            .pipe(gulp.dest(publishDest))
+            .on("end", function () {
 
-                // html-replace
-                var htmlreplace = require("gulp-html-replace");
+                var htmlReplace = require("gulp-html-replace");
+                var appHtml = publishDest + "/app.html";
+                var webConfig = publishDest + "/Web.config";
 
-                return gulp.src(publishSrc, { base: "./" })
+                return gulp.src([appHtml, webConfig])
+                    .pipe(htmlReplace({
+                        "app-html": {
+                            src: "/app/app.min.js?v=" + version,
+                            tpl: "<script async src=\"%s\"></script>",
+                        },
+                        "web-config": getWebConfigHttpsBlock(environment)
+                    }))
                     .on("error", promiseErrorHandler)
                     .pipe(gulp.dest(publishDest))
-                    .on("end", function () {
-
-                        var defaultAspx = publishDest + "/default.aspx";
-                        var webConfig = publishDest + "/Web.config";
-
-                        return gulp.src([defaultAspx, webConfig])
-                            .pipe(htmlreplace({
-                                "publish-default-aspx": "/app/app.min.js?v=" + version,
-                                "publish-web-config-prod": getWebConfigHttpsBlock(environment)
-                            }))
-                            .on("error", promiseErrorHandler)
-                            .pipe(gulp.dest(publishDest))
-                            .on("end", resolve);
-                    });
-            })
-        .catch(promiseErrorHandler);
+                    .on("end", resolve);
+            });
     });
 }

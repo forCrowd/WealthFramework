@@ -662,6 +662,13 @@ input[type="checkbox"].input-validation-error {
 
 /* #region - Misc - */
 
+.center {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .vcenter {
     display: inline-block;
     vertical-align: middle;

@@ -103,7 +103,7 @@
     <None Include="Properties\PublishProfiles\wealth.test.pubxml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="default.aspx" />
+    <Content Include="app.html" />
     <Content Include="systemjs.config.js" />
     <Content Include="tsconfig-build-aot.json" />
     <Content Include="tsconfig-compile-aot.json" />

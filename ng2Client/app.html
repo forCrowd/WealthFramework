@@ -11,13 +11,35 @@
 </head>
 <body>
     <app>
-        
+        <div class="center">
+            <p style="text-align:center">
+                Loading<br />
+                <span id="dots">...</span>
+            </p>
+        </div>
+
+        <script>
+
+            loading();
+
+            function loading() {
+
+                var dots = document.getElementById("dots");
+
+                if (dots) {
+                    var text = dots.textContent;
+                    dots.textContent = text += ".";
+                    setTimeout(loading, 500);
+                }
+            }
+
+        </script>
     </app>
 
     <script>window.module = "aot";</script>
-    <!-- build:publish-default-aspx -->
+    <!-- build:app-html -->
     <!-- This block will be replaced with "app.min.js" script during "build" tasks in gulpfile -->
-    <%--<script src="/app/app.min.js"></script>--%>
+    <!--<script async src="/app/app.min.js"></script>-->
     <script src="/app/lib.js"></script>
     <script src="/node_modules/reflect-metadata/Reflect.js"></script>
     <script src="/node_modules/systemjs/dist/system.src.js"></script>
