@@ -1,65 +1,55 @@
-// Misc
 import "../rxjs-extensions";
 
-// Angular & External
 import { NgModule } from "@angular/core";
+import { FormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
-import { BrowserModule } from "@angular/platform-browser";
+import { RouterModule } from "@angular/router";
+import { BrowserModule, Title } from "@angular/platform-browser";
 import { MomentModule } from "angular2-moment";
-import { BreezeBridgeAngular2Module } from "breeze-bridge-angular2";
 
-// Component
 import { AppComponent } from "./app.component";
 
-// Modules
-import { AppRoutingModule } from "./app-routing.module";
 
-import { CustomErrorHandlerModule } from "../modules/custom-error-handler/custom-error-handler.module";
-import { CustomHttpModule } from "../modules/custom-http.module";
+import { AppErrorHandlerModule } from "../modules/app-error-handler/app-error-handler.module";
+import { AppHttpModule } from "../modules/app-http/app-http.module";
+
+//import { CoreModule } from "../modules/core/core.module";
+import { DataModule } from "../modules/data/data.module";
+import { LoggerModule } from "../modules/logger/logger.module";
 import { NgChartModule } from "../modules/ng-chart/ng-chart.module";
 
-// Pipes
-import { SymbolicPipe } from "../pipes/symbolic.pipe";
 
-// Services
-import { DataService } from "../services/data.service";
-import { CustomEntityManager } from "../services/custom-entity-manager.service";
-import { GoogleAnalyticsService } from "../services/google-analytics.service";
-import { Logger, ToasterModule } from "../services/logger.service";
 
 @NgModule({
+    bootstrap: [
+        AppComponent
+    ],
+    declarations: [
+        AppComponent
+    ],
     imports: [
 
         // Angular & External
         BrowserModule,
+        FormsModule,
         HttpModule,
-
-        BreezeBridgeAngular2Module,
+        RouterModule,
         MomentModule,
-        ToasterModule,
 
-        // Modules
-        AppRoutingModule,
-        CustomErrorHandlerModule,
-        CustomHttpModule,
+        // Internal
+
+        AppErrorHandlerModule,
+        AppHttpModule,
+
+        //CoreModule,
+        DataModule,
+        LoggerModule,
         NgChartModule
-    ],
-    declarations: [
 
-        // App
-        AppComponent,
 
-        // Pipes
-        SymbolicPipe
     ],
     providers: [
-        CustomEntityManager,
-        DataService,
-        GoogleAnalyticsService,
-        Logger,
-    ],
-    bootstrap: [
-        AppComponent
+        Title
     ]
 })
 export class AppModule { }

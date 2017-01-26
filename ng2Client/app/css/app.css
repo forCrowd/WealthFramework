@@ -3,13 +3,6 @@
     min-height: 100%;
 }
 
-body {
-    /* Margin bottom by footer height */
-    margin-bottom: 90px !important;
-    padding-top: 50px;
-    padding-bottom: 20px;
-}
-
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
@@ -23,6 +16,13 @@ hr {
 
 [hidden] {
     display: none !important;
+}
+
+.body {
+    /* Margin bottom by footer height */
+    margin-bottom: 90px !important;
+    padding-top: 50px;
+    padding-bottom: 20px;
 }
 
 .footer {

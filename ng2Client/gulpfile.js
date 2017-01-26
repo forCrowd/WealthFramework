@@ -336,7 +336,7 @@ function publish(environment) {
                     .pipe(htmlReplace({
                         "app-html": {
                             src: "/app/app.min.js?v=" + version,
-                            tpl: "<script async src=\"%s\"></script>",
+                            tpl: "<script async src=\"%s\"></script>"
                         },
                         "web-config": getWebConfigHttpsBlock(environment)
                     }))
