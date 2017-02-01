@@ -1,8 +1,9 @@
-import { enableProdMode } from "@angular/core";
+import { enableProdMode, NgModuleRef } from "@angular/core";
 import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
 
 import { AppModule } from "./app.module";
 //import { AppModule } from "./dev/app.module";
+//import { AppModule } from "./dev/app-basic.module";
 import { Settings } from "./settings/settings";
 
 // Enable production mode
@@ -11,4 +12,6 @@ if (Settings.enableProdMode) {
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule)
-    .then((success: any) => console.log("Bootstrap success", success));
+    .then((ngModuleRef: NgModuleRef<AppModule>) => {
+        console.log("Bootstrap success", ngModuleRef);
+    });

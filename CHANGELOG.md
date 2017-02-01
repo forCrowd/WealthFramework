@@ -1,5 +1,16 @@
 ### Changelog
 
+**0.68.0**
+
+* ng2Client - `APP_INITIALIZER`: During the initialization of `app.module`, we can now make async operations like `fetchMetadata` and `setCurrentUser` and prepare the application.
+This now ensures `dataService.currentUser` is always ready, which greatly reduces the complexity of depended operations.
+* ng2Client - Services & modules organization & cleanup
+* ng2Client - "Restrict usernames list": Validation in `register` function to prevent having a username that matches a physical file or folder
+* ng2Client - `DataService` `fetchedUsers` is now getting updated in related operations
+* ng2Client - `DataService` `loginReturnUrl` usage fix
+* ng2Client - `app-basic.module.ts` was created in `app\dev` folder
+* ng2Client - Minor updates
+
 **0.67.3**
 
 * ng2Client - `async` tag for `app.min.js` and bit better `loading...`

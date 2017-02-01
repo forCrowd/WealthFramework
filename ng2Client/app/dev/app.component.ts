@@ -7,10 +7,8 @@ import { Component, OnInit } from "@angular/core";
 import { ChartConfig, ChartDataItem } from "../modules/ng-chart/ng-chart.module";
 
 // Services
-import { CustomEntityManager } from "../services/custom-entity-manager.service";
-import { DataService } from "../services/data.service";
-import { Angulartics2GoogleAnalytics, GoogleAnalyticsService } from "../services/google-analytics.service";
-import { Logger, ToasterConfig } from "../services/logger.service";
+import { DataService } from "../modules/data/data.module";
+import { Logger, ToasterConfig } from "../modules/logger/logger.module";
 import { Settings } from "../settings/settings";
 
 @Component({
@@ -25,11 +23,8 @@ export class AppComponent implements OnInit {
     displayChart: boolean = false;
     toasterConfig: ToasterConfig = null;
 
-    constructor(angulartics2GoogleAnalytics: Angulartics2GoogleAnalytics,
-        private googleAnalyticsService: GoogleAnalyticsService,
-        private logger: Logger,
-        private dataService: DataService,
-        private entityManager: CustomEntityManager) {
+    constructor(private logger: Logger,
+        private dataService: DataService) {
     }
 
     ngOnInit(): void {
@@ -50,7 +45,7 @@ export class AppComponent implements OnInit {
         this.chartConfig = new ChartConfig(options, data);
 
         // Setup google analytics
-        this.googleAnalyticsService.configureTrackingCode(Settings.analyticsTrackingCode, Settings.analyticsDomainName);
+        //this.googleAnalyticsService.configureTrackingCode(Settings.analyticsTrackingCode, Settings.analyticsDomainName);
 
         // Toaster
         this.toasterConfig = this.logger.getToasterConfig();
