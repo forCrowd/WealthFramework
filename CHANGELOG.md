@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.69.1**
+
+* ng2Client - `utils.ts` `getUniqueEmail` function fix
+
 **0.69.0**
 
 * ng2Client - Username doesn't allow special characters and spaces anymore

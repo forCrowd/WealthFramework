@@ -1,5 +1,5 @@
 export function getUniqueEmail() {
-    return this.getUniqueUserName() + "@forcrowd.org";
+    return getUniqueUserName() + "@forcrowd.org";
 }
 
 export function getUniqueUserName() {
