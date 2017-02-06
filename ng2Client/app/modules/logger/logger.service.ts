@@ -1,5 +1,6 @@
 ﻿import { Injectable } from "@angular/core";
 import { BodyOutputType, ToasterConfig, ToasterService } from "angular2-toaster";
+import { pad } from "../../utils";
 
 //export { ToasterConfig, ToasterModule }
 
@@ -42,9 +43,12 @@ export class Logger {
     logIt(message: string, data?: Object, showToast?: boolean, toastType?: string): void {
         showToast = typeof showToast === "undefined" ? false : showToast;
 
-        let currentDateTime = new Date().getHours() + ":" +
-            new Date().getMinutes() + ":" +
-            new Date().getSeconds();
+        const newDate = new Date();
+        const hour = pad(newDate.getHours().toString());
+        const minute = pad(newDate.getMinutes().toString());
+        const second = pad(newDate.getSeconds().toString());
+
+        let currentDateTime = hour + ":" + minute + ":" + second;
 
         let write: Function;
         switch (toastType) {

@@ -1,11 +1,22 @@
-﻿export class User {
+﻿import { stripInvalidChars } from "../../../utils";
+
+export class User {
 
     // Server-side
     Id = 0;
     Email = "";
     EmailConfirmed = false;
     IsAnonymous = false;
-    UserName = "";
+    get UserName(): string {
+        return this.fields.userName;
+    }
+    set UserName(value: string) {
+        var newValue = stripInvalidChars(value);
+
+        if (this.fields.userName !== newValue) {
+            this.fields.userName = newValue;
+        }
+    }
     SingleUseToken: any = null;
     HasPassword = false;
     FirstName = "";
@@ -29,6 +40,12 @@
     //UserResourcePoolSet = [];
     //UserElementFieldSet = [];
     //UserElementCellSet = [];
+
+    private fields: {
+        userName: string
+    } = {
+        userName: ""
+    };
 
     getResourcePoolSetSorted(): any[] {
         return (this as any).ResourcePoolSet.sort((a: any, b: any) => {

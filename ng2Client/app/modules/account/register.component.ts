@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { DataService } from "../../modules/data/data.module";
 import { Logger } from "../../modules/logger/logger.module";
 import { Settings } from "../../settings/settings";
+import { getUniqueEmail, getUniqueUserName, stripInvalidChars } from "../../utils";
 
 //declare const __moduleName: string;
 
@@ -15,10 +16,18 @@ import { Settings } from "../../settings/settings";
 export class RegisterComponent implements OnInit {
 
     bindingModel = {
-        UserName: "",
+        get UserName(): string {
+            return this.fields.userName;
+        },
+        set UserName(value: string) {
+            this.fields.userName = stripInvalidChars(value);
+        },
         Email: "",
         Password: "",
-        ConfirmPassword: ""
+        ConfirmPassword: "",
+        fields: {
+            userName: ""
+        }
     };
     isSaving = false;
     rememberMe = true;
@@ -34,8 +43,8 @@ export class RegisterComponent implements OnInit {
     ngOnInit(): void {
         // Generate test data if localhost
         if (window.location.hostname === "localhost") {
-            this.bindingModel.UserName = this.dataService.getUniqueUserName();
-            this.bindingModel.Email = this.dataService.getUniqueEmail();
+            this.bindingModel.UserName = getUniqueUserName();
+            this.bindingModel.Email = getUniqueEmail();
             this.bindingModel.Password = "123qwe";
             this.bindingModel.ConfirmPassword = "123qwe";
         }

@@ -1,5 +1,11 @@
 ### Changelog
 
+**0.69.0**
+
+* ng2Client - Username doesn't allow special characters and spaces anymore
+* ng2Client - `npm scripts install` was used to install `local-settings.ts` file and fonts
+* ng2Client - gulpfile.js is now reading `version` from `package.json`
+
 **0.68.0**
 
 * ng2Client - `APP_INITIALIZER`: During the initialization of `app.module`, we can now make async operations like `fetchMetadata` and `setCurrentUser` and prepare the application.

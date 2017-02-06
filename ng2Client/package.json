@@ -1,9 +1,10 @@
 {
     "name": "forcrowd-wealtheconomy-ng2client",
-    "version": "0.68.0",
+    "version": "0.69.0",
     "description": "Experimental ideas on improving how the economy works",
     "main": "app.html",
     "scripts": {
+        "install": "gulp setup",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {

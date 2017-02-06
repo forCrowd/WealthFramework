@@ -176,6 +176,7 @@
     <TypeScriptCompile Include="app\modules\resource-pool\resource-pool-editor.component.ts" />
     <TypeScriptCompile Include="app\modules\resource-pool\symbolic.pipe.ts" />
     <TypeScriptCompile Include="app\modules\user\user.module.ts" />
+    <TypeScriptCompile Include="app\utils.ts" />
     <TypeScriptCompile Include="app\rxjs-extensions.ts" />
     <TypeScriptCompile Include="app\modules\core\auth-guard.service.ts" />
     <TypeScriptCompile Include="app\modules\core\can-deactivate-guard.service.ts" />
