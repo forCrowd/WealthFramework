@@ -7,6 +7,7 @@ import { User } from "./entities/user";
 import { AppEntityManager } from "./app-entity-manager.service";
 import { Logger } from "../../modules/logger/logger.module";
 import { Settings } from "../../settings/settings";
+import { getUniqueEmail, getUniqueUserName } from "../../utils";
 
 @Injectable()
 export class DataService {
@@ -212,23 +213,6 @@ export class DataService {
             + provider + "&clientReturnUrl="
             + window.location.origin + "/app/account/login";
         return url;
-    }
-
-    getUniqueEmail() {
-        return this.getUniqueUserName() + "@forcrowd.org";
-    }
-
-    getUniqueUserName() {
-
-        var now = new Date();
-        var year = now.getFullYear().toString().substring(2);
-        var month = now.getMonth() + 1;
-        var day = now.getDate();
-        var hour = now.getHours();
-        var minute = now.getMinutes();
-        var second = now.getSeconds();
-
-        return "guest" + year + month + day + hour + minute + second;
     }
 
     getUser(username: string) {
@@ -469,8 +453,8 @@ export class DataService {
     // Private methods
     private createAnonymousUser(): any {
         let user = this.createEntity("User", {
-            Email: this.getUniqueEmail(),
-            UserName: this.getUniqueUserName(),
+            Email: getUniqueEmail(),
+            UserName: getUniqueUserName(),
             FirstName: "",
             MiddleName: "",
             LastName: "",

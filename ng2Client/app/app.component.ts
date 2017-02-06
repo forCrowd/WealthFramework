@@ -17,7 +17,7 @@ import { Settings } from "./settings/settings";
 })
 export class AppComponent implements OnDestroy, OnInit {
 
-    applicationInfo: { Version: string } = { Version: Settings.version };
+    appVersion: string = Settings.version;
     currentUser: User = null;
     hideAnonymousAccountInfoBox: boolean = true;
     subscriptions: any[] = [];

@@ -10,8 +10,7 @@ var concat = require("gulp-concat"),
     exec = require("child_process").exec,
     fs = require("fs"),
     gulp = require("gulp"),
-    path = require("path"),
-    version = "";
+    path = require("path");
 
 var appRoot = "./app",
     appJsPath = appRoot + "/app.js",
@@ -37,22 +36,22 @@ var appRoot = "./app",
 gulp.task("default", ["compile-typescript", "generate-app.min.css", "generate-lib.js", "watch"]);
 
 // Build with local settings
-gulp.task("build-local", ["compile-typescript", "generate-app.min.css"], function () {
+gulp.task("build-local", ["generate-app.min.css"], function () {
     return build("local", false);
 });
 
 // Build with production settings
-gulp.task("build-production", ["compile-typescript", "generate-app.min.css"], function () {
+gulp.task("build-production", ["generate-app.min.css"], function () {
     return build("production", true);
 });
 
 // Build with test settings
-gulp.task("build-test", ["compile-typescript", "generate-app.min.css"], function () {
+gulp.task("build-test", ["generate-app.min.css"], function () {
     return build("test", true);
 });
 
 // Compile-typescript
-gulp.task("compile-typescript", ["copy-local-settings"], function () {
+gulp.task("compile-typescript", function () {
     return compileTypescript(typeScriptDefaultProject);
 });
 
@@ -87,7 +86,7 @@ gulp.task("copy-fonts", function () {
 });
 
 // Concat all external css files and minify them into app.min.css
-gulp.task("generate-app.min.css", ["copy-fonts"], function () {
+gulp.task("generate-app.min.css", function () {
 
     var cssmin = require("gulp-cssmin");
 
@@ -103,6 +102,9 @@ gulp.task("generate-lib.js", function () {
         .pipe(concat("lib.js", { newLine: "\r\n" }))
         .pipe(gulp.dest(appRoot));
 });
+
+// Setup scripts (runs after npm install)
+gulp.task("setup", ["copy-local-settings", "copy-fonts"]);
 
 // Watch
 gulp.task("watch", function () {
@@ -124,9 +126,6 @@ function build(environment, runPublish) {
             throw new Error("There is no settings file for `" + environment + "` environment.\r\n"
                 + "Please create this file by using `copy-" + environment + "-settings` task and modify it with your own settings.");
         }
-
-        // Get application version by using `require` (while typescript files are still ES5!)
-        version = require("./app/settings/settings").Settings.version;
 
         return compileAheadOfTime().then(function () {
             return bundle(environment).then(function () {
@@ -329,6 +328,7 @@ function publish(environment) {
             .on("end", function () {
 
                 var htmlReplace = require("gulp-html-replace");
+                var version = require("./package.json").version;
                 var appHtml = publishDest + "/app.html";
                 var webConfig = publishDest + "/Web.config";
 

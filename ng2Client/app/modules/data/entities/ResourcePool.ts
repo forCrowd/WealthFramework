@@ -1,4 +1,6 @@
-﻿export class ResourcePool {
+﻿import { stripInvalidChars } from "../../../utils";
+
+export class ResourcePool {
 
     // Server-side
     Id: number = 0;
@@ -8,7 +10,7 @@
     }
     set Name(value: string) {
 
-        var oldStripped = this.stripInvalidChars(this.fields.name);
+        var oldStripped = stripInvalidChars(this.fields.name);
 
         if (this.fields.name !== value) {
             this.fields.name = value;
@@ -23,7 +25,7 @@
         return this.fields.key;
     }
     set Key(value: string) {
-        var newValue = this.stripInvalidChars(value);
+        var newValue = stripInvalidChars(value);
 
         if (this.fields.key !== newValue) {
             this.fields.key = newValue;
@@ -402,9 +404,9 @@
     setResourcePoolRatePercentage(updateRelated?: any) {
         updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
 
-        var value = this.resourcePoolRate() === 0 ?
-            0 :
-            this.resourcePoolRate() / 100;
+        var value = this.resourcePoolRate() === 0
+            ? 0
+            : this.resourcePoolRate() / 100;
 
         if (this.fields.resourcePoolRatePercentage !== value) {
             this.fields.resourcePoolRatePercentage = value;
@@ -412,25 +414,12 @@
             // Update related
             if (updateRelated) {
                 (this as any).ElementSet.forEach((element: any) => {
-
                     element.ElementItemSet.forEach((item: any) => {
                         item.setResourcePoolAmount();
                     });
                 });
             }
         }
-    }
-
-    stripInvalidChars(value: string) {
-
-        // Trim, remove special chars and replace space with dash
-        if (value !== null) {
-            value = value.trim()
-                .replace(/[^-\w\s]/gi, "")
-                .replace(/\s+/g, "-");
-        }
-
-        return value;
     }
 
     toggleRatingMode() {

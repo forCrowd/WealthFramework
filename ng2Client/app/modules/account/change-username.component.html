@@ -9,7 +9,10 @@
         <div class="form-group">
             <label for="UserName" class="control-label col-md-3">Username</label>
             <div class="col-md-9" [ngClass]="{'has-error': UserName.dirty && UserName.invalid}">
-                <input id="UserName" name="UserName" type="text" [(ngModel)]="bindingModel.UserName" #UserName="ngModel" class="form-control" required />
+                <input id="UserName" name="UserName" type="text" [(ngModel)]="bindingModel.UserName" #UserName="ngModel" class="form-control" aria-describedby="UserNameHelp" required />
+                <span id="UserNameHelp" class="help-block">
+                    No special characters allowed, except dash "-" and underscore "_".
+                </span>
             </div>
         </div>
         <div class="form-group">

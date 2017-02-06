@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { DataService } from "../../modules/data/data.module";
 import { Logger } from "../../modules/logger/logger.module";
 import { Settings } from "../../settings/settings";
+import { getUniqueEmail } from "../../utils";
 
 //declare const __moduleName: string;
 
@@ -52,7 +53,7 @@ export class ChangeEmailComponent implements OnInit {
 
         // Generate test data if localhost
         if (window.location.hostname === "localhost") {
-            this.bindingModel.Email = this.dataService.getUniqueEmail();
+            this.bindingModel.Email = getUniqueEmail();
         }
     }
 }
