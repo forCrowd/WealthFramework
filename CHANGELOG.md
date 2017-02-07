@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.69.2**
+
+* ng2Client - navbar fix
+
 **0.69.1**
 
 * ng2Client - `utils.ts` `getUniqueEmail` function fix

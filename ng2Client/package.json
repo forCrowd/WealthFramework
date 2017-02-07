@@ -1,6 +1,6 @@
 {
     "name": "forcrowd-wealtheconomy-ng2client",
-    "version": "0.69.1",
+    "version": "0.69.2",
     "description": "Experimental ideas on improving how the economy works",
     "main": "app.html",
     "scripts": {
@@ -32,6 +32,7 @@
         "datajs": "1.0.3",
         "font-awesome": "4.7.0",
         "highcharts": "5.0.6",
+        "jquery": "3.1.1",
         "moment": "2.17.1",
         "respond.js": "1.4.2",
         "rxjs": "5.0.3",
