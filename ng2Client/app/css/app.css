@@ -25,6 +25,21 @@ hr {
     padding-bottom: 20px;
 }
 
+/* Custom navbar with buttons (copied from bootstrap.css - navbar a */
+
+.nav > li > button:hover,
+.nav > li > button:focus {
+    text-decoration: none;
+}
+
+@media (max-width: 767px) {
+    .nav > li > button {
+        padding: 10px 15px;
+    }
+}
+
+/* End */
+
 .footer {
     position: absolute;
     bottom: 0;

@@ -25,6 +25,8 @@ var appRoot = "./app",
     libJsSrc = [
         libRoot + "/core-js/client/shim.js", // Angular2 polyfill(s)
         libRoot + "/zone.js/dist/zone.js",
+        libRoot + "/jquery/dist/jquery.slim.js", // These two js are only necessary for `navbar-toogle`?
+        libRoot + "/bootstrap/dist/js/bootstrap.js", // These two js are only necessary for `navbar-toogle`?
         libRoot + "/respond.js/dest/respond.src.js" // Bootstrap polyfill
     ],
     settingsRoot = appRoot + "/settings",
