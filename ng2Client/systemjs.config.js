@@ -38,7 +38,6 @@
 
             // breeze
             "breeze-client": "npm:breeze-client/breeze.base.debug",
-            "breeze.ajax.angular": "npm:breeze-client/breeze.ajax.angular",
             "breeze-bridge-angular2": "npm:breeze-bridge-angular2/index",
             "breeze.dataService.odata": "npm:breeze-client/breeze.dataService.odata",
             "breeze.modelLibrary.backingStore": "npm:breeze-client/breeze.modelLibrary.backingStore",

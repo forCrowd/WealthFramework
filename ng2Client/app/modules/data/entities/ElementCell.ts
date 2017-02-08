@@ -1,6 +1,8 @@
 ﻿import { EventEmitter } from "@angular/core";
 
-export class ElementCell {
+import { EntityBase } from "./entity-base";
+
+export class ElementCell extends EntityBase {
 
     // Public - Server-side
     Id: number = 0;
@@ -12,11 +14,10 @@ export class ElementCell {
     NumericValueCount: number = 0; // Computed value - Used in: setOtherUsersNumericValueCount
     SelectedElementItemId: any = null;
 
-    // TODO breezejs - Cannot assign a navigation property in an entity ctor
-    //ElementField = null;
-    //ElementItem = null;
-    //SelectedElementItem = null;
-    //UserElementCellSet = [];
+    ElementField: any;
+    ElementItem: any;
+    SelectedElementItem: any;
+    UserElementCellSet: any[];
 
     numericValueUpdated$: EventEmitter<number> = new EventEmitter<number>();
 
@@ -57,7 +58,7 @@ export class ElementCell {
     }
 
     currentUserCell() {
-        return (this as any).UserElementCellSet.length > 0 ? (this as any).UserElementCellSet[0] : null;
+        return this.UserElementCellSet.length > 0 ? this.UserElementCellSet[0] : null;
     }
 
     currentUserNumericValue() {
@@ -98,9 +99,9 @@ export class ElementCell {
     }
 
     numericValueCount() {
-        return (this as any).ElementField.UseFixedValue
+        return this.ElementField.UseFixedValue
             ? this.currentUserCell() !== null &&
-                this.currentUserCell().UserId === (this as any).ElementField.Element.ResourcePool.UserId
+                this.currentUserCell().UserId === this.ElementField.Element.ResourcePool.UserId
                 ? // If it belongs to current user
                 1
                 : this.otherUsersNumericValueCount()
@@ -125,9 +126,9 @@ export class ElementCell {
     }
 
     numericValueTotal() {
-        return (this as any).ElementField.UseFixedValue
+        return this.ElementField.UseFixedValue
             ? this.currentUserCell() !== null &&
-                this.currentUserCell().UserId === (this as any).ElementField.Element.ResourcePool.UserId
+                this.currentUserCell().UserId === this.ElementField.Element.ResourcePool.UserId
                 ? // If it belongs to current user
                 this.currentUserNumericValue()
                 : this.otherUsersNumericValueTotal()
@@ -190,21 +191,21 @@ export class ElementCell {
 
         var value: any = 0; // Default value?
 
-        if ((this as any).ElementField.IndexEnabled && (this as any).ElementField.referenceRatingMultiplied() > 0) {
-            switch ((this as any).ElementField.IndexSortType) {
+        if (this.ElementField.IndexEnabled && this.ElementField.referenceRatingMultiplied() > 0) {
+            switch (this.ElementField.IndexSortType) {
                 case 1:
                     { // HighestToLowest (High rating is better)
-                        value = (1 - this.numericValueMultipliedPercentage()) / (this as any).ElementField.referenceRatingMultiplied();
+                        value = (1 - this.numericValueMultipliedPercentage()) / this.ElementField.referenceRatingMultiplied();
                         break;
                     }
                 case 2:
                     { // LowestToHighest (Low rating is better)
-                        value = this.numericValueMultiplied() / (this as any).ElementField.referenceRatingMultiplied();
+                        value = this.numericValueMultiplied() / this.ElementField.referenceRatingMultiplied();
                         break;
                     }
             }
 
-            if (!(this as any).ElementField.referenceRatingAllEqualFlag()) {
+            if (!this.ElementField.referenceRatingAllEqualFlag()) {
                 value = 1 - value;
             }
         }
@@ -225,7 +226,7 @@ export class ElementCell {
         var value: any;
         var userCell: any = this.currentUserCell();
 
-        switch ((this as any).ElementField.DataType) {
+        switch (this.ElementField.DataType) {
             case 2:
                 {
                     value = userCell !== null ? userCell.BooleanValue : 0;
@@ -253,7 +254,7 @@ export class ElementCell {
                     value = userCell !== null ? userCell.DecimalValue : 0; /* Default value? */
                     break;
                 }
-            // default: { throw "currentUserNumericValue() - Not supported element field type: " + (this as any).ElementField.DataType; }
+            // default: { throw "currentUserNumericValue() - Not supported element field type: " + this.ElementField.DataType; }
         }
 
         if (this.fields.currentUserNumericValue !== value) {
@@ -271,13 +272,13 @@ export class ElementCell {
 
         var value: any = 0; // Default value?
 
-        if ((this as any).ElementField.DataType === 6 && (this as any).SelectedElementItem !== null) {
+        if (this.ElementField.DataType === 6 && this.SelectedElementItem !== null) {
             // item's index income / how many times this item has been selected (used) by higher items
             // TODO Check whether ParentCellSet gets updated when selecting / deselecting an item
-            value = (this as any).SelectedElementItem.totalResourcePoolIncome() / (this as any).SelectedElementItem.ParentCellSet.length;
+            value = this.SelectedElementItem.totalResourcePoolIncome() / this.SelectedElementItem.ParentCellSet.length;
         } else {
-            if ((this as any).ElementField.IndexEnabled) {
-                value = (this as any).ElementField.indexIncome() * this.ratingPercentage();
+            if (this.ElementField.IndexEnabled) {
+                value = this.ElementField.indexIncome() * this.ratingPercentage();
             }
         }
 
@@ -294,8 +295,8 @@ export class ElementCell {
 
         var value: any;
 
-        if (typeof (this as any).ElementField !== "undefined") {
-            switch ((this as any).ElementField.Element.ResourcePool.RatingMode) {
+        if (typeof this.ElementField !== "undefined") {
+            switch (this.ElementField.Element.ResourcePool.RatingMode) {
                 case 1:
                     {
                         value = this.currentUserNumericValue();
@@ -317,8 +318,8 @@ export class ElementCell {
             // Update related
             if (updateRelated) {
 
-                if ((this as any).ElementField.DataType === 11) {
-                    (this as any).ElementItem.setDirectIncome();
+                if (this.ElementField.DataType === 11) {
+                    this.ElementItem.setDirectIncome();
                 }
 
                 this.setNumericValueMultiplied();
@@ -333,13 +334,13 @@ export class ElementCell {
 
         var value: any;
 
-        // if (typeof (this as any).ElementField === "undefined" || !(this as any).ElementField.IndexEnabled) {
-        if (typeof (this as any).ElementField === "undefined") {
+        // if (typeof this.ElementField === "undefined" || !this.ElementField.IndexEnabled) {
+        if (typeof this.ElementField === "undefined") {
             value = 0; // ?
         } else {
-            value = this.numericValue() * (this as any).ElementItem.multiplier();
-            //logger.log((this as any).ElementField.Name[0] + "-" + (this as any).ElementItem.Name[0] + " NVMA " + this.numericValue());
-            //logger.log((this as any).ElementField.Name[0] + "-" + (this as any).ElementItem.Name[0] + " NVMB " + (this as any).ElementItem.multiplier());
+            value = this.numericValue() * this.ElementItem.multiplier();
+            //logger.log(this.ElementField.Name[0] + "-" + this.ElementItem.Name[0] + " NVMA " + this.numericValue());
+            //logger.log(this.ElementField.Name[0] + "-" + this.ElementItem.Name[0] + " NVMB " + this.ElementItem.multiplier());
         }
 
         if (this.fields.numericValueMultiplied !== value) {
@@ -347,7 +348,7 @@ export class ElementCell {
 
             // Update related
             if (updateRelated) {
-                (this as any).ElementField.setNumericValueMultiplied();
+                this.ElementField.setNumericValueMultiplied();
             }
 
             // IMPORTANT REMARK: If the field is using IndexSortType 1,
@@ -358,7 +359,7 @@ export class ElementCell {
             // This code block could possibly be improved with a IndexSortType switch case,
             // but it seems it would be bit overkill.
             // Still something to think about it later? / coni2k - 22 Oct. '15
-            //(this as any).ElementField.setReferenceRatingMultiplied();
+            //this.ElementField.setReferenceRatingMultiplied();
         }
     }
 
@@ -367,8 +368,8 @@ export class ElementCell {
 
         var value: any = 0;
 
-        if ((this as any).ElementField.IndexEnabled && (this as any).ElementField.numericValueMultiplied() > 0) {
-            value = this.numericValueMultiplied() / (this as any).ElementField.numericValueMultiplied();
+        if (this.ElementField.IndexEnabled && this.ElementField.numericValueMultiplied() > 0) {
+            value = this.numericValueMultiplied() / this.ElementField.numericValueMultiplied();
         }
 
         if (this.fields.numericValueMultipliedPercentage !== value) {
@@ -385,7 +386,7 @@ export class ElementCell {
         this.fields.otherUsersNumericValueCount = this.NumericValueCount;
 
         // Exclude current user's
-        if ((this as any).UserElementCellSet.length > 0) {
+        if (this.UserElementCellSet.length > 0) {
             this.fields.otherUsersNumericValueCount--;
         }
     }
@@ -395,35 +396,35 @@ export class ElementCell {
         this.fields.otherUsersNumericValueTotal = this.NumericValueTotal !== null ? this.NumericValueTotal : 0;
 
         // Exclude current user's
-        if ((this as any).UserElementCellSet.length > 0) {
+        if (this.UserElementCellSet.length > 0) {
 
             var userValue: any = 0;
-            switch ((this as any).ElementField.DataType) {
+            switch (this.ElementField.DataType) {
                 // TODO Check bool to decimal conversion?
                 case 2:
                     {
-                        userValue = (this as any).UserElementCellSet[0].BooleanValue;
+                        userValue = this.UserElementCellSet[0].BooleanValue;
                         break;
                     }
                 case 3:
                     {
-                        userValue = (this as any).UserElementCellSet[0].IntegerValue;
+                        userValue = this.UserElementCellSet[0].IntegerValue;
                         break;
                     }
                 case 4:
                     {
-                        userValue = (this as any).UserElementCellSet[0].DecimalValue;
+                        userValue = this.UserElementCellSet[0].DecimalValue;
                         break;
                     }
                 // TODO 5 - DateTime?
                 case 11:
                     {
-                        userValue = (this as any).UserElementCellSet[0].DecimalValue;
+                        userValue = this.UserElementCellSet[0].DecimalValue;
                         break;
                     }
                 // TODO 12 - Multiplier?
                 //default: {
-                //    throw "setOtherUsersNumericValueTotal - Not supported element field type: " + (this as any).ElementField.DataType;
+                //    throw "setOtherUsersNumericValueTotal - Not supported element field type: " + this.ElementField.DataType;
                 //}
             }
 
@@ -436,9 +437,9 @@ export class ElementCell {
 
         var value: any = 0;
 
-        if ((this as any).ElementField.IndexEnabled) {
+        if (this.ElementField.IndexEnabled) {
 
-            switch ((this as any).ElementField.IndexSortType) {
+            switch (this.ElementField.IndexSortType) {
                 case 1:
                     { // HightestToLowest (High rating is better)
                         value = this.numericValueMultipliedPercentage();
@@ -446,8 +447,8 @@ export class ElementCell {
                     }
                 case 2:
                     { // LowestToHighest (Low rating is better)
-                        if ((this as any).ElementField.passiveRating() > 0) {
-                            value = (1 - this.numericValueMultipliedPercentage()) / (this as any).ElementField.passiveRating();
+                        if (this.ElementField.passiveRating() > 0) {
+                            value = (1 - this.numericValueMultipliedPercentage()) / this.ElementField.passiveRating();
                         }
                         break;
                     }
@@ -470,10 +471,10 @@ export class ElementCell {
         var value: any = 0;
 
         // If there is only one item, then always %100
-        if ((this as any).ElementField.ElementCellSet.length === 1) {
+        if (this.ElementField.ElementCellSet.length === 1) {
             value = 1;
         } else {
-            switch ((this as any).ElementField.IndexCalculationType) {
+            switch (this.ElementField.IndexCalculationType) {
                 case 1: // Aggressive rating
                     {
                         value = this.aggressiveRating();
@@ -502,8 +503,8 @@ export class ElementCell {
 
         var value: any = 0;
 
-        if ((this as any).ElementField.IndexEnabled && (this as any).ElementField.rating() > 0) {
-            value = this.rating() / (this as any).ElementField.rating();
+        if (this.ElementField.IndexEnabled && this.ElementField.rating() > 0) {
+            value = this.rating() / this.ElementField.rating();
         }
 
         if (this.fields.ratingPercentage !== value) {
@@ -519,29 +520,29 @@ export class ElementCell {
     value() {
 
         var value: any = null;
-        //var currentUserCell: any = (this as any).UserElementCellSet.length > 0
-        //    ? (this as any).UserElementCellSet[0]
+        //var currentUserCell: any = this.UserElementCellSet.length > 0
+        //    ? this.UserElementCellSet[0]
         //    : null;
 
-        switch ((this as any).ElementField.DataType) {
+        switch (this.ElementField.DataType) {
             case 1:
                 {
-                    if ((this as any).UserElementCellSet.length > 0) {
-                        value = (this as any).UserElementCellSet[0].StringValue;
+                    if (this.UserElementCellSet.length > 0) {
+                        value = this.UserElementCellSet[0].StringValue;
                     }
                     break;
                 }
             case 2:
                 {
-                    if ((this as any).UserElementCellSet.length > 0) {
-                        value = (this as any).UserElementCellSet[0].BooleanValue ? "True" : "False";
+                    if (this.UserElementCellSet.length > 0) {
+                        value = this.UserElementCellSet[0].BooleanValue ? "True" : "False";
                     }
                     break;
                 }
             case 3:
                 {
-                    if ((this as any).UserElementCellSet.length > 0) {
-                        value = (this as any).UserElementCellSet[0].IntegerValue;
+                    if (this.UserElementCellSet.length > 0) {
+                        value = this.UserElementCellSet[0].IntegerValue;
                     }
                     break;
                 }
@@ -550,15 +551,15 @@ export class ElementCell {
             case 11:
             case 12:
                 {
-                    if ((this as any).UserElementCellSet.length > 0) {
-                        value = (this as any).UserElementCellSet[0].DecimalValue;
+                    if (this.UserElementCellSet.length > 0) {
+                        value = this.UserElementCellSet[0].DecimalValue;
                     }
                     break;
                 }
             case 6:
                 {
-                    if ((this as any).SelectedElementItem !== null) {
-                        value = (this as any).SelectedElementItem.Name;
+                    if (this.SelectedElementItem !== null) {
+                        value = this.SelectedElementItem.Name;
                     }
                 }
         }

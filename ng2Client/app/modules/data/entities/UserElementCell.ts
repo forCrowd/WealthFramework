@@ -1,4 +1,6 @@
-﻿export class UserElementCell {
+﻿import { EntityBase } from "./entity-base";
+
+export class UserElementCell extends EntityBase {
 
     // Server-side
     UserId: number = 0;

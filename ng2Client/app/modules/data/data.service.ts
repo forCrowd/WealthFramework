@@ -73,7 +73,7 @@ export class DataService {
                 // Sync RowVersion fields
                 this.syncRowVersion(this.currentUser, updatedUser);
 
-                (this.currentUser as any).entityAspect.acceptChanges();
+                this.currentUser.entityAspect.acceptChanges();
             })
             .catch((error: any) => this.handleError(error));
     }
@@ -94,7 +94,7 @@ export class DataService {
                 // Sync RowVersion fields
                 this.syncRowVersion(this.currentUser, updatedUser);
 
-                (this.currentUser as any).entityAspect.acceptChanges();
+                this.currentUser.entityAspect.acceptChanges();
             })
             .catch((error: any) => this.handleError(error));
     }
@@ -108,7 +108,7 @@ export class DataService {
                 // Sync RowVersion fields
                 this.syncRowVersion(this.currentUser, updatedUser);
 
-                (this.currentUser as any).entityAspect.acceptChanges();
+                this.currentUser.entityAspect.acceptChanges();
             })
             .catch((error: any) => this.handleError(error));
     }
@@ -137,7 +137,7 @@ export class DataService {
                 // Sync RowVersion fields
                 this.syncRowVersion(this.currentUser, updatedUser);
 
-                (this.currentUser as any).entityAspect.acceptChanges();
+                this.currentUser.entityAspect.acceptChanges();
             })
             .catch((error: any) => this.handleError(error));
     }
@@ -153,7 +153,7 @@ export class DataService {
                 // Sync RowVersion fields
                 this.syncRowVersion(this.currentUser, updatedUser);
 
-                (this.currentUser as any).entityAspect.acceptChanges();
+                this.currentUser.entityAspect.acceptChanges();
 
                 return "";
             })
@@ -324,7 +324,7 @@ export class DataService {
                 // Sync RowVersion fields
                 this.syncRowVersion(this.currentUser, updatedUser);
 
-                (this.currentUser as any).entityAspect.acceptChanges();
+                this.currentUser.entityAspect.acceptChanges();
 
                 return this.getToken(registerBindingModel.UserName, registerBindingModel.Password, rememberMe)
                     .mergeMap((): any => {
@@ -357,7 +357,7 @@ export class DataService {
                 // Sync RowVersion fields
                 this.syncRowVersion(this.currentUser, updatedUser);
 
-                (this.currentUser as any).entityAspect.acceptChanges();
+                this.currentUser.entityAspect.acceptChanges();
             })
             .catch((error: any) => this.handleError(error));
     }
@@ -627,7 +627,7 @@ export class DataService {
                 // Sync RowVersion fields
                 this.syncRowVersion(this.currentUser, updatedUser);
 
-                (this.currentUser as any).entityAspect.acceptChanges();
+                this.currentUser.entityAspect.acceptChanges();
 
                 return this.getToken("", "", rememberMe, updatedUser.SingleUseToken);
             })

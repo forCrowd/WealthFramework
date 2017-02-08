@@ -2,7 +2,6 @@
 import { config, EntityManager } from "breeze-client";
 import { Observable } from "rxjs/Observable";
 
-import "breeze.ajax.angular";
 import "breeze.dataService.odata";
 import "breeze.modelLibrary.backingStore";
 import "breeze.uriBuilder.odata";
@@ -79,7 +78,7 @@ export class AppEntityManager extends EntityManager {
     getRoutePrefix_Microsoft_AspNet_WebApi_OData_5_3_x(dataService: any) {
 
         // Copied from breeze.debug and modified for Web API OData v.5.3.1.
-        var parser = (document as any).createElement("a");
+        var parser = document.createElement("a");
         parser.href = dataService.serviceName;
 
         // THE CHANGE FOR 5.3.1: Add "/" prefix to pathname

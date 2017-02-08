@@ -1,15 +1,16 @@
 ﻿import { EventEmitter } from "@angular/core";
 
-export class ElementItem {
+import { EntityBase } from "./entity-base";
+
+export class ElementItem extends EntityBase {
 
     // Server-side
     Id: number = 0;
     ElementId: number = 0;
     Name: string = "";
-    // TODO breezejs - Cannot assign a navigation property in an entity ctor
-    //Element = null;
-    //ElementCellSet = [];
-    //ParentCellSet = [];
+    Element: any;
+    ElementCellSet: any[];
+    ParentCellSet: any[];
 
     totalIncomeUpdated$: EventEmitter<any> = new EventEmitter<any>();
 
@@ -80,14 +81,14 @@ export class ElementItem {
     }
 
     getElementCellSetSorted(): any[] {
-        return (this as any).ElementCellSet.sort((a: any, b: any) => (a.ElementField.SortOrder - b.ElementField.SortOrder));
+        return this.ElementCellSet.sort((a: any, b: any) => (a.ElementField.SortOrder - b.ElementField.SortOrder));
     }
 
     incomeStatus() {
 
         var totalIncome = this.totalIncome();
         // TODO Make rounding better, instead of toFixed + number
-        var averageIncome = +(this as any).Element.totalIncomeAverage().toFixed(2);
+        var averageIncome = +this.Element.totalIncomeAverage().toFixed(2);
 
         if (totalIncome === averageIncome) {
             return "average";
@@ -122,7 +123,7 @@ export class ElementItem {
         // First, find direct income cell
         var directIncomeCell: any = null;
 
-        var result = (this as any).ElementCellSet.filter((elementCell: any) => elementCell.ElementField.DataType === 11);
+        var result = this.ElementCellSet.filter((elementCell: any) => elementCell.ElementField.DataType === 11);
 
         if (result.length > 0) {
             directIncomeCell = result[0];
@@ -156,7 +157,7 @@ export class ElementItem {
         // First, find the multiplier cell
         var multiplierCell: any = null;
 
-        var result = (this as any).ElementCellSet.filter((elementCell: any) => elementCell.ElementField.DataType === 12);
+        var result = this.ElementCellSet.filter((elementCell: any) => elementCell.ElementField.DataType === 12);
 
         if (result.length > 0) {
             multiplierCell = result[0];
@@ -191,7 +192,7 @@ export class ElementItem {
     setResourcePoolAmount(updateRelated?: any) {
         updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
 
-        var value = this.directIncome() * (this as any).Element.ResourcePool.resourcePoolRatePercentage();
+        var value = this.directIncome() * this.Element.ResourcePool.resourcePoolRatePercentage();
 
         if (this.fields.resourcePoolAmount !== value) {
             this.fields.resourcePoolAmount = value;
@@ -273,7 +274,7 @@ export class ElementItem {
 
         var value = 0;
 
-        (this as any).ElementCellSet.forEach((cell: any) => {
+        this.ElementCellSet.forEach((cell: any) => {
             value += cell.indexIncome();
         });
 
@@ -282,7 +283,7 @@ export class ElementItem {
 
             // Update related
             // TODO Is this correct? It looks like it didn't affect anything?
-            (this as any).ParentCellSet.forEach((parentCell: any) => {
+            this.ParentCellSet.forEach((parentCell: any) => {
                 parentCell.setIndexIncome();
             });
         }

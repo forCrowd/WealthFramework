@@ -1,6 +1,7 @@
-﻿import { stripInvalidChars } from "../../../utils";
+﻿import { EntityBase } from "./entity-base";
+import { stripInvalidChars } from "../../../utils";
 
-export class ResourcePool {
+export class ResourcePool extends EntityBase {
 
     // Server-side
     Id: number = 0;
@@ -45,10 +46,9 @@ export class ResourcePool {
     ResourcePoolRateTotal: number = 0; // Computed value - Used in: setOtherUsersResourcePoolRateTotal
     ResourcePoolRateCount: number = 0; // Computed value - Used in: setOtherUsersResourcePoolRateCount
     RatingCount: number = 0; // Computed value - Used in: resource-pool-editor.html
-    // TODO breezejs - Cannot assign a navigation property in an entity ctor
-    //User = null;
-    //ElementSet = [];
-    //UserResourcePoolSet = [];
+    User: any;
+    ElementSet: any[];
+    UserResourcePoolSet: any[];
 
     // TODO Move this to field.js?
     displayMultiplierFunctions = true; // In some cases, it's not necessary for the user to change multiplier
@@ -63,7 +63,7 @@ export class ResourcePool {
 
             this.setResourcePoolRate();
 
-            (this as any).ElementSet.forEach((element: any) => {
+            this.ElementSet.forEach((element: any) => {
 
                 element.ElementFieldSet.forEach((field: any) => {
 
@@ -129,7 +129,7 @@ export class ResourcePool {
             var userRatings: any[] = [];
 
             // ResourcePool
-            (this as any).UserResourcePoolSet.forEach((userResourcePool: any) => {
+            this.UserResourcePoolSet.forEach((userResourcePool: any) => {
                 this.ResourcePoolRateTotal += userResourcePool.ResourcePoolRate;
                 this.ResourcePoolRateCount += 1;
 
@@ -139,7 +139,7 @@ export class ResourcePool {
             });
 
             // Fields
-            (this as any).ElementSet.forEach((element: any) => {
+            this.ElementSet.forEach((element: any) => {
                 element.ElementFieldSet.forEach((elementField: any) => {
                     elementField.UserElementFieldSet.forEach((userElementField: any) => {
                         elementField.IndexRatingTotal += userElementField.IndexRating;
@@ -176,8 +176,8 @@ export class ResourcePool {
         this.setOtherUsersResourcePoolRateCount();
 
         // Elements
-        if (typeof (this as any).ElementSet !== "undefined") {
-            (this as any).ElementSet.forEach((element: any) => {
+        if (typeof this.ElementSet !== "undefined") {
+            this.ElementSet.forEach((element: any) => {
 
                 // Fields
                 if (typeof element.ElementFieldSet !== "undefined") {
@@ -203,8 +203,8 @@ export class ResourcePool {
     }
 
     currentUserResourcePool() {
-        return (this as any).UserResourcePoolSet.length > 0 ?
-            (this as any).UserResourcePoolSet[0] :
+        return this.UserResourcePoolSet.length > 0 ?
+            this.UserResourcePoolSet[0] :
             null;
     }
 
@@ -232,8 +232,8 @@ export class ResourcePool {
         }
 
         // Field index level
-        for (var elementIndex = 0; elementIndex < (this as any).ElementSet.length; elementIndex++) {
-            var element = (this as any).ElementSet[elementIndex];
+        for (var elementIndex = 0; elementIndex < this.ElementSet.length; elementIndex++) {
+            var element = this.ElementSet[elementIndex];
 
             // If there are multiple indexes, then the users can set index rating
             if (element.elementFieldIndexSet().length > 1) {
@@ -250,7 +250,7 @@ export class ResourcePool {
     }
 
     mainElement() {
-        var result = (this as any).ElementSet.filter((element: any) => element.IsMainElement);
+        var result = this.ElementSet.filter((element: any) => element.IsMainElement);
 
         return result.length > 0 ? result[0] : null;
     }
@@ -413,7 +413,7 @@ export class ResourcePool {
 
             // Update related
             if (updateRelated) {
-                (this as any).ElementSet.forEach((element: any) => {
+                this.ElementSet.forEach((element: any) => {
                     element.ElementItemSet.forEach((item: any) => {
                         item.setResourcePoolAmount();
                     });
@@ -435,8 +435,8 @@ export class ResourcePool {
         this.setCurrentUserResourcePoolRate();
 
         // Elements
-        if (typeof (this as any).ElementSet !== "undefined") {
-            (this as any).ElementSet.forEach((element: any) => {
+        if (typeof this.ElementSet !== "undefined") {
+            this.ElementSet.forEach((element: any) => {
 
                 // TODO Review this later / coni2k - 24 Nov. '15
                 element.setElementFieldIndexSet();

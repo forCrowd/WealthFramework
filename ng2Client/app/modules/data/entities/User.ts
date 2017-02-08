@@ -1,6 +1,7 @@
-﻿import { stripInvalidChars } from "../../../utils";
+﻿import { EntityBase } from "./entity-base";
+import { stripInvalidChars } from "../../../utils";
 
-export class User {
+export class User extends EntityBase {
 
     // Server-side
     Id = 0;
@@ -32,14 +33,13 @@ export class User {
     CreatedOn = new Date();
     ModifiedOn = new Date();
     DeletedOn: any = null;
-    // TODO breezejs - Cannot assign a navigation property in an entity ctor
-    //Claims = null;
-    //Logins = [];
-    //Roles = [];
-    //ResourcePoolSet = [];
-    //UserResourcePoolSet = [];
-    //UserElementFieldSet = [];
-    //UserElementCellSet = [];
+    Claims: any;
+    Logins: any[];
+    Roles: any[];
+    ResourcePoolSet: any[];
+    UserResourcePoolSet: any[];
+    UserElementFieldSet: any[];
+    UserElementCellSet: any[];
 
     private fields: {
         userName: string
@@ -48,7 +48,7 @@ export class User {
     };
 
     getResourcePoolSetSorted(): any[] {
-        return (this as any).ResourcePoolSet.sort((a: any, b: any) => {
+        return this.ResourcePoolSet.sort((a: any, b: any) => {
             let nameA = a.Name.toLowerCase(), nameB = b.Name.toLowerCase();
             if (nameA < nameB) { return -1 };
             if (nameA > nameB) { return 1 };

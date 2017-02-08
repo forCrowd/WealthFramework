@@ -73,7 +73,6 @@
     <Content Include="app\views-obsolete\overview.html" />
     <Content Include="app\views-obsolete\resourcePoolRateSample.html" />
     <Content Include="app\views-obsolete\roadmap.html" />
-    <Content Include="app\views-obsolete\technologies.html" />
     <Content Include="app\modules\content\priority-index.html" />
     <Content Include="app\modules\content\prologue.html" />
     <Content Include="app\modules\content\reason.html" />
@@ -143,6 +142,7 @@
     <TypeScriptCompile Include="app\modules\content\prologue.ts" />
     <TypeScriptCompile Include="app\modules\content\reason.ts" />
     <TypeScriptCompile Include="app\modules\content\total-cost-index.ts" />
+    <TypeScriptCompile Include="app\modules\data\entities\entity-base.ts" />
     <TypeScriptCompile Include="app\modules\resource-pool\resource-pool.module.ts" />
     <TypeScriptCompile Include="app\modules\user\profile.component.ts" />
     <TypeScriptCompile Include="app\modules\resource-pool\element-manager.component.ts" />
