@@ -132,9 +132,16 @@ export class AppErrorHandler implements ErrorHandler {
                             var mangledName = prefix.match(/\s*(at)?\s*(.*?)\s*(\(|@)/);
                             mangledName = (mangledName && mangledName[2]) || "";
 
-                            return "    at " + (pos.name ? pos.name : mangledName) + " " +
-                                window.location.origin + pos.source + ":" + pos.line + ":" +
-                                pos.column;
+                            return "    at "
+                                + (pos.name ? pos.name : mangledName)
+                                + " "
+                                + window.location.origin
+                                + pos.source
+                                + ":"
+                                + pos.line
+                                + ":"
+                                + pos.column;
+
                         }).catch((error: any): any => {
                             return stackLine;
                         });

@@ -9,11 +9,12 @@ Experimental ideas on improving how the economy works
 
 ### Client
 
-* angular 2
-* typescript
-* breezejs
-* systemjs
-* gulp
+* Angular 2
+* TypeScript
+* BreezeJS
+* SystemJS
+* Rollup
+* Gulp
 
 ### Server
 

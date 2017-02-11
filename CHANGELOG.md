@@ -1,5 +1,12 @@
 ### Changelog
 
+**0.69.3**
+
+* ng2Client - EntityBase was introduced as a base class for entities
+* ng2Client - breezejs - "Cannot assign a navigation property in an entity ctor" fix
+* README.md update
+* Minor updates
+
 **0.69.2**
 
 * ng2Client - navbar fix

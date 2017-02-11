@@ -28,7 +28,7 @@ export class KnowledgeIndexComponent implements OnDestroy, OnInit {
             }
         }
     },
-        [new ChartDataItem("Global Knowledge Index", 0, new EventEmitter<number>())]);
+        [new ChartDataItem("Global Knowledge Database", 0, new EventEmitter<number>())]);
     oldModelChartConfig: ChartConfig = new ChartConfig({
         chart: {
             type: "column",

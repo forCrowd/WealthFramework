@@ -1,6 +1,8 @@
 ﻿import { EventEmitter } from "@angular/core";
 
-export class ElementField {
+import { EntityBase } from "./entity-base";
+
+export class ElementField extends EntityBase {
 
     // Server-side
     Id: number = 0;
@@ -38,16 +40,16 @@ export class ElementField {
 
             //// Update related
             //// a. Element
-            //(this as any).Element.setElementFieldIndexSet();
+            //this.Element.setElementFieldIndexSet();
 
             //// b. Item(s)
-            //(this as any).ElementCellSet.forEach(function(cell) {
+            //this.ElementCellSet.forEach(function(cell) {
             //    var item = cell.ElementItem;
             //    item.setElementCellIndexSet();
             //});
 
             //// c. Cells
-            //(this as any).ElementCellSet.forEach(function(cell) {
+            //this.ElementCellSet.forEach(function(cell) {
             //    cell.setNumericValueMultipliedPercentage(false);
             //});
             //this.setReferenceRatingMultiplied();
@@ -63,11 +65,10 @@ export class ElementField {
     SortOrder: number = 0;
     IndexRatingTotal: number = 0; // Computed value - Used in: setOtherUsersIndexRatingTotal
     IndexRatingCount: number = 0; // Computed value - Used in: setOtherUsersIndexRatingCount
-    // TODO breezejs - Cannot assign a navigation property in an entity ctor
-    //Element = null;
-    //SelectedElement = null;
-    //ElementCellSet = [];
-    //UserElementFieldSet = [];
+    Element: any;
+    SelectedElement: any;
+    ElementCellSet: any[];
+    UserElementFieldSet: any[];
 
     indexRatingUpdated$: EventEmitter<number> = new EventEmitter<number>();
 
@@ -114,8 +115,8 @@ export class ElementField {
     };
 
     currentUserElementField() {
-        return (this as any).UserElementFieldSet.length > 0 ?
-            (this as any).UserElementFieldSet[0] :
+        return this.UserElementFieldSet.length > 0 ?
+            this.UserElementFieldSet[0] :
             null;
     }
 
@@ -258,7 +259,7 @@ export class ElementField {
     setIndexIncome(updateRelated?: any) {
         updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
 
-        var value = (this as any).Element.totalResourcePoolAmount() * this.indexRatingPercentage();
+        var value = this.Element.totalResourcePoolAmount() * this.indexRatingPercentage();
 
         //if (this.IndexEnabled) {
         //logger.log(this.Name[0] + " II " + value.toFixed(2));
@@ -269,7 +270,7 @@ export class ElementField {
 
             // Update related
             if (updateRelated) {
-                (this as any).ElementCellSet.forEach((cell: any) => {
+                this.ElementCellSet.forEach((cell: any) => {
                     cell.setIndexIncome();
                 });
             }
@@ -281,7 +282,7 @@ export class ElementField {
 
         var value = 0; // Default value?
 
-        switch ((this as any).Element.ResourcePool.RatingMode) {
+        switch (this.Element.ResourcePool.RatingMode) {
             case 1: { value = this.currentUserIndexRating(); break; } // Current user's
             case 2: { value = this.indexRatingAverage(); break; } // All
         }
@@ -293,7 +294,7 @@ export class ElementField {
 
             // TODO Update related
             if (updateRelated) {
-                (this as any).Element.ResourcePool.mainElement().setIndexRating();
+                this.Element.ResourcePool.mainElement().setIndexRating();
             }
 
             this.indexRatingUpdated$.emit(this.fields.indexRating);
@@ -305,7 +306,7 @@ export class ElementField {
 
         var value = 0; // Default value?
 
-        var elementIndexRating = (this as any).Element.ResourcePool.mainElement().indexRating();
+        var elementIndexRating = this.Element.ResourcePool.mainElement().indexRating();
 
         if (elementIndexRating === 0) {
             value = 0;
@@ -331,10 +332,10 @@ export class ElementField {
         var value = 0; // Default value?
 
         // Validate
-        if ((this as any).ElementCellSet.length === 0) {
+        if (this.ElementCellSet.length === 0) {
             value = 0; // ?
         } else {
-            (this as any).ElementCellSet.forEach((cell: any) => {
+            this.ElementCellSet.forEach((cell: any) => {
                 value += cell.numericValueMultiplied();
                 //logger.log(this.Name[0] + "-" + cell.ElementItem.Name[0] + " NVMA " + cell.numericValueMultiplied());
             });
@@ -348,35 +349,35 @@ export class ElementField {
             // Update related?
             if (updateRelated && this.IndexEnabled) {
 
-                (this as any).ElementCellSet.forEach((cell: any) => {
+                this.ElementCellSet.forEach((cell: any) => {
                     cell.setNumericValueMultipliedPercentage(false);
                 });
 
                 this.setPassiveRating(false);
 
-                (this as any).ElementCellSet.forEach((cell: any) => {
+                this.ElementCellSet.forEach((cell: any) => {
                     cell.setPassiveRating(false);
                 });
 
                 this.setReferenceRatingMultiplied(false);
 
-                (this as any).ElementCellSet.forEach((cell: any) => {
+                this.ElementCellSet.forEach((cell: any) => {
                     cell.setAggressiveRating(false);
                 });
 
-                (this as any).ElementCellSet.forEach((cell: any) => {
+                this.ElementCellSet.forEach((cell: any) => {
                     cell.setRating(false);
                 });
 
                 this.setRating(false);
 
-                (this as any).ElementCellSet.forEach((cell: any) => {
+                this.ElementCellSet.forEach((cell: any) => {
                     cell.setRatingPercentage(false);
                 });
 
                 //this.setIndexIncome(false);
 
-                (this as any).ElementCellSet.forEach((cell: any) => {
+                this.ElementCellSet.forEach((cell: any) => {
                     cell.setIndexIncome(false);
                 });
             }
@@ -408,7 +409,7 @@ export class ElementField {
 
         var value = 0;
 
-        (this as any).ElementCellSet.forEach((cell: any) => {
+        this.ElementCellSet.forEach((cell: any) => {
             value += 1 - cell.numericValueMultipliedPercentage();
         });
 
@@ -427,7 +428,7 @@ export class ElementField {
         var value = 0; // Default value?
 
         // Validate
-        (this as any).ElementCellSet.forEach((cell: any) => {
+        this.ElementCellSet.forEach((cell: any) => {
             value += cell.rating();
         });
 
@@ -441,7 +442,7 @@ export class ElementField {
             if (updateRelated) {
 
                 // Update related
-                (this as any).ElementCellSet.forEach((cell: any) => {
+                this.ElementCellSet.forEach((cell: any) => {
                     cell.setRatingPercentage(false);
                 });
 
@@ -467,11 +468,11 @@ export class ElementField {
         var allEqualFlag = true;
 
         // Validate
-        if ((this as any).ElementCellSet.length === 0) {
+        if (this.ElementCellSet.length === 0) {
             value = 0; // ?
         } else {
 
-            (this as any).ElementCellSet.forEach((cell: any) => {
+            this.ElementCellSet.forEach((cell: any) => {
 
                 if (value === null) {
 
@@ -537,7 +538,7 @@ export class ElementField {
 
             // TODO ?!
 
-            (this as any).ElementCellSet.forEach((cell: any) => {
+            this.ElementCellSet.forEach((cell: any) => {
                 cell.setAggressiveRating(false);
             });
 

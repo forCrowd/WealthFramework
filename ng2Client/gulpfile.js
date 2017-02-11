@@ -159,7 +159,6 @@ function bundle(environment) {
         plugins: [
             alias({
                 "breeze-client": path.resolve(__dirname, "node_modules", "breeze-client/breeze.base.debug.js"),
-                "breeze.ajax.angular": path.resolve(__dirname, "node_modules", "breeze-client/breeze.ajax.angular.js"),
                 "breeze.dataService.odata": path.resolve(__dirname, "node_modules", "breeze-client/breeze.dataService.odata.js"),
                 "breeze.modelLibrary.backingStore": path.resolve(__dirname, "node_modules", "breeze-client/breeze.modelLibrary.backingStore.js"),
                 "breeze.uriBuilder.odata": path.resolve(__dirname, "node_modules", "breeze-client/breeze.uriBuilder.odata.js"),

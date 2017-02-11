@@ -1,4 +1,6 @@
-﻿export class UserResourcePool {
+﻿import { EntityBase } from "./entity-base";
+
+export class UserResourcePool extends EntityBase {
 
     // Server-side
     UserId: number = 0;

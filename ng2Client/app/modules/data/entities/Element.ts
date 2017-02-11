@@ -1,4 +1,7 @@
-﻿export class Element {
+﻿import { EntityBase } from "./entity-base";
+import { ResourcePool } from "./ResourcePool";
+
+export class Element extends EntityBase {
 
     // Public - Server-side
     Id: number = 0;
@@ -13,28 +16,27 @@
 
             // TODO When this prop set in constructor, ResourcePool is null, in such case, ignore
             // However, it would be better to always have a ResourcePool? / coni2k - 29 Nov. '15
-            if (typeof (this as any).ResourcePool === "undefined" || (this as any).ResourcePool === null) {
+            if (typeof this.ResourcePool === "undefined" || this.ResourcePool === null) {
                 return;
             }
 
             // Main element check: If there is another element that its IsMainElement flag is true, make it false
             if (value) {
-                (this as any).ResourcePool.ElementSet.forEach((element: any) => {
+                this.ResourcePool.ElementSet.forEach((element: any) => {
                     if (element !== this && element.IsMainElement) {
                         element.IsMainElement = false;
                     }
                 });
 
                 // Update selectedElement of resourcePool
-                (this as any).ResourcePool.selectedElement(this);
+                this.ResourcePool.selectedElement(this);
             }
         }
     }
-    // TODO breezejs - Cannot assign a navigation property in an entity ctor
-    //(this as any).ResourcePool = null;
-    //(this as any).ElementFieldSet = [];
-    //(this as any).ElementItemSet = [];
-    //(this as any).ParentFieldSet = [];
+    ResourcePool: any;
+    ElementFieldSet: any[];
+    ElementItemSet: any[];
+    ParentFieldSet: any[];
 
     private fields: {
         // Server-side
@@ -67,7 +69,7 @@
         // TODO Check totalIncome notes
 
         var value = 0;
-        (this as any).ElementItemSet.forEach((item: any) => {
+        this.ElementItemSet.forEach((item: any) => {
             value += item.directIncome();
         });
 
@@ -89,7 +91,7 @@
         // TODO Check totalIncome notes
 
         var value = 0;
-        (this as any).ElementItemSet.forEach((item: any) => {
+        this.ElementItemSet.forEach((item: any) => {
             value += item.directIncomeIncludingResourcePoolAmount();
         });
 
@@ -116,7 +118,7 @@
     // UI related: Determines whether the chart & element details will use full row (col-md-4 vs col-md-12 etc.)
     // TODO Obsolete for the moment!
     fullSize() {
-        return ((this as any).ElementFieldSet.length > 4) || this.elementFieldIndexSet().length > 2;
+        return (this.ElementFieldSet.length > 4) || this.elementFieldIndexSet().length > 2;
     }
 
     getElementFieldIndexSet(element: any) {
@@ -143,11 +145,11 @@
     }
 
     getElementFieldSetSorted(): any[] {
-        return (this as any).ElementFieldSet.sort((a: any, b: any) => a.SortOrder - b.SortOrder);
+        return this.ElementFieldSet.sort((a: any, b: any) => a.SortOrder - b.SortOrder);
     }
 
     getElementItemSetSorted(): any[] {
-        return (this as any).ElementItemSet.sort((a: any, b: any) => {
+        return this.ElementItemSet.sort((a: any, b: any) => {
             let nameA = a.Name.toLowerCase(), nameB = b.Name.toLowerCase();
             if (nameA < nameB) return -1;
             if (nameA > nameB) return 1;
@@ -169,7 +171,7 @@
         // TODO Check totalIncome notes
 
         var value = 0;
-        (this as any).ElementItemSet.forEach((item: any) => {
+        this.ElementItemSet.forEach((item: any) => {
             value += item.multiplier();
         });
 
@@ -201,7 +203,7 @@
         // TODO Check totalIncome notes
 
         var value = 0;
-        (this as any).ElementItemSet.forEach((item: any) => {
+        this.ElementItemSet.forEach((item: any) => {
             value += item.resourcePoolAmount();
         });
 
@@ -209,7 +211,7 @@
     }
 
     setDirectIncomeField() {
-        var result = (this as any).ElementFieldSet.filter((field: any) => field.DataType === 11);
+        var result = this.ElementFieldSet.filter((field: any) => field.DataType === 11);
 
         if (result.length > 0) {
             this.fields.directIncomeField = result[0];
@@ -256,7 +258,7 @@
     }
 
     setMultiplierField() {
-        var result = (this as any).ElementFieldSet.filter((field: any) => field.DataType === 12);
+        var result = this.ElementFieldSet.filter((field: any) => field.DataType === 12);
 
         if (result.length > 0) {
             this.fields.multiplierField = result[0];
@@ -264,8 +266,8 @@
     }
 
     setParent() {
-        if ((this as any).ParentFieldSet.length > 0) {
-            this.fields.parent = (this as any).ParentFieldSet[0].Element;
+        if (this.ParentFieldSet.length > 0) {
+            this.fields.parent = this.ParentFieldSet[0].Element;
         }
     }
 
@@ -274,7 +276,7 @@
         // TODO Check totalIncome notes
 
         var value = 0;
-        (this as any).ElementItemSet.forEach((item: any) => {
+        this.ElementItemSet.forEach((item: any) => {
             value += item.totalDirectIncome();
         });
 
@@ -286,7 +288,7 @@
         // TODO Check totalIncome notes
 
         var value = 0;
-        (this as any).ElementItemSet.forEach((item: any) => {
+        this.ElementItemSet.forEach((item: any) => {
             value += item.totalDirectIncomeIncludingResourcePoolAmount();
         });
 
@@ -298,7 +300,7 @@
         // TODO If elementItems could set their parent element's totalIncome when their totalIncome changes, it wouldn't be necessary to sum this result everytime?
 
         var value = 0;
-        (this as any).ElementItemSet.forEach((item: any) => {
+        this.ElementItemSet.forEach((item: any) => {
             value += item.totalIncome();
         });
 
@@ -308,31 +310,33 @@
     totalIncomeAverage() {
 
         // Validate
-        if ((this as any).ElementItemSet.length === 0) {
+        if (this.ElementItemSet.length === 0) {
             return 0;
         }
 
-        return this.totalIncome() / (this as any).ElementItemSet.length;
+        return this.totalIncome() / this.ElementItemSet.length;
     }
 
     // TODO This is out of pattern!
     totalResourcePoolAmount() {
 
+        //console.log("res", this.resourcePool);
+
         // TODO Check totalIncome notes
 
         var value: any;
 
-        if (this === (this as any).ResourcePool.mainElement()) {
+        if (this === this.ResourcePool.mainElement()) {
 
-            value = (this as any).ResourcePool.InitialValue;
+            value = this.ResourcePool.InitialValue;
 
-            (this as any).ElementItemSet.forEach((item: any) => {
+            this.ElementItemSet.forEach((item: any) => {
                 value += item.totalResourcePoolAmount();
             });
 
         } else {
-            if ((this as any).ResourcePool.mainElement() !== null) {
-                value = (this as any).ResourcePool.mainElement().totalResourcePoolAmount();
+            if (this.ResourcePool.mainElement() !== null) {
+                value = this.ResourcePool.mainElement().totalResourcePoolAmount();
             }
         }
 
