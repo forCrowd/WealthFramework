@@ -7,6 +7,6 @@ import { Settings } from "../../settings/settings";
 @Component({
     moduleId: module.id,
     selector: "implementation",
-    templateUrl: "implementation.html"
+    templateUrl: "implementation.component.html"
 })
 export class ImplementationComponent { }

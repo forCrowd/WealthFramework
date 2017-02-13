@@ -8,7 +8,7 @@ import { Logger } from "../../modules/logger/logger.module";
 @Component({
     moduleId: module.id,
     selector: "introduction",
-    templateUrl: "introduction.html"
+    templateUrl: "introduction.component.html"
 })
 export class IntroductionComponent implements OnDestroy, OnInit {
 

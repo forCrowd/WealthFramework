@@ -5,6 +5,6 @@
 @Component({
     moduleId: module.id,
     selector: "prologue",
-    templateUrl: "prologue.html"
+    templateUrl: "prologue.component.html"
 })
 export class PrologueComponent { }

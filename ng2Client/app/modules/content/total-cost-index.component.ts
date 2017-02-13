@@ -8,7 +8,7 @@ import { Logger } from "../../modules/logger/logger.module";
 @Component({
     moduleId: module.id,
     selector: "total-cost-index",
-    templateUrl: "total-cost-index.html"
+    templateUrl: "total-cost-index.component.html"
 })
 export class TotalCostIndexComponent implements OnDestroy, OnInit {
 
