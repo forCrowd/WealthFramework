@@ -1,5 +1,5 @@
 ﻿import { EntityBase } from "./entity-base";
-import { ResourcePool } from "./ResourcePool";
+import { ResourcePool } from "./resource-pool";
 
 export class Element extends EntityBase {
 
