@@ -8,7 +8,7 @@ import { Logger } from "../../modules/logger/logger.module";
 @Component({
     moduleId: module.id,
     selector: "priority-index",
-    templateUrl: "priority-index.html"
+    templateUrl: "priority-index.component.html"
 })
 export class PriorityIndexComponent {
 

@@ -10,7 +10,7 @@ import { Logger } from "../../modules/logger/logger.module";
 @Component({
     moduleId: module.id,
     selector: "knowledge-index",
-    templateUrl: "knowledge-index.html"
+    templateUrl: "knowledge-index.component.html"
 })
 export class KnowledgeIndexComponent implements OnDestroy, OnInit {
 

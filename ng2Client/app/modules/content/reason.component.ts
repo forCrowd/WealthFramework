@@ -5,6 +5,6 @@
 @Component({
     moduleId: module.id,
     selector: "reason",
-    templateUrl: "reason.html"
+    templateUrl: "reason.component.html"
 })
 export class ReasonComponent { }

@@ -18,15 +18,15 @@ import { ResourcePoolModule } from "../resource-pool/resource-pool.module";
 
 // Routes
 export const contentRoutes: Routes = [
-    { path: "app/allInOne", component: AllInOneComponent, data: { title: "All in One" } },
+    { path: "app/all-in-one", component: AllInOneComponent, data: { title: "All in One" } },
     { path: "app/basics", component: BasicsComponent, data: { title: "Basics" } },
     { path: "app/implementation", component: ImplementationComponent, data: { title: "Implementation" } },
     { path: "app/introduction", component: IntroductionComponent, data: { title: "Introduction" } },
-    { path: "app/knowledgeIndex", component: KnowledgeIndexComponent, data: { title: "Knowledge Index" } },
-    { path: "app/priorityIndex", component: PriorityIndexComponent, data: { title: "Priority Index" } },
+    { path: "app/knowledge-index", component: KnowledgeIndexComponent, data: { title: "Knowledge Index" } },
+    { path: "app/priority-index", component: PriorityIndexComponent, data: { title: "Priority Index" } },
     { path: "app/prologue", component: PrologueComponent, data: { title: "Prologue" } },
     { path: "app/reason", component: ReasonComponent, data: { title: "Reason" } },
-    { path: "app/totalCostIndex", component: TotalCostIndexComponent, data: { title: "Total Cost Index" } }
+    { path: "app/total-cost-index", component: TotalCostIndexComponent, data: { title: "Total Cost Index" } }
 ];
 
 @NgModule({
