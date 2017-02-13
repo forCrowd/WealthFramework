@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.69.4**
+
+* ng2Client - Minor
+
 **0.69.3**
 
 * ng2Client - EntityBase was introduced as a base class for entities
