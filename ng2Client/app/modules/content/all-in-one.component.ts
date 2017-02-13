@@ -9,7 +9,7 @@ import { Settings } from "../../settings/settings";
 @Component({
     moduleId: module.id,
     selector: "all-in-one",
-    templateUrl: "all-in-one.html"
+    templateUrl: "all-in-one.component.html"
 })
 export class AllInOneComponent {
 

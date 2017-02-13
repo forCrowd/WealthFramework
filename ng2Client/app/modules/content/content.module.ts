@@ -3,15 +3,15 @@ import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
 
-import { AllInOneComponent } from "./all-in-one";
-import { BasicsComponent } from "./basics";
-import { ImplementationComponent } from "./implementation";
-import { IntroductionComponent } from "./introduction";
-import { KnowledgeIndexComponent } from "./knowledge-index";
-import { PriorityIndexComponent } from "./priority-index";
-import { PrologueComponent } from "./prologue";
-import { ReasonComponent } from "./reason";
-import { TotalCostIndexComponent } from "./total-cost-index";
+import { AllInOneComponent } from "./all-in-one.component";
+import { BasicsComponent } from "./basics.component";
+import { ImplementationComponent } from "./implementation.component";
+import { IntroductionComponent } from "./introduction.component";
+import { KnowledgeIndexComponent } from "./knowledge-index.component";
+import { PriorityIndexComponent } from "./priority-index.component";
+import { PrologueComponent } from "./prologue.component";
+import { ReasonComponent } from "./reason.component";
+import { TotalCostIndexComponent } from "./total-cost-index.component";
 
 import { NgChartModule } from "../ng-chart/ng-chart.module";
 import { ResourcePoolModule } from "../resource-pool/resource-pool.module";

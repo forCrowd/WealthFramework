@@ -7,15 +7,15 @@ import "breeze.modelLibrary.backingStore";
 import "breeze.uriBuilder.odata";
 import "datajs";
 
-import { Element } from "./entities/Element";
-import { ElementCell } from "./entities/ElementCell";
-import { ElementField } from "./entities/ElementField";
-import { ElementItem } from "./entities/ElementItem";
-import { ResourcePool } from "./entities/ResourcePool";
-import { User } from "./entities/User";
-import { UserElementCell } from "./entities/UserElementCell";
-import { UserElementField } from "./entities/UserElementField";
-import { UserResourcePool } from "./entities/UserResourcePool";
+import { Element } from "./entities/element";
+import { ElementCell } from "./entities/element-cell";
+import { ElementField } from "./entities/element-field";
+import { ElementItem } from "./entities/element-item";
+import { ResourcePool } from "./entities/resource-pool";
+import { User } from "./entities/user";
+import { UserElementCell } from "./entities/user-element-cell";
+import { UserElementField } from "./entities/user-element-field";
+import { UserResourcePool } from "./entities/user-resource-pool";
 import { Logger } from "../logger/logger.module";
 import { Settings } from "../../settings/settings";
 
