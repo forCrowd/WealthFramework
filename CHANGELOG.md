@@ -1,8 +1,12 @@
 ### Changelog
 
+**0.69.5**
+
+* ng2Client - Content module fix
+
 **0.69.4**
 
-* ng2Client - Minor
+* ng2Client - Minor updates
 
 **0.69.3**
 
