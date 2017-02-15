@@ -1,0 +1,27 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+        "baseUrl": ".",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        //"lib": [ "es2015", "dom" ],
+        //"module": "es2015",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "noImplicitAny": true,
+        "paths": {
+            "environment-settings": [ "app/settings/setup/environment-settings" ]
+        },
+        "removeComments": true,
+        "sourceMap": false,
+        "suppressImplicitAnyIndexErrors": true,
+        "target": "es5"
+    },
+    "include": [
+        "app"
+    ],
+    "exclude": [
+        "app/main-aot.ts",
+        "node_modules"
+    ]
+}

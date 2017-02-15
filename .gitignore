@@ -54,6 +54,24 @@ ng2Client/app/settings/production-settings.ts
 ng2Client/aot
 ng2Client/publish
 
+# Connect2EffectDemo
+
+Connect2EffectDemo/app/**/*.js
+Connect2EffectDemo/app/**/*.map
+
+Connect2EffectDemo/app/css/app.min.css
+Connect2EffectDemo/app/fonts
+
+# ng2Client - lib: Contains fixed versions of external .js files (breeze.odata etc.)
+!Connect2EffectDemo/app/lib/*.js
+
+Connect2EffectDemo/app/settings/local-settings.ts
+Connect2EffectDemo/app/settings/test-settings.ts
+Connect2EffectDemo/app/settings/production-settings.ts
+
+Connect2EffectDemo/aot
+Connect2EffectDemo/publish
+
 # ngClient
 ngClient/_system/js/app/settings/*.js
 ngClient/_system/js/app/settings/*.ts

@@ -1,0 +1,146 @@
+﻿<div class="body">
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <button (click)="navigate('/')" type="button" class="btn-link navbar-brand">
+                    #Connect2Effect Demo
+                </button>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-text">
+                    <li>
+                        <button (click)="navigate('/app/home')" type="button" class="btn-link">
+                            <span class="fa fa-home fa-lg g-mr-5" aria-hidden="true"></span>Pitch
+                        </button>
+                    </li>
+                    <li>
+                        <button (click)="navigate('/app/survey')" type="button" class="btn-link">
+                            <span class="fa fa-pie-chart fa-lg g-mr-5" aria-hidden="true"></span>Survey
+                        </button>
+                    </li>
+                </ul>
+                <ul *ngIf="currentUser" class="nav navbar-nav navbar-text navbar-right">
+                    <!--<li [hidden]="currentUser.isAuthenticated()">
+                        <button (click)="navigate('/app/account/register')" type="button" class="btn-link">
+                            Register
+                        </button>
+                    </li>
+                    <li [hidden]="currentUser.isAuthenticated()">
+                        <button (click)="navigate('/app/account/login')" type="button" class="btn-link">
+                            Login
+                        </button>
+                    </li>-->
+                    <!--<li [hidden]="!currentUser.isAuthenticated() || !currentUser.IsAnonymous">
+                        <button (click)="showAnonymousAccountInfoBox()" type="button" class="btn-link">
+                            <span class="fa fa-info-circle fa-lg" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                    <li [hidden]="!currentUser.isAuthenticated()">
+                        <button (click)="navigate('/' + currentUser.UserName)" type="button" class="btn-link">
+                            {{ currentUserText() }}
+                        </button>
+                    </li>
+                    <li [hidden]="!currentUser.isAuthenticated()">
+                        <button (click)="navigate('/app/account')" type="button" class="btn-link">
+                            Account
+                        </button>
+                    </li>-->
+                    <li [hidden]="!currentUser.isAuthenticated()">
+                        <button type="button" class="btn-link">
+                            {{ currentUserText() }}
+                        </button>
+                    </li>
+                    <li [hidden]="!currentUser.isAuthenticated()">
+                        <button (click)="logout()" type="button" class="btn-link">
+                            Logout
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container body-content">
+
+        <!--Anonymous account info block-->
+        <div class="g-padding-20 g-pb-0" [hidden]="hideAnonymousAccountInfoBox">
+            <!--<div class="modal-header">
+                <h3 class="modal-title">Guest Account</h3>
+            </div>-->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 g-mb-20">
+                        <p>
+                            A guest account has been created for you to save your changes temporarily.<br />
+                        </p>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <p class="g-mb-30">
+                            Would like to keep this account?<br />
+                            Please update your email address.
+                        </p>
+                        <p>
+                            <a class="btn btn-primary btn-block" routerLink="/app/account/change-email" (click)="closeAnonymousAccountInfoBox()">Change email</a>
+                        </p>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <p class="g-mb-30">
+                            Do you have an existing account?<br />
+                            Please login with your credentials.
+                        </p>
+                        <p>
+                            <a class="btn btn-primary btn-block" routerLink="/app/account/login" (click)="closeAnonymousAccountInfoBox()">Login</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" type="button" (click)="closeAnonymousAccountInfoBox()">Skip for now</button>
+            </div>
+        </div>
+        <!--Anonymous account info block end-->
+
+        <router-outlet></router-outlet>
+
+        <toaster-container [toasterconfig]="toasterConfig"></toaster-container>
+
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <hr />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="contacts pull-left">
+                        <a href="http://forcrowd.org" target="_blank">
+                            <img src="/app/images/logo.jpg?v=0.70.0" alt="Logo" />
+                        </a>
+                        <a href="https://twitter.com/forCrowd" target="_blank" class="g-ml-40">
+                            <i class="fa fa-twitter fa-lg" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://github.com/forCrowd/WealthEconomy" target="_blank" class="g-ml-20">
+                            <i class="fa fa-github fa-lg" aria-hidden="true"></i>
+                        </a>
+                        <a href="mailto:contact@forcrowd.org" target="_blank" class="g-ml-20">
+                            <i class="fa fa-envelope fa-lg" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                    <div class="pull-right">
+                        <small>Version: {{ appVersion }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
