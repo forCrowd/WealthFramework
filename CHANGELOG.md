@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.70.0**
+
+* Connect2Effect demo app
+
 **0.69.5**
 
 * ng2Client - Content module fix

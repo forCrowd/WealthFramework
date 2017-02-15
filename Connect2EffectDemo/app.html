@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>#Connect2Effect Demo</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base href="/" />
+
+    <link rel="shortcut icon" href="/favicon.ico?v=0.70.0d" />
+    <link rel="stylesheet" href="/app/css/app.min.css?v=0.70.0d" />
+</head>
+<body>
+    <app>
+        <div class="center">
+            <p class="text-center">
+                Loading<br />
+                <span id="dots">...</span>
+            </p>
+        </div>
+
+        <script>
+
+            loading();
+
+            function loading() {
+
+                var dots = document.getElementById("dots");
+
+                if (dots) {
+                    dots.innerHTML += ".";
+                    if (dots.textContent.length % 50 === 0) {
+                        dots.innerHTML += "<br/>";
+                    }
+                    setTimeout(loading, 500);
+                }
+            }
+        </script>
+    </app>
+
+    <script>window.module = "aot";</script>
+    <!-- build:app-html -->
+    
+    <!-- This block will be replaced with "app.min.js" script during "build" tasks in gulpfile -->
+
+    <!-- Production bundle -->
+    <!--<script async src="/app/app.min.js"></script>-->
+    
+    <!-- Development scripts -->
+    <script src="/app/lib.js"></script>
+    <script src="/node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="/node_modules/systemjs/dist/system.src.js"></script>
+    <script src="/systemjs.config.js"></script>
+    <script>
+        System.import("app")
+            .catch(function (error) {
+                console.error(error);
+            });
+    </script>
+
+    <!-- endbuild -->
+</body>
+</html>

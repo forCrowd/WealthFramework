@@ -1,7 +1,7 @@
 {
-    "name": "forcrowd-wealtheconomy-ng2client",
-    "version": "0.70.0",
-    "description": "Experimental ideas on improving how the economy works",
+    "name": "forcrowd-wealtheconomy-connect2effect-demo",
+    "version": "0.70.0d",
+    "description": "#connect2effect demo app",
     "main": "app.html",
     "scripts": {
         "install": "gulp setup",
