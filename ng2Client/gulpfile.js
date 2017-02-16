@@ -315,12 +315,10 @@ function publish(environment) {
             "./app/images/**/*",
             "./app/app.min.js",
             "./app/app.min.js.map",
-            "./app.html",
             "./app_offline.htm_",
             "./favicon.ico",
-            "./robots.txt",
-            "./Web.config"
-        ];
+            "./robots.txt"
+            ];
 
         return gulp.src(publishSrc, { base: "./" })
             .on("error", promiseErrorHandler)
@@ -330,8 +328,8 @@ function publish(environment) {
 
                 var htmlReplace = require("gulp-html-replace");
                 var version = require("./package.json").version;
-                var appHtml = publishDest + "/app.html";
-                var webConfig = publishDest + "/Web.config";
+                var appHtml = "./app.html";
+                var webConfig = "./Web.config";
 
                 return gulp.src([appHtml, webConfig])
                     .pipe(htmlReplace({

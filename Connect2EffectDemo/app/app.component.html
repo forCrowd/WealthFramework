@@ -25,6 +25,11 @@
                             <span class="fa fa-pie-chart fa-lg g-mr-5" aria-hidden="true"></span>Survey
                         </button>
                     </li>
+                    <li>
+                        <button type="button" class="btn-link" onClick="window.open('http://www.connect2effect.com'); return false;">
+                            <span class="fa fa-globe fa-lg g-mr-5" aria-hidden="true"></span>#Connect2Effect Event
+                        </button>
+                    </li>
                 </ul>
                 <ul *ngIf="currentUser" class="nav navbar-nav navbar-text navbar-right">
                     <!--<li [hidden]="currentUser.isAuthenticated()">
@@ -54,6 +59,7 @@
                     </li>-->
                     <li [hidden]="!currentUser.isAuthenticated()">
                         <button type="button" class="btn-link">
+                            "
                             {{ currentUserText() }}
                         </button>
                     </li>

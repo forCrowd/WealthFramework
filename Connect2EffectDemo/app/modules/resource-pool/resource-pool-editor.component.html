@@ -147,13 +147,18 @@
                                         || elementCell.ElementField.DataType === 3
                                         || elementCell.ElementField.DataType === 4
                                         || elementCell.ElementField.DataType === 5">
-                                                <div class="btn-group" role="group" *ngIf="!elementCell.ElementField.UseFixedValue && elementCell.ElementField.IndexEnabled">
-                                                    <button title="0" type="button" (click)="rate0(elementCell)" [disabled]="isSaving" class="btn" [ngClass]="{ 'btn-primary': elementCell.numericValue() === 0, 'btn-default': elementCell.numericValue() !== 0 }" >0</button>
-                                                    <button title="1" type="button" (click)="rate1(elementCell)" [disabled]="isSaving" class="btn" [ngClass]="{ 'btn-primary': elementCell.numericValue() === 20, 'btn-default': elementCell.numericValue() !== 20 }">1</button>
-                                                    <button title="2" type="button" (click)="rate2(elementCell)" [disabled]="isSaving" class="btn" [ngClass]="{ 'btn-primary': elementCell.numericValue() === 40, 'btn-default': elementCell.numericValue() !== 40 }">2</button>
-                                                    <button title="3" type="button" (click)="rate3(elementCell)" [disabled]="isSaving" class="btn" [ngClass]="{ 'btn-primary': elementCell.numericValue() === 60, 'btn-default': elementCell.numericValue() !== 60 }">3</button>
-                                                    <button title="4" type="button" (click)="rate4(elementCell)" [disabled]="isSaving" class="btn" [ngClass]="{ 'btn-primary': elementCell.numericValue() === 80, 'btn-default': elementCell.numericValue() !== 80 }">4</button>
-                                                    <button title="5" type="button" (click)="rate5(elementCell)" [disabled]="isSaving" class="btn" [ngClass]="{ 'btn-primary': elementCell.numericValue() === 100, 'btn-default': elementCell.numericValue() !== 100 }">5</button>
+                                                <div *ngIf="!elementCell.ElementField.UseFixedValue && elementCell.ElementField.IndexEnabled">
+                                                    <div class="btn-group" role="group" [hidden]="resourcePool.RatingMode === 2">
+                                                        <button title="0" type="button" (click)="rate0(elementCell)" [disabled]="isSaving" class="btn" [ngClass]="{ 'btn-primary': elementCell.numericValue() === 0, 'btn-default': elementCell.numericValue() !== 0 }">0</button>
+                                                        <button title="1" type="button" (click)="rate1(elementCell)" [disabled]="isSaving" class="btn" [ngClass]="{ 'btn-primary': elementCell.numericValue() === 20, 'btn-default': elementCell.numericValue() !== 20 }">1</button>
+                                                        <button title="2" type="button" (click)="rate2(elementCell)" [disabled]="isSaving" class="btn" [ngClass]="{ 'btn-primary': elementCell.numericValue() === 40, 'btn-default': elementCell.numericValue() !== 40 }">2</button>
+                                                        <button title="3" type="button" (click)="rate3(elementCell)" [disabled]="isSaving" class="btn" [ngClass]="{ 'btn-primary': elementCell.numericValue() === 60, 'btn-default': elementCell.numericValue() !== 60 }">3</button>
+                                                        <button title="4" type="button" (click)="rate4(elementCell)" [disabled]="isSaving" class="btn" [ngClass]="{ 'btn-primary': elementCell.numericValue() === 80, 'btn-default': elementCell.numericValue() !== 80 }">4</button>
+                                                        <button title="5" type="button" (click)="rate5(elementCell)" [disabled]="isSaving" class="btn" [ngClass]="{ 'btn-primary': elementCell.numericValue() === 100, 'btn-default': elementCell.numericValue() !== 100 }">5</button>
+                                                    </div>
+                                                    <div [hidden]="resourcePool.RatingMode === 1">
+                                                        {{ elementCell.numericValue() | symbolic }}
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div *ngIf="elementCell.ElementField.DataType === 6">
