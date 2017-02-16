@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.70.1**
+
+* Connect2Effect - Minor
+
 **0.70.0**
 
 * Connect2Effect demo app
