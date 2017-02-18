@@ -25,11 +25,6 @@
                             <span class="fa fa-pie-chart fa-lg g-mr-5" aria-hidden="true"></span>Survey
                         </button>
                     </li>
-                    <li>
-                        <button type="button" class="btn-link" onClick="window.open('http://www.connect2effect.com'); return false;">
-                            <span class="fa fa-globe fa-lg g-mr-5" aria-hidden="true"></span>#Connect2Effect Event
-                        </button>
-                    </li>
                 </ul>
                 <ul *ngIf="currentUser" class="nav navbar-nav navbar-text navbar-right">
                     <!--<li [hidden]="currentUser.isAuthenticated()">
@@ -140,6 +135,10 @@
                         </a>
                         <a href="mailto:contact@forcrowd.org" target="_blank" class="g-ml-20">
                             <i class="fa fa-envelope fa-lg" aria-hidden="true"></i>
+                        </a>
+                        <span class="g-ml-20">|</span>
+                        <a href="http://www.connect2effect.com" target="_blank" class="g-ml-20">
+                            <span class="fa fa-globe fa-lg" aria-hidden="true"></span> Connect2Effect
                         </a>
                     </div>
                     <div class="pull-right">

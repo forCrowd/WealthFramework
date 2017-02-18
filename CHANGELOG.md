@@ -1,5 +1,14 @@
 ### Changelog
 
+**0.70.3**
+
+* Connect2Effect - Presentation
+* Connect2Effect - Minor
+
+**0.70.2**
+
+* Connect2Effect - Minor
+
 **0.70.1**
 
 * Connect2Effect - Minor
