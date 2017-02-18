@@ -1,6 +1,6 @@
 {
     "name": "forcrowd-wealtheconomy-connect2effect-demo",
-    "version": "0.70.2",
+    "version": "0.70.3",
     "description": "#connect2effect demo app",
     "main": "app.html",
     "scripts": {
