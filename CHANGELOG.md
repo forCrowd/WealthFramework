@@ -1,5 +1,10 @@
 ### Changelog
 
+**0.70.4**
+
+* ng2Client - data.service - `saveChangesStarted$` now emits before `ensureAuthenticatedUser`, so it blocks UI before even during anonymous user registration.
+Probably fixes `Concurrent saves not allowed` error.
+
 **0.70.3**
 
 * Connect2Effect - Presentation
@@ -12,6 +17,8 @@
 **0.70.1**
 
 * Connect2Effect - Minor
+* ng2Client - gulpfile - app.html & web.config changed check fix: Since these two have `htmlReplace` blocks in them and must be updated during the build operation,
+they always have to copied to `publish` folder, regardless whether they actually changed or not.
 
 **0.70.0**
 
