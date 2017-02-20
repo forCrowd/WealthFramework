@@ -372,11 +372,11 @@ export class DataService {
 
     saveChanges(): Observable<Object> {
 
+        // Broadcast, so UI can block
+        this.saveChangesStarted$.emit();
+
         return this.ensureAuthenticatedUser()
             .mergeMap(() => {
-
-                // Broadcast, so UI can block
-                this.saveChangesStarted$.emit();
 
                 var promise: any = null;
                 var count = this.getChanges().length;
@@ -605,6 +605,7 @@ export class DataService {
     }
 
     private registerAnonymous(registerAnonymousBindingModel: any, rememberMe: boolean): Observable<Object> {
+
 
         return this.http.post(this.registerAnonymousUrl, registerAnonymousBindingModel)
             .mergeMap((value: Response) => {
