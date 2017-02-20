@@ -1,5 +1,10 @@
 ### Changelog
 
+**0.70.5**
+
+* WebApi - ResourcePoolController - expand("User") exposes all user info to other users fix
+* WebApi - Cleanup
+
 **0.70.4**
 
 * ng2Client - data.service - `saveChangesStarted$` now emits before `ensureAuthenticatedUser`, so it blocks UI before even during anonymous user registration.

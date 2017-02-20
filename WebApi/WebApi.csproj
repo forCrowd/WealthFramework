@@ -235,51 +235,11 @@
     <Compile Include="Controllers\Api\BaseApiController.cs" />
     <Compile Include="Controllers\Api\Test\TestController.cs" />
     <Compile Include="Controllers\Extensions\ControllerExtensions.cs" />
-    <Compile Include="Controllers\OData\Generated\ElementCellController.cs">
-      <DependentUpon>ODataController.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\OData\Generated\ElementController.cs">
-      <DependentUpon>ODataController.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\OData\Generated\ElementFieldController.cs">
-      <DependentUpon>ODataController.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\OData\Generated\ElementItemController.cs">
-      <DependentUpon>ODataController.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\OData\Generated\ODataController.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ODataController.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\OData\Generated\ResourcePoolController.cs">
-      <DependentUpon>ODataController.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\OData\Generated\RolesController.cs">
-      <DependentUpon>ODataController.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\OData\Generated\UserClaimsController.cs">
-      <DependentUpon>ODataController.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\OData\Generated\UserElementCellController.cs">
-      <DependentUpon>ODataController.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\OData\Generated\UserElementFieldController.cs">
-      <DependentUpon>ODataController.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\OData\Generated\UserLoginsController.cs">
-      <DependentUpon>ODataController.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\OData\Generated\UserResourcePoolController.cs">
-      <DependentUpon>ODataController.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Controllers\OData\ElementCellController.cs" />
+    <Compile Include="Controllers\OData\ElementController.cs" />
+    <Compile Include="Controllers\OData\ElementFieldController.cs" />
+    <Compile Include="Controllers\OData\ElementItemController.cs" />
     <Compile Include="Controllers\OData\BaseODataController.cs" />
-    <Compile Include="Controllers\OData\Generated\UserRolesController.cs">
-      <DependentUpon>ODataController.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\OData\Generated\UsersController.cs">
-      <DependentUpon>ODataController.tt</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\OData\ResourcePoolController.cs" />
     <Compile Include="Controllers\OData\UsersController.cs" />
     <Compile Include="Controllers\OData\UserElementCellController.cs" />
@@ -329,10 +289,6 @@
     <None Include="googleanalytics.js" />
     <Content Include="favicon.ico" />
     <Content Include="default.aspx" />
-    <Content Include="Controllers\OData\Generated\ODataController.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ODataController.cs</LastGenOutput>
-    </Content>
     <Content Include="robots.txt" />
     <None Include="Properties\PublishProfiles\api.wealth.pubxml" />
     <None Include="Properties\PublishProfiles\api.wealth.test.pubxml" />
