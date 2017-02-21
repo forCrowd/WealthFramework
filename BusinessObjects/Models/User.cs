@@ -88,7 +88,7 @@ namespace forCrowd.WealthEconomy.BusinessObjects
             MiddleName = default(string);
             LastName = default(string);
             Notes = default(string);
-            //CreatedOn = default(string);
+            CreatedOn = default(DateTime);
             ModifiedOn = default(DateTime);
             DeletedOn = default(DateTime?);
             RowVersion = new byte[] { };

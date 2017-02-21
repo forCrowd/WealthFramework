@@ -1,7 +1,10 @@
 namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
 {
-    using forCrowd.WealthEconomy.BusinessObjects;
+    using BusinessObjects;
+    using Extensions;
+    using Facade;
     using Results;
+    using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     using System.Linq;
@@ -9,29 +12,48 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
     using System.Threading.Tasks;
     using System.Web.Http;
     using System.Web.Http.OData;
-    using WebApi.Controllers.Extensions;
 
-    public partial class ResourcePoolController
+    public class ResourcePoolController : BaseODataController
     {
-        [AllowAnonymous]
-        public override IQueryable<ResourcePool> Get()
+        public ResourcePoolController()
         {
-            // var result = base.Get();
-            return MainUnitOfWork.AllLive;
+            MainUnitOfWork = new ResourcePoolUnitOfWork();
         }
 
+        protected ResourcePoolUnitOfWork MainUnitOfWork { get; private set; }
+
+        // GET odata/ResourcePool
         [AllowAnonymous]
-        public override SingleResult<ResourcePool> Get([FromODataUri] int key)
+        public IQueryable<ResourcePool> Get()
         {
-            var result = base.Get(key);
-            return result;
+            var list = MainUnitOfWork.AllLive.Include(resourcePool => resourcePool.User);
+            var isAdmin = this.GetCurrentUserIsAdmin();
+
+            // If it's admin, move along!
+            if (!isAdmin)
+            {
+                // TODO Terrible way to filter the info in both ResourcePool & User controllers, but for the moment.. / coni2k - 20 Feb. '17
+                var currentUserId = this.GetCurrentUserId();
+
+                foreach (var item in list)
+                {
+                    // If the current user is anonymous, or this record doesn't belong to it, hide the details
+                    if (currentUserId == null || currentUserId.Value != item.UserId)
+                    {
+                        item.User.ResetValues();
+                    }
+                }
+            }
+
+            return list;
         }
 
-        public override async Task<IHttpActionResult> Post(ResourcePool resourcePool)
+        // POST odata/ResourcePool
+        public async Task<IHttpActionResult> Post(ResourcePool resourcePool)
         {
             try
             {
-                return await base.Post(resourcePool);
+                await MainUnitOfWork.InsertAsync(resourcePool);
             }
             catch (DbUpdateException)
             {
@@ -45,13 +67,58 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
                     throw;
                 }
             }
+
+            return Created(resourcePool);
         }
 
-        public override async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<ResourcePool> patch)
+        // PATCH odata/ResourcePool(5)
+        [AcceptVerbs("PATCH", "MERGE")]
+        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<ResourcePool> patch)
         {
             try
             {
-                return await base.Patch(key, patch);
+                var resourcePool = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == key);
+                if (resourcePool == null)
+                {
+                    return NotFound();
+                }
+
+                var patchEntity = patch.GetEntity();
+
+                if (patchEntity.RowVersion == null)
+                {
+                    throw new InvalidOperationException("RowVersion property of the entity cannot be null");
+                }
+
+                if (!resourcePool.RowVersion.SequenceEqual(patchEntity.RowVersion))
+                {
+                    return Conflict();
+                }
+
+                patch.Patch(resourcePool);
+
+                try
+                {
+                    await MainUnitOfWork.UpdateAsync(resourcePool);
+                }
+                catch (DbUpdateException)
+                {
+                    if (patch.GetChangedPropertyNames().Any(item => item == "Id"))
+                    {
+                        object keyObject = null;
+                        patch.TryGetPropertyValue("Id", out keyObject);
+
+                        if (keyObject != null && await MainUnitOfWork.All.AnyAsync(item => item.Id == (int)keyObject))
+                        {
+                            return new UniqueKeyConflictResult(Request, "Id", keyObject.ToString());
+                        }
+                        else throw;
+                    }
+                    else throw;
+                }
+
+                return Ok(resourcePool);
+
             }
             catch (DbUpdateException)
             {
@@ -73,6 +140,20 @@ namespace forCrowd.WealthEconomy.WebApi.Controllers.OData
                 }
                 else throw;
             }
+        }
+
+        // DELETE odata/ResourcePool(5)
+        public async Task<IHttpActionResult> Delete([FromODataUri] int key)
+        {
+            var resourcePool = await MainUnitOfWork.AllLive.SingleOrDefaultAsync(item => item.Id == key);
+            if (resourcePool == null)
+            {
+                return NotFound();
+            }
+
+            await MainUnitOfWork.DeleteAsync(resourcePool.Id);
+
+            return StatusCode(HttpStatusCode.NoContent);
         }
     }
 }
