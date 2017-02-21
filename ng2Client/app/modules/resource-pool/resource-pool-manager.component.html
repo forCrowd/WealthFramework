@@ -1,10 +1,10 @@
-﻿<div *ngIf="resourcePool !== null" [hidden]="!displayMain">
+﻿<div *ngIf="resourcePool !== null">
     <h2>{{ resourcePool.Name }}</h2>
     <button type="button" (click)="toggleResourcePool()" class="btn-link">Resource Pool</button>
     <button type="button" (click)="toggleElements()" class="btn-link">Elements</button>
-    <button type="button" (click)="toggleFields()" class="btn-link">Fields</button>
-    <button type="button" (click)="toggleItems()" class="btn-link">Items</button>
-    <button type="button" (click)="toggleCells()" class="btn-link">Cells</button>
+    <button type="button" (click)="toggleFields()" class="btn-link" *ngIf="resourcePool.ElementSet.length > 0">Fields</button>
+    <button type="button" (click)="toggleItems()" class="btn-link" *ngIf="resourcePool.ElementSet.length > 0">Items</button>
+    <button type="button" (click)="toggleCells()" class="btn-link" *ngIf="resourcePool.ElementSet.length > 0">Cells</button>
 
     <div [hidden]="!displayResourcePool">
         <form #resourcePoolForm="ngForm">
@@ -60,14 +60,25 @@
                         <input id="RowVersion" name="RowVersion" [(ngModel)]="resourcePool.RowVersion" #RowVersion="ngModel" type="hidden">
                     </div>
                 </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button (click)="saveResourcePool()" [disabled]="submitDisabled()" type="button" class="btn btn-primary">
+                            Save CMRP
+                        </button>
+                        <button (click)="cancelResourcePool()" type="button" class="btn btn-default">
+                            {{ resourcePool.entityAspect.entityState.isModified() ? "Cancel" : "Close" }}
+                        </button>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
 
     <div [hidden]="!displayElements">
+
         <!-- Element add/edit -->
         <div *ngIf="selectedElement">
-            <element-manager [element]="selectedElement" [isElementNew]="isElementNew" (cancelled)="onElementManagerClosed()" (saved)="onElementManagerClosed()"></element-manager>
+            <element-manager [element]="selectedElement" (cancelled)="onElementManagerClosed()" (saved)="onElementManagerClosed()"></element-manager>
         </div>
 
         <!-- Element list -->
@@ -77,46 +88,51 @@
                     <i class="fa fa-plus" aria-hidden="true"></i> Create New
                 </button>
             </p>
-            <table class="table">
-                <tr>
-                    <th>
-                        Name
-                    </th>
-                    <th>
-                        Is Main Element
-                    </th>
-                    <th></th>
-                </tr>
-                <tr *ngFor="let element of resourcePool.ElementSet">
-                    <td>
-                        {{ element.Name }}
-                    </td>
-                    <td>
-                        {{ element.IsMainElement }}
-                    </td>
-                    <td>
-                        <button (click)="editElement(element)" type="button" class="btn btn-link">
-                            <i class="fa fa-pencil" aria-hidden="true"></i> Edit
-                        </button>
-                        <button (click)="element.IsMainElement = true" [hidden]="element.IsMainElement" type="button" class="btn btn-link" title="Determines whether CMRP Editor will start with this item or not.
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Is Main Element
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let element of resourcePool.ElementSet">
+                        <td>
+                            {{ element.Name }}
+                        </td>
+                        <td>
+                            {{ element.IsMainElement }}
+                        </td>
+                        <td>
+                            <button (click)="editElement(element)" type="button" class="btn btn-link">
+                                <i class="fa fa-pencil" aria-hidden="true"></i> Edit
+                            </button>
+                            <button (click)="setMainElement(element)" [hidden]="element.IsMainElement" type="button" class="btn btn-link" title="Determines whether CMRP Editor will start with this item or not.
                                     Only one element can be 'Main Element' and it cannot be deleted.">
-                            <i class="fa fa-check" aria-hidden="true"></i> Set as main element
-                        </button>
-                        <button (click)="removeElement(element)" *ngIf="!element.IsMainElement" type="button" class="btn btn-link">
-                            <i class="fa fa-times" aria-hidden="true"></i> Remove
-                        </button>
-                    </td>
-                </tr>
+                                <i class="fa fa-check" aria-hidden="true"></i> Set as main element
+                            </button>
+                            <button (click)="removeElement(element)" *ngIf="!element.IsMainElement" type="button" class="btn btn-link">
+                                <i class="fa fa-times" aria-hidden="true"></i> Remove
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>
 
     <div [hidden]="!displayFields">
+
         <!-- Element field add/edit -->
         <div *ngIf="isElementFieldEdit">
             <form #elementFieldForm="ngForm">
                 <div class="form-horizontal g-mt-40">
-                    <div class="form-group" *ngIf="isElementFieldNew" [ngClass]="{ 'has-error': elementField.entityAspect.getValidationErrors('Element').length > 0 }">
+                    <div class="form-group" *ngIf="elementField.entityAspect.entityState.isAdded()" [ngClass]="{ 'has-error': elementField.entityAspect.getValidationErrors('Element').length > 0 }">
                         <label for="ElementId" class="control-label col-md-2">Element</label>
                         <div class="col-md-10">
                             <select id="ElementId" name="ElementId" [(ngModel)]="elementField.Element" #ElementSet="ngModel" class="form-control">
@@ -124,7 +140,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group" *ngIf="!isElementFieldNew">
+                    <div class="form-group" *ngIf="!elementField.entityAspect.entityState.isAdded()">
                         <label for="ElementId" class="control-label col-md-2">Element</label>
                         <p class="form-control-static col-md-10">{{ elementField.Element.Name }}</p>
                     </div>
@@ -217,7 +233,7 @@
                             <input id="Rating" name="Rating" type="text" [(ngModel)]="elementField.UserElementFieldSet[0].Rating" #Rating="ngModel" class="form-control" />
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group hide">
                         <div class="col-md-10">
                             <input id="RowVersion" name="RowVersion" [(ngModel)]="elementField.RowVersion" #RowVersion="ngModel" type="hidden">
                         </div>
@@ -243,54 +259,59 @@
                     <i class="fa fa-plus" aria-hidden="true"></i> Create New
                 </button>
             </p>
-            <table class="table">
-                <tr>
-                    <th>
-                        Element
-                    </th>
-                    <th>
-                        Name
-                    </th>
-                    <th>
-                        Field Type
-                    </th>
-                    <th>
-                        Index Enabled
-                    </th>
-                    <th></th>
-                </tr>
-                <tr *ngFor="let elementField of elementFieldSet()">
-                    <td>
-                        {{ elementField.Element.Name }}
-                    </td>
-                    <td>
-                        {{ elementField.Name }}
-                    </td>
-                    <td>
-                        {{ elementFieldDataType[elementField.DataType] }}
-                    </td>
-                    <td>
-                        {{ elementField.IndexEnabled }}
-                    </td>
-                    <td>
-                        <button (click)="editElementField(elementField)" type="button" class="btn btn-link">
-                            <i class="fa fa-pencil" aria-hidden="true"></i> Edit
-                        </button>
-                        <button (click)="removeElementField(elementField)" type="button" class="btn btn-link">
-                            <i class="fa fa-times" aria-hidden="true"></i> Remove
-                        </button>
-                    </td>
-                </tr>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            Element
+                        </th>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Field Type
+                        </th>
+                        <th>
+                            Index Enabled
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let elementField of elementFieldSet()">
+                        <td>
+                            {{ elementField.Element.Name }}
+                        </td>
+                        <td>
+                            {{ elementField.Name }}
+                        </td>
+                        <td>
+                            {{ elementFieldDataType[elementField.DataType] }}
+                        </td>
+                        <td>
+                            {{ elementField.IndexEnabled }}
+                        </td>
+                        <td>
+                            <button (click)="editElementField(elementField)" type="button" class="btn btn-link">
+                                <i class="fa fa-pencil" aria-hidden="true"></i> Edit
+                            </button>
+                            <button (click)="removeElementField(elementField)" type="button" class="btn btn-link">
+                                <i class="fa fa-times" aria-hidden="true"></i> Remove
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>
 
     <div [hidden]="!displayItems">
+
         <!-- Element item add/edit -->
         <div *ngIf="isElementItemEdit">
             <form #elementItemForm="ngForm">
                 <div class="form-horizontal g-mt-40">
-                    <div class="form-group" *ngIf="isElementItemNew" [ngClass]="{ 'has-error': elementItem.entityAspect.getValidationErrors('Element').length > 0 }">
+                    <div class="form-group" *ngIf="elementItem.entityAspect.entityState.isAdded()" [ngClass]="{ 'has-error': elementItem.entityAspect.getValidationErrors('Element').length > 0 }">
                         <label for="ElementId" class="control-label col-md-2">Element</label>
                         <div class="col-md-10">
                             <select id="ElementId" name="ElementId" [(ngModel)]="elementItem.Element" #ElementSet="ngModel" class="form-control">
@@ -298,7 +319,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group" *ngIf="!isElementItemNew">
+                    <div class="form-group" *ngIf="!elementItem.entityAspect.entityState.isAdded()">
                         <label for="ElementId" class="control-label col-md-2">Element</label>
                         <p class="form-control-static col-md-10">{{ elementItem.Element.Name }}</p>
                     </div>
@@ -308,7 +329,7 @@
                             <input id="Name" name="Name" type="text" [(ngModel)]="elementItem.Name" #Name="ngModel" class="form-control" />
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group hide">
                         <div class="col-md-10">
                             <input id="RowVersion" name="RowVersion" [(ngModel)]="elementItem.RowVersion" #RowVersion="ngModel" type="hidden">
                         </div>
@@ -334,32 +355,36 @@
                     <i class="fa fa-plus" aria-hidden="true"></i> Create New
                 </button>
             </p>
-            <table class="table">
-                <tr>
-                    <th>
-                        Element
-                    </th>
-                    <th>
-                        Name
-                    </th>
-                    <th></th>
-                </tr>
-                <tr *ngFor="let elementItem of elementItemSet()">
-                    <td>
-                        {{ elementItem.Element.Name }}
-                    </td>
-                    <td>
-                        {{ elementItem.Name }}
-                    </td>
-                    <td>
-                        <button (click)="editElementItem(elementItem)" type="button" class="btn btn-link">
-                            <i class="fa fa-pencil" aria-hidden="true"></i> Edit
-                        </button>
-                        <button (click)="removeElementItem(elementItem)" type="button" class="btn btn-link">
-                            <i class="fa fa-times" aria-hidden="true"></i> Remove
-                        </button>
-                    </td>
-                </tr>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            Element
+                        </th>
+                        <th>
+                            Name
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let elementItem of elementItemSet()">
+                        <td>
+                            {{ elementItem.Element.Name }}
+                        </td>
+                        <td>
+                            {{ elementItem.Name }}
+                        </td>
+                        <td>
+                            <button (click)="editElementItem(elementItem)" type="button" class="btn btn-link">
+                                <i class="fa fa-pencil" aria-hidden="true"></i> Edit
+                            </button>
+                            <button (click)="removeElementItem(elementItem)" type="button" class="btn btn-link">
+                                <i class="fa fa-times" aria-hidden="true"></i> Remove
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>
@@ -417,7 +442,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group hide">
                         <div class="col-md-10">
                             <input id="RowVersion" name="RowVersion" [(ngModel)]="elementCell.RowVersion" #RowVersion="ngModel" type="hidden">
                         </div>
@@ -443,67 +468,46 @@
                     &nbsp; <!--Just to align with other tabs-->
                 </button>
             </p>
-            <table class="table">
-                <tr>
-                    <th>
-                        Element
-                    </th>
-                    <th>
-                        Element Field
-                    </th>
-                    <th>
-                        Element Item
-                    </th>
-                    <th>
-                        Value
-                    </th>
-                    <th></th>
-                </tr>
-                <tr *ngFor="let elementCell of elementCellSet()">
-                    <td>
-                        {{ elementCell.ElementField.Element.Name }}
-                    </td>
-                    <td>
-                        {{ elementCell.ElementField.Name }}
-                    </td>
-                    <td>
-                        {{ elementCell.ElementItem.Name }}
-                    </td>
-                    <td>
-                        {{ elementCell.value() }}
-                    </td>
-                    <td>
-                        <button (click)="editElementCell(elementCell)" type="button" class="btn btn-link">
-                            <i class="fa fa-pencil" aria-hidden="true"></i> Edit
-                        </button>
-                    </td>
-                </tr>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            Element
+                        </th>
+                        <th>
+                            Element Field
+                        </th>
+                        <th>
+                            Element Item
+                        </th>
+                        <th>
+                            Value
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let elementCell of elementCellSet()">
+                        <td>
+                            {{ elementCell.ElementField.Element.Name }}
+                        </td>
+                        <td>
+                            {{ elementCell.ElementField.Name }}
+                        </td>
+                        <td>
+                            {{ elementCell.ElementItem.Name }}
+                        </td>
+                        <td>
+                            {{ elementCell.value() }}
+                        </td>
+                        <td>
+                            <button (click)="editElementCell(elementCell)" type="button" class="btn btn-link">
+                                <i class="fa fa-pencil" aria-hidden="true"></i> Edit
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
         </div>
-    </div>
-
-    <div *ngIf="!(selectedElement || isElementFieldEdit || isElementItemEdit || isElementCellEdit)">
-        <button (click)="saveResourcePool()" [disabled]="submitDisabled()" type="button" class="btn btn-primary">{{ isNew ? 'Create CMRP' : 'Save CMRP' }}</button>
-        <button (click)="cancelResourcePool()" type="button" class="btn btn-default">
-            Cancel
-        </button>
-        <button *ngIf="!isNew" (click)="displayRemoveResourcePoolModal()" type="button" class="btn btn-danger pull-right">
-            Delete CMRP
-        </button>
-    </div>
-</div>
-
-<div [hidden]="!displayModal">
-    <div class="modal-header">
-        <h3 class="modal-title">Confirmation</h3>
-    </div>
-    <div class="modal-body">
-        <p>
-            Are you sure you want to remove this resource pool?
-        </p>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-default" type="button" (click)="modal_cancel()">Cancel</button>
-        <button class="btn btn-danger" type="button" (click)="modal_remove()">Remove</button>
     </div>
 </div>

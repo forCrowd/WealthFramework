@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 
-import { DataService } from "../data/data.module";
+import { DataService, ResourcePoolService } from "../data/data.module";
 import { Logger } from "../logger/logger.module";
 
 //declare const __moduleName: string;
@@ -13,13 +13,24 @@ import { Logger } from "../logger/logger.module";
 })
 export class ProfileComponent implements OnInit {
 
-    isCurrentUser: boolean = false;
+    displayMain: boolean = true;
+    selectedResourcePool: any = null;
     user: any = null;
 
     constructor(private activatedRoute: ActivatedRoute,
         private dataService: DataService,
         private logger: Logger,
+        private resourcePoolService: ResourcePoolService,
         private router: Router) {
+    }
+
+    getResourcePoolLink(resourcePool: any): string {
+        return "/" + resourcePool.User.UserName + "/" + resourcePool.Key;
+    }
+
+    manageResourcePool(resourcePool: any): void {
+        const editLink = this.getResourcePoolLink(resourcePool) + "/edit";
+        this.router.navigate([editLink]);
     }
 
     ngOnInit(): void {
@@ -31,7 +42,6 @@ export class ProfileComponent implements OnInit {
 
                 // If profile user equals to current (authenticated) user
                 if (username === this.dataService.currentUser.UserName) {
-                    this.isCurrentUser = true;
                     this.user = this.dataService.currentUser;
                 } else {
 
@@ -50,5 +60,32 @@ export class ProfileComponent implements OnInit {
                         });
                 }
             });
+    }
+
+    removeResourcePool(resourcePool: any): void {
+        this.resourcePoolService.removeResourcePool(resourcePool);
+        this.dataService.saveChanges().subscribe(() => {
+            this.displayMain = true;
+        });
+    }
+
+    userActionsEnabled(): boolean {
+        return this.user === this.dataService.currentUser;
+    }
+
+    // Modal functions
+    modal_cancel(): void {
+        this.displayMain = true;
+    }
+
+    modal_display(resourcePool: any) {
+        this.selectedResourcePool = resourcePool;
+        this.displayMain = false;
+    }
+
+    modal_remove(): void {
+        const resourcePool = this.selectedResourcePool;
+        this.removeResourcePool(resourcePool);
+        this.selectedResourcePool = null;
     }
 }

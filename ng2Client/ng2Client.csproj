@@ -66,6 +66,7 @@
     <Content Include="app\modules\content\knowledge-index.component.html" />
     <Content Include="app\modules\resource-pool\resource-pool-editor.component.css" />
     <Content Include="app\modules\resource-pool\resource-pool-editor.component.html" />
+    <Content Include="app\modules\resource-pool\resource-pool-create.component.html" />
     <Content Include="app\views-obsolete\closingNotes.html" />
     <Content Include="app\views-obsolete\conclusion.html" />
     <Content Include="app\views-obsolete\fairShareIndexSample.html" />
@@ -143,6 +144,7 @@
     <TypeScriptCompile Include="app\modules\content\reason.component.ts" />
     <TypeScriptCompile Include="app\modules\content\total-cost-index.component.ts" />
     <TypeScriptCompile Include="app\modules\data\entities\entity-base.ts" />
+    <TypeScriptCompile Include="app\modules\resource-pool\resource-pool-create.component.ts" />
     <TypeScriptCompile Include="app\modules\resource-pool\resource-pool.module.ts" />
     <TypeScriptCompile Include="app\modules\user\profile.component.ts" />
     <TypeScriptCompile Include="app\modules\resource-pool\element-manager.component.ts" />

@@ -1,8 +1,12 @@
 ### Changelog
 
+**0.71.0**
+
+* ng2Client - New, simplified "Create resource pool page", manager & profile pages were improved
+
 **0.70.5**
 
-* WebApi - ResourcePoolController - expand("User") exposes all user info to other users fix
+* WebApi - ResourcePoolController - "expand('User') exposes all user info to other users" fix
 * WebApi - Cleanup
 
 **0.70.4**
