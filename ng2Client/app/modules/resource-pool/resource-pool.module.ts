@@ -4,6 +4,7 @@ import { FormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
 
 import { ElementManagerComponent } from "./element-manager.component";
+import { ResourcePoolCreateComponent } from "./resource-pool-create.component";
 import { ResourcePoolEditorComponent } from "./resource-pool-editor.component";
 import { ResourcePoolManagerComponent } from "./resource-pool-manager.component";
 import { ResourcePoolViewerComponent } from "./resource-pool-viewer.component";
@@ -16,7 +17,7 @@ import { CanDeactivateGuard } from "../core/core-router.module";
 import { DynamicTitleResolve } from "../core/core-router.module";
 
 export const resourcePoolRoutes: Routes = [
-    { path: ":username/new", component: ResourcePoolManagerComponent, canDeactivate: [CanDeactivateGuard], resolve: { title: DynamicTitleResolve } },
+    { path: ":username/new", component: ResourcePoolCreateComponent, canDeactivate: [CanDeactivateGuard], resolve: { title: DynamicTitleResolve } },
     { path: ":username/:resourcePoolKey/edit", component: ResourcePoolManagerComponent, canActivate: [AuthGuard], canDeactivate: [CanDeactivateGuard], resolve: { title: DynamicTitleResolve } },
     { path: ":username/:resourcePoolKey", component: ResourcePoolViewerComponent, resolve: { title: DynamicTitleResolve } }
 ];
@@ -24,6 +25,7 @@ export const resourcePoolRoutes: Routes = [
 @NgModule({
     declarations: [
         ElementManagerComponent,
+        ResourcePoolCreateComponent,
         ResourcePoolEditorComponent,
         ResourcePoolManagerComponent,
         ResourcePoolViewerComponent,

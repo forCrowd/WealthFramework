@@ -1,6 +1,15 @@
-﻿import { Component, OnInit } from "@angular/core";
+﻿import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 
+import { Element } from "../data/entities/element";
+import { ElementCell } from "../data/entities/element-cell";
+import { ElementField } from "../data/entities/element-field";
+import { ElementItem } from "../data/entities/element-item";
+import { ResourcePool } from "../data/entities/resource-pool";
+import { User } from "../data/entities/user";
+import { UserElementCell } from "../data/entities/user-element-cell";
+import { UserElementField } from "../data/entities/user-element-field";
+import { UserResourcePool } from "../data/entities/user-resource-pool";
 import { DataService, ResourcePoolService } from "../data/data.module";
 import { Logger } from "../logger/logger.module";
 import { ElementFieldDataType, ElementFieldIndexCalculationType, ElementFieldIndexSortType } from "../data/entities/enums";
@@ -12,53 +21,41 @@ import { ElementFieldDataType, ElementFieldIndexCalculationType, ElementFieldInd
     selector: "resource-pool-manager",
     templateUrl: "resource-pool-manager.component.html",
 })
-export class ResourcePoolManagerComponent implements OnInit {
+export class ResourcePoolManagerComponent implements OnDestroy, OnInit {
 
-    displayMain: boolean = true;
-    displayModal: boolean = false;
     displayResourcePool: boolean = true;
     displayElements: boolean = false;
     displayFields: boolean = false;
     displayItems: boolean = false;
     displayCells: boolean = false;
-    elementCell: any = null;
-    elementCellMaster: any = null;
-    elementField: any = null;
-    elementFieldMaster: any = null;
+    elementCell: ElementCell = null;
+    elementField: ElementField = null;
     elementFieldDataType = ElementFieldDataType;
     elementFieldIndexCalculationType = ElementFieldIndexCalculationType;
     elementFieldIndexSortType = ElementFieldIndexSortType;
-    elementItem: any = null;
-    elementItemMaster: any = null;
-    isElementNew = true;
+    elementItem: ElementItem = null;
     isElementCellEdit = false;
     isElementFieldEdit = false;
-    isElementFieldNew = true;
     isElementItemEdit = false;
-    isElementItemNew = true;
-    isNew: boolean;
     isSaving = false;
-    resourcePool: any = null;
-    selectedElement: any = null;
-    user: any;
+    resourcePool: ResourcePool = null;
+    selectedElement: Element = null;
+    subscriptions: any[] = [];
+    user: User;
 
     constructor(private activatedRoute: ActivatedRoute,
         private dataService: DataService,
         private logger: Logger,
         private resourcePoolService: ResourcePoolService,
         private router: Router
-    ) {
-        this.isNew = window.location.pathname.substring(window.location.pathname.lastIndexOf("/") + 1) === "new";
-    }
+    ) { }
 
     addElement() {
         this.selectedElement = this.resourcePoolService.createElement({
             ResourcePool: this.resourcePool,
             Name: "New element",
             IsMainElement: false
-        });
-
-        this.isElementNew = true;
+        }) as Element;
     }
 
     addElementField() {
@@ -77,7 +74,6 @@ export class ResourcePoolManagerComponent implements OnInit {
         });
 
         this.isElementFieldEdit = true;
-        this.isElementFieldNew = true;
     }
 
     addElementItem() {
@@ -86,73 +82,37 @@ export class ResourcePoolManagerComponent implements OnInit {
             Name: "New item"
         });
         this.isElementItemEdit = true;
-        this.isElementItemNew = true;
     }
 
     cancelElementCell() {
-
-        // TODO Find a better way?
-        // Can't use reject changes because in "New CMRP" case, these are newly added entities and reject changes removes them / coni2k - 23 Nov. '15
-        this.elementCell.SelectedElementItemId = this.elementCellMaster.SelectedElementItemId;
-        this.elementCell.UserElementCellSet[0]
-            .StringValue = this.elementCellMaster.UserElementCellSet[0].StringValue;
-        this.elementCell.UserElementCellSet[0]
-            .BooleanValue = this.elementCellMaster.UserElementCellSet[0].BooleanValue;
-        this.elementCell.UserElementCellSet[0]
-            .IntegerValue = this.elementCellMaster.UserElementCellSet[0].IntegerValue;
-        this.elementCell.UserElementCellSet[0]
-            .DecimalValue = this.elementCellMaster.UserElementCellSet[0].DecimalValue;
-        this.elementCell.UserElementCellSet[0]
-            .DateTimeValue = this.elementCellMaster.UserElementCellSet[0].DateTimeValue;
-
+        this.elementCell.UserElementCellSet[0].entityAspect.rejectChanges();
+        this.elementCell.entityAspect.rejectChanges();
         this.isElementCellEdit = false;
         this.elementCell = null;
-        this.elementCellMaster = null;
     }
 
     cancelElementField() {
 
-        // TODO Find a better way?
-        // Can't use reject changes because in "New CMRP" case, these are newly added entities and reject changes removes them / coni2k - 23 Nov. '15
-        if (this.isElementFieldNew) {
-            this.resourcePoolService.removeElementField(this.elementField);
-        } else {
-            this.elementField.Name = this.elementFieldMaster.Name;
-            this.elementField.DataType = this.elementFieldMaster.DataType;
-            this.elementField.SelectedElementId = this.elementFieldMaster.SelectedElementId;
-            this.elementField.UseFixedValue = this.elementFieldMaster.UseFixedValue;
-            this.elementField.IndexEnabled = this.elementFieldMaster.IndexEnabled;
-            this.elementField.IndexCalculationType = this.elementFieldMaster.IndexCalculationType;
-            this.elementField.IndexSortType = this.elementFieldMaster.IndexSortType;
-            this.elementField.SortOrder = this.elementFieldMaster.SortOrder;
+        this.elementField.entityAspect.rejectChanges();
+        if (this.elementField.currentUserElementField() !== null) {
+            this.elementField.currentUserElementField().entityAspect.rejectChanges();
         }
 
         this.isElementFieldEdit = false;
         this.elementField = null;
-        this.elementFieldMaster = null;
     }
 
     cancelElementItem() {
-
-        // TODO Find a better way?
-        // Can't use reject changes because in "New CMRP" case, these are newly added entities and reject changes removes them / coni2k - 23 Nov. '15
-        if (!this.isElementItemNew) {
-            this.elementItem.Name = this.elementItemMaster.Name;
-        }
-
+        this.elementItem.entityAspect.rejectChanges();
         this.isElementItemEdit = false;
         this.elementItem = null;
-        this.elementItemMaster = null;
     }
 
     cancelResourcePool() {
 
-        this.dataService.rejectChanges();
+        this.resourcePool.entityAspect.rejectChanges();
 
-        var command = this.isNew
-            ? "/" + this.dataService.currentUser.UserName
-            : "/" + this.resourcePool.User.UserName + "/" + this.resourcePool.Key;
-
+        var command = "/" + this.resourcePool.User.UserName + "/" + this.resourcePool.Key;
         this.router.navigate([command]);
     }
 
@@ -170,64 +130,23 @@ export class ResourcePoolManagerComponent implements OnInit {
         }
     }
 
-    displayRemoveResourcePoolModal() {
-        this.displayMain = false;
-        this.displayModal = true;
-    }
-
     editElement(element: any) {
         this.selectedElement = element;
-        this.isElementNew = false;
     }
 
     editElementCell(elementCell: any) {
-
         this.elementCell = elementCell;
-
-        this.elementCellMaster = {
-            SelectedElementItemId: this.elementCell.SelectedElementItemId,
-            UserElementCellSet: [
-                {
-                    StringValue: this.elementCell.UserElementCellSet[0].StringValue,
-                    BooleanValue: this.elementCell.UserElementCellSet[0].BooleanValue,
-                    IntegerValue: this.elementCell.UserElementCellSet[0].IntegerValue,
-                    DecimalValue: this.elementCell.UserElementCellSet[0].DecimalValue,
-                    DateTimeValue: this.elementCell.UserElementCellSet[0].DateTimeValue
-                }]
-        };
-
         this.isElementCellEdit = true;
     }
 
     editElementField(elementField: any) {
-
         this.elementField = elementField;
-
-        this.elementFieldMaster = {
-            Name: this.elementField.Name,
-            DataType: this.elementField.DataType,
-            SelectedElementId: this.elementField.SelectedElementId,
-            UseFixedValue: this.elementField.UseFixedValue,
-            IndexEnabled: this.elementField.IndexEnabled,
-            IndexCalculationType: this.elementField.IndexCalculationType,
-            IndexSortType: this.elementField.IelementFieldndexSortType,
-            SortOrder: this.elementField.SortOrder
-        };
-
         this.isElementFieldEdit = true;
-        this.isElementFieldNew = false;
     }
 
     editElementItem(elementItem: any) {
-
         this.elementItem = elementItem;
-
-        this.elementItemMaster = {
-            Name: this.elementItem.Name
-        };
-
         this.isElementItemEdit = true;
-        this.isElementItemNew = false;
     }
 
     elementCellSet() {
@@ -330,6 +249,12 @@ export class ResourcePoolManagerComponent implements OnInit {
         return filtered;
     }
 
+    ngOnDestroy(): void {
+        for (let i = 0; i < this.subscriptions.length; i++) {
+            this.subscriptions[i].unsubscribe();
+        }
+    }
+
     ngOnInit(): void {
 
         this.activatedRoute.params.subscribe(
@@ -338,46 +263,27 @@ export class ResourcePoolManagerComponent implements OnInit {
                 let username = params.username;
                 let resourcePoolKey = params.resourcePoolKey;
 
-                if (this.isNew) {
+                var resourcePoolUniqueKey = { username: username, resourcePoolKey: resourcePoolKey };
 
-                    // If username equals to current user
-                    if (username === this.dataService.currentUser.UserName) {
-                        this.user = this.dataService.currentUser;
+                this.resourcePoolService.getResourcePoolExpanded(resourcePoolUniqueKey)
+                    .subscribe((resourcePool: any) => {
 
-                        this.resourcePool = this.resourcePoolService.createResourcePoolBasic();
+                        // Not found, navigate to 404
+                        if (resourcePool === null) {
+                            let url = window.location.href.replace(window.location.origin, "");
+                            this.router.navigate(["/app/not-found", { url: url }]);
+                            return;
+                        }
 
-                        // Title
-                        // TODO viewTitle was also set in route.js?
-                        //$rootScope.viewTitle = this.resourcePool.Name;
-
-                    } else {
-                        let url = window.location.href.replace(window.location.origin, "");
-                        this.router.navigate(["/app/not-found", { url: url }]);
-                        return;
-                    }
-
-                } else {
-
-                    var resourcePoolUniqueKey = { username: username, resourcePoolKey: resourcePoolKey };
-
-                    this.resourcePoolService.getResourcePoolExpanded(resourcePoolUniqueKey)
-                        .subscribe((resourcePool: any) => {
-
-                            // Not found, navigate to 404
-                            if (resourcePool === null) {
-                                let url = window.location.href.replace(window.location.origin, "");
-                                this.router.navigate(["/app/not-found", { url: url }]);
-                                return;
-                            }
-
-                            this.resourcePool = resourcePool;
-
-                            // Title
-                            // TODO viewTitle was also set in route.js?
-                            //$rootScope.viewTitle = this.resourcePool.Name;
-                        });
-                }
+                        this.resourcePool = resourcePool;
+                    });
             });
+
+        // Save changes events
+        this.subscriptions.push(
+            this.dataService.saveChangesStarted$.subscribe(() => this.saveChangesStart()));
+        this.subscriptions.push(
+            this.dataService.saveChangesCompleted$.subscribe(() => this.saveChangesCompleted()));
     }
 
     onElementManagerClosed() {
@@ -386,19 +292,20 @@ export class ResourcePoolManagerComponent implements OnInit {
 
     removeElement(element: any) {
         this.resourcePoolService.removeElement(element);
+        this.dataService.saveChanges().subscribe();
     }
 
     removeElementField(elementField: any) {
         this.resourcePoolService.removeElementField(elementField);
+        this.dataService.saveChanges().subscribe();
     }
 
     removeElementItem(elementItem: any) {
         this.resourcePoolService.removeElementItem(elementItem);
+        this.dataService.saveChanges().subscribe();
     }
 
     removeResourcePool() {
-
-        this.isSaving = true;
 
         // Move this.resourcePool to a new variable and make it null,
         // otherwise form fails, since it's still showing resourcePool
@@ -411,16 +318,29 @@ export class ResourcePoolManagerComponent implements OnInit {
         this.resourcePoolService.removeResourcePool(resourcePool);
 
         this.dataService.saveChanges()
-            .finally(() => this.isSaving = false)
             .subscribe(() => {
                 this.router.navigate(["/" + this.dataService.currentUser.UserName]);
             });
     }
 
+    saveChangesStart(): void {
+        this.isSaving = true;
+    }
+
+    saveChangesCompleted(): void {
+        this.isSaving = false;
+    }
+
     saveElementCell() {
-        this.isElementCellEdit = false;
-        this.elementCell = null;
-        this.elementCellMaster = null;
+        this.dataService.saveChanges()
+            .subscribe(() => {
+
+                // TODO Try to move this to a better place?
+                this.resourcePool.updateCache();
+
+                this.isElementCellEdit = false;
+                this.elementCell = null;
+            });
     }
 
     saveElementField() {
@@ -442,31 +362,56 @@ export class ResourcePoolManagerComponent implements OnInit {
             this.elementField.UseFixedValue = true;
         }
 
-        this.isElementFieldEdit = false;
-        this.elementField = null;
-        this.elementFieldMaster = null;
+        // Related cells
+        if (this.elementField.entityAspect.entityState.isAdded()) {
+            this.resourcePoolService.createElementFieldRelatedCells(this.elementField);
+        }
+
+        // Save
+        this.dataService.saveChanges()
+            .subscribe(() => {
+
+                // TODO Try to move this to a better place?
+                this.resourcePool.updateCache();
+
+                this.isElementFieldEdit = false;
+                this.elementField = null;
+            });
     }
 
     saveElementItem() {
-        this.isElementItemEdit = false;
-        this.elementItem = null;
-        this.elementItemMaster = null;
+
+        // Related cells
+        if (this.elementItem.entityAspect.entityState.isAdded()) {
+            this.resourcePoolService.createElementItemRelatedCells(this.elementItem);
+        }
+
+        // Save
+        this.dataService.saveChanges()
+            .subscribe(() => {
+
+                // TODO Try to move this to a better place?
+                this.resourcePool.updateCache();
+
+                this.isElementItemEdit = false;
+                this.elementItem = null;
+            });
     }
 
     saveResourcePool() {
-
-        this.isSaving = true;
-
-        // TODO Try to move this to a better place?
-        this.resourcePool.updateCache();
-
-        const command = "/" + this.resourcePool.User.UserName + "/" + this.resourcePool.Key;
-
         this.dataService.saveChanges()
-            .finally(() => this.isSaving = false)
             .subscribe(() => {
-                this.router.navigate([command]);
+
+                // TODO Try to move this to a better place?
+                this.resourcePool.updateCache();
+
+                this.logger.logSuccess("Your changes have been saved!", null, true);
             });
+    }
+
+    setMainElement(element: Element) {
+        element.IsMainElement = true;
+        this.dataService.saveChanges().subscribe();
     }
 
     submitDisabled() {
@@ -513,15 +458,5 @@ export class ResourcePoolManagerComponent implements OnInit {
         this.displayFields = false;
         this.displayItems = false;
         this.displayCells = true;
-    }
-
-    // Modal functions
-    modal_cancel(): void {
-        this.displayMain = true;
-        this.displayModal = false;
-    }
-
-    modal_remove(): void {
-        this.removeResourcePool();
     }
 }

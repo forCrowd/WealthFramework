@@ -1,7 +1,7 @@
-﻿import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+﻿import { Component, EventEmitter, Input, Output } from "@angular/core";
 
 import { Logger } from "../logger/logger.module";
-import { ResourcePoolService } from "../data/data.module";
+import { DataService } from "../data/data.module";
 
 //declare const __moduleName: string;
 
@@ -10,41 +10,28 @@ import { ResourcePoolService } from "../data/data.module";
     selector: "element-manager",
     templateUrl: "element-manager.component.html"
 })
-export class ElementManagerComponent implements OnInit {
+export class ElementManagerComponent {
 
     @Input() element: any;
-    @Input() isElementNew: boolean;
     @Output() cancelled = new EventEmitter();
     @Output() saved = new EventEmitter();
-    elementMaster: any = null;
 
     constructor(private logger: Logger,
-        private resourcePoolService: ResourcePoolService) {
+        private dataService: DataService) {
     }
 
     cancelElement() {
-
-        // TODO Find a better way?
-        // Can't use reject changes because in "New CMRP" case, these are newly added entities and reject changes removes them / coni2k - 23 Nov. '15
-        if (this.isElementNew) {
-            this.resourcePoolService.removeElement(this.element);
-        } else {
-            this.element.Name = this.elementMaster.Name;
-        }
-
+        this.element.entityAspect.rejectChanges();
         this.cancelled.emit();
     }
 
-    ngOnInit(): void {
-
-        if (!this.isElementNew) {
-            this.elementMaster = {
-                    Name: this.element.Name
-                };
-        }
-    }
-
     saveElement() {
-        this.saved.emit();
+        this.dataService.saveChanges().subscribe(() => {
+
+            // TODO Try to move this to a better place?
+            this.element.ResourcePool.updateCache();
+
+            this.saved.emit();
+        });
     }
 }

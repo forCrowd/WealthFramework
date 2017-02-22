@@ -2,6 +2,15 @@
 import { EntityQuery, FetchStrategy, Predicate } from "breeze-client";
 import { Observable, ObservableInput } from "rxjs/Observable";
 
+import { Element } from "./entities/element";
+import { ElementCell } from "./entities/element-cell";
+import { ElementField } from "./entities/element-field";
+import { ElementItem } from "./entities/element-item";
+import { ResourcePool } from "./entities/resource-pool";
+import { User } from "./entities/user";
+import { UserElementCell } from "./entities/user-element-cell";
+import { UserElementField } from "./entities/user-element-field";
+import { UserResourcePool } from "./entities/user-resource-pool";
 import { DataService } from "./data.module";
 import { Logger } from "../logger/logger.module";
 
@@ -52,34 +61,32 @@ export class ResourcePoolService {
             this.createUserElementField(elementField);
         }
 
-        // Related cells
+        return elementField;
+    }
+
+    createElementFieldRelatedCells(elementField: ElementField): void {
         elementField.Element.ElementItemSet.forEach((elementItem: any) => {
             this.createElementCell({
                 ElementField: elementField,
                 ElementItem: elementItem
             });
         });
-
-        return elementField;
     }
 
-    createElementItem(elementItem: any) {
+    createElementItem(elementItem: any): ElementItem {
+        return this.dataService.createEntity("ElementItem", elementItem) as ElementItem;
+    }
 
-        elementItem = this.dataService.createEntity("ElementItem", elementItem);
-
-        // Related cells
+    createElementItemRelatedCells(elementItem: any): void {
         elementItem.Element.ElementFieldSet.forEach((elementField: any) => {
             this.createElementCell({
                 ElementField: elementField,
                 ElementItem: elementItem
             });
         });
-
-        return elementItem;
     }
 
-    createResourcePoolBasic(initializeResourcePool?: any) {
-        initializeResourcePool = typeof initializeResourcePool !== "undefined" ? initializeResourcePool : false;
+    createResourcePoolEmpty() {
 
         var resourcePool: any = this.dataService.createEntity("ResourcePool", {
             User: this.dataService.currentUser,
@@ -91,6 +98,15 @@ export class ResourcePoolService {
         });
 
         this.createUserResourcePool(resourcePool);
+
+        return resourcePool;
+    }
+
+    createResourcePoolBasic(resourcePool?: any) {
+
+        if (typeof resourcePool === "undefined") {
+            resourcePool = this.createResourcePoolEmpty();
+        }
 
         var element: any = this.createElement({
             ResourcePool: resourcePool,
@@ -111,27 +127,28 @@ export class ResourcePoolService {
         });
 
         // Item 1
-        this.createElementItem({
+        var elementItem1 = this.createElementItem({
             Element: element,
             Name: "New item 1"
         });
 
+        // Related cells
+        this.createElementItemRelatedCells(elementItem1);
+
         // Item 2
-        this.createElementItem({
+        var elementItem2 = this.createElementItem({
             Element: element,
             Name: "New item 2"
         });
 
-        // Initialize
-        if (initializeResourcePool) {
-            resourcePool._init(true);
-        }
+        // Related cells
+        this.createElementItemRelatedCells(elementItem2);
 
         return resourcePool;
     }
 
-    createResourcePoolDirectIncomeAndMultiplier(initializeResourcePool: any) {
-        initializeResourcePool = typeof initializeResourcePool !== "undefined" ? initializeResourcePool : false;
+    // Obsolete at the moment / coni2k - 21 Feb. '17
+    createResourcePoolDirectIncomeAndMultiplier() {
 
         var resourcePool: any = this.createResourcePoolBasic();
 
@@ -153,15 +170,14 @@ export class ResourcePoolService {
             SortOrder: 2
         });
 
-        if (initializeResourcePool) {
-            resourcePool._init(true);
-        }
+        // Related cells
+        this.createElementFieldRelatedCells(numberOfSalesField);
 
         return resourcePool;
     }
 
-    createResourcePoolTwoElements(initializeResourcePool: any) {
-        initializeResourcePool = typeof initializeResourcePool !== "undefined" ? initializeResourcePool : false;
+    // Obsolete at the moment / coni2k - 21 Feb. '17
+    createResourcePoolTwoElements() {
 
         var resourcePool: any = this.createResourcePoolBasic();
 
@@ -206,10 +222,6 @@ export class ResourcePoolService {
 
         // Item 2 Cell
         item2.ElementCellSet[0].SelectedElementItem = element2Item2;
-
-        if (initializeResourcePool) {
-            resourcePool._init(true);
-        }
 
         return resourcePool;
     }

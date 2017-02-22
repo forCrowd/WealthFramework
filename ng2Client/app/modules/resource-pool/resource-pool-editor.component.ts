@@ -18,7 +18,7 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
 
     constructor(private dataService: DataService,
         private logger: Logger,
-        private resourcePoolFactory: ResourcePoolService,
+        private resourcePoolService: ResourcePoolService,
         private router: Router) {
     }
 
@@ -42,42 +42,42 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
     }
 
     decreaseElementCellNumericValue(cell: any) {
-        this.resourcePoolFactory.updateElementCellDecimalValue(cell, "decrease");
+        this.resourcePoolService.updateElementCellDecimalValue(cell, "decrease");
         this.saveStream.next();
     }
 
     decreaseElementMultiplier(element: any) {
-        this.resourcePoolFactory.updateElementMultiplier(element, "decrease");
+        this.resourcePoolService.updateElementMultiplier(element, "decrease");
         this.saveStream.next();
     }
 
     decreaseIndexRating(field: any) {
-        this.resourcePoolFactory.updateElementFieldIndexRating(field, "decrease");
+        this.resourcePoolService.updateElementFieldIndexRating(field, "decrease");
         this.saveStream.next();
     }
 
     decreaseResourcePoolRate() {
-        this.resourcePoolFactory.updateResourcePoolRate(this.resourcePool, "decrease");
+        this.resourcePoolService.updateResourcePoolRate(this.resourcePool, "decrease");
         this.saveStream.next();
     }
 
     increaseElementCellNumericValue(cell: any) {
-        this.resourcePoolFactory.updateElementCellDecimalValue(cell, "increase");
+        this.resourcePoolService.updateElementCellDecimalValue(cell, "increase");
         this.saveStream.next();
     }
 
     increaseElementMultiplier(element: any) {
-        this.resourcePoolFactory.updateElementMultiplier(element, "increase");
+        this.resourcePoolService.updateElementMultiplier(element, "increase");
         this.saveStream.next();
     }
 
     increaseIndexRating(field: any) {
-        this.resourcePoolFactory.updateElementFieldIndexRating(field, "increase");
+        this.resourcePoolService.updateElementFieldIndexRating(field, "increase");
         this.saveStream.next();
     }
 
     increaseResourcePoolRate() {
-        this.resourcePoolFactory.updateResourcePoolRate(this.resourcePool, "increase");
+        this.resourcePoolService.updateResourcePoolRate(this.resourcePool, "increase");
         this.saveStream.next();
     }
 
@@ -104,7 +104,7 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
         var resourcePoolUniqueKey = { username: this.username, resourcePoolKey: this.resourcePoolKey };
 
         // Get resource pool
-        this.resourcePoolFactory.getResourcePoolExpanded(resourcePoolUniqueKey)
+        this.resourcePoolService.getResourcePoolExpanded(resourcePoolUniqueKey)
             .subscribe((resourcePool: any) => {
 
                 if (typeof resourcePool === "undefined" || resourcePool === null) {
@@ -200,8 +200,8 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
     }
 
     manageResourcePool(): void {
-        const link = this.config.username + "/" + this.config.resourcePoolKey + "/edit";
-        this.router.navigate([link]);
+        const editLink = "/" + this.config.username + "/" + this.config.resourcePoolKey + "/edit";
+        this.router.navigate([editLink]);
     }
 
     manageResourcePoolEnabled(): boolean {
@@ -236,22 +236,22 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
     }
 
     resetElementCellNumericValue(cell: any) {
-        this.resourcePoolFactory.updateElementCellDecimalValue(cell, "reset");
+        this.resourcePoolService.updateElementCellDecimalValue(cell, "reset");
         this.saveStream.next();
     }
 
     resetElementMultiplier(element: any) {
-        this.resourcePoolFactory.updateElementMultiplier(element, "reset");
+        this.resourcePoolService.updateElementMultiplier(element, "reset");
         this.saveStream.next();
     }
 
     resetIndexRating(field: any) {
-        this.resourcePoolFactory.updateElementFieldIndexRating(field, "reset");
+        this.resourcePoolService.updateElementFieldIndexRating(field, "reset");
         this.saveStream.next();
     }
 
     resetResourcePoolRate() {
-        this.resourcePoolFactory.updateResourcePoolRate(this.resourcePool, "reset");
+        this.resourcePoolService.updateResourcePoolRate(this.resourcePool, "reset");
         this.saveStream.next();
     }
 
