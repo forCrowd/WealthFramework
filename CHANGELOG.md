@@ -1,5 +1,10 @@
 ### Changelog
 
+**0.72.1**
+
+* Connect2Effect - In survey page, rating value was replaced with rating percentage
+* DataObjects - "Popular Software Licenses" field index calculation type was changed to "Passive"
+
 **0.72.0**
 
 * Connect2Effect - Save Changes & Send Verification Email option
