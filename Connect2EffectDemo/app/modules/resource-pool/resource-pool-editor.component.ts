@@ -5,6 +5,7 @@ import { Subject } from "rxjs/Subject";
 import { ChartConfig, ChartDataItem } from "../ng-chart/ng-chart.module";
 import { DataService, ResourcePoolService } from "../data/data.module";
 import { Logger } from "../logger/logger.module";
+import { getUniqueEmail, getUniqueUserName } from "../../utils";
 
 //declare const __moduleName: string;
 
@@ -22,13 +23,19 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
         private router: Router) {
     }
 
+    bindingModel = {
+        UserName: "",
+        Email: ""
+    };
     @Input() config: any = { resourcePoolKey: "", username: "" };
     chartConfig: ChartConfig = null;
+    confirmRequired = true;
     currentUser: any = null;
     displayChart: boolean = false;
     displayDescription: boolean = false;
     displayIndexDetails = false;
     errorMessage: string = "";
+    isEmailValid = true;
     isSaving = false;
     resourcePool: any = null;
     resourcePoolKey = "";
@@ -62,6 +69,21 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
     }
 
     saveChanges() {
+
+        if (this.bindingModel.Email === "") {
+            this.isEmailValid = false;
+            return;
+        }
+
+        // Email & UserName are the same
+        this.bindingModel.UserName = this.bindingModel.Email;
+
+        this.confirmRequired = true;
+        this.saveStream.next();
+    }
+
+    saveChangesAlternative() {
+        this.confirmRequired = false;
         this.saveStream.next();
     }
 
@@ -248,9 +270,17 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
         var resourcePoolKey = typeof this.config.resourcePoolKey === "undefined" ? "" : this.config.resourcePoolKey;
 
         // Delayed save operation
-        this.saveStream.debounceTime(500)
-            .mergeMap(() => this.dataService.saveChanges()).subscribe(() => {
-                this.logger.log("Your changes have been saved!", null, true);
+        this.saveStream.debounceTime(0)
+            .subscribe((): any => {
+                if (this.confirmRequired) {
+                    this.dataService.register(this.bindingModel, true).subscribe((): any => {
+                        this.router.navigate(["/app/survey-completed", { confirm: this.confirmRequired }]);
+                    });
+                } else {
+                    this.dataService.saveChanges().subscribe(() => {
+                        this.router.navigate(["/app/survey-completed", { confirm: this.confirmRequired }]);
+                    });
+                }
             });
 
         // Event handlers
@@ -261,6 +291,12 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
             this.dataService.saveChangesStarted$.subscribe(() => this.saveChangesStart()));
         this.subscriptions.push(
             this.dataService.saveChangesCompleted$.subscribe(() => this.saveChangesCompleted()));
+
+        // Generate test data if localhost
+        if (window.location.hostname === "localhost") {
+            this.bindingModel.UserName = getUniqueUserName();
+            this.bindingModel.Email = getUniqueEmail();
+        }
 
         this.initialize(username, resourcePoolKey, this.dataService.currentUser);
     }

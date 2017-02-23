@@ -93,9 +93,23 @@
         /// <returns></returns>
         public async Task<IdentityResult> CreateAsync(User user, string password, string clientAppUrl)
         {
-            user.HasPassword = null;
+            IdentityResult result;
 
-            var result = await base.CreateAsync(user, password);
+            if (password.IsNullOrDefault())
+            {
+                user.HasPassword = false;
+
+                // Single use token: Since this is an external login, create single use token;
+                // it's going to be used to retrieve the bearer token by the client
+                Store.AddSingleUseToken(user);
+
+                result = await base.CreateAsync(user);
+            }
+            else
+            {
+                user.HasPassword = null;
+                result = await base.CreateAsync(user, password);
+            }
 
             if (result.Succeeded)
             {

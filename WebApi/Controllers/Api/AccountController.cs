@@ -234,6 +234,27 @@
             return Ok(user);
         }
 
+        // POST api/Account/RegisterWithoutPassword
+        [AllowAnonymous]
+        public async Task<IHttpActionResult> RegisterWithoutPassword(RegisterWithoutPasswordBindingModel model)
+        {
+            var user = new User(model.UserName, model.Email)
+            {
+                IsAnonymous = false
+            };
+
+            var result = await UserManager.CreateAsync(user, string.Empty, model.ClientAppUrl);
+            var errorResult = GetErrorResult(result);
+
+            if (errorResult != null)
+            {
+                return errorResult;
+            }
+
+            // TODO This should be Created?
+            return Ok(user);
+        }
+
         // POST api/Account/RegisterAnonymous
         [AllowAnonymous]
         public async Task<IHttpActionResult> RegisterAnonymous(RegisterAnonymousBindingModel model)

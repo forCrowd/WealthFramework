@@ -1,4 +1,4 @@
-﻿import { Component } from "@angular/core";
+﻿import { Component, OnDestroy, OnInit } from "@angular/core";
 
 //declare const __moduleName: string;
 

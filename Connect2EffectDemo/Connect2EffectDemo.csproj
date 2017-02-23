@@ -51,6 +51,7 @@
     <Content Include="app\images\flow.png" />
     <Content Include="app\images\others.png" />
     <Content Include="app\images\results.png" />
+    <Content Include="app\modules\content\survey-completed.component.html" />
     <Content Include="app\modules\content\survey.component.html" />
     <Content Include="app\modules\content\pitch.component.html" />
     <Content Include="app\modules\core\home.component.html" />
@@ -78,6 +79,7 @@
     <TypeScriptCompile Include="app\app.module.ts" />
     <TypeScriptCompile Include="app\main-aot.ts" />
     <TypeScriptCompile Include="app\main.ts" />
+    <TypeScriptCompile Include="app\modules\content\survey-completed.component.ts" />
     <TypeScriptCompile Include="app\modules\app-error-handler\app-error-handler.module.ts" />
     <TypeScriptCompile Include="app\modules\app-error-handler\app-error-handler.service.ts" />
     <TypeScriptCompile Include="app\modules\app-http\app-http.module.ts" />

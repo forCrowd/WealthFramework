@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.72.0**
+
+* Connect2Effect - Save Changes & Send Verification Email option
+
 **0.71.0**
 
 * ng2Client - New, simplified "Create resource pool page", manager & profile pages were improved
