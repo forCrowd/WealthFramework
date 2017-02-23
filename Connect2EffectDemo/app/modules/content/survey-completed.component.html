@@ -1,0 +1,21 @@
+﻿<h2>{{ confirmRequired ? "Confirm Email" : "Survey Completed" }}</h2>
+<div *ngIf="confirmRequired">
+<p>
+    A confirmation email has been sent to your email address.<br />
+    Please use the link in the email to confirm your email address.
+</p>
+<hr />
+<p>
+    If you didn't receive a confirmation email, please send it again.<br />
+</p>
+<p>
+    <button (click)="resendConfirmationEmail()" [disabled]="isResendDisabled" type="button" class="btn btn-primary">
+        Resend Confirmation Email
+    </button>
+</p>
+</div>
+<div *ngIf="!confirmRequired">
+    <p>
+        Thank you for participating to our survey!
+    </p>
+</div>

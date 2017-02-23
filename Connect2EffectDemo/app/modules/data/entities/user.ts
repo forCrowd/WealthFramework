@@ -12,8 +12,7 @@ export class User extends EntityBase {
         return this.fields.userName;
     }
     set UserName(value: string) {
-        var newValue = stripInvalidChars(value);
-
+        var newValue = value;
         if (this.fields.userName !== newValue) {
             this.fields.userName = newValue;
         }

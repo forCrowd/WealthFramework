@@ -270,7 +270,48 @@
                     </div>
                     <div class="col-md-12 text-center">
                         <hr />
-                        <button type="button" (click)="saveChanges()" class="btn-lg">Save Changes</button>
+                    </div>
+                    <div class="col-md-6 text-center" *ngIf="!currentUser.isAuthenticated()">
+                        <p>
+                            Enter your email address *<br />
+                            <input id="email" name="email" type="text" [(ngModel)]="bindingModel.Email" #emailInput="ngModel" class="form-control" style="display: inline-block !important;" required />
+                            <span class="text-danger" [ngClass]="{ 'hide': isEmailValid }"><br />Please enter an email address</span>
+                        </p>
+                        <button type="button" (click)="saveChanges()" class="btn btn-primary">Save Changes &amp; Send Verification Email</button>
+                        <p class="g-mt-20">
+                            <small>* Your email address will only be used as a unique id, and not for any other purpose.</small>
+                        </p>
+                    </div>
+                    <div class="col-md-6 text-center" *ngIf="!currentUser.isAuthenticated()">
+                        <p>
+                            Or if you don't want to enter your email address<br />
+                        </p>
+                        <button type="button" (click)="saveChangesAlternative()" class="btn btn-default">Save Changes Anonymously</button>
+                    </div>
+                    <div class="col-md-12 text-center" *ngIf="currentUser.isAuthenticated()">
+                        <button type="button" (click)="saveChangesAlternative()" class="btn btn-primary btn-lg">Save Changes</button>
+                    </div>
+                    <div class="col-md-12 text-center hide">
+                        <hr />
+                        <div *ngIf="!currentUser.isAuthenticated()">
+                            <p>
+                                Enter your email address *<br />
+                                <input id="email" name="email" type="text" [(ngModel)]="bindingModel.Email" #emailInput="ngModel" class="form-control" style="display: inline-block !important;" required />
+                                <span class="text-danger" [ngClass]="{ 'hide': isEmailValid }"><br />Please enter an email address</span>
+                            </p>
+                            <button type="button" (click)="saveChanges()" class="btn btn-primary">Save Changes &amp; Send Verification Email</button>
+                            <p>
+                                <small>* Your email address will only be used as a unique id, and will not be used for any other purpose.</small>
+                            </p>
+                            <hr />
+                            <p>
+                                Or if you don't want to enter your email address<br />
+                            </p>
+                            <button type="button" (click)="saveChangesAlternative()" class="btn btn-default">Save Changes Anonymously</button>
+                        </div>
+                        <div *ngIf="currentUser.isAuthenticated()">
+                            <button type="button" (click)="saveChangesAlternative()" class="btn btn-primary btn-lg">Save Changes</button>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -53,7 +53,7 @@ export class DataService {
         this.changeUserNameUrl = Settings.serviceAppUrl + "/api/Account/ChangeUserName";
         this.confirmEmailUrl = Settings.serviceAppUrl + "/api/Account/ConfirmEmail";
         this.externalLoginUrl = Settings.serviceAppUrl + "/api/Account/ExternalLogin";
-        this.registerUrl = Settings.serviceAppUrl + "/api/Account/Register";
+        this.registerUrl = Settings.serviceAppUrl + "/api/Account/RegisterWithoutPassword";
         this.registerAnonymousUrl = Settings.serviceAppUrl + "/api/Account/RegisterAnonymous";
         this.resendConfirmationEmailUrl = Settings.serviceAppUrl + "/api/Account/ResendConfirmationEmail";
         this.resetPasswordUrl = Settings.serviceAppUrl + "/api/Account/ResetPassword";
@@ -326,7 +326,7 @@ export class DataService {
 
                 this.currentUser.entityAspect.acceptChanges();
 
-                return this.getToken(registerBindingModel.UserName, registerBindingModel.Password, rememberMe)
+                return this.getToken("", "", rememberMe, updatedUser.SingleUseToken)
                     .mergeMap((): any => {
 
                         // Save the changes that's been done before the registration

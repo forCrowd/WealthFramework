@@ -69,6 +69,11 @@
         public string ClientAppUrl { get; set; }
     }
 
+    public class RegisterWithoutPasswordBindingModel : RegisterAnonymousBindingModel
+    {
+        public string ClientAppUrl { get; set; }
+    }
+
     public class RegisterAnonymousBindingModel
     {
         [Required]
