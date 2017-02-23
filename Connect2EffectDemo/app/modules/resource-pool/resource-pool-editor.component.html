@@ -157,7 +157,7 @@
                                                         <button title="5" type="button" (click)="rate5(elementCell)" [disabled]="isSaving" class="btn" [ngClass]="{ 'btn-primary': elementCell.numericValue() === 100, 'btn-default': elementCell.numericValue() !== 100 }">5</button>
                                                     </div>
                                                     <div [hidden]="resourcePool.RatingMode === 1">
-                                                        {{ elementCell.numericValue() | symbolic }}
+                                                        {{ elementCell.ratingPercentage() | percent }}
                                                     </div>
                                                 </div>
                                             </div>

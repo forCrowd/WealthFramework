@@ -276,7 +276,7 @@
 
             // Fields
             var importanceField = mainElement.AddField("License Rating", ElementFieldDataType.Decimal, false);
-            importanceField.EnableIndex();
+            importanceField.EnableIndex(ElementFieldIndexCalculationType.Passive, ElementFieldIndexSortType.HighestToLowest);
 
             // Items, cell, user cells
             mainElement.ElementItemSet.Skip(0).First().Name = "<a href='http://opensource.org/licenses/Apache-2.0' target='_blank'>Apache-2.0</a>";
