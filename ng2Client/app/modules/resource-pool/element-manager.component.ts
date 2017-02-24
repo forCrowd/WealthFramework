@@ -21,7 +21,7 @@ export class ElementManagerComponent {
     }
 
     cancelElement() {
-        this.element.entityAspect.rejectChanges();
+        this.element.rejectChanges();
         this.cancelled.emit();
     }
 

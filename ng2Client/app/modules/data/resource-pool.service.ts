@@ -31,18 +31,13 @@ export class ResourcePoolService {
         });
     }
 
-    // Event handlers
-    // Todo ng2
-    //$rootScope.$on("ElementField_DataTypeChanged", elementField_DataTypeChanged);
-    //$rootScope.$on("ElementField_IndexEnabledChanged", elementField_IndexEnabledChanged);
-
-    createElement(element: any) {
-        return this.dataService.createEntity("Element", element);
+    createElement(initialValues: Object) {
+        return this.dataService.createEntity("Element", initialValues);
     }
 
-    createElementCell(elementCellInitial: any) {
+    createElementCell(initialValues: Object) {
 
-        var elementCell: any = this.dataService.createEntity("ElementCell", elementCellInitial);
+        var elementCell: any = this.dataService.createEntity("ElementCell", initialValues);
 
         // User element cell
         if (elementCell.ElementField.DataType !== 6) {
@@ -52,38 +47,39 @@ export class ResourcePoolService {
         return elementCell;
     }
 
-    createElementField(elementField: any) {
+    createElementField(initialValues: Object) {
 
-        elementField = this.dataService.createEntity("ElementField", elementField);
+        const elementField = this.dataService.createEntity("ElementField", initialValues) as ElementField;
 
-        // Related user element field, if IndexEnabled
-        if (elementField.IndexEnabled) {
-            this.createUserElementField(elementField);
-        }
-
-        return elementField;
-    }
-
-    createElementFieldRelatedCells(elementField: ElementField): void {
+        // Related cells
         elementField.Element.ElementItemSet.forEach((elementItem: any) => {
             this.createElementCell({
                 ElementField: elementField,
                 ElementItem: elementItem
             });
         });
+
+        // Todo Is there a better way of doing this? / coni2k - 25 Feb. '17
+        // Event handlers
+        elementField.dataTypeChanged$.subscribe((elementField: ElementField) => { this.elementField_DataTypeChanged(elementField); });
+        elementField.indexEnabledChanged$.subscribe((elementField: ElementField) => { this.elementField_IndexEnabledChanged(elementField); });
+
+        return elementField;
     }
 
-    createElementItem(elementItem: any): ElementItem {
-        return this.dataService.createEntity("ElementItem", elementItem) as ElementItem;
-    }
+    createElementItem(initialValues: Object): ElementItem {
 
-    createElementItemRelatedCells(elementItem: any): void {
+        var elementItem = this.dataService.createEntity("ElementItem", initialValues) as ElementItem;
+
+        // Related cells
         elementItem.Element.ElementFieldSet.forEach((elementField: any) => {
             this.createElementCell({
                 ElementField: elementField,
                 ElementItem: elementItem
             });
         });
+
+        return elementItem;
     }
 
     createResourcePoolEmpty() {
@@ -132,17 +128,11 @@ export class ResourcePoolService {
             Name: "New item 1"
         });
 
-        // Related cells
-        this.createElementItemRelatedCells(elementItem1);
-
         // Item 2
         var elementItem2 = this.createElementItem({
             Element: element,
             Name: "New item 2"
         });
-
-        // Related cells
-        this.createElementItemRelatedCells(elementItem2);
 
         return resourcePool;
     }
@@ -169,9 +159,6 @@ export class ResourcePoolService {
             UseFixedValue: false,
             SortOrder: 2
         });
-
-        // Related cells
-        this.createElementFieldRelatedCells(numberOfSalesField);
 
         return resourcePool;
     }
@@ -344,14 +331,14 @@ export class ResourcePoolService {
         return userResourcePool;
     }
 
-    elementField_DataTypeChanged(event: any, elementField: any) {
+    elementField_DataTypeChanged(elementField: ElementField) {
 
         // Related element cells: Clear old values and set default values if necessary
         elementField.ElementCellSet.forEach((elementCell: any) => {
 
             elementCell.SelectedElementItemId = null;
 
-            this.removeUserElementCell(elementCell, false);
+            elementCell.removeUserElementCell(false);
 
             if (elementCell.ElementField.DataType !== 6) {
                 this.createUserElementCell(elementCell, null, false);
@@ -359,17 +346,13 @@ export class ResourcePoolService {
         });
     }
 
-    elementField_IndexEnabledChanged(event: any, elementField: any) {
-
-        if (elementField.Element === null) {
-            return;
-        }
+    elementField_IndexEnabledChanged(elementField: ElementField) {
 
         // Add user element field, if IndexEnabled and there is none
-        if (elementField.IndexEnabled) {
+        if (elementField.IndexEnabled && elementField.currentUserElementField() === null) {
             this.createUserElementField(elementField);
-        } else {
-            this.removeUserElementField(elementField);
+        } else if (!elementField.IndexEnabled && elementField.currentUserElementField() !== null) {
+            elementField.removeUserElementField();
         }
     }
 
@@ -416,6 +399,15 @@ export class ResourcePoolService {
                 // ResourcePool
                 var resourcePool = response.results[0];
 
+                // Todo Is there a better way of doing this? / coni2k - 25 Feb. '17
+                // Events handlers
+                resourcePool.ElementSet.forEach((element: Element) => {
+                    element.ElementFieldSet.forEach((elementField: ElementField) => {
+                        elementField.dataTypeChanged$.subscribe((elementField: ElementField) => { this.elementField_DataTypeChanged(elementField); });
+                        elementField.indexEnabledChanged$.subscribe((elementField: ElementField) => { this.elementField_IndexEnabledChanged(elementField); });
+                    });
+                });
+
                 if (!fetchedEarlier) {
 
                     // Init
@@ -458,113 +450,6 @@ export class ResourcePoolService {
             });
     }
 
-    removeElement(element: any) {
-
-        // Remove from selectedElement
-        if (element.ResourcePool.selectedElement() === element) {
-            element.ResourcePool.selectedElement(null);
-        }
-
-        // Related items
-        var elementItemSet = element.ElementItemSet.slice();
-        elementItemSet.forEach((elementItem: any) => {
-            this.removeElementItem(elementItem);
-        });
-
-        // Related fields
-        var elementFieldSet = element.ElementFieldSet.slice();
-        elementFieldSet.forEach((elementField: any) => {
-            this.removeElementField(elementField);
-        });
-
-        element.entityAspect.setDeleted();
-    }
-
-    removeElementCell(elementCell: any) {
-
-        // Related user cells
-        this.removeUserElementCell(elementCell);
-
-        elementCell.entityAspect.setDeleted();
-    }
-
-    removeElementField(elementField: any) {
-
-        // Related cells
-        var elementCellSet = elementField.ElementCellSet.slice();
-        elementCellSet.forEach((elementCell: any) => {
-            this.removeElementCell(elementCell);
-        });
-
-        // Related user element fields
-        this.removeUserElementField(elementField);
-
-        elementField.entityAspect.setDeleted();
-    }
-
-    removeElementItem(elementItem: any) {
-
-        // Related cells
-        var elementCellSet = elementItem.ElementCellSet.slice();
-        elementCellSet.forEach((elementCell: any) => {
-            this.removeElementCell(elementCell);
-        });
-
-        elementItem.entityAspect.setDeleted();
-    }
-
-    removeResourcePool(resourcePool: any) {
-
-        // Related elements
-        var elementSet = resourcePool.ElementSet.slice();
-        elementSet.forEach((element: any) => {
-            this.removeElement(element);
-        });
-
-        // Related user resource pools
-        this.removeUserResourcePool(resourcePool);
-
-        resourcePool.entityAspect.setDeleted();
-    }
-
-    removeUserElementCell(elementCell: any, updateCache?: any) {
-        updateCache = typeof updateCache !== "undefined" ? updateCache : true;
-
-        var currentUserElementCell = elementCell.currentUserCell();
-
-        if (currentUserElementCell !== null) {
-            currentUserElementCell.entityAspect.setDeleted();
-
-            if (updateCache) {
-                elementCell.setCurrentUserNumericValue();
-            }
-        }
-    }
-
-    removeUserElementField(elementField: any) {
-
-        var currentUserElementField = elementField.currentUserElementField();
-
-        if (currentUserElementField !== null) {
-            currentUserElementField.entityAspect.setDeleted();
-
-            // Update the cache
-            elementField.setCurrentUserIndexRating();
-        }
-    }
-
-    removeUserResourcePool(resourcePool: any) {
-
-        var currentUserResourcePool = resourcePool.currentUserResourcePool();
-
-        if (currentUserResourcePool !== null) {
-            currentUserResourcePool.entityAspect.setDeleted();
-
-            // Update the cache
-            resourcePool.setCurrentUserResourcePoolRate();
-        }
-    }
-
     // When an entity gets updated through angular, unlike breeze updates, it doesn't sync RowVersion automatically
     // After each update, call this function to sync the entities RowVersion with the server's. Otherwise it'll get Conflict error
     // coni2k - 05 Jan. '16
@@ -603,7 +488,7 @@ export class ResourcePoolService {
             }
             case "reset": {
 
-                this.removeUserElementCell(elementCell);
+                elementCell.removeUserElementCell();
                 break;
             }
         }
@@ -655,7 +540,7 @@ export class ResourcePoolService {
             }
             case "reset": {
 
-                this.removeUserElementCell(elementCell, false);
+                elementCell.removeUserElementCell(false);
                 break;
             }
         }
@@ -689,7 +574,7 @@ export class ResourcePoolService {
             }
             case "reset": {
 
-                this.removeUserElementField(elementField);
+                elementField.removeUserElementField();
                 break;
             }
         }
@@ -763,7 +648,7 @@ export class ResourcePoolService {
             }
             case "reset": {
 
-                this.removeUserResourcePool(resourcePool);
+                resourcePool.removeUserResourcePool();
                 break;
             }
         }

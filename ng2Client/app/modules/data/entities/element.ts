@@ -14,22 +14,19 @@ export class Element extends EntityBase {
         if (this.fields.IsMainElement !== value) {
             this.fields.IsMainElement = value;
 
-            // TODO When this prop set in constructor, ResourcePool is null, in such case, ignore
-            // However, it would be better to always have a ResourcePool? / coni2k - 29 Nov. '15
-            if (typeof this.ResourcePool === "undefined" || this.ResourcePool === null) {
-                return;
-            }
+            if (this.initialized) {
 
-            // Main element check: If there is another element that its IsMainElement flag is true, make it false
-            if (value) {
-                this.ResourcePool.ElementSet.forEach((element: any) => {
-                    if (element !== this && element.IsMainElement) {
-                        element.IsMainElement = false;
-                    }
-                });
+                // Main element check: If there is another element that its IsMainElement flag is true, make it false
+                if (value) {
+                    this.ResourcePool.ElementSet.forEach((element: any) => {
+                        if (element !== this && element.IsMainElement) {
+                            element.IsMainElement = false;
+                        }
+                    });
 
-                // Update selectedElement of resourcePool
-                this.ResourcePool.selectedElement(this);
+                    // Update selectedElement of resourcePool
+                    this.ResourcePool.selectedElement(this);
+                }
             }
         }
     }
@@ -63,6 +60,10 @@ export class Element extends EntityBase {
         multiplierField: null,
         totalResourcePoolAmount: null
     };
+
+    static initializer(entity: Element) {
+        super.initializer(entity);
+    }
 
     directIncome() {
 
@@ -196,6 +197,32 @@ export class Element extends EntityBase {
         }
 
         return this.fields.parent;
+    }
+
+    rejectChanges(): void {
+        this.entityAspect.rejectChanges();
+    }
+
+    remove() {
+
+        // Remove from selectedElement
+        if (this.ResourcePool.selectedElement() === this) {
+            this.ResourcePool.selectedElement(null);
+        }
+
+        // Related items
+        var elementItemSet = this.ElementItemSet.slice();
+        elementItemSet.forEach((elementItem: any) => {
+            elementItem.remove();
+        });
+
+        // Related fields
+        var elementFieldSet = this.ElementFieldSet.slice();
+        elementFieldSet.forEach((elementField: any) => {
+            elementField.remove();
+        });
+
+        this.entityAspect.setDeleted();
     }
 
     resourcePoolAmount() {

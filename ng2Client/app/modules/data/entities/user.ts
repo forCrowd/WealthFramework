@@ -41,6 +41,10 @@ export class User extends EntityBase {
     UserElementFieldSet: any[];
     UserElementCellSet: any[];
 
+    static initializer(entity: User) {
+        super.initializer(entity);
+    }
+
     private fields: {
         userName: string
     } = {

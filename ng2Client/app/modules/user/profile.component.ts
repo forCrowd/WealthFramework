@@ -63,7 +63,7 @@ export class ProfileComponent implements OnInit {
     }
 
     removeResourcePool(resourcePool: any): void {
-        this.resourcePoolService.removeResourcePool(resourcePool);
+        resourcePool.remove();
         this.dataService.saveChanges().subscribe(() => {
             this.displayMain = true;
         });
