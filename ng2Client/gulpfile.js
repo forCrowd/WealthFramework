@@ -256,7 +256,7 @@ function getEnvironmentSettingsFile(environment) {
 
 // Todo Try to move this to an xml file and read it from there? / coni2k - 25 Dec. '16
 function getWebConfigHttpsBlock(environment) {
-    return environment !== "prod"
+    return environment !== "production"
         ? ""
         : "" + "\r\n"
         + "                <rule name=\"Redirect to https\" stopProcessing=\"true\" enabled=\"true\">" + "\r\n"

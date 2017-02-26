@@ -279,33 +279,16 @@
             importanceField.EnableIndex(ElementFieldIndexCalculationType.Passive, ElementFieldIndexSortType.HighestToLowest);
 
             // Items, cell, user cells
-            mainElement.ElementItemSet.Skip(0).First().Name = "<a href='http://opensource.org/licenses/Apache-2.0' target='_blank'>Apache-2.0</a>";
-            //mainElement.ElementItemSet.Skip(0).First().Name = "Apache-2.0";
-            //mainElement.ElementItemSet.Skip(0).First().NameCell.SetValue("<a href='http://opensource.org/licenses/Apache-2.0' target='_blank'>Apache-2.0</a>");
+            mainElement.ElementItemSet.Skip(0).First().Name = "Apache-2.0";
             mainElement.ElementItemSet.Skip(0).First().AddCell(importanceField);
 
-            //mainElement.ElementItemSet.Skip(1).First().Name = "BSD-3-Clause";
-            //mainElement.ElementItemSet.Skip(1).First().NameCell.SetValue("<a href='http://opensource.org/licenses/BSD-3-Clause' target='_blank'>BSD-3-Clause</a>");
-            //mainElement.ElementItemSet.Skip(1).First().AddCell(importanceField).SetValue(ratingPerLicense);
-
-            mainElement.ElementItemSet.Skip(1).First().Name = "<a href='http://opensource.org/licenses/GPL-3.0' target='_blank'>GPL-3.0</a>";
-            //mainElement.ElementItemSet.Skip(1).First().Name = "GPL-3.0";
-            //mainElement.ElementItemSet.Skip(1).First().NameCell.SetValue("<a href='http://opensource.org/licenses/GPL-3.0' target='_blank'>GPL-3.0</a>");
+            mainElement.ElementItemSet.Skip(1).First().Name = "EULA (Wikipedia)";
             mainElement.ElementItemSet.Skip(1).First().AddCell(importanceField);
 
-            //mainElement.ElementItemSet.Skip(3).First().Name = "LGPL-3.0";
-            //mainElement.ElementItemSet.Skip(3).First().NameCell.SetValue("<a href='http://opensource.org/licenses/LGPL-3.0' target='_blank'>LGPL-3.0</a>");
-            //mainElement.ElementItemSet.Skip(3).First().AddCell(importanceField).SetValue(ratingPerLicense);
-
-            mainElement.ElementItemSet.Skip(2).First().Name = "<a href='http://opensource.org/licenses/MIT' target='_blank'>MIT</a>";
-            //mainElement.ElementItemSet.Skip(2).First().Name = "MIT";
-            //mainElement.ElementItemSet.Skip(2).First().NameCell.SetValue("<a href='http://opensource.org/licenses/MIT' target='_blank'>MIT</a>");
+            mainElement.ElementItemSet.Skip(2).First().Name = "GPL-3.0";
             mainElement.ElementItemSet.Skip(2).First().AddCell(importanceField);
 
-            // TODO Check it again
-            mainElement.ElementItemSet.Skip(3).First().Name = "<a href='http://en.wikipedia.org/wiki/End-user_license_agreement' target='_blank'>EULA (Wikipedia)</a>";
-            //mainElement.ElementItemSet.Skip(3).First().Name = "EULA (Wikipedia)";
-            //mainElement.ElementItemSet.Skip(3).First().NameCell.SetValue("<a href='http://en.wikipedia.org/wiki/End-user_license_agreement' target='_blank'>EULA (Wikipedia)</a>");
+            mainElement.ElementItemSet.Skip(3).First().Name = "MIT";
             mainElement.ElementItemSet.Skip(3).First().AddCell(importanceField);
 
             // Return
@@ -547,135 +530,85 @@
             return resourcePool;
         }
 
-        [Obsolete("Not in use")]
-        public ResourcePool CreateKnowledgeIndexPopularSoftwareLicenseSampleAlternative(User user)
+        public ResourcePool CreateConnect2EffectDemo(User user)
         {
-            const int numberOfItems = 4;
+            const int numberOfItems = 5;
 
             // Resource pool
             var resourcePool = CreateDefaultResourcePool(user: user,
-                resourcePoolName: "Knowledge Index - Popular Software Licenses",
+                resourcePoolName: "Connect2Effect Demo",
                 useFixedResourcePoolRate: true,
-                mainElementName: "Organization",
-                addDirectIncomeField: true,
-                addMultiplierField: true,
-                addImportanceIndex: false,
-                numberOfItems: numberOfItems);
-
-            // License element
-            var licenseElement = resourcePool.AddElement("License");
-
-            // Fields
-            var linkField = licenseElement.AddField("Link", ElementFieldDataType.String);
-            var importanceField = licenseElement.AddField("License Rating", ElementFieldDataType.Decimal, false);
-            importanceField.EnableIndex();
-
-            // Items, cell, user cells
-            licenseElement.AddItem("Apache-2.0").AddCell(linkField)
-                .SetValue("<a href='http://opensource.org/licenses/Apache-2.0' target='_blank'>Link</a>")
-                .ElementItem
-                .AddCell(importanceField);
-
-            //licenseElement.AddItem("BSD-3-Clause")
-            //    .AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/BSD-3-Clause' target='_blank'>Link</a>")
-            //    .ElementItem
-            //    .AddCell(importanceField).SetValue(ratingPerLicense);
-
-            licenseElement.AddItem("GPL-3.0")
-                .AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/GPL-3.0' target='_blank'>Link</a>")
-                .ElementItem
-                .AddCell(importanceField);
-
-            //licenseElement.AddItem("LGPL-3.0")
-            //    .AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/LGPL-3.0' target='_blank'>Link</a>")
-            //    .ElementItem
-            //    .AddCell(importanceField).SetValue(ratingPerLicense);
-
-            licenseElement.AddItem("MIT")
-                .AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/MIT' target='_blank'>Link</a>")
-                .ElementItem
-                .AddCell(importanceField);
-
-            // TODO Check it again
-            licenseElement.AddItem("EULA (Wikipedia)")
-                .AddCell(linkField).SetValue("<a href='http://en.wikipedia.org/wiki/End-user_license_agreement' target='_blank'>Link</a>")
-                .ElementItem
-                .AddCell(importanceField);
-
-            // Main element
-            var mainElement = resourcePool.ElementSet.First();
-            mainElement.DirectIncomeField.Name = "Sales Price";
-            mainElement.MultiplierField.Name = "Number of Sales";
-            var licenseField = mainElement.AddField("License", ElementFieldDataType.Element);
-            licenseField.SelectedElement = licenseElement;
-
-            // Items, cell, user cells
-            // TODO How about ToList()[0]?
-            mainElement.ElementItemSet.Skip(0).First().Name = "Apache-2.0 Organization";
-            mainElement.ElementItemSet.Skip(0).First().AddCell(licenseField).SetValue(licenseElement.ElementItemSet.Skip(0).First());
-            //mainElement.ElementItemSet.Skip(1).First().Name = "BSD-3-Clause Organization";
-            //mainElement.ElementItemSet.Skip(1).First().AddCell(licenseField).SetValue(licenseElement.ElementItemSet.Skip(1).First());
-            mainElement.ElementItemSet.Skip(1).First().Name = "GPL-3.0 Organization";
-            mainElement.ElementItemSet.Skip(1).First().AddCell(licenseField).SetValue(licenseElement.ElementItemSet.Skip(2).First());
-            //mainElement.ElementItemSet.Skip(3).First().Name = "LGPL-3.0 Organization";
-            //mainElement.ElementItemSet.Skip(3).First().AddCell(licenseField).SetValue(licenseElement.ElementItemSet.Skip(3).First());
-            mainElement.ElementItemSet.Skip(2).First().Name = "MIT Organization";
-            mainElement.ElementItemSet.Skip(2).First().AddCell(licenseField).SetValue(licenseElement.ElementItemSet.Skip(4).First());
-            mainElement.ElementItemSet.Skip(3).First().Name = "EULA Organization";
-            mainElement.ElementItemSet.Skip(3).First().AddCell(licenseField).SetValue(licenseElement.ElementItemSet.Skip(5).First());
-
-            // Return
-            return resourcePool;
-        }
-
-        [Obsolete("Not in use")]
-        public ResourcePool CreateKnowledgeIndexPopularSoftwareLicenseSampleAlternative2(User user)
-        {
-            const int numberOfItems = 4;
-
-            // Resource pool
-            var resourcePool = CreateDefaultResourcePool(user: user,
-                resourcePoolName: "Knowledge Index - Popular Software Licenses",
-                useFixedResourcePoolRate: true,
-                mainElementName: "License",
+                mainElementName: "Project",
                 addDirectIncomeField: false,
                 addMultiplierField: false,
                 addImportanceIndex: false,
                 numberOfItems: numberOfItems);
 
-            // Main element
-            var mainElement = resourcePool.ElementSet.First();
+            resourcePool.InitialValue = 25000;
+
+            // Industry element
+            var goalElement = resourcePool.AddElement("SDG");
 
             // Fields
-            var linkField = mainElement.AddField("Link", ElementFieldDataType.String);
-            var importanceField = mainElement.AddField("License Rating", ElementFieldDataType.Decimal, false);
-            importanceField.EnableIndex();
+            var goalRatingField = goalElement.AddField("Goal Rating", ElementFieldDataType.Decimal, false);
+            goalRatingField.EnableIndex();
+
+            // Items, cells, user cells
+            var goal1 = goalElement.AddItem("1 No Poverty").AddCell(goalRatingField).ElementItem;
+            var goal2 = goalElement.AddItem("2 Zero Hunger").AddCell(goalRatingField).ElementItem;
+            var goal9 = goalElement.AddItem("9 Industry, Innovation And Infrastructure").AddCell(goalRatingField).ElementItem;
+            var goal10 = goalElement.AddItem("10 Reduced Inequalities").AddCell(goalRatingField).ElementItem;
+            var goal12 = goalElement.AddItem("12 Responsible Consumption").AddCell(goalRatingField).ElementItem;
+
+            // License element
+            var legalEntityElement = resourcePool.AddElement("Legal Entity");
+
+            // Fields
+            var legalEntityRating = legalEntityElement.AddField("Legal Entity Rating", ElementFieldDataType.Decimal, false);
+            legalEntityRating.EnableIndex();
 
             // Items, cell, user cells
-            mainElement.ElementItemSet.Skip(0).First().Name = "Apache-2.0";
-            mainElement.ElementItemSet.Skip(0).First().AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/Apache-2.0' target='_blank'>Link</a>");
-            mainElement.ElementItemSet.Skip(0).First().AddCell(importanceField);
+            var forProfit = legalEntityElement.AddItem("For-profit")
+                .AddCell(legalEntityRating).ElementItem;
 
-            //mainElement.ElementItemSet.Skip(1).First().Name = "BSD-3-Clause";
-            //mainElement.ElementItemSet.Skip(1).First().AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/BSD-3-Clause' target='_blank'>Link</a>");
-            //mainElement.ElementItemSet.Skip(1).First().AddCell(importanceField).SetValue(ratingPerLicense);
+            var nonProfit = legalEntityElement.AddItem("Non-profit")
+                .AddCell(legalEntityRating).ElementItem;
 
-            mainElement.ElementItemSet.Skip(1).First().Name = "GPL-3.0";
-            mainElement.ElementItemSet.Skip(1).First().AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/GPL-3.0' target='_blank'>Link</a>");
-            mainElement.ElementItemSet.Skip(1).First().AddCell(importanceField);
+            // Main element
+            var mainElement = resourcePool.ElementSet.First();
+            //mainElement.MultiplierField.Name = "Number of Likes";
 
-            //mainElement.ElementItemSet.Skip(3).First().Name = "LGPL-3.0";
-            //mainElement.ElementItemSet.Skip(3).First().AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/LGPL-3.0' target='_blank'>Link</a>");
-            //mainElement.ElementItemSet.Skip(3).First().AddCell(importanceField).SetValue(ratingPerLicense);
+            var industryField = mainElement.AddField("SDG", ElementFieldDataType.Element);
+            industryField.SelectedElement = goalElement;
 
-            mainElement.ElementItemSet.Skip(2).First().Name = "MIT";
-            mainElement.ElementItemSet.Skip(2).First().AddCell(linkField).SetValue("<a href='http://opensource.org/licenses/MIT' target='_blank'>Link</a>");
-            mainElement.ElementItemSet.Skip(2).First().AddCell(importanceField);
+            var legalEntityField = mainElement.AddField("Legal Entity", ElementFieldDataType.Element);
+            legalEntityField.SelectedElement = legalEntityElement;
 
-            // TODO Check it again
-            mainElement.ElementItemSet.Skip(3).First().Name = "EULA (Wikipedia)";
-            mainElement.ElementItemSet.Skip(3).First().AddCell(linkField).SetValue("<a href='http://en.wikipedia.org/wiki/End-user_license_agreement' target='_blank'>Link</a>");
-            mainElement.ElementItemSet.Skip(3).First().AddCell(importanceField);
+            // Items, cell, user cells
+            var itemIndex = 0;
+            mainElement.ElementItemSet.Skip(itemIndex).First().Name = "Project A";
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SetValue(goal1);
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(legalEntityField).SetValue(nonProfit);
+
+            itemIndex = 1;
+            mainElement.ElementItemSet.Skip(itemIndex).First().Name = "Project B";
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SetValue(goal2);
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(legalEntityField).SetValue(forProfit);
+
+            itemIndex = 2;
+            mainElement.ElementItemSet.Skip(itemIndex).First().Name = "Project C";
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SetValue(goal9);
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(legalEntityField).SetValue(nonProfit);
+
+            itemIndex = 3;
+            mainElement.ElementItemSet.Skip(itemIndex).First().Name = "Project D";
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SetValue(goal10);
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(legalEntityField).SetValue(forProfit);
+
+            itemIndex = 4;
+            mainElement.ElementItemSet.Skip(itemIndex).First().Name = "Project E";
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(industryField).SetValue(goal12);
+            mainElement.ElementItemSet.Skip(itemIndex).First().AddCell(legalEntityField).SetValue(nonProfit);
 
             // Return
             return resourcePool;

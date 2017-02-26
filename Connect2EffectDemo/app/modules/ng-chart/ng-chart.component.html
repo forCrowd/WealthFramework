@@ -1,2 +1,0 @@
-﻿<div *ngIf="!displayChart" [ngStyle]="{'height': chartSize.height, 'width': chartSize.width}"></div>
-<chart *ngIf="displayChart" [options]="config.options" (load)="saveChartObject($event.context)"></chart>

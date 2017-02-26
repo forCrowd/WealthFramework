@@ -122,6 +122,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             var totalCostIndexExistingSystemSample = resourcePoolRepository.CreateTotalCostIndexExistingSystemSample(sampleUser);
             var totalCostIndexNewSystemSample = resourcePoolRepository.CreateTotalCostIndexNewSystemSample(sampleUser);
             var allInOneSample = resourcePoolRepository.CreateAllInOneSample(sampleUser);
+            var connect2effectDemo = resourcePoolRepository.CreateConnect2EffectDemo(sampleUser);
 
             // Set Id fields explicitly, since strangely EF doesn't save them in the order that they've been added to ResourcePoolSet.
             // And they're referred with these Ids on front-end samples
@@ -135,6 +136,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             totalCostIndexExistingSystemSample.Id = 5;
             totalCostIndexNewSystemSample.Id = 6;
             allInOneSample.Id = 7;
+            connect2effectDemo.Id = 8;
 
             // Insert
             resourcePoolRepository.Insert(billionDollarQuestion);
@@ -147,6 +149,7 @@ namespace forCrowd.WealthEconomy.DataObjects.Migrations
             resourcePoolRepository.Insert(totalCostIndexExistingSystemSample);
             resourcePoolRepository.Insert(totalCostIndexNewSystemSample);
             resourcePoolRepository.Insert(allInOneSample);
+            resourcePoolRepository.Insert(connect2effectDemo);
 
             // First save
             context.SaveChanges();
