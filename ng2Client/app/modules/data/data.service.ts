@@ -534,11 +534,17 @@ export class DataService {
                 }
             }
 
-            // Message: Controllers can return custom user-related error messages (email address is not correct etc.)
-            if (message === "" && body.Message !== "") {
+            // Message: Controllers return custom user-related error messages (email address is not correct etc.)
+            if (message === "" && typeof body.Message !== "undefined" && body.Message !== "") {
                 message = body.Message;
             }
 
+            // error_description: Token end point returns an error response with "error" & "error_description"
+            if (message === "" && typeof body.error_description !== "undefined" && body.error_description !== "") {
+                message = body.error_description;
+            }
+
+            // If we caught one of these errors, just display it to the user, no further action is necessary
             if (message !== "") {
                 this.logger.logError(message, undefined, true);
                 alreadyHandled = true;

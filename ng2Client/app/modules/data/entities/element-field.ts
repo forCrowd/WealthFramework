@@ -1,6 +1,7 @@
 ﻿import { EventEmitter } from "@angular/core";
 
 import { EntityBase } from "./entity-base";
+import { ElementFieldDataType } from "./enums";
 
 export class ElementField extends EntityBase {
 
@@ -13,12 +14,29 @@ export class ElementField extends EntityBase {
     }
     set DataType(value: any) {
         if (this.fields.dataType !== value) {
-
-            // Finally, set it
             this.fields.dataType = value;
 
-            // Todo ng2
-            //$rootScope.$broadcast("ElementField_DataTypeChanged", this);
+            if (this.initialized) {
+
+                // a. UseFixedValue must be null for String & Element types
+                if (value === ElementFieldDataType.String ||
+                    value === ElementFieldDataType.Element) {
+                    this.UseFixedValue = null;
+                }
+
+                // b. UseFixedValue must be "false" for Multiplier type
+                if (value === ElementFieldDataType.Multiplier) {
+                    this.UseFixedValue = false;
+                }
+
+                // c. DirectIncome cannot be Use Fixed Value false at the moment
+                if (value === ElementFieldDataType.DirectIncome) {
+                    this.UseFixedValue = true;
+                }
+
+                // Event
+                this.dataTypeChanged$.emit(this);
+            }
         }
     }
     SelectedElementId: any = null;
@@ -30,11 +48,12 @@ export class ElementField extends EntityBase {
         if (this.fields.indexEnabled !== value) {
             this.fields.indexEnabled = value;
 
-            this.IndexCalculationType = value ? 1 : 0;
-            this.IndexSortType = value ? 1 : 0;
+            if (this.initialized) {
+                this.IndexCalculationType = value ? 1 : 0;
+                this.IndexSortType = value ? 1 : 0;
 
-            // Todo ng2
-            //$rootScope.$broadcast("ElementField_IndexEnabledChanged", this);
+                this.indexEnabledChanged$.emit(this);
+            }
 
             // TODO Complete this block!
 
@@ -70,6 +89,8 @@ export class ElementField extends EntityBase {
     ElementCellSet: any[];
     UserElementFieldSet: any[];
 
+    dataTypeChanged$: EventEmitter<ElementField> = new EventEmitter<ElementField>();
+    indexEnabledChanged$: EventEmitter<ElementField> = new EventEmitter<ElementField>();
     indexRatingUpdated$: EventEmitter<number> = new EventEmitter<number>();
 
     private fields: {
@@ -113,6 +134,10 @@ export class ElementField extends EntityBase {
         rating: null,
         indexIncome: null
     };
+
+    static initializer(entity: ElementField) {
+        super.initializer(entity);
+    }
 
     currentUserElementField() {
         return this.UserElementFieldSet.length > 0 ?
@@ -239,7 +264,54 @@ export class ElementField extends EntityBase {
         return this.fields.referenceRatingMultiplied;
     }
 
-    setCurrentUserIndexRating(updateRelated: any) {
+    rejectChanges(): void {
+
+        // Related cells
+        var elementCellSet = this.ElementCellSet.slice();
+        elementCellSet.forEach((elementCell: any) => {
+            elementCell.rejectChanges();
+        });
+
+        // Related user element fields
+        var currentUserElementField = this.currentUserElementField();
+
+        if (currentUserElementField !== null) {
+            currentUserElementField.entityAspect.rejectChanges();
+
+            // Update the cache
+            this.setCurrentUserIndexRating();
+        }
+
+        this.entityAspect.rejectChanges();
+    }
+
+    remove(elementField: any) {
+
+        // Related cells
+        var elementCellSet = this.ElementCellSet.slice();
+        elementCellSet.forEach((elementCell: any) => {
+            elementCell.remove();
+        });
+
+        // Related user element fields
+        this.removeUserElementField();
+
+        this.entityAspect.setDeleted();
+    }
+
+    removeUserElementField() {
+
+        var currentUserElementField = this.currentUserElementField();
+
+        if (currentUserElementField !== null) {
+            currentUserElementField.entityAspect.setDeleted();
+
+            // Update the cache
+            this.setCurrentUserIndexRating();
+        }
+    }
+
+    setCurrentUserIndexRating(updateRelated?: any) {
         updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
 
         var value = this.currentUserElementField() !== null ?

@@ -49,6 +49,10 @@ export class ElementCell extends EntityBase {
         indexIncome: null
     };
 
+    static initializer(entity: ElementCell) {
+        super.initializer(entity);
+    }
+
     aggressiveRating() {
         if (this.fields.aggressiveRating === null) {
             this.setAggressiveRating(false);
@@ -185,6 +189,44 @@ export class ElementCell extends EntityBase {
         return this.fields.ratingPercentage;
     }
 
+    rejectChanges(updateCache?: boolean): void {
+        updateCache = typeof updateCache !== "undefined" ? updateCache : true;
+
+        var currentUserElementCell = this.currentUserCell();
+
+        if (currentUserElementCell !== null) {
+            currentUserElementCell.entityAspect.rejectChanges();
+
+            if (updateCache) {
+                this.setCurrentUserNumericValue();
+            }
+        }
+
+        this.entityAspect.rejectChanges();
+    }
+
+    remove() {
+
+        // Related user cells
+        this.removeUserElementCell();
+
+        this.entityAspect.setDeleted();
+    }
+
+    removeUserElementCell(updateCache?: any) {
+        updateCache = typeof updateCache !== "undefined" ? updateCache : true;
+
+        var currentUserElementCell = this.currentUserCell();
+
+        if (currentUserElementCell !== null) {
+            currentUserElementCell.entityAspect.setDeleted();
+
+            if (updateCache) {
+                this.setCurrentUserNumericValue();
+            }
+        }
+    }
+
     // TODO Currently updateRelated is always "false"?
     setAggressiveRating(updateRelated: any) {
         updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
@@ -220,7 +262,7 @@ export class ElementCell extends EntityBase {
         }
     }
 
-    setCurrentUserNumericValue(updateRelated: any) {
+    setCurrentUserNumericValue(updateRelated?: any) {
         updateRelated = typeof updateRelated === "undefined" ? true : updateRelated;
 
         var value: any;

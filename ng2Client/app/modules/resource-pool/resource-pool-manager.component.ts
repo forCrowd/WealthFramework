@@ -85,25 +85,19 @@ export class ResourcePoolManagerComponent implements OnDestroy, OnInit {
     }
 
     cancelElementCell() {
-        this.elementCell.UserElementCellSet[0].entityAspect.rejectChanges();
-        this.elementCell.entityAspect.rejectChanges();
+        this.elementCell.rejectChanges();
         this.isElementCellEdit = false;
         this.elementCell = null;
     }
 
     cancelElementField() {
-
-        this.elementField.entityAspect.rejectChanges();
-        if (this.elementField.currentUserElementField() !== null) {
-            this.elementField.currentUserElementField().entityAspect.rejectChanges();
-        }
-
+        this.elementField.rejectChanges();
         this.isElementFieldEdit = false;
         this.elementField = null;
     }
 
     cancelElementItem() {
-        this.elementItem.entityAspect.rejectChanges();
+        this.elementItem.rejectChanges();
         this.isElementItemEdit = false;
         this.elementItem = null;
     }
@@ -291,36 +285,18 @@ export class ResourcePoolManagerComponent implements OnDestroy, OnInit {
     }
 
     removeElement(element: any) {
-        this.resourcePoolService.removeElement(element);
+        element.remove();
         this.dataService.saveChanges().subscribe();
     }
 
     removeElementField(elementField: any) {
-        this.resourcePoolService.removeElementField(elementField);
+        elementField.remove();
         this.dataService.saveChanges().subscribe();
     }
 
     removeElementItem(elementItem: any) {
-        this.resourcePoolService.removeElementItem(elementItem);
+        elementItem.remove();
         this.dataService.saveChanges().subscribe();
-    }
-
-    removeResourcePool() {
-
-        // Move this.resourcePool to a new variable and make it null,
-        // otherwise form fails, since it's still showing resourcePool
-        // Todo Introducing a new flag just for this purpose might be confusing at the moment.
-        // But when there is a proper modal for removeResourcePool, displayMain will be obsolete
-        // and can be used for this purpose? / coni2k - 09 Dec. '16
-        let resourcePool = this.resourcePool;
-        this.resourcePool = null;
-
-        this.resourcePoolService.removeResourcePool(resourcePool);
-
-        this.dataService.saveChanges()
-            .subscribe(() => {
-                this.router.navigate(["/" + this.dataService.currentUser.UserName]);
-            });
     }
 
     saveChangesStart(): void {
@@ -344,30 +320,6 @@ export class ResourcePoolManagerComponent implements OnDestroy, OnInit {
     }
 
     saveElementField() {
-
-        // Fixes
-        // a. UseFixedValue must be null for String & Element types
-        if (this.elementField.DataType === ElementFieldDataType.String ||
-            this.elementField.DataType === ElementFieldDataType.Element) {
-            this.elementField.UseFixedValue = null;
-        }
-
-        // b. UseFixedValue must be "false" for Multiplier type
-        if (this.elementField.DataType === ElementFieldDataType.Multiplier) {
-            this.elementField.UseFixedValue = false;
-        }
-
-        // c. DirectIncome cannot be Use Fixed Value false at the moment
-        if (this.elementField.DataType === ElementFieldDataType.DirectIncome) {
-            this.elementField.UseFixedValue = true;
-        }
-
-        // Related cells
-        if (this.elementField.entityAspect.entityState.isAdded()) {
-            this.resourcePoolService.createElementFieldRelatedCells(this.elementField);
-        }
-
-        // Save
         this.dataService.saveChanges()
             .subscribe(() => {
 
@@ -380,13 +332,6 @@ export class ResourcePoolManagerComponent implements OnDestroy, OnInit {
     }
 
     saveElementItem() {
-
-        // Related cells
-        if (this.elementItem.entityAspect.entityState.isAdded()) {
-            this.resourcePoolService.createElementItemRelatedCells(this.elementItem);
-        }
-
-        // Save
         this.dataService.saveChanges()
             .subscribe(() => {
 

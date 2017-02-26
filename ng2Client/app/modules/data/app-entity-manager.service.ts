@@ -53,16 +53,16 @@ export class AppEntityManager extends EntityManager {
 
         // Metadata store
         let store = this.metadataStore;
-        store.registerEntityTypeCtor("Element", Element);
-        store.registerEntityTypeCtor("ElementCell", ElementCell);
-        store.registerEntityTypeCtor("ElementField", ElementField);
-        store.registerEntityTypeCtor("ElementItem", ElementItem);
-        store.registerEntityTypeCtor("ResourcePool", ResourcePool);
+        store.registerEntityTypeCtor("Element", Element, Element.initializer);
+        store.registerEntityTypeCtor("ElementCell", ElementCell, ElementCell.initializer);
+        store.registerEntityTypeCtor("ElementField", ElementField, ElementField.initializer);
+        store.registerEntityTypeCtor("ElementItem", ElementItem, ElementItem.initializer);
+        store.registerEntityTypeCtor("ResourcePool", ResourcePool, ResourcePool.initializer);
 
-        store.registerEntityTypeCtor("User", User);
-        store.registerEntityTypeCtor("UserElementCell", UserElementCell);
-        store.registerEntityTypeCtor("UserElementField", UserElementField);
-        store.registerEntityTypeCtor("UserResourcePool", UserResourcePool);
+        store.registerEntityTypeCtor("User", User, User.initializer);
+        store.registerEntityTypeCtor("UserElementCell", UserElementCell, UserElementCell.initializer);
+        store.registerEntityTypeCtor("UserElementField", UserElementField, UserElementField.initializer);
+        store.registerEntityTypeCtor("UserResourcePool", UserResourcePool, UserResourcePool.initializer);
     }
 
     getMetadata(): Observable<Object> {

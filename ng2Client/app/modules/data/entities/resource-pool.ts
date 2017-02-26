@@ -10,15 +10,16 @@ export class ResourcePool extends EntityBase {
         return this.fields.name;
     }
     set Name(value: string) {
-
-        var oldStripped = stripInvalidChars(this.fields.name);
-
         if (this.fields.name !== value) {
+            var oldStripped = stripInvalidChars(this.fields.name);
             this.fields.name = value;
 
-            // If "Key" is not a custom value (generated through Name), then keep updating it
-            if (this.Key === oldStripped) {
-                this.Key = value;
+            if (this.initialized) {
+
+                // If "Key" is not a custom value (generated through Name), then keep updating it
+                if (this.Key === oldStripped) {
+                    this.Key = value;
+                }
             }
         }
     }
@@ -52,6 +53,10 @@ export class ResourcePool extends EntityBase {
 
     // TODO Move this to field.js?
     displayMultiplierFunctions = true; // In some cases, it's not necessary for the user to change multiplier
+
+    static initializer(entity: ResourcePool) {
+        super.initializer(entity);
+    }
 
     get RatingMode(): any {
         return this.fields.ratingMode;
@@ -277,6 +282,32 @@ export class ResourcePool extends EntityBase {
         }
 
         return this.fields.otherUsersResourcePoolRateTotal;
+    }
+
+    remove() {
+
+        // Related elements
+        var elementSet = this.ElementSet.slice();
+        elementSet.forEach((element: any) => {
+            element.remove();
+        });
+
+        // Related user resource pools
+        this.removeUserResourcePool();
+
+        this.entityAspect.setDeleted();
+    }
+
+    removeUserResourcePool() {
+
+        var currentUserResourcePool = this.currentUserResourcePool();
+
+        if (currentUserResourcePool !== null) {
+            currentUserResourcePool.entityAspect.setDeleted();
+
+            // Update the cache
+            this.setCurrentUserResourcePoolRate();
+        }
     }
 
     resourcePoolRate() {

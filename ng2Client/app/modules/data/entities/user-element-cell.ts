@@ -10,4 +10,8 @@ export class UserElementCell extends EntityBase {
     IntegerValue: number = null;
     DateTimeValue: any = null;
     DecimalValue: number = null;
+
+    static initializer(entity: UserElementCell) {
+        super.initializer(entity);
+    }
 }

@@ -36,6 +36,10 @@ export class ElementItem extends EntityBase {
         totalResourcePoolIncome: null
     };
 
+    static initializer(entity: ElementItem) {
+        super.initializer(entity);
+    }
+
     directIncome() {
         if (this.fields.directIncome === null) {
             this.setDirectIncome(false);
@@ -106,6 +110,28 @@ export class ElementItem extends EntityBase {
         }
 
         return this.fields.multiplier;
+    }
+
+    rejectChanges(): void {
+
+        // Related cells
+        var elementCellSet = this.ElementCellSet.slice();
+        elementCellSet.forEach((elementCell: any) => {
+            elementCell.rejectChanges();
+        });
+
+        this.entityAspect.rejectChanges();
+    }
+
+    remove() {
+
+        // Related cells
+        var elementCellSet = this.ElementCellSet.slice();
+        elementCellSet.forEach((elementCell: any) => {
+            elementCell.remove();
+        });
+
+        this.entityAspect.setDeleted();
     }
 
     resourcePoolAmount() {

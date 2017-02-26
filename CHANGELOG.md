@@ -1,5 +1,12 @@
 ### Changelog
 
+**0.73.0**
+
+* ng2Client - `rejectChanges` function for all entities that covers all related entities
+* ng2Client - entity-base initialized property & improvements in entity relations
+* ng2Client - Login - Invalid credentials error message fix
+* Connect2Effect - Minor
+
 **0.72.1**
 
 * Connect2Effect - In survey page, rating value was replaced with rating percentage
