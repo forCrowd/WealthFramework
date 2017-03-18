@@ -1,5 +1,11 @@
 ### Changelog
 
+**0.73.1**
+
+* ng2Client - gulpfile.js - "prod" - "production" fix
+* ng2Client - ResourcePoolEditor minor updates
+* Connect2Effect - Concluded & removed
+
 **0.73.0**
 
 * ng2Client - `rejectChanges` function for all entities that covers all related entities
