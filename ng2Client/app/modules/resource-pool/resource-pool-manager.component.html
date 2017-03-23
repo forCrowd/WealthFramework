@@ -1,10 +1,17 @@
 ﻿<div *ngIf="resourcePool !== null">
     <h2>{{ resourcePool.Name }}</h2>
+    <hr />
+
     <button type="button" (click)="toggleResourcePool()" class="btn-link">Resource Pool</button>
     <button type="button" (click)="toggleElements()" class="btn-link">Elements</button>
     <button type="button" (click)="toggleFields()" class="btn-link" *ngIf="resourcePool.ElementSet.length > 0">Fields</button>
     <button type="button" (click)="toggleItems()" class="btn-link" *ngIf="resourcePool.ElementSet.length > 0">Items</button>
     <button type="button" (click)="toggleCells()" class="btn-link" *ngIf="resourcePool.ElementSet.length > 0">Cells</button>
+
+    <button type="button" class="btn btn-link pull-right" (click)="viewResourcePool()">
+        <i class="fa fa-home" aria-hidden="true"></i> View
+    </button>
+    <hr />
 
     <div [hidden]="!displayResourcePool">
         <form #resourcePoolForm="ngForm">
@@ -12,13 +19,13 @@
                 <div class="form-group" [ngClass]="{ 'has-error': resourcePool.entityAspect.getValidationErrors('Name').length > 0 }">
                     <label for="Name" class="control-label col-md-2">Name</label>
                     <div class="col-md-10">
-                        <input id="Name" name="Name" type="text" [(ngModel)]="resourcePool.Name" #Name="ngModel" class="form-control" />
+                        <input id="Name" name="Name" type="text" [(ngModel)]="resourcePool.Name" class="form-control" />
                     </div>
                 </div>
                 <div class="form-group" [ngClass]="{ 'has-error': resourcePool.entityAspect.getValidationErrors('Key').length > 0 }">
                     <label for="Key" class="control-label col-md-2">Key</label>
                     <div class="col-md-10">
-                        <input id="Key" name="Key" type="text" [(ngModel)]="resourcePool.Key" #Key="ngModel" class="form-control" aria-describedby="KeyHelp" />
+                        <input id="Key" name="Key" type="text" [(ngModel)]="resourcePool.Key" class="form-control" aria-describedby="KeyHelp" />
                         <span id="KeyHelp" class="help-block">
                             Title that will be used in the url.<br />
                             No special characters allowed, except dash "-" and underscore "_".
@@ -28,27 +35,27 @@
                 <div class="form-group" [ngClass]="{ 'has-error': resourcePool.entityAspect.getValidationErrors('Description').length > 0 }">
                     <label for="Description" class="control-label col-md-2">Description</label>
                     <div class="col-md-10">
-                        <textarea id="Description" name="Description" [(ngModel)]="resourcePool.Description" #Description="ngModel" class="form-control" rows="3"></textarea>
+                        <textarea id="Description" name="Description" [(ngModel)]="resourcePool.Description" class="form-control" rows="3"></textarea>
                     </div>
                 </div>
                 <div class="form-group" [ngClass]="{ 'has-error': resourcePool.entityAspect.getValidationErrors('InitialValue').length > 0 }">
                     <label for="InitialValue" class="control-label col-md-2">Initial Amount</label>
                     <div class="col-md-10">
-                        <input id="InitialValue" name="InitialValue" type="text" [(ngModel)]="resourcePool.InitialValue" #InitialValue="ngModel" class="form-control" aria-describedby="InitialValueHelp" />
+                        <input id="InitialValue" name="InitialValue" type="text" [(ngModel)]="resourcePool.InitialValue" class="form-control" aria-describedby="InitialValueHelp" />
                         <span id="InitialValueHelp" class="help-block">Initial amount in the pool.</span>
                     </div>
                 </div>
                 <div class="form-group" [ngClass]="{ 'has-error': resourcePool.UserResourcePoolSet[0].entityAspect.getValidationErrors('ResourcePoolRate').length > 0 }">
                     <label for="ResourcePoolRate" class="control-label col-md-2">Resource Pool Rate (%)</label>
                     <div class="col-md-10">
-                        <input id="ResourcePoolRate" name="ResourcePoolRate" type="text" [(ngModel)]="resourcePool.UserResourcePoolSet[0].ResourcePoolRate" #ResourcePoolRate="ngModel" class="form-control" aria-describedby="ResourcePoolRateHelp" />
+                        <input id="ResourcePoolRate" name="ResourcePoolRate" type="text" [(ngModel)]="resourcePool.UserResourcePoolSet[0].ResourcePoolRate" class="form-control" aria-describedby="ResourcePoolRateHelp" />
                         <span id="ResourcePoolRateHelp" class="help-block">Determines the size of the pool based on Total Income of the organizations.</span>
                     </div>
                 </div>
                 <div class="form-group" [ngClass]="{ 'has-error': resourcePool.entityAspect.getValidationErrors('UseFixedResourcePoolRate').length > 0 }">
                     <label class="control-label col-md-2">Use Fixed Resource Pool Rate</label>
                     <div class="col-md-10">
-                        <select id="UseFixedResourcePoolRate" name="UseFixedResourcePoolRate" [(ngModel)]="resourcePool.UseFixedResourcePoolRate" #UseFixedResourcePoolRate="ngModel" class="form-control" aria-describedby="UseFixedResourcePoolRateHelp">
+                        <select id="UseFixedResourcePoolRate" name="UseFixedResourcePoolRate" [(ngModel)]="resourcePool.UseFixedResourcePoolRate" class="form-control" aria-describedby="UseFixedResourcePoolRateHelp">
                             <option value="true">True</option>
                             <option value="false" selected="selected">False</option>
                         </select>
@@ -57,7 +64,7 @@
                 </div>
                 <div class="form-group hide">
                     <div class="col-md-10">
-                        <input id="RowVersion" name="RowVersion" [(ngModel)]="resourcePool.RowVersion" #RowVersion="ngModel" type="hidden">
+                        <input id="RowVersion" name="RowVersion" [(ngModel)]="resourcePool.RowVersion" type="hidden">
                     </div>
                 </div>
                 <div class="form-group">
@@ -135,8 +142,8 @@
                     <div class="form-group" *ngIf="elementField.entityAspect.entityState.isAdded()" [ngClass]="{ 'has-error': elementField.entityAspect.getValidationErrors('Element').length > 0 }">
                         <label for="ElementId" class="control-label col-md-2">Element</label>
                         <div class="col-md-10">
-                            <select id="ElementId" name="ElementId" [(ngModel)]="elementField.Element" #ElementSet="ngModel" class="form-control">
-                                <option *ngFor="let element of resourcePool.ElementSet" [value]="element">{{ element.Name }}</option>
+                            <select id="ElementId" name="ElementId" [(ngModel)]="elementField.Element" class="form-control">
+                                <option *ngFor="let element of resourcePool.ElementSet" [ngValue]="element">{{ element.Name }}</option>
                             </select>
                         </div>
                     </div>
@@ -147,13 +154,13 @@
                     <div class="form-group" [ngClass]="{ 'has-error': elementField.entityAspect.getValidationErrors('Name').length > 0 }">
                         <label for="Name" class="control-label col-md-2">Name</label>
                         <div class="col-md-10">
-                            <input id="Name" name="Name" type="text" [(ngModel)]="elementField.Name" #Name="ngModel" class="form-control" />
+                            <input id="Name" name="Name" type="text" [(ngModel)]="elementField.Name" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group" [ngClass]="{ 'has-error': elementField.entityAspect.getValidationErrors('DataType').length > 0 }">
                         <label for="DataType" class="control-label col-md-2">Data Type</label>
                         <div class="col-md-10">
-                            <select id="DataType" name="DataType" [(ngModel)]="elementField.DataType" #DataType="ngModel" class="form-control">
+                            <select id="DataType" name="DataType" [(ngModel)]="elementField.DataType" class="form-control">
                                 <option *ngFor="let item of getElementFieldDataTypeFiltered()" [value]="item.value">{{ item.name }}</option>
                             </select>
                         </div>
@@ -161,15 +168,15 @@
                     <div class="form-group" *ngIf="elementField.DataType === elementFieldDataType.Element" [ngClass]="{ 'has-error': elementField.entityAspect.getValidationErrors('SelectedElement').length > 0 }">
                         <label for="SelectedElementId" class="control-label col-md-2">Selected Element</label>
                         <div class="col-md-10">
-                            <select id="SelectedElementId" name="SelectedElementId" [(ngModel)]="elementField.SelectedElement" #ElementSet="ngModel" class="form-control">
-                                <option *ngFor="let element of resourcePool.ElementSet" [value]="element">{{ element.Name }}</option>
+                            <select id="SelectedElementId" name="SelectedElementId" [(ngModel)]="elementField.SelectedElement" class="form-control">
+                                <option *ngFor="let element of resourcePool.ElementSet" [ngValue]="element">{{ element.Name }}</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group" *ngIf="elementField.DataType !== elementFieldDataType.String && elementField.DataType !== elementFieldDataType.Element && elementField.DataType !== elementFieldDataType.DirectIncome && elementField.DataType !== elementFieldDataType.Multiplier" [ngClass]="{ 'has-error': elementField.entityAspect.getValidationErrors('UseFixedValue').length > 0 }">
                         <label class="control-label col-md-2">Use Fixed Value</label>
                         <div class="col-md-10">
-                            <select id="UseFixedValue" name="UseFixedValue" [(ngModel)]="elementField.UseFixedValue" #UseFixedValue="ngModel" class="form-control" aria-describedby="UseFixedValueHelp">
+                            <select id="UseFixedValue" name="UseFixedValue" [(ngModel)]="elementField.UseFixedValue" class="form-control" aria-describedby="UseFixedValueHelp">
                                 <option value=""></option>
                                 <option value="true">True</option>
                                 <option value="false">False</option>
@@ -183,7 +190,7 @@
                     <div class="form-group" *ngIf="elementField.DataType !== elementFieldDataType.String && elementField.DataType !== elementFieldDataType.Element && elementField.DataType !== elementFieldDataType.Multiplier" [ngClass]="{ 'has-error': elementField.entityAspect.getValidationErrors('IndexEnabled').length > 0 }">
                         <label for="IndexEnabled" class="control-label col-md-2">Index Enabled</label>
                         <div class="col-md-10">
-                            <select id="IndexEnabled" name="IndexEnabled" [(ngModel)]="elementField.IndexEnabled" #IndexEnabled="ngModel" class="form-control" aria-describedby="IndexEnabledHelp">
+                            <select id="IndexEnabled" name="IndexEnabled" [(ngModel)]="elementField.IndexEnabled" class="form-control" aria-describedby="IndexEnabledHelp">
                                 <option value="true">True</option>
                                 <option value="false" selected="selected">False</option>
                             </select>
@@ -196,7 +203,7 @@
                     <div class="form-group" *ngIf="elementField.IndexEnabled" [ngClass]="{ 'has-error': elementField.entityAspect.getValidationErrors('IndexCalculationType').length > 0 }">
                         <label for="IndexCalculationType" class="control-label col-md-2">Index Calculation Type</label>
                         <div class="col-md-10">
-                            <select id="IndexCalculationType" name="IndexCalculationType" [(ngModel)]="elementField.IndexCalculationType" #IndexCalculationType="ngModel" class="form-control" aria-describedby="IndexCalculationTypeHelp">
+                            <select id="IndexCalculationType" name="IndexCalculationType" [(ngModel)]="elementField.IndexCalculationType" class="form-control" aria-describedby="IndexCalculationTypeHelp">
                                 <option *ngFor="let item of getElementFieldIndexCalculationTypeFiltered()" [value]="item.value">{{ item.name }}</option>
                             </select>
                             <span id="IndexCalculationTypeHelp" class="help-block">
@@ -213,7 +220,7 @@
                     <div class="form-group" *ngIf="elementField.IndexEnabled" [ngClass]="{ 'has-error': elementField.entityAspect.getValidationErrors('IndexSortType').length > 0 }">
                         <label for="IndexSortType" class="control-label col-md-2">Index Sort Type</label>
                         <div class="col-md-10">
-                            <select id="IndexSortType" name="IndexSortType" [(ngModel)]="elementField.IndexSortType" #IndexSortType="ngModel" class="form-control" aria-describedby="IndexSortTypeHelp">
+                            <select id="IndexSortType" name="IndexSortType" [(ngModel)]="elementField.IndexSortType" class="form-control" aria-describedby="IndexSortTypeHelp">
                                 <option *ngFor="let item of getElementFieldIndexSortTypeFiltered()" [value]="item.value">{{ item.name }}</option>
                             </select>
                             <span id="IndexSortTypeHelp" class="help-block">
@@ -224,18 +231,18 @@
                     <div class="form-group" [ngClass]="{ 'has-error': elementField.entityAspect.getValidationErrors('SortOrder').length > 0 }">
                         <label for="SortOrder" class="control-label col-md-2">Sort Order</label>
                         <div class="col-md-10">
-                            <input id="SortOrder" name="SortOrder" type="text" [(ngModel)]="elementField.SortOrder" #SortOrder="ngModel" class="form-control" />
+                            <input id="SortOrder" name="SortOrder" type="text" [(ngModel)]="elementField.SortOrder" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group" *ngIf="elementField.IndexEnabled" [ngClass]="{ 'has-error': elementField.UserElementFieldSet[0].entityAspect.getValidationErrors('Rating').length > 0 }">
                         <label for="Rating" class="control-label col-md-2">Rating</label>
                         <div class="col-md-10">
-                            <input id="Rating" name="Rating" type="text" [(ngModel)]="elementField.UserElementFieldSet[0].Rating" #Rating="ngModel" class="form-control" />
+                            <input id="Rating" name="Rating" type="text" [(ngModel)]="elementField.UserElementFieldSet[0].Rating" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group hide">
                         <div class="col-md-10">
-                            <input id="RowVersion" name="RowVersion" [(ngModel)]="elementField.RowVersion" #RowVersion="ngModel" type="hidden">
+                            <input id="RowVersion" name="RowVersion" [(ngModel)]="elementField.RowVersion" type="hidden">
                         </div>
                     </div>
                     <div class="form-group">
@@ -286,7 +293,7 @@
                             {{ elementField.Name }}
                         </td>
                         <td>
-                            {{ elementFieldDataType[elementField.DataType] }}
+                            {{ elementField.DataTypeText }}
                         </td>
                         <td>
                             {{ elementField.IndexEnabled }}
@@ -314,8 +321,8 @@
                     <div class="form-group" *ngIf="elementItem.entityAspect.entityState.isAdded()" [ngClass]="{ 'has-error': elementItem.entityAspect.getValidationErrors('Element').length > 0 }">
                         <label for="ElementId" class="control-label col-md-2">Element</label>
                         <div class="col-md-10">
-                            <select id="ElementId" name="ElementId" [(ngModel)]="elementItem.Element" #ElementSet="ngModel" class="form-control">
-                                <option *ngFor="let element of resourcePool.ElementSet" [value]="element">{{ element.Name }}</option>
+                            <select id="ElementId" name="ElementId" [(ngModel)]="elementItem.Element" class="form-control">
+                                <option *ngFor="let element of resourcePool.ElementSet" [ngValue]="element">{{ element.Name }}</option>
                             </select>
                         </div>
                     </div>
@@ -326,12 +333,12 @@
                     <div class="form-group" [ngClass]="{ 'has-error': elementItem.entityAspect.getValidationErrors('Name').length > 0 }">
                         <label for="Name" class="control-label col-md-2">Name</label>
                         <div class="col-md-10">
-                            <input id="Name" name="Name" type="text" [(ngModel)]="elementItem.Name" #Name="ngModel" class="form-control" />
+                            <input id="Name" name="Name" type="text" [(ngModel)]="elementItem.Name" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group hide">
                         <div class="col-md-10">
-                            <input id="RowVersion" name="RowVersion" [(ngModel)]="elementItem.RowVersion" #RowVersion="ngModel" type="hidden">
+                            <input id="RowVersion" name="RowVersion" [(ngModel)]="elementItem.RowVersion" type="hidden">
                         </div>
                     </div>
                     <div class="form-group">
@@ -406,16 +413,16 @@
                         <label class="control-label col-md-2">Element Item</label>
                         <p class="form-control-static col-md-10">{{ elementCell.ElementItem.Name }}</p>
                     </div>
-                    <div class="form-group" *ngIf="elementCell.ElementField.DataType === elementFieldDataType.String" [ngClass]="{ 'has-error': elementCell.UserElementCellSet[0].entityAspect.getValidationErrors('Strivalue').length > 0 }">
-                        <label for="Strivalue" class="control-label col-md-2">Value</label>
+                    <div class="form-group" *ngIf="elementCell.ElementField.DataType === elementFieldDataType.String" [ngClass]="{ 'has-error': elementCell.UserElementCellSet[0].entityAspect.getValidationErrors('StringValue').length > 0 }">
+                        <label for="StringValue" class="control-label col-md-2">Value</label>
                         <div class="col-md-10">
-                            <input id="Strivalue" name="Strivalue" type="text" [(ngModel)]="elementCell.UserElementCellSet[0].Strivalue" #Strivalue="ngModel" class="form-control" />
+                            <input id="StringValue" name="StringValue" type="text" [(ngModel)]="elementCell.UserElementCellSet[0].StringValue" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group" *ngIf="elementCell.ElementField.DataType === elementFieldDataType.Boolean" [ngClass]="{ 'has-error': elementCell.UserElementCellSet[0].entityAspect.getValidationErrors('BooleanValue').length > 0 }">
                         <label class="control-label col-md-2">Value</label>
                         <div class="col-md-10">
-                            <select id="BooleanValue" name="BooleanValue" [(ngModel)]="elementCell.UserElementCellSet[0].BooleanValue" #UseFixedValue="ngModel" class="form-control" aria-describedby="BooleanValueHelp">
+                            <select id="BooleanValue" name="BooleanValue" [(ngModel)]="elementCell.UserElementCellSet[0].BooleanValue" class="form-control" aria-describedby="BooleanValueHelp">
                                 <option value=""></option>
                                 <option value="true">True</option>
                                 <option value="false">False</option>
@@ -425,31 +432,31 @@
                     <div class="form-group" *ngIf="elementCell.ElementField.DataType === elementFieldDataType.Integer" [ngClass]="{ 'has-error': elementCell.UserElementCellSet[0].entityAspect.getValidationErrors('IntegerValue').length > 0 }">
                         <label for="IntegerValue" class="control-label col-md-2">Value</label>
                         <div class="col-md-10">
-                            <input id="IntegerValue" name="IntegerValue" type="text" [(ngModel)]="elementCell.UserElementCellSet[0].IntegerValue" #IntegerValue="ngModel" class="form-control" />
+                            <input id="IntegerValue" name="IntegerValue" type="text" [(ngModel)]="elementCell.UserElementCellSet[0].IntegerValue" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group" *ngIf="elementCell.ElementField.DataType === elementFieldDataType.Decimal || elementCell.ElementField.DataType === elementFieldDataType.DirectIncome || elementCell.ElementField.DataType === elementFieldDataType.Multiplier" [ngClass]="{ 'has-error': elementCell.UserElementCellSet[0].entityAspect.getValidationErrors('DecimalValue').length > 0 }">
                         <label for="DecimalValue" class="control-label col-md-2">Value</label>
                         <div class="col-md-10">
-                            <input id="DecimalValue" name="DecimalValue" type="text" [(ngModel)]="elementCell.UserElementCellSet[0].DecimalValue" #DecimalValue="ngModel" class="form-control" />
+                            <input id="DecimalValue" name="DecimalValue" type="text" [(ngModel)]="elementCell.UserElementCellSet[0].DecimalValue" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group" *ngIf="elementCell.ElementField.DataType === elementFieldDataType.Element" [ngClass]="{ 'has-error': elementCell.entityAspect.getValidationErrors('SelectedItem').length > 0 }">
                         <label for="SelectedElementItemId" class="control-label col-md-2">Selected Item</label>
                         <div class="col-md-10">
-                            <select id="SelectedElementItemId" name="SelectedElementItemId" [(ngModel)]="elementCell.SelectedElementItem" #ElementItemSet="ngModel" class="form-control">
-                                <option *ngFor="let elementItem of elementCell.ElementField.SelectedElement.ElementItemSet" [value]="elementItem">{{ elementItem.Name }}</option>
+                            <select id="SelectedElementItemId" name="SelectedElementItemId" [(ngModel)]="elementCell.SelectedElementItem" class="form-control">
+                                <option *ngFor="let elementItem of elementCell.ElementField.SelectedElement.ElementItemSet" [ngValue]="elementItem">{{ elementItem.Name }}</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group hide">
                         <div class="col-md-10">
-                            <input id="RowVersion" name="RowVersion" [(ngModel)]="elementCell.RowVersion" #RowVersion="ngModel" type="hidden">
+                            <input id="RowVersion" name="RowVersion" [(ngModel)]="elementCell.RowVersion" type="hidden">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <button (click)="saveElementCell()" [disabled]="(elementCell.entityAspect.getValidationErrors().length + elementCell.UserElementCellSet[0].entityAspect.getValidationErrors().length) > 0" type="button" class="btn btn-primary">
+                            <button (click)="saveElementCell()" [disabled]="(elementCell.entityAspect.getValidationErrors().length + (elementCell.UserElementCellSet.length > 0 ? elementCell.UserElementCellSet[0].entityAspect.getValidationErrors().length : 0)) > 0" type="button" class="btn btn-primary">
                                 Save Cell
                             </button>
                             <button (click)="cancelElementCell()" type="button" class="btn btn-default">

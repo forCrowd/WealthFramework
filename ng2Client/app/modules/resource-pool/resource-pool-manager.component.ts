@@ -320,6 +320,15 @@ export class ResourcePoolManagerComponent implements OnDestroy, OnInit {
     }
 
     saveElementField() {
+
+        // Related cells
+        this.elementField.Element.ElementItemSet.forEach((elementItem: any) => {
+            this.resourcePoolService.createElementCell({
+                ElementField: this.elementField,
+                ElementItem: elementItem
+            });
+        });
+
         this.dataService.saveChanges()
             .subscribe(() => {
 
@@ -332,6 +341,15 @@ export class ResourcePoolManagerComponent implements OnDestroy, OnInit {
     }
 
     saveElementItem() {
+
+        // Related cells
+        this.elementItem.Element.ElementFieldSet.forEach((elementField: any) => {
+            this.resourcePoolService.createElementCell({
+                ElementField: elementField,
+                ElementItem: this.elementItem
+            });
+        });
+
         this.dataService.saveChanges()
             .subscribe(() => {
 
@@ -403,5 +421,10 @@ export class ResourcePoolManagerComponent implements OnDestroy, OnInit {
         this.displayFields = false;
         this.displayItems = false;
         this.displayCells = true;
+    }
+
+    viewResourcePool(): void {
+        var command = "/" + this.resourcePool.User.UserName + "/" + this.resourcePool.Key;
+        this.router.navigate([command]);
     }
 }

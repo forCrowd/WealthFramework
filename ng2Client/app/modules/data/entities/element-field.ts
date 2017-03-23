@@ -24,14 +24,21 @@ export class ElementField extends EntityBase {
                     this.UseFixedValue = null;
                 }
 
-                // b. UseFixedValue must be "false" for Multiplier type
+                // b. UseFixedValue must be "false" for DirectIncome & Multiplier types
                 if (value === ElementFieldDataType.Multiplier) {
                     this.UseFixedValue = false;
                 }
 
-                // c. DirectIncome cannot be Use Fixed Value false at the moment
+                // c. UseFixedValue must be "true" for DirectIncome
                 if (value === ElementFieldDataType.DirectIncome) {
                     this.UseFixedValue = true;
+                }
+
+                // d. IndexEnabled must be "false" for String, Element & Multipler types
+                if (value === ElementFieldDataType.String
+                    || ElementFieldDataType.Element
+                    || ElementFieldDataType.Multiplier) {
+                    this.IndexEnabled = false;
                 }
 
                 // Event
@@ -88,6 +95,18 @@ export class ElementField extends EntityBase {
     SelectedElement: any;
     ElementCellSet: any[];
     UserElementFieldSet: any[];
+
+    // Client-side
+    get DataTypeText(): string {
+
+        let text = ElementFieldDataType[this.DataType];
+
+        if (this.DataType === ElementFieldDataType.Element) {
+            text += " (" + this.SelectedElement.Name + ")";
+        }
+
+        return text;
+    }
 
     dataTypeChanged$: EventEmitter<ElementField> = new EventEmitter<ElementField>();
     indexEnabledChanged$: EventEmitter<ElementField> = new EventEmitter<ElementField>();

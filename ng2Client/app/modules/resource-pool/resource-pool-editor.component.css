@@ -9,6 +9,11 @@
         padding: 0;
     }
 
+    .resource-pool-editor button.btn-xs {
+        line-height: normal;
+        padding: 0;
+    }
+
     .resource-pool-editor .heading {
         padding: 15px;
     }

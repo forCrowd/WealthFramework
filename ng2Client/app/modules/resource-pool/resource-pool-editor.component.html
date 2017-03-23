@@ -158,9 +158,13 @@
                                                         <div [hidden]="resourcePool.RatingMode === 2">
                                                             {{ elementCell.numericValue() | symbolic }}
                                                             <div class="btn-group" role="group">
-                                                                <button title="Increase" type="button" (click)="increaseElementCellNumericValue(elementCell)" [disabled]="isSaving" class="btn btn-default btn-xs">+</button>
-                                                                <button title="Decrease" type="button" (click)="decreaseElementCellNumericValue(elementCell)" [disabled]="isSaving" class="btn btn-default btn-xs">-</button>
-                                                                <button title="Reset" type="button" (click)="resetElementCellNumericValue(elementCell)" [disabled]="isSaving" class="btn btn-default btn-xs hide">0</button>
+
+                                                                <button title="0" type="button" (click)="updateElementCellDecimalValue(elementCell, 0)" [disabled]="isSaving" class="btn" [ngClass]="{ 'btn-primary': elementCell.numericValue() === 0, 'btn-default': elementCell.numericValue() !== 0 }">0</button>
+                                                                <button title="1" type="button" (click)="updateElementCellDecimalValue(elementCell, 20)" [disabled]="isSaving" class="btn" [ngClass]="{ 'btn-primary': elementCell.numericValue() === 20, 'btn-default': elementCell.numericValue() !== 20 }">1</button>
+                                                                <button title="2" type="button" (click)="updateElementCellDecimalValue(elementCell, 40)" [disabled]="isSaving" class="btn" [ngClass]="{ 'btn-primary': elementCell.numericValue() === 40, 'btn-default': elementCell.numericValue() !== 40 }">2</button>
+                                                                <button title="3" type="button" (click)="updateElementCellDecimalValue(elementCell, 60)" [disabled]="isSaving" class="btn" [ngClass]="{ 'btn-primary': elementCell.numericValue() === 60, 'btn-default': elementCell.numericValue() !== 60 }">3</button>
+                                                                <button title="4" type="button" (click)="updateElementCellDecimalValue(elementCell, 80)" [disabled]="isSaving" class="btn" [ngClass]="{ 'btn-primary': elementCell.numericValue() === 80, 'btn-default': elementCell.numericValue() !== 80 }">4</button>
+                                                                <button title="5" type="button" (click)="updateElementCellDecimalValue(elementCell, 100)" [disabled]="isSaving" class="btn" [ngClass]="{ 'btn-primary': elementCell.numericValue() === 100, 'btn-default': elementCell.numericValue() !== 100 }">5</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -170,7 +174,7 @@
                                                 </div>
                                             </div>
                                             <div *ngIf="elementCell.ElementField.DataType === 6">
-                                                {{ elementCell.SelectedElementItem.Name }}
+                                                {{ elementCell.SelectedElementItem !== null ? elementCell.SelectedElementItem.Name : "N/A" }}
                                             </div>
                                             <div *ngIf="elementCell.ElementField.DataType === 11">
                                                 {{ elementItem.directIncome() | symbolic }}

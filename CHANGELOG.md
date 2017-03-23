@@ -1,5 +1,20 @@
 ### Changelog
 
+**0.73.2**
+
+* ng2Client - ResourcePoolEditor - Rating buttons were introduced instead of "+" & "-" buttons
+* ng2Client - ResourcePoolManager - View link
+* ng2Client - DataTypeText property was introduced for ElementField
+* ng2Client - Managers - Unnecessary '#Property="ngModel"' parts were removed
+* ng2Client - ResourcePoolEditor - btn-xs css fix
+* ng2Client - "Create resource pool with 'Basic' template , UserElementField is missing" fix
+* ng2Client - select option ngValue for objects fix
+* ng2Client - DataType changed fixes
+* ng2Client - ElementCell edit disabled property fix
+* ng2Client - ResourcePoolEditor Element type SelectedItem.Name fix
+* ng2Client - addElementItem & addElementField invalid element cell creation fix
+* ng2Client - Manager - Cell edit "Strivalue" fix
+
 **0.73.1**
 
 * ng2Client - gulpfile.js - "prod" - "production" fix

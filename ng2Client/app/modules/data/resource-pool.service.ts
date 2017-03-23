@@ -18,7 +18,7 @@ import { Logger } from "../logger/logger.module";
 export class ResourcePoolService {
 
     elementMultiplierUpdated$: EventEmitter<any> = new EventEmitter<any>();
-    elementCellDecimalValueUpdated$: EventEmitter<any> = new EventEmitter<any>();
+    elementCellDecimalValueUpdated$: EventEmitter<any> = new EventEmitter<ElementCell>();
     fetchedList: any[] = [];
     //fetchFromServer = true;
 
@@ -51,13 +51,8 @@ export class ResourcePoolService {
 
         const elementField = this.dataService.createEntity("ElementField", initialValues) as ElementField;
 
-        // Related cells
-        elementField.Element.ElementItemSet.forEach((elementItem: any) => {
-            this.createElementCell({
-                ElementField: elementField,
-                ElementItem: elementItem
-            });
-        });
+        // Based on IndexEnabled field, handle UserElementField
+        this.elementField_IndexEnabledChanged(elementField);
 
         // Todo Is there a better way of doing this? / coni2k - 25 Feb. '17
         // Event handlers
@@ -68,18 +63,7 @@ export class ResourcePoolService {
     }
 
     createElementItem(initialValues: Object): ElementItem {
-
-        var elementItem = this.dataService.createEntity("ElementItem", initialValues) as ElementItem;
-
-        // Related cells
-        elementItem.Element.ElementFieldSet.forEach((elementField: any) => {
-            this.createElementCell({
-                ElementField: elementField,
-                ElementItem: elementItem
-            });
-        });
-
-        return elementItem;
+        return this.dataService.createEntity("ElementItem", initialValues) as ElementItem;
     }
 
     createResourcePoolEmpty() {
@@ -461,39 +445,23 @@ export class ResourcePoolService {
     // These "updateX" functions were defined in their related entities (user.js).
     // Only because they had to use createEntity() on dataService, it was moved to this service.
     // Try do handle them in a better way, maybe by using broadcast?
-    updateElementCellDecimalValue(elementCell: any, updateType: string) {
+    updateElementCellDecimalValue(elementCell: any, value: number) {
 
-        switch (updateType) {
-            case "increase":
-            case "decrease": {
+        var userElementCell = elementCell.currentUserCell();
 
-                var userElementCell = elementCell.currentUserCell();
+        if (userElementCell === null) { // If there is no item, create it
 
-                if (userElementCell === null) { // If there is no item, create it
+            this.createUserElementCell(elementCell, value);
 
-                    var decimalValue = updateType === "increase" ? 55 : 45;
-                    this.createUserElementCell(elementCell, decimalValue);
+        } else { // If there is an item, update DecimalValue, but cannot be smaller than zero and cannot be bigger than 100
 
-                } else { // If there is an item, update DecimalValue, but cannot be smaller than zero and cannot be bigger than 100
+            userElementCell.DecimalValue = value;
 
-                    userElementCell.DecimalValue = updateType === "increase" ?
-                        userElementCell.DecimalValue + 5 > 100 ? 100 : userElementCell.DecimalValue + 5 :
-                        userElementCell.DecimalValue - 5 < 0 ? 0 : userElementCell.DecimalValue - 5;
-
-                    // Update the cache
-                    elementCell.setCurrentUserNumericValue();
-                }
-
-                break;
-            }
-            case "reset": {
-
-                elementCell.removeUserElementCell();
-                break;
-            }
+            // Update the cache
+            elementCell.setCurrentUserNumericValue();
         }
 
-        this.elementCellDecimalValueUpdated$.emit({ elementCell: elementCell, updateType: updateType });
+        this.elementCellDecimalValueUpdated$.emit(elementCell);
     }
 
     updateElementCellMultiplier(elementCell: any, updateType: any) {
