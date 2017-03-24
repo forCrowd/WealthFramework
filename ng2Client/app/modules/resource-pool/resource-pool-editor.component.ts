@@ -41,11 +41,6 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
         this.loadChartData();
     }
 
-    decreaseElementCellNumericValue(cell: any) {
-        this.resourcePoolService.updateElementCellDecimalValue(cell, "decrease");
-        this.saveStream.next();
-    }
-
     decreaseElementMultiplier(element: any) {
         this.resourcePoolService.updateElementMultiplier(element, "decrease");
         this.saveStream.next();
@@ -58,11 +53,6 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
 
     decreaseResourcePoolRate() {
         this.resourcePoolService.updateResourcePoolRate(this.resourcePool, "decrease");
-        this.saveStream.next();
-    }
-
-    increaseElementCellNumericValue(cell: any) {
-        this.resourcePoolService.updateElementCellDecimalValue(cell, "increase");
         this.saveStream.next();
     }
 
@@ -235,11 +225,6 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
         this.initialize(username, resourcePoolKey, this.dataService.currentUser);
     }
 
-    resetElementCellNumericValue(cell: any) {
-        this.resourcePoolService.updateElementCellDecimalValue(cell, "reset");
-        this.saveStream.next();
-    }
-
     resetElementMultiplier(element: any) {
         this.resourcePoolService.updateElementMultiplier(element, "reset");
         this.saveStream.next();
@@ -271,5 +256,10 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
     toggleIndexDetails() {
         this.displayIndexDetails = !this.displayIndexDetails;
         this.loadChartData();
+    }
+
+    updateElementCellDecimalValue(cell: any, value: number) {
+        this.resourcePoolService.updateElementCellDecimalValue(cell, value);
+        this.saveStream.next();
     }
 }

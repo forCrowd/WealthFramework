@@ -1,5 +1,6 @@
 ﻿import { Component } from "@angular/core";
 
+import { ElementCell } from "../data/entities/element-cell";
 import { Logger } from "../../modules/logger/logger.module";
 import { ResourcePoolService } from "../../modules/data/data.module";
 import { Settings } from "../../settings/settings";
@@ -19,11 +20,11 @@ export class AllInOneComponent {
     constructor(private logger: Logger, private resourcePoolService: ResourcePoolService) {
 
         // Event handlers
-        resourcePoolService.elementCellDecimalValueUpdated$.subscribe((value: any): void => this.processNewInteraction(value.elementCell, value.updateType));
+        resourcePoolService.elementCellDecimalValueUpdated$.subscribe((elementCell: ElementCell): void => this.processNewInteraction(elementCell));
     }
 
     // Processes whether the user is currently interacting with this example
-    processNewInteraction(elementCell: any, updateType: string): void {
+    processNewInteraction(elementCell: ElementCell): void {
 
         // Priority Index
         if (elementCell.ElementField.Element.ResourcePool.User.UserName === "sample"
@@ -53,7 +54,7 @@ export class AllInOneComponent {
                                         var cell = elementField.ElementCellSet[elementCellIndex];
 
                                         if (cell.ElementItem.Name === elementCell.ElementItem.Name) {
-                                            this.resourcePoolService.updateElementCellDecimalValue(cell, updateType);
+                                            this.resourcePoolService.updateElementCellDecimalValue(cell, elementCell.numericValue());
                                             break;
                                         }
                                     }

@@ -3,12 +3,12 @@
         <div class="form-group" [ngClass]="{ 'has-error': element.entityAspect.getValidationErrors('Name').length > 0 }">
             <label for="Name" class="control-label col-md-2">Element</label>
             <div class="col-md-10">
-                <input id="Name" name="Name" type="text" [(ngModel)]="element.Name" #Name="ngModel" class="form-control" />
+                <input id="Name" name="Name" type="text" [(ngModel)]="element.Name" class="form-control" />
             </div>
         </div>
         <div class="form-group hide">
             <div class="col-md-10">
-                <input id="RowVersion" name="RowVersion" [(ngModel)]="element.RowVersion" #RowVersion="ngModel" type="hidden">
+                <input id="RowVersion" name="RowVersion" [(ngModel)]="element.RowVersion" type="hidden">
             </div>
         </div>
         <div class="form-group">
