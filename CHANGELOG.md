@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.73.3**
+
+* ng2Client - ResourcePoolEditor - Smaller rating buttons & numericValue() was removed
+
 **0.73.2**
 
 * ng2Client - ResourcePoolEditor - Rating buttons were introduced instead of "+" & "-" buttons
