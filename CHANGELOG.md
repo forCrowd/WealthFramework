@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.73.4**
+
+* ng2Client - ResourcePoolManager - "Add / edit item & field save operation always tries to create new cells" fix
+
 **0.73.3**
 
 * ng2Client - ResourcePoolEditor - Smaller rating buttons & numericValue() was removed
