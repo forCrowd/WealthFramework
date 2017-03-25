@@ -514,6 +514,24 @@ export class ResourcePoolService {
         }
     }
 
+    updateElementFieldIndexRatingNew(elementField: any, value: number) {
+
+        var userElementField = elementField.currentUserElementField();
+
+        // If there is no item, create it
+        if (userElementField === null) {
+
+            this.createUserElementField(elementField, value);
+
+        } else { // If there is an item, set the Rating
+
+            userElementField.Rating = value;
+
+            // Update the cache
+            elementField.setCurrentUserIndexRating();
+        }
+    }
+
     updateElementFieldIndexRating(elementField: any, updateType: any) {
 
         switch (updateType) {

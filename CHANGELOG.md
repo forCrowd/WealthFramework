@@ -1,5 +1,10 @@
 ### Changelog
 
+**0.74.0**
+
+* ng2Client - Global Goals Fund
+* Visual Studio 2017
+
 **0.73.4**
 
 * ng2Client - ResourcePoolManager - "Add / edit item & field save operation always tries to create new cells" fix
