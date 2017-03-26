@@ -1,11 +1,9 @@
 ﻿import { Component, Input, OnDestroy, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { ChartModule } from "angular2-highcharts";
 import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
 
 import { ChartConfig } from "./chart-config";
-import { Settings } from "../../settings/settings";
 
 //declare const __moduleName: string;
 

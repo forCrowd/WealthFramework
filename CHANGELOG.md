@@ -1,5 +1,13 @@
 ### Changelog
 
+**0.75.0**
+
+* ng2Client - Global Goals Fund was removed
+* ng2Client - Package updates
+* ng2Client - "Related cells are not getting created when using createElementField & creteElementItem" fix
+* ng2Client - Social button hover fix
+* ng2Client - "gulp setup creates 'undefined-settings.ts'" fix
+
 **0.74.0**
 
 * ng2Client - Global Goals Fund

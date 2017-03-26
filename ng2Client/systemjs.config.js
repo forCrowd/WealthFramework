@@ -3,9 +3,6 @@
 
     var config = {
         defaultJSExtensions: true,
-        paths: {
-            "npm:": "node_modules/"
-        },
         map: {
 
             // app
@@ -65,8 +62,12 @@
                 exports: "$traceurRuntime"
             }
         },
+        paths: {
+            "npm:": "node_modules/"
+        },
         transpiler: "plugin-traceur",
-        transpilerRuntime: false
+        transpilerRuntime: false,
+        warnings: true
     };
 
     System.config(config);

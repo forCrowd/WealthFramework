@@ -149,12 +149,22 @@ export class Element extends EntityBase {
         return this.ElementFieldSet.sort((a: any, b: any) => a.SortOrder - b.SortOrder);
     }
 
-    getElementItemSetSorted(): any[] {
+    getElementItemSet(sort?: string): any[] {
+        sort = typeof sort !== "undefined" ? sort : "";
+
         return this.ElementItemSet.sort((a: any, b: any) => {
-            let nameA = a.Name.toLowerCase(), nameB = b.Name.toLowerCase();
-            if (nameA < nameB) return -1;
-            if (nameA > nameB) return 1;
-            return 0;
+            switch (sort) {
+                case "totalIncome": {
+                    return b.totalIncome() - a.totalIncome();
+                }
+                case "name":
+                default: {
+                    let nameA = a.Name.toLowerCase(), nameB = b.Name.toLowerCase();
+                    if (nameA < nameB) return -1;
+                    if (nameA > nameB) return 1;
+                    return 0;
+                }
+            }
         });
     }
 

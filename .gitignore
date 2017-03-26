@@ -47,9 +47,9 @@ ng2Client/app/fonts
 # ng2Client - lib: Contains fixed versions of external .js files (breeze.odata etc.)
 !ng2Client/app/lib/*.js
 
-ng2Client/app/settings/local-settings.ts
-ng2Client/app/settings/test-settings.ts
-ng2Client/app/settings/production-settings.ts
+ng2Client/app/settings/local*
+ng2Client/app/settings/test*
+ng2Client/app/settings/production*
 
 ng2Client/aot
 ng2Client/publish
