@@ -61,6 +61,21 @@ export class ElementItem extends EntityBase {
         return this.fields.elementCellIndexSet;
     }
 
+    elementCell(field: string): any {
+
+        var cell: any = null;
+
+        for (var elementCellIndex = 0; elementCellIndex < this.ElementCellSet.length; elementCellIndex++) {
+            cell = this.ElementCellSet[elementCellIndex];
+
+            if (cell.ElementField.Name === field) {
+                break;
+            }
+        }
+
+        return cell;
+    }
+
     getElementCellIndexSet(elementItem: any) {
 
         var indexSet: any[] = [];

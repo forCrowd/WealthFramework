@@ -28,7 +28,9 @@
                     </div>
                     <div class="col-md-12 settings">
                         <div *ngIf="resourcePool.RatingCount > 0" class="btn-group" role="group" aria-label="Rating Options">
-                            <button (click)="resourcePool.toggleRatingMode()" type="button" class="btn btn-default" [ngClass]="{ 'active': resourcePool.RatingMode === 1 }">Your Ratings</button>
+                            <button (click)="resourcePool.toggleRatingMode()" type="button" class="btn btn-default" [ngClass]="{ 'active': resourcePool.RatingMode === 1 }">
+                                Your Ratings
+                            </button>
                             <button (click)="resourcePool.toggleRatingMode()" type="button" class="btn btn-default" [ngClass]="{ 'active': resourcePool.RatingMode === 2 }">
                                 All Users
                                 <span class="g-ml-10 badge">{{ resourcePool.RatingCount }}</span>

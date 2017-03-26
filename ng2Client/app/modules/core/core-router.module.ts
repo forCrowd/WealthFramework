@@ -17,6 +17,7 @@ import { GoogleAnalyticsService } from "./google-analytics.service";
 // Routes
 import { accountRoutes } from "../account/account.module";
 import { contentRoutes } from "../content/content.module";
+import { globalGoalsFundRoutes } from "../content/global-goals-fund/global-goals-fund.module";
 import { userRoutes } from "../user/user.module";
 import { resourcePoolRoutes } from "../resource-pool/resource-pool.module";
 
@@ -48,6 +49,7 @@ const notFoundRoute: Routes = [
         RouterModule.forRoot(coreRoutes),
         RouterModule.forRoot(accountRoutes),
         RouterModule.forRoot(contentRoutes),
+        RouterModule.forRoot(globalGoalsFundRoutes),
         RouterModule.forRoot(userRoutes),
         RouterModule.forRoot(resourcePoolRoutes),
         RouterModule.forRoot(notFoundRoute),

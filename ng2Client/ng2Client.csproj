@@ -43,6 +43,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="app\images\sdgs\E_SDG_Icons-1.jpg" />
+    <Content Include="app\images\sdgs\E_SDG_Icons-2.jpg" />
+    <Content Include="app\images\sdgs\E_SDG_Icons-3.jpg" />
+    <Content Include="app\images\sdgs\E_SDG_Icons-4.jpg" />
+    <Content Include="app\images\sdgs\E_SDG_Icons-5.jpg" />
+    <Content Include="app\images\sdgs\E_SDG_Icons-6.jpg" />
+    <Content Include="app\images\sdgs\E_SDG_Icons-7.jpg" />
+    <Content Include="app\images\sdgs\E_SDG_Icons-8.jpg" />
+    <Content Include="app\images\sdgs\E_SDG_Icons-9.jpg" />
+    <Content Include="app\images\sdgs\E_SDG_Icons-10.jpg" />
+    <Content Include="app\images\sdgs\E_SDG_Icons-11.jpg" />
+    <Content Include="app\images\sdgs\E_SDG_Icons-12.jpg" />
+    <Content Include="app\images\sdgs\E_SDG_Icons-13.jpg" />
+    <Content Include="app\images\sdgs\E_SDG_Icons-14.jpg" />
+    <Content Include="app\images\sdgs\E_SDG_Icons-15.jpg" />
+    <Content Include="app\images\sdgs\E_SDG_Icons-16.jpg" />
+    <Content Include="app\images\sdgs\E_SDG_Icons-17.jpg" />
     <Content Include="app\modules\account\account-edit.component.html" />
     <Content Include="app\modules\account\account-overview.component.html" />
     <Content Include="app\modules\account\add-password.component.html" />
@@ -55,6 +72,11 @@
     <Content Include="app\modules\account\reset-password.component.html" />
     <Content Include="app\modules\account\social-logins.component.html" />
     <Content Include="app\app.component.html" />
+    <Content Include="app\modules\content\global-goals-fund\dashboard.component.html" />
+    <Content Include="app\modules\content\global-goals-fund\sponsors.component.html" />
+    <Content Include="app\modules\content\global-goals-fund\goals-priority.component.html" />
+    <Content Include="app\modules\content\global-goals-fund\additional-goals.component.html" />
+    <Content Include="app\modules\content\global-goals-fund\global-goals.component.html" />
     <Content Include="app\modules\core\contributors.component.html" />
     <Content Include="app\modules\core\home.component.html" />
     <Content Include="app\modules\core\not-found.component.html" />
@@ -128,6 +150,12 @@
     <TypeScriptCompile Include="app\modules\account\reset-password.component.ts" />
     <TypeScriptCompile Include="app\modules\account\social-logins.component.ts" />
     <TypeScriptCompile Include="app\app.component.ts" />
+    <TypeScriptCompile Include="app\modules\content\global-goals-fund\dashboard.component.ts" />
+    <TypeScriptCompile Include="app\modules\content\global-goals-fund\sponsors.component.ts" />
+    <TypeScriptCompile Include="app\modules\content\global-goals-fund\goals-priority.component.ts" />
+    <TypeScriptCompile Include="app\modules\content\global-goals-fund\global-goals-fund.module.ts" />
+    <TypeScriptCompile Include="app\modules\content\global-goals-fund\additional-goals.component.ts" />
+    <TypeScriptCompile Include="app\modules\content\global-goals-fund\global-goals.component.ts" />
     <TypeScriptCompile Include="app\modules\core\core-router.module.ts" />
     <TypeScriptCompile Include="app\modules\core\core.module.ts" />
     <TypeScriptCompile Include="app\modules\core\contributors.component.ts" />

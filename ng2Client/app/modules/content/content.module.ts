@@ -13,6 +13,7 @@ import { PrologueComponent } from "./prologue.component";
 import { ReasonComponent } from "./reason.component";
 import { TotalCostIndexComponent } from "./total-cost-index.component";
 
+import { GlobalGoalsFundModule } from "./global-goals-fund/global-goals-fund.module";
 import { NgChartModule } from "../ng-chart/ng-chart.module";
 import { ResourcePoolModule } from "../resource-pool/resource-pool.module";
 
@@ -57,6 +58,7 @@ export const contentRoutes: Routes = [
         FormsModule,
         RouterModule,
 
+        GlobalGoalsFundModule,
         NgChartModule,
         ResourcePoolModule
     ]
