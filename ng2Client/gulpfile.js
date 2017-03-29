@@ -39,17 +39,17 @@ gulp.task("default", ["compile-typescript", "generate-app.min.css", "generate-li
 
 // Build with local settings
 gulp.task("build-local", ["generate-app.min.css"], function () {
-    return build("local", false);
+    return build({ environment: "local", runPublish: false });
 });
 
 // Build with production settings
 gulp.task("build-production", ["generate-app.min.css"], function () {
-    return build("production", true);
+    return build({ environment: "production", runPublish: true });
 });
 
 // Build with test settings
 gulp.task("build-test", ["generate-app.min.css"], function () {
-    return build("test", true);
+    return build({ environment: "test", runPublish: true });
 });
 
 // Compile-typescript
@@ -58,15 +58,15 @@ gulp.task("compile-typescript", function () {
 });
 
 gulp.task("copy-local-settings", function () {
-    return copyEnvironmentSettings("local");
+    return copyEnvironmentSettings({ environment: "local" });
 });
 
 gulp.task("copy-production-settings", function () {
-    return copyEnvironmentSettings("production");
+    return copyEnvironmentSettings({ environment: "production" });
 });
 
 gulp.task("copy-test-settings", function () {
-    return copyEnvironmentSettings("test");
+    return copyEnvironmentSettings({ environment: "test" });
 });
 
 // If fonts folder doesn't exist, copy it from Font-Awesome fonts
@@ -117,23 +117,23 @@ gulp.task("watch", function () {
 
 /* Methods */
 
-function build(environment, runPublish) {
+function build(config) {
 
-    var file = getEnvironmentSettingsFile(environment);
+    var file = getEnvironmentSettingsFile(config);
 
     // Check settings file
     return pathExists(file).then(function (exists) {
 
         if (!exists) {
-            throw new Error("There is no settings file for `" + environment + "` environment.\r\n"
-                + "Please create this file by using `copy-" + environment + "-settings` task and modify it with your own settings.");
+            throw new Error("There is no settings file for `" + config.environment + "` environment.\r\n"
+                + "Please create this file by using `copy-" + config.environment + "-settings` task and modify it with your own settings.");
         }
 
-        return compileAheadOfTime().then(function () {
-            return bundle(environment).then(function () {
+        return compileAheadOfTime(config).then(function () {
+            return bundle(config).then(function () {
                 return minify().then(function () {
-                    if (runPublish) {
-                        return publish(environment).then(function () {
+                    if (config.runPublish) {
+                        return publish(config).then(function () {
                             return compileTypescript(typeScriptDefaultProject); // *
                         });
                     } else {
@@ -146,16 +146,17 @@ function build(environment, runPublish) {
     });
 }
 
-function bundle(environment) {
+function bundle(config) {
 
     var rollup = require("rollup"),
         alias = require("rollup-plugin-alias"),
         commonjs = require("rollup-plugin-commonjs"),
         nodeResolve = require("rollup-plugin-node-resolve"),
-        environmentSettingsFile = getEnvironmentSettingsFile(environment);
+        environmentSettingsFile = getEnvironmentSettingsFile(config),
+        entryFile = "main-aot.js";
 
     return rollup.rollup({
-        entry: "./app/main-aot.js",
+        entry: "./app/" + entryFile,
         plugins: [
             alias({
                 "breeze-client": path.resolve(__dirname, "node_modules", "breeze-client/breeze.base.debug.js"),
@@ -195,14 +196,20 @@ function bundle(environment) {
       });
 }
 
-function compileAheadOfTime() {
+function compileAheadOfTime(config) {
+
     return new Promise(function (resolve, reject) {
-        return exec("node_modules\\.bin\\ngc -p tsconfig-build-aot.json", function (err, stdout, stderr) {
+
+        var buildFile = "tsconfig-build-aot.json";
+
+        return exec("node_modules\\.bin\\ngc -p " + buildFile, function (err, stdout, stderr) {
 
             console.log(stdout);
             console.log(stderr);
 
-            return compileTypescript("./tsconfig-compile-aot.json")
+            var compileFile = "tsconfig-compile-aot.json";
+
+            return compileTypescript("./" + compileFile)
                 .then(function () {
                     resolve();
                 });
@@ -221,10 +228,10 @@ function compileTypescript(projectFile) {
 }
 
 // Copies '/app/settings/setup/environment-settings.ts' file to its parent folder as the given environment
-function copyEnvironmentSettings(environment) {
+function copyEnvironmentSettings(config) {
 
     var setupSettings = "environment-settings.ts",
-        environmentSettings = environment + "-settings.ts";
+        environmentSettings = config.environment + "-settings.ts";
 
     // Checks whether the file(s) already being copied
     return pathExists(settingsRoot + "/" + environmentSettings).then(function (exists) {
@@ -243,20 +250,14 @@ function copyEnvironmentSettings(environment) {
     });
 }
 
-function getEnvironmentSettingsFile(environment) {
-
-    var settingsFile = environment === "local"
-        ? "local-settings.js"
-        : environment === "test"
-        ? "test-settings.js"
-        : "production-settings.js";
-
+function getEnvironmentSettingsFile(config) {
+    var settingsFile = config.environment + "-settings.js";
     return path.resolve(__dirname, "app", "settings", settingsFile);
 }
 
 // Todo Try to move this to an xml file and read it from there? / coni2k - 25 Dec. '16
-function getWebConfigHttpsBlock(environment) {
-    return environment !== "production"
+function getWebConfigHttpsBlock(config) {
+    return config.environment !== "production"
         ? ""
         : "" + "\r\n"
         + "                <rule name=\"Redirect to https\" stopProcessing=\"true\" enabled=\"true\">" + "\r\n"
@@ -303,7 +304,7 @@ function promiseErrorHandler(error) {
 }
 
 // Copy publish files to "publish" folder
-function publish(environment) {
+function publish(config) {
 
     return new Promise(function (resolve, reject) {
 
@@ -337,7 +338,7 @@ function publish(environment) {
                             src: "/app/app.min.js?v=" + version,
                             tpl: "<script async src=\"%s\"></script>"
                         },
-                        "web-config": getWebConfigHttpsBlock(environment)
+                        "web-config": getWebConfigHttpsBlock(config.environment)
                     }))
                     .on("error", promiseErrorHandler)
                     .pipe(gulp.dest(publishDest))

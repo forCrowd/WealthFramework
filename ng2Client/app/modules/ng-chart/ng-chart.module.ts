@@ -22,4 +22,3 @@ export { ChartConfig, ChartDataItem }
     ]
 })
 export class NgChartModule { }
-

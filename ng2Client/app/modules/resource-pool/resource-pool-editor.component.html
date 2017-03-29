@@ -10,8 +10,8 @@
                         <span class="label label-danger">{{ errorMessage }}</span>
                     </p>
                 </div>
-                <div *ngIf="resourcePool">
-                    <div class="col-md-12">
+                <div class="col-md-12" *ngIf="resourcePool">
+                    <div class="clearfix">
                         <p class="pull-left">
                             <span class="title panel-title">
                                 {{ resourcePool.Name }}
@@ -23,10 +23,8 @@
                             <i class="fa fa-pencil" aria-hidden="true"></i> Manage
                         </button>
                     </div>
-                    <div class="col-md-12">
-                        <hr />
-                    </div>
-                    <div class="col-md-12 settings">
+                    <hr />
+                    <div class="settings">
                         <div *ngIf="resourcePool.RatingCount > 0" class="btn-group" role="group" aria-label="Rating Options">
                             <button (click)="resourcePool.toggleRatingMode()" type="button" class="btn btn-default" [ngClass]="{ 'active': resourcePool.RatingMode === 1 }">
                                 Your Ratings
@@ -137,7 +135,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let elementItem of resourcePool.selectedElement().getElementItemSetSorted()">
+                                    <tr *ngFor="let elementItem of resourcePool.selectedElement().getElementItemSet('totalIncome')">
                                         <!-- Name -->
                                         <td>
                                             {{ elementItem.Name }}

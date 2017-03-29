@@ -26,7 +26,8 @@ export class ResourcePoolCreateComponent implements OnInit {
 
     cancelResourcePool() {
 
-        this.rejectChanges();
+        // TODO Instead of this, find all sub items of this.ResourcePool and call rejectChanges on them? / coni2k - 21 Feb. '17
+        this.dataService.rejectChanges();
 
         var command = "/" + this.dataService.currentUser.UserName;
 
@@ -40,7 +41,8 @@ export class ResourcePoolCreateComponent implements OnInit {
         }
 
         if (confirm("Discard changes?")) {
-            this.rejectChanges();
+            // TODO Instead of this, find all sub items of this.ResourcePool and call rejectChanges on them? / coni2k - 21 Feb. '17
+            this.dataService.rejectChanges();
             return true;
         } else {
             return false;
@@ -93,11 +95,6 @@ export class ResourcePoolCreateComponent implements OnInit {
                     return;
                 }
             });
-    }
-
-    rejectChanges() {
-        // TODO Instead of this, find all sub items of this.ResourcePool and call rejectChanges on them? / coni2k - 21 Feb. '17
-        this.dataService.rejectChanges();
     }
 
     submitDisabled() {

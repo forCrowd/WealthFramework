@@ -26,7 +26,6 @@ hr {
 }
 
 /* Custom navbar with buttons (copied from bootstrap.css - navbar a */
-
 .nav > li > button:hover,
 .nav > li > button:focus {
     text-decoration: none;
@@ -65,33 +64,33 @@ hr {
 }
 
 .btn-facebook {
-    color: #fff;
-    background-color: #3b5998;
+    color: #fff !important;
+    background-color: #3b5998 !important;
 }
 
     .btn-facebook:focus, .btn-facebook.focus, .btn-facebook:hover, .btn-facebook:active, .btn-facebook.active {
-        color: #fff;
-        background-color: #2d4373;
+        color: #fff !important;
+        background-color: #2d4373 !important;
     }
 
 .btn-microsoft {
-    color: #fff;
-    background-color: #2672ec;
+    color: #fff !important;
+    background-color: #2672ec !important;
 }
 
     .btn-microsoft:focus, .btn-microsoft.focus, .btn-microsoft:hover, .btn-microsoft:active, .btn-microsoft.active {
-        color: #fff;
-        background-color: #125acd;
+        color: #fff !important;
+        background-color: #125acd !important;
     }
 
 .btn-google {
-    color: #fff;
-    background-color: #dd4b39;
+    color: #fff !important;
+    background-color: #dd4b39 !important;
 }
 
     .btn-google:focus, .btn-google.focus, .btn-google:hover, .btn-google:active, .btn-google.active {
-        color: #fff;
-        background-color: #c23321;
+        color: #fff !important;
+        background-color: #c23321 !important;
     }
 
 /* #endregion */

@@ -95,7 +95,7 @@ export class ResourcePoolService {
         element.IsMainElement = true;
 
         // Importance field (index)
-        this.createElementField({
+        var importanceField = this.createElementField({
             Element: element,
             Name: "Importance",
             DataType: 4,
@@ -112,87 +112,23 @@ export class ResourcePoolService {
             Name: "New item 1"
         });
 
+        // Cell 1
+        this.createElementCell({
+            ElementField: importanceField,
+            ElementItem: elementItem1
+        });
+
         // Item 2
         var elementItem2 = this.createElementItem({
             Element: element,
             Name: "New item 2"
         });
 
-        return resourcePool;
-    }
-
-    // Obsolete at the moment / coni2k - 21 Feb. '17
-    createResourcePoolDirectIncomeAndMultiplier() {
-
-        var resourcePool: any = this.createResourcePoolBasic();
-
-        // Convert Importance field to Sales Price field
-        var salesPriceField = resourcePool.mainElement().ElementFieldSet[0];
-        salesPriceField.Name = "Sales Price";
-        salesPriceField.DataType = 11;
-        salesPriceField.UseFixedValue = true;
-        salesPriceField.IndexEnabled = false;
-        salesPriceField.IndexCalculationType = 0;
-        salesPriceField.IndexSortType = 0;
-
-        // Number of Sales field
-        var numberOfSalesField = this.createElementField({
-            Element: resourcePool.mainElement(),
-            Name: "Number of Sales",
-            DataType: 12,
-            UseFixedValue: false,
-            SortOrder: 2
+        // Cell 2
+        this.createElementCell({
+            ElementField: importanceField,
+            ElementItem: elementItem2
         });
-
-        return resourcePool;
-    }
-
-    // Obsolete at the moment / coni2k - 21 Feb. '17
-    createResourcePoolTwoElements() {
-
-        var resourcePool: any = this.createResourcePoolBasic();
-
-        // Element 2 & items
-        var element2 = resourcePool.ElementSet[0];
-        element2.Name = "Child";
-
-        var element2Item1 = element2.ElementItemSet[0];
-        var element2Item2 = element2.ElementItemSet[1];
-
-        // Element 1
-        var element1: any = this.createElement({
-            ResourcePool: resourcePool,
-            Name: "Parent"
-        });
-        element1.IsMainElement = true;
-
-        // Child field (second element)
-        this.createElementField({
-            Element: element1,
-            Name: "Child",
-            DataType: 6,
-            SelectedElement: element2,
-            UseFixedValue: true,
-            SortOrder: 1
-        });
-
-        // Item 1
-        var item1 = this.createElementItem({
-            Element: element1,
-            Name: "Parent 1"
-        });
-
-        // Item 1 Cell
-        item1.ElementCellSet[0].SelectedElementItem = element2Item1;
-
-        // Item 2
-        var item2 = this.createElementItem({
-            Element: element1,
-            Name: "Parent 2"
-        });
-
-        // Item 2 Cell
-        item2.ElementCellSet[0].SelectedElementItem = element2Item2;
 
         return resourcePool;
     }
