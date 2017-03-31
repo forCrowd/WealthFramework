@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.75.1**
+
+* ng2Client - Contributers page - m-sekhon
+
 **0.75.0**
 
 * ng2Client - Global Goals Fund was removed
