@@ -16,7 +16,9 @@ import { Logger } from "../../modules/logger/logger.module";
 export class AccountEditComponent {
 
     currentUser: any;
-    isSaving: boolean;
+    get isSaving(): boolean {
+        return this.dataService.isSaving;
+    }
 
     constructor(private dataService: DataService,
         private logger: Logger,
@@ -43,9 +45,7 @@ export class AccountEditComponent {
     }
 
     saveChanges(): void {
-        this.isSaving = true;
         this.dataService.saveChanges()
-            .finally(() => this.isSaving = false)
             .subscribe((): void => {
                 this.logger.logSuccess("Your changes have been saved!", null, true);
                 this.router.navigate(["/app/account"]);

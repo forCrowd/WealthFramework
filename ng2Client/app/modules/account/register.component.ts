@@ -29,15 +29,13 @@ export class RegisterComponent implements OnInit {
             userName: ""
         }
     };
-    isSaving = false;
+    get isSaving(): boolean {
+        return this.dataService.isSaving;
+    }
     rememberMe = true;
     subscriptions: any[] = [];
 
     constructor(private dataService: DataService, private logger: Logger, private router: Router) {
-    }
-
-    isSaveDisabled() {
-        return this.isSaving;
     }
 
     ngOnInit(): void {
@@ -52,10 +50,7 @@ export class RegisterComponent implements OnInit {
 
     register() {
 
-        this.isSaving = true;
-
         this.dataService.register(this.bindingModel, this.rememberMe)
-            .finally(() => this.isSaving = false)
             .subscribe(() => {
                 this.logger.logSuccess("You have been registered!", null, true);
                 this.router.navigate(["/app/account/confirm-email"]);

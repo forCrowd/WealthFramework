@@ -18,7 +18,9 @@ export class ChangeEmailComponent implements OnInit {
     bindingModel = {
         Email: ""
     };
-    isSaving = false;
+    get isSaving(): boolean {
+        return this.dataService.isSaving;
+    }
 
     constructor(private dataService: DataService, private logger: Logger, private router: Router) {
     }
@@ -40,9 +42,7 @@ export class ChangeEmailComponent implements OnInit {
 
     changeEmail() {
 
-        this.isSaving = true;
         this.dataService.changeEmail(this.bindingModel)
-            .finally(() => this.isSaving = false)
             .subscribe(() => {
                 this.bindingModel.Email = "";
                 this.router.navigate(["/app/account/confirm-email"]);

@@ -16,6 +16,10 @@ export class ElementManagerComponent {
     @Output() cancelled = new EventEmitter();
     @Output() saved = new EventEmitter();
 
+    get isSaving(): boolean {
+        return this.dataService.isSaving;
+    }
+
     constructor(private logger: Logger,
         private dataService: DataService) {
     }
@@ -33,5 +37,9 @@ export class ElementManagerComponent {
 
             this.saved.emit();
         });
+    }
+
+    submitDisabled() {
+        return this.isSaving || this.element.entityAspect.getValidationErrors().length > 0;
     }
 }

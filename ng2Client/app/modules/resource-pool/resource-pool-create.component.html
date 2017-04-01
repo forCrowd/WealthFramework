@@ -38,7 +38,7 @@
                     <button (click)="createResourcePool()" [disabled]="submitDisabled()" type="button" class="btn btn-primary">
                         Create CMRP
                     </button>
-                    <button (click)="cancelResourcePool()" type="button" class="btn btn-default">
+                    <button (click)="cancelResourcePool()" [disabled]="isSaving" type="button" class="btn btn-default">
                         Cancel
                     </button>
                 </div>

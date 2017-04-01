@@ -19,7 +19,9 @@ export class ChangePasswordComponent {
         NewPassword: "",
         ConfirmPassword: ""
     };
-    isSaving = false;
+    get isSaving(): boolean {
+        return this.dataService.isSaving;
+    }
 
     constructor(private dataService: DataService, private logger: Logger, private router: Router) {
     }
@@ -41,10 +43,7 @@ export class ChangePasswordComponent {
 
     changePassword() {
 
-        this.isSaving = true;
-
         this.dataService.changePassword(this.bindingModel)
-            .finally(() => this.isSaving = false)
             .subscribe(() => {
                 this.logger.logSuccess("Your password has been changed!", null, true);
                 this.reset();

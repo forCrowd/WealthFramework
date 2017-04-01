@@ -23,6 +23,7 @@ export class DataService {
     changeUserNameUrl: string = "";
     confirmEmailUrl: string = "";
     externalLoginUrl: string = "";
+    isSaving: boolean = false;
     registerUrl: string = "";
     registerAnonymousUrl: string = "";
     resendConfirmationEmailUrl: string = "";
@@ -63,6 +64,8 @@ export class DataService {
     }
 
     addPassword(addPasswordBindingModel: any) {
+
+        this.isSaving = true;
         return this.http.post(this.addPasswordUrl, addPasswordBindingModel)
             .map((value: Response) => {
 
@@ -75,13 +78,15 @@ export class DataService {
 
                 this.currentUser.entityAspect.acceptChanges();
             })
-            .catch((error: any) => this.handleError(error));
+            .catch((error: any) => this.handleError(error))
+            .finally(() => this.isSaving = false);
     }
 
     changeEmail(changeEmailBindingModel: any): Observable<any> {
 
         changeEmailBindingModel.ClientAppUrl = window.location.origin;
 
+        this.isSaving = true;
         return this.http.post(this.changeEmailUrl, changeEmailBindingModel)
             .map((value: Response) => {
 
@@ -96,10 +101,13 @@ export class DataService {
 
                 this.currentUser.entityAspect.acceptChanges();
             })
-            .catch((error: any) => this.handleError(error));
+            .catch((error: any) => this.handleError(error))
+            .finally(() => this.isSaving = false);
     }
 
     changePassword(changePasswordBindingModel: any) {
+
+        this.isSaving = true;
         return this.http.post(this.changePasswordUrl, changePasswordBindingModel)
             .map((value: Response) => {
 
@@ -110,11 +118,13 @@ export class DataService {
 
                 this.currentUser.entityAspect.acceptChanges();
             })
-            .catch((error: any) => this.handleError(error));
+            .catch((error: any) => this.handleError(error))
+            .finally(() => this.isSaving = false);
     }
 
     changeUserName(changeUserNameBindingModel: any) {
 
+        this.isSaving = true;
         return this.http.post(this.changeUserNameUrl, changeUserNameBindingModel)
             .map((value: Response) => {
 
@@ -139,10 +149,13 @@ export class DataService {
 
                 this.currentUser.entityAspect.acceptChanges();
             })
-            .catch((error: any) => this.handleError(error));
+            .catch((error: any) => this.handleError(error))
+            .finally(() => this.isSaving = false);
     }
 
     confirmEmail(confirmEmailBindingModel: any) {
+
+        this.isSaving = true;
         return this.http.post(this.confirmEmailUrl, confirmEmailBindingModel)
             .map((value: Response) => {
 
@@ -157,7 +170,8 @@ export class DataService {
 
                 return "";
             })
-            .catch((error: any) => this.handleError(error));
+            .catch((error: any) => this.handleError(error))
+            .finally(() => this.isSaving = false);
     }
 
     createEntity(entityType: any, initialValues: any, entityState?: any, mergeStrategy?: any) {
@@ -274,13 +288,15 @@ export class DataService {
 
     login(username: any, password: any, rememberMe: any, singleUseToken?: any): Observable<void> {
 
+        this.isSaving = true;
         return this.getToken(username, password, rememberMe, singleUseToken)
             .mergeMap((): Observable<void> => {
 
                 this.resetCurrentUser(false);
 
                 return this.setCurrentUser();
-            });
+            })
+            .finally(() => this.isSaving = false);
     }
 
     logout(): Observable<void> {
@@ -303,6 +319,7 @@ export class DataService {
 
         registerBindingModel.ClientAppUrl = window.location.origin;
 
+        this.isSaving = true;
         return this.http.post(this.registerUrl, registerBindingModel, rememberMe)
             .mergeMap((value: Response): any => {
 
@@ -333,7 +350,8 @@ export class DataService {
                         return this.saveChanges();
                     });
             })
-            .catch((error: any) => this.handleError(error));
+            .catch((error: any) => this.handleError(error))
+            .finally(() => this.isSaving = false);
     }
 
     rejectChanges() {
@@ -344,11 +362,15 @@ export class DataService {
 
         const model = { ClientAppUrl: window.location.origin };
 
+        this.isSaving = true;
         return this.http.post(this.resendConfirmationEmailUrl, model)
-            .catch((error: any) => this.handleError(error));
+            .catch((error: any) => this.handleError(error))
+            .finally(() => this.isSaving = false);
     }
 
     resetPassword(resetPasswordBindingModel: any) {
+
+        this.isSaving = true;
         return this.http.post(this.resetPasswordUrl, resetPasswordBindingModel)
             .map((value: Response) => {
 
@@ -359,21 +381,25 @@ export class DataService {
 
                 this.currentUser.entityAspect.acceptChanges();
             })
-            .catch((error: any) => this.handleError(error));
+            .catch((error: any) => this.handleError(error))
+            .finally(() => this.isSaving = false);
     }
 
     resetPasswordRequest(resetPasswordRequestBindingModel: any) {
 
         resetPasswordRequestBindingModel.ClientAppUrl = window.location.origin;
 
+        this.isSaving = true;
         return this.http.post(this.resetPasswordRequestUrl, resetPasswordRequestBindingModel)
-            .catch((error: any) => this.handleError(error));
+            .catch((error: any) => this.handleError(error))
+            .finally(() => this.isSaving = false);
     }
 
     saveChanges(): Observable<Object> {
 
         // Broadcast, so UI can block
         this.saveChangesStarted$.emit();
+        this.isSaving = true;
 
         return this.ensureAuthenticatedUser()
             .mergeMap(() => {
@@ -394,6 +420,7 @@ export class DataService {
 
                 // There is nothing to save?
                 if (promise === null) {
+                    this.isSaving = false;
                     this.saveChangesCompleted$.emit();
                     return Observable.of(null);
                 }
@@ -445,6 +472,7 @@ export class DataService {
                     .finally(() => {
 
                         // Broadcast, so UI can unblock
+                        this.isSaving = false;
                         this.saveChangesCompleted$.emit();
                     });
             });
@@ -612,7 +640,7 @@ export class DataService {
 
     private registerAnonymous(registerAnonymousBindingModel: any, rememberMe: boolean): Observable<Object> {
 
-
+        this.isSaving = true;
         return this.http.post(this.registerAnonymousUrl, registerAnonymousBindingModel)
             .mergeMap((value: Response) => {
 
@@ -638,7 +666,8 @@ export class DataService {
 
                 return this.getToken("", "", rememberMe, updatedUser.SingleUseToken);
             })
-            .catch((error: any) => this.handleError(error));
+            .catch((error: any) => this.handleError(error))
+            .finally(() => this.isSaving = false);
     }
 
     private resetCurrentUser(includelocalStorage: boolean): void {

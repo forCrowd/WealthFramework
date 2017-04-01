@@ -13,10 +13,10 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <button (click)="saveElement()" [disabled]="element.entityAspect.getValidationErrors().length > 0" type="button" class="btn btn-primary">
+                <button (click)="saveElement()" [disabled]="submitDisabled()" type="button" class="btn btn-primary">
                     Save Element
                 </button>
-                <button (click)="cancelElement()" type="button" class="btn btn-default">
+                <button (click)="cancelElement()" [disabled]="isSaving" type="button" class="btn btn-default">
                     Cancel
                 </button>
             </div>

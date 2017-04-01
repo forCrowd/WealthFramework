@@ -96,7 +96,6 @@
     <None Include="app_offline.htm_" />
     <Content Include="favicon.ico" />
     <None Include="package.json" />
-    <Content Include="gulpfile.js" />
     <Content Include="robots.txt" />
     <Content Include="tsconfig.json" />
     <None Include="Properties\PublishProfiles\wealth.pubxml" />
@@ -190,6 +189,7 @@
     <TypeScriptCompile Include="app\settings\local-settings.ts" />
     <TypeScriptCompile Include="app\settings\production-settings.ts" />
     <TypeScriptCompile Include="app\settings\setup\environment-settings.ts" />
+    <TypeScriptCompile Include="gulpfile.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
