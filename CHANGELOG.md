@@ -1,5 +1,9 @@
 ### Changelog
 
+**0.75.2**
+
+* ng2Client - gulpfile - getWebConfigHttpsBlock config fix
+
 **0.75.1**
 
 * ng2Client - Contributers page - m-sekhon
