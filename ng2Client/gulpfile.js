@@ -338,7 +338,7 @@ function publish(config) {
                             src: "/app/app.min.js?v=" + version,
                             tpl: "<script async src=\"%s\"></script>"
                         },
-                        "web-config": getWebConfigHttpsBlock(config.environment)
+                        "web-config": getWebConfigHttpsBlock(config)
                     }))
                     .on("error", promiseErrorHandler)
                     .pipe(gulp.dest(publishDest))
