@@ -14,7 +14,9 @@ import { Settings } from "../../settings/settings";
 })
 export class AddPasswordComponent {
 
-    isSaving: boolean;
+    get isSaving(): boolean {
+        return this.dataService.isSaving;
+    }
     model: any = { Password: "", ConfirmPassword: "" };
 
     constructor(private dataService: DataService, private logger: Logger, private router: Router) {
@@ -24,10 +26,7 @@ export class AddPasswordComponent {
 
         // Todo password match validation?
 
-        this.isSaving = true;
-
         this.dataService.addPassword(this.model)
-            .finally(() => this.isSaving = false)
             .subscribe(() => {
                 this.logger.logSuccess("Your password has been set!", null, true);
                 this.reset();

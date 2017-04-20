@@ -1,4 +1,4 @@
-﻿import { Component, OnDestroy, OnInit } from "@angular/core";
+﻿import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 
 import { Element } from "../data/entities/element";
@@ -21,7 +21,7 @@ import { ElementFieldDataType, ElementFieldIndexCalculationType, ElementFieldInd
     selector: "resource-pool-manager",
     templateUrl: "resource-pool-manager.component.html",
 })
-export class ResourcePoolManagerComponent implements OnDestroy, OnInit {
+export class ResourcePoolManagerComponent implements OnInit {
 
     displayResourcePool: boolean = true;
     displayElements: boolean = false;
@@ -37,10 +37,11 @@ export class ResourcePoolManagerComponent implements OnDestroy, OnInit {
     isElementCellEdit = false;
     isElementFieldEdit = false;
     isElementItemEdit = false;
-    isSaving = false;
+    get isSaving(): boolean {
+        return this.dataService.isSaving;
+    };
     resourcePool: ResourcePool = null;
     selectedElement: Element = null;
-    subscriptions: any[] = [];
     user: User;
 
     constructor(private activatedRoute: ActivatedRoute,
@@ -243,12 +244,6 @@ export class ResourcePoolManagerComponent implements OnDestroy, OnInit {
         return filtered;
     }
 
-    ngOnDestroy(): void {
-        for (let i = 0; i < this.subscriptions.length; i++) {
-            this.subscriptions[i].unsubscribe();
-        }
-    }
-
     ngOnInit(): void {
 
         this.activatedRoute.params.subscribe(
@@ -272,12 +267,6 @@ export class ResourcePoolManagerComponent implements OnDestroy, OnInit {
                         this.resourcePool = resourcePool;
                     });
             });
-
-        // Save changes events
-        this.subscriptions.push(
-            this.dataService.saveChangesStarted$.subscribe(() => this.saveChangesStart()));
-        this.subscriptions.push(
-            this.dataService.saveChangesCompleted$.subscribe(() => this.saveChangesCompleted()));
     }
 
     onElementManagerClosed() {
@@ -297,14 +286,6 @@ export class ResourcePoolManagerComponent implements OnDestroy, OnInit {
     removeElementItem(elementItem: any) {
         elementItem.remove();
         this.dataService.saveChanges().subscribe();
-    }
-
-    saveChangesStart(): void {
-        this.isSaving = true;
-    }
-
-    saveChangesCompleted(): void {
-        this.isSaving = false;
     }
 
     saveElementCell() {
@@ -381,10 +362,33 @@ export class ResourcePoolManagerComponent implements OnDestroy, OnInit {
         this.dataService.saveChanges().subscribe();
     }
 
-    submitDisabled() {
-        return this.isSaving
-            || (this.resourcePool.entityAspect.getValidationErrors().length
-                + this.resourcePool.UserResourcePoolSet[0].entityAspect.getValidationErrors().length) > 0;
+    submitDisabled(entity: string) {
+
+        let hasValidationErrors: boolean;
+
+        switch (entity) {
+            case "resourcePool": {
+                hasValidationErrors = (this.resourcePool.entityAspect.getValidationErrors().length
+                    + (this.resourcePool.UserResourcePoolSet.length > 0 ? this.resourcePool.UserResourcePoolSet[0].entityAspect.getValidationErrors().length : 0)) > 0;
+                break;
+            }
+            case "elementField": {
+                hasValidationErrors = (this.elementField.entityAspect.getValidationErrors().length
+                    + (this.elementField.UserElementFieldSet.length > 0 ? this.elementField.UserElementFieldSet[0].entityAspect.getValidationErrors().length : 0)) > 0;
+                break;
+            }
+            case "elementItem": {
+                hasValidationErrors = this.elementItem.entityAspect.getValidationErrors().length > 0;
+                break;
+            }
+            case "elementCell": {
+                hasValidationErrors = (this.elementCell.entityAspect.getValidationErrors().length
+                    + (this.elementCell.UserElementCellSet.length > 0 ? this.elementCell.UserElementCellSet[0].entityAspect.getValidationErrors().length : 0)) > 0;
+                break;
+            }
+        }
+
+        return this.isSaving || hasValidationErrors;
     }
 
     toggleResourcePool(): void {

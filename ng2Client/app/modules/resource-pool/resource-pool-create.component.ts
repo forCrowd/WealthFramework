@@ -13,7 +13,9 @@ import { Logger } from "../logger/logger.module";
 })
 export class ResourcePoolCreateComponent implements OnInit {
 
-    isSaving = false;
+    get isSaving(): boolean {
+        return this.dataService.isSaving;
+}   ;
     resourcePool: any = null;
     template: string = "basic";
     templateApplied: boolean = false; // If save operation fails because of "key | name exists" validation errors, this flag prevents template being applied to resource pool multiple times.
@@ -51,8 +53,6 @@ export class ResourcePoolCreateComponent implements OnInit {
 
     createResourcePool() {
 
-        this.isSaving = true;
-
         if (!this.templateApplied) {
             switch (this.template) {
                 case "none": { break; }
@@ -71,7 +71,6 @@ export class ResourcePoolCreateComponent implements OnInit {
         const command = "/" + this.resourcePool.User.UserName + "/" + this.resourcePool.Key;
 
         this.dataService.saveChanges()
-            .finally(() => this.isSaving = false)
             .subscribe(() => {
                 this.router.navigate([command]);
             });

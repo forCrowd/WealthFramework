@@ -69,10 +69,10 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <button (click)="saveResourcePool()" [disabled]="submitDisabled()" type="button" class="btn btn-primary">
+                        <button (click)="saveResourcePool()" [disabled]="submitDisabled('resourcePool')" type="button" class="btn btn-primary">
                             Save CMRP
                         </button>
-                        <button (click)="cancelResourcePool()" type="button" class="btn btn-default">
+                        <button (click)="cancelResourcePool()" [disabled]="isSaving" type="button" class="btn btn-default">
                             {{ resourcePool.entityAspect.entityState.isModified() ? "Cancel" : "Close" }}
                         </button>
                     </div>
@@ -119,11 +119,11 @@
                             <button (click)="editElement(element)" type="button" class="btn btn-link">
                                 <i class="fa fa-pencil" aria-hidden="true"></i> Edit
                             </button>
-                            <button (click)="setMainElement(element)" [hidden]="element.IsMainElement" type="button" class="btn btn-link" title="Determines whether CMRP Editor will start with this item or not.
+                            <button (click)="setMainElement(element)" [hidden]="element.IsMainElement" [disabled]="isSaving" type="button" class="btn btn-link" title="Determines whether CMRP Editor will start with this item or not.
                                     Only one element can be 'Main Element' and it cannot be deleted.">
                                 <i class="fa fa-check" aria-hidden="true"></i> Set as main element
                             </button>
-                            <button (click)="removeElement(element)" *ngIf="!element.IsMainElement" type="button" class="btn btn-link">
+                            <button (click)="removeElement(element)" *ngIf="!element.IsMainElement" [disabled]="isSaving" type="button" class="btn btn-link">
                                 <i class="fa fa-times" aria-hidden="true"></i> Remove
                             </button>
                         </td>
@@ -247,10 +247,10 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <button (click)="saveElementField()" [disabled]="elementField.entityAspect.getValidationErrors().length > 0" type="button" class="btn btn-primary">
+                            <button (click)="saveElementField()" [disabled]="submitDisabled('elementField')" type="button" class="btn btn-primary">
                                 Save Field
                             </button>
-                            <button (click)="cancelElementField()" type="button" class="btn btn-default">
+                            <button (click)="cancelElementField()" [disabled]="isSaving" type="button" class="btn btn-default">
                                 Cancel
                             </button>
                         </div>
@@ -302,7 +302,7 @@
                             <button (click)="editElementField(elementField)" type="button" class="btn btn-link">
                                 <i class="fa fa-pencil" aria-hidden="true"></i> Edit
                             </button>
-                            <button (click)="removeElementField(elementField)" type="button" class="btn btn-link">
+                            <button (click)="removeElementField(elementField)" [disabled]="isSaving" type="button" class="btn btn-link">
                                 <i class="fa fa-times" aria-hidden="true"></i> Remove
                             </button>
                         </td>
@@ -343,10 +343,10 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <button (click)="saveElementItem()" [disabled]="elementItem.entityAspect.getValidationErrors().length > 0" type="button" class="btn btn-primary">
+                            <button (click)="saveElementItem()" [disabled]="submitDisabled('elementItem')" type="button" class="btn btn-primary">
                                 Save Item
                             </button>
-                            <button (click)="cancelElementItem()" class="btn btn-default" type="button">
+                            <button (click)="cancelElementItem()" [disabled]="isSaving" class="btn btn-default" type="button">
                                 Cancel
                             </button>
                         </div>
@@ -386,7 +386,7 @@
                             <button (click)="editElementItem(elementItem)" type="button" class="btn btn-link">
                                 <i class="fa fa-pencil" aria-hidden="true"></i> Edit
                             </button>
-                            <button (click)="removeElementItem(elementItem)" type="button" class="btn btn-link">
+                            <button (click)="removeElementItem(elementItem)" [disabled]="isSaving" type="button" class="btn btn-link">
                                 <i class="fa fa-times" aria-hidden="true"></i> Remove
                             </button>
                         </td>
@@ -456,10 +456,10 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <button (click)="saveElementCell()" [disabled]="(elementCell.entityAspect.getValidationErrors().length + (elementCell.UserElementCellSet.length > 0 ? elementCell.UserElementCellSet[0].entityAspect.getValidationErrors().length : 0)) > 0" type="button" class="btn btn-primary">
+                            <button (click)="saveElementCell()" [disabled]="submitDisabled('elementCell')" type="button" class="btn btn-primary">
                                 Save Cell
                             </button>
-                            <button (click)="cancelElementCell()" type="button" class="btn btn-default">
+                            <button (click)="cancelElementCell()" [disabled]="isSaving" type="button" class="btn btn-default">
                                 Cancel
                             </button>
                         </div>

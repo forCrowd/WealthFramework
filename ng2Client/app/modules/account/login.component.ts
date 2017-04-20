@@ -15,7 +15,9 @@ import { Settings } from "../../settings/settings";
 export class LoginComponent implements OnDestroy, OnInit {
 
     error: any;
-    isSaving = false;
+    get isSaving(): boolean {
+        return this.dataService.isSaving;
+    }
     init: any;
     password = "";
     rememberMe = true;
@@ -29,16 +31,10 @@ export class LoginComponent implements OnDestroy, OnInit {
         private router: Router) {
     }
 
-    isSaveDisabled() {
-        return this.isSaving;
-    }
-
     login() {
 
         if (this.username !== "" && this.password !== "") {
-            this.isSaving = true;
             this.dataService.login(this.username, this.password, this.rememberMe)
-                .finally(() => this.isSaving = false)
                 .subscribe(() => {
 
                     this.logger.logSuccess("You have been logged in!", null, true);

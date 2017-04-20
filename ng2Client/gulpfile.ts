@@ -1,5 +1,6 @@
-﻿///<binding ProjectOpened="default" />
-"use strict";
+///<binding ProjectOpened="default" />
+/// <reference path="node_modules/@types/node/index.d.ts" />
+/// <reference path="node_modules/@types/core-js/index.d.ts" />
 
 // In order to resolve "environment-settings" in "./app/settings/settings"
 require("app-module-path").addPath("./app/settings/setup");
@@ -32,6 +33,9 @@ var appRoot = "./app",
     settingsRoot = appRoot + "/settings",
     typeScriptDefaultProject = "./tsconfig.json";
 
+var environment = "",
+    runPublish = false;
+
 /* Tasks */
 
 // default
@@ -39,17 +43,22 @@ gulp.task("default", ["compile-typescript", "generate-app.min.css", "generate-li
 
 // Build with local settings
 gulp.task("build-local", ["generate-app.min.css"], function () {
-    return build({ environment: "local", runPublish: false });
+    environment = "local";
+    return build();
 });
 
 // Build with production settings
 gulp.task("build-production", ["generate-app.min.css"], function () {
-    return build({ environment: "production", runPublish: true });
+    environment = "production";
+    runPublish = true;
+    return build();
 });
 
 // Build with test settings
 gulp.task("build-test", ["generate-app.min.css"], function () {
-    return build({ environment: "test", runPublish: true });
+    environment = "test";
+    runPublish = true;
+    return build();
 });
 
 // Compile-typescript
@@ -58,15 +67,18 @@ gulp.task("compile-typescript", function () {
 });
 
 gulp.task("copy-local-settings", function () {
-    return copyEnvironmentSettings({ environment: "local" });
+    environment = "local";
+    return copyEnvironmentSettings();
 });
 
 gulp.task("copy-production-settings", function () {
-    return copyEnvironmentSettings({ environment: "production" });
+    environment = "production";
+    return copyEnvironmentSettings();
 });
 
 gulp.task("copy-test-settings", function () {
-    return copyEnvironmentSettings({ environment: "test" });
+    environment = "test";
+    return copyEnvironmentSettings();
 });
 
 // If fonts folder doesn't exist, copy it from Font-Awesome fonts
@@ -110,30 +122,47 @@ gulp.task("setup", ["copy-local-settings", "copy-fonts"]);
 
 // Watch
 gulp.task("watch", function () {
-    gulp.watch("./app/**/*.ts", ["compile-typescript"]);
-    gulp.watch(appMinCssSrc, ["generate-app.min.css"]);
-    gulp.watch(libJsSrc, ["generate-lib.js"]);
+
+    var appTsGlob = "app/**/*.ts";
+
+    var appMinCssGlob = appMinCssSrc.slice();
+    appMinCssGlob.forEach(function (value, index, array) {
+        if (value.substring(0, 2) === "./") {
+            array[index] = value.substring(2); // Remove './' part from each item, so watch can work with new & deleted items
+        }
+    });
+
+    var libJsGlob = libJsSrc.slice();
+    libJsGlob.forEach(function (value, index, array) {
+        if (value.substring(0, 2) === "./") {
+            array[index] = value.substring(2); // Remove './' part from each item, so watch can work with new & deleted items
+        }
+    });
+
+    gulp.watch(appTsGlob, ["compile-typescript"]);
+    gulp.watch(appMinCssGlob, ["generate-app.min.css"]);
+    gulp.watch(libJsGlob, ["generate-lib.js"]);
 });
 
 /* Methods */
 
-function build(config) {
+function build() {
 
-    var file = getEnvironmentSettingsFile(config);
+    var file = getEnvironmentSettingsFile();
 
     // Check settings file
     return pathExists(file).then(function (exists) {
 
         if (!exists) {
-            throw new Error("There is no settings file for `" + config.environment + "` environment.\r\n"
-                + "Please create this file by using `copy-" + config.environment + "-settings` task and modify it with your own settings.");
+            throw new Error("There is no settings file for `" + environment + "` environment.\r\n"
+                + "Please create this file by using `copy-" + environment + "-settings` task and modify it with your own settings.");
         }
 
-        return compileAheadOfTime(config).then(function () {
-            return bundle(config).then(function () {
+        return compileAheadOfTime().then(function () {
+            return bundle().then(function () {
                 return minify().then(function () {
-                    if (config.runPublish) {
-                        return publish(config).then(function () {
+                    if (runPublish) {
+                        return publish().then(function () {
                             return compileTypescript(typeScriptDefaultProject); // *
                         });
                     } else {
@@ -146,13 +175,13 @@ function build(config) {
     });
 }
 
-function bundle(config) {
+function bundle() {
 
     var rollup = require("rollup"),
         alias = require("rollup-plugin-alias"),
         commonjs = require("rollup-plugin-commonjs"),
         nodeResolve = require("rollup-plugin-node-resolve"),
-        environmentSettingsFile = getEnvironmentSettingsFile(config),
+        environmentSettingsFile = getEnvironmentSettingsFile(),
         entryFile = "main-aot.js";
 
     return rollup.rollup({
@@ -166,43 +195,43 @@ function bundle(config) {
                 "environment-settings": path.resolve(__dirname, "app", "settings", environmentSettingsFile),
                 "highcharts": path.resolve(__dirname, "node_modules", "highcharts/highcharts.src.js")
             }),
-          commonjs({
-              namedExports: {
-                  "node_modules/breeze-client/breeze.base.debug.js": [
-                      "config",
-                      "EntityManager",
-                      "EntityState",
-                      "EntityQuery",
-                      "FetchStrategy",
-                      "Predicate"
-                  ],
-                  "node_modules/angulartics2/dist/index.js": [
-                      "Angulartics2GoogleAnalytics"
-                  ],
-                  "node_modules/angular2-highcharts/index.js": [
-                      "ChartModule"
-                  ]
-              }
-          }),
-          nodeResolve({ jsnext: true, module: true })
+            commonjs({
+                namedExports: {
+                    "node_modules/breeze-client/breeze.base.debug.js": [
+                        "config",
+                        "EntityManager",
+                        "EntityState",
+                        "EntityQuery",
+                        "FetchStrategy",
+                        "Predicate"
+                    ],
+                    "node_modules/angulartics2/dist/index.js": [
+                        "Angulartics2GoogleAnalytics"
+                    ],
+                    "node_modules/angular2-highcharts/index.js": [
+                        "ChartModule"
+                    ]
+                }
+            }),
+            nodeResolve({ jsnext: true, module: true })
         ]
     })
-      .then(function (bundle) {
-          return bundle.write({
-              format: "iife",
-              moduleName: "app",
-              dest: appJsPath
-          });
-      });
+        .then(function (bundle: any) {
+            return bundle.write({
+                format: "iife",
+                moduleName: "app",
+                dest: appJsPath
+            });
+        });
 }
 
-function compileAheadOfTime(config) {
+function compileAheadOfTime() {
 
     return new Promise(function (resolve, reject) {
 
         var buildFile = "tsconfig-build-aot.json";
 
-        return exec("node_modules\\.bin\\ngc -p " + buildFile, function (err, stdout, stderr) {
+        return exec("node_modules\\.bin\\ngc -p " + buildFile, function (err: any, stdout: any, stderr: any) {
 
             console.log(stdout);
             console.log(stderr);
@@ -217,9 +246,9 @@ function compileAheadOfTime(config) {
     });
 }
 
-function compileTypescript(projectFile) {
+function compileTypescript(projectFile: any) {
     return new Promise(function (resolve, reject) {
-        return exec("node_modules\\.bin\\tsc -p " + projectFile, function (err, stdout, stderr) {
+        return exec("node_modules\\.bin\\tsc -p " + projectFile, function (err: any, stdout: any, stderr: any) {
             console.log(stdout);
             console.log(stderr);
             resolve();
@@ -228,10 +257,10 @@ function compileTypescript(projectFile) {
 }
 
 // Copies '/app/settings/setup/environment-settings.ts' file to its parent folder as the given environment
-function copyEnvironmentSettings(config) {
+function copyEnvironmentSettings() {
 
     var setupSettings = "environment-settings.ts",
-        environmentSettings = config.environment + "-settings.ts";
+        environmentSettings = environment + "-settings.ts";
 
     // Checks whether the file(s) already being copied
     return pathExists(settingsRoot + "/" + environmentSettings).then(function (exists) {
@@ -250,14 +279,14 @@ function copyEnvironmentSettings(config) {
     });
 }
 
-function getEnvironmentSettingsFile(config) {
-    var settingsFile = config.environment + "-settings.js";
+function getEnvironmentSettingsFile() {
+    var settingsFile = environment + "-settings.js";
     return path.resolve(__dirname, "app", "settings", settingsFile);
 }
 
 // Todo Try to move this to an xml file and read it from there? / coni2k - 25 Dec. '16
-function getWebConfigHttpsBlock(config) {
-    return config.environment !== "production"
+function getWebConfigHttpsBlock() {
+    return environment !== "production"
         ? ""
         : "" + "\r\n"
         + "                <rule name=\"Redirect to https\" stopProcessing=\"true\" enabled=\"true\">" + "\r\n"
@@ -280,45 +309,45 @@ function minify() {
         appJsSrc.push(appJsPath);
 
         gulp.src(appJsSrc)
-                .pipe(sourcemaps.init())
-                .pipe(concat("app.min.js", { newLine: "\r\n" }))
-                .pipe(uglify())
-                .on("error", promiseErrorHandler)
-                .pipe(sourcemaps.write("./", { sourceRoot: appRoot.substring(1) }))
-                .pipe(gulp.dest(appRoot))
-                .on("end", resolve);
+            .pipe(sourcemaps.init())
+            .pipe(concat("app.min.js", { newLine: "\r\n" }))
+            .pipe(uglify())
+            .on("error", promiseErrorHandler)
+            .pipe(sourcemaps.write("./", { sourceRoot: appRoot.substring(1) }))
+            .pipe(gulp.dest(appRoot))
+            .on("end", resolve);
     });
 }
 
-function pathExists(path) {
+function pathExists(path: any) {
     return new Promise(function (resolve, reject) {
-        fs.stat(path, function (err) {
+        fs.stat(path, function (err: any) {
             var exists = err === null;
             return resolve(exists);
         });
     });
 }
 
-function promiseErrorHandler(error) {
+function promiseErrorHandler(error: any) {
     console.log(error);
 }
 
 // Copy publish files to "publish" folder
-function publish(config) {
+function publish() {
 
     return new Promise(function (resolve, reject) {
 
         var changed = require("gulp-changed"),
             publishDest = "./publish",
             publishSrc = [
-            "./app/fonts/**/*",
-            "./app/css/app.min.css",
-            "./app/images/**/*",
-            "./app/app.min.js",
-            "./app/app.min.js.map",
-            "./app_offline.htm_",
-            "./favicon.ico",
-            "./robots.txt"
+                "./app/fonts/**/*",
+                "./app/css/app.min.css",
+                "./app/images/**/*",
+                "./app/app.min.js",
+                "./app/app.min.js.map",
+                "./app_offline.htm_",
+                "./favicon.ico",
+                "./robots.txt"
             ];
 
         return gulp.src(publishSrc, { base: "./" })
@@ -338,7 +367,7 @@ function publish(config) {
                             src: "/app/app.min.js?v=" + version,
                             tpl: "<script async src=\"%s\"></script>"
                         },
-                        "web-config": getWebConfigHttpsBlock(config)
+                        "web-config": getWebConfigHttpsBlock()
                     }))
                     .on("error", promiseErrorHandler)
                     .pipe(gulp.dest(publishDest))

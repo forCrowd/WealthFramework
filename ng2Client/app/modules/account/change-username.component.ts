@@ -27,7 +27,9 @@ export class ChangeUserNameComponent implements OnInit {
         }
     };
     externalLoginInit: boolean; // For external login's
-    isSaving = false;
+    get isSaving(): boolean {
+        return this.dataService.isSaving;
+    }
 
     constructor(private activatedRoute: ActivatedRoute,
         private dataService: DataService,
@@ -55,10 +57,7 @@ export class ChangeUserNameComponent implements OnInit {
 
     changeUserName() {
 
-        this.isSaving = true;
-
         this.dataService.changeUserName(this.bindingModel)
-            .finally(() => this.isSaving = false)
             .subscribe(() => {
                 this.logger.logSuccess("Your username has been changed!", null, true);
 
@@ -86,7 +85,7 @@ export class ChangeUserNameComponent implements OnInit {
             });
     }
 
-    isSaveDisabled() {
+    submitDisabled() {
         return this.bindingModel.UserName === this.dataService.currentUser.UserName || this.isSaving;
     }
 }

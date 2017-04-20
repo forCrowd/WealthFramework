@@ -1,5 +1,18 @@
 ### Changelog
 
+**0.76.0**
+
+* ng2Client - data.service - isSaving
+ * All save, cancel, remove buttons are now using this
+ * Replaces saveChangesStarted$, saveChangesCompleted$ cases
+ * Replaces component level isSaving fields
+* ng2Client - systemjs 0.20 & angular2-toaster updates
+* ng2Client - gulpfile - local variables, instead of "config"
+* ng2Client - gulpfile.ts, instead of .js
+* ng2Client - gulpfile "watch newly added / deleted files are not triggering the task" fix
+* ng2Client - tsconfig.json - typescript compilation warnings fix - "lib": [ "es2015", "dom" ]
+* WebApi - csproj file fixes, powershell warmup script was removed
+
 **0.75.2**
 
 * ng2Client - gulpfile - getWebConfigHttpsBlock config fix

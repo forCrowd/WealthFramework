@@ -13,7 +13,7 @@
                 <button (click)="changeEmail()" [disabled]="changeEmailForm.form.invalid || isSaving" type="button" class="btn btn-primary">
                     Save
                 </button>
-                <button (click)="cancel()" type="button" class="btn btn-default">
+                <button (click)="cancel()" [disabled]="isSaving" type="button" class="btn btn-default">
                     Cancel
                 </button>
             </div>

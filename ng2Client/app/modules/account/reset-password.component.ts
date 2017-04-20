@@ -21,7 +21,9 @@ export class ResetPasswordComponent implements OnInit {
         ConfirmPassword: ""
     };
     email: string;
-    isSaving = false;
+    get isSaving(): boolean {
+        return this.dataService.isSaving;
+    }
     requestBindingModel = {
         Email: ""
     };
@@ -60,10 +62,7 @@ export class ResetPasswordComponent implements OnInit {
 
     resetPassword() {
 
-        this.isSaving = true;
-
         this.dataService.resetPassword(this.bindingModel)
-            .finally(() => this.isSaving = false)
             .subscribe(() => {
                 this.logger.logSuccess("Your password has been reset!", null, true);
                 this.router.navigate(["/app/account/login"]);
@@ -72,10 +71,7 @@ export class ResetPasswordComponent implements OnInit {
 
     resetPasswordRequest() {
 
-        this.isSaving = true;
-
         this.dataService.resetPasswordRequest(this.requestBindingModel)
-            .finally(() => this.isSaving = false)
             .subscribe(() => {
                 this.viewMode = "sent";
             });

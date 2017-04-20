@@ -14,7 +14,9 @@ import { Settings } from "../../settings/settings";
 })
 export class ConfirmEmailComponent implements OnInit {
 
-    isResendDisabled = false;
+    get isSaving(): boolean {
+        return this.dataService.isSaving;
+    }
 
     constructor(private activatedRoute: ActivatedRoute,
         private dataService: DataService,
@@ -24,15 +26,9 @@ export class ConfirmEmailComponent implements OnInit {
 
     resendConfirmationEmail() {
 
-        this.isResendDisabled = true;
-
         this.dataService.resendConfirmationEmail()
             .subscribe(() => {
                 this.logger.logSuccess("Confirmation email has been resent to your email address!", null, true);
-            },
-            null,
-            () => {
-                this.isResendDisabled = false;
             });
     }
 

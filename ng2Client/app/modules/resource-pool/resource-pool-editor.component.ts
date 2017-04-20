@@ -29,7 +29,9 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
     displayDescription: boolean = false;
     displayIndexDetails = false;
     errorMessage: string = "";
-    isSaving = false;
+    get isSaving(): boolean {
+        return this.dataService.isSaving;
+    }
     resourcePool: any = null;
     resourcePoolKey = "";
     saveStream = new Subject();
@@ -217,10 +219,6 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
         this.subscriptions.push(
             this.dataService.currentUserChanged$.subscribe((newUser: any) =>
                 this.initialize(this.username, this.resourcePoolKey, newUser)));
-        this.subscriptions.push(
-            this.dataService.saveChangesStarted$.subscribe(() => this.saveChangesStart()));
-        this.subscriptions.push(
-            this.dataService.saveChangesCompleted$.subscribe(() => this.saveChangesCompleted()));
 
         this.initialize(username, resourcePoolKey, this.dataService.currentUser);
     }
@@ -238,14 +236,6 @@ export class ResourcePoolEditorComponent implements OnDestroy, OnInit {
     resetResourcePoolRate() {
         this.resourcePoolService.updateResourcePoolRate(this.resourcePool, "reset");
         this.saveStream.next();
-    }
-
-    saveChangesStart() {
-        this.isSaving = true;
-    }
-
-    saveChangesCompleted() {
-        this.isSaving = false;
     }
 
     toggleDescription() {
