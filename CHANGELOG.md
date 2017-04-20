@@ -13,6 +13,10 @@
 * ng2Client - tsconfig.json - typescript compilation warnings fix - "lib": [ "es2015", "dom" ]
 * WebApi - csproj file fixes, powershell warmup script was removed
 
+**0.75.2**
+
+* ng2Client - gulpfile - getWebConfigHttpsBlock config fix
+
 **0.75.1**
 
 * ng2Client - Contributers page - m-sekhon
