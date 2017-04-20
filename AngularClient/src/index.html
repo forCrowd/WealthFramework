@@ -1,0 +1,39 @@
+﻿<!doctype html>
+<html>
+<head>
+    <title>Wealth Economy</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base href="/" />
+
+    <link rel="icon" type="image/x-icon" href="favicon.ico?v=0.77.0">
+</head>
+<body>
+    <app>
+        <div class="center">
+            <p class="text-center">
+                Loading<br />
+                <span id="dots">...</span>
+            </p>
+        </div>
+
+        <script>
+
+            loading();
+
+            function loading() {
+
+                var dots = document.getElementById("dots");
+
+                if (dots) {
+                    dots.innerHTML += ".";
+                    if (dots.textContent.length % 50 === 0) {
+                        dots.innerHTML += "<br/>";
+                    }
+                    setTimeout(loading, 500);
+                }
+            }
+        </script>
+    </app>
+</body>
+</html>

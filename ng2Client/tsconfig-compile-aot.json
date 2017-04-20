@@ -9,7 +9,7 @@
         "moduleResolution": "node",
         "noImplicitAny": true,
         "paths": {
-            "environment-settings": [ "app/settings/setup/environment-settings" ]
+            "environment-settings": [ "app/main/settings/setup/environment-settings" ]
         },
         "removeComments": true,
         "sourceMap": false,
@@ -17,6 +17,6 @@
         "target": "es5"
     },
     "files": [
-        "app/main-aot.ts"
+        "app/boot-aot.ts"
     ]
 }

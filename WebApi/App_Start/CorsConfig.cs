@@ -16,9 +16,17 @@
                 SupportsCredentials = true
             };
 
-            foreach (var allowedDomain in Framework.AppSettings.AllowedDomains)
+            if (Framework.AppSettings.AllowAnyOrigin)
             {
-                policy.Origins.Add(allowedDomain);
+                policy.AllowAnyOrigin = true;
+            }
+            else
+            {
+                policy.AllowAnyOrigin = false;
+                foreach (var allowedDomain in Framework.AppSettings.AllowedOrigins)
+                {
+                    policy.Origins.Add(allowedDomain);
+                }
             }
 
             app.UseCors(new CorsOptions

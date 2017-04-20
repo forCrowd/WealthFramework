@@ -24,13 +24,18 @@
         }
 
         /// <summary>
-        /// Allowed domains in CORS policy
+        /// Allowed origins in CORS policy
         /// </summary>
-        public static IEnumerable<string> AllowedDomains
+        public static bool AllowAnyOrigin
+        {
+            get { return bool.Parse(ConfigurationManager.AppSettings["AllowAnyOrigin"]); }
+        }
+
+        public static IEnumerable<string> AllowedOrigins
         {
             get
             {
-                return ConfigurationManager.AppSettings["AllowedDomains"]
+                return ConfigurationManager.AppSettings["AllowedOrigins"]
                     .Split(';')
                     .Select(item => item.Trim())
                     .Where(item => item != string.Empty);

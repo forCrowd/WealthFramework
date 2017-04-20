@@ -9,12 +9,11 @@ Experimental ideas on improving how the economy works
 
 ### Client
 
-* Angular 2
+* Angular
+* Angular CLI
 * TypeScript
 * BreezeJS
-* SystemJS
-* Rollup
-* Gulp
+* Karma & Jasmine
 
 ### Server
 
@@ -46,17 +45,20 @@ When deploying the project, update following configuration files with your own s
 
 If you would like to make the application offline during the deployment, you can use **app_offline.htm_**.
 
-### ng2Client Deployment
+### AngularClient Deployment
 
-ng2Client project has three different environment; local, test, production.  
-Each environment has its own settings under "/app/settings/" folder (i.e. "production-settings")  
-Update these files anyway you like.  
-  
-To deploy the application, execute the necessary task in gulpfile (i.e. "build-production").  
-This task generates an output in "publish" folder in the root of ng2Client project.  
-Simply copy the output to your server.
+AngularClient is a Angular CLI project and all of its commands are available.
 
-If you would like to make the application offline during the deployment, you can use **app_offline.htm_**.
+Thera are three environments defined in `.angular-cli.json` file: `dev`, `test` & `prod`.  
+For `test` & `prod`, please create your own files by copying `dev` configuration file:
+
+    AngularClient\src\app-settings\environments\environment-settings.ts
+
+To prepare a production bundle, run the following on your command console:
+
+    ng build -prod
+
+For more options, please visit [Angular CLI](https://github.com/angular/angular-cli)
 
 ## Changelog
 

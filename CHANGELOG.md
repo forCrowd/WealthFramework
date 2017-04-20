@@ -1,11 +1,34 @@
 ### Changelog
 
+**0.77.0**
+
+* AngularClient - New angular-cli based client :)
+* AngularClient - Module / routers separation was improved
+* AngularClient - Services (auth, app-entity-manager, account, resource pool) separation was improved
+* AngularClient - ngClient tests were moved to as "spec" files
+* AngularClient - Error handler improvements & Observable.throw error handling fix
+* AngularClient - isBusy (old isSaving) implementation improvements
+* AngularClient - logger service improvements & unnecessary dependency clean-up
+* AngularClient - Console class was introduced: It overwrites default console by adding timestamp in front of the message
+* AngularClient - Change Password test data for "dev" environment
+* AngularClient - Refactoring
+* WebApi - `AllowedAnyOrigin` setting was added to `appSettings.config` file
+* ngClient & ng2Client were removed from solution
+* ng2Client - Resource pool editor - Dynamic item sort order based on "Your Ratings" vs. "All Ratings"
+* ng2Client - angular 4 & other package updates
+* ng2Client - angular 4 router fix
+https://github.com/forCrowd/Labs-Angular4-BreezeJS-AppInit
+* ng2Client - AOT updates: gulpfile deletes "aot" folder before compiling + tsconfig-aot.json uses only "main.ts" file
+* ng2Client - Folder structure: dev-basic, dev-all, main
+* ng2Client - "app-aot.html" was introduced to test "AOT" builds
+* ng2Client - core & core-router modules were merged
+
 **0.76.0**
 
 * ng2Client - data.service - isSaving
- * All save, cancel, remove buttons are now using this
- * Replaces saveChangesStarted$, saveChangesCompleted$ cases
- * Replaces component level isSaving fields
+  * All save, cancel, remove buttons are now using this
+  * Replaces saveChangesStarted$, saveChangesCompleted$ cases
+  * Replaces component level isSaving fields
 * ng2Client - systemjs 0.20 & angular2-toaster updates
 * ng2Client - gulpfile - local variables, instead of "config"
 * ng2Client - gulpfile.ts, instead of .js
@@ -229,29 +252,29 @@ https://github.com/forCrowd/WealthEconomy/issues/118
 **0.65.0**
 
 * ng2Client project
- * Initial ng2Client project and files - angelfeliz
- * All angular controllers and directives were converted to components - coni2k
- * typescript and gulp-typescript packages were updated to latest, typings related items were removed - coni2k
- * systemjs module loader was introduced: No more app.min.js & lib.min.js (at least for the moment) - coni2k
- * angular2-moment instead of angular-moment - coni2k
- * rxjs & observables instead of promises - coni2k
- * angular2-highcharts instead of highcharts-ng - coni2k
- * breeze z-validate doesn't seem to be working with angular2, removed for now - coni2k
- * angulartics2 instead of angular-google-analytics - coni2k
- * Disqus was removed for now - coni2k
- * "symbolic" pipe instead of numberSymbol, "enumConverter" was removed, "percentage" pipe was replaced with built-in one - coni2k
- * Page title implementation was done through titleService, routing and new DynamicTitleResolve service - coni2k
- * enableProdMode settings was added to settings & all settings are now static - coni2k
- * ApplicationInfo service was merged with data-context service - coni2k
- * Separate ngChart module & component - coni2k
- * _system folder was renamed to app - coni2k
- * Naming conventions: https://angular.io/styleguide - coni2k
- * LocationHistory was removed - coni2k
- * loginReturnUrl is now stored in localStorage - coni2k
- * systemjs builder and new bundling method with gulpfile.js - coni2k
- * gulpfile.js improvements - coni2k
- * Settings for three different environments ("dev", "test", "prod"), and client has its own version field now - coni2k
- * Cache busting through AppSettings version field - coni2k
+  * Initial ng2Client project and files - angelfeliz
+  * All angular controllers and directives were converted to components - coni2k
+  * typescript and gulp-typescript packages were updated to latest, typings related items were removed - coni2k
+  * systemjs module loader was introduced: No more app.min.js & lib.min.js (at least for the moment) - coni2k
+  * angular2-moment instead of angular-moment - coni2k
+  * rxjs & observables instead of promises - coni2k
+  * angular2-highcharts instead of highcharts-ng - coni2k
+  * breeze z-validate doesn't seem to be working with angular2, removed for now - coni2k
+  * angulartics2 instead of angular-google-analytics - coni2k
+  * Disqus was removed for now - coni2k
+  * "symbolic" pipe instead of numberSymbol, "enumConverter" was removed, "percentage" pipe was replaced with built-in one - coni2k
+  * Page title implementation was done through titleService, routing and new DynamicTitleResolve service - coni2k
+  * enableProdMode settings was added to settings & all settings are now static - coni2k
+  * ApplicationInfo service was merged with data-context service - coni2k
+  * Separate ngChart module & component - coni2k
+  * _system folder was renamed to app - coni2k
+  * Naming conventions: https://angular.io/styleguide - coni2k
+  * LocationHistory was removed - coni2k
+  * loginReturnUrl is now stored in localStorage - coni2k
+  * systemjs builder and new bundling method with gulpfile.js - coni2k
+  * gulpfile.js improvements - coni2k
+  * Settings for three different environments ("dev", "test", "prod"), and client has its own version field now - coni2k
+  * Cache busting through AppSettings version field - coni2k
 * Multi client support: WebApi doesn't construct client urls anymore, gets the related urls from the client itself.
 ClientAppUrl setting in appSettings was renamed to AllowedDomains and only used in CorsConfig for determining clients.
 * ngClient - Radio buttons in manage forms were replaced with dropdowns
@@ -394,10 +417,10 @@ https://github.com/forCrowd/WealthEconomy/issues/67
 * Project notes were moved to wiki page  
 https://github.com/forCrowd/WealthEconomy/wiki
 * package updates
- * breezejs was updated to 1.5.7 and odata adapter's manually fixed version was removed
- * angular was replaced with fixed 1.5.4: there is a problem with 1.5.5+ packages, it installs 1.5.7 instead
- * jquery was replaced with fixed 2.2.2: there is a problem with 2.2.3+ packages, it installs 3.0.0 instead
- * bootstrap-social package was removed
+  * breezejs was updated to 1.5.7 and odata adapter's manually fixed version was removed
+  * angular was replaced with fixed 1.5.4: there is a problem with 1.5.5+ packages, it installs 1.5.7 instead
+  * jquery was replaced with fixed 2.2.2: there is a problem with 2.2.3+ packages, it installs 3.0.0 instead
+  * bootstrap-social package was removed
 
 **0.57.0**
 
@@ -424,8 +447,8 @@ https://github.com/forCrowd/WealthEconomy/issues/63
 
 * Auto register with guest account  
 https://github.com/forCrowd/WealthEconomy/issues/61
- * login.html & register.html was updated accordingly
- * registerLogin.html was removed
+  * login.html & register.html was updated accordingly
+  * registerLogin.html was removed
 * Allow login with email address  
 https://github.com/forCrowd/WealthEconomy/issues/62
 * Both Profile (/[username]) and New CMRP (/[username]/new) routes now correctly check 'username' for both against local (currentUser) & remote
@@ -442,10 +465,10 @@ https://github.com/forCrowd/WealthEconomy/issues/62
 
 * Navigate away confirmation in 'Unsaved changes' case  
 https://github.com/forCrowd/WealthEconomy/issues/60
- * isEditing property was removed
- * ResourcePool.isTemp property was removed
- * dataContext - _createEntitySuppressAuthValidation variable was removed
- * UPO & Basics CMRPs were moved from client-side to server-side (again)
+  * isEditing property was removed
+  * ResourcePool.isTemp property was removed
+  * dataContext - _createEntitySuppressAuthValidation variable was removed
+  * UPO & Basics CMRPs were moved from client-side to server-side (again)
 * Register - Username and email inputs were disabled for anonymous user case
 * 'Register / login modal is not displayed when a new anonymous user interacts after logout' bug fix
 * Logo update
@@ -478,8 +501,8 @@ https://github.com/forCrowd/WealthEconomy/issues/57
 * OData controller error - No HTTP resource was found that matches the request URI  
 https://github.com/forCrowd/WealthEconomy/issues/56
 * Fixes for initial setup
- * -ExecutionPolicy Unrestricted was added for WebApiWarmup.ps1 call in post build
- * WebApi targets path fix
+  * -ExecutionPolicy Unrestricted was added for WebApiWarmup.ps1 call in post build
+  * WebApi targets path fix
 * Sketch.pptx file
 
 **0.51.0**
@@ -553,18 +576,18 @@ Even if resource pool belongs to current user, resourcePoolRateCount, resourcePo
 **0.46.0**
 
 * Disqus was enabled on all routes that has 'enableDisqus: true'
- * Original angular-utils-disqus wasn't loading the related disqus comments on route changes. Forked, fixed & replaced  
- * https://github.com/michaelbromley/angularUtils/pull/296
+  * Original angular-utils-disqus wasn't loading the related disqus comments on route changes. Forked, fixed & replaced  
+  * https://github.com/michaelbromley/angularUtils/pull/296
 * Total Cost Index - Both CMRPs update each other sales number
 * Closing Notes was removed & icons section was moved to default page, only visible on home
 
 **0.45.0**
 
 * Content updates
- * Sector Index was renamed to Priority
- * Fair Share was removed
- * All in One was added
- * Total Cost Index, Implementation, Reason, Closing Notes updates
+  * Sector Index was renamed to Priority
+  * Fair Share was removed
+  * All in One was added
+  * Total Cost Index, Implementation, Reason, Closing Notes updates
 
 **0.44.0**
 
@@ -615,7 +638,7 @@ https://www.nuget.org/packages/Microsoft.AspNet.WebApi.MessageHandlers.Compressi
 * Sourcemap generation was added to gulp minifying
 * angular exceptionHandling was modified to handle sourcemapped stacktrace
 * breeze.base.debug.js + necessary adapters as main breeze setup, instead of breeze.debug.js
- * Also breeze.dataService.odata.js fix: https://github.com/Breeze/breeze.js/pull/128
+  * Also breeze.dataService.odata.js fix: https://github.com/Breeze/breeze.js/pull/128
 * External libraries minified & bundled as well: lib.js, lib.min.js, lib.css, lib.min.css
 * .tt files and most of the generated files were remove from ngClient
 * gulpfile errorHandler was added for uglify
@@ -662,14 +685,14 @@ In case of an update in the page, browsers automatically get the latest default.
 **0.42.0**
 
 * Separation of Web client (ngClient) & WebApi
- * Cors was enabled on WebApi
- * client related files were removed from WebApi
- * bower was installed to ngClient and all client packages were installed through bower
- * Mvc, Web pages and other unnecessary packages were removed
- * RequireHttps flag for WebApi
- * CustomErrors for WebApi
+  * Cors was enabled on WebApi
+  * client related files were removed from WebApi
+  * bower was installed to ngClient and all client packages were installed through bower
+  * Mvc, Web pages and other unnecessary packages were removed
+  * RequireHttps flag for WebApi
+  * CustomErrors for WebApi
 * Global.asax functional was moved to Startup.cs
- * Http to Https rule handling was moved to web.config
+  * Http to Https rule handling was moved to web.config
 * "test.forcrowd.org" domain was created for tests before production
 
 **0.41.4**
@@ -686,7 +709,7 @@ Now both cases call updateAnonymousChanges method which handles this case correc
 **0.41.2**
 
 * angular entity update - 'RowVersion field out of sync' fix
- * Json formatter reference loop handling was set to 'Ignore'
+  * Json formatter reference loop handling was set to 'Ignore'
 * Social login - 'userFactory getCurrentUser leaves a temp user in the context' fix
 * UserManager ChangeEmailAsync function was replaced with existing SetEmailAsync
 * Client side error handling improvements
@@ -700,8 +723,8 @@ Now both cases call updateAnonymousChanges method which handles this case correc
 **0.41.0**
 
 * Social logins: Facebook, Google, Microsoft
- * Social Buttons for Bootstrap: http://lipis.github.io/bootstrap-social/
- * FontAwesome: http://fortawesome.github.io/Font-Awesome/
+  * Social Buttons for Bootstrap: http://lipis.github.io/bootstrap-social/
+  * FontAwesome: http://fortawesome.github.io/Font-Awesome/
 * Registration email address info moved to appSettings
 * Elmah settings moved to Configs folder
 * RequireHttps attribute for WebApi
@@ -1070,8 +1093,8 @@ Related issue with 'Total Cost Index - New Model' example was fixed
 * Azure websites is back again; http://wealth.azurewebsites.net
 * Register for error messages fix
 * editView.tt 
- * Both nullable and non-nullable boolean type will be rendered as radio input
- * 'Cancel' type was changed to 'button' type instead of 'submit' and service.cancelChanges() method was removed
+  * Both nullable and non-nullable boolean type will be rendered as radio input
+  * 'Cancel' type was changed to 'button' type instead of 'submit' and service.cancelChanges() method was removed
 * LazyLoading was disabled
 * breeze RowVersion property issue was fixed
 * Extending the breeze's entities, instead of DTOs from WebApi, WebApi DTOs were removed
@@ -1093,8 +1116,8 @@ http://xabikos.com/multitenant/application%20design/software%20as%20a%20service/
 **0.14.7**
 
 * Clean-up
- * ElementItemElementField was renamed to ElementCell
- * Long property names were shortened
+  * ElementItemElementField was renamed to ElementCell
+  * Long property names were shortened
 * Package updates & breeze - Microsoft AspNet WebApi OData 5.3.x conflict fix
 * Warm-up script was converted to PowerShell + gitignore was modified for WarmUpResult.txt
 * Version number fix; 0.14.6.1 -> 0.14.7
@@ -1225,7 +1248,7 @@ http://xabikos.com/multitenant/application%20design/software%20as%20a%20service/
 **0.11.10**
 
 * Replace metadata.xml with EdmBuilder CodeFirst output
- * WealthEconomyContext moved under BusinessObjects
+  * WealthEconomyContext moved under BusinessObjects
 * IsSample field to ResourcePool object, SampleUserId to Web\web.config and UserUnitOfWork now uses these parameters to copy the sample data
 
 **0.11.9**
@@ -1285,7 +1308,7 @@ http://xabikos.com/multitenant/application%20design/software%20as%20a%20service/
 **0.10.9**
 
 * T4 files update to use IdentityContext
- * Dependencies folder was created under Framework - T4 folder, that contains IdentityContext libraries
+  * Dependencies folder was created under Framework - T4 folder, that contains IdentityContext libraries
 * EntityFramework.dll + EntityFramework.SqlServer.dll files under  
 C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE folder  
 were replaced with Entity Framework 6.1 versions.
@@ -1308,9 +1331,9 @@ were replaced with Entity Framework 6.1 versions.
 **0.10.5**
 
 * routing fixes
- * if it's supported, angular html5Mode is on
- * href fixes
- * mvc routing always goes to HomeController, so angular can handle the requests
+  * if it's supported, angular html5Mode is on
+  * href fixes
+  * mvc routing always goes to HomeController, so angular can handle the requests
 
 **0.10.4**
 
@@ -1342,9 +1365,9 @@ were replaced with Entity Framework 6.1 versions.
 **0.9.2**
 
 * BusinessObjects
- * Merge generated and custom classes
- * BaseEntity class
- * Clean up + fine-tuning
+  * Merge generated and custom classes
+  * BaseEntity class
+  * Clean up + fine-tuning
 * Framework - T4 files fixes
 
 **0.9.1**
@@ -1354,11 +1377,11 @@ were replaced with Entity Framework 6.1 versions.
 **0.9.0**
 
 * Application
- * Converted to Code First approach from Database First
+  * Converted to Code First approach from Database First
      * T4 files were updated to read from Code First metadata
      * EF6.Utility.cs was moved to the solution
- * Switched to LocalDb instead of SQL Server 2008 R2
- * T4 include files are now under Framework\T4 folder
+  * Switched to LocalDb instead of SQL Server 2008 R2
+  * T4 include files are now under Framework\T4 folder
 
 **0.8.1**
 
@@ -1367,8 +1390,8 @@ were replaced with Entity Framework 6.1 versions.
 **0.8.0**
 
 * Database
- * ResourcePool table became the main container for Organization, License and Sector tables
- * UserResourcePoolOrganization was dropped and UserOrganization was introduced
+  * ResourcePool table became the main container for Organization, License and Sector tables
+  * UserResourcePoolOrganization was dropped and UserOrganization was introduced
 
 **0.7.0**
 
@@ -1399,7 +1422,7 @@ were replaced with Entity Framework 6.1 versions.
 
 * SolutionItems - Local_UpdateDatabase.sql was updated to remove doktrosizlar db items
 * Business + DataObjects
- * To support tables with multiple primary key, IEntity interface Id property was replaced with IsNew
+  * To support tables with multiple primary key, IEntity interface Id property was replaced with IsNew
 * Web - Controllers fine-tuning
 
 **0.4.2**.2
@@ -1421,38 +1444,38 @@ were replaced with Entity Framework 6.1 versions.
 **0.4.0**
 
 * DataObjects
- * Utility.ttinclude: Common code blocks from t4 files were moved to this file
- * Repositories were updated
+  * Utility.ttinclude: Common code blocks from t4 files were moved to this file
+  * Repositories were updated
 * BusinessObjects
- * Metadata.t4 was moved under "Generated" folder and was modified to generated the files for once.
+  * Metadata.t4 was moved under "Generated" folder and was modified to generated the files for once.
 * Facade
- * UnitOfWork classes were created for each entity
+  * UnitOfWork classes were created for each entity
 * Web
- * Repositories + UnitOfWork updates
+  * Repositories + UnitOfWork updates
 * General
- * config files connectionstrings were updated
- * github repository reset
+  * config files connectionstrings were updated
+  * github repository reset
 
 **0.3.0**
 
 * BusinessObjects
- * OrganizationGroupType was renamed to UserResourcePoolType
- * UserDistributionIndexRatingAverage class was merged into UserResourcePool
- * BusinessObjectsDto.t4 was add to be able create Dto classes
- * OrganizationGroupType was renamed to UserResourcePoolType
+  * OrganizationGroupType was renamed to UserResourcePoolType
+  * UserDistributionIndexRatingAverage class was merged into UserResourcePool
+  * BusinessObjectsDto.t4 was add to be able create Dto classes
+  * OrganizationGroupType was renamed to UserResourcePoolType
 * Web
- * Number of ratings info was added to CMRP views
- * Create / Edit operations were modified to use Dto classes
+  * Number of ratings info was added to CMRP views
+  * Create / Edit operations were modified to use Dto classes
 * Database + General
- * UserResourcePool table ResourcePoolRate field percentage update - values were divided to 100
+  * UserResourcePool table ResourcePoolRate field percentage update - values were divided to 100
 
 **0.2.0**
 
 * Database + General
- * ResourcePool + ResourcePoolOrganization + UserResourcePool + UserResourcePoolOrganization tables were added
- * User table ResourcePoolRate was removed
- * UserDistributionIndexRating table was removed
- * UserOrganizationRating table was removed
+  * ResourcePool + ResourcePoolOrganization + UserResourcePool + UserResourcePoolOrganization tables were added
+  * User table ResourcePoolRate was removed
+  * UserDistributionIndexRating table was removed
+  * UserOrganizationRating table was removed
 * General - Versioning method was updated: Minor version number will be increased in every update
 
 **0.1.9**.1 - 06 Mar '14
@@ -1463,15 +1486,15 @@ were replaced with Entity Framework 6.1 versions.
 
 * SolutionItems - Maintenance scripts
 * Database
- * Organization table UserId + NumberOfSales fields were removed
- * UserOrganizationRating table NumberOfSales field was added
- * All tables CreatedOn + ModifiedOn default values
+  * Organization table UserId + NumberOfSales fields were removed
+  * UserOrganizationRating table NumberOfSales field was added
+  * All tables CreatedOn + ModifiedOn default values
 * Web
- * Quality Private + Public views
- * Sector Private + Public views
- * Employee Satisfaction Private + Public views
- * Customer Satisfaction Private + Public views
- * All in One Private + Public views
+  * Quality Private + Public views
+  * Sector Private + Public views
+  * Employee Satisfaction Private + Public views
+  * Customer Satisfaction Private + Public views
+  * All in One Private + Public views
 
 **0.1.8** - 04 Mar '14
 

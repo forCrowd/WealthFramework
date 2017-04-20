@@ -1,0 +1,126 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "breeze-client@1.6.3",
+        "scope": null,
+        "escapedName": "breeze-client",
+        "name": "breeze-client",
+        "rawSpec": "1.6.3",
+        "spec": "1.6.3",
+        "type": "version"
+      },
+      "D:\\Development\\Projects\\GitHub\\coni2k\\WealthEconomy\\AngularClient"
+    ]
+  ],
+  "_from": "breeze-client@1.6.3",
+  "_id": "breeze-client@1.6.3",
+  "_inCache": true,
+  "_location": "/breeze-client",
+  "_nodeVersion": "4.5.0",
+  "_npmOperationalInternal": {
+    "host": "packages-18-east.internal.npmjs.com",
+    "tmp": "tmp/breeze-client-1.6.3.tgz_1488753247575_0.4800216876901686"
+  },
+  "_npmUser": {
+    "name": "marcelgood",
+    "email": "marcelg@ideablade.com"
+  },
+  "_npmVersion": "3.10.8",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "breeze-client@1.6.3",
+    "scope": null,
+    "escapedName": "breeze-client",
+    "name": "breeze-client",
+    "rawSpec": "1.6.3",
+    "spec": "1.6.3",
+    "type": "version"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/breeze-client/-/breeze-client-1.6.3.tgz",
+  "_shasum": "2963be6b5d3e7309bed3fce17ff46c2c7b1b155c",
+  "_shrinkwrap": null,
+  "_spec": "breeze-client@1.6.3",
+  "_where": "D:\\Development\\Projects\\GitHub\\coni2k\\WealthEconomy\\AngularClient",
+  "author": {
+    "name": "Jay Traband",
+    "email": "jayt@ideablade.com"
+  },
+  "bugs": {
+    "url": "https://github.com/Breeze/breeze.js/issues"
+  },
+  "dependencies": {},
+  "description": "Breeze Javascript client",
+  "devDependencies": {
+    "event-stream": "^3.2.1",
+    "gulp": "^3.8.7",
+    "gulp-changed": "^1.0.0",
+    "gulp-shell": "^0.2.9"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "2963be6b5d3e7309bed3fce17ff46c2c7b1b155c",
+    "tarball": "https://registry.npmjs.org/breeze-client/-/breeze-client-1.6.3.tgz"
+  },
+  "engines": {
+    "node": ">= 0.6.6"
+  },
+  "homepage": "http://www.breezejs.com",
+  "jspm": {
+    "directories": {
+      "lib": "build"
+    },
+    "format": "global"
+  },
+  "keywords": [
+    "breeze",
+    "spa",
+    "data binding",
+    "change tracking",
+    "query",
+    "linq",
+    "cache",
+    "graph",
+    "angular",
+    "angularjs"
+  ],
+  "license": "MIT",
+  "main": "./breeze.base.debug.js",
+  "maintainers": [
+    {
+      "name": "ideablade",
+      "email": "BreezeClub@ideablade.com"
+    },
+    {
+      "name": "jtraband",
+      "email": "jayt@ideablade.com"
+    },
+    {
+      "name": "marcelgood",
+      "email": "marcelg@ideablade.com"
+    },
+    {
+      "name": "steveschmitt",
+      "email": "steves@ideablade.com"
+    },
+    {
+      "name": "wardbell",
+      "email": "wardbell@hotmail.com"
+    }
+  ],
+  "name": "breeze-client",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Breeze/breeze.js.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "types": "./index.d.ts",
+  "version": "1.6.3"
+}

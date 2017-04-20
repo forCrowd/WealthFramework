@@ -1,0 +1,71 @@
+<div class="container body-content">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>
+                Dev Module - All Components
+            </h3>
+            <p>
+                A lightweight versions of 'app module' to make quick sanity checks.
+            </p>
+            <hr />
+            Current User / Auth?: {{ currentUser.Email + " - " + currentUser.isAuthenticated() }}
+            <button *ngIf="currentUser.isAuthenticated()" (click)="logout()">logout</button>
+            <button *ngIf="!currentUser.isAuthenticated()" (click)="login()">login</button>
+            <hr />
+            <div>
+                <button type="button" (click)="consoleLog()">console log</button>
+                <button type="button" (click)="toasterLog()">toaster log</button>
+                <button type="button" (click)="rxjsTest()">rxjs test</button>
+                <button type="button" (click)="toggleChart()">toggle chart</button>
+                <button type="button" (click)="error()">error</button>
+            </div>
+            <hr />
+            <div>
+                <p>
+                    WebApi - Get
+                </p>
+                <p>
+                    <button type="button" (click)="okGet()">ok</button>
+                    <button type="button" (click)="okGetMessage()">ok - message</button>
+                </p>
+                <p>
+                    WebApi - Post
+                </p>
+                <p>
+                    <button type="button" (click)="ok()">ok</button>
+                    <button type="button" (click)="badRequest()">bad request</button>
+                    <button type="button" (click)="badRequestMessage()">bad request - message</button>
+                    <button type="button" (click)="conflict()">conflict</button>
+                </p>
+                <p>
+                    <button type="button" (click)="exception()">exception</button>
+                    <button type="button" (click)="getTokenInvalidUser()">get token - invalid user</button>
+                    <button type="button" (click)="getTokenInvalidToken()">get token - invalid token</button>
+                    <button type="button" (click)="internalServerError()">internal server error</button>
+                </p>
+                <p>
+                    <button type="button" (click)="modelStateError()">model state error</button>
+                    <button type="button" (click)="notFound()">not found</button>
+                    <button type="button" (click)="unauthorized()">unauthorized</button>
+                </p>
+            </div>
+            <hr />
+            <div>
+                Moment: {{ getNewDate() | amTimeAgo }}
+            </div>
+            <div [hidden]="!displayChart">
+                <hr />
+                <ngChart [config]="chartConfig"></ngChart>
+            </div>
+            <hr />
+            <div>
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+
+    <toaster-container [toasterconfig]="toasterConfig"></toaster-container>
+
+</div>
+
+<footer class="footer"></footer>

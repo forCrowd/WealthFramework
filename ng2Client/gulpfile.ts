@@ -2,12 +2,13 @@
 /// <reference path="node_modules/@types/node/index.d.ts" />
 /// <reference path="node_modules/@types/core-js/index.d.ts" />
 
-// In order to resolve "environment-settings" in "./app/settings/settings"
-require("app-module-path").addPath("./app/settings/setup");
+// In order to resolve "environment-settings" in "./app/main/settings/settings"
+require("app-module-path").addPath("./app/main/settings/setup");
 
 /* Varibles */
 
 var concat = require("gulp-concat"),
+    del = require("del"),
     exec = require("child_process").exec,
     fs = require("fs"),
     gulp = require("gulp"),
@@ -15,7 +16,7 @@ var concat = require("gulp-concat"),
 
 var appRoot = "./app",
     appJsPath = appRoot + "/app.js",
-    appCssRoot = appRoot + "/css",
+    appCssRoot = appRoot + "/resources/css",
     libRoot = "./node_modules",
     appMinCssSrc = [
         appCssRoot + "/app.css",
@@ -30,7 +31,7 @@ var appRoot = "./app",
         libRoot + "/bootstrap/dist/js/bootstrap.js", // These two js are only necessary for `navbar-toogle`?
         libRoot + "/respond.js/dest/respond.src.js" // Bootstrap polyfill
     ],
-    settingsRoot = appRoot + "/settings",
+    settingsRoot = appRoot + "/main/settings",
     typeScriptDefaultProject = "./tsconfig.json";
 
 var environment = "",
@@ -42,51 +43,51 @@ var environment = "",
 gulp.task("default", ["compile-typescript", "generate-app.min.css", "generate-lib.js", "watch"]);
 
 // Build with local settings
-gulp.task("build-local", ["generate-app.min.css"], function () {
+gulp.task("build-local", ["generate-app.min.css"], function() {
     environment = "local";
     return build();
 });
 
 // Build with production settings
-gulp.task("build-production", ["generate-app.min.css"], function () {
+gulp.task("build-production", ["generate-app.min.css"], function() {
     environment = "production";
     runPublish = true;
     return build();
 });
 
 // Build with test settings
-gulp.task("build-test", ["generate-app.min.css"], function () {
+gulp.task("build-test", ["generate-app.min.css"], function() {
     environment = "test";
     runPublish = true;
     return build();
 });
 
 // Compile-typescript
-gulp.task("compile-typescript", function () {
+gulp.task("compile-typescript", function() {
     return compileTypescript(typeScriptDefaultProject);
 });
 
-gulp.task("copy-local-settings", function () {
+gulp.task("copy-local-settings", function() {
     environment = "local";
     return copyEnvironmentSettings();
 });
 
-gulp.task("copy-production-settings", function () {
+gulp.task("copy-production-settings", function() {
     environment = "production";
     return copyEnvironmentSettings();
 });
 
-gulp.task("copy-test-settings", function () {
+gulp.task("copy-test-settings", function() {
     environment = "test";
     return copyEnvironmentSettings();
 });
 
 // If fonts folder doesn't exist, copy it from Font-Awesome fonts
-gulp.task("copy-fonts", function () {
+gulp.task("copy-fonts", function() {
 
-    var fontsDest = appRoot + "/fonts";
+    var fontsDest = appRoot + "/resources/fonts";
 
-    return pathExists(fontsDest).then(function (exists) {
+    return pathExists(fontsDest).then(function(exists) {
 
         // If the path exists, everything is already happened, we are too late!
         if (exists) {
@@ -100,7 +101,7 @@ gulp.task("copy-fonts", function () {
 });
 
 // Concat all external css files and minify them into app.min.css
-gulp.task("generate-app.min.css", function () {
+gulp.task("generate-app.min.css", function() {
 
     var cssmin = require("gulp-cssmin");
 
@@ -111,7 +112,7 @@ gulp.task("generate-app.min.css", function () {
 });
 
 // Only for development, concat all external javascript libraries into lib.js
-gulp.task("generate-lib.js", function () {
+gulp.task("generate-lib.js", function() {
     return gulp.src(libJsSrc)
         .pipe(concat("lib.js", { newLine: "\r\n" }))
         .pipe(gulp.dest(appRoot));
@@ -121,19 +122,19 @@ gulp.task("generate-lib.js", function () {
 gulp.task("setup", ["copy-local-settings", "copy-fonts"]);
 
 // Watch
-gulp.task("watch", function () {
+gulp.task("watch", function() {
 
     var appTsGlob = "app/**/*.ts";
 
     var appMinCssGlob = appMinCssSrc.slice();
-    appMinCssGlob.forEach(function (value, index, array) {
+    appMinCssGlob.forEach(function(value, index, array) {
         if (value.substring(0, 2) === "./") {
             array[index] = value.substring(2); // Remove './' part from each item, so watch can work with new & deleted items
         }
     });
 
     var libJsGlob = libJsSrc.slice();
-    libJsGlob.forEach(function (value, index, array) {
+    libJsGlob.forEach(function(value, index, array) {
         if (value.substring(0, 2) === "./") {
             array[index] = value.substring(2); // Remove './' part from each item, so watch can work with new & deleted items
         }
@@ -151,18 +152,18 @@ function build() {
     var file = getEnvironmentSettingsFile();
 
     // Check settings file
-    return pathExists(file).then(function (exists) {
+    return pathExists(file).then(function(exists) {
 
         if (!exists) {
             throw new Error("There is no settings file for `" + environment + "` environment.\r\n"
                 + "Please create this file by using `copy-" + environment + "-settings` task and modify it with your own settings.");
         }
 
-        return compileAheadOfTime().then(function () {
-            return bundle().then(function () {
-                return minify().then(function () {
+        return compileAheadOfTime().then(function() {
+            return bundle().then(function() {
+                return minify().then(function() {
                     if (runPublish) {
-                        return publish().then(function () {
+                        return publish().then(function() {
                             return compileTypescript(typeScriptDefaultProject); // *
                         });
                     } else {
@@ -182,18 +183,18 @@ function bundle() {
         commonjs = require("rollup-plugin-commonjs"),
         nodeResolve = require("rollup-plugin-node-resolve"),
         environmentSettingsFile = getEnvironmentSettingsFile(),
-        entryFile = "main-aot.js";
+        entryFile = "boot-aot.js";
 
     return rollup.rollup({
         entry: "./app/" + entryFile,
         plugins: [
             alias({
-                "breeze-client": path.resolve(__dirname, "node_modules", "breeze-client/breeze.base.debug.js"),
-                "breeze.dataService.odata": path.resolve(__dirname, "node_modules", "breeze-client/breeze.dataService.odata.js"),
-                "breeze.modelLibrary.backingStore": path.resolve(__dirname, "node_modules", "breeze-client/breeze.modelLibrary.backingStore.js"),
-                "breeze.uriBuilder.odata": path.resolve(__dirname, "node_modules", "breeze-client/breeze.uriBuilder.odata.js"),
-                "environment-settings": path.resolve(__dirname, "app", "settings", environmentSettingsFile),
-                "highcharts": path.resolve(__dirname, "node_modules", "highcharts/highcharts.src.js")
+                "breeze-client": path.resolve(__dirname, "node_modules", "breeze-client", "breeze.base.debug.js"),
+                "breeze.dataService.odata": path.resolve(__dirname, "node_modules", "breeze-client", "breeze.dataService.odata.js"),
+                "breeze.modelLibrary.backingStore": path.resolve(__dirname, "node_modules", "breeze-client", "breeze.modelLibrary.backingStore.js"),
+                "breeze.uriBuilder.odata": path.resolve(__dirname, "node_modules", "breeze-client", "breeze.uriBuilder.odata.js"),
+                "environment-settings": path.resolve(__dirname, "app", "main", "settings", environmentSettingsFile),
+                "highcharts": path.resolve(__dirname, "node_modules", "highcharts", "highcharts.src.js")
             }),
             commonjs({
                 namedExports: {
@@ -213,10 +214,10 @@ function bundle() {
                     ]
                 }
             }),
-            nodeResolve({ jsnext: true, module: true })
+            nodeResolve({ jsnext: true })
         ]
     })
-        .then(function (bundle: any) {
+        .then(function(bundle: any) {
             return bundle.write({
                 format: "iife",
                 moduleName: "app",
@@ -227,28 +228,30 @@ function bundle() {
 
 function compileAheadOfTime() {
 
-    return new Promise(function (resolve, reject) {
+    return new Promise(function(resolve, reject) {
 
         var buildFile = "tsconfig-build-aot.json";
 
-        return exec("node_modules\\.bin\\ngc -p " + buildFile, function (err: any, stdout: any, stderr: any) {
+        return del(["aot"]).then(() => {
+            return exec("node_modules\\.bin\\ngc -p " + buildFile, function(err: any, stdout: any, stderr: any) {
 
-            console.log(stdout);
-            console.log(stderr);
+                console.log(stdout);
+                console.log(stderr);
 
-            var compileFile = "tsconfig-compile-aot.json";
+                var compileFile = "tsconfig-compile-aot.json";
 
-            return compileTypescript("./" + compileFile)
-                .then(function () {
-                    resolve();
-                });
+                return compileTypescript("./" + compileFile)
+                    .then(function() {
+                        resolve();
+                    });
+            });
         });
     });
 }
 
 function compileTypescript(projectFile: any) {
-    return new Promise(function (resolve, reject) {
-        return exec("node_modules\\.bin\\tsc -p " + projectFile, function (err: any, stdout: any, stderr: any) {
+    return new Promise(function(resolve, reject) {
+        return exec("node_modules\\.bin\\tsc -p " + projectFile, function(err: any, stdout: any, stderr: any) {
             console.log(stdout);
             console.log(stderr);
             resolve();
@@ -256,14 +259,14 @@ function compileTypescript(projectFile: any) {
     });
 }
 
-// Copies '/app/settings/setup/environment-settings.ts' file to its parent folder as the given environment
+// Copies 'app/settings/setup/environment-settings.ts' file to its parent folder as the given environment
 function copyEnvironmentSettings() {
 
     var setupSettings = "environment-settings.ts",
         environmentSettings = environment + "-settings.ts";
 
     // Checks whether the file(s) already being copied
-    return pathExists(settingsRoot + "/" + environmentSettings).then(function (exists) {
+    return pathExists(settingsRoot + "/" + environmentSettings).then(function(exists) {
 
         // No need to copy from setup, move along!
         if (exists) {
@@ -281,7 +284,7 @@ function copyEnvironmentSettings() {
 
 function getEnvironmentSettingsFile() {
     var settingsFile = environment + "-settings.js";
-    return path.resolve(__dirname, "app", "settings", settingsFile);
+    return path.resolve(__dirname, "app", "main", "settings", settingsFile);
 }
 
 // Todo Try to move this to an xml file and read it from there? / coni2k - 25 Dec. '16
@@ -300,7 +303,7 @@ function getWebConfigHttpsBlock() {
 
 function minify() {
 
-    return new Promise(function (resolve, reject) {
+    return new Promise(function(resolve, reject) {
 
         var sourcemaps = require("gulp-sourcemaps"),
             uglify = require("gulp-uglify"),
@@ -320,8 +323,8 @@ function minify() {
 }
 
 function pathExists(path: any) {
-    return new Promise(function (resolve, reject) {
-        fs.stat(path, function (err: any) {
+    return new Promise(function(resolve, reject) {
+        fs.stat(path, function(err: any) {
             var exists = err === null;
             return resolve(exists);
         });
@@ -335,14 +338,14 @@ function promiseErrorHandler(error: any) {
 // Copy publish files to "publish" folder
 function publish() {
 
-    return new Promise(function (resolve, reject) {
+    return new Promise(function(resolve, reject) {
 
         var changed = require("gulp-changed"),
             publishDest = "./publish",
             publishSrc = [
-                "./app/fonts/**/*",
-                "./app/css/app.min.css",
-                "./app/images/**/*",
+                "./app/resources/fonts/**/*",
+                "./app/resources/css/app.min.css",
+                "./app/resources/images/**/*",
                 "./app/app.min.js",
                 "./app/app.min.js.map",
                 "./app_offline.htm_",
@@ -354,7 +357,7 @@ function publish() {
             .on("error", promiseErrorHandler)
             .pipe(changed(publishDest))
             .pipe(gulp.dest(publishDest))
-            .on("end", function () {
+            .on("end", function() {
 
                 var htmlReplace = require("gulp-html-replace");
                 var version = require("./package.json").version;
@@ -364,8 +367,10 @@ function publish() {
                 return gulp.src([appHtml, webConfig])
                     .pipe(htmlReplace({
                         "app-html": {
-                            src: "/app/app.min.js?v=" + version,
-                            tpl: "<script async src=\"%s\"></script>"
+                            src: "app/app.min.js?v=" + version,
+                            tpl: "\n" +
+                            "    <script> window.module = 'aot';</script>" + "\n" +
+                            "    <script async src=\'%s\'></script>"
                         },
                         "web-config": getWebConfigHttpsBlock()
                     }))
